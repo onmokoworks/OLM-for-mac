@@ -38,6 +38,8 @@ class AttestorTests(unittest.TestCase):
             "kind": "olmsmoother2_mac_process_challenge",
             "schema_version": 1,
             "run_nonce": nonce,
+            "started_at": "2026-07-28T00:00:00Z",
+            "run_challenge_sha256": "c" * 64,
             "wrapper_sha256": "b" * 64,
             "expected": {
                 "ae_executable": {"path": str(ae), "sha256": digest(ae)},

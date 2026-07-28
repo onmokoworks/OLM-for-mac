@@ -332,11 +332,14 @@ def run_once(
     snapshot_provider: Callable[[str], dict[str, Any]],
 ) -> dict[str, Any]:
     challenge = _object(challenge, "challenge")
-    if set(challenge) != {"kind", "schema_version", "run_nonce", "wrapper_sha256", "expected", "result_path", "outputs"}:
+    if set(challenge) != {"kind", "schema_version", "run_nonce", "started_at", "run_challenge_sha256", "wrapper_sha256", "expected", "result_path", "outputs"}:
         raise AttestationError("challenge schema mismatch")
     if challenge.get("kind") != "olmsmoother2_mac_process_challenge" or type(challenge.get("schema_version")) is not int or challenge.get("schema_version") != 1:
         raise AttestationError("challenge kind/schema mismatch")
     nonce = _nonce(challenge.get("run_nonce"))
+    if not isinstance(challenge.get("started_at"), str) or not challenge["started_at"]:
+        raise AttestationError("challenge start timestamp missing")
+    _hex(challenge.get("run_challenge_sha256"), "run_challenge_sha256")
     expected = _object(challenge.get("expected"), "challenge.expected")
     if set(expected) != {"ae_executable", "module"}:
         raise AttestationError("challenge.expected schema mismatch")

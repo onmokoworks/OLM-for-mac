@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate an OLMSmoother2 v2/no-key Mac candidate return, fail closed."""
 from __future__ import annotations
-import argparse, hashlib, json, re, sys
+import argparse, hashlib, json, os, re, stat, sys
 from datetime import datetime, timezone
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
@@ -12,6 +12,66 @@ from verify_32bpc_float_return import VerificationError, inspect_float_rgba_exr
 REQUEST = ROOT / "refs/mac_validation_requests/olmsmoother2_no_key_32bpc_mac_validation_20260715.json"
 def digest(p: Path) -> str: return hashlib.sha256(p.read_bytes()).hexdigest()
 def canonical(v: object) -> str: return hashlib.sha256(json.dumps(v, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode()).hexdigest()
+def strict_protocol_json(path: Path, label: str) -> dict:
+    if path.is_symlink(): raise ValueError(f"{label} symlink forbidden")
+    st=os.stat(path,follow_symlinks=False)
+    if not stat.S_ISREG(st.st_mode) or st.st_nlink != 1: raise ValueError(f"{label} must be one unaliased regular file")
+    raw=path.read_bytes()
+    if not raw or len(raw)>1024*1024: raise ValueError(f"{label} invalid size")
+    def pairs(items):
+        value={}
+        for key,item in items:
+            if key in value: raise ValueError(f"{label} duplicate JSON key")
+            value[key]=item
+        return value
+    value=json.loads(raw.decode("utf-8"),object_pairs_hook=pairs,parse_constant=lambda x: (_ for _ in ()).throw(ValueError(f"{label} invalid number")))
+    if not isinstance(value,dict): raise ValueError(f"{label} must be an object")
+    return value
+def validate_mac_process_proof(base: Path, result: Path, outputs: dict[str,Path], settings: dict[str,Path], plugin_binary: Path, nonce: str) -> bool:
+    names={"challenge":"process_challenge.json","pre":"pre_request.json","pre_ok":"pre_ok.json","post":"post_request.json","attestation":"mac_process_attestation.json","post_ok":"post_ok.json"}
+    rows={key:strict_protocol_json(base/name,name) for key,name in names.items()}
+    c,pre,pre_ok,post,att,post_ok=(rows[k] for k in ("challenge","pre","pre_ok","post","attestation","post_ok"))
+    if set(c)!={"kind","schema_version","run_nonce","started_at","run_challenge_sha256","wrapper_sha256","expected","result_path","outputs"} or c.get("kind")!="olmsmoother2_mac_process_challenge" or c.get("schema_version")!=1 or c.get("run_nonce")!=nonce: raise ValueError("process challenge schema/nonce mismatch")
+    run_challenge_path=base/"run_challenge.json"
+    run_challenge=strict_protocol_json(run_challenge_path,"run_challenge.json")
+    if c.get("run_challenge_sha256")!=digest(run_challenge_path) or c.get("started_at")!=run_challenge.get("started_at"): raise ValueError("freshness challenge is not bound to process challenge")
+    expected=c.get("expected",{}); ae=expected.get("ae_executable",{}); module=expected.get("module",{})
+    if set(expected)!={"ae_executable","module"} or set(ae)!={"path","sha256"} or set(module)!={"path","sha256"}: raise ValueError("process executable/module schema mismatch")
+    ae_path=Path(ae.get("path","")); module_path=Path(module.get("path",""))
+    if not ae_path.is_absolute() or ae_path.is_symlink() or ae_path.resolve(strict=True)!=ae_path or digest(ae_path)!=ae.get("sha256"): raise ValueError("AE executable identity/hash mismatch")
+    if module_path!=plugin_binary or module_path.is_symlink() or module_path.resolve(strict=True)!=module_path or digest(module_path)!=module.get("sha256"): raise ValueError("plugin module identity/hash mismatch")
+    expected_outputs={role:{"exr":str(outputs[role]),"settings":str(settings[role])} for role in ("no_effect_control","effect_on")}
+    if c.get("result_path")!=str(result) or c.get("outputs")!=expected_outputs: raise ValueError("process challenge result/artifact path split")
+    wrapper=base/"run_mac_wrapper.jsx"
+    if not wrapper.is_file() or wrapper.is_symlink() or digest(wrapper)!=c.get("wrapper_sha256"): raise ValueError("wrapper identity/hash mismatch")
+    csha=canonical(c)
+    if set(pre)!={"kind","schema_version","run_nonce","challenge_sha256","sequence"} or pre!={"kind":"olmsmoother2_mac_process_pre_request","schema_version":1,"run_nonce":nonce,"challenge_sha256":csha,"sequence":1}: raise ValueError("pre request chain mismatch")
+    if set(pre_ok)!={"kind","schema_version","run_nonce","challenge_sha256","pre_request_sha256","pre_snapshot_sha256","snapshot"} or pre_ok.get("kind")!="olmsmoother2_mac_process_pre_ok" or pre_ok.get("schema_version")!=1 or pre_ok.get("run_nonce")!=nonce or pre_ok.get("challenge_sha256")!=csha or pre_ok.get("pre_request_sha256")!=canonical(pre) or pre_ok.get("pre_snapshot_sha256")!=canonical(pre_ok.get("snapshot")): raise ValueError("pre acknowledgement chain mismatch")
+    def validate_snapshot(snapshot: object, label: str) -> dict:
+        if not isinstance(snapshot,dict) or set(snapshot)!={"process","module"}: raise ValueError(f"{label} snapshot schema mismatch")
+        process=snapshot.get("process"); loaded=snapshot.get("module")
+        if not isinstance(process,dict) or set(process)!={"pid","birth_token","executable_path","executable_sha256","dev","ino","size","mtime_ns"}: raise ValueError(f"{label} process schema mismatch")
+        if not isinstance(loaded,dict) or set(loaded)!={"path","sha256","dev","ino","size","mtime_ns","vmmap_match_count"}: raise ValueError(f"{label} module schema mismatch")
+        if type(process.get("pid")) is not int or process["pid"]<=0 or not isinstance(process.get("birth_token"),str) or not process["birth_token"] or process.get("executable_path")!=str(ae_path) or process.get("executable_sha256")!=ae["sha256"]: raise ValueError(f"{label} process identity mismatch")
+        if loaded.get("path")!=str(module_path) or loaded.get("sha256")!=module["sha256"] or loaded.get("vmmap_match_count")!=1: raise ValueError(f"{label} module identity mismatch")
+        for row in (process,loaded):
+            if any(type(row.get(key)) is not int or row[key]<0 for key in ("dev","ino","size","mtime_ns")): raise ValueError(f"{label} stat identity mismatch")
+        return snapshot
+    pre_snapshot=validate_snapshot(pre_ok["snapshot"],"pre")
+    expected_artifacts={role:{"exr_sha256":digest(outputs[role]),"settings_sha256":digest(settings[role])} for role in ("no_effect_control","effect_on")}
+    if set(post)!={"kind","schema_version","run_nonce","challenge_sha256","sequence","pre_request_sha256","pre_snapshot_sha256","pre_ok_sha256","result_sha256","artifacts"} or post.get("kind")!="olmsmoother2_mac_process_post_request" or post.get("schema_version")!=1 or post.get("run_nonce")!=nonce or post.get("challenge_sha256")!=csha or post.get("sequence")!=2 or post.get("pre_request_sha256")!=canonical(pre) or post.get("pre_snapshot_sha256")!=pre_ok.get("pre_snapshot_sha256") or post.get("pre_ok_sha256")!=digest(base/"pre_ok.json") or post.get("result_sha256")!=digest(result) or post.get("artifacts")!=expected_artifacts: raise ValueError("post request result/artifact chain mismatch")
+    invariants={"same_pid_birth":True,"same_executable":True,"same_module_file":True,"exact_vmmap_pre":True,"exact_vmmap_post":True,"pre_nonce_digest_chain":True,"post_snapshot_observed_by_attestor":True}
+    if set(att)!={"kind","schema_version","status","run_nonce","challenge_sha256","pre","post","artifacts","result","invariants"} or att.get("kind")!="olmsmoother2_mac_process_attestation" or att.get("schema_version")!=1 or att.get("status")!="attested" or att.get("run_nonce")!=nonce or att.get("challenge_sha256")!=csha or att.get("invariants")!=invariants: raise ValueError("attestation schema/invariants mismatch")
+    if att.get("pre")!={"request_sha256":canonical(pre),"snapshot":pre_ok["snapshot"],"snapshot_sha256":pre_ok["pre_snapshot_sha256"]}: raise ValueError("attestation pre binding mismatch")
+    apost=att.get("post",{})
+    post_snapshot=validate_snapshot(apost.get("snapshot"),"post")
+    if set(apost)!={"request_sha256","snapshot","snapshot_sha256"} or apost.get("request_sha256")!=canonical(post) or apost.get("snapshot_sha256")!=canonical(post_snapshot): raise ValueError("attestation post binding mismatch")
+    for section,keys in (("process",("pid","birth_token","executable_path","executable_sha256","dev","ino","size","mtime_ns")),("module",("path","sha256","dev","ino","size","mtime_ns"))):
+        if any(pre_snapshot[section][key]!=post_snapshot[section][key] for key in keys): raise ValueError("attestation process/module interval changed")
+    verified={role:{"exr":str(outputs[role]),"exr_sha256":expected_artifacts[role]["exr_sha256"],"settings":str(settings[role]),"settings_sha256":expected_artifacts[role]["settings_sha256"]} for role in expected_artifacts}
+    if att.get("artifacts")!=verified or att.get("result")!={"path":str(result),"sha256":digest(result)}: raise ValueError("attestation result/artifact binding mismatch")
+    if set(post_ok)!={"kind","schema_version","run_nonce","challenge_sha256","post_request_sha256","attestation_sha256"} or post_ok!={"kind":"olmsmoother2_mac_process_post_ok","schema_version":1,"run_nonce":nonce,"challenge_sha256":csha,"post_request_sha256":canonical(post),"attestation_sha256":digest(base/"mac_process_attestation.json")}: raise ValueError("post acknowledgement/attestation hash mismatch")
+    return True
 def parse_time(value: object) -> datetime:
     if not isinstance(value,str): raise ValueError("timestamp missing")
     return datetime.fromisoformat(value.replace("Z","+00:00")).astimezone(timezone.utc)
@@ -21,8 +81,7 @@ def resolve_return_paths(result: Path, output_dir: Path, case: dict) -> tuple[Pa
     result=result.resolve(strict=True)
     if result.parent != base: raise ValueError("result must be a non-symlink file directly in dedicated output directory")
     challenge_path=base/"run_challenge.json"
-    if challenge_path.is_symlink(): raise ValueError("challenge symlink forbidden")
-    challenge=json.loads(challenge_path.read_text(encoding="utf-8"))
+    challenge=strict_protocol_json(challenge_path,"run_challenge.json")
     paths=[]; outputs={}; settings={}
     for branch in ("no_effect_control","effect_on"):
         item=case.get("outputs",{}).get(branch,{})
@@ -35,7 +94,7 @@ def resolve_return_paths(result: Path, output_dir: Path, case: dict) -> tuple[Pa
     if len(set(paths+[result,challenge_path.resolve(strict=True)])) != 6:
         raise ValueError("duplicate/basename-alias result, output, settings, or challenge path")
     expected_roles={branch:{"exr":str(outputs[branch]),"settings":str(settings[branch])} for branch in ("no_effect_control","effect_on")}
-    if challenge.get("kind")!="olmsmoother2_mac_run_challenge" or challenge.get("result_path") != str(result) or challenge.get("output_paths") != expected_roles:
+    if set(challenge)!={"kind","run_nonce","started_at","result_path","output_paths"} or challenge.get("kind")!="olmsmoother2_mac_run_challenge" or challenge.get("result_path") != str(result) or challenge.get("output_paths") != expected_roles:
         raise ValueError("challenge/output path split")
     return result,outputs,settings,challenge
 def main() -> int:
@@ -69,6 +128,10 @@ def main() -> int:
     if om.get("template_name")!=expected_output_template or om.get("capture_api")!="OutputModule.getSettings(GetSettingsFormat.STRING)" or om.get("sample_type")!="FLOAT" or om.get("compression")!="none" or om.get("channels")!= ["A","B","G","R"]: fail.append("output contract drift")
     plugin=d.get("plugin",{}); pp=Path(plugin.get("path","")); pb=Path(plugin.get("binary_path",""))
     if plugin.get("filename")!="OLMSmoother2.plugin" or not pp.is_dir() or pb != pp/"Contents"/"MacOS"/"OLMSmoother2" or len(plugin.get("sha256",""))!=64 or not pb.is_file() or (pb.is_file() and plugin.get("sha256")!=digest(pb)): fail.append("loaded plugin bundle/binary identity or hash missing/mismatched")
+    try:
+        mac_process_proof_present=validate_mac_process_proof(out.resolve(strict=True),result_path,resolved_outputs,resolved_settings,pb.resolve(strict=True),nonce)
+    except (OSError,ValueError,json.JSONDecodeError) as e:
+        print(f"[FAIL_CLOSED] macOS process proof invalid: {e}"); return 1
     reference=request["windows_reference"]; expected_input={"filename":reference["before_effects_frame"],"sha256":reference["before_effects_sha256"]}; expected_case={**request["cases"][0],"input":expected_input}
     expected_contract=canonical({"request_id":request["request_id"],"case":expected_case,"common_setup":request["common_setup"],"mac_run_contract":request["mac_run_contract"],"output_template":expected_output_template})
     if d.get("case_contract_sha256")!=expected_contract: fail.append("case/parameter contract hash missing or mismatched")
@@ -159,7 +222,7 @@ def main() -> int:
     elif not entry_attested: status="blocked_input_entry_identity"
     elif not attested: status="blocked_pending_windows_artifact_attestation"
     elif not effect_exact: status="candidate_return_verified_effect_mismatch"
-    else: status="raw_float32_exact_artifact_only_missing_process_proof"
+    else: status="raw_float32_exact_artifact_only_missing_windows_process_proof"
     reasons=[]
     if not attested: reasons.append("Windows Preserve RGB manifest or same-run PF32 entry attestation is not admissible")
     if not entry_attested: reasons.append("Windows Preserve RGB effect run lacks an exact same-run PF32 input-entry witness")
@@ -169,7 +232,7 @@ def main() -> int:
     if not control_exact: next_gate="repair/aligned-capture the no-effect host/export path before attributing the effect output"
     elif not entry_attested: next_gate="repair the same-run Windows PF32 input-entry witness before attributing effect residuals"
     elif not effect_exact: next_gate="eliminate the attributable 32bpc effect-on raw FLOAT32 residual without changing the frozen 8bpc core"
-    else: next_gate="capture exact same-run loaded-process/module proof on both hosts; raw artifact equality is not AE exact"
-    report={"kind":"olmsmoother2_no_key_32bpc_mac_validation_report","schema_version":2,"status":status,"ae_exact_claim":False,"raw_float32_exact_artifact_classification":exact,"case_count":1,"result_json":str(result_path),"mac_candidate_return_verified":True,"windows_reference_manifest":str(manifest),"windows_artifact_manifest_checks_passed":attested,"windows_same_run_process_proof_present":False,"windows_pf32_input_entry_attestation_present":entry_attested,"windows_pf32_input_entry_comparison":entry_comparison,"raw_float32_comparisons":comparisons,"control_gate_passed":control_exact,"effect_gate_passed":effect_exact,"missing_exact_process_proof":["macOS same-run loaded OLMSmoother2 module identity in the rendering After Effects process","Windows same-run AfterFX process and loaded OLMSmoother2.aex module identity bound to both compared renders"],"reason":"; ".join(reasons+["AE exact is forbidden without exact same-run loaded-process/module proof on both hosts"]),"next_gate":next_gate}
+    else: next_gate="capture exact same-run loaded-process/module proof on Windows; macOS proof alone and raw artifact equality are not AE exact"
+    report={"kind":"olmsmoother2_no_key_32bpc_mac_validation_report","schema_version":2,"status":status,"ae_exact_claim":False,"raw_float32_exact_artifact_classification":exact,"case_count":1,"result_json":str(result_path),"mac_candidate_return_verified":True,"mac_process_proof_present":mac_process_proof_present,"windows_reference_manifest":str(manifest),"windows_artifact_manifest_checks_passed":attested,"windows_same_run_process_proof_present":False,"windows_pf32_input_entry_attestation_present":entry_attested,"windows_pf32_input_entry_comparison":entry_comparison,"raw_float32_comparisons":comparisons,"control_gate_passed":control_exact,"effect_gate_passed":effect_exact,"missing_exact_process_proof":["Windows same-run AfterFX process and loaded OLMSmoother2.aex module identity bound to both compared renders"],"reason":"; ".join(reasons+["macOS same-run process/module proof passes; AE exact remains forbidden without Windows same-run process/module proof"]),"next_gate":next_gate}
     target=out/"validation_report.json"; target.write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8"); print(f"[INTERMEDIATE] wrote {target}; AE exact remains unproven"); return 2 if exact else 1
 if __name__=="__main__": raise SystemExit(main())

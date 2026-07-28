@@ -20,6 +20,7 @@ def load_report():
 
 
 def fixture_tree(tmp_path: Path):
+    tmp_path = tmp_path.resolve()
     result = tmp_path / "mac_validation_return.json"
     challenge = tmp_path / "run_challenge.json"
     result.write_text("{}")
@@ -37,6 +38,8 @@ def fixture_tree(tmp_path: Path):
         ordered.extend((str(exr), str(settings)))
     challenge.write_text(json.dumps({
         "kind": "olmsmoother2_mac_run_challenge",
+        "run_nonce": "a" * 64,
+        "started_at": "2026-07-28T00:00:00Z",
         "result_path": str(result),
         "output_paths": {
             "no_effect_control": {"exr": ordered[0], "settings": ordered[1]},
@@ -74,6 +77,17 @@ class Smoother2ReportFailClosedTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "path split"):
                 report.resolve_return_paths(result, tmp_path, case)
 
+            result, case = fixture_tree(tmp_path)
+            _, resolved_outputs, resolved_settings, challenge = report.resolve_return_paths(result, tmp_path, case)
+            self.assertEqual(challenge["run_nonce"], "a" * 64)
+            self.assertEqual(set(resolved_outputs), {"no_effect_control", "effect_on"})
+            self.assertEqual(set(resolved_settings), {"no_effect_control", "effect_on"})
+
+            alias = tmp_path / "run_challenge_alias.json"
+            alias.hardlink_to(tmp_path / "run_challenge.json")
+            with self.assertRaisesRegex(ValueError, "unaliased"):
+                report.resolve_return_paths(result, tmp_path, case)
+
     def test_static_nonce_freshness_readback_and_no_ae_exact(self):
         runner = RUNNER.read_text(encoding="utf-8")
         report = REPORT.read_text(encoding="utf-8")
@@ -88,13 +102,42 @@ class Smoother2ReportFailClosedTests(unittest.TestCase):
         self.assertIn("stale preexisting artifact", report)
         self.assertIn('"ae_exact_claim":False', report)
         self.assertIn('"raw_float32_exact_artifact_classification":exact', report)
-        self.assertIn("raw_float32_exact_artifact_only_missing_process_proof", report)
+        self.assertIn("raw_float32_exact_artifact_only_missing_windows_process_proof", report)
+        self.assertIn('"mac_process_proof_present":mac_process_proof_present', report)
+        self.assertIn("process_challenge.json", runner)
+        self.assertIn("pre_request.json", runner)
+        self.assertIn("post_request.json", runner)
+        self.assertIn("mac_process_attestation.json", runner)
+        self.assertIn("pre_ok_sha256", runner)
+        self.assertIn("attestation_sha256", runner)
+        self.assertIn("OLM_AE_MAC_PAYLOAD_SHA256", runner)
+        self.assertIn("__olm_hash(payloadPath)", runner)
+        self.assertIn("exclusive_bytes(wrapper", runner)
         self.assertIn("windows_same_run_process_proof_present", report)
         self.assertIn("missing_exact_process_proof", report)
         self.assertNotIn('"ae_exact_claim":exact', report)
         self.assertIn("return 2 if exact else 1", report)
+        self.assertNotIn("--app-name", runner)
+        self.assertNotIn("osascript", runner)
         self.assertIn("p.name!==x.name", runner)
         self.assertLess(runner.index("m.file=new File(p);var s=capture"), runner.index("app.project.renderQueue.render()"))
+
+    def test_protocol_files_fail_closed_on_missing_stale_alias_and_tamper(self):
+        report = load_report()
+        with tempfile.TemporaryDirectory(prefix="smoother2_protocol_") as raw:
+            root=Path(raw)
+            missing=root/"missing.json"
+            with self.assertRaises(OSError):
+                report.strict_protocol_json(missing,"missing")
+            stale=root/"stale.json"; stale.write_text('{"kind":"stale"}')
+            self.assertEqual(report.strict_protocol_json(stale,"stale"),{"kind":"stale"})
+            alias=root/"alias.json"; alias.hardlink_to(stale)
+            with self.assertRaisesRegex(ValueError,"unaliased"):
+                report.strict_protocol_json(stale,"stale")
+            alias.unlink()
+            stale.write_text('{"kind":"a","kind":"tampered"}')
+            with self.assertRaisesRegex(ValueError,"duplicate JSON key"):
+                report.strict_protocol_json(stale,"tampered")
 
 
 if __name__ == "__main__":
