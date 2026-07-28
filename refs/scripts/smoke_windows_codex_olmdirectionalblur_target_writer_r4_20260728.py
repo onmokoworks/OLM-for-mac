@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Static/adversarial smoke for the DirectionalBlur r3 batch child."""
+"""Static/adversarial smoke for the DirectionalBlur r4 batch child."""
 
 from __future__ import annotations
 
@@ -13,11 +13,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 BUILDER = ROOT / "scripts/package_windows_codex_olmdirectionalblur_target_writer_20260728.py"
-TARGET = ROOT / "refs/handoffs/windows_codex_batch_jobs_20260728/olmdirectionalblur_target_writer_20260728_r3"
+TARGET = ROOT / "refs/handoffs/windows_codex_batch_jobs_20260728/olmdirectionalblur_target_writer_20260728_r4"
 
 
 def load_builder():
-    spec = importlib.util.spec_from_file_location("dblur_r2", BUILDER)
+    spec = importlib.util.spec_from_file_location("dblur_r4", BUILDER)
     module = importlib.util.module_from_spec(spec)
     assert spec.loader
     spec.loader.exec_module(module)
@@ -43,10 +43,16 @@ def main() -> int:
     assert "Run only `run.ps1`" in readme
     assert ".\\artifacts\\run_witness.ps1" not in readme
     for token in ("} finally {", "cleanup_unresolved", "RETURN*.zip", "expanded_return", "Write-Status 'exact_bind_failure'",
-                  "$exitCode = 2", "Remove-Item -LiteralPath $status"):
+                  "$exitCode = 2", "Remove-Item -LiteralPath $status", "Copy-RunDiagnostics",
+                  "AE_RENDER_RESULT.json", "AE_RENDER_LOG.txt", "INPUT_COPY_PREFLIGHT.json",
+                  "Get-InnerFailureReason", "ae_renderer_error"):
         assert token in wrapper
+    assert wrapper.index("if ($proc.ExitCode -ne 0") < wrapper.index("$flatten = Join-Path")
     for token in ("PRELAUNCH_AFTERFX_BASELINE.json", "OWNED_AFTERFX_IDENTITY.json", "OWNED_CDB_IDENTITY.json",
-                  "CreationDate", "PID identity recycled or ambiguous", "user_pid_touched=$false"):
+                  "CreationDate", "PID identity recycled or ambiguous", "user_pid_touched=$false",
+                  "function Stage-ValidatedInputCopy", "Get-FileHash -LiteralPath $source",
+                  "Get-FileHash -LiteralPath $destination", "verified_run_unique_input_copy",
+                  "OLM_AE_INPUT_COPY_PREVALIDATED=1", "OLM_AE_INPUT_COPY_SHA256"):
         assert token in inner
     assert "foreach ($state in @(Get-AfterFxState))" not in inner
     assert inner.count("Stop-Process") == 1
@@ -70,7 +76,7 @@ def main() -> int:
     assert finalize_model(True, False)[0] != 0
     assert finalize_model(True, True) == (2, False)
 
-    with tempfile.TemporaryDirectory(prefix="dblur_r2_flatten_") as tmp:
+    with tempfile.TemporaryDirectory(prefix="dblur_r4_flatten_") as tmp:
         root = Path(tmp)
         run = root / "run"
         evidence = root / "evidence"
@@ -106,7 +112,7 @@ def main() -> int:
         (run / "RETURN_OLMDIRECTIONALBLUR_WRITER_ENTRY.json").write_text(json.dumps(payload))
         failed = subprocess.run(["python3", str(helper), "--run-root", str(run), "--evidence-root", str(root / "bad")])
         assert failed.returncode != 0
-    print("[OK] DirectionalBlur r3 batch child smoke passed")
+    print("[OK] DirectionalBlur r4 batch child smoke passed")
     return 0
 
 

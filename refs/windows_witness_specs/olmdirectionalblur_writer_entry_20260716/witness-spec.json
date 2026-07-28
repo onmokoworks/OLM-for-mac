@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "description": "Same-run Windows Front Alpha Fade writer-entry versus PF byte-store witness.",
+  "description": "Same-run Windows Front Alpha Fade render-dispatch, Iterate8, and one-shot target PF store hardware-watch witness.",
   "request_id": "olmdirectionalblur_writer_entry_20260716",
   "run_id_prefix": "dblur-writer-20260716",
   "queue": {
     "profile": "olmdirectionalblur-front-alpha-writer-entry",
     "plugin_area": "OLMDirectionalBlur Front Alpha Fade writer entry and PF store witness",
-    "command": "Run one pinned-AEX Software render and capture the typed writer input, PF store, PF output binding, and same-run PNG export at (494,169).",
-    "stop_condition": "answered only when writer entry, PF store, PF output binding, and export binding all share one run identity; otherwise return exact_bind_failure.",
+    "command": "Run one pinned-AEX Software render, derive the PF output base from the first writer callback, arm a one-byte hardware write watch on target (494,169), and capture its post-store ARGB plus source float words.",
+    "stop_condition": "answered only when dispatch, Iterate8, target-arm, target-store, PF output binding, and export binding all share one run identity; otherwise return exact_bind_failure.",
     "supersedes": [
       "olmdirectionalblur_row755_20260713"
     ]
@@ -45,10 +45,12 @@
       "cdb_template": "probe.cdb.in",
       "template_values": {"witness_id": "olmdirectionalblur-writer-entry-v1"},
       "addresses": {
+        "effect_dispatch": "0x83f0",
+        "output_iterate_call": "0x5665",
         "worker_entry": "0x4d84",
         "rowdriver_entry": "0x38d0",
-        "writer_entry": "0x566a",
-        "pf_store": "0x6b30"
+        "writer_entry": "0x6b30",
+        "pf_store": "0x6bc7"
       },
       "exports": [
         {"source": "cdb_trace_{case_id}.txt.writer_pf_argb8.bin", "archive_path": "return/writer_pf_argb8.bin", "required": true},
@@ -60,25 +62,40 @@
     "identity_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id"],
     "events": [
       {
-        "name": "writer_entry",
-        "prefix": "DBR_WRITER_ENTRY",
+        "name": "effect_dispatch",
+        "prefix": "DBR_EFFECT_DISPATCH",
         "cardinality": {"scope": "per_case", "min": 1, "max": 1},
-        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "hook_rva", "x", "y", "writer_addr", "pf_output_addr", "rgba_f32_bits", "typed_f32", "same_run_key"],
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "hook_rva", "command", "in_data", "out_data", "params", "occurrence", "same_run_key"],
         "field_constraints": {
-          "witness_id": {"equals": "olmdirectionalblur-writer-entry-v1"}, "stage": {"equals": "writer_entry"}, "hook_rva": {"equals": "566a"},
-          "x": {"equals": "494"}, "y": {"equals": "169"}, "writer_addr": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"}, "pf_output_addr": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
-          "rgba_f32_bits": {"pattern": "^0x[0-9a-fA-F]{8},0x[0-9a-fA-F]{8},0x[0-9a-fA-F]{8},0x[0-9a-fA-F]{8}$"}, "typed_f32": {"equals": "1"}, "same_run_key": {"equals": "writer-pf-494-169"}
+          "witness_id": {"equals": "olmdirectionalblur-writer-entry-v1"}, "stage": {"equals": "effect_dispatch"}, "hook_rva": {"equals": "83f0"}, "command": {"equals": "24"}, "occurrence": {"equals": "1"}, "same_run_key": {"equals": "writer-pf-494-169"}
         }
       },
       {
-        "name": "pf_store",
-        "prefix": "DBR_PF_STORE",
+        "name": "output_iterate",
+        "prefix": "DBR_OUTPUT_ITERATE",
         "cardinality": {"scope": "per_case", "min": 1, "max": 1},
-        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "hook_rva", "x", "y", "store_addr", "writer_addr", "pf_argb_bytes", "typed_argb8", "same_run_key"],
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "hook_rva", "params", "writer_base", "row_shift", "col_shift", "stride", "callback", "occurrence", "same_run_key"],
         "field_constraints": {
-          "witness_id": {"equals": "olmdirectionalblur-writer-entry-v1"}, "stage": {"equals": "pf_store"}, "hook_rva": {"equals": "6b30"},
-          "x": {"equals": "494"}, "y": {"equals": "169"}, "store_addr": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"}, "writer_addr": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"},
-          "pf_argb_bytes": {"pattern": "^[0-9]+,[0-9]+,[0-9]+,[0-9]+$"}, "typed_argb8": {"equals": "1"}, "same_run_key": {"equals": "writer-pf-494-169"}
+          "witness_id": {"equals": "olmdirectionalblur-writer-entry-v1"}, "stage": {"equals": "output_iterate"}, "hook_rva": {"equals": "5665"}, "occurrence": {"equals": "1"}, "same_run_key": {"equals": "writer-pf-494-169"}
+        }
+      },
+      {
+        "name": "target_arm",
+        "prefix": "DBR_TARGET_ARM",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "hook_rva", "occurrence", "params", "source_base", "row_shift", "col_shift", "stride", "first_local_x", "first_local_y", "first_pf_output", "output_base", "target_output", "target_source", "output_rowbytes", "x", "y", "same_run_key"],
+        "field_constraints": {
+          "witness_id": {"equals": "olmdirectionalblur-writer-entry-v1"}, "stage": {"equals": "target_arm"}, "hook_rva": {"equals": "6b30"}, "occurrence": {"equals": "1"}, "output_rowbytes": {"equals": "7680"}, "x": {"equals": "494"}, "y": {"equals": "169"}, "same_run_key": {"equals": "writer-pf-494-169"}
+        }
+      },
+      {
+        "name": "target_store",
+        "prefix": "DBR_TARGET_STORE",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id", "witness_id", "stage", "hook_rva", "occurrence", "x", "y", "store_addr", "output_base", "source_addr", "pf_argb_bytes", "rgba_f32_bits", "typed_argb8", "typed_f32", "same_run_key"],
+        "field_constraints": {
+          "witness_id": {"equals": "olmdirectionalblur-writer-entry-v1"}, "stage": {"equals": "target_store"}, "hook_rva": {"equals": "6bc7"}, "occurrence": {"equals": "1"}, "x": {"equals": "494"}, "y": {"equals": "169"},
+          "store_addr": {"pattern": "^(?:0x)?[0-9a-fA-F`]+$"}, "pf_argb_bytes": {"pattern": "^[0-9]+,[0-9]+,[0-9]+,[0-9]+$"}, "rgba_f32_bits": {"pattern": "^0x[0-9a-fA-F]{8},0x[0-9a-fA-F]{8},0x[0-9a-fA-F]{8},0x[0-9a-fA-F]{8}$"}, "typed_argb8": {"equals": "1"}, "typed_f32": {"equals": "1"}, "same_run_key": {"equals": "writer-pf-494-169"}
         }
       },
       {
@@ -97,5 +114,9 @@
       }
     ]
   },
-  "return_bundle": {"json_name": "RETURN_OLMDIRECTIONALBLUR_WRITER_ENTRY.json", "zip_name": "RETURN_OLMDIRECTIONALBLUR_WRITER_ENTRY.zip", "include_logs": []}
+  "return_bundle": {
+    "json_name": "RETURN_OLMDIRECTIONALBLUR_WRITER_ENTRY.json",
+    "zip_name": "RETURN_OLMDIRECTIONALBLUR_WRITER_ENTRY.zip",
+    "include_logs": ["INPUT_COPY_PREFLIGHT.json"]
+  }
 }

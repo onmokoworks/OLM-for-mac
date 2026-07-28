@@ -14,8 +14,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "refs/runtime_trace_packages/windows_witness_olmdirectionalblur_writer_entry_20260716.zip"
-TARGET = ROOT / "refs/handoffs/windows_codex_batch_jobs_20260728/olmdirectionalblur_target_writer_20260728_r3"
-JOB_ID = "olmdirectionalblur_target_writer_20260728_r3"
+TARGET = ROOT / "refs/handoffs/windows_codex_batch_jobs_20260728/olmdirectionalblur_target_writer_20260728_r4"
+JOB_ID = "olmdirectionalblur_target_writer_20260728_r4"
 REQUEST_ID = "olmdirectionalblur_writer_entry_20260716"
 
 WRAPPER = r"""param(
@@ -33,6 +33,9 @@ $inner = Join-Path $PackageRoot 'artifacts\run_witness.ps1'
 $status = Join-Path $evidence 'CHILD_STATUS.json'
 $exitCode = 2
 $cleanupFailed = $false
+$innerFailure = $null
+$aeRendererError = ''
+$diagnosticFiles = @()
 
 function Write-Status([string]$Terminal, [string]$Stage, [string]$Reason) {
   $directManifest = $null
@@ -54,10 +57,72 @@ function Write-Status([string]$Terminal, [string]$Stage, [string]$Reason) {
       [ordered]@{run_id=$directManifest.run_id;ae_pid=$directManifest.ae_pid;module_base=$directManifest.module_base;aex_sha256=$directManifest.aex_sha256;renderer=$directManifest.renderer;case_id=$directManifest.case_id}
     } else { $null })
     failure = $(if ($Terminal -eq 'answered') { $null } else {
-      [ordered]@{ stage = $Stage; reason = $Reason; missing_fields = @('direct_target_store_evidence') }
+      [ordered]@{
+        stage = $Stage
+        reason = $Reason
+        missing_fields = @('direct_target_store_evidence')
+        diagnostics = [ordered]@{
+          files = @($diagnosticFiles)
+          inner_failure = $innerFailure
+          ae_renderer_error = $aeRendererError
+        }
+      }
     })
   }
   $body | ConvertTo-Json -Depth 12 | Set-Content -LiteralPath $status -Encoding UTF8
+}
+
+function Copy-RunDiagnostics([string]$RunRoot) {
+  foreach ($item in @(
+    [pscustomobject]@{Filter='INPUT_COPY_PREFLIGHT.json';Destination='INPUT_COPY_PREFLIGHT.json'},
+    [pscustomobject]@{Filter='ae_result_*.json';Destination='AE_RENDER_RESULT.json'},
+    [pscustomobject]@{Filter='ae_*.log';Destination='AE_RENDER_LOG.txt'},
+    [pscustomobject]@{Filter='queue.log';Destination='AE_QUEUE_LOG.txt'},
+    [pscustomobject]@{Filter='afterfx_launch_wrapper.cmd';Destination='AFTERFX_LAUNCH_WRAPPER.cmd'}
+  )) {
+    $candidate = Get-ChildItem -LiteralPath $RunRoot -Filter $item.Filter -File -Recurse |
+      Sort-Object FullName | Select-Object -First 1
+    if ($candidate) {
+      Copy-Item -LiteralPath $candidate.FullName -Destination (Join-Path $evidence $item.Destination) -Force
+      $script:diagnosticFiles += $item.Destination
+    }
+  }
+  $aeResultPath = Join-Path $evidence 'AE_RENDER_RESULT.json'
+  if (Test-Path -LiteralPath $aeResultPath -PathType Leaf) {
+    try {
+      $aeResult = Get-Content -LiteralPath $aeResultPath -Raw | ConvertFrom-Json
+      if ($aeResult.error) { $script:aeRendererError = [string]$aeResult.error }
+    } catch {
+      $script:aeRendererError = 'AE_RENDER_RESULT.json is not valid JSON: ' + $_.Exception.Message
+    }
+  }
+}
+
+function Get-InnerFailureReason([object]$Parsed, [int]$ProcessExitCode) {
+  $parts = @("inner_exit=$ProcessExitCode", "inner_status=" + [string]$Parsed.status)
+  if ($Parsed.PSObject.Properties.Name -contains 'failure' -and $Parsed.failure) {
+    $script:innerFailure = $Parsed.failure
+    if ($Parsed.failure.stage) { $parts += "inner_stage=" + [string]$Parsed.failure.stage }
+    if ($Parsed.failure.reason) { $parts += "inner_reason=" + [string]$Parsed.failure.reason }
+    if ($Parsed.failure.last_observation) { $parts += "last_observation=" + [string]$Parsed.failure.last_observation }
+  }
+  if ($aeRendererError) { $parts += "ae_renderer_error=" + $aeRendererError }
+  $copyPath = Join-Path $evidence 'INPUT_COPY_PREFLIGHT.json'
+  if (Test-Path -LiteralPath $copyPath -PathType Leaf) {
+    try {
+      $copyReport = Get-Content -LiteralPath $copyPath -Raw | ConvertFrom-Json
+      $parts += "input_copy_status=" + [string]$copyReport.status
+      if ($copyReport.reason) { $parts += "input_copy_reason=" + [string]$copyReport.reason }
+    } catch {
+      $parts += "input_copy_report_error=" + $_.Exception.Message
+    }
+  }
+  return ($parts -join '; ')
+}
+
+function Get-DiagnosticTail([string]$Path) {
+  if (!(Test-Path -LiteralPath $Path -PathType Leaf)) { return '' }
+  return [string]::Join(' | ', @(Get-Content -LiteralPath $Path -Tail 30 -ErrorAction SilentlyContinue))
 }
 
 try {
@@ -73,6 +138,7 @@ try {
     -RedirectStandardOutput $stdout -RedirectStandardError $stderr
   $run = Get-ChildItem -LiteralPath $work -Directory | Sort-Object LastWriteTimeUtc -Descending | Select-Object -First 1
   if ($null -eq $run) { throw 'inner runner emitted no run directory' }
+  Copy-RunDiagnostics $run.FullName
   $validation = Get-ChildItem -LiteralPath $run.FullName -Filter validation_status.json -Recurse | Select-Object -First 1
   if ($null -eq $validation) { throw 'inner runner emitted no validation_status.json' }
   Copy-Item $validation.FullName (Join-Path $evidence 'INNER_VALIDATION_STATUS.json') -Force
@@ -81,22 +147,28 @@ try {
     $candidate = Get-ChildItem -LiteralPath $run.FullName -Filter $pattern -Recurse | Select-Object -First 1
     if ($candidate) { Copy-Item $candidate.FullName (Join-Path $evidence $candidate.Name) -Force }
   }
-  $flatten = Join-Path $PackageRoot 'scripts\flatten_return.py'
-  & py -3 $flatten --run-root $run.FullName --evidence-root $evidence
-  if ($LASTEXITCODE -ne 0) { throw 'manifest-bound direct evidence extraction failed' }
-  $argb = Test-Path -LiteralPath (Join-Path $evidence 'writer_pf_argb8.bin') -PathType Leaf
-  $png = Test-Path -LiteralPath (Join-Path $evidence 'rendered_db_angle0_alpha_fade_hard_edges.png') -PathType Leaf
   if ($proc.ExitCode -ne 0 -or [string]$parsed.status -cne 'answered') {
-    Write-Status 'exact_bind_failure' 'inner_runner' ("status=" + [string]$parsed.status + " exit=" + $proc.ExitCode)
-  } elseif (!$argb -or !$png) {
-    Write-Status 'exact_bind_failure' 'direct_evidence' 'required raw ARGB or rendered PNG evidence missing'
+    Write-Status 'exact_bind_failure' 'inner_runner' (Get-InnerFailureReason $parsed $proc.ExitCode)
   } else {
-    Write-Status 'answered' '' ''
-    $exitCode = 0
+    $flatten = Join-Path $PackageRoot 'scripts\flatten_return.py'
+    & py -3 $flatten --run-root $run.FullName --evidence-root $evidence
+    if ($LASTEXITCODE -ne 0) { throw 'manifest-bound direct evidence extraction failed' }
+    $argb = Test-Path -LiteralPath (Join-Path $evidence 'writer_pf_argb8.bin') -PathType Leaf
+    $png = Test-Path -LiteralPath (Join-Path $evidence 'rendered_db_angle0_alpha_fade_hard_edges.png') -PathType Leaf
+    if (!$argb -or !$png) {
+      Write-Status 'exact_bind_failure' 'direct_evidence' 'required raw ARGB or rendered PNG evidence missing'
+    } else {
+      Write-Status 'answered' '' ''
+      $exitCode = 0
+    }
   }
 } catch {
   New-Item -ItemType Directory -Force -Path $evidence | Out-Null
-  Write-Status 'exact_bind_failure' 'wrapper_exception' $_.Exception.Message
+  $exceptionReason = $_.Exception.Message
+  $stderrTail = Get-DiagnosticTail (Join-Path $evidence 'INNER_RUNNER_STDERR.txt')
+  if ($stderrTail) { $exceptionReason += '; inner_stderr_tail=' + $stderrTail }
+  if ($aeRendererError) { $exceptionReason += '; ae_renderer_error=' + $aeRendererError }
+  Write-Status 'exact_bind_failure' 'wrapper_exception' $exceptionReason
 } finally {
   try {
     Get-ChildItem -LiteralPath $work -Filter 'RETURN*.zip' -Recurse -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction Stop
@@ -194,7 +266,7 @@ def canonical(value: object) -> bytes:
 
 def package_bytes() -> bytes:
     source = SOURCE.read_bytes()
-    if sha(source) != "6482b4e2092688f699162a24fd9ee1338b44864bcc831a21bdaa2436ee1d62e6":
+    if sha(source) != "7a71b4228c206af3c26cb7dfc4e3ece17e7cf7d62c8e8b7030748a2f8fbe780b":
         raise RuntimeError("DirectionalBlur witness package is stale; regenerate and re-audit")
     members: dict[str, bytes] = {}
     with zipfile.ZipFile(io.BytesIO(source)) as zin:
@@ -284,6 +356,103 @@ if ($prelaunchBaseline.Count -ne 0) {
     if baseline_anchor not in inner:
         raise RuntimeError("inner prelaunch baseline patch anchor missing")
     inner = inner.replace(baseline_anchor, baseline_patch)
+
+    finish_anchor = "function Finish([object]$body, [int]$code) {"
+    input_copy_preflight = r"""function Stage-ValidatedInputCopy([string]$Root, [string]$StageDirectory) {
+  $reportPath = Join-Path $work 'INPUT_COPY_PREFLIGHT.json'
+  $report = [ordered]@{
+    schema_version = 1
+    status = 'exact_bind_failure'
+    request_id = [string]$contract.request_id
+    run_id = $runId
+    source = $null
+    destination = $null
+    source_size_bytes = $null
+    destination_size_bytes = $null
+    source_sha256 = $null
+    destination_sha256 = $null
+    reason = $null
+  }
+  try {
+    $requestRoot = [IO.Path]::GetFullPath((Join-Path $Root 'request'))
+    $manifestPath = Join-Path $requestRoot 'request_manifest.json'
+    if (!(Test-Path -LiteralPath $manifestPath -PathType Leaf)) { throw "request manifest missing: $manifestPath" }
+    $manifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
+    if ([string]$manifest.request_id -cne [string]$contract.request_id) { throw 'request manifest does not match the witness request_id' }
+    if (@($contract.cases).Count -ne 1) { throw 'Directional input-copy preflight requires exactly one contract case' }
+    $caseId = [string]$contract.cases[0].id
+    $requestCases = @($manifest.cases | Where-Object { [string]$_.id -ceq $caseId })
+    if ($requestCases.Count -ne 1) { throw "request manifest does not contain exactly one bound case: $caseId" }
+    $inputDirectory = [string]$manifest.input_dir
+    $inputFilename = [string]$requestCases[0].before_effects_frame
+    if ([string]::IsNullOrWhiteSpace($inputDirectory) -or [IO.Path]::IsPathRooted($inputDirectory)) { throw 'request input_dir must be a non-empty relative path' }
+    if ([string]::IsNullOrWhiteSpace($inputFilename) -or [IO.Path]::GetFileName($inputFilename) -cne $inputFilename) { throw 'before_effects_frame must be a plain filename' }
+    $source = [IO.Path]::GetFullPath((Join-Path (Join-Path $requestRoot $inputDirectory) $inputFilename))
+    $report.source = $source
+    $requestPrefix = $requestRoot.TrimEnd('\') + '\'
+    if (!$source.StartsWith($requestPrefix, [StringComparison]::OrdinalIgnoreCase)) { throw 'resolved input escaped the package request directory' }
+    if (!(Test-Path -LiteralPath $source -PathType Leaf)) { throw "package-local input missing: $source" }
+    $sourceItem = Get-Item -LiteralPath $source
+    if ($sourceItem.Length -le 0) { throw "package-local input is empty: $source" }
+    $destination = Join-Path $StageDirectory 'input.png'
+    $report.destination = $destination
+    if (Test-Path -LiteralPath $destination) { throw "fresh input destination already exists: $destination" }
+    Copy-Item -LiteralPath $source -Destination $destination -ErrorAction Stop
+    if (!(Test-Path -LiteralPath $destination -PathType Leaf)) { throw "input copy did not become observable: $destination" }
+    $destinationItem = Get-Item -LiteralPath $destination
+    $sourceHash = (Get-FileHash -LiteralPath $source -Algorithm SHA256).Hash.ToLowerInvariant()
+    $destinationHash = (Get-FileHash -LiteralPath $destination -Algorithm SHA256).Hash.ToLowerInvariant()
+    $report.source = $source
+    $report.destination = $destination
+    $report.source_size_bytes = [int64]$sourceItem.Length
+    $report.destination_size_bytes = [int64]$destinationItem.Length
+    $report.source_sha256 = $sourceHash
+    $report.destination_sha256 = $destinationHash
+    if ($sourceItem.Length -ne $destinationItem.Length -or $sourceHash -cne $destinationHash) {
+      throw 'run-unique input copy is not byte-identical to the package-local source'
+    }
+    $report.status = 'answered'
+    $report.reason = $null
+    $report | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $reportPath -Encoding UTF8
+    return [pscustomobject]@{path=$destination;size_bytes=[int64]$destinationItem.Length;sha256=$destinationHash}
+  } catch {
+    $report.reason = $_.Exception.Message
+    $report | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $reportPath -Encoding UTF8 -ErrorAction SilentlyContinue
+    throw "input copy preflight failed: $($_.Exception.Message)"
+  }
+}
+
+"""
+    if finish_anchor not in inner:
+        raise RuntimeError("inner Finish anchor missing")
+    inner = inner.replace(finish_anchor, input_copy_preflight + finish_anchor, 1)
+
+    launch_dir_anchor = """$launchDir = (Get-Item -LiteralPath $launchDir).FullName
+$queueLaunch = Join-Path $launchDir 'queue.jsx'"""
+    launch_dir_patch = """$launchDir = (Get-Item -LiteralPath $launchDir).FullName
+try { $validatedInput = Stage-ValidatedInputCopy $PackageRoot $launchDir }
+catch { Finish (Failure 'input_copy_preflight' $_.Exception.Message @('verified_run_unique_input_copy') '') 2 }
+$env:OLM_AE_INPUT_FILE_OVERRIDE = [string]$validatedInput.path
+$env:OLM_AE_INPUT_COPY_PREVALIDATED = '1'
+$env:OLM_AE_INPUT_COPY_SIZE_BYTES = [string]$validatedInput.size_bytes
+$env:OLM_AE_INPUT_COPY_SHA256 = [string]$validatedInput.sha256
+$queueLaunch = Join-Path $launchDir 'queue.jsx'"""
+    if launch_dir_anchor not in inner:
+        raise RuntimeError("inner launch directory anchor missing")
+    inner = inner.replace(launch_dir_anchor, launch_dir_patch, 1)
+
+    environment_anchor = """  ('set "WINDOWS_WITNESS_QUEUE_SHA256=' + $queueHash + '"'),
+  'set "OLM_AE_PAUSE_BEFORE_RENDER=1"',"""
+    environment_patch = """  ('set "WINDOWS_WITNESS_QUEUE_SHA256=' + $queueHash + '"'),
+  ('set "OLM_AE_INPUT_FILE_OVERRIDE=' + [string]$validatedInput.path + '"'),
+  'set "OLM_AE_INPUT_COPY_PREVALIDATED=1"',
+  ('set "OLM_AE_INPUT_COPY_SIZE_BYTES=' + [string]$validatedInput.size_bytes + '"'),
+  ('set "OLM_AE_INPUT_COPY_SHA256=' + [string]$validatedInput.sha256 + '"'),
+  'set "OLM_AE_PAUSE_BEFORE_RENDER=1"',"""
+    if environment_anchor not in inner:
+        raise RuntimeError("inner launch environment anchor missing")
+    inner = inner.replace(environment_anchor, environment_patch, 1)
+
     members["artifacts/run_witness.ps1"] = inner.encode("utf-8")
     members["README.md"] = (
         "# OLMDirectionalBlur batch child\n\nRun only `run.ps1` from the package root. "

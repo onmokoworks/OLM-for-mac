@@ -82,8 +82,17 @@ The returned archive allowlist is exact: `BATCH_RETURN.json`, immutable byte-for
 byte copies of `BATCH_MANIFEST.json` and `BATCH_RETURN_CONTRACT.json`,
 `CHECKSUMS.sha256`, and only evidence files referenced once by a job record.
 Directories, unreferenced files, unexpected files, and incomplete or surplus
-checksum entries are rejected. Parent status is derived from child statuses,
-and failure records are required only for `exact_bind_failure`.
+checksum entries are rejected. To avoid a circular self-hash,
+`CHECKSUMS.sha256` is the sole allowlisted member deliberately absent from its
+own contents. It lists every other exact allowlisted regular-file member once,
+in lexicographic canonical member-name order. Checksum lines may spell a member
+canonically (`BATCH_MANIFEST.json`) or with exactly one leading `./`
+(`./BATCH_MANIFEST.json`); the validator removes that one optional prefix
+before duplicate, ordering, allowlist, self-entry, and hash checks. Repeated
+`./`, dot segments elsewhere, backslashes, traversal, aliases that normalize to
+the same member, missing members, and entries for any other path fail
+validation. Parent status is derived from child statuses, and failure records
+are required only for `exact_bind_failure`.
 
 Validate a return deterministically with:
 

@@ -174,7 +174,7 @@ def mocked_cleanup_decision(
     sidecar,
     live_processes,
 ):
-    """Mirror the r3 allowlist: ambiguity produces no process-stop action."""
+    """Ensure r4 preserves the r3 allowlist and fail-closed process policy."""
 
     expected_prefix = "\\OLM_Witness_" + re.sub(
         r"[^A-Za-z0-9_-]", "_", request_id
@@ -331,6 +331,28 @@ def assert_adversarial_ownership_policy(builder) -> None:
         assert user["pid"] not in stopped
 
 
+def assert_installed_aex_path_bindings(builder, package_text) -> None:
+    expected = (
+        r"C:\Program Files\Adobe\Common\Plug-ins\7.0"
+        r"\MediaCore\OLM\OLMRadialBlur.aex"
+    )
+    bare = (
+        r"C:\Program Files\Adobe\Common\Plug-ins\7.0"
+        r"\MediaCore\OLMRadialBlur.aex"
+    )
+    assert builder.DEFAULT_AEX_PATH == expected
+    for name, text in package_text.items():
+        logical_text = text.replace("\\\\", "\\")
+        assert bare not in logical_text, (name, bare)
+    for name in (
+        "witness-contract.json",
+        "run.ps1",
+        "artifacts/run_witness.ps1",
+        "README.md",
+    ):
+        assert expected in package_text[name].replace("\\\\", "\\"), name
+
+
 def main() -> int:
     builder = load(BUILDER_PATH, "rb10_child_builder")
     batch = load(BATCH_PACKAGER_PATH, "windows_batch_packager")
@@ -375,6 +397,13 @@ def main() -> int:
         readme = archive.read("README.md").decode("utf-8")
         renderer = archive.read("scripts/renderer.jsx").decode("utf-8")
         cdb = archive.read("cdb/000_case_0010.cdb.in").decode("ascii")
+        package_text = {}
+        for name in names:
+            try:
+                package_text[name] = archive.read(name).decode("utf-8")
+            except UnicodeDecodeError:
+                continue
+        assert_installed_aex_path_bindings(builder, package_text)
         request = json.loads(archive.read("request/request_manifest.json"))
         input_bytes = archive.read("request/input/case_0010_before_effects.png")
         legacy_reference_bytes = archive.read("request/expected/case_0010.png")
@@ -402,6 +431,7 @@ def main() -> int:
         )
         assert contract["request_id"] == builder.REQUEST_ID
         assert contract["plugin"]["aex_sha256"] == builder.AEX_SHA256
+        assert contract["plugin"]["default_aex_path"] == builder.DEFAULT_AEX_PATH
         assert contract["project"] == {
             "bits_per_channel": 8,
             "environment": {
@@ -499,7 +529,7 @@ def main() -> int:
         assert readme.count("run.ps1") == 1
         assert "Cleanup is therefore fail-closed, not guaranteed" in readme
         assert "Pre-existing and concurrent user" in readme
-        assert "$directQueueLaunch = $true # package r3" in inner_runner
+        assert "$directQueueLaunch = $true # package r4" in inner_runner
         assert inner_runner.count("schtasks.exe /Create") == 1
         assert inner_runner.count("schtasks.exe /Run") == 1
         assert "\\OLM_Witness_Dispatch_" not in inner_runner

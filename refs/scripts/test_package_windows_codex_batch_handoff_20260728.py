@@ -103,8 +103,8 @@ class BatchPackagerTests(unittest.TestCase):
 
     def write_return(self, path: Path, members: dict[str, bytes]) -> None:
         payload = dict(members)
-        payload.pop("CHECKSUMS.sha256", None)
-        payload["CHECKSUMS.sha256"] = "".join(
+        payload.pop(MODULE.RETURN_CHECKSUMS_MEMBER, None)
+        payload[MODULE.RETURN_CHECKSUMS_MEMBER] = "".join(
             f"{hashlib.sha256(payload[name]).hexdigest()}  {name}\n"
             for name in sorted(payload)
         ).encode()
@@ -213,6 +213,21 @@ class BatchPackagerTests(unittest.TestCase):
                         "nested_zip_extension_magic_or_valid_payload_under_jobs"
                     ],
                     "forbidden",
+                )
+                self.assertEqual(
+                    contract["checksum_coverage"],
+                    {
+                        "sole_unlisted_member": "CHECKSUMS.sha256",
+                        "listed_members": "every other exact allowlisted regular-file member",
+                        "cardinality": "exactly_once",
+                        "unexpected_entries": "forbidden",
+                        "accepted_path_spellings": [
+                            "canonical_member_name",
+                            "exactly_one_leading_dot_slash_plus_canonical_member_name",
+                        ],
+                        "normalization": "remove_at_most_one_leading_dot_slash_before_all_checks",
+                        "order": "lexicographic_by_normalized_canonical_member_name",
+                    },
                 )
                 self.assertEqual(
                     contract["delivery"]["session_policy_enforcement"],
@@ -358,6 +373,90 @@ class BatchPackagerTests(unittest.TestCase):
             result = MODULE.validate_return_archive(request, returned)
             self.assertEqual(result["status"], "partial_success")
             self.assertEqual(result["job_count"], 2)
+
+    def test_return_checksums_are_complete_non_circular_and_fail_closed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            request = root / "request.zip"
+            MODULE.package(
+                "batch_1",
+                [self.child(root, "one"), self.child(root, "two")],
+                request,
+            )
+            base_members = self.valid_return_members(request)
+            expected_names = sorted(base_members)
+
+            def checksum_bytes(names: list[str], prefix: str = "") -> bytes:
+                return "".join(
+                    f"{hashlib.sha256(base_members[name]).hexdigest()}  {prefix}{name}\n"
+                    for name in names
+                ).encode()
+
+            valid_members = dict(base_members)
+            valid_members[MODULE.RETURN_CHECKSUMS_MEMBER] = checksum_bytes(
+                expected_names,
+                prefix="./",
+            )
+            valid_return = root / "valid_actual_shape.zip"
+            MODULE.deterministic_zip(valid_return, valid_members)
+            MODULE.validate_return_archive(request, valid_return)
+            checksum_names = [
+                MODULE.normalize_return_checksum_path(line.split("  ", 1)[1])
+                for line in valid_members[MODULE.RETURN_CHECKSUMS_MEMBER].decode().splitlines()
+            ]
+            self.assertEqual(checksum_names, expected_names)
+            self.assertNotIn(MODULE.RETURN_CHECKSUMS_MEMBER, checksum_names)
+
+            evidence_name = next(name for name in expected_names if name.startswith("jobs/"))
+            invalid_checksum_files = {
+                "missing_non_checksum_member": checksum_bytes(
+                    [name for name in expected_names if name != evidence_name]
+                ),
+                "bogus_self_hash": checksum_bytes(expected_names)
+                + f"{'0' * 64}  {MODULE.RETURN_CHECKSUMS_MEMBER}\n".encode(),
+                "extra_checksum_entry": checksum_bytes(expected_names)
+                + f"{'0' * 64}  UNEXPECTED.txt\n".encode(),
+                "normalized_alias_collision": checksum_bytes(expected_names)
+                + (
+                    f"{hashlib.sha256(base_members[expected_names[0]]).hexdigest()}"
+                    f"  ./{expected_names[0]}\n"
+                ).encode(),
+                "repeated_dot_slash": checksum_bytes(expected_names).replace(
+                    f"  {expected_names[0]}\n".encode(),
+                    f"  ././{expected_names[0]}\n".encode(),
+                ),
+                "interior_dot_segment": checksum_bytes(expected_names).replace(
+                    f"  {evidence_name}\n".encode(),
+                    f"  {evidence_name.rsplit('/', 1)[0]}/./"
+                    f"{evidence_name.rsplit('/', 1)[1]}\n".encode(),
+                ),
+                "backslash": checksum_bytes(expected_names).replace(
+                    f"  {evidence_name}\n".encode(),
+                    f"  {evidence_name.replace('/', chr(92), 1)}\n".encode(),
+                ),
+                "traversal": checksum_bytes(expected_names).replace(
+                    f"  {expected_names[0]}\n".encode(),
+                    f"  ./../{expected_names[0]}\n".encode(),
+                ),
+            }
+            reasons = {
+                "missing_non_checksum_member": "list every allowlisted member except",
+                "bogus_self_hash": "self-referential returned checksum after normalization",
+                "extra_checksum_entry": "list every allowlisted member except",
+                "normalized_alias_collision": "duplicate or self-referential returned checksum after normalization",
+                "repeated_dot_slash": "must be canonical after at most one leading",
+                "interior_dot_segment": "must be canonical after at most one leading",
+                "backslash": "must be a non-empty POSIX relative path",
+                "traversal": "returned checksum path is unsafe",
+            }
+            for name, checksum_file in invalid_checksum_files.items():
+                with self.subTest(name=name):
+                    members = dict(base_members)
+                    members[MODULE.RETURN_CHECKSUMS_MEMBER] = checksum_file
+                    returned = root / f"{name}.zip"
+                    MODULE.deterministic_zip(returned, members)
+                    with self.assertRaisesRegex(MODULE.ContractError, reasons[name]):
+                        MODULE.validate_return_archive(request, returned)
 
     def test_validate_return_cli_accepts_valid_and_rejects_invalid(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -517,6 +616,14 @@ class BatchPackagerTests(unittest.TestCase):
                 lambda members: members.__setitem__(
                     "BATCH_MANIFEST.json",
                     members["BATCH_MANIFEST.json"] + b" ",
+                ),
+                "not the immutable request copy",
+            ))
+            cases.append((
+                "altered_contract_copy",
+                lambda members: members.__setitem__(
+                    "BATCH_RETURN_CONTRACT.json",
+                    members["BATCH_RETURN_CONTRACT.json"] + b" ",
                 ),
                 "not the immutable request copy",
             ))

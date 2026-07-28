@@ -29,8 +29,23 @@
 
     function ensureFolder(path) {
         var folder = new Folder(path);
+        if (folder.exists) {
+            return folder;
+        }
+        var parent = folder.parent;
+        if (parent && !parent.exists && parent.fsName !== folder.fsName) {
+            ensureFolder(parent.fsName);
+        }
+        var created = folder.create();
+        if (!created && !folder.exists) {
+            throw new Error(
+                "could not create folder path=" + folder.fsName +
+                " parent=" + (parent ? parent.fsName : "") +
+                " parent_exists=" + (parent && parent.exists ? "1" : "0")
+            );
+        }
         if (!folder.exists) {
-            folder.create();
+            throw new Error("folder creation did not become observable path=" + folder.fsName);
         }
         return folder;
     }
@@ -205,6 +220,9 @@
     var forceSoftware = getenv("OLM_AE_FORCE_SOFTWARE") === "1";
     var inputAlphaMode = String(getenv("OLM_AE_INPUT_ALPHA_MODE") || "").toUpperCase();
     var inputFileOverride = getenv("OLM_AE_INPUT_FILE_OVERRIDE");
+    var inputCopyPrevalidated = getenv("OLM_AE_INPUT_COPY_PREVALIDATED") === "1";
+    var inputCopyExpectedSha256 = String(getenv("OLM_AE_INPUT_COPY_SHA256") || "").toLowerCase();
+    var inputCopyExpectedSize = Number(getenv("OLM_AE_INPUT_COPY_SIZE_BYTES") || 0);
     var pauseBeforeRender = getenv("OLM_AE_PAUSE_BEFORE_RENDER") === "1";
     var readyMarkerPath = getenv("OLM_AE_READY_MARKER");
     var continueMarkerPath = getenv("OLM_AE_CONTINUE_MARKER");
@@ -334,9 +352,73 @@
             summary.warnings.push("bitsPerChannel: " + bitsError.toString());
         }
 
-        var inputFilename = inputFileOverride || requestCase.before_effects_frame;
-        var inputPath = requestDir + "/" + requestManifest.input_dir + "/" + inputFilename;
-        appendText(logPath, "inputFilename=" + inputFilename + (inputFileOverride ? " source=override\n" : " source=before_effects_frame\n"));
+        var inputFilename = requestCase.before_effects_frame;
+        var manifestInputPath = requestDir + "/" + requestManifest.input_dir + "/" + inputFilename;
+        var inputFile = inputFileOverride ? new File(inputFileOverride) : new File(manifestInputPath);
+        var inputPath = inputFile.fsName;
+        appendText(
+            logPath,
+            "inputFilename=" + inputFilename +
+                (inputFileOverride ? " source=absolute_override" : " source=before_effects_frame") +
+                " resolved=" + inputPath +
+                " exists=" + (inputFile.exists ? "1" : "0") +
+                " size_bytes=" + (inputFile.exists ? Number(inputFile.length || 0) : 0) + "\n"
+        );
+        if (!inputFile.exists) {
+            throw new Error(
+                "input source missing resolved=" + inputPath +
+                " override=" + (inputFileOverride ? "1" : "0") +
+                " manifest_path=" + manifestInputPath
+            );
+        }
+        if (Number(inputFile.length || 0) <= 0) {
+            throw new Error("input source is empty resolved=" + inputPath);
+        }
+        var witnessRunId = getenv("WINDOWS_WITNESS_RUN_ID");
+        if (inputCopyPrevalidated) {
+            if (!witnessRunId || !inputFileOverride || !inputCopyExpectedSha256 || inputCopyExpectedSize <= 0) {
+                throw new Error(
+                    "prevalidated input binding is incomplete run_id=" + witnessRunId +
+                    " override=" + (inputFileOverride ? "1" : "0") +
+                    " sha256=" + inputCopyExpectedSha256 +
+                    " expected_size=" + inputCopyExpectedSize
+                );
+            }
+            if (Number(inputFile.length || 0) !== inputCopyExpectedSize) {
+                throw new Error(
+                    "prevalidated input size changed expected=" + inputCopyExpectedSize +
+                    " actual=" + Number(inputFile.length || 0) +
+                    " path=" + inputPath
+                );
+            }
+            appendText(
+                logPath,
+                "inputCacheIdentity=wrapper_sha256_prevalidated path=" + inputPath +
+                    " sha256=" + inputCopyExpectedSha256 +
+                    " size_bytes=" + inputCopyExpectedSize + "\n"
+            );
+        } else if (witnessRunId) {
+            var uniqueInput = new File(outputDir + "/witness_input_" + witnessRunId + ".png");
+            if (uniqueInput.exists) {
+                throw new Error("run-unique input destination already exists path=" + uniqueInput.fsName);
+            }
+            var copyOk = inputFile.copy(uniqueInput.fsName);
+            if (!copyOk || !uniqueInput.exists || Number(uniqueInput.length || 0) !== Number(inputFile.length || 0)) {
+                throw new Error(
+                    "run-unique input copy validation failed" +
+                    " source=" + inputPath +
+                    " source_exists=" + (inputFile.exists ? "1" : "0") +
+                    " source_size=" + Number(inputFile.length || 0) +
+                    " destination=" + uniqueInput.fsName +
+                    " destination_exists=" + (uniqueInput.exists ? "1" : "0") +
+                    " destination_size=" + (uniqueInput.exists ? Number(uniqueInput.length || 0) : 0) +
+                    " copy_returned=" + (copyOk ? "1" : "0") +
+                    " destination_parent_exists=" + (uniqueInput.parent.exists ? "1" : "0")
+                );
+            }
+            inputPath = uniqueInput.fsName;
+            appendText(logPath, "inputCacheIdentity=run_unique_copy path=" + inputPath + "\n");
+        }
         appendText(logPath, "import " + inputPath + "\n");
         var footage = importFootage(inputPath);
         if (inputAlphaMode) {

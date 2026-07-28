@@ -20,8 +20,8 @@ from tools.windows_witness.compiler import compile_witness
 from tools.windows_witness.core import deterministic_zip
 
 
-REQUEST_ID = "olmradialblur_case0010_same_run_upstream_sampler_20260728_r3"
-JOB_ID = "olmradialblur_case0010_upstream_sampler_20260728_r3"
+REQUEST_ID = "olmradialblur_case0010_same_run_upstream_sampler_20260728_r4"
+JOB_ID = "olmradialblur_case0010_upstream_sampler_20260728_r4"
 TARGET = (
     ROOT
     / "refs"
@@ -49,10 +49,14 @@ LEGACY_REFERENCE_SHA256 = "6d54dcfcd073b0cd1d90be2a9dcf020fb5d852a6a963e0246e521
 CLAIM_BOUNDARY = "upstream_cells_and_direct_sampler_raw_only"
 FINAL_WRITEBACK_BOUNDARY = "unresolved_later_job_required"
 EFFECT_ARTIFACT_ROLE = "presence_only_not_output_exact"
-WITNESS_ID = "olmradialblur-case0010-upstream-direct-sampler-v3"
+WITNESS_ID = "olmradialblur-case0010-upstream-direct-sampler-v4"
 PROJECT_ID = "case_0010_1920x1080_8bpc_frame0_software"
 PLUGIN_ID = "OLMRadialBlur_2025"
 RUNTIME_ID = "AfterFX_2025_desktop_CDB_x64"
+DEFAULT_AEX_PATH = (
+    "C:\\Program Files\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore"
+    "\\OLM\\OLMRadialBlur.aex"
+)
 
 
 def canonical_json(value: Any) -> bytes:
@@ -253,19 +257,19 @@ CONTROL_COPY_INSERT = """        var footage = importFootage(inputPath);
 
 FAIL_CLOSED_RUNNER = r"""param(
   [string]$PackageRoot = $PSScriptRoot,
-  [string]$AexPath = '',
+  [string]$AexPath = 'C:\Program Files\Adobe\Common\Plug-ins\7.0\MediaCore\OLM\OLMRadialBlur.aex',
   [string]$AfterFxPath = '',
   [string]$CdbPath = ''
 )
 
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version 2
-$requestId = 'olmradialblur_case0010_same_run_upstream_sampler_20260728_r3'
+$requestId = 'olmradialblur_case0010_same_run_upstream_sampler_20260728_r4'
 $claimBoundary = 'upstream_cells_and_direct_sampler_raw_only'
 $finalWritebackBoundary = 'unresolved_later_job_required'
 $effectArtifactRole = 'presence_only_not_output_exact'
 $evidenceRoot = Join-Path $PackageRoot 'evidence'
-$workRoot = Join-Path $PackageRoot 'work_r3'
+$workRoot = Join-Path $PackageRoot 'work_r4'
 $innerRunner = Join-Path $PackageRoot 'artifacts\run_witness.ps1'
 $contractPath = Join-Path $PackageRoot 'witness-contract.json'
 $stdoutPath = Join-Path $evidenceRoot 'INNER_RUNNER_STDOUT.txt'
@@ -806,6 +810,14 @@ def patch_inner_runner(package_dir: Path) -> None:
     text = path.read_text(encoding="utf-8")
     text = replace_once(
         text,
+        "  [string]$AexPath = '',\n",
+        "  [string]$AexPath = '"
+        + DEFAULT_AEX_PATH
+        + "',\n",
+        "inner default AEX path",
+    )
+    text = replace_once(
+        text,
         "$fridaAnsweredCases = @()\n",
         "$fridaAnsweredCases = @()\n" + INNER_OWNERSHIP_STATE,
         "ownership state",
@@ -871,7 +883,7 @@ def patch_inner_runner(package_dir: Path) -> None:
         "$directQueueLaunch = ([string]$env:WINDOWS_WITNESS_DIRECT_R -eq '1') "
         "-or ($transportKind -eq 'in_process_collector') -or "
         "($transportKind -eq 'frida')\n",
-        "$directQueueLaunch = $true # package r3: one request-bound scheduled "
+        "$directQueueLaunch = $true # package r4: one request-bound scheduled "
         "task, one ownership sidecar PID\n",
         "direct launch policy",
     )
@@ -949,7 +961,7 @@ def patch_inner_runner(package_dir: Path) -> None:
         raise RuntimeError("legacy dispatch scheduled-task block drifted")
     text = (
         text[:dispatch_start]
-        + "$dispatchTaskOutput = @() # r3 has no secondary dispatch task\n"
+        + "$dispatchTaskOutput = @() # r4 has no secondary dispatch task\n"
         + text[dispatch_end:]
     )
     text = replace_once(
@@ -1183,7 +1195,7 @@ def spec() -> dict[str, Any]:
             "ambiguous ownership reports cleanup_unresolved and touches no AE PID."
         ),
         "request_id": REQUEST_ID,
-        "run_id_prefix": "rb10upstream",
+        "run_id_prefix": "rb10upstreamr4",
         "queue": {
             "profile": "radialblur-case0010-upstream-direct-sampler",
             "plugin_area": "OLMRadialBlur tiny Rotation case_0010",
@@ -1206,10 +1218,7 @@ def spec() -> dict[str, Any]:
             "name": "OLM RadialBlur",
             "module_filename": "OLMRadialBlur.aex",
             "aex_sha256": AEX_SHA256,
-            "default_aex_path": (
-                "C:\\Program Files\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore"
-                "\\OLMRadialBlur.aex"
-            ),
+            "default_aex_path": DEFAULT_AEX_PATH,
         },
         "host": {
             "afterfx_path": (
@@ -1363,6 +1372,11 @@ def finalize_compiled_package(package_dir: Path, package_zip: Path) -> None:
         "From an interactive Windows desktop PowerShell session, run only the "
         "package-root `run.ps1` entrypoint.\n",
         "README root entrypoint",
+    )
+    readme += (
+        "\nThe default installed AEX binding used by both entrypoints is "
+        f"`{DEFAULT_AEX_PATH}`. Pass `-AexPath` only to override that exact "
+        "installed location.\n"
     )
     readme += f"""
 

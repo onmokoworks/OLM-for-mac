@@ -29,6 +29,7 @@ DOS_DEVICE_RE = re.compile(
 WINDOWS_FORBIDDEN_RE = re.compile(r'[\x00-\x1f\x7f<>"|?*]')
 ZIP_MAGIC = (b"PK\x03\x04", b"PK\x05\x06", b"PK\x07\x08")
 RETURN_RECORD_SCHEMA = "windows_codex_batch_return_record_v2"
+RETURN_CHECKSUMS_MEMBER = "CHECKSUMS.sha256"
 
 
 class ContractError(ValueError):
@@ -320,7 +321,7 @@ def return_contract(batch_id: str, jobs: list[dict[str, Any]]) -> dict[str, Any]
                 "BATCH_RETURN.json",
                 "BATCH_MANIFEST.json",
                 "BATCH_RETURN_CONTRACT.json",
-                "CHECKSUMS.sha256",
+                RETURN_CHECKSUMS_MEMBER,
             ],
             "variable": "only regular evidence files referenced exactly once by BATCH_RETURN.json",
             "directories": "forbidden",
@@ -328,7 +329,19 @@ def return_contract(batch_id: str, jobs: list[dict[str, Any]]) -> dict[str, Any]
             "nested_zip_extension_magic_or_valid_payload_under_jobs": "forbidden",
         },
         "immutable_request_copies": ["BATCH_MANIFEST.json", "BATCH_RETURN_CONTRACT.json"],
-        "checksums_file": "CHECKSUMS.sha256",
+        "checksums_file": RETURN_CHECKSUMS_MEMBER,
+        "checksum_coverage": {
+            "sole_unlisted_member": RETURN_CHECKSUMS_MEMBER,
+            "listed_members": "every other exact allowlisted regular-file member",
+            "cardinality": "exactly_once",
+            "unexpected_entries": "forbidden",
+            "accepted_path_spellings": [
+                "canonical_member_name",
+                "exactly_one_leading_dot_slash_plus_canonical_member_name",
+            ],
+            "normalization": "remove_at_most_one_leading_dot_slash_before_all_checks",
+            "order": "lexicographic_by_normalized_canonical_member_name",
+        },
         "validator": {
             "algorithm": "windows_codex_batch_return_validator_v2",
             "implementation": "scripts/package_windows_codex_batch_handoff_20260728.py",
@@ -359,7 +372,7 @@ def intake_schema(
             "BATCH_RETURN.json",
             "BATCH_MANIFEST.json",
             "BATCH_RETURN_CONTRACT.json",
-            "CHECKSUMS.sha256",
+            RETURN_CHECKSUMS_MEMBER,
         ],
         "validation": [
             "reject unsafe, duplicate-on-Windows, symlink, and __MACOSX ZIP members",
@@ -373,7 +386,7 @@ def intake_schema(
             "require each job to contain at least one non-empty evidence entry with path, SHA-256, kind, and description",
             "require every evidence path to name a direct regular non-ZIP file exactly one path component below that job's exact ordered directory",
             "verify every evidence SHA-256 against its referenced file",
-            "verify CHECKSUMS.sha256 lists every allowlisted non-directory member except itself exactly once and no others",
+            "verify CHECKSUMS.sha256 lists every allowlisted non-directory member except itself exactly once and no others, accepting only canonical paths or one leading ./ and checking normalized canonical paths",
             "accept answered and exact_bind_failure children independently",
             "preserve and intake answered children when parent status is partial_success",
             "validate one received consolidated archive; delivery count and timing remain an external session policy",
@@ -525,29 +538,47 @@ def require_exact_keys(value: dict[str, Any], expected: set[str], label: str) ->
         )
 
 
+def normalize_return_checksum_path(value: str) -> str:
+    canonical = value[2:] if value.startswith("./") else value
+    safe_relative(canonical, "returned checksum path")
+    if PurePosixPath(canonical).as_posix() != canonical:
+        raise ContractError(
+            "returned checksum path must be canonical after at most one leading './'"
+        )
+    return canonical
+
+
 def validate_return_checksums(members: dict[str, bytes]) -> None:
     try:
-        text = members["CHECKSUMS.sha256"].decode("ascii")
+        text = members[RETURN_CHECKSUMS_MEMBER].decode("ascii")
     except (KeyError, UnicodeDecodeError) as exc:
-        raise ContractError("returned CHECKSUMS.sha256 is missing or non-ASCII") from exc
+        raise ContractError(f"returned {RETURN_CHECKSUMS_MEMBER} is missing or non-ASCII") from exc
     lines = text.splitlines()
     if text and not text.endswith("\n"):
-        raise ContractError("returned CHECKSUMS.sha256 must end with a newline")
+        raise ContractError(f"returned {RETURN_CHECKSUMS_MEMBER} must end with a newline")
     parsed: dict[str, str] = {}
     observed_order: list[str] = []
     for line in lines:
         match = re.fullmatch(r"([0-9a-f]{64})  (.+)", line)
         if match is None:
             raise ContractError(f"invalid returned checksum line: {line!r}")
-        sha256, name = match.groups()
-        safe_relative(name, "returned checksum path")
-        if name == "CHECKSUMS.sha256" or name in parsed:
-            raise ContractError(f"duplicate or self-referential returned checksum: {name}")
+        sha256, spelled_name = match.groups()
+        name = normalize_return_checksum_path(spelled_name)
+        if name == RETURN_CHECKSUMS_MEMBER or name in parsed:
+            raise ContractError(
+                f"duplicate or self-referential returned checksum after normalization: "
+                f"{spelled_name}"
+            )
         parsed[name] = sha256
         observed_order.append(name)
-    expected_names = sorted(set(members) - {"CHECKSUMS.sha256"})
+    # A checksum manifest cannot bind its own final bytes without a circular
+    # fixed point. It is the sole allowlisted member intentionally omitted.
+    expected_names = sorted(set(members) - {RETURN_CHECKSUMS_MEMBER})
     if observed_order != expected_names:
-        raise ContractError("returned checksums must list every allowlisted member exactly once")
+        raise ContractError(
+            f"returned checksums must list every allowlisted member except "
+            f"{RETURN_CHECKSUMS_MEMBER} exactly once"
+        )
     for name in expected_names:
         if parsed[name] != digest(members[name]):
             raise ContractError(f"returned checksum mismatch: {name}")
@@ -589,7 +620,7 @@ def validate_return_archive(request_batch: Path, return_batch: Path) -> dict[str
         "BATCH_RETURN.json",
         "BATCH_MANIFEST.json",
         "BATCH_RETURN_CONTRACT.json",
-        "CHECKSUMS.sha256",
+        RETURN_CHECKSUMS_MEMBER,
     }
     missing = fixed_members - set(returned_members)
     if missing:
