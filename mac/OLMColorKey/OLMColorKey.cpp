@@ -193,6 +193,10 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	                     THRESHOLD_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	PF_ADD_TOPIC(GetStringPtr(StrID_ThresholdGroup_Param_Name),
+	             THRESHOLD_GROUP_START_DISK_ID);
+
+	AEFX_CLR_STRUCT(def);
 	PF_ADD_CHECKBOX(GetStringPtr(StrID_Premultiplied_Param_Name), "", FALSE, 0,
 	                PREMULTIPLIED_DISK_ID);
 
@@ -213,10 +217,6 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_CHECKBOX(GetStringPtr(StrID_PerComponent_Param_Name), "", FALSE, 0,
 	                PER_COMPONENT_DISK_ID);
-
-	AEFX_CLR_STRUCT(def);
-	PF_ADD_TOPIC(GetStringPtr(StrID_ThresholdGroup_Param_Name),
-	             THRESHOLD_GROUP_START_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_ThresholdR_Param_Name),
