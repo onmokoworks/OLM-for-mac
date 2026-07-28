@@ -1,0 +1,263 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://olm.invalid/schemas/olmdistancegradation-pf16-boundary-capture-20260728.json",
+  "title": "OLMDistanceGradation PF16 boundary capture",
+  "type": "object",
+  "required": ["schema_id", "identity", "captures"],
+  "properties": {
+    "schema_id": {
+      "const": "olmdistancegradation_pf16_boundary_capture_20260728/v1"
+    },
+    "identity": {"$ref": "#/$defs/identity"},
+    "captures": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/capture"}
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "identity": {
+      "type": "object",
+      "required": [
+        "run_id",
+        "platform",
+        "case_manifest_sha256",
+        "reference_manifest_sha256",
+        "plugin_path",
+        "plugin_sha256",
+        "process_id",
+        "process_start_token",
+        "process_executable",
+        "process_executable_sha256"
+      ],
+      "properties": {
+        "run_id": {"type": "string", "minLength": 1},
+        "platform": {"const": "macos"},
+        "case_manifest_sha256": {
+          "const": "7c4761b3b4de904c2a8baa8883c964f234943604414d2cd34bab107ccc43cf29"
+        },
+        "reference_manifest_sha256": {
+          "const": "c4378358c8b4db2b2d5d12d0bf0b4142f141963538ca5ec4d86a49eeb8b9e71e"
+        },
+        "plugin_path": {"type": "string", "pattern": "^/"},
+        "plugin_sha256": {"$ref": "#/$defs/sha256"},
+        "process_id": {"type": "integer", "minimum": 1},
+        "process_start_token": {"type": "string", "minLength": 1},
+        "process_executable": {"type": "string", "pattern": "^/"},
+        "process_executable_sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "coordinate": {
+      "type": "object",
+      "required": ["x", "y"],
+      "properties": {
+        "x": {"type": "integer", "minimum": 0},
+        "y": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "pf16_channels": {
+      "type": "object",
+      "required": ["a", "r", "g", "b"],
+      "properties": {
+        "a": {"type": "integer", "minimum": 0, "maximum": 32768},
+        "r": {"type": "integer", "minimum": 0, "maximum": 32768},
+        "g": {"type": "integer", "minimum": 0, "maximum": 32768},
+        "b": {"type": "integer", "minimum": 0, "maximum": 32768}
+      },
+      "additionalProperties": false
+    },
+    "true16_channels": {
+      "type": "object",
+      "required": ["a", "r", "g", "b"],
+      "properties": {
+        "a": {"type": "integer", "minimum": 0, "maximum": 65535},
+        "r": {"type": "integer", "minimum": 0, "maximum": 65535},
+        "g": {"type": "integer", "minimum": 0, "maximum": 65535},
+        "b": {"type": "integer", "minimum": 0, "maximum": 65535}
+      },
+      "additionalProperties": false
+    },
+    "float32_channel": {
+      "type": "object",
+      "required": ["value", "bits_hex"],
+      "properties": {
+        "value": {"type": "number"},
+        "bits_hex": {"type": "string", "pattern": "^0x[0-9a-fA-F]{8}$"}
+      },
+      "additionalProperties": false
+    },
+    "float32_channels": {
+      "type": "object",
+      "required": ["a", "r", "g", "b"],
+      "properties": {
+        "a": {"$ref": "#/$defs/float32_channel"},
+        "r": {"$ref": "#/$defs/float32_channel"},
+        "g": {"$ref": "#/$defs/float32_channel"},
+        "b": {"$ref": "#/$defs/float32_channel"}
+      },
+      "additionalProperties": false
+    },
+    "source_pf16": {
+      "type": "object",
+      "required": ["coordinate", "argb"],
+      "properties": {
+        "coordinate": {"$ref": "#/$defs/coordinate"},
+        "argb": {"$ref": "#/$defs/pf16_channels"}
+      },
+      "additionalProperties": false
+    },
+    "field": {
+      "type": "object",
+      "required": [
+        "coordinate",
+        "float_value",
+        "float_bits_hex",
+        "derived_pf16_word",
+        "derivation",
+        "direct_field_staging_word"
+      ],
+      "properties": {
+        "coordinate": {"$ref": "#/$defs/coordinate"},
+        "float_value": {"type": "number"},
+        "float_bits_hex": {"type": "string", "pattern": "^0x[0-9a-fA-F]{8}$"},
+        "derived_pf16_word": {"type": "integer", "minimum": 0, "maximum": 32768},
+        "derivation": {
+          "const": "nearest_even_clamp_float32_times_32768_logging_only"
+        },
+        "direct_field_staging_word": {
+          "const": "unavailable_at_mac_float_field_boundary"
+        }
+      },
+      "additionalProperties": false
+    },
+    "pre_store": {
+      "type": "object",
+      "required": ["coordinate", "argb"],
+      "properties": {
+        "coordinate": {"$ref": "#/$defs/coordinate"},
+        "argb": {"$ref": "#/$defs/float32_channels"}
+      },
+      "additionalProperties": false
+    },
+    "stored_pf16": {
+      "type": "object",
+      "required": ["coordinate", "argb"],
+      "properties": {
+        "coordinate": {"$ref": "#/$defs/coordinate"},
+        "argb": {"$ref": "#/$defs/pf16_channels"}
+      },
+      "additionalProperties": false
+    },
+    "exported_true16": {
+      "type": "object",
+      "required": ["coordinate", "argb", "artifact_path", "artifact_sha256", "relation_to_stored_pf16"],
+      "properties": {
+        "coordinate": {"$ref": "#/$defs/coordinate"},
+        "argb": {"$ref": "#/$defs/true16_channels"},
+        "artifact_path": {"type": "string", "pattern": "^/"},
+        "artifact_sha256": {"$ref": "#/$defs/sha256"},
+        "relation_to_stored_pf16": {
+          "const": "unverified_structural_only"
+        }
+      },
+      "additionalProperties": false
+    },
+    "capture": {
+      "type": "object",
+      "required": ["case_id", "identity", "coordinate", "source_pf16"],
+      "properties": {
+        "case_id": {
+          "enum": [
+            "olmdistancegradation_extended__case_0012",
+            "olmdistancegradation_extended__case_0014",
+            "olmdistancegradation_extended__case_0024",
+            "olmdistancegradation_extended__case_0025",
+            "olmdistancegradation_extended__case_0026",
+            "olmdistancegradation_extended__case_0027"
+          ]
+        },
+        "identity": {"$ref": "#/$defs/identity"},
+        "coordinate": {"$ref": "#/$defs/coordinate"},
+        "source_pf16": {"$ref": "#/$defs/source_pf16"},
+        "field": {"$ref": "#/$defs/field"},
+        "pre_store": {"$ref": "#/$defs/pre_store"},
+        "stored_pf16": {"$ref": "#/$defs/stored_pf16"},
+        "exported_true16": {"$ref": "#/$defs/exported_true16"}
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {"properties": {"case_id": {"const": "olmdistancegradation_extended__case_0012"}}},
+          "then": {"properties": {"coordinate": {"const": {"x": 438, "y": 0}}}}
+        },
+        {
+          "if": {"properties": {"case_id": {"const": "olmdistancegradation_extended__case_0014"}}},
+          "then": {"properties": {"coordinate": {"const": {"x": 448, "y": 0}}}}
+        },
+        {
+          "if": {"properties": {"case_id": {"const": "olmdistancegradation_extended__case_0024"}}},
+          "then": {"properties": {"coordinate": {"const": {"x": 232, "y": 328}}}}
+        },
+        {
+          "if": {"properties": {"case_id": {"const": "olmdistancegradation_extended__case_0025"}}},
+          "then": {"properties": {"coordinate": {"const": {"x": 3, "y": 0}}}}
+        },
+        {
+          "if": {"properties": {"case_id": {"const": "olmdistancegradation_extended__case_0026"}}},
+          "then": {"properties": {"coordinate": {"const": {"x": 907, "y": 222}}}}
+        },
+        {
+          "if": {"properties": {"case_id": {"const": "olmdistancegradation_extended__case_0027"}}},
+          "then": {"properties": {"coordinate": {"const": {"x": 1234, "y": 443}}}}
+        },
+        {
+          "if": {
+            "properties": {
+              "case_id": {
+                "enum": [
+                  "olmdistancegradation_extended__case_0012",
+                  "olmdistancegradation_extended__case_0014"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": ["pre_store", "stored_pf16", "exported_true16"],
+            "not": {"required": ["field"]}
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "case_id": {
+                "enum": [
+                  "olmdistancegradation_extended__case_0024",
+                  "olmdistancegradation_extended__case_0025",
+                  "olmdistancegradation_extended__case_0026",
+                  "olmdistancegradation_extended__case_0027"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": ["field"],
+            "not": {
+              "anyOf": [
+                {"required": ["pre_store"]},
+                {"required": ["stored_pf16"]},
+                {"required": ["exported_true16"]}
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

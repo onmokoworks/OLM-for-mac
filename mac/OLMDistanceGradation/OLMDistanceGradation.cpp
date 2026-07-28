@@ -364,6 +364,52 @@ static void debug_dump_shade_point(
 	fclose(f);
 }
 
+static unsigned long debug_float32_bits(float value)
+{
+	unsigned long bits = 0;
+	unsigned int word = 0;
+	memcpy(&word, &value, sizeof(word));
+	bits = word;
+	return bits;
+}
+
+// Mac-only, logging-only PF16 boundary witness.  The production shade path
+// does not enter this function unless both capture env vars select a point.
+// Values and words are copied from the live PF16 shade site; float bit
+// identities use memcpy so the witness does not depend on aliasing.
+static void debug_dump_pf16_boundary_point(
+	const char *path, const char *case_id, long x, long y,
+	const PF_Pixel16 &source, float field_value, u_short derived_field_word,
+	float oa, float orv, float og, float ob, const PF_Pixel16 &stored)
+{
+	if (!path || !path[0] || !case_id || !case_id[0]) return;
+	FILE *f = fopen(path, "a");
+	if (!f) return;
+	fprintf(f,
+	        "{\"kind\":\"olmdg_pf16_shade_boundary_v1\",\"case_id\":\"%s\","
+	        "\"x\":%ld,\"y\":%ld,"
+	        "\"source\":{\"a\":%u,\"r\":%u,\"g\":%u,\"b\":%u},"
+	        "\"field\":{\"value\":%.9g,\"bits\":\"0x%08lx\","
+	        "\"derived_pf16_word\":%u,"
+	        "\"derivation\":\"nearest_even_clamp_float32_times_32768_logging_only\","
+	        "\"direct_field_staging_word\":\"unavailable_at_mac_float_field_boundary\"},"
+	        "\"pre_store\":{"
+	        "\"a\":{\"value\":%.9g,\"bits\":\"0x%08lx\"},"
+	        "\"r\":{\"value\":%.9g,\"bits\":\"0x%08lx\"},"
+	        "\"g\":{\"value\":%.9g,\"bits\":\"0x%08lx\"},"
+	        "\"b\":{\"value\":%.9g,\"bits\":\"0x%08lx\"}},"
+	        "\"stored\":{\"a\":%u,\"r\":%u,\"g\":%u,\"b\":%u}}\n",
+	        case_id, x, y,
+	        (unsigned int)source.alpha, (unsigned int)source.red,
+	        (unsigned int)source.green, (unsigned int)source.blue,
+	        field_value, debug_float32_bits(field_value), (unsigned int)derived_field_word,
+	        oa, debug_float32_bits(oa), orv, debug_float32_bits(orv),
+	        og, debug_float32_bits(og), ob, debug_float32_bits(ob),
+	        (unsigned int)stored.alpha, (unsigned int)stored.red,
+	        (unsigned int)stored.green, (unsigned int)stored.blue);
+	fclose(f);
+}
+
 // ============================================================================
 // Distance field builder (shared across bit depths)
 //   input_alpha_norm: 0..1 alpha, size w*h
@@ -740,6 +786,8 @@ template<> void shade_scanline<PF_Pixel16>(
 {
 	const char *shade_debug_path = getenv("OLM_DG_SHADE_DEBUG_PATH");
 	const char *points = getenv("OLM_DG_DEBUG_POINTS");
+	const char *pf16_capture_path = getenv("OLM_DG_PF16_BOUNDARY_CAPTURE_PATH");
+	const char *pf16_capture_case = getenv("OLM_DG_PF16_BOUNDARY_CAPTURE_CASE_ID");
 	for (long i = 0; i < w; ++i) {
 		float sa, sr, sg, sb;
 		load_rgba_norm(&src[i], sa, sr, sg, sb);
@@ -801,6 +849,19 @@ template<> void shade_scanline<PF_Pixel16>(
 		dst[i].red   = dr;
 		dst[i].green = dg;
 		dst[i].blue  = db;
+		if (pf16_capture_path && pf16_capture_path[0] &&
+		    pf16_capture_case && pf16_capture_case[0] &&
+		    debug_point_selected(points, i, y)) {
+			// The Mac core retains the field as float32.  Record the PF16 word
+			// produced by the established nearest-even field-staging boundary
+			// alongside that authoritative float without feeding it back.
+			float field_scaled = x_row[i] * 32768.0f;
+			u_short derived_field_word = (field_scaled < 0.0f) ? 0 :
+				(field_scaled > 32768.0f ? 32768 : (u_short)lrintf(field_scaled));
+			debug_dump_pf16_boundary_point(
+				pf16_capture_path, pf16_capture_case, i, y, src[i],
+				x_row[i], derived_field_word, oa, orv, og, ob, dst[i]);
+		}
 		if (debug_point_selected(points, i, y)) {
 			debug_dump_shade_point(shade_debug_path, p, i, y, sizeof(PF_Pixel16),
 			                       sa, sr, sg, sb, x_row[i], a_row[i], oa, orv, og, ob,
