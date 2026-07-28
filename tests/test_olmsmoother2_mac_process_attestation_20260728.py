@@ -7,6 +7,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 
 ROOT = Path(__file__).resolve().parents[1]
 PATH = ROOT / "scripts/attest_olmsmoother2_mac_process_20260728.py"
@@ -169,9 +170,171 @@ class AttestorTests(unittest.TestCase):
 
     def test_no_live_or_destructive_actions(self):
         source = PATH.read_text()
-        for forbidden in ("osascript", "pkill", "os.kill", "terminate(", "subprocess.run", "Popen("):
+        for forbidden in ("osascript", "pkill", "os.kill", "terminate(", "Popen("):
             self.assertNotIn(forbidden, source)
-        self.assertIn("live process adapter is not implemented", source)
+        self.assertIn('["/bin/ps", "-axo", "pid=,comm="]', source)
+        self.assertIn('["/usr/bin/vmmap", str(pid)]', source)
+        self.assertNotIn("stdout=subprocess.PIPE", source)
+        self.assertIn("tempfile.TemporaryFile()", source)
+        self.assertIn("resource.RLIMIT_FSIZE", source)
+
+
+class LiveSnapshotAdapterTests(unittest.TestCase):
+    def fixture(self, root: Path):
+        executable = root / "After Effects"
+        module = root / "OLMSmoother2.plugin"
+        executable.write_bytes(b"ae executable")
+        module.write_bytes(b"module")
+        digest = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
+        expected = {
+            "ae_executable": {"path": str(executable), "sha256": digest(executable)},
+            "module": {"path": str(module), "sha256": digest(module)},
+        }
+        return executable, module, expected
+
+    @staticmethod
+    def completed(stdout="", returncode=0):
+        return SimpleNamespace(stdout=stdout, stderr="", returncode=returncode)
+
+    def runner(self, executable: Path, module: Path, initial=None, vmmap=None, hook=None):
+        calls = []
+
+        def run(command, timeout):
+            calls.append(command)
+            if hook:
+                hook(command, len(calls))
+            if command == ["/bin/ps", "-axo", "pid=,comm="]:
+                text = initial if initial is not None else f" 42 {executable}\n"
+                return self.completed(text)
+            if command[:3] == ["/bin/ps", "-p", "42"]:
+                return self.completed(f" 42 {executable}\n")
+            if command == ["/usr/bin/vmmap", "42"]:
+                text = vmmap if vmmap is not None else f"__TEXT 0000000100000000-0000000100002000 [ 8K] r-x/r-x SM=COW  {module}\n"
+                return self.completed(text)
+            raise AssertionError(command)
+
+        return run, calls
+
+    def capture(self, mutation=None, **runner_kwargs):
+        with tempfile.TemporaryDirectory(prefix="smoother_live_") as raw:
+            executable, module, expected = self.fixture(Path(raw).resolve())
+            runner, calls = self.runner(executable, module, **runner_kwargs)
+            if mutation:
+                mutation(executable, module, expected, runner, calls)
+            result = attestor.snapshot_from_macos(expected, runner, lambda pid: "100:200")
+            attestor.validate_snapshot(result, expected, "live")
+            return result, calls
+
+    def test_valid_live_snapshot_and_absolute_commands(self):
+        snapshot, calls = self.capture()
+        self.assertEqual(snapshot["process"]["pid"], 42)
+        self.assertEqual(snapshot["module"]["vmmap_match_count"], 1)
+        self.assertEqual(calls[0], ["/bin/ps", "-axo", "pid=,comm="])
+        self.assertEqual(calls[-1], ["/bin/ps", "-p", "42", "-o", "pid=,comm="])
+
+    def test_candidate_cardinality_and_exact_executable(self):
+        with tempfile.TemporaryDirectory(prefix="smoother_live_") as raw:
+            executable, module, expected = self.fixture(Path(raw).resolve())
+            cases = ("", f"1 {executable}\n2 {executable}\n", f"42 {executable} Helper\n")
+            for output in cases:
+                runner, _ = self.runner(executable, module, initial=output)
+                with self.subTest(output=output), self.assertRaisesRegex(attestor.AttestationError, "exactly one"):
+                    attestor.snapshot_from_macos(expected, runner, lambda pid: "1:2")
+
+    def test_vmmap_grammar_substring_rejected_and_multi_region_accepted(self):
+        with tempfile.TemporaryDirectory(prefix="smoother_live_") as raw:
+            executable, module, expected = self.fixture(Path(raw).resolve())
+            for output in (
+                f"garbage 0000000100000000-0000000100002000 {module}\n",
+                f"garbage __TEXT 0000000100000000-0000000100002000 [ 8K] r-x/r-x SM=COW  {module}\n",
+                f"__TEXT 0000000100000000-0000000100002000 [ 8K] r-x/r-x SM=COW  {module}.old\n",
+                "",
+            ):
+                runner, _ = self.runner(executable, module, vmmap=output)
+                with self.subTest(output=output), self.assertRaisesRegex(attestor.AttestationError, "exactly one exact"):
+                    attestor.snapshot_from_macos(expected, runner, lambda pid: "1:2")
+            multi = (
+                f"__TEXT 0000000100000000-0000000100002000 [ 8K] r-x/r-x SM=COW  {module}\n"
+                f"__DATA 0000000100002000-0000000100004000 [ 8K] rw-/rw- SM=COW  {module}\n"
+            )
+            runner, _ = self.runner(executable, module, vmmap=multi)
+            self.assertEqual(attestor.snapshot_from_macos(expected, runner, lambda pid: "1:2")["module"]["vmmap_match_count"], 1)
+
+    def test_command_failure_timeout_and_boolean_returncode_rejected(self):
+        with tempfile.TemporaryDirectory(prefix="smoother_live_") as raw:
+            _, _, expected = self.fixture(Path(raw).resolve())
+
+            def failure(command, timeout):
+                return self.completed("", 1)
+
+            def timeout(command, timeout):
+                raise TimeoutError()
+
+            def boolean(command, timeout):
+                return self.completed("", True)
+
+            def raw_string(command, timeout):
+                return ""
+
+            for runner in (failure, timeout, boolean, raw_string):
+                with self.subTest(runner=runner.__name__), self.assertRaises(attestor.AttestationError):
+                    attestor.snapshot_from_macos(expected, runner, lambda pid: "1:2")
+            with self.assertRaisesRegex(attestor.AttestationError, "too large"):
+                attestor._command_text(
+                    lambda command, timeout: self.completed("x" * (8 * 1024 * 1024 + 1)),
+                    ["/bin/ps", "-axo", "pid=,comm="],
+                )
+
+    def test_birth_drift_and_invalid_boolean_birth_rejected(self):
+        with tempfile.TemporaryDirectory(prefix="smoother_live_") as raw:
+            executable, module, expected = self.fixture(Path(raw).resolve())
+            runner, _ = self.runner(executable, module)
+            values = iter(("1:2", "1:3"))
+            with self.assertRaisesRegex(attestor.AttestationError, "birth identity changed"):
+                attestor.snapshot_from_macos(expected, runner, lambda pid: next(values))
+            runner, _ = self.runner(executable, module)
+            with self.assertRaisesRegex(attestor.AttestationError, "birth token"):
+                attestor.snapshot_from_macos(expected, runner, lambda pid: True)
+
+    def test_pid_replacement_after_vmmap_rejected(self):
+        with tempfile.TemporaryDirectory(prefix="smoother_live_") as raw:
+            executable, module, expected = self.fixture(Path(raw).resolve())
+            pinned_reads = 0
+
+            def runner(command, timeout):
+                nonlocal pinned_reads
+                if command == ["/bin/ps", "-axo", "pid=,comm="]:
+                    return self.completed(f"42 {executable}\n")
+                if command[:3] == ["/bin/ps", "-p", "42"]:
+                    pinned_reads += 1
+                    path = executable if pinned_reads == 1 else executable.parent / "Replacement"
+                    return self.completed(f"42 {path}\n")
+                return self.completed(f"__TEXT 0000000100000000-0000000100002000 [ 8K] r-x/r-x SM=COW  {module}\n")
+
+            with self.assertRaisesRegex(attestor.AttestationError, "pinned process"):
+                attestor.snapshot_from_macos(expected, runner, lambda pid: "1:2")
+
+    def test_executable_and_module_drift_rejected(self):
+        for selected in ("executable", "module"):
+            with tempfile.TemporaryDirectory(prefix="smoother_live_") as raw:
+                executable, module, expected = self.fixture(Path(raw).resolve())
+                target = executable if selected == "executable" else module
+
+                def hook(command, count, target=target):
+                    if command == ["/usr/bin/vmmap", "42"]:
+                        target.write_bytes(target.read_bytes() + b" drift")
+
+                runner, _ = self.runner(executable, module, hook=hook)
+                with self.subTest(selected=selected), self.assertRaises(attestor.AttestationError):
+                    attestor.snapshot_from_macos(expected, runner, lambda pid: "1:2")
+
+    def test_expected_path_hash_and_stat_drift_rejected(self):
+        with tempfile.TemporaryDirectory(prefix="smoother_live_") as raw:
+            executable, module, expected = self.fixture(Path(raw).resolve())
+            runner, _ = self.runner(executable, module)
+            expected["module"]["sha256"] = "0" * 64
+            with self.assertRaisesRegex(attestor.AttestationError, "file/hash mismatch"):
+                attestor.snapshot_from_macos(expected, runner, lambda pid: "1:2")
 
 
 if __name__ == "__main__":

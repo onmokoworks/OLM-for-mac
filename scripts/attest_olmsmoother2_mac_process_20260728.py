@@ -9,11 +9,16 @@ stable render-process/module interval.
 from __future__ import annotations
 
 import hashlib
+import contextlib
 import json
 import os
 import re
+import resource
 import stat
+import subprocess
 import tempfile
+import ctypes
+import ctypes.util
 from pathlib import Path
 from typing import Any, Callable
 
@@ -55,7 +60,8 @@ def _nonce(value: object) -> str:
     return _hex(value, "run_nonce")
 
 
-def _bound_exact(path_value: object, digest_value: object, label: str) -> tuple[Path, tuple[int, int, int, int]]:
+@contextlib.contextmanager
+def _held_exact(path_value: object, digest_value: object, label: str):
     if not isinstance(path_value, str) or not path_value:
         raise AttestationError(f"{label} path missing")
     raw = Path(path_value)
@@ -88,13 +94,192 @@ def _bound_exact(path_value: object, digest_value: object, label: str) -> tuple[
             raise AttestationError(f"{label} changed while being bound")
         if digest.hexdigest() != _hex(digest_value, f"{label}.sha256"):
             raise AttestationError(f"{label} file/hash mismatch")
-        return path, after_identity
+        yield path, after_identity
+        final = os.fstat(descriptor)
+        final_identity = (final.st_dev, final.st_ino, final.st_size, final.st_mtime_ns)
+        current = os.stat(path, follow_symlinks=False)
+        current_identity = (current.st_dev, current.st_ino, current.st_size, current.st_mtime_ns)
+        if final_identity != after_identity or current_identity != after_identity:
+            raise AttestationError(f"{label} changed before identity release")
     finally:
         os.close(descriptor)
 
 
+def _bound_exact(path_value: object, digest_value: object, label: str) -> tuple[Path, tuple[int, int, int, int]]:
+    with _held_exact(path_value, digest_value, label) as bound:
+        return bound
+
+
 def _regular_exact(path_value: object, digest_value: object, label: str) -> Path:
     return _bound_exact(path_value, digest_value, label)[0]
+
+
+def _run_read_only(command: list[str], timeout: float = 10.0) -> subprocess.CompletedProcess[str]:
+    stdout_limit = 64 * 1024 * 1024 if command and command[0] == "/usr/bin/vmmap" else 8 * 1024 * 1024
+    stderr_limit = 1024 * 1024
+    child_file_limit = max(stdout_limit, stderr_limit)
+    def limit_child_output() -> None:
+        resource.setrlimit(resource.RLIMIT_FSIZE, (child_file_limit, child_file_limit))
+    with tempfile.TemporaryFile() as stdout_file, tempfile.TemporaryFile() as stderr_file:
+        result = subprocess.run(
+            command,
+            stdin=subprocess.DEVNULL,
+            stdout=stdout_file,
+            stderr=stderr_file,
+            check=False,
+            timeout=timeout,
+            preexec_fn=limit_child_output,
+        )
+        stdout_size = os.fstat(stdout_file.fileno()).st_size
+        stderr_size = os.fstat(stderr_file.fileno()).st_size
+        if stdout_size > stdout_limit or stderr_size > stderr_limit:
+            raise AttestationError(f"read-only command output too large: {command[0]}")
+        stdout_file.seek(0)
+        stderr_file.seek(0)
+        try:
+            stdout = stdout_file.read().decode("utf-8", errors="strict")
+            stderr = stderr_file.read().decode("utf-8", errors="strict")
+        except UnicodeDecodeError as exc:
+            raise AttestationError(f"read-only command output is not UTF-8: {command[0]}") from exc
+        return subprocess.CompletedProcess(command, result.returncode, stdout, stderr)
+
+
+def _command_text(command_runner: Callable[..., object], command: list[str], timeout: float = 10.0) -> str:
+    try:
+        result = command_runner(command, timeout=timeout)
+    except (OSError, subprocess.SubprocessError) as exc:
+        raise AttestationError(f"read-only command failed: {command[0]}") from exc
+    returncode = getattr(result, "returncode", None)
+    stdout = getattr(result, "stdout", None)
+    stderr = getattr(result, "stderr", None)
+    if type(returncode) is not int or returncode != 0 or not isinstance(stdout, str) or not isinstance(stderr, str):
+        raise AttestationError(f"read-only command failed: {command[0]}")
+    limit = 64 * 1024 * 1024 if command and command[0] == "/usr/bin/vmmap" else 8 * 1024 * 1024
+    if len(stdout.encode("utf-8")) > limit:
+        raise AttestationError(f"read-only command output too large: {command[0]}")
+    return stdout
+
+
+VMMAP_REGION = re.compile(
+    r"^\s*__TEXT\s+[0-9A-Fa-f]{8,16}-[0-9A-Fa-f]{8,16}\s+"
+    r"\[\s*[^\]]+\]\s+[rwx-]{3}/[rwx-]{3}\s+SM=\S+\s+(?P<path>/.*)$"
+)
+
+
+def _vmmap_paths(output: str) -> list[str]:
+    return [
+        match.group("path")
+        for line in output.splitlines()
+        if (match := VMMAP_REGION.fullmatch(line.rstrip())) is not None
+    ]
+
+
+def _ps_rows(output: str) -> list[tuple[int, str]]:
+    rows: list[tuple[int, str]] = []
+    for line in output.splitlines():
+        match = re.fullmatch(r"\s*([0-9]+)\s+(.+?)\s*", line)
+        if not match:
+            if line.strip():
+                raise AttestationError("malformed ps output")
+            continue
+        pid = int(match.group(1))
+        if pid <= 0:
+            raise AttestationError("invalid ps PID")
+        rows.append((pid, match.group(2)))
+    return rows
+
+
+def _native_birth_token(pid: int) -> str:
+    """Return the kernel BSD start time for PID, failing closed off macOS/libproc."""
+    PROC_PIDTBSDINFO = 3
+    PROC_PIDTBSDINFO_SIZE = 136
+    library_name = ctypes.util.find_library("proc")
+    if not library_name:
+        raise AttestationError("native process birth provider unavailable")
+    try:
+        library = ctypes.CDLL(library_name, use_errno=True)
+        proc_pidinfo = library.proc_pidinfo
+        proc_pidinfo.argtypes = [ctypes.c_int, ctypes.c_int, ctypes.c_uint64, ctypes.c_void_p, ctypes.c_int]
+        proc_pidinfo.restype = ctypes.c_int
+        buffer = (ctypes.c_ubyte * PROC_PIDTBSDINFO_SIZE)()
+        received = proc_pidinfo(pid, PROC_PIDTBSDINFO, 0, buffer, PROC_PIDTBSDINFO_SIZE)
+    except (AttributeError, OSError) as exc:
+        raise AttestationError("native process birth provider unavailable") from exc
+    if received != PROC_PIDTBSDINFO_SIZE:
+        raise AttestationError("could not read native process birth identity")
+    # struct proc_bsdinfo ends with struct timeval pbi_start_tv (uint64 sec/usec).
+    seconds = int.from_bytes(bytes(buffer[120:128]), byteorder="little")
+    microseconds = int.from_bytes(bytes(buffer[128:136]), byteorder="little")
+    if seconds <= 0 or not 0 <= microseconds < 1_000_000:
+        raise AttestationError("invalid native process birth identity")
+    return f"{seconds}:{microseconds}"
+
+
+def _exact_process(rows: list[tuple[int, str]], pid: int, executable: Path) -> None:
+    if rows != [(pid, str(executable))]:
+        raise AttestationError("pinned process identity changed")
+
+
+def snapshot_from_macos(
+    expected: dict[str, Any],
+    command_runner: Callable[..., object] = _run_read_only,
+    birth_provider: Callable[[int], str] = _native_birth_token,
+) -> dict[str, Any]:
+    """Capture one fail-closed, read-only process/module identity snapshot."""
+    expected_ae = _object(expected.get("ae_executable"), "expected.ae_executable")
+    expected_module = _object(expected.get("module"), "expected.module")
+    with contextlib.ExitStack() as stack:
+        executable, executable_identity = stack.enter_context(
+            _held_exact(expected_ae.get("path"), expected_ae.get("sha256"), "expected.ae_executable")
+        )
+        module, module_identity = stack.enter_context(
+            _held_exact(expected_module.get("path"), expected_module.get("sha256"), "expected.module")
+        )
+        candidates = [
+            (pid, command)
+            for pid, command in _ps_rows(_command_text(command_runner, ["/bin/ps", "-axo", "pid=,comm="]))
+            if command == str(executable)
+        ]
+        if len(candidates) != 1:
+            raise AttestationError("requires exactly one canonical executable process")
+        pid = candidates[0][0]
+        pinned_command = ["/bin/ps", "-p", str(pid), "-o", "pid=,comm="]
+        _exact_process(_ps_rows(_command_text(command_runner, pinned_command)), pid, executable)
+        birth_before = birth_provider(pid)
+        if not isinstance(birth_before, str) or not birth_before:
+            raise AttestationError("invalid process birth token")
+        vmmap = _command_text(command_runner, ["/usr/bin/vmmap", str(pid)], timeout=120.0)
+        parsed_paths = _vmmap_paths(vmmap)
+        match_count = len({path for path in parsed_paths if path == str(module)})
+        if match_count != 1:
+            raise AttestationError("requires exactly one exact vmmap module pathname")
+        # Verify the pinned PID/path first, then read birth last so a same-path
+        # PID replacement between these operations cannot pass.
+        _exact_process(_ps_rows(_command_text(command_runner, pinned_command)), pid, executable)
+        birth_after = birth_provider(pid)
+        if not isinstance(birth_after, str) or birth_after != birth_before:
+            raise AttestationError("process birth identity changed during snapshot")
+    return {
+        "process": {
+            "pid": pid,
+            "birth_token": birth_before,
+            "executable_path": str(executable),
+            "executable_sha256": expected_ae["sha256"],
+            "dev": executable_identity[0],
+            "ino": executable_identity[1],
+            "size": executable_identity[2],
+            "mtime_ns": executable_identity[3],
+        },
+        "module": {
+            "path": str(module),
+            "sha256": expected_module["sha256"],
+            "dev": module_identity[0],
+            "ino": module_identity[1],
+            "size": module_identity[2],
+            "mtime_ns": module_identity[3],
+            "vmmap_match_count": match_count,
+        },
+    }
 
 
 def validate_snapshot(snapshot: object, expected: dict[str, Any], label: str) -> dict[str, Any]:
