@@ -38,14 +38,24 @@ def i32(data: bytes, pos: int) -> tuple[int, int]:
 
 
 def cstr(data: bytes, pos: int) -> tuple[str, int]:
-    end = data.index(b"\0", pos)
-    return data[pos:end].decode("utf-8"), end + 1
+    try:
+        end = data.index(b"\0", pos)
+        return data[pos:end].decode("utf-8"), end + 1
+    except (ValueError, UnicodeDecodeError) as exc:
+        raise VerificationError("invalid or unterminated EXR string") from exc
 
 
 def parse_exr_header(path: Path) -> tuple[dict[str, Any], int]:
     data = path.read_bytes()
     if len(data) < 8 or struct.unpack_from("<I", data)[0] != MAGIC:
         raise VerificationError(f"{path}: not an OpenEXR file")
+    version_field = struct.unpack_from("<I", data, 4)[0]
+    version, flags = version_field & 0xff, version_field >> 8
+    if version != 2 or flags != 0:
+        raise VerificationError(
+            f"{path}: unsupported EXR version/flags ({version}, 0x{flags:06x}); "
+            "only version 2 single-part scanline files are accepted"
+        )
     pos = 8
     attrs: dict[str, Any] = {}
     while True:
@@ -58,6 +68,8 @@ def parse_exr_header(path: Path) -> tuple[dict[str, Any], int]:
         if len(value) != size:
             raise VerificationError(f"{path}: truncated {name} attribute")
         pos += size
+        if name in attrs:
+            raise VerificationError(f"{path}: duplicate EXR header attribute {name}")
         attrs[name] = (attr_type, value)
 
 
@@ -73,8 +85,12 @@ def decode_attrs(attrs: dict[str, Any], path: Path) -> dict[str, Any]:
     channels = []
     pos = 0
     while True:
+        if pos >= len(raw):
+            raise VerificationError(f"{path}: channels chlist has no exact terminator")
         name, pos = cstr(raw, pos)
         if not name:
+            if pos != len(raw):
+                raise VerificationError(f"{path}: channels chlist has trailing data")
             break
         if pos + 16 > len(raw):
             raise VerificationError(f"{path}: truncated channel entry {name}")
@@ -82,6 +98,15 @@ def decode_attrs(attrs: dict[str, Any], path: Path) -> dict[str, Any]:
         pos += 16
         channels.append({"name": name, "sample_type": sample_type, "p_linear": p_linear,
                          "x_sampling": x_sampling, "y_sampling": y_sampling})
+    names = [channel["name"] for channel in channels]
+    if len(names) != 4 or set(names) != EXPECTED_CHANNELS or len(set(names)) != 4:
+        raise VerificationError(f"{path}: expected unique exactly RGBA channels, got {names!r}")
+    if any(channel["sample_type"] != 2 for channel in channels):
+        raise VerificationError(f"{path}: all channels must be FLOAT")
+    if any(channel["x_sampling"] != 1 or channel["y_sampling"] != 1 for channel in channels):
+        raise VerificationError(f"{path}: channel sampling must be 1/1")
+    if any(channel["p_linear"] not in (0, 1) for channel in channels):
+        raise VerificationError(f"{path}: channel pLinear must be 0 or 1")
 
     typ, raw = required("dataWindow")
     if typ != "box2i" or len(raw) != 16:
@@ -90,16 +115,76 @@ def decode_attrs(attrs: dict[str, Any], path: Path) -> dict[str, Any]:
     width, height = max_x - min_x + 1, max_y - min_y + 1
     if width <= 0 or height <= 0:
         raise VerificationError(f"{path}: invalid dimensions {width}x{height}")
-    compression = required("compression")[1]
-    if len(compression) != 1:
+    display_type, display_raw = required("displayWindow")
+    if display_type != "box2i" or len(display_raw) != 16:
+        raise VerificationError(f"{path}: invalid displayWindow")
+    display_window = list(struct.unpack("<4i", display_raw))
+    if display_window[2] < display_window[0] or display_window[3] < display_window[1]:
+        raise VerificationError(f"{path}: invalid displayWindow dimensions")
+    compression_type, compression = required("compression")
+    if compression_type != "compression" or len(compression) != 1:
         raise VerificationError(f"{path}: invalid compression attribute")
+    line_type, line_raw = required("lineOrder")
+    if line_type != "lineOrder" or len(line_raw) != 1 or line_raw[0] not in (0, 1, 2):
+        raise VerificationError(f"{path}: invalid lineOrder attribute")
     result = {"channels": channels, "width": width, "height": height,
               "data_window": [min_x, min_y, max_x, max_y],
-              "compression": compression[0], "header": {}}
+              "display_window": display_window, "compression": compression[0],
+              "line_order": line_raw[0], "header": {}}
     for name in ("color_space", "alpha_mode", "renderer", "ae_version"):
         if name in attrs and attrs[name][0] == "string":
             result["header"][name] = attrs[name][1].rstrip(b"\0").decode("utf-8")
     return result
+
+
+def validate_scanline_layout(
+    path: Path, header_end: int, info: dict[str, Any]
+) -> tuple[bytes, list[tuple[int, int, int]], dict[str, Any]]:
+    """Validate and describe the one-row, canonical, gap-free scanline layout."""
+    data = path.read_bytes()
+    height = info["height"]
+    table_end = header_end + height * 8
+    if table_end > len(data):
+        raise VerificationError(f"{path}: truncated scanline offset table")
+    offsets = struct.unpack_from("<" + "Q" * height, data, header_end)
+    if len(set(offsets)) != height:
+        raise VerificationError(f"{path}: duplicate scanline chunk offset")
+    min_y, max_y = info["data_window"][1], info["data_window"][3]
+    expected_size = info["width"] * len(info["channels"]) * 4
+    chunks: list[tuple[int, int, int]] = []
+    rows: set[int] = set()
+    for offset in offsets:
+        if offset < table_end or offset + 8 > len(data):
+            raise VerificationError(f"{path}: invalid scanline chunk offset {offset}")
+        y, size = struct.unpack_from("<iI", data, offset)
+        end = offset + 8 + size
+        if y < min_y or y > max_y or y in rows:
+            raise VerificationError(f"{path}: invalid or duplicate scanline y={y}")
+        if size != expected_size or end > len(data):
+            raise VerificationError(
+                f"{path}: invalid scanline payload size {size}, expected {expected_size}"
+            )
+        rows.add(y)
+        chunks.append((offset, end, y))
+    if rows != set(range(min_y, max_y + 1)):
+        raise VerificationError(f"{path}: incomplete/misaligned scanline image")
+    ordered = sorted(chunks)
+    cursor = table_end
+    for start, end, _ in ordered:
+        if start != cursor:
+            raise VerificationError(f"{path}: non-canonical gap or overlapping scanline chunks")
+        cursor = end
+    if cursor != len(data):
+        raise VerificationError(f"{path}: trailing data after scanline chunks")
+    layout = {
+        "data_window": list(info["data_window"]),
+        "display_window": list(info["display_window"]),
+        "line_order": info["line_order"],
+        "header_end": header_end,
+        "table_end": table_end,
+        "file_end": cursor,
+    }
+    return data, chunks, layout
 
 
 def decode_builtin_scanlines(path: Path, header_end: int, info: dict[str, Any]) -> dict[str, int]:
@@ -109,38 +194,20 @@ def decode_builtin_scanlines(path: Path, header_end: int, info: dict[str, Any]) 
         raise VerificationError(f"{path}: channel sample type is not FLOAT")
     if any(ch["x_sampling"] != 1 or ch["y_sampling"] != 1 for ch in info["channels"]):
         raise VerificationError(f"{path}: sampled/subsampled channels are unsupported")
-    data = path.read_bytes()
     width, height = info["width"], info["height"]
     counts = {"finite": 0, "nan": 0, "+inf": 0, "-inf": 0}
     expected_row = width * len(info["channels"]) * 4
-    table_end = header_end + height * 8
-    if table_end > len(data):
-        raise VerificationError(f"{path}: truncated scanline offset table")
-    offsets = struct.unpack_from("<" + "Q" * height, data, header_end)
-    seen_rows: set[int] = set()
-    min_y, max_y = info["data_window"][1], info["data_window"][3]
-    for offset in offsets:
-        if offset < table_end or offset + 8 > len(data):
-            raise VerificationError(f"{path}: invalid scanline chunk offset {offset}")
+    data, chunks, _ = validate_scanline_layout(path, header_end, info)
+    for offset, _, _ in chunks:
         pos = offset
         y, pos = i32(data, pos)
-        if y < min_y or y > max_y:
-            raise VerificationError(f"{path}: out-of-range scanline y={y}")
         size, pos = u32(data, pos)
         payload = data[pos : pos + size]
-        if len(payload) != size or size != expected_row:
-            raise VerificationError(f"{path}: invalid scanline payload size {size}, expected {expected_row}")
-        if y in seen_rows:
-            raise VerificationError(f"{path}: duplicate scanline y={y}")
-        seen_rows.add(y)
         values = struct.unpack("<" + "f" * (size // 4), payload)
         for value in values:
             if math.isnan(value): counts["nan"] += 1
             elif math.isinf(value): counts["+inf" if value > 0 else "-inf"] += 1
             else: counts["finite"] += 1
-    expected_rows = set(range(min_y, max_y + 1))
-    if seen_rows != expected_rows:
-        raise VerificationError(f"{path}: incomplete/misaligned scanline image")
     counts["total"] = width * height * len(info["channels"])
     return counts
 
@@ -180,6 +247,7 @@ def inspect_float_rgba_exr(path: Path, expected_dimensions: tuple[int, int] | No
     dimensions = (info["width"], info["height"])
     if expected_dimensions is not None and dimensions != expected_dimensions:
         raise VerificationError(f"{path}: dimensions {dimensions!r} do not match {expected_dimensions!r}")
+    _, _, layout = validate_scanline_layout(path, header_end, info)
     counts = decode_builtin_scanlines(path, header_end, info)
     return {
         "path": str(path),
@@ -188,6 +256,7 @@ def inspect_float_rgba_exr(path: Path, expected_dimensions: tuple[int, int] | No
         "channel_order": names,
         "sample_types": [channel["sample_type"] for channel in info["channels"]],
         "compression": info["compression"],
+        "layout": layout,
         "sample_counts": counts,
     }
 

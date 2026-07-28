@@ -12,10 +12,18 @@ from verify_32bpc_float_return import (
     VerificationError,
     decode_attrs,
     parse_exr_header,
+    validate_scanline_layout,
 )
 
 
 def read_planes(path: Path) -> tuple[dict[str, bytes], int, int]:
+    planes, width, height, _ = read_planes_with_layout(path)
+    return planes, width, height
+
+
+def read_planes_with_layout(
+    path: Path,
+) -> tuple[dict[str, bytes], int, int, dict[str, object]]:
     attrs, header_end = parse_exr_header(path)
     info = decode_attrs(attrs, path)
     channels = info["channels"]
@@ -28,15 +36,11 @@ def read_planes(path: Path) -> tuple[dict[str, bytes], int, int]:
         raise VerificationError(f"{path}: all channels must be FLOAT")
     width, height = info["width"], info["height"]
     min_y, max_y = info["data_window"][1], info["data_window"][3]
-    data = path.read_bytes()
-    table_end = header_end + height * 8
-    offsets = struct.unpack_from("<" + "Q" * height, data, header_end)
+    data, chunks, layout = validate_scanline_layout(path, header_end, info)
     planes = {name: bytearray(width * height * 4) for name in names}
     rows: set[int] = set()
     row_size = width * 4
-    for offset in offsets:
-        if offset < table_end or offset + 8 > len(data):
-            raise VerificationError(f"{path}: invalid scanline offset {offset}")
+    for offset, _, _ in chunks:
         y, payload_size = struct.unpack_from("<iI", data, offset)
         if y < min_y or y > max_y or y in rows:
             raise VerificationError(f"{path}: invalid scanline y={y}")
@@ -52,14 +56,17 @@ def read_planes(path: Path) -> tuple[dict[str, bytes], int, int]:
         rows.add(y)
     if rows != set(range(min_y, max_y + 1)):
         raise VerificationError(f"{path}: incomplete scanline set")
-    return {name: bytes(value) for name, value in planes.items()}, width, height
+    return {name: bytes(value) for name, value in planes.items()}, width, height, layout
 
 
 def compare(reference: Path, candidate: Path) -> dict[str, int]:
-    ref, ref_w, ref_h = read_planes(reference)
-    got, got_w, got_h = read_planes(candidate)
+    ref, ref_w, ref_h, ref_layout = read_planes_with_layout(reference)
+    got, got_w, got_h, got_layout = read_planes_with_layout(candidate)
     if (ref_w, ref_h) != (got_w, got_h):
         raise VerificationError(f"dimension mismatch: {ref_w}x{ref_h} vs {got_w}x{got_h}")
+    for key in ("data_window", "display_window", "line_order"):
+        if ref_layout[key] != got_layout[key]:
+            raise VerificationError(f"EXR layout mismatch for {key}")
     mismatched_values = 0
     max_ulp_bits = 0
     for name in sorted(EXPECTED_CHANNELS):

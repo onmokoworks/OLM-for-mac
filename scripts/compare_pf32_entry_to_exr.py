@@ -12,7 +12,7 @@ from pathlib import Path
 
 import numpy as np
 
-from compare_float_exr import read_planes
+from compare_float_exr import read_planes_with_layout
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -27,21 +27,25 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
-def read_raw(path: Path) -> bytes:
+def read_raw(path: Path, expected_size: int) -> bytes:
     if path.suffix.lower() == ".gz":
         with gzip.open(path, "rb") as stream:
-            return stream.read()
-    return path.read_bytes()
+            data = stream.read(expected_size + 1)
+    else:
+        data = path.read_bytes()
+    if len(data) != expected_size:
+        raise ValueError(f"raw size {len(data)} != expected {expected_size}")
+    return data
 
 
 def compare_pf32_entry(raw_path: Path, exr_path: Path) -> dict[str, object]:
-    planes, width, height = read_planes(exr_path)
-    raw_bytes = read_raw(raw_path)
+    planes, width, height, layout = read_planes_with_layout(exr_path)
     expected_size = width * height * 4 * 4
-    if len(raw_bytes) != expected_size:
-        raise ValueError(
-            f"raw size {len(raw_bytes)} != expected {expected_size}"
-        )
+    if layout["data_window"] != [0, 0, width - 1, height - 1]:
+        raise ValueError("PF32 comparison requires dataWindow origin 0")
+    if layout["display_window"] != layout["data_window"]:
+        raise ValueError("PF32 comparison requires full identical display/data windows")
+    raw_bytes = read_raw(raw_path, expected_size)
 
     channel_order = ("A", "R", "G", "B")
     raw_words = np.frombuffer(raw_bytes, dtype="<u4").reshape(height, width, 4)
