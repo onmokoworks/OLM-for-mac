@@ -5,6 +5,8 @@ import hashlib
 import importlib.util
 import json
 import tempfile
+import threading
+import time
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
@@ -66,6 +68,7 @@ class AttestorTests(unittest.TestCase):
             "sequence": 2,
             "pre_request_sha256": attestor.canonical_sha256(pre),
             "pre_snapshot_sha256": attestor.canonical_sha256(snapshot),
+            "pre_ok_sha256": "0" * 64,
             "result_sha256": digest(files["result.json"]),
             "artifacts": {
                 "no_effect_control": {"exr_sha256": digest(files["no.exr"]), "settings_sha256": digest(files["no.json"])},
@@ -335,6 +338,153 @@ class LiveSnapshotAdapterTests(unittest.TestCase):
             expected["module"]["sha256"] = "0" * 64
             with self.assertRaisesRegex(attestor.AttestationError, "file/hash mismatch"):
                 attestor.snapshot_from_macos(expected, runner, lambda pid: "1:2")
+
+
+class WatchProtocolTests(unittest.TestCase):
+    def protocol_fixture(self, root: Path):
+        challenge, pre, post, snapshot = AttestorTests().fixture(root)
+        challenge_path = root / "challenge.json"
+        challenge_path.write_text(json.dumps(challenge), encoding="utf-8")
+        return challenge_path, challenge, pre, post, snapshot
+
+    @staticmethod
+    def write(path: Path, value):
+        path.write_text(json.dumps(value), encoding="utf-8")
+
+    def publish_post_after_ack(self, root: Path, post: object) -> threading.Thread:
+        def publish():
+            deadline = time.monotonic() + 1
+            while not (root / "pre_ok.json").is_file():
+                if time.monotonic() >= deadline:
+                    return
+                time.sleep(0.002)
+            bound_post = copy.deepcopy(post)
+            bound_post["pre_ok_sha256"] = attestor.file_sha256(root / "pre_ok.json")
+            self.write(root / "post_request.json", bound_post)
+        thread = threading.Thread(target=publish, daemon=True)
+        thread.start()
+        return thread
+
+    def test_watch_writes_bound_pre_and_post_acknowledgements(self):
+        with tempfile.TemporaryDirectory(prefix="smoother_watch_") as raw:
+            root = Path(raw).resolve()
+            challenge_path, challenge, pre, post, snapshot = self.protocol_fixture(root)
+            self.write(root / "pre_request.json", pre)
+            publisher = self.publish_post_after_ack(root, post)
+            calls = []
+
+            def capture(expected):
+                calls.append(expected)
+                return copy.deepcopy(snapshot)
+
+            result = attestor.watch_challenge(challenge_path, 1, capture)
+            publisher.join(1)
+            pre_ok = json.loads((root / "pre_ok.json").read_text())
+            post_ok = json.loads((root / "post_ok.json").read_text())
+            written = json.loads((root / "mac_process_attestation.json").read_text())
+            self.assertEqual(len(calls), 2)
+            self.assertEqual(pre_ok["run_nonce"], challenge["run_nonce"])
+            self.assertEqual(pre_ok["pre_request_sha256"], attestor.canonical_sha256(pre))
+            self.assertEqual(pre_ok["pre_snapshot_sha256"], attestor.canonical_sha256(snapshot))
+            self.assertEqual(pre_ok["snapshot"], snapshot)
+            self.assertEqual(written, result)
+            self.assertEqual(post_ok["attestation_sha256"], attestor.file_sha256(root / "mac_process_attestation.json"))
+
+    def test_watch_times_out_without_pre_request(self):
+        with tempfile.TemporaryDirectory(prefix="smoother_watch_") as raw:
+            root = Path(raw).resolve()
+            challenge_path, _, _, _, _ = self.protocol_fixture(root)
+            with self.assertRaisesRegex(attestor.AttestationError, "timeout"):
+                attestor.watch_challenge(challenge_path, 0.01, lambda expected: self.fail("capture"))
+
+    def test_watch_rejects_stale_ack_and_attestation_outputs(self):
+        for filename in ("post_request.json", "pre_ok.json", "post_ok.json", "mac_process_attestation.json"):
+            with tempfile.TemporaryDirectory(prefix="smoother_watch_") as raw:
+                root = Path(raw).resolve()
+                challenge_path, _, _, _, _ = self.protocol_fixture(root)
+                (root / filename).write_text("{}", encoding="utf-8")
+                with self.subTest(filename=filename), self.assertRaisesRegex(attestor.AttestationError, "preexisting"):
+                    attestor.watch_challenge(challenge_path, 0.01, lambda expected: self.fail("capture"))
+
+    def test_watch_enforces_overall_deadline_after_snapshot(self):
+        with tempfile.TemporaryDirectory(prefix="smoother_watch_") as raw:
+            root = Path(raw).resolve()
+            challenge_path, _, pre, _, snapshot = self.protocol_fixture(root)
+            self.write(root / "pre_request.json", pre)
+            def slow_capture(expected):
+                time.sleep(0.02)
+                return snapshot
+            with self.assertRaisesRegex(attestor.AttestationError, "overall timeout"):
+                attestor.watch_challenge(challenge_path, 0.005, slow_capture)
+            self.assertFalse((root / "pre_ok.json").exists())
+
+    def test_post_request_cannot_appear_during_pre_snapshot(self):
+        with tempfile.TemporaryDirectory(prefix="smoother_watch_") as raw:
+            root = Path(raw).resolve()
+            challenge_path, _, pre, post, snapshot = self.protocol_fixture(root)
+            self.write(root / "pre_request.json", pre)
+            def early_post(expected):
+                self.write(root / "post_request.json", post)
+                return snapshot
+            with self.assertRaisesRegex(attestor.AttestationError, "before pre acknowledgement"):
+                attestor.watch_challenge(challenge_path, 1, early_post)
+            self.assertFalse((root / "pre_ok.json").exists())
+
+    def test_published_protocol_hardlink_is_rejected(self):
+        with tempfile.TemporaryDirectory(prefix="smoother_watch_") as raw:
+            root = Path(raw).resolve()
+            path = root / "proof.json"
+            attestor.atomic_write_json(path, {"a": 1})
+            alias = root / "proof-alias.json"
+            alias.hardlink_to(path)
+            with self.assertRaisesRegex(attestor.AttestationError, "hardlink aliases"):
+                attestor._assert_unchanged(path, {"a": 1}, "proof")
+
+    def test_watch_rejects_malformed_or_symlink_request(self):
+        for symlink in (False, True):
+            with tempfile.TemporaryDirectory(prefix="smoother_watch_") as raw:
+                root = Path(raw).resolve()
+                challenge_path, _, _, _, _ = self.protocol_fixture(root)
+                malformed = root / "malformed.json"
+                malformed.write_text('{"run_nonce":', encoding="utf-8")
+                request = root / "pre_request.json"
+                if symlink:
+                    request.symlink_to(malformed)
+                else:
+                    request.write_bytes(malformed.read_bytes())
+                with self.subTest(symlink=symlink), self.assertRaises(attestor.AttestationError):
+                    attestor.watch_challenge(challenge_path, 0.1, lambda expected: self.fail("capture"))
+
+    def test_watch_rejects_pre_post_snapshot_drift_without_final_output(self):
+        with tempfile.TemporaryDirectory(prefix="smoother_watch_") as raw:
+            root = Path(raw).resolve()
+            challenge_path, _, pre, post, snapshot = self.protocol_fixture(root)
+            self.write(root / "pre_request.json", pre)
+            publisher = self.publish_post_after_ack(root, post)
+            changed = copy.deepcopy(snapshot)
+            changed["process"]["birth_token"] = "9:9"
+            captures = iter((snapshot, changed))
+            with self.assertRaisesRegex(attestor.AttestationError, "process identity changed"):
+                attestor.watch_challenge(challenge_path, 1, lambda expected: copy.deepcopy(next(captures)))
+            publisher.join(1)
+            self.assertFalse((root / "mac_process_attestation.json").exists())
+            self.assertFalse((root / "post_ok.json").exists())
+
+    def test_watch_rejects_output_tamper_and_has_no_process_control(self):
+        with tempfile.TemporaryDirectory(prefix="smoother_watch_") as raw:
+            root = Path(raw).resolve()
+            challenge_path, _, pre, post, snapshot = self.protocol_fixture(root)
+            self.write(root / "pre_request.json", pre)
+            self.write(root / "post_request.json", post)
+            (root / "mac_process_attestation.json").write_text('{"tampered":true}', encoding="utf-8")
+            with self.assertRaisesRegex(attestor.AttestationError, "preexisting"):
+                attestor.watch_challenge(challenge_path, 1, lambda expected: snapshot)
+        source = PATH.read_text()
+        for forbidden in ("osascript", "launchctl", "pkill", "os.kill", "terminate(", "Popen("):
+            self.assertNotIn(forbidden, source)
+        self.assertIn('"--challenge"', source)
+        self.assertIn('"--watch"', source)
+        self.assertIn('"--timeout"', source)
 
 
 if __name__ == "__main__":

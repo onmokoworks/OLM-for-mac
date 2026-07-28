@@ -9,6 +9,7 @@ stable render-process/module interval.
 from __future__ import annotations
 
 import hashlib
+import argparse
 import contextlib
 import json
 import os
@@ -19,11 +20,20 @@ import subprocess
 import tempfile
 import ctypes
 import ctypes.util
+import time
 from pathlib import Path
 from typing import Any, Callable
 
 HEX64 = re.compile(r"[0-9a-f]{64}")
 ROLES = ("no_effect_control", "effect_on")
+PROTOCOL_FILES = {
+    "pre_request": "pre_request.json",
+    "pre_ok": "pre_ok.json",
+    "post_request": "post_request.json",
+    "post_ok": "post_ok.json",
+    "attestation": "mac_process_attestation.json",
+}
+MAX_PROTOCOL_JSON_BYTES = 1024 * 1024
 
 
 class AttestationError(ValueError):
@@ -350,7 +360,7 @@ def run_once(
     pre_snapshot_digest = canonical_sha256(pre_snapshot)
 
     post = _object(post_request, "post_request")
-    if set(post) != {"kind", "schema_version", "run_nonce", "challenge_sha256", "sequence", "pre_request_sha256", "pre_snapshot_sha256", "result_sha256", "artifacts"}:
+    if set(post) != {"kind", "schema_version", "run_nonce", "challenge_sha256", "sequence", "pre_request_sha256", "pre_snapshot_sha256", "pre_ok_sha256", "result_sha256", "artifacts"}:
         raise AttestationError("post request schema mismatch")
     if post.get("kind") != "olmsmoother2_mac_process_post_request" or type(post.get("schema_version")) is not int or post.get("schema_version") != 1 or post.get("run_nonce") != nonce:
         raise AttestationError("post request identity/nonce mismatch")
@@ -358,6 +368,7 @@ def run_once(
         raise AttestationError("post request challenge/sequence mismatch")
     if post.get("pre_request_sha256") != pre_digest or post.get("pre_snapshot_sha256") != pre_snapshot_digest:
         raise AttestationError("post request pre-phase digest chain mismatch")
+    _hex(post.get("pre_ok_sha256"), "post_request.pre_ok_sha256")
     post_snapshot = validate_snapshot(snapshot_provider("post"), expected, "post")
     for section, keys in (
         ("process", ("pid", "birth_token", "executable_path", "executable_sha256", "dev", "ino", "size", "mtime_ns")),
@@ -424,14 +435,213 @@ def atomic_write_json(path: Path, value: object) -> None:
             os.fsync(stream.fileno())
         if path.exists() or path.is_symlink():
             raise AttestationError(f"refusing to overwrite {path}")
-        os.link(temp, path)
+        try:
+            os.link(temp, path)
+        except FileExistsError as exc:
+            raise AttestationError(f"refusing to overwrite {path}") from exc
+        temp.unlink()
+        os.chmod(path, 0o444, follow_symlinks=False)
+        directory = os.open(path.parent, os.O_RDONLY | getattr(os, "O_CLOEXEC", 0))
+        try:
+            os.fsync(directory)
+        finally:
+            os.close(directory)
+        if os.stat(path, follow_symlinks=False).st_nlink != 1:
+            raise AttestationError(f"published protocol file has aliases: {path}")
     finally:
         temp.unlink(missing_ok=True)
 
 
+def _strict_json_bytes(payload: bytes, label: str) -> object:
+    if not payload or len(payload) > MAX_PROTOCOL_JSON_BYTES:
+        raise AttestationError(f"{label} has invalid size")
+
+    def pairs(items: list[tuple[str, object]]) -> dict[str, object]:
+        result: dict[str, object] = {}
+        for key, value in items:
+            if key in result:
+                raise AttestationError(f"{label} contains duplicate JSON key")
+            result[key] = value
+        return result
+
+    def invalid_constant(value: str) -> object:
+        raise AttestationError(f"{label} contains invalid JSON number {value}")
+
+    try:
+        return json.loads(
+            payload.decode("utf-8", errors="strict"),
+            object_pairs_hook=pairs,
+            parse_constant=invalid_constant,
+        )
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise AttestationError(f"{label} is malformed JSON") from exc
+
+
+def strict_load_json(path: Path, label: str) -> object:
+    """Read one bounded regular file without following links or accepting drift."""
+    if not path.is_absolute() or path.is_symlink():
+        raise AttestationError(f"{label} must be an absolute non-symlink")
+    flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
+    try:
+        descriptor = os.open(path, flags)
+    except OSError as exc:
+        raise AttestationError(f"{label} cannot be opened without following links") from exc
+    try:
+        before = os.fstat(descriptor)
+        if not stat.S_ISREG(before.st_mode):
+            raise AttestationError(f"{label} is not a regular file")
+        payload = bytearray()
+        while len(payload) <= MAX_PROTOCOL_JSON_BYTES:
+            chunk = os.read(descriptor, min(65536, MAX_PROTOCOL_JSON_BYTES + 1 - len(payload)))
+            if not chunk:
+                break
+            payload.extend(chunk)
+        after = os.fstat(descriptor)
+        current = os.stat(path, follow_symlinks=False)
+        identity = lambda row: (row.st_dev, row.st_ino, row.st_size, row.st_mtime_ns)
+        if identity(before) != identity(after) or identity(after) != identity(current):
+            raise AttestationError(f"{label} changed while being read")
+        return _strict_json_bytes(bytes(payload), label)
+    finally:
+        os.close(descriptor)
+
+
+def _wait_for_request(path: Path, label: str, deadline: float) -> object:
+    while True:
+        try:
+            os.lstat(path)
+        except FileNotFoundError:
+            if time.monotonic() >= deadline:
+                raise AttestationError(f"timeout waiting for {label}")
+            time.sleep(min(0.02, max(0.0, deadline - time.monotonic())))
+            continue
+        return strict_load_json(path, label)
+
+
+def _assert_unchanged(path: Path, expected: object, label: str) -> None:
+    if os.stat(path, follow_symlinks=False).st_nlink != 1:
+        raise AttestationError(f"{label} has hardlink aliases")
+    if canonical_sha256(strict_load_json(path, label)) != canonical_sha256(expected):
+        raise AttestationError(f"{label} changed after acceptance")
+
+
+def _require_deadline(deadline: float, label: str) -> None:
+    if time.monotonic() > deadline:
+        raise AttestationError(f"overall timeout after {label}")
+
+
+def watch_challenge(
+    challenge_path: Path,
+    timeout: float,
+    snapshot_provider: Callable[[dict[str, Any]], dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    """Serve the nonce-bound two-phase filesystem protocol until one attestation."""
+    if not isinstance(timeout, (int, float)) or isinstance(timeout, bool) or timeout <= 0:
+        raise AttestationError("timeout must be positive")
+    if not challenge_path.is_absolute() or challenge_path.is_symlink():
+        raise AttestationError("challenge must be an absolute non-symlink path")
+    resolved_challenge = challenge_path.resolve(strict=True)
+    if challenge_path != resolved_challenge:
+        raise AttestationError("challenge path must be canonical without symlink aliases")
+    challenge_path = resolved_challenge
+    capture = snapshot_provider or snapshot_from_macos
+    parent = challenge_path.parent
+    paths = {name: parent / filename for name, filename in PROTOCOL_FILES.items()}
+    for name in ("post_request", "pre_ok", "post_ok", "attestation"):
+        if paths[name].exists() or paths[name].is_symlink():
+            raise AttestationError(f"refusing preexisting {paths[name].name}")
+
+    challenge = _object(strict_load_json(challenge_path, "challenge"), "challenge")
+
+    deadline = time.monotonic() + float(timeout)
+    pre = _object(_wait_for_request(paths["pre_request"], "pre_request", deadline), "pre_request")
+    expected = _object(challenge.get("expected"), "challenge.expected")
+    captured_pre: dict[str, Any] | None = None
+
+    def capture_pre(phase: str) -> dict[str, Any]:
+        nonlocal captured_pre
+        if phase != "pre":
+            return {}
+        captured_pre = capture(expected)
+        return captured_pre
+
+    # Reuse run_once's exact challenge and pre-request validation before
+    # publishing the ack; the intentionally absent post request stops it after
+    # the independently captured pre snapshot has been validated.
+    try:
+        run_once(challenge, pre, {}, capture_pre)
+    except AttestationError as exc:
+        if "post request schema mismatch" not in str(exc):
+            raise
+    if captured_pre is None:
+        raise AttestationError("pre snapshot was not captured")
+    pre_snapshot = captured_pre
+    _require_deadline(deadline, "pre snapshot")
+    pre_ok = {
+        "kind": "olmsmoother2_mac_process_pre_ok",
+        "schema_version": 1,
+        "run_nonce": challenge["run_nonce"],
+        "challenge_sha256": canonical_sha256(challenge),
+        "pre_request_sha256": canonical_sha256(pre),
+        "pre_snapshot_sha256": canonical_sha256(pre_snapshot),
+        "snapshot": pre_snapshot,
+    }
+    if paths["post_request"].exists() or paths["post_request"].is_symlink():
+        raise AttestationError("post_request appeared before pre acknowledgement")
+    atomic_write_json(paths["pre_ok"], pre_ok)
+    pre_ok_file_digest = file_sha256(paths["pre_ok"])
+
+    post = _object(_wait_for_request(paths["post_request"], "post_request", deadline), "post_request")
+    if post.get("pre_ok_sha256") != pre_ok_file_digest:
+        raise AttestationError("post request does not bind the published pre acknowledgement")
+    _assert_unchanged(challenge_path, challenge, "challenge")
+    _assert_unchanged(paths["pre_request"], pre, "pre_request")
+    _assert_unchanged(paths["pre_ok"], pre_ok, "pre_ok")
+    post_snapshot = validate_snapshot(capture(expected), expected, "post")
+    _require_deadline(deadline, "post snapshot")
+    attestation = run_once(
+        challenge,
+        pre,
+        post,
+        lambda phase: pre_snapshot if phase == "pre" else post_snapshot,
+    )
+    _require_deadline(deadline, "final validation")
+    # Catch tampering during the final validation before committing the proof.
+    _assert_unchanged(challenge_path, challenge, "challenge")
+    _assert_unchanged(paths["pre_request"], pre, "pre_request")
+    _assert_unchanged(paths["pre_ok"], pre_ok, "pre_ok")
+    _assert_unchanged(paths["post_request"], post, "post_request")
+    atomic_write_json(paths["attestation"], attestation)
+    attestation_file_digest = file_sha256(paths["attestation"])
+    _assert_unchanged(paths["attestation"], attestation, "attestation")
+    _require_deadline(deadline, "attestation publication")
+    post_ok = {
+        "kind": "olmsmoother2_mac_process_post_ok",
+        "schema_version": 1,
+        "run_nonce": challenge["run_nonce"],
+        "challenge_sha256": canonical_sha256(challenge),
+        "post_request_sha256": canonical_sha256(post),
+        "attestation_sha256": attestation_file_digest,
+    }
+    atomic_write_json(paths["post_ok"], post_ok)
+    _require_deadline(deadline, "post acknowledgement publication")
+    return attestation
+
+
 def main() -> int:
-    print("[FAIL_CLOSED] live process adapter is not implemented; use run_once with an independently tested snapshot provider")
-    return 2
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--challenge", type=Path, required=True)
+    parser.add_argument("--watch", action="store_true")
+    parser.add_argument("--timeout", type=float, required=True)
+    args = parser.parse_args()
+    if not args.watch:
+        parser.error("--watch is required")
+    try:
+        watch_challenge(args.challenge, args.timeout)
+    except (AttestationError, OSError) as exc:
+        print(f"[FAIL_CLOSED] {exc}")
+        return 2
+    return 0
 
 
 if __name__ == "__main__":
