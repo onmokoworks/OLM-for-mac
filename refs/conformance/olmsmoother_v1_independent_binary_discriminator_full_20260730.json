@@ -1,0 +1,2068 @@
+{
+  "cases": [
+    {
+      "decoded_worker_png_rgba": {
+        "exact": false,
+        "max_abs_diff": 63,
+        "mismatched_bytes": 633
+      },
+      "id": "case_0001",
+      "input_sha256": "166cafc8aaa2bb2d78ed26a12fe95b6dcf0f6eeeabd7f3a4daaf0ceece500e4c",
+      "raw_pf8_argb_sha256": {
+        "exact": false,
+        "v1_sha256": "56e4d17b3f4acd08b7513f4d045392838d8f6d17699c41868f00b26b30f94257",
+        "v2_forced_v1_sha256": "83afbf8c1f5f31501c09e9051e3b11f7e63f077b5432ea5f325bd885b9a13ab9"
+      },
+      "render_readback": {
+        "v1": {
+          "assignments": [
+            "Use Color Key@1=0",
+            "Color Key@2=255,255,255,255",
+            "Do Smooth Range@3=6"
+          ],
+          "worker_result": {
+            "dropped_unsupported_suite_calls": 0,
+            "guards_intact": true,
+            "height": 540,
+            "input_png_sha256": "166cafc8aaa2bb2d78ed26a12fe95b6dcf0f6eeeabd7f3a4daaf0ceece500e4c",
+            "input_requests": [],
+            "output_png": "/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olm_smoother_v1_discriminator_wv4h_6v9/case_0001.v1.png",
+            "output_request": [
+              0,
+              0,
+              960,
+              540
+            ],
+            "parameter_values": [
+              {
+                "name": "Use Color Key",
+                "slot": 1,
+                "value": 0.0
+              },
+              {
+                "color": [
+                  255,
+                  255,
+                  255,
+                  255
+                ],
+                "name": "Color Key",
+                "slot": 2
+              },
+              {
+                "name": "Do Smooth Range",
+                "slot": 3,
+                "value": 6.0
+              }
+            ],
+            "pixel_bytes": 2073600,
+            "pixel_format": "argb8",
+            "raw_pixel_bytes": 2073600,
+            "raw_pixel_sha256": "56e4d17b3f4acd08b7513f4d045392838d8f6d17699c41868f00b26b30f94257",
+            "render_error": 0,
+            "render_mode": "classic",
+            "schema_version": 1,
+            "setup": {
+              "advertised_num_params": 4,
+              "dropped_unsupported_suite_calls": 0,
+              "execution_backend": "unicorn-x86_64",
+              "global_setup_error": 0,
+              "out_flags": 33554496,
+              "out_flags2": 134217728,
+              "parameters": [
+                {
+                  "default_value": 0.0,
+                  "index": -1,
+                  "name": "Use Color Key",
+                  "param_type": 4,
+                  "precision": null,
+                  "slider_max": 1.0,
+                  "slider_min": 0.0,
+                  "slot": 1,
+                  "valid_max": 1.0,
+                  "valid_min": 0.0
+                },
+                {
+                  "current_color": [
+                    255,
+                    255,
+                    255,
+                    255
+                  ],
+                  "default_color": [
+                    255,
+                    255,
+                    255,
+                    255
+                  ],
+                  "default_value": null,
+                  "index": -1,
+                  "name": "Color Key",
+                  "param_type": 5,
+                  "precision": null,
+                  "slider_max": null,
+                  "slider_min": null,
+                  "slot": 2,
+                  "valid_max": null,
+                  "valid_min": null
+                },
+                {
+                  "default_value": 6.0,
+                  "index": -1,
+                  "name": "Do Smooth Range",
+                  "param_type": 1,
+                  "precision": null,
+                  "slider_max": 255.0,
+                  "slider_min": 0.0,
+                  "slot": 3,
+                  "valid_max": 255.0,
+                  "valid_min": 0.0
+                }
+              ],
+              "params_setup_error": 0,
+              "schema_version": 1,
+              "suite_requests": [],
+              "unsupported_suite_calls": []
+            },
+            "suite_requests": [
+              "PF Iterate8 Suite v1"
+            ],
+            "unsupported_suite_calls": [],
+            "width": 960
+          }
+        },
+        "v2_forced_v1": {
+          "assignments": [
+            "Enable Color Key@1=0",
+            "Color Key@2=255,255,255,255",
+            "Invert Color Key@3=0",
+            "Smoothness@4=100",
+            "Extra Smooth@5=0",
+            "Smooth Range@6=6",
+            "Smoother Version@7=1",
+            "Gamma Correction@8=1",
+            "Gamma Value@9=2.4000000953674316",
+            "Number of Gamma Colors@10=1",
+            "Gamma Color@11=255,0,0,0",
+            "Gamma Color@12=255,0,0,0",
+            "Gamma Color@13=255,0,0,0",
+            "Gamma Color@14=255,0,0,0",
+            "Gamma Color@15=255,0,0,0"
+          ],
+          "worker_result": {
+            "dropped_unsupported_suite_calls": 0,
+            "guards_intact": true,
+            "height": 540,
+            "input_png_sha256": "166cafc8aaa2bb2d78ed26a12fe95b6dcf0f6eeeabd7f3a4daaf0ceece500e4c",
+            "input_requests": [
+              [
+                0,
+                0,
+                960,
+                540
+              ]
+            ],
+            "output_png": "/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olm_smoother_v1_discriminator_wv4h_6v9/case_0001.v2_forced_v1.png",
+            "output_request": [
+              0,
+              0,
+              960,
+              540
+            ],
+            "parameter_values": [
+              {
+                "name": "Enable Color Key",
+                "slot": 1,
+                "value": 0.0
+              },
+              {
+                "color": [
+                  255,
+                  255,
+                  255,
+                  255
+                ],
+                "name": "Color Key",
+                "slot": 2
+              },
+              {
+                "name": "Invert Color Key",
+                "slot": 3,
+                "value": 0.0
+              },
+              {
+                "name": "Smoothness",
+                "slot": 4,
+                "value": 100.0
+              },
+              {
+                "name": "Extra Smooth",
+                "slot": 5,
+                "value": 0.0
+              },
+              {
+                "name": "Smooth Range",
+                "slot": 6,
+                "value": 6.0
+              },
+              {
+                "name": "Smoother Version",
+                "slot": 7,
+                "value": 1.0
+              },
+              {
+                "name": "Gamma Correction",
+                "slot": 8,
+                "value": 1.0
+              },
+              {
+                "name": "Gamma Value",
+                "slot": 9,
+                "value": 2.4000000953674316
+              },
+              {
+                "name": "Number of Gamma Colors",
+                "slot": 10,
+                "value": 1.0
+              },
+              {
+                "color": [
+                  255,
+                  0,
+                  0,
+                  0
+                ],
+                "name": "Gamma Color",
+                "slot": 11
+              },
+              {
+                "color": [
+                  255,
+                  0,
+                  0,
+                  0
+                ],
+                "name": "Gamma Color",
+                "slot": 12
+              },
+              {
+                "color": [
+                  255,
+                  0,
+                  0,
+                  0
+                ],
+                "name": "Gamma Color",
+                "slot": 13
+              },
+              {
+                "color": [
+                  255,
+                  0,
+                  0,
+                  0
+                ],
+                "name": "Gamma Color",
+                "slot": 14
+              },
+              {
+                "color": [
+                  255,
+                  0,
+                  0,
+                  0
+                ],
+                "name": "Gamma Color",
+                "slot": 15
+              }
+            ],
+            "pixel_bytes": 2073600,
+            "pixel_format": "argb8",
+            "raw_pixel_bytes": 2073600,
+            "raw_pixel_sha256": "83afbf8c1f5f31501c09e9051e3b11f7e63f077b5432ea5f325bd885b9a13ab9",
+            "render_error": 0,
+            "render_mode": "smart-cpu",
+            "schema_version": 1,
+            "setup": {
+              "advertised_num_params": 16,
+              "dropped_unsupported_suite_calls": 0,
+              "execution_backend": "unicorn-x86_64",
+              "global_setup_error": 0,
+              "out_flags": 33555520,
+              "out_flags2": 134222848,
+              "parameters": [
+                {
+                  "default_value": 0.0,
+                  "index": -1,
+                  "name": "Enable Color Key",
+                  "param_type": 4,
+                  "precision": null,
+                  "slider_max": 1.0,
+                  "slider_min": 0.0,
+                  "slot": 1,
+                  "valid_max": 1.0,
+                  "valid_min": 0.0
+                },
+                {
+                  "current_color": [
+                    255,
+                    255,
+                    255,
+                    255
+                  ],
+                  "default_color": [
+                    255,
+                    255,
+                    255,
+                    255
+                  ],
+                  "default_value": null,
+                  "index": -1,
+                  "name": "Color Key",
+                  "param_type": 5,
+                  "precision": null,
+                  "slider_max": null,
+                  "slider_min": null,
+                  "slot": 2,
+                  "valid_max": null,
+                  "valid_min": null
+                },
+                {
+                  "default_value": 0.0,
+                  "index": -1,
+                  "name": "Invert Color Key",
+                  "param_type": 4,
+                  "precision": null,
+                  "slider_max": 1.0,
+                  "slider_min": 0.0,
+                  "slot": 3,
+                  "valid_max": 1.0,
+                  "valid_min": 0.0
+                },
+                {
+                  "default_value": 100.0,
+                  "index": -1,
+                  "name": "Smoothness",
+                  "param_type": 1,
+                  "precision": null,
+                  "slider_max": 100.0,
+                  "slider_min": 0.0,
+                  "slot": 4,
+                  "valid_max": 100.0,
+                  "valid_min": 0.0
+                },
+                {
+                  "default_value": 0.0,
+                  "index": -1,
+                  "name": "Extra Smooth",
+                  "param_type": 1,
+                  "precision": null,
+                  "slider_max": 100.0,
+                  "slider_min": 0.0,
+                  "slot": 5,
+                  "valid_max": 100.0,
+                  "valid_min": 0.0
+                },
+                {
+                  "default_value": 2.0,
+                  "index": -1,
+                  "name": "Smooth Range",
+                  "param_type": 1,
+                  "precision": null,
+                  "slider_max": 100.0,
+                  "slider_min": 0.0,
+                  "slot": 6,
+                  "valid_max": 100.0,
+                  "valid_min": 0.0
+                },
+                {
+                  "default_value": 2.0,
+                  "index": -1,
+                  "name": "Smoother Version",
+                  "param_type": 7,
+                  "precision": null,
+                  "slider_max": 2.0,
+                  "slider_min": 1.0,
+                  "slot": 7,
+                  "valid_max": 2.0,
+                  "valid_min": 1.0
+                },
+                {
+                  "default_value": 1.0,
+                  "index": -1,
+                  "name": "Gamma Correction",
+                  "param_type": 7,
+                  "precision": null,
+                  "slider_max": 3.0,
+                  "slider_min": 1.0,
+                  "slot": 8,
+                  "valid_max": 3.0,
+                  "valid_min": 1.0
+                },
+                {
+                  "default_value": 2.4000000953674316,
+                  "index": -1,
+                  "name": "Gamma Value",
+                  "param_type": 10,
+                  "precision": 2,
+                  "slider_max": 2.4000000953674316,
+                  "slider_min": 1.0,
+                  "slot": 9,
+                  "valid_max": 2.4000000953674316,
+                  "valid_min": 1.0
+                },
+                {
+                  "default_value": 1.0,
+                  "index": -1,
+                  "name": "Number of Gamma Colors",
+                  "param_type": 1,
+                  "precision": null,
+                  "slider_max": 5.0,
+                  "slider_min": 0.0,
+                  "slot": 10,
+                  "valid_max": 5.0,
+                  "valid_min": 0.0
+                },
+                {
+                  "current_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_value": null,
+                  "index": -1,
+                  "name": "Gamma Color",
+                  "param_type": 5,
+                  "precision": null,
+                  "slider_max": null,
+                  "slider_min": null,
+                  "slot": 11,
+                  "valid_max": null,
+                  "valid_min": null
+                },
+                {
+                  "current_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_value": null,
+                  "index": -1,
+                  "name": "Gamma Color",
+                  "param_type": 5,
+                  "precision": null,
+                  "slider_max": null,
+                  "slider_min": null,
+                  "slot": 12,
+                  "valid_max": null,
+                  "valid_min": null
+                },
+                {
+                  "current_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_value": null,
+                  "index": -1,
+                  "name": "Gamma Color",
+                  "param_type": 5,
+                  "precision": null,
+                  "slider_max": null,
+                  "slider_min": null,
+                  "slot": 13,
+                  "valid_max": null,
+                  "valid_min": null
+                },
+                {
+                  "current_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_value": null,
+                  "index": -1,
+                  "name": "Gamma Color",
+                  "param_type": 5,
+                  "precision": null,
+                  "slider_max": null,
+                  "slider_min": null,
+                  "slot": 14,
+                  "valid_max": null,
+                  "valid_min": null
+                },
+                {
+                  "current_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_value": null,
+                  "index": -1,
+                  "name": "Gamma Color",
+                  "param_type": 5,
+                  "precision": null,
+                  "slider_max": null,
+                  "slider_min": null,
+                  "slot": 15,
+                  "valid_max": null,
+                  "valid_min": null
+                }
+              ],
+              "params_setup_error": 0,
+              "schema_version": 1,
+              "suite_requests": [
+                "PF Handle Suite v2",
+                "AEGP Utility Suite v13",
+                "AEGP Memory Suite v1"
+              ],
+              "unsupported_suite_calls": []
+            },
+            "suite_requests": [
+              "PF Handle Suite v2",
+              "AEGP Utility Suite v13",
+              "AEGP Memory Suite v1",
+              "PF World Suite v2"
+            ],
+            "unsupported_suite_calls": [],
+            "width": 960
+          }
+        }
+      },
+      "round_premultiplied_export_rgba": {
+        "exact": false,
+        "max_abs_diff": 63,
+        "mismatched_bytes": 633
+      },
+      "size": [
+        960,
+        540
+      ]
+    },
+    {
+      "decoded_worker_png_rgba": {
+        "exact": false,
+        "max_abs_diff": 63,
+        "mismatched_bytes": 982
+      },
+      "id": "case_0002",
+      "input_sha256": "dd9c1adc8920f6785e5d4449545c29e5f3b60761244dae6d34293b401e0f0c9c",
+      "raw_pf8_argb_sha256": {
+        "exact": false,
+        "v1_sha256": "6fe3055ef4c00544e66657fb931b8c3517f4f449df2601c601d837f43585092b",
+        "v2_forced_v1_sha256": "8fa42622e1a4a13f0670e018e23e29ba1a0be07370befc4d447be178ccd041d1"
+      },
+      "render_readback": {
+        "v1": {
+          "assignments": [
+            "Use Color Key@1=0",
+            "Color Key@2=255,255,255,255",
+            "Do Smooth Range@3=6"
+          ],
+          "worker_result": {
+            "dropped_unsupported_suite_calls": 0,
+            "guards_intact": true,
+            "height": 540,
+            "input_png_sha256": "dd9c1adc8920f6785e5d4449545c29e5f3b60761244dae6d34293b401e0f0c9c",
+            "input_requests": [],
+            "output_png": "/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olm_smoother_v1_discriminator_wv4h_6v9/case_0002.v1.png",
+            "output_request": [
+              0,
+              0,
+              960,
+              540
+            ],
+            "parameter_values": [
+              {
+                "name": "Use Color Key",
+                "slot": 1,
+                "value": 0.0
+              },
+              {
+                "color": [
+                  255,
+                  255,
+                  255,
+                  255
+                ],
+                "name": "Color Key",
+                "slot": 2
+              },
+              {
+                "name": "Do Smooth Range",
+                "slot": 3,
+                "value": 6.0
+              }
+            ],
+            "pixel_bytes": 2073600,
+            "pixel_format": "argb8",
+            "raw_pixel_bytes": 2073600,
+            "raw_pixel_sha256": "6fe3055ef4c00544e66657fb931b8c3517f4f449df2601c601d837f43585092b",
+            "render_error": 0,
+            "render_mode": "classic",
+            "schema_version": 1,
+            "setup": {
+              "advertised_num_params": 4,
+              "dropped_unsupported_suite_calls": 0,
+              "execution_backend": "unicorn-x86_64",
+              "global_setup_error": 0,
+              "out_flags": 33554496,
+              "out_flags2": 134217728,
+              "parameters": [
+                {
+                  "default_value": 0.0,
+                  "index": -1,
+                  "name": "Use Color Key",
+                  "param_type": 4,
+                  "precision": null,
+                  "slider_max": 1.0,
+                  "slider_min": 0.0,
+                  "slot": 1,
+                  "valid_max": 1.0,
+                  "valid_min": 0.0
+                },
+                {
+                  "current_color": [
+                    255,
+                    255,
+                    255,
+                    255
+                  ],
+                  "default_color": [
+                    255,
+                    255,
+                    255,
+                    255
+                  ],
+                  "default_value": null,
+                  "index": -1,
+                  "name": "Color Key",
+                  "param_type": 5,
+                  "precision": null,
+                  "slider_max": null,
+                  "slider_min": null,
+                  "slot": 2,
+                  "valid_max": null,
+                  "valid_min": null
+                },
+                {
+                  "default_value": 6.0,
+                  "index": -1,
+                  "name": "Do Smooth Range",
+                  "param_type": 1,
+                  "precision": null,
+                  "slider_max": 255.0,
+                  "slider_min": 0.0,
+                  "slot": 3,
+                  "valid_max": 255.0,
+                  "valid_min": 0.0
+                }
+              ],
+              "params_setup_error": 0,
+              "schema_version": 1,
+              "suite_requests": [],
+              "unsupported_suite_calls": []
+            },
+            "suite_requests": [
+              "PF Iterate8 Suite v1"
+            ],
+            "unsupported_suite_calls": [],
+            "width": 960
+          }
+        },
+        "v2_forced_v1": {
+          "assignments": [
+            "Enable Color Key@1=0",
+            "Color Key@2=255,255,255,255",
+            "Invert Color Key@3=0",
+            "Smoothness@4=100",
+            "Extra Smooth@5=0",
+            "Smooth Range@6=6",
+            "Smoother Version@7=1",
+            "Gamma Correction@8=1",
+            "Gamma Value@9=2.4000000953674316",
+            "Number of Gamma Colors@10=1",
+            "Gamma Color@11=255,0,0,0",
+            "Gamma Color@12=255,0,0,0",
+            "Gamma Color@13=255,0,0,0",
+            "Gamma Color@14=255,0,0,0",
+            "Gamma Color@15=255,0,0,0"
+          ],
+          "worker_result": {
+            "dropped_unsupported_suite_calls": 0,
+            "guards_intact": true,
+            "height": 540,
+            "input_png_sha256": "dd9c1adc8920f6785e5d4449545c29e5f3b60761244dae6d34293b401e0f0c9c",
+            "input_requests": [
+              [
+                0,
+                0,
+                960,
+                540
+              ]
+            ],
+            "output_png": "/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olm_smoother_v1_discriminator_wv4h_6v9/case_0002.v2_forced_v1.png",
+            "output_request": [
+              0,
+              0,
+              960,
+              540
+            ],
+            "parameter_values": [
+              {
+                "name": "Enable Color Key",
+                "slot": 1,
+                "value": 0.0
+              },
+              {
+                "color": [
+                  255,
+                  255,
+                  255,
+                  255
+                ],
+                "name": "Color Key",
+                "slot": 2
+              },
+              {
+                "name": "Invert Color Key",
+                "slot": 3,
+                "value": 0.0
+              },
+              {
+                "name": "Smoothness",
+                "slot": 4,
+                "value": 100.0
+              },
+              {
+                "name": "Extra Smooth",
+                "slot": 5,
+                "value": 0.0
+              },
+              {
+                "name": "Smooth Range",
+                "slot": 6,
+                "value": 6.0
+              },
+              {
+                "name": "Smoother Version",
+                "slot": 7,
+                "value": 1.0
+              },
+              {
+                "name": "Gamma Correction",
+                "slot": 8,
+                "value": 1.0
+              },
+              {
+                "name": "Gamma Value",
+                "slot": 9,
+                "value": 2.4000000953674316
+              },
+              {
+                "name": "Number of Gamma Colors",
+                "slot": 10,
+                "value": 1.0
+              },
+              {
+                "color": [
+                  255,
+                  0,
+                  0,
+                  0
+                ],
+                "name": "Gamma Color",
+                "slot": 11
+              },
+              {
+                "color": [
+                  255,
+                  0,
+                  0,
+                  0
+                ],
+                "name": "Gamma Color",
+                "slot": 12
+              },
+              {
+                "color": [
+                  255,
+                  0,
+                  0,
+                  0
+                ],
+                "name": "Gamma Color",
+                "slot": 13
+              },
+              {
+                "color": [
+                  255,
+                  0,
+                  0,
+                  0
+                ],
+                "name": "Gamma Color",
+                "slot": 14
+              },
+              {
+                "color": [
+                  255,
+                  0,
+                  0,
+                  0
+                ],
+                "name": "Gamma Color",
+                "slot": 15
+              }
+            ],
+            "pixel_bytes": 2073600,
+            "pixel_format": "argb8",
+            "raw_pixel_bytes": 2073600,
+            "raw_pixel_sha256": "8fa42622e1a4a13f0670e018e23e29ba1a0be07370befc4d447be178ccd041d1",
+            "render_error": 0,
+            "render_mode": "smart-cpu",
+            "schema_version": 1,
+            "setup": {
+              "advertised_num_params": 16,
+              "dropped_unsupported_suite_calls": 0,
+              "execution_backend": "unicorn-x86_64",
+              "global_setup_error": 0,
+              "out_flags": 33555520,
+              "out_flags2": 134222848,
+              "parameters": [
+                {
+                  "default_value": 0.0,
+                  "index": -1,
+                  "name": "Enable Color Key",
+                  "param_type": 4,
+                  "precision": null,
+                  "slider_max": 1.0,
+                  "slider_min": 0.0,
+                  "slot": 1,
+                  "valid_max": 1.0,
+                  "valid_min": 0.0
+                },
+                {
+                  "current_color": [
+                    255,
+                    255,
+                    255,
+                    255
+                  ],
+                  "default_color": [
+                    255,
+                    255,
+                    255,
+                    255
+                  ],
+                  "default_value": null,
+                  "index": -1,
+                  "name": "Color Key",
+                  "param_type": 5,
+                  "precision": null,
+                  "slider_max": null,
+                  "slider_min": null,
+                  "slot": 2,
+                  "valid_max": null,
+                  "valid_min": null
+                },
+                {
+                  "default_value": 0.0,
+                  "index": -1,
+                  "name": "Invert Color Key",
+                  "param_type": 4,
+                  "precision": null,
+                  "slider_max": 1.0,
+                  "slider_min": 0.0,
+                  "slot": 3,
+                  "valid_max": 1.0,
+                  "valid_min": 0.0
+                },
+                {
+                  "default_value": 100.0,
+                  "index": -1,
+                  "name": "Smoothness",
+                  "param_type": 1,
+                  "precision": null,
+                  "slider_max": 100.0,
+                  "slider_min": 0.0,
+                  "slot": 4,
+                  "valid_max": 100.0,
+                  "valid_min": 0.0
+                },
+                {
+                  "default_value": 0.0,
+                  "index": -1,
+                  "name": "Extra Smooth",
+                  "param_type": 1,
+                  "precision": null,
+                  "slider_max": 100.0,
+                  "slider_min": 0.0,
+                  "slot": 5,
+                  "valid_max": 100.0,
+                  "valid_min": 0.0
+                },
+                {
+                  "default_value": 2.0,
+                  "index": -1,
+                  "name": "Smooth Range",
+                  "param_type": 1,
+                  "precision": null,
+                  "slider_max": 100.0,
+                  "slider_min": 0.0,
+                  "slot": 6,
+                  "valid_max": 100.0,
+                  "valid_min": 0.0
+                },
+                {
+                  "default_value": 2.0,
+                  "index": -1,
+                  "name": "Smoother Version",
+                  "param_type": 7,
+                  "precision": null,
+                  "slider_max": 2.0,
+                  "slider_min": 1.0,
+                  "slot": 7,
+                  "valid_max": 2.0,
+                  "valid_min": 1.0
+                },
+                {
+                  "default_value": 1.0,
+                  "index": -1,
+                  "name": "Gamma Correction",
+                  "param_type": 7,
+                  "precision": null,
+                  "slider_max": 3.0,
+                  "slider_min": 1.0,
+                  "slot": 8,
+                  "valid_max": 3.0,
+                  "valid_min": 1.0
+                },
+                {
+                  "default_value": 2.4000000953674316,
+                  "index": -1,
+                  "name": "Gamma Value",
+                  "param_type": 10,
+                  "precision": 2,
+                  "slider_max": 2.4000000953674316,
+                  "slider_min": 1.0,
+                  "slot": 9,
+                  "valid_max": 2.4000000953674316,
+                  "valid_min": 1.0
+                },
+                {
+                  "default_value": 1.0,
+                  "index": -1,
+                  "name": "Number of Gamma Colors",
+                  "param_type": 1,
+                  "precision": null,
+                  "slider_max": 5.0,
+                  "slider_min": 0.0,
+                  "slot": 10,
+                  "valid_max": 5.0,
+                  "valid_min": 0.0
+                },
+                {
+                  "current_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_value": null,
+                  "index": -1,
+                  "name": "Gamma Color",
+                  "param_type": 5,
+                  "precision": null,
+                  "slider_max": null,
+                  "slider_min": null,
+                  "slot": 11,
+                  "valid_max": null,
+                  "valid_min": null
+                },
+                {
+                  "current_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_value": null,
+                  "index": -1,
+                  "name": "Gamma Color",
+                  "param_type": 5,
+                  "precision": null,
+                  "slider_max": null,
+                  "slider_min": null,
+                  "slot": 12,
+                  "valid_max": null,
+                  "valid_min": null
+                },
+                {
+                  "current_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_value": null,
+                  "index": -1,
+                  "name": "Gamma Color",
+                  "param_type": 5,
+                  "precision": null,
+                  "slider_max": null,
+                  "slider_min": null,
+                  "slot": 13,
+                  "valid_max": null,
+                  "valid_min": null
+                },
+                {
+                  "current_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_value": null,
+                  "index": -1,
+                  "name": "Gamma Color",
+                  "param_type": 5,
+                  "precision": null,
+                  "slider_max": null,
+                  "slider_min": null,
+                  "slot": 14,
+                  "valid_max": null,
+                  "valid_min": null
+                },
+                {
+                  "current_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_value": null,
+                  "index": -1,
+                  "name": "Gamma Color",
+                  "param_type": 5,
+                  "precision": null,
+                  "slider_max": null,
+                  "slider_min": null,
+                  "slot": 15,
+                  "valid_max": null,
+                  "valid_min": null
+                }
+              ],
+              "params_setup_error": 0,
+              "schema_version": 1,
+              "suite_requests": [
+                "PF Handle Suite v2",
+                "AEGP Utility Suite v13",
+                "AEGP Memory Suite v1"
+              ],
+              "unsupported_suite_calls": []
+            },
+            "suite_requests": [
+              "PF Handle Suite v2",
+              "AEGP Utility Suite v13",
+              "AEGP Memory Suite v1",
+              "PF World Suite v2"
+            ],
+            "unsupported_suite_calls": [],
+            "width": 960
+          }
+        }
+      },
+      "round_premultiplied_export_rgba": {
+        "exact": false,
+        "max_abs_diff": 63,
+        "mismatched_bytes": 982
+      },
+      "size": [
+        960,
+        540
+      ]
+    },
+    {
+      "decoded_worker_png_rgba": {
+        "exact": false,
+        "max_abs_diff": 123,
+        "mismatched_bytes": 1542
+      },
+      "id": "case_0003",
+      "input_sha256": "7dc50c17733999bb952a69f65d6dfe60249694dd449fd9a0acb67411ba30570b",
+      "raw_pf8_argb_sha256": {
+        "exact": false,
+        "v1_sha256": "39fe0d7b3871dfde47f3eac89bcdb073644f24df6fe16919d9be9dcb22bfd6d5",
+        "v2_forced_v1_sha256": "bb941cfeadfadb8867f2e621d8162aedc441ad0c8079dfb8d31c712b04d46f31"
+      },
+      "render_readback": {
+        "v1": {
+          "assignments": [
+            "Use Color Key@1=0",
+            "Color Key@2=255,255,255,255",
+            "Do Smooth Range@3=6"
+          ],
+          "worker_result": {
+            "dropped_unsupported_suite_calls": 0,
+            "guards_intact": true,
+            "height": 540,
+            "input_png_sha256": "7dc50c17733999bb952a69f65d6dfe60249694dd449fd9a0acb67411ba30570b",
+            "input_requests": [],
+            "output_png": "/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olm_smoother_v1_discriminator_wv4h_6v9/case_0003.v1.png",
+            "output_request": [
+              0,
+              0,
+              960,
+              540
+            ],
+            "parameter_values": [
+              {
+                "name": "Use Color Key",
+                "slot": 1,
+                "value": 0.0
+              },
+              {
+                "color": [
+                  255,
+                  255,
+                  255,
+                  255
+                ],
+                "name": "Color Key",
+                "slot": 2
+              },
+              {
+                "name": "Do Smooth Range",
+                "slot": 3,
+                "value": 6.0
+              }
+            ],
+            "pixel_bytes": 2073600,
+            "pixel_format": "argb8",
+            "raw_pixel_bytes": 2073600,
+            "raw_pixel_sha256": "39fe0d7b3871dfde47f3eac89bcdb073644f24df6fe16919d9be9dcb22bfd6d5",
+            "render_error": 0,
+            "render_mode": "classic",
+            "schema_version": 1,
+            "setup": {
+              "advertised_num_params": 4,
+              "dropped_unsupported_suite_calls": 0,
+              "execution_backend": "unicorn-x86_64",
+              "global_setup_error": 0,
+              "out_flags": 33554496,
+              "out_flags2": 134217728,
+              "parameters": [
+                {
+                  "default_value": 0.0,
+                  "index": -1,
+                  "name": "Use Color Key",
+                  "param_type": 4,
+                  "precision": null,
+                  "slider_max": 1.0,
+                  "slider_min": 0.0,
+                  "slot": 1,
+                  "valid_max": 1.0,
+                  "valid_min": 0.0
+                },
+                {
+                  "current_color": [
+                    255,
+                    255,
+                    255,
+                    255
+                  ],
+                  "default_color": [
+                    255,
+                    255,
+                    255,
+                    255
+                  ],
+                  "default_value": null,
+                  "index": -1,
+                  "name": "Color Key",
+                  "param_type": 5,
+                  "precision": null,
+                  "slider_max": null,
+                  "slider_min": null,
+                  "slot": 2,
+                  "valid_max": null,
+                  "valid_min": null
+                },
+                {
+                  "default_value": 6.0,
+                  "index": -1,
+                  "name": "Do Smooth Range",
+                  "param_type": 1,
+                  "precision": null,
+                  "slider_max": 255.0,
+                  "slider_min": 0.0,
+                  "slot": 3,
+                  "valid_max": 255.0,
+                  "valid_min": 0.0
+                }
+              ],
+              "params_setup_error": 0,
+              "schema_version": 1,
+              "suite_requests": [],
+              "unsupported_suite_calls": []
+            },
+            "suite_requests": [
+              "PF Iterate8 Suite v1"
+            ],
+            "unsupported_suite_calls": [],
+            "width": 960
+          }
+        },
+        "v2_forced_v1": {
+          "assignments": [
+            "Enable Color Key@1=0",
+            "Color Key@2=255,255,255,255",
+            "Invert Color Key@3=0",
+            "Smoothness@4=100",
+            "Extra Smooth@5=0",
+            "Smooth Range@6=6",
+            "Smoother Version@7=1",
+            "Gamma Correction@8=1",
+            "Gamma Value@9=2.4000000953674316",
+            "Number of Gamma Colors@10=1",
+            "Gamma Color@11=255,0,0,0",
+            "Gamma Color@12=255,0,0,0",
+            "Gamma Color@13=255,0,0,0",
+            "Gamma Color@14=255,0,0,0",
+            "Gamma Color@15=255,0,0,0"
+          ],
+          "worker_result": {
+            "dropped_unsupported_suite_calls": 0,
+            "guards_intact": true,
+            "height": 540,
+            "input_png_sha256": "7dc50c17733999bb952a69f65d6dfe60249694dd449fd9a0acb67411ba30570b",
+            "input_requests": [
+              [
+                0,
+                0,
+                960,
+                540
+              ]
+            ],
+            "output_png": "/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olm_smoother_v1_discriminator_wv4h_6v9/case_0003.v2_forced_v1.png",
+            "output_request": [
+              0,
+              0,
+              960,
+              540
+            ],
+            "parameter_values": [
+              {
+                "name": "Enable Color Key",
+                "slot": 1,
+                "value": 0.0
+              },
+              {
+                "color": [
+                  255,
+                  255,
+                  255,
+                  255
+                ],
+                "name": "Color Key",
+                "slot": 2
+              },
+              {
+                "name": "Invert Color Key",
+                "slot": 3,
+                "value": 0.0
+              },
+              {
+                "name": "Smoothness",
+                "slot": 4,
+                "value": 100.0
+              },
+              {
+                "name": "Extra Smooth",
+                "slot": 5,
+                "value": 0.0
+              },
+              {
+                "name": "Smooth Range",
+                "slot": 6,
+                "value": 6.0
+              },
+              {
+                "name": "Smoother Version",
+                "slot": 7,
+                "value": 1.0
+              },
+              {
+                "name": "Gamma Correction",
+                "slot": 8,
+                "value": 1.0
+              },
+              {
+                "name": "Gamma Value",
+                "slot": 9,
+                "value": 2.4000000953674316
+              },
+              {
+                "name": "Number of Gamma Colors",
+                "slot": 10,
+                "value": 1.0
+              },
+              {
+                "color": [
+                  255,
+                  0,
+                  0,
+                  0
+                ],
+                "name": "Gamma Color",
+                "slot": 11
+              },
+              {
+                "color": [
+                  255,
+                  0,
+                  0,
+                  0
+                ],
+                "name": "Gamma Color",
+                "slot": 12
+              },
+              {
+                "color": [
+                  255,
+                  0,
+                  0,
+                  0
+                ],
+                "name": "Gamma Color",
+                "slot": 13
+              },
+              {
+                "color": [
+                  255,
+                  0,
+                  0,
+                  0
+                ],
+                "name": "Gamma Color",
+                "slot": 14
+              },
+              {
+                "color": [
+                  255,
+                  0,
+                  0,
+                  0
+                ],
+                "name": "Gamma Color",
+                "slot": 15
+              }
+            ],
+            "pixel_bytes": 2073600,
+            "pixel_format": "argb8",
+            "raw_pixel_bytes": 2073600,
+            "raw_pixel_sha256": "bb941cfeadfadb8867f2e621d8162aedc441ad0c8079dfb8d31c712b04d46f31",
+            "render_error": 0,
+            "render_mode": "smart-cpu",
+            "schema_version": 1,
+            "setup": {
+              "advertised_num_params": 16,
+              "dropped_unsupported_suite_calls": 0,
+              "execution_backend": "unicorn-x86_64",
+              "global_setup_error": 0,
+              "out_flags": 33555520,
+              "out_flags2": 134222848,
+              "parameters": [
+                {
+                  "default_value": 0.0,
+                  "index": -1,
+                  "name": "Enable Color Key",
+                  "param_type": 4,
+                  "precision": null,
+                  "slider_max": 1.0,
+                  "slider_min": 0.0,
+                  "slot": 1,
+                  "valid_max": 1.0,
+                  "valid_min": 0.0
+                },
+                {
+                  "current_color": [
+                    255,
+                    255,
+                    255,
+                    255
+                  ],
+                  "default_color": [
+                    255,
+                    255,
+                    255,
+                    255
+                  ],
+                  "default_value": null,
+                  "index": -1,
+                  "name": "Color Key",
+                  "param_type": 5,
+                  "precision": null,
+                  "slider_max": null,
+                  "slider_min": null,
+                  "slot": 2,
+                  "valid_max": null,
+                  "valid_min": null
+                },
+                {
+                  "default_value": 0.0,
+                  "index": -1,
+                  "name": "Invert Color Key",
+                  "param_type": 4,
+                  "precision": null,
+                  "slider_max": 1.0,
+                  "slider_min": 0.0,
+                  "slot": 3,
+                  "valid_max": 1.0,
+                  "valid_min": 0.0
+                },
+                {
+                  "default_value": 100.0,
+                  "index": -1,
+                  "name": "Smoothness",
+                  "param_type": 1,
+                  "precision": null,
+                  "slider_max": 100.0,
+                  "slider_min": 0.0,
+                  "slot": 4,
+                  "valid_max": 100.0,
+                  "valid_min": 0.0
+                },
+                {
+                  "default_value": 0.0,
+                  "index": -1,
+                  "name": "Extra Smooth",
+                  "param_type": 1,
+                  "precision": null,
+                  "slider_max": 100.0,
+                  "slider_min": 0.0,
+                  "slot": 5,
+                  "valid_max": 100.0,
+                  "valid_min": 0.0
+                },
+                {
+                  "default_value": 2.0,
+                  "index": -1,
+                  "name": "Smooth Range",
+                  "param_type": 1,
+                  "precision": null,
+                  "slider_max": 100.0,
+                  "slider_min": 0.0,
+                  "slot": 6,
+                  "valid_max": 100.0,
+                  "valid_min": 0.0
+                },
+                {
+                  "default_value": 2.0,
+                  "index": -1,
+                  "name": "Smoother Version",
+                  "param_type": 7,
+                  "precision": null,
+                  "slider_max": 2.0,
+                  "slider_min": 1.0,
+                  "slot": 7,
+                  "valid_max": 2.0,
+                  "valid_min": 1.0
+                },
+                {
+                  "default_value": 1.0,
+                  "index": -1,
+                  "name": "Gamma Correction",
+                  "param_type": 7,
+                  "precision": null,
+                  "slider_max": 3.0,
+                  "slider_min": 1.0,
+                  "slot": 8,
+                  "valid_max": 3.0,
+                  "valid_min": 1.0
+                },
+                {
+                  "default_value": 2.4000000953674316,
+                  "index": -1,
+                  "name": "Gamma Value",
+                  "param_type": 10,
+                  "precision": 2,
+                  "slider_max": 2.4000000953674316,
+                  "slider_min": 1.0,
+                  "slot": 9,
+                  "valid_max": 2.4000000953674316,
+                  "valid_min": 1.0
+                },
+                {
+                  "default_value": 1.0,
+                  "index": -1,
+                  "name": "Number of Gamma Colors",
+                  "param_type": 1,
+                  "precision": null,
+                  "slider_max": 5.0,
+                  "slider_min": 0.0,
+                  "slot": 10,
+                  "valid_max": 5.0,
+                  "valid_min": 0.0
+                },
+                {
+                  "current_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_value": null,
+                  "index": -1,
+                  "name": "Gamma Color",
+                  "param_type": 5,
+                  "precision": null,
+                  "slider_max": null,
+                  "slider_min": null,
+                  "slot": 11,
+                  "valid_max": null,
+                  "valid_min": null
+                },
+                {
+                  "current_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_value": null,
+                  "index": -1,
+                  "name": "Gamma Color",
+                  "param_type": 5,
+                  "precision": null,
+                  "slider_max": null,
+                  "slider_min": null,
+                  "slot": 12,
+                  "valid_max": null,
+                  "valid_min": null
+                },
+                {
+                  "current_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_value": null,
+                  "index": -1,
+                  "name": "Gamma Color",
+                  "param_type": 5,
+                  "precision": null,
+                  "slider_max": null,
+                  "slider_min": null,
+                  "slot": 13,
+                  "valid_max": null,
+                  "valid_min": null
+                },
+                {
+                  "current_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_value": null,
+                  "index": -1,
+                  "name": "Gamma Color",
+                  "param_type": 5,
+                  "precision": null,
+                  "slider_max": null,
+                  "slider_min": null,
+                  "slot": 14,
+                  "valid_max": null,
+                  "valid_min": null
+                },
+                {
+                  "current_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_color": [
+                    255,
+                    0,
+                    0,
+                    0
+                  ],
+                  "default_value": null,
+                  "index": -1,
+                  "name": "Gamma Color",
+                  "param_type": 5,
+                  "precision": null,
+                  "slider_max": null,
+                  "slider_min": null,
+                  "slot": 15,
+                  "valid_max": null,
+                  "valid_min": null
+                }
+              ],
+              "params_setup_error": 0,
+              "schema_version": 1,
+              "suite_requests": [
+                "PF Handle Suite v2",
+                "AEGP Utility Suite v13",
+                "AEGP Memory Suite v1"
+              ],
+              "unsupported_suite_calls": []
+            },
+            "suite_requests": [
+              "PF Handle Suite v2",
+              "AEGP Utility Suite v13",
+              "AEGP Memory Suite v1",
+              "PF World Suite v2"
+            ],
+            "unsupported_suite_calls": [],
+            "width": 960
+          }
+        }
+      },
+      "round_premultiplied_export_rgba": {
+        "exact": false,
+        "max_abs_diff": 123,
+        "mismatched_bytes": 1543
+      },
+      "size": [
+        960,
+        540
+      ]
+    }
+  ],
+  "claim_boundary": "local AEXCompat PF8 raw-buffer SHA-256 identity plus decoded worker-PNG RGBA and round-premultiplied decoded PNG comparisons; not AE exact",
+  "identity": {
+    "v1_aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+    "v2_aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+    "worker_sha256": "d9f0f54c894690b77f848543fbca2a1366a7aaadc0c0984ab9ef643d64d499f1"
+  },
+  "schema": "olm.smoother-v1-discriminator/1",
+  "setup": {
+    "v1": {
+      "advertised_num_params": 4,
+      "dropped_unsupported_suite_calls": 0,
+      "execution_backend": "unicorn-x86_64",
+      "global_setup_error": 0,
+      "out_flags": 33554496,
+      "out_flags2": 134217728,
+      "parameters": [
+        {
+          "default_value": 0.0,
+          "index": -1,
+          "name": "Use Color Key",
+          "param_type": 4,
+          "precision": null,
+          "slider_max": 1.0,
+          "slider_min": 0.0,
+          "slot": 1,
+          "valid_max": 1.0,
+          "valid_min": 0.0
+        },
+        {
+          "current_color": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "default_color": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "default_value": null,
+          "index": -1,
+          "name": "Color Key",
+          "param_type": 5,
+          "precision": null,
+          "slider_max": null,
+          "slider_min": null,
+          "slot": 2,
+          "valid_max": null,
+          "valid_min": null
+        },
+        {
+          "default_value": 6.0,
+          "index": -1,
+          "name": "Do Smooth Range",
+          "param_type": 1,
+          "precision": null,
+          "slider_max": 255.0,
+          "slider_min": 0.0,
+          "slot": 3,
+          "valid_max": 255.0,
+          "valid_min": 0.0
+        }
+      ],
+      "params_setup_error": 0,
+      "schema_version": 1,
+      "suite_requests": [],
+      "unsupported_suite_calls": []
+    },
+    "v2_forced_v1": {
+      "advertised_num_params": 16,
+      "dropped_unsupported_suite_calls": 0,
+      "execution_backend": "unicorn-x86_64",
+      "global_setup_error": 0,
+      "out_flags": 33555520,
+      "out_flags2": 134222848,
+      "parameters": [
+        {
+          "default_value": 0.0,
+          "index": -1,
+          "name": "Enable Color Key",
+          "param_type": 4,
+          "precision": null,
+          "slider_max": 1.0,
+          "slider_min": 0.0,
+          "slot": 1,
+          "valid_max": 1.0,
+          "valid_min": 0.0
+        },
+        {
+          "current_color": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "default_color": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "default_value": null,
+          "index": -1,
+          "name": "Color Key",
+          "param_type": 5,
+          "precision": null,
+          "slider_max": null,
+          "slider_min": null,
+          "slot": 2,
+          "valid_max": null,
+          "valid_min": null
+        },
+        {
+          "default_value": 0.0,
+          "index": -1,
+          "name": "Invert Color Key",
+          "param_type": 4,
+          "precision": null,
+          "slider_max": 1.0,
+          "slider_min": 0.0,
+          "slot": 3,
+          "valid_max": 1.0,
+          "valid_min": 0.0
+        },
+        {
+          "default_value": 100.0,
+          "index": -1,
+          "name": "Smoothness",
+          "param_type": 1,
+          "precision": null,
+          "slider_max": 100.0,
+          "slider_min": 0.0,
+          "slot": 4,
+          "valid_max": 100.0,
+          "valid_min": 0.0
+        },
+        {
+          "default_value": 0.0,
+          "index": -1,
+          "name": "Extra Smooth",
+          "param_type": 1,
+          "precision": null,
+          "slider_max": 100.0,
+          "slider_min": 0.0,
+          "slot": 5,
+          "valid_max": 100.0,
+          "valid_min": 0.0
+        },
+        {
+          "default_value": 2.0,
+          "index": -1,
+          "name": "Smooth Range",
+          "param_type": 1,
+          "precision": null,
+          "slider_max": 100.0,
+          "slider_min": 0.0,
+          "slot": 6,
+          "valid_max": 100.0,
+          "valid_min": 0.0
+        },
+        {
+          "default_value": 2.0,
+          "index": -1,
+          "name": "Smoother Version",
+          "param_type": 7,
+          "precision": null,
+          "slider_max": 2.0,
+          "slider_min": 1.0,
+          "slot": 7,
+          "valid_max": 2.0,
+          "valid_min": 1.0
+        },
+        {
+          "default_value": 1.0,
+          "index": -1,
+          "name": "Gamma Correction",
+          "param_type": 7,
+          "precision": null,
+          "slider_max": 3.0,
+          "slider_min": 1.0,
+          "slot": 8,
+          "valid_max": 3.0,
+          "valid_min": 1.0
+        },
+        {
+          "default_value": 2.4000000953674316,
+          "index": -1,
+          "name": "Gamma Value",
+          "param_type": 10,
+          "precision": 2,
+          "slider_max": 2.4000000953674316,
+          "slider_min": 1.0,
+          "slot": 9,
+          "valid_max": 2.4000000953674316,
+          "valid_min": 1.0
+        },
+        {
+          "default_value": 1.0,
+          "index": -1,
+          "name": "Number of Gamma Colors",
+          "param_type": 1,
+          "precision": null,
+          "slider_max": 5.0,
+          "slider_min": 0.0,
+          "slot": 10,
+          "valid_max": 5.0,
+          "valid_min": 0.0
+        },
+        {
+          "current_color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "default_color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "default_value": null,
+          "index": -1,
+          "name": "Gamma Color",
+          "param_type": 5,
+          "precision": null,
+          "slider_max": null,
+          "slider_min": null,
+          "slot": 11,
+          "valid_max": null,
+          "valid_min": null
+        },
+        {
+          "current_color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "default_color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "default_value": null,
+          "index": -1,
+          "name": "Gamma Color",
+          "param_type": 5,
+          "precision": null,
+          "slider_max": null,
+          "slider_min": null,
+          "slot": 12,
+          "valid_max": null,
+          "valid_min": null
+        },
+        {
+          "current_color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "default_color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "default_value": null,
+          "index": -1,
+          "name": "Gamma Color",
+          "param_type": 5,
+          "precision": null,
+          "slider_max": null,
+          "slider_min": null,
+          "slot": 13,
+          "valid_max": null,
+          "valid_min": null
+        },
+        {
+          "current_color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "default_color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "default_value": null,
+          "index": -1,
+          "name": "Gamma Color",
+          "param_type": 5,
+          "precision": null,
+          "slider_max": null,
+          "slider_min": null,
+          "slot": 14,
+          "valid_max": null,
+          "valid_min": null
+        },
+        {
+          "current_color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "default_color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "default_value": null,
+          "index": -1,
+          "name": "Gamma Color",
+          "param_type": 5,
+          "precision": null,
+          "slider_max": null,
+          "slider_min": null,
+          "slot": 15,
+          "valid_max": null,
+          "valid_min": null
+        }
+      ],
+      "params_setup_error": 0,
+      "schema_version": 1,
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "AEGP Memory Suite v1"
+      ],
+      "unsupported_suite_calls": []
+    }
+  },
+  "verdict": "discriminated"
+}
