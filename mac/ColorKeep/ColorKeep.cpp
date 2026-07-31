@@ -43,15 +43,15 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_EnabledColorNum_Param_Name),
-	              1, COLORKEEP_MAX_COLORS,
-	              1, COLORKEEP_MAX_COLORS,
-	              COLORKEEP_MAX_COLORS,
+	              0, COLORKEEP_MAX_COLORS,
+	              0, COLORKEEP_MAX_COLORS,
+	              1,
 	              ENABLED_COLOR_NUM_DISK_ID);
 
 	for (int i = 0; i < COLORKEEP_MAX_COLORS; ++i) {
 		AEFX_CLR_STRUCT(def);
 		PF_ADD_COLOR(GetStringPtr(StrID_Color_Param_Name),
-		             PF_MAX_CHAN8, PF_MAX_CHAN8, PF_MAX_CHAN8,
+		             0, 0, 0,
 		             COLOR_DISK_ID_FIRST + i);
 	}
 
@@ -67,7 +67,7 @@ SetColorsEnabled(PF_InData *in_data, PF_ParamDef *params[])
 	PF_ParamUtilsSuite3 *pu = suites.ParamUtilsSuite3();
 
 	A_long enabledCount = params[COLORKEEP_ENABLED_COLOR_NUM]->u.sd.value;
-	if (enabledCount < 1) enabledCount = 1;
+	if (enabledCount < 0) enabledCount = 0;
 	if (enabledCount > COLORKEEP_MAX_COLORS) enabledCount = COLORKEEP_MAX_COLORS;
 
 	for (int i = 0; i < COLORKEEP_MAX_COLORS; ++i) {
@@ -104,26 +104,38 @@ CheckoutInfo(PF_InData *in_data, PF_ParamDef *params[], ColorKeepInfo *info)
 	return err;
 }
 
-static PF_FpLong g_floatEps = 1.0e-4;
+// These are the exact float32 constants used by the Windows 2025 AEX.
+static const float kColorKeep8Bias = 0.00196078442968428125f; // 0x3B008081
+static const float kColorKeep8Scale = 255.0f;                 // 0x437F0000
+static const float kColorKeep16Bias = 0.0000152587890625f;    // 0x37800000
+static const float kColorKeep16Scale = 32768.0f;              // 0x47000000
+static const float kColorKeepFloatTolerance = 1.0e-4f;        // 0x38D1B717
 
-static inline u_char ftob(PF_FpLong f)
+static inline u_char ColorKeepQuantize8(float value)
 {
-	return (u_char)((int)((f + (0.5 / 255.0)) * 255.0));
+	const float biased = value + kColorKeep8Bias;
+	const float scaled = biased * kColorKeep8Scale;
+	return (u_char)((int)scaled);
 }
 
-static inline u_short ftow(PF_FpLong f)
+static inline u_short ColorKeepQuantize16(float value)
 {
-	return (u_short)((int)((f + (0.5 / 32768.0)) * 32768.0));
+	const float biased = value + kColorKeep16Bias;
+	const float scaled = biased * kColorKeep16Scale;
+	return (u_short)((int)scaled);
 }
 
 static PF_Err
-ColorKeep8Func(void *refcon, A_long xL, A_long yL, PF_Pixel8 *inP, PF_Pixel8 *outP)
+ColorKeep8Func(void *refcon, A_long, A_long, PF_Pixel8 *inP, PF_Pixel8 *outP)
 {
 	ColorKeepInfo *info = (ColorKeepInfo*)refcon;
 	bool match = false;
 	for (A_long i = 0; i < info->count; ++i) {
-		const PF_Pixel8 &c = info->colors8[i];
-		if (inP->red == c.red && inP->green == c.green && inP->blue == c.blue) {
+		const PF_PixelFloat &c = info->colors[i];
+		if (inP->red == ColorKeepQuantize8(c.red) &&
+		    inP->green == ColorKeepQuantize8(c.green) &&
+		    inP->blue == ColorKeepQuantize8(c.blue) &&
+		    inP->alpha == ColorKeepQuantize8(c.alpha)) {
 			match = true; break;
 		}
 	}
@@ -133,20 +145,16 @@ ColorKeep8Func(void *refcon, A_long xL, A_long yL, PF_Pixel8 *inP, PF_Pixel8 *ou
 }
 
 static PF_Err
-ColorKeep16Func(void *refcon, A_long xL, A_long yL, PF_Pixel16 *inP, PF_Pixel16 *outP)
+ColorKeep16Func(void *refcon, A_long, A_long, PF_Pixel16 *inP, PF_Pixel16 *outP)
 {
 	ColorKeepInfo *info = (ColorKeepInfo*)refcon;
 	bool match = false;
-	const PF_FpLong tol16 = 0.5 / 255.0;
-	PF_FpLong inR = (PF_FpLong)inP->red   / PF_MAX_CHAN16;
-	PF_FpLong inG = (PF_FpLong)inP->green / PF_MAX_CHAN16;
-	PF_FpLong inB = (PF_FpLong)inP->blue  / PF_MAX_CHAN16;
 	for (A_long i = 0; i < info->count; ++i) {
-		const PF_Pixel8 &c = info->colors8[i];
-		PF_FpLong cr = (PF_FpLong)c.red   / 255.0;
-		PF_FpLong cg = (PF_FpLong)c.green / 255.0;
-		PF_FpLong cb = (PF_FpLong)c.blue  / 255.0;
-		if (fabs(inR - cr) <= tol16 && fabs(inG - cg) <= tol16 && fabs(inB - cb) <= tol16) {
+		const PF_PixelFloat &c = info->colors[i];
+		if (inP->red == ColorKeepQuantize16(c.red) &&
+		    inP->green == ColorKeepQuantize16(c.green) &&
+		    inP->blue == ColorKeepQuantize16(c.blue) &&
+		    inP->alpha == ColorKeepQuantize16(c.alpha)) {
 			match = true; break;
 		}
 	}
@@ -156,17 +164,16 @@ ColorKeep16Func(void *refcon, A_long xL, A_long yL, PF_Pixel16 *inP, PF_Pixel16 
 }
 
 static PF_Err
-ColorKeepFloatFunc(void *refcon, A_long xL, A_long yL, PF_PixelFloat *inP, PF_PixelFloat *outP)
+ColorKeepFloatFunc(void *refcon, A_long, A_long, PF_PixelFloat *inP, PF_PixelFloat *outP)
 {
 	ColorKeepInfo *info = (ColorKeepInfo*)refcon;
 	bool match = false;
-	const float tolF = 0.5f / 255.0f;
 	for (A_long i = 0; i < info->count; ++i) {
-		const PF_Pixel8 &c = info->colors8[i];
-		float cr = (float)c.red   / 255.0f;
-		float cg = (float)c.green / 255.0f;
-		float cb = (float)c.blue  / 255.0f;
-		if (fabsf(inP->red - cr) <= tolF && fabsf(inP->green - cg) <= tolF && fabsf(inP->blue - cb) <= tolF) {
+		const PF_PixelFloat &c = info->colors[i];
+		if (fabsf(inP->red - c.red) <= kColorKeepFloatTolerance &&
+		    fabsf(inP->green - c.green) <= kColorKeepFloatTolerance &&
+		    fabsf(inP->blue - c.blue) <= kColorKeepFloatTolerance &&
+		    fabsf(inP->alpha - c.alpha) <= kColorKeepFloatTolerance) {
 			match = true; break;
 		}
 	}
