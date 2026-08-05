@@ -22,7 +22,12 @@ def main()->int:
     interpretation=d["mac_run_contract"]["input_interpretation"]; template=ROOT/interpretation["template"]; assert interpretation["preserve_rgb"] is True and template.is_file(); assert hashlib.sha256(template.read_bytes()).hexdigest()==interpretation["template_sha256"]
     with tempfile.TemporaryDirectory(prefix="olmsmoother2_mac_smoke_") as t:
         root=Path(t); dump=root/"wrapper.jsx"; wrong=root/"wrong.plugin"; p=subprocess.run([sys.executable,str(RUNNER),"--plugin-path",str(wrong),"--dump-js",str(dump)],cwd=ROOT,text=True,capture_output=True); assert p.returncode==2 and not dump.exists()
-        plugin=root/"OLMSmoother2.plugin"; binary=plugin/"Contents"/"MacOS"/"OLMSmoother2"; binary.parent.mkdir(parents=True); binary.write_bytes(b"smoke only"); ae=root/"AfterFX"; ae.write_bytes(b"smoke executable"); p=subprocess.run([sys.executable,str(RUNNER),"--plugin-path",str(plugin),"--ae-executable",str(ae.resolve()),"--support-dir",str(root/"support"),"--dump-js",str(dump)],cwd=ROOT,text=True,capture_output=True); assert p.returncode==0,p.stdout+p.stderr
+        plugin=root/"OLMSmoother2.plugin"; binary=plugin/"Contents"/"MacOS"/"OLMSmoother2"; binary.parent.mkdir(parents=True); binary.write_bytes(b"smoke only"); ae=root/"AfterFX"; ae.write_bytes(b"smoke executable")
+        rejected=subprocess.run([sys.executable,str(RUNNER),"--plugin-path",str(plugin),"--ae-executable",str(ae.resolve()),"--support-dir",str(root/"rejected")],cwd=ROOT,text=True,capture_output=True)
+        assert rejected.returncode==2 and "current host-phase target" in rejected.stdout
+        patched_root=root/"patched"; (patched_root/"scripts").mkdir(parents=True); (patched_root/"refs").symlink_to(ROOT/"refs",target_is_directory=True)
+        patched_runner=patched_root/"scripts"/RUNNER.name; patched_runner.write_text(RUNNER.read_text().replace("fe782f344dcaf8865b778198b0faeb8cecd525062a83f38aca8dc1db74442c34",hashlib.sha256(binary.read_bytes()).hexdigest()),encoding="utf-8")
+        p=subprocess.run([sys.executable,str(patched_runner),"--plugin-path",str(plugin),"--ae-executable",str(ae.resolve()),"--support-dir",str(root/"support"),"--dump-js",str(dump)],cwd=ROOT,text=True,capture_output=True); assert p.returncode==0,p.stdout+p.stderr
         jsx=(root/"support"/"run_mac_olmsmoother2_no_key_32bpc_validation.jsx").read_text(); wrapper=dump.read_text()
         for token in ("GpuAccelType.SOFTWARE","bitsPerChannel","OLMSmoother2.plugin","OLM EXR 32 Float","getSettings(GetSettingsFormat.STRING)","no_effect_control","effect_on","case_contract_sha256","hash_bound_aep_template_footage_replace","preserve_rgb:true","ft.replace(f)","FAIL_CLOSED"): assert token in jsx or token in wrapper, token
         assert "OLM_AE_MAC_PLUGIN_BINARY_PATH" in wrapper
@@ -60,7 +65,7 @@ def main()->int:
         assert "OLM_AE_MAC_PAYLOAD_SHA256" in wrapper
         assert hashlib.sha256((root/"support"/"run_mac_olmsmoother2_no_key_32bpc_validation.jsx").read_bytes()).hexdigest() in wrapper
         assert "__olm_hash(payloadPath)" in wrapper
-        assert "$.fileName" in wrapper and "actualWrapper.fsName!==expectedWrapper.fsName" in wrapper
+        assert "OLM_AE_MAC_WRAPPER_PATH" in wrapper and "actualWrapper=expectedWrapper" in wrapper and "__olm_hash(actualWrapper.fsName)" in wrapper
         assert process_challenge["expected"]["ae_executable"]=={"path":str(ae.resolve()),"sha256":hashlib.sha256(ae.read_bytes()).hexdigest()}
         assert process_challenge["expected"]["module"]=={"path":str(binary.resolve()),"sha256":hashlib.sha256(binary.read_bytes()).hexdigest()}
         assert os.stat(process_challenge_path).st_nlink==1

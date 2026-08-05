@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate an OLMSmoother2 v2/no-key Mac candidate return, fail closed."""
 from __future__ import annotations
-import argparse, hashlib, json, os, re, stat, sys
+import argparse, email.utils, hashlib, json, os, re, stat, struct, sys
 from datetime import datetime, timezone
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
@@ -12,6 +12,26 @@ from verify_32bpc_float_return import VerificationError, inspect_float_rgba_exr
 REQUEST = ROOT / "refs/mac_validation_requests/olmsmoother2_no_key_32bpc_mac_validation_20260715.json"
 def digest(p: Path) -> str: return hashlib.sha256(p.read_bytes()).hexdigest()
 def canonical(v: object) -> str: return hashlib.sha256(json.dumps(v, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode()).hexdigest()
+def same_ae_float32_value(actual: object, expected: object) -> bool:
+    if isinstance(expected, list):
+        return isinstance(actual, list) and len(actual)==len(expected) and all(
+            struct.pack("<f", float(a)) == struct.pack("<f", float(e)) for a,e in zip(actual,expected)
+        )
+    if isinstance(expected, (int, float)) and not isinstance(expected, bool):
+        return isinstance(actual, (int, float)) and not isinstance(actual, bool) and struct.pack("<f", float(actual)) == struct.pack("<f", float(expected))
+    return actual == expected
+def valid_ae_readback(readback: object, enabled: bool, expected_params: list[dict]) -> bool:
+    if not isinstance(readback, dict) or readback.get("effect") != {"name":"OLM Smoother v2","match_name":"OLM Smoother v2","enabled":enabled}:
+        return False
+    actual_params=readback.get("params")
+    if not isinstance(actual_params, list) or len(actual_params)!=len(expected_params):
+        return False
+    for actual,expected in zip(actual_params,expected_params):
+        if not isinstance(actual,dict) or {k:actual.get(k) for k in ("name","match_name","property_index")} != {k:expected[k] for k in ("name","match_name","property_index")}:
+            return False
+        if not same_ae_float32_value(actual.get("value"),expected["value"]):
+            return False
+    return True
 def strict_protocol_json(path: Path, label: str) -> dict:
     if path.is_symlink(): raise ValueError(f"{label} symlink forbidden")
     st=os.stat(path,follow_symlinks=False)
@@ -74,7 +94,12 @@ def validate_mac_process_proof(base: Path, result: Path, outputs: dict[str,Path]
     return True
 def parse_time(value: object) -> datetime:
     if not isinstance(value,str): raise ValueError("timestamp missing")
-    return datetime.fromisoformat(value.replace("Z","+00:00")).astimezone(timezone.utc)
+    try:
+        parsed=datetime.fromisoformat(value.replace("Z","+00:00"))
+    except ValueError:
+        parsed=email.utils.parsedate_to_datetime(value)
+    if parsed.tzinfo is None: raise ValueError("timestamp timezone missing")
+    return parsed.astimezone(timezone.utc)
 def resolve_return_paths(result: Path, output_dir: Path, case: dict) -> tuple[Path,dict[str,Path],dict[str,Path],dict]:
     if output_dir.is_symlink() or result.is_symlink(): raise ValueError("result/output directory symlink forbidden")
     base=output_dir.resolve(strict=True)
@@ -141,7 +166,7 @@ def main() -> int:
     for p in case.get("params_full",[]):
         if p.get("match_name")=="OLM Smoother v2-0001" and p.get("value")!=0: fail.append("Enable Color Key is not exactly 0")
         if p.get("match_name")=="OLM Smoother v2-0006" and p.get("value")!=2: fail.append("Smoother Version is not exactly 2")
-    outputs=case.get("outputs",{}); setting_serial=[]
+    outputs=case.get("outputs",{}); setting_contracts=[]
     for branch in ("no_effect_control","effect_on"):
         item=outputs.get(branch,{}); path=resolved_outputs[branch]
         if path.suffix.lower()!=".exr" or not path.is_file(): fail.append(f"missing {branch} FLOAT EXR"); continue
@@ -152,15 +177,14 @@ def main() -> int:
         except (VerificationError,OSError,ValueError) as e: fail.append(f"{branch} is not uncompressed FLOAT RGBA EXR: {e}")
         settings=item.get("output_module_settings",{}); sp=resolved_settings[branch]
         if not sp.is_file() or len(settings.get("sha256",""))!=64 or (sp.is_file() and settings["sha256"]!=digest(sp)): fail.append(f"{branch} settings capture missing/hash mismatch")
-        setting_serial.append(settings.get("serialization"))
+        setting_contracts.append(canonical({k:v for k,v in settings.get("settings",{}).items() if k!="Output File Info"}))
         try:
             captured=json.loads(sp.read_text(encoding="utf-8"))
             if captured.get("kind")!="olm_output_module_settings_capture" or captured.get("run_nonce")!=nonce or captured.get("output_template")!=expected_output_template or captured.get("capture_api")!="OutputModule.getSettings(GetSettingsFormat.STRING)" or captured.get("output_path")!=str(path) or settings.get("output_path")!=str(path) or canonical(captured.get("settings"))!=canonical(settings.get("settings")): fail.append(f"{branch} settings capture semantics drift")
         except (OSError,json.JSONDecodeError): fail.append(f"{branch} settings capture is not valid JSON")
         if item.get("effect_enabled") is not (branch=="effect_on"): fail.append(f"{branch} enabled-state drift")
-        expected_readback={"effect":{"name":"OLM Smoother v2","match_name":"OLM Smoother v2","enabled":branch=="effect_on"},"params":expected_params}
-        if item.get("readback_before_render")!=expected_readback or item.get("readback_after_render")!=expected_readback: fail.append(f"{branch} AE effect/parameter/enabled readback missing or forged")
-    if len(setting_serial)==2 and setting_serial[0]!=setting_serial[1]: fail.append("control/effect settings differ")
+        if not valid_ae_readback(item.get("readback_before_render"),branch=="effect_on",expected_params) or not valid_ae_readback(item.get("readback_after_render"),branch=="effect_on",expected_params): fail.append(f"{branch} AE effect/parameter/enabled readback missing or forged")
+    if len(setting_contracts)==2 and setting_contracts[0]!=setting_contracts[1]: fail.append("control/effect settings differ outside Output File Info")
     if fail: print("[FAIL_CLOSED] "+"; ".join(fail)); return 1
     ref=request["windows_preserve_rgb_reference"]; manifest=ROOT/ref["manifest"]; ref_root=ROOT/ref["artifact_root"]
     try: md=json.loads(manifest.read_text(encoding="utf-8"))
