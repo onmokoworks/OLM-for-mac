@@ -16,7 +16,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_PACKAGE = ROOT / "refs/runtime_trace_packages/windows_witness_olmtoondilate_32bpc_typed_procedural_samecomp_20260713"
 STEM = "olmtoondilate_mac_32bpc_validation_20260715"
-PLUGIN_BINARY = ROOT / "mac/OLMToonDilate/Mac/build/Debug/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate"
+PLUGIN_BINARY = Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate"
+EXPECTED_CURRENT_INSTALLED_SHA256 = "8ac60d57193d1848fc830cff49c2a31faff5ed6298fa0d7736ab4298e2bd0ffc"
+EXPECTED_OUTPUT_SHA256 = {
+    "no_effect": "00ac6170abefd2bb3fddb7a0f2904c933844597df31b4a039677e1300d5e2764",
+    "effect_on": "e31d15b4e2aef24d294c74695f6448d5f90aecc4a989a6c36ee263f4af82ea22",
+}
 PLUGIN_SOURCE_PATHS = (
     ROOT / "mac/OLMToonDilate/OLMToonDilate.cpp",
     ROOT / "mac/OLMToonDilate/OLMToonDilate.h",
@@ -65,8 +70,35 @@ def binary_architectures(path: Path) -> list[str]:
 
 def fixture_source() -> str:
     source = (SOURCE_PACKAGE / "request/fixture/ae_generate_32bpc_typed_procedural_fixture.jsx").read_text(encoding="utf-8")
+    serializer = r'''
+    function jsonStringify(value) {
+        if (value === null || typeof value === "undefined") return "null";
+        if (typeof value === "string") return quote(value);
+        if (typeof value === "number") return isFinite(value) ? String(value) : "null";
+        if (typeof value === "boolean") return value ? "true" : "false";
+        var parts = [];
+        var i;
+        if (value instanceof Array) {
+            for (i = 0; i < value.length; i++) parts.push(jsonStringify(value[i]));
+            return "[" + parts.join(",") + "]";
+        }
+        var keys = [];
+        for (var key in value) keys.push(String(key));
+        keys.sort();
+        for (i = 0; i < keys.length; i++) {
+            parts.push(quote(keys[i]) + ":" + jsonStringify(value[keys[i]]));
+        }
+        return "{" + parts.join(",") + "}";
+    }
+
+'''
+    anchor_serializer = "    function ensureFolder(path) {"
+    if anchor_serializer not in source:
+        raise RuntimeError("fixture serializer anchor drifted")
+    source = source.replace(anchor_serializer, serializer + anchor_serializer, 1)
     source = source.replace('var effectName = getenv("OLM_AE_TYPED_FIXTURE_EFFECT") || "OLM Color Key";',
                             'var effectName = getenv("OLM_AE_TYPED_FIXTURE_EFFECT") || "OLM Toon Dilate";')
+    source = source.replace("JSON.stringify", "jsonStringify")
     source = source.replace('var suppressStarted = false;', 'var suppressStarted = false;\n    var settingsCaptures = [];')
     anchor = '        module.applyTemplate(template);\n        module.file = sequenceFile;'
     replacement = '''        module.applyTemplate(template);
@@ -86,9 +118,24 @@ def fixture_source() -> str:
     source = source.replace(anchor, replacement, 1)
     source = source.replace('project.linearBlending = false;',
                             'project.linearBlending = false;\n        try { project.gpuAccelType = GpuAccelType.SOFTWARE; } catch (e) { fail("cannot set SOFTWARE renderer"); }')
+    source = source.replace(
+        '        project = app.newProject();',
+        '        if (app.project) app.project.close(CloseOptions.DO_NOT_SAVE_CHANGES);\n'
+        '        project = app.newProject();',
+        1,
+    )
+    source = source.replace('project.items.numItems', 'project.numItems')
+    source = source.replace(
+        'if (String(project.workingSpace) !== "") fail("working space is not None");',
+        'if (String(project.workingSpace) !== "None") fail("working space is not None");',
+    )
     source = source.replace('var effectOn = renderOne(renderComp, outputDir, "effect_effect_on.exr", template);',
                             'var effectOn = renderOne(renderComp, outputDir, "effect_effect_on.exr", template);\n        if (settingsCaptures.length !== 2) fail("expected no-effect and effect-on settings captures");\n        if (JSON.stringify(settingsCaptures[0].settings) !== JSON.stringify(settingsCaptures[1].settings)) fail("OutputModule settings differ between controls");')
-    return source
+    # Project.saveAs is not part of the current After Effects ExtendScript API.
+    # The Windows seed fixture predates this Mac package, so normalize it here.
+    source = source.replace("project.saveAs(new File(projectPath));",
+                            "project.save(new File(projectPath));")
+    return source.replace("JSON.stringify", "jsonStringify")
 
 
 def write_package(root: Path) -> dict:
@@ -98,16 +145,22 @@ def write_package(root: Path) -> dict:
     # A fixed digest here made every later rebuild look invalid even when the
     # source and candidate were deliberately changed together.
     plugin_sha256 = digest(PLUGIN_BINARY)
+    if plugin_sha256 != EXPECTED_CURRENT_INSTALLED_SHA256:
+        raise RuntimeError("current installed ToonDilate binary identity drifted")
     plugin_architectures = binary_architectures(PLUGIN_BINARY)
     (root / "fixture").mkdir(parents=True)
     fixture = root / "fixture/ae_generate_32bpc_olmtoondilate_fixture.jsx"
     fixture.write_text(fixture_source(), encoding="utf-8")
+    fixture_sha256 = digest(fixture)
     request = {
         "kind": "olmtoondilate_mac_32bpc_validation_request", "schema": 1,
         "status": "request-only; no AE exact claim", "request_id": STEM,
         "required_ae": {"major_minor": "26.3", "renderer": "SOFTWARE"},
+        "entry_contract": {"required_commands": ["PF_Cmd_SMART_PRE_RENDER", "PF_Cmd_SMART_RENDER"],
+                           "legacy_render": "unproved and not accepted as a substitute"},
         "project": {"bits_per_channel": 32, "working_space": "None", "linear_blending": False},
-        "output_template": "OLM EXR 32 Float", "fixture_contract": CONTRACT,
+        "output_template": "OLM EXR 32 Float", "fixture_jsx_sha256": fixture_sha256,
+        "fixture_contract": CONTRACT,
         "input_contract": {"kind": "ae_generated_typed_procedural_source", "external_footage": False,
                             "same_comp_control": True, "parameter": PARAMETERS[0]},
         "output_module_contract": {"capture_required": True, "capture_api": "OutputModule.getSettings(GetSettingsFormat.STRING)",
@@ -120,6 +173,7 @@ def write_package(root: Path) -> dict:
                                 str(path.relative_to(ROOT)): digest(path) for path in PLUGIN_SOURCE_PATHS
                             }, "build_architectures": plugin_architectures}},
                  "parameters": PARAMETERS, "outputs": CONTRACT["output_names"]},
+        "expected_current_installed_output_sha256": EXPECTED_OUTPUT_SHA256,
         "acceptance_gate": {"comparison": "Mac AE vs Windows AE Software", "required": "raw FLOAT EXR bits exact",
                              "evidence_boundary": "AE render records only; CLI/emulation is intermediate evidence"},
         "fail_closed": ["reject existing AfterFX before launch", "reject plugin identity/hash mismatch",

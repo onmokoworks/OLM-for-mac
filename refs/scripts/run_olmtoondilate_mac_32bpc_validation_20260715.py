@@ -53,10 +53,47 @@ def verify_output(path, expected_dimensions=(64, 64)):
     except (OSError, ValueError, VerificationError) as exc:
         fail(f"invalid uncompressed FLOAT RGBA EXR: {exc}")
 
+def write_es3_loader(wrapper: Path, trace: Path, payload: Path) -> None:
+    header = "(function () {\n  var payloadPath = " + json.dumps(str(payload)) + ";\n  var tracePath = " + json.dumps(str(trace)) + ";\n"
+    body = r'''  function esc(v) { return String(v).replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\r/g, '\\r').replace(/\n/g, '\\n'); }
+  function writeTrace(status, message, fileName, lineNumber) {
+    var f = new File(tracePath); f.encoding = 'UTF-8';
+    if (!f.open('w')) return;
+    f.write('{"status":"' + esc(status) + '","payload":"' + esc(payloadPath) + '","trace":"' + esc(tracePath) + '","message":"' + esc(message || '') + '","file":"' + esc(fileName || '') + '","line":' + (lineNumber || 0) + '}\n');
+    f.close();
+  }
+  try {
+    if (app.project) app.project.close(CloseOptions.DO_NOT_SAVE_CHANGES);
+    var created = app.newProject();
+    if (!created || !app.project) { writeTrace('error', 'app.newProject returned null', '', 0); return; }
+    var payload = new File(payloadPath);
+    if (!payload.exists) { writeTrace('error', 'payload missing', payloadPath, 0); return; }
+    $.evalFile(payload);
+    writeTrace('ok', '', payloadPath, 0);
+  } catch (e) {
+    writeTrace('error', e && e.message ? e.message : String(e), e && e.fileName ? e.fileName : payloadPath, e && e.line ? e.line : 0);
+  }
+}());
+'''
+    wrapper.write_text(header + body, encoding="utf-8")
+
+def audit_es3_loader(wrapper: Path, trace: Path, payload: Path) -> dict:
+    source = wrapper.read_text(encoding="utf-8")
+    required = [str(payload), str(trace), "app.newProject()", "if (!created || !app.project)",
+                "$.evalFile(payload)", "catch (e)", "e.fileName", "e.line"]
+    missing = [value for value in required if value not in source]
+    forbidden = [value for value in ("alert(", "throw ", "JSON.") if value in source]
+    if missing or forbidden: fail(f"ES3 loader static audit failed: missing={missing!r} forbidden={forbidden!r}")
+    return {"loader": str(wrapper), "loader_sha256": sha(wrapper), "payload": str(payload), "trace": str(trace),
+            "absolute_paths": payload.is_absolute() and trace.is_absolute() and wrapper.is_absolute(),
+            "new_project_null_guard": True, "eval_error_file_line_trace": True,
+            "no_alert_or_rethrow": True, "no_json_global_dependency": True}
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--package", type=Path, default=PACKAGE)
     p.add_argument("--execute", action="store_true", help="explicitly invoke AE on macOS")
+    p.add_argument("--prepare-loader-only", action="store_true", help="write and statically audit the ES3 loader without invoking AE")
     p.add_argument("--ae-app", default="Adobe After Effects 2026")
     p.add_argument("--plugin-binary", type=Path, help="OLMToonDilate.plugin bundle or its Mach-O executable")
     p.add_argument("--windows-return", type=Path)
@@ -66,9 +103,17 @@ def main():
         fail("request plugin hash is missing or invalid")
     fixture = package / "fixture/ae_generate_32bpc_olmtoondilate_fixture.jsx"
     if not fixture.is_file(): fail("fixture missing")
+    if request.get("fixture_jsx_sha256") != sha(fixture): fail("fixture hash differs from request contract")
     output_dir = package / "mac_run"; output_dir.mkdir(exist_ok=True)
     report = {"kind": "olmtoondilate_mac_32bpc_validation_report", "schema": 1, "status": "blocked", "ae_exact": False,
               "reason": "cross_host_return_compare_required", "request_id": request["request_id"], "fixture_sha256": sha(fixture)}
+    wrapper = (output_dir / "run_fixture_es3_loader.jsx").resolve()
+    trace = (output_dir / "es3_loader_trace.json").resolve()
+    payload = fixture.resolve()
+    if args.prepare_loader_only:
+        if args.execute: fail("--prepare-loader-only and --execute are mutually exclusive")
+        write_es3_loader(wrapper, trace, payload)
+        report.update({"status": "prepared", "reason": "loader_static_preflight_only", "loader_static_audit": audit_es3_loader(wrapper, trace, payload)})
     if args.execute:
         if sys.platform != "darwin": fail("--execute requires macOS")
         if subprocess.run(["pgrep", "-x", "After Effects"], stdout=subprocess.DEVNULL).returncode == 0: fail("After Effects is already running; use a fresh process for loaded-module proof")
@@ -78,7 +123,21 @@ def main():
         env = dict(os.environ); env.update({"OLM_AE_TYPED_FIXTURE_OUTPUT_DIR": str(output_dir), "OLM_AE_TYPED_FIXTURE_TEMPLATE": "OLM EXR 32 Float",
             "OLM_AE_TYPED_FIXTURE_PROJECT_PATH": str(output_dir / "fixture.aep"), "OLM_AE_TYPED_FIXTURE_EFFECT": "OLM Toon Dilate",
             "OLM_AE_TYPED_FIXTURE_OVERWRITE": "0"})
-        subprocess.run(["osascript", "-e", "with timeout of 3600 seconds", "-e", f'tell application "{args.ae_app}" to DoScriptFile POSIX file "{fixture}" with override', "-e", "end timeout"], check=True, env=env)
+        if trace.exists(): trace.unlink()
+        write_es3_loader(wrapper, trace, payload)
+        audit_es3_loader(wrapper, trace, payload)
+        subprocess.run([
+            "osascript", "-e", "with timeout of 3600 seconds",
+            "-e", f'tell application "{args.ae_app}"',
+            "-e", f'DoScriptFile POSIX file "{wrapper}" with override',
+            "-e", "end tell", "-e", "end timeout",
+        ], check=True, env=env)
+        if not trace.is_file(): fail("ES3 loader did not write its absolute trace")
+        loader_trace = read(trace)
+        if loader_trace.get("status") != "ok":
+            fail(f"ES3 loader failed: file={loader_trace.get('file')} line={loader_trace.get('line')} message={loader_trace.get('message')}")
+        if loader_trace.get("payload") != str(payload) or loader_trace.get("trace") != str(trace):
+            fail("ES3 loader absolute path trace drifted")
         loaded_proof = ae_process_proof(plugin)
         result = read(output_dir / "fixture_result.json")
         if result.get("status") != "ok": fail("AE fixture did not report ok")
@@ -91,6 +150,15 @@ def main():
         if len(settings) != 2 or sha(settings[0]) != sha(settings[1]): fail("settings captures missing or unequal")
         outputs = {n: output_dir / fn for n, fn in request["case"]["outputs"].items()}
         inspected = {n: verify_output(path) for n, path in outputs.items()}
+        expected_outputs = request.get("expected_current_installed_output_sha256", {})
+        if set(expected_outputs) != set(outputs): fail("expected output hash contract missing or drifted")
+        for name in outputs:
+            if inspected[name]["sha256"] != expected_outputs[name]:
+                fail(f"{name} output hash differs from the pinned current-installed expectation")
+        requested = request["case"]["parameters"][0]
+        readbacks = result.get("parameters", [])
+        if len(readbacks) != 1 or readbacks[0].get("property_index") != 1 or abs(float(readbacks[0].get("actual")) - float(requested["value"])) > float(requested["readback_tolerance"]):
+            fail("Search Radius readback differs from the pinned parameter contract")
         record = {"kind": "olm_32bpc_typed_procedural_render_record", "schema": 1, "platform": "macos", "record_role": "reference",
                   "required_ae_major_minor": "26.3", "ae_version": result.get("ae_version", ""), "output_template": "OLM EXR 32 Float",
                   "fixture_jsx_sha256": sha(fixture), "renderer_class": "SOFTWARE", "linear_blending": False,

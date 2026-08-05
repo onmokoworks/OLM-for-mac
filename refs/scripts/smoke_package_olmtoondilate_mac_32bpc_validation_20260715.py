@@ -3,21 +3,39 @@
 from __future__ import annotations
 import importlib.util, json, subprocess, sys, tempfile
 from pathlib import Path
+from unittest import mock
 ROOT=Path(__file__).resolve().parents[2]
 GEN=ROOT/"scripts/package_olmtoondilate_mac_32bpc_validation_20260715.py"
 RUN=ROOT/"refs/scripts/run_olmtoondilate_mac_32bpc_validation_20260715.py"
 COMPARE=ROOT/"refs/scripts/compare_olmtoondilate_mac_32bpc_validation_20260715.py"
-PLUGIN_BINARY=ROOT/"mac/OLMToonDilate/Mac/build/Debug/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate"
+PLUGIN_BINARY=Path.home()/"Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate"
+SUBPROCESS_TIMEOUT_SECONDS=60
+
+def run_bounded(command):
+  if str(RUN) in command and "--execute" in command:
+    raise AssertionError("FAIL CLOSED: smoke must never execute the AE runner")
+  try:
+    return subprocess.run(command,cwd=ROOT,text=True,capture_output=True,timeout=SUBPROCESS_TIMEOUT_SECONDS)
+  except subprocess.TimeoutExpired as exc:
+    raise AssertionError(f"FAIL CLOSED: subprocess timed out after {SUBPROCESS_TIMEOUT_SECONDS}s: {command!r}") from exc
 
 def archs(path):
-  proc=subprocess.run(["lipo","-archs",str(path)],cwd=ROOT,check=True,text=True,capture_output=True)
+  proc=run_bounded(["lipo","-archs",str(path)])
+  assert proc.returncode==0,proc.stderr
   return sorted({token for token in proc.stdout.split() if token})
 
 def main():
+  with mock.patch.object(subprocess,"run",side_effect=subprocess.TimeoutExpired(["timeout-proof"],SUBPROCESS_TIMEOUT_SECONDS)):
+    try:
+      run_bounded(["timeout-proof"])
+    except AssertionError as exc:
+      assert str(exc).startswith("FAIL CLOSED: subprocess timed out")
+    else:
+      raise AssertionError("subprocess timeout did not fail closed")
   with tempfile.TemporaryDirectory(prefix="toondilate_mac_smoke_") as d:
     spec=importlib.util.spec_from_file_location("olmtoondilate_run_validation",RUN); module=importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
     assert Path(module.PACKAGE)==ROOT/"refs/runtime_trace_packages/olmtoondilate_mac_32bpc_validation_20260715"
-    out=Path(d)/"package"; subprocess.run([sys.executable,str(GEN),"--output-dir",str(out)],cwd=ROOT,check=True,capture_output=True,text=True)
+    out=Path(d)/"package"; proc=run_bounded([sys.executable,str(GEN),"--output-dir",str(out)]); assert proc.returncode==0,proc.stderr
     req=json.loads((out/"request_manifest.json").read_text()); assert req["case"]["effect"]=="OLM Toon Dilate"; assert req["project"]=={"bits_per_channel":32,"working_space":"None","linear_blending":False}
     plugin=req["case"]["plugin"]; assert plugin["binary"]=="Contents/MacOS/OLMToonDilate"; assert len(plugin["sha256"])==64
     provenance=plugin["candidate_provenance"]; assert provenance["build_architectures"]==archs(PLUGIN_BINARY)
@@ -28,10 +46,28 @@ def main():
     fixture=(out/"fixture/ae_generate_32bpc_olmtoondilate_fixture.jsx").read_text();
     for token in ("OLM Toon Dilate","OutputModule.getSettings(GetSettingsFormat.STRING)","GpuAccelType.SOFTWARE","project.bitsPerChannel = 32","project.linearBlending = false"):
       assert token in fixture, token
-    proc=subprocess.run([sys.executable,str(RUN),"--package",str(out)],cwd=ROOT,text=True,capture_output=True); assert proc.returncode==0,proc.stderr
+    proc=run_bounded([sys.executable,str(RUN),"--package",str(out)]); assert proc.returncode==0,proc.stderr
     report=json.loads((out/"mac_run/validation_report.json").read_text()); assert report["status"]=="blocked" and report["ae_exact"] is False
-    proc=subprocess.run([sys.executable,str(RUN),"--package",str(out),"--execute"],cwd=ROOT,text=True,capture_output=True); assert proc.returncode!=0; assert "FAIL CLOSED" in proc.stderr+proc.stdout
-    fixture_sha="f"*64
+    launch_attempts=[]
+    def reject_ae_launch(command,**kwargs):
+      if command[:3]==["pgrep","-x","After Effects"]:
+        return subprocess.CompletedProcess(command,1,"","")
+      if command and command[0]=="osascript":
+        launch_attempts.append(command)
+        raise RuntimeError("AE launch safely intercepted by smoke")
+      raise AssertionError(f"unexpected execute-preflight subprocess: {command!r}")
+    execute_argv=[str(RUN),"--package",str(out),"--execute","--plugin-binary",str(PLUGIN_BINARY)]
+    with mock.patch.object(module.sys,"argv",execute_argv), mock.patch.object(module.sys,"platform","darwin"), mock.patch.object(module.subprocess,"run",side_effect=reject_ae_launch):
+      try:
+        module.main()
+      except RuntimeError as exc:
+        assert str(exc)=="AE launch safely intercepted by smoke"
+      else:
+        raise AssertionError("execute preflight did not reach the mocked AE launch boundary")
+    assert len(launch_attempts)==1
+    assert launch_attempts[0][0]=="osascript"
+    assert "Adobe After Effects 2026" in " ".join(launch_attempts[0])
+    fixture_sha=req["fixture_jsx_sha256"]
     base_case={
       "id": req["case"]["id"], "fixture_contract": req["fixture_contract"],
       "output_module": {"template_name":"OLM EXR 32 Float","capture_api":"OutputModule.getSettings(GetSettingsFormat.STRING)","settings_sha256":"a"*64},
@@ -41,15 +77,15 @@ def main():
     win_record={"platform":"windows","required_ae_major_minor":"26.3","ae_version":"26.3x1","output_template":"OLM EXR 32 Float","renderer_class":"SOFTWARE","linear_blending":False,"fixture_jsx_sha256":fixture_sha,"cases":[dict(base_case, plugin={"name":"OLMToonDilate.aex","sha256":"c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"})]}
     mac_path=Path(d)/"mac_record.json"; win_path=Path(d)/"windows_record.json"
     mac_path.write_text(json.dumps(mac_record), encoding="utf-8"); win_path.write_text(json.dumps(win_record), encoding="utf-8")
-    proc=subprocess.run([sys.executable,str(COMPARE),str(mac_path),str(win_path),"--package",str(out),"--json"],cwd=ROOT,text=True,capture_output=True)
-    assert proc.returncode!=0; assert "FLOAT EXR output missing" in proc.stderr+proc.stdout
+    proc=run_bounded([sys.executable,str(COMPARE),str(mac_path),str(win_path),"--package",str(out),"--json"])
+    assert proc.returncode!=0; assert "FLOAT EXR output missing" in proc.stderr+proc.stdout,proc.stderr+proc.stdout
     mac_record["cases"][0]["plugin"]["sha256"]="0"*64; mac_path.write_text(json.dumps(mac_record), encoding="utf-8")
-    proc=subprocess.run([sys.executable,str(COMPARE),str(mac_path),str(win_path),"--package",str(out),"--json"],cwd=ROOT,text=True,capture_output=True)
-    assert proc.returncode!=0; assert "mac plugin identity/hash drifted" in proc.stderr+proc.stdout
+    proc=run_bounded([sys.executable,str(COMPARE),str(mac_path),str(win_path),"--package",str(out),"--json"])
+    assert proc.returncode!=0; assert "mac plugin identity/hash drifted" in proc.stderr+proc.stdout,proc.stderr+proc.stdout
     mac_record["cases"][0]["plugin"]["sha256"]=req["case"]["plugin"]["sha256"]; mac_path.write_text(json.dumps(mac_record), encoding="utf-8")
     win_record["cases"][0]["plugin"]["sha256"]="1"*64; win_path.write_text(json.dumps(win_record), encoding="utf-8")
-    proc=subprocess.run([sys.executable,str(COMPARE),str(mac_path),str(win_path),"--package",str(out),"--json"],cwd=ROOT,text=True,capture_output=True)
-    assert proc.returncode!=0; assert "windows plugin identity/hash drifted" in proc.stderr+proc.stdout
+    proc=run_bounded([sys.executable,str(COMPARE),str(mac_path),str(win_path),"--package",str(out),"--json"])
+    assert proc.returncode!=0; assert "windows plugin identity/hash drifted" in proc.stderr+proc.stdout,proc.stderr+proc.stdout
     runner=RUN.read_text(encoding="utf-8")
     for token in ("Adobe After Effects 2026","pgrep\", \"-x\", \"After Effects","vmmap_exact_path","binary_predates_process_start","re.escape(resolved)","Contents/MacOS/OLMToonDilate"):
       assert token in runner, token

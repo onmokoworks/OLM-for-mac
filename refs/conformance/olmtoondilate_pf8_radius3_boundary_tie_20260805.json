@@ -1,0 +1,189 @@
+{
+  "status": "PASS_PF8_RADIUS3_BOUNDARY_TIE",
+  "schema": "olmtoondilate.pf8-radius3-boundary-tie/1",
+  "aex": "aex/OLMToonDilate/Plugins/64/2025/OLMToonDilate.aex",
+  "aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+  "worker": "0x1801a6150",
+  "fixture": {
+    "width": 7,
+    "height": 3,
+    "rowbytes": 32,
+    "radius": 3,
+    "left_seed": [
+      0,
+      1
+    ],
+    "right_seed": [
+      6,
+      1
+    ],
+    "left_argb": [
+      255,
+      10,
+      20,
+      30
+    ],
+    "right_argb": [
+      255,
+      90,
+      80,
+      70
+    ],
+    "padding_byte": 165
+  },
+  "execution": {
+    "instructions": 5851,
+    "return_rax": "0xf0fef20"
+  },
+  "gates": {
+    "aex_sha256_exact": true,
+    "worker_returned": true,
+    "full_visible_argb_exact": true,
+    "center_tie_prefers_left_seed": true,
+    "both_boundary_seeds_preserved": true,
+    "padding_preserved": true
+  },
+  "center_tie_actual_argb": [
+    255,
+    10,
+    20,
+    30
+  ],
+  "actual_rows_argb": [
+    [
+      [
+        255,
+        10,
+        20,
+        30
+      ],
+      [
+        255,
+        10,
+        20,
+        30
+      ],
+      [
+        255,
+        10,
+        20,
+        30
+      ],
+      [
+        255,
+        90,
+        80,
+        70
+      ],
+      [
+        255,
+        90,
+        80,
+        70
+      ],
+      [
+        255,
+        90,
+        80,
+        70
+      ],
+      [
+        255,
+        90,
+        80,
+        70
+      ]
+    ],
+    [
+      [
+        255,
+        10,
+        20,
+        30
+      ],
+      [
+        255,
+        10,
+        20,
+        30
+      ],
+      [
+        255,
+        10,
+        20,
+        30
+      ],
+      [
+        255,
+        10,
+        20,
+        30
+      ],
+      [
+        255,
+        90,
+        80,
+        70
+      ],
+      [
+        255,
+        90,
+        80,
+        70
+      ],
+      [
+        255,
+        90,
+        80,
+        70
+      ]
+    ],
+    [
+      [
+        255,
+        10,
+        20,
+        30
+      ],
+      [
+        255,
+        10,
+        20,
+        30
+      ],
+      [
+        255,
+        10,
+        20,
+        30
+      ],
+      [
+        255,
+        10,
+        20,
+        30
+      ],
+      [
+        255,
+        90,
+        80,
+        70
+      ],
+      [
+        255,
+        90,
+        80,
+        70
+      ],
+      [
+        255,
+        90,
+        80,
+        70
+      ]
+    ]
+  ],
+  "actual_visible_sha256": "4044e8355c0566c467b7851855cbf4b17143d696f5b5c5cd37f7b3231fa464e4",
+  "expected_visible_sha256": "4044e8355c0566c467b7851855cbf4b17143d696f5b5c5cd37f7b3231fa464e4",
+  "claim_boundary": "bounded actual-AEX PF8 radius-3 boundary/tie fixture under local Unicorn; no AE-host claim"
+}

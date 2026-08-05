@@ -24,12 +24,12 @@ def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
 def resolve(root, value):
     path = Path(value)
     return path if path.is_absolute() else root / path
-def load_expected_mac_plugin_sha(package_root: Path | None):
+def load_request(package_root: Path | None):
     package_roots = ((package_root,) if package_root else ()) + HELPER_DIRS
     for root in package_roots:
         manifest = root / "request_manifest.json"
         if manifest.is_file():
-            return read(manifest)["case"]["plugin"]["sha256"]
+            return read(manifest)
     return None
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument("mac"); ap.add_argument("windows"); ap.add_argument("--json",action="store_true"); ap.add_argument("--package", type=Path); a=ap.parse_args()
@@ -37,7 +37,10 @@ def main():
     left,right=read(left_path),read(right_path)
     if {left.get("platform"),right.get("platform")} != {"macos","windows"}: raise SystemExit("comparison requires Mac and Windows records")
     if left.get("fixture_jsx_sha256") != right.get("fixture_jsx_sha256"): raise SystemExit("fixture JSX hash mismatch")
-    expected_mac_plugin_sha = load_expected_mac_plugin_sha(a.package.resolve() if a.package else None)
+    request = load_request(a.package.resolve() if a.package else None)
+    expected_mac_plugin_sha = request["case"]["plugin"]["sha256"] if request else None
+    if not request or left.get("fixture_jsx_sha256") != request.get("fixture_jsx_sha256"):
+        raise SystemExit("fixture JSX hash differs from request contract")
     for record in (left,right):
         if record.get("required_ae_major_minor") != "26.3" or not str(record.get("ae_version", "")).startswith("26.3") or record.get("output_template") != "OLM EXR 32 Float" or record.get("renderer_class") != "SOFTWARE" or record.get("linear_blending") is not False: raise SystemExit("host/AE contract drifted")
         case=record.get("cases");
@@ -55,7 +58,12 @@ def main():
         if fixture.get("project_bits_per_channel")!=32 or fixture.get("working_space")!="None" or fixture.get("linear_blending") is not False or fixture.get("render_policy")!="same comp, only branch enabled state changes" or fixture.get("source_policy")!="AE-generated solids only; no footage imported": raise SystemExit("32bpc/same-context/color contract missing")
         om=c.get("output_module",{})
         if om.get("template_name")!="OLM EXR 32 Float" or om.get("capture_api")!="OutputModule.getSettings(GetSettingsFormat.STRING)" or not om.get("settings_sha256"): raise SystemExit("Output Module capture missing")
-    mc,wc=left["cases"][0],right["cases"][0]; rows={}
+    mc,wc=left["cases"][0],right["cases"][0]
+    if mc.get("id") != wc.get("id") or mc.get("effect") != wc.get("effect"):
+        raise SystemExit("case/effect identity mismatch")
+    if mc.get("parameters_requested") != wc.get("parameters_requested"):
+        raise SystemExit("requested parameter mismatch")
+    rows={}
     for name in ("no_effect","effect_on"):
         lp=resolve(left_path.parent, mc["outputs"][name]["path"]); rp=resolve(right_path.parent, wc["outputs"][name]["path"])
         if not lp.is_file() or not rp.is_file(): raise SystemExit("FLOAT EXR output missing: "+name)

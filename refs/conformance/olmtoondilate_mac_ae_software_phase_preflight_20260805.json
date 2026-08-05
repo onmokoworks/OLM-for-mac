@@ -1,0 +1,42 @@
+{
+  "status": "PASS_PREPARED_NOT_EXECUTED",
+  "schema": "olmtoondilate.mac-ae-software-phase-preflight/1",
+  "package": "refs/runtime_trace_packages/olmtoondilate_mac_32bpc_validation_20260715",
+  "runner": {
+    "path": "refs/runtime_trace_packages/olmtoondilate_mac_32bpc_validation_20260715/run_mac_validation.py",
+    "sha256": "25d6938b55b657bfc7a6a04ad70b716ee37b92bd501f38dc8086d97cc2f81494",
+    "execute_requires_explicit_flag": true,
+    "fresh_ae_process_required": true,
+    "loaded_module_gate": "vmmap exact path plus SHA-256, binary must predate AE process"
+  },
+  "fixture": {
+    "jsx": "refs/runtime_trace_packages/olmtoondilate_mac_32bpc_validation_20260715/fixture/ae_generate_32bpc_olmtoondilate_fixture.jsx",
+    "sha256": "0f119ad6dfa2cc0729ac94549b553dfb405ea3eba9648a3fc12d6c51c3d7b799",
+    "project_output": "mac_run/fixture.aep",
+    "project": {"bits_per_channel": 32, "working_space": "None", "linear_blending": false, "renderer": "SOFTWARE"},
+    "dimensions": [64, 64],
+    "source": "AE-generated solids only; no imported footage"
+  },
+  "entry_and_parameter_contract": {
+    "required_commands": ["PF_Cmd_SMART_PRE_RENDER", "PF_Cmd_SMART_RENDER"],
+    "supported_depth": "32bpc FLOAT",
+    "effect": "OLM Toon Dilate",
+    "search_radius": {"property_index": 1, "match_name": "ADBE OLMToonDilate-0001", "requested": 13.0, "readback_tolerance": 0.0001},
+    "legacy_render": "unproved and not accepted as a substitute"
+  },
+  "installed_identity": {
+    "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate",
+    "sha256": "8ac60d57193d1848fc830cff49c2a31faff5ed6298fa0d7736ab4298e2bd0ffc",
+    "architectures": ["arm64", "x86_64"]
+  },
+  "expected_output_sha256": {
+    "no_effect": "00ac6170abefd2bb3fddb7a0f2904c933844597df31b4a039677e1300d5e2764",
+    "effect_on": "e31d15b4e2aef24d294c74695f6448d5f90aecc4a989a6c36ee263f4af82ea22"
+  },
+  "preflight": {
+    "package_generation": "PASS",
+    "non_execute_runner_validation": "PASS_BLOCKED_AS_DESIGNED",
+    "ae_launched_or_operated": false
+  },
+  "claim_boundary": "Preparation only. Expected hashes come from the prior canonical 32bpc Software AE-exact fixture; no current-installed AE render has been executed in this phase."
+}

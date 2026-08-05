@@ -1,14 +1,21 @@
 {
+  "capture_gate": {
+    "mac_candidate_effect_control_exr_present": false,
+    "mac_package_identity_ready": true,
+    "source_32bpc_dispatch_ready": true,
+    "verdict": "only-host-capture-remains",
+    "windows_float_effect_control_ready": true
+  },
   "checked_in_package": {
     "binary_sha_matches_current": true,
     "build_architectures_match_current": true,
-    "current_binary_path": "mac/OLMToonDilate/Mac/build/Debug/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate",
-    "current_binary_sha256": "731798e1386f04afd181523e3fd55fbf5824a89b7ea97493281217ed5882c36e",
+    "current_binary_path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate",
+    "current_binary_sha256": "8ac60d57193d1848fc830cff49c2a31faff5ed6298fa0d7736ab4298e2bd0ffc",
     "current_build_architectures": [
       "arm64",
       "x86_64"
     ],
-    "packaged_binary_sha256": "731798e1386f04afd181523e3fd55fbf5824a89b7ea97493281217ed5882c36e",
+    "packaged_binary_sha256": "8ac60d57193d1848fc830cff49c2a31faff5ed6298fa0d7736ab4298e2bd0ffc",
     "packaged_build_architectures": [
       "arm64",
       "x86_64"
@@ -69,7 +76,7 @@
       "command": "python3 tools/emulation/test_olmtoondilate_mac_smartrender_adapter_20260717.py",
       "returncode": 0,
       "stderr_tail": "",
-      "stdout_tail": "{\"build\": {\"arch\": \"arm64\", \"compiler\": \"/usr/bin/clang++\", \"flags\": [\"-std=c++17\", \"-arch\", \"arm64\", \"-O2\", \"-fno-fast-math\", \"-ffp-contract=off\", \"-isysroot\", \"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk\", \"-I\", \"<repo>/Headers\", \"-I\", \"<repo>/Headers/SP\", \"-I\", \"<repo>/Util\", \"-I\", \"<repo>/Resources\", \"/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olm_toondilate_mac_smartrender_zwep17fp/toondilate_mac_smartrender_adapter_probe.cpp\", \"-framework\", \"Cocoa\", \"-o\", \"/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olm_toondilate_mac_smartrender_zwep17fp/toondilate_mac_smartrender_adapter_probe\"]}, \"cases\": [{\"bitdepth\": 16, \"checkin_layer_pixels_once\": true, \"checkout_layer_once\": true, \"checkout_layer_pixels_once\": true, \"checkout_output_once\": true, \"input_padding_preserved\": true, \"output_padding_preserved\": true, \"pf_cmd_render_fallbacks\": 0, \"pixel_format\": \"PF16\", \"preserve_rgb_of_zero_alpha\": true, \"search_radius\": 0, \"visible_output_bit_identical\": true, \"zero_alpha_rgb_preserved\": true}, {\"bitdepth\": 32, \"checkin_layer_pixels_once\": true, \"checkout_layer_once\": true, \"checkout_layer_pixels_once\": true, \"checkout_output_once\": true, \"input_padding_preserved\": true, \"output_padding_preserved\": true, \"pf_cmd_render_fallbacks\": 0, \"pixel_format\": \"PF32\", \"preserve_rgb_of_zero_alpha\": true, \"search_radius\": 0, \"visible_output_bit_identical\": true, \"zero_alpha_rgb_preserved\": true}], \"claim_boundary\": \"Mac-local source-included PF adapter proof; no AE exact or Windows claim\", \"production_source\": \"mac/OLMToonDilate/OLMToonDilate.cpp\", \"status\": \"ok\"}\n"
+      "stdout_tail": "opagated\": true, \"distance_5_raw_uint16_preserved\": true, \"nonzero_extents_padding_exact\": true, \"radius\": 4, \"rowbytes\": 56}, \"pf32_empty_both_production\": {\"dimensions\": [0, 0], \"empty_output_backing_unchanged\": true, \"nonzero_origin_zero_size_extents_unchanged\": true, \"radius\": 4, \"rowbytes\": 24}, \"pf32_fractional_radius_2_5_5x1_production\": {\"ceil_frontier_3_propagated\": true, \"dimensions\": [5, 1], \"distance_4_raw_float32_preserved\": true, \"effective_radius\": 3, \"nonzero_extents_padding_exact\": true, \"requested_radius\": 2.5, \"rowbytes\": 88}, \"pf32_radius3_5x1_partial_production\": {\"dimensions\": [5, 1], \"distance_3_frontier_propagated\": true, \"distance_4_raw_float32_preserved\": true, \"nonzero_extents_padding_exact\": true, \"radius\": 3, \"rowbytes\": 88}, \"pf32_radius4_6x1_partial_production\": {\"dimensions\": [6, 1], \"distance_4_frontier_propagated\": true, \"distance_5_raw_float32_preserved\": true, \"nonzero_extents_padding_exact\": true, \"radius\": 4, \"rowbytes\": 104}, \"pf8_empty_width_production\": {\"dimensions\": [0, 1], \"empty_output_padding_unchanged\": true, \"nonzero_origin_zero_width_extents_unchanged\": true, \"radius\": 4, \"rowbytes\": 8}, \"pf8_fractional_radius_2_01_5x1_production\": {\"ceil_frontier_3_propagated\": true, \"dimensions\": [5, 1], \"distance_4_raw_uint8_preserved\": true, \"effective_radius\": 3, \"nonzero_extents_padding_exact\": true, \"requested_radius\": 2.01, \"rowbytes\": 28}, \"pf8_radius3_5x1_partial_production\": {\"dimensions\": [5, 1], \"distance_3_frontier_propagated\": true, \"distance_4_raw_uint8_preserved\": true, \"nonzero_extents_padding_exact\": true, \"radius\": 3, \"rowbytes\": 28}, \"pf8_radius4_6x1_partial_production\": {\"dimensions\": [6, 1], \"distance_4_frontier_propagated\": true, \"distance_5_raw_uint8_preserved\": true, \"nonzero_extents_padding_exact\": true, \"radius\": 4, \"rowbytes\": 32}, \"positive_radius_fixture\": {\"PF16_exact\": true, \"PF32_exact\": true, \"PF8_exact\": true, \"radius\": 1}, \"production_source\": \"mac/OLMToonDilate/OLMToonDilate.cpp\", \"status\": \"ok\"}\n"
     }
   ],
   "schema": 1,

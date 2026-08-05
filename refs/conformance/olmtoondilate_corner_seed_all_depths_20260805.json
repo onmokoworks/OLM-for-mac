@@ -1,0 +1,175 @@
+{
+  "status": "PASS_CORNER_SEED_ALL_DEPTHS",
+  "schema": "olmtoondilate.corner-seed-all-depths/1",
+  "aex": "aex/OLMToonDilate/Plugins/64/2025/OLMToonDilate.aex",
+  "aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+  "fixture": {
+    "width": 5,
+    "height": 5,
+    "radius": 4,
+    "seed_a": [
+      0,
+      0
+    ],
+    "seed_b": [
+      4,
+      4
+    ],
+    "padding_byte": 165
+  },
+  "gates": {
+    "aex_sha256_exact": true,
+    "three_independent_workers": true,
+    "all_depths_exact": true
+  },
+  "cases": [
+    {
+      "depth": 8,
+      "worker": "0x1801a6150",
+      "rowbytes": 24,
+      "instructions": 7549,
+      "gates": {
+        "worker_returned": true,
+        "full_visible_four_word_exact": true,
+        "padding_preserved": true
+      },
+      "label_rows": [
+        [
+          "A",
+          "A",
+          "A",
+          "A",
+          "A"
+        ],
+        [
+          "A",
+          "A",
+          "A",
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "A",
+          "A",
+          "B",
+          "B"
+        ],
+        [
+          "A",
+          "A",
+          "B",
+          "B",
+          "B"
+        ],
+        [
+          "A",
+          "B",
+          "B",
+          "B",
+          "B"
+        ]
+      ],
+      "actual_visible_sha256": "51e6b41a1497ce0ef24300758a7c1fc7d15f3ac088a975337953f1c8e67464d0"
+    },
+    {
+      "depth": 16,
+      "worker": "0x1801a5a90",
+      "rowbytes": 44,
+      "instructions": 7570,
+      "gates": {
+        "worker_returned": true,
+        "full_visible_four_word_exact": true,
+        "padding_preserved": true
+      },
+      "label_rows": [
+        [
+          "A",
+          "A",
+          "A",
+          "A",
+          "A"
+        ],
+        [
+          "A",
+          "A",
+          "A",
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "A",
+          "A",
+          "B",
+          "B"
+        ],
+        [
+          "A",
+          "A",
+          "B",
+          "B",
+          "B"
+        ],
+        [
+          "A",
+          "B",
+          "B",
+          "B",
+          "B"
+        ]
+      ],
+      "actual_visible_sha256": "2367a3cfe66186a976f4c53a47336c295bb69ca50ee4b2e0c36c09be530b2a25"
+    },
+    {
+      "depth": 32,
+      "worker": "0x1801a6800",
+      "rowbytes": 84,
+      "instructions": 7368,
+      "gates": {
+        "worker_returned": true,
+        "full_visible_four_word_exact": true,
+        "padding_preserved": true
+      },
+      "label_rows": [
+        [
+          "A",
+          "A",
+          "A",
+          "A",
+          "A"
+        ],
+        [
+          "A",
+          "A",
+          "A",
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "A",
+          "A",
+          "B",
+          "B"
+        ],
+        [
+          "A",
+          "A",
+          "B",
+          "B",
+          "B"
+        ],
+        [
+          "A",
+          "B",
+          "B",
+          "B",
+          "B"
+        ]
+      ],
+      "actual_visible_sha256": "aec55c45b6d5bd1793af1cdc212d8e2f6116f7cbef1600d055f823d01b7a80da"
+    }
+  ],
+  "claim_boundary": "three independent actual-AEX typed workers on a corner-seed geometry under local Unicorn; no AE-host claim"
+}

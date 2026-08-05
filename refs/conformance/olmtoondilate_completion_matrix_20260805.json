@@ -1,0 +1,40 @@
+{
+  "status": "BOUNDED_MATRIX_UPDATED",
+  "schema": "olmtoondilate.completion-matrix/1",
+  "commands": {
+    "sequence_setup_0x01": "actual entrypoint exact",
+    "smart_pre_render_0x17": "actual entrypoint exact under probe-local checkout seam",
+    "smart_render_0x18": "actual entrypoint to production exact for bounded fixtures",
+    "legacy_render": "not covered by this SmartRender campaign",
+    "global_and_parameter_setup": "production source/build covered; actual behavioral parity not claimed"
+  },
+  "bitdepths": {"PF8": "covered", "PF16": "covered", "PF32": "covered"},
+  "radius": {
+    "nonpositive": "0 and -1 all-depth exact",
+    "integer": "1 through 4 all-depth bounded exact",
+    "fractional": "PF8 2.01, PF32 2.5, PF16 3.25 exact"
+  },
+  "geometry": {
+    "partial_padded_nonzero_extent": "all-depth exact",
+    "frontier_inside_outside": "radii 2 through 4 exact",
+    "boundary_tie_and_corner": "all-depth actual worker plus production exact",
+    "empty_width": "PF8 0x1 actual SmartRender entrypoint to production exact",
+    "empty_height": "PF16 1x0 actual SmartRender entrypoint to production exact",
+    "empty_both_axes": "PF32 0x0 actual SmartRender entrypoint to production exact"
+  },
+  "metadata": {
+    "rowbytes_padding_guards": "bounded exact",
+    "nonzero_extent_headers": "probe-local unchanged and buffer-local exact",
+    "composition_width_scaling": "not proven: exact actual-AEX host field/layout is not established",
+    "real_ae_layout_and_execution": "not claimed"
+  },
+  "installed_completion": {
+    "actual_entry_to_typed_writer_to_production_source": "exact",
+    "production_source_to_installed_universal_binary": "SHA and codesign identity exact",
+    "installed_dynamic_load": "arm64 EffectMain SmartPreRender/SmartRender PF8 exact",
+    "real_ae_render": "not claimed"
+  },
+  "selected_gap_closed": "PF32 both-axes-empty SmartRender geometry",
+  "actual_report_sha256": "4c96cae5eb9dde9761dd7b461dfe7c364644797a15534b144262bbf746ed01ec",
+  "legacy_render_observation": "PF_Cmd_RENDER 0x0b returned under the current probe ABI without acquiring PF World Suite or producing expected output; remains unproved rather than inferred"
+}

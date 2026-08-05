@@ -1,0 +1,42 @@
+{
+  "status": "PASS_ENTRYPOINT_DISPATCH_IDENTIFIED",
+  "schema": "olmtoondilate.actual-aex-smartrender-entrypoint/1",
+  "aex": "aex/OLMToonDilate/Plugins/64/2025/OLMToonDilate.aex",
+  "aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+  "exports": {
+    "entry_point": "0x1801abc00"
+  },
+  "pf_cmd_mapping": {
+    "PF_Cmd_SMART_PRE_RENDER": 23,
+    "PF_Cmd_SMART_RENDER": 24
+  },
+  "my_effect_vtable": "0x180311e18",
+  "vtable_slots": {
+    "base": "0x1801abb20",
+    "smart_pre_render_plus_0x10": "0x1801a5940",
+    "smart_render_plus_0x20": "0x1801a5970"
+  },
+  "functions": {
+    "smart_pre_render": "0x1801a5940",
+    "smart_render": "0x1801a5970",
+    "typed_worker_dispatch": {
+      "PF8": "0x1801a6150",
+      "PF16": "0x1801a5a90",
+      "PF32": "0x1801a6800"
+    }
+  },
+  "gates": {
+    "aex_sha256_exact": true,
+    "entry_export_exact": true,
+    "smart_pre_vtable_exact": true,
+    "smart_render_vtable_exact": true,
+    "decomp_dispatch_tokens_exact": true
+  },
+  "not_proven": [
+    "actual-AEX sequence setup succeeds under the current synthetic suite set",
+    "actual-AEX SmartPreRender checkout/result_rect host callback readback",
+    "partial-world pixel equivalence"
+  ],
+  "next_boundary": "extend synthetic suites required by command 1 sequence setup, copy out_data+0x28 handle into in_data+0x138, then call entry_point commands 0x17 and 0x18",
+  "claim_boundary": "binary-identity-bound entrypoint and command/vtable dispatch identification only"
+}

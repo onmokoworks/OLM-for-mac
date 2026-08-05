@@ -1,0 +1,72 @@
+{
+  "status": "PASS_INSTALLED_COMPLETION_ROUTE",
+  "route": [
+    "actual AEX entry_point command 0x17 SmartPreRender",
+    "actual AEX entry_point command 0x18 typed PF8/PF16/PF32 workers and writers",
+    "source-included production EffectMain SmartPreRender/SmartRender exact adapter",
+    "current production source SHA identity",
+    "current installed signed Universal bundle SHA identity",
+    "installed arm64 EffectMain dynamic SmartPreRender/SmartRender execution"
+  ],
+  "actual_aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+  "actual_report_sha256": "4c96cae5eb9dde9761dd7b461dfe7c364644797a15534b144262bbf746ed01ec",
+  "production_source_sha256": "ea5b54e4a658a1cc092993c8d4bff1d67c08a5282a990df9f78771e69ee8f81b",
+  "installed": {
+    "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin",
+    "binary_sha256": "8ac60d57193d1848fc830cff49c2a31faff5ed6298fa0d7736ab4298e2bd0ffc",
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "codesign": "valid"
+  },
+  "gates": {
+    "actual_entry_chain_exact": true,
+    "production_adapter_exact": true,
+    "production_source_identity": true,
+    "installed_binary_identity": true,
+    "installed_universal": true,
+    "installed_codesign_valid": true,
+    "single_active_bundle": true,
+    "installed_dynamic_entry_exact": true
+  },
+  "restart_required_from_install_record": true,
+  "installed_dynamic_entry": {
+    "architecture": "arm64",
+    "binary_sha256": "8ac60d57193d1848fc830cff49c2a31faff5ed6298fa0d7736ab4298e2bd0ffc",
+    "callbacks": {
+      "checkin": 1,
+      "exact": true,
+      "output": 1,
+      "param": 1,
+      "pixels": 1,
+      "pre": 1
+    },
+    "claim_boundary": "Installed arm64 slice dynamically loaded and executed AE-free with focused host callbacks; real AE execution remains unclaimed.",
+    "commands": [
+      "PF_Cmd_SMART_PRE_RENDER",
+      "PF_Cmd_SMART_RENDER"
+    ],
+    "entry_symbol": "EffectMain",
+    "fixture": {
+      "depth": 8,
+      "dimensions": [
+        3,
+        2
+      ],
+      "nonzero_extents": true,
+      "padding": 8,
+      "radius": 1,
+      "rowbytes": 20
+    },
+    "gates": {
+      "dlopen_and_dlsym": true,
+      "padding_unchanged": true,
+      "smartpre_to_smartrender_returned": true,
+      "typed_writer_visible_exact": true
+    },
+    "installed_binary": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate",
+    "status": "PASS_INSTALLED_DYNAMIC_ENTRY"
+  },
+  "claim_boundary": "AE-free completion route including dynamic execution of the installed arm64 EffectMain under focused host callbacks. Real AE execution remains unclaimed."
+}

@@ -6,6 +6,7 @@ from __future__ import annotations
 import hashlib
 import json
 import subprocess
+import tempfile
 from pathlib import Path
 
 
@@ -18,7 +19,7 @@ EXACT16 = ROOT / "refs/conformance/bitdepth_16bpc_exact_manifest_20260703.md"
 PACKAGE_SMOKE = ROOT / "refs/scripts/smoke_package_olmtoondilate_mac_32bpc_validation_20260715.py"
 PACKAGE_DIR = ROOT / "refs/runtime_trace_packages/olmtoondilate_mac_32bpc_validation_20260715"
 PACKAGE_MANIFEST = PACKAGE_DIR / "request_manifest.json"
-PLUGIN_BINARY = ROOT / "mac/OLMToonDilate/Mac/build/Debug/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate"
+PLUGIN_BINARY = Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate"
 
 
 def sha256(path: Path) -> str:
@@ -32,7 +33,7 @@ def sha256(path: Path) -> str:
 def run(command: list[str]) -> dict:
     proc = subprocess.run(command, cwd=ROOT, text=True, capture_output=True)
     def portable(text: str) -> str:
-        return text.replace(str(ROOT), "<repo>")
+        return text.replace(str(ROOT), "<repo>").replace(tempfile.gettempdir(), "<tmp>")
     return {
         "command": " ".join(command),
         "returncode": proc.returncode,
@@ -121,7 +122,7 @@ def current_package_facts() -> dict:
         ROOT / "mac/OLMToonDilate/Mac/OLMToonDilate.xcodeproj/project.pbxproj",
     )}
     current_binary_sha = sha256(PLUGIN_BINARY)
-    current_binary_path = str(PLUGIN_BINARY.relative_to(ROOT))
+    current_binary_path = str(PLUGIN_BINARY)
     current_archs = binary_architectures(PLUGIN_BINARY)
     packaged_sources = plugin.get("candidate_provenance", {}).get("source_sha256", {})
     packaged_archs = plugin.get("candidate_provenance", {}).get("build_architectures", [])
@@ -140,18 +141,56 @@ def current_package_facts() -> dict:
     }
 
 
+def capture_gate_facts(source: dict, windows: dict, package: dict, mac_candidate_exr_count: int) -> dict:
+    """Classify the remaining 32bpc gap without inferring pixels from PNG/CLI."""
+    source_ready = source["all_rules_present"]
+    manifest = windows["manifest"]
+    references_ready = (
+        manifest["project_bits_per_channel"] == 32
+        and manifest["renderer"] == "SOFTWARE"
+        and manifest["toondilate_cases"] == 3
+        and manifest["toondilate_float_preserving"]
+        and manifest["toondilate_output_formats"] == ["exr"]
+        and manifest["toondilate_frames_exist"]
+        and manifest["toondilate_before_frames_exist"]
+        and windows["exr_headers"]["count"] == 6
+        and all(item["openexr_magic"] for item in windows["exr_headers"]["files"])
+    )
+    package_ready = (
+        package["present"]
+        and package["binary_sha_matches_current"]
+        and package["build_architectures_match_current"]
+        and package["source_sha_matches_current"]
+    )
+    return {
+        "source_32bpc_dispatch_ready": source_ready,
+        "windows_float_effect_control_ready": references_ready,
+        "mac_package_identity_ready": package_ready,
+        "mac_candidate_effect_control_exr_present": mac_candidate_exr_count > 0,
+        "verdict": (
+            "only-host-capture-remains"
+            if source_ready and references_ready and package_ready and mac_candidate_exr_count == 0
+            else "not-ready-for-host-capture-only-classification"
+        ),
+    }
+
+
 def main() -> int:
     binary_candidates = sorted(ROOT.glob("mac/OLMToonDilate/Mac/build/**/Contents/MacOS/OLMToonDilate"))
     binary_facts = [{"path": str(path.relative_to(ROOT)), "sha256": sha256(path)} for path in binary_candidates]
     package_smoke = run(["python3", str(PACKAGE_SMOKE.relative_to(ROOT))])
+    source = source_facts()
+    windows = {"manifest": manifest_facts(), "exr_headers": exr_header_facts()}
+    package = current_package_facts()
+    mac_candidate_exr_count = len(list((ROOT / "refs/reports").rglob("*toondilate*.exr")))
 
     result = {
         "kind": "olmtoondilate_depth_readiness_audit",
         "schema": 1,
         "generated_at": "2026-07-18",
         "scope": {"plugin": "OLMToonDilate", "depths": [16, 32], "windows_renderer": "SOFTWARE"},
-        "source": source_facts(),
-        "windows_32bpc": {"manifest": manifest_facts(), "exr_headers": exr_header_facts()},
+        "source": source,
+        "windows_32bpc": windows,
         "mac_candidate_binary": {"candidates": binary_facts,
                                   "package_hash_binding": "generated_from_current_binary_at_package_time",
                                   "package_smoke_returncode": package_smoke["returncode"],
@@ -160,9 +199,10 @@ def main() -> int:
             "16bpc_declared_exact": exact16_declared_exact(),
             "pf16_actual_aex_stage": "tools/emulation/test_olmtoondilate_pf16_actual_aex_cli_differential_20260716.py",
             "pf32_actual_aex_matrix": "tools/emulation/test_olmtoondilate_pf32_seed_propagation_matrix_20260717.py",
-            "mac_32bpc_candidate_exr_count": len(list((ROOT / "refs/reports").rglob("*toondilate*.exr"))),
+            "mac_32bpc_candidate_exr_count": mac_candidate_exr_count,
         },
-        "checked_in_package": current_package_facts(),
+        "checked_in_package": package,
+        "capture_gate": capture_gate_facts(source, windows, package, mac_candidate_exr_count),
         "reproducible_checks": [
             run(["python3", "refs/scripts/smoke_olmtoondilate_bitdepth_conformance.py"]),
             run(["python3", "tools/emulation/test_olmtoondilate_pf16_actual_aex_cli_differential_20260716.py"]),
