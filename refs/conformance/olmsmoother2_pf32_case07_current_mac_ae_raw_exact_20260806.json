@@ -1,0 +1,62 @@
+{
+  "kind": "olmsmoother2_pf32_case07_current_mac_ae_raw_exact",
+  "schema_version": 1,
+  "status": "raw_float32_exact_artifact_only_missing_windows_process_proof",
+  "ae_exact_claim": false,
+  "scope": {
+    "effect": "OLM Smoother v2",
+    "case_id": "final_random10_olm_smoother_v2_07",
+    "renderer": "SOFTWARE",
+    "bits_per_channel": 32,
+    "working_space": "None",
+    "linear_blending": false,
+    "dimensions": [1920, 1080],
+    "frame_rate": 24,
+    "frame": 0,
+    "enable_color_key": 0,
+    "smoother_version": 2
+  },
+  "host": {
+    "after_effects": "26.3.0x87",
+    "macos": "15.7.2",
+    "installed_plugin_binary_sha256": "fe782f344dcaf8865b778198b0faeb8cecd525062a83f38aca8dc1db74442c34",
+    "same_run_process_module_attestation": true,
+    "attestation_sha256": "14791578383c5d031494126d7d9503aa8493d074641069e190df2d6c2191d0f7"
+  },
+  "mac_artifacts": {
+    "result_sha256": "400b147dfd451ec7b5518d60155e5d8f24f787583a2eeb0c7423ac7c686b30cb",
+    "report_sha256": "fee7649f1265319929a6fc1ae10bf32a2f9195dd9f047a0d444817953eebcc8e",
+    "no_effect_exr_sha256": "22dbf87bd0f4d9f3df8c2b7727838c0e3f09bb6436453c81208467a79a3b94fc",
+    "effect_on_exr_sha256": "f650592db25b8813aae8d477a5a93b4764ea624f074bf3a7b1dfb64728a05f04",
+    "no_effect_settings_sha256": "aeebe66069de7a5f339ced6c2ad72fb3932cd06502faae27d59a2b27b3832e8c",
+    "effect_on_settings_sha256": "17d369895636d6626b12a401123c58825fe6222f06cded32df0e433f26df2bb7"
+  },
+  "windows_reference": {
+    "manifest": "refs/conformance/olmsmoother2_case07_windows_preserve_rgb_reference_20260727.json",
+    "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+    "pf32_input_entry_stored_sha256": "f29cad40b4f0081fa5f279da0e875198a2970ea2d9c1161db7cc2058acf4044c",
+    "pf32_input_entry_uncompressed_sha256": "133a9447f8d722a7add9a5c7fc63bcf16b7e77c21cab9aa7c48d84df8677685b",
+    "artifact_manifest_checks_passed": true,
+    "same_run_process_module_attestation": false
+  },
+  "exact_comparisons": {
+    "pf32_input_entry_vs_source_exr": {
+      "word_count": 8294400,
+      "mismatched_words": 0,
+      "max_raw_u32_delta": 0
+    },
+    "no_effect_control": {
+      "value_count": 8294400,
+      "mismatched_values": 0,
+      "max_raw_u32_delta": 0
+    },
+    "effect_on": {
+      "value_count": 8294400,
+      "mismatched_values": 0,
+      "max_raw_u32_delta": 0
+    }
+  },
+  "runner_commit": "b8638416",
+  "evidence_boundary": "The current Universal Mac binary is raw-FLOAT32 exact for this one PF32 case and has same-run Mac process/module proof. This record does not generalize to other parameters, bit depths, renderers, AE versions, or cases.",
+  "remaining_gate": "Capture Windows same-run AfterFX process and loaded OLMSmoother2.aex identity bound to both reference renders before promoting this current-binary run to AE exact."
+}
