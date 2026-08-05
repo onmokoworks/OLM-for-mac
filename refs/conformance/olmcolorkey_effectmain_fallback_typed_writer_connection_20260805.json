@@ -1,0 +1,41 @@
+{
+  "cases": [
+    {
+      "gates": {
+        "effectmain_render_invoked_once": true,
+        "fallback_smart_full_buffer_byte_exact": true,
+        "padding_preserved": true,
+        "typed_numerical_contract_present": true
+      },
+      "pixel_format": "PF8"
+    },
+    {
+      "gates": {
+        "effectmain_render_invoked_once": true,
+        "fallback_smart_full_buffer_byte_exact": true,
+        "padding_preserved": true,
+        "typed_numerical_contract_present": true
+      },
+      "pixel_format": "PF16"
+    },
+    {
+      "gates": {
+        "effectmain_render_invoked_once": true,
+        "fallback_smart_full_buffer_byte_exact": true,
+        "padding_preserved": true,
+        "typed_numerical_contract_present": true
+      },
+      "pixel_format": "PF32"
+    }
+  ],
+  "closed_boundary": "For the independent center-key PF8/PF16/PF32 fixture, public EffectMain PF_Cmd_RENDER reaches RenderWorld's typed writer and produces a full-buffer byte-exact result to the proven SmartRender path; rebuilt executable sections equal the installed bundle.",
+  "connection_gates": {
+    "actual_entry_worker_writer_connected": true,
+    "all_depth_fallback_cases": true,
+    "installed_codesign_universal": true,
+    "rebuilt_installed_sections_exact": true
+  },
+  "installed_sha256": "34fd47cd04c6665f75a84ffb0d2bb01390823e50d2224059917043cd45350464",
+  "remaining_boundary": "No arbitrary geometry/parameter or current AE-host render claim.",
+  "status": "pass"
+}

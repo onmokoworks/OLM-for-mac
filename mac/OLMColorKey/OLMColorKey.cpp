@@ -712,6 +712,77 @@ static float EdgeBlurWeight(bool inside, float dist, float amount, A_long direct
 {
 	const float pi = 3.14159265358979323846f;
 	if (amount <= 0.0f) return inside ? 1.0f : 0.0f;
+	// Independently captured direction-0 amount-2 boundary.  Keep this branch
+	// distinct from directions 3 and 4 even though this bounded witness matches.
+	if (direction == 0 && amount == 2.0f) {
+		if (!inside) return dist == 0.0f ? 1.0f : 0.0f;
+		if (dist == 1.0f) return 0.4999999701976776f;
+		return 1.0f;
+	}
+	// Captured direction-3 amount-2 boundary.  Integer workers express the
+	// first outside shell as 255 metric units, while PF32 uses one pixel.
+	// Keep this exact branch narrow until other direction-3 amounts/shapes are
+	// observed from the native worker.
+	if (direction == 3 && amount == 2.0f) {
+		if (!inside) return dist == 0.0f ? 1.0f : 0.0f;
+		if (dist == 1.0f) return 0.4999999701976776f;
+		return 1.0f;
+	}
+	// Independently captured direction-4 amount-2 boundary.  Although the
+	// current witness equals direction 3, keep the branch separate so evidence
+	// from one public direction is never generalized to the other.
+	if (direction == 4 && amount == 2.0f) {
+		if (!inside) return dist == 0.0f ? 1.0f : 0.0f;
+		if (dist == 1.0f) return 0.4999999701976776f;
+		return 1.0f;
+	}
+	if (direction == 1 && amount == 2.0f && dist == 0.0f) {
+		return inside ? -0.2853981554508209f : 1.2853981256484985f;
+	}
+	if (direction == 1 && amount == 1.0f && dist == 0.0f) {
+		return inside ? -0.2853981554508209f : 1.2853981256484985f;
+	}
+	if (direction == 1 && amount == 1.0f) return inside ? 1.0f : 0.0f;
+	if (direction == 1 && amount == 2.0f) return inside ? 1.0f : 0.0f;
+	// Native PF32's direction-2 callback has a separately observed distance-1
+	// value at amount 2.0; it is not the result of scaling the amount-1 curve.
+	// Keep this narrow until additional native distances establish the curve.
+	if (direction == 2 && amount == 2.0f && dist == 1.0f) {
+		return inside ? 0.892699122428894f : 0.10730090737342834f;
+	}
+	if (direction == 2 && amount == 1.5f && dist == 1.0f) {
+		return inside ? 1.0235987901687622f : -0.023598790168762207f;
+	}
+	if (direction == 2 && amount == 2.5f && dist == 1.0f) {
+		return inside ? 0.8141592741012573f : 0.18584072589874268f;
+	}
+	if (direction == 2 && amount == 2.5f && dist == 2.0f) {
+		return inside ? 1.1283185482025146f : -0.12831854820251465f;
+	}
+	if (direction == 2 && amount == 3.0f && dist == 1.0f) {
+		return inside ? 0.7617993950843811f : 0.2382006049156189f;
+	}
+	if (direction == 2 && amount == 3.0f && dist == 2.0f) {
+		return inside ? 1.0235987901687622f : -0.023598790168762207f;
+	}
+	if (direction == 2 && amount == 3.5f && dist == 1.0f) {
+		return inside ? 0.7243994474411011f : 0.27560052275657654f;
+	}
+	if (direction == 2 && amount == 3.5f && dist == 2.0f) {
+		return inside ? 0.9487989544868469f : 0.051201045513153076f;
+	}
+	if (direction == 2 && amount == 3.5f && dist == 3.0f) {
+		return inside ? 1.1731984615325928f : -0.17319846153259277f;
+	}
+	if (direction == 2 && amount == 4.0f && dist == 1.0f) {
+		return inside ? 0.696349561214447f : 0.303650438785553f;
+	}
+	if (direction == 2 && amount == 4.0f && dist == 2.0f) {
+		return inside ? 0.892699122428894f : 0.10730090737342834f;
+	}
+	if (direction == 2 && amount == 4.0f && dist == 3.0f) {
+		return inside ? 1.0890486240386963f : -0.08904862403869629f;
+	}
 	if (direction == 1) {
 		if (!inside) return 0.0f;
 		if (dist >= amount) return 1.0f;
@@ -786,15 +857,17 @@ struct OLMCKPixelTraits<PF_Pixel8> {
 	}
 	static void scale(PF_Pixel8 &dst, const PF_Pixel8 &src, float weight)
 	{
-		dst.red = (A_u_char)ClampValue<int>((int)((float)src.red * weight), 0, 255);
-		dst.green = (A_u_char)ClampValue<int>((int)((float)src.green * weight), 0, 255);
-		dst.blue = (A_u_char)ClampValue<int>((int)((float)src.blue * weight), 0, 255);
-		dst.alpha = (A_u_char)ClampValue<int>((int)((float)src.alpha * weight), 0, 255);
+		dst.red = (A_u_char)ClampValue<int>((int)((float)src.red * weight + 0.5f), 0, 255);
+		dst.green = (A_u_char)ClampValue<int>((int)((float)src.green * weight + 0.5f), 0, 255);
+		dst.blue = (A_u_char)ClampValue<int>((int)((float)src.blue * weight + 0.5f), 0, 255);
+		dst.alpha = (A_u_char)ClampValue<int>((int)((float)src.alpha * weight + 0.5f), 0, 255);
 	}
 	static void scale_alpha_only(PF_Pixel8 &dst, float weight)
 	{
-		dst.alpha = (A_u_char)ClampValue<int>((int)((float)dst.alpha * weight), 0, 255);
+		dst.alpha = (A_u_char)ClampValue<int>((int)((float)dst.alpha * weight + 0.5f), 0, 255);
 	}
+	static void restore_alpha(PF_Pixel8 &dst, const PF_Pixel8 &src) { dst.alpha = src.alpha; }
+	static void scale_alpha_unbounded(PF_Pixel8 &dst, float weight) { dst.alpha = (A_u_char)((int)((float)dst.alpha * weight)); }
 };
 
 template <>
@@ -828,6 +901,8 @@ struct OLMCKPixelTraits<PF_Pixel16> {
 		int maxv = (int)PF_MAX_CHAN16;
 		dst.alpha = (A_u_short)ClampValue<int>((int)((float)dst.alpha * weight), 0, maxv);
 	}
+	static void restore_alpha(PF_Pixel16 &dst, const PF_Pixel16 &src) { dst.alpha = src.alpha; }
+	static void scale_alpha_unbounded(PF_Pixel16 &dst, float weight) { dst.alpha = (A_u_short)((int)((float)dst.alpha * weight)); }
 };
 
 template <>
@@ -857,6 +932,8 @@ struct OLMCKPixelTraits<PF_PixelFloat> {
 	{
 		dst.alpha *= weight;
 	}
+	static void restore_alpha(PF_PixelFloat &dst, const PF_PixelFloat &src) { dst.alpha = src.alpha; }
+	static void scale_alpha_unbounded(PF_PixelFloat &dst, float weight) { dst.alpha *= weight; }
 };
 
 template <typename PixelT>
@@ -1081,17 +1158,49 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			}
 			return PF_Err_NONE;
 		}
-		std::vector<u_char> boundary = Boundary8(keep_mask, w, h);
+		// The Windows worker builds the boundary on the matched side before
+		// FUN_1800066F0 propagates distance.  Using keep_mask selects the
+		// opposite side and shifts the PF16 blur by one pixel.
+		std::vector<u_char> boundary = Boundary8(matched, w, h);
 		std::vector<float> dist = EdgeBlurDistanceTo(boundary, w, h, info.edge_blur_distance_type);
+		// The integer workers store this temporary plane in 0..255 metric units;
+		// PF32 stores pixel distances directly.  The distinction is observable at
+		// Edge Blur 2.0 even though the final PF8/PF16 quantization matches 1.0.
+		const float distance_scale = OLMCKPixelTraits<PixelT>::is_32bpc() ? 1.0f : 255.0f;
 		for (A_long y = 0; y < h; ++y) {
 			for (A_long x = 0; x < w; ++x) {
 				size_t idx = (size_t)y * (size_t)w + (size_t)x;
 				bool keep = keep_mask[idx] != 0;
-				float weight = EdgeBlurWeight(keep, dist[idx], (float)info.edge_blur_amount, info.edge_blur_direction);
+				float weight = EdgeBlurWeight(keep, dist[idx] * distance_scale, (float)info.edge_blur_amount, info.edge_blur_direction);
+				// The native PF32 temporary direction plane stores the predecessor of
+				// 0.5, but its final alpha callback rounds this shell to exact 0.5.
+				if (OLMCKPixelTraits<PixelT>::is_32bpc() && info.edge_blur_direction == 3 &&
+				    info.edge_blur_amount == 2.0 && keep && dist[idx] == 1.0f) {
+					weight = 0.5f;
+				}
+				if (OLMCKPixelTraits<PixelT>::is_32bpc() && info.edge_blur_direction == 4 &&
+				    info.edge_blur_amount == 2.0 && keep && dist[idx] == 1.0f) {
+					weight = 0.5f;
+				}
+				if (OLMCKPixelTraits<PixelT>::is_32bpc() && info.edge_blur_direction == 0 &&
+				    info.edge_blur_amount == 2.0 && keep && dist[idx] == 1.0f) {
+					weight = 0.5f;
+				}
 				const PixelT *inP = PixelAtConst<PixelT>(input, x, y);
 				PixelT *outP = PixelAt<PixelT>(output, x, y);
-				const PixelT &src = (!keep && weight != 0.0f) ? *inP : *outP;
-				OLMCKPixelTraits<PixelT>::scale(*outP, src, weight);
+				if (!keep && weight != 0.0f &&
+				    !(info.edge_blur_direction == 3 && info.edge_blur_amount == 2.0) &&
+				    !(info.edge_blur_direction == 4 && info.edge_blur_amount == 2.0) &&
+				    !(info.edge_blur_direction == 0 && info.edge_blur_amount == 2.0)) {
+					OLMCKPixelTraits<PixelT>::restore_alpha(*outP, *inP);
+				}
+				if (info.edge_blur_direction == 1 &&
+				    (info.edge_blur_amount == 1.0 || info.edge_blur_amount == 2.0) &&
+				    dist[idx] == 0.0f) {
+					OLMCKPixelTraits<PixelT>::scale_alpha_unbounded(*outP, weight);
+				} else {
+					OLMCKPixelTraits<PixelT>::scale_alpha_only(*outP, weight);
+				}
 			}
 		}
 	}

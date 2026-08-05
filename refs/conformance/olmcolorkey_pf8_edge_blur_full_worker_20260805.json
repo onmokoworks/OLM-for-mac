@@ -1,0 +1,145 @@
+{
+  "cases": {
+    "all": {
+      "actual_aex_alpha8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "actual_aex_direction_plane": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "exact": true,
+      "production_alpha8": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "line": {
+      "actual_aex_alpha8": [
+        128,
+        128,
+        128,
+        128,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255
+      ],
+      "actual_aex_direction_plane": [
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exact": true,
+      "production_alpha8": [
+        128,
+        128,
+        128,
+        128,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    "single": {
+      "actual_aex_alpha8": [
+        128,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255
+      ],
+      "actual_aex_direction_plane": [
+        0.5,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "exact": true,
+      "production_alpha8": [
+        128,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255
+      ]
+    }
+  },
+  "kind": "olmcolorkey_pf8_edge_blur_full_worker_20260805",
+  "quantization": "PF8 native rounds half-up; not derived by quantizing PF16/PF32 evidence",
+  "schema_version": 1,
+  "scope": "4x3 PF8 single/line/all masks, Edge Blur 1.0, internal plane, final bytes, and padding only",
+  "shim_boundary": "parameter materialization plus bounded PF World/Handle/Iterate8 and worker-prepare shims",
+  "status": "pass"
+}

@@ -1,0 +1,44 @@
+{
+  "cases": [
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "gates": {
+        "actual_alpha_exact": true,
+        "actual_plane_exact": true,
+        "center_coordinate_declared": true,
+        "padding_preserved": true,
+        "production_alpha_exact": true,
+        "production_plane_exact": true
+      },
+      "pixel_format": "PF8"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "gates": {
+        "actual_alpha_exact": true,
+        "actual_plane_exact": true,
+        "center_coordinate_declared": true,
+        "padding_preserved": true,
+        "production_alpha_exact": true,
+        "production_plane_exact": true
+      },
+      "pixel_format": "PF16"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "gates": {
+        "actual_alpha_exact": true,
+        "actual_plane_exact": true,
+        "center_coordinate_declared": true,
+        "padding_preserved": true,
+        "production_alpha_exact": true,
+        "production_plane_exact": true
+      },
+      "pixel_format": "PF32"
+    }
+  ],
+  "claim_boundary": "Independent center-key geometry only; does not generalize the corner single-key gate or arbitrary geometry.",
+  "production_source_sha256": "52febf06cefea8b281ab9b2b6060c783ea77e45321b7c63ff755848151e55c05",
+  "scope": "4x3 key at (1,1), direction 2, amount 2.0, PF8/PF16/PF32",
+  "status": "pass"
+}

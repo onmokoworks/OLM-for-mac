@@ -1,0 +1,160 @@
+{
+  "abi_boundary": {
+    "parameter_materialization": "FUN_18000A3D0 replaced by declared fixture record",
+    "pf_handle": "new_handle returns PF_Handle; lock(handle) returns data",
+    "pf_world_slot_0": "PF_NewWorld(effect_ref,width,height,flags,pixel_format,world*)",
+    "pf_world_slot_1": "PF_DisposeWorld(effect_ref,world)"
+  },
+  "actual_aex": {
+    "direction_planes_f32": {
+      "all": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "line": [
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "single": [
+        0.5,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "seed_planes_f32": {
+      "all": [
+        3999.0,
+        4000.0,
+        4000.0,
+        4000.0,
+        4000.0,
+        4000.0,
+        4000.0,
+        4000.0,
+        4000.0,
+        4000.0,
+        4000.0,
+        4000.0
+      ],
+      "line": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        255.0,
+        255.0,
+        255.0,
+        255.0,
+        510.0,
+        510.0,
+        510.0,
+        510.0
+      ],
+      "single": [
+        0.0,
+        255.0,
+        510.0,
+        765.0,
+        255.0,
+        510.0,
+        765.0,
+        1020.0,
+        510.0,
+        765.0,
+        1020.0,
+        1275.0
+      ]
+    }
+  },
+  "exact": true,
+  "fixture": {
+    "dimensions": [
+      4,
+      3
+    ],
+    "direction": 2,
+    "distance_type": 2,
+    "edge_blur_amount": 1.0,
+    "enabled_black_key": true
+  },
+  "kind": "olmcolorkey_pf16_edge_blur_internal_plane_20260805",
+  "next_boundary": "AEX distance_type=2 generator produces an all-zero seed plane from the inverse PF16 mask; production Boundary8+L1 does not. Final-pixel equality is intentionally not claimed.",
+  "production": {
+    "direction_planes_f32": {
+      "all": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "line": [
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "single": [
+        0.5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "generator": "Boundary8(matched) -> EdgeBlurDistanceTo -> EdgeBlurWeight"
+  },
+  "schema_version": 1,
+  "status": "pass"
+}

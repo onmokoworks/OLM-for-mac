@@ -1,0 +1,231 @@
+{
+  "actual_paths": [
+    {
+      "all_acceptance_gates": true,
+      "entrypoints": {
+        "final_pixel_callback": "0x1800029b0",
+        "parameter_materialize": "0x18000a3d0",
+        "pf8_worker": "0x1800094b0",
+        "pixel_callback": "0x180001e00",
+        "smart_worker": "0x1800018e0"
+      },
+      "hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      },
+      "pixel_format": "PF8",
+      "writer_iterate_events": [
+        {
+          "callback": "PF_Iterate8",
+          "calls": 12,
+          "destination_world": "0xf0fe7d0",
+          "guest_callback": "0x180001e00",
+          "mode": "bounded_direct_execution_of_native_guest_callback",
+          "output_alpha": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            255,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "source_world": "0x40000000"
+        },
+        {
+          "callback": "PF_Iterate8",
+          "calls": 12,
+          "destination_world": "0x40000050",
+          "guest_callback": "0x1800029b0",
+          "mode": "bounded_direct_execution_of_native_guest_callback",
+          "output_alpha": [
+            255,
+            255,
+            255,
+            255,
+            255,
+            128,
+            255,
+            255,
+            255,
+            255,
+            255,
+            255
+          ],
+          "source_world": "0x40000000"
+        }
+      ]
+    },
+    {
+      "all_acceptance_gates": true,
+      "entrypoints": {
+        "final_pixel_callback": "0x1800035b0",
+        "parameter_materialize": "0x18000a3d0",
+        "pf16_worker": "0x180009000",
+        "pixel_callback": "0x1800029d0",
+        "smart_worker": "0x1800018e0"
+      },
+      "hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      },
+      "pixel_format": "PF16",
+      "writer_iterate_events": [
+        {
+          "callback": "PF_Iterate16",
+          "calls": 12,
+          "destination_world": "0xf0fe7d0",
+          "guest_callback": "0x1800029d0",
+          "mode": "bounded_direct_execution_of_native_guest_callback",
+          "output_alpha": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            32768,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "source_world": "0x40000000"
+        },
+        {
+          "callback": "PF_Iterate16",
+          "calls": 12,
+          "destination_world": "0x40000050",
+          "guest_callback": "0x1800035b0",
+          "mode": "bounded_direct_execution_of_native_guest_callback",
+          "output_alpha": [
+            32768,
+            32768,
+            32768,
+            32768,
+            32768,
+            16384,
+            32768,
+            32768,
+            32768,
+            32768,
+            32768,
+            32768
+          ],
+          "source_world": "0x40000000"
+        }
+      ]
+    },
+    {
+      "all_acceptance_gates": true,
+      "entrypoints": {
+        "final_pixel_callback": "0x180004170",
+        "parameter_materialize": "0x18000a3d0",
+        "pf32_worker": "0x180009960",
+        "pixel_callback": "0x1800035d0",
+        "smart_worker": "0x1800018e0"
+      },
+      "hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      },
+      "pixel_format": "PF32",
+      "writer_iterate_events": [
+        {
+          "callback": "PF_IterateFloat",
+          "calls": 12,
+          "destination_world": "0xf0fe7d0",
+          "guest_callback": "0x1800035d0",
+          "mode": "bounded_direct_execution_of_native_guest_callback",
+          "output_alpha": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "source_world": "0x40000000"
+        },
+        {
+          "callback": "PF_IterateFloat",
+          "calls": 12,
+          "destination_world": "0x40000050",
+          "guest_callback": "0x180004170",
+          "mode": "bounded_direct_execution_of_native_guest_callback",
+          "output_alpha": [
+            1.0,
+            0.892699122428894,
+            1.0,
+            1.0,
+            0.892699122428894,
+            0.5,
+            0.892699122428894,
+            1.0,
+            1.0,
+            0.892699122428894,
+            1.0,
+            1.0
+          ],
+          "source_world": "0x40000000"
+        }
+      ]
+    }
+  ],
+  "closed_boundary": "Current source rebuild has byte-exact executable __text/__const sections in the installed Universal bundle; actual center-key all-depth entry/worker/writer evidence and the production EffectMain adapter are connected without relying on historical PNGs.",
+  "executable_sections": {
+    "arm64": {
+      "__const": {
+        "installed": "f8442fae3de6861a871722b0346046aae03399f013bd13d91249d2c03d2954d2",
+        "rebuilt": "f8442fae3de6861a871722b0346046aae03399f013bd13d91249d2c03d2954d2"
+      },
+      "__text": {
+        "installed": "f2df4a68cb29d288529d9cd9d853fa2ce76c8379bfaae8f347c46808c825ab41",
+        "rebuilt": "f2df4a68cb29d288529d9cd9d853fa2ce76c8379bfaae8f347c46808c825ab41"
+      }
+    },
+    "x86_64": {
+      "__const": {
+        "installed": "787e6c2a907fb19b05506a77a65e246d413a90199fb6977358b9bc2d6378cf1e",
+        "rebuilt": "787e6c2a907fb19b05506a77a65e246d413a90199fb6977358b9bc2d6378cf1e"
+      },
+      "__text": {
+        "installed": "c29dd56f011c6e123246d48796548b8c929240fd82d27f1ed8fd608f340117de",
+        "rebuilt": "c29dd56f011c6e123246d48796548b8c929240fd82d27f1ed8fd608f340117de"
+      }
+    }
+  },
+  "gates": {
+    "actual_entry_worker_writer_all_depths": true,
+    "installed_codesign_valid": true,
+    "installed_effectmain_and_smartrender_symbols": true,
+    "installed_universal": true,
+    "production_effectmain_adapter_passes": true,
+    "rebuild_succeeded": true,
+    "rebuilt_installed_text_const_exact": true
+  },
+  "installed": {
+    "observed_ae_pids": [
+      37363
+    ],
+    "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMColorKey.plugin",
+    "sha256": "34fd47cd04c6665f75a84ffb0d2bb01390823e50d2224059917043cd45350464"
+  },
+  "remaining_boundary": "No current AE-host render or loaded-module mapping claim; this audit does not start, stop, or inspect a loaded plugin module in AE.",
+  "status": "pass"
+}

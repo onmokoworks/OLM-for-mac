@@ -1,0 +1,47 @@
+{
+  "cases": [
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "gates": {
+        "actual_alpha_exact": true,
+        "actual_amount_is_1": true,
+        "actual_direction_is_1": true,
+        "actual_plane_exact": true,
+        "padding_preserved": true,
+        "production_alpha_exact": true,
+        "production_plane_exact": true
+      },
+      "pixel_format": "PF8"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "gates": {
+        "actual_alpha_exact": true,
+        "actual_amount_is_1": true,
+        "actual_direction_is_1": true,
+        "actual_plane_exact": true,
+        "padding_preserved": true,
+        "production_alpha_exact": true,
+        "production_plane_exact": true
+      },
+      "pixel_format": "PF16"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "gates": {
+        "actual_alpha_exact": true,
+        "actual_amount_is_1": true,
+        "actual_direction_is_1": true,
+        "actual_plane_exact": true,
+        "padding_preserved": true,
+        "production_alpha_exact": true,
+        "production_plane_exact": true
+      },
+      "pixel_format": "PF32"
+    }
+  ],
+  "claim_boundary": "Exact only for this amount/direction/shape; no direction-1 amount interpolation or other geometry/AE-host claim.",
+  "production_source_sha256": "52febf06cefea8b281ab9b2b6060c783ea77e45321b7c63ff755848151e55c05",
+  "scope": "4x3 single black key, direction 1, amount 1.0, PF8/PF16/PF32",
+  "status": "pass"
+}

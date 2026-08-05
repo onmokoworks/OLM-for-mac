@@ -1,0 +1,20 @@
+#!/usr/bin/env python3
+"""Audit the dormant, hash-bound OLMColorKey Mac AE host-phase package."""
+import hashlib,json,plistlib,subprocess
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[1]
+RUNNER=ROOT/"scripts/run_olmcolorkey_case0001_pf16_current_binary_mac_20260805.py"
+REPORT=ROOT/"refs/reports/olmcolorkey_case0001_pf16_current_binary_preflight_20260805/runner_report.json"
+REFERENCE=ROOT/"handoff/ae_pixel_validation_20260618/requests/ae_pixel_bitdepth16_olmcolorkey_exact_20260625/reference_manifest.json"
+OUT=ROOT/"refs/conformance/olmcolorkey_mac_ae_host_phase_package_20260805.json"
+APP=Path("/Applications/Adobe After Effects 2026/Adobe After Effects 2026.app")
+EXPECTED_BINARY="34fd47cd04c6665f75a84ffb0d2bb01390823e50d2224059917043cd45350464"
+def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
+def main():
+ report=json.loads(REPORT.read_text()); ref=json.loads(REFERENCE.read_text()); case=next(c for c in ref["cases"] if c["id"]=="olmcolorkey__case_0001"); params=case["effects"][0]["params"]
+ selected=[{"name":p["name"],"match_name":p["match_name"],"value":p.get("value")} for p in params if p.get("match_name") in {"OLM Color Key-0001","OLM Color Key-0002","OLM Color Key-0004","OLM Color Key-0005","OLM Color Key-0013","OLM Color Key-0017","OLM Color Key-0019","OLM Color Key-0021"}]
+ info=plistlib.loads((APP/"Contents/Info.plist").read_bytes()) if APP.is_dir() else {}; p=subprocess.run(["pgrep","-x","After Effects"],capture_output=True,text=True); pids=[int(x) for x in p.stdout.split() if x.isdigit()]
+ checks=report["checks"]; gates={"runner_bound_to_current_installed_sha":report["contract"]["required_loaded_binary_sha256"]==EXPECTED_BINARY and checks["binary_hash_matches"],"target_ae_installed_exact_version":info.get("CFBundleVersion")=="26.3.0.87","software_16bpc_project_contract":report["contract"]["renderer"]=="SOFTWARE" and report["contract"]["bits_per_channel"]==16,"all_219_params_hash_pinned":checks["case_contract_exact"] and checks["readable_param_count"]==219,"fixture_and_runner_dependencies_hash_pinned":all(checks[k] for k in ("input_hash_matches","windows_reference_hash_matches","request_manifest_hash_matches","reference_manifest_hash_matches","render_jsx_hash_matches")),"expected_output_hash_explicit":report["contract"]["expected_output_sha256"]=="d650ed20952374cdce84872aa57777c2c758884bca9c8d2c7a036a4ee7dec133","loaded_identity_gate_predeclared":report["status"]=="restart_required" and checks["loaded_module_is_sole_exact_current_binary"] is False,"runner_dormant_no_ae_operation":report["run_requested"] is False and report["run_executed"] is False and pids==[]}
+ result={"status":"ready_for_manual_host_phase" if all(gates.values()) else "blocked","ae_exact_claim":False,"runner":{"path":str(RUNNER.relative_to(ROOT)),"sha256":sha(RUNNER),"invocation":"python3 scripts/run_olmcolorkey_case0001_pf16_current_binary_mac_20260805.py --run","preflight_report":str(REPORT.relative_to(ROOT))},"target":{"application":"Adobe After Effects 2026","version":info.get("CFBundleShortVersionString"),"build":info.get("CFBundleVersion"),"renderer":"SOFTWARE","bits_per_channel":16,"case_id":"olmcolorkey__case_0001"},"fixture":{"input_sha256":checks["input_hash"],"expected_output_sha256":report["contract"]["expected_output_sha256"],"readable_parameter_count":checks["readable_param_count"],"readable_parameters_sha256":checks["readable_params_sha256"],"selected_parameters":selected},"identity_gates":{"required_installed_binary_sha256":EXPECTED_BINARY,"pre_render":"exactly one AE PID; exact installed module path mapped; installed hash exact; binary predates AE start","post_render":"same AE PID; same sole exact module mapping; installed hash unchanged; fresh output hash exact"},"gates":gates,"remaining_boundary":"AE is not running. No render was executed; expected hash becomes a current Mac AE exact result only after all pre/post identity gates pass."}
+ OUT.write_text(json.dumps(result,indent=2,sort_keys=True)+"\n"); print(json.dumps({"status":result["status"],"json":str(OUT)})); return 0 if all(gates.values()) else 1
+if __name__=="__main__": raise SystemExit(main())

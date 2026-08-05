@@ -73,8 +73,10 @@ def test_production_adapters_execute_with_nontrivial_rowbytes_and_padding():
         color = _run_probe(color_module, base / "color")
         toon = _run_probe(toon_module, base / "toon")
 
-    assert {case["pixel_format"] for case in color["cases"]} == {"PF32"}
-    assert all(case["rowbytes"] > 4 * 16 for case in color["cases"])
+    assert {case["pixel_format"] for case in color["cases"]} == {"PF8", "PF16", "PF32"}
+    pixel_size = {"PF8": 4, "PF16": 8, "PF32": 16}
+    assert all(case["rowbytes"] > 4 * pixel_size[case["pixel_format"]]
+               for case in color["cases"])
     assert all(case["input_padding_preserved"] for case in color["cases"])
     assert all(case["output_padding_preserved"] for case in color["cases"])
     assert {case["pixel_format"] for case in toon["cases"]} == {"PF16", "PF32"}

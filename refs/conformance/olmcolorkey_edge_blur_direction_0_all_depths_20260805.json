@@ -1,0 +1,47 @@
+{
+  "cases": [
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "gates": {
+        "actual_amount_is_2": true,
+        "actual_direction_is_0": true,
+        "actual_direction_plane_exact": true,
+        "actual_final_alpha_exact": true,
+        "production_direction_plane_exact": true,
+        "production_final_alpha_exact": true,
+        "production_padding_preserved": true
+      },
+      "pixel_format": "PF8"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "gates": {
+        "actual_amount_is_2": true,
+        "actual_direction_is_0": true,
+        "actual_direction_plane_exact": true,
+        "actual_final_alpha_exact": true,
+        "production_direction_plane_exact": true,
+        "production_final_alpha_exact": true,
+        "production_padding_preserved": true
+      },
+      "pixel_format": "PF16"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "gates": {
+        "actual_amount_is_2": true,
+        "actual_direction_is_0": true,
+        "actual_direction_plane_exact": true,
+        "actual_final_alpha_exact": true,
+        "production_direction_plane_exact": true,
+        "production_final_alpha_exact": true,
+        "production_padding_preserved": true
+      },
+      "pixel_format": "PF32"
+    }
+  ],
+  "claim_boundary": "Bounded direction-0 actual full-worker to production source-adapter proof only; no equivalence to directions 3/4, other amount, shape, or AE-host claim.",
+  "production_source_sha256": "52febf06cefea8b281ab9b2b6060c783ea77e45321b7c63ff755848151e55c05",
+  "scope": "4x3 single black key, Edge Blur amount 2.0, direction 0, PF8/PF16/PF32",
+  "status": "pass"
+}

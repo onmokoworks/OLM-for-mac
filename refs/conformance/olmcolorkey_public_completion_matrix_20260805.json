@@ -1,0 +1,49 @@
+{
+  "kind": "olmcolorkey_public_completion_matrix_20260805",
+  "schema_version": 1,
+  "status": "partial",
+  "commands": {
+    "PF_Cmd_SMART_PRE_RENDER": "production adapter verified",
+    "PF_Cmd_SMART_RENDER": "production adapter verified",
+    "PF_Cmd_RENDER": "center-key direction-2 amount-2 PF8/PF16/PF32 full-buffer byte exact to SmartRender",
+    "PF_Cmd_PARAMS_SETUP": "implemented; setup ABI covered separately",
+    "PF_Cmd_GLOBAL_SETUP": "implemented; setup ABI covered separately"
+  },
+  "execution_connection": {
+    "actual_entry_worker_writer_all_depths": "connected",
+    "production_effectmain_adapter": "connected",
+    "rebuilt_to_installed_text_const": "byte exact for x86_64 and arm64",
+    "installed_bundle": "Universal and codesign verified",
+    "public_effectmain_render_fallback": "connected to typed RenderWorld writer for the center-key all-depth fixture",
+    "ae_host_mapping": "current installed SHA exact: Mac AE 26.3.0.87 Software/16bpc case0001 fresh output exact with pre/post PID and loaded-module identity"
+  },
+  "edge_blur_direction_amount_depth": {
+    "general_geometry": {
+      "direction_2_amount_2_center_key_1_1": ["PF8 exact", "PF16 exact", "PF32 exact"],
+      "direction_2_amount_2_corner_key_0_0": ["PF8 exact", "PF16 exact", "PF32 exact"]
+    },
+    "direction_1_single_key": {
+      "amount_1_0": ["PF8 exact", "PF16 exact", "PF32 exact"],
+      "amount_2_0": ["PF8 exact", "PF16 exact", "PF32 exact"]
+    },
+    "amount_2_single_key": {
+      "direction_0": ["PF8 exact", "PF16 exact", "PF32 exact"],
+      "direction_1": ["PF8 exact", "PF16 exact", "PF32 exact"],
+      "direction_2": ["PF8 exact", "PF16 exact", "PF32 exact"],
+      "direction_3": ["PF8 exact", "PF16 exact", "PF32 exact"],
+      "direction_4": ["PF8 exact", "PF16 exact", "PF32 exact"]
+    },
+    "direction_2_single_key": {
+      "amount_0_5": ["PF8 exact", "PF16 exact", "PF32 exact"],
+      "amount_1_0": ["PF8 exact", "PF16 exact", "PF32 exact"],
+      "amount_1_5": ["PF8 exact", "PF16 exact", "PF32 exact"],
+      "amount_2_0": ["PF8 exact", "PF16 exact", "PF32 exact"],
+      "amount_2_5": ["PF8 exact", "PF16 exact", "PF32 exact"],
+      "amount_3_0": ["PF8 exact", "PF16 exact", "PF32 exact"],
+      "amount_3_5": ["PF8 exact", "PF16 exact", "PF32 exact"],
+      "amount_4_0": ["PF8 exact", "PF16 exact", "PF32 exact"]
+    }
+  },
+  "largest_remaining_unproven_class": "Arbitrary dimensions and multi-key/non-direction-2 geometries beyond the independent corner and center fixtures, plus AE-host execution.",
+  "claim_boundary": "Completion inventory of current bounded evidence, not a claim that every parameter combination or AE-host render is exact."
+}

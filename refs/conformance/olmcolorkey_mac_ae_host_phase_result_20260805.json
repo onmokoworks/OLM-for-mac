@@ -1,0 +1,42 @@
+{
+  "ae_exact_claim": true,
+  "case": {
+    "application": "Adobe After Effects 2026",
+    "bits_per_channel": 16,
+    "build": "26.3.0.87",
+    "id": "olmcolorkey__case_0001",
+    "readable_parameter_count": 219,
+    "renderer": "SOFTWARE"
+  },
+  "claim_boundary": "Current installed OLMColorKey SHA, AE 26.3.0.87 Software/16bpc case0001 only. The runner proved pre/post identity and fresh output equality; no other case is promoted.",
+  "gates": {
+    "fresh_output_exact": true,
+    "osascript_success": true,
+    "post_same_pid_mapping_hash": true,
+    "pre_loaded_exact_current_binary": true,
+    "pre_single_pid_60573": true,
+    "run_was_explicit_and_executed": true,
+    "runner_pass": true,
+    "software_16bpc_contract": true
+  },
+  "identity": {
+    "agent_ae_termination_or_restart_performed": false,
+    "current_ae_pids_after_runner_return": [],
+    "installed_binary_sha256": "34fd47cd04c6665f75a84ffb0d2bb01390823e50d2224059917043cd45350464",
+    "post_hash_unchanged": true,
+    "post_same_pid": true,
+    "post_sole_exact_mapping": true,
+    "pre_loaded_exact": true,
+    "render_pid": 60573
+  },
+  "output": {
+    "exact": true,
+    "expected_sha256": "d650ed20952374cdce84872aa57777c2c758884bca9c8d2c7a036a4ee7dec133",
+    "fresh_sha256": "d650ed20952374cdce84872aa57777c2c758884bca9c8d2c7a036a4ee7dec133"
+  },
+  "runner_report": {
+    "path": "refs/reports/olmcolorkey_case0001_pf16_current_binary_host_run_20260805/runner_report.json",
+    "sha256": "112ce51e394853e23cd082c947f973f77ac61758af5a397f338eb34a2f4cb6c0"
+  },
+  "status": "pass"
+}

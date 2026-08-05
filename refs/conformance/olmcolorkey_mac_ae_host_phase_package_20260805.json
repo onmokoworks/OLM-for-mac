@@ -1,0 +1,82 @@
+{
+  "ae_exact_claim": false,
+  "fixture": {
+    "expected_output_sha256": "d650ed20952374cdce84872aa57777c2c758884bca9c8d2c7a036a4ee7dec133",
+    "input_sha256": "01fe02e7d14f670c9c21564e6962ecae7a5d23ff6cb67c8f19df244a6c098105",
+    "readable_parameter_count": 219,
+    "readable_parameters_sha256": "c5bcbc5d2cc1a7ffe28cd153a676dd0e22c5923de9ece7f65bb6b4655155fdb8",
+    "selected_parameters": [
+      {
+        "match_name": "OLM Color Key-0001",
+        "name": "Color Keep",
+        "value": 0
+      },
+      {
+        "match_name": "OLM Color Key-0002",
+        "name": "Threshold",
+        "value": 0.62000000476837
+      },
+      {
+        "match_name": "OLM Color Key-0004",
+        "name": "Premultiplied Color",
+        "value": 0
+      },
+      {
+        "match_name": "OLM Color Key-0005",
+        "name": "Color Space",
+        "value": 1
+      },
+      {
+        "match_name": "OLM Color Key-0013",
+        "name": "Amount",
+        "value": 0
+      },
+      {
+        "match_name": "OLM Color Key-0017",
+        "name": "Amount",
+        "value": 0
+      },
+      {
+        "match_name": "OLM Color Key-0019",
+        "name": "Direction",
+        "value": 2
+      },
+      {
+        "match_name": "OLM Color Key-0021",
+        "name": "Number of Colors",
+        "value": 1
+      }
+    ]
+  },
+  "gates": {
+    "all_219_params_hash_pinned": true,
+    "expected_output_hash_explicit": true,
+    "fixture_and_runner_dependencies_hash_pinned": true,
+    "loaded_identity_gate_predeclared": true,
+    "runner_bound_to_current_installed_sha": true,
+    "runner_dormant_no_ae_operation": true,
+    "software_16bpc_project_contract": true,
+    "target_ae_installed_exact_version": true
+  },
+  "identity_gates": {
+    "post_render": "same AE PID; same sole exact module mapping; installed hash unchanged; fresh output hash exact",
+    "pre_render": "exactly one AE PID; exact installed module path mapped; installed hash exact; binary predates AE start",
+    "required_installed_binary_sha256": "34fd47cd04c6665f75a84ffb0d2bb01390823e50d2224059917043cd45350464"
+  },
+  "remaining_boundary": "AE is not running. No render was executed; expected hash becomes a current Mac AE exact result only after all pre/post identity gates pass.",
+  "runner": {
+    "invocation": "python3 scripts/run_olmcolorkey_case0001_pf16_current_binary_mac_20260805.py --run",
+    "path": "scripts/run_olmcolorkey_case0001_pf16_current_binary_mac_20260805.py",
+    "preflight_report": "refs/reports/olmcolorkey_case0001_pf16_current_binary_preflight_20260805/runner_report.json",
+    "sha256": "8bc58098b11f33ff1304a3187afe4bc14a0681072d3f5276cd5acccd7e7a8fb6"
+  },
+  "status": "ready_for_manual_host_phase",
+  "target": {
+    "application": "Adobe After Effects 2026",
+    "bits_per_channel": 16,
+    "build": "26.3.0.87",
+    "case_id": "olmcolorkey__case_0001",
+    "renderer": "SOFTWARE",
+    "version": "26.3.0"
+  }
+}
