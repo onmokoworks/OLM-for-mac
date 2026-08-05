@@ -1,0 +1,55 @@
+{
+  "kind": "colorkeep_pf8_current_mac_ae_host",
+  "schema_version": 1,
+  "status": "host_export_exact_and_installed_worker_raw_exact",
+  "ae_exact_claim": false,
+  "scope": {
+    "effect_name": "Color Keep",
+    "effect_match_name": "OLM Color Keep",
+    "renderer": "SOFTWARE",
+    "bits_per_channel": 8,
+    "working_space": "None",
+    "linear_blending": false,
+    "source_footprint": [4, 3],
+    "host_comp": [4, 4],
+    "enabled_color_count": 5,
+    "case_id": "colorkeep_pf8_five_keys"
+  },
+  "host": {
+    "after_effects_distribution_version": "26.3.0",
+    "after_effects_app_version": "26.3x87",
+    "installed_binary_sha256": "ccc89781fa547450acc3053cb77bff8d6983cd8c6835866c87449e7a64117cce",
+    "loaded_module_vmmap_exact_path": true,
+    "loaded_process_pid": 37363,
+    "candidate_return_sha256": "74e961803041d3137bbf84f4cbf2966ddce9199989e1d7bfd0641e3900ed9c05",
+    "rendered_png_sha256": "c034b88f79090137ece1f04926480b6c59393aba10f6aeb874b298340488548c",
+    "alpha_exact_for_all_12_source_pixels": true,
+    "opaque_rgba_exact_for_all_6_opaque_pixels": true,
+    "minimum_comp_padding_row_transparent_black": true,
+    "png_hidden_rgb_observable_at_alpha_zero": false
+  },
+  "installed_worker": {
+    "report": "refs/conformance/colorkeep_installed_pf8_host_fixture_20260806.json",
+    "architecture": "arm64",
+    "worker_symbol": "__ZL14ColorKeep8FuncPviiP8PF_PixelS1_",
+    "worker_image_offset": "0x1cd8",
+    "actual_aex_raw_argb8_sha256": "29f9080b90d73404359c07439727d3e85b32ea185fe7fde4edd669310ed8a05b",
+    "observed_raw_argb8_sha256": "29f9080b90d73404359c07439727d3e85b32ea185fe7fde4edd669310ed8a05b",
+    "byte_count": 48,
+    "mismatched_bytes": 0,
+    "hidden_rgb_at_alpha_zero_compared": true
+  },
+  "actual_aex_fixture": {
+    "report": "refs/conformance/colorkeep_pf8_mac_ae_fixture_actual_aex_20260805.json",
+    "aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+    "input_png_sha256": "3df81d4fba288411f9bb780e3718e3d954857f8d5e39c5eb9be14275d78d77dc",
+    "expected_png_sha256": "ec46d5325b8c265aaed1e0e467750eacbcfb034d2f79c06af70a280706bf0328",
+    "expected_raw_argb8_sha256": "29f9080b90d73404359c07439727d3e85b32ea185fe7fde4edd669310ed8a05b"
+  },
+  "evidence_composition": [
+    "The AE run proves the exact installed module is loaded, the effect surface and five parameters are accepted, and all host-export-observable source-footprint values match the actual-AEX fixture.",
+    "The installed-worker run proves all 48 raw ARGB8 bytes, including hidden RGB where alpha is zero, match the actual-AEX fixture.",
+    "The AE PNG exporter normalizes hidden RGB to zero at alpha zero, so that channel cannot be observed directly in this host export."
+  ],
+  "remaining_boundary": "AE host suite dispatch into the exact PF8 worker is strongly connected by the loaded module and observable output, but hidden RGB is established by direct installed-worker execution rather than the AE PNG artifact itself. Do not generalize beyond this case or promote ae_exact_claim without an admissible raw host-output observation."
+}

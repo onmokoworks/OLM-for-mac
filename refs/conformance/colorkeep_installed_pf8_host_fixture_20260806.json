@@ -1,0 +1,24 @@
+{
+  "byte_count": 48,
+  "evidence_boundary": "Direct execution of the PF8 worker inside the exact installed Mach-O; AE suite dispatch/export is proven separately by the host runner.",
+  "executed_architecture": "arm64",
+  "fixture": {
+    "actual_aex_raw": "refs/mac_validation_fixtures/colorkeep_pf8_20260805/colorkeep_pf8_expected_actual_aex.argb8",
+    "actual_aex_raw_sha256": "29f9080b90d73404359c07439727d3e85b32ea185fe7fde4edd669310ed8a05b",
+    "dimensions": [
+      4,
+      3
+    ],
+    "enabled_color_count": 5,
+    "input": "refs/mac_validation_fixtures/colorkeep_pf8_20260805/colorkeep_pf8_input.png"
+  },
+  "hidden_rgb_at_alpha_zero_compared": true,
+  "installed_binary": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/ColorKeep.plugin/Contents/MacOS/ColorKeep",
+  "installed_binary_sha256": "ccc89781fa547450acc3053cb77bff8d6983cd8c6835866c87449e7a64117cce",
+  "kind": "colorkeep_installed_pf8_host_fixture",
+  "mismatched_bytes": 0,
+  "observed_raw_argb8_sha256": "29f9080b90d73404359c07439727d3e85b32ea185fe7fde4edd669310ed8a05b",
+  "status": "installed_hash_bound_raw_argb8_exact",
+  "worker_image_offset": "0x1cd8",
+  "worker_symbol": "__ZL14ColorKeep8FuncPviiP8PF_PixelS1_"
+}
