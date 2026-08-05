@@ -1,4 +1,5 @@
 #include "dblur_rowdriver.h"
+#include "dblur_noise.h"
 
 #include <cstdint>
 #include <cmath>
@@ -156,17 +157,20 @@ extern "C" void olm_dblur_scatter_f32(int start, int offset, char backward,
     }
 }
 
-extern "C" void olm_dblur_rowdriver_f32(
+namespace {
+
+void rowdriver_impl(
     int row_start, int row_end, const float* source, float* destination,
     int width, int mode, float opacity, float exponent, float scale,
     float edge_x, float edge_y, const float* scatter_front,
     const float* scatter_back, const float* prepass_front,
     const float* prepass_back, float* denominator, float* alpha_max,
     const float* comp_map, int scatter_front_count, int scatter_back_count,
-    int prepass_front_count, int prepass_back_count) {
-    // Modes 2 and 3 use additional host fields. All other values take the
-    // decompiled default multiplier of 1.0f.
-    if (mode == 2 || mode == 3) {
+    int prepass_front_count, int prepass_back_count,
+    const float* field, const olm::dblur::NoisePlaneView* noise_plane,
+    bool interpolate_noise) {
+    if ((mode == 2 && field == nullptr) ||
+        (mode == 3 && noise_plane == nullptr)) {
         return;
     }
     for (int row = row_start; row < row_end; ++row) {
@@ -188,6 +192,17 @@ extern "C" void olm_dblur_rowdriver_f32(
             }
             float coefficient = powf_compat(
                 divf(comp_map[pixel * 4], scale), exponent);
+            if (mode == 3) {
+                const float noise = olm::dblur::sample_noise_plane(
+                    *noise_plane, x, row, interpolate_noise);
+                coefficient = mulf(
+                    coefficient,
+                    addf(mulf(noise, opacity), 1.0f - opacity));
+            } else if (mode == 2) {
+                coefficient = mulf(
+                    coefficient,
+                    addf(mulf(field[pixel], opacity), 1.0f - opacity));
+            }
             if (coefficient == 0.0f) {
                 continue;
             }
@@ -215,4 +230,57 @@ extern "C" void olm_dblur_rowdriver_f32(
                                   mulf(edge, coefficient));
         }
     }
+}
+
+}  // namespace
+
+extern "C" void olm_dblur_rowdriver_f32(
+    int row_start, int row_end, const float* source, float* destination,
+    int width, int mode, float opacity, float exponent, float scale,
+    float edge_x, float edge_y, const float* scatter_front,
+    const float* scatter_back, const float* prepass_front,
+    const float* prepass_back, float* denominator, float* alpha_max,
+    const float* comp_map, int scatter_front_count, int scatter_back_count,
+    int prepass_front_count, int prepass_back_count) {
+    rowdriver_impl(
+        row_start, row_end, source, destination, width, mode, opacity, exponent,
+        scale, edge_x, edge_y, scatter_front, scatter_back, prepass_front,
+        prepass_back, denominator, alpha_max, comp_map, scatter_front_count,
+        scatter_back_count, prepass_front_count, prepass_back_count, nullptr,
+        nullptr, false);
+}
+
+extern "C" void olm_dblur_rowdriver_noise_f32(
+    int row_start, int row_end, const float* source, float* destination,
+    int width, float opacity, float exponent, float scale,
+    float edge_x, float edge_y, const float* scatter_front,
+    const float* scatter_back, const float* prepass_front,
+    const float* prepass_back, float* denominator, float* alpha_max,
+    const float* comp_map, int scatter_front_count, int scatter_back_count,
+    int prepass_front_count, int prepass_back_count, const float* noise_samples,
+    int noise_stride, float noise_cell_size, int interpolate_noise) {
+    const olm::dblur::NoisePlaneView noise_plane{
+        noise_samples, noise_stride, noise_cell_size};
+    rowdriver_impl(
+        row_start, row_end, source, destination, width, 3, opacity, exponent,
+        scale, edge_x, edge_y, scatter_front, scatter_back, prepass_front,
+        prepass_back, denominator, alpha_max, comp_map, scatter_front_count,
+        scatter_back_count, prepass_front_count, prepass_back_count,
+        nullptr, &noise_plane, interpolate_noise != 0);
+}
+
+extern "C" void olm_dblur_rowdriver_field_f32(
+    int row_start, int row_end, const float* source, float* destination,
+    int width, float opacity, float exponent, float scale,
+    float edge_x, float edge_y, const float* scatter_front,
+    const float* scatter_back, const float* prepass_front,
+    const float* prepass_back, float* denominator, float* alpha_max,
+    const float* comp_map, int scatter_front_count, int scatter_back_count,
+    int prepass_front_count, int prepass_back_count, const float* field) {
+    rowdriver_impl(
+        row_start, row_end, source, destination, width, 2, opacity, exponent,
+        scale, edge_x, edge_y, scatter_front, scatter_back, prepass_front,
+        prepass_back, denominator, alpha_max, comp_map, scatter_front_count,
+        scatter_back_count, prepass_front_count, prepass_back_count, field,
+        nullptr, false);
 }

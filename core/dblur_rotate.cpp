@@ -26,6 +26,59 @@ __attribute__((noinline)) float fdiv(float a, float b) {
 
 }  // namespace
 
+extern "C" void olm_dblur_rotate_scalar_f32_trig(const float* source,
+                                                  float* destination,
+                                                  int width,
+                                                  int height,
+                                                  float cosine,
+                                                  float sine) {
+    for (int y = 0; y < height; ++y) {
+        const float centered_y = static_cast<float>(y - height / 2);
+        float* dst = destination + static_cast<std::size_t>(y) * width;
+        for (int x = 0; x < width; ++x, ++dst) {
+            const float centered_x = static_cast<float>(x - width / 2);
+            const float sample_y = fadd(
+                fadd(fmul(centered_x, sine), fmul(centered_y, cosine)),
+                static_cast<float>(height / 2));
+            const float sample_x = fadd(
+                fsub(fmul(centered_x, cosine), fmul(centered_y, sine)),
+                static_cast<float>(width / 2));
+            const int iy = static_cast<int>(sample_y);
+            const int ix = static_cast<int>(sample_x);
+            const float fy = fsub(sample_y, static_cast<float>(iy));
+            const float fx = fsub(sample_x, static_cast<float>(ix));
+            if (!(iy > 0 && iy < height - 1 && ix > 0 && ix < width - 1)) {
+                continue;
+            }
+
+            const std::size_t top = static_cast<std::size_t>(iy) * width + ix;
+            const std::size_t bottom = top + width;
+            const float one_minus_y = fsub(1.0f, fy);
+            const float one_minus_x = fsub(1.0f, fx);
+            volatile float top_right = fmul(fmul(one_minus_y, fx), source[top + 1]);
+            volatile float top_left = fmul(fmul(one_minus_x, one_minus_y), source[top]);
+            volatile float bottom_left = fmul(fmul(one_minus_x, fy), source[bottom]);
+            volatile float bottom_right = fmul(fmul(fy, fx), source[bottom + 1]);
+            volatile float value = top_right;
+            value = fadd(value, top_left);
+            value = fadd(value, bottom_left);
+            value = fadd(value, bottom_right);
+            *dst = value;
+        }
+    }
+}
+
+extern "C" void olm_dblur_rotate_scalar_f32(const float* source,
+                                             float* destination,
+                                             int width,
+                                             int height,
+                                             float angle) {
+    const float cosine = static_cast<float>(std::cos(static_cast<double>(angle)));
+    const float sine = static_cast<float>(std::sin(static_cast<double>(angle)));
+    olm_dblur_rotate_scalar_f32_trig(
+        source, destination, width, height, cosine, sine);
+}
+
 extern "C" void olm_dblur_rotate_rgba_f32_trig(const float* source,
                                                 float* destination,
                                                 int width,

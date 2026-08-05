@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "kind": "dblur_mode2_field_builder_actual_aex_20260805",
+  "status": "pass",
+  "scope": "64x64 decoded RGBA crop (450,150)..(514,214), 8-bpc Layer mode",
+  "work_dimensions": [
+    94,
+    94
+  ],
+  "placement": {
+    "row0": 15,
+    "col0": 15
+  },
+  "internal_angle": 1.5707963705062866,
+  "hashes": {
+    "actual_aex_source_field": "4454dcba4f929451fba2f76912810c6326bf3d50c878c38f9bd84ccec6256663",
+    "portable_source_field": "4454dcba4f929451fba2f76912810c6326bf3d50c878c38f9bd84ccec6256663",
+    "actual_aex_rotated_field": "896271211a16fd87192f5c57cafc6b0dbc30c6f739b5234fbc2605b7eee41a7b",
+    "portable_rotated_field": "896271211a16fd87192f5c57cafc6b0dbc30c6f739b5234fbc2605b7eee41a7b",
+    "actual_aex_output": "c41939b0ddc6faa3aba839c22029f4a9ce73d5ea15a3438418264e20fee64a76",
+    "portable_rowdriver_detour_output": "c41939b0ddc6faa3aba839c22029f4a9ce73d5ea15a3438418264e20fee64a76",
+    "portable_core_output": "c41939b0ddc6faa3aba839c22029f4a9ce73d5ea15a3438418264e20fee64a76"
+  },
+  "checks": {
+    "actual_complete": true,
+    "detour_complete": true,
+    "source_field_byte_exact": true,
+    "rotated_field_byte_exact": true,
+    "rowdriver_detour_output_byte_exact": true,
+    "portable_core_return_zero": true,
+    "portable_core_output_byte_exact": true,
+    "source_field_pinned": true,
+    "rotated_field_pinned": true,
+    "output_pinned": true,
+    "maximum_exact": true,
+    "nonzero_field": true
+  },
+  "claim_boundary": {
+    "actual_aex_field_builder_byte_exact": true,
+    "actual_aex_scalar_rotate_byte_exact": true,
+    "actual_aex_full_render_detour_byte_exact": true,
+    "actual_aex_portable_core_byte_exact": true,
+    "mac_ae_pixel_exact": false,
+    "windows_ae_pixel_exact": false,
+    "16_32_bpc": false
+  }
+}

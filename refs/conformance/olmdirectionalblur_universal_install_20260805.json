@@ -1,0 +1,33 @@
+{
+  "status": "installed_host_not_running",
+  "plugin": "OLMDirectionalBlur",
+  "build": {
+    "configuration_requested": "Release",
+    "configuration_build_dir_observed": "Debug",
+    "architectures": ["x86_64", "arm64"],
+    "binary_sha256": "6a89dd4d9bca3f5b3c7af7782627d1b7b7bb6b0c45afe83945d056f1db7519f0",
+    "info_plist_sha256": "431c5b03d113b1234ea80c9a0bee51f5ef757004c18036970bdc3f3bc943d09b",
+    "bundle_identifier": "com.adobe.AfterEffects.OLMDirectionalBlur",
+    "signature": "adhoc",
+    "cdhash_sha256": "6d7f1ae362fb3c903e0cd76153e11e18cdd9baa0",
+    "codesign_verify": "valid on disk; satisfies Designated Requirement"
+  },
+  "install": {
+    "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin",
+    "backup": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin.backup-20260805-2252",
+    "previous_backup": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin.backup-20260805-2119",
+    "installed_binary_sha256": "6a89dd4d9bca3f5b3c7af7782627d1b7b7bb6b0c45afe83945d056f1db7519f0",
+    "installed_architectures": ["x86_64", "arm64"],
+    "active_exact_name_bundle_count": 1
+  },
+  "host": {
+    "computer_name": "macbook pro (57)",
+    "machine_architecture": "arm64",
+    "macos": "15.7.2",
+    "after_effects_path": "/Applications/Adobe After Effects 2026/Adobe After Effects 2026.app",
+    "after_effects_version": "26.3.0",
+    "after_effects_pid_during_install": null,
+    "after_effects_was_not_stopped": true,
+    "restart_required": false
+  }
+}

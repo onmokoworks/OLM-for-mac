@@ -53,6 +53,7 @@ def build(directory: Path) -> Path:
     for source, optimization in (
         (ROOT / "core/dblur_rotate.cpp", "-O0"),
         (ROOT / "core/dblur_rowdriver.cpp", "-O2"),
+        (ROOT / "core/dblur_field.cpp", "-O2"),
         (ROOT / "core/dblur_frontonly.cpp", "-O2"),
     ):
         obj = directory / f"{source.stem}.o"

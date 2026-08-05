@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "kind": "dblur_mac_mode2_host_adapter_20260805",
+  "status": "pass",
+  "used_exact": 1,
+  "pixels_match": true,
+  "ownership_preserved": true,
+  "dimension_mismatch_fail_closed": true,
+  "scope": "arm64 source-included production PF8 adapter, equal 16x16 Layer worlds",
+  "parameters": {
+    "angle": 27,
+    "front": 37,
+    "back": 19,
+    "noise_variation": 73,
+    "noise_type": 3
+  },
+  "claim_boundary": {
+    "mac_adapter_exact": true,
+    "mac_ae_pixel_exact": false
+  }
+}

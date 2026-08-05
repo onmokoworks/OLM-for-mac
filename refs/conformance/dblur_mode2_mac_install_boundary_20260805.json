@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "kind": "dblur_mode2_mac_install_boundary_20260805",
+  "status": "installed_restart_required",
+  "ae": {
+    "version": "26.3",
+    "pid_at_install": 77384,
+    "loaded_bundle_resolved_by_lsof": "OLMDirectionalBlur.plugin.old-mode1-20260805",
+    "loaded_binary_sha256": "9fbe1461d6149c2ceae3d0ec507f9dd0c90f7d3a8ac2f8a22d3a324dad7b0a58",
+    "new_binary_executed": false
+  },
+  "installation": {
+    "source_unsigned_binary_sha256": "d8ec56c4b22c4f6bb7a17556dc2b2663a468633c4f97ae590a6e129f0a1584a7",
+    "installed_adhoc_signed_binary_sha256": "61dca84682741365643ba6d5dfbc457f586f8733e5a37203b122b2555a95206d",
+    "architecture": "arm64",
+    "codesign_verify": "pass",
+    "backup_binary_sha256": "9fbe1461d6149c2ceae3d0ec507f9dd0c90f7d3a8ac2f8a22d3a324dad7b0a58",
+    "backup": "handoff/mac_plugin_backups/mediacore_20260805_directionalblur_before_mode2/OLMDirectionalBlur.plugin"
+  },
+  "claim_boundary": {
+    "new_plugin_installed": true,
+    "new_plugin_loaded_by_ae": false,
+    "mac_ae_pixel_exact": false,
+    "required_next_event": "restart After Effects, then bind vmmap/lsof to installed hash before rendering"
+  }
+}

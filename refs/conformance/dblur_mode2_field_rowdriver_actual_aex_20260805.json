@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "kind": "dblur_mode2_field_rowdriver_actual_aex_20260805",
+  "status": "pass",
+  "scope": "single 16-pixel row, nonzero mode-2 field, typed rowdriver only",
+  "provenance": {
+    "aex": "plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "function": "0x1800038d0"
+  },
+  "parameters": {
+    "opacity": 0.75,
+    "field_range": [
+      0.0625,
+      1.0
+    ],
+    "front_count": 4
+  },
+  "comparisons": {
+    "destination": {
+      "exact": true,
+      "actual_sha256": "f75111c63254098be88cb89b545c25ca3c33cfe19eb694859b5a3f01e63a73dc",
+      "portable_sha256": "f75111c63254098be88cb89b545c25ca3c33cfe19eb694859b5a3f01e63a73dc"
+    },
+    "denominator": {
+      "exact": true,
+      "actual_sha256": "11d857ba5d5f47628a4b5332ef5f966a2623d5ad43eff5e4ee3ce3ea30d4c620",
+      "portable_sha256": "11d857ba5d5f47628a4b5332ef5f966a2623d5ad43eff5e4ee3ce3ea30d4c620"
+    },
+    "alpha": {
+      "exact": true,
+      "actual_sha256": "9628e545ed3ac074e5a6cbf542a642b62482fbfca9b4cb3ea4743a1874256e37",
+      "portable_sha256": "9628e545ed3ac074e5a6cbf542a642b62482fbfca9b4cb3ea4743a1874256e37"
+    }
+  },
+  "claim_boundary": {
+    "mode2_rowdriver_exact": true,
+    "ae_field_generation_exact": false,
+    "mac_ae_exact": false
+  }
+}

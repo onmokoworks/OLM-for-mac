@@ -23,6 +23,10 @@ from aex_loader import AexLoader  # noqa: E402
 
 POPULATE = 0x180006980
 OUTPUT = 0x180006B30
+POPULATE16 = 0x1800068E0
+OUTPUT16 = 0x180006A90
+POPULATE32 = 0x180006A20
+OUTPUT32 = 0x180006BD0
 ITERATE8_WRAPPER = 0x180006700
 ROTATE = 0x180001EC0
 ROWDRIVER = 0x1800038D0
@@ -140,6 +144,58 @@ def model_output(loader: AexLoader, params: int, y: int, x: int, out: bytearray,
     loader.write_bytes(out_ptr, packed)
 
 
+def round_f32(value: float) -> float:
+    return struct.unpack("<f", struct.pack("<f", value))[0]
+
+
+def model_populate16(loader: AexLoader, params: int, y: int, x: int, pixel: bytes) -> None:
+    # Actual 0x1800068E0 loads PF_Pixel16 A/R/G/B words and performs a binary32
+    # multiply by the binary32 constant 1/32768 before storing work R/G/B/A.
+    stride = u32(loader, params + 0x80A0)
+    row0 = u32(loader, params + 0x8098)
+    col0 = u32(loader, params + 0x809C)
+    base = u64(loader, params + 0x8078)
+    index = ((row0 + y) * stride + col0 + x) * 16
+    alpha, red, green, blue = struct.unpack("<4H", pixel)
+    scale = round_f32(1.0 / 32768.0)
+    values = tuple(round_f32(value * scale) for value in (red, green, blue, alpha))
+    loader.write_bytes(base + index, struct.pack("<4f", *values))
+
+
+def model_output16(loader: AexLoader, params: int, y: int, x: int,
+                   out: bytearray, out_ptr: int, width: int) -> None:
+    # Actual 0x180006A90 uses binary32 math, truncates toward zero, and stores
+    # the low u16 word. RGB alone receives gain and the upper 1.0 clamp.
+    rgba = pixel_float(loader, params, x, y)
+    gain = f32(loader, params + 0x28)
+    rgb = [round_f32(min(round_f32(value * gain), 1.0) * 32768.0)
+           for value in rgba[:3]]
+    alpha = round_f32(rgba[3] * 32768.0)
+    values = [int(alpha), int(rgb[0]), int(rgb[1]), int(rgb[2])]
+    packed = struct.pack("<4H", *(value & 0xFFFF for value in values))
+    address = (y * width + x) * 8
+    out[address:address + 8] = packed
+    loader.write_bytes(out_ptr, packed)
+
+
+def model_populate32(loader: AexLoader, params: int, y: int, x: int, pixel: bytes) -> None:
+    alpha, red, green, blue = struct.unpack("<4f", pixel)
+    stride, row0, col0 = u32(loader, params + 0x80A0), u32(loader, params + 0x8098), u32(loader, params + 0x809C)
+    base = u64(loader, params + 0x8078)
+    loader.write_bytes(base + ((row0 + y) * stride + col0 + x) * 16,
+                       struct.pack("<4f", red, green, blue, alpha))
+
+
+def model_output32(loader: AexLoader, params: int, y: int, x: int,
+                   out: bytearray, out_ptr: int, width: int) -> None:
+    rgba = pixel_float(loader, params, x, y)
+    gain = f32(loader, params + 0x28)
+    packed = struct.pack("<4f", rgba[3], *(min(round_f32(v * gain), 1.0) for v in rgba[:3]))
+    address = (y * width + x) * 16
+    out[address:address + 16] = packed
+    loader.write_bytes(out_ptr, packed)
+
+
 def callback_model_check(loader: AexLoader, source: bytes, width: int) -> dict:
     params = loader.host_alloc(0x8200)
     work = loader.bump_alloc(width * 540 * 16, align=64)
@@ -174,6 +230,84 @@ def callback_model_check(loader: AexLoader, source: bytes, width: int) -> dict:
     return {"status": "pass" if all(item["match"] for item in checks) else "mismatch", "samples": checks, "disasm": {"populate": "0x180006980", "output": "0x180006b30", "channel_max": 255.0}}
 
 
+def callback_model_check16(loader: AexLoader) -> dict:
+    width, height = 3, 2
+    params = loader.host_alloc(0x8200)
+    work = loader.bump_alloc(width * height * 16, align=64)
+    pixel_ptr = loader.bump_alloc(8, align=8)
+    out = loader.bump_alloc(width * height * 8, align=8)
+    loader.write_bytes(params, b"\x00" * 0x8200)
+    loader.write_bytes(params + 0x8078, struct.pack("<Q", work))
+    loader.write_bytes(params + 0x8090, struct.pack("<Q", work))
+    loader.write_bytes(params + 0x80A0, struct.pack("<I", width))
+    loader.write_bytes(params + 0x28, struct.pack("<f", 1.0))
+    witnesses = (
+        (0, 0, (0, 1, 16384, 32768)),
+        (1, 0, (32768, 32640, 128, 255)),
+        (2, 1, (12345, 23456, 30000, 32767)),
+    )
+    checks = []
+    for x, y, words in witnesses:
+        pixel = struct.pack("<4H", *words)
+        address = (y * width + x) * 16
+        loader.write_bytes(pixel_ptr, pixel)
+        loader.write_bytes(work + address, b"\x00" * 16)
+        loader.call_function(POPULATE16, int_args=[params, x, y, pixel_ptr], max_instructions=10000)
+        actual_floats = loader.read_bytes(work + address, 16)
+        loader.write_bytes(work + address, b"\x00" * 16)
+        model_populate16(loader, params, y, x, pixel)
+        model_floats = loader.read_bytes(work + address, 16)
+
+        probe = struct.pack("<4f", 0.25, 0.5, 0.75, 1.0)
+        loader.write_bytes(work + address, probe)
+        out_address = out + (y * width + x) * 8
+        loader.write_bytes(out_address, b"\x00" * 8)
+        loader.call_function(OUTPUT16, int_args=[params, x, y, 0, out_address], max_instructions=10000)
+        actual_output = loader.read_bytes(out_address, 8)
+        expected_output = bytearray(width * height * 8)
+        model_output16(loader, params, y, x, expected_output, out_address, width)
+        model_output_bytes = bytes(expected_output[(y * width + x) * 8:(y * width + x + 1) * 8])
+        checks.append({
+            "xy": [x, y], "input_words_argb": list(words),
+            "actual_populate_hex": actual_floats.hex(),
+            "model_populate_hex": model_floats.hex(),
+            "actual_output_hex": actual_output.hex(),
+            "model_output_hex": model_output_bytes.hex(),
+            "match": actual_floats == model_floats and actual_output == model_output_bytes,
+        })
+    return {
+        "status": "pass" if all(item["match"] for item in checks) else "mismatch",
+        "samples": checks,
+        "disasm": {"populate": "0x1800068e0", "output": "0x180006a90", "channel_max": 32768.0},
+    }
+
+
+def callback_model_check32(loader: AexLoader) -> dict:
+    width, height = 2, 2
+    params = loader.host_alloc(0x8200); work = loader.bump_alloc(width * height * 16, align=64)
+    pixel_ptr = loader.bump_alloc(16, align=16); out_ptr = loader.bump_alloc(16, align=16)
+    loader.write_bytes(params, b"\0" * 0x8200)
+    loader.write_bytes(params + 0x8078, struct.pack("<Q", work)); loader.write_bytes(params + 0x8090, struct.pack("<Q", work))
+    loader.write_bytes(params + 0x80A0, struct.pack("<I", width)); loader.write_bytes(params + 0x28, struct.pack("<f", 1.0))
+    checks = []
+    for x, y, values in ((0, 0, (0.0, 0.25, 0.5, 0.75)), (1, 1, (1.0, 1.25, -0.5, 0.125))):
+        pixel = struct.pack("<4f", *values); address = (y * width + x) * 16
+        loader.write_bytes(pixel_ptr, pixel); loader.call_function(POPULATE32, int_args=[params, x, y, pixel_ptr], max_instructions=10000)
+        actual_pop = loader.read_bytes(work + address, 16)
+        loader.write_bytes(work + address, b"\0" * 16); model_populate32(loader, params, y, x, pixel)
+        model_pop = loader.read_bytes(work + address, 16)
+        loader.write_bytes(work + address, struct.pack("<4f", 0.25, 0.5, 0.75, 1.0))
+        loader.call_function(OUTPUT32, int_args=[params, x, y, 0, out_ptr], max_instructions=10000)
+        actual_out = loader.read_bytes(out_ptr, 16); modeled = bytearray(width * height * 16)
+        model_output32(loader, params, y, x, modeled, out_ptr, width)
+        model_out = bytes(modeled[address:address + 16])
+        checks.append({"xy": [x, y], "actual_populate": actual_pop.hex(), "model_populate": model_pop.hex(),
+                       "actual_output": actual_out.hex(), "model_output": model_out.hex(),
+                       "match": actual_pop == model_pop and actual_out == model_out})
+    return {"status": "pass" if all(c["match"] for c in checks) else "mismatch", "samples": checks,
+            "disasm": {"populate": "0x180006a20", "output": "0x180006bd0"}}
+
+
 def build_world(loader: AexLoader, width: int, height: int, data: bytes,
                 rowbytes: int, area: tuple[int, int, int, int]) -> int:
     ptr = loader.bump_alloc(len(data), align=64)
@@ -189,7 +323,7 @@ def build_world(loader: AexLoader, width: int, height: int, data: bytes,
 
 
 def padded_world_bytes(pixels: bytes, width: int, height: int, rowbytes: int) -> bytes:
-    packed_rowbytes = width * 4
+    packed_rowbytes = len(pixels) // height
     if len(pixels) != packed_rowbytes * height or rowbytes < packed_rowbytes:
         raise ValueError("invalid PF_EffectWorld byte layout")
     rows = bytearray(rowbytes * height)
@@ -233,7 +367,7 @@ def build_rotate_candidate() -> tuple[tempfile.TemporaryDirectory, ctypes.CDLL, 
     return temp_dir, library, function
 
 
-def build_rowdriver_candidate() -> tuple[tempfile.TemporaryDirectory, ctypes.CDLL, object]:
+def build_rowdriver_candidate() -> tuple[tempfile.TemporaryDirectory, ctypes.CDLL, object, object, object]:
     """Build the bounded, actual-AEX-conformant default-mode rowdriver."""
     temp_dir = tempfile.TemporaryDirectory(prefix="olm_dblur_rowdriver_")
     library_path = Path(temp_dir.name) / "libdblur_rowdriver.dylib"
@@ -255,7 +389,7 @@ def build_rowdriver_candidate() -> tuple[tempfile.TemporaryDirectory, ctypes.CDL
     )
     library = ctypes.CDLL(str(library_path))
     function = library.olm_dblur_rowdriver_f32
-    function.argtypes = [
+    base_argtypes = [
         ctypes.c_int,
         ctypes.c_int,
         ctypes.POINTER(ctypes.c_float),
@@ -279,8 +413,19 @@ def build_rowdriver_candidate() -> tuple[tempfile.TemporaryDirectory, ctypes.CDL
         ctypes.c_int,
         ctypes.c_int,
     ]
+    function.argtypes = base_argtypes
     function.restype = None
-    return temp_dir, library, function
+    noise_function = library.olm_dblur_rowdriver_noise_f32
+    noise_function.argtypes = base_argtypes[:5] + base_argtypes[6:] + [
+        ctypes.POINTER(ctypes.c_float), ctypes.c_int, ctypes.c_float, ctypes.c_int,
+    ]
+    noise_function.restype = None
+    field_function = library.olm_dblur_rowdriver_field_f32
+    field_function.argtypes = base_argtypes[:5] + base_argtypes[6:] + [
+        ctypes.POINTER(ctypes.c_float),
+    ]
+    field_function.restype = None
+    return temp_dir, library, function, noise_function, field_function
 
 
 def main() -> int:
@@ -291,6 +436,10 @@ def main() -> int:
     parser.add_argument("--output", type=Path, default=ROOT / "refs/conformance/dblur_fullrender_host_fixture_20260711.json")
     parser.add_argument("--host-output-raw", type=Path, help="write complete host ARGB8 bytes when render finishes")
     parser.add_argument("--host-output-png", type=Path, help="write complete host output as RGBA PNG when render finishes")
+    parser.add_argument("--field-source-raw", type=Path,
+                        help="write mode-2 unrotated float32 field bytes")
+    parser.add_argument("--field-rotated-raw", type=Path,
+                        help="write mode-2 rotated float32 field bytes")
     parser.add_argument("--slow-trace", action="store_true", help="enable image-text instruction tracing for ABI capture")
     parser.add_argument("--max-instructions", type=int, default=200_000_000)
     parser.add_argument("--downsample-num", type=int, default=1)
@@ -309,6 +458,7 @@ def main() -> int:
     parser.add_argument("--seed", type=int, default=1)
     parser.add_argument("--noise-offset", type=int, default=0)
     parser.add_argument("--thickness", type=float, default=10.0)
+    parser.add_argument("--bitdepth", type=int, choices=(8, 16, 32), default=8)
     parser.add_argument(
         "--world-area", nargs=4, type=int, metavar=("LEFT", "TOP", "RIGHT", "BOTTOM"),
         default=(0, 0, None, None),
@@ -316,6 +466,12 @@ def main() -> int:
     )
     parser.add_argument("--row-padding", type=int, default=0,
                         help="extra bytes after each PF_EffectWorld row")
+    parser.add_argument("--noise-layer-row-padding", type=int,
+                        help="extra bytes after each controlled Noise Layer row; defaults to --row-padding")
+    parser.add_argument("--noise-layer-origin", nargs=2, type=int, metavar=("X", "Y"),
+                        help="controlled Noise Layer extent origin; defaults to the render world origin")
+    parser.add_argument("--noise-layer-size", nargs=2, type=int, metavar=("WIDTH", "HEIGHT"),
+                        help="controlled Noise Layer dimensions; defaults to render source dimensions; smaller sizes use a top-left crop")
     parser.add_argument(
         "--detour-rotate",
         action=argparse.BooleanOptionalAction,
@@ -336,15 +492,62 @@ def main() -> int:
     args = parser.parse_args()
     if args.schedule_only_rowdriver and not args.detour_rowdriver:
         parser.error("--schedule-only-rowdriver requires --detour-rowdriver")
-    width, height, source_rgba, source = load_argb(args.source)
+    width, height, source_rgba, source8 = load_argb(args.source)
+    if args.bitdepth == 32:
+        source = b"".join(
+            struct.pack("<f", value / 255.0) for value in source8
+        )
+        pixel_size = 16
+        populate_callback = POPULATE32
+        output_callback = OUTPUT32
+    elif args.bitdepth == 16:
+        source = b"".join(
+            struct.pack("<H", value * 128) for value in source8
+        )
+        pixel_size = 8
+        populate_callback = POPULATE16
+        output_callback = OUTPUT16
+    else:
+        source = source8
+        pixel_size = 4
+        populate_callback = POPULATE
+        output_callback = OUTPUT
     left, top, right, bottom = args.world_area
     right = width if right is None else right
     bottom = height if bottom is None else bottom
     area = (left, top, right, bottom)
-    if args.row_padding < 0 or not (0 <= left <= right <= width and 0 <= top <= bottom <= height):
+    if (args.row_padding < 0 or
+            (args.noise_layer_row_padding is not None and args.noise_layer_row_padding < 0) or
+            not (0 <= left <= right <= width and 0 <= top <= bottom <= height)):
         raise ValueError(f"invalid world mapping controls: area={area}, row_padding={args.row_padding}")
-    rowbytes = width * 4 + args.row_padding
+    rowbytes = width * pixel_size + args.row_padding
     source_world_bytes = padded_world_bytes(source, width, height, rowbytes)
+    noise_layer_width, noise_layer_height = (
+        (width, height) if args.noise_layer_size is None else tuple(args.noise_layer_size)
+    )
+    if noise_layer_width <= 0 or noise_layer_height <= 0:
+        raise ValueError("controlled Noise Layer size must be positive")
+    noise_layer_pixels_mut = bytearray(noise_layer_width * noise_layer_height * pixel_size)
+    copy_width = min(width, noise_layer_width)
+    copy_height = min(height, noise_layer_height)
+    for y in range(copy_height):
+        source_offset = y * width * pixel_size
+        layer_offset = y * noise_layer_width * pixel_size
+        noise_layer_pixels_mut[layer_offset:layer_offset + copy_width * pixel_size] = \
+            source[source_offset:source_offset + copy_width * pixel_size]
+    noise_layer_pixels = bytes(noise_layer_pixels_mut)
+    noise_layer_padding = args.row_padding if args.noise_layer_row_padding is None else args.noise_layer_row_padding
+    noise_layer_rowbytes = noise_layer_width * pixel_size + noise_layer_padding
+    noise_layer_world_bytes = padded_world_bytes(
+        noise_layer_pixels, noise_layer_width, noise_layer_height, noise_layer_rowbytes
+    )
+    noise_origin_x, noise_origin_y = (
+        (left, top) if args.noise_layer_origin is None else tuple(args.noise_layer_origin)
+    )
+    noise_layer_area = (
+        noise_origin_x, noise_origin_y,
+        noise_origin_x + noise_layer_width, noise_origin_y + noise_layer_height,
+    )
     loader = AexLoader(str(args.aex), verbose=False, fast=not args.slow_trace)
     loader.register_libm_impls(max_threads=1)
 
@@ -426,6 +629,10 @@ def main() -> int:
         raise ValueError("downsample numerator and denominator must be positive")
     loader.write_bytes(in_data + 0x11C, struct.pack("<I", args.downsample_num))
     loader.write_bytes(in_data + 0x120, struct.pack("<I", args.downsample_den))
+    # Mode-2 validates the checked-out Layer dimensions against the render
+    # source dimensions at PF_InData +0xfc/+0x100 after applying render scale.
+    loader.write_bytes(in_data + 0xFC, struct.pack("<I", width))
+    loader.write_bytes(in_data + 0x100, struct.pack("<I", height))
 
     def param_checkout(ld: AexLoader, _args: list[int]) -> int:
         rsp = ld.uc.reg_read(UC_X86_REG_RSP)
@@ -460,6 +667,16 @@ def main() -> int:
             ld.write_bytes(param_def + 0x3A, struct.pack("<h", args.noise_variation))
         elif index == 16:
             ld.write_bytes(param_def + 0x38, struct.pack("<i", args.noise_type))
+        elif index == 17:
+            # PF_LayerDef begins at PF_ParamDef.u (+0x38).  The 8-bpc render
+            # path reads its embedded PF_EffectWorld fields at u+0x18:
+            # data, rowbytes, width and height.  Use the fixture source as a
+            # controlled Layer-noise checkout so mode 2 exercises the natural
+            # AEX field builder instead of observing an all-zero null layer.
+            ld.write_bytes(
+                param_def + 0x50,
+                ld.read_bytes(noise_layer_world + 0x18, 0x28),
+            )
         elif index == 18:
             ld.write_bytes(param_def + 0x38, struct.pack("<i", args.seed))
         elif index == 19:
@@ -480,16 +697,20 @@ def main() -> int:
     loader.write_bytes(in_data + 0xB8, struct.pack("<Q", loader.host_alloc(8)))
 
     input_world = build_world(loader, width, height, source_world_bytes, rowbytes, area)
+    noise_layer_world = build_world(
+        loader, noise_layer_width, noise_layer_height,
+        noise_layer_world_bytes, noise_layer_rowbytes, noise_layer_area
+    )
     render_desc = loader.host_alloc(0x80)
     loader.write_bytes(render_desc, b"\x00" * 0x80)
     loader.write_bytes(render_desc + 0x24, struct.pack("<I", width))
     loader.write_bytes(render_desc + 0x28, struct.pack("<I", height))
-    output_bytes = bytearray(width * height * 4)
+    output_bytes = bytearray(width * height * pixel_size)
     output_world = build_world(loader, width, height, bytes(rowbytes * height), rowbytes, area)
     output_data_ptr = u64(loader, output_world + 0x18)
     depth_descriptor = loader.host_alloc(0x40)
     loader.write_bytes(depth_descriptor, b"\x00" * 0x40)
-    loader.write_bytes(depth_descriptor + 0x2C, struct.pack("<H", 8))
+    loader.write_bytes(depth_descriptor + 0x2C, struct.pack("<H", args.bitdepth))
     cb_struct = loader.host_alloc(0x20)
     param_6 = loader.host_alloc(0x20)
     # FUN_180007bd0 reads param_6[0]+0x2c as depth.  It is a separate host
@@ -559,7 +780,9 @@ def main() -> int:
     rowdriver_cache: dict = {}
     if args.detour_rowdriver:
         if not args.schedule_only_rowdriver:
-            rowdriver_temp_dir, rowdriver_library, rowdriver_function = build_rowdriver_candidate()
+            (rowdriver_temp_dir, rowdriver_library, rowdriver_function,
+             rowdriver_noise_function,
+             rowdriver_field_function) = build_rowdriver_candidate()
 
         def make_float_array(blob: bytes):
             count = len(blob) // 4
@@ -582,8 +805,6 @@ def main() -> int:
             source_ptr = u64(ld, source_slot)
             destination_ptr = u64(ld, destination_slot)
             mode = u32(ld, params + 0x20)
-            if mode in (2, 3):
-                raise RuntimeError(f"rowdriver detour has no exact gate for mode {mode}")
             if source_ptr == destination_ptr:
                 raise RuntimeError("rowdriver source/destination alias is not covered")
             if not (0 <= row_start < row_end <= row_height and 0 < row_width <= 32768 and row_height <= 32768):
@@ -631,6 +852,29 @@ def main() -> int:
                     "prepass_back": ld.read_bytes(params + 0x7EE8, counts["prepass_back"] * 4),
                 }
                 tables = {name: make_float_array(blob) for name, blob in table_blobs.items()}
+                noise = None
+                field = None
+                if mode == 2:
+                    field_ptr = u64(ld, params + 0x80B0)
+                    field_blob = ld.read_bytes(field_ptr, scalar_bytes)
+                    field = {
+                        "samples": make_float_array(field_blob),
+                        "sha256": hashlib.sha256(field_blob).hexdigest(),
+                    }
+                if mode == 3:
+                    noise_context = params + 0x80C0
+                    noise_ptr = u64(ld, noise_context + 0x08)
+                    noise_width = u32(ld, noise_context + 0x10)
+                    noise_height = u32(ld, noise_context + 0x14)
+                    noise_blob = ld.read_bytes(noise_ptr, noise_width * noise_height * 4)
+                    noise = {
+                        "samples": make_float_array(noise_blob),
+                        "stride": noise_width,
+                        "height": noise_height,
+                        "cell_size": f32(ld, noise_context + 0x40),
+                        "interpolate": int(bool(ld.read_bytes(params + 0x80BC, 1)[0])),
+                        "sha256": hashlib.sha256(noise_blob).hexdigest(),
+                    }
                 rowdriver_cache.update({
                     "key": key,
                     "next_row": row_start,
@@ -645,6 +889,8 @@ def main() -> int:
                     "comp": make_float_array(comp_blob),
                     "tables": tables,
                     "counts": counts,
+                    "noise": noise,
+                    "field": field,
                 })
                 observed["rowdriver_state"] = {
                     "dimensions": [row_width, row_height],
@@ -654,7 +900,8 @@ def main() -> int:
                     "alpha": hex(alpha_ptr),
                     "comp_map": hex(comp_ptr),
                     "mode": mode,
-                    "mode_branch": "default",
+                    "mode_branch": "field" if mode == 2 else (
+                        "interpolated" if mode == 3 else "default"),
                     "counts": counts,
                     "table_sha256": {
                         name: hashlib.sha256(blob).hexdigest()
@@ -672,6 +919,13 @@ def main() -> int:
                     "denominator_before_sha256": hashlib.sha256(denominator_blob).hexdigest(),
                     "alpha_before_sha256": hashlib.sha256(alpha_blob).hexdigest(),
                     "comp_map_sha256": hashlib.sha256(comp_blob).hexdigest(),
+                    "noise_plane": None if noise is None else {
+                        "dimensions": [noise["stride"], noise["height"]],
+                        "cell_size": noise["cell_size"],
+                        "interpolate": bool(noise["interpolate"]),
+                        "sha256": noise["sha256"],
+                    },
+                    "field_sha256": None if field is None else field["sha256"],
                 }
             elif rowdriver_cache["key"] != key:
                 raise RuntimeError("rowdriver detour ownership changed within one render")
@@ -679,7 +933,7 @@ def main() -> int:
             if row_start != rowdriver_cache["next_row"]:
                 raise RuntimeError(f"non-contiguous rowdriver range: expected {rowdriver_cache['next_row']}, got {row_start}")
 
-            rowdriver_function(
+            rowdriver_args = (
                 row_start,
                 row_end,
                 rowdriver_cache["source"],
@@ -703,6 +957,20 @@ def main() -> int:
                 rowdriver_cache["counts"]["prepass_front"],
                 rowdriver_cache["counts"]["prepass_back"],
             )
+            if mode == 3:
+                noise = rowdriver_cache["noise"]
+                rowdriver_noise_function(
+                    *rowdriver_args[:5], *rowdriver_args[6:],
+                    noise["samples"], noise["stride"],
+                    ctypes.c_float(noise["cell_size"]), noise["interpolate"],
+                )
+            elif mode == 2:
+                rowdriver_field_function(
+                    *rowdriver_args[:5], *rowdriver_args[6:],
+                    rowdriver_cache["field"]["samples"],
+                )
+            else:
+                rowdriver_function(*rowdriver_args)
 
             row_pixels = (row_end - row_start) * row_width
             plane_offset = row_start * row_width * 16
@@ -872,7 +1140,7 @@ def main() -> int:
         area_words = list(struct.unpack("<4i", ld.read_bytes(rect, 16)))
         call = {"rip": "0x1800067c5", "stack_slots_at_callback": raw_stack}
         observed["iterate_calls"].append({"callback": hex(callback), "params": hex(params), "start": args_[1], "end": args_[2], "regs": [hex(value) for value in args_], "return_rip": hex(u64(ld, rsp)), "raw_stack": raw_stack, "source_world": hex(source_world), "rect": hex(rect), "area_words": area_words, "area_bounds": {"start": args_[1], "end": args_[2], "width": u32(ld, params + 0x80A0), "height": u32(ld, params + 0x80A4)}, "dst_world": hex(dst_world), "refcon": hex(params), "wrapper_call": call})
-        if callback not in (POPULATE, OUTPUT) or params == 0:
+        if callback not in (POPULATE, OUTPUT, POPULATE16, OUTPUT16, POPULATE32, OUTPUT32) or params == 0:
             raise RuntimeError(f"PF_Iterate8 ABI unresolved: callback=0x{callback:x} refcon=0x{params:x}")
         # PF Iterate walks the requested host-world rectangle. The pixel callback
         # applies the padded work-buffer offset itself; iterating the padded
@@ -898,7 +1166,9 @@ def main() -> int:
         source_rowbytes = u32(ld, source_world + 0x20)
         destination_data = u64(ld, dst_world + 0x18)
         destination_rowbytes = u32(ld, dst_world + 0x20)
-        if source_rowbytes < source_width * 4 or destination_rowbytes < destination_width * 4:
+        callback_pixel_size = 16 if callback in (POPULATE32, OUTPUT32) else (8 if callback in (POPULATE16, OUTPUT16) else 4)
+        if (source_rowbytes < source_width * callback_pixel_size or
+                destination_rowbytes < destination_width * callback_pixel_size):
             raise RuntimeError(
                 f"PF_Iterate8 rowbytes are too small: source={source_rowbytes}, "
                 f"destination={destination_rowbytes}"
@@ -906,19 +1176,22 @@ def main() -> int:
         if source_height:
             require_ptr(
                 ld, source_data + (source_height - 1) * source_rowbytes,
-                "source world final row", source_width * 4,
+                "source world final row", source_width * callback_pixel_size,
             )
         if destination_height:
             require_ptr(
                 ld, destination_data + (destination_height - 1) * destination_rowbytes,
-                "destination world final row", destination_width * 4,
+                "destination world final row", destination_width * callback_pixel_size,
             )
         for y in range(top, bottom):
             for x in range(left, right):
-                if source_world == input_world and source_rowbytes == width * 4:
-                    pixel = source[(y * width + x) * 4:(y * width + x + 1) * 4]
+                if source_world == input_world and source_rowbytes == width * callback_pixel_size:
+                    pixel = source[(y * width + x) * callback_pixel_size:(y * width + x + 1) * callback_pixel_size]
                 else:
-                    pixel = ld.read_bytes(source_data + y * source_rowbytes + x * 4, 4)
+                    pixel = ld.read_bytes(
+                        source_data + y * source_rowbytes + x * callback_pixel_size,
+                        callback_pixel_size,
+                    )
                 if callback == POPULATE:
                     model_populate(ld, params, y, x, pixel)
                 elif callback == OUTPUT:
@@ -927,10 +1200,32 @@ def main() -> int:
                         destination_data + y * destination_rowbytes + x * 4,
                         width,
                     )
+                elif callback == POPULATE16:
+                    model_populate16(ld, params, y, x, pixel)
+                elif callback == OUTPUT16:
+                    destination = destination_data + y * destination_rowbytes + x * 8
+                    if (x, y) in ((14, 13), (15, 13), (14, 14), (15, 14),
+                                  (14, 15), (15, 15)):
+                        rgba = pixel_float(ld, params, x, y)
+                        observed.setdefault("pf16_writer_probes", []).append({
+                            "xy": [x, y],
+                            "source_words_argb": list(struct.unpack("<4H", pixel)),
+                            "writer_rgba": rgba,
+                            "writer_rgba_bits": [
+                                f"0x{struct.unpack('<I', struct.pack('<f', value))[0]:08X}"
+                                for value in rgba
+                            ],
+                        })
+                    model_output16(ld, params, y, x, output_bytes, destination, width)
+                elif callback == POPULATE32:
+                    model_populate32(ld, params, y, x, pixel)
+                elif callback == OUTPUT32:
+                    destination = destination_data + y * destination_rowbytes + x * 16
+                    model_output32(ld, params, y, x, output_bytes, destination, width)
         observed["iterate_calls"][-1]["callback_error"] = 0
-        if callback == POPULATE and "first_iterate" not in observed["checkpoints"]:
+        if callback in (POPULATE, POPULATE16, POPULATE32) and "first_iterate" not in observed["checkpoints"]:
             observed["checkpoints"]["first_iterate"] = {"callback": hex(callback), "area_words": area_words, "refcon": hex(params)}
-        if callback == OUTPUT:
+        if callback in (OUTPUT, OUTPUT16, OUTPUT32):
             observed["checkpoints"]["final_host_output"] = {"callback": hex(callback), "area_words": area_words, "refcon": hex(params)}
         return 0
 
@@ -955,6 +1250,30 @@ def main() -> int:
     loader.add_code_hook(ROTATE_CALL + 5, rotate_after)
     loader.add_code_hook(ROTATE_RETURN, lambda _ld, _address, _size: observed.__setitem__("render_return", observed["render_return"] + 1))
     loader.add_code_hook(0x18000528A, lambda _ld, _address, _size: observed["checkpoints"].__setitem__("rotate", {"callsite": "0x18000528a"}))
+    def capture_mode2_source_field(ld: AexLoader, _address: int, _size: int) -> None:
+        params = ld.uc.reg_read(UC_X86_REG_RBX)
+        if u32(ld, params + 0x20) != 2:
+            return
+        field_pointer = u64(ld, params + 0x80A8)
+        field_width = u32(ld, params + 0x80A0)
+        field_height = u32(ld, params + 0x80A4)
+        field_bytes = ld.read_bytes(field_pointer, field_width * field_height * 4)
+        field_words = struct.unpack(f"<{field_width * field_height}f", field_bytes)
+        if args.field_source_raw is not None:
+            args.field_source_raw.parent.mkdir(parents=True, exist_ok=True)
+            args.field_source_raw.write_bytes(field_bytes)
+        observed["noise_field_source_probe"] = {
+            "pointer": hex(field_pointer),
+            "dimensions": [field_width, field_height],
+            "placement": {
+                "row0": u32(ld, params + 0x8098),
+                "col0": u32(ld, params + 0x809C),
+            },
+            "sha256": hashlib.sha256(field_bytes).hexdigest(),
+            "minimum": min(field_words),
+            "maximum": max(field_words),
+        }
+    loader.add_code_hook(0x1800052BE, capture_mode2_source_field)
     def capture_rowdriver_entry(ld: AexLoader, _address: int, _size: int) -> None:
         rsp = ld.uc.reg_read(UC_X86_REG_RSP)
         source_slot = ld.uc.reg_read(UC_X86_REG_R8)
@@ -986,6 +1305,61 @@ def main() -> int:
                 "prepass_back": u32(ld, params + 0x54),
             },
         })
+        if mode == 3 and "noise_plane_probe" not in observed:
+            noise_context = params + 0x80C0
+            noise_pointer = u64(ld, noise_context + 0x08)
+            noise_width = u32(ld, noise_context + 0x10)
+            noise_height = u32(ld, noise_context + 0x14)
+            noise_bytes = ld.read_bytes(noise_pointer, noise_width * noise_height * 4)
+            noise_words = struct.unpack(
+                f"<{noise_width * noise_height}f", noise_bytes
+            )
+            observed["noise_plane_probe"] = {
+                "context": hex(noise_context),
+                "pointer": hex(noise_pointer),
+                "dimensions": [noise_width, noise_height],
+                "source_dimensions": [
+                    u32(ld, noise_context + 0x18),
+                    u32(ld, noise_context + 0x1C),
+                ],
+                "table_size": u32(ld, noise_context + 0x20),
+                "cell_size": f32(ld, noise_context + 0x40),
+                "sha256": hashlib.sha256(noise_bytes).hexdigest(),
+                "first_words": [
+                    f"0x{struct.unpack('<I', struct.pack('<f', value))[0]:08X}"
+                    for value in noise_words[:16]
+                ],
+            }
+        if mode == 2 and "noise_field_probe" not in observed:
+            field_pointer = u64(ld, params + 0x80B0)
+            field_bytes = ld.read_bytes(field_pointer, row_width * row_width * 4)
+            field_words = struct.unpack(f"<{row_width * row_width}f", field_bytes)
+            if args.field_rotated_raw is not None:
+                args.field_rotated_raw.parent.mkdir(parents=True, exist_ok=True)
+                args.field_rotated_raw.write_bytes(field_bytes)
+            observed["noise_field_probe"] = {
+                "pointer": hex(field_pointer),
+                "dimensions": [row_width, row_width],
+                "sha256": hashlib.sha256(field_bytes).hexdigest(),
+                "minimum": min(field_words),
+                "maximum": max(field_words),
+                "first_words": [
+                    f"0x{struct.unpack('<I', struct.pack('<f', value))[0]:08X}"
+                    for value in field_words[:16]
+                ],
+            }
+        if "component_map_probe" not in observed:
+            component_map = u64(ld, params + 0x8118)
+            sample_points = ((0, 0), (row_width // 2, row_width // 2),
+                             (row_width // 2, 73), (row_width // 2, row_width - 72))
+            observed["component_map_probe"] = {
+                "pointer": hex(component_map),
+                "samples": {
+                    f"{x},{y}": list(struct.unpack(
+                        "<4f", ld.read_bytes(component_map + (y * row_width + x) * 16, 16)))
+                    for x, y in sample_points
+                },
+            }
         observed["checkpoints"].setdefault("rowdriver", {"entry": "0x1800038d0"})
 
     loader.add_code_hook(ROWDRIVER, capture_rowdriver_entry)
@@ -1025,7 +1399,22 @@ def main() -> int:
     rotate_manifest = ROOT / "replay/fixtures/dblur_rotate/manifest.json"
     rowdriver_source = ROOT / "core/dblur_rowdriver.cpp"
     rowdriver_manifest = ROOT / "replay/fixtures/dblur_rowdriver_full/manifest.json"
-    result = {"kind": "dblur_fullrender_host_fixture", "schema": 1, "status": "blocked", "exact_case": {"path": source_name, "dimensions": [width, height], "comp_dimensions": [width * args.downsample_den // args.downsample_num, height * args.downsample_den // args.downsample_num], "downsample": [args.downsample_num, args.downsample_den], "png_sha256": hashlib.sha256(args.source.read_bytes()).hexdigest(), "decoded_rgba_sha256": hashlib.sha256(source_rgba).hexdigest(), "host_argb_sha256": hashlib.sha256(source).hexdigest(), "host_pixel_layout": "PF_Pixel8 A/R/G/B"}, "callback_model_check": None, "execution": observed, "setup_addresses": {"in_data": hex(in_data), "output_world": hex(output_world), "input_world": hex(input_world), "depth_descriptor": hex(depth_descriptor), "render_desc": hex(render_desc), "param_6": hex(param_6)}, "world_layout": {"input_extent_hint": [0, 0, width, height], "output_extent_hint": [0, 0, width, height], "depth_descriptor_offset": "0x2c", "depth_bits": 8, "downsample_num": args.downsample_num, "downsample_den": args.downsample_den}, "param_def_case_values": {"1": {"type": "short@+0x3a", "value": 0}, "2": {"type": "double@+0x38", "value": 1.0}, "3": {"type": "short@+0x3a", "value": 92}, "5": {"type": "int32@+0x38", "value": 1690}, "6": {"type": "int32@+0x38", "value": 0}, "7": {"type": "short@+0x3a", "value": 45}, "10": {"type": "int32@+0x38", "value": 0}, "11": {"type": "int32@+0x38", "value": 0}, "12": {"type": "short@+0x3a", "value": 0}}, "binary_callback_provenance": {"file": "plugins_2025/OLMDirectionalBlur.aex", "input_load": "PF_Pixel8 A/R/G/B bytes decoded from PNG RGBA", "output_store": "movb A/R/G/B at 0x180006bc5/0x180006bb0/0x180006bbe/0x180006bb3", "checked_in_disasm_note": "the stale movw sequence is not used for this AEX"}, "rotate_detour": {"enabled": args.detour_rotate, "primitive": "FUN_180001ec0", "candidate": "core/dblur_rotate.cpp", "candidate_sha256": hashlib.sha256(rotate_source.read_bytes()).hexdigest(), "fixture_manifest": "replay/fixtures/dblur_rotate/manifest.json", "fixture_manifest_sha256": hashlib.sha256(rotate_manifest.read_bytes()).hexdigest(), "fixture_gate": "6/6 byte-exact against actual AEX", "compile_flags": ["-O0", "-fno-fast-math", "-ffp-contract=off"]} if args.detour_rotate else {"enabled": False}, "rowdriver_detour": {"enabled": args.detour_rowdriver, "primitive": "FUN_1800038d0", "candidate": "core/dblur_rowdriver.cpp", "candidate_sha256": hashlib.sha256(rowdriver_source.read_bytes()).hexdigest(), "fixture_manifest": "replay/fixtures/dblur_rowdriver_full/manifest.json", "fixture_manifest_sha256": hashlib.sha256(rowdriver_manifest.read_bytes()).hexdigest(), "fixture_gate": "3/3 full rowdriver plus 5/5 leaf cases byte-exact against actual AEX at O2", "covered_modes": [0, 1], "rejected_modes": [2, 3], "compile_flags": ["-O2", "-fno-fast-math", "-ffp-contract=off"]} if args.detour_rowdriver else {"enabled": False}}
+    result = {"kind": "dblur_fullrender_host_fixture", "schema": 1, "status": "blocked", "exact_case": {"path": source_name, "dimensions": [width, height], "comp_dimensions": [width * args.downsample_den // args.downsample_num, height * args.downsample_den // args.downsample_num], "downsample": [args.downsample_num, args.downsample_den], "png_sha256": hashlib.sha256(args.source.read_bytes()).hexdigest(), "decoded_rgba_sha256": hashlib.sha256(source_rgba).hexdigest(), "host_argb_sha256": hashlib.sha256(source).hexdigest(), "host_pixel_layout": f"PF_Pixel{args.bitdepth} A/R/G/B little-endian words" if args.bitdepth == 16 else "PF_Pixel8 A/R/G/B"}, "callback_model_check": None, "execution": observed, "setup_addresses": {"in_data": hex(in_data), "output_world": hex(output_world), "input_world": hex(input_world), "noise_layer_world": hex(noise_layer_world), "depth_descriptor": hex(depth_descriptor), "render_desc": hex(render_desc), "param_6": hex(param_6)}, "world_layout": {"input_dimensions": [width, height], "noise_layer_dimensions": [noise_layer_width, noise_layer_height], "input_extent_hint": list(area), "output_extent_hint": list(area), "noise_layer_extent_hint": list(noise_layer_area), "input_rowbytes": rowbytes, "noise_layer_rowbytes": noise_layer_rowbytes, "depth_descriptor_offset": "0x2c", "depth_bits": args.bitdepth, "downsample_num": args.downsample_num, "downsample_den": args.downsample_den}, "param_def_case_values": {"1": {"type": "short@+0x3a", "value": 0}, "2": {"type": "double@+0x38", "value": 1.0}, "3": {"type": "short@+0x3a", "value": 92}, "5": {"type": "int32@+0x38", "value": 1690}, "6": {"type": "int32@+0x38", "value": 0}, "7": {"type": "short@+0x3a", "value": 45}, "10": {"type": "int32@+0x38", "value": 0}, "11": {"type": "int32@+0x38", "value": 0}, "12": {"type": "short@+0x3a", "value": 0}}, "binary_callback_provenance": {"file": "plugins_2025/OLMDirectionalBlur.aex", "input_load": "PF_Pixel16 A/R/G/B words" if args.bitdepth == 16 else "PF_Pixel8 A/R/G/B bytes decoded from PNG RGBA", "output_store": "u16 A/R/G/B at 0x180006a90" if args.bitdepth == 16 else "movb A/R/G/B at 0x180006bc5/0x180006bb0/0x180006bbe/0x180006bb3", "checked_in_disasm_note": "typed callback selected by the actual depth dispatch"}, "rotate_detour": {"enabled": args.detour_rotate, "primitive": "FUN_180001ec0", "candidate": "core/dblur_rotate.cpp", "candidate_sha256": hashlib.sha256(rotate_source.read_bytes()).hexdigest(), "fixture_manifest": "replay/fixtures/dblur_rotate/manifest.json", "fixture_manifest_sha256": hashlib.sha256(rotate_manifest.read_bytes()).hexdigest(), "fixture_gate": "6/6 byte-exact against actual AEX", "compile_flags": ["-O0", "-fno-fast-math", "-ffp-contract=off"]} if args.detour_rotate else {"enabled": False}, "rowdriver_detour": {"enabled": args.detour_rowdriver, "primitive": "FUN_1800038d0", "candidate": "core/dblur_rowdriver.cpp", "candidate_sha256": hashlib.sha256(rowdriver_source.read_bytes()).hexdigest(), "fixture_manifest": "replay/fixtures/dblur_rowdriver_full/manifest.json", "fixture_manifest_sha256": hashlib.sha256(rowdriver_manifest.read_bytes()).hexdigest(), "fixture_gate": "3/3 full rowdriver plus 5/5 leaf cases byte-exact against actual AEX at O2", "covered_modes": [0, 1], "rejected_modes": [2, 3], "compile_flags": ["-O2", "-fno-fast-math", "-ffp-contract=off"]} if args.detour_rowdriver else {"enabled": False}}
+    if args.detour_rowdriver:
+        result["rowdriver_detour"].update(
+            {
+                "fixture_gate": (
+                    "default/mode-1 fixture suite plus focused nonzero mode-2 field "
+                    "and mode-3 Smooth/Block full-frame gates, byte-exact against actual AEX"
+                ),
+                "covered_modes": [0, 1, 2, 3],
+                "mode_boundaries": {
+                    "2": "rowdriver only; host Layer checkout and field construction remain unresolved",
+                    "3": "generated Smooth and Block planes plus rowdriver",
+                },
+                "rejected_modes": [],
+            }
+        )
     result["param_def_case_values"] = {
         "1": {"type": "short@+0x3a", "value": args.angle},
         "2": {"type": "double@+0x38", "value": args.brightness_gain},
@@ -1042,10 +1431,21 @@ def main() -> int:
         "19": {"type": "short@+0x3a", "value": args.noise_offset},
         "20": {"type": "double@+0x38", "value": args.thickness},
     }
-    try:
-        result["callback_model_check"] = callback_model_check(loader, source, width)
-    except Exception as exc:
-        result["callback_model_check"] = {"status": "error", "reason": type(exc).__name__, "message": str(exc)}
+    if args.bitdepth == 8:
+        try:
+            result["callback_model_check"] = callback_model_check(loader, source, width)
+        except Exception as exc:
+            result["callback_model_check"] = {"status": "error", "reason": type(exc).__name__, "message": str(exc)}
+    elif args.bitdepth == 16:
+        try:
+            result["callback_model_check"] = callback_model_check16(loader)
+        except Exception as exc:
+            result["callback_model_check"] = {"status": "error", "reason": type(exc).__name__, "message": str(exc)}
+    else:
+        try:
+            result["callback_model_check"] = callback_model_check32(loader)
+        except Exception as exc:
+            result["callback_model_check"] = {"status": "error", "reason": type(exc).__name__, "message": str(exc)}
     try:
         # The existing render-entry ABI is three integer arguments; host callbacks are real AEX entrypoints.
         # PF_Cmd_RENDER=0x18 was traced above. The direct worker comparison is
@@ -1055,10 +1455,10 @@ def main() -> int:
         observed["budget"] = {"instruction_limit": args.max_instructions, "instructions": call_result["instructions"], "exhausted": call_result["instructions"] >= args.max_instructions}
         if observed["budget"]["exhausted"]:
             raise RuntimeError(f"AEX instruction budget exhausted before render return; last_rip={observed['last_rips'][-1] if observed['last_rips'] else 'none'}")
-        if observed["iterate_calls"] and observed["rotate_entry"]:
+        if observed["iterate_calls"] and "final_host_output" in observed["checkpoints"]:
             result["status"] = "ok"
         else:
-            result["blocked"] = {"reason": "pre-render-return", "message": "FUN_180007bd0 returned without entering PF Iterate8 or 0x180005628", "last_rips": observed["last_rips"], "required": "the exact PF Iterate8 callback ABI or render branch state; no callback values were fabricated"}
+            result["blocked"] = {"reason": "pre-render-return", "message": "FUN_180007bd0 returned without a complete populate/output callback pair", "last_rips": observed["last_rips"], "required": "the exact typed iterate callback ABI and render branch state; no callback values were fabricated"}
     except Exception as exc:
         if observed["budget"].get("exhausted"):
             if "rowdriver" in observed["checkpoints"] and "rotateback" not in observed["checkpoints"]:
@@ -1070,13 +1470,15 @@ def main() -> int:
         else:
             reason = "iterate8-suite-abi" if any(item[0] == "PF_Iterate8" for item in loader.callback_log) else type(exc).__name__
         result["blocked"] = {"reason": reason, "message": str(exc), "last_rip": observed["last_rips"][-1] if observed["last_rips"] else None, "completed_checkpoints": sorted(observed["checkpoints"]), "required": "continue from the real PF Iterate8 populate return through AEX rotate, rowdriver, normalization, rotateback 0x180005628, and output callback; do not synthesize missing stages"}
-    complete = len(output_bytes) == width * height * 4 and bool(observed["iterate_calls"] and observed["rotate_entry"] and "final_host_output" in observed["checkpoints"])
-    result["output"] = {"format": "ARGB8", "dimensions": [width, height], "complete": complete, "sha256": hashlib.sha256(output_bytes).hexdigest() if complete else None, "byte_count": len(output_bytes) if complete else 0}
+    complete = len(output_bytes) == width * height * pixel_size and bool(
+        observed["iterate_calls"] and "final_host_output" in observed["checkpoints"]
+    )
+    result["output"] = {"format": f"ARGB{args.bitdepth * 4}", "dimensions": [width, height], "complete": complete, "sha256": hashlib.sha256(output_bytes).hexdigest() if complete else None, "byte_count": len(output_bytes) if complete else 0}
     if complete and args.host_output_raw is not None:
         args.host_output_raw.parent.mkdir(parents=True, exist_ok=True)
         args.host_output_raw.write_bytes(output_bytes)
         result["output"]["raw_path"] = str(args.host_output_raw)
-    if complete and args.host_output_png is not None:
+    if complete and args.host_output_png is not None and args.bitdepth == 8:
         rgba_bytes = bytearray(len(output_bytes))
         for offset in range(0, len(output_bytes), 4):
             alpha, red, green, blue = output_bytes[offset:offset + 4]
@@ -1084,7 +1486,7 @@ def main() -> int:
         args.host_output_png.parent.mkdir(parents=True, exist_ok=True)
         Image.frombytes("RGBA", (width, height), bytes(rgba_bytes)).save(args.host_output_png)
         result["output"]["png_path"] = str(args.host_output_png)
-    if complete and args.expected is not None:
+    if complete and args.expected is not None and args.bitdepth == 8:
         expected_width, expected_height, expected_rgba, expected_argb = load_argb(args.expected)
         if (expected_width, expected_height) != (width, height):
             raise RuntimeError(
@@ -1124,8 +1526,8 @@ def main() -> int:
         if x >= width or y >= height:
             final_bytes = "out-of-bounds"
         else:
-            address = (y * width + x) * 4
-            final_bytes = output_bytes[address:address + 4].hex() if complete else "not captured"
+            address = (y * width + x) * pixel_size
+            final_bytes = output_bytes[address:address + pixel_size].hex() if complete else "not captured"
         result.setdefault("targets", {})[f"{x},{y}"] = {"final_host_bytes": final_bytes}
     result["execution"]["callback_log"] = [
         {"label": label, "args": [hex(value) for value in args_], "ret": ret}

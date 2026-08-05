@@ -21,6 +21,8 @@ import sys
 from pathlib import Path
 from typing import NoReturn
 
+from PIL import Image
+
 
 ROOT = Path(__file__).resolve().parents[1]
 WINDOWS_DIR = ROOT / "refs/win_references/20260604_olm/OLMDirectionalBlur"
@@ -69,6 +71,18 @@ def check_png(path: Path, expected: tuple[int, int]) -> None:
         fail(f"{path}: expected non-interlaced 8-bit RGBA PNG")
 
 
+def png_dimensions(path: Path) -> tuple[int, int]:
+    raw = path.read_bytes()
+    if len(raw) < 29 or raw[:8] != b"\x89PNG\r\n\x1a\n" or raw[12:16] != b"IHDR":
+        fail(f"{path}: missing PNG IHDR")
+    return struct.unpack(">II", raw[16:24])
+
+
+def decoded_rgba(path: Path) -> bytes:
+    with Image.open(path) as image:
+        return image.convert("RGBA").tobytes()
+
+
 def plugin_identity(plugin: Path) -> dict:
     if plugin.name != PLUGIN_NAME or not plugin.is_dir():
         fail(f"--plugin-path must be an existing {PLUGIN_NAME} bundle")
@@ -102,6 +116,12 @@ def request_manifest(manifest: dict, case: dict, plugin: dict) -> dict:
         if item.get("match_name", "").startswith(plugin_prefix)
         and item.get("property_value_type") in {"OneD", "LAYER_INDEX"}
     ]
+    input_dimensions = png_dimensions(WINDOWS_DIR / case["before_effects_frame"])
+    output_dimensions = png_dimensions(WINDOWS_DIR / case["frame"])
+    if input_dimensions != output_dimensions:
+        fail("canonical case input/output dimensions differ")
+    if manifest["comp"]["width"] != input_dimensions[0] * 2 or manifest["comp"]["height"] != input_dimensions[1] * 2:
+        fail("canonical case is not the expected half-resolution capture")
     return {
         "kind": "olmdirectionalblur_8bpc_mac_validation_request",
         "schema_version": 1,
@@ -119,7 +139,9 @@ def request_manifest(manifest: dict, case: dict, plugin: dict) -> dict:
                 "path": str((WINDOWS_DIR / case["frame"]).relative_to(ROOT)),
                 "sha256": sha256(WINDOWS_DIR / case["frame"]),
             },
-            "comp": {"width": manifest["comp"]["width"], "height": manifest["comp"]["height"], "pixel_aspect": 1, "frame_rate": manifest["comp"]["frame_rate"]},
+            "source_comp": {"width": manifest["comp"]["width"], "height": manifest["comp"]["height"], "frame_rate": manifest["comp"]["frame_rate"]},
+            "comp": {"width": manifest["comp"]["width"], "height": manifest["comp"]["height"], "pixel_aspect": 1, "frame_rate": manifest["comp"]["frame_rate"], "resolution_factor": [2, 2]},
+            "render": {"width": input_dimensions[0], "height": input_dimensions[1]},
             "effect": {"name": effect["name"], "match_name": effect["match_name"], "params": params},
         },
         "windows_reference": {
@@ -131,7 +153,7 @@ def request_manifest(manifest: dict, case: dict, plugin: dict) -> dict:
         },
         "plugin_identity": plugin,
         "acceptance": {
-            "comparison": "byte_exact_rgba_png",
+            "comparison": "decoded_rgba_pixel_exact",
             "control_gate": "Mac no_effect must equal canonical before_effects before effect output is considered",
             "ae_exact_claim": False,
             "fail_closed": [
@@ -140,7 +162,7 @@ def request_manifest(manifest: dict, case: dict, plugin: dict) -> dict:
                 "installed Adobe plug-in path",
                 "AE/project/renderer/8bpc contract drift",
                 "missing control/effect return, wrong dimensions/PNG format, or hash mismatch",
-                "any nonzero byte delta",
+                "any nonzero decoded RGBA pixel delta",
                 "missing vmmap exact-path loaded-plugin proof",
             ],
         },
@@ -163,21 +185,23 @@ def jsx_source(request: dict) -> str:
     function hash(path) {{ var m = system.callSystem("/usr/bin/shasum -a 256 " + shquote(path)).match(/^([0-9a-fA-F]{{64}})\\s/); if (!m) fail("cannot hash " + path); return m[1].toLowerCase(); }}
     function find(group, matchName) {{ for (var i = 1; i <= group.numProperties; i++) {{ var p = group.property(i); if (p.matchName === matchName) return p; if (p.numProperties > 0) {{ var found = find(p, matchName); if (found) return found; }} }} return null; }}
     function setParams(effect) {{ for (var i = 0; i < PARAMS.length; i++) {{ var item = PARAMS[i], p = find(effect, item.match_name); if (!p) fail("missing " + item.match_name); p.setValue(item.value); }} }}
-    function render(comp, effect, enabled, outputDir, name) {{ effect.enabled = enabled; var path = outputDir + "/" + name; var rendered = new File(path); if (rendered.exists && !rendered.remove()) fail("cannot remove stale render " + path); comp.saveFrameToPng(0, rendered); if (!rendered.exists) fail("missing render " + path); var result = {{path: rendered.fsName, sha256: hash(rendered.fsName), effect_enabled: enabled}}; return result; }}
+    function render(comp, effect, enabled, outputDir, name) {{ effect.enabled = enabled; var path = outputDir + "/" + name; var rendered = new File(path); if (rendered.exists && !rendered.remove()) fail("cannot remove stale render " + path); comp.saveFrameToPng(0, rendered); for (var wait = 0; wait < 1800; wait++) {{ rendered = new File(path); if (rendered.exists) break; $.sleep(100); }} if (!rendered.exists) fail("missing render " + path); var result = {{path: rendered.fsName, sha256: hash(rendered.fsName), effect_enabled: enabled}}; return result; }}
     var inputDir = env("OLM_AE_MAC_INPUT_DIR_20260718"), outputDir = env("OLM_AE_MAC_OUTPUT_DIR_20260718"), pluginPath = env("OLM_AE_MAC_PLUGIN_PATH_20260718"), resultPath = env("OLM_AE_MAC_RESULT_JSON_20260718");
     if (!inputDir || !outputDir || !pluginPath || !resultPath) fail("required environment missing");
     var plugin = new Folder(pluginPath), binary = new File(pluginPath + "/Contents/MacOS/OLMDirectionalBlur");
     if (!plugin.exists || plugin.name !== "{PLUGIN_NAME}" || !binary.exists) fail("plugin identity mismatch");
     var stagedHash = hash(binary.fsName); if (stagedHash !== EXPECTED_PLUGIN_SHA256) fail("staged plugin changed after package hash");
     var project = app.newProject(); project.bitsPerChannel = 8; project.linearBlending = false; try {{ project.gpuAccelType = GpuAccelType.SOFTWARE; }} catch (e) {{ fail("cannot set SOFTWARE"); }}
-    if (Number(project.bitsPerChannel) !== 8 || String(project.gpuAccelType).toUpperCase() !== "SOFTWARE" || project.workingSpace !== "None") fail("project contract drift");
-    var input = new File(inputDir + "/case_0001_before_effects.png"); if (!input.exists || hash(input.fsName) !== CASE.input.sha256) fail("input identity mismatch");
+    var rendererRaw = Number(project.gpuAccelType), workingSpaceRaw = project.workingSpace, workingSpaceText = String(workingSpaceRaw);
+    if (Number(project.bitsPerChannel) !== 8 || rendererRaw !== Number(GpuAccelType.SOFTWARE) || (workingSpaceText !== "" && workingSpaceText !== "None")) fail("project contract drift: bpc=" + project.bitsPerChannel + " renderer_raw=" + rendererRaw + " working_space_raw=" + workingSpaceText);
+    var input = new File(inputDir + "/case_0001_before_effects_fullres_nearest.png"); if (!input.exists || hash(input.fsName) !== CASE.host_input.sha256) fail("host input identity mismatch");
     var footage = project.importFile(new ImportOptions(input));
-    var comp = project.items.addComp(CASE.id, CASE.comp.width, CASE.comp.height, CASE.comp.pixel_aspect, 1, CASE.comp.frame_rate);
-    var layer = comp.layers.add(footage), effect = layer.property("ADBE Effect Parade").addProperty(CASE.effect.match_name); if (!effect || effect.matchName !== CASE.effect.match_name) fail("effect identity mismatch"); setParams(effect);
+    var comp = project.items.addComp(CASE.id, CASE.comp.width, CASE.comp.height, CASE.comp.pixel_aspect, 1, CASE.comp.frame_rate); comp.resolutionFactor = CASE.comp.resolution_factor;
+    var layer = comp.layers.add(footage);
+    var effect = layer.property("ADBE Effect Parade").addProperty(CASE.effect.match_name); if (!effect || effect.matchName !== CASE.effect.match_name) fail("effect identity mismatch"); setParams(effect);
     var control = render(comp, effect, false, outputDir, "case_0001__no_effect.png");
     var enabled = render(comp, effect, true, outputDir, "case_0001__effect_on.png");
-    write(resultPath, JSON.stringify({{kind:"olmdirectionalblur_8bpc_mac_validation_return", schema_version:1, status:"candidate_return_pending_external_vmmap_proof", ae_exact_claim:false, request_id:"{STEM}", platform:"macOS", ae_version:app.version, project:{{bits_per_channel:project.bitsPerChannel, renderer:"SOFTWARE", working_space:project.workingSpace, linear_blending:project.linearBlending}}, staged_plugin:{{filename:plugin.name, path:binary.fsName, sha256:stagedHash, expected_sha256:EXPECTED_PLUGIN_SHA256}}, loaded_plugin_proof:{{status:"required", method:"vmmap_exact_path"}}, cases:[{{id:CASE.id, input:CASE.input, outputs:{{no_effect:control, effect_on:enabled}}}}]}}) + "\\n");
+    write(resultPath, JSON.stringify({{kind:"olmdirectionalblur_8bpc_mac_validation_return", schema_version:1, status:"candidate_return_pending_external_vmmap_proof", ae_exact_claim:false, request_id:"{STEM}", platform:"macOS", ae_version:app.version, project:{{bits_per_channel:project.bitsPerChannel, renderer:"SOFTWARE", renderer_raw:rendererRaw, working_space:"None", working_space_raw:workingSpaceRaw, working_space_raw_type:typeof workingSpaceRaw, linear_blending:project.linearBlending}}, staged_plugin:{{filename:plugin.name, path:binary.fsName, sha256:stagedHash, expected_sha256:EXPECTED_PLUGIN_SHA256}}, loaded_plugin_proof:{{status:"required", method:"vmmap_exact_path"}}, cases:[{{id:CASE.id, input:CASE.input, outputs:{{no_effect:control, effect_on:enabled}}}}]}}) + "\\n");
     try {{ project.close(CloseOptions.DO_NOT_SAVE_CHANGES); }} catch (e) {{}}
 }}());
 '''
@@ -194,6 +218,17 @@ def package(args: argparse.Namespace) -> int:
     (out / "windows_reference").mkdir(parents=True, exist_ok=True)
     (out / "return").mkdir(parents=True, exist_ok=True)
     shutil.copy2(WINDOWS_DIR / case["before_effects_frame"], out / "input/case_0001_before_effects.png")
+    host_input = out / "input/case_0001_before_effects_fullres_nearest.png"
+    with Image.open(WINDOWS_DIR / case["before_effects_frame"]) as image:
+        image.convert("RGBA").resize(
+            (manifest["comp"]["width"], manifest["comp"]["height"]),
+            Image.Resampling.NEAREST,
+        ).save(host_input)
+    request["case"]["host_input"] = {
+        "path": "input/case_0001_before_effects_fullres_nearest.png",
+        "sha256": sha256(host_input),
+        "construction": "canonical 960x540 decoded RGBA nearest-neighbor 2x expansion",
+    }
     shutil.copy2(WINDOWS_DIR / case["frame"], out / "windows_reference/case_0001.png")
     shutil.copy2(WINDOWS_MANIFEST, out / "windows_reference/reference_manifest.json")
     shutil.copytree(args.plugin_path, out / "plugin" / PLUGIN_NAME)
@@ -253,7 +288,17 @@ def compare(args: argparse.Namespace) -> int:
     if data.get("status") != "candidate_return_pending_external_vmmap_proof": failures.append("return status mismatch")
     if data.get("platform") != "macOS": failures.append("return platform mismatch")
     if data.get("ae_exact_claim") is not False: failures.append("ae_exact_claim must be false")
-    if data.get("project") != {"bits_per_channel": 8, "renderer": "SOFTWARE", "working_space": "None", "linear_blending": False}: failures.append("project contract drift")
+    project = data.get("project", {})
+    if (
+        project.get("bits_per_channel") != 8
+        or project.get("renderer") != "SOFTWARE"
+        or project.get("renderer_raw") != 1816
+        or project.get("working_space") != "None"
+        or project.get("working_space_raw") not in {"", "None"}
+        or project.get("working_space_raw_type") != "string"
+        or project.get("linear_blending") is not False
+    ):
+        failures.append("project contract drift")
     expected_hash = request["plugin_identity"]["executable_sha256"]
     plugin = args.plugin_path.resolve()
     plugin_binary = plugin / "Contents/MacOS" / EXECUTABLE_NAME
@@ -281,14 +326,14 @@ def compare(args: argparse.Namespace) -> int:
         item = case.get("outputs", {}).get(branch, {})
         path = Path(item.get("path", "")); path = path if path.is_absolute() else output_dir / path
         if not path.is_file(): failures.append(f"missing {branch} PNG"); continue
-        try: check_png(path, (request["case"]["comp"]["width"], request["case"]["comp"]["height"]))
+        try: check_png(path, (request["case"]["render"]["width"], request["case"]["render"]["height"]))
         except ValueError as exc: failures.append(str(exc)); continue
         digest = sha256(path); output_hashes[branch] = digest
         if item.get("sha256") != digest: failures.append(f"{branch} hash mismatch")
         reference = ROOT / ref["path"] if branch == "effect_on" else ROOT / request["case"]["input"]["path"]
         if not reference.is_file() or sha256(reference) != ref["sha256"]: failures.append(f"canonical {branch} reference missing/changed")
-        elif path.read_bytes() != reference.read_bytes(): failures.append(f"{branch} byte delta")
-    report = {"kind": "olmdirectionalblur_8bpc_mac_validation_report", "schema_version": 1, "status": "pass" if not failures else "fail_closed", "ae_exact_claim": False, "failures": failures, "byte_exact": not failures, "loaded_plugin_proof": proof, "output_hashes": output_hashes}
+        elif decoded_rgba(path) != decoded_rgba(reference): failures.append(f"{branch} decoded RGBA pixel delta")
+    report = {"kind": "olmdirectionalblur_8bpc_mac_validation_report", "schema_version": 1, "status": "pass" if not failures else "fail_closed", "ae_exact_claim": False, "failures": failures, "pixel_exact": not failures, "loaded_plugin_proof": proof, "output_hashes": output_hashes}
     target = args.report or output_dir / f"{STEM}_report.json"
     target.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print(("[OK]" if not failures else "[FAIL_CLOSED]") + f" wrote {target}")

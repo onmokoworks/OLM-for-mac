@@ -21,3 +21,19 @@ extern "C" void olm_dblur_rotate_rgba_f32_trig(const float* source,
                                                 int height,
                                                 float cosine,
                                                 float sine);
+
+// Exact candidate for the scalar auxiliary-plane rotator at FUN_1800018c0.
+// This is used by DirectionalBlur's Layer-noise mode after the checked-out
+// layer has been converted to a premultiplied luminance field.
+extern "C" void olm_dblur_rotate_scalar_f32(const float* source,
+                                             float* destination,
+                                             int width,
+                                             int height,
+                                             float angle);
+
+extern "C" void olm_dblur_rotate_scalar_f32_trig(const float* source,
+                                                  float* destination,
+                                                  int width,
+                                                  int height,
+                                                  float cosine,
+                                                  float sine);

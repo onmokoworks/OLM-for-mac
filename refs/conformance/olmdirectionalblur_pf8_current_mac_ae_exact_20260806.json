@@ -1,0 +1,36 @@
+{
+  "ae_exact_claim": true,
+  "case": "case_0001",
+  "claim_boundary": "Current installed binary, Mac AE 26.3.0.87 Software/PF8 case_0001 only; no other parameters, depths, renderer, or host are promoted.",
+  "gates": {
+    "control_file_exact": true,
+    "effect_file_exact": true,
+    "installed_binary_hash_exact": true,
+    "payload_binary_hash_exact": true,
+    "payload_control_hash_exact": true,
+    "payload_effect_hash_exact": true,
+    "payload_status_pass": true,
+    "same_single_ae_pid": true,
+    "software_pf8_contract": true,
+    "sole_exact_loaded_module": true
+  },
+  "host": {
+    "application": "After Effects 26.3.0.87",
+    "bits_per_channel": 8,
+    "pid": 31792,
+    "renderer": "SOFTWARE"
+  },
+  "identity": {
+    "expected_sha256": "6a89dd4d9bca3f5b3c7af7782627d1b7b7bb6b0c45afe83945d056f1db7519f0",
+    "installed_binary": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin/Contents/MacOS/OLMDirectionalBlur",
+    "observed_ae_pids": [
+      31792
+    ]
+  },
+  "output": {
+    "control_sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4",
+    "effect_sha256": "91b2af26cfad17c1d0cb620ed9844ceb5254090567350c312c1999d9993a0e05"
+  },
+  "plugin": "OLMDirectionalBlur",
+  "status": "pass"
+}

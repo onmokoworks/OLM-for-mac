@@ -158,6 +158,7 @@ int main(int argc, char **argv) {{
         str(ROOT / "core/dblur_frontonly.cpp"),
         str(ROOT / "core/dblur_rotate.cpp"),
         str(ROOT / "core/dblur_rowdriver.cpp"),
+        str(ROOT / "core/dblur_field.cpp"),
         "-Wl,-dead_strip",
         "-framework",
         "Cocoa",

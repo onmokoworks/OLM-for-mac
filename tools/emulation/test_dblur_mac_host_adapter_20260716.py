@@ -128,16 +128,16 @@ int main() {{
         }}
     }}
     std::printf("],\\"gates\\":[");
-    struct Gate {{ const char *name; OLMDirectionalBlurInfo mutate; }};
+    struct Gate {{ const char *name; OLMDirectionalBlurInfo mutate; int expected_exact; }};
     const Gate gates[] = {{
-        {{"size_variation", []{{ OLMDirectionalBlurInfo x{{}}; x.size_variation = 1.0; return x; }}()}},
-        {{"front_alpha_fade", []{{ OLMDirectionalBlurInfo x{{}}; x.front_alpha_fade = 1; return x; }}()}},
-        {{"back_alpha_fade", []{{ OLMDirectionalBlurInfo x{{}}; x.back_alpha_fade = 1; return x; }}()}},
-        {{"front_sharp_tail", []{{ OLMDirectionalBlurInfo x{{}}; x.front_sharp_tail = 1.0; return x; }}()}},
-        {{"back_strength", []{{ OLMDirectionalBlurInfo x{{}}; x.back_strength = 1; return x; }}()}},
-        {{"noise", []{{ OLMDirectionalBlurInfo x{{}}; x.noise_variation = 1.0; return x; }}()}},
-        {{"downsample", []{{ OLMDirectionalBlurInfo x{{}}; x.render_scale_x = 0.5; return x; }}()}},
-        {{"dimension_mismatch", []{{ OLMDirectionalBlurInfo x{{}}; return x; }}()}},
+        {{"size_variation", []{{ OLMDirectionalBlurInfo x{{}}; x.size_variation = 1.0; return x; }}(), 1}},
+        {{"front_alpha_fade", []{{ OLMDirectionalBlurInfo x{{}}; x.front_alpha_fade = 1; return x; }}(), 1}},
+        {{"back_alpha_fade", []{{ OLMDirectionalBlurInfo x{{}}; x.back_strength = 1; x.back_alpha_fade = 1; return x; }}(), 1}},
+        {{"front_sharp_tail", []{{ OLMDirectionalBlurInfo x{{}}; x.front_sharp_tail = 1.0; return x; }}(), 1}},
+        {{"back_strength", []{{ OLMDirectionalBlurInfo x{{}}; x.back_strength = 1; return x; }}(), 1}},
+        {{"noise", []{{ OLMDirectionalBlurInfo x{{}}; x.noise_variation = 1.0; x.noise_type = 1; x.thickness = 10.0; return x; }}(), 1}},
+        {{"downsample", []{{ OLMDirectionalBlurInfo x{{}}; x.render_scale_x = 0.5; return x; }}(), 1}},
+        {{"dimension_mismatch", []{{ OLMDirectionalBlurInfo x{{}}; return x; }}(), 0}},
     }};
     for (std::size_t i = 0; i < sizeof(gates) / sizeof(gates[0]); ++i) {{
         OLMDirectionalBlurInfo gated = info;
@@ -147,6 +147,8 @@ int main() {{
         gated.front_sharp_tail = gates[i].mutate.front_sharp_tail;
         gated.back_strength = gates[i].mutate.back_strength;
         gated.noise_variation = gates[i].mutate.noise_variation;
+        gated.noise_type = gates[i].mutate.noise_type;
+        gated.thickness = gates[i].mutate.thickness;
         gated.render_scale_x = gates[i].mutate.render_scale_x ? gates[i].mutate.render_scale_x : 1.0;
         PF_EffectWorld gate_out{{}};
         gate_out.data = reinterpret_cast<PF_PixelPtr>(input.data());
@@ -154,10 +156,10 @@ int main() {{
         gate_out.extent_hint = {{kExtents[1][0], kExtents[1][1], kExtents[1][2], kExtents[1][3]}};
         if (std::strcmp(gates[i].name, "dimension_mismatch") == 0) gate_out.width = 15;
         int used_exact = 1;
-        if (OLMDirectionalBlurTestRenderWorld(&in, &gate_out, &gated, 8, &used_exact) != PF_Err_NONE || used_exact != 0)
+        if (OLMDirectionalBlurTestRenderWorld(&in, &gate_out, &gated, 8, &used_exact) != PF_Err_NONE || used_exact != gates[i].expected_exact)
             return 40 + static_cast<int>(i);
         if (i) std::printf(",");
-        std::printf("{{\\"name\\":\\"%s\\",\\"used_exact\\":0}}", gates[i].name);
+        std::printf("{{\\"name\\":\\"%s\\",\\"used_exact\\":%d}}", gates[i].name, used_exact);
     }}
     std::printf("]}}\\n");
     return 0;
@@ -168,7 +170,7 @@ int main() {{
                "-ffunction-sections", "-fdata-sections", "-Wno-unused-function", "-Wno-unused-parameter",
                "-isysroot", sdk, "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
                "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"),
-               str(probe), str(CORE / "dblur_frontonly.cpp"), str(CORE / "dblur_rotate.cpp"), str(CORE / "dblur_rowdriver.cpp"),
+               str(probe), str(CORE / "dblur_frontonly.cpp"), str(CORE / "dblur_rotate.cpp"), str(CORE / "dblur_rowdriver.cpp"), str(CORE / "dblur_field.cpp"),
                "-Wl,-dead_strip", "-framework", "Cocoa", "-o", str(executable)]
     build = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, check=False)
     if build.returncode:

@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "kind": "dblur_scalar_rotate_actual_aex_20260805",
+  "status": "pass",
+  "primitive": "FUN_1800018c0",
+  "scope": "float32 scalar planes; strict-interior bilinear rotation",
+  "cases": [
+    {
+      "id": "even_zero",
+      "dimensions": [
+        6,
+        4
+      ],
+      "angle": 0.0,
+      "actual_aex_sha256": "44df2f71a545fe38c40797b0bf59a944ff6b967b57e53ada3e4e8fdb067b1177",
+      "portable_sha256": "44df2f71a545fe38c40797b0bf59a944ff6b967b57e53ada3e4e8fdb067b1177",
+      "byte_exact": true
+    },
+    {
+      "id": "odd_positive",
+      "dimensions": [
+        7,
+        5
+      ],
+      "angle": 0.37,
+      "actual_aex_sha256": "17886ec68413c301c7baa5666c57a6ad6644f583c580d349f5ac59c9c42bf405",
+      "portable_sha256": "17886ec68413c301c7baa5666c57a6ad6644f583c580d349f5ac59c9c42bf405",
+      "byte_exact": true
+    },
+    {
+      "id": "odd_negative",
+      "dimensions": [
+        5,
+        7
+      ],
+      "angle": -0.61,
+      "actual_aex_sha256": "4ed0709b31dbba2f8d8515f59990c8f5cb41543e1f580947e6e4e861df6e1f96",
+      "portable_sha256": "4ed0709b31dbba2f8d8515f59990c8f5cb41543e1f580947e6e4e861df6e1f96",
+      "byte_exact": true
+    },
+    {
+      "id": "thin",
+      "dimensions": [
+        3,
+        3
+      ],
+      "angle": 1.0,
+      "actual_aex_sha256": "21ccf434d4c60abbda9d26333a0e7b70068c019fae749c1527b3c27a008fd8fb",
+      "portable_sha256": "21ccf434d4c60abbda9d26333a0e7b70068c019fae749c1527b3c27a008fd8fb",
+      "byte_exact": true
+    }
+  ],
+  "claim_boundary": {
+    "actual_aex_byte_exact": true
+  }
+}

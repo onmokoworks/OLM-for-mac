@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "kind": "dblur_mode3_fullframe_actual_aex_20260805",
+  "status": "pass",
+  "scope": "64x64 witness crop, 8bpc mode 3 Smooth/Block, actual-AEX versus portable",
+  "source": {
+    "canonical": "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png",
+    "construction": "decoded RGBA crop (462,137)..(526,201)"
+  },
+  "parameters": {
+    "front_strength_ui": 48,
+    "front_strength_worker": 24,
+    "noise_variation": 100,
+    "noise_types": {
+      "smooth": 1,
+      "block": 2
+    },
+    "seed": 7,
+    "noise_offset_ui": 13,
+    "noise_offset_worker": 0.3611111044883728,
+    "thickness_ui": 10,
+    "noise_cell_size_worker": 5,
+    "downsample": [
+      1,
+      2
+    ]
+  },
+  "cases": {
+    "smooth": {
+      "noise_type": 1,
+      "actual_aex_raw_sha256": "b7edf1fe473004a79933d44e82cdf5c1b8b17201e3062ec093d5c6fe9a8cc882",
+      "portable_detour_raw_sha256": "b7edf1fe473004a79933d44e82cdf5c1b8b17201e3062ec093d5c6fe9a8cc882",
+      "portable_core_raw_sha256": "b7edf1fe473004a79933d44e82cdf5c1b8b17201e3062ec093d5c6fe9a8cc882"
+    },
+    "block": {
+      "noise_type": 2,
+      "actual_aex_raw_sha256": "f83594c779d3aafb8e0a24ccc06fb7cdc482248861753af693f77ada6b4e674e",
+      "portable_detour_raw_sha256": "f83594c779d3aafb8e0a24ccc06fb7cdc482248861753af693f77ada6b4e674e",
+      "portable_core_raw_sha256": "f83594c779d3aafb8e0a24ccc06fb7cdc482248861753af693f77ada6b4e674e"
+    }
+  },
+  "noise_plane_sha256": "15d8e87d57380c0296ec8fe5ca84e6db0d0fb1e06cd1a16a6e57975c3c3929de",
+  "work_dimensions": [
+    94,
+    94
+  ],
+  "noise_plane_dimensions": [
+    21,
+    21
+  ],
+  "checks": {
+    "smooth_actual_complete": true,
+    "smooth_detour_complete": true,
+    "smooth_raw_byte_exact": true,
+    "smooth_pinned_raw_hash": true,
+    "smooth_noise_plane_exact": true,
+    "smooth_mode3_worker": true,
+    "smooth_portable_core_return_zero": true,
+    "smooth_portable_core_raw_exact": true,
+    "block_actual_complete": true,
+    "block_detour_complete": true,
+    "block_raw_byte_exact": true,
+    "block_pinned_raw_hash": true,
+    "block_noise_plane_exact": true,
+    "block_mode3_worker": true,
+    "block_portable_core_return_zero": true,
+    "block_portable_core_raw_exact": true,
+    "smooth_and_block_distinct": true
+  },
+  "claim_boundary": {
+    "actual_aex_raw_exact": true,
+    "windows_ae_pixel_exact": false,
+    "mac_ae_pixel_exact": false,
+    "mode2_layer_field": false,
+    "full_size_mode3_raw_exact": false
+  }
+}

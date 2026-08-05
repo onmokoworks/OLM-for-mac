@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "kind": "dblur_mode1_case0001_portable_20260805",
+  "status": "pass",
+  "scope": "portable mode-1 8bpc case_0001 raw callback; Windows AE residual remains explicit",
+  "provenance": {
+    "aex": "plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "source": "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png",
+    "source_sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4",
+    "windows_reference": "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001.png",
+    "windows_reference_sha256": "538a22ea912ba192693c4a1701dfc0816016d32c7ef0f26d2da1dc64fcaf9f82"
+  },
+  "parameters": {
+    "angle": 0,
+    "brightness_gain": 1,
+    "size_variation": 92,
+    "front_strength_ui": 1690,
+    "front_strength_worker": 845,
+    "front_alpha_fade": 0,
+    "front_sharp_tail": 45,
+    "render_scale": 0.5
+  },
+  "actual_aex_raw_argb_sha256": "e6465cd9994e88abef18f6ca8f62c6d1c9b3ec100efff1d5de4ec16b3e4de1b9",
+  "portable_raw_argb_sha256": "e6465cd9994e88abef18f6ca8f62c6d1c9b3ec100efff1d5de4ec16b3e4de1b9",
+  "windows_decoded_rgba_sha256": "69f60582987dc65ff6432508953f6ea7028bea41350f17ef6df4d2ed9cfc40a0",
+  "portable_decoded_rgba_sha256": "18b8985421b09920c27eb31fa8392534d9f606fbacc8a85f93765d0f7bc493d1",
+  "windows_residual": {
+    "differing_bytes": 1639,
+    "differing_pixels": 1639,
+    "max_absolute_byte_delta": 1
+  },
+  "checks": {
+    "return_code_zero": true,
+    "actual_aex_raw_exact": true,
+    "windows_residual_bounded": true
+  },
+  "claim_boundary": {
+    "actual_aex_raw_exact": true,
+    "windows_ae_pixel_exact": false,
+    "remaining": "1639 one-byte Windows-AE-versus-emulated-callback deltas"
+  }
+}

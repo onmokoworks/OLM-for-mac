@@ -1,0 +1,94 @@
+#pragma once
+
+#include <cstdint>
+#include <cmath>
+#include <random>
+#include <vector>
+
+namespace olm::dblur {
+
+struct NoisePlaneView {
+    const float* samples;
+    int stride;
+    float cell_size;
+};
+
+// Typed candidate for OLMDirectionalBlur FUN_180003370. The interpolated
+// branch deliberately preserves the AEX's float smoothstep and mixed
+// float/double accumulation order.
+inline float sample_noise_plane(const NoisePlaneView& plane, int x, int y,
+                                bool interpolate) {
+    const float sample_x = static_cast<float>(x) / plane.cell_size;
+    const float sample_y = static_cast<float>(y) / plane.cell_size;
+    const int ix = static_cast<int>(sample_x);
+    const int iy = static_cast<int>(sample_y);
+    const int first = iy * plane.stride + ix;
+    if (!interpolate) {
+        return plane.samples[first];
+    }
+
+    const float fraction_x = sample_x - static_cast<float>(ix);
+    const float fraction_y = sample_y - static_cast<float>(iy);
+    const float square_x = fraction_x * fraction_x;
+    const float square_y = fraction_y * fraction_y;
+    const float smooth_x = (3.0f - (fraction_x + fraction_x)) * square_x;
+    const float smooth_y = (3.0f - (fraction_y + fraction_y)) * square_y;
+    const double inverse_x = 1.0 - static_cast<double>(smooth_x);
+    const double inverse_y = 1.0 - static_cast<double>(smooth_y);
+    return static_cast<float>(inverse_y * static_cast<double>(smooth_x)) *
+               plane.samples[first + 1] +
+           static_cast<float>(inverse_x * inverse_y) * plane.samples[first] +
+           static_cast<float>(inverse_x * static_cast<double>(smooth_y)) *
+               plane.samples[first + plane.stride] +
+           smooth_y * smooth_x * plane.samples[first + plane.stride + 1];
+}
+
+inline bool generate_noise_plane(int source_width, int source_height,
+                                 float cell_size, float offset, std::uint32_t seed,
+                                 std::vector<float>* output, int* plane_width,
+                                 int* plane_height) {
+    if (source_width <= 0 || source_height <= 0 || cell_size <= 0.0f ||
+        output == nullptr || plane_width == nullptr || plane_height == nullptr) {
+        return false;
+    }
+    *plane_width = static_cast<int>(static_cast<float>(source_width) / cell_size + 3.0f);
+    *plane_height = static_cast<int>(static_cast<float>(source_height) / cell_size + 3.0f);
+    if (*plane_width <= 0 || *plane_height <= 0) {
+        return false;
+    }
+
+    std::mt19937 random(seed);
+    constexpr double kUint32Unit = 1.0 / 4294967296.0;
+    const auto next_unit = [&random]() {
+        return static_cast<double>(random()) * kUint32Unit;
+    };
+    std::vector<float> table(101);
+    for (float& value : table) {
+        value = static_cast<float>(next_unit() * 2.0 - 1.0);
+    }
+
+    output->resize(static_cast<std::size_t>(*plane_width) * *plane_height);
+    for (float& value : *output) {
+        const float base = static_cast<float>(next_unit());
+        float table_position = static_cast<float>(next_unit() * 100.0 +
+                                                  static_cast<double>(offset));
+        while (table_position >= 100.0f) {
+            table_position -= 100.0f;
+        }
+        const int table_index = static_cast<int>(table_position);
+        const float fraction = table_position - static_cast<float>(table_index);
+        float smooth = static_cast<float>(
+            std::pow(static_cast<double>(fraction), 2.0));
+        smooth *= 3.0f - (fraction + fraction);
+        const float interpolated =
+            (1.0f - smooth) * table[static_cast<std::size_t>(table_index)] +
+            smooth * table[static_cast<std::size_t>(table_index + 1)];
+        const float combined = static_cast<float>(
+            static_cast<double>(interpolated) * 0.5 +
+            static_cast<double>(base));
+        value = combined < 0.0f ? 0.0f : (combined > 1.0f ? 1.0f : combined);
+    }
+    return true;
+}
+
+}  // namespace olm::dblur

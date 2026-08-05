@@ -1,0 +1,37 @@
+{
+  "plugin": "OLMDirectionalBlur",
+  "scope": "bounded actual-AEX fixtures connected to production; unlisted combinations remain unclaimed",
+  "commands": {
+    "ABOUT": "implemented; metadata only",
+    "GLOBAL_SETUP": "implemented",
+    "PARAMS_SETUP": "implemented",
+    "RENDER": "implemented typed dispatch",
+    "SMART_PRE_RENDER": "implemented input and Noise Layer checkout",
+    "SMART_RENDER": "implemented typed dispatch"
+  },
+  "bitdepths": {
+    "PF8": {
+      "exact": ["angle 0/45", "brightness 1/0.5", "front/back", "alpha fade", "sharp tail", "size variation", "Noise Type1/2/3", "Layer rowbytes/origin"],
+      "fail_closed": ["Type3 Layer size mismatch"]
+    },
+    "PF16": {
+      "exact": ["angle 0/45", "brightness 1/0.5", "front strength 1/2/8", "Noise Type1 Smooth seed1/thickness3", "Noise Type2 Block seed1/thickness3"],
+      "largest_remaining": ["back", "fade/tail", "size variation", "Noise Type3 Layer"]
+    },
+    "PF32": {
+      "exact": ["angle 0/45", "brightness 1/0.5", "front/back", "size variation", "Noise Type1 Smooth", "Noise Type2 Block", "Noise Type3 Layer"],
+      "largest_remaining": ["fade/tail", "other seeds/noise geometry", "other Layer sizes"]
+    }
+  },
+  "newly_closed": {
+    "branch": "PF16 angle 45, brightness 1, front strength 8, Noise Type2 variation100 seed1 thickness3",
+    "callbacks": ["0x1800068e0", "0x180006a90"],
+    "format": "ARGB64",
+    "active_bytes": 2048,
+    "rowbytes": 144,
+    "padding": 16,
+    "noise_plane_sha256": "c0dd4dfdf3d35cf0f52c3a9eb75f51d5b0aaa61de3562e345d4213e7737243dc",
+    "sha256": "0b91171a30163a15afcb1a47cf149536e2951671ae9d45f4bdc1e3ecc44a2582"
+  },
+  "helper_api": "capture_actual/capture_mac positional argument order preserved; brightness_gain is trailing optional argument"
+}

@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "kind": "olmdirectionalblur_noise_type3_layer_size_contract_20260805",
+  "status": "pass",
+  "created_at_utc": "2026-08-05T17:37:31+00:00",
+  "scope": "PF8 Type 3, 16x16 source, controlled top-left-crop 12x12 Layer and transparent-padded 20x20 Layer; equal origin; independent rowbytes",
+  "actual_aex": {
+    "cases": [
+      {
+        "relation": "smaller",
+        "source_dimensions": [
+          16,
+          16
+        ],
+        "layer_dimensions": [
+          12,
+          12
+        ],
+        "callbacks": [
+          "0x180006980"
+        ],
+        "rotate_call_count": 0,
+        "output_complete": false,
+        "rejected_before_processing": true
+      },
+      {
+        "relation": "larger",
+        "source_dimensions": [
+          16,
+          16
+        ],
+        "layer_dimensions": [
+          20,
+          20
+        ],
+        "callbacks": [
+          "0x180006980"
+        ],
+        "rotate_call_count": 0,
+        "output_complete": false,
+        "rejected_before_processing": true
+      }
+    ],
+    "contract": "Layer width and height must equal render source width and height before rotate/field/rowdriver/output"
+  },
+  "production": {
+    "dimension_mismatch_fail_closed": true,
+    "test": "tools/emulation/test_dblur_mac_mode2_host_adapter_20260805.py"
+  },
+  "comparison": {
+    "rejection_contract_exact": true,
+    "full_frame_available": false
+  },
+  "boundary": {
+    "equal_dimension_layer_supported": true,
+    "different_dimension_layer_supported": false,
+    "crop_clamp_rule": "none; rejected before field construction",
+    "mac_ae_exact_claim": false
+  }
+}

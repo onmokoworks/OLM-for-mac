@@ -54,6 +54,12 @@ def main() -> int:
         jsx = (output / "olmdirectionalblur_8bpc_mac_validation_20260718_run.jsx").read_text()
         assert request["status"] == "package_only_no_ae_launch_no_install"
         assert request["case"]["id"] == "case_0001"
+        assert request["case"]["source_comp"] == {"width": 1920, "height": 1080, "frame_rate": 24}
+        assert request["case"]["comp"]["resolution_factor"] == [2, 2]
+        assert (request["case"]["comp"]["width"], request["case"]["comp"]["height"]) == (1920, 1080)
+        assert request["case"]["render"] == {"width": 960, "height": 540}
+        assert request["case"]["host_input"]["construction"].endswith("2x expansion")
+        assert (output / request["case"]["host_input"]["path"]).is_file()
         assert request["windows_reference"]["renderer"] == "SOFTWARE"
         assert request["windows_reference"]["bits_per_channel"] == 8
         assert request["plugin_identity"]["bundle_name"] == "OLMDirectionalBlur.plugin"
@@ -62,7 +68,14 @@ def main() -> int:
         assert meta["ae_launched"] is False and meta["install_performed"] is False
         assert "OLM_AE_MAC_PLUGIN_PATH_20260718" in jsx
         assert "GpuAccelType.SOFTWARE" in jsx
+        assert "rendererRaw !== Number(GpuAccelType.SOFTWARE)" in jsx
+        assert 'workingSpaceText !== "" && workingSpaceText !== "None"' in jsx
+        assert "renderer_raw:rendererRaw" in jsx
+        assert "working_space_raw:workingSpaceRaw" in jsx
         assert "bitsPerChannel = 8" in jsx
+        assert "comp.resolutionFactor = CASE.comp.resolution_factor" in jsx
+        assert "CASE.host_input.sha256" in jsx
+        assert 'property("ADBE Scale").setValue([200, 200])' not in jsx
         assert "FAIL_CLOSED" in jsx
         assert "staged_plugin" in jsx
         assert "loaded_plugin_proof" in jsx
@@ -70,9 +83,12 @@ def main() -> int:
         assert "vmmap_exact_path" in jsx
         assert "candidate_return_pending_external_vmmap_proof" in jsx
         source = SCRIPT.read_text()
+        assert '"comparison": "decoded_rgba_pixel_exact"' in source
+        assert 'decoded_rgba(path) != decoded_rgba(reference)' in source
         for gate in ("return kind mismatch", "return schema mismatch", "return request id mismatch", "return status mismatch", "return platform mismatch"):
             assert gate in source
         assert "saveFrameToPng(0, rendered)" in jsx
+        assert "wait < 1800" in jsx and "$.sleep(100)" in jsx
         assert "PNG Sequence" not in jsx
         assert "renderQueue" not in jsx
         wrapper = (output / "olmdirectionalblur_8bpc_mac_validation_20260718_wrapper.jsx").read_text()

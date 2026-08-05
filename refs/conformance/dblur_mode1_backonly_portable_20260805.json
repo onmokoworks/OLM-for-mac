@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "kind": "dblur_mode1_backonly_portable_20260805",
+  "status": "pass",
+  "scope": "portable mode-1 8bpc back-only raw callback",
+  "provenance": {
+    "aex": "plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "source": "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png",
+    "source_sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4",
+    "oracle_command": "python3 tools/emulation/dblur_fullrender_host_fixture_20260711.py --front-strength 0 --front-alpha-fade 0 --front-sharp-tail 0 --back-strength 240 --back-alpha-fade 0 --back-sharp-tail 0 --size-variation 0 --noise-variation 0 --downsample-num 1 --downsample-den 2",
+    "back_fade_tail_oracle_command": "python3 tools/emulation/dblur_fullrender_host_fixture_20260711.py --front-strength 0 --front-alpha-fade 0 --front-sharp-tail 0 --back-strength 240 --back-alpha-fade 96 --back-sharp-tail 25 --size-variation 50 --noise-variation 0 --downsample-num 1 --downsample-den 2"
+  },
+  "parameters": {
+    "angle": 0,
+    "brightness_gain": 1,
+    "size_variation": 0,
+    "front_strength_worker": 0,
+    "back_strength_ui": 240,
+    "back_strength_worker": 120,
+    "render_scale": 0.5
+  },
+  "back_fade_tail_parameters": {
+    "angle": 0,
+    "brightness_gain": 1,
+    "size_variation": 50,
+    "front_strength_worker": 0,
+    "back_strength_ui": 240,
+    "back_strength_worker": 120,
+    "back_alpha_fade_ui": 96,
+    "back_alpha_fade_worker": 48,
+    "back_sharp_tail": 25,
+    "component_divisor": 518530,
+    "render_scale": 0.5
+  },
+  "actual_aex_worker": {
+    "mode": 1,
+    "work_dimensions": [
+      1104,
+      1104
+    ],
+    "scatter_front": 0,
+    "scatter_back": 120,
+    "prepass_front": 0,
+    "prepass_back": 0
+  },
+  "actual_aex_raw_argb_sha256": "1a25fefa174c7a69f1004ce42f116e9633967587bccc3278b0d2418d99084695",
+  "portable_raw_argb_sha256": "1a25fefa174c7a69f1004ce42f116e9633967587bccc3278b0d2418d99084695",
+  "back_fade_tail_actual_aex_raw_argb_sha256": "6136b2c1c4c7ebe5d030e6f5933d393a991ced79607409f44a2f3ba2fff93b0e",
+  "back_fade_tail_portable_raw_argb_sha256": "6136b2c1c4c7ebe5d030e6f5933d393a991ced79607409f44a2f3ba2fff93b0e",
+  "checks": {
+    "return_code_zero": true,
+    "actual_aex_raw_exact": true,
+    "back_fade_tail_return_code_zero": true,
+    "back_fade_tail_actual_aex_raw_exact": true
+  },
+  "claim_boundary": {
+    "actual_aex_raw_exact": true,
+    "windows_ae_pixel_exact": false,
+    "remaining": "no corresponding Windows AE saved-frame reference for this synthetic back-only parameter set"
+  }
+}

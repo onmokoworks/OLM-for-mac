@@ -332,17 +332,24 @@ static PF_Err RenderDirectional8(PF_EffectWorld *input, PF_EffectWorld *output,
 	return PF_Err_NONE;
 }
 
-static bool CanUseExactFrontOnly8(const PF_EffectWorld *input,
-                                  const PF_EffectWorld *output,
-                                  const OLMDirectionalBlurInfo &info)
+static bool CanUseExact8(const PF_EffectWorld *input,
+                         const PF_EffectWorld *output,
+                         const PF_EffectWorld *noise_layer,
+                         const OLMDirectionalBlurInfo &info)
 {
 	return input && output && input->width == output->width &&
-	       input->height == output->height && info.front_strength > 0 &&
-	       info.size_variation == 0.0 && info.front_alpha_fade == 0 &&
-	       info.front_sharp_tail == 0.0 && info.back_strength == 0 &&
-	       info.back_alpha_fade == 0 && info.back_sharp_tail == 0.0 &&
-	       info.noise_variation == 0.0 && info.render_scale_x == 1.0 &&
-	       info.render_scale_y == 1.0;
+	       input->height == output->height &&
+	       (info.front_strength > 0 || info.back_strength > 0) &&
+	       info.front_strength >= 0 && info.front_alpha_fade >= 0 &&
+	       info.back_strength >= 0 && info.back_alpha_fade >= 0 &&
+	       info.noise_variation >= 0.0 &&
+	       (info.noise_variation == 0.0 ||
+	        ((info.noise_type == 1 || info.noise_type == 2) && info.thickness > 0.0) ||
+	        (info.noise_type == 3 && noise_layer && noise_layer->data &&
+	         noise_layer->width == input->width &&
+	         noise_layer->height == input->height)) &&
+	       info.render_scale_x > 0.0 &&
+	       info.render_scale_y > 0.0;
 }
 
 #if defined(OLM_DBLUR_ENABLE_BOUNDARY_CAPTURE)
@@ -368,8 +375,9 @@ static bool WriteDirectionalBlurCapture(const char *prefix,
 }
 #endif
 
-static PF_Err RenderExactFrontOnly8(PF_EffectWorld *input,
+static PF_Err RenderExact8(PF_EffectWorld *input,
 	                                PF_EffectWorld *output,
+	                                PF_EffectWorld *noise_layer,
 	                                const OLMDirectionalBlurInfo &info)
 {
 	const A_long width = output->width;
@@ -389,12 +397,51 @@ static PF_Err RenderExactFrontOnly8(PF_EffectWorld *input,
 		}
 	}
 
-	const int result = olm_dblur_frontonly_rgba8(
+	const double radians = -info.angle_deg * kPi / 180.0;
+	const double vx = std::cos(radians), vy = std::sin(radians);
+	const float render_scale = static_cast<float>(std::sqrt(
+		std::pow(vx * info.render_scale_x, 2) + std::pow(vy * info.render_scale_y, 2)));
+	const int result = info.noise_variation > 0.0 && info.noise_type == 3
+		? olm_dblur_layer_mode2_rgba8(
+			source.data(), destination.data(), width, height,
+			static_cast<float>(info.angle_deg),
+			static_cast<float>(info.brightness_gain),
+			static_cast<int>(info.front_strength),
+			static_cast<int>(info.front_alpha_fade),
+			static_cast<float>(info.front_sharp_tail),
+			static_cast<int>(info.back_strength),
+			static_cast<int>(info.back_alpha_fade),
+			static_cast<float>(info.back_sharp_tail),
+			static_cast<float>(info.size_variation),
+			static_cast<float>(info.noise_variation),
+			reinterpret_cast<const std::uint8_t *>(noise_layer->data),
+			static_cast<int>(noise_layer->width),
+			static_cast<int>(noise_layer->height),
+			static_cast<int>(noise_layer->rowbytes),
+			// The actual AEX's equal-dimension Layer path treats the checked-out
+			// pixel buffer as render-local even when its extent origin differs.
+			// Keep the extent for host checkout/gating, but bind local (0,0) to
+			// the render world's origin at the field-builder boundary.
+			static_cast<int>(input->extent_hint.left),
+			static_cast<int>(input->extent_hint.top),
+			static_cast<int>(input->extent_hint.left),
+			static_cast<int>(input->extent_hint.top), render_scale)
+		: olm_dblur_noise_mode3_rgba8(
 		source.data(), destination.data(), width, height,
 		static_cast<float>(info.angle_deg),
 		static_cast<float>(info.brightness_gain),
 		static_cast<int>(info.front_strength),
-		static_cast<int>(info.front_alpha_fade));
+		static_cast<int>(info.front_alpha_fade),
+		static_cast<float>(info.front_sharp_tail),
+		static_cast<int>(info.back_strength),
+		static_cast<int>(info.back_alpha_fade),
+		static_cast<float>(info.back_sharp_tail),
+		static_cast<float>(info.size_variation),
+		static_cast<float>(info.noise_variation),
+		static_cast<int>(info.noise_type),
+		static_cast<std::uint32_t>(info.seed),
+		static_cast<int>(info.noise_offset),
+		static_cast<float>(info.thickness), render_scale);
 	if (result != 0) {
 		return result == -5 ? PF_Err_OUT_OF_MEMORY : PF_Err_INTERNAL_STRUCT_DAMAGED;
 	}
@@ -454,19 +501,112 @@ static PF_Err RenderExactFrontOnly8(PF_EffectWorld *input,
 }
 
 static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
+                          PF_EffectWorld *noise_layer,
                           const OLMDirectionalBlurInfo &info, short bitdepth)
 {
 	if (bitdepth == 8) {
-		if (CanUseExactFrontOnly8(input, output, info)) {
-			return RenderExactFrontOnly8(input, output, info);
+		if (CanUseExact8(input, output, noise_layer, info)) {
+			return RenderExact8(input, output, noise_layer, info);
+		}
+		if (info.noise_variation > 0.0 && info.noise_type == 3) {
+			// Do not silently substitute the legacy approximate renderer when
+			// the checked-out Layer contract falls outside the proven mode-2
+			// dimensions/origin boundary.
+			return PF_Err_BAD_CALLBACK_PARAM;
 		}
 		return RenderDirectional8(input, output, info);
 	}
 	if (bitdepth == 16) {
+		const bool minimal_exact = input && output && input->data && output->data &&
+			input->width == output->width && input->height == output->height &&
+			(info.angle_deg == 0.0 || info.angle_deg == 45.0) &&
+			(info.brightness_gain == 1.0 || info.brightness_gain == 0.5) &&
+			info.size_variation == 0.0 &&
+			(info.front_strength == 1 || info.front_strength == 2 || info.front_strength == 8) &&
+			info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0 &&
+			info.back_strength == 0 && info.back_alpha_fade == 0 &&
+			info.back_sharp_tail == 0.0 &&
+			(info.noise_variation == 0.0 ||
+			 (info.noise_variation == 100.0 &&
+			  (info.noise_type == 1 || info.noise_type == 2) &&
+			  info.seed == 1 && info.noise_offset == 0 && info.thickness == 3.0 &&
+			  info.front_strength == 8 && info.angle_deg == 45.0)) &&
+			info.render_scale_x == 1.0 && info.render_scale_y == 1.0;
+		if (minimal_exact) {
+			const std::size_t words = static_cast<std::size_t>(input->width) * input->height * 4;
+			std::vector<std::uint16_t> source(words), destination(words);
+			for (A_long y = 0; y < input->height; ++y) {
+				std::memcpy(source.data() + static_cast<std::size_t>(y) * input->width * 4,
+					reinterpret_cast<const std::uint8_t *>(input->data) + y * input->rowbytes,
+					static_cast<std::size_t>(input->width) * sizeof(PF_Pixel16));
+			}
+			const int result = olm_dblur_minimal_argb16(
+				source.data(), destination.data(), input->width, input->height,
+				static_cast<int>(info.front_strength), static_cast<float>(info.brightness_gain),
+				static_cast<float>(info.angle_deg), static_cast<float>(info.noise_variation),
+				static_cast<int>(info.noise_type),
+				static_cast<std::uint32_t>(info.seed), info.noise_offset,
+				static_cast<float>(info.thickness));
+			if (result != 0) return result == -5 ? PF_Err_OUT_OF_MEMORY : PF_Err_INTERNAL_STRUCT_DAMAGED;
+			for (A_long y = 0; y < output->height; ++y) {
+				std::memcpy(reinterpret_cast<std::uint8_t *>(output->data) + y * output->rowbytes,
+					destination.data() + static_cast<std::size_t>(y) * output->width * 4,
+					static_cast<std::size_t>(output->width) * sizeof(PF_Pixel16));
+			}
+			return PF_Err_NONE;
+		}
 		CopyWorld<PF_Pixel16>(input, output);
 		return PF_Err_NONE;
 	}
 	if (bitdepth == 32) {
+		const bool minimal_exact = input && output && input->data && output->data &&
+			input->width == output->width && input->height == output->height &&
+			(info.angle_deg == 0.0 || info.angle_deg == 45.0) &&
+			(info.brightness_gain == 1.0 || info.brightness_gain == 0.5) &&
+			((info.size_variation == 0.0 &&
+			  ((info.front_strength == 1 || info.front_strength == 2) ||
+			   (info.front_strength == 0 && info.back_strength == 1) ||
+			   (info.front_strength == 8 && info.back_strength == 0))) ||
+			 (info.size_variation == 50.0 && info.front_strength == 8 &&
+			  info.back_strength == 0)) &&
+			info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0 &&
+			(info.back_strength == 0 || info.back_strength == 1) && info.back_alpha_fade == 0 &&
+			info.back_sharp_tail == 0.0 &&
+			(info.noise_variation == 0.0 ||
+			 (info.noise_variation == 100.0 &&
+			  (info.noise_type == 1 || info.noise_type == 2 ||
+			   (info.noise_type == 3 && noise_layer && noise_layer->data &&
+			    noise_layer->width == input->width && noise_layer->height == input->height)) &&
+			  info.seed == 1 && info.noise_offset == 0 && info.thickness == 3.0 &&
+			  info.front_strength == 8 && info.back_strength == 0 &&
+			  info.size_variation == 0.0 && info.angle_deg == 45.0)) &&
+			info.render_scale_x == 1.0 && info.render_scale_y == 1.0;
+		if (minimal_exact) {
+			const std::size_t values = static_cast<std::size_t>(input->width) * input->height * 4;
+			std::vector<float> source(values), destination(values);
+			for (A_long y = 0; y < input->height; ++y)
+				std::memcpy(source.data() + static_cast<std::size_t>(y) * input->width * 4,
+					reinterpret_cast<const std::uint8_t *>(input->data) + y * input->rowbytes,
+					static_cast<std::size_t>(input->width) * sizeof(PF_PixelFloat));
+			const int result = olm_dblur_minimal_argb32(source.data(), destination.data(),
+				input->width, input->height, static_cast<int>(info.front_strength),
+				static_cast<int>(info.back_strength),
+				static_cast<float>(info.size_variation),
+				static_cast<float>(info.angle_deg),
+				static_cast<float>(info.brightness_gain),
+				static_cast<float>(info.noise_variation),
+				static_cast<int>(info.noise_type),
+				static_cast<std::uint32_t>(info.seed), info.noise_offset,
+				static_cast<float>(info.thickness),
+				info.noise_type == 3 ? reinterpret_cast<const float *>(noise_layer->data) : nullptr,
+				info.noise_type == 3 ? static_cast<int>(noise_layer->rowbytes) : 0);
+			if (result != 0) return result == -5 ? PF_Err_OUT_OF_MEMORY : PF_Err_INTERNAL_STRUCT_DAMAGED;
+			for (A_long y = 0; y < output->height; ++y)
+				std::memcpy(reinterpret_cast<std::uint8_t *>(output->data) + y * output->rowbytes,
+					destination.data() + static_cast<std::size_t>(y) * output->width * 4,
+					static_cast<std::size_t>(output->width) * sizeof(PF_PixelFloat));
+			return PF_Err_NONE;
+		}
 		CopyWorld<PF_PixelFloat>(input, output);
 		return PF_Err_NONE;
 	}
@@ -486,8 +626,24 @@ extern "C" PF_Err OLMDirectionalBlurTestRenderWorld(
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
 	*used_exact_front_only8 =
-		bitdepth == 8 && CanUseExactFrontOnly8(input, output, *info) ? 1 : 0;
-	return RenderWorld(input, output, *info, bitdepth);
+		bitdepth == 8 && CanUseExact8(input, output, nullptr, *info) ? 1 : 0;
+	return RenderWorld(input, output, nullptr, *info, bitdepth);
+}
+
+extern "C" PF_Err OLMDirectionalBlurTestRenderWorldWithNoise(
+	PF_EffectWorld *input,
+	PF_EffectWorld *output,
+	PF_EffectWorld *noise_layer,
+	const OLMDirectionalBlurInfo *info,
+	short bitdepth,
+	int *used_exact8)
+{
+	if (!info || !used_exact8) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	*used_exact8 = bitdepth == 8 &&
+		CanUseExact8(input, output, noise_layer, *info) ? 1 : 0;
+	return RenderWorld(input, output, noise_layer, *info, bitdepth);
 }
 #endif
 
@@ -555,7 +711,9 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	default:
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
-	return RenderWorld(input, output, info, bitdepth);
+	PF_EffectWorld *noise_layer = params[OLMDIRECTIONALBLUR_NOISE_LAYER]
+		? &params[OLMDIRECTIONALBLUR_NOISE_LAYER]->u.ld : NULL;
+	return RenderWorld(input, output, noise_layer, info, bitdepth);
 }
 
 typedef struct {
@@ -574,15 +732,22 @@ SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 	PF_Err err = PF_Err_NONE;
 	PF_RenderRequest req = extra->input->output_request;
 	PF_CheckoutResult in_result;
+	PF_CheckoutResult noise_result;
 
 	req.preserve_rgb_of_zero_alpha = TRUE;
 	ERR(extra->cb->checkout_layer(in_data->effect_ref,
 		OLMDIRECTIONALBLUR_INPUT, OLMDIRECTIONALBLUR_INPUT, &req, in_data->current_time,
 		in_data->time_step, in_data->time_scale, &in_result));
+	ERR(extra->cb->checkout_layer(in_data->effect_ref,
+		OLMDIRECTIONALBLUR_NOISE_LAYER, OLMDIRECTIONALBLUR_NOISE_LAYER, &req,
+		in_data->current_time, in_data->time_step, in_data->time_scale,
+		&noise_result));
 
 	if (!err) {
 		UnionLRect(&in_result.result_rect, &extra->output->result_rect);
 		UnionLRect(&in_result.max_result_rect, &extra->output->max_result_rect);
+		UnionLRect(&noise_result.result_rect, &extra->output->result_rect);
+		UnionLRect(&noise_result.max_result_rect, &extra->output->max_result_rect);
 		PreRenderData *pre = new PreRenderData;
 		RenderScaleFromInData(in_data, pre->render_scale_x, pre->render_scale_y);
 		extra->output->pre_render_data = pre;
@@ -596,11 +761,14 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 {
 	PF_Err err = PF_Err_NONE;
 	PF_EffectWorld *input_world  = NULL;
+	PF_EffectWorld *noise_world  = NULL;
 	PF_EffectWorld *output_world = NULL;
 	ERR(extra->cb->checkout_layer_pixels(in_data->effect_ref, OLMDIRECTIONALBLUR_INPUT, &input_world));
+	ERR(extra->cb->checkout_layer_pixels(in_data->effect_ref, OLMDIRECTIONALBLUR_NOISE_LAYER, &noise_world));
 	ERR(extra->cb->checkout_output(in_data->effect_ref, &output_world));
 	if (err || !input_world || !output_world) {
 		extra->cb->checkin_layer_pixels(in_data->effect_ref, OLMDIRECTIONALBLUR_INPUT);
+		extra->cb->checkin_layer_pixels(in_data->effect_ref, OLMDIRECTIONALBLUR_NOISE_LAYER);
 		return err;
 	}
 
@@ -623,13 +791,14 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 
 	if (!err) {
 		OLMDirectionalBlurInfo info = InfoFromParams(param_ptrs, render_scale_x, render_scale_y);
-		ERR(RenderWorld(input_world, output_world, info, extra->input->bitdepth));
+		ERR(RenderWorld(input_world, output_world, noise_world, info, extra->input->bitdepth));
 	}
 
 	for (int i = 1; i < OLMDIRECTIONALBLUR_NUM_PARAMS; ++i) {
 		PF_CHECKIN_PARAM(in_data, &checked[i]);
 	}
 	extra->cb->checkin_layer_pixels(in_data->effect_ref, OLMDIRECTIONALBLUR_INPUT);
+	extra->cb->checkin_layer_pixels(in_data->effect_ref, OLMDIRECTIONALBLUR_NOISE_LAYER);
 	return err;
 }
 

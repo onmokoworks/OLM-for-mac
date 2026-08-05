@@ -5221,7 +5221,7 @@
   },
   "production_oracle": {
     "source": "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp",
-    "source_sha256": "c8b3c880381e5d637797c17c476a26303a4ea04d9f9934d8de83d98fa4e125d9",
+    "source_sha256": "0419d2c855c44744d00fee11b64808e11ccd7d3e006952e2cd2b3ed72d885fb1",
     "entry": "OLMDirectionalBlurTestRenderWorld -> RenderWorld -> RenderExactFrontOnly8",
     "parameters": {
       "bitdepth": 8,
@@ -5262,6 +5262,7 @@
         "./core/dblur_frontonly.cpp",
         "./core/dblur_rotate.cpp",
         "./core/dblur_rowdriver.cpp",
+        "./core/dblur_field.cpp",
         "-Wl,-dead_strip",
         "-framework",
         "Cocoa",

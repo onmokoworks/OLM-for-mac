@@ -2,8 +2,8 @@
   "schema": 1,
   "kind": "olmdirectionalblur_complete_pf8_compare_20260718",
   "status": "pass",
-  "created_at_utc": "2026-07-18T01:46:12+00:00",
-  "scope": "same-run bounded actual-AEX natural PF8 output versus current Mac adapter",
+  "created_at_utc": "2026-08-05T17:37:44+00:00",
+  "scope": "hash-bound 16x16 PF8, angle=0, brightness=1, front-strength=8, all variation/back/noise controls zero; actual-AEX natural output versus production Mac dispatcher",
   "dimensions": [
     16,
     16
@@ -27,17 +27,17 @@
         "return_rip": "0x1800067c8",
         "raw_stack": {
           "0x20": "0x180006567",
-          "0x28": "0x4000041c",
+          "0x28": "0x4000049c",
           "0x30": "0xf0f6e60",
           "0x38": "0x180006980",
-          "0x40": "0x400003f0",
+          "0x40": "0x40000470",
           "0x48": "0x40000000",
           "0x50": "0x0",
           "0x58": "0x0",
           "0x60": "0x0"
         },
         "source_world": "0x400002f0",
-        "rect": "0x4000041c",
+        "rect": "0x4000049c",
         "area_words": [
           0,
           0,
@@ -50,16 +50,16 @@
           "width": 26,
           "height": 26
         },
-        "dst_world": "0x400003f0",
+        "dst_world": "0x40000470",
         "refcon": "0xf0f6e60",
         "wrapper_call": {
           "rip": "0x1800067c5",
           "stack_slots_at_callback": {
             "0x20": "0x180006567",
-            "0x28": "0x4000041c",
+            "0x28": "0x4000049c",
             "0x30": "0xf0f6e60",
             "0x38": "0x180006980",
-            "0x40": "0x400003f0",
+            "0x40": "0x40000470",
             "0x48": "0x40000000",
             "0x50": "0x0",
             "0x58": "0x0",
@@ -84,17 +84,17 @@
         "return_rip": "0x1800067c8",
         "raw_stack": {
           "0x20": "0x180006567",
-          "0x28": "0x4000041c",
+          "0x28": "0x4000049c",
           "0x30": "0xf0f6e60",
           "0x38": "0x180006b30",
-          "0x40": "0x400003f0",
+          "0x40": "0x40000470",
           "0x48": "0x40000000",
           "0x50": "0x0",
           "0x58": "0x0",
           "0x60": "0x0"
         },
         "source_world": "0x400002f0",
-        "rect": "0x4000041c",
+        "rect": "0x4000049c",
         "area_words": [
           0,
           0,
@@ -107,16 +107,16 @@
           "width": 26,
           "height": 26
         },
-        "dst_world": "0x400003f0",
+        "dst_world": "0x40000470",
         "refcon": "0xf0f6e60",
         "wrapper_call": {
           "rip": "0x1800067c5",
           "stack_slots_at_callback": {
             "0x20": "0x180006567",
-            "0x28": "0x4000041c",
+            "0x28": "0x4000049c",
             "0x30": "0xf0f6e60",
             "0x38": "0x180006b30",
-            "0x40": "0x400003f0",
+            "0x40": "0x40000470",
             "0x48": "0x40000000",
             "0x50": "0x0",
             "0x58": "0x0",
@@ -129,13 +129,70 @@
       }
     ],
     "output_complete": true,
+    "natural_complete": true,
+    "rotate_call_count": 1,
     "writer": "0x180006b30",
+    "angle_degrees": 0.0,
+    "brightness_gain": 1.0,
+    "front_strength": 8,
+    "back_strength": 0,
+    "front_alpha_fade": 0,
+    "front_sharp_tail": 0.0,
+    "size_variation": 0.0,
+    "noise_variation": 0.0,
+    "noise_type": 1,
+    "seed": 1,
+    "noise_offset": 0,
+    "thickness": 10.0,
+    "input_rowbytes": 76,
+    "noise_layer_rowbytes": 76,
+    "input_extent_hint": [
+      0,
+      0,
+      16,
+      16
+    ],
+    "noise_layer_extent_hint": [
+      0,
+      0,
+      16,
+      16
+    ],
+    "input_dimensions": [
+      16,
+      16
+    ],
+    "noise_layer_dimensions": [
+      16,
+      16
+    ],
     "sha256": "8b8a28887908f089024bc38f69221148b612adfdcf44afc63d282216a0d7d3ae",
     "raw": "refs/conformance/olmdirectionalblur_actual_aex_pf8_frame_20260718.argb8"
   },
   "mac_adapter": {
     "exact": 1,
     "rowbytes": 76,
+    "noise_layer_rowbytes": 76,
+    "input_extent_hint": [
+      0,
+      0,
+      16,
+      16
+    ],
+    "noise_layer_extent_hint": [
+      0,
+      0,
+      16,
+      16
+    ],
+    "input_dimensions": [
+      16,
+      16
+    ],
+    "noise_layer_dimensions": [
+      16,
+      16
+    ],
     "production_source": "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp",
     "sha256": "8b8a28887908f089024bc38f69221148b612adfdcf44afc63d282216a0d7d3ae",
     "raw": "refs/conformance/olmdirectionalblur_mac_adapter_pf8_frame_20260718.argb8"
@@ -145,8 +202,31 @@
     "mismatch_count": 0,
     "first_mismatch_byte": null
   },
+  "identity": {
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "source_sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4",
+    "crop_argb_sha256": "ad840bf75281333fc389ba7083074e10ff82e7538583242e7a91880e6bbe1b83",
+    "actual_pf8_sha256": "8b8a28887908f089024bc38f69221148b612adfdcf44afc63d282216a0d7d3ae"
+  },
+  "parameters": {
+    "angle_degrees": 0,
+    "brightness_gain": 1,
+    "front_strength": 8,
+    "front_alpha_fade": 0,
+    "front_sharp_tail": 0,
+    "back_strength": 0,
+    "back_alpha_fade": 0,
+    "back_sharp_tail": 0,
+    "size_variation": 0,
+    "noise_variation": 0,
+    "render_scale": [
+      1,
+      1
+    ]
+  },
   "fail_closed": {
-    "production_source_edited": false,
+    "production_dispatch_exercised": true,
+    "pinned_aex_input_and_output": true,
     "windows_values_fabricated": false,
     "ae_exact_claim": false,
     "complete_frame_required": true

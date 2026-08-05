@@ -1,0 +1,177 @@
+{
+  "schema": 1,
+  "kind": "dblur_noise_sampler_actual_aex_20260805",
+  "status": "pass",
+  "scope": "FUN_180003370 sampler plus fixed FUN_1800034e0 generated plane",
+  "provenance": {
+    "aex": "plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "function": "0x180003370"
+  },
+  "fixture": {
+    "stride": 7,
+    "rows": 6,
+    "cell_size": 4.25
+  },
+  "cases": [
+    {
+      "xy": [
+        0,
+        0
+      ],
+      "interpolate": false,
+      "actual_bits": "0x00000000",
+      "portable_bits": "0x00000000",
+      "exact": true
+    },
+    {
+      "xy": [
+        1,
+        2
+      ],
+      "interpolate": false,
+      "actual_bits": "0x00000000",
+      "portable_bits": "0x00000000",
+      "exact": true
+    },
+    {
+      "xy": [
+        4,
+        3
+      ],
+      "interpolate": false,
+      "actual_bits": "0x00000000",
+      "portable_bits": "0x00000000",
+      "exact": true
+    },
+    {
+      "xy": [
+        7,
+        8
+      ],
+      "interpolate": false,
+      "actual_bits": "0x3F70A3D7",
+      "portable_bits": "0x3F70A3D7",
+      "exact": true
+    },
+    {
+      "xy": [
+        12,
+        13
+      ],
+      "interpolate": false,
+      "actual_bits": "0x3EDC28F6",
+      "portable_bits": "0x3EDC28F6",
+      "exact": true
+    },
+    {
+      "xy": [
+        20,
+        16
+      ],
+      "interpolate": false,
+      "actual_bits": "0x3E23D70A",
+      "portable_bits": "0x3E23D70A",
+      "exact": true
+    },
+    {
+      "xy": [
+        0,
+        0
+      ],
+      "interpolate": true,
+      "actual_bits": "0x00000000",
+      "portable_bits": "0x00000000",
+      "exact": true
+    },
+    {
+      "xy": [
+        1,
+        2
+      ],
+      "interpolate": true,
+      "actual_bits": "0x3E9F968E",
+      "portable_bits": "0x3E9F968E",
+      "exact": true
+    },
+    {
+      "xy": [
+        4,
+        3
+      ],
+      "interpolate": true,
+      "actual_bits": "0x3F514083",
+      "portable_bits": "0x3F514083",
+      "exact": true
+    },
+    {
+      "xy": [
+        7,
+        8
+      ],
+      "interpolate": true,
+      "actual_bits": "0x3F40E534",
+      "portable_bits": "0x3F40E534",
+      "exact": true
+    },
+    {
+      "xy": [
+        12,
+        13
+      ],
+      "interpolate": true,
+      "actual_bits": "0x3F4414BC",
+      "portable_bits": "0x3F4414BC",
+      "exact": true
+    },
+    {
+      "xy": [
+        20,
+        16
+      ],
+      "interpolate": true,
+      "actual_bits": "0x3E82E21A",
+      "portable_bits": "0x3E82E21A",
+      "exact": true
+    }
+  ],
+  "generator": {
+    "source_dimensions": [
+      1104,
+      1104
+    ],
+    "plane_dimensions": [
+      223,
+      223
+    ],
+    "cell_size": 5.0,
+    "offset": 0.3611111044883728,
+    "seed": 7,
+    "actual_aex_sha256": "61c28ffa1fb0391f1647a4d4cfd8167307b9e88670103b1477aaef9e7cf492d0",
+    "portable_sha256": "61c28ffa1fb0391f1647a4d4cfd8167307b9e88670103b1477aaef9e7cf492d0",
+    "portable_first_words": [
+      "0x3F5AEC8E",
+      "0x3F055CC4",
+      "0x3F149483",
+      "0x3F2AB84C",
+      "0x3D6D1720",
+      "0x3F1ED2E7",
+      "0x3EE96078",
+      "0x3F2E7019",
+      "0x3F800000",
+      "0x3EDD0F3D",
+      "0x3E94E5B8",
+      "0x3F800000",
+      "0x3E8C9AB4",
+      "0x3EA3FD62",
+      "0x3EDF4DD5",
+      "0x3F33F41C"
+    ],
+    "exact": true
+  },
+  "claim_boundary": {
+    "sampler_exact": true,
+    "noise_plane_generation_exact": true,
+    "mode3_rowdriver_exact": false
+  }
+}

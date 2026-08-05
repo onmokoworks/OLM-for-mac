@@ -1,0 +1,60 @@
+{
+  "plugin": "OLMDirectionalBlur",
+  "status": "prepared_not_run",
+  "ae_launched": false,
+  "installed_identity": {
+    "bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin",
+    "binary": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin/Contents/MacOS/OLMDirectionalBlur",
+    "sha256": "6a89dd4d9bca3f5b3c7af7782627d1b7b7bb6b0c45afe83945d056f1db7519f0",
+    "load_gate": "unique After Effects PID plus vmmap exact resolved binary path plus on-disk SHA"
+  },
+  "project": {
+    "bits_per_channel": 8,
+    "renderer": "SOFTWARE",
+    "working_space": "None",
+    "linear_blending": false,
+    "comp": {"width": 1920, "height": 1080, "pixel_aspect": 1, "frame_rate": 24, "resolution_factor": [2, 2]},
+    "save_frame_output": {"width": 960, "height": 540, "format": "PNG RGBA8"},
+    "frame": 0
+  },
+  "case": {
+    "id": "case_0001",
+    "input": {
+      "path": "refs/mac_validation_runs/olmdirectionalblur_8bpc_20260805_run5/input/case_0001_before_effects_fullres_nearest.png",
+      "sha256": "f11febc8e88b755fbd0b5abe6cb1f427458bc3f8b39419f54f57a0a13b720074"
+    },
+    "expected_control": {
+      "path": "refs/mac_validation_runs/olmdirectionalblur_8bpc_20260805_run5/return/case_0001__no_effect.png",
+      "sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4",
+      "dimensions": [960, 540]
+    },
+    "expected_actual_output": {
+      "path": "refs/mac_validation_runs/olmdirectionalblur_8bpc_20260805_run5/return/case_0001__effect_on.png",
+      "sha256": "91b2af26cfad17c1d0cb620ed9844ceb5254090567350c312c1999d9993a0e05",
+      "dimensions": [960, 540],
+      "provenance": "prior Mac AE Software render; reused as the fixed host regression target"
+    },
+    "effect_match_name": "OLM Directional Blur",
+    "parameters": {
+      "OLM Directional Blur-0001": 0,
+      "OLM Directional Blur-0002": 1,
+      "OLM Directional Blur-0003": 92,
+      "OLM Directional Blur-0005": 1690,
+      "OLM Directional Blur-0006": 0,
+      "OLM Directional Blur-0007": 45,
+      "OLM Directional Blur-0010": 0,
+      "OLM Directional Blur-0011": 0,
+      "OLM Directional Blur-0012": 0,
+      "OLM Directional Blur-0015": 0,
+      "OLM Directional Blur-0016": 1,
+      "OLM Directional Blur-0017": 0,
+      "OLM Directional Blur-0018": 1,
+      "OLM Directional Blur-0019": 0,
+      "OLM Directional Blur-0020": 10
+    }
+  },
+  "runner": "tools/emulation/olmdirectionalblur_mac_ae_software_host_phase_20260805.jsx",
+  "payload": "tools/emulation/olmdirectionalblur_mac_ae_software_host_phase_payload_20260805.jsx",
+  "audit": "tools/emulation/test_olmdirectionalblur_mac_ae_software_host_phase_20260805.py",
+  "claim_boundary": "Preparation only. AE was not launched or operated; a pass from the audit is not an AE render result."
+}

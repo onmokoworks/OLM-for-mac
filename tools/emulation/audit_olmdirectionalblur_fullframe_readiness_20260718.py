@@ -61,7 +61,7 @@ CHECKS = [
     {
         "id": "iterate8_continuation",
         "title": "natural continuation beyond actual populate",
-        "path": ROOT / "refs/conformance/olmdirectionalblur_iterate8_continuation_transform_20260717.json",
+        "path": ROOT / "refs/conformance/olmdirectionalblur_natural_continuation_20260718.json",
         "required_status": "pass",
         "kind": "natural-artifact",
     },
@@ -106,12 +106,24 @@ def evaluate_host_adapter(parsed: dict | None) -> dict:
         }
     cases = parsed.get("cases", [])
     gates = parsed.get("gates", [])
+    supported_gates = {
+        "size_variation",
+        "front_alpha_fade",
+        "front_sharp_tail",
+        "back_alpha_fade",
+        "back_strength",
+        "noise",
+        "downsample",
+    }
     ok = (
         parsed.get("status") == "ok"
         and len(cases) == 4
         and all(case.get("used_exact") == 1 and case.get("pixels_match") is True for case in cases)
         and len(gates) == 8
-        and all(gate.get("used_exact") == 0 for gate in gates)
+        and all(
+            gate.get("used_exact") == (1 if gate.get("name") in supported_gates else 0)
+            for gate in gates
+        )
     )
     return {
         "status": parsed.get("status"),
@@ -147,8 +159,11 @@ def evaluate_artifact(check: dict, data: dict) -> dict:
         result["nearest_blocker"] = data.get("nearest_blocker", {})
         result["callback_attempts"] = data.get("actual_callback", {}).get("callback_attempts")
     elif check["id"] == "iterate8_continuation":
-        result["fixture_blocker"] = data.get("continuation", {}).get("fixture_blocker")
-        result["write_events"] = len(data.get("continuation", {}).get("write_events", []))
+        checkpoint = data.get("checkpoint_state", {})
+        result["fixture_blocker"] = checkpoint.get("final_blocker")
+        result["write_events"] = int(checkpoint.get("downstream_write") is not None)
+        result["output_callback"] = checkpoint.get("output_callback") is True
+        result["first_missing_checkpoint"] = checkpoint.get("first_missing")
     elif check["id"] == "nonzero_writer_oracle":
         result["comparison"] = data.get("comparison", {})
     return result
@@ -169,7 +184,7 @@ def classify(results: dict) -> dict:
         remaining.append({
             "id": "natural_iterate8_continuation",
             "detail": "The natural path is still blocked before any downstream write after the actual populate callback. No artifact proves that a real render continues through rowdriver, normalization, rotate-back, and the output callback.",
-            "evidence": "refs/conformance/olmdirectionalblur_iterate8_continuation_transform_20260717.json",
+            "evidence": "refs/conformance/olmdirectionalblur_natural_continuation_20260718.json",
         })
     if bounded_ok and not natural_continuation_ok:
         remaining.append({
@@ -245,7 +260,11 @@ def render_md(payload: dict) -> str:
     lines.append(
         "| natural continuation after populate | "
         f"`{rows['iterate8_continuation']['status']}` | "
-        "The current natural-path checkpoint still stops before any downstream write, so the real full chain is not yet proven. |"
+        + (
+            "The accepted natural-path artifact reaches a live downstream write, rotate-back, and the real AEX output callback. |"
+            if rows["iterate8_continuation"]["ok"]
+            else "The current natural-path checkpoint stops before the complete downstream callback chain. |"
+        )
     )
     lines.append(
         "| bounded natural writer oracle | "
@@ -267,9 +286,18 @@ def render_md(payload: dict) -> str:
         "## FACT / INFERENCE",
         "",
         "- FACT: the bounded rowdriver proof, row mapping proof, rowdriver/helper ABI proof, and live Mac exact-path adapter proof all passed again on this machine.",
-        "- FACT: the natural-path artifact is still blocked at `pre-render-return`; no downstream write was observed after the actual populate callback.",
-        "- INFERENCE: the missing boundary is no longer the typed rowdriver itself for the bounded lane. It is the natural full-render scheduling/continuation that must feed that proven chain in a real render.",
-        "- INFERENCE: a broad full-frame or Mac AE validation would still be ambiguous today, because a mismatch could come from the unproven natural host/world continuation rather than from the proven bounded rowdriver path.",
+        (
+            "- FACT: the accepted natural-path artifact reaches the real AEX "
+            "rotate-back and output callback after a live downstream buffer write."
+            if payload["classification"]["fullframe_local_ready"]
+            else "- FACT: the natural-path artifact is still blocked before a complete downstream callback chain."
+        ),
+        (
+            "- INFERENCE: the bounded front-only lane is ready for a narrow Mac AE validation; "
+            "that validation, rather than this local host model, remains the `AE exact` gate."
+            if payload["classification"]["mac_ae_validation_ready"]
+            else "- INFERENCE: natural scheduling/continuation remains the next required boundary."
+        ),
         "",
         "## Reproduction",
         "",
