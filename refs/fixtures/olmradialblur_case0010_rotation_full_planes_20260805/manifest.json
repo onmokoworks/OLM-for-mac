@@ -1,0 +1,200 @@
+{
+  "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "case_id": "case_0010",
+  "input_path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/win_references/20260604_olm/OLMRadialBlur/case_0010_before_effects.png",
+  "input_sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
+  "schema": "olmradialblur.rotation-full-plane-dump/1",
+  "stages": [
+    {
+      "eligibility_mask_pointer": null,
+      "geometry": {
+        "angular_count": 1800,
+        "cells": 1987200,
+        "radius_count": 1104
+      },
+      "planes": {
+        "accum_rgba": {
+          "path": "pre_scatter__accum_rgba.bin.zlib",
+          "raw_bytes": 31795200,
+          "raw_sha256": "28f0d2baa2379fe2463479f490c5a39d37dc6dd93a25e2b98994bcb43b2887f3",
+          "zlib_bytes": 30920,
+          "zlib_sha256": "0e09dbe5dca4285b7c519706992e5e037644b46b301df6c2cae20282d997b6ca"
+        },
+        "max_alpha": {
+          "path": "pre_scatter__max_alpha.bin.zlib",
+          "raw_bytes": 7948800,
+          "raw_sha256": "d2f7e55daedc29efa7a6fd3f4e8523b84a1d8acb97520a92a0f5bced3097c65a",
+          "zlib_bytes": 7738,
+          "zlib_sha256": "e43fdaa1425b92fcab5b933b5993acb0c2d9edb57e14b3284ce29ac8dca7655d"
+        },
+        "normalized_or_polar_rgba": {
+          "path": "pre_scatter__normalized_or_polar_rgba.bin.zlib",
+          "raw_bytes": 31795200,
+          "raw_sha256": "ece535310c6ebe1d300e58d71412415bd1964f268656341f1efd3091b616f5c2",
+          "zlib_bytes": 393677,
+          "zlib_sha256": "d5cdcb45f9cf767a7cf0d178435683c95b09713165d6616111830e9eeb0bb4c2"
+        },
+        "slot_0x10": {
+          "path": "pre_scatter__slot_0x10.bin.zlib",
+          "raw_bytes": 7948800,
+          "raw_sha256": "1b64638f4ad7ddcf17fe951647ac14b329fcd593026cf8e067cbc4d7c2cedff0",
+          "zlib_bytes": 82932,
+          "zlib_sha256": "b9a6823a844a71194d37ad132a5c0841053861f75d45c8da1f6cf2749ae7cafb"
+        },
+        "slot_0x12": {
+          "path": "pre_scatter__slot_0x12.bin.zlib",
+          "raw_bytes": 7948800,
+          "raw_sha256": "d2f7e55daedc29efa7a6fd3f4e8523b84a1d8acb97520a92a0f5bced3097c65a",
+          "zlib_bytes": 7738,
+          "zlib_sha256": "e43fdaa1425b92fcab5b933b5993acb0c2d9edb57e14b3284ce29ac8dca7655d"
+        },
+        "slot_0x14": {
+          "path": "pre_scatter__slot_0x14.bin.zlib",
+          "raw_bytes": 7948800,
+          "raw_sha256": "9d8cbc91c0628af17310bb8521fe5814203612b3586f01bd536c3048a0fa0136",
+          "zlib_bytes": 7743,
+          "zlib_sha256": "3af3dca2551cdd2c5c5679a9711d88636053353cd9f6267b6d0a03a3d4e39e44"
+        }
+      },
+      "pointers": {
+        "accum_rgba": "0x268e4800",
+        "max_alpha": "0x28737000",
+        "normalized_or_polar_rgba": "0x28ecba00",
+        "slot_0x10": "0x2ad1e200",
+        "slot_0x12": "0x2b4b2c00",
+        "slot_0x14": "0x2bc47600"
+      },
+      "stage": "pre_scatter"
+    },
+    {
+      "eligibility_mask_pointer": "0x2c3dc000",
+      "geometry": {
+        "angular_count": 1800,
+        "cells": 1987200,
+        "radius_count": 1104
+      },
+      "planes": {
+        "accum_rgba": {
+          "path": "post_scatter_pre_gather__accum_rgba.bin.zlib",
+          "raw_bytes": 31795200,
+          "raw_sha256": "9899c1400df2911c72043e83a9f5178bc12e187d95f569c512d2fdaaf72cc361",
+          "zlib_bytes": 394224,
+          "zlib_sha256": "7d23246ea4194ba1592b48cb6091c3bfad825cc4488cc1f997a0c4b57900ce1d"
+        },
+        "eligibility_mask": {
+          "path": "post_scatter_pre_gather__eligibility_mask.bin.zlib",
+          "raw_bytes": 1987200,
+          "raw_sha256": "f867434ff321374114d785248583da46aa42fed65515392dd05f31b490957a09",
+          "zlib_bytes": 5020,
+          "zlib_sha256": "93b050fc83de9dfacd63e565d58c82233519d321244b24193ff2e10c6f1e5ba8"
+        },
+        "max_alpha": {
+          "path": "post_scatter_pre_gather__max_alpha.bin.zlib",
+          "raw_bytes": 7948800,
+          "raw_sha256": "1158168d287ca036b310156a549a4c8c370812f6969c680a7f08fb7c5b57e2e4",
+          "zlib_bytes": 82873,
+          "zlib_sha256": "84f9f532f7b7a1f7e9dc64e4925756ef41b990e9b8c4ac5dd96ae46edf511288"
+        },
+        "normalized_or_polar_rgba": {
+          "path": "post_scatter_pre_gather__normalized_or_polar_rgba.bin.zlib",
+          "raw_bytes": 31795200,
+          "raw_sha256": "ece535310c6ebe1d300e58d71412415bd1964f268656341f1efd3091b616f5c2",
+          "zlib_bytes": 393677,
+          "zlib_sha256": "d5cdcb45f9cf767a7cf0d178435683c95b09713165d6616111830e9eeb0bb4c2"
+        },
+        "slot_0x10": {
+          "path": "post_scatter_pre_gather__slot_0x10.bin.zlib",
+          "raw_bytes": 7948800,
+          "raw_sha256": "1b64638f4ad7ddcf17fe951647ac14b329fcd593026cf8e067cbc4d7c2cedff0",
+          "zlib_bytes": 82932,
+          "zlib_sha256": "b9a6823a844a71194d37ad132a5c0841053861f75d45c8da1f6cf2749ae7cafb"
+        },
+        "slot_0x12": {
+          "path": "post_scatter_pre_gather__slot_0x12.bin.zlib",
+          "raw_bytes": 7948800,
+          "raw_sha256": "1158168d287ca036b310156a549a4c8c370812f6969c680a7f08fb7c5b57e2e4",
+          "zlib_bytes": 82873,
+          "zlib_sha256": "84f9f532f7b7a1f7e9dc64e4925756ef41b990e9b8c4ac5dd96ae46edf511288"
+        },
+        "slot_0x14": {
+          "path": "post_scatter_pre_gather__slot_0x14.bin.zlib",
+          "raw_bytes": 7948800,
+          "raw_sha256": "9d8cbc91c0628af17310bb8521fe5814203612b3586f01bd536c3048a0fa0136",
+          "zlib_bytes": 7743,
+          "zlib_sha256": "3af3dca2551cdd2c5c5679a9711d88636053353cd9f6267b6d0a03a3d4e39e44"
+        }
+      },
+      "pointers": {
+        "accum_rgba": "0x268e4800",
+        "max_alpha": "0x28737000",
+        "normalized_or_polar_rgba": "0x28ecba00",
+        "slot_0x10": "0x2ad1e200",
+        "slot_0x12": "0x2b4b2c00",
+        "slot_0x14": "0x2bc47600"
+      },
+      "stage": "post_scatter_pre_gather"
+    },
+    {
+      "eligibility_mask_pointer": null,
+      "geometry": {
+        "angular_count": 1800,
+        "cells": 1987200,
+        "radius_count": 1104
+      },
+      "planes": {
+        "accum_rgba": {
+          "path": "post_normalize__accum_rgba.bin.zlib",
+          "raw_bytes": 31795200,
+          "raw_sha256": "36cb0bd6cb90bcc7b01293543e7725f16c29a73f5e4733753acea728fe6195b5",
+          "zlib_bytes": 563236,
+          "zlib_sha256": "5b7484fdd8e20cf161bd7408340b56aa60faa8c8a23304ec6309b491b771b7a8"
+        },
+        "max_alpha": {
+          "path": "post_normalize__max_alpha.bin.zlib",
+          "raw_bytes": 7948800,
+          "raw_sha256": "1158168d287ca036b310156a549a4c8c370812f6969c680a7f08fb7c5b57e2e4",
+          "zlib_bytes": 82873,
+          "zlib_sha256": "84f9f532f7b7a1f7e9dc64e4925756ef41b990e9b8c4ac5dd96ae46edf511288"
+        },
+        "normalized_or_polar_rgba": {
+          "path": "post_normalize__normalized_or_polar_rgba.bin.zlib",
+          "raw_bytes": 31795200,
+          "raw_sha256": "fac9eab1c00f086bc4c51366f31c787642a46199349c32e37069b617f8a50644",
+          "zlib_bytes": 556387,
+          "zlib_sha256": "14d4f07d3eeb40e82322c9b815789a9ba5f4949850dfefb72cec49695ff0788c"
+        },
+        "slot_0x10": {
+          "path": "post_normalize__slot_0x10.bin.zlib",
+          "raw_bytes": 7948800,
+          "raw_sha256": "1b64638f4ad7ddcf17fe951647ac14b329fcd593026cf8e067cbc4d7c2cedff0",
+          "zlib_bytes": 82932,
+          "zlib_sha256": "b9a6823a844a71194d37ad132a5c0841053861f75d45c8da1f6cf2749ae7cafb"
+        },
+        "slot_0x12": {
+          "path": "post_normalize__slot_0x12.bin.zlib",
+          "raw_bytes": 7948800,
+          "raw_sha256": "1158168d287ca036b310156a549a4c8c370812f6969c680a7f08fb7c5b57e2e4",
+          "zlib_bytes": 82873,
+          "zlib_sha256": "84f9f532f7b7a1f7e9dc64e4925756ef41b990e9b8c4ac5dd96ae46edf511288"
+        },
+        "slot_0x14": {
+          "path": "post_normalize__slot_0x14.bin.zlib",
+          "raw_bytes": 7948800,
+          "raw_sha256": "9d8cbc91c0628af17310bb8521fe5814203612b3586f01bd536c3048a0fa0136",
+          "zlib_bytes": 7743,
+          "zlib_sha256": "3af3dca2551cdd2c5c5679a9711d88636053353cd9f6267b6d0a03a3d4e39e44"
+        }
+      },
+      "pointers": {
+        "accum_rgba": "0x268e4800",
+        "max_alpha": "0x28737000",
+        "normalized_or_polar_rgba": "0x28ecba00",
+        "slot_0x10": "0x2ad1e200",
+        "slot_0x12": "0x2b4b2c00",
+        "slot_0x14": "0x2bc47600"
+      },
+      "stage": "post_normalize"
+    }
+  ]
+}

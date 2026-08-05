@@ -1,0 +1,227 @@
+{
+  "conformance_status": {
+    "full_native_pf8_output_exact": true,
+    "internal_exact": true,
+    "modeled_writer_exact": true,
+    "native_writer_exact": true,
+    "native_writer_pending": false
+  },
+  "differences": {
+    "accum": {
+      "different_mod4": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0
+      },
+      "different_values": 0,
+      "first_different": null
+    },
+    "eligibility": {
+      "different_mod4": null,
+      "different_values": 0,
+      "first_different": null
+    },
+    "max_alpha": {
+      "different_mod4": null,
+      "different_values": 0,
+      "first_different": null
+    },
+    "normalized": {
+      "different_mod4": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0
+      },
+      "different_values": 0,
+      "first_different": null
+    },
+    "polar": {
+      "different_mod4": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0
+      },
+      "different_values": 0,
+      "first_different": null
+    },
+    "source_scalar": {
+      "different_mod4": null,
+      "different_values": 0,
+      "first_different": null
+    }
+  },
+  "expected_actual_aex_sha256": {
+    "accum": "36cb0bd6cb90bcc7b01293543e7725f16c29a73f5e4733753acea728fe6195b5",
+    "eligibility": "f867434ff321374114d785248583da46aa42fed65515392dd05f31b490957a09",
+    "max_alpha": "1158168d287ca036b310156a549a4c8c370812f6969c680a7f08fb7c5b57e2e4",
+    "normalized": "fac9eab1c00f086bc4c51366f31c787642a46199349c32e37069b617f8a50644",
+    "polar": "ece535310c6ebe1d300e58d71412415bd1964f268656341f1efd3091b616f5c2",
+    "source_scalar": "1b64638f4ad7ddcf17fe951647ac14b329fcd593026cf8e067cbc4d7c2cedff0"
+  },
+  "full_native_pf8_fixture_identity": {
+    "compressed_sha256_exact": true,
+    "report_fixture_path_exact": true,
+    "report_raw_sha256_exact": true,
+    "report_status_exact": true,
+    "report_zlib_sha256_exact": true
+  },
+  "full_native_pf8_output": {
+    "actual_raw_sha256": "cb39306e0e340bfa121e5ea55c9e1b43f87696237b4d6c855a47ce09dba188fc",
+    "different_channels_argb": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "different_pixels": 0,
+    "exact": true,
+    "expected_raw_sha256": "cb39306e0e340bfa121e5ea55c9e1b43f87696237b4d6c855a47ce09dba188fc",
+    "first_differences": [],
+    "maximum_absolute_difference": 0
+  },
+  "inverse_writer": {
+    "actual_aex_identity_checks": {
+      "aex_sha256": true,
+      "input_sha256": true,
+      "manifest_sha256": true,
+      "scope_case": true,
+      "scope_pixel_format": true
+    },
+    "actual_aex_writeback_artifact_status": "exact",
+    "actual_aex_writeback_reference_status": "exact",
+    "checks": {
+      "both_witnesses_captured": true,
+      "modeled_pf8_low_byte_argb_exact": true,
+      "ordered_inverse_coordinate_words_exact": true,
+      "output_world_matches_test_seam": true,
+      "partial_actual_aex_sampler_words_exact": true
+    },
+    "coordinates": [
+      [
+        1612,
+        6
+      ],
+      [
+        1614,
+        6
+      ]
+    ],
+    "cvtt_edge_semantics_exercised": true,
+    "inverse_coordinate_words": [
+      "0x44c86d1b",
+      "0x4452b13b",
+      "0x44c87ade",
+      "0x44531452"
+    ],
+    "inverse_rgba_words": [
+      "0x3cb6586e",
+      "0x3cb6586e",
+      "0x3cb6586e",
+      "0x3f800000",
+      "0xbb85c1ca",
+      "0xbb85c1ca",
+      "0xbb85c1ca",
+      "0x3f800000"
+    ],
+    "native_writer_checks": {
+      "all_actual_aex_checks_exact": true,
+      "exact_witness_coordinates": true,
+      "native_after_argb_exact": true,
+      "native_oracle_argb_exact": true,
+      "packer_rgba_words_exact": true,
+      "pf8_scale_word_exact": true
+    },
+    "packed_argb": [
+      [
+        255,
+        5,
+        5,
+        5
+      ],
+      [
+        255,
+        255,
+        255,
+        255
+      ]
+    ],
+    "packer_rgba_words": [
+      "0x3cb6586e",
+      "0x3cb6586e",
+      "0x3cb6586e",
+      "0x3f800000",
+      "0xbb85c1ca",
+      "0xbb85c1ca",
+      "0xbb85c1ca",
+      "0x3f800000"
+    ],
+    "reference_policy": "The exact actual-AEX artifact is accepted only after identity, XMM input words, PF8 scale, native after-store ARGB, and native oracle ARGB all match.",
+    "residual_probe": {
+      "angle_raw_words": [
+        "0x40aec341",
+        "0x40af72b1",
+        "0x40add0e7"
+      ],
+      "coordinate_words": [
+        "0x44c391d5",
+        "0x443852e2",
+        "0x44c45628",
+        "0x443c1c96",
+        "0x44c282a0",
+        "0x4430cefb"
+      ],
+      "coordinates": [
+        [
+          1462,
+          0
+        ],
+        [
+          1484,
+          0
+        ],
+        [
+          1426,
+          8
+        ]
+      ],
+      "mask": 7,
+      "rgba_words": [
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x3f7fffff",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x3f800000",
+        "0x3e74e80a",
+        "0x3e74e80a",
+        "0x3e74e80a",
+        "0x3f800000"
+      ]
+    }
+  },
+  "kind": "olmradialblur_case0010_rotation_mac_production_planes_20260805",
+  "mac_production_sha256": {
+    "accum": "36cb0bd6cb90bcc7b01293543e7725f16c29a73f5e4733753acea728fe6195b5",
+    "eligibility": "f867434ff321374114d785248583da46aa42fed65515392dd05f31b490957a09",
+    "max_alpha": "1158168d287ca036b310156a549a4c8c370812f6969c680a7f08fb7c5b57e2e4",
+    "normalized": "fac9eab1c00f086bc4c51366f31c787642a46199349c32e37069b617f8a50644",
+    "polar": "ece535310c6ebe1d300e58d71412415bd1964f268656341f1efd3091b616f5c2",
+    "source_scalar": "1b64638f4ad7ddcf17fe951647ac14b329fcd593026cf8e067cbc4d7c2cedff0"
+  },
+  "matches": {
+    "accum": true,
+    "eligibility": true,
+    "max_alpha": true,
+    "normalized": true,
+    "polar": true,
+    "source_scalar": true
+  },
+  "output_argb8_sha256": "cb39306e0e340bfa121e5ea55c9e1b43f87696237b4d6c855a47ce09dba188fc",
+  "scope": "Mac production RenderRotation8 internal planes plus bounded modeled inverse/PF8 writer for case_0010; no AE host claim",
+  "status": "native_exact"
+}

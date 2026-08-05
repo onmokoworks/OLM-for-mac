@@ -1,0 +1,42 @@
+{
+  "kind": "olmradialblur_public_completion_matrix_20260805",
+  "status": "partial_with_new_structural_exact_boundary",
+  "commands": [
+    {"command": "PF_Cmd_ABOUT", "production": "implemented", "actual_aex_exact": false},
+    {"command": "PF_Cmd_GLOBAL_SETUP", "production": "implemented", "actual_aex_exact": false},
+    {"command": "PF_Cmd_PARAMS_SETUP", "production": "implemented", "actual_aex_exact": false},
+    {"command": "PF_Cmd_RENDER", "production": "implemented", "actual_aex_exact": "bounded render cases below"},
+    {"command": "PF_Cmd_SMART_PRE_RENDER", "production": "implemented", "actual_aex_exact": false},
+    {"command": "PF_Cmd_SMART_RENDER", "production": "implemented", "actual_aex_exact": "AE-free compositional connection to bounded PF32 actual→RenderWorld exact path and current installed identity"}
+  ],
+  "render_matrix": [
+    {"family": "Rotation", "bitdepth": "PF8", "boundary": "case0010 Strength4 mode1", "status": "full_frame_exact"},
+    {"family": "Rotation", "bitdepth": "PF16", "boundary": "Strength4/5 and Mode3 UI2/UI3, padded 9x7", "status": "production_exact"},
+    {"family": "Rotation", "bitdepth": "PF32", "boundary": "Strength4/5 and Mode3 UI2/UI3/UI4, padded 9x7", "status": "production_exact"},
+    {"family": "Zoom", "bitdepth": "PF32", "boundary": "case0009 outer-only", "status": "internal_exact_and_mac_runner_available"},
+    {"family": "Zoom", "bitdepth": "PF32", "boundary": "Strength4 mode1/offset0, independent padded 9x7", "status": "owner_to_planes_to_direct_float_writer_exact"},
+    {"family": "Zoom", "bitdepth": "PF16", "boundary": "Strength4/5 mode1, padded 9x7", "status": "production_exact"},
+    {"family": "Zoom", "bitdepth": "PF16", "boundary": "Mode3 UI2, Strength4, padded 9x7", "status": "production_exact_new_this_round"},
+    {"family": "Zoom", "bitdepth": "PF16", "boundary": "Mode2 UI2, Strength4, padded 9x7", "status": "production_exact_new_next_matrix_gap"},
+    {"family": "Zoom", "bitdepth": "PF8", "boundary": "Strength4 mode1/offset0, padded 9x7", "status": "production_exact_new_typed_gap"}
+  ],
+  "major_parameter_matrix": [
+    {"parameter": "Blur Type", "proved": ["Zoom", "Rotation"]},
+    {"parameter": "Outer Strength", "proved": ["4", "5"], "boundary": "bounded typed fixtures"},
+    {"parameter": "Outer Offset Mode", "proved": ["mode1", "mode2 UI2 for Zoom PF16", "mode3 UI2 for Zoom PF16", "mode3 UI2/UI3/UI4 for Rotation typed"], "unproved": ["broader mode2/mode3 values and geometries"]},
+    {"parameter": "Center/Ratio/Angle/Quality", "proved": ["centered, ratio1, angle0, quality5"], "unproved": ["off-center", "ellipse ratio", "nonzero angle", "other quality"]},
+    {"parameter": "Repeat Border", "proved": ["enabled"], "unproved": ["disabled"]},
+    {"parameter": "Brightness Gain", "proved": ["1.0"], "unproved": ["non-unit"]},
+    {"parameter": "Inner Strength/Offset/Edge Fade", "proved": ["zero/disabled only"], "unproved": ["nonzero inner worker"]},
+    {"parameter": "Outer Edge Fade", "proved": ["zero"], "unproved": ["nonzero"]},
+    {"parameter": "Size/Noise Variation and Noise controls", "proved": ["variation zero"], "unproved": ["nonzero variation/noise families"]}
+  ],
+  "largest_structural_gap_selected": {
+    "boundary": "Zoom PF16 outer offset mode3/UI2",
+    "reason": "The nonzero-offset Zoom worker previously left the actual outer-only path and was a larger structural gap than another strength value.",
+    "before": "pre-blur exact; post-blur and output mismatched",
+    "after": "pre-blur, post-blur, PF16 output, and padding byte-exact",
+    "evidence": "refs/conformance/olmradialblur_zoom_pf16_offset_mode3_ui2_small_actual_aex_20260805.json"
+  },
+  "claim_boundary": "Exact claims are limited to enumerated fixtures. The matrix does not generalize unproved commands, bit depths, geometries, or parameters."
+}

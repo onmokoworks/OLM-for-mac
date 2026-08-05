@@ -1,0 +1,76 @@
+{
+  "aex": {
+    "identity_exact": true,
+    "owner": "0x180007520",
+    "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "zoom_core": "0x1800056f0"
+  },
+  "artifacts": {
+    "output": {
+      "bytes": 308,
+      "path": "refs/fixtures/olmradialblur_zoom_pf8_small_20260805/output.bin.zlib",
+      "raw_sha256": "c970cdd100cd3df066e69d76da61b106c18834ba41353406e0c9f06bcf87e4a4",
+      "zlib_sha256": "ae3f1c8ff35ccc7c3397eb7149524352d99ae3e57eb471bd5417046591834815"
+    },
+    "post_blur": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_zoom_pf8_small_20260805/post_blur.bin.zlib",
+      "raw_sha256": "3a4558578778fd15acbec55d6662e1f2e3760c6fbaa98eb378ffdfaa157c5123",
+      "zlib_sha256": "ecd78bf283604643bb3cd338be76b438e3f86a1db1dc79d9d8e241a583214f27"
+    },
+    "pre_blur": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_zoom_pf8_small_20260805/pre_blur.bin.zlib",
+      "raw_sha256": "65d238f8d0afa5fe9291d8a1e434f3d60359147c3f70d0428c1366241bf55805",
+      "zlib_sha256": "767d31aeb62c7a153abce84c041ef1332408225bf5ae8d596a81b1c13e835b82"
+    },
+    "source_pf8": {
+      "bytes": 308,
+      "path": "refs/fixtures/olmradialblur_zoom_pf8_small_20260805/source_pf8.bin.zlib",
+      "raw_sha256": "52e90891881bcacb8f3ac3e737ba5b9905d4a63fb5d7aefe55c43b21fe91c240",
+      "zlib_sha256": "ea5adddaede98f6f2a86139efb54df542ffc5a5ece4ad40f56c87dc94866c7f2"
+    }
+  },
+  "differences": {
+    "output": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "mac_raw_sha256": "c970cdd100cd3df066e69d76da61b106c18834ba41353406e0c9f06bcf87e4a4"
+    },
+    "post_blur": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "mac_raw_sha256": "3a4558578778fd15acbec55d6662e1f2e3760c6fbaa98eb378ffdfaa157c5123"
+    },
+    "pre_blur": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "mac_raw_sha256": "65d238f8d0afa5fe9291d8a1e434f3d60359147c3f70d0428c1366241bf55805"
+    }
+  },
+  "fixture_hashes_exact": true,
+  "geometry": {
+    "angular_count": 1800,
+    "height": 7,
+    "padding_bytes": 8,
+    "radius_count": 9,
+    "rowbytes": 44,
+    "visible_bytes": 36,
+    "width": 9
+  },
+  "kind": "olmradialblur_zoom_pf8_small_actual_aex_20260805",
+  "matches": {
+    "output": true,
+    "post_blur": true,
+    "pre_blur": true
+  },
+  "padding_exact": true,
+  "scope": "independent PF8 Zoom outer-only Strength4/mode1/offset0, padded 9x7; no PF16/PF32 source or quantization reuse and no AE-host claim",
+  "status": "exact",
+  "typed_contract": {
+    "deep_quantization_reused": false,
+    "radius_neighbor": "PF8 clamped",
+    "source": "independent PF_Pixel8 ARGB bytes",
+    "writer": "PF8 floor/clamp path"
+  }
+}

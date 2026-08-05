@@ -1,0 +1,96 @@
+{
+  "aex": {
+    "identity_exact": true,
+    "owner": "0x180007d30",
+    "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "zoom_core": "0x1800056f0"
+  },
+  "artifacts": {
+    "output": {
+      "bytes": 1120,
+      "path": "refs/fixtures/olmradialblur_zoom_pf32_small_20260805/output.bin.zlib",
+      "raw_sha256": "17889d6d9d5f0f74c39c72a847eeefe51638e3fc6b4c4403cc300e46ccb55d01",
+      "zlib_sha256": "47d9d1939ff45eacd34e0d7521a5500237155437ed6048c9cd3b5c75bf2372c5"
+    },
+    "post_blur": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_zoom_pf32_small_20260805/post_blur.bin.zlib",
+      "raw_sha256": "a946ef09d52d4c498de2e532f8654405461e73c7524d3af99883afb0c2e3b65a",
+      "zlib_sha256": "d72223cc413589c3a2f14ed285613e1951a54b0c03d482580eb4955fd08785b6"
+    },
+    "pre_blur": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_zoom_pf32_small_20260805/pre_blur.bin.zlib",
+      "raw_sha256": "65468046f663d30ac544be430c965ee2c305193561e09d4bf9753747e4cb24ff",
+      "zlib_sha256": "1bc876bcc635af129c2c587ee2bbaf52dcb6eb15f08bc0fb145861357d7e4fd0"
+    },
+    "source_pf32": {
+      "bytes": 1120,
+      "path": "refs/fixtures/olmradialblur_zoom_pf32_small_20260805/source_pf32.bin.zlib",
+      "raw_sha256": "edc1a4f6c03f8b0e05bef4d9ae7a2a8a1b0b217c214e747076bfeda8fea60f04",
+      "zlib_sha256": "e1baf8a5b51586b3808e914d5a227deb1fb9293c3a7bc609414c1036a894d4f7"
+    }
+  },
+  "differences": {
+    "output": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "mac_raw_sha256": "17889d6d9d5f0f74c39c72a847eeefe51638e3fc6b4c4403cc300e46ccb55d01"
+    },
+    "post_blur": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "mac_raw_sha256": "a946ef09d52d4c498de2e532f8654405461e73c7524d3af99883afb0c2e3b65a"
+    },
+    "pre_blur": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "mac_raw_sha256": "65468046f663d30ac544be430c965ee2c305193561e09d4bf9753747e4cb24ff"
+    }
+  },
+  "fixture_hashes_exact": true,
+  "full_path": [
+    "PF32 owner 0x180007d30",
+    "Zoom core 0x1800056f0",
+    "pre-blur plane",
+    "post-blur plane",
+    "FUN_180017490 direct-float writer",
+    "current installed Universal bundle"
+  ],
+  "geometry": {
+    "angular_count": 1800,
+    "height": 7,
+    "padding_bytes": 16,
+    "radius_count": 9,
+    "rowbytes": 160,
+    "visible_bytes": 144,
+    "width": 9
+  },
+  "installed_connection": {
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "binary": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin/Contents/MacOS/OLMRadialBlur",
+    "expected_current_sha256": "2e079e3c168666c2f3509f8d4c90ab107301880bce43f538cf4e16bcb8047732",
+    "identity_exact": true,
+    "sha256": "2e079e3c168666c2f3509f8d4c90ab107301880bce43f538cf4e16bcb8047732",
+    "source_to_installed_connection": "same current OLMRadialBlur.cpp built, signed, and installed in the preceding PF8 boundary; no production source change in this PF32 pass"
+  },
+  "kind": "olmradialblur_zoom_pf32_small_actual_aex_20260805",
+  "matches": {
+    "output": true,
+    "post_blur": true,
+    "pre_blur": true
+  },
+  "padding_exact": true,
+  "production_dispatch": "final compared output is emitted by OLMRadialBlurTestRenderWorld(bitdepth=32), not a direct RenderZoomTyped call",
+  "scope": "independent PF32 Zoom outer-only Strength4/mode1/offset0, padded 9x7; no PF8/PF16 source or quantization reuse and no AE-host claim",
+  "status": "exact",
+  "typed_contract": {
+    "integer_quantization_reused": false,
+    "radius_neighbor": "deep unclamped",
+    "source": "independent PF_PixelFloat ARGB words",
+    "writer": "FUN_180017490 direct float stores"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "kind": "olmradialblur_mac_ae_minimal_es3_loader_static",
+  "status": "PASS",
+  "ae_executed": false,
+  "checks": [
+    {
+      "runner": "scripts/run_olmradialblur_case0010_pf8_mac_20260805.py",
+      "loader_bytes": 462,
+      "assertions": {
+        "absolute_payload_literal": true,
+        "absolute_trace_literal": true,
+        "required_tokens": true,
+        "forbidden_tokens_absent": true,
+        "minimal_size": true,
+        "ae26_new_project_contract": true,
+        "doscriptfile_targets_loader": true,
+        "stale_trace_fails_closed": true
+      }
+    },
+    {
+      "runner": "scripts/run_olmradialblur_case0009_pf32_mac_20260805.py",
+      "loader_bytes": 462,
+      "assertions": {
+        "absolute_payload_literal": true,
+        "absolute_trace_literal": true,
+        "required_tokens": true,
+        "forbidden_tokens_absent": true,
+        "minimal_size": true,
+        "ae26_new_project_contract": true,
+        "doscriptfile_targets_loader": true,
+        "stale_trace_fails_closed": true
+      }
+    }
+  ]
+}

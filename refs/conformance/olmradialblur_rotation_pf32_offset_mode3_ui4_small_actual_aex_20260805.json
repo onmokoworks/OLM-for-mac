@@ -1,0 +1,181 @@
+{
+  "aex": {
+    "identity_exact": true,
+    "owner": "0x180007d30",
+    "path": "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "pf32_writer": "0x180017490",
+    "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+  },
+  "artifacts": {
+    "accum": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_offset_mode3_ui4_small_20260805/accum.bin.zlib",
+      "raw_sha256": "0ddf8481cbd51ff20d11d085beff66ae34787554a507fb411d0163f6265cf0fc",
+      "zlib_sha256": "8cd6d125c65b358ff4d4aa84d92483688f4cc433b4f7e9fa5d74666fd33ee3da"
+    },
+    "coordinates": {
+      "bytes": 504,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_offset_mode3_ui4_small_20260805/coordinates.bin.zlib",
+      "raw_sha256": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+      "zlib_sha256": "aaccf447e96339787ca82d3003a056cae7c03cab57f626370fb06ce1d60d1937"
+    },
+    "final_rgba": {
+      "bytes": 1008,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_offset_mode3_ui4_small_20260805/final_rgba.bin.zlib",
+      "raw_sha256": "874e10885088e49fe7bc2375ed7e330bf0c42df5c62a8de3ac13e69ff14c4d71",
+      "zlib_sha256": "ec7e3e9664c4d4b28c7dc11fe8f1aaa5d8959367d756f61d2feb3c673f51fea9"
+    },
+    "max_alpha": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_offset_mode3_ui4_small_20260805/max_alpha.bin.zlib",
+      "raw_sha256": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+      "zlib_sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    "output": {
+      "bytes": 1120,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_offset_mode3_ui4_small_20260805/output.bin.zlib",
+      "raw_sha256": "45027094459b2a548f164da1e66426b926d7a0ce066471cf6661f1683da02e88",
+      "zlib_sha256": "8a79be9e69a9216a1ba76679150a3c4ef4377bed8e3786c6785cfde89de70c09"
+    },
+    "polar": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_offset_mode3_ui4_small_20260805/polar.bin.zlib",
+      "raw_sha256": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+      "zlib_sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    "source_pf32": {
+      "bytes": 1120,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_offset_mode3_ui4_small_20260805/source_pf32.bin.zlib",
+      "raw_sha256": "31fab74e9856c24ca6aa724ef8cd72dd2e53399286f1eecaaa2589edac3b0b33",
+      "zlib_sha256": "e2f9ca3d94aa06ad68b6990d6a66912f1bffc77d20e91ad643a5d23f90bade19"
+    },
+    "source_scalar": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_offset_mode3_ui4_small_20260805/source_scalar.bin.zlib",
+      "raw_sha256": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc",
+      "zlib_sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    }
+  },
+  "differences": {
+    "accum": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_indices": [],
+      "mac_raw_sha256": "0ddf8481cbd51ff20d11d085beff66ae34787554a507fb411d0163f6265cf0fc"
+    },
+    "coordinates": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_indices": [],
+      "mac_raw_sha256": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b"
+    },
+    "final_rgba": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_indices": [],
+      "mac_raw_sha256": "874e10885088e49fe7bc2375ed7e330bf0c42df5c62a8de3ac13e69ff14c4d71"
+    },
+    "max_alpha": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_indices": [],
+      "mac_raw_sha256": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c"
+    },
+    "output": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_indices": [],
+      "mac_raw_sha256": "45027094459b2a548f164da1e66426b926d7a0ce066471cf6661f1683da02e88"
+    },
+    "polar": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_indices": [],
+      "mac_raw_sha256": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3"
+    },
+    "source_scalar": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_indices": [],
+      "mac_raw_sha256": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+    }
+  },
+  "fixture_hashes_exact": true,
+  "geometry": {
+    "angular_count": 1800,
+    "height": 7,
+    "padding_bytes": 16,
+    "radius_count": 9,
+    "rowbytes": 160,
+    "visible_bytes": 144,
+    "width": 9
+  },
+  "kind": "olmradialblur_rotation_pf32_offset_mode3_ui4_small_actual_aex_20260805",
+  "matches": {
+    "accum": true,
+    "coordinates": true,
+    "final_rgba": true,
+    "max_alpha": true,
+    "output": true,
+    "polar": true,
+    "source_scalar": true
+  },
+  "padding_exact": true,
+  "parameter_branch": {
+    "actual_output_differs_from_ui3": true,
+    "dynamic_worker_spans_by_radius": [
+      12,
+      6,
+      4,
+      3,
+      2,
+      2,
+      1,
+      1,
+      1
+    ],
+    "fixed_strength_branch_selected": false,
+    "formula": "floor((radius_count/2)*(outer_offset_ui-1)/(radius_index+1))",
+    "non_equivalent_to_ui3": true,
+    "outer_offset_mode": 3,
+    "outer_offset_ui": 4,
+    "outer_strength": 4,
+    "radius_half": 4,
+    "ui3_spans": [
+      8,
+      4,
+      2,
+      2,
+      1,
+      1,
+      1,
+      1,
+      0
+    ],
+    "worker_offset_zero_based": 3
+  },
+  "scope": "independent PF32 Rotation mode 3/UI offset 4, padded 9x7; explicit bounded gate, no other offset/depth/geometry or AE-host claim",
+  "status": "exact",
+  "typed_source": "native PF_PixelFloat ARGB; direct float read/write",
+  "weight_table_derivation": {
+    "actual_length12_words": [
+      "0x3f800000",
+      "0x3f781fab",
+      "0x3f61eb51",
+      "0x3f413d2b",
+      "0x3f1b4598",
+      "0x3eea6923",
+      "0x3ea638da",
+      "0x3e5d74a1",
+      "0x3e0a9557",
+      "0x3da2f01b",
+      "0x3d33f73a",
+      "0x3cbabae3"
+    ],
+    "denominator": "f32(f32(f32(30000*30000)*0.111111119389534)*2)+double(1e-5), then f32 reciprocal",
+    "entry": "exponent=f32(-index_squared*inv_denom); value=f32(exp(double(exponent)))",
+    "length12_index_scale": 2500,
+    "policy": "one recovered float32 table-generation rule; no length/index-specific nextafter patches",
+    "table_length": 30000
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "aex": {
+    "identity_exact": true,
+    "owner": "0x180006d10",
+    "path": "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "pf16_writer": "0x180017440",
+    "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "zoom_core": "0x1800056f0"
+  },
+  "artifacts": {
+    "output": {
+      "bytes": 560,
+      "path": "refs/fixtures/olmradialblur_zoom_pf16_offset_mode3_ui2_small_20260805/output.bin.zlib",
+      "raw_sha256": "0b0bff1ccc6023d1583775165dde69dd2d0b0f97e7af946062f737ab6fc893aa",
+      "zlib_sha256": "7ac84c2629e7a7ae4dc1865583906f829903b0bbf0ad51b2a3cb819f408ab096"
+    },
+    "post_blur": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_zoom_pf16_offset_mode3_ui2_small_20260805/post_blur.bin.zlib",
+      "raw_sha256": "d85a97a70daaab76fb339bcb21b31125e88b87c076bbe5005b1216e8374140ab",
+      "zlib_sha256": "85503846b2a43c3abc21102cec5108ee9c30b11e4efeeeb96295d4099959a25c"
+    },
+    "pre_blur": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_zoom_pf16_offset_mode3_ui2_small_20260805/pre_blur.bin.zlib",
+      "raw_sha256": "27c95680ec8f1d897eeddcd456456bfad1ae1406c121e7f39a6a1e9863d72dc0",
+      "zlib_sha256": "25ea86099c1168b122dba225079c1708b3e67695ac7613ca4d72b47cbf03ed5a"
+    },
+    "source_pf16": {
+      "bytes": 560,
+      "path": "refs/fixtures/olmradialblur_zoom_pf16_offset_mode3_ui2_small_20260805/source_pf16.bin.zlib",
+      "raw_sha256": "d059727f9096038fea75037a9ba49b82f99c9dd84fd74b15fb11b09f72ca6f85",
+      "zlib_sha256": "5a57d8c8f898bfc576ba38654a81eccf47635c5c30314d59c7c86e8a8ab29f55"
+    }
+  },
+  "differences": {
+    "output": {
+      "actual_first32": "c15c380d130c891a6278c019020f88310080e7267a132145937fef33d118d452",
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_context_actual": "c15c380d130c891a6278c019020f8831",
+      "first_context_mac": "c15c380d130c891a6278c019020f8831",
+      "first_indices": [],
+      "mac_first32": "c15c380d130c891a6278c019020f88310080e7267a132145937fef33d118d452",
+      "mac_raw_sha256": "0b0bff1ccc6023d1583775165dde69dd2d0b0f97e7af946062f737ab6fc893aa"
+    },
+    "post_blur": {
+      "actual_first32": "00ee053f0024f43e00004d3d0000803fd126183fa227ff3e4b45403e0000803f",
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_context_actual": "00ee053f0024f43e00004d3d0000803f",
+      "first_context_mac": "00ee053f0024f43e00004d3d0000803f",
+      "first_indices": [],
+      "mac_first32": "00ee053f0024f43e00004d3d0000803fd126183fa227ff3e4b45403e0000803f",
+      "mac_raw_sha256": "d85a97a70daaab76fb339bcb21b31125e88b87c076bbe5005b1216e8374140ab"
+    },
+    "pre_blur": {
+      "actual_first32": "00ee053f0024f43e00004d3d0000803f00e8253f00bc033f005c953e0000803f",
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_context_actual": "00ee053f0024f43e00004d3d0000803f",
+      "first_context_mac": "00ee053f0024f43e00004d3d0000803f",
+      "first_indices": [],
+      "mac_first32": "00ee053f0024f43e00004d3d0000803f00e8253f00bc033f005c953e0000803f",
+      "mac_raw_sha256": "27c95680ec8f1d897eeddcd456456bfad1ae1406c121e7f39a6a1e9863d72dc0"
+    }
+  },
+  "exact_boundary": {
+    "actual_aex_core": "FUN_1800056f0",
+    "compared": [
+      "pre_blur_float32_plane",
+      "post_blur_float32_plane",
+      "PF16 output bytes",
+      "row padding"
+    ],
+    "internal_owner_final_float_plane": "observed by hook but excluded because the production seam does not expose an equivalent buffer; final PF16 bytes independently compare exact",
+    "typed_owner": "FUN_180006d10",
+    "typed_writer": "FUN_180017440"
+  },
+  "fixture_hashes_exact": true,
+  "geometry": {
+    "angular_count": 1800,
+    "height": 7,
+    "padding_bytes": 8,
+    "radius_count": 9,
+    "rowbytes": 80,
+    "visible_bytes": 72,
+    "width": 9
+  },
+  "kind": "olmradialblur_zoom_pf16_offset_mode3_ui2_small_actual_aex_20260805",
+  "matches": {
+    "output": true,
+    "post_blur": true,
+    "pre_blur": true
+  },
+  "non_overlap": {
+    "existing_case0009_pf32": false,
+    "reason": "This case supplies an independent PF_Pixel16 source and exercises the PF16 truncate writer on a reduced padded frame."
+  },
+  "padding_exact": true,
+  "parameter_branch": {
+    "blur_type": 1,
+    "inner_strength": 0,
+    "outer_offset": 2,
+    "outer_offset_mode": 3,
+    "outer_strength": 4
+  },
+  "production_change_required": false,
+  "scope": "independent PF16 Zoom outer offset mode 3/UI 2, Strength 4, padded 9x7; structural offset-worker boundary, no Rotation fixture reuse or AE-host claim",
+  "status": "exact",
+  "structural_boundary": {
+    "classification": "Zoom nonzero-offset worker path",
+    "not_a_strength_value_variant": true,
+    "outer_offset_mode": 3,
+    "outer_offset_ui": 2,
+    "worker_offset_zero_based": 1
+  },
+  "typed_source": "PF_Pixel16 ARGB, independently normalized by 1/32768; no PF8 fixture or quantization reuse",
+  "universal_reinstall_required": false
+}

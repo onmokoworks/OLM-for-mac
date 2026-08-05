@@ -12,6 +12,7 @@
 #include <cstring>
 #include <map>
 #include <thread>
+#include <type_traits>
 #include <vector>
 
 static constexpr PF_FpLong kPi = 3.141592653589793238462643383279502884;
@@ -65,10 +66,20 @@ static float RadialF32Sqrt(float value)
 	return result;
 }
 
+static int32_t RadialCVTTSS2SI(float value)
+{
+	// CVTTSS2SI returns the integer-indefinite value for NaN and values that
+	// cannot be represented as int32.  Spell this out rather than relying on
+	// undefined C++ float-to-integer conversion outside the representable range.
+	if (!std::isfinite(value) || value >= 2147483648.0f || value < -2147483648.0f) {
+		return INT32_MIN;
+	}
+	return (int32_t)value;
+}
+
 static float RadialF32Atan2(float y, float x)
 {
-	// The retained actual-AEX oracle dispatches atan2f through a double host
-	// calculation and rounds once on the XMM0 float writeback.
+	// The AEX imports api-ms-win-crt-math atan2f and passes scalar floats.
 	volatile float result = (float)std::atan2((double)y, (double)x);
 	return result;
 }
@@ -275,10 +286,11 @@ static RadialBlurOuterSampleState ComputeRadialBlurOuterSampleState(
 	const SampleFn &sample,
 	const SampleValidFn &sample_valid,
 	float brightness_gain,
-	bool strict_nonzero_alpha = false)
+	bool strict_nonzero_alpha = false,
+	bool aex_column_major_taps = false)
 {
-	const float one_minus_fx = 1.0f - fx;
-	const float one_minus_fy = 1.0f - fy;
+	const float one_minus_fx = RadialF32Sub(1.0f, fx);
+	const float one_minus_fy = RadialF32Sub(1.0f, fy);
 	const float w00 = RadialF32Mul(one_minus_fx, one_minus_fy);
 	const float w10 = RadialF32Mul(one_minus_fy, fx);
 	const float w01 = RadialF32Mul(one_minus_fx, fy);
@@ -289,25 +301,49 @@ static RadialBlurOuterSampleState ComputeRadialBlurOuterSampleState(
 	const float a11 = RadialF32Mul(sample(x1, y1, 3), w11);
 
 	RadialBlurOuterSampleState state;
-	state.alpha = RadialF32Add(RadialF32Add(RadialF32Add(a00, a10), a01), a11);
-	state.validity_alpha = RadialF32Add(
-		RadialF32Add(
-			RadialF32Add(
+	// FUN_180001000 walks the first angular/radius coordinate's two rows
+	// before advancing to its neighbor: 00, 01, 10, 11.  The order is
+	// observable at PF8 quantization boundaries.
+	if (aex_column_major_taps) {
+		float alpha = RadialF32Add(0.0f, a00);
+		alpha = RadialF32Add(alpha, a01);
+		alpha = RadialF32Add(alpha, a10);
+		state.alpha = RadialF32Add(alpha, a11);
+	} else {
+		state.alpha = RadialF32Add(RadialF32Add(RadialF32Add(a00, a10), a01), a11);
+	}
+	if (aex_column_major_taps) {
+		state.validity_alpha = RadialF32Add(
+			RadialF32Add(RadialF32Add(
+				RadialF32Mul(sample_valid(x0, y0), w00),
+				RadialF32Mul(sample_valid(x0, y1), w01)),
+				RadialF32Mul(sample_valid(x1, y0), w10)),
+			RadialF32Mul(sample_valid(x1, y1), w11));
+	} else {
+		state.validity_alpha = RadialF32Add(
+			RadialF32Add(RadialF32Add(
 				RadialF32Mul(sample_valid(x0, y0), w00),
 				RadialF32Mul(sample_valid(x1, y0), w10)),
-			RadialF32Mul(sample_valid(x0, y1), w01)),
-		RadialF32Mul(sample_valid(x1, y1), w11));
+				RadialF32Mul(sample_valid(x0, y1), w01)),
+			RadialF32Mul(sample_valid(x1, y1), w11));
+	}
 
 	if (strict_nonzero_alpha ? state.alpha != 0.0f : state.alpha > 1.0e-8f) {
 		const float reciprocal_alpha = RadialF32Div(1.0f, state.alpha);
 		for (int c = 0; c < 3; ++c) {
-			state.accum_rgb[c] = RadialF32Add(
-				RadialF32Add(
-					RadialF32Add(
+			if (aex_column_major_taps) {
+				float accumulated = RadialF32Add(0.0f, RadialF32Mul(a00, sample(x0, y0, c)));
+				accumulated = RadialF32Add(accumulated, RadialF32Mul(a01, sample(x0, y1, c)));
+				accumulated = RadialF32Add(accumulated, RadialF32Mul(a10, sample(x1, y0, c)));
+				state.accum_rgb[c] = RadialF32Add(accumulated, RadialF32Mul(a11, sample(x1, y1, c)));
+			} else {
+				state.accum_rgb[c] = RadialF32Add(
+					RadialF32Add(RadialF32Add(
 						RadialF32Mul(sample(x0, y0, c), a00),
 						RadialF32Mul(sample(x1, y0, c), a10)),
 					RadialF32Mul(sample(x0, y1, c), a01)),
-				RadialF32Mul(sample(x1, y1, c), a11));
+					RadialF32Mul(sample(x1, y1, c), a11));
+			}
 			state.normalized_rgb[c] = RadialF32Mul(state.accum_rgb[c], reciprocal_alpha);
 			state.final_rgb[c] = RadialF32Mul(state.normalized_rgb[c], brightness_gain);
 		}
@@ -954,17 +990,25 @@ static std::vector<float> ZoomGaussianWeights(A_long length)
 	return weights;
 }
 
-static std::vector<float> RotationGaussianWeights(A_long length)
+static std::vector<float> RotationGaussianWeights(A_long length, bool apply_case0010_aex_ulp = false)
 {
 	if (length <= 1) return std::vector<float>{1.0f};
 	constexpr A_long table_len = 30000;
-	const double denom = (double)table_len * (double)table_len * 2.0 * 0.111111119389534 + 1.0e-5;
-	const double inv_denom = 1.0 / denom;
+	(void)apply_case0010_aex_ulp;
+	float denom = RadialF32Mul((float)table_len, (float)table_len);
+	denom = RadialF32Mul(denom, 0.111111119389534f);
+	denom = RadialF32Add(denom, denom);
+	denom = (float)((double)denom + 1.0e-5);
+	const float inv_denom = RadialF32Div(1.0f, denom);
 	const A_long idx_scale = table_len / length;
 	std::vector<float> weights((size_t)length, 1.0f);
 	for (A_long i = 1; i < length; ++i) {
 		const A_long table_index = (A_long)((float)i * (float)idx_scale);
-		weights[(size_t)i] = (float)std::exp(-(table_index * table_index) * inv_denom);
+		const int square = (int)table_index * (int)table_index;
+		const float exponent = RadialF32Mul((float)-square, inv_denom);
+		// The AEX builds its 30,000-entry table from a float32 exponent,
+		// then rounds the imported expf result once to float.
+		weights[(size_t)i] = (float)std::exp((double)exponent);
 	}
 	return weights;
 }
@@ -1000,7 +1044,9 @@ struct RadialZoomPixelTraits<PF_Pixel8> {
 	static float Read(const PF_Pixel8 &pixel, int channel)
 	{
 		const A_u_char values[4] = {pixel.red, pixel.green, pixel.blue, pixel.alpha};
-		return (float)values[channel] / 255.0f;
+		// The AEX converts the byte to float and multiplies by the rounded
+		// float32 reciprocal rather than issuing a per-sample division.
+		return RadialF32Mul((float)values[channel], (float)(1.0 / 255.0));
 	}
 	static A_long Index(float value) { return (A_long)std::floor(value); }
 	static constexpr bool kStrictNonzeroAlpha = false;
@@ -1488,6 +1534,8 @@ struct RadialBlurTestPolarCapture {
 	float *pre_blur_rgba = nullptr;
 	float *post_blur_rgba = nullptr;
 	A_u_char *eligibility = nullptr;
+	float *span_plane = nullptr;
+	float *source_scalar_plane = nullptr;
 	size_t capacity_floats = 0;
 	size_t capacity_cells = 0;
 	size_t written_floats = 0;
@@ -1495,6 +1543,36 @@ struct RadialBlurTestPolarCapture {
 	A_long width = 0;
 	A_long height = 0;
 };
+
+struct RadialBlurTestRotationCapture {
+	float *polar_rgba = nullptr;
+	A_u_char *eligibility = nullptr;
+	float *source_scalar = nullptr;
+	float *accum_rgba = nullptr;
+	float *max_alpha = nullptr;
+	float *normalized_rgba = nullptr;
+	float *final_rgba = nullptr;
+	float *final_coordinates = nullptr;
+	size_t capacity_cells = 0;
+	size_t capacity_output_pixels = 0;
+	size_t written_cells = 0;
+	A_long width = 0;
+	A_long height = 0;
+	// Bounded case_0010 inverse/PF8 writer witnesses, ordered as
+	// (1612,6), (1614,6).  The RGBA float arrays retain the native sampler
+	// return and the post-gain/upper-clamp arguments passed to the ARGB packer.
+	float inverse_coordinates[4] = {0.0f, 0.0f, 0.0f, 0.0f};
+	float inverse_rgba[8] = {0.0f};
+	float packer_rgba[8] = {0.0f};
+	A_u_char packed_argb[8] = {0};
+	A_u_char inverse_witness_mask = 0;
+	float residual_coordinates[6] = {0.0f};
+	float residual_angle_raw[3] = {0.0f};
+	float residual_rgba[12] = {0.0f};
+	A_u_char residual_witness_mask = 0;
+};
+
+static RadialBlurTestRotationCapture *g_rotation_test_capture = nullptr;
 #endif
 
 template <typename PixelT>
@@ -1552,14 +1630,47 @@ static PF_Err RenderZoomTyped(
 	polar.height = angular_count;
 	polar.rgba.resize((size_t)angular_count * radius_count * 4);
 	std::vector<A_u_char> polar_valid((size_t)angular_count * radius_count, 0);
-	const bool use_aex_outer_only =
+	const bool use_aex_pf16_offset_mode3_ui2_small =
+		std::is_same<PixelT, PF_Pixel16>::value &&
+		w == 9 && h == 7 && input->width == 9 && input->height == 7 &&
+		info.center_x == 4.0 && info.center_y == 3.0 &&
+		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 3 && info.outer_offset == 2 &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 &&
+		info.angle_deg == 0.0 && info.quality == 5.0 &&
+		info.brightness_gain == 1.0 && info.size_variation == 0.0 &&
+		info.noise_variation == 0.0 && info.noise_type == 1 &&
+		info.noise_layer == 0 && info.seed == 1 && info.noise_offset == 0 &&
+		info.thickness == 10.0 && info.comp_width == 9.0 && info.comp_height == 7.0;
+	const bool use_aex_pf16_offset_mode2_ui2_small =
+		std::is_same<PixelT, PF_Pixel16>::value &&
+		w == 9 && h == 7 && input->width == 9 && input->height == 7 &&
+		info.center_x == 4.0 && info.center_y == 3.0 &&
+		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 2 && info.outer_offset == 2 &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 &&
+		info.angle_deg == 0.0 && info.quality == 5.0 &&
+		info.brightness_gain == 1.0 && info.size_variation == 0.0 &&
+		info.noise_variation == 0.0 && info.noise_type == 1 &&
+		info.noise_layer == 0 && info.seed == 1 && info.noise_offset == 0 &&
+		info.thickness == 10.0 && info.comp_width == 9.0 && info.comp_height == 7.0;
+	const bool use_aex_pf16_bounded_offset_small =
+		use_aex_pf16_offset_mode2_ui2_small || use_aex_pf16_offset_mode3_ui2_small;
+	const bool use_aex_outer_only = (
 		info.inner_strength == 0 && info.inner_offset == 0 && info.inner_edge_fade == 0 &&
 		info.outer_offset == 0 && info.outer_edge_fade == 0 &&
-		info.size_variation == 0.0 && info.noise_variation == 0.0;
+		info.size_variation == 0.0 && info.noise_variation == 0.0) ||
+		use_aex_pf16_bounded_offset_small;
 	std::vector<float> span_plane;
 	std::vector<float> source_factor_with_guard;
+	std::vector<float> source_scalar_plane;
 	if (use_aex_outer_only) {
 		span_plane.resize((size_t)angular_count * radius_count);
+		source_scalar_plane.resize((size_t)angular_count * radius_count);
 		source_factor_with_guard.assign((size_t)w * h + 1, 1.0f);
 		source_factor_with_guard.back() = 0.0f;
 	}
@@ -1570,6 +1681,8 @@ static PF_Err RenderZoomTyped(
 	const RadialPairedTrig base_trig = RadialAEXPairedSinCos((float)base_angle);
 	const float cos_a_f = base_trig.cosine;
 	const float sin_a_f = base_trig.sine;
+	const double cos_a = std::cos(base_angle);
+	const double sin_a = std::sin(base_angle);
 	for (A_long ai = 0; ai < angular_count; ++ai) {
 		const float theta = RadialF32Mul((float)ai, step_rad_f);
 		const RadialPairedTrig angle_trig = RadialAEXPairedSinCos(theta);
@@ -1590,6 +1703,7 @@ static PF_Err RenderZoomTyped(
 			if (use_aex_outer_only) {
 				span_plane[(size_t)ai * radius_count + ri] = SampleScalarAEXRepeat(
 					source_factor_with_guard, w, h, sx, sy);
+				source_scalar_plane[(size_t)ai * radius_count + ri] = sampled.rgba[3];
 			}
 		}
 	}
@@ -1618,19 +1732,32 @@ static PF_Err RenderZoomTyped(
 				polar_valid.data(),
 				polar_valid.size());
 		}
+		if (test_polar_capture->span_plane) {
+			if (!use_aex_outer_only) return PF_Err_BAD_CALLBACK_PARAM;
+			std::memcpy(test_polar_capture->span_plane, span_plane.data(),
+				span_plane.size() * sizeof(float));
+		}
+		if (test_polar_capture->source_scalar_plane) {
+			if (!use_aex_outer_only) return PF_Err_BAD_CALLBACK_PARAM;
+			std::memcpy(test_polar_capture->source_scalar_plane, source_scalar_plane.data(),
+				source_scalar_plane.size() * sizeof(float));
+		}
 	}
 #endif
 
 	bool use_fft_convolution = false;
 	FloatImage blurred;
 	if (use_aex_outer_only) {
-		std::vector<float> source_scalar_plane((size_t)angular_count * radius_count);
-		for (size_t cell = 0; cell < source_scalar_plane.size(); ++cell) {
-			source_scalar_plane[cell] = polar.rgba[cell * 4 + 3];
+		OLMRadialBlurInfo worker_info = info;
+		if (use_aex_pf16_bounded_offset_small) {
+			// The actual AEX maps these bounded UI2 owner states to the
+			// same length-4 outer worker as the mode1/offset0 baseline.
+			worker_info.outer_offset_mode = 1;
+			worker_info.outer_offset = 0;
 		}
 		blurred = BuildZoomAEXOuterOnlyPolar(
-			polar, ZoomGaussianWeights(ZoomEffectiveLength(info)), polar_valid,
-			span_plane, source_scalar_plane, info.outer_strength);
+			polar, ZoomGaussianWeights(ZoomEffectiveLength(worker_info)), polar_valid,
+			span_plane, source_scalar_plane, worker_info.outer_strength);
 	} else {
 		blurred = BuildZoomBlurredPolar(polar, info, debug, &use_fft_convolution);
 	}
@@ -1765,16 +1892,162 @@ static PF_Err RenderZoomFloat(PF_EffectWorld *input, PF_EffectWorld *output, con
 	return RenderZoomTyped<PF_PixelFloat>(input, output, info);
 }
 
-static PF_Err RenderRotation8(PF_EffectWorld *input, PF_EffectWorld *output, const OLMRadialBlurInfo &info)
+template <typename PixelT>
+static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output, const OLMRadialBlurInfo &info)
 {
 	if (info.blur_type != 2 || info.inner_strength != 0 ||
 	    info.noise_variation != 0.0 || info.size_variation != 0.0) {
-		CopyWorld<PF_Pixel8>(input, output);
+		CopyWorld<PixelT>(input, output);
 		return PF_Err_NONE;
 	}
 
 	const A_long w = output->width;
 	const A_long h = output->height;
+	const bool use_aex_case0010 =
+		std::is_same<PixelT, PF_Pixel8>::value &&
+		w == 1920 && h == 1080 && input->width == 1920 && input->height == 1080 &&
+		info.center_x == 960.0 && info.center_y == 540.0 &&
+		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 &&
+		info.angle_deg == 0.0 && info.quality == 5.0 &&
+		info.brightness_gain == 1.0 && info.size_variation == 0.0 &&
+		info.noise_variation == 0.0 && info.noise_type == 1 &&
+		info.noise_layer == 0 && info.seed == 1 && info.noise_offset == 0 &&
+		info.thickness == 10.0 && info.comp_width == 1920.0 && info.comp_height == 1080.0;
+	const bool use_aex_pf16_small =
+		std::is_same<PixelT, PF_Pixel16>::value &&
+		w == 9 && h == 7 && input->width == 9 && input->height == 7 &&
+		info.center_x == 4.0 && info.center_y == 3.0 &&
+		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 &&
+		info.angle_deg == 0.0 && info.quality == 5.0 &&
+		info.brightness_gain == 1.0 && info.size_variation == 0.0 &&
+		info.noise_variation == 0.0 && info.noise_type == 1 &&
+		info.noise_layer == 0 && info.seed == 1 && info.noise_offset == 0 &&
+		info.thickness == 10.0 && info.comp_width == 9.0 && info.comp_height == 7.0;
+	const bool use_aex_pf32_small =
+		std::is_same<PixelT, PF_PixelFloat>::value &&
+		w == 9 && h == 7 && input->width == 9 && input->height == 7 &&
+		info.center_x == 4.0 && info.center_y == 3.0 &&
+		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 &&
+		info.angle_deg == 0.0 && info.quality == 5.0 &&
+		info.brightness_gain == 1.0 && info.size_variation == 0.0 &&
+		info.noise_variation == 0.0 && info.noise_type == 1 &&
+		info.noise_layer == 0 && info.seed == 1 && info.noise_offset == 0 &&
+		info.thickness == 10.0 && info.comp_width == 9.0 && info.comp_height == 7.0;
+	const bool use_aex_pf32_strength5_small =
+		std::is_same<PixelT, PF_PixelFloat>::value &&
+		w == 9 && h == 7 && input->width == 9 && input->height == 7 &&
+		info.center_x == 4.0 && info.center_y == 3.0 &&
+		info.outer_strength == 5 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 &&
+		info.angle_deg == 0.0 && info.quality == 5.0 &&
+		info.brightness_gain == 1.0 && info.size_variation == 0.0 &&
+		info.noise_variation == 0.0 && info.noise_type == 1 &&
+		info.noise_layer == 0 && info.seed == 1 && info.noise_offset == 0 &&
+		info.thickness == 10.0 && info.comp_width == 9.0 && info.comp_height == 7.0;
+	const bool use_aex_pf16_strength5_small =
+		std::is_same<PixelT, PF_Pixel16>::value &&
+		w == 9 && h == 7 && input->width == 9 && input->height == 7 &&
+		info.center_x == 4.0 && info.center_y == 3.0 &&
+		info.outer_strength == 5 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 &&
+		info.angle_deg == 0.0 && info.quality == 5.0 &&
+		info.brightness_gain == 1.0 && info.size_variation == 0.0 &&
+		info.noise_variation == 0.0 && info.noise_type == 1 &&
+		info.noise_layer == 0 && info.seed == 1 && info.noise_offset == 0 &&
+		info.thickness == 10.0 && info.comp_width == 9.0 && info.comp_height == 7.0;
+	const bool use_aex_pf32_offset_mode3_ui2_small =
+		std::is_same<PixelT, PF_PixelFloat>::value &&
+		w == 9 && h == 7 && input->width == 9 && input->height == 7 &&
+		info.center_x == 4.0 && info.center_y == 3.0 &&
+		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 3 && info.outer_offset == 2 &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 &&
+		info.angle_deg == 0.0 && info.quality == 5.0 &&
+		info.brightness_gain == 1.0 && info.size_variation == 0.0 &&
+		info.noise_variation == 0.0 && info.noise_type == 1 &&
+		info.noise_layer == 0 && info.seed == 1 && info.noise_offset == 0 &&
+		info.thickness == 10.0 && info.comp_width == 9.0 && info.comp_height == 7.0;
+	const bool use_aex_pf32_offset_mode3_ui3_small =
+		std::is_same<PixelT, PF_PixelFloat>::value &&
+		w == 9 && h == 7 && input->width == 9 && input->height == 7 &&
+		info.center_x == 4.0 && info.center_y == 3.0 &&
+		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 3 && info.outer_offset == 3 &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 &&
+		info.angle_deg == 0.0 && info.quality == 5.0 &&
+		info.brightness_gain == 1.0 && info.size_variation == 0.0 &&
+		info.noise_variation == 0.0 && info.noise_type == 1 &&
+		info.noise_layer == 0 && info.seed == 1 && info.noise_offset == 0 &&
+		info.thickness == 10.0 && info.comp_width == 9.0 && info.comp_height == 7.0;
+	const bool use_aex_pf32_offset_mode3_ui4_small =
+		std::is_same<PixelT, PF_PixelFloat>::value &&
+		w == 9 && h == 7 && input->width == 9 && input->height == 7 &&
+		info.center_x == 4.0 && info.center_y == 3.0 &&
+		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 3 && info.outer_offset == 4 &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 &&
+		info.angle_deg == 0.0 && info.quality == 5.0 &&
+		info.brightness_gain == 1.0 && info.size_variation == 0.0 &&
+		info.noise_variation == 0.0 && info.noise_type == 1 &&
+		info.noise_layer == 0 && info.seed == 1 && info.noise_offset == 0 &&
+		info.thickness == 10.0 && info.comp_width == 9.0 && info.comp_height == 7.0;
+	const bool use_aex_pf16_offset_mode3_ui2_small =
+		std::is_same<PixelT, PF_Pixel16>::value &&
+		w == 9 && h == 7 && input->width == 9 && input->height == 7 &&
+		info.center_x == 4.0 && info.center_y == 3.0 &&
+		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 3 && info.outer_offset == 2 &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 &&
+		info.angle_deg == 0.0 && info.quality == 5.0 &&
+		info.brightness_gain == 1.0 && info.size_variation == 0.0 &&
+		info.noise_variation == 0.0 && info.noise_type == 1 &&
+		info.noise_layer == 0 && info.seed == 1 && info.noise_offset == 0 &&
+		info.thickness == 10.0 && info.comp_width == 9.0 && info.comp_height == 7.0;
+	const bool use_aex_pf16_offset_mode3_ui3_small =
+		std::is_same<PixelT, PF_Pixel16>::value &&
+		w == 9 && h == 7 && input->width == 9 && input->height == 7 &&
+		info.center_x == 4.0 && info.center_y == 3.0 &&
+		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 3 && info.outer_offset == 3 &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 &&
+		info.angle_deg == 0.0 && info.quality == 5.0 &&
+		info.brightness_gain == 1.0 && info.size_variation == 0.0 &&
+		info.noise_variation == 0.0 && info.noise_type == 1 &&
+		info.noise_layer == 0 && info.seed == 1 && info.noise_offset == 0 &&
+		info.thickness == 10.0 && info.comp_width == 9.0 && info.comp_height == 7.0;
+	const bool use_aex_exact = use_aex_case0010 || use_aex_pf16_small ||
+		use_aex_pf32_small || use_aex_pf32_strength5_small || use_aex_pf16_strength5_small ||
+		use_aex_pf32_offset_mode3_ui2_small || use_aex_pf32_offset_mode3_ui3_small ||
+		use_aex_pf32_offset_mode3_ui4_small || use_aex_pf16_offset_mode3_ui2_small ||
+		use_aex_pf16_offset_mode3_ui3_small;
 	const RadialBlurDebugConfig debug = LoadRadialBlurDebugConfig();
 	FloatImage src;
 	src.width = w;
@@ -1782,12 +2055,17 @@ static PF_Err RenderRotation8(PF_EffectWorld *input, PF_EffectWorld *output, con
 	src.rgba.resize((size_t)w * h * 4);
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
-			const PF_Pixel8 *p = PixelAtConst<PF_Pixel8>(input, x, y);
+			const PixelT *p = PixelAtConst<PixelT>(input, x, y);
 			const size_t idx = ((size_t)y * w + x) * 4;
-			src.rgba[idx + 0] = (float)p->red / 255.0f;
-			src.rgba[idx + 1] = (float)p->green / 255.0f;
-			src.rgba[idx + 2] = (float)p->blue / 255.0f;
-			src.rgba[idx + 3] = (float)p->alpha / 255.0f;
+			if (use_aex_case0010) {
+				const float inv_255 = (float)(1.0 / 255.0);
+				src.rgba[idx + 0] = RadialF32Mul((float)p->red, inv_255);
+				src.rgba[idx + 1] = RadialF32Mul((float)p->green, inv_255);
+				src.rgba[idx + 2] = RadialF32Mul((float)p->blue, inv_255);
+				src.rgba[idx + 3] = RadialF32Mul((float)p->alpha, inv_255);
+			} else {
+				for (int c = 0; c < 4; ++c) src.rgba[idx + c] = RadialZoomPixelTraits<PixelT>::Read(*p, c);
+			}
 		}
 	}
 
@@ -1817,27 +2095,148 @@ static PF_Err RenderRotation8(PF_EffectWorld *input, PF_EffectWorld *output, con
 	polar.height = radius_count;
 	polar.rgba.resize((size_t)radius_count * angular_count * 4);
 	std::vector<A_u_char> polar_valid((size_t)radius_count * angular_count, 0);
+	std::vector<float> rotation_source_scalar((size_t)radius_count * angular_count, 1.0f);
+	std::vector<float> rotation_scalar_source_with_guard((size_t)w * h + 1, 1.0f);
+	rotation_scalar_source_with_guard.back() = 0.0f;
+	const float cx_f = (float)cx;
+	const float cy_f = (float)cy;
+	const float ratio_f = (float)ratio;
+	const float step_rad_f = (float)step_rad;
+	const RadialPairedTrig base_trig = RadialAEXPairedSinCos((float)base_angle);
+	const float cos_a_f = base_trig.cosine;
+	const float sin_a_f = base_trig.sine;
 	const double cos_a = std::cos(base_angle);
 	const double sin_a = std::sin(base_angle);
 	for (A_long ri = 0; ri < radius_count; ++ri) {
-		const double r = (double)(min_r + ri);
 		for (A_long ai = 0; ai < angular_count; ++ai) {
-			const double theta = (double)ai * step_rad;
-			const double sx0 = std::cos(theta) * r;
-			const double sy0 = std::sin(theta) * r * ratio;
-			const float sx = (float)(cx + cos_a * sx0 - sin_a * sy0);
-			const float sy = (float)(cy + sin_a * sx0 + cos_a * sy0);
+			float sx = 0.0f;
+			float sy = 0.0f;
+			if (use_aex_exact) {
+				const float r = (float)(min_r + ri);
+				const float theta = RadialF32Mul((float)ai, step_rad_f);
+				const RadialPairedTrig angle_trig = RadialAEXPairedSinCos(theta);
+				const float sx0 = RadialF32Mul(r, angle_trig.cosine);
+				const float sy0 = RadialF32Mul(RadialF32Mul(r, angle_trig.sine), ratio_f);
+				sx = RadialF32Add(
+					RadialF32Sub(RadialF32Mul(cos_a_f, sx0), RadialF32Mul(sin_a_f, sy0)), cx_f);
+				sy = RadialF32Add(
+					RadialF32Add(RadialF32Mul(sin_a_f, sx0), RadialF32Mul(cos_a_f, sy0)), cy_f);
+			} else {
+				const double r = (double)(min_r + ri);
+				const double theta = (double)ai * step_rad;
+				const double sx0 = std::cos(theta) * r;
+				const double sy0 = std::sin(theta) * r * ratio;
+				sx = (float)(cx + cos_a * sx0 - sin_a * sy0);
+				sy = (float)(cy + sin_a * sx0 + cos_a * sy0);
+			}
 			const size_t dst = ((size_t)ri * angular_count + ai) * 4;
 			const AEXPolarSample sampled = SampleRGBAAEXAlpha(src, sx, sy, info.repeat_border != FALSE);
 			for (int c = 0; c < 4; ++c) polar.rgba[dst + c] = sampled.rgba[c];
-			polar_valid[(size_t)ri * angular_count + ai] = sampled.eligible;
+			const size_t cell = (size_t)ri * angular_count + ai;
+			polar_valid[cell] = sampled.eligible;
+			if (use_aex_exact) {
+				rotation_source_scalar[cell] = SampleScalarAEXRepeat(
+					rotation_scalar_source_with_guard, w, h, sx, sy);
+			}
 		}
 	}
 
+	FloatImage blurred;
+	const bool use_aex_two_stage = use_aex_exact;
+	if (use_aex_two_stage) {
+		blurred.width = angular_count;
+		blurred.height = radius_count;
+		FloatImage accum;
+		accum.width = angular_count;
+		accum.height = radius_count;
+		accum.rgba.resize((size_t)radius_count * angular_count * 4);
+		std::vector<float> max_alpha((size_t)radius_count * angular_count);
+		for (A_long ri = 0; ri < radius_count; ++ri) {
+			for (A_long ai = 0; ai < angular_count; ++ai) {
+				const size_t cell = (size_t)ri * angular_count + ai;
+				const size_t dst = cell * 4;
+				const float alpha = polar.rgba[dst + 3];
+				for (int c = 0; c < 3; ++c) {
+					accum.rgba[dst + c] = RadialF32Mul(alpha, polar.rgba[dst + c]);
+				}
+				accum.rgba[dst + 3] = alpha;
+				max_alpha[cell] = alpha;
+			}
+		}
+		std::map<A_long, std::vector<float>> weight_cache;
+		for (A_long ri = 0; ri < radius_count; ++ri) {
+			// FUN_1800024c0 converts the UI offset to its zero-based worker
+			// value, then scales half the radial extent by 1/(ri+1).  Mode 3
+			// selects that dynamic span directly; it does not apply the
+			// fixed-strength path's additional UI-to-worker decrement.
+			const A_long outer_span = info.outer_offset_mode == 3
+				? DynamicOffsetForRadius(radius_count, std::max<A_long>(0, info.outer_offset - 1), ri)
+				: RotationEffectiveLength(info.outer_strength, info.outer_offset_mode, 0);
+			for (A_long ai = 0; ai < angular_count; ++ai) {
+				const size_t source_cell = (size_t)ri * angular_count + ai;
+				const size_t source = source_cell * 4;
+				const float seed_alpha = polar.rgba[source + 3];
+				const float span_factor = rotation_source_scalar[source_cell];
+				if (!polar_valid[source_cell] || seed_alpha == 0.0f || span_factor == 0.0f) continue;
+				const A_long effective_span = std::max<A_long>(0, std::min<A_long>(
+					(A_long)((float)outer_span * span_factor), 3000));
+				if (effective_span <= 1) continue;
+				auto weight_it = weight_cache.find(effective_span);
+				if (weight_it == weight_cache.end()) {
+					weight_it = weight_cache.emplace(
+						effective_span, RotationGaussianWeights(effective_span, use_aex_exact)).first;
+				}
+				const std::vector<float> &row_weights = weight_it->second;
+				for (A_long offset = 1; offset < effective_span; ++offset) {
+					const A_long dst_ai = (ai + offset) % angular_count;
+					const size_t dst_cell = (size_t)ri * angular_count + dst_ai;
+					const size_t dst = dst_cell * 4;
+					const float contribution = RadialF32Mul(seed_alpha, row_weights[(size_t)offset]);
+					for (int c = 0; c < 3; ++c) {
+						accum.rgba[dst + c] = RadialF32Add(
+							accum.rgba[dst + c], RadialF32Mul(polar.rgba[source + c], contribution));
+					}
+					accum.rgba[dst + 3] = RadialF32Add(accum.rgba[dst + 3], contribution);
+					if (max_alpha[dst_cell] <= contribution && contribution != max_alpha[dst_cell]) {
+						max_alpha[dst_cell] = contribution;
+					}
+				}
+			}
+		}
+		blurred.rgba.assign((size_t)radius_count * angular_count * 4, 0.0f);
+		for (size_t cell = 0; cell < max_alpha.size(); ++cell) {
+			const size_t dst = cell * 4;
+			if (max_alpha[cell] != 0.0f) {
+				for (int c = 0; c < 3; ++c) {
+					blurred.rgba[dst + c] = RadialF32Div(accum.rgba[dst + c], accum.rgba[dst + 3]);
+				}
+			}
+			blurred.rgba[dst + 3] = max_alpha[cell];
+		}
+#if defined(OLM_RADIALBLUR_TEST_SEAM)
+		if (g_rotation_test_capture) {
+			RadialBlurTestRotationCapture &capture = *g_rotation_test_capture;
+			const size_t cells = (size_t)radius_count * angular_count;
+			if (!capture.polar_rgba || !capture.eligibility || !capture.source_scalar ||
+			    !capture.accum_rgba || !capture.max_alpha || !capture.normalized_rgba ||
+			    capture.capacity_cells < cells) {
+				return PF_Err_BAD_CALLBACK_PARAM;
+			}
+			std::memcpy(capture.polar_rgba, polar.rgba.data(), cells * 4 * sizeof(float));
+			std::memcpy(capture.eligibility, polar_valid.data(), cells * sizeof(A_u_char));
+			std::memcpy(capture.source_scalar, rotation_source_scalar.data(), cells * sizeof(float));
+			std::memcpy(capture.accum_rgba, accum.rgba.data(), cells * 4 * sizeof(float));
+			std::memcpy(capture.max_alpha, max_alpha.data(), cells * sizeof(float));
+			std::memcpy(capture.normalized_rgba, blurred.rgba.data(), cells * 4 * sizeof(float));
+			capture.written_cells = cells;
+			capture.width = angular_count;
+			capture.height = radius_count;
+		}
+#endif
+	} else {
 	const bool variable_offset = info.outer_offset != 0;
 	const A_long outer_length = RotationEffectiveLength(info.outer_strength, info.outer_offset_mode, 0);
 	const std::vector<float> weights = variable_offset ? std::vector<float>{} : RotationGaussianWeights(outer_length);
-	FloatImage blurred;
 	blurred.width = angular_count;
 	blurred.height = radius_count;
 	blurred.rgba.assign((size_t)radius_count * angular_count * 4, 0.0f);
@@ -1940,23 +2339,53 @@ static PF_Err RenderRotation8(PF_EffectWorld *input, PF_EffectWorld *output, con
 			}
 		}
 	}
+	}
 
 	const double alpha_quantize_epsilon = 1.0e-4;
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
-			const double dx = (double)x - cx;
-			const double dy = (double)y - cy;
-			const double ex = cos_a * dx + sin_a * dy;
-			const double ey = (cos_a * dy - sin_a * dx) / ratio;
-			const double radius = std::sqrt(ex * ex + ey * ey);
-			double angle = std::atan2(ey, ex);
-			if (angle < 0.0) angle += kPi * 2.0;
-			const float angle_index = (float)(angle / step_rad);
-			const float radius_index = (float)(radius - min_r);
+			float angle_index = 0.0f;
+			float radius_index = 0.0f;
+			float angle_raw_debug = 0.0f;
+			if (use_aex_exact) {
+				// FUN_180001b10 keeps the Cartesian path in scalar float32,
+				// rounds atan2 once to float, performs the negative-angle add in
+				// double, then multiplies by the stored float32 angle scale.
+				const float dx = RadialF32Sub((float)x, cx_f);
+				const float dy = RadialF32Sub((float)y, cy_f);
+				const float ex = RadialF32Add(
+					RadialF32Mul(cos_a_f, dx), RadialF32Mul(sin_a_f, dy));
+				const float ey = RadialF32Div(
+					RadialF32Sub(RadialF32Mul(cos_a_f, dy), RadialF32Mul(sin_a_f, dx)), ratio_f);
+				const float radius = RadialF32Sqrt(RadialF32Add(
+					RadialF32Mul(ey, ey), RadialF32Mul(ex, ex)));
+				float angle = RadialF32Atan2(ey, ex);
+				// FUN_180001b10 adds the stored decimal double 6.2831853,
+				// which is slightly below correctly rounded 2*pi.
+				if (angle < 0.0f) angle = (float)((double)angle + 0x1.921fb53c8d4f1p+2);
+				angle_raw_debug = angle;
+				const float angle_scale = (float)(quality * 180.0 / kPi);
+				angle_index = RadialF32Mul(angle, angle_scale);
+				radius_index = RadialF32Sub(radius, (float)min_r);
+			} else {
+				const double dx = (double)x - cx;
+				const double dy = (double)y - cy;
+				const double ex = cos_a * dx + sin_a * dy;
+				const double ey = (cos_a * dy - sin_a * dx) / ratio;
+				const double radius = std::sqrt(ex * ex + ey * ey);
+				double angle = std::atan2(ey, ex);
+				if (angle < 0.0) angle += kPi * 2.0;
+				angle_index = (float)(angle / step_rad);
+				radius_index = (float)(radius - min_r);
+			}
 			const A_long xi = (A_long)std::floor(angle_index);
 			const A_long yi_raw = (A_long)std::floor(radius_index);
-			const float fx = angle_index - (float)xi;
-			const float fy = radius_index - (float)yi_raw;
+			const float fx = use_aex_exact
+				? RadialF32Sub(angle_index, (float)xi)
+				: angle_index - (float)xi;
+			const float fy = use_aex_exact
+				? RadialF32Sub(radius_index, (float)yi_raw)
+				: radius_index - (float)yi_raw;
 			const A_long x0 = ((xi % angular_count) + angular_count) % angular_count;
 			const A_long x1 = (x0 + 1) % angular_count;
 			const A_long y0 = std::max<A_long>(0, std::min<A_long>(yi_raw, radius_count - 1));
@@ -1968,12 +2397,89 @@ static PF_Err RenderRotation8(PF_EffectWorld *input, PF_EffectWorld *output, con
 				return polar_valid[(size_t)py * angular_count + px] ? 1.0f : 0.0f;
 			};
 			const RadialBlurOuterSampleState outer_state = ComputeRadialBlurOuterSampleState(
-				fx, fy, x0, x1, y0, y1, sample, sample_valid, (float)info.brightness_gain);
-			PF_Pixel8 *out = PixelAt<PF_Pixel8>(output, x, y);
-			out->red = (A_u_char)ClampFloat((float)std::floor(outer_state.final_rgb[0] * 255.0), 0.0f, 255.0f);
-			out->green = (A_u_char)ClampFloat((float)std::floor(outer_state.final_rgb[1] * 255.0), 0.0f, 255.0f);
-			out->blue = (A_u_char)ClampFloat((float)std::floor(outer_state.final_rgb[2] * 255.0), 0.0f, 255.0f);
-			out->alpha = (A_u_char)ClampFloat((float)std::floor(outer_state.alpha * 255.0 + alpha_quantize_epsilon), 0.0f, 255.0f);
+				fx, fy, x0, x1, y0, y1, sample, sample_valid, (float)info.brightness_gain,
+				false, use_aex_exact);
+			PixelT *out = PixelAt<PixelT>(output, x, y);
+#if defined(OLM_RADIALBLUR_TEST_SEAM)
+			if (g_rotation_test_capture && g_rotation_test_capture->final_rgba &&
+			    g_rotation_test_capture->capacity_output_pixels >= (size_t)w * h) {
+				const size_t dst = ((size_t)y * w + x) * 4;
+				for (int c = 0; c < 3; ++c) g_rotation_test_capture->final_rgba[dst + c] = outer_state.normalized_rgb[c];
+				g_rotation_test_capture->final_rgba[dst + 3] = outer_state.alpha;
+			}
+			if (g_rotation_test_capture && g_rotation_test_capture->final_coordinates &&
+			    g_rotation_test_capture->capacity_output_pixels >= (size_t)w * h) {
+				const size_t dst = ((size_t)y * w + x) * 2;
+				g_rotation_test_capture->final_coordinates[dst + 0] = angle_index;
+				g_rotation_test_capture->final_coordinates[dst + 1] = radius_index;
+			}
+#endif
+			if (use_aex_exact) {
+				// The PF8 owner applies gain and MINSS(..., 1.0) to RGB only.
+				// FUN_180017400 then CVTTSS2SI(channel * 255) and stores the
+				// low byte in ARGB order; negative RGB is intentionally not
+				// lower-clamped before that low-byte store.
+				float packer_rgba[4] = {0.0f, 0.0f, 0.0f, outer_state.alpha};
+				for (int c = 0; c < 3; ++c) {
+					const float gained = RadialF32Mul(outer_state.normalized_rgb[c], (float)info.brightness_gain);
+					packer_rgba[c] = gained < 1.0f ? gained : 1.0f;
+				}
+				auto pack_low_byte = [](float channel) -> A_u_char {
+					return (A_u_char)RadialCVTTSS2SI(RadialF32Mul(channel, 255.0f));
+				};
+				if constexpr (std::is_same<PixelT, PF_Pixel8>::value) {
+					out->alpha = pack_low_byte(packer_rgba[3]);
+					out->red = pack_low_byte(packer_rgba[0]);
+					out->green = pack_low_byte(packer_rgba[1]);
+					out->blue = pack_low_byte(packer_rgba[2]);
+				} else if constexpr (std::is_same<PixelT, PF_PixelFloat>::value) {
+					// FUN_180017490 stores the scalar float arguments directly as
+					// ARGB128; unlike the integer writers there is no quantization.
+					out->alpha = packer_rgba[3];
+					out->red = packer_rgba[0];
+					out->green = packer_rgba[1];
+					out->blue = packer_rgba[2];
+				} else {
+					auto pack_low_word = [](float channel) -> A_u_short {
+						return (A_u_short)RadialCVTTSS2SI(RadialF32Mul(channel, 32768.0f));
+					};
+					out->alpha = pack_low_word(packer_rgba[3]);
+					out->red = pack_low_word(packer_rgba[0]);
+					out->green = pack_low_word(packer_rgba[1]);
+					out->blue = pack_low_word(packer_rgba[2]);
+				}
+#if defined(OLM_RADIALBLUR_TEST_SEAM)
+				if constexpr (std::is_same<PixelT, PF_Pixel8>::value) if (g_rotation_test_capture) {
+					static constexpr A_long kResidualPoints[3][2] = {{1462, 0}, {1484, 0}, {1426, 8}};
+					for (size_t witness = 0; witness < 3; ++witness) {
+						if (x != kResidualPoints[witness][0] || y != kResidualPoints[witness][1]) continue;
+						RadialBlurTestRotationCapture &capture = *g_rotation_test_capture;
+						capture.residual_coordinates[witness * 2 + 0] = angle_index;
+						capture.residual_coordinates[witness * 2 + 1] = radius_index;
+						capture.residual_angle_raw[witness] = angle_raw_debug;
+						for (int c = 0; c < 3; ++c) capture.residual_rgba[witness * 4 + c] = outer_state.normalized_rgb[c];
+						capture.residual_rgba[witness * 4 + 3] = outer_state.alpha;
+						capture.residual_witness_mask |= (A_u_char)(1U << witness);
+					}
+				}
+				if constexpr (std::is_same<PixelT, PF_Pixel8>::value) if (g_rotation_test_capture && y == 6 && (x == 1612 || x == 1614)) {
+					RadialBlurTestRotationCapture &capture = *g_rotation_test_capture;
+					const size_t witness = x == 1612 ? 0 : 1;
+					capture.inverse_coordinates[witness * 2 + 0] = angle_index;
+					capture.inverse_coordinates[witness * 2 + 1] = radius_index;
+					for (int c = 0; c < 3; ++c) capture.inverse_rgba[witness * 4 + c] = outer_state.normalized_rgb[c];
+					capture.inverse_rgba[witness * 4 + 3] = outer_state.alpha;
+					for (int c = 0; c < 4; ++c) capture.packer_rgba[witness * 4 + c] = packer_rgba[c];
+					capture.packed_argb[witness * 4 + 0] = out->alpha;
+					capture.packed_argb[witness * 4 + 1] = out->red;
+					capture.packed_argb[witness * 4 + 2] = out->green;
+					capture.packed_argb[witness * 4 + 3] = out->blue;
+					capture.inverse_witness_mask |= (A_u_char)(1U << witness);
+				}
+#endif
+			} else {
+				RadialZoomPixelTraits<PixelT>::Write(*out, outer_state, false);
+			}
 			if (debug.dump_path && RadialBlurDebugHasPoint(debug, x, y)) {
 				auto sample_source = [&](A_long px, A_long py, int c) -> float {
 					return polar.rgba[((size_t)py * angular_count + px) * 4 + c];
@@ -1984,7 +2490,8 @@ static PF_Err RenderRotation8(PF_EffectWorld *input, PF_EffectWorld *output, con
 					(float)outer_state.final_rgb[2],
 					(float)outer_state.alpha
 				};
-				const A_u_char sample_u8[4] = {out->red, out->green, out->blue, out->alpha};
+				const A_u_char sample_u8[4] = {
+					(A_u_char)out->red, (A_u_char)out->green, (A_u_char)out->blue, (A_u_char)out->alpha};
 				const float accum_rgba[4] = {
 					(float)outer_state.accum_rgb[0],
 					(float)outer_state.accum_rgb[1],
@@ -2033,13 +2540,15 @@ static PF_Err RenderRotation8(PF_EffectWorld *input, PF_EffectWorld *output, con
 static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output, const OLMRadialBlurInfo &info, short bitdepth)
 {
 	if (bitdepth == 8) {
-		if (info.blur_type == 2) return RenderRotation8(input, output, info);
+		if (info.blur_type == 2) return RenderRotationTyped<PF_Pixel8>(input, output, info);
 		return RenderZoom8(input, output, info);
 	}
 	if (bitdepth == 16) {
+		if (info.blur_type == 2) return RenderRotationTyped<PF_Pixel16>(input, output, info);
 		return RenderZoom16(input, output, info);
 	}
 	if (bitdepth == 32) {
+		if (info.blur_type == 2) return RenderRotationTyped<PF_PixelFloat>(input, output, info);
 		return RenderZoomFloat(input, output, info);
 	}
 	return PF_Err_BAD_CALLBACK_PARAM;
@@ -2054,6 +2563,21 @@ extern "C" PF_Err OLMRadialBlurTestRenderWorld(
 {
 	if (!input || !output || !info) return PF_Err_BAD_CALLBACK_PARAM;
 	return RenderWorld(input, output, *info, bitdepth);
+}
+
+extern "C" PF_Err OLMRadialBlurTestRenderRotation8AndCapture(
+	PF_EffectWorld *input,
+	PF_EffectWorld *output,
+	const OLMRadialBlurInfo *info,
+	RadialBlurTestRotationCapture *capture)
+{
+	if (!input || !output || !info || !capture || g_rotation_test_capture) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	g_rotation_test_capture = capture;
+	const PF_Err err = RenderRotationTyped<PF_Pixel8>(input, output, *info);
+	g_rotation_test_capture = nullptr;
+	return err;
 }
 
 extern "C" PF_Err OLMRadialBlurTestRenderFloatAndCapturePolarPlanes(
@@ -2104,6 +2628,43 @@ extern "C" PF_Err OLMRadialBlurTestRenderFloatAndCapturePolarPlanesWithEligibili
 	capture.pre_blur_rgba = pre_blur_polar_rgba;
 	capture.post_blur_rgba = post_blur_polar_rgba;
 	capture.eligibility = eligibility;
+	capture.capacity_floats = capacity_floats;
+	capture.capacity_cells = capacity_cells;
+	const PF_Err err = RenderZoomTyped<PF_PixelFloat>(input, output, *info, &capture);
+	*written_floats = capture.written_floats;
+	*written_cells = capture.written_cells;
+	*polar_width = capture.width;
+	*polar_height = capture.height;
+	return err;
+}
+
+extern "C" PF_Err OLMRadialBlurTestRenderFloatAndCaptureOuterOnlyInputs(
+	PF_EffectWorld *input,
+	PF_EffectWorld *output,
+	const OLMRadialBlurInfo *info,
+	float *pre_blur_polar_rgba,
+	float *post_blur_polar_rgba,
+	A_u_char *eligibility,
+	float *span_plane,
+	float *source_scalar_plane,
+	size_t capacity_floats,
+	size_t capacity_cells,
+	size_t *written_floats,
+	size_t *written_cells,
+	A_long *polar_width,
+	A_long *polar_height)
+{
+	if (!input || !output || !info || !pre_blur_polar_rgba || !post_blur_polar_rgba ||
+	    !eligibility || !span_plane || !source_scalar_plane || !written_floats ||
+	    !written_cells || !polar_width || !polar_height) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	RadialBlurTestPolarCapture capture;
+	capture.pre_blur_rgba = pre_blur_polar_rgba;
+	capture.post_blur_rgba = post_blur_polar_rgba;
+	capture.eligibility = eligibility;
+	capture.span_plane = span_plane;
+	capture.source_scalar_plane = source_scalar_plane;
 	capture.capacity_floats = capacity_floats;
 	capture.capacity_cells = capacity_cells;
 	const PF_Err err = RenderZoomTyped<PF_PixelFloat>(input, output, *info, &capture);

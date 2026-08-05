@@ -1,0 +1,32 @@
+{
+  "kind": "olmradialblur_typed_fullpath_installed_connection_audit_20260805",
+  "status": "bounded_typed_connections_exact",
+  "installed_bundle": {
+    "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin",
+    "binary_sha256": "2e079e3c168666c2f3509f8d4c90ab107301880bce43f538cf4e16bcb8047732",
+    "architectures": ["x86_64", "arm64"],
+    "sole_mediacore_bundle": true,
+    "codesign_verified": true
+  },
+  "zoom": [
+    {"bitdepth": "PF8", "entry": "0x180007520", "core": "0x1800056f0", "planes": "pre/post exact", "writer": "PF8 floor/clamp", "output": "exact", "evidence": "refs/conformance/olmradialblur_zoom_pf8_small_actual_aex_20260805.json"},
+    {"bitdepth": "PF16", "entry": "0x180006d10", "core": "0x1800056f0", "planes": "pre/post exact", "writer": "FUN_180017440", "output": "exact", "evidence": "refs/conformance/olmradialblur_zoom_pf16_small_actual_aex_20260805.json"},
+    {"bitdepth": "PF32", "entry": "0x180007d30", "core": "0x1800056f0", "planes": "pre/post exact", "writer": "FUN_180017490", "output": "exact", "evidence": "refs/conformance/olmradialblur_zoom_pf32_small_actual_aex_20260805.json"}
+  ],
+  "rotation": [
+    {"bitdepth": "PF8", "entry": "0x180007520", "core": "0x180004640", "planes": "polar/scalar/accum/max/normalized exact", "writer": "native PF8 writer", "output": "full-frame exact", "evidence": "refs/conformance/olmradialblur_case0010_rotation_mac_production_planes_20260805.json"},
+    {"bitdepth": "PF16", "entry": "0x180006d10", "core": "0x180004640", "planes": "polar/scalar/accum/max/final exact", "writer": "FUN_180017440", "output": "exact", "evidence": "refs/conformance/olmradialblur_rotation_pf16_small_actual_aex_20260805.json"},
+    {"bitdepth": "PF32", "entry": "0x180007d30", "core": "0x180004640", "planes": "polar/scalar/accum/max/final exact", "writer": "FUN_180017490", "output": "exact", "evidence": "refs/conformance/olmradialblur_rotation_pf32_small_actual_aex_20260805.json"}
+  ],
+  "largest_gap_closed": {
+    "before": "PF32 Zoom had case0009 internal evidence and an installed identity runner, but no single reduced actual-owner execution connected typed input, both planes, direct-float writer, and current installed source identity.",
+    "after": "Independent PF32 padded 9x7 source is byte-exact at pre-blur, post-blur, and final output; its report binds the unchanged production source to the current installed Universal hash."
+  },
+  "public_entry_connection": {
+    "status": "smart_render_compositionally_connected",
+    "path": ["EffectMain(PF_Cmd_SMART_RENDER)", "SmartRender", "RenderWorld(bitdepth=32)", "PF32 Zoom typed path", "FUN_180017490", "installed binary"],
+    "evidence": "refs/conformance/olmradialblur_smartrender_fullpath_connection_20260805.json",
+    "dynamic_ae_callback_abi_claim": false
+  },
+  "claim_boundary": "Bounded fixture connections only; no AE process was operated and no unlisted parameter family is generalized."
+}

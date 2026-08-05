@@ -1,0 +1,33 @@
+{
+  "kind": "olmradialblur_current_mac_ae_supported_lanes",
+  "recorded_at": "2026-08-06",
+  "ae": {
+    "version": "26.3x87",
+    "renderer": "SOFTWARE",
+    "pid": 37363
+  },
+  "plugin": {
+    "installed_path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin/Contents/MacOS/OLMRadialBlur",
+    "sha256": "2e079e3c168666c2f3509f8d4c90ab107301880bce43f538cf4e16bcb8047732",
+    "same_process_module_attested": true
+  },
+  "pf8_case0010": {
+    "status": "mac_windows_png_exact",
+    "dimensions": [1920, 1080],
+    "control_differing_pixels": 0,
+    "effect_differing_pixels": 0,
+    "effect_png_sha256": "6d54dcfcd073b0cd1d90be2a9dcf020fb5d852a6a963e0246e521cc882d9960c",
+    "claim": "canonical case0010 only"
+  },
+  "pf32_case0009": {
+    "status": "mac_mismatch",
+    "dimensions": [1920, 1080],
+    "sample_type": "FLOAT32",
+    "finite_samples": 8294400,
+    "nonfinite_samples": 0,
+    "expected_semantic_rgba_sha256": "7de7d970a2fb739956a59e4d523125c75a61d64b5f0c05e65e3d726ba62010",
+    "actual_semantic_rgba_sha256": "d66dc120c1f67ea8631dc0fe43f877c51f8e6b5554eafd1c4cb34901ee7525f8",
+    "internal_pf32_exact": false,
+    "windows_ae_exact": false
+  }
+}

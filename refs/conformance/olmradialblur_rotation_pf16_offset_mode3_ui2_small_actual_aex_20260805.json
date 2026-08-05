@@ -1,0 +1,183 @@
+{
+  "aex": {
+    "identity_exact": true,
+    "owner": "0x180006d10",
+    "path": "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "pf16_writer": "0x180017440",
+    "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+  },
+  "artifacts": {
+    "accum": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_offset_mode3_ui2_small_20260805/accum.bin.zlib",
+      "raw_sha256": "d9bb8c3313c184cb14cbc8766f9eb2a2fc976899f6e180863323ea08bf11e927",
+      "zlib_sha256": "ab5a36659088061e56f7649e77ecf6cbd7272016efea1319225f406164ea7524"
+    },
+    "coordinates": {
+      "bytes": 504,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_offset_mode3_ui2_small_20260805/coordinates.bin.zlib",
+      "raw_sha256": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+      "zlib_sha256": "aaccf447e96339787ca82d3003a056cae7c03cab57f626370fb06ce1d60d1937"
+    },
+    "final_rgba": {
+      "bytes": 1008,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_offset_mode3_ui2_small_20260805/final_rgba.bin.zlib",
+      "raw_sha256": "a8f64911ad3b79539265ecf281ad914bae0344d8d12f881d5e4567b2a1cb7be4",
+      "zlib_sha256": "735f5373a580b1ef86d953f6b6549b43d52df57119e246006c257c4171d15ca9"
+    },
+    "max_alpha": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_offset_mode3_ui2_small_20260805/max_alpha.bin.zlib",
+      "raw_sha256": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+      "zlib_sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    "output": {
+      "bytes": 560,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_offset_mode3_ui2_small_20260805/output.bin.zlib",
+      "raw_sha256": "e693cdda8295732642061e13777fb4bef656513e32795f58a7429f1002227050",
+      "zlib_sha256": "7fb401038f496b7f943d083115d1879eefb9c283e91c53a14f036d0f83a82076"
+    },
+    "polar": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_offset_mode3_ui2_small_20260805/polar.bin.zlib",
+      "raw_sha256": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+      "zlib_sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    "source_pf16": {
+      "bytes": 560,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_offset_mode3_ui2_small_20260805/source_pf16.bin.zlib",
+      "raw_sha256": "d059727f9096038fea75037a9ba49b82f99c9dd84fd74b15fb11b09f72ca6f85",
+      "zlib_sha256": "5a57d8c8f898bfc576ba38654a81eccf47635c5c30314d59c7c86e8a8ab29f55"
+    },
+    "source_scalar": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_offset_mode3_ui2_small_20260805/source_scalar.bin.zlib",
+      "raw_sha256": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc",
+      "zlib_sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    }
+  },
+  "differences": {
+    "accum": {
+      "actual_first32": "9f94903f2ec7833f844ddd3de72d0a409f94903f2ec7833f844ddd3de72d0a40",
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_context_actual": "9f94903f2ec7833f844ddd3de72d0a40",
+      "first_context_mac": "9f94903f2ec7833f844ddd3de72d0a40",
+      "first_indices": [],
+      "mac_first32": "9f94903f2ec7833f844ddd3de72d0a409f94903f2ec7833f844ddd3de72d0a40",
+      "mac_raw_sha256": "d9bb8c3313c184cb14cbc8766f9eb2a2fc976899f6e180863323ea08bf11e927"
+    },
+    "coordinates": {
+      "actual_first32": "308b87440000a04000a08c44b6c3874097b193445ac16640693a9d44c2624a40",
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_context_actual": "308b87440000a04000a08c44b6c38740",
+      "first_context_mac": "308b87440000a04000a08c44b6c38740",
+      "first_indices": [],
+      "mac_first32": "308b87440000a04000a08c44b6c3874097b193445ac16640693a9d44c2624a40",
+      "mac_raw_sha256": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b"
+    },
+    "final_rgba": {
+      "actual_first32": "7e51e635707e8f35863363366501003fbc140e3ecfc22b3d6072893ec675663f",
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_context_actual": "7e51e635707e8f35863363366501003f",
+      "first_context_mac": "7e51e635707e8f35863363366501003f",
+      "first_indices": [],
+      "mac_first32": "7e51e635707e8f35863363366501003fbc140e3ecfc22b3d6072893ec675663f",
+      "mac_raw_sha256": "a8f64911ad3b79539265ecf281ad914bae0344d8d12f881d5e4567b2a1cb7be4"
+    },
+    "max_alpha": {
+      "actual_first32": "0000803f0000803f0000803f0000803f0000803f0000803f0000803f0000803f",
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_context_actual": "0000803f0000803f0000803f0000803f",
+      "first_context_mac": "0000803f0000803f0000803f0000803f",
+      "first_indices": [],
+      "mac_first32": "0000803f0000803f0000803f0000803f0000803f0000803f0000803f0000803f",
+      "mac_raw_sha256": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c"
+    },
+    "output": {
+      "actual_first32": "00400000000000003a73c2115e055c220080fa1faa09de3d937fe82f6f0eaf5c",
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_context_actual": "00400000000000003a73c2115e055c22",
+      "first_context_mac": "00400000000000003a73c2115e055c22",
+      "first_indices": [],
+      "mac_first32": "00400000000000003a73c2115e055c220080fa1faa09de3d937fe82f6f0eaf5c",
+      "mac_raw_sha256": "e693cdda8295732642061e13777fb4bef656513e32795f58a7429f1002227050"
+    },
+    "polar": {
+      "actual_first32": "00ee053f0024f43e00004d3d0000803f00ee053f0024f43e00004d3d0000803f",
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_context_actual": "00ee053f0024f43e00004d3d0000803f",
+      "first_context_mac": "00ee053f0024f43e00004d3d0000803f",
+      "first_indices": [],
+      "mac_first32": "00ee053f0024f43e00004d3d0000803f00ee053f0024f43e00004d3d0000803f",
+      "mac_raw_sha256": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3"
+    },
+    "source_scalar": {
+      "actual_first32": "0000803f0000803f0000803f0000803f0000803f0000803f0000803f0000803f",
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_context_actual": "0000803f0000803f0000803f0000803f",
+      "first_context_mac": "0000803f0000803f0000803f0000803f",
+      "first_indices": [],
+      "mac_first32": "0000803f0000803f0000803f0000803f0000803f0000803f0000803f0000803f",
+      "mac_raw_sha256": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+    }
+  },
+  "fixture_hashes_exact": true,
+  "geometry": {
+    "angular_count": 1800,
+    "height": 7,
+    "padding_bytes": 8,
+    "radius_count": 9,
+    "rowbytes": 80,
+    "visible_bytes": 72,
+    "width": 9
+  },
+  "kind": "olmradialblur_rotation_pf16_offset_mode3_ui2_small_actual_aex_20260805",
+  "matches": {
+    "accum": true,
+    "coordinates": true,
+    "final_rgba": true,
+    "max_alpha": true,
+    "output": true,
+    "polar": true,
+    "source_scalar": true
+  },
+  "padding_exact": true,
+  "parameter_branch": {
+    "dynamic_worker_spans_by_radius": [
+      4,
+      2,
+      1,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "formula": "floor((radius_count/2)*(outer_offset_ui-1)/(radius_index+1))",
+    "outer_offset_mode": 3,
+    "outer_offset_ui": 2,
+    "outer_strength": 4,
+    "radius_half": 4,
+    "weight_table_rule": "shared actual 30000-entry float32 exponent generation, sampled independently by PF16 owner",
+    "worker_offset_zero_based": 1
+  },
+  "scope": "independent PF16 Rotation mode 3/UI offset 2, padded 9x7; no PF32 quantization reuse, other offset/depth/geometry, or AE-host claim",
+  "status": "exact",
+  "typed_pf16_contract": {
+    "padding_bytes": 8,
+    "pf8_or_pf32_quantization_reused": false,
+    "rowbytes": 80,
+    "source": "PF_Pixel16 ARGB words normalized independently by float32 multiply with 1/32768",
+    "visible_bytes": 72,
+    "writer": "FUN_180017440: float32 multiply by 32768, CVTTSS2SI, low u16 ARGB stores"
+  },
+  "typed_source": "PF_Pixel16 ARGB, independently normalized by 1/32768; no PF8 fixture or quantization reuse"
+}

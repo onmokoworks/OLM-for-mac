@@ -1,0 +1,135 @@
+{
+  "aex": {
+    "identity_exact": true,
+    "owner": "0x180007d30",
+    "path": "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "pf32_writer": "0x180017490",
+    "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+  },
+  "artifacts": {
+    "accum": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_strength5_small_20260805/accum.bin.zlib",
+      "raw_sha256": "1f2b04046a3ae0c60407af8a928d74e27a17bdf0c73c6e8473154beb97d91ae7",
+      "zlib_sha256": "d6752684d3c1f78f2624e57d3bf35087187f53928cc314d9eb797e383e90dade"
+    },
+    "coordinates": {
+      "bytes": 504,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_strength5_small_20260805/coordinates.bin.zlib",
+      "raw_sha256": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+      "zlib_sha256": "aaccf447e96339787ca82d3003a056cae7c03cab57f626370fb06ce1d60d1937"
+    },
+    "final_rgba": {
+      "bytes": 1008,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_strength5_small_20260805/final_rgba.bin.zlib",
+      "raw_sha256": "7c3f8b5a19e9e8559539f779050d0ed6f900024ede6683cf44ab190eb814ce12",
+      "zlib_sha256": "5bf0d427ee6369dbcd0dfe9ffd2f0a6005f000e62336c5329d69fb7e8e2b2a9e"
+    },
+    "max_alpha": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_strength5_small_20260805/max_alpha.bin.zlib",
+      "raw_sha256": "4b63bcde7212e5bf5854c9dbd67b29ac20e8e47f3256ddf05870723b0c495acc",
+      "zlib_sha256": "b82e5eab50766b23897b967342757a0ec474abf6a47c5e2b79df369aa60fbe0e"
+    },
+    "output": {
+      "bytes": 1120,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_strength5_small_20260805/output.bin.zlib",
+      "raw_sha256": "f32900f11ea537c4b818879f6b04d1a473e8ab09101ee008170f1d2b2eb408ca",
+      "zlib_sha256": "8736195b170f64c540b71d27af6e019e6f609f1c805724408be6308bc79708ac"
+    },
+    "polar": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_strength5_small_20260805/polar.bin.zlib",
+      "raw_sha256": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+      "zlib_sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    "source_pf32": {
+      "bytes": 1120,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_strength5_small_20260805/source_pf32.bin.zlib",
+      "raw_sha256": "31fab74e9856c24ca6aa724ef8cd72dd2e53399286f1eecaaa2589edac3b0b33",
+      "zlib_sha256": "e2f9ca3d94aa06ad68b6990d6a66912f1bffc77d20e91ad643a5d23f90bade19"
+    },
+    "source_scalar": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_strength5_small_20260805/source_scalar.bin.zlib",
+      "raw_sha256": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc",
+      "zlib_sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    }
+  },
+  "differences": {
+    "accum": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_indices": [],
+      "mac_raw_sha256": "1f2b04046a3ae0c60407af8a928d74e27a17bdf0c73c6e8473154beb97d91ae7"
+    },
+    "coordinates": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_indices": [],
+      "mac_raw_sha256": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b"
+    },
+    "final_rgba": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_indices": [],
+      "mac_raw_sha256": "7c3f8b5a19e9e8559539f779050d0ed6f900024ede6683cf44ab190eb814ce12"
+    },
+    "max_alpha": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_indices": [],
+      "mac_raw_sha256": "4b63bcde7212e5bf5854c9dbd67b29ac20e8e47f3256ddf05870723b0c495acc"
+    },
+    "output": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_indices": [],
+      "mac_raw_sha256": "f32900f11ea537c4b818879f6b04d1a473e8ab09101ee008170f1d2b2eb408ca"
+    },
+    "polar": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_indices": [],
+      "mac_raw_sha256": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3"
+    },
+    "source_scalar": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_indices": [],
+      "mac_raw_sha256": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+    }
+  },
+  "fixture_hashes_exact": true,
+  "geometry": {
+    "angular_count": 1800,
+    "height": 7,
+    "padding_bytes": 16,
+    "radius_count": 9,
+    "rowbytes": 160,
+    "visible_bytes": 144,
+    "width": 9
+  },
+  "kind": "olmradialblur_rotation_pf32_strength5_small_actual_aex_20260805",
+  "matches": {
+    "accum": true,
+    "coordinates": true,
+    "final_rgba": true,
+    "max_alpha": true,
+    "output": true,
+    "polar": true,
+    "source_scalar": true
+  },
+  "padding_exact": true,
+  "parameter_branch": {
+    "actual_accum_differs_from_baseline": true,
+    "actual_output_differs_from_baseline": true,
+    "baseline_outer_strength": 4,
+    "outer_offset": 0,
+    "outer_offset_mode": 1,
+    "outer_strength": 5
+  },
+  "scope": "independent PF32 Rotation Outer Strength 5, mode 1/offset 0, padded 9x7; distinct from Strength 4 baseline; no other depth or AE-host claim",
+  "status": "exact",
+  "typed_source": "native PF_PixelFloat ARGB; direct float read/write"
+}

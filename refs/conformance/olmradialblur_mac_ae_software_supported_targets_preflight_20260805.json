@@ -1,0 +1,88 @@
+{
+  "ae_operated": false,
+  "ae_pids": [
+    12791
+  ],
+  "checks": {
+    "codesign_valid": true,
+    "fixture_schema_loaded": true,
+    "installed_hash_exact": true,
+    "installed_universal": true,
+    "loaded_module_is_sole_exact_canonical_binary": false,
+    "output_templates_exact": true,
+    "pf32_input_hash_exact": true,
+    "pf32_internal_hash_exact": true,
+    "pf32_params_exact": true,
+    "pf8_input_hash_exact": true,
+    "pf8_manifest_hash_exact": true,
+    "pf8_params_exact": true,
+    "pf8_reference_hash_exact": true,
+    "runner_hashes_match_fixture": true,
+    "single_ae_process": true,
+    "sole_canonical_bundle": true
+  },
+  "installed": {
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "binary": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin/Contents/MacOS/OLMRadialBlur",
+    "bundles": [
+      "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin"
+    ],
+    "sha256": "2e079e3c168666c2f3509f8d4c90ab107301880bce43f538cf4e16bcb8047732"
+  },
+  "kind": "olmradialblur_mac_ae_software_supported_targets_preflight_20260805",
+  "loaded_module_paths": {
+    "12791": []
+  },
+  "next_action": "Start AE manually, then rerun this preflight. Invoke each target runner with --run only after status=ready.",
+  "provenance_ready": true,
+  "render_executed": false,
+  "render_ready": false,
+  "render_requested": false,
+  "status": "restart_required",
+  "targets": [
+    {
+      "expected_result": "lossless RGBA8 exact against retained Windows reference",
+      "id": "rotation_pf8_case0010",
+      "input": "refs/win_references/20260604_olm/OLMRadialBlur/case_0010_before_effects.png",
+      "input_sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
+      "output_template": "PNG Sequence",
+      "project": {
+        "bits_per_channel": 8,
+        "frame_rate": 24,
+        "height": 1080,
+        "linear_blending": false,
+        "renderer": "SOFTWARE",
+        "resolution_factor": [
+          1,
+          1
+        ],
+        "time": 0,
+        "width": 1920,
+        "working_space": ""
+      },
+      "reference": "refs/win_references/20260604_olm/OLMRadialBlur/case_0010.png",
+      "reference_sha256": "6d54dcfcd073b0cd1d90be2a9dcf020fb5d852a6a963e0246e521cc882d9960c",
+      "runner": "scripts/run_olmradialblur_case0010_pf8_mac_20260805.py"
+    },
+    {
+      "expected_result": "FLOAT RGBA semantic frame exact against actual-AEX internal oracle",
+      "expected_semantic_rgba_sha256": "7de7d9700fddce9f77261fe3e81db8b89ffc88a06c897b866ffe512392562010",
+      "id": "zoom_pf32_case0009",
+      "input": "refs/win_references/20260604_olm/OLMRadialBlur/case_0009_before_effects.png",
+      "input_sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
+      "output_template": "OLM EXR 32 Float",
+      "project": {
+        "bits_per_channel": 32,
+        "frame_rate": 24,
+        "height": 1080,
+        "linear_blending": false,
+        "renderer": "SOFTWARE",
+        "width": 1920
+      },
+      "runner": "scripts/run_olmradialblur_case0009_pf32_mac_20260805.py"
+    }
+  ]
+}

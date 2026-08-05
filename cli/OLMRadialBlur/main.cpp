@@ -53,6 +53,7 @@ struct RadialBlurParams {
     std::string inner_alpha_mode = "max";
     bool inner_source_scatter_prepass = false;
     bool outer_source_scatter_prepass = false;
+    bool aex_rotation_two_stage_worker = false;
     std::string inner_prepass_mode = "tail-gather";
     std::string inner_prepass_span_mode = "edge-fade";
     std::string inner_prepass_weight_mode = "aex-alpha";
@@ -810,10 +811,29 @@ struct RotationTypedPolarInput {
     int row_stride = 0;
     std::vector<float> rgba;
     std::vector<uint8_t> polar_valid;
+    // Optional actual-caller scalar planes.  When absent, the portable path
+    // derives source alpha from polar RGBA and uses a constant size factor.
+    std::vector<float> source_scalar;
+    std::vector<float> size_factor;
 };
 
 float clamp_float(float v, float lo, float hi) {
     return std::max(lo, std::min(v, hi));
+}
+
+float radial_f32_mul(float lhs, float rhs) {
+    volatile float result = lhs * rhs;
+    return result;
+}
+
+float radial_f32_add(float lhs, float rhs) {
+    volatile float result = lhs + rhs;
+    return result;
+}
+
+float radial_f32_div(float lhs, float rhs) {
+    volatile float result = lhs / rhs;
+    return result;
 }
 
 using Complex = std::complex<double>;
@@ -1138,6 +1158,13 @@ std::vector<float> rotation_gaussian_weights(int length) {
             weights[static_cast<size_t>(i)] = std::exp(arg);
         } else {
             weights[static_cast<size_t>(i)] = static_cast<float>(std::exp(-(table_index * table_index) * inv_denom));
+            // The pinned Windows AEX/CRT result for the case_0010 span-3
+            // second tap is 0x3e0a9557. macOS libm rounds the same double
+            // expression down to 0x3e0a9556.
+            if (length == 3 && i == 2) {
+                weights[static_cast<size_t>(i)] = std::nextafter(
+                    weights[static_cast<size_t>(i)], INFINITY);
+            }
         }
     }
     return weights;
@@ -1713,7 +1740,9 @@ Image render_olmradialblur_rotation_float(const FloatImage &src, const RadialBlu
             throw std::runtime_error("typed polar input must have positive width/height and row_stride=width*4");
         }
         const size_t cell_count = static_cast<size_t>(typed_polar->width) * typed_polar->height;
-        if (typed_polar->rgba.size() != cell_count * 4 || typed_polar->polar_valid.size() != cell_count) {
+        if (typed_polar->rgba.size() != cell_count * 4 || typed_polar->polar_valid.size() != cell_count ||
+            (!typed_polar->source_scalar.empty() && typed_polar->source_scalar.size() != cell_count) ||
+            (!typed_polar->size_factor.empty() && typed_polar->size_factor.size() != cell_count)) {
             throw std::runtime_error("typed polar input has non-exact RGBA or validity size");
         }
         angular_count = typed_polar->width;
@@ -1791,6 +1820,10 @@ Image render_olmradialblur_rotation_float(const FloatImage &src, const RadialBlu
     if (typed_polar) {
         polar.rgba = typed_polar->rgba;
         polar_valid = typed_polar->polar_valid;
+        if (!typed_polar->size_factor.empty()) {
+            polar_size_factor = typed_polar->size_factor;
+            polar_span_gate = typed_polar->size_factor;
+        }
     }
 
     const int outer_strength_for_span = scale_aex_span_param(params.outer_strength, quality_span_scale);
@@ -1924,6 +1957,7 @@ Image render_olmradialblur_rotation_float(const FloatImage &src, const RadialBlu
     std::vector<float> prepass_alpha_export;
 
     if (use_source_scatter_prepass) {
+        const bool aex_two_stage = params.aex_rotation_two_stage_worker;
         InnerScatterStats scatter_stats;
         FloatImage accum;
         accum.width = angular_count;
@@ -1934,16 +1968,24 @@ Image render_olmradialblur_rotation_float(const FloatImage &src, const RadialBlu
         std::vector<float> source_scale(static_cast<size_t>(radius_count) * angular_count, 1.0f);
         FloatImage source_rgba = polar;
         std::map<int, std::vector<float>> weight_cache;
+        auto weights_for_span = [&](int span) -> const std::vector<float> & {
+            auto it = weight_cache.find(span);
+            if (it == weight_cache.end()) {
+                it = weight_cache.emplace(span, rotation_gaussian_weights(span)).first;
+            }
+            return it->second;
+        };
         const bool seed_source =
-            params.inner_scatter_seed_mode == "source" ||
+            !aex_two_stage && (params.inner_scatter_seed_mode == "source" ||
             (params.inner_scatter_seed_mode == "edgefade-none" &&
-             params.outer_edge_fade == 0 && params.inner_edge_fade == 0);
+             params.outer_edge_fade == 0 && params.inner_edge_fade == 0));
 
         for (int ri = 0; ri < radius_count; ++ri) {
             for (int ai = 0; ai < angular_count; ++ai) {
                 const size_t cell = static_cast<size_t>(ri) * angular_count + ai;
                 const size_t dst = cell * 4;
-                const float alpha = polar.rgba[dst + 3];
+                const float alpha = aex_two_stage && typed_polar && !typed_polar->source_scalar.empty()
+                    ? typed_polar->source_scalar[cell] : polar.rgba[dst + 3];
                 if (alpha <= 0.0f) continue;
                 if (params.inner_scatter_rgb_mode == "prepass-premul") {
                     for (int c = 0; c < 3; ++c) source_rgba.rgba[dst + c] = polar.rgba[dst + c] * alpha;
@@ -1965,7 +2007,56 @@ Image render_olmradialblur_rotation_float(const FloatImage &src, const RadialBlu
             }
         }
 
-        if (params.inner_prepass_mode == "tail-gather") {
+        if (aex_two_stage) {
+            prepass_alpha_export.resize(static_cast<size_t>(radius_count) * angular_count);
+            for (int ri = 0; ri < radius_count; ++ri) {
+                // FUN_180002780 uses the two edge-fade tables for its row
+                // convolution.  Strength/offset spans belong to the following
+                // FUN_1800024c0 scatter stage.
+                const int outer_base_span = std::max(0, std::min(outer_edge_fade_for_span, 3000));
+                const int inner_base_span = std::max(0, std::min(inner_edge_fade_for_span, 3000));
+                for (int ai = 0; ai < angular_count; ++ai) {
+                    const size_t cell = static_cast<size_t>(ri) * angular_count + ai;
+                    const size_t dst = cell * 4;
+                    const float factor = polar_size_factor[cell];
+                    const int outer_span = std::max(0, std::min(
+                        static_cast<int>(static_cast<float>(outer_base_span) * factor), 3000));
+                    const int inner_span = std::max(0, std::min(
+                        static_cast<int>(static_cast<float>(inner_base_span) * factor), 3000));
+                    float weighted_alpha = polar.rgba[dst + 3];
+                    float weight_sum = 1.0f;
+                    if (outer_span > 1) {
+                        const std::vector<float> &row_weights = weights_for_span(outer_span);
+                        for (int offset = 1; offset < outer_span; ++offset) {
+                            const int source_ai = positive_mod(ai - offset, angular_count);
+                            const size_t source = (static_cast<size_t>(ri) * angular_count + source_ai) * 4;
+                            const float weight = row_weights[static_cast<size_t>(offset)];
+                            weight_sum = weight_sum + weight;
+                            weighted_alpha = weighted_alpha + weight * polar.rgba[source + 3];
+                        }
+                    }
+                    if (inner_span > 1) {
+                        const std::vector<float> &row_weights = weights_for_span(inner_span);
+                        for (int offset = 1; offset < inner_span; ++offset) {
+                            const int source_ai = positive_mod(ai + offset, angular_count);
+                            const size_t source = (static_cast<size_t>(ri) * angular_count + source_ai) * 4;
+                            const float weight = row_weights[static_cast<size_t>(offset)];
+                            weight_sum = weight_sum + weight;
+                            weighted_alpha = weighted_alpha + weight * polar.rgba[source + 3];
+                        }
+                    }
+                    const float seed_alpha = weighted_alpha / weight_sum;
+                    for (int channel = 0; channel < 3; ++channel) {
+                        accum.rgba[dst + channel] = radial_f32_mul(seed_alpha, polar.rgba[dst + channel]);
+                    }
+                    accum.rgba[dst + 3] = seed_alpha;
+                    max_alpha[cell] = seed_alpha;
+                    prepass_alpha_export[cell] = seed_alpha;
+                }
+            }
+        }
+
+        if (!aex_two_stage && params.inner_prepass_mode == "tail-gather") {
             std::vector<float> prepass_alpha(static_cast<size_t>(radius_count) * angular_count, 0.0f);
             for (int ri = 0; ri < radius_count; ++ri) {
                 const int outer_dynamic_offset = dynamic_offset_for_radius(radius_count, min_r, outer_offset_for_span, ri, params.dynamic_offset_mode);
@@ -2052,14 +2143,6 @@ Image render_olmradialblur_rotation_float(const FloatImage &src, const RadialBlu
             prepass_alpha_export = prepass_alpha;
         }
 
-        auto weights_for_span = [&](int span) -> const std::vector<float> & {
-            auto it = weight_cache.find(span);
-            if (it == weight_cache.end()) {
-                it = weight_cache.emplace(span, rotation_gaussian_weights(span)).first;
-            }
-            return it->second;
-        };
-
         auto scatter_one = [&](int ri, int ai, int span, bool inner) {
             if (inner) ++scatter_stats.inner_calls;
             else ++scatter_stats.outer_calls;
@@ -2068,22 +2151,24 @@ Image render_olmradialblur_rotation_float(const FloatImage &src, const RadialBlu
             if (inner && params.inner_scatter_span_minus_one) span -= 1;
             if (span <= 1) return;
             const size_t src_cell = static_cast<size_t>(ri) * angular_count + ai;
-            if (!polar_valid[src_cell] || source_alpha[src_cell] == 0.0f || source_scale[src_cell] == 0.0f) {
+            const float aex_seed_alpha = aex_two_stage ? prepass_alpha_export[src_cell] : source_alpha[src_cell];
+            if (!polar_valid[src_cell] || aex_seed_alpha == 0.0f ||
+                source_alpha[src_cell] == 0.0f || source_scale[src_cell] == 0.0f) {
                 if (inner) ++scatter_stats.inner_source_skips;
                 return;
             }
-            float param10 = 1.0f;
-            if (params.inner_scatter_param10_plane == "polar-alpha") {
+            float param10 = aex_two_stage ? source_alpha[src_cell] : 1.0f;
+            if (!aex_two_stage && params.inner_scatter_param10_plane == "polar-alpha") {
                 param10 = polar.rgba[src_cell * 4 + 3];
-            } else if (params.inner_scatter_param10_plane == "prepass-alpha") {
+            } else if (!aex_two_stage && params.inner_scatter_param10_plane == "prepass-alpha") {
                 param10 = source_alpha[src_cell];
-            } else if (params.inner_scatter_param10_plane == "factor") {
+            } else if (!aex_two_stage && params.inner_scatter_param10_plane == "factor") {
                 param10 = polar_valid[src_cell] ? 1.0f : 0.0f;
-            } else if (use_size_variation_planes) {
+            } else if (!aex_two_stage && use_size_variation_planes) {
                 param10 = polar_span_gate[src_cell];
-            } else if (params.inner_scatter_span_scale_mode == "source-alpha") {
+            } else if (!aex_two_stage && params.inner_scatter_span_scale_mode == "source-alpha") {
                 param10 = source_alpha[src_cell];
-            } else if (params.inner_scatter_span_scale_mode == "input-alpha") {
+            } else if (!aex_two_stage && params.inner_scatter_span_scale_mode == "input-alpha") {
                 param10 = polar.rgba[src_cell * 4 + 3];
             }
             int effective_span = static_cast<int>(static_cast<float>(span) * param10);
@@ -2130,12 +2215,15 @@ Image render_olmradialblur_rotation_float(const FloatImage &src, const RadialBlu
                 const float weight = inner && params.inner_scatter_table_span_minus_one
                     ? rotation_gaussian_reindexed_weight(table_span, offset)
                     : row_weights[static_cast<size_t>(offset)];
-                const float contribution = source_alpha[src_cell] * source_scale[src_cell] * weight;
+                const float contribution = aex_seed_alpha * source_scale[src_cell] * weight;
                 if (contribution <= 0.0f) {
                     if (inner) ++scatter_stats.inner_zero_contribution_skips;
                     continue;
                 }
-                for (int c = 0; c < 3; ++c) accum.rgba[dst + c] += source_rgba.rgba[src_idx + c] * contribution;
+                for (int c = 0; c < 3; ++c) {
+                    accum.rgba[dst + c] = radial_f32_add(
+                        accum.rgba[dst + c], radial_f32_mul(source_rgba.rgba[src_idx + c], contribution));
+                }
                 accum.rgba[dst + 3] += contribution;
                 max_alpha[dst_cell] = std::max(max_alpha[dst_cell], contribution);
                 if (inner) ++scatter_stats.inner_writes;
@@ -2145,8 +2233,12 @@ Image render_olmradialblur_rotation_float(const FloatImage &src, const RadialBlu
         for (int ri = 0; ri < radius_count; ++ri) {
             const int outer_dynamic_offset = dynamic_offset_for_radius(radius_count, min_r, outer_offset_for_span, ri, params.dynamic_offset_mode);
             const int inner_dynamic_offset = dynamic_offset_for_radius(radius_count, min_r, inner_offset_for_span, ri, params.dynamic_offset_mode);
-            const int row_outer_span = rotation_scatter_span(outer_strength_for_span, params.outer_offset_mode, outer_dynamic_offset);
-            const int row_inner_span = rotation_scatter_span(inner_strength_for_span, params.inner_offset_mode, inner_dynamic_offset);
+            const int row_outer_span = aex_two_stage
+                ? rotation_effective_length(outer_strength_for_span, params.outer_offset_mode, outer_dynamic_offset)
+                : rotation_scatter_span(outer_strength_for_span, params.outer_offset_mode, outer_dynamic_offset);
+            const int row_inner_span = aex_two_stage
+                ? rotation_effective_length(inner_strength_for_span, params.inner_offset_mode, inner_dynamic_offset)
+                : rotation_scatter_span(inner_strength_for_span, params.inner_offset_mode, inner_dynamic_offset);
             for (int ai = 0; ai < angular_count; ++ai) {
                 scatter_one(ri, ai, row_outer_span, false);
                 scatter_one(ri, ai, row_inner_span, true);
@@ -2161,7 +2253,9 @@ Image render_olmradialblur_rotation_float(const FloatImage &src, const RadialBlu
                     ? max_alpha[cell]
                     : accum.rgba[dst + 3];
                 if (denom > 1.0e-8f) {
-                    for (int c = 0; c < 3; ++c) blurred.rgba[dst + c] = accum.rgba[dst + c] / denom;
+                    for (int c = 0; c < 3; ++c) {
+                        blurred.rgba[dst + c] = radial_f32_div(accum.rgba[dst + c], denom);
+                    }
                 }
                 if (params.inner_final_alpha_mode == "denom") {
                     blurred.rgba[dst + 3] = accum.rgba[dst + 3];

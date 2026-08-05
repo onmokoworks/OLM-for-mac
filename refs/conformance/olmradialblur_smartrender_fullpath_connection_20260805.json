@@ -1,0 +1,35 @@
+{
+  "actual_production_evidence": "refs/conformance/olmradialblur_zoom_pf32_small_actual_aex_20260805.json",
+  "claim_boundary": "AE-free compositional connection: public adapter structure is fail-closed source-audited and the exact RenderWorld path is executed; no AE process or host callback ABI is claimed dynamically.",
+  "connection": [
+    "EffectMain(PF_Cmd_SMART_RENDER)",
+    "SmartRender callbacks/param checkout",
+    "RenderWorld(bitdepth=32)",
+    "RenderZoomTyped<PF_PixelFloat>",
+    "pre/post planes",
+    "FUN_180017490 writer",
+    "current installed Universal binary"
+  ],
+  "gates": {
+    "all_public_params_checked_out": true,
+    "checkout_input_then_output": true,
+    "effectmain_dispatches_smart_render": true,
+    "input_checked_in": true,
+    "installed_identity_exact": true,
+    "installed_universal": true,
+    "pf32_actual_to_renderworld_exact": true,
+    "pf32_pre_post_output_exact": true,
+    "pre_render_dimensions_consumed": true,
+    "smart_bitdepth_routes_renderworld": true
+  },
+  "installed": {
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin/Contents/MacOS/OLMRadialBlur",
+    "sha256": "2e079e3c168666c2f3509f8d4c90ab107301880bce43f538cf4e16bcb8047732"
+  },
+  "kind": "olmradialblur_smartrender_fullpath_connection_20260805",
+  "status": "connected"
+}

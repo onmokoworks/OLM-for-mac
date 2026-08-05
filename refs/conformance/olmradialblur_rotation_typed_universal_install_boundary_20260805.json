@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "kind": "olmradialblur_rotation_typed_universal_install_boundary_20260805",
+  "status": "installed_restart_required",
+  "build": {
+    "configuration": "Debug",
+    "sdk": "macosx",
+    "architectures": [
+      "arm64",
+      "x86_64"
+    ],
+    "unsigned_binary_sha256": "a6ed9d27a71cdd87e8579d539d4d326d846d50bde52fea7908788f47d2d7465e",
+    "adhoc_signed_binary_sha256": "bd9121889f25666c8ada1b71d4fe53dadcf38411ceab227f933ed7b4d9896874",
+    "codesign_verify": "pass",
+    "xcodebuild": "pass"
+  },
+  "installation": {
+    "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin",
+    "installed_binary": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin/Contents/MacOS/OLMRadialBlur",
+    "installed_binary_sha256": "bd9121889f25666c8ada1b71d4fe53dadcf38411ceab227f933ed7b4d9896874",
+    "installed_matches_signed_build": true,
+    "architectures": [
+      "arm64",
+      "x86_64"
+    ],
+    "codesign_verify": "pass",
+    "backup_bundle": "handoff/mac_plugin_backups/mediacore_20260805_radialblur_before_rotation_typed_universal/OLMRadialBlur.plugin",
+    "backup_binary_sha256": "1906a26532c88589f1750e695d45b3106e532e7bdaa4d4cde9659047188c9200",
+    "backup_architecture": "arm64",
+    "recoverable": true
+  },
+  "host_identity": {
+    "after_effects_pid_before_build": 77384,
+    "after_effects_pid_after_install": 77384,
+    "after_effects_stopped_or_restarted": false,
+    "case0010_runner": {
+      "status": "restart_required",
+      "installed_binary_hash_matches": true,
+      "single_ae_process": true,
+      "loaded_module_paths": []
+    },
+    "case0009_runner": {
+      "status": "restart_required",
+      "installed_binary_hash_matches": true,
+      "single_ae_process": true,
+      "loaded_module_paths": []
+    },
+    "new_binary_executed_by_after_effects": false
+  },
+  "runner_updates": [
+    "scripts/run_olmradialblur_case0010_pf8_mac_20260805.py",
+    "scripts/run_olmradialblur_case0009_pf32_mac_20260805.py"
+  ],
+  "claim_boundary": {
+    "bundle_built_signed_and_installed": true,
+    "universal_architecture_verified": true,
+    "new_bundle_loaded_by_after_effects": false,
+    "mac_ae_rendered": false,
+    "mac_ae_pixel_exact": false,
+    "required_next_event": "A user-controlled future After Effects restart, followed by another hash-bound identity preflight before any render"
+  }
+}

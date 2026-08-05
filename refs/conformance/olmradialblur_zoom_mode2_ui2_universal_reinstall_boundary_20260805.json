@@ -1,0 +1,28 @@
+{
+  "kind": "olmradialblur_zoom_mode2_ui2_universal_reinstall_boundary_20260805",
+  "status": "restart_required",
+  "scope": "Universal rebuild and safe canonical reinstall after bounded PF16 Zoom mode2/UI2 exact production routing",
+  "build": {
+    "derived_data": "/tmp/olmradialblur_universal_zoommode2_20260805",
+    "architectures": ["x86_64", "arm64"],
+    "codesign": "ad-hoc, deep/strict verification passed",
+    "binary_sha256": "d05a8dddb040ebbc90fdf8c41b2b7f690a1efee13aa9c7825dc82b4676140e2d"
+  },
+  "install": {
+    "canonical_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin",
+    "binary_sha256": "d05a8dddb040ebbc90fdf8c41b2b7f690a1efee13aa9c7825dc82b4676140e2d",
+    "matches_signed_build": true,
+    "sole_mediacore_bundle": true,
+    "backup": "handoff/mac_plugin_backups/mediacore_20260805_radialblur_before_zoom_mode2_ui2/OLMRadialBlur.plugin",
+    "previous_binary_sha256": "ea96d315673a4230615a8d7df54e3f8c2a0e9bdd7aa31603ada49edd3ed102c3"
+  },
+  "after_effects": {
+    "running_before": false,
+    "running_after": false,
+    "stopped_or_restarted_by_task": false,
+    "restart_required": true
+  },
+  "cross_preflight_handoff": {
+    "expected_plugin_sha256": "d05a8dddb040ebbc90fdf8c41b2b7f690a1efee13aa9c7825dc82b4676140e2d"
+  }
+}

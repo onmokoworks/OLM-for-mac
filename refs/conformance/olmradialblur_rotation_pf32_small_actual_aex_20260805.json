@@ -1,0 +1,127 @@
+{
+  "aex": {
+    "identity_exact": true,
+    "owner": "0x180007d30",
+    "path": "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "pf32_writer": "0x180017490",
+    "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+  },
+  "artifacts": {
+    "accum": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_small_20260805/accum.bin.zlib",
+      "raw_sha256": "13b28b32ce8db24cde6bd5f93acab3113a192137b77be5f99da09555859d7135",
+      "zlib_sha256": "d5ecc8de65c376ef57c75de86eff824f9184095ec7760dbbb841eefa41962f1f"
+    },
+    "coordinates": {
+      "bytes": 504,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_small_20260805/coordinates.bin.zlib",
+      "raw_sha256": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+      "zlib_sha256": "aaccf447e96339787ca82d3003a056cae7c03cab57f626370fb06ce1d60d1937"
+    },
+    "final_rgba": {
+      "bytes": 1008,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_small_20260805/final_rgba.bin.zlib",
+      "raw_sha256": "d7e30cdd2e7b7906fa2dac18107c7fedacde052635ee7d660d9665975a38b765",
+      "zlib_sha256": "694dff990a1b4d058d4fbfb019ea5a6291198d99c8eafdaca8d586726159a757"
+    },
+    "max_alpha": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_small_20260805/max_alpha.bin.zlib",
+      "raw_sha256": "fcc2f0e5a233ad87b4acd4e52dd129e487eda8b7ffdac999cea2e9e9bfedd8e4",
+      "zlib_sha256": "a24081203bfef004eab1aa8640f25b86e6d9f44d3e7378ad763ac49fec58dfa6"
+    },
+    "output": {
+      "bytes": 1120,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_small_20260805/output.bin.zlib",
+      "raw_sha256": "beb7ce8ac537a172873092d1439121019f2dbedee2d3cff04e4f6e3bf5d8ea94",
+      "zlib_sha256": "07defc28157a0e46c3690b1464b124bbb546347e6d119136c5b0f4c9588d9271"
+    },
+    "polar": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_small_20260805/polar.bin.zlib",
+      "raw_sha256": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+      "zlib_sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    "source_pf32": {
+      "bytes": 1120,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_small_20260805/source_pf32.bin.zlib",
+      "raw_sha256": "31fab74e9856c24ca6aa724ef8cd72dd2e53399286f1eecaaa2589edac3b0b33",
+      "zlib_sha256": "e2f9ca3d94aa06ad68b6990d6a66912f1bffc77d20e91ad643a5d23f90bade19"
+    },
+    "source_scalar": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_small_20260805/source_scalar.bin.zlib",
+      "raw_sha256": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc",
+      "zlib_sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    }
+  },
+  "differences": {
+    "accum": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_indices": [],
+      "mac_raw_sha256": "13b28b32ce8db24cde6bd5f93acab3113a192137b77be5f99da09555859d7135"
+    },
+    "coordinates": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_indices": [],
+      "mac_raw_sha256": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b"
+    },
+    "final_rgba": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_indices": [],
+      "mac_raw_sha256": "d7e30cdd2e7b7906fa2dac18107c7fedacde052635ee7d660d9665975a38b765"
+    },
+    "max_alpha": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_indices": [],
+      "mac_raw_sha256": "fcc2f0e5a233ad87b4acd4e52dd129e487eda8b7ffdac999cea2e9e9bfedd8e4"
+    },
+    "output": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_indices": [],
+      "mac_raw_sha256": "beb7ce8ac537a172873092d1439121019f2dbedee2d3cff04e4f6e3bf5d8ea94"
+    },
+    "polar": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_indices": [],
+      "mac_raw_sha256": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3"
+    },
+    "source_scalar": {
+      "different_bytes": 0,
+      "first_byte": null,
+      "first_indices": [],
+      "mac_raw_sha256": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+    }
+  },
+  "fixture_hashes_exact": true,
+  "geometry": {
+    "angular_count": 1800,
+    "height": 7,
+    "padding_bytes": 16,
+    "radius_count": 9,
+    "rowbytes": 160,
+    "visible_bytes": 144,
+    "width": 9
+  },
+  "kind": "olmradialblur_rotation_pf32_small_actual_aex_20260805",
+  "matches": {
+    "accum": true,
+    "coordinates": true,
+    "final_rgba": true,
+    "max_alpha": true,
+    "output": true,
+    "polar": true,
+    "source_scalar": true
+  },
+  "padding_exact": true,
+  "scope": "independent natural PF32 Rotation 9x7, padded rowbytes 160; no PF8/PF16 fixture or quantization and no AE-host claim",
+  "status": "exact",
+  "typed_source": "native PF_PixelFloat ARGB; direct float read/write"
+}

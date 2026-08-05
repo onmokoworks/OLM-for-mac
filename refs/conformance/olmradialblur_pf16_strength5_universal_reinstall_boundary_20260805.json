@@ -1,0 +1,31 @@
+{
+  "kind": "olmradialblur_pf16_strength5_universal_reinstall_boundary_20260805",
+  "status": "restart_required",
+  "scope": "Universal rebuild and safe canonical MediaCore reinstall after adding bounded PF16 Rotation Strength 5 exact production coverage",
+  "build": {
+    "derived_data": "/tmp/olmradialblur_universal_pf16strength5_20260805",
+    "configuration": "Debug",
+    "architectures": ["x86_64", "arm64"],
+    "codesign": "ad-hoc, deep/strict verification passed",
+    "binary_sha256": "94a0fea0084575b3bf23e0263f14485aac9af59d2c1fc6c2c17a3e42cbb47f0d"
+  },
+  "install": {
+    "canonical_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin",
+    "binary_sha256": "94a0fea0084575b3bf23e0263f14485aac9af59d2c1fc6c2c17a3e42cbb47f0d",
+    "matches_signed_build": true,
+    "sole_mediacore_bundle": true,
+    "backup": "handoff/mac_plugin_backups/mediacore_20260805_radialblur_before_pf16_strength5/OLMRadialBlur.plugin",
+    "previous_binary_sha256": "95dc9f93708c69d62fd52a6952ed3765bbd4a7ab1f2e466a5ff24da715c22d4a"
+  },
+  "after_effects": {
+    "running_before": false,
+    "running_after": false,
+    "stopped_or_restarted_by_task": false,
+    "restart_required": true,
+    "identity_runner_status": "restart_required",
+    "note": "After Effects was not running at the install boundary. Both guarded identity runners classify the absent single loaded AE process/module as restart_required; no render was attempted."
+  },
+  "cross_preflight_handoff": {
+    "expected_plugin_sha256": "94a0fea0084575b3bf23e0263f14485aac9af59d2c1fc6c2c17a3e42cbb47f0d"
+  }
+}

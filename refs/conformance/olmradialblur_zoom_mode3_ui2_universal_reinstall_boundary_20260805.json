@@ -1,0 +1,29 @@
+{
+  "kind": "olmradialblur_zoom_mode3_ui2_universal_reinstall_boundary_20260805",
+  "status": "restart_required",
+  "scope": "Universal rebuild and safe canonical reinstall after bounded PF16 Zoom mode3/UI2 exact production routing",
+  "build": {
+    "derived_data": "/tmp/olmradialblur_universal_zoommode3_20260805",
+    "architectures": ["x86_64", "arm64"],
+    "codesign": "ad-hoc, deep/strict verification passed",
+    "binary_sha256": "ea96d315673a4230615a8d7df54e3f8c2a0e9bdd7aa31603ada49edd3ed102c3"
+  },
+  "install": {
+    "canonical_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin",
+    "binary_sha256": "ea96d315673a4230615a8d7df54e3f8c2a0e9bdd7aa31603ada49edd3ed102c3",
+    "matches_signed_build": true,
+    "sole_mediacore_bundle": true,
+    "backup": "handoff/mac_plugin_backups/mediacore_20260805_radialblur_before_zoom_mode3_ui2/OLMRadialBlur.plugin",
+    "previous_binary_sha256": "94a0fea0084575b3bf23e0263f14485aac9af59d2c1fc6c2c17a3e42cbb47f0d"
+  },
+  "after_effects": {
+    "running_before": false,
+    "running_after": false,
+    "stopped_or_restarted_by_task": false,
+    "restart_required": true,
+    "note": "After Effects was not running; guarded identity runners require a single process loaded from this exact canonical binary before rendering."
+  },
+  "cross_preflight_handoff": {
+    "expected_plugin_sha256": "ea96d315673a4230615a8d7df54e3f8c2a0e9bdd7aa31603ada49edd3ed102c3"
+  }
+}

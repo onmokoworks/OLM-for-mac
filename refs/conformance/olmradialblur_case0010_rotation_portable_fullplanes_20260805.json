@@ -1,0 +1,72 @@
+{
+  "claim_boundary": "portable worker against retained case_0010 internal planes; no host writeback claim",
+  "comparisons": {
+    "accum_vs_post_normalize": {
+      "actual_sha256": "36cb0bd6cb90bcc7b01293543e7725f16c29a73f5e4733753acea728fe6195b5",
+      "bit_exact": true,
+      "different_words": 0,
+      "different_words_mod4": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0
+      },
+      "expected_sha256": "36cb0bd6cb90bcc7b01293543e7725f16c29a73f5e4733753acea728fe6195b5",
+      "first_differences": [],
+      "first_different_word": null,
+      "max_abs_difference": 0.0,
+      "size_match": true
+    },
+    "collapsed_vs_post_normalize": {
+      "actual_sha256": "fac9eab1c00f086bc4c51366f31c787642a46199349c32e37069b617f8a50644",
+      "bit_exact": true,
+      "different_words": 0,
+      "different_words_mod4": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0
+      },
+      "expected_sha256": "fac9eab1c00f086bc4c51366f31c787642a46199349c32e37069b617f8a50644",
+      "first_differences": [],
+      "first_different_word": null,
+      "max_abs_difference": 0.0,
+      "size_match": true
+    },
+    "scatter_vs_post_scatter": {
+      "actual_sha256": "1158168d287ca036b310156a549a4c8c370812f6969c680a7f08fb7c5b57e2e4",
+      "bit_exact": true,
+      "different_words": 0,
+      "different_words_mod4": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0
+      },
+      "expected_sha256": "1158168d287ca036b310156a549a4c8c370812f6969c680a7f08fb7c5b57e2e4",
+      "first_differences": [],
+      "first_different_word": null,
+      "max_abs_difference": 0.0,
+      "size_match": true
+    },
+    "source_vs_pre_scatter": {
+      "actual_sha256": "1b64638f4ad7ddcf17fe951647ac14b329fcd593026cf8e067cbc4d7c2cedff0",
+      "bit_exact": true,
+      "different_words": 0,
+      "different_words_mod4": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0
+      },
+      "expected_sha256": "1b64638f4ad7ddcf17fe951647ac14b329fcd593026cf8e067cbc4d7c2cedff0",
+      "first_differences": [],
+      "first_different_word": null,
+      "max_abs_difference": 0.0,
+      "size_match": true
+    }
+  },
+  "implementation": "cli/OLMRadialBlur/main.cpp::render_olmradialblur_rotation_float",
+  "kind": "olmradialblur_case0010_rotation_portable_fullplanes_probe_20260805",
+  "status": "bit_exact"
+}

@@ -1,0 +1,252 @@
+{
+  "boundary": "Proves the native CPU owner sampler-to-internal-frame-to-PF8 pack/store boundary; does not prove PF-world-to-AE-export provenance.",
+  "checks": {
+    "blur_type_is_rotation": true,
+    "both_internal_cells_observed": true,
+    "destination_pointer_relations": true,
+    "exactly_two_pf8_calls_observed": true,
+    "exactly_two_sampler_calls": true,
+    "internal_pointer_relations": true,
+    "native_store_matches_oracle": true,
+    "native_store_observed": true,
+    "rotation_owner_observed": true,
+    "rotation_worker_returned": true,
+    "sampler_pointer_relations": true,
+    "sampler_return_observed": true,
+    "sampler_to_writeback_same_cell": true,
+    "stopped_after_final_witness": true
+  },
+  "elapsed_seconds": 1289.8483707904816,
+  "identity": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "input_path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/win_references/20260604_olm/OLMRadialBlur/case_0010_before_effects.png",
+    "input_sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
+    "manifest_path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/win_references/20260604_olm/OLMRadialBlur/reference_manifest.json",
+    "manifest_sha256": "7ec542fad64cc210474c6309c3e48c9f12bd0885f54d31943da873d94024b565"
+  },
+  "internal_cells": {
+    "1612,6": {
+      "expected_pointer": "0x22fa94c0",
+      "pointer": "0x22fa94c0",
+      "rgba_f32": [
+        0.02225896343588829,
+        0.02225896343588829,
+        0.02225896343588829,
+        1.0
+      ],
+      "rgba_words": [
+        "0x3cb6586e",
+        "0x3cb6586e",
+        "0x3cb6586e",
+        "0x3f800000"
+      ],
+      "rip": "0x180007bb0"
+    },
+    "1614,6": {
+      "expected_pointer": "0x22fa94e0",
+      "pointer": "0x22fa94e0",
+      "rgba_f32": [
+        -0.004081939347088337,
+        -0.004081939347088337,
+        -0.004081939347088337,
+        1.0
+      ],
+      "rgba_words": [
+        "0xbb85c1ca",
+        "0xbb85c1ca",
+        "0xbb85c1ca",
+        "0x3f800000"
+      ],
+      "rip": "0x180007bb0"
+    }
+  },
+  "owner": {
+    "blur_type": 2,
+    "brightness_gain": 1.0,
+    "brightness_gain_word": "0x3f800000",
+    "internal_frame": "0x22f76000",
+    "output_data": "0x207e9000",
+    "output_height": 1080,
+    "output_rowbytes": 7680,
+    "output_width": 1920,
+    "output_world": "0x40000340",
+    "rip": "0x180007b45",
+    "work": "0x400003c0"
+  },
+  "pf8_calls": [
+    {
+      "after_argb": [
+        255,
+        5,
+        5,
+        5
+      ],
+      "before_argb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "destination_stack_0x20": "0x207f5d30",
+      "expected_destination": "0x207f5d30",
+      "native_store_matches_oracle": true,
+      "oracle_argb": [
+        255,
+        5,
+        5,
+        5
+      ],
+      "pf8_scale": 255.0,
+      "pf8_scale_word": "0x437f0000",
+      "resolved_destination": "0x207f5d30",
+      "rgba_f32": [
+        0.02225896343588829,
+        0.02225896343588829,
+        0.02225896343588829,
+        1.0
+      ],
+      "rgba_words": [
+        "0x3cb6586e",
+        "0x3cb6586e",
+        "0x3cb6586e",
+        "0x3f800000"
+      ],
+      "rip": "0x180007c14",
+      "xy": [
+        1612,
+        6
+      ]
+    },
+    {
+      "after_argb": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "before_argb": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "destination_stack_0x20": "0x207f5d38",
+      "expected_destination": "0x207f5d38",
+      "native_store_matches_oracle": true,
+      "oracle_argb": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "pf8_scale": 255.0,
+      "pf8_scale_word": "0x437f0000",
+      "resolved_destination": "0x207f5d38",
+      "rgba_f32": [
+        -0.004081939347088337,
+        -0.004081939347088337,
+        -0.004081939347088337,
+        1.0
+      ],
+      "rgba_words": [
+        "0xbb85c1ca",
+        "0xbb85c1ca",
+        "0xbb85c1ca",
+        "0x3f800000"
+      ],
+      "rip": "0x180007c14",
+      "xy": [
+        1614,
+        6
+      ]
+    }
+  ],
+  "post_worker_checkpoint": {
+    "header_sha256": null,
+    "path": "refs/fixtures/olmradialblur_case0010_rotation_full_planes_20260805/post_worker_pre_pf8.aexcp",
+    "rip": "0x180007b4a",
+    "sha256": "47b7911d1ba4628b5c318d220ad53d06ec0819c4e8fd805d6c6d28ebf871d67a"
+  },
+  "render_instruction_segments": [
+    1500000000,
+    381934688
+  ],
+  "sampler_calls": [
+    {
+      "destination": "0x22fa94c0",
+      "expected_destination": "0x22fa94c0",
+      "radial_count": 1800,
+      "return_destination": "0x22fa94c0",
+      "return_rip": "0x180004ec8",
+      "returned_rgba_f32": [
+        0.02225896343588829,
+        0.02225896343588829,
+        0.02225896343588829,
+        1.0
+      ],
+      "returned_rgba_words": [
+        "0x3cb6586e",
+        "0x3cb6586e",
+        "0x3cb6586e",
+        "0x3f800000"
+      ],
+      "rip": "0x180004ebf",
+      "sample_angle_word": "0x44c86d1b",
+      "sample_radius_word": "0x4452b13b",
+      "source_polar": "0x28ecba00",
+      "xy": [
+        1612,
+        6
+      ]
+    },
+    {
+      "destination": "0x22fa94e0",
+      "expected_destination": "0x22fa94e0",
+      "radial_count": 1800,
+      "return_destination": "0x22fa94e0",
+      "return_rip": "0x180004ec8",
+      "returned_rgba_f32": [
+        -0.004081939347088337,
+        -0.004081939347088337,
+        -0.004081939347088337,
+        1.0
+      ],
+      "returned_rgba_words": [
+        "0xbb85c1ca",
+        "0xbb85c1ca",
+        "0xbb85c1ca",
+        "0x3f800000"
+      ],
+      "rip": "0x180004ebf",
+      "sample_angle_word": "0x44c87ade",
+      "sample_radius_word": "0x44531452",
+      "source_polar": "0x28ecba00",
+      "xy": [
+        1614,
+        6
+      ]
+    }
+  ],
+  "schema": "olmradialblur.case0010-pf8-writeback-witness/1",
+  "scope": {
+    "case_id": "case_0010",
+    "path": "actual Windows AEX under Mac Unicorn fast=True",
+    "pixel_format": "PF8 ARGB",
+    "stopped_immediately_after": [
+      1614,
+      6
+    ],
+    "witness_coordinates": [
+      [
+        1612,
+        6
+      ],
+      [
+        1614,
+        6
+      ]
+    ]
+  },
+  "status": "exact"
+}

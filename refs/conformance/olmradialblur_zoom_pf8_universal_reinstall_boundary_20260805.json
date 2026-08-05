@@ -1,0 +1,21 @@
+{
+  "kind": "olmradialblur_zoom_pf8_universal_reinstall_boundary_20260805",
+  "status": "restart_required",
+  "scope": "Universal rebuild and safe canonical reinstall after PF8 Zoom AEX reciprocal-multiply reader alignment",
+  "build": {
+    "derived_data": "/tmp/olmradialblur_universal_zoompf8_20260805",
+    "architectures": ["x86_64", "arm64"],
+    "codesign": "ad-hoc, deep/strict verification passed",
+    "binary_sha256": "2e079e3c168666c2f3509f8d4c90ab107301880bce43f538cf4e16bcb8047732"
+  },
+  "install": {
+    "canonical_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin",
+    "binary_sha256": "2e079e3c168666c2f3509f8d4c90ab107301880bce43f538cf4e16bcb8047732",
+    "matches_signed_build": true,
+    "sole_mediacore_bundle": true,
+    "backup": "handoff/mac_plugin_backups/mediacore_20260805_radialblur_before_zoom_pf8/OLMRadialBlur.plugin",
+    "previous_binary_sha256": "d05a8dddb040ebbc90fdf8c41b2b7f690a1efee13aa9c7825dc82b4676140e2d"
+  },
+  "after_effects": {"running_before": false, "running_after": false, "stopped_or_restarted_by_task": false, "restart_required": true},
+  "cross_preflight_handoff": {"expected_plugin_sha256": "2e079e3c168666c2f3509f8d4c90ab107301880bce43f538cf4e16bcb8047732"}
+}

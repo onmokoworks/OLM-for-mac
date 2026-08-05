@@ -1,0 +1,73 @@
+{
+  "boundary": "PF8 world is authoritative for the AEX CPU owner; AE host/export behavior remains separate.",
+  "checks": {
+    "case_id": true,
+    "checkpoint_kind": true,
+    "input_sha256": true,
+    "input_world": true,
+    "manifest_sha256": true,
+    "output_world": true,
+    "param_ctx": true,
+    "render_ctx": true,
+    "rip": true,
+    "rotation_worker_returned": true
+  },
+  "frame": {
+    "format": "PF8 ARGB",
+    "height": 1080,
+    "raw_bytes": 8294400,
+    "raw_sha256": "cb39306e0e340bfa121e5ea55c9e1b43f87696237b4d6c855a47ce09dba188fc",
+    "rowbytes": 7680,
+    "width": 1920,
+    "witness_argb": {
+      "1612,6": [
+        255,
+        5,
+        5,
+        5
+      ],
+      "1614,6": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    "zlib_bytes": 347239,
+    "zlib_path": "refs/fixtures/olmradialblur_case0010_rotation_full_planes_20260805/post_worker_full_pf8_argb.bin.zlib",
+    "zlib_sha256": "b18b2b11e627db82bc79365196a581e01198739fd7708da6af279ef3e2b9e2f1"
+  },
+  "identity": {
+    "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "checkpoint_sha256": "6ee451f0ba56425886e095c56b76cfd65861e574f08832c854cd5a70055b8d39",
+    "input_sha256": "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4",
+    "manifest_sha256": "7ec542fad64cc210474c6309c3e48c9f12bd0885f54d31943da873d94024b565"
+  },
+  "legacy_png_comparison": {
+    "different_channels_rgba": [
+      3767,
+      118,
+      343,
+      0
+    ],
+    "different_pixels": 3992,
+    "first_difference_xy": [
+      1036,
+      2
+    ],
+    "legacy_decoded_rgba_sha256": "8bc975548cde105f8b6df4b092eff5b61058923f48b0eb92ffbf0cf02e3a91e7",
+    "legacy_png_sha256": "6d54dcfcd073b0cd1d90be2a9dcf020fb5d852a6a963e0246e521cc882d9960c",
+    "max_absolute_difference": 1,
+    "native_rgba_sha256": "bbfbf0b45fde5255863892ee2ed4de3a930d5022afc8346cf9bffdc9fe7a5f58"
+  },
+  "resume": {
+    "elapsed_seconds": 76.76348209381104,
+    "final_rip": "0x90000000",
+    "instruction_segments": [
+      107847231
+    ]
+  },
+  "schema": "olmradialblur.case0010-full-pf8-actual-aex/1",
+  "scope": "actual Windows AEX CPU owner resumed post-worker through complete PF8 world under Mac Unicorn",
+  "status": "exact"
+}
