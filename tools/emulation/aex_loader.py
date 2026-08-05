@@ -538,6 +538,89 @@ class AexLoader:
         """Register/override a Python implementation for an imported symbol."""
         self.import_impls[name] = fn
 
+    def enable_crt_initializer_imports(self) -> None:
+        """Opt in to MS CRT ``_initterm``/``_initterm_e`` callback walking.
+
+        This is deliberately not enabled by default: most existing leaf probes
+        do not run a DLL process-attach sequence. Callback targets are read as
+        pointer-sized slots, NULL entries are skipped, and executable-image
+        membership is checked before nested execution.
+        """
+        active = False
+        self.crt_initializer_log = []
+
+        def executable_target(target: int) -> bool:
+            if not (self.load_base <= target < self.load_base + self.size_of_image):
+                return False
+            rva = target - self.load_base
+            return any(
+                section.VirtualAddress <= rva <
+                section.VirtualAddress + max(section.Misc_VirtualSize, section.SizeOfRawData)
+                and bool(section.Characteristics & 0x20000000)
+                for section in self.pe.sections
+            )
+
+        def invoke_preserving_outer_state(target: int) -> int:
+            gp_regs = [
+                UC_X86_REG_RAX, UC_X86_REG_RBX, UC_X86_REG_RCX, UC_X86_REG_RDX,
+                UC_X86_REG_RSI, UC_X86_REG_RDI, UC_X86_REG_RBP, UC_X86_REG_RSP,
+                UC_X86_REG_R8, UC_X86_REG_R9, UC_X86_REG_R10, UC_X86_REG_R11,
+                UC_X86_REG_R12, UC_X86_REG_R13, UC_X86_REG_R14, UC_X86_REG_R15,
+                UC_X86_REG_RIP,
+            ]
+            gp = {reg: self.uc.reg_read(reg) for reg in gp_regs}
+            eflags = self.uc.reg_read(UC_X86_REG_EFLAGS)
+            mxcsr = self.uc.reg_read(UC_X86_REG_MXCSR)
+            xmm = [self.uc.reg_read(reg) for reg in _XMM_REGS]
+            stack = bytes(self.uc.mem_read(STACK_BASE, STACK_SIZE))
+            outer_import_log = list(self.import_log)
+            result = self.call_function(target)
+            nested_import_log = list(self.import_log)
+            self.uc.mem_write(STACK_BASE, stack)
+            for reg, value in gp.items():
+                self.uc.reg_write(reg, value)
+            self.uc.reg_write(UC_X86_REG_EFLAGS, eflags)
+            self.uc.reg_write(UC_X86_REG_MXCSR, mxcsr)
+            for reg, value in zip(_XMM_REGS, xmm):
+                self.uc.reg_write(reg, value)
+            self.import_log[:] = outer_import_log + nested_import_log
+            return int(result["rax"])
+
+        def walk(_uc: Uc, args: List[int], stop_on_nonzero: bool) -> int:
+            nonlocal active
+            if active:
+                raise RuntimeError("reentrant CRT initializer walk")
+            begin, end = int(args[0]), int(args[1])
+            if begin > end or begin & 7 or end & 7:
+                raise ValueError("invalid CRT initializer pointer range")
+            if not (self.load_base <= begin <= end <= self.load_base + self.size_of_image):
+                raise ValueError("CRT initializer range is outside the loaded image")
+            if (end - begin) // 8 > 65536:
+                raise ValueError("CRT initializer range is unreasonably large")
+            active = True
+            try:
+                for slot in range(begin, end, 8):
+                    target = struct.unpack("<Q", self.read_bytes(slot, 8))[0]
+                    if target == 0:
+                        continue
+                    if not executable_target(target):
+                        raise ValueError(f"CRT initializer target 0x{target:x} is not executable image code")
+                    callback_result = invoke_preserving_outer_state(target)
+                    self.crt_initializer_log.append({
+                        "kind": "_initterm_e" if stop_on_nonzero else "_initterm",
+                        "slot": slot,
+                        "target": target,
+                        "result": callback_result & 0xFFFFFFFF,
+                    })
+                    if stop_on_nonzero and (callback_result & 0xFFFFFFFF) != 0:
+                        return callback_result & 0xFFFFFFFF
+                return 0
+            finally:
+                active = False
+
+        self.register_import_impl("_initterm", lambda uc, args: walk(uc, args, False))
+        self.register_import_impl("_initterm_e", lambda uc, args: walk(uc, args, True))
+
     def _register_default_impls(self) -> None:
         def _read_cstring_or_bytes(uc: Uc, addr: int, n: int) -> bytes:
             return bytes(uc.mem_read(addr, n))
