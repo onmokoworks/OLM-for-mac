@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Build the minimal Windows AE calibration batch for the OLM Mac release.
 
-This deliberately reuses six already-materialized rows from the pinned r5
-campaign.  Eight plug-ins have a retained cross-host representative AE cell;
-only ColorKeep and OLMKiraKira still need a Windows AE host observation.
+This deliberately reuses one already-materialized row from the pinned r5
+campaign.  The frozen release matrix identifies OLMSmoother v1 PF16 as the
+only definite missing Windows observation; all other release cells reuse
+retained evidence and must not be recaptured.
 """
 
 from __future__ import annotations
@@ -21,22 +22,17 @@ SOURCE = ROOT / "handoffs/windows_batch/olm_windows_all_plugins_reference_campai
 OUT_DIR = ROOT / "refs/reference_requests"
 PACKAGE_ID = "olm_windows_ae_release_boundary_minimal_20260806"
 ZIP_TIME = (2026, 8, 6, 0, 0, 0)
-SELECTED = {
-    ("OLMKiraKira", "kk_mapped_bm4_mm1_hi_r5_orange_opaque", depth)
-    for depth in (8, 16, 32)
-} | {
-    ("ColorKeep", "colorkeep_opaque_cells_red_darkgray", depth)
-    for depth in (8, 16, 32)
-}
+SELECTED = {("OLMSmoother v1", "case_0001", 16)}
 REUSED = {
     "OLMBlur": "refs/conformance/olmblur_32bpc_case0001_ae_exact_20260727.json",
     "OLMColorKey": "refs/conformance/olmcolorkey_32bpc_all9_ae_exact_20260728.json",
     "OLMToonDilate": "refs/conformance/olmtoondilate_32bpc_typed_procedural_ae_exact_20260728.json",
     "OLMSmoother2": "refs/conformance/olmsmoother2_32bpc_case01_10_ae_exact_20260727.json",
-    "OLMSmoother v1": "refs/conformance/olmsmoother_v1_pf8_current_mac_ae_exact_20260805.json",
+    "ColorKeep": "refs/conformance/colorkeep_pf16_upstream_chain_current_mac_ae_20260806.md",
     "OLMDistanceGradation": "refs/conformance/olmdistancegradation_pf32_case0001_current_mac_ae_exact_20260806.json",
     "OLMDirectionalBlur": "refs/conformance/olmdirectionalblur_pf8_current_mac_ae_exact_20260806.json",
     "OLMRadialBlur": "refs/conformance/olmradialblur_current_mac_ae_supported_lanes_20260806.json",
+    "OLMKiraKira": "refs/conformance/olmkirakira_completion_matrix_20260805.json",
 }
 
 
@@ -91,6 +87,12 @@ def main() -> int:
             members.append(copy_member(stage, member))
         exr_tool = "tools/verify_32bpc_float_return.py"
         members.append(copy_member(stage, exr_tool))
+        scope_source = ROOT / "refs/conformance/olm_release_completion_matrix_20260806.md"
+        scope_member = "scope_evidence/olm_release_completion_matrix_20260806.md"
+        scope_target = stage / scope_member
+        scope_target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(scope_source, scope_target)
+        members.append({"member": scope_member, "sha256": sha(scope_target), "bytes": scope_target.stat().st_size})
 
         reuse_rows = []
         for plugin, repo_member in REUSED.items():
@@ -110,6 +112,11 @@ def main() -> int:
             "schema_version": 1,
             "package_id": PACKAGE_ID,
             "source_campaign_id": rows_doc["campaign_id"],
+            "authoritative_release_scope": {
+                "member": scope_member,
+                "sha256": sha(scope_target),
+                "decision": "only OLMSmoother v1 PF16 is a definite missing Windows observation",
+            },
             "target": {
                 "after_effects": "26.3x87",
                 "renderer": "SOFTWARE",
@@ -120,8 +127,9 @@ def main() -> int:
                 "output": "uncompressed scanline OpenEXR FLOAT32 ABGR, Preserve RGB",
             },
             "claim_boundary": (
-                "Six AE-host calibration cells only. Major-mode/depth implementation parity remains "
-                "grounded by local actual-AEX fixtures; these rows must not be generalized."
+                "One OLMSmoother v1 PF16 AE-host calibration cell only. Major-mode/depth "
+                "implementation parity remains grounded by retained actual-AEX fixtures; this row "
+                "must not be generalized to PF8 or a native PF32 lane."
             ),
             "acquire": rows,
             "reuse": reuse_rows,
@@ -146,9 +154,11 @@ def main() -> int:
         shutil.copy2(ROOT / "scripts/verify_windows_ae_release_boundary_minimal_20260806.py", stage / "VERIFY_RETURN.py")
         readme = """# Minimal OLM Windows AE release-boundary batch
 
-Run only the six rows in `BATCH_CONTRACT.json`: ColorKeep and OLMKiraKira at
-8/16/32 bpc.  The other eight plug-ins are evidence reuse rows and MUST NOT be
-rerendered.  Use a fresh AE 26.3x87 process/project/effect per row, Software
+Run only the single row in `BATCH_CONTRACT.json`: OLMSmoother v1 `case_0001`
+at native PF16.  The other nine plug-ins are evidence reuse rows and MUST NOT
+be rerendered.  In particular, do not recapture ColorKeep or OLMKiraKira: their
+remaining release work is Mac-host/production closure using retained Windows
+references.  Use a fresh AE 26.3x87 process/project/effect, Software
 renderer (raw 1816), working space None, linear blending off, straight-alpha
 Preserve-RGB import, and the pinned AEX/source/template hashes.
 
