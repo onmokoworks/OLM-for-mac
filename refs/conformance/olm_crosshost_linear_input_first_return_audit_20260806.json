@@ -1,0 +1,316 @@
+{
+  "kind": "olm_crosshost_linear_input_first_return_audit",
+  "status": "fixture_contract_defect",
+  "root_cause": "non-canonical EXR physical channel order R,G,B,A; AE readers bind the first plane as alpha, proven at every depth by no-effect output A == output R for every pixel (and at PF32 both equal source R)",
+  "pixel_count": 2073600,
+  "rows": [
+    {
+      "row_id": "colorkeep__discovery_3__colorkeep_opaque_cells_red_darkgray__8bpc__linear_float32_input",
+      "plugin": "ColorKeep",
+      "depth": 8,
+      "host": {
+        "windows": {
+          "source_interpretation": {
+            "alpha_mode": 5412,
+            "preserve_rgb_api_available": false,
+            "preserve_rgb": null,
+            "color_profile_name": "undefined",
+            "source_extension": ".exr"
+          },
+          "no_effect_alpha_equals_red": 2073600,
+          "no_effect_red_equals_source_red": 627360,
+          "effect_on_all_zero_values": true
+        },
+        "mac": {
+          "source_interpretation": {
+            "alpha_mode": 5412,
+            "preserve_rgb_api_available": false,
+            "preserve_rgb": null,
+            "color_profile_name": "undefined",
+            "source_extension": ".exr"
+          },
+          "no_effect_alpha_equals_red": 2073600,
+          "no_effect_red_equals_source_red": 627360,
+          "effect_on_all_zero_values": true
+        }
+      },
+      "cross_host": {
+        "no_effect": {
+          "total": 4147200,
+          "by_channel": {
+            "R": 0,
+            "G": 2073600,
+            "B": 2073600,
+            "A": 0
+          }
+        },
+        "effect_on": {
+          "total": 0,
+          "by_channel": {
+            "R": 0,
+            "G": 0,
+            "B": 0,
+            "A": 0
+          }
+        }
+      }
+    },
+    {
+      "row_id": "colorkeep__discovery_3__colorkeep_opaque_cells_red_darkgray__16bpc__linear_float32_input",
+      "plugin": "ColorKeep",
+      "depth": 16,
+      "host": {
+        "windows": {
+          "source_interpretation": {
+            "alpha_mode": 5412,
+            "preserve_rgb_api_available": false,
+            "preserve_rgb": null,
+            "color_profile_name": "undefined",
+            "source_extension": ".exr"
+          },
+          "no_effect_alpha_equals_red": 2073600,
+          "no_effect_red_equals_source_red": 0,
+          "effect_on_all_zero_values": true
+        },
+        "mac": {
+          "source_interpretation": {
+            "alpha_mode": 5412,
+            "preserve_rgb_api_available": false,
+            "preserve_rgb": null,
+            "color_profile_name": "undefined",
+            "source_extension": ".exr"
+          },
+          "no_effect_alpha_equals_red": 2073600,
+          "no_effect_red_equals_source_red": 0,
+          "effect_on_all_zero_values": true
+        }
+      },
+      "cross_host": {
+        "no_effect": {
+          "total": 4147200,
+          "by_channel": {
+            "R": 0,
+            "G": 2073600,
+            "B": 2073600,
+            "A": 0
+          }
+        },
+        "effect_on": {
+          "total": 0,
+          "by_channel": {
+            "R": 0,
+            "G": 0,
+            "B": 0,
+            "A": 0
+          }
+        }
+      }
+    },
+    {
+      "row_id": "colorkeep__discovery_3__colorkeep_opaque_cells_red_darkgray__32bpc__linear_float32_input",
+      "plugin": "ColorKeep",
+      "depth": 32,
+      "host": {
+        "windows": {
+          "source_interpretation": {
+            "alpha_mode": 5412,
+            "preserve_rgb_api_available": false,
+            "preserve_rgb": null,
+            "color_profile_name": "undefined",
+            "source_extension": ".exr"
+          },
+          "no_effect_alpha_equals_red": 2073600,
+          "no_effect_red_equals_source_red": 2073600,
+          "effect_on_all_zero_values": true
+        },
+        "mac": {
+          "source_interpretation": {
+            "alpha_mode": 5412,
+            "preserve_rgb_api_available": false,
+            "preserve_rgb": null,
+            "color_profile_name": "undefined",
+            "source_extension": ".exr"
+          },
+          "no_effect_alpha_equals_red": 2073600,
+          "no_effect_red_equals_source_red": 2073600,
+          "effect_on_all_zero_values": true
+        }
+      },
+      "cross_host": {
+        "no_effect": {
+          "total": 4147200,
+          "by_channel": {
+            "R": 0,
+            "G": 2073600,
+            "B": 2073600,
+            "A": 0
+          }
+        },
+        "effect_on": {
+          "total": 0,
+          "by_channel": {
+            "R": 0,
+            "G": 0,
+            "B": 0,
+            "A": 0
+          }
+        }
+      }
+    },
+    {
+      "row_id": "olmkirakira__controlled_ramps_off_10__kk_mapped_bm4_mm1_hi_r5_orange_opaque__8bpc__linear_float32_input",
+      "plugin": "OLMKiraKira",
+      "depth": 8,
+      "host": {
+        "windows": {
+          "source_interpretation": {
+            "alpha_mode": 5412,
+            "preserve_rgb_api_available": false,
+            "preserve_rgb": null,
+            "color_profile_name": "undefined",
+            "source_extension": ".exr"
+          },
+          "no_effect_alpha_equals_red": 2073600,
+          "no_effect_red_equals_source_red": 627360,
+          "effect_on_all_zero_values": false
+        },
+        "mac": {
+          "source_interpretation": {
+            "alpha_mode": 5412,
+            "preserve_rgb_api_available": false,
+            "preserve_rgb": null,
+            "color_profile_name": "undefined",
+            "source_extension": ".exr"
+          },
+          "no_effect_alpha_equals_red": 2073600,
+          "no_effect_red_equals_source_red": 627360,
+          "effect_on_all_zero_values": false
+        }
+      },
+      "cross_host": {
+        "no_effect": {
+          "total": 4147200,
+          "by_channel": {
+            "R": 0,
+            "G": 2073600,
+            "B": 2073600,
+            "A": 0
+          }
+        },
+        "effect_on": {
+          "total": 5660477,
+          "by_channel": {
+            "R": 821089,
+            "G": 2073600,
+            "B": 2073600,
+            "A": 692188
+          }
+        }
+      }
+    },
+    {
+      "row_id": "olmkirakira__controlled_ramps_off_10__kk_mapped_bm4_mm1_hi_r5_orange_opaque__16bpc__linear_float32_input",
+      "plugin": "OLMKiraKira",
+      "depth": 16,
+      "host": {
+        "windows": {
+          "source_interpretation": {
+            "alpha_mode": 5412,
+            "preserve_rgb_api_available": false,
+            "preserve_rgb": null,
+            "color_profile_name": "undefined",
+            "source_extension": ".exr"
+          },
+          "no_effect_alpha_equals_red": 2073600,
+          "no_effect_red_equals_source_red": 0,
+          "effect_on_all_zero_values": false
+        },
+        "mac": {
+          "source_interpretation": {
+            "alpha_mode": 5412,
+            "preserve_rgb_api_available": false,
+            "preserve_rgb": null,
+            "color_profile_name": "undefined",
+            "source_extension": ".exr"
+          },
+          "no_effect_alpha_equals_red": 2073600,
+          "no_effect_red_equals_source_red": 0,
+          "effect_on_all_zero_values": false
+        }
+      },
+      "cross_host": {
+        "no_effect": {
+          "total": 4147200,
+          "by_channel": {
+            "R": 0,
+            "G": 2073600,
+            "B": 2073600,
+            "A": 0
+          }
+        },
+        "effect_on": {
+          "total": 5694396,
+          "by_channel": {
+            "R": 851468,
+            "G": 2073600,
+            "B": 2073600,
+            "A": 695728
+          }
+        }
+      }
+    },
+    {
+      "row_id": "olmkirakira__controlled_ramps_off_10__kk_mapped_bm4_mm1_hi_r5_orange_opaque__32bpc__linear_float32_input",
+      "plugin": "OLMKiraKira",
+      "depth": 32,
+      "host": {
+        "windows": {
+          "source_interpretation": {
+            "alpha_mode": 5412,
+            "preserve_rgb_api_available": false,
+            "preserve_rgb": null,
+            "color_profile_name": "undefined",
+            "source_extension": ".exr"
+          },
+          "no_effect_alpha_equals_red": 2073600,
+          "no_effect_red_equals_source_red": 2073600,
+          "effect_on_all_zero_values": false
+        },
+        "mac": {
+          "source_interpretation": {
+            "alpha_mode": 5412,
+            "preserve_rgb_api_available": false,
+            "preserve_rgb": null,
+            "color_profile_name": "undefined",
+            "source_extension": ".exr"
+          },
+          "no_effect_alpha_equals_red": 2073600,
+          "no_effect_red_equals_source_red": 2073600,
+          "effect_on_all_zero_values": false
+        }
+      },
+      "cross_host": {
+        "no_effect": {
+          "total": 4147200,
+          "by_channel": {
+            "R": 0,
+            "G": 2073600,
+            "B": 2073600,
+            "A": 0
+          }
+        },
+        "effect_on": {
+          "total": 5677992,
+          "by_channel": {
+            "R": 835064,
+            "G": 2073600,
+            "B": 2073600,
+            "A": 695728
+          }
+        }
+      }
+    }
+  ],
+  "required_fix": "regenerate source with physical channel order A,B,G,R and invalidate every first-generation pixel artifact",
+  "minimum_recapture": "six effect rows remain necessary for final ColorKeep/Kira PF8/PF16/PF32 exactness; three disabled controls alone can calibrate the corrected source but cannot close effect-on parity"
+}

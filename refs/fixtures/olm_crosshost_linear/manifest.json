@@ -4,7 +4,7 @@
   "source_member": "inputs/opaque_cells_rgba8.png",
   "source_png_sha256": "1ec1c0fa672865b43f7869eec196e0442ab77ce3e4d4711a6cb2e6f6e6844021",
   "output": "refs/fixtures/olm_crosshost_linear/opaque_cells_linear_float32.exr",
-  "output_sha256": "f452bb90cf166ed6cb195eb946f61f513b6f808ecc0e02753cdeaca68aa08a13",
+  "output_sha256": "941ee168b74a73d6653d2b9c84958831812889c33298f4ea6bd49c31a9b554f6",
   "width": 1920,
   "height": 1080,
   "channels": [
@@ -12,6 +12,12 @@
     "G",
     "B",
     "A"
+  ],
+  "physical_channel_order": [
+    "A",
+    "B",
+    "G",
+    "R"
   ],
   "sample_type": "FLOAT32",
   "compression": "none",

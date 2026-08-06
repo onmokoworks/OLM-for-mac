@@ -16,6 +16,7 @@ propertyの存在だけを共通契約の根拠にはしない。
 ## 新しい最小契約
 
 - 入力は1920×1080、RGBA、非圧縮scanline FLOAT32 OpenEXR。
+- channel listと各scanline payloadの物理順はOpenEXRのcanonicalな`A,B,G,R`。
 - 元PNGの各8-bit code valueを`value / 255.0`として一度だけbinary32へ丸める。
 - EXRにICC、gamma、chromaticities属性を付けず、AE projectのworking spaceはNone、
   linear blendingはoff、alphaはstraightとする。
@@ -29,6 +30,26 @@ fixtureは
 `refs/fixtures/olm_crosshost_linear/opaque_cells_linear_float32.exr`、生成根拠は
 同ディレクトリの`manifest.json`、再生成器は
 `scripts/generate_olm_crosshost_linear_fixture_20260806.py`である。
+
+## 第1回linear返却で判明したfixture欠陥
+
+最初のfixtureはsemantic channel自体はRGBAだったが、channel listとpayloadを
+`R,G,B,A`順で書いていた。Windows/Mac返却を解析すると、全6行・全深度で
+effect-offの`A == R`が2,073,600 pixelすべてに成立し、PF32では両者がsource Rとも
+一致した。つまり先頭R planeがalphaへ誤bindされていた。誤alphaによるpremultiply
+経路がhost間で異なり、effect-offは全行でG/B各2,073,600値、合計4,147,200値が
+不一致になった。
+
+ColorKeep effect-onは両host・全深度でRGBA全面`+0.0f`となったため、その0差は
+ColorKeep parityの有効な証拠ではない。Kira effect-on差も壊れた入力から派生しており
+無効である。第1回Windows/Mac returnは原因証拠として保持するが、pixel exact判定
+からは全6行を失効させる。
+
+生成器は物理順`A,B,G,R`へ修正済み。修正版fixture SHA-256は
+`941ee168b74a73d6653d2b9c84958831812889c33298f4ea6bd49c31a9b554f6`、package SHA-256は
+`50715bef2dff8f4338c818dc78a827ae8bf65680c6397401015b313c78856cef`。
+機械可読な全6行差分は
+`refs/conformance/olm_crosshost_linear_input_first_return_audit_20260806.json`に固定した。
 
 ## 既存証拠の再利用境界
 

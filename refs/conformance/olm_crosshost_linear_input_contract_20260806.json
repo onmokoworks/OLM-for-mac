@@ -1,7 +1,7 @@
 {
   "kind": "olm_crosshost_linear_input_contract_evidence",
   "schema_version": 1,
-  "status": "ready_for_mac_and_minimal_windows_observation",
+  "status": "corrected_fixture_ready_for_second_observation",
   "cause_observation": {
     "source": "refs/conformance/colorkeep_windows_mac_ae_boundary_20260806.json",
     "plugins_observed": ["ColorKeep", "OLMKiraKira"],
@@ -14,7 +14,7 @@
   "fixture": {
     "path": "refs/fixtures/olm_crosshost_linear/opaque_cells_linear_float32.exr",
     "manifest": "refs/fixtures/olm_crosshost_linear/manifest.json",
-    "sha256": "f452bb90cf166ed6cb195eb946f61f513b6f808ecc0e02753cdeaca68aa08a13",
+    "sha256": "941ee168b74a73d6653d2b9c84958831812889c33298f4ea6bd49c31a9b554f6",
     "dimensions": [1920, 1080],
     "sample_type": "FLOAT32",
     "compression": "none",
@@ -22,11 +22,19 @@
   },
   "request": {
     "path": "refs/reference_requests/olm_crosshost_linear_input_20260806.zip",
-    "sha256": "15280cde0e8208c549a7b6ee124cd2e2da2dae8f2ae3f46dc643235e51128c76",
+    "sha256": "50715bef2dff8f4338c818dc78a827ae8bf65680c6397401015b313c78856cef",
     "rows": 6,
     "plugins": ["ColorKeep", "OLMKiraKira"],
     "depths": [8, 16, 32],
     "branches_per_row": ["no_effect", "effect_on"]
+  },
+  "first_generation_invalidated": {
+    "package_sha256": "15280cde0e8208c549a7b6ee124cd2e2da2dae8f2ae3f46dc643235e51128c76",
+    "fixture_sha256": "f452bb90cf166ed6cb195eb946f61f513b6f808ecc0e02753cdeaca68aa08a13",
+    "windows_return_sha256": "680e5f43ba79528f092a04905212527b2a1c9070d36099c167acf864d691c54e",
+    "mac_return_sha256": "43e4e9645337e2b6660c7bcec317725ea3068a01bdf8ac08a0bf573c195f7662",
+    "root_cause": "fixture used non-canonical physical channel order R,G,B,A; AE bound first plane as alpha",
+    "focused_audit": "refs/conformance/olm_crosshost_linear_input_first_return_audit_20260806.json"
   },
   "preserve_rgb_policy": {
     "finding": "ExtendScript may expose mainSource.preserveRGB as undefined",
@@ -44,7 +52,7 @@
   },
   "tests": {
     "command": "python3 -m unittest tests.test_olm_crosshost_linear_input_20260806 tests.test_strict_float_exr",
-    "result": "10 tests passed"
+    "result": "12 tests passed"
   },
-  "claim_boundary": "Artifacts and runners are ready, but no cross-host exact claim exists until a new Windows return and the paired Mac return pass zero-word-delta verification for all six rows."
+  "claim_boundary": "Corrected ABGR artifacts and runners are ready, but no cross-host exact claim exists until a second Windows return and paired Mac return pass zero-word-delta verification for all six rows."
 }

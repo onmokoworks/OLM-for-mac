@@ -93,6 +93,7 @@ def main() -> int:
             "sha256": fixture_hash,
             "dimensions": [1920, 1080],
             "channels": ["A", "B", "G", "R"],
+            "physical_channel_order": ["A", "B", "G", "R"],
             "sample_type": "FLOAT32",
             "compression": "none",
             "working_space_raw_accepted": [None, ""],

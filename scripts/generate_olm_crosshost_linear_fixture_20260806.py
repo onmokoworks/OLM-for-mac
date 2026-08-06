@@ -45,9 +45,13 @@ def generate(output: Path) -> dict:
     def attr(name: str, kind: str, value: bytes) -> bytes:
         return name.encode() + b"\0" + kind.encode() + b"\0" + struct.pack("<I", len(value)) + value
 
+    # OpenEXR channel lists and scanline payloads are canonicalized in
+    # lexicographic physical order.  AE's Windows and macOS readers disagree
+    # on a non-canonical R,G,B,A list (the first plane can become alpha).
+    physical_order = "ABGR"
     channels = b"".join(
         name.encode() + b"\0" + struct.pack("<iB3xii", 2, 0, 1, 1)
-        for name in "RGBA"
+        for name in physical_order
     ) + b"\0"
     window = struct.pack("<4i", 0, 0, width - 1, height - 1)
     header = b"".join((
@@ -73,7 +77,7 @@ def generate(output: Path) -> dict:
         for y in range(height):
             stream.write(struct.pack("<iI", y, row_payload_bytes))
             start, end = y * width * 4, (y + 1) * width * 4
-            for name in "RGBA":
+            for name in physical_order:
                 stream.write(planes[name][start:end])
     payload = output.read_bytes()
     return {
@@ -86,6 +90,7 @@ def generate(output: Path) -> dict:
         "width": width,
         "height": height,
         "channels": ["R", "G", "B", "A"],
+        "physical_channel_order": ["A", "B", "G", "R"],
         "sample_type": "FLOAT32",
         "compression": "none",
         "conversion": "rgba8 code value / 255.0 rounded once to IEEE-754 binary32",
