@@ -1,0 +1,892 @@
+{
+  "cases": [
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "016243b2e87bb7ab9bd4e37225658870cb01ce2b01f396f193ed69359eed6150",
+      "case": "enabled_black_key_edge_blur_1_single",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF8",
+      "production_expected_active_sha256": "016243b2e87bb7ab9bd4e37225658870cb01ce2b01f396f193ed69359eed6150",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "8b5cbc4a643f21a40397ba3057bd6fc5d4e4bde90737d10a4f592d4f3f872832",
+      "case": "enabled_black_key_edge_blur_1_line",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "separately pinned by depth-specific full-worker audit",
+      "pixel_format": "PF8",
+      "production_expected_active_sha256": "8b5cbc4a643f21a40397ba3057bd6fc5d4e4bde90737d10a4f592d4f3f872832",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "17b0761f87b081d5cf10757ccc89f12be355c70e2e29df288b65b30710dcbcd1",
+      "case": "enabled_black_key_edge_blur_1_all",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "separately pinned by depth-specific full-worker audit",
+      "pixel_format": "PF8",
+      "production_expected_active_sha256": "17b0761f87b081d5cf10757ccc89f12be355c70e2e29df288b65b30710dcbcd1",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "016243b2e87bb7ab9bd4e37225658870cb01ce2b01f396f193ed69359eed6150",
+      "case": "enabled_black_key_edge_blur_2_single",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF8",
+      "production_expected_active_sha256": "016243b2e87bb7ab9bd4e37225658870cb01ce2b01f396f193ed69359eed6150",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "016243b2e87bb7ab9bd4e37225658870cb01ce2b01f396f193ed69359eed6150",
+      "case": "enabled_black_key_edge_blur_1.5_single",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF8",
+      "production_expected_active_sha256": "016243b2e87bb7ab9bd4e37225658870cb01ce2b01f396f193ed69359eed6150",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "016243b2e87bb7ab9bd4e37225658870cb01ce2b01f396f193ed69359eed6150",
+      "case": "enabled_black_key_edge_blur_0.5_single",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF8",
+      "production_expected_active_sha256": "016243b2e87bb7ab9bd4e37225658870cb01ce2b01f396f193ed69359eed6150",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "016243b2e87bb7ab9bd4e37225658870cb01ce2b01f396f193ed69359eed6150",
+      "case": "enabled_black_key_edge_blur_2.5_single",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF8",
+      "production_expected_active_sha256": "016243b2e87bb7ab9bd4e37225658870cb01ce2b01f396f193ed69359eed6150",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "016243b2e87bb7ab9bd4e37225658870cb01ce2b01f396f193ed69359eed6150",
+      "case": "enabled_black_key_edge_blur_3_single",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF8",
+      "production_expected_active_sha256": "016243b2e87bb7ab9bd4e37225658870cb01ce2b01f396f193ed69359eed6150",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "016243b2e87bb7ab9bd4e37225658870cb01ce2b01f396f193ed69359eed6150",
+      "case": "enabled_black_key_edge_blur_3.5_single",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF8",
+      "production_expected_active_sha256": "016243b2e87bb7ab9bd4e37225658870cb01ce2b01f396f193ed69359eed6150",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "016243b2e87bb7ab9bd4e37225658870cb01ce2b01f396f193ed69359eed6150",
+      "case": "enabled_black_key_edge_blur_4_single",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF8",
+      "production_expected_active_sha256": "016243b2e87bb7ab9bd4e37225658870cb01ce2b01f396f193ed69359eed6150",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "f7f8383f06495bbca4efb7f4acc6e8c42461683b8cf59265a588c052e4bad2f4",
+      "case": "enabled_black_key_edge_blur_2_single_direction_1",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF8",
+      "production_expected_active_sha256": "f7f8383f06495bbca4efb7f4acc6e8c42461683b8cf59265a588c052e4bad2f4",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "9066df9de8c71b8f92c169fd2eb663140d16635458d6ad8a53b432cde061335f",
+      "case": "enabled_black_key_edge_blur_2_single_direction_3",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF8",
+      "production_expected_active_sha256": "9066df9de8c71b8f92c169fd2eb663140d16635458d6ad8a53b432cde061335f",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "9066df9de8c71b8f92c169fd2eb663140d16635458d6ad8a53b432cde061335f",
+      "case": "enabled_black_key_edge_blur_2_single_direction_4",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF8",
+      "production_expected_active_sha256": "9066df9de8c71b8f92c169fd2eb663140d16635458d6ad8a53b432cde061335f",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "9066df9de8c71b8f92c169fd2eb663140d16635458d6ad8a53b432cde061335f",
+      "case": "enabled_black_key_edge_blur_2_single_direction_0",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF8",
+      "production_expected_active_sha256": "9066df9de8c71b8f92c169fd2eb663140d16635458d6ad8a53b432cde061335f",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "f7f8383f06495bbca4efb7f4acc6e8c42461683b8cf59265a588c052e4bad2f4",
+      "case": "enabled_black_key_edge_blur_1_single_direction_1",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF8",
+      "production_expected_active_sha256": "f7f8383f06495bbca4efb7f4acc6e8c42461683b8cf59265a588c052e4bad2f4",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "b07ec60c1f924708c317cd981a34245ea7cc7e40224fbafdd0d13616660f9efa",
+      "case": "enabled_black_key_edge_blur_2_center",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF8",
+      "production_expected_active_sha256": "b07ec60c1f924708c317cd981a34245ea7cc7e40224fbafdd0d13616660f9efa",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "28e2c17e461254d64b3d0df996e58c70d6b12d9fb486a4b44bbea01f28588501",
+      "case": "enabled_black_key_edge_blur_1_single",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF16",
+      "production_expected_active_sha256": "28e2c17e461254d64b3d0df996e58c70d6b12d9fb486a4b44bbea01f28588501",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "28e2c17e461254d64b3d0df996e58c70d6b12d9fb486a4b44bbea01f28588501",
+      "case": "enabled_black_key_edge_blur_2_single",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF16",
+      "production_expected_active_sha256": "28e2c17e461254d64b3d0df996e58c70d6b12d9fb486a4b44bbea01f28588501",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "28e2c17e461254d64b3d0df996e58c70d6b12d9fb486a4b44bbea01f28588501",
+      "case": "enabled_black_key_edge_blur_1.5_single",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF16",
+      "production_expected_active_sha256": "28e2c17e461254d64b3d0df996e58c70d6b12d9fb486a4b44bbea01f28588501",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "28e2c17e461254d64b3d0df996e58c70d6b12d9fb486a4b44bbea01f28588501",
+      "case": "enabled_black_key_edge_blur_0.5_single",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF16",
+      "production_expected_active_sha256": "28e2c17e461254d64b3d0df996e58c70d6b12d9fb486a4b44bbea01f28588501",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "28e2c17e461254d64b3d0df996e58c70d6b12d9fb486a4b44bbea01f28588501",
+      "case": "enabled_black_key_edge_blur_2.5_single",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF16",
+      "production_expected_active_sha256": "28e2c17e461254d64b3d0df996e58c70d6b12d9fb486a4b44bbea01f28588501",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "28e2c17e461254d64b3d0df996e58c70d6b12d9fb486a4b44bbea01f28588501",
+      "case": "enabled_black_key_edge_blur_3_single",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF16",
+      "production_expected_active_sha256": "28e2c17e461254d64b3d0df996e58c70d6b12d9fb486a4b44bbea01f28588501",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "28e2c17e461254d64b3d0df996e58c70d6b12d9fb486a4b44bbea01f28588501",
+      "case": "enabled_black_key_edge_blur_3.5_single",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF16",
+      "production_expected_active_sha256": "28e2c17e461254d64b3d0df996e58c70d6b12d9fb486a4b44bbea01f28588501",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "28e2c17e461254d64b3d0df996e58c70d6b12d9fb486a4b44bbea01f28588501",
+      "case": "enabled_black_key_edge_blur_4_single",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF16",
+      "production_expected_active_sha256": "28e2c17e461254d64b3d0df996e58c70d6b12d9fb486a4b44bbea01f28588501",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "dde68c9bc8247e6078598f051258ac0ff892d03ff11e9e377d51fd6995e2c889",
+      "case": "enabled_black_key_edge_blur_2_single_direction_1",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF16",
+      "production_expected_active_sha256": "dde68c9bc8247e6078598f051258ac0ff892d03ff11e9e377d51fd6995e2c889",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "5171cb9eb3b1f49c57c6be9051e6d99dfbe6afa35c87e6f72ff5ad44aea7fb18",
+      "case": "enabled_black_key_edge_blur_2_single_direction_3",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF16",
+      "production_expected_active_sha256": "5171cb9eb3b1f49c57c6be9051e6d99dfbe6afa35c87e6f72ff5ad44aea7fb18",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "5171cb9eb3b1f49c57c6be9051e6d99dfbe6afa35c87e6f72ff5ad44aea7fb18",
+      "case": "enabled_black_key_edge_blur_2_single_direction_4",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF16",
+      "production_expected_active_sha256": "5171cb9eb3b1f49c57c6be9051e6d99dfbe6afa35c87e6f72ff5ad44aea7fb18",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "5171cb9eb3b1f49c57c6be9051e6d99dfbe6afa35c87e6f72ff5ad44aea7fb18",
+      "case": "enabled_black_key_edge_blur_2_single_direction_0",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF16",
+      "production_expected_active_sha256": "5171cb9eb3b1f49c57c6be9051e6d99dfbe6afa35c87e6f72ff5ad44aea7fb18",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "dde68c9bc8247e6078598f051258ac0ff892d03ff11e9e377d51fd6995e2c889",
+      "case": "enabled_black_key_edge_blur_1_single_direction_1",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF16",
+      "production_expected_active_sha256": "dde68c9bc8247e6078598f051258ac0ff892d03ff11e9e377d51fd6995e2c889",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "490fd6f9906d2099573be3f25bed391f3798efd322c5a6f513ab9db67b0577c9",
+      "case": "enabled_black_key_edge_blur_2_center",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF16",
+      "production_expected_active_sha256": "490fd6f9906d2099573be3f25bed391f3798efd322c5a6f513ab9db67b0577c9",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "e1ac0043748077c93ac162f6cc2808606b8c9f685e3a91038181eae3242bdd93",
+      "case": "enabled_black_key_edge_blur_1_single",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF32",
+      "production_expected_active_sha256": "e1ac0043748077c93ac162f6cc2808606b8c9f685e3a91038181eae3242bdd93",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "7213e89ddc394e5d4510fc44bf5c422b5ca56a5a83bc6e8abfadb4445fbe4d0f",
+      "case": "enabled_black_key_edge_blur_1_line",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "separately pinned by depth-specific full-worker audit",
+      "pixel_format": "PF32",
+      "production_expected_active_sha256": "7213e89ddc394e5d4510fc44bf5c422b5ca56a5a83bc6e8abfadb4445fbe4d0f",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "5d89f056865052bcb89c910d2d62872e029fb273c3db03f8968a52a41593c1b5",
+      "case": "enabled_black_key_edge_blur_1_all",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "separately pinned by depth-specific full-worker audit",
+      "pixel_format": "PF32",
+      "production_expected_active_sha256": "5d89f056865052bcb89c910d2d62872e029fb273c3db03f8968a52a41593c1b5",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "ee64c5edc1e5b5ec4dbb1d6e70fa697c205a3fd6fabdfccd31ee1a541b859bf3",
+      "case": "enabled_black_key_edge_blur_2_single",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF32",
+      "production_expected_active_sha256": "ee64c5edc1e5b5ec4dbb1d6e70fa697c205a3fd6fabdfccd31ee1a541b859bf3",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "739b63e76481a89d8c93caaee0d03f8c0cede2eb27012560e936fecb907805ab",
+      "case": "enabled_black_key_edge_blur_1.5_single",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF32",
+      "production_expected_active_sha256": "739b63e76481a89d8c93caaee0d03f8c0cede2eb27012560e936fecb907805ab",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "e1ac0043748077c93ac162f6cc2808606b8c9f685e3a91038181eae3242bdd93",
+      "case": "enabled_black_key_edge_blur_0.5_single",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF32",
+      "production_expected_active_sha256": "e1ac0043748077c93ac162f6cc2808606b8c9f685e3a91038181eae3242bdd93",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "1d078fdacd3e0b5b87c52fa33efab4341a3bb7f63ae6bf3c49ecf199bc074e72",
+      "case": "enabled_black_key_edge_blur_2.5_single",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF32",
+      "production_expected_active_sha256": "1d078fdacd3e0b5b87c52fa33efab4341a3bb7f63ae6bf3c49ecf199bc074e72",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "e8f1b2c668946197a923306db6de16a49ded4466a95c3fd93af22fc4bbe0b585",
+      "case": "enabled_black_key_edge_blur_3_single",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF32",
+      "production_expected_active_sha256": "e8f1b2c668946197a923306db6de16a49ded4466a95c3fd93af22fc4bbe0b585",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "20ead2976a9e5d6e372dc9015f99ae8a931a69bbd86cc55d8989383547a1f1fc",
+      "case": "enabled_black_key_edge_blur_3.5_single",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF32",
+      "production_expected_active_sha256": "20ead2976a9e5d6e372dc9015f99ae8a931a69bbd86cc55d8989383547a1f1fc",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "3eca06f14e379249ff7ecc1a6f99ab556dc76f3c0d29ad2c9b4b003b1745bf52",
+      "case": "enabled_black_key_edge_blur_4_single",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF32",
+      "production_expected_active_sha256": "3eca06f14e379249ff7ecc1a6f99ab556dc76f3c0d29ad2c9b4b003b1745bf52",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "a2feafbbccffd15cd73d3816d7ee28f5d08d03d72af0878fcb19f783ef160483",
+      "case": "enabled_black_key_edge_blur_2_single_direction_1",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF32",
+      "production_expected_active_sha256": "a2feafbbccffd15cd73d3816d7ee28f5d08d03d72af0878fcb19f783ef160483",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "c68d62702c02aef5648aa979655a274d7a9f134dcd74fb856674d8d0a05058ba",
+      "case": "enabled_black_key_edge_blur_2_single_direction_3",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF32",
+      "production_expected_active_sha256": "c68d62702c02aef5648aa979655a274d7a9f134dcd74fb856674d8d0a05058ba",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "c68d62702c02aef5648aa979655a274d7a9f134dcd74fb856674d8d0a05058ba",
+      "case": "enabled_black_key_edge_blur_2_single_direction_4",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF32",
+      "production_expected_active_sha256": "c68d62702c02aef5648aa979655a274d7a9f134dcd74fb856674d8d0a05058ba",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "c68d62702c02aef5648aa979655a274d7a9f134dcd74fb856674d8d0a05058ba",
+      "case": "enabled_black_key_edge_blur_2_single_direction_0",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF32",
+      "production_expected_active_sha256": "c68d62702c02aef5648aa979655a274d7a9f134dcd74fb856674d8d0a05058ba",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "a2feafbbccffd15cd73d3816d7ee28f5d08d03d72af0878fcb19f783ef160483",
+      "case": "enabled_black_key_edge_blur_1_single_direction_1",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF32",
+      "production_expected_active_sha256": "a2feafbbccffd15cd73d3816d7ee28f5d08d03d72af0878fcb19f783ef160483",
+      "status": "pass"
+    },
+    {
+      "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "actual_output_active_sha256": "71c199f0c4a63c7b1a85fb987fb04499dc53e789ec47ebc69dde0765fca459b1",
+      "case": "enabled_black_key_edge_blur_2_center",
+      "gates": {
+        "actual_aex_status_pass": true,
+        "actual_alpha_exact": true,
+        "actual_full_argb_active_bytes_exact": true,
+        "actual_output_padding_preserved": true,
+        "internal_direction_plane_exact_or_separately_pinned": true,
+        "production_input_padding_preserved": true,
+        "production_output_padding_preserved": true,
+        "production_parameter_checkout_order_verified": true
+      },
+      "internal_plane_comparison": "direct production adapter equality",
+      "pixel_format": "PF32",
+      "production_expected_active_sha256": "71c199f0c4a63c7b1a85fb987fb04499dc53e789ec47ebc69dde0765fca459b1",
+      "status": "pass"
+    }
+  ],
+  "claim_boundary": "PF16 amount-1 line/all are excluded because they lack a direct production adapter render. No interpolation to uncaptured combinations, arbitrary geometry, non-Edge-Blur parameters, or AE-host render claim.",
+  "counts": {
+    "PF16": 14,
+    "PF32": 16,
+    "PF8": 16,
+    "total": 46
+  },
+  "exactness": "For every admitted cell: hash-pinned actual-AEX full ARGB active bytes, final alpha, internal direction plane, and padding are exact to the current production SmartRender typed-writer contract.",
+  "kind": "olmcolorkey_edge_blur_complete_family_20260806",
+  "production_adapter": "tools/emulation/test_olmcolorkey_mac_smartrender_adapter_20260717.py",
+  "production_source": "mac/OLMColorKey/OLMColorKey.cpp",
+  "schema_version": 1,
+  "scope": "The production-admitted retained 4x3 Edge Blur fixtures: 16 PF8, 14 PF16, and 16 PF32 cells covering direction-2 amounts, all public directions at amount 2, direction-1 amount 1, and center-key amount 2 where directly exercised.",
+  "status": "pass"
+}
