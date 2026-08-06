@@ -107,7 +107,8 @@ def run_actual() -> tuple[dict[str, bytes], dict[str, object]]:
     m4.install_reader_detours(loader, params)
     capture: dict[str, object] = {"order": [], "helper_calls": 0, "helper_active": False,
                                   "trace_enabled": True, "first_inner_trace": [],
-                                  "all_store_count": 0, "all_store_hash": hashlib.sha256()}
+                                  "all_store_count": 0, "all_store_hash": hashlib.sha256(),
+                                  "mode": "natural", "call_contexts": [], "call_store_digests": []}
     gp_regs = (UC_X86_REG_RAX, UC_X86_REG_RBX, UC_X86_REG_RCX, UC_X86_REG_RDX,
                UC_X86_REG_RSI, UC_X86_REG_RDI, UC_X86_REG_RBP, UC_X86_REG_RSP,
                UC_X86_REG_R8, UC_X86_REG_R9, UC_X86_REG_R10, UC_X86_REG_R11,
@@ -140,8 +141,19 @@ def run_actual() -> tuple[dict[str, bytes], dict[str, object]]:
         capture["final_rgba"] = ld.read_bytes(m4.u64(ld, owner_work + 0xA0), W * H * 16)
 
     def helper_entry(ld, _address, _size):
+        if capture["mode"] == "replay":
+            capture["helper_active"] = True
+            capture["current_call_hash"] = hashlib.sha256()
+            capture["current_call_stores"] = 0
+            return
         capture["helper_calls"] += 1
         capture["helper_active"] = True
+        capture["current_call_hash"] = hashlib.sha256()
+        capture["current_call_stores"] = 0
+        rsp0 = ld.uc.reg_read(UC_X86_REG_RSP)
+        capture["call_contexts"].append({"gp": [ld.uc.reg_read(reg) for reg in gp_regs],
+                                          "xmm": [ld.uc.reg_read(reg) for reg in xmm_regs],
+                                          "stack": ld.read_bytes(rsp0, 0x100)})
         return_address = struct.unpack("<Q", ld.read_bytes(ld.uc.reg_read(UC_X86_REG_RSP), 8))[0]
         if return_address not in capture.setdefault("helper_returns", set()):
             capture["helper_returns"].add(return_address)
@@ -164,6 +176,8 @@ def run_actual() -> tuple[dict[str, bytes], dict[str, object]]:
             "work": work,
             "accum_ptr": ptrs["accum_rgba"], "max_ptr": ptrs["max_alpha"],
         }
+        capture["model_accum"] = bytearray(capture["helper"]["accum_before"])
+        capture["model_max"] = bytearray(capture["helper"]["max_before"])
         ld.add_code_hook(capture["helper"]["return_address"], helper_return)
 
     def helper_return(ld, _address, _size):
@@ -174,6 +188,9 @@ def run_actual() -> tuple[dict[str, bytes], dict[str, object]]:
         helper["max_after"] = ld.read_bytes(helper["max_ptr"], CELLS * 4)
 
     def helper_any_return(_ld, address, _size):
+        if capture["mode"] == "natural":
+            capture["call_store_digests"].append({"sha256": capture["current_call_hash"].hexdigest(),
+                                                   "stores": capture["current_call_stores"]})
         capture["helper_active"] = False
         if "helper" in capture and address == capture["helper"]["return_address"]:
             capture["record_first_inner"] = False
@@ -189,12 +206,15 @@ def run_actual() -> tuple[dict[str, bytes], dict[str, object]]:
                 offset = address - base_ptr
                 raw_value = int(value).to_bytes(size, "little", signed=False)
                 record = struct.pack("<BII", 0 if region == "accum" else 1, offset, size) + raw_value
-                model = capture.setdefault(f"model_{region}", bytearray(helper[f"{region}_before"]))
-                model[offset:offset + size] = raw_value
-                capture["all_region_write_count"] = capture.get("all_region_write_count", 0) + 1
+                if capture["mode"] == "natural":
+                    model = capture[f"model_{region}"]
+                    model[offset:offset + size] = raw_value
+                    capture["all_region_write_count"] = capture.get("all_region_write_count", 0) + 1
                 if capture["helper_active"]:
                     capture["all_store_hash"].update(record)
                     capture["all_store_count"] += 1
+                    capture["current_call_hash"].update(record)
+                    capture["current_call_stores"] += 1
                 if capture["helper_active"] and capture.get("record_first_inner", True):
                     capture["first_inner_trace"].append({"region": region, "offset": offset,
                                                           "size": size, "value_hex": raw_value.hex()})
@@ -218,6 +238,13 @@ def run_actual() -> tuple[dict[str, bytes], dict[str, object]]:
     if not helper or "accum_after" not in helper:
         raise RuntimeError("fail-closed first helper call was not captured through return")
     capture["record_first_inner"] = False
+    natural_trace_summary = {
+        "helper_store_count": capture["all_store_count"],
+        "all_region_write_count": capture.get("all_region_write_count", 0),
+        "sha256": capture["all_store_hash"].hexdigest(),
+        "reconstructed_accum_exact": bytes(capture["model_accum"]) == capture["post_normalize"]["accum_rgba"],
+        "reconstructed_max_exact": bytes(capture["model_max"]) == capture["post_normalize"]["max_alpha"],
+    }
     artifacts: dict[str, bytes] = {"source_pf16": base.source_frame()}
     for stage in ("pre_b150", "post_b150_pre_a9d0", "post_normalize"):
         for name, raw in capture[stage].items():
@@ -247,6 +274,36 @@ def run_actual() -> tuple[dict[str, bytes], dict[str, object]]:
     replay = {"instructions": loader.instructions_executed - before_instructions,
               "accum_exact": replay_accum == helper["accum_after"],
               "max_exact": replay_max == helper["max_after"]}
+    # Replay every natural helper call sequentially from the exact post-prepass planes.
+    loader.write_bytes(helper["accum_ptr"], capture["post_b150_pre_a9d0"]["accum_rgba"])
+    loader.write_bytes(helper["max_ptr"], capture["post_b150_pre_a9d0"]["max_alpha"])
+    capture["mode"] = "replay"
+    capture["record_first_inner"] = False
+    first_divergence = None
+    replay_instructions = 0
+    for call_index, (context, expected_digest) in enumerate(zip(capture["call_contexts"], capture["call_store_digests"])):
+        stack_pointer = context["gp"][7]
+        loader.write_bytes(stack_pointer, struct.pack("<Q", RETURN_TRAMPOLINE) + context["stack"][8:])
+        for reg, value in zip(gp_regs, context["gp"]): loader.uc.reg_write(reg, value)
+        loader.uc.reg_write(UC_X86_REG_RSP, stack_pointer)
+        for reg, value in zip(xmm_regs, context["xmm"]): loader.uc.reg_write(reg, value)
+        start_count = loader.instructions_executed
+        loader.uc.emu_start(INNER_HELPER, RETURN_TRAMPOLINE, count=5_000_000)
+        replay_instructions += loader.instructions_executed - start_count
+        observed = {"sha256": capture["current_call_hash"].hexdigest(),
+                    "stores": capture["current_call_stores"]}
+        if observed != expected_digest:
+            first_divergence = {"call_index": call_index, "expected": expected_digest,
+                                "observed": observed, "direction": context["gp"][3]}
+            break
+    sequence_accum = loader.read_bytes(helper["accum_ptr"], CELLS * 16)
+    sequence_max = loader.read_bytes(helper["max_ptr"], CELLS * 4)
+    sequence_replay = {"calls_expected": len(capture["call_contexts"]),
+                       "calls_replayed": len(capture["call_contexts"]) if first_divergence is None else first_divergence["call_index"] + 1,
+                       "instructions": replay_instructions, "first_divergence": first_divergence,
+                       "store_streams_exact": first_divergence is None,
+                       "accum_exact": first_divergence is None and sequence_accum == capture["post_normalize"]["accum_rgba"],
+                       "max_exact": first_divergence is None and sequence_max == capture["post_normalize"]["max_alpha"]}
     capture["trace_enabled"] = False
     changed_cells = []
     for cell in range(CELLS):
@@ -254,7 +311,7 @@ def run_actual() -> tuple[dict[str, bytes], dict[str, object]]:
         if helper["accum_before"][lo:hi] != helper["accum_after"][lo:hi]:
             changed_cells.append([cell // 1800, cell % 1800])
     first_trace = capture["first_inner_trace"]
-    meta = {"setup_instructions": setup["instructions"], "owner_instructions": owner["instructions"], "worker_order": capture["order"], "inner_base_length": capture["inner_base_length"], "helper_calls": capture["helper_calls"], "first_helper_return": hex(helper["return_address"]), "first_helper_registers": {"gp": [hex(x) for x in helper["gp"]], "xmm": [hex(x) for x in helper["xmm"]]}, "first_inner_helper_write_set": {"changed_cells": changed_cells, "count": len(changed_cells), "max_plane_changed": helper["max_before"] != helper["max_after"], "memory_store_count": len(first_trace), "memory_stores": first_trace, "candidate_store_discriminator": {"actual_first_store": first_trace[0], "portable_backward_first_store": {"region": "accum", "offset": 1799 * 16, "size": 4, "channel": "red"}, "portable_forward_first_store": {"region": "accum", "offset": 1 * 16, "size": 4, "channel": "red"}, "classification": "actual walks cells 1799 down to 1770 and stores alpha, blue, green, red; both current portable candidates store red first and forward chooses cell 1"}}, "all_helper_store_trace": {"helper_store_count": capture["all_store_count"], "all_region_write_count": capture.get("all_region_write_count", 0), "sha256": capture["all_store_hash"].hexdigest(), "reconstructed_accum_exact": bytes(capture["model_accum"]) == capture["post_normalize"]["accum_rgba"], "reconstructed_max_exact": bytes(capture["model_max"]) == capture["post_normalize"]["max_alpha"], "classification": "compact trace captured, but replaying callback values alone does not reconstruct final accum; full-call semantics not promoted"}, "direct_replay": replay}
+    meta = {"setup_instructions": setup["instructions"], "owner_instructions": owner["instructions"], "worker_order": capture["order"], "inner_base_length": capture["inner_base_length"], "helper_calls": capture["helper_calls"], "first_helper_return": hex(helper["return_address"]), "first_helper_registers": {"gp": [hex(x) for x in helper["gp"]], "xmm": [hex(x) for x in helper["xmm"]]}, "first_inner_helper_write_set": {"changed_cells": changed_cells, "count": len(changed_cells), "max_plane_changed": helper["max_before"] != helper["max_after"], "memory_store_count": len(first_trace), "memory_stores": first_trace, "candidate_store_discriminator": {"actual_first_store": first_trace[0], "portable_backward_first_store": {"region": "accum", "offset": 1799 * 16, "size": 4, "channel": "red"}, "portable_forward_first_store": {"region": "accum", "offset": 1 * 16, "size": 4, "channel": "red"}, "classification": "actual walks cells 1799 down to 1770 and stores alpha, blue, green, red; both current portable candidates store red first and forward chooses cell 1"}}, "all_helper_store_trace": natural_trace_summary, "sequence_replay": sequence_replay, "direct_replay": replay}
     return artifacts, meta
 
 
@@ -286,6 +343,8 @@ def main() -> int:
         "output_padding_preserved": padding_exact,
         "instruction_budget": execution["owner_instructions"] <= 500_000_000,
         "first_helper_direct_replay": all(execution["direct_replay"][key] for key in ("accum_exact", "max_exact")),
+        "full_helper_sequence_replay": all(execution["sequence_replay"][key] for key in ("store_streams_exact", "accum_exact", "max_exact")),
+        "offline_store_folding": all(execution["all_helper_store_trace"][key] for key in ("reconstructed_accum_exact", "reconstructed_max_exact")),
     }
     report = {
         "kind": "olmradialblur_rotation_pf16_inner32_small_actual_aex_20260806",

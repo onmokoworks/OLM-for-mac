@@ -208,12 +208,11 @@
   },
   "execution": {
     "all_helper_store_trace": {
-      "all_region_write_count": 1330227,
-      "classification": "compact trace captured, but replaying callback values alone does not reconstruct final accum; full-call semantics not promoted",
-      "helper_store_count": 1330227,
-      "reconstructed_accum_exact": false,
+      "all_region_write_count": 1330107,
+      "helper_store_count": 1330107,
+      "reconstructed_accum_exact": true,
       "reconstructed_max_exact": true,
-      "sha256": "0b1a7c8b2d7c279a73c6de567a7094f7ce24b32af2ee4bfb6f54f1fe676b9034"
+      "sha256": "0408c5ca8f6abc10da7fc100975f713658705a758ea205a2675e42590a8d5405"
     },
     "direct_replay": {
       "accum_exact": true,
@@ -1132,6 +1131,15 @@
     "helper_calls": 22349,
     "inner_base_length": 31,
     "owner_instructions": 19687384,
+    "sequence_replay": {
+      "accum_exact": true,
+      "calls_expected": 22349,
+      "calls_replayed": 22349,
+      "first_divergence": null,
+      "instructions": 11535289,
+      "max_exact": true,
+      "store_streams_exact": true
+    },
     "setup_instructions": 208,
     "worker_order": [
       "prepass",
@@ -1143,11 +1151,13 @@
     "all_stages_captured": true,
     "first_helper_direct_replay": true,
     "first_helper_hashes_pinned": true,
+    "full_helper_sequence_replay": true,
     "inner_base_length_nonzero": true,
     "instruction_budget": true,
     "key_hashes_pinned": true,
     "nonzero_inner_changed_accum": true,
     "nonzero_inner_output_differs_from_zero_fixture": true,
+    "offline_store_folding": true,
     "output_padding_preserved": true,
     "worker_order": true
   },
