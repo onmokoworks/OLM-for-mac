@@ -517,18 +517,23 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		return RenderDirectional8(input, output, info);
 	}
 	if (bitdepth == 16) {
+		const bool front_only_exact =
+			(info.front_strength == 1 || info.front_strength == 2 || info.front_strength == 8) &&
+			info.back_strength == 0;
+		const bool back_family_exact =
+			(((info.front_strength == 0 || info.front_strength == 1 ||
+			   info.front_strength == 2 || info.front_strength == 8) &&
+			  info.back_strength == 1) ||
+			 (info.front_strength == 0 &&
+			  (info.back_strength == 2 || info.back_strength == 8))) &&
+			info.angle_deg == 45.0 && info.brightness_gain == 1.0 &&
+			info.noise_variation == 0.0;
 		const bool minimal_exact = input && output && input->data && output->data &&
 			input->width == output->width && input->height == output->height &&
 			(info.angle_deg == 0.0 || info.angle_deg == 45.0) &&
 			(info.brightness_gain == 1.0 || info.brightness_gain == 0.5) &&
 			info.size_variation == 0.0 &&
-			(((info.front_strength == 1 || info.front_strength == 2 || info.front_strength == 8) &&
-			  info.back_strength == 0) ||
-			 ((info.front_strength == 0 || info.front_strength == 1 ||
-			   info.front_strength == 2 || info.front_strength == 8) &&
-			  info.back_strength == 1 &&
-			  info.angle_deg == 45.0 && info.brightness_gain == 1.0 &&
-			  info.noise_variation == 0.0)) &&
+			(front_only_exact || back_family_exact) &&
 			info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0 &&
 			info.back_alpha_fade == 0 &&
 			info.back_sharp_tail == 0.0 &&

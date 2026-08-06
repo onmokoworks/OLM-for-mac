@@ -116,23 +116,25 @@ int main() {{ std::printf("{{\\"status\\":\\"pass\\",\\"cases\\":["); bool first
     )
     generated = generated.replace(
         'if(!first)std::printf(",");',
-        '''if(d==16) for(int front: {0,1,2,8}) {
+        '''if(d==16) for(int family_index=0; family_index<6; ++family_index) {
+          const int fronts[6]={0,1,2,8,0,0}; const int backs[6]={1,1,1,1,2,8};
+          const int front=fronts[family_index], back_strength=backs[family_index];
           std::vector<std::uint8_t> expected_back(rb*HEIGHT,OUT_PAD);
           std::vector<std::uint16_t> src(WIDTH*HEIGHT*4), dst(WIDTH*HEIGHT*4);
           for(int y=0;y<HEIGHT;++y) std::memcpy(src.data()+y*WIDTH*4,inb.data()+y*rb,WIDTH*ps);
-          if(olm_dblur_minimal_argb16(src.data(),dst.data(),WIDTH,HEIGHT,front,1,1.0f,45.0f,0.0f,1,1,0,10.0f)!=0) return 33;
+          if(olm_dblur_minimal_argb16(src.data(),dst.data(),WIDTH,HEIGHT,front,back_strength,1.0f,45.0f,0.0f,1,1,0,10.0f)!=0) return 33;
           for(int y=0;y<HEIGHT;++y) std::memcpy(expected_back.data()+y*rb,dst.data()+y*WIDTH*4,WIDTH*ps);
           std::fill(outb.begin(),outb.end(),OUT_PAD);
           OLMDirectionalBlurInfo back{}; back.angle_deg=45.0; back.brightness_gain=1.0;
-          back.front_strength=front; back.back_strength=1; back.noise_type=1; back.seed=1; back.thickness=10.0;
+          back.front_strength=front; back.back_strength=back_strength; back.noise_type=1; back.seed=1; back.thickness=10.0;
           back.render_scale_x=back.render_scale_y=1.0; int back_exact=0;
           PF_Err back_err=OLMDirectionalBlurTestRenderWorld(&in,&out,&back,16,&back_exact);
           bool back_visible=true;
           for(int y=0;y<HEIGHT;++y) back_visible=back_visible&&
             std::memcmp(expected_back.data()+y*rb,outb.data()+y*rb,WIDTH*ps)==0;
           if(back_err!=PF_Err_NONE || back_exact!=0 || !back_visible || !pad(outb,rb,OUT_PAD)) {
-            std::fprintf(stderr,"frontback front=%d err=%d exact=%d visible=%d pad=%d\\n",
-              front,(int)back_err,back_exact,back_visible,pad(outb,rb,OUT_PAD)); return 39;
+            std::fprintf(stderr,"frontback front=%d back=%d err=%d exact=%d visible=%d pad=%d\\n",
+              front,back_strength,(int)back_err,back_exact,back_visible,pad(outb,rb,OUT_PAD)); return 39;
           }
         }
         for(int unsupported_kind=0; unsupported_kind<(d==16?2:1); ++unsupported_kind) {
@@ -209,7 +211,7 @@ def main() -> int:
             else "fade fail_closed_output_untouched"
         )
         if case["pixel_format"] == "PF16":
-            case["back_family"] = "back-only and front1/2/8+back1 production dispatch exact; padding preserved"
+            case["back_family"] = "back-only strength1/2/8 and front1/2/8+back1 production dispatch exact; padding preserved"
     report.update({
         "source": str(SOURCE.relative_to(ROOT)),
         "scope": "Mac-local source-included public EffectMain PF32/PF16 SmartRender output exactly matches the typed core; no interactive AE/Windows claim",

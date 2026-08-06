@@ -15,8 +15,8 @@
       "fail_closed": ["Type3 Layer size mismatch"]
     },
     "PF16": {
-      "exact": ["angle 0/45", "brightness 1/0.5", "front strength 1/2/8", "back strength 1 (front 0/1/2/8, angle 45, neutral variations)", "Noise Type1 Smooth seed1/thickness3", "Noise Type2 Block seed1/thickness3"],
-      "largest_remaining": ["other back combinations", "fade/tail", "size variation", "Noise Type3 Layer"]
+      "exact": ["angle 0/45", "brightness 1/0.5", "front strength 1/2/8", "back strength 1/2/8 back-only plus back1 with front 1/2/8 (angle 45, neutral variations)", "Noise Type1 Smooth seed1/thickness3", "Noise Type2 Block seed1/thickness3"],
+      "largest_remaining": ["other front/back combinations", "fade/tail", "size variation", "Noise Type3 Layer"]
     },
     "PF32": {
       "exact": ["angle 0/45", "brightness 1/0.5", "front/back", "size variation", "Noise Type1 Smooth", "Noise Type2 Block", "Noise Type3 Layer"],
