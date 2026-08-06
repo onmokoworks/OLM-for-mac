@@ -6,6 +6,7 @@
 #include <cmath>
 #include <cstdio>
 #include <limits>
+#include <new>
 #include <vector>
 
 static void UnionLRect(const PF_LRect *src, PF_LRect *dst)
@@ -81,20 +82,60 @@ struct ToonPixelTraits<PF_PixelFloat> {
 template <typename PixelT>
 static PixelT *PixelAt(PF_EffectWorld *world, A_long x, A_long y)
 {
-	return reinterpret_cast<PixelT *>(reinterpret_cast<char *>(world->data) + y * world->rowbytes) + x;
+	const size_t offset = static_cast<size_t>(y) * static_cast<size_t>(world->rowbytes);
+	return reinterpret_cast<PixelT *>(reinterpret_cast<char *>(world->data) + offset) + x;
 }
 
 template <typename PixelT>
 static const PixelT *PixelAtConst(const PF_EffectWorld *world, A_long x, A_long y)
 {
-	return reinterpret_cast<const PixelT *>(reinterpret_cast<const char *>(world->data) + y * world->rowbytes) + x;
+	const size_t offset = static_cast<size_t>(y) * static_cast<size_t>(world->rowbytes);
+	return reinterpret_cast<const PixelT *>(reinterpret_cast<const char *>(world->data) + offset) + x;
+}
+
+template <typename PixelT>
+static PF_Err ValidateWorlds(const PF_EffectWorld *input, const PF_EffectWorld *output, size_t *pixel_count)
+{
+	if (!input || !output || !pixel_count) return PF_Err_BAD_CALLBACK_PARAM;
+	if (output->width < 0 || output->height < 0 ||
+	    input->width < output->width || input->height < output->height) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	const size_t width = static_cast<size_t>(output->width);
+	const size_t height = static_cast<size_t>(output->height);
+	if (width != 0 && height > std::numeric_limits<size_t>::max() / width) {
+		return PF_Err_OUT_OF_MEMORY;
+	}
+	*pixel_count = width * height;
+	if (*pixel_count > std::vector<uint32_t>().max_size()) return PF_Err_OUT_OF_MEMORY;
+	if (*pixel_count == 0) return PF_Err_NONE;
+	if (!input->data || !output->data || input->rowbytes <= 0 || output->rowbytes <= 0) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	if (width > std::numeric_limits<size_t>::max() / sizeof(PixelT)) {
+		return PF_Err_OUT_OF_MEMORY;
+	}
+	const size_t visible_rowbytes = width * sizeof(PixelT);
+	if (static_cast<size_t>(input->rowbytes) < visible_rowbytes ||
+	    static_cast<size_t>(output->rowbytes) < visible_rowbytes) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	if (height - 1 > std::numeric_limits<size_t>::max() / static_cast<size_t>(input->rowbytes) ||
+	    height - 1 > std::numeric_limits<size_t>::max() / static_cast<size_t>(output->rowbytes)) {
+		return PF_Err_OUT_OF_MEMORY;
+	}
+	return PF_Err_NONE;
 }
 
 template <typename PixelT>
 static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const OLMToonDilateInfo &info)
 {
+	if (!input || !output) return PF_Err_BAD_CALLBACK_PARAM;
 	const A_long w = output->width;
 	const A_long h = output->height;
+	size_t pixel_count = 0;
+	PF_Err validation_err = ValidateWorlds<PixelT>(input, output, &pixel_count);
+	if (validation_err != PF_Err_NONE) return validation_err;
 	if (w <= 0 || h <= 0 || info.search_radius <= 0.0) {
 		for (A_long y = 0; y < h; ++y) {
 			for (A_long x = 0; x < w; ++x) {
@@ -115,15 +156,14 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		return PF_Err_NONE;
 	}
 
-	const A_long n = w * h;
 	const uint32_t INF = std::numeric_limits<uint32_t>::max();
-	std::vector<uint32_t> dist((size_t)n, INF);
+	std::vector<uint32_t> dist(pixel_count, INF);
 	bool has_seed = false;
 
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
 			*PixelAt<PixelT>(output, x, y) = *PixelAtConst<PixelT>(input, x, y);
-			A_long idx = y * w + x;
+				size_t idx = static_cast<size_t>(y) * static_cast<size_t>(w) + static_cast<size_t>(x);
 			if (ToonPixelTraits<PixelT>::opaque(*PixelAtConst<PixelT>(input, x, y))) {
 				dist[idx] = 0;
 				has_seed = true;
@@ -133,7 +173,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	if (!has_seed) return PF_Err_NONE;
 
 	auto try_relax = [&](A_long x, A_long y, const A_long coords[][2], int count) {
-		A_long idx = y * w + x;
+		size_t idx = static_cast<size_t>(y) * static_cast<size_t>(w) + static_cast<size_t>(x);
 		if (dist[(size_t)idx] == 0) return;
 		uint32_t best = INF;
 		A_long best_x = -1;
@@ -142,7 +182,8 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			A_long nx = coords[i][0];
 			A_long ny = coords[i][1];
 			if (nx < 0 || nx >= w || ny < 0 || ny >= h) continue;
-			uint32_t d = dist[(size_t)(ny * w + nx)];
+			size_t neighbor_idx = static_cast<size_t>(ny) * static_cast<size_t>(w) + static_cast<size_t>(nx);
+			uint32_t d = dist[neighbor_idx];
 			if (d < best) {
 				best = d;
 				best_x = nx;
@@ -326,6 +367,8 @@ EffectMain(PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data,
 		}
 	} catch (PF_Err &thrown_err) {
 		err = thrown_err;
+	} catch (const std::bad_alloc &) {
+		err = PF_Err_OUT_OF_MEMORY;
 	}
 	return err;
 }

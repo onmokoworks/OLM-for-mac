@@ -137,7 +137,7 @@ struct SPBasicSuite;
 using PF_Err = A_long;
 using PF_FpLong = double;
 constexpr int WIDTH = 5, HEIGHT = 3, PADDING = 4, PAD = 0xA5, OUT_PAD = 0xEE;
-enum {{ PF_Err_NONE = 0, PF_Err_BAD_CALLBACK_PARAM = -1, PF_Err_INVALID_CALLBACK = -2 }};
+enum {{ PF_Err_NONE = 0, PF_Err_BAD_CALLBACK_PARAM = -1, PF_Err_INVALID_CALLBACK = -2, PF_Err_OUT_OF_MEMORY = -3 }};
 enum PF_Cmd {{ PF_Cmd_ABOUT = 0, PF_Cmd_GLOBAL_SETUP, PF_Cmd_PARAMS_SETUP,
                PF_Cmd_RENDER, PF_Cmd_SMART_PRE_RENDER, PF_Cmd_SMART_RENDER }};
 enum PF_PixelFormat {{ PF_PixelFormat_INVALID, PF_PixelFormat_ARGB32,
@@ -408,6 +408,23 @@ bool pf32_empty_both_case() {{
     constexpr int W=0,H=0,RB=24;std::vector<std::uint8_t>ib(RB,0xAC),ob(RB,0xCE);PF_EffectWorld input{{ib.data(),RB,W,H,32,{{3051,3053,3051,3053}}}},output{{ob.data(),RB,W,H,32,{{4257,4259,4257,4259}}}};State st{{&input,&output}};st.width=W;st.height=H;PF_InData in{{&st,0,1,1,nullptr}};PF_OutData out{{}};PF_RenderRequest req{{false}};PF_PreRenderInput pi{{req}};PF_PreRenderOutput po{{}};PF_PreRenderCallbacks pcb{{pre_checkout}};PF_PreRenderExtra pre{{&pi,&po,&pcb}};
     if(EffectMain(PF_Cmd_SMART_PRE_RENDER,&in,&out,nullptr,nullptr,&pre)!=PF_Err_NONE)return false;PF_SmartRenderInput ri{{32,po.pre_render_data}};PF_SmartRenderCallbacks rcb{{pixels_checkout,output_checkout,checkin}};PF_SmartRenderExtra render{{&ri,&rcb}};g_radius=4.0;bool ok=EffectMain(PF_Cmd_SMART_RENDER,&in,&out,nullptr,nullptr,&render)==PF_Err_NONE;for(auto b:ob)ok=ok&&b==0xCE;ok=ok&&input.extent_hint.left==3051&&input.extent_hint.top==3053&&output.extent_hint.left==4257&&output.extent_hint.top==4259;if(po.delete_pre_render_data_func)po.delete_pre_render_data_func(po.pre_render_data);return ok;
 }}
+bool malformed_world_guard_cases() {{
+    std::uint8_t input_bytes[64]={{}},output_bytes[64]={{}};size_t count=999;
+    PF_EffectWorld input{{input_bytes,16,2,2,32,{{0,0,2,2}}}},output{{output_bytes,32,2,2,32,{{0,0,2,2}}}};
+    OLMToonDilateInfo info{{1.0,2.0}};
+    bool ok=RenderWorld(nullptr,&output,info,32)==PF_Err_BAD_CALLBACK_PARAM;
+    ok=ok&&RenderWorld(&input,nullptr,info,32)==PF_Err_BAD_CALLBACK_PARAM;
+    ok=ok&&ValidateWorlds<PF_PixelFloat>(&input,&output,&count)==PF_Err_BAD_CALLBACK_PARAM;
+    input.rowbytes=32;output.rowbytes=31;ok=ok&&ValidateWorlds<PF_PixelFloat>(&input,&output,&count)==PF_Err_BAD_CALLBACK_PARAM;
+    output.rowbytes=32;input.data=nullptr;ok=ok&&ValidateWorlds<PF_PixelFloat>(&input,&output,&count)==PF_Err_BAD_CALLBACK_PARAM;
+    input.data=input_bytes;input.width=1;ok=ok&&ValidateWorlds<PF_PixelFloat>(&input,&output,&count)==PF_Err_BAD_CALLBACK_PARAM;
+    input.width=2;output.width=-1;ok=ok&&ValidateWorlds<PF_PixelFloat>(&input,&output,&count)==PF_Err_BAD_CALLBACK_PARAM;
+    input.width=std::numeric_limits<A_long>::max();input.height=std::numeric_limits<A_long>::max();output=input;
+    ok=ok&&ValidateWorlds<PF_PixelFloat>(&input,&output,&count)==PF_Err_BAD_CALLBACK_PARAM;
+    PF_EffectWorld empty{{nullptr,0,0,1,32,{{0,0,0,1}}}};count=999;
+    ok=ok&&ValidateWorlds<PF_PixelFloat>(&empty,&empty,&count)==PF_Err_NONE&&count==0;
+    return ok;
+}}
 }}
 
 int main() {{
@@ -461,7 +478,8 @@ int main() {{
     bool pf8Empty=pf8_empty_width_case();
     bool pf16EmptyHeight=pf16_empty_height_case();
     bool pf32EmptyBoth=pf32_empty_both_case();
-    if (!(positive8 && positive16 && positive32 && positive8Radius2 && positive16Radius2 && positive32Radius2 && pf8Radius3Tie && pf16Radius3Tie && pf32Radius3Tie && pf8Corner && pf16Corner && pf32Corner && pf32Alpha0 && nonpositive && nonzeroExtent && nonzeroExtent16 && nonzeroExtent32 && mixed3x2 && mixedRadius2 && pf32Radius3Partial && pf16Radius3Partial && pf8Radius3Partial && pf8Radius4Partial && pf16Radius4Partial && pf32Radius4Partial && pf8Fractional && pf32Fractional && pf16Fractional && pf8Empty && pf16EmptyHeight && pf32EmptyBoth)) return 60;
+    bool malformedWorldGuards=malformed_world_guard_cases();
+    if (!(positive8 && positive16 && positive32 && positive8Radius2 && positive16Radius2 && positive32Radius2 && pf8Radius3Tie && pf16Radius3Tie && pf32Radius3Tie && pf8Corner && pf16Corner && pf32Corner && pf32Alpha0 && nonpositive && nonzeroExtent && nonzeroExtent16 && nonzeroExtent32 && mixed3x2 && mixedRadius2 && pf32Radius3Partial && pf16Radius3Partial && pf8Radius3Partial && pf8Radius4Partial && pf16Radius4Partial && pf32Radius4Partial && pf8Fractional && pf32Fractional && pf16Fractional && pf8Empty && pf16EmptyHeight && pf32EmptyBoth && malformedWorldGuards)) return 60;
     std::printf("],\\\"positive_radius_fixture\\\":{{\\\"radius\\\":1,\\\"PF8_exact\\\":true,\\\"PF16_exact\\\":true,\\\"PF32_exact\\\":true}},\\\"PF8_radius2_shape_fixture\\\":{{\\\"dimensions\\\":[5,3],\\\"radius\\\":2,\\\"visible_argb_exact\\\":true}},\\\"PF16_radius2_shape_fixture\\\":{{\\\"dimensions\\\":[5,3],\\\"radius\\\":2,\\\"visible_exact_4_word\\\":true}},\\\"PF32_radius2_shape_fixture\\\":{{\\\"dimensions\\\":[5,3],\\\"radius\\\":2,\\\"visible_exact_4_word\\\":true}},\\\"PF8_radius3_boundary_tie_fixture\\\":{{\\\"dimensions\\\":[7,3],\\\"radius\\\":3,\\\"scan_asymmetric_tie_exact\\\":true}},\\\"PF16_radius3_boundary_tie_fixture\\\":{{\\\"dimensions\\\":[7,3],\\\"radius\\\":3,\\\"scan_asymmetric_tie_exact\\\":true}},\\\"PF32_radius3_boundary_tie_fixture\\\":{{\\\"dimensions\\\":[7,3],\\\"radius\\\":3,\\\"raw_float32_exact\\\":true}}}}\\n"); return 0;
 }}
 ''', encoding="utf-8")
