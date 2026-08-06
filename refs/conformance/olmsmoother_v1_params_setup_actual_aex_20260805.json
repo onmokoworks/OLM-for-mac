@@ -1,0 +1,85 @@
+{
+  "actual_aex_fixture_valid": true,
+  "entrypoint": "EffectMain(PF_Cmd_PARAMS_SETUP)",
+  "expected_production": {
+    "error": 0,
+    "num_params": 4,
+    "parameters": [
+      {
+        "a": 0,
+        "b": 1,
+        "c": 0,
+        "d": 1,
+        "disk_id": 1,
+        "kind": "checkbox",
+        "name": "Use Color Key",
+        "value": 0
+      },
+      {
+        "a": 255,
+        "b": 255,
+        "c": 255,
+        "d": 255,
+        "disk_id": 2,
+        "kind": "color",
+        "name": "Color Key",
+        "value": 0
+      },
+      {
+        "a": 0,
+        "b": 255,
+        "c": 0,
+        "d": 6,
+        "disk_id": 3,
+        "kind": "slider",
+        "name": "Do Smooth Range",
+        "value": 6
+      }
+    ]
+  },
+  "fixture_sha256": "3008b8239c48e56c6d0fb0aa707ef7e46df41d311c8f8aa710a79503e2d75735",
+  "not_proven": [
+    "render parameter consumption",
+    "typed rendering",
+    "AE host exactness"
+  ],
+  "production": {
+    "error": 0,
+    "num_params": 4,
+    "parameters": [
+      {
+        "a": 0,
+        "b": 1,
+        "c": 0,
+        "d": 1,
+        "disk_id": 1,
+        "kind": "checkbox",
+        "name": "Use Color Key",
+        "value": 0
+      },
+      {
+        "a": 255,
+        "b": 255,
+        "c": 255,
+        "d": 255,
+        "disk_id": 2,
+        "kind": "color",
+        "name": "Color Key",
+        "value": 0
+      },
+      {
+        "a": 0,
+        "b": 255,
+        "c": 0,
+        "d": 6,
+        "disk_id": 3,
+        "kind": "slider",
+        "name": "Do Smooth Range",
+        "value": 6
+      }
+    ]
+  },
+  "schema_version": 1,
+  "scope": "three public parameters, order, names, types/defaults/ranges and production disk IDs",
+  "status": "exact"
+}

@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "scope": "OLMSmoother v1 current installed macOS AE PF8 Software host render for canonical no-key case0001 and retained Color-Key-enabled case05",
+  "after_effects": {
+    "version": "26.3x87",
+    "pid": 63831,
+    "process_start": "Wed Aug 5 23:38:56 2026",
+    "executable": "/Applications/Adobe After Effects 2026/Adobe After Effects 2026.app/Contents/MacOS/After Effects",
+    "executable_sha256": "e24dbf277be8f8dd365d425da90fde442d33fea9de64de95c231cf347821ec46",
+    "same_pid_pre_and_post": true,
+    "restarted_or_terminated": false
+  },
+  "plugin": {
+    "binary": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother.plugin/Contents/MacOS/OLMSmoother",
+    "binary_sha256": "44b199789d086b4f52354dd76fb3a3b107180323221718938d8d8580884028c0",
+    "architectures": [
+      "arm64",
+      "x86_64"
+    ],
+    "deployment_target": "11.0",
+    "sole_exact_mapping_pre_and_post": true
+  },
+  "harness": {
+    "runner": "scripts/run_olmsmoother_v1_pf8_current_mac_ae_20260805.py",
+    "runner_sha256": "7a865f473a67b805761a15de4f475223f5f6a355e6b819d17cd1b36655dcc4f0",
+    "request": "refs/mac_validation_requests/olmsmoother_v1_pf8_current_ae_host_20260805.json",
+    "request_sha256": "f06bbc6af35cceab2cf82d75e865f4afef42a3b1db5998e407a47d6474ef7f94",
+    "accepted_run": "refs/mac_validation_runs/olmsmoother_v1_pf8_current_20260805_run7",
+    "runner_report_sha256": "07086b37a875237fb3f786d89e438bbffc016dad02070fbbd738d3eded383714",
+    "project_sha256": "d4d4d21772d2ba8e264d929f5d2a27cfb0fcdd61a54b462190afd4aa3782275b",
+    "project": {
+      "bits_per_channel": 8,
+      "renderer": "SOFTWARE",
+      "working_space": "",
+      "linear_blending": false,
+      "input_alpha_mode": "STRAIGHT"
+    }
+  },
+  "cases": {
+    "case_0001": {
+      "role": "canonical_pf8_no_key",
+      "use_color_key": 0,
+      "do_smooth_range": 6,
+      "control_file_sha256": "166cafc8aaa2bb2d78ed26a12fe95b6dcf0f6eeeabd7f3a4daaf0ceece500e4c",
+      "effect_file_sha256": "b2c4cf128d89712b6565745a2d451b6ead1a47ad2efa5a4f4c92a402e95e3156",
+      "control_decoded_rgba_exact": true,
+      "effect_decoded_rgba_exact": true,
+      "mismatched_pixels": 0
+    },
+    "final_random10_olm_smoother_05": {
+      "role": "retained_pf8_color_key_enabled",
+      "use_color_key": 1,
+      "color_key_rgb8_readback": [
+        247,
+        135,
+        193
+      ],
+      "do_smooth_range": 239,
+      "control_file_sha256": "5276e925f0e7f6de61532a6f9adc3c33a9c8e7330deb0b96eb83f16a30273776",
+      "effect_file_sha256": "5276e925f0e7f6de61532a6f9adc3c33a9c8e7330deb0b96eb83f16a30273776",
+      "control_decoded_rgba_exact": true,
+      "effect_decoded_rgba_exact": true,
+      "mismatched_pixels": 0
+    }
+  },
+  "claim_boundary": {
+    "pf8_host_exact": true,
+    "pf16_host_exact": false,
+    "pf16_aexcompat_boundary_preserved": true,
+    "other_plugins": "not operated"
+  }
+}

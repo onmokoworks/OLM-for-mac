@@ -1,0 +1,15 @@
+{
+  "actual_aex_reference_png_sha256": "b2c4cf128d89712b6565745a2d451b6ead1a47ad2efa5a4f4c92a402e95e3156",
+  "actual_aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+  "height": 540,
+  "input_sha256": "166cafc8aaa2bb2d78ed26a12fe95b6dcf0f6eeeabd7f3a4daaf0ceece500e4c",
+  "max_abs_diff": 0,
+  "mean_abs_diff_all_rgba": 0.0,
+  "mismatched_channel_bytes": 0,
+  "mismatched_pixels": 0,
+  "production_png_sha256": "b2c4cf128d89712b6565745a2d451b6ead1a47ad2efa5a4f4c92a402e95e3156",
+  "schema_version": 1,
+  "scope": "OLMSmoother v1 classic PF8 case_0001, Use Color Key=0, Do Smooth Range=6",
+  "status": "exact",
+  "width": 960
+}

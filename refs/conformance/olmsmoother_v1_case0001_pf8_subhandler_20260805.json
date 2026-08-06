@@ -1,0 +1,108 @@
+{
+  "actual_aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+  "cases": [
+    {
+      "center": [
+        464,
+        170
+      ],
+      "direction": 5,
+      "instructions": 1024,
+      "outputs": {
+        "flag_a": 0,
+        "flag_b": 0,
+        "mode": 2,
+        "p11": [
+          465,
+          170
+        ],
+        "p13": [
+          464,
+          170
+        ],
+        "p9": [
+          465,
+          170
+        ]
+      }
+    },
+    {
+      "center": [
+        495,
+        170
+      ],
+      "direction": 3,
+      "instructions": 898,
+      "outputs": {
+        "flag_a": 0,
+        "flag_b": 0,
+        "mode": 2,
+        "p11": [
+          494,
+          170
+        ],
+        "p13": [
+          495,
+          170
+        ],
+        "p9": [
+          495,
+          170
+        ]
+      }
+    },
+    {
+      "center": [
+        459,
+        171
+      ],
+      "direction": 5,
+      "instructions": 1024,
+      "outputs": {
+        "flag_a": 0,
+        "flag_b": 0,
+        "mode": 2,
+        "p11": [
+          460,
+          171
+        ],
+        "p13": [
+          459,
+          171
+        ],
+        "p9": [
+          460,
+          171
+        ]
+      }
+    },
+    {
+      "center": [
+        500,
+        171
+      ],
+      "direction": 3,
+      "instructions": 898,
+      "outputs": {
+        "flag_a": 0,
+        "flag_b": 0,
+        "mode": 2,
+        "p11": [
+          499,
+          171
+        ],
+        "p13": [
+          500,
+          171
+        ],
+        "p9": [
+          500,
+          171
+        ]
+      }
+    }
+  ],
+  "input_sha256": "166cafc8aaa2bb2d78ed26a12fe95b6dcf0f6eeeabd7f3a4daaf0ceece500e4c",
+  "schema_version": 1,
+  "status": "captured"
+}

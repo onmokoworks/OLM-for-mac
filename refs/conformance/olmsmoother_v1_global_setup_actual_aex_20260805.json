@@ -1,0 +1,24 @@
+{
+  "actual_aex": {
+    "error": 0,
+    "out_flags": 33554496,
+    "out_flags2": 134217728
+  },
+  "entrypoint": "EffectMain(PF_Cmd_GLOBAL_SETUP)",
+  "fixture_sha256": "3008b8239c48e56c6d0fb0aa707ef7e46df41d311c8f8aa710a79503e2d75735",
+  "not_proven": [
+    "PARAMS_SETUP",
+    "PF8/PF16 render",
+    "Smart Render reachability",
+    "After Effects host exactness"
+  ],
+  "production": {
+    "error": 0,
+    "out_flags": 33554496,
+    "out_flags2": 134217728
+  },
+  "production_source": "mac/OLMSmoother/Mac/OLMSmoother_port.cpp",
+  "schema_version": 1,
+  "scope": "public GLOBAL_SETUP return/out_flags/out_flags2 only",
+  "status": "exact"
+}

@@ -1,0 +1,119 @@
+{
+  "actual_aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+  "center": [
+    464,
+    170
+  ],
+  "executor_captures": [
+    {
+      "color_a_index": 4,
+      "color_b_index": 5,
+      "direction": 5,
+      "end": [
+        464,
+        170
+      ],
+      "evaluator_bytes": "c8d100800100000000000000cdcccc3ecdcccc3c000000000000000000000000",
+      "evaluator_function": "0x180001150",
+      "evaluator_vtable": "0x18000d1c8",
+      "leading_span": 2,
+      "start": [
+        462,
+        170
+      ],
+      "use_source": 1
+    },
+    {
+      "color_a_index": 4,
+      "color_b_index": 5,
+      "direction": 5,
+      "end": [
+        479,
+        170
+      ],
+      "evaluator_bytes": "a8d10080010000004444043fbcbb7b3f03000000d00100000200000004000000",
+      "evaluator_function": "0x1800010c0",
+      "evaluator_vtable": "0x18000d1a8",
+      "leading_span": -1,
+      "start": [
+        465,
+        170
+      ],
+      "use_source": 1
+    }
+  ],
+  "input_sha256": "166cafc8aaa2bb2d78ed26a12fe95b6dcf0f6eeeabd7f3a4daaf0ceece500e4c",
+  "instructions": 353,
+  "main_args": [
+    464,
+    170,
+    5,
+    2,
+    0,
+    0,
+    494,
+    170,
+    460,
+    170,
+    464,
+    170
+  ],
+  "neighborhood_argb": [
+    [
+      255,
+      0,
+      0,
+      0
+    ],
+    [
+      255,
+      0,
+      0,
+      0
+    ],
+    [
+      255,
+      0,
+      0,
+      0
+    ],
+    [
+      255,
+      0,
+      0,
+      0
+    ],
+    [
+      255,
+      0,
+      0,
+      0
+    ],
+    [
+      255,
+      255,
+      0,
+      0
+    ],
+    [
+      255,
+      255,
+      0,
+      0
+    ],
+    [
+      255,
+      255,
+      0,
+      0
+    ],
+    [
+      255,
+      255,
+      0,
+      0
+    ]
+  ],
+  "schema_version": 1,
+  "status": "captured"
+}

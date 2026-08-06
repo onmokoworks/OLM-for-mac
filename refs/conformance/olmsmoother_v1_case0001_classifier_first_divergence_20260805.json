@@ -1,0 +1,91 @@
+{
+  "actual_aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+  "actual_classifier": [
+    1,
+    0,
+    0,
+    0
+  ],
+  "case": "PF8 case_0001",
+  "directions": [
+    5,
+    3,
+    1,
+    7
+  ],
+  "first_owner_center": [
+    464,
+    170
+  ],
+  "fixed_stage": "Classifier8/FUN_180008060 direction-pixel versus table-selected-pixel comparison",
+  "neighborhood_argb": [
+    [
+      255,
+      0,
+      0,
+      0
+    ],
+    [
+      255,
+      0,
+      0,
+      0
+    ],
+    [
+      255,
+      0,
+      0,
+      0
+    ],
+    [
+      255,
+      0,
+      0,
+      0
+    ],
+    [
+      255,
+      0,
+      0,
+      0
+    ],
+    [
+      255,
+      255,
+      0,
+      0
+    ],
+    [
+      255,
+      255,
+      0,
+      0
+    ],
+    [
+      255,
+      255,
+      0,
+      0
+    ],
+    [
+      255,
+      255,
+      0,
+      0
+    ]
+  ],
+  "next_boundary": "localize the remaining full-frame residual after this generic classifier fix",
+  "original_first_output_mismatch": [
+    462,
+    170
+  ],
+  "production_classifier": [
+    1,
+    0,
+    0,
+    0
+  ],
+  "schema_version": 1,
+  "scope": "direct classifier fixture before dispatch/worker",
+  "status": "classifier_divergence_fixed"
+}

@@ -135,6 +135,36 @@ bool find_param_number(const std::string &json, const std::string &key, double &
 	return true;
 }
 
+bool find_param_color(const std::string &json, const std::string &key,
+	                  uint8_t &red, uint8_t &green, uint8_t &blue) {
+	std::string needle = "\"" + key + "\"";
+	size_t pos = json.find(needle);
+	if (pos == std::string::npos) return false;
+	size_t vpos = json.find("\"value\"", pos);
+	if (vpos == std::string::npos) return false;
+	size_t cursor = json.find('[', vpos);
+	if (cursor == std::string::npos) return false;
+	double values[3]{};
+	for (int component = 0; component < 3; ++component) {
+		++cursor;
+		while (cursor < json.size() &&
+		       (json[cursor] == ' ' || json[cursor] == '\t' ||
+		        json[cursor] == '\n' || json[cursor] == ',')) ++cursor;
+		char *end = nullptr;
+		values[component] = std::strtod(json.c_str() + cursor, &end);
+		if (end == json.c_str() + cursor) return false;
+		cursor = static_cast<size_t>(end - json.c_str());
+	}
+	auto to_byte = [](double value) -> uint8_t {
+		if (value < 0.0) value = 0.0;
+		if (value <= 1.0) value *= 255.0;
+		if (value > 255.0) value = 255.0;
+		return static_cast<uint8_t>(value + 0.5);
+	};
+	red = to_byte(values[0]); green = to_byte(values[1]); blue = to_byte(values[2]);
+	return true;
+}
+
 std::string slurp(const std::string &path) {
 	std::ifstream f(path, std::ios::binary);
 	if (!f) throw std::runtime_error("failed to open params " + path);
@@ -162,9 +192,11 @@ int main(int argc, char **argv) {
 	try {
 		// Defaults match the OLMSmoother v1 param defaults (Tolerance=6).
 		double use_key = 0.0, tolerance = 6.0;
+		uint8_t key_red = 255, key_green = 255, key_blue = 255;
 		if (!params_path.empty()) {
 			std::string json = slurp(params_path);
 			find_param_number(json, "Use Color Key", use_key);
+			find_param_color(json, "Color Key", key_red, key_green, key_blue);
 			// "Do Smooth Range" is the AE label for the Tolerance slider.
 			if (!find_param_number(json, "Do Smooth Range", tolerance))
 				find_param_number(json, "Tolerance", tolerance);
@@ -197,7 +229,7 @@ int main(int argc, char **argv) {
 		PF_ParamDef p_input{}, p_use{}, p_color{}, p_tol{};
 		p_use.u.bd.value = (use_key != 0.0) ? 1 : 0;
 		p_tol.u.sd.value = static_cast<A_long>(tolerance + 0.5);
-		p_color.u.cd.value = PF_Pixel8{255, 255, 255, 255};
+		p_color.u.cd.value = PF_Pixel8{255, key_red, key_green, key_blue};
 		PF_ParamDef *params[SM_NUM_PARAMS] = {&p_input, &p_use, &p_color, &p_tol};
 
 		PF_InData in_data{};
@@ -215,8 +247,9 @@ int main(int argc, char **argv) {
 			d[0] = s[1]; d[1] = s[2]; d[2] = s[3]; d[3] = s[0];
 		}
 		write_png(out_path, res);
-		std::printf("wrote: %s (tolerance=%d use_key=%d)\n", out_path.c_str(),
-		            (int)p_tol.u.sd.value, (int)p_use.u.bd.value);
+		std::printf("wrote: %s (tolerance=%d use_key=%d key=%u,%u,%u)\n", out_path.c_str(),
+		            (int)p_tol.u.sd.value, (int)p_use.u.bd.value,
+		            (unsigned)key_red, (unsigned)key_green, (unsigned)key_blue);
 		return 0;
 	} catch (const std::exception &e) {
 		std::fprintf(stderr, "error: %s\n", e.what());

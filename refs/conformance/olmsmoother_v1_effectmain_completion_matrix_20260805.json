@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "plugin": "standalone OLMSmoother v1",
+  "status": "selected_maximum_local_boundary_exact",
+  "public_commands": {
+    "ABOUT": "production present; actual-AEX observable message not yet fixture-bound",
+    "GLOBAL_SETUP": "actual-AEX to source-included production exact",
+    "GLOBAL_SETDOWN": "fallthrough no-op; not independently executed",
+    "PARAMS_SETUP": "actual-AEX to source-included production exact",
+    "SEQUENCE_SETUP_RESETUP_FLATTEN_SETDOWN": "fallthrough no-op; not independently executed",
+    "DO_DIALOG_FRAME_SETUP_FRAME_SETDOWN": "fallthrough no-op; not independently executed",
+    "RENDER": "classic PF8 case_0001 no-key tolerance 6 exact at the complete 960x540 frame; PF16 remains a separate typed-session boundary",
+    "USER_CHANGED_PARAM": "actual-AEX to source-included production exact no-op",
+    "UPDATE_PARAMS_UI": "actual-AEX to source-included production exact no-op",
+    "SMART_PRE_RENDER_SMART_RENDER": "production code exists but out_flags2 does not advertise Smart Render; host reachability unproved",
+    "other_commands": "fallthrough no-op; not independently executed"
+  },
+  "typed_depths": {
+    "PF8": "canonical actual-AEX full-frame case exact; all natural case_0001 Classifier/SubHandler/Main/Executor boundaries exact",
+    "PF16": "actual main-kernel boundary and corrected nine-entry tables proved; full typed session remains with the AEXCompat Apple Silicon task",
+    "PF32": "no native Windows v1 lane; AE 32bpc uses host conversion and must not call a native PF32 path"
+  },
+  "maximum_local_item": "PF_Cmd_RENDER classic PF8, case_0001, Use Color Key=0, Color Key=white, Do Smooth Range=6, 960x540",
+  "selected_item_result": {
+    "status": "exact",
+    "input_sha256": "166cafc8aaa2bb2d78ed26a12fe95b6dcf0f6eeeabd7f3a4daaf0ceece500e4c",
+    "actual_aex_reference_png_sha256": "b2c4cf128d89712b6565745a2d451b6ead1a47ad2efa5a4f4c92a402e95e3156",
+    "production_png_sha256": "b2c4cf128d89712b6565745a2d451b6ead1a47ad2efa5a4f4c92a402e95e3156",
+    "mismatched_pixels": 0,
+    "mismatched_channel_bytes": 0,
+    "max_abs_diff": 0,
+    "mean_abs_diff_all_rgba": 0.0,
+    "evidence": "refs/conformance/olmsmoother_v1_case0001_pf8_fullframe_actual_aex_20260805.json"
+  },
+  "case0001_internal_boundary": {
+    "edge_centers": 1898,
+    "classifier_calls": 7592,
+    "natural_main_calls": 368,
+    "executor_calls": 687,
+    "production_natural_main_calls": 368,
+    "mismatch_count": 0,
+    "main_args_sha256": "600a10f2992f6a9ca4a74c4ef08acefe99f5de39b0800dda96cdcd356325028d",
+    "normalized_executor_captures_sha256": "26cd0b0fd1883c0ec6852c2e50cb1dfbc334166671192fdde4138d2c557f3ae9",
+    "executor_replay_sha256": "8a2728344e9cceec81b2ffd2b4b4425421a0d7e0228c571b48383b922315db34",
+    "evidence": "refs/conformance/olmsmoother_v1_case0001_pf8_mainkernel_all_boundaries_20260805.json"
+  },
+  "identity": {
+    "actual_aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+    "manifest_sha256": "0fa0e2e0215fd13716d20e24d39b90550348a6a6ec440d37943760b3857c3898",
+    "production_source_sha256": "6cf64e5ee9a64bc3279c3407b2f424ec1110d0b0f6c42467b41bd6c6340e9540",
+    "cli_source_sha256": "bfe39c31a79d79d1275d93f46c1d72d9bba3a8e05d20c3eac87c2b9439fe7e7f",
+    "cli_shim_sha256": "f8a36c58840ab24895557aa54fb2e91e1cf8a09ecbdba34ac1d5d4a29ac9db79"
+  },
+  "remaining_boundaries": [
+    "Broaden PF8 actual-AEX full-frame coverage beyond the pinned canonical no-key/tolerance-6 case before claiming every parameter combination.",
+    "Complete the PF16 typed macOS session in the separate AEXCompat Apple Silicon task.",
+    "Observe the installed universal bundle in an AE host before making host-load or host-render claims."
+  ],
+  "claim_boundary": "Canonical PF8 render and its complete natural internal call chain are exact; this is not a universal all-parameter, PF16-session, or AE-host exactness claim."
+}

@@ -143,9 +143,18 @@ struct AEGP_SuiteHandler { AEGP_SuiteHandler(void *) {} };
 #define AEFX_CLR_STRUCT(S) std::memset(&(S), 0, sizeof(S))
 #define PF_SPRINTF std::sprintf
 #define ERR(X) do { if (err == PF_Err_NONE) { err = (X); } } while (0)
+#ifdef OLMSMOOTHER_CAPTURE_PARAMS
+#define PF_ADD_CHECKBOX(NAME, DESC, DEFAULT, FLAGS, DISK_ID) \
+    olmsmoother_capture_checkbox((NAME), (DEFAULT), (DISK_ID))
+#define PF_ADD_COLOR(NAME, R, G, B, DISK_ID) \
+    olmsmoother_capture_color((NAME), (R), (G), (B), (DISK_ID))
+#define PF_ADD_SLIDER(NAME, VALID_MIN, VALID_MAX, SLIDER_MIN, SLIDER_MAX, DEFAULT, DISK_ID) \
+    olmsmoother_capture_slider((NAME), (VALID_MIN), (VALID_MAX), (SLIDER_MIN), (SLIDER_MAX), (DEFAULT), (DISK_ID))
+#else
 #define PF_ADD_CHECKBOX(...) ((void)0)
 #define PF_ADD_COLOR(...)    ((void)0)
 #define PF_ADD_SLIDER(...)   ((void)0)
+#endif
 #define PF_CHECKOUT_PARAM(...) (PF_Err_NONE)
 #define PF_CHECKIN_PARAM(...)  ((void)0)
 
@@ -157,7 +166,14 @@ enum {
 	StrID_Key_Param_Name,
 	StrID_Tolerance_Param_Name
 };
-static inline const char *GetStringPtr(int) { return ""; }
+static inline const char *GetStringPtr(int id) {
+#ifdef OLMSMOOTHER_CAPTURE_PARAMS
+	static const char *const values[] = {"OLM Smoother", "", "Use Color Key", "Color Key", "Do Smooth Range"};
+	return (id >= 0 && id < 5) ? values[id] : "";
+#else
+	(void)id; return "";
+#endif
+}
 
 // --- iterate suites (concrete fn-ptr typed, backed by the CLI loop) ---------
 typedef PF_Err (*PF_Iterate8Fn)(void *, A_long, A_long, PF_Pixel8 *, PF_Pixel8 *);

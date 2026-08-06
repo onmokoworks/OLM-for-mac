@@ -1,0 +1,56 @@
+{
+  "actual_aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+  "key_rgb": [
+    202,
+    187,
+    230
+  ],
+  "mismatches": [],
+  "schema_version": 1,
+  "scope": "OLMSmoother v1 PF8 Color Key callback at Windows RVA 0x26e0",
+  "status": "exact",
+  "vectors": [
+    {
+      "actual_argb": "00cabbe6",
+      "input_argb": "00cabbe6",
+      "name": "transparent_exact",
+      "preseed_argb": "11121314",
+      "production_argb": "00cabbe6"
+    },
+    {
+      "actual_argb": "15161718",
+      "input_argb": "ffcabbe6",
+      "name": "opaque_exact_rgb",
+      "preseed_argb": "15161718",
+      "production_argb": "15161718"
+    },
+    {
+      "actual_argb": "191a1b1c",
+      "input_argb": "01cabbe6",
+      "name": "alpha_one_exact_rgb",
+      "preseed_argb": "191a1b1c",
+      "production_argb": "191a1b1c"
+    },
+    {
+      "actual_argb": "1d1e1f20",
+      "input_argb": "00c9bbe6",
+      "name": "red_mismatch",
+      "preseed_argb": "1d1e1f20",
+      "production_argb": "1d1e1f20"
+    },
+    {
+      "actual_argb": "21222324",
+      "input_argb": "00cabce6",
+      "name": "green_mismatch",
+      "preseed_argb": "21222324",
+      "production_argb": "21222324"
+    },
+    {
+      "actual_argb": "25262728",
+      "input_argb": "00cabbe7",
+      "name": "blue_mismatch",
+      "preseed_argb": "25262728",
+      "production_argb": "25262728"
+    }
+  ]
+}

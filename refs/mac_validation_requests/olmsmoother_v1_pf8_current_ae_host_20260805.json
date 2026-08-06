@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "kind": "olmsmoother_v1_pf8_current_ae_host_request",
+  "status": "installed_host_render_pending_no_ae_operation",
+  "target_application": {
+    "name": "Adobe After Effects 2026",
+    "executable": "/Applications/Adobe After Effects 2026/Adobe After Effects 2026.app/Contents/MacOS/After Effects",
+    "executable_sha256": "e24dbf277be8f8dd365d425da90fde442d33fea9de64de95c231cf347821ec46"
+  },
+  "plugin": {
+    "effect_name": "OLM Smoother",
+    "effect_match_name": "OLM Smoother",
+    "bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother.plugin",
+    "binary": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother.plugin/Contents/MacOS/OLMSmoother",
+    "required_binary_sha256": "44b199789d086b4f52354dd76fb3a3b107180323221718938d8d8580884028c0",
+    "replaces_installed_binary_sha256": "2f39684812ac8a1eb2b18790f63b4ee5edceb391d8e2706b7e8f0bb8f45c365e",
+    "required_architectures": [
+      "arm64",
+      "x86_64"
+    ],
+    "required_deployment_target": "11.0",
+    "codesign_identifier": "com.adobe.AfterEffects.OLMSmoother"
+  },
+  "project_fixture": {
+    "generated_filename": "olmsmoother_v1_pf8_host_fixture.aep",
+    "bits_per_channel": 8,
+    "renderer": "SOFTWARE",
+    "renderer_raw": 1816,
+    "working_space": "",
+    "linear_blending": false,
+    "input_alpha_mode": "STRAIGHT",
+    "pixel_aspect": 1,
+    "frame_rate": 24,
+    "duration": 1,
+    "save_before_render": true
+  },
+  "reference_manifests": [
+    {
+      "path": "refs/win_references/20260604_olm/OLMSmoother/reference_manifest.json",
+      "sha256": "0fa0e2e0215fd13716d20e24d39b90550348a6a6ec440d37943760b3857c3898"
+    },
+    {
+      "path": "refs/win_references/olm_final_random_per_plugin_10cases_20260629_windows_reference_return/OLMSmoother/reference_manifest.json",
+      "sha256": "a65b33a81a73dc8fd9ea9d4a4778c78eb0f8183c429ebc84fc0aff038adb6b75"
+    }
+  ],
+  "cases": [
+    {
+      "id": "case_0001",
+      "role": "canonical_pf8_no_key",
+      "dimensions": [
+        960,
+        540
+      ],
+      "input": {
+        "path": "refs/win_references/20260604_olm/OLMSmoother/case_0001_before_effects.png",
+        "file_sha256": "166cafc8aaa2bb2d78ed26a12fe95b6dcf0f6eeeabd7f3a4daaf0ceece500e4c",
+        "decoded_rgba_sha256": "7512509bfc319d80770ab9d4bf3535d3f14eb7e79793060b7ce482e104b36569"
+      },
+      "windows_expected": {
+        "path": "refs/win_references/20260604_olm/OLMSmoother/case_0001.png",
+        "file_sha256": "b2c4cf128d89712b6565745a2d451b6ead1a47ad2efa5a4f4c92a402e95e3156",
+        "decoded_rgba_sha256": "bcd6dada738c2f561bb58cd0870d4f5a40b6282410395cde2b0da0dbb443b22c"
+      },
+      "params": [
+        {
+          "name": "Use Color Key",
+          "match_name": "OLM Smoother-0001",
+          "property_index": 1,
+          "value": 0
+        },
+        {
+          "name": "Color Key",
+          "match_name": "OLM Smoother-0002",
+          "property_index": 2,
+          "value": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "name": "Do Smooth Range",
+          "match_name": "OLM Smoother-0003",
+          "property_index": 3,
+          "value": 6
+        }
+      ]
+    },
+    {
+      "id": "final_random10_olm_smoother_05",
+      "role": "retained_pf8_color_key_enabled",
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "input": {
+        "path": "refs/win_references/olm_final_random_per_plugin_10cases_20260629_windows_reference_return/OLMSmoother/olm_final_random10_olm_smoother_20260629__software__fr24__final_random10_olm_smoother_05_before_effects.png",
+        "file_sha256": "5276e925f0e7f6de61532a6f9adc3c33a9c8e7330deb0b96eb83f16a30273776",
+        "decoded_rgba_sha256": "4ba0d32b33d4868531303db844e5b138b71b510eb741b723a5da5722385373cb"
+      },
+      "windows_expected": {
+        "path": "refs/win_references/olm_final_random_per_plugin_10cases_20260629_windows_reference_return/OLMSmoother/olm_final_random10_olm_smoother_20260629__software__fr24__final_random10_olm_smoother_05.png",
+        "file_sha256": "5276e925f0e7f6de61532a6f9adc3c33a9c8e7330deb0b96eb83f16a30273776",
+        "decoded_rgba_sha256": "4ba0d32b33d4868531303db844e5b138b71b510eb741b723a5da5722385373cb"
+      },
+      "params": [
+        {
+          "name": "Use Color Key",
+          "match_name": "OLM Smoother-0001",
+          "property_index": 1,
+          "value": 1
+        },
+        {
+          "name": "Color Key",
+          "match_name": "OLM Smoother-0002",
+          "property_index": 2,
+          "value": [
+            0.96740001440048,
+            0.52939999103546,
+            0.75520002841949,
+            1
+          ]
+        },
+        {
+          "name": "Do Smooth Range",
+          "match_name": "OLM Smoother-0003",
+          "property_index": 3,
+          "value": 239
+        }
+      ]
+    }
+  ],
+  "acceptance": {
+    "control": "each Mac no-effect decoded RGBA must equal the pinned input decoded RGBA",
+    "effect": "each Mac effect-on decoded RGBA must equal the pinned Windows expected decoded RGBA",
+    "file_hash_note": "Windows PNG file hashes are provenance targets; AE PNG encoder identity is recorded but decoded RGBA exactness is the acceptance gate",
+    "loaded_identity": "one pre-existing AE process, same PID before/after, and the sole loaded OLMSmoother Mach-O canonical path must be the installed binary with required_binary_sha256",
+    "required_mismatched_pixels": 0,
+    "ae_exact_claim_before_run": false
+  },
+  "claim_boundary": {
+    "pf8_only": true,
+    "pf16_aexcompat_boundary_preserved": true,
+    "ae_not_operated_during_preparation": true
+  }
+}

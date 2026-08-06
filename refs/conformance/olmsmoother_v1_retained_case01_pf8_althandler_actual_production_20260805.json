@@ -1,0 +1,15 @@
+{
+  "actual_aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+  "candidate_calls": 1680,
+  "classifier_mismatches": [],
+  "expected_png_sha256": "afbf8c8b2a96e3b496179b0b0407a391a46f6efb6e04fa0b524fbb355a745470",
+  "fullframe_residual_pixels": 210,
+  "handler_mismatches": [],
+  "input_sha256": "5276e925f0e7f6de61532a6f9adc3c33a9c8e7330deb0b96eb83f16a30273776",
+  "production_png_sha256": "0e74999084540a0adf2d5f2fb079618fc8ad5a6dd4865e2bd17f8c40afffc4d6",
+  "schema_version": 1,
+  "scope": "OLMSmoother v1 retained case01 PF8 AltHandler paths that can touch a full-frame residual",
+  "status": "exact",
+  "tested_alt_calls": 6,
+  "tested_alt_calls_writing_target": 0
+}

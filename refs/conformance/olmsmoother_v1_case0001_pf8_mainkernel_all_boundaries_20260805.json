@@ -1,0 +1,26 @@
+{
+  "actual_aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+  "actual_executor_replay_sha256": "8a2728344e9cceec81b2ffd2b4b4425421a0d7e0228c571b48383b922315db34",
+  "actual_vs_production_executor_replay_mismatch": 0,
+  "classifier_calls": 7592,
+  "edge_centers": 1898,
+  "executor_calls": 687,
+  "executor_replay_calls": 687,
+  "first_main_caller_mismatch": null,
+  "first_mismatches": [],
+  "input_sha256": "166cafc8aaa2bb2d78ed26a12fe95b6dcf0f6eeeabd7f3a4daaf0ceece500e4c",
+  "main_args_sha256": "600a10f2992f6a9ca4a74c4ef08acefe99f5de39b0800dda96cdcd356325028d",
+  "main_caller_mismatch": false,
+  "mismatch_count": 0,
+  "mode_counts": {
+    "2": 368
+  },
+  "natural_main_calls": 368,
+  "normalized_executor_captures_sha256": "26cd0b0fd1883c0ec6852c2e50cb1dfbc334166671192fdde4138d2c557f3ae9",
+  "production_executor_captures_sha256": "26cd0b0fd1883c0ec6852c2e50cb1dfbc334166671192fdde4138d2c557f3ae9",
+  "production_executor_replay_sha256": "8a2728344e9cceec81b2ffd2b4b4425421a0d7e0228c571b48383b922315db34",
+  "production_natural_main_calls": 368,
+  "schema_version": 1,
+  "scope": "case_0001 nonuniform 3x3 centers; actual Classifier8/SubHandler8 ownership and actual-versus-CFG-interpreted MainInterpKernel8 Executor ABI boundary",
+  "status": "exact"
+}

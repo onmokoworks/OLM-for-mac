@@ -1,0 +1,2543 @@
+{
+  "actual_aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+  "calls": [
+    {
+      "direction": 5,
+      "fixture": "binary_rotation_0",
+      "late_hit": false,
+      "result": 1,
+      "tolerance": 0,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "direction": 3,
+      "fixture": "binary_rotation_0",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 0,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "direction": 1,
+      "fixture": "binary_rotation_0",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 0,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "direction": 7,
+      "fixture": "binary_rotation_0",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 0,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "direction": 5,
+      "fixture": "binary_rotation_0",
+      "late_hit": true,
+      "result": 1,
+      "tolerance": 1,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "direction": 3,
+      "fixture": "binary_rotation_0",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 1,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "direction": 1,
+      "fixture": "binary_rotation_0",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 1,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "direction": 7,
+      "fixture": "binary_rotation_0",
+      "late_hit": true,
+      "result": 0,
+      "tolerance": 1,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "direction": 5,
+      "fixture": "binary_rotation_0",
+      "late_hit": true,
+      "result": 1,
+      "tolerance": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "direction": 3,
+      "fixture": "binary_rotation_0",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "direction": 1,
+      "fixture": "binary_rotation_0",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "direction": 7,
+      "fixture": "binary_rotation_0",
+      "late_hit": true,
+      "result": 0,
+      "tolerance": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "direction": 5,
+      "fixture": "binary_rotation_0",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 254,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "direction": 3,
+      "fixture": "binary_rotation_0",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 254,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "direction": 1,
+      "fixture": "binary_rotation_0",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 254,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "direction": 7,
+      "fixture": "binary_rotation_0",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 254,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "direction": 5,
+      "fixture": "binary_rotation_1",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 0,
+      "values": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "direction": 3,
+      "fixture": "binary_rotation_1",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 0,
+      "values": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "direction": 1,
+      "fixture": "binary_rotation_1",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 0,
+      "values": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "direction": 7,
+      "fixture": "binary_rotation_1",
+      "late_hit": false,
+      "result": 1,
+      "tolerance": 0,
+      "values": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "direction": 5,
+      "fixture": "binary_rotation_1",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 1,
+      "values": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "direction": 3,
+      "fixture": "binary_rotation_1",
+      "late_hit": true,
+      "result": 0,
+      "tolerance": 1,
+      "values": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "direction": 1,
+      "fixture": "binary_rotation_1",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 1,
+      "values": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "direction": 7,
+      "fixture": "binary_rotation_1",
+      "late_hit": true,
+      "result": 1,
+      "tolerance": 1,
+      "values": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "direction": 5,
+      "fixture": "binary_rotation_1",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 6,
+      "values": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "direction": 3,
+      "fixture": "binary_rotation_1",
+      "late_hit": true,
+      "result": 0,
+      "tolerance": 6,
+      "values": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "direction": 1,
+      "fixture": "binary_rotation_1",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 6,
+      "values": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "direction": 7,
+      "fixture": "binary_rotation_1",
+      "late_hit": true,
+      "result": 1,
+      "tolerance": 6,
+      "values": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "direction": 5,
+      "fixture": "binary_rotation_1",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 254,
+      "values": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "direction": 3,
+      "fixture": "binary_rotation_1",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 254,
+      "values": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "direction": 1,
+      "fixture": "binary_rotation_1",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 254,
+      "values": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "direction": 7,
+      "fixture": "binary_rotation_1",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 254,
+      "values": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "direction": 5,
+      "fixture": "binary_rotation_2",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 0,
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "direction": 3,
+      "fixture": "binary_rotation_2",
+      "late_hit": false,
+      "result": 1,
+      "tolerance": 0,
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "direction": 1,
+      "fixture": "binary_rotation_2",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 0,
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "direction": 7,
+      "fixture": "binary_rotation_2",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 0,
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "direction": 5,
+      "fixture": "binary_rotation_2",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 1,
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "direction": 3,
+      "fixture": "binary_rotation_2",
+      "late_hit": true,
+      "result": 1,
+      "tolerance": 1,
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "direction": 1,
+      "fixture": "binary_rotation_2",
+      "late_hit": true,
+      "result": 0,
+      "tolerance": 1,
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "direction": 7,
+      "fixture": "binary_rotation_2",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 1,
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "direction": 5,
+      "fixture": "binary_rotation_2",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 6,
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "direction": 3,
+      "fixture": "binary_rotation_2",
+      "late_hit": true,
+      "result": 1,
+      "tolerance": 6,
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "direction": 1,
+      "fixture": "binary_rotation_2",
+      "late_hit": true,
+      "result": 0,
+      "tolerance": 6,
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "direction": 7,
+      "fixture": "binary_rotation_2",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 6,
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "direction": 5,
+      "fixture": "binary_rotation_2",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 254,
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "direction": 3,
+      "fixture": "binary_rotation_2",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 254,
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "direction": 1,
+      "fixture": "binary_rotation_2",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 254,
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "direction": 7,
+      "fixture": "binary_rotation_2",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 254,
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "direction": 5,
+      "fixture": "binary_rotation_3",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 0,
+      "values": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "direction": 3,
+      "fixture": "binary_rotation_3",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 0,
+      "values": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "direction": 1,
+      "fixture": "binary_rotation_3",
+      "late_hit": false,
+      "result": 1,
+      "tolerance": 0,
+      "values": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "direction": 7,
+      "fixture": "binary_rotation_3",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 0,
+      "values": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "direction": 5,
+      "fixture": "binary_rotation_3",
+      "late_hit": true,
+      "result": 0,
+      "tolerance": 1,
+      "values": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "direction": 3,
+      "fixture": "binary_rotation_3",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 1,
+      "values": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "direction": 1,
+      "fixture": "binary_rotation_3",
+      "late_hit": true,
+      "result": 1,
+      "tolerance": 1,
+      "values": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "direction": 7,
+      "fixture": "binary_rotation_3",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 1,
+      "values": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "direction": 5,
+      "fixture": "binary_rotation_3",
+      "late_hit": true,
+      "result": 0,
+      "tolerance": 6,
+      "values": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "direction": 3,
+      "fixture": "binary_rotation_3",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 6,
+      "values": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "direction": 1,
+      "fixture": "binary_rotation_3",
+      "late_hit": true,
+      "result": 1,
+      "tolerance": 6,
+      "values": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "direction": 7,
+      "fixture": "binary_rotation_3",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 6,
+      "values": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "direction": 5,
+      "fixture": "binary_rotation_3",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 254,
+      "values": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "direction": 3,
+      "fixture": "binary_rotation_3",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 254,
+      "values": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "direction": 1,
+      "fixture": "binary_rotation_3",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 254,
+      "values": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "direction": 7,
+      "fixture": "binary_rotation_3",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 254,
+      "values": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "direction": 5,
+      "fixture": "distinct_channels",
+      "late_hit": false,
+      "result": 4,
+      "tolerance": 0,
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "direction": 3,
+      "fixture": "distinct_channels",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 0,
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "direction": 1,
+      "fixture": "distinct_channels",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 0,
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "direction": 7,
+      "fixture": "distinct_channels",
+      "late_hit": false,
+      "result": 4,
+      "tolerance": 0,
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "direction": 5,
+      "fixture": "distinct_channels",
+      "late_hit": true,
+      "result": 4,
+      "tolerance": 1,
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "direction": 3,
+      "fixture": "distinct_channels",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 1,
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "direction": 1,
+      "fixture": "distinct_channels",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 1,
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "direction": 7,
+      "fixture": "distinct_channels",
+      "late_hit": true,
+      "result": 4,
+      "tolerance": 1,
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "direction": 5,
+      "fixture": "distinct_channels",
+      "late_hit": true,
+      "result": 4,
+      "tolerance": 6,
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "direction": 3,
+      "fixture": "distinct_channels",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 6,
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "direction": 1,
+      "fixture": "distinct_channels",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 6,
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "direction": 7,
+      "fixture": "distinct_channels",
+      "late_hit": true,
+      "result": 4,
+      "tolerance": 6,
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "direction": 5,
+      "fixture": "distinct_channels",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 254,
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "direction": 3,
+      "fixture": "distinct_channels",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 254,
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "direction": 1,
+      "fixture": "distinct_channels",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 254,
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "direction": 7,
+      "fixture": "distinct_channels",
+      "late_hit": false,
+      "result": 0,
+      "tolerance": 254,
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    }
+  ],
+  "entry": "0x180008060",
+  "late_boundary": "0x180009388",
+  "late_hits": [
+    {
+      "boundary": "0x1800087f0",
+      "direction": 5,
+      "fixture": "binary_rotation_0",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 5,
+        "r15": 1,
+        "r9": null,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x0",
+        "r13": "0x40000054",
+        "r15": "0x40000044",
+        "r9": "0x40000000",
+        "rax": "0x1",
+        "rbp": "0x1",
+        "rbx": "0x40000050",
+        "rdi": "0x1",
+        "rsi": "0x2"
+      },
+      "tolerance": 1,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "boundary": "0x180009388",
+      "direction": 5,
+      "fixture": "binary_rotation_0",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 5,
+        "r15": 1,
+        "r9": 7,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x40000001",
+        "r13": "0x40000054",
+        "r15": "0x40000044",
+        "r9": "0x4000005c",
+        "rax": "0x0",
+        "rbp": "0x1",
+        "rbx": "0x40000050",
+        "rdi": "0x1",
+        "rsi": "0x1"
+      },
+      "tolerance": 1,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "boundary": "0x1800087f0",
+      "direction": 7,
+      "fixture": "binary_rotation_0",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 7,
+        "r15": 5,
+        "r9": null,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x40000001",
+        "r13": "0x4000005c",
+        "r15": "0x40000054",
+        "r9": "0x40000000",
+        "rax": "0x5",
+        "rbp": "0x1",
+        "rbx": "0x40000050",
+        "rdi": "0x1",
+        "rsi": "0x8"
+      },
+      "tolerance": 1,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "boundary": "0x1800087f0",
+      "direction": 5,
+      "fixture": "binary_rotation_0",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 5,
+        "r15": 1,
+        "r9": null,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x0",
+        "r13": "0x40000054",
+        "r15": "0x40000044",
+        "r9": "0x40000000",
+        "rax": "0x1",
+        "rbp": "0x1",
+        "rbx": "0x40000050",
+        "rdi": "0x6",
+        "rsi": "0x2"
+      },
+      "tolerance": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "boundary": "0x180009388",
+      "direction": 5,
+      "fixture": "binary_rotation_0",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 5,
+        "r15": 1,
+        "r9": 7,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x40000001",
+        "r13": "0x40000054",
+        "r15": "0x40000044",
+        "r9": "0x4000005c",
+        "rax": "0x0",
+        "rbp": "0x1",
+        "rbx": "0x40000050",
+        "rdi": "0x6",
+        "rsi": "0x1"
+      },
+      "tolerance": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "boundary": "0x1800087f0",
+      "direction": 7,
+      "fixture": "binary_rotation_0",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 7,
+        "r15": 5,
+        "r9": null,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x40000001",
+        "r13": "0x4000005c",
+        "r15": "0x40000054",
+        "r9": "0x40000000",
+        "rax": "0x5",
+        "rbp": "0x1",
+        "rbx": "0x40000050",
+        "rdi": "0x6",
+        "rsi": "0x8"
+      },
+      "tolerance": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "boundary": "0x1800087f0",
+      "direction": 3,
+      "fixture": "binary_rotation_1",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 3,
+        "r15": 7,
+        "r9": null,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x1",
+        "r13": "0x4000004c",
+        "r15": "0x4000005c",
+        "r9": "0x40000000",
+        "rax": "0x7",
+        "rbp": "0x1",
+        "rbx": "0x40000050",
+        "rdi": "0x1",
+        "rsi": "0x6"
+      },
+      "tolerance": 1,
+      "values": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "boundary": "0x1800087f0",
+      "direction": 7,
+      "fixture": "binary_rotation_1",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 7,
+        "r15": 5,
+        "r9": null,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x0",
+        "r13": "0x4000005c",
+        "r15": "0x40000054",
+        "r9": "0x40000000",
+        "rax": "0x5",
+        "rbp": "0x1",
+        "rbx": "0x40000050",
+        "rdi": "0x1",
+        "rsi": "0x8"
+      },
+      "tolerance": 1,
+      "values": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "boundary": "0x180009388",
+      "direction": 7,
+      "fixture": "binary_rotation_1",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 7,
+        "r15": 5,
+        "r9": 3,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x40000001",
+        "r13": "0x4000005c",
+        "r15": "0x40000054",
+        "r9": "0x4000004c",
+        "rax": "0x0",
+        "rbp": "0x1",
+        "rbx": "0x40000050",
+        "rdi": "0x1",
+        "rsi": "0x1"
+      },
+      "tolerance": 1,
+      "values": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "boundary": "0x1800087f0",
+      "direction": 3,
+      "fixture": "binary_rotation_1",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 3,
+        "r15": 7,
+        "r9": null,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x40000001",
+        "r13": "0x4000004c",
+        "r15": "0x4000005c",
+        "r9": "0x40000000",
+        "rax": "0x7",
+        "rbp": "0x1",
+        "rbx": "0x40000050",
+        "rdi": "0x6",
+        "rsi": "0x6"
+      },
+      "tolerance": 6,
+      "values": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "boundary": "0x1800087f0",
+      "direction": 7,
+      "fixture": "binary_rotation_1",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 7,
+        "r15": 5,
+        "r9": null,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x0",
+        "r13": "0x4000005c",
+        "r15": "0x40000054",
+        "r9": "0x40000000",
+        "rax": "0x5",
+        "rbp": "0x1",
+        "rbx": "0x40000050",
+        "rdi": "0x6",
+        "rsi": "0x8"
+      },
+      "tolerance": 6,
+      "values": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "boundary": "0x180009388",
+      "direction": 7,
+      "fixture": "binary_rotation_1",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 7,
+        "r15": 5,
+        "r9": 3,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x40000001",
+        "r13": "0x4000005c",
+        "r15": "0x40000054",
+        "r9": "0x4000004c",
+        "rax": "0x0",
+        "rbp": "0x1",
+        "rbx": "0x40000050",
+        "rdi": "0x6",
+        "rsi": "0x1"
+      },
+      "tolerance": 6,
+      "values": [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "boundary": "0x1800087f0",
+      "direction": 3,
+      "fixture": "binary_rotation_2",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 3,
+        "r15": 7,
+        "r9": null,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x0",
+        "r13": "0x4000004c",
+        "r15": "0x4000005c",
+        "r9": "0x40000000",
+        "rax": "0x7",
+        "rbp": "0x1",
+        "rbx": "0x40000050",
+        "rdi": "0x1",
+        "rsi": "0x6"
+      },
+      "tolerance": 1,
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "boundary": "0x180009388",
+      "direction": 3,
+      "fixture": "binary_rotation_2",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 3,
+        "r15": 7,
+        "r9": 1,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x40000001",
+        "r13": "0x4000004c",
+        "r15": "0x4000005c",
+        "r9": "0x40000044",
+        "rax": "0x0",
+        "rbp": "0x1",
+        "rbx": "0x40000050",
+        "rdi": "0x1",
+        "rsi": "0x1"
+      },
+      "tolerance": 1,
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "boundary": "0x1800087f0",
+      "direction": 1,
+      "fixture": "binary_rotation_2",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 1,
+        "r15": 3,
+        "r9": null,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x40000001",
+        "r13": "0x40000044",
+        "r15": "0x4000004c",
+        "r9": "0x40000000",
+        "rax": "0x3",
+        "rbp": "0x1",
+        "rbx": "0x40000050",
+        "rdi": "0x1",
+        "rsi": "0x0"
+      },
+      "tolerance": 1,
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "boundary": "0x1800087f0",
+      "direction": 3,
+      "fixture": "binary_rotation_2",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 3,
+        "r15": 7,
+        "r9": null,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x0",
+        "r13": "0x4000004c",
+        "r15": "0x4000005c",
+        "r9": "0x40000000",
+        "rax": "0x7",
+        "rbp": "0x1",
+        "rbx": "0x40000050",
+        "rdi": "0x6",
+        "rsi": "0x6"
+      },
+      "tolerance": 6,
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "boundary": "0x180009388",
+      "direction": 3,
+      "fixture": "binary_rotation_2",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 3,
+        "r15": 7,
+        "r9": 1,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x40000001",
+        "r13": "0x4000004c",
+        "r15": "0x4000005c",
+        "r9": "0x40000044",
+        "rax": "0x0",
+        "rbp": "0x1",
+        "rbx": "0x40000050",
+        "rdi": "0x6",
+        "rsi": "0x1"
+      },
+      "tolerance": 6,
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "boundary": "0x1800087f0",
+      "direction": 1,
+      "fixture": "binary_rotation_2",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 1,
+        "r15": 3,
+        "r9": null,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x40000001",
+        "r13": "0x40000044",
+        "r15": "0x4000004c",
+        "r9": "0x40000000",
+        "rax": "0x3",
+        "rbp": "0x1",
+        "rbx": "0x40000050",
+        "rdi": "0x6",
+        "rsi": "0x0"
+      },
+      "tolerance": 6,
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "boundary": "0x1800087f0",
+      "direction": 5,
+      "fixture": "binary_rotation_3",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 5,
+        "r15": 1,
+        "r9": null,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x1",
+        "r13": "0x40000054",
+        "r15": "0x40000044",
+        "r9": "0x40000000",
+        "rax": "0x1",
+        "rbp": "0x1",
+        "rbx": "0x40000050",
+        "rdi": "0x1",
+        "rsi": "0x2"
+      },
+      "tolerance": 1,
+      "values": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "boundary": "0x1800087f0",
+      "direction": 1,
+      "fixture": "binary_rotation_3",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 1,
+        "r15": 3,
+        "r9": null,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x0",
+        "r13": "0x40000044",
+        "r15": "0x4000004c",
+        "r9": "0x40000000",
+        "rax": "0x3",
+        "rbp": "0x1",
+        "rbx": "0x40000050",
+        "rdi": "0x1",
+        "rsi": "0x0"
+      },
+      "tolerance": 1,
+      "values": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "boundary": "0x180009388",
+      "direction": 1,
+      "fixture": "binary_rotation_3",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 1,
+        "r15": 3,
+        "r9": 5,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x40000001",
+        "r13": "0x40000044",
+        "r15": "0x4000004c",
+        "r9": "0x40000054",
+        "rax": "0x0",
+        "rbp": "0x1",
+        "rbx": "0x40000050",
+        "rdi": "0x1",
+        "rsi": "0x1"
+      },
+      "tolerance": 1,
+      "values": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "boundary": "0x1800087f0",
+      "direction": 5,
+      "fixture": "binary_rotation_3",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 5,
+        "r15": 1,
+        "r9": null,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x40000001",
+        "r13": "0x40000054",
+        "r15": "0x40000044",
+        "r9": "0x40000000",
+        "rax": "0x1",
+        "rbp": "0x1",
+        "rbx": "0x40000050",
+        "rdi": "0x6",
+        "rsi": "0x2"
+      },
+      "tolerance": 6,
+      "values": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "boundary": "0x1800087f0",
+      "direction": 1,
+      "fixture": "binary_rotation_3",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 1,
+        "r15": 3,
+        "r9": null,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x0",
+        "r13": "0x40000044",
+        "r15": "0x4000004c",
+        "r9": "0x40000000",
+        "rax": "0x3",
+        "rbp": "0x1",
+        "rbx": "0x40000050",
+        "rdi": "0x6",
+        "rsi": "0x0"
+      },
+      "tolerance": 6,
+      "values": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "boundary": "0x180009388",
+      "direction": 1,
+      "fixture": "binary_rotation_3",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 1,
+        "r15": 3,
+        "r9": 5,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x40000001",
+        "r13": "0x40000044",
+        "r15": "0x4000004c",
+        "r9": "0x40000054",
+        "rax": "0x0",
+        "rbp": "0x1",
+        "rbx": "0x40000050",
+        "rdi": "0x6",
+        "rsi": "0x1"
+      },
+      "tolerance": 6,
+      "values": [
+        0,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "boundary": "0x1800087f0",
+      "direction": 5,
+      "fixture": "distinct_channels",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 5,
+        "r15": 1,
+        "r9": null,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x40000000",
+        "r13": "0x40000054",
+        "r15": "0x40000044",
+        "r9": "0x40000001",
+        "rax": "0x1",
+        "rbp": "0x4",
+        "rbx": "0x40000050",
+        "rdi": "0x1",
+        "rsi": "0x2"
+      },
+      "tolerance": 1,
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "boundary": "0x1800087f0",
+      "direction": 7,
+      "fixture": "distinct_channels",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 7,
+        "r15": 5,
+        "r9": null,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x40000000",
+        "r13": "0x4000005c",
+        "r15": "0x40000054",
+        "r9": "0x40000001",
+        "rax": "0x5",
+        "rbp": "0x4",
+        "rbx": "0x40000050",
+        "rdi": "0x1",
+        "rsi": "0x8"
+      },
+      "tolerance": 1,
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "boundary": "0x1800087f0",
+      "direction": 5,
+      "fixture": "distinct_channels",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 5,
+        "r15": 1,
+        "r9": null,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x40000000",
+        "r13": "0x40000054",
+        "r15": "0x40000044",
+        "r9": "0x40000001",
+        "rax": "0x1",
+        "rbp": "0x4",
+        "rbx": "0x40000050",
+        "rdi": "0x6",
+        "rsi": "0x2"
+      },
+      "tolerance": 6,
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "boundary": "0x1800087f0",
+      "direction": 7,
+      "fixture": "distinct_channels",
+      "pointer_indices": {
+        "r11": null,
+        "r13": 7,
+        "r15": 5,
+        "r9": null,
+        "rax": null,
+        "rbp": null,
+        "rbx": 4,
+        "rdi": null,
+        "rsi": null
+      },
+      "registers": {
+        "r11": "0x40000000",
+        "r13": "0x4000005c",
+        "r15": "0x40000054",
+        "r9": "0x40000001",
+        "rax": "0x5",
+        "rbp": "0x4",
+        "rbx": "0x40000050",
+        "rdi": "0x6",
+        "rsi": "0x8"
+      },
+      "tolerance": 6,
+      "values": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "status": "captured"
+}

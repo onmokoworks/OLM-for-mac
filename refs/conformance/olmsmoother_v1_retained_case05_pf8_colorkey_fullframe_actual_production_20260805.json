@@ -1,0 +1,30 @@
+{
+  "actual_aex_reference_png_sha256": "5276e925f0e7f6de61532a6f9adc3c33a9c8e7330deb0b96eb83f16a30273776",
+  "actual_aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+  "cli_stdout": "wrote: /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olmsmoother-v1-case05-uowdynp8/case05.png (tolerance=239 use_key=1 key=247,135,193)",
+  "color_key_float": [
+    0.96740001440048,
+    0.52939999103546,
+    0.75520002841949,
+    1
+  ],
+  "color_key_rgb8": [
+    247,
+    135,
+    193
+  ],
+  "do_smooth_range": 239,
+  "height": 1080,
+  "input_exact_key_rgb_pixels": 0,
+  "input_sha256": "5276e925f0e7f6de61532a6f9adc3c33a9c8e7330deb0b96eb83f16a30273776",
+  "max_abs_diff": 0,
+  "mean_abs_diff_all_rgba": 0.0,
+  "mismatched_channel_bytes": 0,
+  "mismatched_pixels": 0,
+  "production_png_sha256": "5276e925f0e7f6de61532a6f9adc3c33a9c8e7330deb0b96eb83f16a30273776",
+  "schema_version": 1,
+  "scope": "OLMSmoother v1 retained Windows Software PF8 final_random10 case05, Use Color Key=1",
+  "status": "exact",
+  "use_color_key": 1,
+  "width": 1920
+}

@@ -1,0 +1,103 @@
+{
+  "ae_exact_claim": false,
+  "after_effects": {
+    "exact_current_mapping": true,
+    "loaded_olmsmoother_paths": {
+      "63831": [
+        "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother.plugin/Contents/MacOS/OLMSmoother"
+      ]
+    },
+    "pids": [
+      63831
+    ]
+  },
+  "checks": {
+    "ae_executable_hash_matches": true,
+    "architectures": [
+      "arm64",
+      "x86_64"
+    ],
+    "architectures_match": true,
+    "cases": {
+      "case_0001": {
+        "input": {
+          "decoded_hash_matches": true,
+          "decoded_rgba_sha256": "7512509bfc319d80770ab9d4bf3535d3f14eb7e79793060b7ce482e104b36569",
+          "dimensions": [
+            960,
+            540
+          ],
+          "dimensions_match": true,
+          "file_hash_matches": true,
+          "file_sha256": "166cafc8aaa2bb2d78ed26a12fe95b6dcf0f6eeeabd7f3a4daaf0ceece500e4c"
+        },
+        "windows_expected": {
+          "decoded_hash_matches": true,
+          "decoded_rgba_sha256": "bcd6dada738c2f561bb58cd0870d4f5a40b6282410395cde2b0da0dbb443b22c",
+          "dimensions": [
+            960,
+            540
+          ],
+          "dimensions_match": true,
+          "file_hash_matches": true,
+          "file_sha256": "b2c4cf128d89712b6565745a2d451b6ead1a47ad2efa5a4f4c92a402e95e3156"
+        }
+      },
+      "final_random10_olm_smoother_05": {
+        "input": {
+          "decoded_hash_matches": true,
+          "decoded_rgba_sha256": "4ba0d32b33d4868531303db844e5b138b71b510eb741b723a5da5722385373cb",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "dimensions_match": true,
+          "file_hash_matches": true,
+          "file_sha256": "5276e925f0e7f6de61532a6f9adc3c33a9c8e7330deb0b96eb83f16a30273776"
+        },
+        "windows_expected": {
+          "decoded_hash_matches": true,
+          "decoded_rgba_sha256": "4ba0d32b33d4868531303db844e5b138b71b510eb741b723a5da5722385373cb",
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "dimensions_match": true,
+          "file_hash_matches": true,
+          "file_sha256": "5276e925f0e7f6de61532a6f9adc3c33a9c8e7330deb0b96eb83f16a30273776"
+        }
+      }
+    },
+    "codesign_deep_strict": true,
+    "deployment_target_matches": true,
+    "deployment_targets": [
+      "11.0"
+    ],
+    "installed_binary_hash_matches": true,
+    "installed_binary_sha256": "44b199789d086b4f52354dd76fb3a3b107180323221718938d8d8580884028c0",
+    "reference_manifests_match": true,
+    "request_hash_matches": true,
+    "request_sha256": "f06bbc6af35cceab2cf82d75e865f4afef42a3b1db5998e407a47d6474ef7f94"
+  },
+  "created_at": "2026-08-05T14:55:10.911961+00:00",
+  "harness": {
+    "request": {
+      "path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/mac_validation_requests/olmsmoother_v1_pf8_current_ae_host_20260805.json",
+      "sha256": "f06bbc6af35cceab2cf82d75e865f4afef42a3b1db5998e407a47d6474ef7f94"
+    },
+    "runner": {
+      "path": "/Users/onmk/Documents/Projects/Personal/OLM as/scripts/run_olmsmoother_v1_pf8_current_mac_ae_20260805.py",
+      "sha256": "7a865f473a67b805761a15de4f475223f5f6a355e6b819d17cd1b36655dcc4f0"
+    }
+  },
+  "kind": "olmsmoother_v1_pf8_current_ae_host_preflight",
+  "pf16_aexcompat_boundary_preserved": true,
+  "run_executed": false,
+  "run_requested": false,
+  "schema_version": 1,
+  "status": "ready",
+  "target_cases": [
+    "case_0001",
+    "final_random10_olm_smoother_05"
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "schema_version": 4,
+  "status": "pf8_host_exact",
+  "scope": "OLMSmoother v1 canonical PF8 plus retained Color-Key-enabled PF8 exact macOS-11-targeted universal production bundle install and load-preflight boundary",
+  "build": {
+    "command": "xcodebuild -project mac/OLMSmoother/Mac/OLMSmoother.xcodeproj -scheme OLMSmoother -configuration Debug ARCHS='arm64 x86_64' ONLY_ACTIVE_ARCH=NO CODE_SIGNING_ALLOWED=NO CONFIGURATION_BUILD_DIR=/tmp/olmsmoother-v1-macos11-build-20260805.YsmrFF build",
+    "result": "success",
+    "requested_configuration": "Debug",
+    "effective_project_configuration": "Debug (the project currently declares Debug as its sole configuration)",
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "deployment_target": "11.0",
+    "sdk": "26.2",
+    "unsigned_macho_sha256": "10a56ac4647a8d7fa7f6cfc365ac846be46de07fa58e4d1e88e4c70944f485dc"
+  },
+  "install": {
+    "bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother.plugin",
+    "macho_sha256_after_adhoc_sign": "44b199789d086b4f52354dd76fb3a3b107180323221718938d8d8580884028c0",
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "codesign_identifier": "com.adobe.AfterEffects.OLMSmoother",
+    "codesign_deep_strict": true,
+    "sole_matching_bundle_in_mediacore": true,
+    "deployment_target": "11.0",
+    "recoverable_previous_bundle": "handoff/mac_plugin_backups/mediacore_20260805_olmsmoother_before_macos11_deployment_fix/OLMSmoother.plugin",
+    "recoverable_previous_macho_sha256": "2f39684812ac8a1eb2b18790f63b4ee5edceb391d8e2706b7e8f0bb8f45c365e"
+  },
+  "ae_process_during_install": {
+    "pid_before": [],
+    "pid_after": [],
+    "unchanged": true,
+    "mapped_installed_olmsmoother_paths": [],
+    "restart_performed": false
+  },
+  "post_install_load_preflight": {
+    "pid": 63831,
+    "installed_path_mapped": true,
+    "mapped_binary_sha256": "44b199789d086b4f52354dd76fb3a3b107180323221718938d8d8580884028c0",
+    "render_performed": true,
+    "render_status": "pass",
+    "render_report": "refs/mac_validation_runs/olmsmoother_v1_pf8_current_20260805_run7/runner_report.json",
+    "render_report_sha256": "07086b37a875237fb3f786d89e438bbffc016dad02070fbbd738d3eded383714",
+    "runner": "scripts/run_olmsmoother_v1_pf8_current_mac_ae_20260805.py",
+    "request": "refs/mac_validation_requests/olmsmoother_v1_pf8_current_ae_host_20260805.json"
+  },
+  "portable_conformance": {
+    "case0001_status": "exact",
+    "case0001_actual_and_production_png_sha256": "b2c4cf128d89712b6565745a2d451b6ead1a47ad2efa5a4f4c92a402e95e3156",
+    "case0001_mismatched_pixels": 0,
+    "retained_colorkey_case": "final_random10_olm_smoother_05",
+    "retained_colorkey_case_status": "exact",
+    "retained_colorkey_actual_and_production_png_sha256": "5276e925f0e7f6de61532a6f9adc3c33a9c8e7330deb0b96eb83f16a30273776",
+    "retained_colorkey_mismatched_pixels": 0,
+    "keymask_actual_callback_vectors": "exact, 6 of 6",
+    "fixed_fixture_regression": "PASS smoother lane, 16 tests"
+  },
+  "claim_boundary": {
+    "host_exact": true,
+    "host_exact_scope": "PF8 canonical no-key case0001 and retained Color-Key-enabled case05",
+    "reason": "The same AE process mapped the exact installed hash before and after both selected PF8 Software host renders; all control and effect-on decoded RGBA outputs are exact.",
+    "aexcompat_typed_session_gap_preserved": true,
+    "handoff_contract": "refs/requests/olmsmoother_v1_pf16_macos_aexcompat_session_20260805.json"
+  }
+}
