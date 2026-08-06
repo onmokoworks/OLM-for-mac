@@ -24,10 +24,10 @@ def main() -> int:
         "OLMSmoother", "OLMSmoother2", "OLMToonDilate",
     }
     assert not [row for row in rows if row["state"] == "invalid"]
-    assert [row["plugin"] for row in rows if row["state"] == "pending"] == ["OLMKiraKira", "OLMToonDilate"]
+    assert not [row for row in rows if row["state"] == "pending"]
     install = module.installed_gate()
     assert install["state"] == "proven", install
-    print("PASS_OLM_RELEASE_GATE_AUDIT proven=8 pending=2 invalid=0 universal=10")
+    print("PASS_OLM_RELEASE_GATE_AUDIT proven=10 pending=0 invalid=0 universal=10")
     return 0
 
 

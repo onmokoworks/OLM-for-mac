@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Run or validate the isolated Mac ToonDilate 32bpc request."""
 from __future__ import annotations
-import argparse, datetime as dt, hashlib, json, os, re, subprocess, sys
+import argparse, datetime as dt, hashlib, json, os, re, secrets, subprocess, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -9,8 +9,10 @@ PACKAGE = (Path(__file__).resolve().parent if Path(__file__).resolve().parent.na
            else ROOT / "runtime_trace_packages/olmtoondilate_mac_32bpc_validation_20260715")
 _here = Path(__file__).resolve().parent
 _helper = _here if _here.name == "olmtoondilate_mac_32bpc_validation_20260715" else ROOT / "runtime_trace_packages/olmtoondilate_mac_32bpc_validation_20260715"
+REFS = _here.parents[1] if _here.name == "olmtoondilate_mac_32bpc_validation_20260715" else ROOT
 sys.path.insert(0, str(_helper))
 from verify_32bpc_float_return import VerificationError, inspect_float_rgba_exr
+from compare_float_exr import compare as compare_float_words
 def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
 def read(path): return json.loads(path.read_text(encoding="utf-8-sig"))
 def fail(message): raise SystemExit("FAIL CLOSED: " + message)
@@ -124,6 +126,9 @@ def main():
             "OLM_AE_TYPED_FIXTURE_PROJECT_PATH": str(output_dir / "fixture.aep"), "OLM_AE_TYPED_FIXTURE_EFFECT": "OLM Toon Dilate",
             "OLM_AE_TYPED_FIXTURE_OVERWRITE": "0"})
         if trace.exists(): trace.unlink()
+        challenge = {"nonce": secrets.token_hex(32), "created_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
+                     "plugin_sha256": expected_plugin_sha, "fixture_sha256": sha(fixture)}
+        (output_dir / "process_challenge.json").write_text(json.dumps(challenge, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         write_es3_loader(wrapper, trace, payload)
         audit_es3_loader(wrapper, trace, payload)
         subprocess.run([
@@ -151,10 +156,18 @@ def main():
         outputs = {n: output_dir / fn for n, fn in request["case"]["outputs"].items()}
         inspected = {n: verify_output(path) for n, path in outputs.items()}
         expected_outputs = request.get("expected_current_installed_output_sha256", {})
+        retained = {
+            "no_effect": REFS / "conformance/olmtoondilate_32bpc_typed_procedural_ae_exact_20260728/mac_no_effect.exr",
+            "effect_on": REFS / "conformance/olmtoondilate_32bpc_typed_procedural_ae_exact_20260728/mac_effect_on.exr",
+        }
         if set(expected_outputs) != set(outputs): fail("expected output hash contract missing or drifted")
+        raw_repeat = {}
         for name in outputs:
-            if inspected[name]["sha256"] != expected_outputs[name]:
-                fail(f"{name} output hash differs from the pinned current-installed expectation")
+            if not retained[name].is_file() or sha(retained[name]) != expected_outputs[name]:
+                fail(f"{name} retained expectation identity drifted")
+            raw_repeat[name] = compare_float_words(outputs[name], retained[name])
+            if raw_repeat[name].get("mismatched_values") != 0:
+                fail(f"{name} raw FLOAT words differ from the pinned current-installed expectation")
         requested = request["case"]["parameters"][0]
         readbacks = result.get("parameters", [])
         if len(readbacks) != 1 or readbacks[0].get("property_index") != 1 or abs(float(readbacks[0].get("actual")) - float(requested["value"])) > float(requested["readback_tolerance"]):
@@ -168,7 +181,10 @@ def main():
                              "output_module": {"template_name": "OLM EXR 32 Float", "capture_api": "OutputModule.getSettings(GetSettingsFormat.STRING)",
                                 "settings_sha256": sha(settings[0]), "settings": [str(x) for x in settings]}}]}
         (output_dir / "mac_record.json").write_text(json.dumps(record, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-        report.update({"mac_record": str(output_dir / "mac_record.json"), "status": "blocked", "reason": "cross_host_return_compare_required"})
+        report.update({"mac_record": str(output_dir / "mac_record.json"), "status": "current_mac_host_pass",
+                       "reason": "current_installed_mac_repeat_raw_float_exact",
+                       "ae_exact": False, "process_challenge": challenge, "raw_repeat": raw_repeat,
+                       "claim_boundary": "Current Mac AE representative host/load/render repeat only; no new Windows exactness claim."})
     if args.windows_return:
         comparator = package / "compare_cross_host.py"
         proc = subprocess.run([sys.executable, str(comparator), str(output_dir / "mac_record.json"), str(args.windows_return), "--json"], text=True, capture_output=True)

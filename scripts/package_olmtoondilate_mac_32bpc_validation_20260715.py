@@ -39,7 +39,7 @@ CONTRACT = {
     "source_policy": "AE-generated solids only; no footage imported",
     "render_policy": "same comp, only branch enabled state changes",
     "source_layers": [
-        {"name": "solid_background", "kind": "solid", "bounds": [0, 0, 64, 64], "rgb": [0, 0, 0], "alpha": 1.0},
+        {"name": "solid_background", "kind": "solid", "bounds": [0, 0, 64, 64], "rgb": [0, 0, 0], "alpha": 0.0},
         {"name": "rect_integer_a25", "kind": "solid", "bounds": [4, 4, 20, 16], "rgb": [1, 0, 0], "alpha": 0.25},
         {"name": "rect_integer_a50", "kind": "solid", "bounds": [28, 4, 20, 16], "rgb": [0, 1, 0], "alpha": 0.5},
         {"name": "rect_integer_a75", "kind": "solid", "bounds": [4, 28, 20, 16], "rgb": [0, 0, 1], "alpha": 0.75},
@@ -69,7 +69,10 @@ def binary_architectures(path: Path) -> list[str]:
 
 
 def fixture_source() -> str:
-    source = (SOURCE_PACKAGE / "request/fixture/ae_generate_32bpc_typed_procedural_fixture.jsx").read_text(encoding="utf-8")
+    # Start from the maintained canonical fixture.  The old Windows-package
+    # snapshot predates the transparent Toon background and explicit radius-13
+    # set/readback, so regenerating from it silently changed the declared case.
+    source = (ROOT / "scripts/ae_generate_32bpc_typed_procedural_fixture.jsx").read_text(encoding="utf-8")
     serializer = r'''
     function jsonStringify(value) {
         if (value === null || typeof value === "undefined") return "null";

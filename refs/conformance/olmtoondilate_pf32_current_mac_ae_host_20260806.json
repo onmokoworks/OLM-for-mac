@@ -1,0 +1,64 @@
+{
+  "schema": "olmtoondilate.current-mac-ae-host/1",
+  "date": "2026-08-06",
+  "status": "pass",
+  "current_mac_host_gate": true,
+  "ae_exact_claim": false,
+  "host": {
+    "ae_version": "26.3x87",
+    "renderer": "SOFTWARE",
+    "bits_per_channel": 32,
+    "working_space": "None",
+    "linear_blending": false,
+    "pid": 35280,
+    "process_started_local": "Thu Aug 6 15:51:22 2026"
+  },
+  "installed_module": {
+    "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate",
+    "sha256": "7d2c24d8ad0f7436ee7035e0d926a2abaac1a74bc9305a4223f76230c1fc5537",
+    "vmmap_exact_path": true,
+    "binary_predates_process_start": true
+  },
+  "process_challenge": {
+    "nonce": "3f5a3534bc2721f10ca910ad09c7fba16ad3400a19abb2f214f69f5e058b1c28",
+    "created_at_utc": "2026-08-06T06:51:22.453311+00:00",
+    "plugin_sha256": "7d2c24d8ad0f7436ee7035e0d926a2abaac1a74bc9305a4223f76230c1fc5537",
+    "fixture_sha256": "64163ea82091e801c8ab9fca100aa37b49310f29109b9e86dc5b03cca8648eda"
+  },
+  "fixture": {
+    "dimensions": [64, 64],
+    "source": "AE-generated solids only; no imported footage",
+    "render_policy": "same comp, only branch enabled state changes",
+    "effect": "OLM Toon Dilate",
+    "search_radius": {
+      "match_name": "ADBE OLMToonDilate-0001",
+      "requested": 13,
+      "readback": 13
+    }
+  },
+  "outputs": {
+    "format": "OpenEXR uncompressed FLOAT ABGR",
+    "dimensions": [64, 64],
+    "finite_values_per_output": 16384,
+    "no_effect_repeat": {
+      "mismatched_values": 0,
+      "max_raw_u32_delta": 0
+    },
+    "effect_on_repeat": {
+      "mismatched_values": 0,
+      "max_raw_u32_delta": 0
+    },
+    "effect_on_vs_no_effect": {
+      "mismatched_values": 6448,
+      "max_raw_u32_delta": 1065353216
+    }
+  },
+  "gates": {
+    "fresh_single_ae_process": true,
+    "sole_exact_loaded_module": true,
+    "explicit_parameter_readback": true,
+    "both_outputs_raw_repeat_exact": true,
+    "effect_branch_non_noop": true
+  },
+  "claim_boundary": "Current installed OLMToonDilate Mac bundle loaded and rendered one 64x64 PF32 Software/radius-13 representative in AE 26.3x87. Raw FLOAT values repeat the retained canonical Mac outputs exactly. This is a Mac release host gate and makes no new Windows-AE-exact claim."
+}

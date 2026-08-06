@@ -39,10 +39,10 @@
     },
     {
       "plugin": "OLMKiraKira",
-      "evidence": "refs/conformance/olmkirakira_mac_ae_es3_loader_fix_20260806.json",
-      "state": "pending",
-      "assertions": {"status": "static_ready_no_retry", "ae_retry_performed": false},
-      "boundary": "Runner is prepared, but the current installed bundle has no completed representative Mac AE render witness."
+      "evidence": "refs/conformance/olmkirakira_mode4_case01_current_mac_ae_20260806.json",
+      "state": "proven",
+      "assertions": {"status": "exact", "run_executed": true, "post_identity.exact_same_pid_and_module": true, "raw_float32_compare.equal": true},
+      "boundary": "Current installed PF32 Mode4 case01 loaded and rendered raw-FLOAT exact to the retained Windows artifact."
     },
     {
       "plugin": "OLMRadialBlur",
@@ -67,10 +67,10 @@
     },
     {
       "plugin": "OLMToonDilate",
-      "evidence": "refs/conformance/olmtoondilate_installed_completion_route_20260805.json",
-      "state": "pending",
-      "assertions": {"status": "PASS_INSTALLED_COMPLETION_ROUTE", "gates.installed_dynamic_entry_exact": true},
-      "boundary": "Installed EffectMain is exact under focused callbacks, but the current installed bundle has no real Mac AE representative render."
+      "evidence": "refs/conformance/olmtoondilate_pf32_current_mac_ae_host_20260806.json",
+      "state": "proven",
+      "assertions": {"status": "pass", "current_mac_host_gate": true, "gates.sole_exact_loaded_module": true, "gates.both_outputs_raw_repeat_exact": true, "gates.effect_branch_non_noop": true},
+      "boundary": "Current installed PF32 Software/radius-13 representative loaded and rendered in AE 26.3x87; this Mac smoke makes no new Windows-exact claim."
     }
   ]
 }
