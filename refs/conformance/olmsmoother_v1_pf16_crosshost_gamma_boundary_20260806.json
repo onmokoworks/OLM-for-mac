@@ -1,0 +1,10 @@
+{
+  "dimensions": [960, 540],
+  "mac_pf16_normalized_max_integer_delta": 0.0,
+  "mismatch_bbox": [860, 440, 959, 539],
+  "mismatch_channels": {"A": 0, "B": 0, "G": 0, "R": 183},
+  "mismatch_count": 183,
+  "status": "pass",
+  "verdict": "All remaining cross-host words are red-channel AE export gamma differences; Mac output is exact PF16-normalized words.",
+  "windows_equals_mac_pow_2_4_max_abs_error": 9.624730730184439e-07
+}

@@ -8,6 +8,10 @@ OUT=ROOT/'mac/OLMSmoother/Mac/OLMSmoother_subhandler8.generated.inc'
 EXPECTED_LINEAR=1135
 EXPECTED_UNIQUE=1115
 RET_STMT='return;'
+COLOR_COMPARE_TARGET=0x180002430
+COLOR_COMPARE_EXPR='ColorCompare8((const uint8_t*)R.rcx,(const uint8_t*)R.rdx)'
+EDGE_WALKER_TARGET=0x180009e30
+EDGE_WALKER_EXPR='EdgeWalker8((RenderState*)R.rcx,(int)R.rdx,(int)R.r8,(int)R.r9,(uint32_t)M.read64(R.rsp+0x20),(int*)M.ptr(M.read64(R.rsp+0x28)),(int*)M.ptr(M.read64(R.rsp+0x30)),(int)M.read64(R.rsp+0x38))'
 alias={}
 for b in ('rax','rbx','rcx','rdx','rsi','rdi','rbp','rsp'):
  n=b[1]; alias[b]=(b,64);alias['e'+n+'x' if b in ('rax','rbx','rcx','rdx') else 'e'+b[1:]]=(b,32)
@@ -31,17 +35,17 @@ def addr(x,pc,size):
   terms.append(('-' if sign=='-' else '+')+v)
  return '('+''.join(terms).lstrip('+')+')'
 def read(x,pc,size,force=None):
- mm=re.match(r'(?:(byte|dword|qword) ptr )?(\[.*\])$',x)
+ mm=re.match(r'(?:(byte|word|dword|qword) ptr )?(\[.*\])$',x)
  if mm:
-  w={'byte':8,'dword':32,'qword':64}[mm.group(1)] if mm.group(1) else force
+  w={'byte':8,'word':16,'dword':32,'qword':64}[mm.group(1)] if mm.group(1) else force
   return f'M.read{w}({addr(mm.group(2),pc,size)})',w
  if x in alias:
   b,w=alias[x];return (f'uint{w}_t(R.{b})' if w<64 else f'R.{b}'),w
  return x+'ull',force
 def write(dst,val,pc,size,force=None):
- mm=re.match(r'(?:(byte|dword|qword) ptr )?(\[.*\])$',dst)
+ mm=re.match(r'(?:(byte|word|dword|qword) ptr )?(\[.*\])$',dst)
  if mm:
-  w={'byte':8,'dword':32,'qword':64}[mm.group(1)] if mm.group(1) else force
+  w={'byte':8,'word':16,'dword':32,'qword':64}[mm.group(1)] if mm.group(1) else force
   return f'M.write{w}({addr(mm.group(2),pc,size)}, {val});'
  b,w=alias[dst]
  if w==64:return f'R.{b}=uint64_t({val});'
@@ -72,8 +76,8 @@ def main():
   elif m=='jmp':z.append(f'  goto L_{int(o[0],0):x};')
   elif m=='call':
    target=int(o[0],0)
-   if target==0x180002430:z.append('  R.rax=uint32_t(ColorCompare8((const uint8_t*)R.rcx,(const uint8_t*)R.rdx)); goto L_%x;'%nxt)
-   elif target==0x180009e30:z.append('  R.rax=(uintptr_t)EdgeWalker8((RenderState*)R.rcx,(int)R.rdx,(int)R.r8,(int)R.r9,(uint32_t)M.read64(R.rsp+0x20),(int*)M.ptr(M.read64(R.rsp+0x28)),(int*)M.ptr(M.read64(R.rsp+0x30)),(int)M.read64(R.rsp+0x38)); goto L_%x;'%nxt)
+   if target==COLOR_COMPARE_TARGET:z.append(f'  R.rax=uint32_t({COLOR_COMPARE_EXPR}); goto L_{nxt:x};')
+   elif target==EDGE_WALKER_TARGET:z.append(f'  R.rax=(uintptr_t){EDGE_WALKER_EXPR}; goto L_{nxt:x};')
    else:raise AssertionError(hex(target))
   elif m=='add':
    a,w=read(o[0],pc,sz);b,_=read(o[1],pc,sz,w);z.append(f'  T=M.addflags({a},{b},{w}); '+write(o[0],'T',pc,sz,w)+' goto L_%x;'%nxt)
@@ -88,6 +92,9 @@ def main():
    a,w=read(o[0],pc,sz);z.append(f'  T=M.subflags(0,{a},{w}); '+write(o[0],'T',pc,sz,w)+' goto L_%x;'%nxt)
   elif m=='inc':
    a,w=read(o[0],pc,sz);z.append(f'  T=M.addflags({a},1,{w}); '+write(o[0],'T',pc,sz,w)+' goto L_%x;'%nxt)
+  elif m=='shl':
+   a,w=read(o[0],pc,sz);b,_=read(o[1],pc,sz,w);z.append('  '+write(o[0],f'({a})<<(({b})&0x3f)',pc,sz,w)+' goto L_%x;'%nxt)
+  elif m=='nop':z.append('  goto L_%x;'%nxt)
   elif m=='pop':z.append('  '+write(o[0],'M.read64(R.rsp)',pc,sz,64)+' R.rsp+=8; goto L_%x;'%nxt)
   elif m=='ret':z.append('  '+RET_STMT)
   else:raise AssertionError(m)

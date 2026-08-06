@@ -12,10 +12,14 @@
 - effect on: 183語が不一致
 - Mac effect onは複数回のfresh AE取得で決定的
 
-PF16 classifierのforward比較に、reverse-table側ポインタを上書きして同じslot同士を比較する移植誤りがあった。actual AEX逆変換に合わせて選択方向とreverse-table-2を比較するよう限定修正した。この修正は実機出力40語を変化させた。
+PF16 classifierのforward比較に、reverse-table側ポインタを上書きして同じslot同士を比較する移植誤りがあった。actual AEX逆変換に合わせて選択方向とreverse-table-2を比較するよう修正した。
 
 actual AEXのPF16/PF8 classifierを、512個のbinary 3x3 mask × 4方向（計2048呼び出し）で比較すると戻り値は一致した。ただし、同条件を利用したclassifier shortcutはMac AE出力を一語も改善しなかったため採用しなかった。
 
-次にcanonical座標でactual AEXのSubHandler16とMac移植を比較し、制御座標の1点差を確認した。8bit素材からlosslessにwidenされたPF16入力に限り、制御geometryをactual AEXと一致するSubHandler8へ渡し、PF16の補間・色演算は維持した。これによりWindowsとの差の絶対誤差総和は `45.59158470638795` から `33.02504000655608`、最大絶対誤差は `0.7950260639190674` から `0.31183870136737823` へ縮小した。異なるFLOAT32語数はなお183で、完全一致には至っていない。ネイティブPF16入力はこのshadow経路に入らず従来実装へ戻る。
+次にEdgeWalker16（392命令）とSubHandler16（963命令）をactual AEXの全CFGから生成した実装へ置換した。独立fixture 32呼び出し、canonical control 80呼び出し、MainKernel 80呼び出し、10,000 pixelの累積callback比較はすべてactual AEXと完全一致した。補間評価器の`LinearOffsetZeroOneValue`はWindows同様、終端値をobject `+0x18`へ配置した。
 
-機械可読証拠は `refs/conformance/olmsmoother_v1_windows_ae_release_boundary_mac_exact_20260806.json`。`pf16_exact_eligible=false` を維持し、未一致を隠してリリースゲートを通さない。
+最終Mac AE出力は、960×540×RGBAの全FLOAT sampleについて`sample × 32768`が整数（最大delta 0）であり、PF16 wordを正確に正規化している。残る183語はすべてR channel、bbox `(860,440)..(959,539)`内にあり、Windows値は`Mac値 ^ 2.4`で最大絶対誤差`9.624730730184439e-07`まで説明できる。effect offは0/1だけなので、このcross-host Gamma 2.4境界が現れない。
+
+明示的row-major走査はAE host iterate順と端部30 R語が異なるため採用しなかった。プラグインへ逆Gammaや独自走査を入れてWindows EXRだけに合わせることもしていない。PF16演算はactual AEX一致、raw EXR不一致はAE host/export色変換境界として分離する。
+
+機械可読証拠は `refs/conformance/olmsmoother_v1_windows_ae_release_boundary_mac_exact_20260806.json` と `refs/conformance/olmsmoother_v1_pf16_crosshost_gamma_boundary_20260806.json`。raw EXRについては`pf16_exact_eligible=false`を維持するが、PF16 plugin arithmeticのactual AEX一致は成立する。

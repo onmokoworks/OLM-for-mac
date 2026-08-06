@@ -52,22 +52,11 @@ def test_pf16_forward_pair_cannot_alias_reverse_table_operand() -> None:
     assert "cmp_le(puVar12, puVar18)" not in forward
 
 
-def test_pf16_rgba8_shadow_changes_only_subhandler_geometry() -> None:
-    source = SOURCE.read_text(encoding="utf-8")
-    assert "if (state->byte_shadow_world != nullptr)" in source
-    assert "SubHandler8(&byte_state, byte_neigh, x, y, dir," in source
-    assert "Widen8To16((uint8_t)narrowed) != src[x]" in source
-    assert "state->byte_shadow_world = &byte_shadow_world;" in source
-    assert "free(byte_shadow_data);" in source
-    classifier16 = _function("Classifier16")
-    assert "byte_shadow_world" not in classifier16
-
-
-def test_rgba8_derived_pf16_uses_exact_subhandler_geometry() -> None:
+def test_pf16_uses_generated_exact_walker_and_subhandler() -> None:
     source = SOURCE.read_text(encoding="utf-8")
     subhandler16 = _function("SubHandler16")
-    assert "state->byte_shadow_world != nullptr" in subhandler16
-    assert "SubHandler8(&byte_state, byte_neigh" in subhandler16
-    assert "state->byte_shadow_world = &byte_shadow_world;" in source
-    assert "Widen8To16((uint8_t)narrowed) != src[x]" in source
+    assert "SubHandler16Exact(state, neigh" in subhandler16
+    assert '#include "OLMSmoother_subhandler16.generated.inc"' in source
+    assert '#include "OLMSmoother_edgewalker16.generated.inc"' in source
+    assert "state->threshold     = state->tolerance;" in source
     assert "MainInterpKernel16(state, neigh" in source

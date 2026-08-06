@@ -22,7 +22,7 @@
   },
   "installed_plugin": {
     "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother.plugin/Contents/MacOS/OLMSmoother",
-    "sha256": "815f335fcc3af66fe42bfa2dde6447ea3c5eda4104972eaf45b03f746e62a043"
+    "sha256": "c95c59219010b7afee05eaba86c0da4ba14e467afb0c2505d2df30ac92581fa9"
   },
   "harness": {
     "runner": {
@@ -100,8 +100,8 @@
         "value": 6
       }
     ],
-    "no_effect_source": "/Users/onmk/Documents/Projects/Personal/OLM as/tmp/olmsmoother_v1_pf16_boundary_subhandler_20260806/mac/olmsmoother_v1__canonical_3__case_0001__16bpc/no_effect_00024.exr",
-    "effect_on_source": "/Users/onmk/Documents/Projects/Personal/OLM as/tmp/olmsmoother_v1_pf16_boundary_subhandler_20260806/mac/olmsmoother_v1__canonical_3__case_0001__16bpc/effect_on_00024.exr",
+    "no_effect_source": "/Users/onmk/Documents/Projects/Personal/OLM as/tmp/olmsmoother_v1_pf16_boundary_endpoint_20260806/mac/olmsmoother_v1__canonical_3__case_0001__16bpc/no_effect_00024.exr",
+    "effect_on_source": "/Users/onmk/Documents/Projects/Personal/OLM as/tmp/olmsmoother_v1_pf16_boundary_endpoint_20260806/mac/olmsmoother_v1__canonical_3__case_0001__16bpc/effect_on_00024.exr",
     "no_effect_settings": {
       "Audio Bit Depth": "32 Bit",
       "Audio Channels": "Stereo",
@@ -120,8 +120,8 @@
       "Lock Aspect Ratio": "true",
       "Output Audio": "Off",
       "Output File Info": {
-        "Full Flat Path": "/Users/onmk/Documents/Projects/Personal/OLM as/tmp/olmsmoother_v1_pf16_boundary_subhandler_20260806/mac/olmsmoother_v1__canonical_3__case_0001__16bpc/no_effect_[#####].exr",
-        "Base Path": "/Users/onmk/Documents/Projects/Personal/OLM as/tmp/olmsmoother_v1_pf16_boundary_subhandler_20260806/mac/olmsmoother_v1__canonical_3__case_0001__16bpc",
+        "Full Flat Path": "/Users/onmk/Documents/Projects/Personal/OLM as/tmp/olmsmoother_v1_pf16_boundary_endpoint_20260806/mac/olmsmoother_v1__canonical_3__case_0001__16bpc/no_effect_[#####].exr",
+        "Base Path": "/Users/onmk/Documents/Projects/Personal/OLM as/tmp/olmsmoother_v1_pf16_boundary_endpoint_20260806/mac/olmsmoother_v1__canonical_3__case_0001__16bpc",
         "Subfolder Path": "",
         "File Name": "no_effect_[#####].exr",
         "File Template": "no_effect_[#####].[fileExtension]"
@@ -156,8 +156,8 @@
       "Lock Aspect Ratio": "true",
       "Output Audio": "Off",
       "Output File Info": {
-        "Full Flat Path": "/Users/onmk/Documents/Projects/Personal/OLM as/tmp/olmsmoother_v1_pf16_boundary_subhandler_20260806/mac/olmsmoother_v1__canonical_3__case_0001__16bpc/effect_on_[#####].exr",
-        "Base Path": "/Users/onmk/Documents/Projects/Personal/OLM as/tmp/olmsmoother_v1_pf16_boundary_subhandler_20260806/mac/olmsmoother_v1__canonical_3__case_0001__16bpc",
+        "Full Flat Path": "/Users/onmk/Documents/Projects/Personal/OLM as/tmp/olmsmoother_v1_pf16_boundary_endpoint_20260806/mac/olmsmoother_v1__canonical_3__case_0001__16bpc/effect_on_[#####].exr",
+        "Base Path": "/Users/onmk/Documents/Projects/Personal/OLM as/tmp/olmsmoother_v1_pf16_boundary_endpoint_20260806/mac/olmsmoother_v1__canonical_3__case_0001__16bpc",
         "Subfolder Path": "",
         "File Name": "effect_on_[#####].exr",
         "File Template": "effect_on_[#####].[fileExtension]"
@@ -182,7 +182,7 @@
   },
   "host_identity": {
     "ae_pids": [
-      72238
+      77863
     ],
     "loaded_smoother_modules": [
       "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother.plugin/Contents/MacOS/OLMSmoother"
@@ -192,7 +192,7 @@
   "parameter_surface_exact": true,
   "branches": {
     "no_effect": {
-      "mac_sha256": "ab7bbaedc596520ff70f3539c96bd189f03b66f478c306307f1b9cf77a77df9f",
+      "mac_sha256": "1cf4b41956020d04041fc6326eb2c1466348af0ab647e424107c95f81d78a860",
       "windows_sha256": "4e8d8e50fa137f014112d21ab2fd450a40aa8fb0ecf48377f9225dd8c80b0235",
       "raw_float32_compare": {
         "equal": true,
@@ -212,7 +212,7 @@
       }
     },
     "effect_on": {
-      "mac_sha256": "f2dc18db3c6a2645ea0cbd13e75ac361b5698a3e83958ff463a2f4bdded90dc9",
+      "mac_sha256": "4ae59b12135ed029ff2a9b788bc7fa7ebe683f7dc4500da40fd81df2b7166db3",
       "windows_sha256": "c706d254faf2135a68c81f17aae6f7f33f45e7645fe8f13b9fd4d1009ef52b61",
       "raw_float32_compare": {
         "equal": false,

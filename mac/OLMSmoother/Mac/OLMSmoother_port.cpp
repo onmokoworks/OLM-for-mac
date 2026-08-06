@@ -140,8 +140,7 @@ struct RenderState {
 	PF_EffectWorld   *src_world;     // pointer to current input world
 	PF_EffectWorld   *dst_world;     // pointer to output world
 	int32_t           tolerance;     // tolerance value (used by classifier)
-	int32_t           threshold;     // tolerance << 7 (16-bit) or tolerance (8-bit)
-	PF_EffectWorld   *byte_shadow_world; // lossless RGBA8-derived PF16 control geometry
+	int32_t           threshold;     // raw tolerance; PF16 helpers apply <<7 internally
 };
 
 // ----------------------------------------------------------------------------
@@ -233,12 +232,16 @@ struct LinearOffsetOneValue : LinearEvalBase {
 
 // FUN_180001110 — LinearOffsetZeroOneValue::operator()
 struct LinearOffsetZeroOneValue : LinearEvalBase {
+	// Unlike the other linear evaluators, the Windows object keeps the
+	// t==1 endpoint at +0x18.  LinearEvalBase::v2 occupies +0x14, so retain
+	// that slot as padding and model the extra word explicitly.
+	float endpoint_one;
 	LinearOffsetZeroOneValue(float ofs, float p0, float p1, float p2) {
-		offset = ofs; v0 = p0; v1 = p1; v2 = p2;
+		offset = ofs; v0 = p0; v1 = p1; v2 = 0.0f; endpoint_one = p2;
 	}
 	float Evaluate(float t) const override {
 		if (t == DAT_18000d1f4) {
-			return v2;  // Win returns *(param_1 + 0x18)
+			return endpoint_one;  // Win returns *(param_1 + 0x18)
 		}
 		if (t != 0.0f) {
 			return SseAddF32(SseMulF32(SseSubF32(v0, offset), t), offset);
@@ -846,6 +849,8 @@ static int32_t Classifier8 (RenderState *state, uint32_t x, uint32_t y,
                             const uintptr_t *neigh, uint32_t dir);
 static uint16_t* EdgeWalker16(RenderState *state, int x, int y, int dir1, uint32_t dir2,
                               int *out_x, int *out_y, int threshold);
+static uint16_t* EdgeWalker16Exact(RenderState *state, int x, int y, int dir1, uint32_t dir2,
+                                   int *out_x, int *out_y, int threshold);
 static uint8_t*  EdgeWalker8 (RenderState *state, int x, int y, int dir1, uint32_t dir2,
                               int *out_x, int *out_y, int threshold);
 static uint8_t*  EdgeWalker8Exact(RenderState *state, int x, int y, int dir1, uint32_t dir2,
@@ -854,6 +859,10 @@ static void SubHandler16(RenderState *state, uintptr_t *neigh, uint32_t x, uint3
                          uint32_t *o6, uint8_t *o7, uint8_t *o8,
                          uint32_t *o9, uint32_t *o10, uint32_t *o11, uint32_t *o12,
                          uint32_t *o13, uint32_t *o14);
+static void SubHandler16Exact(RenderState *state, uintptr_t *neigh, uint32_t x, uint32_t y, uint32_t dir,
+                              uint32_t *o6, uint8_t *o7, uint8_t *o8,
+                              uint32_t *o9, uint32_t *o10, uint32_t *o11, uint32_t *o12,
+                              uint32_t *o13, uint32_t *o14);
 static void SubHandler8 (RenderState *state, uintptr_t *neigh, uint32_t x, uint32_t y, uint32_t dir,
                          uint32_t *o6, uint8_t *o7, uint8_t *o8,
                          uint32_t *o9, uint32_t *o10, uint32_t *o11, uint32_t *o12,
@@ -875,6 +884,10 @@ static void InterpExecutor8 (RenderState *state, int dir, int p3, int p4,
                              const uint8_t *param_8, LinearEvalBase *evaluator,
                              char p10, int p11);
 #ifdef OLMSMOOTHER_TEST_HOOKS
+using InterpExecutor16TestHook = void (*)(RenderState*, int, int, int,
+                                         const uint16_t*, int, int,
+                                         const uint16_t*, LinearEvalBase*, char, int);
+static InterpExecutor16TestHook g_interp_executor16_test_hook = nullptr;
 using InterpExecutor8TestHook = void (*)(RenderState*, int, int, int,
                                         const uint8_t*, int, int,
                                         const uint8_t*, LinearEvalBase*, char, int);
@@ -1454,6 +1467,8 @@ static uint16_t*
 EdgeWalker16(RenderState *state, int x, int y, int dir1, uint32_t dir2,
              int *out_x, int *out_y, int threshold)
 {
+	return EdgeWalker16Exact(state, x, y, dir1, dir2, out_x, out_y, threshold);
+
 	uint16_t *result = nullptr;
 	int dy_dir1 = DAT_18000f0f0[dir1];
 	int dx_dir1 = DAT_18000f0c8[dir1];
@@ -1860,16 +1875,9 @@ SubHandler16(RenderState *state, uintptr_t *neigh, uint32_t x, uint32_t y, uint3
              uint32_t *o9, uint32_t *o10, uint32_t *o11, uint32_t *o12,
              uint32_t *o13, uint32_t *o14)
 {
-	if (state->byte_shadow_world != nullptr) {
-		RenderState byte_state = *state;
-		byte_state.src_world = state->byte_shadow_world;
-		byte_state.byte_shadow_world = nullptr;
-		uintptr_t byte_neigh[9]{};
-		NeighborExtract8((int)x, (int)y, &byte_state, byte_neigh);
-		SubHandler8(&byte_state, byte_neigh, x, y, dir,
-		            o6, o7, o8, o9, o10, o11, o12, o13, o14);
-		return;
-	}
+	SubHandler16Exact(state, neigh, x, y, dir,
+	                  o6, o7, o8, o9, o10, o11, o12, o13, o14);
+	return;
 
 	const uint16_t *puVar1;   // dir DAT_18000f050 pixel
 	const uint16_t *puVar2;   // center pixel (neigh+0x20 = param_2[4])
@@ -2310,12 +2318,17 @@ struct SubHandler8Regs {
 struct SubHandler8Memory {
 	static constexpr uint64_t kModule=0x180000000ull, kStack=0x700000000000ull;
 	uint8_t stack[0x1000]{}; bool zf=false,sf=false,of=false; PF_EffectWorld *world=nullptr;
+	RenderState *state=nullptr; bool pf16=false;
 	template<class T> T raw(uint64_t a) const { T v{}; memcpy(&v,(const void*)(uintptr_t)a,sizeof(v));return v; }
 	bool is_stack(uint64_t a,size_t n=1) const { return a>=kStack&&a+n<=kStack+sizeof(stack); }
 	void *ptr(uint64_t a) { return is_stack(a)?(void*)(stack+a-kStack):(void*)(uintptr_t)a; }
 	uint8_t read8(uint64_t a) const { if(is_stack(a))return stack[a-kStack]; return raw<uint8_t>(a); }
+	uint16_t read16(uint64_t a) const { if(is_stack(a,2)){uint16_t v;memcpy(&v,stack+a-kStack,2);return v;} return raw<uint16_t>(a); }
 	uint32_t read32(uint64_t a) const {
 		if(is_stack(a,4)){uint32_t v;memcpy(&v,stack+a-kStack,4);return v;}
+		if(state&&a==(uintptr_t)state+8)return uint32_t(state->tolerance_lo);
+		if(state&&a==(uintptr_t)state+0xc)return uint32_t(state->tolerance_hi);
+		if(state&&pf16&&a==(uintptr_t)state+0x10)return uint32_t(state->threshold);
 		if(world&&(a==(uintptr_t)world+4||a==(uintptr_t)world+0x24))return uint32_t(world->width);
 		if(world&&(a==(uintptr_t)world+8||a==(uintptr_t)world+0x28))return uint32_t(world->height);
 		if(world&&(a==(uintptr_t)world+0xc||a==(uintptr_t)world+0x20))return uint32_t(world->rowbytes);
@@ -2332,8 +2345,9 @@ struct SubHandler8Memory {
 		}
 		return raw<uint32_t>(a);
 	}
-	uint64_t read64(uint64_t a) const { if(is_stack(a,8)){uint64_t v;memcpy(&v,stack+a-kStack,8);return v;} if(world&&(a==(uintptr_t)world+0x10||a==(uintptr_t)world+0x18))return (uintptr_t)world->data; return raw<uint64_t>(a); }
+	uint64_t read64(uint64_t a) const { if(is_stack(a,8)){uint64_t v;memcpy(&v,stack+a-kStack,8);return v;} if(state&&a==(uintptr_t)state+(pf16?0x18:0x10))return (uintptr_t)world; if(world&&(a==(uintptr_t)world+0x10||a==(uintptr_t)world+0x18))return (uintptr_t)world->data; return raw<uint64_t>(a); }
 	void write8(uint64_t a,uint8_t v){if(is_stack(a))stack[a-kStack]=v;else memcpy((void*)(uintptr_t)a,&v,1);}
+	void write16(uint64_t a,uint16_t v){if(is_stack(a,2))memcpy(stack+a-kStack,&v,2);else memcpy((void*)(uintptr_t)a,&v,2);}
 	void write32(uint64_t a,uint32_t v){if(is_stack(a,4))memcpy(stack+a-kStack,&v,4);else memcpy((void*)(uintptr_t)a,&v,4);}
 	void write64(uint64_t a,uint64_t v){if(is_stack(a,8))memcpy(stack+a-kStack,&v,8);else memcpy((void*)(uintptr_t)a,&v,8);}
 	uint64_t subflags(uint64_t a,uint64_t b,int w){const uint64_t mask=w==64?~0ull:((1ull<<w)-1);a&=mask;b&=mask;uint64_t r=(a-b)&mask;zf=r==0;sf=(r>>(w-1))&1;of=(((a^b)&(a^r))>>(w-1))&1;return r;}
@@ -2341,11 +2355,40 @@ struct SubHandler8Memory {
 	void logicflags(uint64_t r,int w){const uint64_t mask=w==64?~0ull:((1ull<<w)-1);r&=mask;zf=r==0;sf=(r>>(w-1))&1;of=false;}
 };
 
+static uint16_t*
+EdgeWalker16Exact(RenderState *state, int x, int y, int dir1, uint32_t dir2,
+                  int *out_x, int *out_y, int threshold)
+{
+	SubHandler8Regs R; SubHandler8Memory M; uint64_t T=0;
+	M.state=state; M.world=state->src_world; M.pf16=true;
+	R.rcx=(uintptr_t)state; R.rdx=uint32_t(x); R.r8=uint32_t(y); R.r9=uint32_t(dir1);
+	R.rsp=SubHandler8Memory::kStack+0x800; M.write64(R.rsp,0xdeadbeefdeadbeefull);
+	const uint64_t args[]={dir2,(uintptr_t)out_x,(uintptr_t)out_y,uint32_t(threshold)};
+	for(size_t i=0;i<sizeof(args)/sizeof(args[0]);++i)M.write64(R.rsp+0x28+i*8,args[i]);
+#include "OLMSmoother_edgewalker16.generated.inc"
+}
+
+static void
+SubHandler16Exact(RenderState *state, uintptr_t *neigh, uint32_t x, uint32_t y, uint32_t dir,
+                  uint32_t *o6, uint8_t *o7, uint8_t *o8,
+                  uint32_t *o9, uint32_t *o10, uint32_t *o11, uint32_t *o12,
+                  uint32_t *o13, uint32_t *o14)
+{
+	SubHandler8Regs R; SubHandler8Memory M; uint64_t T=0;
+	M.state=state; M.world=state->src_world; M.pf16=true;
+	R.rcx=(uintptr_t)state; R.rdx=(uintptr_t)neigh; R.r8=x; R.r9=y;
+	R.rsp=SubHandler8Memory::kStack+0x800; M.write64(R.rsp,0xdeadbeefdeadbeefull);
+	const uint64_t args[]={dir,(uintptr_t)o6,(uintptr_t)o7,(uintptr_t)o8,(uintptr_t)o9,
+		(uintptr_t)o10,(uintptr_t)o11,(uintptr_t)o12,(uintptr_t)o13,(uintptr_t)o14};
+	for(size_t i=0;i<sizeof(args)/sizeof(args[0]);++i)M.write64(R.rsp+0x28+i*8,args[i]);
+#include "OLMSmoother_subhandler16.generated.inc"
+}
+
 static uint8_t*
 EdgeWalker8Exact(RenderState *state, int x, int y, int dir1, uint32_t dir2,
                  int *out_x, int *out_y, int threshold)
 {
-	SubHandler8Regs R; SubHandler8Memory M; uint64_t T=0; M.world=state->src_world;
+	SubHandler8Regs R; SubHandler8Memory M; uint64_t T=0; M.state=state; M.world=state->src_world;
 	R.rcx=(uintptr_t)state; R.rdx=uint32_t(x); R.r8=uint32_t(y); R.r9=uint32_t(dir1);
 	R.rsp=SubHandler8Memory::kStack+0x800; M.write64(R.rsp,0xdeadbeefdeadbeefull);
 	const uint64_t args[]={dir2,(uintptr_t)out_x,(uintptr_t)out_y,uint32_t(threshold)};
@@ -2359,7 +2402,7 @@ SubHandler8Exact(RenderState *state, uintptr_t *neigh, uint32_t x, uint32_t y, u
                  uint32_t *o9, uint32_t *o10, uint32_t *o11, uint32_t *o12,
                  uint32_t *o13, uint32_t *o14)
 {
-	SubHandler8Regs R; SubHandler8Memory M; uint64_t T=0; M.world=state->src_world;
+	SubHandler8Regs R; SubHandler8Memory M; uint64_t T=0; M.state=state; M.world=state->src_world;
 	R.rcx=(uintptr_t)state; R.rdx=(uintptr_t)neigh; R.r8=x; R.r9=y;
 	R.rsp=SubHandler8Memory::kStack+0x800;
 	M.write64(R.rsp,0xdeadbeefdeadbeefull);
@@ -3223,6 +3266,13 @@ InterpExecutor16(RenderState *state, int param_2, int param_3, int param_4,
                  const uint16_t *param_8, LinearEvalBase *evaluator,
                  char param_10, int param_11)
 {
+#ifdef OLMSMOOTHER_TEST_HOOKS
+	if (g_interp_executor16_test_hook != nullptr) {
+		g_interp_executor16_test_hook(state,param_2,param_3,param_4,param_5,
+		                              param_6,param_7,param_8,evaluator,param_10,param_11);
+		return;
+	}
+#endif
 	int iVar7  = param_11;
 	char cVar6 = param_10;
 	float fVar4 = DAT_18000d1f4;
@@ -3565,39 +3615,8 @@ RenderEntryChain(PF_InData       *in_data,
 	PF_EffectWorld *pass_input = input;
 	PF_EffectWorld key_world{};
 	void *key_world_data = nullptr;
-	PF_EffectWorld byte_shadow_world{};
-	void *byte_shadow_data = nullptr;
 	state->src_world = pass_input;
 	state->dst_world = output;
-	state->byte_shadow_world = nullptr;
-
-	if (sizeof(PixelT) == sizeof(PF_Pixel16) && input->width > 0 && input->height > 0) {
-		const A_long shadow_rowbytes = input->width * (A_long)sizeof(PF_Pixel8);
-		byte_shadow_data = malloc((size_t)shadow_rowbytes * (size_t)input->height);
-		bool lossless = byte_shadow_data != nullptr;
-		for (A_long y = 0; y < input->height && lossless; ++y) {
-			const uint16_t *src = (const uint16_t*)((const uint8_t*)input->data +
-			                                                (int64_t)y * input->rowbytes);
-			uint8_t *dst = (uint8_t*)byte_shadow_data + (int64_t)y * shadow_rowbytes;
-			for (A_long x = 0; x < input->width * 4; ++x) {
-				uint32_t narrowed = ((uint32_t)src[x] * 255u + 16384u) / 32768u;
-				if (narrowed > 255u || Widen8To16((uint8_t)narrowed) != src[x]) {
-					lossless = false;
-					break;
-				}
-				dst[x] = (uint8_t)narrowed;
-			}
-		}
-		if (lossless) {
-			byte_shadow_world = *input;
-			byte_shadow_world.data = static_cast<decltype(byte_shadow_world.data)>(byte_shadow_data);
-			byte_shadow_world.rowbytes = shadow_rowbytes;
-			state->byte_shadow_world = &byte_shadow_world;
-		} else {
-			free(byte_shadow_data);
-			byte_shadow_data = nullptr;
-		}
-	}
 
 	// Windows allocates and pre-copies a temporary PF8 world before invoking
 	// LAB_1800026e0. Keep PF16 on its existing independently bounded path.
@@ -3654,8 +3673,6 @@ RenderEntryChain(PF_InData       *in_data,
 	}
 
 	free(key_world_data);
-	free(byte_shadow_data);
-	state->byte_shadow_world = nullptr;
 	return err;
 }
 
@@ -3683,7 +3700,7 @@ BuildRenderState(PF_ParamDef *params[], short bitdepth, RenderState *state)
 		state->key_a         = 0;  // alpha pad
 		state->key_rg_packed = (uint16_t)((Widen8To16(g) << 8) | Widen8To16(r));
 		state->key_b         = Widen8To16(b);
-		state->threshold     = state->tolerance << 7;  // ×128 for 0..6→0..768
+		state->threshold     = state->tolerance;
 	} else {
 		state->key_a         = 0;
 		state->key_rg_packed = (uint16_t)((g << 8) | r);
