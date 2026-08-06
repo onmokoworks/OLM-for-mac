@@ -32,8 +32,8 @@ Mac AE同一条件レンダーのプラグイン別比較を進めています�
 | OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3；PF8／PF16／PF32限定 | PF16 Type 3 Layerは16×16、angle 45、front 8、back 0、variation 100、neutral size／fade／tail、独立paddingに限定。Layer欠落・寸法不一致・他tupleはfail-close |
 | OLMRadialBlur | Zoom／Rotation／Inner；PF8／PF16／PF32 guard付き | PF8 centered neutral Inner Strength 1〜64は9×7、64×36、640×360で証明。PF16／PF32 Innerは9×7 guardを維持。未記載offset／ratio／angle／quality／repeat／edge／noise／variationはfail-close |
 | OLMSmoother2 | v1／v2 classifier、key／invert、Gamma None／All／Colors、range／extra、palette；PF8／PF16／PF32限定 | PF32 case07はraw artifact exactだが、同一runのWindows process／module証明がなく、process-attested AE exactとは呼ばない |
-| OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur；PF8／PF16／PF32限定 | Mode 4 Highlightの3-pass等方blurとMerge 1 alpha加重合成をactual AEX根拠で修正し、3深度のeffect動作を確認。raw cross-host exactはeffect-off全RGBのhost色変換差により非主張 |
-| OLMSmoother v1 | no-key／Color Key、smoothing range；native PF8／PF16 | PF8 canonical 960×540と保持済みkey pathはexact。PF16 effect-offはcross-host raw exact、effect-onは183 FLOAT語不一致でfail-closeし、walker／subhandler移植を継続中。AEXにnative PF32 callbackはなく、32bpc projectではAEがclassic integer pluginの前後をhost-convertする |
+| OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur；PF8／PF16／PF32限定 | Mode 4 Highlightの経験的0.62 gainを除去し、aggregationとMerge 1／PF32 writerはactual AEXへ各16 word bit exact。MakeSeed／3-pass 11×11生成を含むfull callerはAEXCompatのchannel-vtable／OpenCV初期化境界として未昇格 |
+| OLMSmoother v1 | no-key／Color Key、smoothing range；native PF8／PF16 | PF8 canonical 960×540と保持済みkey pathはexact。PF16 walker／subhandler／MainKernel／Executorはactual AEXへ局所・10,000 pixel累積exact。Windows AE EXRの183語差は全点でhost Gamma 2.4境界。AEXにnative PF32 callbackはなく、32bpc projectではAEがclassic integer pluginの前後をhost-convertする |
 
 ## AE host境界
 
@@ -90,13 +90,15 @@ e582b0f368deb6dfbb34de2675e382d2222372705da043151d90dc895f7d7a0a
 
 - ColorKeep：[`colorkeep_windows_mac_ae_boundary_20260806.md`](colorkeep_windows_mac_ae_boundary_20260806.md)
 - OLMKiraKira：[`olmkirakira_mode4_windows_boundary_closure_20260806.md`](olmkirakira_mode4_windows_boundary_closure_20260806.md)
+- OLMKiraKira hostless exact境界：[`olmkirakira_mode4_highlight_hostless_actual_aex_20260807.md`](olmkirakira_mode4_highlight_hostless_actual_aex_20260807.md)
 - OLMSmoother v1：[`olmsmoother_v1_windows_ae_release_boundary_mac_exact_20260806.md`](olmsmoother_v1_windows_ae_release_boundary_mac_exact_20260806.md)
+- OLMSmoother v1 host Gamma境界：[`olmsmoother_v1_pf16_crosshost_gamma_boundary_20260806.md`](olmsmoother_v1_pf16_crosshost_gamma_boundary_20260806.md)
 
 ## 最終Mac検証結果
 
 ```text
-PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=423.84s
-captured-output-sha256 bf5970bbcaf47fed933b8602841ec20ce2e0db1a3f2be7d411fefa8b363e19fd
+PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=450.94s
+captured-output-sha256 b8a090d5b48ab4bef89b2cb1ecf6073cfadc2f1d52f4d011d2837ef843957cbc
 Mac AE representatives 10 proven / 0 pending / 0 invalid
 Universal installed bundles 10 / 10
 Parameter UI registration 10 / 10（exact 7、bounded 3）
