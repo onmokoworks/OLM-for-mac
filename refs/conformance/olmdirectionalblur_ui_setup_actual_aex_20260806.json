@@ -1,0 +1,345 @@
+{
+  "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+  "entrypoint": "0x1800083f0",
+  "execution": {
+    "global_return": 0,
+    "out_num_params": 22,
+    "params_return": 0,
+    "registrations": [
+      [
+        "OLMDirectionalBlur",
+        "0x18000efa0"
+      ]
+    ]
+  },
+  "global_setup": {
+    "my_version": "0x88800",
+    "out_flags": "0x6000040",
+    "out_flags2": "0x8001408"
+  },
+  "name_evidence": "Names are the strings selected by the decompiled FUN_180007310 table indices; AexLoader does not emulate imported strncpy, while every non-string raw field is read directly from each actual add_param callback.",
+  "not_proven": [
+    "native AE control layout",
+    "localized resources",
+    "host treatment of the popup's third string when num_choices is 2"
+  ],
+  "params_setup": {
+    "num_params_including_input": 22,
+    "row_count": 21,
+    "rows": [
+      {
+        "angle_fixed": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "disk_id": 1,
+        "flags": 0,
+        "name": "Angle",
+        "type": 3,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 2,
+        "display_flags": 0,
+        "flags": 0,
+        "fs_flags": 0,
+        "name": "Brightness Gain",
+        "precision": 2,
+        "range_f32_bits": [
+          0,
+          1092616192,
+          0,
+          1073741824,
+          1065353216
+        ],
+        "type": 10,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0,
+        "value_f64_bits": 4607182418800017408
+      },
+      {
+        "disk_id": 3,
+        "display_flags": 1,
+        "flags": 0,
+        "name": "Size Variation",
+        "precision": 1,
+        "type": 2,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0,
+        "values_fixed": [
+          0,
+          0,
+          6553600,
+          0,
+          6553600,
+          0
+        ]
+      },
+      {
+        "disk_id": 4,
+        "flags": 0,
+        "name": "Front Blur Parameters",
+        "type": 13,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 5,
+        "flags": 0,
+        "name": "Blur Strength",
+        "type": 1,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0,
+        "values_i32": [
+          0,
+          0,
+          4000,
+          0,
+          4000,
+          0
+        ]
+      },
+      {
+        "disk_id": 6,
+        "flags": 0,
+        "name": "Alpha Fade",
+        "type": 1,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0,
+        "values_i32": [
+          0,
+          0,
+          100,
+          0,
+          100,
+          0
+        ]
+      },
+      {
+        "disk_id": 7,
+        "display_flags": 1,
+        "flags": 0,
+        "name": "Sharp Tail",
+        "precision": 1,
+        "type": 2,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0,
+        "values_fixed": [
+          0,
+          0,
+          6553600,
+          0,
+          6553600,
+          0
+        ]
+      },
+      {
+        "disk_id": 8,
+        "flags": 0,
+        "name": "Sharp Tail",
+        "type": 14,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 9,
+        "flags": 0,
+        "name": "Back Blur Parameters",
+        "type": 13,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 10,
+        "flags": 0,
+        "name": "Blur Strength",
+        "type": 1,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0,
+        "values_i32": [
+          0,
+          0,
+          4000,
+          0,
+          4000,
+          0
+        ]
+      },
+      {
+        "disk_id": 11,
+        "flags": 0,
+        "name": "Alpha Fade",
+        "type": 1,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0,
+        "values_i32": [
+          0,
+          0,
+          100,
+          0,
+          100,
+          0
+        ]
+      },
+      {
+        "disk_id": 12,
+        "display_flags": 1,
+        "flags": 0,
+        "name": "Sharp Tail",
+        "precision": 1,
+        "type": 2,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0,
+        "values_fixed": [
+          0,
+          0,
+          6553600,
+          0,
+          6553600,
+          0
+        ]
+      },
+      {
+        "disk_id": 13,
+        "flags": 0,
+        "name": "Sharp Tail",
+        "type": 14,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 14,
+        "flags": 0,
+        "name": "Noise Parameters",
+        "type": 13,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 15,
+        "display_flags": 1,
+        "flags": 0,
+        "name": "Noise Variation",
+        "precision": 1,
+        "type": 2,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0,
+        "values_fixed": [
+          0,
+          0,
+          6553600,
+          0,
+          6553600,
+          0
+        ]
+      },
+      {
+        "choices": "Smooth | Block | Layer",
+        "disk_id": 16,
+        "flags": 0,
+        "name": "Noise Type",
+        "popup": [
+          1,
+          2,
+          1
+        ],
+        "type": 7,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 17,
+        "flags": 0,
+        "layer_default": 0,
+        "name": "Noise Layer",
+        "type": 0,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 18,
+        "flags": 0,
+        "name": "Seed",
+        "type": 1,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0,
+        "values_i32": [
+          1,
+          1,
+          1000,
+          1,
+          1000,
+          1
+        ]
+      },
+      {
+        "angle_fixed": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "disk_id": 19,
+        "flags": 0,
+        "name": "Offset",
+        "type": 3,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 20,
+        "display_flags": 0,
+        "flags": 0,
+        "fs_flags": 0,
+        "name": "Thickness",
+        "precision": 2,
+        "range_f32_bits": [
+          1065353216,
+          1120403456,
+          1065353216,
+          1120403456,
+          1092616192
+        ],
+        "type": 10,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0,
+        "value_f64_bits": 4621819117588971520
+      },
+      {
+        "disk_id": 21,
+        "flags": 0,
+        "name": "Thickness",
+        "type": 14,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      }
+    ]
+  },
+  "production_exact": true,
+  "schema": "olmdirectionalblur.ui-setup-actual-aex/1",
+  "status": "exact"
+}

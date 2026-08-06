@@ -90,6 +90,7 @@ LANES = (
     Lane(
         "directionalblur",
         (
+            (sys.executable, "tools/emulation/test_olmdirectionalblur_ui_setup_actual_aex_20260806.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_noise_type3_layer_rowbytes_pf8_production_20260805.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_noise_type3_layer_origin_pf8_production_20260805.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_noise_type3_layer_size_contract_20260805.py"),
@@ -119,6 +120,7 @@ LANES = (
     Lane(
         "kirakira",
         (
+            (sys.executable, "tools/emulation/test_olmkirakira_ui_setup_actual_aex_20260806.py"),
             (sys.executable, "tools/emulation/test_olmkirakira_mode3_length9_15x6_exact_boundary_20260806.py"),
             (sys.executable, "tools/emulation/test_olmkirakira_mode3_nonwhitelist_production_20260806.py"),
             (sys.executable, "tools/emulation/test_olmkirakira_mode2_ramp_production_seam_20260805.py"),

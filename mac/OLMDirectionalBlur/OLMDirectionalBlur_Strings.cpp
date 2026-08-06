@@ -25,7 +25,7 @@ TableString g_strs[StrID_NUMTYPES] = {
 	{ StrID_NoiseParams_Param_Name,     "Noise Parameters" },
 	{ StrID_NoiseVariation_Param_Name,  "Noise Variation" },
 	{ StrID_NoiseType_Param_Name,       "Noise Type" },
-	{ StrID_NoiseType_Choices,          "Smooth|Block|Layer" },
+	{ StrID_NoiseType_Choices,          "Smooth | Block | Layer" },
 	{ StrID_NoiseLayer_Param_Name,      "Noise Layer" },
 	{ StrID_Seed_Param_Name,            "Seed" },
 	{ StrID_NoiseOffset_Param_Name,     "Offset" },

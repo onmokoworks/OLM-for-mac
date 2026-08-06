@@ -43,8 +43,8 @@ struct PF_Pixel16 {{ std::uint16_t alpha, red, green, blue; }};
 struct PF_PixelFloat {{ float alpha, red, green, blue; }};
 struct PF_LRect {{ A_long left, top, right, bottom; }};
 struct PF_EffectWorld {{ PF_PixelPtr data; A_long rowbytes, width, height; A_short bitdepth; PF_LRect extent_hint; A_long dephault; }}; using PF_LayerDef = PF_EffectWorld;
-struct PF_FloatSlider {{ PF_FpLong value; }}; struct PF_Slider {{ A_long value; }}; struct PF_Popup {{ A_long value; }};
-struct PF_ParamDef {{ union {{ PF_FloatSlider fs_d; PF_Slider sd; PF_Popup pd; PF_LayerDef ld; }} u; }};
+struct PF_FloatSlider {{ PF_FpLong value; }}; struct PF_Slider {{ A_long value; }}; struct PF_Popup {{ A_long value; }}; struct PF_Angle {{ A_long value; }}; struct PF_FixedSlider {{ A_long value; }};
+struct PF_ParamDef {{ union {{ PF_FloatSlider fs_d; PF_Slider sd; PF_Popup pd; PF_Angle ad; PF_FixedSlider fd; PF_LayerDef ld; }} u; }};
 struct PF_InData {{ PF_ProgPtr effect_ref; A_long current_time, time_step, time_scale; struct {{ A_long num, den; }} downsample_x, downsample_y; void *pica_basicP; }};
 struct PF_OutData {{ char return_msg[256]; A_u_long my_version, out_flags, out_flags2; A_long num_params; }};
 struct PF_RenderRequest {{ bool preserve_rgb_of_zero_alpha; }}; struct PF_CheckoutResult {{ PF_LRect result_rect, max_result_rect; A_long ref_width; }};
@@ -67,6 +67,7 @@ static inline const char *GetStringPtr(int) {{ return ""; }} static PF_Err regis
 #define PF_Precision_TENTHS 0
 #define PF_Precision_HUNDREDTHS 0
 #define PF_LayerDefault_MYSELF 0
+#define PF_LayerDefault_NONE 0
 #define PF_OutFlag2_SUPPORTS_SMART_RENDER 1u
 #define PF_OutFlag2_FLOAT_COLOR_AWARE 2u
 #define PF_OutFlag2_SUPPORTS_GET_FLATTENED_SEQUENCE_DATA 4u
@@ -78,17 +79,28 @@ static inline const char *GetStringPtr(int) {{ return ""; }} static PF_Err regis
 #define PF_CHECKIN_PARAM(...) ((void)0)
 #define PF_REGISTER_EFFECT_EXT2(...) register_effect()
 #define PF_ADD_FLOAT_SLIDERX(...) ((void)0)
+#define PF_ADD_FIXED(...) ((void)0)
+#define PF_ADD_ANGLE(...) ((void)0)
 #define PF_ADD_SLIDER(...) ((void)0)
 #define PF_ADD_NULL(...) ((void)0)
+#define PF_ADD_TOPIC(...) ((void)0)
+#define PF_END_TOPIC(...) ((void)0)
 #define PF_ADD_LAYER(...) ((void)0)
 #define PF_ADD_POPUP(...) ((void)0)
 #define PF_OutFlag_NONE 0
+#define PF_ValueDisplayFlag_PERCENT 1
 #define kPFWorldSuite "PF World Suite"
 #define kPFWorldSuiteVersion2 2
 enum {{ StrID_NONE, StrID_Name, StrID_Description, StrID_Angle_Param_Name, StrID_BrightnessGain_Param_Name, StrID_SizeVariation_Param_Name, StrID_FrontBlurParams_Param_Name, StrID_FrontStrength_Param_Name, StrID_FrontAlphaFade_Param_Name, StrID_FrontSharpTail_Param_Name, StrID_FrontBlank_Param_Name, StrID_BackBlurParams_Param_Name, StrID_BackStrength_Param_Name, StrID_BackAlphaFade_Param_Name, StrID_BackSharpTail_Param_Name, StrID_BackBlank_Param_Name, StrID_NoiseParams_Param_Name, StrID_NoiseVariation_Param_Name, StrID_NoiseType_Param_Name, StrID_NoiseLayer_Param_Name, StrID_Seed_Param_Name, StrID_NoiseOffset_Param_Name, StrID_Thickness_Param_Name, StrID_NoiseBlank_Param_Name }};
 enum {{ StrID_NoiseType_Choices }};
 enum {{ OLMDIRECTIONALBLUR_INPUT = 0, OLMDIRECTIONALBLUR_ANGLE, OLMDIRECTIONALBLUR_BRIGHTNESS_GAIN, OLMDIRECTIONALBLUR_SIZE_VARIATION, OLMDIRECTIONALBLUR_FRONT_PARAMS_LABEL, OLMDIRECTIONALBLUR_FRONT_STRENGTH, OLMDIRECTIONALBLUR_FRONT_ALPHA_FADE, OLMDIRECTIONALBLUR_FRONT_SHARP_TAIL, OLMDIRECTIONALBLUR_FRONT_BLANK, OLMDIRECTIONALBLUR_BACK_PARAMS_LABEL, OLMDIRECTIONALBLUR_BACK_STRENGTH, OLMDIRECTIONALBLUR_BACK_ALPHA_FADE, OLMDIRECTIONALBLUR_BACK_SHARP_TAIL, OLMDIRECTIONALBLUR_BACK_BLANK, OLMDIRECTIONALBLUR_NOISE_PARAMS_LABEL, OLMDIRECTIONALBLUR_NOISE_VARIATION, OLMDIRECTIONALBLUR_NOISE_TYPE, OLMDIRECTIONALBLUR_NOISE_LAYER, OLMDIRECTIONALBLUR_SEED, OLMDIRECTIONALBLUR_NOISE_OFFSET, OLMDIRECTIONALBLUR_THICKNESS, OLMDIRECTIONALBLUR_NOISE_BLANK, OLMDIRECTIONALBLUR_NUM_PARAMS }};
-enum {{ NOISE_TYPE_DISK_ID = 17 }};
+enum {{ ANGLE_DISK_ID=1, BRIGHTNESS_GAIN_DISK_ID, SIZE_VARIATION_DISK_ID,
+FRONT_PARAMS_LABEL_DISK_ID, FRONT_STRENGTH_DISK_ID, FRONT_ALPHA_FADE_DISK_ID,
+FRONT_SHARP_TAIL_DISK_ID, FRONT_BLANK_DISK_ID, BACK_PARAMS_LABEL_DISK_ID,
+BACK_STRENGTH_DISK_ID, BACK_ALPHA_FADE_DISK_ID, BACK_SHARP_TAIL_DISK_ID,
+BACK_BLANK_DISK_ID, NOISE_PARAMS_LABEL_DISK_ID, NOISE_VARIATION_DISK_ID,
+NOISE_TYPE_DISK_ID, NOISE_LAYER_DISK_ID, SEED_DISK_ID, NOISE_OFFSET_DISK_ID,
+THICKNESS_DISK_ID, NOISE_BLANK_DISK_ID }};
 struct OLMDirectionalBlurInfo {{ PF_FpLong angle_deg, brightness_gain, size_variation; A_long front_strength, front_alpha_fade; PF_FpLong front_sharp_tail; A_long back_strength, back_alpha_fade; PF_FpLong back_sharp_tail, noise_variation; A_long noise_type, noise_layer, seed, noise_offset; PF_FpLong thickness, render_scale_x, render_scale_y; }};
 #define MAJOR_VERSION 1
 #define MINOR_VERSION 1
