@@ -3,7 +3,7 @@ import json,subprocess,tempfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 with tempfile.TemporaryDirectory(prefix="olmkira-ae-preflight-") as td:
- p=Path(td)/"report.json";r=subprocess.run(["python3",str(ROOT/"scripts/run_olmkirakira_mode4_case01_mac_ae_20260805.py"),"--report",str(p)],capture_output=True,text=True)
+ p=Path(td)/"report.json";r=subprocess.run(["python3",str(ROOT/"scripts/run_olmkirakira_mode4_case01_mac_ae_20260805.py"),"--report","report.json"],cwd=td,capture_output=True,text=True)
  assert r.returncode==0,(r.stdout,r.stderr);x=json.loads(p.read_text());c=x["checks"]
  assert x["run_requested"] is False and x["run_executed"] is False
  assert c["installed_sha_matches"] and c["input_sha_matches"] and c["expected_sha_matches"] and c["manifest_sha_matches"]

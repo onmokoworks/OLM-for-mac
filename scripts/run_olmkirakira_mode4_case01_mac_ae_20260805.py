@@ -77,6 +77,11 @@ def loader_jsx(payload: Path, trace: Path) -> str:
 
 def main():
     ap=argparse.ArgumentParser();ap.add_argument("--run",action="store_true");ap.add_argument("--report",type=Path,default=ROOT/"refs/reports/olmkirakira_mode4_case01_mac_preflight_20260805.json");a=ap.parse_args()
+    # JSX runs with the temporary loader directory as its current directory.
+    # Resolve the report before deriving output paths so a caller-supplied
+    # relative report cannot silently redirect the render into that temporary
+    # directory and fail before EffectMain is reached.
+    a.report = a.report.resolve()
     error=None
     try: case,params=case_contract()
     except Exception as e: case,params,error=None,[],str(e)

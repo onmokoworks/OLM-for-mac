@@ -1,0 +1,501 @@
+{
+  "schema": "olmkirakira-mode4-mac-ae-runner/1",
+  "case_id": "final_random10_olm_kira_kira_01",
+  "status": "exact",
+  "run_requested": true,
+  "run_executed": true,
+  "checks": {
+    "installed_sha": "cd97c6f328bf6a4adbe001662f35c12af405f89a2374046f185f68673df96719",
+    "installed_sha_matches": true,
+    "input_sha_matches": true,
+    "expected_sha_matches": true,
+    "manifest_sha_matches": true,
+    "case_contract_exact": true,
+    "case_error": null,
+    "mode4_value": 4,
+    "software_renderer": true,
+    "bpc": 32,
+    "ae_pids": [
+      30086
+    ],
+    "loaded_modules": {
+      "30086": [
+        "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin/Contents/MacOS/OLMKiraKira"
+      ]
+    },
+    "loaded_identity_exact": true,
+    "clean_single_ae_without_conflicting_kira_module": true
+  },
+  "contract": {
+    "renderer": "Software",
+    "bits_per_channel": 32,
+    "resolution_factor": [
+      1,
+      1
+    ],
+    "working_space": "None",
+    "linear_blending": false,
+    "effect_match_name": "OLM OLM Kira Kira",
+    "params": [
+      [
+        "OLM OLM Kira Kira-0008",
+        4
+      ],
+      [
+        "OLM OLM Kira Kira-0009",
+        4
+      ],
+      [
+        "OLM OLM Kira Kira-0017",
+        2
+      ],
+      [
+        "OLM OLM Kira Kira-0010",
+        0
+      ],
+      [
+        "OLM OLM Kira Kira-0002",
+        17
+      ],
+      [
+        "OLM OLM Kira Kira-0011",
+        167
+      ],
+      [
+        "OLM OLM Kira Kira-0027",
+        0
+      ],
+      [
+        "OLM OLM Kira Kira-0007",
+        9264
+      ],
+      [
+        "OLM OLM Kira Kira-0012",
+        85
+      ],
+      [
+        "OLM OLM Kira Kira-0003",
+        581
+      ],
+      [
+        "OLM OLM Kira Kira-0013",
+        [
+          0.58090001344681,
+          0.54900002479553,
+          0.43450000882149,
+          1
+        ]
+      ],
+      [
+        "OLM OLM Kira Kira-0018",
+        0
+      ],
+      [
+        "OLM OLM Kira Kira-0004",
+        823
+      ],
+      [
+        "OLM OLM Kira Kira-0014",
+        [
+          0.44190001487732,
+          0.24500000476837,
+          0.95770001411438,
+          1
+        ]
+      ],
+      [
+        "OLM OLM Kira Kira-0020",
+        0
+      ],
+      [
+        "OLM OLM Kira Kira-0005",
+        196
+      ],
+      [
+        "OLM OLM Kira Kira-0015",
+        [
+          0.98240000009537,
+          0.58600002527237,
+          0.99989998340607,
+          1
+        ]
+      ],
+      [
+        "OLM OLM Kira Kira-0022",
+        0
+      ],
+      [
+        "OLM OLM Kira Kira-0026",
+        227
+      ],
+      [
+        "OLM OLM Kira Kira-0028",
+        [
+          0.43860000371933,
+          0.5770999789238,
+          0.34389999508858,
+          1
+        ]
+      ],
+      [
+        "OLM OLM Kira Kira-0035",
+        1
+      ],
+      [
+        "OLM OLM Kira Kira-0006",
+        282
+      ],
+      [
+        "OLM OLM Kira Kira-0016",
+        [
+          0.70340001583099,
+          0.64980000257492,
+          0.81519997119904,
+          1
+        ]
+      ],
+      [
+        "OLM OLM Kira Kira-0024",
+        1
+      ],
+      [
+        "OLM OLM Kira Kira-0001",
+        -25
+      ],
+      [
+        "ADBE Effect Mask Opacity",
+        100
+      ],
+      [
+        "ADBE Force CPU GPU",
+        1
+      ]
+    ],
+    "expected_exr_sha256": "810b76cde27a6590f0f2913d2e4f7bc2c1649c77b128a7c174d46b0088215c1d",
+    "installed_binary_sha256": "cd97c6f328bf6a4adbe001662f35c12af405f89a2374046f185f68673df96719"
+  },
+  "osascript": {
+    "returncode": 0,
+    "stdout": "0\n",
+    "stderr": ""
+  },
+  "ae_return": {
+    "status": "ok",
+    "ae_version": "26.3x87",
+    "project": {
+      "bpc": 32,
+      "renderer": "SOFTWARE",
+      "resolution": [
+        1,
+        1
+      ]
+    },
+    "effect": {
+      "name": "OLM Kira Kira",
+      "match_name": "OLM OLM Kira Kira"
+    },
+    "params": [
+      [
+        "OLM OLM Kira Kira-0008",
+        4
+      ],
+      [
+        "OLM OLM Kira Kira-0009",
+        4
+      ],
+      [
+        "OLM OLM Kira Kira-0017",
+        2
+      ],
+      [
+        "OLM OLM Kira Kira-0010",
+        0
+      ],
+      [
+        "OLM OLM Kira Kira-0002",
+        17
+      ],
+      [
+        "OLM OLM Kira Kira-0011",
+        167
+      ],
+      [
+        "OLM OLM Kira Kira-0027",
+        0
+      ],
+      [
+        "OLM OLM Kira Kira-0007",
+        9264
+      ],
+      [
+        "OLM OLM Kira Kira-0012",
+        85
+      ],
+      [
+        "OLM OLM Kira Kira-0003",
+        581
+      ],
+      [
+        "OLM OLM Kira Kira-0013",
+        [
+          0.58090001344681,
+          0.54900002479553,
+          0.43450000882149,
+          1
+        ]
+      ],
+      [
+        "OLM OLM Kira Kira-0018",
+        0
+      ],
+      [
+        "OLM OLM Kira Kira-0004",
+        823
+      ],
+      [
+        "OLM OLM Kira Kira-0014",
+        [
+          0.44190001487732,
+          0.24500000476837,
+          0.95770001411438,
+          1
+        ]
+      ],
+      [
+        "OLM OLM Kira Kira-0020",
+        0
+      ],
+      [
+        "OLM OLM Kira Kira-0005",
+        196
+      ],
+      [
+        "OLM OLM Kira Kira-0015",
+        [
+          0.98240000009537,
+          0.58600002527237,
+          0.99989998340607,
+          1
+        ]
+      ],
+      [
+        "OLM OLM Kira Kira-0022",
+        0
+      ],
+      [
+        "OLM OLM Kira Kira-0026",
+        227
+      ],
+      [
+        "OLM OLM Kira Kira-0028",
+        [
+          0.43860000371933,
+          0.5770999789238,
+          0.34389999508858,
+          1
+        ]
+      ],
+      [
+        "OLM OLM Kira Kira-0035",
+        1
+      ],
+      [
+        "OLM OLM Kira Kira-0006",
+        282
+      ],
+      [
+        "OLM OLM Kira Kira-0016",
+        [
+          0.70340001583099,
+          0.64980000257492,
+          0.81519997119904,
+          1
+        ]
+      ],
+      [
+        "OLM OLM Kira Kira-0024",
+        1
+      ],
+      [
+        "OLM OLM Kira Kira-0001",
+        -25
+      ],
+      [
+        "ADBE Effect Mask Opacity",
+        100
+      ],
+      [
+        "ADBE Force CPU GPU",
+        1
+      ]
+    ],
+    "readback": [
+      [
+        "OLM OLM Kira Kira-0008",
+        4
+      ],
+      [
+        "OLM OLM Kira Kira-0009",
+        4
+      ],
+      [
+        "OLM OLM Kira Kira-0017",
+        2
+      ],
+      [
+        "OLM OLM Kira Kira-0010",
+        0
+      ],
+      [
+        "OLM OLM Kira Kira-0002",
+        17
+      ],
+      [
+        "OLM OLM Kira Kira-0011",
+        167
+      ],
+      [
+        "OLM OLM Kira Kira-0027",
+        0
+      ],
+      [
+        "OLM OLM Kira Kira-0007",
+        9264
+      ],
+      [
+        "OLM OLM Kira Kira-0012",
+        85
+      ],
+      [
+        "OLM OLM Kira Kira-0003",
+        581
+      ],
+      [
+        "OLM OLM Kira Kira-0013",
+        [
+          0.58090001344681,
+          0.54900002479553,
+          0.43450000882149,
+          1
+        ]
+      ],
+      [
+        "OLM OLM Kira Kira-0018",
+        0
+      ],
+      [
+        "OLM OLM Kira Kira-0004",
+        823
+      ],
+      [
+        "OLM OLM Kira Kira-0014",
+        [
+          0.44190001487732,
+          0.24500000476837,
+          0.95770001411438,
+          1
+        ]
+      ],
+      [
+        "OLM OLM Kira Kira-0020",
+        0
+      ],
+      [
+        "OLM OLM Kira Kira-0005",
+        196
+      ],
+      [
+        "OLM OLM Kira Kira-0015",
+        [
+          0.98240000009537,
+          0.58600002527237,
+          0.99989998340607,
+          1
+        ]
+      ],
+      [
+        "OLM OLM Kira Kira-0022",
+        0
+      ],
+      [
+        "OLM OLM Kira Kira-0026",
+        227
+      ],
+      [
+        "OLM OLM Kira Kira-0028",
+        [
+          0.43860000371933,
+          0.5770999789238,
+          0.34389999508858,
+          1
+        ]
+      ],
+      [
+        "OLM OLM Kira Kira-0035",
+        1
+      ],
+      [
+        "OLM OLM Kira Kira-0006",
+        282
+      ],
+      [
+        "OLM OLM Kira Kira-0016",
+        [
+          0.70340001583099,
+          0.64980000257492,
+          0.81519997119904,
+          1
+        ]
+      ],
+      [
+        "OLM OLM Kira Kira-0024",
+        1
+      ],
+      [
+        "OLM OLM Kira Kira-0001",
+        -25
+      ],
+      [
+        "ADBE Effect Mask Opacity",
+        100
+      ],
+      [
+        "ADBE Force CPU GPU",
+        1
+      ]
+    ],
+    "output": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/final_random10_olm_kira_kira_01_mac.exr"
+  },
+  "post_identity": {
+    "ae_pids": [
+      30086
+    ],
+    "loaded_modules": {
+      "30086": [
+        "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin/Contents/MacOS/OLMKiraKira"
+      ]
+    },
+    "exact_same_pid_and_module": true
+  },
+  "loader_trace": {
+    "path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/final_random10_olm_kira_kira_01_loader_trace.log",
+    "text": "LOADER_ENTER payload=/private/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olmkira-mode4-ae-llnz_6lu/payload.jsx\nLOADER_FAIL error=Error: After Effects \u30a8\u30e9\u30fc: \u30ec\u30f3\u30c0\u30fc\u30ad\u30e5\u30fc\u30a2\u30a4\u30c6\u30e01\u3001\u51fa\u529b\u30e2\u30b8\u30e5\u30fc\u30eb1\u306e\u51fa\u529b\u30a8\u30e9\u30fc\u3067\u3059\u3002\u6b21\u306e\u30c7\u30a3\u30ec\u30af\u30c8\u30ea\u306f\u5b58\u5728\u3057\u307e\u305b\u3093 : /private/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olmkira-mode4-ae-llnz_6lu/refs/conformance\u3002 line=13 file=/private/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olmkira-mode4-ae-llnz_6lu/payload.jsx\nLOADER_ENTER payload=/private/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olmkira-mode4-ae-eenual5g/payload.jsx\nLOADER_RETURN\n"
+  },
+  "output_sha256": "dcfc1b98eea2d5f777b65651a0116346da2be8a1442411b11ad0024f4bdb5810",
+  "raw_float32_compare": {
+    "equal": true,
+    "max_absolute_error": 0,
+    "nonzero_count": 0,
+    "nan_inf_policy": "raw FLOAT32 words; NaN and +/-Inf words must match exactly",
+    "mac_sample_counts": {
+      "nan": 0,
+      "+inf": 0,
+      "-inf": 0
+    },
+    "windows_sample_counts": {
+      "nan": 0,
+      "+inf": 0,
+      "-inf": 0
+    }
+  }
+}
