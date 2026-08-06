@@ -112,24 +112,32 @@
       "0x3d800000",
       "0x3db491f3"
     ],
-    "final_pf32_argb_u32": [
-      "0x3f800000",
-      "0x3da62b31",
-      "0x3ca62b31",
-      "0x3ba62b31",
-      "0x3f800000",
-      "0x3e0a6577",
-      "0x3d983939",
-      "0x3d722995",
-      "0x3f800000",
-      "0x3e41b67f",
-      "0x3e0374f9",
-      "0x3de7c930",
-      "0x3f800000",
-      "0x3e7908ac",
-      "0x3e3ace7d",
-      "0x3e2b3ff2"
-    ],
+    "typed_outputs": {
+      "PF8": {
+        "entry": "0x18114e110",
+        "pixel_size": 4,
+        "actual_hex": "ff140501ff22120fff30201cff3e2e2a",
+        "portable_hex": "ff140501ff22120fff30201cff3e2e2a",
+        "exact_bytes": 16,
+        "quantization": "clamp; scale; truncate toward zero"
+      },
+      "PF16": {
+        "entry": "0x18114ddc0",
+        "pixel_size": 8,
+        "actual_hex": "0080620a9802a60000804c1183099107008036186e107c0e0080211f59176715",
+        "portable_hex": "0080620a9802a60000804c1183099107008036186e107c0e0080211f59176715",
+        "exact_bytes": 32,
+        "quantization": "clamp; scale; truncate toward zero"
+      },
+      "PF32": {
+        "entry": "0x18114e460",
+        "pixel_size": 16,
+        "actual_hex": "0000803f312ba63d312ba63c312ba63b0000803f77650a3e3939983d9529723d0000803f7fb6413ef974033e30c9e73d0000803fac08793e7dce3a3ef23f2b3e",
+        "portable_hex": "0000803f312ba63d312ba63c312ba63b0000803f77650a3e3939983d9529723d0000803f7fb6413ef974033e30c9e73d0000803fac08793e7dce3a3ef23f2b3e",
+        "exact_bytes": 64,
+        "quantization": "clamp; preserve IEEE-754 binary32 words"
+      }
+    },
     "suite_acquire_count": 12,
     "suite_release_count": 12,
     "fault": null
@@ -137,10 +145,13 @@
   "comparison": {
     "highlight_plane_words": 4,
     "aggregation_words": 16,
-    "final_pf32_words": 16,
+    "final_pf8_bytes": 16,
+    "final_pf16_bytes": 32,
+    "final_pf32_bytes": 64,
     "max_ulp": 0,
     "highlight_portable_owner": "core/kirakira_highlight.h (called by mac/OLMKiraKira/OLMKiraKira.cpp)",
-    "compose_portable_owner": "tools/emulation/olmkirakira_outer_compose_oracle_20260728.py"
+    "compose_portable_owner": "tools/emulation/olmkirakira_outer_compose_oracle_20260728.py",
+    "mac_typed_writer_owner": "mac/OLMKiraKira/OLMKiraKira.cpp PixelTraits::WriteAexTruncate, selected unconditionally after RenderTyped compose"
   },
   "scaffold": {
     "SPBasic": [
@@ -156,6 +167,7 @@
     "first_unscaffolded_stop": "indirect NULL call returning to 0x181231f4d while acquiring PF Handle Suite v2",
     "resolution": "attach host context to argument slot 2 and provide the six callbacks above"
   },
-  "boundary": "This is a hostless Mac Unicorn execution of the checked-in Windows AEX, not a live Windows/AE render claim. The canonical internal PF32 chain is bit exact through the final writer.",
+  "boundary": "This is a hostless Mac Unicorn execution of the checked-in Windows AEX with typed PF8/PF16/PF32 output worlds, not a live Windows/AE render claim. The same canonical internal float chain is byte exact through each final typed writer.",
+  "boundary_ja": "\u30c1\u30a7\u30c3\u30af\u30a4\u30f3\u6e08\u307fWindows AEX\u3092Mac\u4e0a\u306eUnicorn\u3067\u5b9f\u884c\u3057\u305fhostless\u5883\u754c\u3067\u3042\u308a\u3001Windows/AE\u5b9f\u6a5f\u30ec\u30f3\u30c0\u30fc\u306e\u4e00\u81f4\u4e3b\u5f35\u3067\u306f\u306a\u3044\u3002\u5171\u901a\u306e\u5185\u90e8float\u7d4c\u8def\u304b\u3089PF8/PF16/PF32 typed world\u3078\u66f8\u304f\u6700\u7d42\u5883\u754c\u307e\u3067\u3092byte exact\u3068\u3059\u308b\u3002",
   "verification": "python3 tools/emulation/probe_olmkirakira_mode4_fullcaller_scaffold_20260807.py"
 }

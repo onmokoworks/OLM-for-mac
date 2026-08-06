@@ -26,7 +26,11 @@ FULL_CALLER = 0x18114F4A0
 BRIGHTNESS_CTOR = 0x18114EC20
 AGGREGATE = 0x18114FD90
 AGGREGATE_MERGE2 = 0x18114FFD0
-COMPOSE_PF32 = 0x18114E460
+COMPOSE = {
+    "PF8": (0x18114E110, 4),
+    "PF16": (0x18114DDC0, 8),
+    "PF32": (0x18114E460, 16),
+}
 
 
 def load_base():
@@ -172,39 +176,51 @@ def main() -> int:
             self.write_bytes(owner + 0x58, struct.pack("<i", len(values)))
             self.write_bytes(owner + 0x128, struct.pack("<Q", pixels))
             self.write_bytes(owner + 0x190, struct.pack("<Q", scratch))
-            output = self.host_alloc(len(values) * 16, align=64)
-            self.write_bytes(output, b"\0" * (len(values) * 16))
-            world = self.host_alloc(0x40, align=16)
-            self.write_bytes(world, b"\0" * 0x40)
-            self.write_bytes(world + 0x18, struct.pack("<Q", output))
-            self.write_bytes(world + 0x20, struct.pack("<i", len(values) * 16))
-            self.write_bytes(world + 0x24, struct.pack("<i", len(values)))
-            self.write_bytes(world + 0x28, struct.pack("<i", 1))
-            super().call_function(COMPOSE_PF32, int_args=[owner, world], max_instructions=200_000)
             from olmkirakira_outer_compose_oracle_20260728 import compose_pixel, stage_typed_writer
             glow_values = struct.unpack(f"<{len(values) * 4}f", self.read_bytes(scratch, len(values) * 16))
-            portable_final = b"".join(
-                stage_typed_writer(compose_pixel(
-                    glow_values[index * 4:index * 4 + 4],
-                    rgba[index * 4:index * 4 + 4],
-                    glow_opacity=1.0, source_opacity=1.0, merge_mode=1,
-                ), depth="PF32")
-                for index in range(len(values))
-            )
-            actual_final = self.read_bytes(output, len(values) * 16)
-            if portable_final != actual_final:
-                raise AssertionError("actual AEX final PF32 output differs from portable compose/writer")
+            typed_outputs = {}
+            for depth, (compose_entry, pixel_size) in COMPOSE.items():
+                output = self.host_alloc(len(values) * pixel_size, align=64)
+                self.write_bytes(output, b"\0" * (len(values) * pixel_size))
+                world = self.host_alloc(0x40, align=16)
+                self.write_bytes(world, b"\0" * 0x40)
+                self.write_bytes(world + 0x18, struct.pack("<Q", output))
+                self.write_bytes(world + 0x20, struct.pack("<i", len(values) * pixel_size))
+                self.write_bytes(world + 0x24, struct.pack("<i", len(values)))
+                self.write_bytes(world + 0x28, struct.pack("<i", 1))
+                super().call_function(compose_entry, int_args=[owner, world], max_instructions=200_000)
+                portable_final = b"".join(
+                    stage_typed_writer(compose_pixel(
+                        glow_values[index * 4:index * 4 + 4],
+                        rgba[index * 4:index * 4 + 4],
+                        glow_opacity=1.0, source_opacity=1.0, merge_mode=1,
+                    ), depth=depth)
+                    for index in range(len(values))
+                )
+                actual_final = self.read_bytes(output, len(values) * pixel_size)
+                if portable_final != actual_final:
+                    raise AssertionError(f"actual AEX final {depth} output differs from portable compose/writer")
+                typed_outputs[depth] = {
+                    "entry": hex(compose_entry),
+                    "pixel_size": pixel_size,
+                    "actual_hex": actual_final.hex(),
+                    "portable_hex": portable_final.hex(),
+                    "exact_bytes": len(actual_final),
+                    "quantization": "clamp; scale; truncate toward zero" if depth != "PF32" else "clamp; preserve IEEE-754 binary32 words",
+                }
             observed["exact"] = {
                 "highlight_plane_words": len(values),
                 "aggregation_words": len(values) * 4,
-                "final_pf32_words": len(values) * 4,
+                "final_pf8_bytes": len(values) * 4,
+                "final_pf16_bytes": len(values) * 8,
+                "final_pf32_bytes": len(values) * 16,
                 "max_ulp": 0,
             }
             observed["output_buffers"] = {
                 "scratch_u32": [hex(value) for value in struct.unpack(f"<{len(values) * 4}I", self.read_bytes(scratch, len(values) * 16))],
                 "colors_u32": [hex(value) for value in struct.unpack("<20I", self.read_bytes(colors, 80))],
                 "flags_hex": self.read_bytes(flags, 5).hex(),
-                "final_pf32_u32": [hex(value) for value in struct.unpack(f"<{len(values) * 4}I", actual_final)],
+                "typed_outputs": typed_outputs,
             }
             return result
 
@@ -222,7 +238,9 @@ def main() -> int:
         and observed.get("exact") == {
             "highlight_plane_words": 4,
             "aggregation_words": 16,
-            "final_pf32_words": 16,
+            "final_pf8_bytes": 16,
+            "final_pf16_bytes": 32,
+            "final_pf32_bytes": 64,
             "max_ulp": 0,
         }
         and len(suite_calls) == 24
@@ -258,7 +276,7 @@ def main() -> int:
         "actual_aex": {
             "highlight_plane_u32": observed["aggregate_entry"]["ray_words"][4],
             "aggregation_u32": observed["output_buffers"]["scratch_u32"],
-            "final_pf32_argb_u32": observed["output_buffers"]["final_pf32_u32"],
+            "typed_outputs": observed["output_buffers"]["typed_outputs"],
             "suite_acquire_count": 12,
             "suite_release_count": 12,
             "fault": None,
@@ -267,6 +285,7 @@ def main() -> int:
             **observed["exact"],
             "highlight_portable_owner": "core/kirakira_highlight.h (called by mac/OLMKiraKira/OLMKiraKira.cpp)",
             "compose_portable_owner": "tools/emulation/olmkirakira_outer_compose_oracle_20260728.py",
+            "mac_typed_writer_owner": "mac/OLMKiraKira/OLMKiraKira.cpp PixelTraits::WriteAexTruncate, selected unconditionally after RenderTyped compose",
         },
         "scaffold": {
             "SPBasic": ["AcquireSuite", "ReleaseSuite"],
@@ -274,7 +293,8 @@ def main() -> int:
             "first_unscaffolded_stop": "indirect NULL call returning to 0x181231f4d while acquiring PF Handle Suite v2",
             "resolution": "attach host context to argument slot 2 and provide the six callbacks above",
         },
-        "boundary": "This is a hostless Mac Unicorn execution of the checked-in Windows AEX, not a live Windows/AE render claim. The canonical internal PF32 chain is bit exact through the final writer.",
+        "boundary": "This is a hostless Mac Unicorn execution of the checked-in Windows AEX with typed PF8/PF16/PF32 output worlds, not a live Windows/AE render claim. The same canonical internal float chain is byte exact through each final typed writer.",
+        "boundary_ja": "チェックイン済みWindows AEXをMac上のUnicornで実行したhostless境界であり、Windows/AE実機レンダーの一致主張ではない。共通の内部float経路からPF8/PF16/PF32 typed worldへ書く最終境界までをbyte exactとする。",
         "verification": "python3 tools/emulation/probe_olmkirakira_mode4_fullcaller_scaffold_20260807.py",
     }
     OUT_JSON.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
@@ -285,11 +305,13 @@ def main() -> int:
         "MakeSeed、Highlight 11×11 box filter 3 pass、Mode-1 aggregation、Merge-1 compose/PF32 writerを通した。\n\n"
         "- Highlight plane: 4/4 words exact\n"
         "- aggregation: 16/16 words exact\n"
-        "- final PF32 ARGB: 16/16 words exact\n"
+        "- final PF8 ARGB: 16/16 bytes exact\n"
+        "- final PF16 ARGB: 32/32 bytes exact\n"
+        "- final PF32 ARGB: 64/64 bytes exact\n"
         "- max ULP: 0\n"
         "- PF Handle Suite: Acquire 12 / Release 12、faultなし\n\n"
         "Mac productionは `core/kirakira_highlight.h` の同じportable primitiveを使用する。"
-        "最終compose/writerは既存binary-grounded oracleと比較した。これはhostless actual-AEX境界であり、live Windows/AE出力のraw exact主張ではない。\n\n"
+        "最終compose/writerはtyped world上で既存binary-grounded oracleと比較した。PF8/PF16はclamp後に255/32768倍し、ゼロ方向へ切り捨てる。これはhostless actual-AEX境界であり、live Windows/AE出力のraw exact主張ではない。\n\n"
         "Verification: `python3 tools/emulation/probe_olmkirakira_mode4_fullcaller_scaffold_20260807.py`\n",
         encoding="utf-8",
     )

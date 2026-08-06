@@ -614,9 +614,9 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			const FloatRGBA glow_normalized = glow_full[idx];
 			const FloatRGBA &out = output_pixels[idx];
 			KiraKiraDebugDumpPoint(debug, bitdepth, w, h, x, y, src, glow_normalized, glow_a, out);
-			*PixelAt<PixelT>(output, x, y) = info.merge_mode == 2
-				? PixelTraits<PixelT>::WriteAexTruncate(out)
-				: PixelTraits<PixelT>::Write(out);
+			// The actual integer-depth outer writers use CVTTSS2SI after
+			// clamp and scale for both merge modes.
+			*PixelAt<PixelT>(output, x, y) = PixelTraits<PixelT>::WriteAexTruncate(out);
 		}
 	}
 	return PF_Err_NONE;
