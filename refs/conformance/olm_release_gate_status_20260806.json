@@ -2,10 +2,10 @@
   "claim_boundary": "Release integration only: ten-lane fixed fixtures, installed Universal identities, and one current-Mac-AE load/render witness per plugin. This manifest does not promote unlisted geometries, parameters, bit depths, or AE exactness.",
   "fixed_fixture_regression": {
     "boundary": "Only commands enumerated by the ten fixed-fixture lanes; slow RadialBlur full replay is excluded.",
-    "output_sha256": "6f3ef62cda8ea9630eeed5977164cfb4f72911123990b3a839ddcb6929b65ccc",
+    "output_sha256": "38a02e68c34185fbb5b4216347e161bac1487c45034b217d6638f2e763e5699d",
     "returncode": 0,
     "state": "proven",
-    "summary": "PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=458.88s",
+    "summary": "PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=456.26s",
     "tail": [
       "      |                                                      ^",
       "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here",
@@ -29,12 +29,12 @@
       "1 warning generated."
     ]
   },
-  "generated_at": "2026-08-06T06:46:01.338915+00:00",
+  "generated_at": "2026-08-06T07:16:51.617005+00:00",
   "mac_ae_representative": {
     "counts": {
       "invalid": 0,
-      "pending": 2,
-      "proven": 8
+      "pending": 0,
+      "proven": 10
     },
     "plugins": [
       {
@@ -78,12 +78,12 @@
         "state": "proven"
       },
       {
-        "boundary": "Runner is prepared, but the current installed bundle has no completed representative Mac AE render witness.",
-        "declared_state": "pending",
-        "evidence": "refs/conformance/olmkirakira_mac_ae_es3_loader_fix_20260806.json",
+        "boundary": "Current installed PF32 Mode4 case01 loaded and rendered raw-FLOAT exact to the retained Windows artifact.",
+        "declared_state": "proven",
+        "evidence": "refs/conformance/olmkirakira_mode4_case01_current_mac_ae_20260806.json",
         "failures": [],
         "plugin": "OLMKiraKira",
-        "state": "pending"
+        "state": "proven"
       },
       {
         "boundary": "PF8 case0010 is Windows-AE exact; PF32 case0009 remains outside Windows-AE exactness.",
@@ -110,18 +110,18 @@
         "state": "proven"
       },
       {
-        "boundary": "Installed EffectMain is exact under focused callbacks, but the current installed bundle has no real Mac AE representative render.",
-        "declared_state": "pending",
-        "evidence": "refs/conformance/olmtoondilate_installed_completion_route_20260805.json",
+        "boundary": "Current installed PF32 Software/radius-13 representative loaded and rendered in AE 26.3x87; this Mac smoke makes no new Windows-exact claim.",
+        "declared_state": "proven",
+        "evidence": "refs/conformance/olmtoondilate_pf32_current_mac_ae_host_20260806.json",
         "failures": [],
         "plugin": "OLMToonDilate",
-        "state": "pending"
+        "state": "proven"
       }
     ]
   },
-  "releasable": false,
+  "releasable": true,
   "schema": "olm.release-gate-report/1",
-  "status": "release_gate_pending_or_invalid",
+  "status": "release_gate_pass",
   "universal_installs": {
     "boundary": "Bundle identity/architectures/signature only; AE process state is reported but is not an install-identity failure.",
     "bundle_count": 10,
@@ -237,8 +237,8 @@
         "universal_exact": true
       }
     ],
-    "preflight_status": "ae_not_running",
-    "returncode": 2,
+    "preflight_status": "ready_for_hash_bound_host_runners",
+    "returncode": 0,
     "state": "proven"
   }
 }
