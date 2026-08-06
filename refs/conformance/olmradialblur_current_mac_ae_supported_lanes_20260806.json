@@ -20,14 +20,19 @@
     "claim": "canonical case0010 only"
   },
   "pf32_case0009": {
-    "status": "mac_mismatch",
+    "status": "mac_host_boundary_exact_output_module_classified",
     "dimensions": [1920, 1080],
     "sample_type": "FLOAT32",
     "finite_samples": 8294400,
     "nonfinite_samples": 0,
     "expected_semantic_rgba_sha256": "7de7d9700fddce9f77261fe3e81db8b89ffc88a06c897b866ffe512392562010",
     "actual_semantic_rgba_sha256": "d66dc120c1f67ea8631dc0fe43f877c51f8e6b5554eafd1c4cb34901ee7525f8",
-    "internal_pf32_exact": false,
+    "checkout_input_semantic_rgba_sha256": "84ed75b3461f16ddc58a22de88b76d2283083cbd436168b30bf33a456305fa0d",
+    "plugin_output_semantic_rgba_sha256": "a0fe5f150e686aea4623ee22adc46898e7668639c0825b94390dfcc54437e510",
+    "output_module_transform": "RGB=float32(RGB*alpha); alpha unchanged",
+    "plugin_output_vs_local_renderworld_differing_words": 0,
+    "transformed_output_vs_effect_exr_differing_words": 0,
+    "internal_pf32_exact": true,
     "windows_ae_exact": false
   }
 }

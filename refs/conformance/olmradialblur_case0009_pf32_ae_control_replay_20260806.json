@@ -2,6 +2,7 @@
   "claim_boundary": {
     "actual_ae_checkout_world_identical_to_control_exr": false,
     "ae_control_words_replayed": true,
+    "output_module_premultiply_reproduces_effect_hash": true,
     "portable_control_regeneration_exact": true,
     "production_renderworld_matches_effect_exr": false,
     "production_replay_hash_pinned": true,
@@ -15,6 +16,8 @@
   "input_contract": "pinned PNG regenerated through compact AE-control byte-to-float mapping into PF_PixelFloat ARGB",
   "kind": "olmradialblur_case0009_pf32_ae_control_replay_20260806",
   "optional_retained_artifact_verification": null,
+  "output_module_premultiplied_semantic_rgba_sha256": "d66dc120c1f67ea8631dc0fe43f877c51f8e6b5554eafd1c4cb34901ee7525f8",
+  "portable_output_module_transform": "RGB=float32(RGB*alpha), alpha unchanged",
   "production_replay_semantic_rgba_sha256": "a0fe5f150e686aea4623ee22adc46898e7668639c0825b94390dfcc54437e510",
   "status": "portable_replay_exact"
 }

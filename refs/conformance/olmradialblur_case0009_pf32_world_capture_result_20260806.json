@@ -1,0 +1,94 @@
+{
+  "capture": {
+    "input_raw_argb_rows_sha256": "a8dc231e700a947499034cb8934337ab5a4afdda0551bd7060c8a111d0d12166",
+    "input_semantic_rgba_sha256": "84ed75b3461f16ddc58a22de88b76d2283083cbd436168b30bf33a456305fa0d",
+    "output_raw_argb_rows_sha256": "f4e0b93bf583fb8a1cdbbac0fc416d3571b85efa32a42d934d75d589deef1e93",
+    "output_semantic_rgba_sha256": "a0fe5f150e686aea4623ee22adc46898e7668639c0825b94390dfcc54437e510"
+  },
+  "comparisons": {
+    "captured_input_vs_compact_mapping": {
+      "different_words": 0,
+      "different_words_by_channel": {
+        "A": 0,
+        "B": 0,
+        "G": 0,
+        "R": 0
+      },
+      "exact": true,
+      "first_word": null,
+      "max_raw_u32_delta": 0,
+      "raw_u32_delta_counts": {}
+    },
+    "captured_input_vs_control_exr": {
+      "different_words": 0,
+      "different_words_by_channel": {
+        "A": 0,
+        "B": 0,
+        "G": 0,
+        "R": 0
+      },
+      "exact": true,
+      "first_word": null,
+      "max_raw_u32_delta": 0,
+      "raw_u32_delta_counts": {}
+    },
+    "captured_output_vs_effect_before_premultiply": {
+      "different_words": 80625,
+      "different_words_by_channel": {
+        "A": 0,
+        "B": 24936,
+        "G": 24691,
+        "R": 30998
+      },
+      "exact": false,
+      "first_word": 20,
+      "max_raw_u32_delta": 3,
+      "raw_u32_delta_counts": {
+        "1": 78850,
+        "2": 1740,
+        "3": 35
+      }
+    },
+    "captured_output_vs_local_renderworld": {
+      "different_words": 0,
+      "different_words_by_channel": {
+        "A": 0,
+        "B": 0,
+        "G": 0,
+        "R": 0
+      },
+      "exact": true,
+      "first_word": null,
+      "max_raw_u32_delta": 0,
+      "raw_u32_delta_counts": {}
+    },
+    "premultiplied_output_vs_effect": {
+      "different_words": 0,
+      "different_words_by_channel": {
+        "A": 0,
+        "B": 0,
+        "G": 0,
+        "R": 0
+      },
+      "exact": true,
+      "first_word": null,
+      "max_raw_u32_delta": 0,
+      "raw_u32_delta_counts": {}
+    }
+  },
+  "diagnostic_bundle_sha256": "74c8ff857e60d611bbf69584b187234e6ab4bca588d371fef7f6b8e3ffff1509",
+  "exact_transform": "RGB=float32(RGB*alpha); alpha unchanged",
+  "exr": {
+    "control_file_sha256": "a06a4975d5367563a67b263d80de997df7bbc0591f36d8b9f8c6273a66dd778e",
+    "control_semantic_rgba_sha256": "84ed75b3461f16ddc58a22de88b76d2283083cbd436168b30bf33a456305fa0d",
+    "effect_file_sha256": "bc6c38058f9475b302c83b16ad85c6a2876999d2aa5b29100b8fed2f55239319",
+    "effect_semantic_rgba_sha256": "d66dc120c1f67ea8631dc0fe43f877c51f8e6b5554eafd1c4cb34901ee7525f8"
+  },
+  "first_divergent_boundary": "AE Output Module Color: Premultiplied (Matted)",
+  "kind": "olmradialblur_case0009_pf32_world_capture_result_20260806",
+  "normal_restore_identity_exact": true,
+  "normal_restore_preflight": "all_10_installed_identities_exact; ae_not_running",
+  "normal_restored_bundle_sha256": "2e079e3c168666c2f3509f8d4c90ab107301880bce43f538cf4e16bcb8047732",
+  "status": "output_module_premultiply_exact",
+  "windows_ae_exact": false
+}

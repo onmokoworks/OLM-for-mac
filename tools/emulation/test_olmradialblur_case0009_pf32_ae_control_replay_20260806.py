@@ -26,6 +26,8 @@ DEFAULT_RUN = Path("/tmp/olmradialblur_pf32_20260806.8xa7UB")
 INPUT = ROOT / "refs/win_references/20260604_olm/OLMRadialBlur/case_0009_before_effects.png"
 MAPPING = ROOT / "refs/fixtures/olmradialblur_case0009_ae_control_u8_to_f32_20260806.json"
 REPORT = ROOT / "refs/conformance/olmradialblur_case0009_pf32_ae_control_replay_20260806.json"
+DIAGNOSTIC_REPORT = ROOT / "refs/conformance/olmradialblur_case0009_pf32_world_capture_result_20260806.json"
+INSTALLED = Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin/Contents/MacOS/OLMRadialBlur"
 WIDTH, HEIGHT = 1920, 1080
 
 
@@ -63,9 +65,15 @@ def compare_words(expected: bytes, actual: bytes) -> dict[str, object]:
             "max_raw_u32_delta": max_raw_delta, "exact": different == 0}
 
 
+def argb_to_rgba(raw: bytes) -> bytes:
+    words = np.frombuffer(raw, dtype=np.uint8).reshape(HEIGHT, WIDTH, 4, 4)
+    return np.ascontiguousarray(words[:, :, [1, 2, 3, 0], :]).tobytes()
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source-run", type=Path)
+    parser.add_argument("--capture-dir", type=Path)
     args = parser.parse_args()
     fixture = json.loads(MAPPING.read_text(encoding="utf-8"))
     if hashlib.sha256(INPUT.read_bytes()).hexdigest() != fixture["source_png_sha256"]:
@@ -86,6 +94,7 @@ def main() -> int:
             value = int(rgba8[channel])
             control_argb[base + (channel + 1) * 4:base + (channel + 2) * 4] = mapping[value * 4:(value + 1) * 4]
     control_argb = bytes(control_argb)
+    generated_control_rgba = argb_to_rgba(control_argb)
     source = str(SOURCE).replace("\\", "\\\\").replace('"', '\\"')
     with tempfile.TemporaryDirectory(prefix="olmradial-pf32-control-replay-") as td_raw:
         td = Path(td_raw)
@@ -119,15 +128,18 @@ std::ofstream(argv[2],std::ios::binary).write((char*)output.data(),output.size()
 
     # Convert production A,R,G,B memory into semantic R,G,B,A for a direct
     # raw-word comparison with the preserved effect EXR.
-    production_rgba = bytearray(len(production_argb))
-    for pixel in range(WIDTH * HEIGHT):
-        base = pixel * 16
-        for dst_channel, src_channel in enumerate((1, 2, 3, 0)):
-            production_rgba[base + dst_channel * 4:base + dst_channel * 4 + 4] = \
-                production_argb[base + src_channel * 4:base + src_channel * 4 + 4]
+    production_rgba = argb_to_rgba(production_argb)
     replay_hash = hashlib.sha256(production_rgba).hexdigest()
     if replay_hash != "a0fe5f150e686aea4623ee22adc46898e7668639c0825b94390dfcc54437e510":
         raise AssertionError(f"portable production replay drifted: {replay_hash}")
+    replay_array = np.frombuffer(production_rgba, dtype="<f4").reshape(HEIGHT, WIDTH, 4)
+    premultiplied_array = replay_array.copy()
+    premultiplied_array[:, :, :3] = np.float32(
+        premultiplied_array[:, :, :3] * premultiplied_array[:, :, 3:4])
+    premultiplied_rgba = premultiplied_array.tobytes()
+    premultiplied_hash = hashlib.sha256(premultiplied_rgba).hexdigest()
+    if premultiplied_hash != "d66dc120c1f67ea8631dc0fe43f877c51f8e6b5554eafd1c4cb34901ee7525f8":
+        raise AssertionError(f"premultiplied output-module replay drifted: {premultiplied_hash}")
     optional = None
     if args.source_run is not None:
         control_planes, cw, ch = read_planes(args.source_run / "control.exr00000")
@@ -158,9 +170,68 @@ std::ofstream(argv[2],std::ios::binary).write((char*)output.data(),output.size()
             raise AssertionError("preserved effect artifact identity drifted")
         if comparison["different_words"] != 80625 or comparison["max_raw_u32_delta"] != 3:
             raise AssertionError(f"control-replay discriminator drifted: {comparison}")
+        premultiplied_comparison = compare_words(effect_rgba, premultiplied_rgba)
+        if not premultiplied_comparison["exact"]:
+            raise AssertionError(f"effect EXR is not exact premultiplied output: {premultiplied_comparison}")
         optional = {"source_run": str(args.source_run), "mapping_uniqueness": uniqueness,
                     "effect_semantic_rgba_sha256": hashlib.sha256(effect_rgba).hexdigest(),
-                    "effect_comparison": comparison}
+                    "effect_comparison_before_output_module_premultiply": comparison,
+                    "effect_comparison_after_output_module_premultiply": premultiplied_comparison}
+    if args.capture_dir is not None:
+        if optional is None:
+            raise AssertionError("--capture-dir requires --source-run")
+        def captured_semantic(stage: str) -> bytes:
+            metadata = json.loads((args.capture_dir / f"{stage}.json").read_text(encoding="utf-8"))
+            if metadata["width"] != WIDTH or metadata["height"] != HEIGHT or metadata["rowbytes"] < WIDTH * 16:
+                raise AssertionError(f"invalid {stage} capture metadata")
+            raw = np.memmap(args.capture_dir / f"{stage}.argb128.rows", dtype=np.uint8, mode="r",
+                            shape=(HEIGHT, metadata["rowbytes"]))
+            active = np.ascontiguousarray(raw[:, :WIDTH * 16]).reshape(HEIGHT, WIDTH, 4, 4)
+            return np.ascontiguousarray(active[:, :, [1, 2, 3, 0], :]).tobytes()
+        captured_input = captured_semantic("input")
+        captured_output = captured_semantic("output")
+        captured_checks = {
+            "input_vs_control": compare_words(semantic(control_planes, "RGBA"), captured_input),
+            "input_vs_compact_mapping": compare_words(generated_control_rgba, captured_input),
+            "output_vs_local_renderworld": compare_words(bytes(production_rgba), captured_output),
+            "output_vs_effect_before_premultiply": compare_words(effect_rgba, captured_output),
+        }
+        if not captured_checks["input_vs_control"]["exact"] or not captured_checks["output_vs_local_renderworld"]["exact"]:
+            raise AssertionError(f"captured boundary mismatch: {captured_checks}")
+        optional["capture_dir"] = str(args.capture_dir)
+        optional["captured_world_checks"] = captured_checks
+        ae_return = json.loads((args.source_run / "ae_return.json").read_text(encoding="utf-8"))
+        diagnostic_result = {
+            "kind": "olmradialblur_case0009_pf32_world_capture_result_20260806",
+            "status": "output_module_premultiply_exact",
+            "diagnostic_bundle_sha256": ae_return["plugin"]["sha256"],
+            "normal_restored_bundle_sha256": hashlib.sha256(INSTALLED.read_bytes()).hexdigest(),
+            "normal_restore_identity_exact": hashlib.sha256(INSTALLED.read_bytes()).hexdigest() == "2e079e3c168666c2f3509f8d4c90ab107301880bce43f538cf4e16bcb8047732",
+            "normal_restore_preflight": "all_10_installed_identities_exact; ae_not_running",
+            "capture": {
+                "input_raw_argb_rows_sha256": hashlib.sha256((args.capture_dir / "input.argb128.rows").read_bytes()).hexdigest(),
+                "input_semantic_rgba_sha256": hashlib.sha256(captured_input).hexdigest(),
+                "output_raw_argb_rows_sha256": hashlib.sha256((args.capture_dir / "output.argb128.rows").read_bytes()).hexdigest(),
+                "output_semantic_rgba_sha256": hashlib.sha256(captured_output).hexdigest(),
+            },
+            "exr": {
+                "control_file_sha256": hashlib.sha256((args.source_run / "control.exr00000").read_bytes()).hexdigest(),
+                "control_semantic_rgba_sha256": hashlib.sha256(semantic(control_planes, "RGBA")).hexdigest(),
+                "effect_file_sha256": hashlib.sha256((args.source_run / "effect_on.exr00000").read_bytes()).hexdigest(),
+                "effect_semantic_rgba_sha256": hashlib.sha256(effect_rgba).hexdigest(),
+            },
+            "comparisons": {
+                "captured_input_vs_control_exr": captured_checks["input_vs_control"],
+                "captured_input_vs_compact_mapping": captured_checks["input_vs_compact_mapping"],
+                "captured_output_vs_local_renderworld": captured_checks["output_vs_local_renderworld"],
+                "captured_output_vs_effect_before_premultiply": captured_checks["output_vs_effect_before_premultiply"],
+                "premultiplied_output_vs_effect": premultiplied_comparison,
+            },
+            "first_divergent_boundary": "AE Output Module Color: Premultiplied (Matted)",
+            "exact_transform": "RGB=float32(RGB*alpha); alpha unchanged",
+            "windows_ae_exact": False,
+        }
+        DIAGNOSTIC_REPORT.write_text(json.dumps(diagnostic_result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     report = {
         "kind": "olmradialblur_case0009_pf32_ae_control_replay_20260806",
         "status": "portable_replay_exact",
@@ -168,13 +239,17 @@ std::ofstream(argv[2],std::ios::binary).write((char*)output.data(),output.size()
         "input_contract": "pinned PNG regenerated through compact AE-control byte-to-float mapping into PF_PixelFloat ARGB",
         "compact_mapping_fixture": str(MAPPING.relative_to(ROOT)),
         "production_replay_semantic_rgba_sha256": replay_hash,
+        "output_module_premultiplied_semantic_rgba_sha256": premultiplied_hash,
+        "portable_output_module_transform": "RGB=float32(RGB*alpha), alpha unchanged",
         "optional_retained_artifact_verification": optional,
         "claim_boundary": {
             "ae_control_words_replayed": True,
             "portable_control_regeneration_exact": True,
             "production_replay_hash_pinned": True,
-            "production_renderworld_matches_effect_exr": optional is not None and optional["effect_comparison"]["exact"],
-            "actual_ae_checkout_world_identical_to_control_exr": False,
+            "output_module_premultiply_reproduces_effect_hash": True,
+            "production_renderworld_matches_effect_exr": False,
+            "actual_ae_checkout_world_identical_to_control_exr": bool(
+                optional and optional.get("captured_world_checks", {}).get("input_vs_control", {}).get("exact")),
             "windows_ae_exact": False,
         },
     }
