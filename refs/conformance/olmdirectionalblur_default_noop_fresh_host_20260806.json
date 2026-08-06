@@ -1,0 +1,55 @@
+{
+  "schema": "olmdirectionalblur.default-noop-fresh-host/1",
+  "status": "exact",
+  "cause": "After the Noise Layer default was corrected from MYSELF to NONE, the Mac SmartRender adapter still treated the optional layer checkout as mandatory. Once that was fixed, AE 26.3 exposed a second bounded gap: the PF32 dispatcher rejected the actual default zero-strength tuple with PF_Err_BAD_CALLBACK_PARAM.",
+  "actual_aex_default_tuple_evidence": {
+    "raw_params_setup": "refs/conformance/olmdirectionalblur_ui_setup_actual_aex_20260806.json",
+    "angle": 0,
+    "brightness_gain": 1,
+    "size_variation": 0,
+    "front_strength": 0,
+    "front_alpha_fade": 0,
+    "front_sharp_tail": 0,
+    "back_strength": 0,
+    "back_alpha_fade": 0,
+    "back_sharp_tail": 0,
+    "noise_variation": 0,
+    "noise_type": 1,
+    "noise_layer": 0,
+    "seed": 1,
+    "noise_offset": 0,
+    "thickness": 10
+  },
+  "windows_ae_identity_evidence": {
+    "manifest": "refs/win_references/olm_fresh_instance_ranges_20260629/OLMmulti-effectrangecapture/reference_manifest.json",
+    "case": "range_default_olmdirectionalblur",
+    "renderer": "Software",
+    "effect_on_png": "olm_fresh_instance_ranges_20260629__software__fr24__range_default_olmdirectionalblur.png",
+    "before_effects_png": "olm_fresh_instance_ranges_20260629__software__fr24__range_default_olmdirectionalblur_before_effects.png",
+    "both_sha256": "e1597b6557a3018b78a21ea6cc8436ed93f1b19d25115ef747b051cf8086e4c7",
+    "comparison": "byte_exact"
+  },
+  "mac_ae_26_3_fresh_host": {
+    "result": "handoff/ae_host_validation_directional_optional_noise_20260806/final_result.json",
+    "ae_version": "26.3x87",
+    "bitdepth_reported_by_smart_render": 32,
+    "loaded": true,
+    "applied": true,
+    "render_succeeded": true,
+    "fresh_png": "handoff/ae_host_validation_directional_optional_noise_20260806/minimal_render_png/OLMDirectionalBlur.png",
+    "fresh_png_sha256": "efed4b183f9db110a38e7d63c5fbf3dc7efa3c708357a374e27814eb07e6e317",
+    "all_plugins": "10/10 fresh PNGs"
+  },
+  "installed_binary": {
+    "configuration": "Debug",
+    "architectures": ["arm64", "x86_64"],
+    "sha256": "5a6e0687eda84d427978a924bbb0722dc716ebbcf149dbb0cb4f7022f323efaa",
+    "codesign_verified": true
+  },
+  "focused_tests": [
+    "python3 tools/emulation/test_olmdirectionalblur_default_noop_host_contract_20260806.py",
+    "python3 tools/emulation/test_olmdirectionalblur_mac_smartrender_adapter_20260717.py",
+    "python3 tools/emulation/test_olmdirectionalblur_ui_setup_actual_aex_20260806.py"
+  ],
+  "boundary": "The identity fast path is restricted to the complete actual default tuple; it is not a general zero-strength substitution for edited controls. Noise Layer checkout remains required fail-closed when a consuming Noise Type 3 path needs it."
+}

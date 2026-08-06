@@ -496,6 +496,24 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
                           PF_EffectWorld *noise_layer,
                           const OLMDirectionalBlurInfo &info, short bitdepth)
 {
+	const bool default_no_op = input && output && input->data && output->data &&
+		input->width == output->width && input->height == output->height &&
+		info.angle_deg == 0.0 && info.brightness_gain == 1.0 &&
+		info.size_variation == 0.0 &&
+		info.front_strength == 0 && info.front_alpha_fade == 0 &&
+		info.front_sharp_tail == 0.0 &&
+		info.back_strength == 0 && info.back_alpha_fade == 0 &&
+		info.back_sharp_tail == 0.0 && info.noise_variation == 0.0 &&
+		info.noise_type == 1 && info.seed == 1 && info.noise_offset == 0 &&
+		info.thickness == 10.0;
+	if (default_no_op) {
+		switch (bitdepth) {
+		case 8: CopyWorld<PF_Pixel8>(input, output); return PF_Err_NONE;
+		case 16: CopyWorld<PF_Pixel16>(input, output); return PF_Err_NONE;
+		case 32: CopyWorld<PF_PixelFloat>(input, output); return PF_Err_NONE;
+		default: return PF_Err_BAD_CALLBACK_PARAM;
+		}
+	}
 	if (bitdepth == 8) {
 		if (CanUseExact8(input, output, noise_layer, info)) {
 			return RenderExact8(input, output, noise_layer, info);
@@ -747,22 +765,30 @@ SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 	PF_Err err = PF_Err_NONE;
 	PF_RenderRequest req = extra->input->output_request;
 	PF_CheckoutResult in_result;
-	PF_CheckoutResult noise_result;
+	PF_CheckoutResult noise_result = {};
 
 	req.preserve_rgb_of_zero_alpha = TRUE;
 	ERR(extra->cb->checkout_layer(in_data->effect_ref,
 		OLMDIRECTIONALBLUR_INPUT, OLMDIRECTIONALBLUR_INPUT, &req, in_data->current_time,
 		in_data->time_step, in_data->time_scale, &in_result));
-	ERR(extra->cb->checkout_layer(in_data->effect_ref,
-		OLMDIRECTIONALBLUR_NOISE_LAYER, OLMDIRECTIONALBLUR_NOISE_LAYER, &req,
-		in_data->current_time, in_data->time_step, in_data->time_scale,
-		&noise_result));
+	// `None` is the actual AEX default for Noise Layer. AE reports that optional
+	// layer as unavailable during pre-render; that must not abort modes which do
+	// not consume it. A selected layer still contributes its requested extent.
+	PF_Err noise_err = PF_Err_BAD_CALLBACK_PARAM;
+	if (!err) {
+		noise_err = extra->cb->checkout_layer(in_data->effect_ref,
+			OLMDIRECTIONALBLUR_NOISE_LAYER, OLMDIRECTIONALBLUR_NOISE_LAYER, &req,
+			in_data->current_time, in_data->time_step, in_data->time_scale,
+			&noise_result);
+	}
 
 	if (!err) {
 		UnionLRect(&in_result.result_rect, &extra->output->result_rect);
 		UnionLRect(&in_result.max_result_rect, &extra->output->max_result_rect);
-		UnionLRect(&noise_result.result_rect, &extra->output->result_rect);
-		UnionLRect(&noise_result.max_result_rect, &extra->output->max_result_rect);
+		if (noise_err == PF_Err_NONE) {
+			UnionLRect(&noise_result.result_rect, &extra->output->result_rect);
+			UnionLRect(&noise_result.max_result_rect, &extra->output->max_result_rect);
+		}
 		PreRenderData *pre = new PreRenderData;
 		RenderScaleFromInData(in_data, pre->render_scale_x, pre->render_scale_y);
 		extra->output->pre_render_data = pre;
@@ -779,11 +805,21 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 	PF_EffectWorld *noise_world  = NULL;
 	PF_EffectWorld *output_world = NULL;
 	ERR(extra->cb->checkout_layer_pixels(in_data->effect_ref, OLMDIRECTIONALBLUR_INPUT, &input_world));
-	ERR(extra->cb->checkout_layer_pixels(in_data->effect_ref, OLMDIRECTIONALBLUR_NOISE_LAYER, &noise_world));
+	bool noise_checked_out = false;
+	if (!err) {
+		const PF_Err noise_err = extra->cb->checkout_layer_pixels(
+			in_data->effect_ref, OLMDIRECTIONALBLUR_NOISE_LAYER, &noise_world);
+		noise_checked_out = noise_err == PF_Err_NONE;
+		if (!noise_checked_out) {
+			noise_world = NULL;
+		}
+	}
 	ERR(extra->cb->checkout_output(in_data->effect_ref, &output_world));
 	if (err || !input_world || !output_world) {
 		extra->cb->checkin_layer_pixels(in_data->effect_ref, OLMDIRECTIONALBLUR_INPUT);
-		extra->cb->checkin_layer_pixels(in_data->effect_ref, OLMDIRECTIONALBLUR_NOISE_LAYER);
+		if (noise_checked_out) {
+			extra->cb->checkin_layer_pixels(in_data->effect_ref, OLMDIRECTIONALBLUR_NOISE_LAYER);
+		}
 		return err;
 	}
 
@@ -813,7 +849,9 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 		PF_CHECKIN_PARAM(in_data, &checked[i]);
 	}
 	extra->cb->checkin_layer_pixels(in_data->effect_ref, OLMDIRECTIONALBLUR_INPUT);
-	extra->cb->checkin_layer_pixels(in_data->effect_ref, OLMDIRECTIONALBLUR_NOISE_LAYER);
+	if (noise_checked_out) {
+		extra->cb->checkin_layer_pixels(in_data->effect_ref, OLMDIRECTIONALBLUR_NOISE_LAYER);
+	}
 	return err;
 }
 

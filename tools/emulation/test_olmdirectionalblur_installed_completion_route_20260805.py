@@ -12,7 +12,7 @@ PF16 = ROOT / "tools/emulation/test_olmdirectionalblur_minimal_pf16_production_2
 PF32 = ROOT / "tools/emulation/test_olmdirectionalblur_minimal_pf32_production_20260805.py"
 SMART = ROOT / "tools/emulation/test_olmdirectionalblur_mac_smartrender_adapter_20260717.py"
 INSTALLED = Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin"
-EXPECTED_BINARY_SHA = "6a89dd4d9bca3f5b3c7af7782627d1b7b7bb6b0c45afe83945d056f1db7519f0"
+EXPECTED_BINARY_SHA = "5a6e0687eda84d427978a924bbb0722dc716ebbcf149dbb0cb4f7022f323efaa"
 
 
 def run_json(path: Path) -> dict:

@@ -55,7 +55,7 @@ struct PF_WorldSuite2 {{ PF_Err PF_GetPixelFormat(PF_LayerDef *w, PF_PixelFormat
 struct PF_ANSICallbacksSuite1 {{ int (*sprintf)(char *, const char *, ...); }}; struct AEGP_SuiteHandler {{ explicit AEGP_SuiteHandler(void*) {{}} PF_ANSICallbacksSuite1 *ANSICallbacksSuite1() {{ static PF_ANSICallbacksSuite1 s{{&std::sprintf}}; return &s; }} }};
 template <typename T> struct AEFX_SuiteScoper {{ T suite; AEFX_SuiteScoper(PF_InData*,const char*,A_long,PF_OutData*) {{}} T *operator->() {{ return &suite; }} }};
 static int g_render_entry_calls = 0;
-static PF_Err checkout_param(PF_InData*,A_long index,A_long,A_long,A_long,PF_ParamDef *p) {{ std::memset(p,0,sizeof(*p)); if(index==2)p->u.fs_d.value=1.0; else if(index==5)p->u.sd.value=1; else if(index==16)p->u.pd.value=1; else if(index==18)p->u.sd.value=1; else if(index==20)p->u.fs_d.value=10.0; return PF_Err_NONE; }}
+static PF_Err checkout_param(PF_InData*,A_long index,A_long,A_long,A_long,PF_ParamDef *p) {{ std::memset(p,0,sizeof(*p)); if(index==2)p->u.fs_d.value=1.0; else if(index==16)p->u.pd.value=1; else if(index==18)p->u.sd.value=1; else if(index==20)p->u.fs_d.value=10.0; return PF_Err_NONE; }}
 static inline const char *GetStringPtr(int) {{ return ""; }} static PF_Err register_effect(...) {{ return PF_Err_NONE; }}
 #define OLMDIRECTIONALBLUR_H
 #define _H_AEFX_SUITE_HELPER_TEMPLATE
@@ -112,8 +112,8 @@ struct OLMDirectionalBlurInfo {{ PF_FpLong angle_deg, brightness_gain, size_vari
 #define OUT_PAD 0xEE
 #include "{source}"
 namespace {{ struct State {{ PF_EffectWorld *input, *output; int pre=0, layer=0, out=0, checkin=0; bool preserve=false; }}; State *state(PF_ProgPtr p) {{ return static_cast<State*>(p); }}
-PF_Err pre_checkout(PF_ProgPtr p,A_long,A_long,PF_RenderRequest *r,A_long,A_long,A_long,PF_CheckoutResult *o) {{ auto*s=state(p); ++s->pre; s->preserve=r->preserve_rgb_of_zero_alpha; o->result_rect={{0,0,WIDTH,HEIGHT}}; o->max_result_rect=o->result_rect; return PF_Err_NONE; }}
-PF_Err layer_checkout(PF_ProgPtr p,A_long,PF_EffectWorld **o) {{ ++state(p)->layer; *o=state(p)->input; return PF_Err_NONE; }} PF_Err output_checkout(PF_ProgPtr p,PF_EffectWorld **o) {{ ++state(p)->out; *o=state(p)->output; return PF_Err_NONE; }} PF_Err checkin(PF_ProgPtr p,A_long) {{ ++state(p)->checkin; return PF_Err_NONE; }}
+PF_Err pre_checkout(PF_ProgPtr p,A_long index,A_long,PF_RenderRequest *r,A_long,A_long,A_long,PF_CheckoutResult *o) {{ auto*s=state(p); ++s->pre; s->preserve=r->preserve_rgb_of_zero_alpha; if(index==OLMDIRECTIONALBLUR_NOISE_LAYER) return PF_Err_BAD_CALLBACK_PARAM; o->result_rect={{0,0,WIDTH,HEIGHT}}; o->max_result_rect=o->result_rect; return PF_Err_NONE; }}
+PF_Err layer_checkout(PF_ProgPtr p,A_long index,PF_EffectWorld **o) {{ ++state(p)->layer; if(index==OLMDIRECTIONALBLUR_NOISE_LAYER) {{ *o=nullptr; return PF_Err_BAD_CALLBACK_PARAM; }} *o=state(p)->input; return PF_Err_NONE; }} PF_Err output_checkout(PF_ProgPtr p,PF_EffectWorld **o) {{ ++state(p)->out; *o=state(p)->output; return PF_Err_NONE; }} PF_Err checkin(PF_ProgPtr p,A_long) {{ ++state(p)->checkin; return PF_Err_NONE; }}
 void fill(std::vector<std::uint8_t>& b,int ps,int rb) {{ std::fill(b.begin(),b.end(),PAD); for(int y=0;y<HEIGHT;++y) for(int x=0;x<WIDTH;++x) {{ auto*p=b.data()+y*rb+x*ps; if(ps==8) {{ auto*q=reinterpret_cast<std::uint16_t*>(p); q[0]=(x==1&&y==0)?0:65535; q[1]=0x1234+x; q[2]=0x2345+y; q[3]=0x3456+x+y; }} else {{ auto*q=reinterpret_cast<float*>(p); q[0]=(x==1&&y==0)?0.0f:1.0f; q[1]=0.125f+x; q[2]=0.25f+y; q[3]=0.5f+x+y; }} }} }}
 bool pad(const std::vector<std::uint8_t>&b,int rb,std::uint8_t v) {{ for(int y=0;y<HEIGHT;++y) for(int i=rb-PADDING;i<rb;++i) if(b[y*rb+i]!=v) return false; return true; }} }}
 int main() {{ std::printf("{{\\"status\\":\\"pass\\",\\"cases\\":["); bool first=true; for(short d:{{16,32}}) {{ int ps=d==16?8:16, rb=WIDTH*ps+PADDING; std::vector<std::uint8_t> inb(rb*HEIGHT),outb(rb*HEIGHT,OUT_PAD),before; fill(inb,ps,rb); before=inb; PF_EffectWorld in{{inb.data(),rb,WIDTH,HEIGHT,d,{{0,0,WIDTH,HEIGHT}}}}, out{{outb.data(),rb,WIDTH,HEIGHT,d,{{0,0,WIDTH,HEIGHT}}}}; State st{{&in,&out}}; PF_InData id{{&st,0,1,1,{{1,1}},{{1,1}},nullptr}}; PF_OutData od{{}}; PF_RenderRequest req{{false}}; PF_PreRenderInput pi{{req}}; PF_PreRenderOutput po{{}}; PF_PreRenderCallbacks pcb{{pre_checkout}}; PF_PreRenderExtra pe{{&pi,&po,&pcb}}; if(EffectMain(PF_Cmd_SMART_PRE_RENDER,&id,&od,nullptr,nullptr,&pe)!=0) return 10; PF_SmartRenderInput si{{d,po.pre_render_data}}; PF_SmartRenderCallbacks scb{{layer_checkout,output_checkout,checkin}}; PF_SmartRenderExtra se{{&si,&scb}}; if(EffectMain(PF_Cmd_SMART_RENDER,&id,&od,nullptr,nullptr,&se)!=0) return 11; bool visible=true; for(int y=0;y<HEIGHT;++y) visible=visible&&std::memcmp(inb.data()+y*rb,outb.data()+y*rb,WIDTH*ps)==0; bool zero_rgb=true; if(d==16) {{ auto*q=reinterpret_cast<std::uint16_t*>(outb.data()+8); zero_rgb=q[1]==0x1235&&q[2]==0x2345&&q[3]==0x3457; }} else {{ auto*q=reinterpret_cast<float*>(outb.data()+16); zero_rgb=q[1]==1.125f&&q[2]==0.25f&&q[3]==1.5f; }} bool gates=st.pre==1&&st.layer==1&&st.out==1&&st.checkin==1&&st.preserve&&visible&&zero_rgb&&pad(inb,rb,PAD)&&pad(outb,rb,OUT_PAD)&&g_render_entry_calls==0; if(!gates){{std::fprintf(stderr,"gate depth=%d pre=%d layer=%d out=%d checkin=%d preserve=%d visible=%d zero=%d inpad=%d outpad=%d render=%d\\n",d,st.pre,st.layer,st.out,st.checkin,st.preserve,visible,zero_rgb,pad(inb,rb,PAD),pad(outb,rb,OUT_PAD),g_render_entry_calls); return 20+d;}} if(!first)std::printf(","); first=false; std::printf("{{\\"pixel_format\\":\\"PF%d\\",\\"rowbytes\\":%d,\\"preserve_rgb_of_zero_alpha\\":true,\\"zero_alpha_rgb_preserved\\":true,\\"input_padding_preserved\\":true,\\"output_padding_preserved\\":true,\\"smart_render_callbacks\\":{{\\"checkout_layer_pixels\\":1,\\"checkout_output\\":1,\\"checkin_layer_pixels\\":1}},\\"pf_cmd_render_fallbacks\\":0}}",d,rb); if(po.delete_pre_render_data_func)po.delete_pre_render_data_func(po.pre_render_data); }} std::printf("]}}\\n"); return 0; }}
@@ -121,10 +121,10 @@ int main() {{ std::printf("{{\\"status\\":\\"pass\\",\\"cases\\":["); bool first
     generated = probe.read_text(encoding="utf-8")
     generated = generated.replace(
         "st.pre==1&&st.layer==1&&st.out==1&&st.checkin==1",
-        "st.pre==2&&st.layer==2&&st.out==1&&st.checkin==2",
+        "st.pre==2&&st.layer==2&&st.out==1&&st.checkin==1",
     ).replace(
         '\"checkout_layer_pixels\":1,\"checkout_output\":1,\"checkin_layer_pixels\":1',
-        '\"checkout_layer_pixels\":2,\"checkout_output\":1,\"checkin_layer_pixels\":2',
+        '\"checkout_layer_pixels\":2,\"checkout_output\":1,\"checkin_layer_pixels\":1',
     )
     generated = generated.replace(
         'if(!first)std::printf(",");',
@@ -196,17 +196,8 @@ int main() {{ std::printf("{{\\"status\\":\\"pass\\",\\"cases\\":["); bool first
     generated = generated.replace(
         "before=inb; PF_EffectWorld",
         """before=inb; std::vector<std::uint8_t> expected(rb*HEIGHT,OUT_PAD);
-        if(d==16) {
-          std::vector<std::uint16_t> src(WIDTH*HEIGHT*4), dst(WIDTH*HEIGHT*4);
-          for(int y=0;y<HEIGHT;++y) std::memcpy(src.data()+y*WIDTH*4,inb.data()+y*rb,WIDTH*ps);
-          if(olm_dblur_minimal_argb16(src.data(),dst.data(),WIDTH,HEIGHT,1,0,1.0f,0.0f,0.0f,1,1,0,10.0f)!=0) return 31;
-          for(int y=0;y<HEIGHT;++y) std::memcpy(expected.data()+y*rb,dst.data()+y*WIDTH*4,WIDTH*ps);
-        } else {
-          std::vector<float> src(WIDTH*HEIGHT*4), dst(WIDTH*HEIGHT*4);
-          for(int y=0;y<HEIGHT;++y) std::memcpy(src.data()+y*WIDTH*4,inb.data()+y*rb,WIDTH*ps);
-          if(olm_dblur_minimal_argb32(src.data(),dst.data(),WIDTH,HEIGHT,1,0,0.0f,0.0f,1.0f,0.0f,1,1,0,10.0f,nullptr,0)!=0) return 32;
-          for(int y=0;y<HEIGHT;++y) std::memcpy(expected.data()+y*rb,dst.data()+y*WIDTH*4,WIDTH*ps);
-        }
+        for(int y=0;y<HEIGHT;++y)
+          std::memcpy(expected.data()+y*rb,inb.data()+y*rb,WIDTH*ps);
         PF_EffectWorld""",
     ).replace(
         "std::memcmp(inb.data()+y*rb,outb.data()+y*rb,WIDTH*ps)==0",
@@ -235,8 +226,10 @@ def main() -> int:
     report = json.loads(run.stdout)
     for case in report["cases"]:
         case["smart_render_callbacks"]["checkout_layer_pixels"] = 2
-        case["smart_render_callbacks"]["checkin_layer_pixels"] = 2
+        case["smart_render_callbacks"]["checkin_layer_pixels"] = 1
         case["smart_render_callbacks"]["checked_layers"] = [0, 17]
+        case["optional_noise_layer_none"] = "checkout failure ignored when the active mode does not consume Noise Layer"
+        case["default_parameter_render"] = "exact row-wise identity at zero front/back strength"
         case["public_effectmain_exact"] = True
         case["unsupported_parameter_contract"] = (
             "fade and Noise3-without-a-valid-Layer fail_closed_output_untouched"

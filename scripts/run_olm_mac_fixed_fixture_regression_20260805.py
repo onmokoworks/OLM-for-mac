@@ -90,6 +90,7 @@ LANES = (
     Lane(
         "directionalblur",
         (
+            (sys.executable, "tools/emulation/test_olmdirectionalblur_default_noop_host_contract_20260806.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_ui_setup_actual_aex_20260806.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_noise_type3_layer_rowbytes_pf8_production_20260805.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_noise_type3_layer_origin_pf8_production_20260805.py"),
