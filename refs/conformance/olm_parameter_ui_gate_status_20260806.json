@@ -1,0 +1,200 @@
+{
+  "bounded_count": 3,
+  "claim_boundary": "Hostless actual Windows AEX GLOBAL_SETUP/PARAMS_SETUP registration compared with current Mac production. A passing gate proves only each row's declared normalized registration surface; it does not prove native AE layout, localization, interaction, rendering, or fields explicitly listed as evidence boundaries.",
+  "counts": {
+    "invalid": 0,
+    "pending": 0,
+    "proven": 10
+  },
+  "generated_at": "2026-08-06T08:42:18.495198+00:00",
+  "manifest_failures": [],
+  "passed": true,
+  "plugins": [
+    {
+      "boundary": "Pointer values, inactive union residue, localized host rendering, AE-version interpretation, and render behavior are excluded.",
+      "classification": "exact_normalized_registration",
+      "evidence": "refs/conformance/olmblur_params_setup_actual_aex_20260806.json",
+      "failures": [],
+      "plugin": "OLMBlur",
+      "runner": "tools/emulation/test_olmblur_params_setup_actual_aex_20260806.py",
+      "runner_result": {
+        "output_sha256": "d611c737c557ab481d26ac10506fafaf6468d6ae3d07ddbc1386517fe6c30180",
+        "returncode": 0,
+        "state": "proven",
+        "tail": [
+          "PASS_OLMBLUR_PARAMS_SETUP_ACTUAL_AEX rows=5"
+        ]
+      },
+      "state": "proven"
+    },
+    {
+      "boundary": "All 101 owned raw registration rows are exact, but per-row display-name binding/localization is unproved because the hostless AEX run does not execute the DLL/CRT string-table initializer.",
+      "classification": "bounded_public_registration",
+      "evidence": "refs/conformance/colorkeep_params_setup_actual_aex_20260805.json",
+      "failures": [],
+      "plugin": "ColorKeep",
+      "runner": "tools/emulation/test_colorkeep_params_setup_actual_aex_20260805.py",
+      "runner_result": {
+        "output_sha256": "531c17edd2b2f8a7ee7fe083cca179c7c4ceed886d80665c0a2d2ba94ae66f32",
+        "returncode": 0,
+        "state": "proven",
+        "tail": [
+          "        0,",
+          "        100",
+          "      ]",
+          "    },",
+          "    \"num_params_including_input\": 102",
+          "  },",
+          "  \"status\": \"exact\"",
+          "}"
+        ]
+      },
+      "state": "proven"
+    },
+    {
+      "boundary": "Pointer-valued labels/choice strings and hostless variadic name formatting are excluded; counts, defaults, types, flags, ranges, order, and normalized values are compared.",
+      "classification": "exact_normalized_registration",
+      "evidence": "refs/conformance/olmcolorkey_params_setup_actual_aex_20260806.json",
+      "failures": [],
+      "plugin": "OLMColorKey",
+      "runner": "tools/emulation/test_olmcolorkey_params_setup_actual_aex_20260806.py",
+      "runner_result": {
+        "output_sha256": "2042159f04c1c61ea0eede5cbe2dc9b50481929d2213eb6e7a4e9cd28d488790",
+        "returncode": 0,
+        "state": "proven",
+        "tail": [
+          "{\"mismatches\": 0, \"report\": \"/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/olmcolorkey_params_setup_actual_aex_20260806.json\", \"rows\": 223, \"status\": \"exact\"}"
+        ]
+      },
+      "state": "proven"
+    },
+    {
+      "boundary": "Normalized hostless GLOBAL_SETUP and all 21 owned registration rows only; native AE control layout and rendering are excluded.",
+      "classification": "exact_normalized_registration",
+      "evidence": "refs/conformance/olmdirectionalblur_ui_setup_actual_aex_20260806.json",
+      "failures": [],
+      "plugin": "OLMDirectionalBlur",
+      "runner": "tools/emulation/test_olmdirectionalblur_ui_setup_actual_aex_20260806.py",
+      "runner_result": {
+        "output_sha256": "83498f6a6a960777cf02e223a64a09c8c3de531b4e977095969cbe9816760eef",
+        "returncode": 0,
+        "state": "proven",
+        "tail": [
+          "{\"end_names\": [\"Sharp Tail\", \"Sharp Tail\", \"Thickness\"], \"global\": {\"my_version\": \"0x88800\", \"out_flags\": \"0x6000040\", \"out_flags2\": \"0x8001408\"}, \"rows\": 21, \"status\": \"pass\", \"type_sequence\": [3, 10, 2, 13, 1, 1, 2, 14, 13, 1, 1, 2, 14, 13, 2, 7, 0, 1, 3, 10, 14]}"
+        ]
+      },
+      "state": "proven"
+    },
+    {
+      "boundary": "Normalized hostless GLOBAL_SETUP/PARAMS_SETUP only; AE-native layout, localization, interaction, and rendering are excluded.",
+      "classification": "exact_normalized_registration",
+      "evidence": "refs/conformance/olmdistancegradation_ui_setup_actual_aex_20260806.json",
+      "failures": [],
+      "plugin": "OLMDistanceGradation",
+      "runner": "tools/emulation/test_olmdistancegradation_ui_setup_actual_aex_20260806.py",
+      "runner_result": {
+        "output_sha256": "f44af73252e97ce98ba1571b01d896b293fc9afe18010d3dd14feebfaa8759f0",
+        "returncode": 0,
+        "state": "proven",
+        "tail": [
+          "PASS_OLMDISTANCEGRADATION_UI_SETUP_ACTUAL_AEX_20260806 rows=12 global=exact"
+        ]
+      },
+      "state": "proven"
+    },
+    {
+      "boundary": "All 40 owned registration rows and five ramp registrations are exact. Expanded custom-ramp drawing/interaction has not been visually proven in native AE and is not promoted by this gate.",
+      "classification": "bounded_public_registration",
+      "evidence": "refs/conformance/olmkirakira_ui_setup_actual_aex_20260806.json",
+      "failures": [],
+      "plugin": "OLMKiraKira",
+      "runner": "tools/emulation/test_olmkirakira_ui_setup_actual_aex_20260806.py",
+      "runner_result": {
+        "output_sha256": "3c5bbaf850281da0ab55429e3e53ba579705dbfaab2a8e184bd4bfed43412182",
+        "returncode": 0,
+        "state": "proven",
+        "tail": [
+          "PASS_OLMKIRAKIRA_UI_SETUP_ACTUAL_AEX_20260806 rows=40 ramps=5 global=exact"
+        ]
+      },
+      "state": "proven"
+    },
+    {
+      "boundary": "The public 30-control registration surface is exact. Windows custom UI capability/event flags are intentionally not advertised because the corresponding Mac EVENT/USER_CHANGED/UPDATE handlers are not ported.",
+      "classification": "bounded_public_registration",
+      "evidence": "refs/conformance/olmradialblur_ui_setup_actual_aex_20260806.json",
+      "failures": [],
+      "plugin": "OLMRadialBlur",
+      "runner": "tools/emulation/test_olmradialblur_ui_setup_actual_aex_20260806.py",
+      "runner_result": {
+        "output_sha256": "9a6eaffc3bb5aa95bcd45c4f3d8af4e7195ec34e801b18fdbc37568b55b5bdaf",
+        "returncode": 0,
+        "state": "proven",
+        "tail": [
+          "PASS_OLMRADIALBLUR_UI_SETUP_ACTUAL_AEX rows=30 public_exact=1 custom_ui_boundary=1"
+        ]
+      },
+      "state": "proven"
+    },
+    {
+      "boundary": "Three raw records and GLOBAL_SETUP are compared; name/type literals rely on the separately hash-bound retained fixture. Native AE layout and rendering are excluded.",
+      "classification": "exact_normalized_registration",
+      "evidence": "refs/conformance/olmsmoother_v1_setup_raw_actual_production_20260806.json",
+      "failures": [],
+      "plugin": "OLMSmoother",
+      "runner": "tools/emulation/test_olmsmoother_v1_setup_raw_actual_production_20260806.py",
+      "runner_result": {
+        "output_sha256": "86490291cf548b4d96bc305f11b066d1961ca8e6f0bec377939c8468aa546c9d",
+        "returncode": 0,
+        "state": "proven",
+        "tail": [
+          "      \"Do Smooth Range\"",
+          "    ]",
+          "  },",
+          "  \"retained_name_fixture_sha256\": \"3008b8239c48e56c6d0fb0aa707ef7e46df41d311c8f8aa710a79503e2d75735\",",
+          "  \"schema_version\": 1,",
+          "  \"scope\": \"OLMSmoother v1 actual-AEX complete GLOBAL_SETUP write footprint and complete normalized 0xb0 PARAMS_SETUP records, with production semantic comparison\",",
+          "  \"status\": \"exact\"",
+          "}"
+        ]
+      },
+      "state": "proven"
+    },
+    {
+      "boundary": "Direct hostless actual-AEX GLOBAL_SETUP/PARAMS_SETUP comparison for all 15 owned rows; native AE layout and rendering are excluded.",
+      "classification": "exact_normalized_registration",
+      "evidence": "refs/conformance/olmsmoother2_ui_setup_actual_aex_20260806.json",
+      "failures": [],
+      "plugin": "OLMSmoother2",
+      "runner": "tools/emulation/test_olmsmoother2_ui_setup_actual_aex_20260806.py",
+      "runner_result": {
+        "output_sha256": "0f81b18ce32248c8633d3126454045b33b538e8c819a0e5e1ac08eb118be9735",
+        "returncode": 0,
+        "state": "proven",
+        "tail": [
+          "PASS_OLMSMOOTHER2_UI_SETUP_ACTUAL_AEX_20260806 rows=15"
+        ]
+      },
+      "state": "proven"
+    },
+    {
+      "boundary": "Hostless actual-AEX public GLOBAL_SETUP/PARAMS_SETUP and PiPL capability literals only; native AE control layout is excluded.",
+      "classification": "exact_normalized_registration",
+      "evidence": "refs/conformance/olmtoondilate_ui_setup_actual_aex_20260806.json",
+      "failures": [],
+      "plugin": "OLMToonDilate",
+      "runner": "tools/emulation/test_olmtoondilate_ui_setup_actual_aex_20260806.py",
+      "runner_result": {
+        "output_sha256": "1f35c32a55fb8b0f20c57577e840bf03e4f159a0691cb2aaa2e532e7fddc8522",
+        "returncode": 0,
+        "state": "proven",
+        "tail": [
+          "00000000000000000\", \"ui_flags\": 0, \"ui_height\": 0, \"ui_width\": 0}]}, \"production\": {\"global_setup\": {\"my_version\": 559104, \"out_flags\": 33554500, \"out_flags2\": 134353920}, \"pipl_capabilities_exact\": true, \"rows\": [{\"disk_id\": 1, \"flags\": 0, \"float_slider\": {\"curve_tolerance\": 0.0, \"default\": 2.0, \"display_flags\": 0, \"fs_flags\": 0, \"phase\": 0.0, \"precision\": 1, \"slider_max\": 100.0, \"slider_min\": 0.0, \"valid_max\": 100.0, \"valid_min\": 0.0, \"value\": 2.0, \"value_desc\": \"\"}, \"name\": \"Search Radius\", \"param_type\": 10, \"raw_hex\": \"0100000000000000000000000a00000053656172636820526164697573000000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c842000000000000c8420000004001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\", \"ui_flags\": 0, \"ui_height\": 0, \"ui_width\": 0}]}, \"schema\": \"olmtoondilate-ui-setup-actual-aex/1\", \"status\": \"exact\"}"
+        ]
+      },
+      "state": "proven"
+    }
+  ],
+  "schema": "olm.parameter-ui-gate-report/1",
+  "status": "parameter_ui_gate_pass"
+}

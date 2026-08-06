@@ -27,7 +27,10 @@ def main() -> int:
     assert not [row for row in rows if row["state"] == "pending"]
     install = module.installed_gate()
     assert install["state"] == "proven", install
-    print("PASS_OLM_RELEASE_GATE_AUDIT proven=10 pending=0 invalid=0 universal=10")
+    parameter_ui = module.parameter_ui_gate()
+    assert parameter_ui["state"] == "proven", parameter_ui
+    assert parameter_ui["counts"] == {"proven": 10, "pending": 0, "invalid": 0}
+    print("PASS_OLM_RELEASE_GATE_AUDIT proven=10 pending=0 invalid=0 universal=10 parameter_ui=10")
     return 0
 
 

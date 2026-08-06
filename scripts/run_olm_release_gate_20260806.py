@@ -12,6 +12,7 @@ import hashlib
 import json
 import subprocess
 import sys
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -21,6 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "refs/conformance/olm_release_gate_manifest_20260806.json"
 PREFLIGHT = ROOT / "scripts/preflight_olm_all_universal_installs_20260805.py"
 REGRESSION = ROOT / "scripts/run_olm_mac_fixed_fixture_regression_20260805.py"
+PARAMETER_UI_GATE = ROOT / "scripts/run_olm_parameter_ui_gate_20260806.py"
 DEFAULT_REPORT = ROOT / "refs/conformance/olm_release_gate_status_20260806.json"
 
 
@@ -111,6 +113,43 @@ def regression_gate(skip: bool) -> dict[str, Any]:
     }
 
 
+def parameter_ui_gate() -> dict[str, Any]:
+    with tempfile.TemporaryDirectory(prefix="olm_parameter_ui_release_gate_") as raw:
+        report_path = Path(raw) / "report.json"
+        try:
+            proc = subprocess.run(
+                [sys.executable, str(PARAMETER_UI_GATE), "--report", str(report_path)],
+                cwd=ROOT, capture_output=True, text=True, timeout=600,
+            )
+        except subprocess.TimeoutExpired as exc:
+            return {"state": "invalid", "error": "parameter_ui_gate_timeout", "detail": str(exc)}
+        try:
+            payload = json.loads(report_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            return {
+                "state": "invalid", "returncode": proc.returncode,
+                "error": f"parameter_ui_report_invalid:{exc}",
+                "tail": (proc.stdout + proc.stderr).splitlines()[-20:],
+            }
+    exact = (
+        proc.returncode == 0
+        and payload.get("passed") is True
+        and payload.get("counts") == {"proven": 10, "pending": 0, "invalid": 0}
+    )
+    return {
+        "state": "proven" if exact else "invalid",
+        "returncode": proc.returncode,
+        "status": payload.get("status"),
+        "counts": payload.get("counts"),
+        "bounded_count": payload.get("bounded_count"),
+        "plugins": [
+            {k: row.get(k) for k in ("plugin", "state", "classification", "boundary", "failures")}
+            for row in payload.get("plugins", [])
+        ],
+        "boundary": payload.get("claim_boundary"),
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--skip-regression", action="store_true", help="audit manifests/installs only; result stays pending")
@@ -121,10 +160,12 @@ def main() -> int:
     host_rows = validate_host_rows(manifest)
     install = installed_gate()
     regression = regression_gate(args.skip_regression)
+    parameter_ui = parameter_ui_gate()
     host_counts = {state: sum(row["state"] == state for row in host_rows) for state in ("proven", "pending", "invalid")}
     releasable = (
         install["state"] == "proven"
         and regression["state"] == "proven"
+        and parameter_ui["state"] == "proven"
         and host_counts == {"proven": 10, "pending": 0, "invalid": 0}
     )
     report = {
@@ -134,6 +175,7 @@ def main() -> int:
         "releasable": releasable,
         "claim_boundary": manifest["claim_boundary"],
         "fixed_fixture_regression": regression,
+        "parameter_ui_registration": parameter_ui,
         "universal_installs": install,
         "mac_ae_representative": {"counts": host_counts, "plugins": host_rows},
     }
