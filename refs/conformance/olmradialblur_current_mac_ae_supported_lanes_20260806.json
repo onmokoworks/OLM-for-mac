@@ -25,7 +25,7 @@
     "sample_type": "FLOAT32",
     "finite_samples": 8294400,
     "nonfinite_samples": 0,
-    "expected_semantic_rgba_sha256": "7de7d970a2fb739956a59e4d523125c75a61d64b5f0c05e65e3d726ba62010",
+    "expected_semantic_rgba_sha256": "7de7d9700fddce9f77261fe3e81db8b89ffc88a06c897b866ffe512392562010",
     "actual_semantic_rgba_sha256": "d66dc120c1f67ea8631dc0fe43f877c51f8e6b5554eafd1c4cb34901ee7525f8",
     "internal_pf32_exact": false,
     "windows_ae_exact": false

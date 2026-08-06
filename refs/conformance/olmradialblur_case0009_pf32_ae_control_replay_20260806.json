@@ -1,0 +1,20 @@
+{
+  "claim_boundary": {
+    "actual_ae_checkout_world_identical_to_control_exr": false,
+    "ae_control_words_replayed": true,
+    "portable_control_regeneration_exact": true,
+    "production_renderworld_matches_effect_exr": false,
+    "production_replay_hash_pinned": true,
+    "windows_ae_exact": false
+  },
+  "compact_mapping_fixture": "refs/fixtures/olmradialblur_case0009_ae_control_u8_to_f32_20260806.json",
+  "dimensions": [
+    1920,
+    1080
+  ],
+  "input_contract": "pinned PNG regenerated through compact AE-control byte-to-float mapping into PF_PixelFloat ARGB",
+  "kind": "olmradialblur_case0009_pf32_ae_control_replay_20260806",
+  "optional_retained_artifact_verification": null,
+  "production_replay_semantic_rgba_sha256": "a0fe5f150e686aea4623ee22adc46898e7668639c0825b94390dfcc54437e510",
+  "status": "portable_replay_exact"
+}
