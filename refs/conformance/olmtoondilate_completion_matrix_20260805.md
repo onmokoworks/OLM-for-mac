@@ -2,6 +2,8 @@
 
 The bounded SmartRender campaign covers sequence setup, SmartPreRender, and SmartRender entrypoints; PF8/PF16/PF32; integer radii 0–4; three independent fractional-radius cases; padded partial geometry; frontier/tie/corner behavior; and probe-local nonzero extents.
 
+The hostless public setup gate now captures the actual AEX `GLOBAL_SETUP` payload and complete one-row `PARAMS_SETUP` structure. Production and PiPL match the raw capability flags, parameter name/type, disk ID, flags/UI flags, ranges, default, precision, and curve tolerance. Native AE control layout remains a separate host boundary.
+
 The empty-axis geometry now covers PF8 empty-width (`0x1`), PF16 empty-height (`1x0`), and PF32 both-axes-empty (`0x0`) worlds through actual command `0x18` and production `EffectMain`, including nonzero-origin zero-size extent headers, backing sentinels, and guards.
 
 Largest remaining boundaries are legacy Render, the exact actual-AEX composition-width metadata field/layout, and execution under a real AE host. None are inferred from the current probe-local seams.

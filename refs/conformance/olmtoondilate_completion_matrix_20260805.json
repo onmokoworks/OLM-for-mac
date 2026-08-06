@@ -6,7 +6,7 @@
     "smart_pre_render_0x17": "actual entrypoint exact under probe-local checkout seam",
     "smart_render_0x18": "actual entrypoint to production exact for bounded fixtures",
     "legacy_render": "not covered by this SmartRender campaign",
-    "global_and_parameter_setup": "production source/build covered; actual behavioral parity not claimed"
+    "global_and_parameter_setup": "actual AEX raw GLOBAL_SETUP and complete one-row PARAMS_SETUP surface exact"
   },
   "bitdepths": {"PF8": "covered", "PF16": "covered", "PF32": "covered"},
   "radius": {

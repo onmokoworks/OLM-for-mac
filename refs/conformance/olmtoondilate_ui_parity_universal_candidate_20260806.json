@@ -1,0 +1,15 @@
+{
+  "status": "PASS_UNIVERSAL_CANDIDATE_NOT_INSTALLED",
+  "source_sha256": "5ffc51877c3f13095acef39a18f473a6ec9c98df770194671e61560d3cfa63ed",
+  "candidate_binary_sha256": "c5a94d4b991166a9afb46a9d2959eae0f8c4096e2208f94f5b7b484a2750d8c6",
+  "architectures": ["arm64", "x86_64"],
+  "build": "Debug Universal BUILD SUCCEEDED",
+  "gates": {
+    "actual_aex_global_params_raw_exact": true,
+    "source_included_smartrender_adapter_exact": true,
+    "classic_dispatch_exact": true,
+    "typed_tinyworld_matrix_exact": true,
+    "installed_identity_updated": false
+  },
+  "claim_boundary": "Current Universal candidate and source-only behavior. Installation and real AE loading/rendering are intentionally deferred to avoid concurrent installer races."
+}

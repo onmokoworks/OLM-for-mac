@@ -9,6 +9,11 @@
 #include <new>
 #include <vector>
 
+// The Windows AEX emits a zero curve tolerance for Search Radius. Adobe's
+// shared helper otherwise substitutes the audio-oriented 0.05 default.
+#undef AEFX_AUDIO_DEFAULT_CURVE_TOLERANCE
+#define AEFX_AUDIO_DEFAULT_CURVE_TOLERANCE 0.0
+
 static void UnionLRect(const PF_LRect *src, PF_LRect *dst)
 {
 	if (dst->left == dst->right || dst->top == dst->bottom) {
@@ -38,10 +43,11 @@ GlobalSetup(PF_InData *, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
 {
 	out_data->my_version = PF_VERSION(MAJOR_VERSION, MINOR_VERSION, BUG_VERSION,
 	                                  STAGE_VERSION, BUILD_VERSION);
-	out_data->out_flags  = 0x02000040;
+	out_data->out_flags  = 0x02000044;
 	out_data->out_flags2 = PF_OutFlag2_SUPPORTS_SMART_RENDER |
 	                      PF_OutFlag2_FLOAT_COLOR_AWARE |
-	                      PF_OutFlag2_SUPPORTS_GET_FLATTENED_SEQUENCE_DATA;
+	                      PF_OutFlag2_AUTOMATIC_WIDE_TIME_INPUT |
+	                      PF_OutFlag2_SUPPORTS_THREADED_RENDERING;
 	return PF_Err_NONE;
 }
 

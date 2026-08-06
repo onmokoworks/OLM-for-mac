@@ -1,0 +1,102 @@
+{
+  "aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+  "claim_boundary": "Hostless actual-AEX public GLOBAL_SETUP/PARAMS_SETUP raw structure versus source-included production; native AE control layout is not claimed.",
+  "entry_point": "0x1801abc00",
+  "fixed_mismatches": [
+    "out_flags missing PF_OutFlag_NON_PARAM_VARY",
+    "out_flags2 advertised flattened-sequence instead of actual automatic-wide-time/threaded-rendering bits",
+    "float-slider curve_tolerance was 0.05 instead of raw actual 0.0"
+  ],
+  "global_setup": {
+    "my_version": 559104,
+    "out_flags": 33554500,
+    "out_flags2": 134353920,
+    "return_code": 0
+  },
+  "params_setup": {
+    "meta": {
+      "num_params": 2,
+      "return_code": 0,
+      "suite_acquisitions": [
+        [
+          "PF Handle Suite",
+          2
+        ],
+        [
+          "AEGP Utility Suite",
+          13
+        ],
+        [
+          "PF Handle Suite",
+          2
+        ],
+        [
+          "PF Handle Suite",
+          2
+        ]
+      ]
+    },
+    "rows": [
+      {
+        "disk_id": 1,
+        "flags": 0,
+        "float_slider": {
+          "curve_tolerance": 0.0,
+          "default": 2.0,
+          "display_flags": 0,
+          "fs_flags": 0,
+          "phase": 0.0,
+          "precision": 1,
+          "slider_max": 100.0,
+          "slider_min": 0.0,
+          "valid_max": 100.0,
+          "valid_min": 0.0,
+          "value": 2.0,
+          "value_desc": ""
+        },
+        "name": "Search Radius",
+        "param_type": 10,
+        "raw_hex": "0100000000000000000000000a00000053656172636820526164697573000000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c842000000000000c8420000004001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      }
+    ]
+  },
+  "production": {
+    "global_setup": {
+      "my_version": 559104,
+      "out_flags": 33554500,
+      "out_flags2": 134353920
+    },
+    "pipl_capabilities_exact": true,
+    "rows": [
+      {
+        "disk_id": 1,
+        "flags": 0,
+        "float_slider": {
+          "curve_tolerance": 0.0,
+          "default": 2.0,
+          "display_flags": 0,
+          "fs_flags": 0,
+          "phase": 0.0,
+          "precision": 1,
+          "slider_max": 100.0,
+          "slider_min": 0.0,
+          "valid_max": 100.0,
+          "valid_min": 0.0,
+          "value": 2.0,
+          "value_desc": ""
+        },
+        "name": "Search Radius",
+        "param_type": 10,
+        "raw_hex": "0100000000000000000000000a00000053656172636820526164697573000000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c842000000000000c8420000004001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      }
+    ]
+  },
+  "schema": "olmtoondilate-ui-setup-actual-aex/1",
+  "status": "exact"
+}

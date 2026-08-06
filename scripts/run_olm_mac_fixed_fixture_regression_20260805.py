@@ -225,6 +225,7 @@ LANES = (
         "toondilate",
         (
             (sys.executable, "tools/emulation/test_olmtoondilate_nonpositive_radius_all_depths_20260805.py"),
+            (sys.executable, "tools/emulation/test_olmtoondilate_ui_setup_actual_aex_20260806.py"),
             (sys.executable, "tools/emulation/audit_olmtoondilate_actual_aex_smartrender_entrypoint_20260805.py"),
             (sys.executable, "tools/emulation/probe_olmtoondilate_actual_aex_sequence_smartpre_20260805.py"),
             (sys.executable, "tools/emulation/test_olmtoondilate_mac_smartrender_adapter_20260717.py"),

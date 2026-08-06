@@ -180,6 +180,8 @@ static PF_Err register_effect(...) {{ return PF_Err_NONE; }}
 #define PF_OutFlag2_SUPPORTS_SMART_RENDER 1u
 #define PF_OutFlag2_FLOAT_COLOR_AWARE 2u
 #define PF_OutFlag2_SUPPORTS_GET_FLATTENED_SEQUENCE_DATA 4u
+#define PF_OutFlag2_AUTOMATIC_WIDE_TIME_INPUT 8u
+#define PF_OutFlag2_SUPPORTS_THREADED_RENDERING 16u
 #define PF_Precision_TENTHS 0
 #define AEFX_CLR_STRUCT(x) std::memset(&(x), 0, sizeof(x))
 #define ERR(x) do {{ if (err == PF_Err_NONE) err = (x); }} while (0)
