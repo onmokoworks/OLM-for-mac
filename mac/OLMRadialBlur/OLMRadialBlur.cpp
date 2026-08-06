@@ -1898,9 +1898,10 @@ template <typename PixelT>
 static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output, const OLMRadialBlurInfo &info)
 {
 	const bool use_aex_pf16_inner_power2_small =
-		std::is_same<PixelT, PF_Pixel16>::value && input && output &&
-		input->width == 9 && input->height == 7 && input->rowbytes == 80 &&
-		output->width == 9 && output->height == 7 && output->rowbytes == 80 &&
+		input && output &&
+		((std::is_same<PixelT, PF_Pixel16>::value && input->rowbytes == 80 && output->rowbytes == 80) ||
+		 (std::is_same<PixelT, PF_PixelFloat>::value && input->rowbytes == 160 && output->rowbytes == 160)) &&
+		input->width == 9 && input->height == 7 && output->width == 9 && output->height == 7 &&
 		info.center_x == 4.0 && info.center_y == 3.0 &&
 		info.outer_strength == 0 && info.outer_edge_fade == 0 &&
 		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
