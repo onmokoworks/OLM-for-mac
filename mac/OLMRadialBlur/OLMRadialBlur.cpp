@@ -1587,8 +1587,10 @@ static PF_Err RenderZoomTyped(
 {
 	if (info.blur_type != 1 || info.inner_strength != 0 ||
 	    info.noise_variation != 0.0) {
-		CopyWorld<PixelT>(input, output);
-		return PF_Err_NONE;
+		// These branches are not yet backed by an actual-AEX worker/output
+		// contract.  Returning success with an unchanged frame made an
+		// unsupported render indistinguishable from an exact identity result.
+		return PF_Err_BAD_CALLBACK_PARAM;
 	}
 
 	const A_long w = output->width;
@@ -1897,8 +1899,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 {
 	if (info.blur_type != 2 || info.inner_strength != 0 ||
 	    info.noise_variation != 0.0 || info.size_variation != 0.0) {
-		CopyWorld<PixelT>(input, output);
-		return PF_Err_NONE;
+		return PF_Err_BAD_CALLBACK_PARAM;
 	}
 
 	const A_long w = output->width;
