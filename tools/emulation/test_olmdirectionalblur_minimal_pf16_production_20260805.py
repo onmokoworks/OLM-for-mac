@@ -22,6 +22,8 @@ EXPECTED = "e9312eb08a382321671c3425c32fc028062edc0a5ff88eaeb659b990216faf93"
 EXPECTED_GAIN_HALF = "6087391dc9fb2be2fda4eee72145c02dd6fb6ca2690228f5923b0bc12ae458ad"
 EXPECTED_ANGLE45 = "07e05693b1fe8fc2516aa67f79b5700ff9a9c99a417e8e90228cd6d9bec5fa11"
 EXPECTED_BACK_ANGLE45 = "2545772bed5562452123c265cc52abd8a7c3ff5c8bf9f920f72270447bec7ec7"
+EXPECTED_FRONT2_BACK1_ANGLE45 = "07e05693b1fe8fc2516aa67f79b5700ff9a9c99a417e8e90228cd6d9bec5fa11"
+EXPECTED_FRONT8_BACK1_ANGLE45 = "3b71a8e7c929b102d74142d778218db8ade316bdc2da60e9e204db5c9be7393c"
 EXPECTED_NOISE1 = "967a2daed57313a0a3d9d7684ccce50e4e5ff6995914d05bb2764b5227bddcb8"
 EXPECTED_NOISE2 = "0b91171a30163a15afcb1a47cf149536e2951671ae9d45f4bdc1e3ecc44a2582"
 EXPECTED_NOISE_PLANE = "c0dd4dfdf3d35cf0f52c3a9eb75f51d5b0aaa61de3562e345d4213e7737243dc"
@@ -70,9 +72,13 @@ def main() -> int:
                 (2, 0, 0.5, 0, 0, 1, 10, EXPECTED_GAIN_HALF),
                 (2, 0, 1.0, 45, 0, 1, 10, EXPECTED_ANGLE45),
                 (0, 1, 1.0, 45, 0, 1, 10, EXPECTED_BACK_ANGLE45),
+                (1, 1, 1.0, 45, 0, 1, 10, EXPECTED_BACK_ANGLE45),
+                (2, 1, 1.0, 45, 0, 1, 10, EXPECTED_FRONT2_BACK1_ANGLE45),
+                (8, 1, 1.0, 45, 0, 1, 10, EXPECTED_FRONT8_BACK1_ANGLE45),
                 (8, 0, 1.0, 45, 100, 1, 3, EXPECTED_NOISE1),
                 (8, 0, 1.0, 45, 100, 2, 3, EXPECTED_NOISE2)):
-            report_path, actual_path = temp / f"actual_{strength}_{gain}.json", temp / f"actual_{strength}_{gain}.argb64"
+            report_path = temp / f"actual_{strength}_{back}_{gain}.json"
+            actual_path = temp / f"actual_{strength}_{back}_{gain}.argb64"
             command = [sys.executable, str(FIXTURE), "--source", str(source), "--output", str(report_path),
                        "--host-output-raw", str(actual_path), "--bitdepth", "16", "--angle", str(angle),
                        "--brightness-gain", str(gain),

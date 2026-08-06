@@ -524,7 +524,9 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			info.size_variation == 0.0 &&
 			(((info.front_strength == 1 || info.front_strength == 2 || info.front_strength == 8) &&
 			  info.back_strength == 0) ||
-			 (info.front_strength == 0 && info.back_strength == 1 &&
+			 ((info.front_strength == 0 || info.front_strength == 1 ||
+			   info.front_strength == 2 || info.front_strength == 8) &&
+			  info.back_strength == 1 &&
 			  info.angle_deg == 45.0 && info.brightness_gain == 1.0 &&
 			  info.noise_variation == 0.0)) &&
 			info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0 &&
