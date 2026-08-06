@@ -1,0 +1,199 @@
+{
+  "aex": {
+    "owner": "0x180006d10",
+    "parallel_wrappers": [
+      "0x18000b150",
+      "0x18000a9d0"
+    ],
+    "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "workers": [
+      "0x180002780",
+      "0x1800024c0"
+    ],
+    "writer": "0x180017440"
+  },
+  "artifacts": {
+    "final_rgba": {
+      "bytes": 1008,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/final_rgba.bin.zlib",
+      "raw_sha256": "8a5df2b125c892a972ba60bae4c1da5498dc36eef2f5dc898dc29ec135c4c91c",
+      "zlib_sha256": "be33c68df9c1af312458442b1318c827c6d72ff91d4a81166d2b8dacb099bdb9"
+    },
+    "output": {
+      "bytes": 560,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/output.bin.zlib",
+      "raw_sha256": "4861bfd510e5cd8deff80bc1d6bf542e04dc9dc15bd532815ade7bf83a01c8a9",
+      "zlib_sha256": "35ebf824bd1ce7167c0ca5fc3b5be881c2fc3309c14e15e06a785cea414ccddc"
+    },
+    "post_b150_pre_a9d0__accum_rgba": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/post_b150_pre_a9d0__accum_rgba.bin.zlib",
+      "raw_sha256": "b9ad15ac07f2951fb0008d91153225ca28de61182b82b508d6c13178c2a6da8e",
+      "zlib_sha256": "78f9d03e6412aecba54e4dbb0554a4a79342c6f3706bebca3ac3d54e7efa2890"
+    },
+    "post_b150_pre_a9d0__factor": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/post_b150_pre_a9d0__factor.bin.zlib",
+      "raw_sha256": "32463b33ca384eab338e956e9ba6fce744090e1757599609d52374434a814b13",
+      "zlib_sha256": "79f1f1964628b5d4a84e427f7b38a2c9168627a012a8a3fd7af97a3583a32862"
+    },
+    "post_b150_pre_a9d0__max_alpha": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/post_b150_pre_a9d0__max_alpha.bin.zlib",
+      "raw_sha256": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+      "zlib_sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    "post_b150_pre_a9d0__polar_rgba": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/post_b150_pre_a9d0__polar_rgba.bin.zlib",
+      "raw_sha256": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+      "zlib_sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    "post_b150_pre_a9d0__prepass_alpha": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/post_b150_pre_a9d0__prepass_alpha.bin.zlib",
+      "raw_sha256": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+      "zlib_sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    "post_b150_pre_a9d0__span_gate": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/post_b150_pre_a9d0__span_gate.bin.zlib",
+      "raw_sha256": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc",
+      "zlib_sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    },
+    "post_b150_pre_a9d0__valid": {
+      "bytes": 16200,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/post_b150_pre_a9d0__valid.bin.zlib",
+      "raw_sha256": "ed77c2060c747a4c3b4850e4b18304b7181df04f116edf830c5b2b7c3e11c67c",
+      "zlib_sha256": "372e675248717553cf1caee8913bcfae3ea4710210ac043deaafe6f8ec3ea45a"
+    },
+    "post_normalize__accum_rgba": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/post_normalize__accum_rgba.bin.zlib",
+      "raw_sha256": "d12cf7c4be728b8440ade07490e32c13370e7afa5e363b274179462a68cf6364",
+      "zlib_sha256": "bdf8d4c47111e48ee1c6b70dc4032600bbb8b924cbf112fc77ad2240be8c1cdc"
+    },
+    "post_normalize__factor": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/post_normalize__factor.bin.zlib",
+      "raw_sha256": "32463b33ca384eab338e956e9ba6fce744090e1757599609d52374434a814b13",
+      "zlib_sha256": "79f1f1964628b5d4a84e427f7b38a2c9168627a012a8a3fd7af97a3583a32862"
+    },
+    "post_normalize__max_alpha": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/post_normalize__max_alpha.bin.zlib",
+      "raw_sha256": "1753e6370c8c0bd8a1877ad2aa046b2b747a3e49a54b771e75990c00e5324fa1",
+      "zlib_sha256": "e6f3214969d5ed5b6b60c6acfc3130aca9f71b4d1a958550571df887a62aa55a"
+    },
+    "post_normalize__polar_rgba": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/post_normalize__polar_rgba.bin.zlib",
+      "raw_sha256": "c01d5d840243e9a4b87ed93330f177a2298cabf90711ec03d55523bea0677834",
+      "zlib_sha256": "67a018127b04c8b353b9f60d55003154dcddd0a480231a5f239aef2a240ea9c8"
+    },
+    "post_normalize__prepass_alpha": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/post_normalize__prepass_alpha.bin.zlib",
+      "raw_sha256": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+      "zlib_sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    "post_normalize__span_gate": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/post_normalize__span_gate.bin.zlib",
+      "raw_sha256": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc",
+      "zlib_sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    },
+    "pre_b150__accum_rgba": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/pre_b150__accum_rgba.bin.zlib",
+      "raw_sha256": "dd2860e5e42300a259bef1aa9f5b80f1d10ccb45ba555dc0a7686cd124027766",
+      "zlib_sha256": "5d1729ebdd24006d1b741f9c90e971abbc5d0a2485d818736cab2d4852362fbc"
+    },
+    "pre_b150__factor": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/pre_b150__factor.bin.zlib",
+      "raw_sha256": "32463b33ca384eab338e956e9ba6fce744090e1757599609d52374434a814b13",
+      "zlib_sha256": "79f1f1964628b5d4a84e427f7b38a2c9168627a012a8a3fd7af97a3583a32862"
+    },
+    "pre_b150__max_alpha": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/pre_b150__max_alpha.bin.zlib",
+      "raw_sha256": "d043a2d604f110e5746b2875778ccc2f90f76c0e8056aa8d5dd0cca27501ed2c",
+      "zlib_sha256": "2445e0784f3c386c19211305bac27ceb0cb141bbf10edf4c4b815ea2ff30b9ee"
+    },
+    "pre_b150__polar_rgba": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/pre_b150__polar_rgba.bin.zlib",
+      "raw_sha256": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+      "zlib_sha256": "5a083bd125c501c5d2b3aba8b02f7c7d366917e9bfaf289a92ca91bb6a9e2690"
+    },
+    "pre_b150__prepass_alpha": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/pre_b150__prepass_alpha.bin.zlib",
+      "raw_sha256": "d043a2d604f110e5746b2875778ccc2f90f76c0e8056aa8d5dd0cca27501ed2c",
+      "zlib_sha256": "2445e0784f3c386c19211305bac27ceb0cb141bbf10edf4c4b815ea2ff30b9ee"
+    },
+    "pre_b150__span_gate": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/pre_b150__span_gate.bin.zlib",
+      "raw_sha256": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc",
+      "zlib_sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    },
+    "source_pf16": {
+      "bytes": 560,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/source_pf16.bin.zlib",
+      "raw_sha256": "d059727f9096038fea75037a9ba49b82f99c9dd84fd74b15fb11b09f72ca6f85",
+      "zlib_sha256": "5a57d8c8f898bfc576ba38654a81eccf47635c5c30314d59c7c86e8a8ab29f55"
+    }
+  },
+  "execution": {
+    "inner_base_length": 31,
+    "owner_instructions": 19687384,
+    "setup_instructions": 208,
+    "worker_order": [
+      "prepass",
+      "scatter"
+    ]
+  },
+  "gates": {
+    "aex_identity": true,
+    "all_stages_captured": true,
+    "inner_base_length_nonzero": true,
+    "instruction_budget": true,
+    "key_hashes_pinned": true,
+    "nonzero_inner_changed_accum": true,
+    "nonzero_inner_output_differs_from_zero_fixture": true,
+    "output_padding_preserved": true,
+    "worker_order": true
+  },
+  "geometry": {
+    "angular_count": 1800,
+    "cells": 16200,
+    "height": 7,
+    "radius_count": 9,
+    "rowbytes": 80,
+    "width": 9
+  },
+  "kind": "olmradialblur_rotation_pf16_inner32_small_actual_aex_20260806",
+  "params": {
+    "edge_fades": [
+      0,
+      0
+    ],
+    "inner_strength": 32,
+    "noise_variation": 0,
+    "offset_modes": [
+      1,
+      1
+    ],
+    "offsets": [
+      0,
+      0
+    ],
+    "outer_strength": 0,
+    "quality": 5,
+    "size_variation": 0
+  },
+  "scope": "Pinned actual-AEX owner-only Rotation PF16 9x7 Inner Strength=32 internal planes and padded output; no production or AE-host claim",
+  "status": "exact_actual_aex_fixture"
+}
