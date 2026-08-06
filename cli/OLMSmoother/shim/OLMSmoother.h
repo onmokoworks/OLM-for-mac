@@ -35,6 +35,13 @@ typedef void *PF_ProgPtr;
 #define TRUE 1
 #endif
 
+// Pinned OLMSmoother v1 eVER tuple from the production header/binary.
+#define MAJOR_VERSION 1
+#define MINOR_VERSION 2
+#define BUG_VERSION 1
+#define STAGE_VERSION 0
+#define BUILD_VERSION 0
+
 // --- pixels (AE native byte order is Alpha, Red, Green, Blue) ---------------
 struct PF_Pixel8  { uint8_t  alpha, red, green, blue; };
 struct PF_Pixel16 { uint16_t alpha, red, green, blue; };
@@ -139,13 +146,16 @@ struct PF_SmartRenderExtra {
 struct AEGP_SuiteHandler { AEGP_SuiteHandler(void *) {} };
 
 // --- macros the port expects from AE_Macros.h / Param_Utils.h --------------
-#define PF_VERSION(A, B, C, D, E) (0u)
+#define PF_VERSION(A, B, C, D, E) \
+	((static_cast<A_u_long>(A) << 19) | (static_cast<A_u_long>(B) << 15) | \
+	 (static_cast<A_u_long>(C) << 11) | (static_cast<A_u_long>(D) << 9) | \
+	 static_cast<A_u_long>(E))
 #define AEFX_CLR_STRUCT(S) std::memset(&(S), 0, sizeof(S))
 #define PF_SPRINTF std::sprintf
 #define ERR(X) do { if (err == PF_Err_NONE) { err = (X); } } while (0)
 #ifdef OLMSMOOTHER_CAPTURE_PARAMS
 #define PF_ADD_CHECKBOX(NAME, DESC, DEFAULT, FLAGS, DISK_ID) \
-    olmsmoother_capture_checkbox((NAME), (DEFAULT), (DISK_ID))
+    olmsmoother_capture_checkbox((NAME), (DEFAULT), (FLAGS), (DISK_ID))
 #define PF_ADD_COLOR(NAME, R, G, B, DISK_ID) \
     olmsmoother_capture_color((NAME), (R), (G), (B), (DISK_ID))
 #define PF_ADD_SLIDER(NAME, VALID_MIN, VALID_MAX, SLIDER_MIN, SLIDER_MAX, DEFAULT, DISK_ID) \

@@ -11,8 +11,10 @@
         "c": 0,
         "d": 1,
         "disk_id": 1,
+        "flags": 0,
         "kind": "checkbox",
         "name": "Use Color Key",
+        "ui_flags": 0,
         "value": 0
       },
       {
@@ -21,8 +23,10 @@
         "c": 255,
         "d": 255,
         "disk_id": 2,
+        "flags": 0,
         "kind": "color",
         "name": "Color Key",
+        "ui_flags": 0,
         "value": 0
       },
       {
@@ -31,14 +35,17 @@
         "c": 0,
         "d": 6,
         "disk_id": 3,
+        "flags": 0,
         "kind": "slider",
         "name": "Do Smooth Range",
+        "ui_flags": 0,
         "value": 6
       }
     ]
   },
   "fixture_sha256": "3008b8239c48e56c6d0fb0aa707ef7e46df41d311c8f8aa710a79503e2d75735",
   "not_proven": [
+    "localized names beyond the retained strings",
     "render parameter consumption",
     "typed rendering",
     "AE host exactness"
@@ -53,8 +60,10 @@
         "c": 0,
         "d": 1,
         "disk_id": 1,
+        "flags": 0,
         "kind": "checkbox",
         "name": "Use Color Key",
+        "ui_flags": 0,
         "value": 0
       },
       {
@@ -63,8 +72,10 @@
         "c": 255,
         "d": 255,
         "disk_id": 2,
+        "flags": 0,
         "kind": "color",
         "name": "Color Key",
+        "ui_flags": 0,
         "value": 0
       },
       {
@@ -73,13 +84,15 @@
         "c": 0,
         "d": 6,
         "disk_id": 3,
+        "flags": 0,
         "kind": "slider",
         "name": "Do Smooth Range",
+        "ui_flags": 0,
         "value": 6
       }
     ]
   },
   "schema_version": 1,
-  "scope": "three public parameters, order, names, types/defaults/ranges and production disk IDs",
+  "scope": "three public parameters, order, names, types/defaults/ranges, disk IDs, flags and ui_flags; raw flags independently pinned by the raw actual-AEX setup test",
   "status": "exact"
 }

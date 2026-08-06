@@ -1,6 +1,7 @@
 {
   "actual_aex": {
     "error": 0,
+    "my_version": 591872,
     "out_flags": 33554496,
     "out_flags2": 134217728
   },
@@ -14,11 +15,12 @@
   ],
   "production": {
     "error": 0,
+    "my_version": 591872,
     "out_flags": 33554496,
     "out_flags2": 134217728
   },
   "production_source": "mac/OLMSmoother/Mac/OLMSmoother_port.cpp",
   "schema_version": 1,
-  "scope": "public GLOBAL_SETUP return/out_flags/out_flags2 only",
+  "scope": "public GLOBAL_SETUP return/my_version/out_flags/out_flags2; my_version independently pinned by the raw actual-AEX setup test",
   "status": "exact"
 }

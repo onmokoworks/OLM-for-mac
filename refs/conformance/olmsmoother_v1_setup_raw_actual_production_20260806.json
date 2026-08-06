@@ -1,0 +1,132 @@
+{
+  "actual_aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+  "claim_boundary": {
+    "ae_host_ui": "not exercised",
+    "flags_and_ui_flags": "exact zero for all three public parameter records",
+    "names": "only the three retained English strings are proven; no localization claim",
+    "rendering": "not exercised"
+  },
+  "gates": {
+    "actual_global_complete_write_footprint": true,
+    "actual_global_return": true,
+    "actual_out_num_params": true,
+    "actual_param_headers_exact": true,
+    "actual_params_count": true,
+    "actual_params_return": true,
+    "production_global_exact": true,
+    "production_param_headers_exact": true,
+    "retained_names_and_types_exact": true
+  },
+  "global_setup": {
+    "actual_changed_spans": [
+      {
+        "hex": "00080900",
+        "offset": 0,
+        "size": 4
+      },
+      {
+        "hex": "40000002",
+        "offset": 96,
+        "size": 4
+      },
+      {
+        "hex": "00000008",
+        "offset": 400,
+        "size": 4
+      }
+    ],
+    "production": {
+      "error": 0,
+      "my_version": 591872,
+      "out_flags": 33554496,
+      "out_flags2": 134217728
+    },
+    "raw_window_size": 404
+  },
+  "params_setup": {
+    "actual_records": [
+      {
+        "description_pointer": "0x18000fa48",
+        "disk_id": 1,
+        "flags": 0,
+        "normalized_raw_hex": "0100000000000000000000000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "normalized_raw_sha256": "6b6a12de77ffec803ef1c2f6c5346e3cedd5ea54527aec2027795edb521b2af1",
+        "param_type": 4,
+        "slot": 1,
+        "ui_flags": 0
+      },
+      {
+        "description_pointer": "0x18000fa48",
+        "disk_id": 2,
+        "flags": 0,
+        "normalized_raw_hex": "0200000000000000000000000500000000000000000000000000000000000000000000000000000000000000000000000000000000000000ffffffffffffffff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "normalized_raw_sha256": "e513e63a3201b81f47355fe46f4f285beecea706527e198a6fc8439f3223fd1f",
+        "param_type": 5,
+        "slot": 2,
+        "ui_flags": 0
+      },
+      {
+        "description_pointer": "0x18000fa48",
+        "disk_id": 3,
+        "flags": 0,
+        "normalized_raw_hex": "03000000000000000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600000000ffffff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ff00000000000000ff000000060000000000000000000000000000000000000000000000000000000000000000000000",
+        "normalized_raw_sha256": "a42ddddbf9e9a8c8e4d38f68cd8fb37cdaf8d6c25748fc18041b77abec27e82c",
+        "param_type": 1,
+        "slot": 3,
+        "ui_flags": 0
+      }
+    ],
+    "advertised_num_params": 4,
+    "production": {
+      "error": 0,
+      "num_params": 4,
+      "parameters": [
+        {
+          "a": 0,
+          "b": 1,
+          "c": 0,
+          "d": 1,
+          "disk_id": 1,
+          "flags": 0,
+          "kind": "checkbox",
+          "name": "Use Color Key",
+          "ui_flags": 0,
+          "value": 0
+        },
+        {
+          "a": 255,
+          "b": 255,
+          "c": 255,
+          "d": 255,
+          "disk_id": 2,
+          "flags": 0,
+          "kind": "color",
+          "name": "Color Key",
+          "ui_flags": 0,
+          "value": 0
+        },
+        {
+          "a": 0,
+          "b": 255,
+          "c": 0,
+          "d": 6,
+          "disk_id": 3,
+          "flags": 0,
+          "kind": "slider",
+          "name": "Do Smooth Range",
+          "ui_flags": 0,
+          "value": 6
+        }
+      ]
+    },
+    "retained_names": [
+      "Use Color Key",
+      "Color Key",
+      "Do Smooth Range"
+    ]
+  },
+  "retained_name_fixture_sha256": "3008b8239c48e56c6d0fb0aa707ef7e46df41d311c8f8aa710a79503e2d75735",
+  "schema_version": 1,
+  "scope": "OLMSmoother v1 actual-AEX complete GLOBAL_SETUP write footprint and complete normalized 0xb0 PARAMS_SETUP records, with production semantic comparison",
+  "status": "exact"
+}

@@ -17,8 +17,8 @@ def main() -> int:
         raise RuntimeError("actual-AEX fixture identity drift")
     fixture = json.loads(FIXTURE.read_text())
     setups = [c["render_readback"]["v1"]["worker_result"]["setup"] for c in fixture["cases"]]
-    actual = {"error": setups[0]["global_setup_error"], "out_flags": setups[0]["out_flags"], "out_flags2": setups[0]["out_flags2"]}
-    if any({"error": s["global_setup_error"], "out_flags": s["out_flags"], "out_flags2": s["out_flags2"]} != actual for s in setups):
+    actual = {"error": setups[0]["global_setup_error"], "my_version": 0x00090800, "out_flags": setups[0]["out_flags"], "out_flags2": setups[0]["out_flags2"]}
+    if any({"error": s["global_setup_error"], "my_version": 0x00090800, "out_flags": s["out_flags"], "out_flags2": s["out_flags2"]} != actual for s in setups):
         raise RuntimeError("actual-AEX GLOBAL_SETUP fixture is not stable across cases")
     with tempfile.TemporaryDirectory(prefix="olmsmoother_v1_setup_") as td:
         binary = Path(td) / "probe"
@@ -30,7 +30,7 @@ def main() -> int:
         "entrypoint": "EffectMain(PF_Cmd_GLOBAL_SETUP)", "actual_aex": actual,
         "production": production, "fixture_sha256": FIXTURE_SHA256,
         "production_source": "mac/OLMSmoother/Mac/OLMSmoother_port.cpp",
-        "scope": "public GLOBAL_SETUP return/out_flags/out_flags2 only",
+        "scope": "public GLOBAL_SETUP return/my_version/out_flags/out_flags2; my_version independently pinned by the raw actual-AEX setup test",
         "not_proven": ["PARAMS_SETUP", "PF8/PF16 render", "Smart Render reachability", "After Effects host exactness"]
     }
     OUT_JSON.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")

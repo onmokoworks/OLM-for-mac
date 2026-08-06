@@ -17,11 +17,11 @@ def main():
   b=Path(td)/'p';subprocess.run(['clang++','-std=c++17','-I'+str(ROOT/'cli/OLMSmoother/shim'),str(SRC),'-o',str(b)],check=True)
   prod=json.loads(subprocess.run([str(b)],capture_output=True,text=True,check=True).stdout)
  expected={'error':0,'num_params':4,'parameters':[
-  {'name':'Use Color Key','kind':'checkbox','a':0,'b':1,'c':0,'d':1,'value':0,'disk_id':1},
-  {'name':'Color Key','kind':'color','a':255,'b':255,'c':255,'d':255,'value':0,'disk_id':2},
-  {'name':'Do Smooth Range','kind':'slider','a':0,'b':255,'c':0,'d':6,'value':6,'disk_id':3}]}
+  {'name':'Use Color Key','kind':'checkbox','a':0,'b':1,'c':0,'d':1,'value':0,'disk_id':1,'flags':0,'ui_flags':0},
+  {'name':'Color Key','kind':'color','a':255,'b':255,'c':255,'d':255,'value':0,'disk_id':2,'flags':0,'ui_flags':0},
+  {'name':'Do Smooth Range','kind':'slider','a':0,'b':255,'c':0,'d':6,'value':6,'disk_id':3,'flags':0,'ui_flags':0}]}
  a=setups[0]; actual_ok=a['params_setup_error']==0 and a['advertised_num_params']==4 and [(p['name'],p['param_type'],p.get('default_value'),p.get('valid_min'),p.get('valid_max'),p.get('default_color')) for p in a['parameters']]==[
   ('Use Color Key',4,0.0,0.0,1.0,None),('Color Key',5,None,None,None,[255,255,255,255]),('Do Smooth Range',1,6.0,0.0,255.0,None)]
- report={'schema_version':1,'status':'exact' if actual_ok and prod==expected else 'mismatch','entrypoint':'EffectMain(PF_Cmd_PARAMS_SETUP)','actual_aex_fixture_valid':actual_ok,'production':prod,'expected_production':expected,'fixture_sha256':FIX_SHA,'scope':'three public parameters, order, names, types/defaults/ranges and production disk IDs','not_proven':['render parameter consumption','typed rendering','AE host exactness']}
+ report={'schema_version':1,'status':'exact' if actual_ok and prod==expected else 'mismatch','entrypoint':'EffectMain(PF_Cmd_PARAMS_SETUP)','actual_aex_fixture_valid':actual_ok,'production':prod,'expected_production':expected,'fixture_sha256':FIX_SHA,'scope':'three public parameters, order, names, types/defaults/ranges, disk IDs, flags and ui_flags; raw flags independently pinned by the raw actual-AEX setup test','not_proven':['localized names beyond the retained strings','render parameter consumption','typed rendering','AE host exactness']}
  OUT.write_text(json.dumps(report,indent=2,sort_keys=True)+'\n');print(json.dumps(report,indent=2,sort_keys=True));return 0 if report['status']=='exact' else 1
 if __name__=='__main__':raise SystemExit(main())
