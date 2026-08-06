@@ -38,6 +38,16 @@ static int pixel_index(const uint8_t *pixel)
 	return -1;
 }
 
+static void capture_evaluator_fields(uint32_t (&fields)[4], LinearEvalBase *evaluator)
+{
+	std::memcpy(fields, &evaluator->offset, sizeof(fields));
+	if (auto *zero_one = dynamic_cast<LinearOffsetZeroOneValue*>(evaluator)) {
+		// The semantic fourth field lives at object +0x18 for FUN_180001110;
+		// +0x14 is padding in the corrected production layout.
+		std::memcpy(&fields[3], &zero_one->endpoint_one, sizeof(fields[3]));
+	}
+}
+
 static void capture_executor(RenderState *, int direction, int start_x, int start_y,
                              const uint8_t *color_a, int end_x, int end_y,
                              const uint8_t *color_b, LinearEvalBase *evaluator,
@@ -61,7 +71,7 @@ static void capture_executor(RenderState *, int direction, int start_x, int star
 	else if (dynamic_cast<LinearOffsetZeroValue*>(evaluator)) capture.evaluator_kind = 3;
 	else if (dynamic_cast<LinearThreeOffsetFunction*>(evaluator)) capture.evaluator_kind = 4;
 	else capture.evaluator_kind = -1;
-	std::memcpy(capture.fields, &evaluator->offset, sizeof(capture.fields));
+	capture_evaluator_fields(capture.fields, evaluator);
 }
 
 static int evaluator_kind(LinearEvalBase *evaluator)
@@ -108,7 +118,7 @@ static void capture_touching_executor(RenderState *, int direction, int start_x,
 	                      static_cast<unsigned char>(use_source), leading_span};
 	std::memcpy(capture.args11, values, sizeof(values));
 	capture.evaluator_kind = evaluator_kind(evaluator);
-	std::memcpy(capture.fields, &evaluator->offset, sizeof(capture.fields));
+	capture_evaluator_fields(capture.fields, evaluator);
 }
 
 extern "C" int olmsmoother_run_mainkernel8_production(
