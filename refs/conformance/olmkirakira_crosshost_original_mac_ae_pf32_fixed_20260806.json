@@ -1,0 +1,45 @@
+{
+  "kind": "olmkirakira_crosshost_normalized_mac_ae",
+  "status": "mismatch",
+  "package_sha256": "50715bef2dff8f4338c818dc78a827ae8bf65680c6397401015b313c78856cef",
+  "windows_return_sha256": "517b341eb9a3798bc863d021cde11c5b2e9911f714b2978088f27178e150d5b6",
+  "plugin_sha256": "700d3a91e31aab2ff38fb1e40e2f0d529ef73d3060eb29fc2e018285b8e2ddbe",
+  "normalization": "package fixture remains Mac source",
+  "rows": [
+    {
+      "row_id": "olmkirakira__controlled_ramps_off_10__kk_mapped_bm4_mm1_hi_r5_orange_opaque__32bpc__linear_float32_input",
+      "depth": 32,
+      "ae_pid": 95718,
+      "source_sha256": "941ee168b74a73d6653d2b9c84958831812889c33298f4ea6bd49c31a9b554f6",
+      "source_interpretation": {
+        "alpha_mode": 5412,
+        "preserve_rgb_api_available": false,
+        "preserve_rgb": null,
+        "color_profile_name": "undefined",
+        "source_extension": ".exr"
+      },
+      "branches": {
+        "no_effect": {
+          "mac_sha256": "8d5c2b29c106546cb09e34c62db75d14a1f98e8a56584c2f7ab3e08245ddd67f",
+          "windows_sha256": "69ed156db002337d0f24985820b826c28fb0f080090fc9cf44e94ba99f1743a0",
+          "width": 1920,
+          "height": 1080,
+          "mismatched_values": 6220800,
+          "max_raw_u32_delta": 36716873,
+          "exact": false
+        },
+        "effect_on": {
+          "mac_sha256": "3b1e8e6423f67d9393fc02da3faa5c60d5a295fefa82020a6ae982c8dee751cc",
+          "windows_sha256": "4e5d647ce465367d0ffa4e8be3a7378bbd0c24c30850f686258292a28af0cee7",
+          "width": 1920,
+          "height": 1080,
+          "mismatched_values": 6220800,
+          "max_raw_u32_delta": 39688563,
+          "exact": false
+        }
+      },
+      "status": "mismatch"
+    }
+  ],
+  "claim_boundary": "Kira representative Mode4 PF8/PF16/PF32, same numeric input proven by Windows-control-to-Mac-control equality; raw effect equality only where exact."
+}

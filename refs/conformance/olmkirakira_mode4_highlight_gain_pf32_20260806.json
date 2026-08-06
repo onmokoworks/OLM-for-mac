@@ -1,0 +1,72 @@
+{
+  "kind": "olmkirakira_mode4_highlight_gain_pf32",
+  "status": "mode4_highlight_gain_corrected_and_ae_verified",
+  "case": "kk_mapped_bm4_mm1_hi_r5_orange_opaque",
+  "depth": 32,
+  "case_reduction": {
+    "blur_mode": 4,
+    "merge_mode": 1,
+    "vertical_length": 0,
+    "horizontal_length": 0,
+    "diagonal_length": 0,
+    "diagonal2_length": 0,
+    "highlight_radius": 5,
+    "highlight_color": [1.0, 0.25, 0.0625, 1.0],
+    "brightness_gain": 1.0,
+    "consequence": "only the fifth/highlight scalar lane, colored union, and Merge-1 compose can change the image"
+  },
+  "host_boundary": {
+    "windows_effect_off_from_source": "component transfer approximately x^2.4",
+    "mac_effect_off_from_source_pf32": "raw identity",
+    "normalized_replay_warning": "feeding Windows effect-off to Mac matches exported control but does not prove equal plugin input"
+  },
+  "recovered_glow_alpha": {
+    "equation": "a=(out-source)/(highlight_color-out) after inverse Windows host transfer",
+    "windows_over_mac_median": 1.61290407,
+    "expected_if_mac_has_extra_0_62": 1.6129032258064515,
+    "channel_solution_median_delta_rg": 0.00000930,
+    "channel_solution_median_delta_rb": 0.00000638,
+    "channel_solution_max_median_delta": 0.00000930,
+    "windows_alpha_vs_three_pass_11x11_box_correlation": 0.99999999996,
+    "windows_alpha_vs_box_median_ratio": 1.0000011,
+    "windows_alpha_vs_box_mean_absolute_error": 0.00000277
+  },
+  "implementation_before": {
+    "path": "mac/OLMKiraKira/OLMKiraKira.cpp",
+    "expression": "scale = brightness_gain * 0.62; AddColoredUnion(... highlight ..., scale)",
+    "effect": "Mode4 highlight alpha is underweighted by 0.62"
+  },
+  "production_change": {
+    "expression": "highlight_scale = blur_mode == 4 ? brightness_gain : scale",
+    "scope": "Mode4 fifth/highlight AddColoredUnion scale only",
+    "unchanged": ["directional Mode4 recurrence", "box passes", "Merge-1 compose", "other blur modes", "other ray scales"]
+  },
+  "production_validation": {
+    "installed_plugin_sha256": "700d3a91e31aab2ff38fb1e40e2f0d529ef73d3060eb29fc2e018285b8e2ddbe",
+    "universal_architectures": ["arm64", "x86_64"],
+    "codesign_strict_verified": true,
+    "fresh_mac_ae_original_fixture": true,
+    "inverse_transfer_exponent": 2.3999937,
+    "control_inverse_transfer": {
+      "mismatched_rgb_values": 831496,
+      "max_ulp": 3,
+      "max_absolute_error": 5.960464477539063e-08
+    },
+    "effect_inverse_transfer": {
+      "mismatched_rgb_values": 1402930,
+      "max_ulp": 14,
+      "max_absolute_error": 2.384185791015625e-07
+    },
+    "recovered_glow_alpha_windows_over_mac_median": {
+      "R": 1.0,
+      "G": 1.0,
+      "B": 1.0
+    },
+    "interpretation": "The former 1/0.62 scalar discrepancy is removed. Remaining word differences are bounded by the approximate inversion of the independently observed Windows host transfer; the control itself is not raw-exact under that numerical inverse."
+  },
+  "depth_boundary": {
+    "PF32": "focused Mode4 highlight scalar correction verified",
+    "PF8_PF16": "not promoted by this PF32 fixture; quantization and host-boundary behavior remain separate gates"
+  },
+  "claim_boundary": "For the representative PF32 Mode4/highlight-only fixture, the actual-AEX-derived scalar correction is verified in fresh Mac AE: recovered glow-alpha scale agrees at median 1.0 in all RGB solutions. Raw cross-host exactness is not claimed because the measured Windows host transfer inverse itself leaves up to 3 ULP on the control."
+}

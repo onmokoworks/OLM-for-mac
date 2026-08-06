@@ -557,6 +557,14 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 
 	const double gain_scale = 0.62;
 	double scale = info.brightness_gain * gain_scale;
+	// The corrected PF32 AE boundary isolates the fifth/highlight-only Mode-4
+	// lane.  After undoing Windows AE's measured component transfer, the AEX
+	// glow alpha is the three-pass 11x11 box result times Brightness Gain
+	// directly; the historical 0.62 scaffold underweights it by exactly 0.62.
+	// Keep the older factor on every other bounded lane.
+	const double highlight_scale = info.blur_mode == 4
+		? info.brightness_gain
+		: scale;
 	if (info.strength_multiplier <= 1.0e-6) {
 		scale = 127.0 / 255.0;
 	}
@@ -577,7 +585,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		AddColoredUnion(glow, vertical, info.vertical_color, scale);
 		AddColoredUnion(glow, horizontal, info.horizontal_color, scale);
 		AddColoredUnion(glow, diagonal, info.diagonal_color, scale);
-		AddColoredUnion(glow, highlight, info.highlight_color, scale);
+		AddColoredUnion(glow, highlight, info.highlight_color, highlight_scale);
 		AddColoredUnion(glow, diagonal2, info.diagonal2_color, scale);
 		for (FloatRGBA &g : glow) {
 			if (g.a > 1.0e-6f) {
