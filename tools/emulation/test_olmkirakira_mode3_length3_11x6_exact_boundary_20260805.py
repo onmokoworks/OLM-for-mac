@@ -52,7 +52,7 @@ def main() -> int:
     assert actual == expected
 
     mac = MAC.read_text(encoding="utf-8")
-    assert "rw == 11 && rh == 6 && length == 3" in mac
+    assert "actual_aex_mode3_length = length == 3 || length == 5 || length == 7" in mac
     print("PASS_OLMKIRAKIRA_MODE3_LENGTH3_11X6_EXACT_BOUNDARY_20260805 words=66 max_ulp=0")
     return 0
 
