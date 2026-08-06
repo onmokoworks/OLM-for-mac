@@ -1,0 +1,244 @@
+{
+  "claim_boundary": "Release integration only: ten-lane fixed fixtures, installed Universal identities, and one current-Mac-AE load/render witness per plugin. This manifest does not promote unlisted geometries, parameters, bit depths, or AE exactness.",
+  "fixed_fixture_regression": {
+    "boundary": "Only commands enumerated by the ten fixed-fixture lanes; slow RadialBlur full replay is excluded.",
+    "output_sha256": "6f3ef62cda8ea9630eeed5977164cfb4f72911123990b3a839ddcb6929b65ccc",
+    "returncode": 0,
+    "state": "proven",
+    "summary": "PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=458.88s",
+    "tail": [
+      "      |                                                      ^",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here",
+      "  278 | __deprecated_msg(\"This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.\")",
+      "      | ^",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'",
+      "  227 |         #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))",
+      "      |                                                       ^",
+      "1 warning generated.",
+      "In file included from /Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/olmsmoother2_v2_effectmain_pf32_smart_production_harness_20260805.cpp:4:",
+      "In file included from /Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/../../mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp:9:",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/cli/OLMSmoother2/shim/OLMSmoother2.h:203:54: warning: 'sprintf' is deprecated: This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead. [-Wdeprecated-declarations]",
+      "  203 | static PF_ANSICallbacksSuite1 g_ansi_suite = { &std::sprintf };",
+      "      |                                                      ^",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here",
+      "  278 | __deprecated_msg(\"This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.\")",
+      "      | ^",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'",
+      "  227 |         #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))",
+      "      |                                                       ^",
+      "1 warning generated."
+    ]
+  },
+  "generated_at": "2026-08-06T06:46:01.338915+00:00",
+  "mac_ae_representative": {
+    "counts": {
+      "invalid": 0,
+      "pending": 2,
+      "proven": 8
+    },
+    "plugins": [
+      {
+        "boundary": "Current installed PF32 case0001 loaded and rendered; render is explicitly not Windows-exact.",
+        "declared_state": "proven",
+        "evidence": "refs/conformance/olmblur_case0001_current_host_result_20260805.json",
+        "failures": [],
+        "plugin": "OLMBlur",
+        "state": "proven"
+      },
+      {
+        "boundary": "PF8 five-key representative only; hidden RGB is direct-worker evidence, not AE-export evidence.",
+        "declared_state": "proven",
+        "evidence": "refs/conformance/colorkeep_pf8_current_mac_ae_host_20260806.json",
+        "failures": [],
+        "plugin": "ColorKeep",
+        "state": "proven"
+      },
+      {
+        "boundary": "AE 26.3.0.87 Software/PF16 case0001 only.",
+        "declared_state": "proven",
+        "evidence": "refs/conformance/olmcolorkey_mac_ae_host_phase_result_20260805.json",
+        "failures": [],
+        "plugin": "OLMColorKey",
+        "state": "proven"
+      },
+      {
+        "boundary": "AE 26.3.0.87 Software/PF8 case0001 only.",
+        "declared_state": "proven",
+        "evidence": "refs/conformance/olmdirectionalblur_pf8_current_mac_ae_exact_20260806.json",
+        "failures": [],
+        "plugin": "OLMDirectionalBlur",
+        "state": "proven"
+      },
+      {
+        "boundary": "Software/PF32 basic case0001 effect-on only; control is observational.",
+        "declared_state": "proven",
+        "evidence": "refs/conformance/olmdistancegradation_pf32_case0001_current_mac_ae_exact_20260806.json",
+        "failures": [],
+        "plugin": "OLMDistanceGradation",
+        "state": "proven"
+      },
+      {
+        "boundary": "Runner is prepared, but the current installed bundle has no completed representative Mac AE render witness.",
+        "declared_state": "pending",
+        "evidence": "refs/conformance/olmkirakira_mac_ae_es3_loader_fix_20260806.json",
+        "failures": [],
+        "plugin": "OLMKiraKira",
+        "state": "pending"
+      },
+      {
+        "boundary": "PF8 case0010 is Windows-AE exact; PF32 case0009 remains outside Windows-AE exactness.",
+        "declared_state": "proven",
+        "evidence": "refs/conformance/olmradialblur_current_mac_ae_supported_lanes_20260806.md",
+        "failures": [],
+        "plugin": "OLMRadialBlur",
+        "state": "proven"
+      },
+      {
+        "boundary": "PF8 canonical case0001 and retained key-enabled case05 only.",
+        "declared_state": "proven",
+        "evidence": "refs/conformance/olmsmoother_v1_pf8_current_mac_ae_exact_20260805.json",
+        "failures": [],
+        "plugin": "OLMSmoother",
+        "state": "proven"
+      },
+      {
+        "boundary": "PF32 case07 raw-artifact exact; Windows same-run process/module proof is absent, so AE exact is not claimed.",
+        "declared_state": "proven",
+        "evidence": "refs/conformance/olmsmoother2_pf32_case07_current_mac_ae_raw_exact_20260806.json",
+        "failures": [],
+        "plugin": "OLMSmoother2",
+        "state": "proven"
+      },
+      {
+        "boundary": "Installed EffectMain is exact under focused callbacks, but the current installed bundle has no real Mac AE representative render.",
+        "declared_state": "pending",
+        "evidence": "refs/conformance/olmtoondilate_installed_completion_route_20260805.json",
+        "failures": [],
+        "plugin": "OLMToonDilate",
+        "state": "pending"
+      }
+    ]
+  },
+  "releasable": false,
+  "schema": "olm.release-gate-report/1",
+  "status": "release_gate_pending_or_invalid",
+  "universal_installs": {
+    "boundary": "Bundle identity/architectures/signature only; AE process state is reported but is not an install-identity failure.",
+    "bundle_count": 10,
+    "bundles": [
+      {
+        "architectures": [
+          "x86_64",
+          "arm64"
+        ],
+        "codesign_exact": true,
+        "name": "OLMBlur",
+        "sha256": "dd64362e6071cfd93e92f3a4853782752aeb023c54671773bfedb0c496e8afc7",
+        "sha256_exact": true,
+        "universal_exact": true
+      },
+      {
+        "architectures": [
+          "x86_64",
+          "arm64"
+        ],
+        "codesign_exact": true,
+        "name": "ColorKeep",
+        "sha256": "ccc89781fa547450acc3053cb77bff8d6983cd8c6835866c87449e7a64117cce",
+        "sha256_exact": true,
+        "universal_exact": true
+      },
+      {
+        "architectures": [
+          "x86_64",
+          "arm64"
+        ],
+        "codesign_exact": true,
+        "name": "OLMColorKey",
+        "sha256": "34fd47cd04c6665f75a84ffb0d2bb01390823e50d2224059917043cd45350464",
+        "sha256_exact": true,
+        "universal_exact": true
+      },
+      {
+        "architectures": [
+          "x86_64",
+          "arm64"
+        ],
+        "codesign_exact": true,
+        "name": "OLMDirectionalBlur",
+        "sha256": "6a89dd4d9bca3f5b3c7af7782627d1b7b7bb6b0c45afe83945d056f1db7519f0",
+        "sha256_exact": true,
+        "universal_exact": true
+      },
+      {
+        "architectures": [
+          "x86_64",
+          "arm64"
+        ],
+        "codesign_exact": true,
+        "name": "OLMDistanceGradation",
+        "sha256": "656537d052f67a9e7eb4d4ba2c6f5c890fe34e3d2c47069bcfba01854d96055e",
+        "sha256_exact": true,
+        "universal_exact": true
+      },
+      {
+        "architectures": [
+          "x86_64",
+          "arm64"
+        ],
+        "codesign_exact": true,
+        "name": "OLMKiraKira",
+        "sha256": "cd97c6f328bf6a4adbe001662f35c12af405f89a2374046f185f68673df96719",
+        "sha256_exact": true,
+        "universal_exact": true
+      },
+      {
+        "architectures": [
+          "x86_64",
+          "arm64"
+        ],
+        "codesign_exact": true,
+        "name": "OLMRadialBlur",
+        "sha256": "2e079e3c168666c2f3509f8d4c90ab107301880bce43f538cf4e16bcb8047732",
+        "sha256_exact": true,
+        "universal_exact": true
+      },
+      {
+        "architectures": [
+          "x86_64",
+          "arm64"
+        ],
+        "codesign_exact": true,
+        "name": "OLMSmoother",
+        "sha256": "44b199789d086b4f52354dd76fb3a3b107180323221718938d8d8580884028c0",
+        "sha256_exact": true,
+        "universal_exact": true
+      },
+      {
+        "architectures": [
+          "x86_64",
+          "arm64"
+        ],
+        "codesign_exact": true,
+        "name": "OLMSmoother2",
+        "sha256": "fe782f344dcaf8865b778198b0faeb8cecd525062a83f38aca8dc1db74442c34",
+        "sha256_exact": true,
+        "universal_exact": true
+      },
+      {
+        "architectures": [
+          "x86_64",
+          "arm64"
+        ],
+        "codesign_exact": true,
+        "name": "OLMToonDilate",
+        "sha256": "7d2c24d8ad0f7436ee7035e0d926a2abaac1a74bc9305a4223f76230c1fc5537",
+        "sha256_exact": true,
+        "universal_exact": true
+      }
+    ],
+    "preflight_status": "ae_not_running",
+    "returncode": 2,
+    "state": "proven"
+  }
+}

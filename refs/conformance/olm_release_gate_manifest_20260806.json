@@ -1,0 +1,76 @@
+{
+  "schema": "olm.release-gate-manifest/1",
+  "claim_boundary": "Release integration only: ten-lane fixed fixtures, installed Universal identities, and one current-Mac-AE load/render witness per plugin. This manifest does not promote unlisted geometries, parameters, bit depths, or AE exactness.",
+  "plugins": [
+    {
+      "plugin": "OLMBlur",
+      "evidence": "refs/conformance/olmblur_case0001_current_host_result_20260805.json",
+      "state": "proven",
+      "assertions": {"status": "render_succeeded_raw_float32_mismatch", "host.renderer": "SOFTWARE", "identity.preflight_all_checks": true, "identity.post_vmmap_exact_path": true},
+      "boundary": "Current installed PF32 case0001 loaded and rendered; render is explicitly not Windows-exact."
+    },
+    {
+      "plugin": "ColorKeep",
+      "evidence": "refs/conformance/colorkeep_pf8_current_mac_ae_host_20260806.json",
+      "state": "proven",
+      "assertions": {"status": "host_export_exact_and_installed_worker_raw_exact", "host.loaded_module_vmmap_exact_path": true},
+      "boundary": "PF8 five-key representative only; hidden RGB is direct-worker evidence, not AE-export evidence."
+    },
+    {
+      "plugin": "OLMColorKey",
+      "evidence": "refs/conformance/olmcolorkey_mac_ae_host_phase_result_20260805.json",
+      "state": "proven",
+      "assertions": {"status": "pass", "ae_exact_claim": true, "gates.fresh_output_exact": true, "gates.pre_loaded_exact_current_binary": true},
+      "boundary": "AE 26.3.0.87 Software/PF16 case0001 only."
+    },
+    {
+      "plugin": "OLMDirectionalBlur",
+      "evidence": "refs/conformance/olmdirectionalblur_pf8_current_mac_ae_exact_20260806.json",
+      "state": "proven",
+      "assertions": {"status": "pass", "ae_exact_claim": true, "gates.sole_exact_loaded_module": true, "gates.effect_file_exact": true},
+      "boundary": "AE 26.3.0.87 Software/PF8 case0001 only."
+    },
+    {
+      "plugin": "OLMDistanceGradation",
+      "evidence": "refs/conformance/olmdistancegradation_pf32_case0001_current_mac_ae_exact_20260806.json",
+      "state": "proven",
+      "assertions": {"status": "accepted_exact", "host_attestation.sole_exact_mapping": true, "ae_exact_claim_permitted": true},
+      "boundary": "Software/PF32 basic case0001 effect-on only; control is observational."
+    },
+    {
+      "plugin": "OLMKiraKira",
+      "evidence": "refs/conformance/olmkirakira_mac_ae_es3_loader_fix_20260806.json",
+      "state": "pending",
+      "assertions": {"status": "static_ready_no_retry", "ae_retry_performed": false},
+      "boundary": "Runner is prepared, but the current installed bundle has no completed representative Mac AE render witness."
+    },
+    {
+      "plugin": "OLMRadialBlur",
+      "evidence": "refs/conformance/olmradialblur_current_mac_ae_supported_lanes_20260806.md",
+      "state": "proven",
+      "contains": ["sole running After Effects 26.3x87 process", "PF8 case0010", "matched the retained Windows PNG at every RGBA8 pixel"],
+      "boundary": "PF8 case0010 is Windows-AE exact; PF32 case0009 remains outside Windows-AE exactness."
+    },
+    {
+      "plugin": "OLMSmoother",
+      "evidence": "refs/conformance/olmsmoother_v1_pf8_current_mac_ae_exact_20260805.json",
+      "state": "proven",
+      "assertions": {"status": "pass", "plugin.sole_exact_mapping_pre_and_post": true, "claim_boundary.pf8_host_exact": true},
+      "boundary": "PF8 canonical case0001 and retained key-enabled case05 only."
+    },
+    {
+      "plugin": "OLMSmoother2",
+      "evidence": "refs/conformance/olmsmoother2_pf32_case07_current_mac_ae_raw_exact_20260806.json",
+      "state": "proven",
+      "assertions": {"status": "raw_float32_exact_artifact_only_missing_windows_process_proof", "host.same_run_process_module_attestation": true, "exact_comparisons.effect_on.mismatched_values": 0},
+      "boundary": "PF32 case07 raw-artifact exact; Windows same-run process/module proof is absent, so AE exact is not claimed."
+    },
+    {
+      "plugin": "OLMToonDilate",
+      "evidence": "refs/conformance/olmtoondilate_installed_completion_route_20260805.json",
+      "state": "pending",
+      "assertions": {"status": "PASS_INSTALLED_COMPLETION_ROUTE", "gates.installed_dynamic_entry_exact": true},
+      "boundary": "Installed EffectMain is exact under focused callbacks, but the current installed bundle has no real Mac AE representative render."
+    }
+  ]
+}
