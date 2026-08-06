@@ -386,6 +386,7 @@ extern "C" int olm_dblur_minimal_argb16(const std::uint16_t* input_argb,
                                          std::uint16_t* output_argb,
                                          int width, int height,
                                          int front_strength,
+                                         int back_strength,
                                          float brightness_gain,
                                          float angle_degrees,
                                          float noise_variation_percent,
@@ -394,7 +395,8 @@ extern "C" int olm_dblur_minimal_argb16(const std::uint16_t* input_argb,
                                          int noise_offset_ui,
                                          float thickness_ui) {
     if (!input_argb || !output_argb || width <= 0 || height <= 0 ||
-        front_strength <= 0) return -1;
+        (front_strength <= 0 && back_strength <= 0) ||
+        front_strength < 0 || back_strength < 0) return -1;
     try {
         const float diagonal = std::sqrt(static_cast<float>(width * width + height * height));
         const int half_span = 2 - static_cast<int>(diagonal * -0.5f);
@@ -424,7 +426,8 @@ extern "C" int olm_dblur_minimal_argb16(const std::uint16_t* input_argb,
             component_map[pixel * 4 + 0] = 1.0f;
             component_map[pixel * 4 + 3] = 1.0f;
         }
-        const std::vector<float> weights = gaussian_weights(front_strength);
+        const std::vector<float> front_weights = gaussian_weights(front_strength);
+        const std::vector<float> back_weights = gaussian_weights(back_strength);
         const float empty = 0.0f;
         if (noise_variation_percent > 0.0f) {
             std::vector<float> noise; int nw = 0, nh = 0;
@@ -432,15 +435,20 @@ extern "C" int olm_dblur_minimal_argb16(const std::uint16_t* input_argb,
                     static_cast<float>(noise_offset_ui) / 36.0f, seed, &noise, &nw, &nh)) return -1;
             olm_dblur_rowdriver_noise_f32(0, work_height, a.data(), b.data(), work_width,
                 noise_variation_percent / 100.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-                weights.data(), &empty, &empty, &empty, denominator.data(), alpha_max.data(),
-                component_map.data(), front_strength, 0, 0, 0,
+                front_strength > 0 ? front_weights.data() : &empty,
+                back_strength > 0 ? back_weights.data() : &empty,
+                &empty, &empty, denominator.data(), alpha_max.data(),
+                component_map.data(), front_strength, back_strength, 0, 0,
                 noise.data(), nw, thickness_ui, noise_type == 1 ? 1 : 0);
         } else {
             olm_dblur_rowdriver_f32(
                 0, work_height, a.data(), b.data(), work_width, 1, 1.0f, 0.0f, 1.0f,
-                0.0f, 0.0f, weights.data(), &empty, &empty, &empty,
+                0.0f, 0.0f,
+                front_strength > 0 ? front_weights.data() : &empty,
+                back_strength > 0 ? back_weights.data() : &empty,
+                &empty, &empty,
                 denominator.data(), alpha_max.data(), component_map.data(),
-                front_strength, 0, 0, 0);
+                front_strength, back_strength, 0, 0);
         }
         for (std::size_t pixel = 0; pixel < work_pixels; ++pixel) {
             if (denominator[pixel] > 0.0f) {

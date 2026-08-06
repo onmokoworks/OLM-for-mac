@@ -522,9 +522,13 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			(info.angle_deg == 0.0 || info.angle_deg == 45.0) &&
 			(info.brightness_gain == 1.0 || info.brightness_gain == 0.5) &&
 			info.size_variation == 0.0 &&
-			(info.front_strength == 1 || info.front_strength == 2 || info.front_strength == 8) &&
+			(((info.front_strength == 1 || info.front_strength == 2 || info.front_strength == 8) &&
+			  info.back_strength == 0) ||
+			 (info.front_strength == 0 && info.back_strength == 1 &&
+			  info.angle_deg == 45.0 && info.brightness_gain == 1.0 &&
+			  info.noise_variation == 0.0)) &&
 			info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0 &&
-			info.back_strength == 0 && info.back_alpha_fade == 0 &&
+			info.back_alpha_fade == 0 &&
 			info.back_sharp_tail == 0.0 &&
 			(info.noise_variation == 0.0 ||
 			 (info.noise_variation == 100.0 &&
@@ -542,7 +546,8 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			}
 			const int result = olm_dblur_minimal_argb16(
 				source.data(), destination.data(), input->width, input->height,
-				static_cast<int>(info.front_strength), static_cast<float>(info.brightness_gain),
+				static_cast<int>(info.front_strength), static_cast<int>(info.back_strength),
+				static_cast<float>(info.brightness_gain),
 				static_cast<float>(info.angle_deg), static_cast<float>(info.noise_variation),
 				static_cast<int>(info.noise_type),
 				static_cast<std::uint32_t>(info.seed), info.noise_offset,
