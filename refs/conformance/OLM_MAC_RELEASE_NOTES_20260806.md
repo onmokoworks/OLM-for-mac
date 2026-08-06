@@ -25,15 +25,15 @@ Mac AE同一条件レンダーのプラグイン別比較を進めています�
 | プラグイン | リリース候補の主要モード／native depth | 重要な証拠境界 |
 | --- | --- | --- |
 | OLMBlur | Legacy／NonLegacy、repeat、bias；PF8／PF16／PF32 | 複数のpadded typed fixtureでdimension-generic workerを確認。現行PF32 host smokeはロード／レンダー証拠であり、Windows exact出力の新規主張ではない |
-| ColorKeep | enabled／disabled、tolerance、1〜100色；PF8／PF16／PF32 | duplicate／特殊floatを含むdirect worldはexact。PF8 host exportとPF16 inter-effect discriminatorだけでは、保留中の同一契約Windows 3行を代替しない |
+| ColorKeep | enabled／disabled、tolerance、1〜100色；PF8／PF16／PF32 | Windows/Macのkeep mask、alpha、保持／棄却関係は3深度exact。raw EXRはeffect-off時点の全RGBにhost色変換差があるためcross-host exactへ昇格しない |
 | OLMColorKey | core、Edge Thin、Edge Blur、replace／color-space；PF8／PF16／PF32限定 | Edge Blurは記録済み4×3、corner／center、single-key、方向、amountに限定 |
 | OLMToonDilate | copy／dilate、fractional radius、frontier／tie／corner／eligibility；PF8／PF16／PF32 | padded／partial／empty worldとradius -1〜4を確認。現行PF32 radius 13 AE代表はhost smoke |
 | OLMDistanceGradation | Inside／Outside／Both、RGB／Layer、Constant／Linear／Sphere／Power、invert／background／blur；PF8／PF16／PF32限定 | 証明済みaxisとfamilyは全コントロール直積ではない。PF32 SmartRenderは元AEXのnative機能ではない |
 | OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3；PF8／PF16／PF32限定 | PF16 Type 3 Layerは16×16、angle 45、front 8、back 0、variation 100、neutral size／fade／tail、独立paddingに限定。Layer欠落・寸法不一致・他tupleはfail-close |
 | OLMRadialBlur | Zoom／Rotation／Inner；PF8／PF16／PF32 guard付き | PF8 centered neutral Inner Strength 1〜64は9×7、64×36、640×360で証明。PF16／PF32 Innerは9×7 guardを維持。未記載offset／ratio／angle／quality／repeat／edge／noise／variationはfail-close |
 | OLMSmoother2 | v1／v2 classifier、key／invert、Gamma None／All／Colors、range／extra、palette；PF8／PF16／PF32限定 | PF32 case07はraw artifact exactだが、同一runのWindows process／module証明がなく、process-attested AE exactとは呼ばない |
-| OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur；PF8／PF16／PF32限定 | Mode 3／4は記録済みshape、length、tupleに限定。natural Mode 4と現行PF32 Mac AE出力は保持済みartifactへexact |
-| OLMSmoother v1 | no-key／Color Key、smoothing range；native PF8／PF16 | PF8 canonical 960×540と保持済みkey pathはexact。PF16 cross-host parityは1行保留。AEXにnative PF32 callbackはなく、32bpc projectではAEがclassic integer pluginの前後をhost-convertする |
+| OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur；PF8／PF16／PF32限定 | Mode 4 Highlightの3-pass等方blurとMerge 1 alpha加重合成をactual AEX根拠で修正し、3深度のeffect動作を確認。raw cross-host exactはeffect-off全RGBのhost色変換差により非主張 |
+| OLMSmoother v1 | no-key／Color Key、smoothing range；native PF8／PF16 | PF8 canonical 960×540と保持済みkey pathはexact。PF16 effect-offはcross-host raw exact、effect-onは183 FLOAT語不一致でfail-closeし、walker／subhandler移植を継続中。AEXにnative PF32 callbackはなく、32bpc projectではAEがclassic integer pluginの前後をhost-convertする |
 
 ## AE host境界
 
@@ -85,6 +85,12 @@ e582b0f368deb6dfbb34de2675e382d2222372705da043151d90dc895f7d7a0a
 受領記録は
 [`olm_windows_ae_release_boundary_minimal_intake_20260806.json`](olm_windows_ae_release_boundary_minimal_intake_20260806.json)
 を参照してください。
+
+プラグイン別の同一契約解析：
+
+- ColorKeep：[`colorkeep_windows_mac_ae_boundary_20260806.md`](colorkeep_windows_mac_ae_boundary_20260806.md)
+- OLMKiraKira：[`olmkirakira_mode4_windows_boundary_closure_20260806.md`](olmkirakira_mode4_windows_boundary_closure_20260806.md)
+- OLMSmoother v1：[`olmsmoother_v1_windows_ae_release_boundary_mac_exact_20260806.md`](olmsmoother_v1_windows_ae_release_boundary_mac_exact_20260806.md)
 
 ## 最終Mac検証結果
 
