@@ -17,6 +17,14 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools/emulation"))
+from olm_installed_identity import verified_binary
+
+LANE_INSTALLED_PLUGIN = {
+    "smoother": "OLMSmoother",
+    "smoother2": "OLMSmoother2",
+    "toondilate": "OLMToonDilate",
+}
 
 
 @dataclass(frozen=True)
@@ -270,6 +278,20 @@ def main() -> int:
 
     for lane in lanes:
         print(f"\n== {lane.name} ==", flush=True)
+        installed_plugin = LANE_INSTALLED_PLUGIN.get(lane.name)
+        if installed_plugin:
+            try:
+                binary, identity = verified_binary(installed_plugin)
+            except RuntimeError as exc:
+                command = ("installed-identity-manifest", installed_plugin)
+                failures.append((lane.name, command, 126))
+                print(f"FAIL {lane.name}: {exc}", file=sys.stderr)
+                continue
+            print(
+                f"PASS {lane.name}: accepted installed identity "
+                f"{binary} sha256={identity['sha256']}",
+                flush=True,
+            )
         for command in lane.commands:
             missing = ROOT / command[1]
             if not missing.is_file():
