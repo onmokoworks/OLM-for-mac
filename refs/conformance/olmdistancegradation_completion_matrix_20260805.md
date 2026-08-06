@@ -25,6 +25,13 @@ is proven.
 | Invert off/on | PF8/PF16/PF32 bounded pairs |
 | Row padding | Distinct rowbytes with unchanged sentinels at all depths |
 
+PF16 also has a bounded Cartesian family for
+Outside/RGB/no-background/no-blur: Constant, Linear, Sphere, and Power 2.5,
+each with Invert off/on. A 9x7 transparent island retains intermediate
+distance values, so all eight actual-AEX outputs are distinct and match
+production including row padding. See the 2026-08-06 interpolation-family
+evidence for hashes and exclusions.
+
 PF32 Layer mode is exact for Both/Layer/Linear/no-bg and
 Both/Layer/Power-2.5/no-bg through the actual classic whole-render owner:
 
