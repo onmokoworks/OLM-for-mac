@@ -1,0 +1,524 @@
+{
+  "schema": "olmdistancegradation.pf32-owner-probe/1",
+  "status": "owner_completed_field_captured",
+  "binary_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+  "entry": "0x181172a10",
+  "events": [
+    {
+      "callback": "owner.extra.vtable+0x10",
+      "args": [
+        "0x0",
+        "0xf0fe8d8",
+        "0x40004b00",
+        "0x40004d00"
+      ]
+    },
+    {
+      "callback": "checkout_param",
+      "slot": 2,
+      "destination": "0xf0feeb0",
+      "value": 1
+    },
+    {
+      "callback": "checkin_param"
+    },
+    {
+      "callback": "checkout_param",
+      "slot": 3,
+      "destination": "0xf0feeb0",
+      "value": 4
+    },
+    {
+      "callback": "checkin_param"
+    },
+    {
+      "callback": "checkout_param",
+      "slot": 4,
+      "destination": "0xf0feeb0",
+      "value": 4
+    },
+    {
+      "callback": "checkin_param"
+    },
+    {
+      "callback": "checkout_param",
+      "slot": 6,
+      "destination": "0xf0feeb0",
+      "value": 0
+    },
+    {
+      "callback": "checkin_param"
+    },
+    {
+      "callback": "checkout_param",
+      "slot": 5,
+      "destination": "0xf0feeb0",
+      "value": 0
+    },
+    {
+      "callback": "checkin_param"
+    },
+    {
+      "callback": "checkout_param",
+      "slot": 7,
+      "destination": "0xf0feeb0",
+      "value": 0
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF ColorParamSuite"
+    },
+    {
+      "callback": "ColorParam.GetFloatingPointColor",
+      "args": [
+        "0x0",
+        "0xf0feeb0",
+        "0x40005198",
+        "0x0"
+      ]
+    },
+    {
+      "callback": "checkin_param"
+    },
+    {
+      "callback": "checkout_param",
+      "slot": 8,
+      "destination": "0xf0feeb0",
+      "value": 0
+    },
+    {
+      "callback": "ColorParam.GetFloatingPointColor",
+      "args": [
+        "0x0",
+        "0xf0feeb0",
+        "0x400051a8",
+        "0x0"
+      ]
+    },
+    {
+      "callback": "checkin_param"
+    },
+    {
+      "callback": "checkout_param",
+      "slot": 1,
+      "destination": "0xf0feeb0",
+      "value": 1
+    },
+    {
+      "callback": "checkin_param"
+    },
+    {
+      "callback": "checkout_param",
+      "slot": 9,
+      "destination": "0xf0feeb0",
+      "value": 1
+    },
+    {
+      "callback": "checkin_param"
+    },
+    {
+      "callback": "checkout_param",
+      "slot": 10,
+      "destination": "0xf0feeb0",
+      "value": 1
+    },
+    {
+      "callback": "checkin_param"
+    },
+    {
+      "callback": "checkout_param",
+      "slot": 11,
+      "destination": "0xf0feeb0",
+      "value": 1
+    },
+    {
+      "callback": "checkin_param"
+    },
+    {
+      "callback": "checkout_param",
+      "slot": 12,
+      "destination": "0xf0feeb0",
+      "value": 0
+    },
+    {
+      "callback": "checkin_param"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 144
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 2992
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 144
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 220
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 144
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 748
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 144
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 2992
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 144
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 748
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 144
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 2992
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 144
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 748
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 144
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 220
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "shim": "FUN_181187e20",
+      "rcx_contract": "ignored probe-local TLS container",
+      "return": "0x40005350"
+    },
+    {
+      "hook": "FUN_181174760",
+      "rip": "0x181174760",
+      "dst_ipl": "0x200025c0",
+      "return": "0x181173495"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 144
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 220
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 144
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 748
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 144
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 748
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 144
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 748
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "shim": "FUN_181187e20",
+      "rcx_contract": "ignored probe-local TLS container",
+      "return": "0x40005350"
+    },
+    {
+      "shim": "FUN_181187e20",
+      "rcx_contract": "ignored probe-local TLS container",
+      "return": "0x40005350"
+    },
+    {
+      "shim": "FUN_181187e20",
+      "rcx_contract": "ignored probe-local TLS container",
+      "return": "0x40005350"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    }
+  ],
+  "instructions": 40010,
+  "failure": null,
+  "parameter_contract": {
+    "checkout_slots": [
+      2,
+      3,
+      4,
+      6,
+      5,
+      7,
+      8,
+      1,
+      9,
+      10,
+      11,
+      12
+    ],
+    "slot7_float_color_argb": [
+      1.0,
+      0.10980392156862745,
+      0.0,
+      0.9333333333333333
+    ],
+    "checkout_destination_stack_arg": "RSP+0x30 (argument 6)"
+  },
+  "fieldgen_reached": true,
+  "intermediate_field": {
+    "shape": [
+      11,
+      17
+    ],
+    "sha256": "13a74e7dc8897b6489f66b39e0e4505a4e46a943f3635b5b0c68bbe571b682cf",
+    "word_count": 187,
+    "first_words": [
+      "0x00000000",
+      "0x00000000",
+      "0x00000000",
+      "0x00000000",
+      "0x00000000",
+      "0x00000000",
+      "0x00000000",
+      "0x00000000"
+    ]
+  },
+  "output_world": {
+    "world": 1073763184,
+    "data": 536873920,
+    "rowbytes": 272,
+    "width": 17,
+    "height": 11,
+    "sha256": "cda258b2a722a9336224ca9bb3997f0761213a8dac68d24b5fed88d80f18e2a3",
+    "byte_count": 2992,
+    "sentinel_cd_remaining": 0
+  },
+  "mat_tls_shim": {
+    "functions": [
+      "0x181187e20",
+      "0x181187f50"
+    ],
+    "return_object_size": 32,
+    "zero_initialized": true
+  },
+  "conclusion": "Probe-local Mat TLS singleton shims allow the 17x11 PF32 owner to complete and reach FUN_181174760. The intermediate float field and naturally written output world are retained; PF8/PF16 staging is not used."
+}

@@ -111,9 +111,11 @@ def run() -> None:
     if completed.returncode != 0:
         raise AssertionError(f"production RenderBits harness failed:\n{completed.stdout}{completed.stderr}")
     harness_lines = [line for line in completed.stdout.splitlines() if line.startswith("PASS ")]
-    assert len(harness_lines) == 6, harness_lines
+    assert len(harness_lines) == 8, harness_lines
+    assert any("shape-mismatch-fail-closed" in line for line in harness_lines)
+    assert any("short-row-fail-closed" in line for line in harness_lines)
     print("PASS staging-contract cases=4")
-    print("PASS production-renderbits harness cases=6")
+    print("PASS production-renderbits harness cases=8")
     print("PASS scope=Mac-local-layout-only no-AEX-exact-claim")
 
 

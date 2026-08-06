@@ -17,6 +17,7 @@
     "output_format": "EXR",
     "float_preserving": true,
     "plugin_filename": "OLMDistanceGradation.plugin",
+    "plugin_executable_sha256": "656537d052f67a9e7eb4d4ba2c6f5c890fe34e3d2c47069bcfba01854d96055e",
     "sha256_required": true,
     "fresh_output_directory": true
   },
@@ -63,6 +64,7 @@
     "missing_binding_action": "fail closed and list the missing field; do not substitute a nearby case or infer settings"
   },
   "stop_lines": [
+    "PF32 Smart remains unsupported by the actual AEX; this is a classic host-render request and makes no PF32 Smart claim",
     "do not retune production source",
     "do not claim AE exact from PNG, 16bpc, or diagnostic-only evidence",
     "fail if any case is missing input identity, parameters, provenance, plugin hash, or raw float output",

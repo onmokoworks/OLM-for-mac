@@ -1,0 +1,23 @@
+{
+  "schema": "olm.mac-plugin-install-evidence/1",
+  "plugin": "OLMDistanceGradation",
+  "status": "installed_verified",
+  "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDistanceGradation.plugin",
+  "installed_executable": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation",
+  "installed_binary_sha256": "656537d052f67a9e7eb4d4ba2c6f5c890fe34e3d2c47069bcfba01854d96055e",
+  "architectures": [
+    "x86_64",
+    "arm64"
+  ],
+  "bundle_identifier": "com.adobe.AfterEffects.OLMDistanceGradation",
+  "signature": "adhoc",
+  "codesign_strict_verified": true,
+  "installed_bundle_count": 1,
+  "replaced_binary_sha256": "bc99635232f06378c8b728709c262a9e547364fe68adb4bef25684078b0838c6",
+  "backup_bundle": "/Users/onmk/Documents/Projects/Personal/OLM as/handoff/mac_plugin_backups/20260805T231300/OLMDistanceGradation.plugin",
+  "installed_at": "2026-08-05T23:13:00+09:00",
+  "after_effects_was_operated": false,
+  "after_effects_running_post_install": false,
+  "restart_required": false,
+  "pf32_smart_claimed": false
+}

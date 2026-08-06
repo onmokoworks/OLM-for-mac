@@ -14,6 +14,7 @@ import platform
 import shutil
 import subprocess
 import sys
+import hashlib
 from pathlib import Path
 
 
@@ -23,6 +24,9 @@ ON_ID = CASE_ID + "__bg_on"
 OFF_ID = CASE_ID + "__bg_off"
 NORMALIZED = ROOT / "refs/win_references/olm_bitdepth_16bpc_normalized_exact_20260625/OLMbit-depthconformancebatch"
 VARIANTS = ROOT / "refs/win_references/olmdistancegradation_16bpc_bg_compose_variants_20260626/DistanceGradation"
+PLUGIN_BUNDLE = Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDistanceGradation.plugin"
+PLUGIN_EXECUTABLE = PLUGIN_BUNDLE / "Contents/MacOS/OLMDistanceGradation"
+PLUGIN_SHA256 = "656537d052f67a9e7eb4d4ba2c6f5c890fe34e3d2c47069bcfba01854d96055e"
 
 
 def args() -> argparse.Namespace:
@@ -100,6 +104,9 @@ def materialize(work: Path) -> tuple[Path, Path, list[dict]]:
 
 def main() -> int:
     a = args()
+    if not PLUGIN_EXECUTABLE.is_file() or hashlib.sha256(PLUGIN_EXECUTABLE.read_bytes()).hexdigest() != PLUGIN_SHA256:
+        print("[FAIL_CLOSED] installed OLMDistanceGradation executable identity mismatch")
+        return 2
     work = a.work_dir.resolve()
     request, candidate, rows = materialize(work)
     candidate.mkdir(parents=True, exist_ok=True)
@@ -116,6 +123,8 @@ def main() -> int:
         "case_ids": [row["id"] for row in rows],
         "request_dir": str(request),
         "profile": {"bits_per_channel": 16, "gpu_accel_type": "SOFTWARE", "software_equivalent_profile": "software_16bpc", "max_diff": 0},
+        "installed_plugin": {"bundle": str(PLUGIN_BUNDLE), "executable": str(PLUGIN_EXECUTABLE), "sha256": PLUGIN_SHA256},
+        "pf32_smart_boundary": "unsupported by actual AEX; not exercised or claimed",
         "commands": [subprocess.list2cmdline(cmd) for cmd in commands],
         "blocked_reason": None if gui_ready else "AE GUI execution requires macOS with osascript; no GUI run performed.",
     }

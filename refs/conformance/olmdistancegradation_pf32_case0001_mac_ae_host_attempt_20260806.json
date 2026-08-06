@@ -1,0 +1,33 @@
+{
+  "schema": "olmdistancegradation.mac-ae-host-attempt/1",
+  "status": "fail_closed_no_return",
+  "ae_exact_claim": false,
+  "attempt_count": 1,
+  "host": {
+    "pid": 10665,
+    "started": "2026-08-06T00:39:01+09:00",
+    "process_alive_post_attempt": true,
+    "stopped_or_restarted": false
+  },
+  "target": {
+    "case_id": "olmdistancegradation_basic__case_0001",
+    "depth": 32,
+    "renderer": "SOFTWARE",
+    "input_sha256": "6b1972a25a1a336f52fe10d627fbe710d97578329112878d0c17a2f6607b6e97",
+    "windows_expected_sha256": "5500a71581ccc9df4501dfdb4380b3d0066cf2e20e1b50bb68188c6fecac06df"
+  },
+  "installed_identity": {
+    "executable_sha256": "656537d052f67a9e7eb4d4ba2c6f5c890fe34e3d2c47069bcfba01854d96055e",
+    "binary_predates_process_start": true
+  },
+  "artifacts": {
+    "support": "/tmp/olmdg_pf32_case0001_live_20260806_0045",
+    "input_present_and_hash_exact": true,
+    "host_trace_present": false,
+    "return_json_present": false,
+    "output_exr_present": false
+  },
+  "failure_boundary": "DoScriptFile produced no JSX entry trace and no return; therefore effect add, raw FLOAT output, and post identity were not reached.",
+  "stop_rule_observed": "Stopped after the first failed host attempt; no retry and no AE termination or restart.",
+  "pf32_smart": "unsupported by actual AEX; unclaimed"
+}

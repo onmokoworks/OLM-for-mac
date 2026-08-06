@@ -1,0 +1,43 @@
+{
+  "schema": "olmdistancegradation.mac-ae-classic-host-phase/1",
+  "status": "prepared_not_executed",
+  "installed_executable": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation",
+  "installed_sha256": "656537d052f67a9e7eb4d4ba2c6f5c890fe34e3d2c47069bcfba01854d96055e",
+  "renderer": "SOFTWARE",
+  "fresh_project_required": true,
+  "effect_match_name": "OLM Distance Gradation",
+  "classic_targets": [
+    {
+      "depth": 8,
+      "case_id": "case_0001",
+      "input": "refs/win_references/20260605_extra/OLMDistanceGradation/case_0001_before_effects.png",
+      "input_sha256": "9d96a359d987774a398ec27e224650fda83fa00ae3c14bd04b87e2402ea34265",
+      "expected": "refs/win_references/20260605_extra/OLMDistanceGradation/case_0001.png",
+      "expected_sha256": "7d8a37e51743efe9d9aa8dd8c70c220749039194c196828a5dc288885cd16f0f",
+      "project_recipe": "fresh project; bitsPerChannel=8; gpuAccelType=SOFTWARE",
+      "runner": "scripts/run_ae_single_case.py via scripts/ae_pixel_validation_render.jsx",
+      "comparison_scope": "PNG host regression; not a typed-word oracle"
+    },
+    {
+      "depth": 16,
+      "case_id": "olmdistancegradation_extended__case_0023__bg_on/off",
+      "runner": "scripts/run_distancegradation_case0023_mac_reverify.py --dry-run",
+      "project_recipe": "fresh project; bitsPerChannel=16; gpuAccelType=SOFTWARE",
+      "comparison_scope": "two canonical max_diff=0 Windows Software PNG targets materialized by runner"
+    },
+    {
+      "depth": 32,
+      "case_id": "olmdistancegradation_basic__case_0001",
+      "input": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0001_before_effects.exr",
+      "input_sha256": "6b1972a25a1a336f52fe10d627fbe710d97578329112878d0c17a2f6607b6e97",
+      "expected": "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMbit-depthconformancebatch/olm_bitdepth_32bpc_full_probe_exr_rerun_20260703__software_32bpc__fr24__olmdistancegradation_basic__case_0001.exr",
+      "expected_sha256": "5500a71581ccc9df4501dfdb4380b3d0066cf2e20e1b50bb68188c6fecac06df",
+      "project_recipe": "fresh project; bitsPerChannel=32; gpuAccelType=SOFTWARE; workingSpace=None; linearBlending=false",
+      "runner": "scripts/run_olmdistancegradation_32bpc_mac_validation_20260715.py",
+      "comparison_scope": "raw FLOAT32 EXR words; full request contains 29 pinned cases"
+    }
+  ],
+  "load_identity_contract": "unique installed bundle + executable SHA + successful effect match-name creation",
+  "pf32_smart": "unsupported by actual AEX; excluded and unclaimed",
+  "after_effects_operated": false
+}

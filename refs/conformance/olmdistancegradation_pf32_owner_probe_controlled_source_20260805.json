@@ -1,0 +1,1117 @@
+{
+  "schema": "olmdistancegradation.pf32-owner-probe/1",
+  "source_mode": "controlled",
+  "status": "owner_completed_field_captured",
+  "binary_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+  "entry": "0x181172a10",
+  "events": [
+    {
+      "callback": "owner.extra.vtable+0x10",
+      "args": [
+        "0x0",
+        "0xf0fe8d8",
+        "0x40004b00",
+        "0x40004d00"
+      ]
+    },
+    {
+      "callback": "checkout_param",
+      "slot": 2,
+      "destination": "0xf0feeb0",
+      "value": 1,
+      "raw_value_16": "01000000000000000000000000000000"
+    },
+    {
+      "callback": "checkin_param"
+    },
+    {
+      "callback": "checkout_param",
+      "slot": 3,
+      "destination": "0xf0feeb0",
+      "value": 4,
+      "raw_value_16": "04000000000000000000000000000000"
+    },
+    {
+      "callback": "checkin_param"
+    },
+    {
+      "callback": "checkout_param",
+      "slot": 4,
+      "destination": "0xf0feeb0",
+      "value": 4,
+      "raw_value_16": "04000000000000000000000000000000"
+    },
+    {
+      "callback": "checkin_param"
+    },
+    {
+      "callback": "checkout_param",
+      "slot": 6,
+      "destination": "0xf0feeb0",
+      "value": 1,
+      "raw_value_16": "01000000000000000000000000000000"
+    },
+    {
+      "callback": "checkin_param"
+    },
+    {
+      "callback": "checkout_param",
+      "slot": 5,
+      "destination": "0xf0feeb0",
+      "value": 1,
+      "raw_value_16": "01000000000000000000000000000000"
+    },
+    {
+      "callback": "checkin_param"
+    },
+    {
+      "callback": "checkout_param",
+      "slot": 7,
+      "destination": "0xf0feeb0",
+      "value": 0,
+      "raw_value_16": "00000000000000000000000000000000"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF ColorParamSuite"
+    },
+    {
+      "callback": "ColorParam.GetFloatingPointColor",
+      "args": [
+        "0x0",
+        "0xf0feeb0",
+        "0x40005198",
+        "0x0"
+      ]
+    },
+    {
+      "callback": "checkin_param"
+    },
+    {
+      "callback": "checkout_param",
+      "slot": 8,
+      "destination": "0xf0feeb0",
+      "value": 0,
+      "raw_value_16": "00000000000000000000000000000000"
+    },
+    {
+      "callback": "ColorParam.GetFloatingPointColor",
+      "args": [
+        "0x0",
+        "0xf0feeb0",
+        "0x400051a8",
+        "0x0"
+      ]
+    },
+    {
+      "callback": "checkin_param"
+    },
+    {
+      "callback": "checkout_param",
+      "slot": 1,
+      "destination": "0xf0feeb0",
+      "value": 1,
+      "raw_value_16": "01000000000000000000000000000000"
+    },
+    {
+      "callback": "checkin_param"
+    },
+    {
+      "callback": "checkout_param",
+      "slot": 9,
+      "destination": "0xf0feeb0",
+      "value": 2,
+      "raw_value_16": "02000000000000000000000000000000"
+    },
+    {
+      "callback": "checkin_param"
+    },
+    {
+      "callback": "checkout_param",
+      "slot": 10,
+      "destination": "0xf0feeb0",
+      "value": 1,
+      "raw_value_16": "000000000000f03f0000000000000000"
+    },
+    {
+      "callback": "checkin_param"
+    },
+    {
+      "callback": "checkout_param",
+      "slot": 11,
+      "destination": "0xf0feeb0",
+      "value": 1,
+      "raw_value_16": "01000000000000000000000000000000"
+    },
+    {
+      "callback": "checkin_param"
+    },
+    {
+      "callback": "checkout_param",
+      "slot": 12,
+      "destination": "0xf0feeb0",
+      "value": 0,
+      "raw_value_16": "00000000000000000000000000000000"
+    },
+    {
+      "callback": "checkin_param"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 144
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 2992
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 144
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 220
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 144
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 748
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 144
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 2992
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 144
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 748
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 144
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 2992
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 144
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 748
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 144
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 220
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "shim": "FUN_181187e20",
+      "rcx_contract": "ignored probe-local TLS container",
+      "return": "0x40005350"
+    },
+    {
+      "hook": "FUN_181174760",
+      "rip": "0x181174760",
+      "dst_ipl": "0x200025c0",
+      "return": "0x181173495"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 144
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 220
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 144
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 748
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 144
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 748
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 144
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "PFHandle.new",
+      "size": 748
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "shim": "FUN_181187e20",
+      "rcx_contract": "ignored probe-local TLS container",
+      "return": "0x40005350"
+    },
+    {
+      "shim": "FUN_181187e20",
+      "rcx_contract": "ignored probe-local TLS container",
+      "return": "0x40005350"
+    },
+    {
+      "shim": "FUN_181187e20",
+      "rcx_contract": "ignored probe-local TLS container",
+      "return": "0x40005350"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    },
+    {
+      "callback": "SPBasic.AcquireSuite",
+      "suite": "PF Handle Suite"
+    }
+  ],
+  "instructions": 40011,
+  "failure": null,
+  "parameter_contract": {
+    "checkout_slots": [
+      2,
+      3,
+      4,
+      6,
+      5,
+      7,
+      8,
+      1,
+      9,
+      10,
+      11,
+      12
+    ],
+    "slot7_float_color_argb": [
+      1.0,
+      0.10980392156862745,
+      0.0,
+      0.9333333333333333
+    ],
+    "checkout_destination_stack_arg": "RSP+0x30 (argument 6)"
+  },
+  "fieldgen_reached": true,
+  "intermediate_field": {
+    "shape": [
+      11,
+      17
+    ],
+    "sha256": "8ac06eb6a3a4329f511a3496e33b13c51ec01c6fb03624f238e545c7536e30ca",
+    "word_count": 187,
+    "first_words": [
+      "0x3f800000",
+      "0x3f800000",
+      "0x3f800000",
+      "0x3f800000",
+      "0x3f800000",
+      "0x3f800000",
+      "0x3f800000",
+      "0x3f800000"
+    ]
+  },
+  "output_world": {
+    "world": 1073763184,
+    "data": 536873920,
+    "rowbytes": 272,
+    "width": 17,
+    "height": 11,
+    "sha256": "c014b5d14d68e4ec6ce49592029067f6415bce31366a7f66694ecb9eb57c8540",
+    "byte_count": 2992,
+    "sentinel_cd_remaining": 0
+  },
+  "matrix_captures": [
+    {
+      "label": "scale_or_normalize",
+      "phase": "entry",
+      "rip": "0x18117c580",
+      "return": "0x181174a72",
+      "args": [
+        {
+          "ptr": "0x20004640",
+          "header": "90000000000000000100000000000000200000004752415947524159000000000000000004000000110000000b0000000000000000000000000000000000000000000000000000000000000000000000ec020000000000000047002000000000",
+          "flags": 144,
+          "dims": 0,
+          "rows": 1,
+          "cols": 0,
+          "data": "0x5941524700000020",
+          "step_ptr": "0x0",
+          "kind": "IplImage",
+          "shape": [
+            11,
+            17
+          ],
+          "dtype": "float32",
+          "pixels": {
+            "0": "0000803f",
+            "90": "0000803f",
+            "91": "00000000",
+            "93": "00000000",
+            "96": "0000803f"
+          }
+        },
+        {
+          "ptr": "0x20004a00",
+          "header": "90000000000000000100000000000000080000004752415947524159000000000000000004000000110000000b0000000000000000000000000000000000000000000000000000000000000000000000dc00000000000000c04a002000000000",
+          "flags": 144,
+          "dims": 0,
+          "rows": 1,
+          "cols": 0,
+          "data": "0x5941524700000008",
+          "step_ptr": "0x0",
+          "kind": "IplImage",
+          "shape": [
+            11,
+            17
+          ],
+          "dtype": "uint8",
+          "pixels": {
+            "0": "00",
+            "90": "00",
+            "91": "00",
+            "93": "00",
+            "96": "00"
+          }
+        },
+        {
+          "ptr": "0x200023e0",
+          "header": "0000803f0000803e0000003f0000403f0000000000000000000000000000000090000000000000000100000000000000080000004752415947524159000000000000000004000000110000000b00000000000000000000000000000000000000",
+          "flags": 1065353216,
+          "dims": 1048576000,
+          "rows": 1056964608,
+          "cols": 1061158912,
+          "data": "0x0",
+          "step_ptr": "0xb00000011"
+        },
+        {
+          "ptr": "0x4",
+          "not_mapped_mat": true
+        }
+      ]
+    },
+    {
+      "label": "scale_or_normalize",
+      "phase": "return",
+      "rip": "0x181174a72",
+      "args": [
+        {
+          "ptr": "0x20004640",
+          "header": "90000000000000000100000000000000200000004752415947524159000000000000000004000000110000000b0000000000000000000000000000000000000000000000000000000000000000000000ec020000000000000047002000000000",
+          "flags": 144,
+          "dims": 0,
+          "rows": 1,
+          "cols": 0,
+          "data": "0x5941524700000020",
+          "step_ptr": "0x0",
+          "kind": "IplImage",
+          "shape": [
+            11,
+            17
+          ],
+          "dtype": "float32",
+          "pixels": {
+            "0": "0000803f",
+            "90": "0000803f",
+            "91": "00000000",
+            "93": "00000000",
+            "96": "0000803f"
+          }
+        },
+        {
+          "ptr": "0x20004a00",
+          "header": "90000000000000000100000000000000080000004752415947524159000000000000000004000000110000000b0000000000000000000000000000000000000000000000000000000000000000000000dc00000000000000c04a002000000000",
+          "flags": 144,
+          "dims": 0,
+          "rows": 1,
+          "cols": 0,
+          "data": "0x5941524700000008",
+          "step_ptr": "0x0",
+          "kind": "IplImage",
+          "shape": [
+            11,
+            17
+          ],
+          "dtype": "uint8",
+          "pixels": {
+            "0": "ff",
+            "90": "ff",
+            "91": "00",
+            "93": "00",
+            "96": "ff"
+          }
+        },
+        {
+          "ptr": "0x200023e0",
+          "header": "0000803f0000803e0000003f0000403f0000000000000000000000000000000090000000000000000100000000000000080000004752415947524159000000000000000004000000110000000b00000000000000000000000000000000000000",
+          "flags": 1065353216,
+          "dims": 1048576000,
+          "rows": 1056964608,
+          "cols": 1061158912,
+          "data": "0x0",
+          "step_ptr": "0xb00000011"
+        },
+        {
+          "ptr": "0x4",
+          "not_mapped_mat": true
+        }
+      ]
+    },
+    {
+      "label": "precompose_copy_or_convert",
+      "phase": "entry",
+      "rip": "0x18117bca0",
+      "return": "0x1811735ba",
+      "args": [
+        {
+          "ptr": "0x200025c0",
+          "header": "90000000000000000100000000000000200000004752415947524159000000000000000004000000110000000b0000000000000000000000000000000000000000000000000000000000000000000000ec020000000000008026002000000000",
+          "flags": 144,
+          "dims": 0,
+          "rows": 1,
+          "cols": 0,
+          "data": "0x5941524700000020",
+          "step_ptr": "0x0",
+          "kind": "IplImage",
+          "shape": [
+            11,
+            17
+          ],
+          "dtype": "float32",
+          "pixels": {
+            "0": "0000803f",
+            "90": "0000803e",
+            "91": "00000000",
+            "93": "00000000",
+            "96": "0000803e"
+          }
+        },
+        {
+          "ptr": "0x20003600",
+          "header": "90000000000000000100000000000000200000004752415947524159000000000000000004000000110000000b0000000000000000000000000000000000000000000000000000000000000000000000ec02000000000000c036002000000000",
+          "flags": 144,
+          "dims": 0,
+          "rows": 1,
+          "cols": 0,
+          "data": "0x5941524700000020",
+          "step_ptr": "0x0",
+          "kind": "IplImage",
+          "shape": [
+            11,
+            17
+          ],
+          "dtype": "float32",
+          "pixels": {
+            "0": "00000000",
+            "90": "00000000",
+            "91": "00000000",
+            "93": "00000000",
+            "96": "00000000"
+          }
+        },
+        {
+          "ptr": "0x0"
+        },
+        {
+          "ptr": "0x0"
+        }
+      ]
+    },
+    {
+      "label": "precompose_copy_or_convert",
+      "phase": "return",
+      "rip": "0x1811735ba",
+      "args": [
+        {
+          "ptr": "0x200025c0",
+          "header": "90000000000000000100000000000000200000004752415947524159000000000000000004000000110000000b0000000000000000000000000000000000000000000000000000000000000000000000ec020000000000008026002000000000",
+          "flags": 144,
+          "dims": 0,
+          "rows": 1,
+          "cols": 0,
+          "data": "0x5941524700000020",
+          "step_ptr": "0x0",
+          "kind": "IplImage",
+          "shape": [
+            11,
+            17
+          ],
+          "dtype": "float32",
+          "pixels": {
+            "0": "0000803f",
+            "90": "0000803e",
+            "91": "00000000",
+            "93": "00000000",
+            "96": "0000803e"
+          }
+        },
+        {
+          "ptr": "0x20003600",
+          "header": "90000000000000000100000000000000200000004752415947524159000000000000000004000000110000000b0000000000000000000000000000000000000000000000000000000000000000000000ec02000000000000c036002000000000",
+          "flags": 144,
+          "dims": 0,
+          "rows": 1,
+          "cols": 0,
+          "data": "0x5941524700000020",
+          "step_ptr": "0x0",
+          "kind": "IplImage",
+          "shape": [
+            11,
+            17
+          ],
+          "dtype": "float32",
+          "pixels": {
+            "0": "0000803f",
+            "90": "0000803e",
+            "91": "00000000",
+            "93": "00000000",
+            "96": "0000803e"
+          }
+        },
+        {
+          "ptr": "0x0"
+        },
+        {
+          "ptr": "0x0"
+        }
+      ]
+    },
+    {
+      "label": "final_compose",
+      "phase": "entry",
+      "rip": "0x18117c6e0",
+      "return": "0x181173630",
+      "args": [
+        {
+          "ptr": "0x20003600",
+          "header": "90000000000000000100000000000000200000004752415947524159000000000000000004000000110000000b0000000000000000000000000000000000000000000000000000000000000000000000ec02000000000000c036002000000000",
+          "flags": 144,
+          "dims": 0,
+          "rows": 1,
+          "cols": 0,
+          "data": "0x5941524700000020",
+          "step_ptr": "0x0",
+          "kind": "IplImage",
+          "shape": [
+            11,
+            17
+          ],
+          "dtype": "float32",
+          "pixels": {
+            "0": "0000803f",
+            "90": "0000803e",
+            "91": "00000000",
+            "93": "00000000",
+            "96": "0000803e"
+          }
+        },
+        {
+          "ptr": "0x20003600",
+          "header": "90000000000000000100000000000000200000004752415947524159000000000000000004000000110000000b0000000000000000000000000000000000000000000000000000000000000000000000ec02000000000000c036002000000000",
+          "flags": 144,
+          "dims": 0,
+          "rows": 1,
+          "cols": 0,
+          "data": "0x5941524700000020",
+          "step_ptr": "0x0",
+          "kind": "IplImage",
+          "shape": [
+            11,
+            17
+          ],
+          "dtype": "float32",
+          "pixels": {
+            "0": "0000803f",
+            "90": "0000803e",
+            "91": "00000000",
+            "93": "00000000",
+            "96": "0000803e"
+          }
+        },
+        {
+          "ptr": "0x20003600",
+          "header": "90000000000000000100000000000000200000004752415947524159000000000000000004000000110000000b0000000000000000000000000000000000000000000000000000000000000000000000ec02000000000000c036002000000000",
+          "flags": 144,
+          "dims": 0,
+          "rows": 1,
+          "cols": 0,
+          "data": "0x5941524700000020",
+          "step_ptr": "0x0",
+          "kind": "IplImage",
+          "shape": [
+            11,
+            17
+          ],
+          "dtype": "float32",
+          "pixels": {
+            "0": "0000803f",
+            "90": "0000803e",
+            "91": "00000000",
+            "93": "00000000",
+            "96": "0000803e"
+          }
+        },
+        {
+          "ptr": "0x200025c0",
+          "header": "90000000000000000100000000000000200000004752415947524159000000000000000004000000110000000b0000000000000000000000000000000000000000000000000000000000000000000000ec020000000000008026002000000000",
+          "flags": 144,
+          "dims": 0,
+          "rows": 1,
+          "cols": 0,
+          "data": "0x5941524700000020",
+          "step_ptr": "0x0",
+          "kind": "IplImage",
+          "shape": [
+            11,
+            17
+          ],
+          "dtype": "float32",
+          "pixels": {
+            "0": "0000803f",
+            "90": "0000803e",
+            "91": "00000000",
+            "93": "00000000",
+            "96": "0000803e"
+          }
+        }
+      ]
+    },
+    {
+      "label": "final_compose",
+      "phase": "return",
+      "rip": "0x181173630",
+      "args": [
+        {
+          "ptr": "0x20003600",
+          "header": "90000000000000000100000000000000200000004752415947524159000000000000000004000000110000000b0000000000000000000000000000000000000000000000000000000000000000000000ec02000000000000c036002000000000",
+          "flags": 144,
+          "dims": 0,
+          "rows": 1,
+          "cols": 0,
+          "data": "0x5941524700000020",
+          "step_ptr": "0x0",
+          "kind": "IplImage",
+          "shape": [
+            11,
+            17
+          ],
+          "dtype": "float32",
+          "pixels": {
+            "0": "0000803f",
+            "90": "0000803e",
+            "91": "00000000",
+            "93": "00000000",
+            "96": "0000803e"
+          }
+        },
+        {
+          "ptr": "0x20003600",
+          "header": "90000000000000000100000000000000200000004752415947524159000000000000000004000000110000000b0000000000000000000000000000000000000000000000000000000000000000000000ec02000000000000c036002000000000",
+          "flags": 144,
+          "dims": 0,
+          "rows": 1,
+          "cols": 0,
+          "data": "0x5941524700000020",
+          "step_ptr": "0x0",
+          "kind": "IplImage",
+          "shape": [
+            11,
+            17
+          ],
+          "dtype": "float32",
+          "pixels": {
+            "0": "0000803f",
+            "90": "0000803e",
+            "91": "00000000",
+            "93": "00000000",
+            "96": "0000803e"
+          }
+        },
+        {
+          "ptr": "0x20003600",
+          "header": "90000000000000000100000000000000200000004752415947524159000000000000000004000000110000000b0000000000000000000000000000000000000000000000000000000000000000000000ec02000000000000c036002000000000",
+          "flags": 144,
+          "dims": 0,
+          "rows": 1,
+          "cols": 0,
+          "data": "0x5941524700000020",
+          "step_ptr": "0x0",
+          "kind": "IplImage",
+          "shape": [
+            11,
+            17
+          ],
+          "dtype": "float32",
+          "pixels": {
+            "0": "0000803f",
+            "90": "0000803e",
+            "91": "00000000",
+            "93": "00000000",
+            "96": "0000803e"
+          }
+        },
+        {
+          "ptr": "0x200025c0",
+          "header": "90000000000000000100000000000000200000004752415947524159000000000000000004000000110000000b0000000000000000000000000000000000000000000000000000000000000000000000ec020000000000008026002000000000",
+          "flags": 144,
+          "dims": 0,
+          "rows": 1,
+          "cols": 0,
+          "data": "0x5941524700000020",
+          "step_ptr": "0x0",
+          "kind": "IplImage",
+          "shape": [
+            11,
+            17
+          ],
+          "dtype": "float32",
+          "pixels": {
+            "0": "0000803f",
+            "90": "0000803e",
+            "91": "00000000",
+            "93": "00000000",
+            "96": "0000803e"
+          }
+        }
+      ]
+    },
+    {
+      "label": "scale_or_normalize",
+      "phase": "entry",
+      "rip": "0x18117c580",
+      "return": "0x181173647",
+      "args": [
+        {
+          "ptr": "0x20002980",
+          "header": "90000000000000000400000000000000200000005247420042475241000000000000000004000000110000000b0000000000000000000000000000000000000000000000000000000000000000000000b00b000000000000402a002000000000",
+          "flags": 144,
+          "dims": 0,
+          "rows": 4,
+          "cols": 0,
+          "data": "0x42475200000020",
+          "step_ptr": "0x0",
+          "kind": "IplImage",
+          "shape": [
+            11,
+            17,
+            4
+          ],
+          "dtype": "float32",
+          "pixels": {
+            "0": "0000803f0000803f0000803f0000803f",
+            "90": "0000803e0000803e0000803e0000803e",
+            "91": "00000000000000000000000000000000",
+            "93": "00000000000000000000000000000000",
+            "96": "0000803e0000803e0000803e0000803e"
+          }
+        },
+        {
+          "ptr": "0x200039c0",
+          "header": "90000000000000000400000000000000200000005247420042475241000000000000000004000000110000000b0000000000000000000000000000000000000000000000000000000000000000000000b00b000000000000803a002000000000",
+          "flags": 144,
+          "dims": 0,
+          "rows": 4,
+          "cols": 0,
+          "data": "0x42475200000020",
+          "step_ptr": "0x0",
+          "kind": "IplImage",
+          "shape": [
+            11,
+            17,
+            4
+          ],
+          "dtype": "float32",
+          "pixels": {
+            "0": "00000000000000000000000000000000",
+            "90": "00000000000000000000000000000000",
+            "91": "00000000000000000000000000000000",
+            "93": "00000000000000000000000000000000",
+            "96": "00000000000000000000000000000000"
+          }
+        },
+        {
+          "ptr": "0x0"
+        },
+        {
+          "ptr": "0xb7",
+          "not_mapped_mat": true
+        }
+      ]
+    },
+    {
+      "label": "scale_or_normalize",
+      "phase": "return",
+      "rip": "0x181173647",
+      "args": [
+        {
+          "ptr": "0x20002980",
+          "header": "90000000000000000400000000000000200000005247420042475241000000000000000004000000110000000b0000000000000000000000000000000000000000000000000000000000000000000000b00b000000000000402a002000000000",
+          "flags": 144,
+          "dims": 0,
+          "rows": 4,
+          "cols": 0,
+          "data": "0x42475200000020",
+          "step_ptr": "0x0",
+          "kind": "IplImage",
+          "shape": [
+            11,
+            17,
+            4
+          ],
+          "dtype": "float32",
+          "pixels": {
+            "0": "0000803f0000803f0000803f0000803f",
+            "90": "0000803e0000803e0000803e0000803e",
+            "91": "00000000000000000000000000000000",
+            "93": "00000000000000000000000000000000",
+            "96": "0000803e0000803e0000803e0000803e"
+          }
+        },
+        {
+          "ptr": "0x200039c0",
+          "header": "90000000000000000400000000000000200000005247420042475241000000000000000004000000110000000b0000000000000000000000000000000000000000000000000000000000000000000000b00b000000000000803a002000000000",
+          "flags": 144,
+          "dims": 0,
+          "rows": 4,
+          "cols": 0,
+          "data": "0x42475200000020",
+          "step_ptr": "0x0",
+          "kind": "IplImage",
+          "shape": [
+            11,
+            17,
+            4
+          ],
+          "dtype": "float32",
+          "pixels": {
+            "0": "0000803f0000803f0000803f0000803f",
+            "90": "0000803e0000803e0000803e0000803e",
+            "91": "00000000000000000000000000000000",
+            "93": "00000000000000000000000000000000",
+            "96": "0000803e0000803e0000803e0000803e"
+          }
+        },
+        {
+          "ptr": "0x0"
+        },
+        {
+          "ptr": "0xb7",
+          "not_mapped_mat": true
+        }
+      ]
+    }
+  ],
+  "mat_tls_shim": {
+    "functions": [
+      "0x181187e20",
+      "0x181187f50"
+    ],
+    "return_object_size": 32,
+    "zero_initialized": true
+  },
+  "conclusion": "Probe-local Mat TLS singleton shims allow the 17x11 PF32 owner to complete and reach FUN_181174760. The intermediate float field and naturally written output world are retained; PF8/PF16 staging is not used."
+}

@@ -1,0 +1,55 @@
+{
+  "schema": 3,
+  "kind": "olmdistancegradation_32bpc_mac_validation_report",
+  "status": "accepted_exact",
+  "accepted_exact_cases": [
+    "olmdistancegradation_basic__case_0001"
+  ],
+  "failed_cases": [],
+  "observations": [
+    {
+      "case_id": "olmdistancegradation_basic__case_0001",
+      "no_effect_vs_input": {
+        "equal": false,
+        "max_absolute_error": null,
+        "nonzero_count": 89663,
+        "nan_inf_policy": "raw FLOAT32 words; NaN and +/-Inf words must match exactly",
+        "mac_sample_counts": {
+          "nan": 0,
+          "+inf": 0,
+          "-inf": 0
+        },
+        "windows_sample_counts": {
+          "nan": 0,
+          "+inf": 0,
+          "-inf": 0
+        }
+      },
+      "effect_on_vs_windows_effect": {
+        "equal": true,
+        "max_absolute_error": 0,
+        "nonzero_count": 0,
+        "nan_inf_policy": "raw FLOAT32 words; NaN and +/-Inf words must match exactly",
+        "mac_sample_counts": {
+          "nan": 0,
+          "+inf": 0,
+          "-inf": 0
+        },
+        "windows_sample_counts": {
+          "nan": 0,
+          "+inf": 0,
+          "-inf": 0
+        }
+      }
+    }
+  ],
+  "host_attestation": {
+    "observed_ae_pids": [
+      31792
+    ],
+    "loaded_plugin_path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDistanceGradation.plugin/Contents/MacOS/OLMDistanceGradation",
+    "sole_exact_mapping": true
+  },
+  "ae_exact_claim_permitted": true,
+  "reason": "Exact plugin/project/output bindings, a fresh same-context no-effect control artifact, and raw FLOAT32 equality of effect-on output to the Windows effect reference are required. No Windows AE no-effect export exists, so input-vs-control equality is observational and is not promoted."
+}

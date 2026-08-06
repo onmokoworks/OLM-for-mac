@@ -1,0 +1,77 @@
+{
+  "blobs": {
+    "field_f32.bin": {
+      "blob": "field_f32.bin",
+      "sha256": "8ac06eb6a3a4329f511a3496e33b13c51ec01c6fb03624f238e545c7536e30ca",
+      "size": 748
+    },
+    "field_pf8.bin": {
+      "blob": "field_pf8.bin",
+      "sha256": "7eed71ee10848be040d09cca44d9c67a531095a7b0fd3b485374692bec5c6a1d",
+      "size": 187
+    },
+    "output_agrb8.bin": {
+      "blob": "output_agrb8.bin",
+      "sha256": "03317f191a6d2d32ceece722226f98ec23c35c81aa5c34cb4e91663d8354b554",
+      "size": 748
+    },
+    "source_agrb8.bin": {
+      "blob": "source_agrb8.bin",
+      "sha256": "d1f91aa49de6c11311e765c01273d81588231dff95d77f7c0e6f500eb66b8521",
+      "size": 748
+    }
+  },
+  "case_id": "distancegradation.pipeline.pf8.17x11.threshold4.linear.inside",
+  "exclusions": [
+    "host resize",
+    "blur",
+    "After Effects checkout/export"
+  ],
+  "height": 11,
+  "params": {
+    "bg_rgb_u8": [
+      255,
+      0,
+      0
+    ],
+    "grad_rgb_u8": [
+      28,
+      0,
+      238
+    ],
+    "in_out": 1,
+    "interp_mode": 1,
+    "invert": 1,
+    "render_mode": 1,
+    "use_bg": 1
+  },
+  "provenance": {
+    "binary_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+    "compose_function": "0x181170870",
+    "execution": {
+      "callback_counts": {
+        "PFHandle.dispose": 8,
+        "PFHandle.lock": 8,
+        "PFHandle.new": 8,
+        "PFHandle.unlock": 8,
+        "SPBasic.AcquireSuite": 16,
+        "SPBasic.ReleaseSuite": 16,
+        "cv::dist_transform": 1,
+        "cv::normalize_minmax": 1,
+        "cv::resize_same_shape": 2,
+        "cv::threshold": 1
+      },
+      "hits": [
+        "FUN_1812aef70",
+        "FUN_1812aef70",
+        "FUN_18117ca50"
+      ],
+      "instructions": 6923
+    },
+    "field_function": "0x181174760",
+    "oracle": "unicorn-aex"
+  },
+  "schema": "olm.aex.cpu-pipeline-fixture/1",
+  "threshold": 4,
+  "width": 17
+}

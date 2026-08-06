@@ -1,4 +1,4 @@
-# OLMDistanceGradation case_0023 Neighborhood Probe Result - 2026-07-13
+# OLMDistanceGradation case_0023 Neighborhood Probe Result - 2026-07-26
 
 - Case: `olmdistancegradation_extended__case_0023`
 - Probe dir: `refs/reports/ae_single_case_distancegradation_case0023_neighborhood_probe_20260707`

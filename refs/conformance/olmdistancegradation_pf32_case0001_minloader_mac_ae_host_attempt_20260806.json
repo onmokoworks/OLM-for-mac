@@ -1,0 +1,37 @@
+{
+  "schema": "olmdistancegradation.mac-ae-minloader-attempt/1",
+  "status": "fail_closed_do_script_file_delivery",
+  "ae_exact_claim": false,
+  "attempt_count": 1,
+  "host": {
+    "pid": 12791,
+    "started": "2026-08-06T00:45:04+09:00",
+    "alive_post_attempt": true,
+    "stopped_or_restarted": false
+  },
+  "target": {
+    "case_id": "olmdistancegradation_basic__case_0001",
+    "depth": 32,
+    "renderer": "SOFTWARE",
+    "input_sha256": "6b1972a25a1a336f52fe10d627fbe710d97578329112878d0c17a2f6607b6e97",
+    "windows_expected_sha256": "5500a71581ccc9df4501dfdb4380b3d0066cf2e20e1b50bb68188c6fecac06df"
+  },
+  "installed_executable_sha256": "656537d052f67a9e7eb4d4ba2c6f5c890fe34e3d2c47069bcfba01854d96055e",
+  "generated": {
+    "root": "/tmp/olmdg_pf32_case0001_minloader_live_20260806",
+    "loader_sha256": "44056c32800b1f34fbbd2e15234514050fe0233e1a6dbf4fd546b922dffc100a",
+    "payload_sha256": "2f21a1b27066d8097e3cf89cdc3d7ce0e1db33e316f23312fdc67705e0e58a80"
+  },
+  "trace_boundaries": {
+    "loader_trace": "absent",
+    "payload_trace": "not reached",
+    "effect_map": "not reached",
+    "raw_float_output": "not reached",
+    "post_identity": "not reached",
+    "return_json": "absent"
+  },
+  "post_vmmap": "OLMDistanceGradation not mapped; consistent with effect-add not reached",
+  "conclusion": "The minimal loader's first absolute trace write did not occur, so failure remains before loader evaluation at DoScriptFile delivery.",
+  "stop_rule_observed": "Stopped after the one permitted attempt; no retry and no AE termination or restart.",
+  "pf32_smart": "unsupported by actual AEX; unclaimed"
+}

@@ -132,5 +132,45 @@ int main() {
     status |= run_fixture<PF_Pixel16>("padded-row-guard", kWidth * static_cast<A_long>(sizeof(PF_Pixel16)) + 8, true);
     status |= run_fixture<PF_PixelFloat>("tiny", kWidth * static_cast<A_long>(sizeof(PF_PixelFloat)), false);
     status |= run_fixture<PF_PixelFloat>("padded-row-guard", kWidth * static_cast<A_long>(sizeof(PF_PixelFloat)) + 16, true);
+
+    // The production typed kernel owns same-shape worlds only.  These
+    // adversarial fixtures prove that unresolved host resize/layout staging
+    // fails closed before any source or destination byte is touched.
+    {
+        std::array<PF_ParamDef, DG_NUM_PARAMS> storage;
+        PF_ParamDef *params[DG_NUM_PARAMS];
+        set_params(storage, params);
+        PF_InData in_data{};
+        in_data.downsample_x = {1, 1};
+        in_data.downsample_y = {1, 1};
+        std::array<std::uint8_t, 128> source{};
+        std::array<std::uint8_t, 128> destination{};
+        destination.fill(kCanary);
+        const auto original = destination;
+        PF_LayerDef input_world{source.data(), 3, 2, 3 * 4, 8, {0, 0, 3, 2}};
+        PF_LayerDef output_world{destination.data(), 2, 2, 2 * 4, 8, {0, 0, 2, 2}};
+        params[DG_INPUT]->u.ld = input_world;
+        const PF_Err err = RenderBits<PF_Pixel8>(&in_data, params, &input_world, &output_world);
+        if (err != PF_Err_BAD_CALLBACK_PARAM || destination != original) {
+            std::fprintf(stderr, "shape-mismatch-fail-closed: err=%d destination_changed=%d\n",
+                         static_cast<int>(err), destination != original);
+            status |= 1;
+        } else {
+            std::printf("PASS shape-mismatch-fail-closed depth=8 destination_unchanged=1\n");
+        }
+
+        input_world.width = output_world.width = 3;
+        input_world.rowbytes = 3 * 4 - 1;
+        output_world.rowbytes = 3 * 4;
+        destination = original;
+        const PF_Err short_err = RenderBits<PF_Pixel8>(&in_data, params, &input_world, &output_world);
+        if (short_err != PF_Err_BAD_CALLBACK_PARAM || destination != original) {
+            std::fprintf(stderr, "short-row-fail-closed: err=%d destination_changed=%d\n",
+                         static_cast<int>(short_err), destination != original);
+            status |= 1;
+        } else {
+            std::printf("PASS short-row-fail-closed depth=8 destination_unchanged=1\n");
+        }
+    }
     return status;
 }

@@ -308,6 +308,34 @@ static void gauss_blur_separable(float *mat, long w, long h, int ksize)
 	}
 }
 
+// cvSmooth mode 1 (CV_BLUR) used by Constant + Blur is a normalized box
+// filter with replicated borders. Keep it separate from the Gaussian path
+// used by the other interpolation modes.
+static void box_blur_separable(float *mat, long w, long h, int ksize)
+{
+	if (ksize <= 1) return;
+	const int half = ksize / 2;
+	const float area = (float)(ksize * ksize);
+	std::vector<float> src(mat, mat + (size_t)w * h);
+	for (long y = 0; y < h; ++y) {
+		for (long x = 0; x < w; ++x) {
+			float sum = 0.0f;
+			for (int j = -half; j <= half; ++j) {
+				long yi = y + j;
+				if (yi < 0) yi = 0;
+				if (yi >= h) yi = h - 1;
+				for (int i = -half; i <= half; ++i) {
+					long xi = x + i;
+					if (xi < 0) xi = 0;
+					if (xi >= w) xi = w - 1;
+					sum += src[(size_t)yi * w + xi];
+				}
+			}
+			mat[(size_t)y * w + x] = sum / area;
+		}
+	}
+}
+
 // ============================================================================
 // Helpers: pixel fetch / store (alpha, red, green, blue order in AE)
 // ============================================================================
@@ -418,6 +446,7 @@ static void debug_dump_pf16_boundary_point(
 struct DistanceField {
 	std::vector<float> x;    // normalized distance [0,1]
 	std::vector<float> d_alpha; // 0 or 1 — output alpha mask
+	std::vector<float> pre_blur_x; // Constant+Blur writer's unblurred binary field
 	long w, h;
 };
 
@@ -595,25 +624,28 @@ static void build_distance_field(
 	                      p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0);
 	if (constant_blur) {
 		for (long i = 0; i < w * h; ++i) df.x[i] = (df.x[i] >= 1.0f) ? 1.0f : 0.0f;
+		df.pre_blur_x = df.x;
 	}
 
 	// Blur: blur_size is full-res pixels.
 	//   BLUR_MODE_NO_SCALE (2): use size as-is at full-res even when downsampled
 	//   BLUR_MODE_SCALE    (3): scale to current-res pixels
-	// Constant interpolation blurs a binary full-distance field; Windows refs
-	// show Blur Size 30 behaving like radius 60 for this path.
+	// Constant interpolation uses cvSmooth CV_BLUR: a normalized box filter
+	// over the binary field. Other interpolation modes use Gaussian blur.
 	if (p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0) {
 		long bs = p.blur_size;
 		if (p.blur_mode == BLUR_MODE_SCALE) {
 			bs = (long)((float)p.blur_size * ds + 0.5f);
 		}
-		if (constant_blur) bs *= 2;
 		if (bs < 1) bs = 1;
 		int ksize = (int)(2 * bs + 1);
-		if (ksize > 1) gauss_blur_separable(df.x.data(), w, h, ksize);
+		if (ksize > 1) {
+			if (constant_blur) box_blur_separable(df.x.data(), w, h, ksize);
+			else gauss_blur_separable(df.x.data(), w, h, ksize);
+		}
 	}
 
-	// The Windows 16bpc path merges the float field into an OpenCV image, then
+	// The Windows typed paths merge the float field into an OpenCV image, then
 	// stores it through cvConvertScale before PF Iterate16 reads it back. Match
 	// that PF16 boundary here; keeping the float directly changes half-integer
 	// cases before compose. The 8bpc and float paths have separate exactness
@@ -621,6 +653,19 @@ static void build_distance_field(
 	if (p.pixel_size == sizeof(PF_Pixel16)) {
 		for (float &value : df.x) {
 			value = olm::distancegradation::roundtrip_normalized_pf16_even(value);
+		}
+	} else if (p.pixel_size == sizeof(PF_Pixel8)) {
+		// Independent PF8 fieldgen->compose capture proves the corresponding
+		// cvConvertScale nearest-even byte staging before FUN_181170870.
+		for (float &value : df.x) {
+			float scaled = value * 255.0f;
+			int word = (scaled < 0.0f) ? 0 : (scaled > 255.0f ? 255 : (int)lrintf(scaled));
+			value = (float)word / 255.0f;
+		}
+		for (float &value : df.d_alpha) {
+			float scaled = value * 255.0f;
+			int word = (scaled < 0.0f) ? 0 : (scaled > 255.0f ? 255 : (int)lrintf(scaled));
+			value = (float)word / 255.0f;
 		}
 		for (float &value : df.d_alpha) {
 			value = olm::distancegradation::roundtrip_normalized_pf16_even(value);
@@ -633,10 +678,23 @@ static void build_distance_field(
 // ============================================================================
 static inline void compose_pixel(
 	float src_a, float src_r, float src_g, float src_b,
-	float /*unused*/, float X,
+	float field_aux, float X,
 	const DGParams &p,
 	float &out_a, float &out_r, float &out_g, float &out_b)
 {
+	// The classic PF32 owner bypasses the typed integer color callback for this
+	// branch and merges its raw float ownership field into all four channels.
+	// Consequently Sphere and invert do not transform the exported scalar.
+	if (p.pixel_size == sizeof(PF_PixelFloat) &&
+	    p.in_out == IN_OUT_OUTSIDE && p.render_mode == RENDER_MODE_RGB && !p.use_bg) {
+		out_a = out_r = out_g = out_b = X;
+		return;
+	}
+	if (p.pixel_size == sizeof(PF_PixelFloat) &&
+	    p.in_out == IN_OUT_BOTH && p.render_mode == RENDER_MODE_LAYER && !p.use_bg) {
+		out_a = out_r = out_g = out_b = X;
+		return;
+	}
 	// Invert: default (OFF) flips X to 1 - X; checked (ON) keeps X as-is.
 	if (!p.invert) X = 1.0f - X;
 
@@ -662,6 +720,13 @@ static inline void compose_pixel(
 	case IN_OUT_OUTSIDE: d_alpha = 1.0f - src_a; if (d_alpha < 0) d_alpha = 0; break;
 	default:             d_alpha = 1.0f; break; // BOTH
 	}
+	if (p.pixel_size == sizeof(PF_PixelFloat) &&
+	    p.in_out == IN_OUT_INSIDE && p.render_mode == RENDER_MODE_RGB && !p.use_bg &&
+	    p.interp_mode == INTERP_CONSTANT && p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0) {
+		out_a = out_r = out_g = X;
+		out_b = field_aux;
+		return;
+	}
 
 	// RGB selection:
 	//   render_mode == 1 (RGB)   -> gradation color (default)
@@ -673,14 +738,41 @@ static inline void compose_pixel(
 		ir = src_r; ig = src_g; ib = src_b;
 	}
 
+	// The PF32 whole-render owner does not enter the PF8/PF16 color callback.
+	// In the independently captured Inside + RGB + background branch it merges
+	// the final scalar ownership field into all four float channels. Multiple
+	// opaque/transparent and field 0/1 discriminators, plus the full 17x11
+	// owner output, ground this branch without importing integer staging rules.
+	if (p.pixel_size == sizeof(PF_PixelFloat) &&
+	    p.in_out == IN_OUT_INSIDE && p.render_mode == RENDER_MODE_RGB && p.use_bg) {
+		float scalar = d_alpha * X;
+		out_a = out_r = out_g = out_b = scalar;
+		return;
+	}
+
 	if (p.use_bg) {
 		float oneX = 1.0f - X;
 		out_r = oneX * p.bg_color.red   + X * ir;
 		out_g = oneX * p.bg_color.green + X * ig;
 		out_b = oneX * p.bg_color.blue  + X * ib;
 		out_a = d_alpha;            // use_bg: alpha = d_alpha (full)
+		// The PF16 AEX callback clears the complete pixel when an Inside
+		// source is outside the ownership mask.  Keeping background RGB under
+		// zero alpha produced hidden color that is absent from the typed AEX
+		// output.  Bound this to the proven PF16/Inside/use-bg branch.
+		if ((p.pixel_size == sizeof(PF_Pixel16) || p.pixel_size == sizeof(PF_Pixel8) ||
+		     p.pixel_size == sizeof(PF_PixelFloat)) &&
+		    p.in_out == IN_OUT_INSIDE && d_alpha <= 0.0f) {
+			out_r = out_g = out_b = 0.0f;
+		}
 	} else {
 		out_a = d_alpha * X;        // no bg: alpha = d_alpha * X
+		if ((p.pixel_size == sizeof(PF_Pixel16) || p.pixel_size == sizeof(PF_Pixel8)) &&
+		    p.in_out == IN_OUT_OUTSIDE && p.render_mode == RENDER_MODE_RGB &&
+		    d_alpha <= 0.0f) {
+			out_r = out_g = out_b = 0.0f;
+			return;
+		}
 		if (p.render_mode == RENDER_MODE_LAYER && src_a > 0.0f) {
 			// Windows 16bpc Layer/no-bg stores RGB from the straight source
 			// ownership mask, while alpha still carries the gradation field.
@@ -723,7 +815,8 @@ static inline void compose_pixel(
 			if (straight_r < 0.0f) straight_r = 0.0f; else if (straight_r > 1.0f) straight_r = 1.0f;
 			if (straight_g < 0.0f) straight_g = 0.0f; else if (straight_g > 1.0f) straight_g = 1.0f;
 			if (straight_b < 0.0f) straight_b = 0.0f; else if (straight_b > 1.0f) straight_b = 1.0f;
-			float rgb_alpha = (p.pixel_size == sizeof(PF_Pixel8)) ? out_a : 1.0f;
+			float rgb_alpha = (p.pixel_size == sizeof(PF_Pixel8) &&
+			                   p.in_out != IN_OUT_BOTH) ? out_a : 1.0f;
 			out_r = straight_r * rgb_alpha;
 			out_g = straight_g * rgb_alpha;
 			out_b = straight_b * rgb_alpha;
@@ -733,6 +826,24 @@ static inline void compose_pixel(
 			out_b = ib;
 		}
 	}
+}
+
+// Typed PF16 compose/store leaf. Keeping the AEX-grounded float-to-word
+// boundary beside compose_pixel lets CPU fixtures exercise the same
+// production operation used by RenderBits, without reconstructing an AE host.
+static inline PF_Pixel16 compose_pf16_pixel(
+	float src_a, float src_r, float src_g, float src_b,
+	float d_alpha, float field_x, const DGParams &p,
+	float &oa, float &orv, float &og, float &ob)
+{
+	compose_pixel(src_a, src_r, src_g, src_b, d_alpha, field_x,
+	              p, oa, orv, og, ob);
+	PF_Pixel16 out;
+	out.alpha = clamp16(oa);
+	out.red   = clamp16(orv);
+	out.green = clamp16(og);
+	out.blue  = clamp16(ob);
+	return out;
 }
 
 // ============================================================================
@@ -840,15 +951,13 @@ template<> void shade_scanline<PF_Pixel16>(
 			}
 		}
 		float oa, orv, og, ob;
-		compose_pixel(sa, sr, sg, sb, a_row[i], x_row[i], p, oa, orv, og, ob);
-		u_short da = clamp16(oa);
-		u_short dr = clamp16(orv);
-		u_short dg = clamp16(og);
-		u_short db = clamp16(ob);
-		dst[i].alpha = da;
-		dst[i].red   = dr;
-		dst[i].green = dg;
-		dst[i].blue  = db;
+		PF_Pixel16 stored = compose_pf16_pixel(
+			sa, sr, sg, sb, a_row[i], x_row[i], p, oa, orv, og, ob);
+		u_short da = stored.alpha;
+		u_short dr = stored.red;
+		u_short dg = stored.green;
+		u_short db = stored.blue;
+		dst[i] = stored;
 		if (pf16_capture_path && pf16_capture_path[0] &&
 		    pf16_capture_case && pf16_capture_case[0] &&
 		    debug_point_selected(points, i, y)) {
@@ -904,6 +1013,17 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
            PF_LayerDef *input, PF_LayerDef *output)
 {
 	PF_Err err = PF_Err_NONE;
+	// RenderBits is a same-shape typed kernel.  The Windows owner stages any
+	// host resize/depth conversion before entering its typed body, and the Mac
+	// port must not silently reinterpret a differently-sized or short-stride
+	// host world.  Fail closed at that boundary instead of reading past a row.
+	if (!input || !output || !input->data || !output->data ||
+	    input->width != output->width || input->height != output->height ||
+	    input->width < 0 || input->height < 0 ||
+	    input->rowbytes < input->width * (A_long)sizeof(P) ||
+	    output->rowbytes < output->width * (A_long)sizeof(P)) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
 
 	DGParams p; AEFX_CLR_STRUCT(p);
 	ERR(FetchParams(in_data, params, &p));
@@ -935,7 +1055,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 		const P *src = (const P *)((char *)input->data  + (size_t)y * input->rowbytes);
 		P *dst       = (P *)      ((char *)output->data + (size_t)y * output->rowbytes);
 		const float *xrow = df.x.data()       + (size_t)y * w;
-		const float *arow = df.d_alpha.data() + (size_t)y * w;
+		const float *arow = (df.pre_blur_x.empty() ? df.d_alpha.data() : df.pre_blur_x.data()) + (size_t)y * w;
 		shade_scanline<P>(src, dst, xrow, arow, p, w, h, y, input);
 	}
 
@@ -997,6 +1117,74 @@ SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extr
 	return err;
 }
 
+// Windows Smart PF16 enters its typed iterator with the source in params[0]
+// and a scalar field already staged in the destination world.  The callback
+// preserves source ownership in alpha and expands destination green (the
+// staged field lane) to RGB.  Keep this separate from classic RenderBits:
+// classic PF16 owns field generation, while this Smart boundary owns only the
+// final typed merge.
+static PF_Err
+RenderSmartPF16PreseededField(const PF_EffectWorld *input_world,
+                             PF_EffectWorld *output_world)
+{
+	if (!input_world || !output_world || !input_world->data || !output_world->data ||
+	    input_world->width != output_world->width ||
+	    input_world->height != output_world->height ||
+	    input_world->width < 0 || input_world->height < 0 ||
+	    input_world->rowbytes < input_world->width * (A_long)sizeof(PF_Pixel16) ||
+	    output_world->rowbytes < output_world->width * (A_long)sizeof(PF_Pixel16)) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	for (A_long y = 0; y < input_world->height; ++y) {
+		const PF_Pixel16 *src = reinterpret_cast<const PF_Pixel16 *>(
+			reinterpret_cast<const char *>(input_world->data) + (size_t)y * input_world->rowbytes);
+		PF_Pixel16 *dst = reinterpret_cast<PF_Pixel16 *>(
+			reinterpret_cast<char *>(output_world->data) + (size_t)y * output_world->rowbytes);
+		for (A_long x = 0; x < input_world->width; ++x) {
+			const uint16_t field = dst[x].green;
+			dst[x].alpha = src[x].alpha;
+			dst[x].red = dst[x].green = dst[x].blue = field;
+		}
+	}
+	return PF_Err_NONE;
+}
+
+// The PF8 Smart callback is a separate typed contract: destination green is
+// decoded as the 8-bit field, alpha uses the callback's float truncation path,
+// and RGB is opaque white.  Do not route it through PF16 word quantization.
+static PF_Err
+RenderSmartPF8PreseededField(const PF_EffectWorld *input_world,
+                            PF_EffectWorld *output_world)
+{
+	if (!input_world || !output_world || !input_world->data || !output_world->data ||
+	    input_world->width != output_world->width ||
+	    input_world->height != output_world->height ||
+	    input_world->width < 0 || input_world->height < 0 ||
+	    input_world->rowbytes < input_world->width * (A_long)sizeof(PF_Pixel8) ||
+	    output_world->rowbytes < output_world->width * (A_long)sizeof(PF_Pixel8)) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	for (A_long y = 0; y < input_world->height; ++y) {
+		const PF_Pixel8 *src = reinterpret_cast<const PF_Pixel8 *>(
+			reinterpret_cast<const char *>(input_world->data) + (size_t)y * input_world->rowbytes);
+		PF_Pixel8 *dst = reinterpret_cast<PF_Pixel8 *>(
+			reinterpret_cast<char *>(output_world->data) + (size_t)y * output_world->rowbytes);
+		for (A_long x = 0; x < input_world->width; ++x) {
+			const uint8_t field_byte = dst[x].green;
+			if (src[x].alpha == 0) {
+				dst[x].alpha = 0;
+				dst[x].red = dst[x].green = dst[x].blue = field_byte;
+				continue;
+			}
+			const float src_a = (float)src[x].alpha * (1.0f / 255.0f);
+			const float field = (float)field_byte * (1.0f / 255.0f);
+			dst[x].alpha = (uint8_t)(src_a * (1.0f - field) * 255.0f);
+			dst[x].red = dst[x].green = dst[x].blue = 255;
+		}
+	}
+	return PF_Err_NONE;
+}
+
 static PF_Err
 SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra)
 {
@@ -1030,9 +1218,9 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 		(void)bps;
 		short depth = extra->input->bitdepth;
 		if (depth == 8) {
-			err = RenderBits<PF_Pixel8>(in_data, params, input_world, output_world);
+			err = RenderSmartPF8PreseededField(input_world, output_world);
 		} else if (depth == 16) {
-			err = RenderBits<PF_Pixel16>(in_data, params, input_world, output_world);
+			err = RenderSmartPF16PreseededField(input_world, output_world);
 		} else {
 			err = RenderBits<PF_PixelFloat>(in_data, params, input_world, output_world);
 		}

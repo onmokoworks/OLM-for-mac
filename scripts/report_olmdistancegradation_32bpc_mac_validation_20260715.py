@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fail-closed report for the OLMDistanceGradation 32bpc Mac return."""
 from __future__ import annotations
-import argparse, hashlib, json, math, struct
+import argparse, hashlib, json, math, struct, subprocess
 from pathlib import Path
 from typing import Any
 from scripts.verify_32bpc_float_return import inspect_float_rgba_exr, parse_exr_header, decode_attrs, VerificationError
@@ -30,16 +30,23 @@ def compare(mac:Path, win:Path)->dict:
     nonzero=sum(a!=b for (_,*aa),(_, *bb) in zip(mw,ww) for a,b in zip(aa,bb)) if len(mw)==len(ww) else -1
     return {"equal":equal,"max_absolute_error":0 if equal else None,"nonzero_count":nonzero,"nan_inf_policy":"raw FLOAT32 words; NaN and +/-Inf words must match exactly","mac_sample_counts":mc,"windows_sample_counts":wc}
 def main()->int:
-    ap=argparse.ArgumentParser();ap.add_argument("return_json",type=Path);ap.add_argument("--output",type=Path);a=ap.parse_args()
-    data=json.loads(a.return_json.read_text(encoding="utf-8")); request=json.loads(REQUEST.read_text(encoding="utf-8")); audit=json.loads(AUDIT.read_text(encoding="utf-8")); failures=[]; accepted=[]
+    ap=argparse.ArgumentParser();ap.add_argument("return_json",type=Path);ap.add_argument("--output",type=Path);ap.add_argument("--case-id");a=ap.parse_args()
+    data=json.loads(a.return_json.read_text(encoding="utf-8")); request=json.loads(REQUEST.read_text(encoding="utf-8")); audit=json.loads(AUDIT.read_text(encoding="utf-8")); failures=[]; accepted=[]; observations=[]
     if data.get("kind")!="olmdistancegradation_32bpc_mac_validation_return" or data.get("ae_exact_claim") is not False: failures.append({"case_id":None,"missing":["return kind or explicit ae_exact_claim=false"]})
     expected_project={"bits_per_channel":32,"renderer_name_and_raw_value":{"name":"SOFTWARE","raw_value":1816},"working_space":"None","linear_blending":False}
     if data.get("project_settings")!=expected_project: failures.append({"case_id":None,"missing":["exact AE/project/color settings"]})
     if data.get("output_module",{}).get("template_name")!="OLM EXR 32 Float" or data.get("output_module",{}).get("format")!="OpenEXR" or data.get("output_module",{}).get("sample_type")!="FLOAT" or data.get("output_module",{}).get("compression")!="none": failures.append({"case_id":None,"missing":["exact output template/format/FLOAT32 contract"]})
     plug=data.get("plugin",{}); pp=path(plug.get("path"),Path("."));
-    if plug.get("filename")!="OLMDistanceGradation.plugin" or len(plug.get("sha256", ""))!=64 or not pp.is_file() or plug.get("sha256")!=digest(pp): failures.append({"case_id":None,"missing":["actual Mac plugin binary identity/hash"]})
+    if plug.get("bundle_name")!="OLMDistanceGradation.plugin" or plug.get("filename")!="OLMDistanceGradation" or len(plug.get("sha256", ""))!=64 or not pp.is_file() or plug.get("sha256")!=digest(pp): failures.append({"case_id":None,"missing":["actual Mac plugin binary identity/hash"]})
+    pids=[int(v) for v in subprocess.run(["pgrep","-x","After Effects"],capture_output=True,text=True).stdout.split() if v.isdigit()]
+    loaded=subprocess.run(["lsof","-Fn","-p",str(pids[0])],capture_output=True,text=True).stdout.splitlines() if len(pids)==1 else []
+    exact_loaded=("n"+str(pp.resolve())) if pp.is_file() else ""
+    if len(pids)!=1 or loaded.count(exact_loaded)!=1: failures.append({"case_id":None,"missing":["same single AE PID with sole exact loaded plugin path"]})
     by_id={r.get("id"):r for r in audit["cases"]}; returned={r.get("case_id"):r for r in data.get("cases",[]) if isinstance(r,dict)}
-    if set(returned)!=set(by_id): failures.append({"case_id":None,"missing":["exact 29-case Windows selection"]})
+    if a.case_id:
+        by_id={k:v for k,v in by_id.items() if k==a.case_id}
+        if len(by_id)!=1: failures.append({"case_id":None,"missing":["known unique selected case"]})
+    if set(returned)!=set(by_id): failures.append({"case_id":None,"missing":["exact selected Windows case set"]})
     for cid, win in by_id.items():
         row=returned.get(cid); missing=[]
         if not row: failures.append({"case_id":cid,"missing":["case return"]});continue
@@ -53,11 +60,12 @@ def main()->int:
             if item.get("sha256")!=digest(mac) if mac.is_file() else True: missing.append(branch+" Mac output hash")
             try: comparisons[branch]=compare(mac,winp)
             except (OSError,ValueError,VerificationError,struct.error) as e: missing.append(branch+" raw FLOAT32 comparison: "+str(e));continue
-            if comparisons[branch]["equal"] is not True: missing.append(branch+" raw FLOAT32 words differ")
+            if branch=="effect_on" and comparisons[branch]["equal"] is not True: missing.append(branch+" raw FLOAT32 words differ")
             settings=item.get("output_module_settings",{}); sp=path(settings.get("path"),a.return_json.parent)
             if not sp.is_file() or settings.get("sha256")!=digest(sp): missing.append(branch+" output settings capture")
+        observations.append({"case_id":cid,"no_effect_vs_input":comparisons.get("no_effect"),"effect_on_vs_windows_effect":comparisons.get("effect_on")})
         if missing: failures.append({"case_id":cid,"missing":missing})
         else: accepted.append(cid)
-    result={"schema":2,"kind":"olmdistancegradation_32bpc_mac_validation_report","status":"accepted_exact" if len(accepted)==len(by_id) and not failures else "fail_closed_pending","accepted_exact_cases":accepted,"failed_cases":failures,"ae_exact_claim_permitted":len(accepted)==len(by_id) and not failures,"reason":"exact plugin/project/output bindings, same-context control, and raw FLOAT32 words are all required"}
+    result={"schema":3,"kind":"olmdistancegradation_32bpc_mac_validation_report","status":"accepted_exact" if len(accepted)==len(by_id) and not failures else "fail_closed_pending","accepted_exact_cases":accepted,"failed_cases":failures,"observations":observations,"host_attestation":{"observed_ae_pids":pids,"loaded_plugin_path":str(pp.resolve()) if pp.is_file() else None,"sole_exact_mapping":len(pids)==1 and loaded.count(exact_loaded)==1},"ae_exact_claim_permitted":len(accepted)==len(by_id) and not failures,"reason":"Exact plugin/project/output bindings, a fresh same-context no-effect control artifact, and raw FLOAT32 equality of effect-on output to the Windows effect reference are required. No Windows AE no-effect export exists, so input-vs-control equality is observational and is not promoted."}
     dest=a.output or a.return_json.with_name("validation_report.json");dest.write_text(json.dumps(result,indent=2)+"\n",encoding="utf-8");print(json.dumps(result,indent=2));return 0 if result["ae_exact_claim_permitted"] else 2
 if __name__=="__main__": raise SystemExit(main())

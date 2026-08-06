@@ -1,0 +1,25 @@
+{
+  "schema": "olmdistancegradation.mac-ae-es3-loader-static/1",
+  "status": "PASS_MINIMAL_ES3_LOADER_STATIC",
+  "ae_executed": false,
+  "loader": {
+    "generated_path": "/tmp/olmdg_pf32_case0001_es3_loader_static_20260806/run_mac_wrapper.jsx",
+    "absolute_trace_first_write": "LOADER_ENTER payload=...",
+    "payload_dispatch": "try { $.evalFile(payloadFile) }",
+    "caught_fields": ["Error.toString", "line", "fileName"],
+    "alert": false,
+    "rethrow": false,
+    "json_api_dependency": false
+  },
+  "payload": {
+    "generated_path": "/tmp/olmdg_pf32_case0001_es3_loader_static_20260806/run_mac_olmdistancegradation_32bpc_validation.jsx",
+    "runtime_failure_trace": "PAYLOAD_FAIL error=... line=... file=...",
+    "rethrow": false,
+    "json_api_dependency": false
+  },
+  "target": "PF32 classic olmdistancegradation_basic__case_0001",
+  "installed_sha256": "656537d052f67a9e7eb4d4ba2c6f5c890fe34e3d2c47069bcfba01854d96055e",
+  "ae_pid_observed_alive_but_not_operated": 10665,
+  "test": "tools/emulation/test_olmdistancegradation_mac_ae_es3_loader_20260806.py",
+  "pf32_smart": "unsupported by actual AEX; unclaimed"
+}
