@@ -1,0 +1,69 @@
+{
+  "ae_parameter_contract": {
+    "default": 2.4,
+    "maximum": 2.4,
+    "minimum": 1.0,
+    "source": "retained Windows AE case final_random10_olm_smoother_v2_09 parameter readback",
+    "tested_float32": 1.932800054550171
+  },
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "No other intermediate Gamma Value",
+    "No key interaction",
+    "No other palette/geometry",
+    "No AE host runtime claim"
+  ],
+  "decode_lut_sha256": "11056c2feda87964204a53471e172ae6fb6039a0c3120f6277c7ff115fe88cba",
+  "fixtures": [
+    {
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1502,
+      "depth": "PF16",
+      "equal": true,
+      "padding_per_row": 6,
+      "padding_preserved": true,
+      "raw_hex": "008000800080008000801c770e03c4090080000000000080a5a5a5a5a5a50080000000800000008000400060002000804c699313944ea5a5a5a5a5a5",
+      "worker_instructions": 5162
+    },
+    {
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1502,
+      "depth": "PF32",
+      "equal": true,
+      "padding_per_row": 12,
+      "padding_preserved": true,
+      "raw_hex": "0000803f0000803f0000803f0000803f0000803f3b376e3f7274c33c713d9c3d0000803f00000000000000000000803fa5a5a5a5a5a5a5a5a5a5a5a50000803f000000000000803f000000000000803f0000003f0000403ffdff7f3e0000803fbc98523f579a1c3e59271d3fa5a5a5a5a5a5a5a5a5a5a5a5",
+      "worker_instructions": 5097
+    }
+  ],
+  "inverse_lut_sha256": "b7014467dcae06109111302b8c930494950d27b817d1390d6434605795772fbc",
+  "palette_contract": {
+    "matched_pixels": [
+      0,
+      1
+    ],
+    "nonmatching_pixels": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "ordered_rgba": [
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "scope": "PF16/PF32 natural v2 Gamma Colors, Gamma Value=1.93280005455017 retained case-09 intermediate value, ordered [white,red], key off, padded3x2, captured LUTs",
+  "verdict": "PASS_V2_GAMMA_COLORS_GAMMA_VALUE_1_9328_INTERMEDIATE_TO_PRODUCTION_EXACT"
+}

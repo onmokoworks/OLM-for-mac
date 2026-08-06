@@ -23,13 +23,16 @@
       "non_invert_white_color_endpoint": "proven exact/inside/outside/far",
       "invert_threshold": "proven",
       "non_invert_plus_gamma_colors": "proven",
-      "invert_plus_gamma_colors": "proven"
+      "invert_plus_gamma_colors": "proven",
+      "invert_white_color_endpoint": "proven exact/inside/outside/far",
+      "invert_white_plus_gamma_colors": "proven ordered [red,white] owner/classifier/typed interaction"
     },
     "gamma": {
       "none": "proven",
       "all_colors": "proven",
       "gamma_colors": "proven",
       "value_1_identity_endpoint": "proven",
+      "value_1_9328_retained_case09_intermediate": "proven",
       "value_2_4_default_upper_endpoint": "proven"
     },
     "smoothing": {
@@ -49,7 +52,7 @@
     }
   },
   "largest_closed_gap_this_round": "Extra Smooth=100 public upper endpoint",
-  "next_largest_natural_gap": "Invert-key white color endpoint, consolidated current-fixture PF8 coverage, or an intermediate Gamma Value",
+  "next_largest_natural_gap": "Consolidated current-fixture PF8 coverage, other intermediate Gamma Values, or other key color endpoints",
   "constraints": [
     "Do not generalize palette count above 5",
     "No AE-host claim from emulation or adapter-only command tests"

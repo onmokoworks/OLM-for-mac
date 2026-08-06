@@ -6,7 +6,7 @@
 | Versions | v1 and v2 actual classifier/worker → production for PF16/PF32 | No new host claim |
 | Depths | PF16 and PF32 current emulation fixtures; PF8 prior ledger slices | Consolidated new PF8 fixture is optional |
 | Key | non-invert/invert thresholds, non-invert and invert white endpoints, both Gamma Colors interactions including invert-white | Other color endpoints and larger interaction cross-products |
-| Gamma | None, All Colors, Gamma Colors, values 1.0 and 2.4 | Intermediate values |
+| Gamma | None, All Colors, Gamma Colors, values 1.0, retained case-09 intermediate 1.9328, and 2.4 | Other intermediate values |
 | Smoothing | Smoothness 0/100, Range 0/1/255, Extra Smooth 0/100 | Other cross-parameter combinations |
 | Palette | natural counts 1..5, reorder, duplicate, tolerance | Count 6 is direct-owner-only and forbidden publicly |
 

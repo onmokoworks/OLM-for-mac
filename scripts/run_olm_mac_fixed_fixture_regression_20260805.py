@@ -205,6 +205,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmsmoother2_gamma_palette_count6_contract_cap_20260805.py"),
             (sys.executable, "tools/emulation/test_olmsmoother2_v2_gamma_palette5_reordered_actual_aex_20260805.py"),
             (sys.executable, "tools/emulation/test_olmsmoother2_v2_gamma_value1_actual_aex_20260805.py"),
+            (sys.executable, "tools/emulation/test_olmsmoother2_v2_gamma_value19328_actual_aex_20260806.py"),
             (sys.executable, "tools/emulation/test_olmsmoother2_v2_smoothness0_actual_aex_20260805.py"),
             (sys.executable, "tools/emulation/test_olmsmoother2_v2_smoothrange0_actual_aex_20260805.py"),
             (sys.executable, "tools/emulation/test_olmsmoother2_v2_extra_smooth100_actual_aex_20260805.py"),
