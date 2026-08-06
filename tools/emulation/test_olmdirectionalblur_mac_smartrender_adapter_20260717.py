@@ -59,6 +59,7 @@ static PF_Err checkout_param(PF_InData*,A_long index,A_long,A_long,A_long,PF_Par
 static inline const char *GetStringPtr(int) {{ return ""; }} static PF_Err register_effect(...) {{ return PF_Err_NONE; }}
 #define OLMDIRECTIONALBLUR_H
 #define _H_AEFX_SUITE_HELPER_TEMPLATE
+#define OLM_DBLUR_TEST_SEAM 1
 #define AE_OS_MAC 1
 #define DllExport
 #define PF_Stage_DEVELOP 0
@@ -114,6 +115,29 @@ int main() {{ std::printf("{{\\"status\\":\\"pass\\",\\"cases\\":["); bool first
         '\"checkout_layer_pixels\":2,\"checkout_output\":1,\"checkin_layer_pixels\":2',
     )
     generated = generated.replace(
+        'if(!first)std::printf(",");',
+        '''OLMDirectionalBlurInfo unsupported{};
+        unsupported.angle_deg=0.0; unsupported.brightness_gain=1.0;
+        unsupported.front_strength=1; unsupported.noise_type=1;
+        unsupported.seed=1; unsupported.thickness=10.0;
+        unsupported.render_scale_x=unsupported.render_scale_y=1.0;
+        if(d==16) unsupported.back_strength=1;
+        else unsupported.front_alpha_fade=1;
+        std::fill(outb.begin(),outb.end(),OUT_PAD);
+        int unsupported_exact=0;
+        PF_Err unsupported_err=OLMDirectionalBlurTestRenderWorld(
+          &in,&out,&unsupported,d,&unsupported_exact);
+        bool unsupported_untouched=std::all_of(outb.begin(),outb.end(),
+          [](std::uint8_t v){return v==OUT_PAD;});
+        if(unsupported_err!=PF_Err_BAD_CALLBACK_PARAM || unsupported_exact!=0 ||
+           !unsupported_untouched) {
+          std::fprintf(stderr,"unsupported depth=%d err=%d exact=%d untouched=%d\\n",
+            d,(int)unsupported_err,unsupported_exact,unsupported_untouched);
+          return 40+d;
+        }
+        if(!first)std::printf(",");''',
+    )
+    generated = generated.replace(
         "before=inb; PF_EffectWorld",
         """before=inb; std::vector<std::uint8_t> expected(rb*HEIGHT,OUT_PAD);
         if(d==16) {
@@ -158,6 +182,7 @@ def main() -> int:
         case["smart_render_callbacks"]["checkin_layer_pixels"] = 2
         case["smart_render_callbacks"]["checked_layers"] = [0, 17]
         case["public_effectmain_exact"] = True
+        case["unsupported_parameter_contract"] = "fail_closed_output_untouched"
     report.update({
         "source": str(SOURCE.relative_to(ROOT)),
         "scope": "Mac-local source-included public EffectMain PF32/PF16 SmartRender output exactly matches the typed core; no interactive AE/Windows claim",

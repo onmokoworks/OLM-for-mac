@@ -555,8 +555,9 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			}
 			return PF_Err_NONE;
 		}
-		CopyWorld<PF_Pixel16>(input, output);
-		return PF_Err_NONE;
+		// Do not make a missing PF16 port look like a successful identity
+		// render. Extend the predicate only with an actual-AEX byte oracle.
+		return PF_Err_BAD_CALLBACK_PARAM;
 	}
 	if (bitdepth == 32) {
 		const bool minimal_exact = input && output && input->data && output->data &&
@@ -607,8 +608,9 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 					static_cast<std::size_t>(output->width) * sizeof(PF_PixelFloat));
 			return PF_Err_NONE;
 		}
-		CopyWorld<PF_PixelFloat>(input, output);
-		return PF_Err_NONE;
+		// Do not make a missing PF32 port look like a successful identity
+		// render. Extend the predicate only with an actual-AEX byte oracle.
+		return PF_Err_BAD_CALLBACK_PARAM;
 	}
 	return PF_Err_BAD_CALLBACK_PARAM;
 }
