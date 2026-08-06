@@ -1,0 +1,297 @@
+{
+  "admitted_rule": "integer Inner Strength 1..64 inclusive for the declared tuple and witnessed geometries",
+  "aex": {
+    "identity_exact": true,
+    "owner": "0x180007520",
+    "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+  },
+  "cases": [
+    {
+      "effective_span": 0,
+      "hashes": {
+        "accum": "133b7680e50f0aabe4e684a8f6f6956b8d0bc0c22408eb593089505fe2bdb121",
+        "final_rgba": "0065cc372adfddf592e2eec2bae923b79ba70ca9dcee0afdcade711da07173b0",
+        "max_alpha": "edf7d749b6bb9734e528648f63357c276e343ee1624159e8dcff885915cfbb7b",
+        "output": "388d75dd47fcb954312cf481e93d77fddfcd5018b044eb249adc3f22d86a8d31",
+        "polar": "716f94e45400b1e81763d9b8d0c91810424e84f66b88d31fc71c48f09afc1733",
+        "source_scalar": "460868b09e0f53f289e3a858bba95e644bdb6c19a636a5969289885a7f3552db"
+      },
+      "inner_strength": 1,
+      "matches": {
+        "accum": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "status": "exact"
+    },
+    {
+      "effective_span": 1,
+      "hashes": {
+        "accum": "133b7680e50f0aabe4e684a8f6f6956b8d0bc0c22408eb593089505fe2bdb121",
+        "final_rgba": "0065cc372adfddf592e2eec2bae923b79ba70ca9dcee0afdcade711da07173b0",
+        "max_alpha": "edf7d749b6bb9734e528648f63357c276e343ee1624159e8dcff885915cfbb7b",
+        "output": "388d75dd47fcb954312cf481e93d77fddfcd5018b044eb249adc3f22d86a8d31",
+        "polar": "716f94e45400b1e81763d9b8d0c91810424e84f66b88d31fc71c48f09afc1733",
+        "source_scalar": "460868b09e0f53f289e3a858bba95e644bdb6c19a636a5969289885a7f3552db"
+      },
+      "inner_strength": 2,
+      "matches": {
+        "accum": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "status": "exact"
+    },
+    {
+      "effective_span": 2,
+      "hashes": {
+        "accum": "2c24173a12de3d490b79d7d70a3caab79d722a171e5a8b6bac00bc1f8c3f9e63",
+        "final_rgba": "fbce4637b53d6b4037e75f0d3bc581bfe6da0abe811df97e429e0501ed8cd8ce",
+        "max_alpha": "a08c632065925be98f8995c166b2ca2d36c688977630c3ebc4d18468232ce0b0",
+        "output": "0ffe000566927859a670f441eca251c60ef395a01c637b0c13a8dd364719f0a6",
+        "polar": "716f94e45400b1e81763d9b8d0c91810424e84f66b88d31fc71c48f09afc1733",
+        "source_scalar": "460868b09e0f53f289e3a858bba95e644bdb6c19a636a5969289885a7f3552db"
+      },
+      "inner_strength": 3,
+      "matches": {
+        "accum": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "status": "exact"
+    },
+    {
+      "effective_span": 3,
+      "hashes": {
+        "accum": "bd580ba465530a49b00908bd981af2a1f39dd7894549d709825cd3bdf3f43074",
+        "final_rgba": "1f0b4dc8329c7993db9c5626456b6400ce62825f373fe8756e99adf1f34540e9",
+        "max_alpha": "bf480c6a4860ba73848cf8b37e978df74cfa151fb8f298a33fc74a05ae19d10a",
+        "output": "bc6ee5e84a1148115f657db64e1a575b16186be5e9ee94957ff050461a541cfc",
+        "polar": "716f94e45400b1e81763d9b8d0c91810424e84f66b88d31fc71c48f09afc1733",
+        "source_scalar": "460868b09e0f53f289e3a858bba95e644bdb6c19a636a5969289885a7f3552db"
+      },
+      "inner_strength": 4,
+      "matches": {
+        "accum": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "status": "exact"
+    },
+    {
+      "effective_span": 4,
+      "hashes": {
+        "accum": "80e846e5a9827ebf4078100c2f6cfa19e0f76c2226b2b8fc47514ed5df183ce1",
+        "final_rgba": "cc63a42e6570b2a6b967bc448d2a4be3cc7be7bdbc3ad661fa7acbaebe941407",
+        "max_alpha": "0a3707143ea7f35ede497d37d5ef38254afeab37ef533b63621d416bcec75ad9",
+        "output": "8a7304ea0fca613ae51f5383d969920989df7b537b51524f393a44126f240841",
+        "polar": "716f94e45400b1e81763d9b8d0c91810424e84f66b88d31fc71c48f09afc1733",
+        "source_scalar": "460868b09e0f53f289e3a858bba95e644bdb6c19a636a5969289885a7f3552db"
+      },
+      "inner_strength": 5,
+      "matches": {
+        "accum": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "status": "exact"
+    },
+    {
+      "effective_span": 7,
+      "hashes": {
+        "accum": "5b56ed8aa0587c7dc2e794952f2cbe63ac8ca9177c51a57697a376534be318e1",
+        "final_rgba": "29d4db8170b4b7d63384205a9d96ad17aae3a7d1cfbd376247deece2b3602097",
+        "max_alpha": "f3e6d091f98711e2788f273b593b2c513a120be985702cb6a734fc576e00545e",
+        "output": "a36e2a42281eaba6eeb6f773ac8d51c2c47ae3040424a2af6e3b60e32cbf86a2",
+        "polar": "716f94e45400b1e81763d9b8d0c91810424e84f66b88d31fc71c48f09afc1733",
+        "source_scalar": "460868b09e0f53f289e3a858bba95e644bdb6c19a636a5969289885a7f3552db"
+      },
+      "inner_strength": 8,
+      "matches": {
+        "accum": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "status": "exact"
+    },
+    {
+      "effective_span": 15,
+      "hashes": {
+        "accum": "99b7bb0a2eb620df0a1c1535912c38896141c3c7a6c0a0df7f1e4e1cd24dc7a8",
+        "final_rgba": "2b66fd6a66f595c80d9d36707f99300535a4c4f83c679a7b1827a5105a2fa506",
+        "max_alpha": "940fcbf8c3c8114971459e210272354d0571a6617a46cc1ec0744476f63d2aee",
+        "output": "6ca66cede85f1500e05cf0ed3b573e75331540a62d8f87a734d0399efd4d07b0",
+        "polar": "716f94e45400b1e81763d9b8d0c91810424e84f66b88d31fc71c48f09afc1733",
+        "source_scalar": "460868b09e0f53f289e3a858bba95e644bdb6c19a636a5969289885a7f3552db"
+      },
+      "inner_strength": 16,
+      "matches": {
+        "accum": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "status": "exact"
+    },
+    {
+      "effective_span": 30,
+      "hashes": {
+        "accum": "478a4388a2174b50564d617c5b65441244908eee4021c77be5d545d0faa977e1",
+        "final_rgba": "5068b6f60c8f4e36a01d2bbebd78d9a3d2c70af5fadd0e02b135cdc0e647fd5e",
+        "max_alpha": "d02ba9aa9d17aafbd9c7307bb83e269a0012e57299c9b78e2c5a6b6c0f298e11",
+        "output": "a38bcc0ae220290e6c044985ba3a8164c4d0b6099928c2bd4b0e72790daeab0b",
+        "polar": "716f94e45400b1e81763d9b8d0c91810424e84f66b88d31fc71c48f09afc1733",
+        "source_scalar": "460868b09e0f53f289e3a858bba95e644bdb6c19a636a5969289885a7f3552db"
+      },
+      "inner_strength": 31,
+      "matches": {
+        "accum": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "status": "exact"
+    },
+    {
+      "effective_span": 31,
+      "hashes": {
+        "accum": "0deb7d662fb3e46bd628ff504d8896c30ee333ad70558f1a0c934060bf9aeb9c",
+        "final_rgba": "b7f82a68403ed85b39a1679b8e4035873136d032f4c52dcf3c6796559edb8067",
+        "max_alpha": "e408c68ce5def44f38da631d68d4035858f3f92bd5eb33af98b349ac5ee236e3",
+        "output": "b76062498f64dbfa20dcaac4143b87d4e8f5ae158e29114fba32989666938e65",
+        "polar": "716f94e45400b1e81763d9b8d0c91810424e84f66b88d31fc71c48f09afc1733",
+        "source_scalar": "460868b09e0f53f289e3a858bba95e644bdb6c19a636a5969289885a7f3552db"
+      },
+      "inner_strength": 32,
+      "matches": {
+        "accum": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "status": "exact"
+    },
+    {
+      "effective_span": 32,
+      "hashes": {
+        "accum": "42ab990d611471edcc5d45756a6818054904e7378102490e98aa36005bea2fae",
+        "final_rgba": "d7c4f14a9d435cf19df729f52e677603df042bad48675a47c0b93d7d6023dd94",
+        "max_alpha": "76f922bae9b5a1e5daeefded1177d0932ca859222da086d29acde428fb8d87b3",
+        "output": "872a908c43fa4f2db3c459b3b76091ed1ead71ff3758c008c3c25daa7176db35",
+        "polar": "716f94e45400b1e81763d9b8d0c91810424e84f66b88d31fc71c48f09afc1733",
+        "source_scalar": "460868b09e0f53f289e3a858bba95e644bdb6c19a636a5969289885a7f3552db"
+      },
+      "inner_strength": 33,
+      "matches": {
+        "accum": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "status": "exact"
+    },
+    {
+      "effective_span": 62,
+      "hashes": {
+        "accum": "72c403d519581ab3e41bc3da9078766789ac5493a4009e4c48e34511718227b1",
+        "final_rgba": "0e2fcf741f09e040f2978b9d44abcaaeb10a05604c0ab06e89decfe5bfd76a4f",
+        "max_alpha": "9d3318bfab36a6ea8b5fa1d6abfd120869f292094fade179133377551034d809",
+        "output": "808f6828fcb8ab91457de03c30b7a65cea46e14e5711c294ce4faefdfc6ba73f",
+        "polar": "716f94e45400b1e81763d9b8d0c91810424e84f66b88d31fc71c48f09afc1733",
+        "source_scalar": "460868b09e0f53f289e3a858bba95e644bdb6c19a636a5969289885a7f3552db"
+      },
+      "inner_strength": 63,
+      "matches": {
+        "accum": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "status": "exact"
+    },
+    {
+      "effective_span": 63,
+      "hashes": {
+        "accum": "345f799c11bfc039a7dfcaf956950e9ecb356b772ba548209d44fce743aea4f3",
+        "final_rgba": "43098a3aa9edeb178f3643b231b24ae89065454167bd1c55b61cda1446994415",
+        "max_alpha": "757c4b1d30480f16d58376ea9f6d7bdc8814ab989fa32ba619d23be9b4ae6d3b",
+        "output": "50778e14a0e84bcc10ac6e8b4372af3c24b508070722579110e3b7bd049233d8",
+        "polar": "716f94e45400b1e81763d9b8d0c91810424e84f66b88d31fc71c48f09afc1733",
+        "source_scalar": "460868b09e0f53f289e3a858bba95e644bdb6c19a636a5969289885a7f3552db"
+      },
+      "inner_strength": 64,
+      "matches": {
+        "accum": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "status": "exact"
+    }
+  ],
+  "geometry": {
+    "height": 7,
+    "padding_bytes": 8,
+    "rowbytes": 44,
+    "width": 9
+  },
+  "kind": "olmradialblur_rotation_pf8_inner_strength_family_production_20260806",
+  "scope": "Independent PF8 actual-AEX owner and production Rotation Inner witnesses; internal planes plus padded output",
+  "status": "exact",
+  "strengths": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    8,
+    16,
+    31,
+    32,
+    33,
+    63,
+    64
+  ]
+}

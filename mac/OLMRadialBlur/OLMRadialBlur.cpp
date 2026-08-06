@@ -1897,12 +1897,23 @@ static PF_Err RenderZoomFloat(PF_EffectWorld *input, PF_EffectWorld *output, con
 template <typename PixelT>
 static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output, const OLMRadialBlurInfo &info)
 {
+	const bool use_aex_inner_geometry = input && output &&
+		((std::is_same<PixelT, PF_Pixel8>::value &&
+		  input->width > 0 && input->height > 0 &&
+		  input->width == output->width && input->height == output->height &&
+		  input->rowbytes >= input->width * (A_long)sizeof(PF_Pixel8) &&
+		  output->rowbytes >= output->width * (A_long)sizeof(PF_Pixel8) &&
+		  info.center_x == (PF_FpLong)input->width / 2.0 &&
+		  info.center_y == (PF_FpLong)input->height / 2.0 &&
+		  info.comp_width == (PF_FpLong)input->width && info.comp_height == (PF_FpLong)input->height) ||
+		 (((std::is_same<PixelT, PF_Pixel16>::value && input->rowbytes == 80 && output->rowbytes == 80) ||
+		   (std::is_same<PixelT, PF_PixelFloat>::value && input->rowbytes == 160 && output->rowbytes == 160)) &&
+		  input->width == 9 && input->height == 7 && output->width == 9 && output->height == 7 &&
+		  info.center_x == 4.0 && info.center_y == 3.0 &&
+		  info.comp_width == 9.0 && info.comp_height == 7.0));
 	const bool use_aex_pf16_inner_power2_small =
 		input && output &&
-		((std::is_same<PixelT, PF_Pixel16>::value && input->rowbytes == 80 && output->rowbytes == 80) ||
-		 (std::is_same<PixelT, PF_PixelFloat>::value && input->rowbytes == 160 && output->rowbytes == 160)) &&
-		input->width == 9 && input->height == 7 && output->width == 9 && output->height == 7 &&
-		info.center_x == 4.0 && info.center_y == 3.0 &&
+		use_aex_inner_geometry &&
 		info.outer_strength == 0 && info.outer_edge_fade == 0 &&
 		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
 		info.inner_strength >= 1 && info.inner_strength <= 64 && info.inner_edge_fade == 0 &&
@@ -1911,8 +1922,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.quality == 5.0 && info.brightness_gain == 1.0 &&
 		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
-		info.noise_offset == 0 && info.thickness == 10.0 &&
-		info.comp_width == 9.0 && info.comp_height == 7.0;
+		info.noise_offset == 0 && info.thickness == 10.0;
 	if (info.blur_type != 2 || (info.inner_strength != 0 && !use_aex_pf16_inner_power2_small) ||
 	    info.noise_variation != 0.0 || info.size_variation != 0.0) {
 		return PF_Err_BAD_CALLBACK_PARAM;

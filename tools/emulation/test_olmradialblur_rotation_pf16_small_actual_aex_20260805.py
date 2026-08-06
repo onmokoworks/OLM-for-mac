@@ -22,6 +22,7 @@ W, H, ROWBYTES = 9, 7, 80
 VISIBLE = W * 8
 FIXTURE_OUTER_STRENGTH, FIXTURE_OUTER_OFFSET_MODE, FIXTURE_OUTER_OFFSET = 4, 1, 0
 FIXTURE_INNER_STRENGTH = 0
+FIXTURE_CENTER_X, FIXTURE_CENTER_Y = 4.0, 3.0
 OWNER = 0x180006D10
 ROTATION_RETURN = 0x18000733A
 AEX_SHA256 = "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
@@ -70,7 +71,7 @@ def build_world(loader: AexLoader, payload: bytes) -> tuple[int, int]:
 
 def actual_aex() -> dict[str, bytes]:
     params = m4.load_case0010_params()
-    params.update({"Center": (4.0, 3.0), "Quality": 5.0,
+    params.update({"Center": (FIXTURE_CENTER_X, FIXTURE_CENTER_Y), "Quality": 5.0,
                    "Outer Strength": FIXTURE_OUTER_STRENGTH,
                    "Outer Offset Mode": FIXTURE_OUTER_OFFSET_MODE,
                    "Outer Offset": FIXTURE_OUTER_OFFSET,
@@ -86,10 +87,16 @@ def actual_aex() -> dict[str, bytes]:
     def pre_scatter(ld, _address, _size):
         if "pre_planes" in captured: return
         work = int(captured["work"])
-        cells = 1800 * 9
+        accum_ptr = m4.u64(ld, work + 0xF250 * 4)
+        max_ptr = m4.u64(ld, work + 0xF252 * 4)
+        plane_bytes = max_ptr - accum_ptr
+        if plane_bytes <= 0 or plane_bytes % 16:
+            raise RuntimeError(f"invalid Rotation plane allocation: {hex(accum_ptr)}..{hex(max_ptr)}")
+        cells = plane_bytes // 16
+        captured["cells"] = cells
         captured["pre_planes"] = {"polar": ld.read_bytes(m4.u64(ld, work + 0xE * 4), cells * 16), "source_scalar": ld.read_bytes(m4.u64(ld, work + 0x10 * 4), cells * 4)}
     def rotation_return(ld, _address, _size):
-        work = int(captured["work"]); cells = 1800 * 9
+        work = int(captured["work"]); cells = int(captured["cells"])
         pointers = {"polar": m4.u64(ld, work + 0xE * 4), "source_scalar": m4.u64(ld, work + 0x10 * 4), "accum": m4.u64(ld, work + 0xF250 * 4), "max_alpha": m4.u64(ld, work + 0xF252 * 4)}
         owner_work = ld.uc.reg_read(UC_X86_REG_RBX)
         captured["planes"] = {"accum": ld.read_bytes(pointers["accum"], cells * 16), "max_alpha": ld.read_bytes(pointers["max_alpha"], cells * 4), "final_rgba": ld.read_bytes(m4.u64(ld, owner_work + 0xA0), W * H * 16)}
@@ -107,7 +114,9 @@ def actual_aex() -> dict[str, bytes]:
             angle_index = struct.unpack("<f", struct.pack("<f", angle * angle_scale))[0]
             coordinates += struct.pack("<2f", angle_index, radius)
     planes["coordinates"] = bytes(coordinates)
-    planes["geometry"] = struct.pack("<II", 1800, 9)
+    if int(captured["cells"]) % 1800:
+        raise RuntimeError(f"Rotation cells do not divide the quality-5 angular extent: {captured['cells']}")
+    planes["geometry"] = struct.pack("<II", 1800, int(captured["cells"]) // 1800)
     return planes
 
 

@@ -1,0 +1,37 @@
+{
+  "kind": "olmradialblur_rotation_pf8_inner_practical_geometry_20260806",
+  "status": "exact",
+  "scope": "Independent PF8 actual-AEX owner and production Rotation Inner practical preview geometry; centered comp-sized 640x360, rowbytes 2576, Inner Strength 4, ratio 1, angle 0, quality 5, repeat border, neutral offsets/edge fades/noise/variation",
+  "aex": {
+    "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "identity_exact": true,
+    "owner": "0x180007520"
+  },
+  "geometry": {
+    "width": 640,
+    "height": 360,
+    "rowbytes": 2576,
+    "padding_bytes": 16,
+    "polar_cells": 666000
+  },
+  "inner_strength": 4,
+  "effective_span": 3,
+  "matches": {
+    "polar": true,
+    "source_scalar": true,
+    "accum": true,
+    "max_alpha": true,
+    "final_rgba": true,
+    "output": true,
+    "padding": true
+  },
+  "actual_sha256": {
+    "polar": "49ccc741d2e7b4b1d725951f61e8e38a1bca72bce97a7cb6310fe1b0c465fd42",
+    "source_scalar": "7a4499f15e5afae82c1a44b7111581c043c40ef0c4b5c3a523c0ed811174c546",
+    "accum": "46099f5848f47cb8675741832ab62fbfa97128bc76f4a55bb8ff29d7a7a242f8",
+    "max_alpha": "71d8010da734bada3ea25cec458dc0a374eb6e67b8d42c7d467e98d2f35ef6e5",
+    "final_rgba": "05cc3d0d5368d089e7a2217b890c56d88ca044fe946fa945c57d4707e93fadf2",
+    "output": "9e47373fd583a3c80d960dfa07bec3a48d46e49d6a7de7e0bab897832f8a1eba"
+  },
+  "claim_boundary": "This witness supports the centered, comp-sized PF8 geometry-general production path only for the declared neutral tuple. It does not prove off-center, non-unit ratio, nonzero angle, other quality, disabled repeat border, offsets, edge fades, noise, or variation. PF16/PF32 geometry claims remain at their separately witnessed 9x7 scope."
+}
