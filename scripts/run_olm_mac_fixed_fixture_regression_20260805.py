@@ -106,6 +106,7 @@ LANES = (
     Lane(
         "distancegradation",
         (
+            (sys.executable, "tools/emulation/test_olmdistancegradation_installed_identity_20260806.py"),
             (sys.executable, "tools/emulation/test_olmdistancegradation_pf32_effectmain_fixture_20260805.py"),
             (sys.executable, "tools/emulation/probe_olmdistancegradation_pf16_smartpre_param_20260805.py"),
             (sys.executable, "tools/emulation/audit_olmdistancegradation_pf16_smart_natural_capture_20260805.py"),

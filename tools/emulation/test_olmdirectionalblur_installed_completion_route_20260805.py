@@ -8,11 +8,15 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+
+from tools.emulation.olm_installed_identity import MANIFEST as IDENTITY_MANIFEST
+from tools.emulation.olm_installed_identity import verified_binary
+
 PF16 = ROOT / "tools/emulation/test_olmdirectionalblur_minimal_pf16_production_20260805.py"
 PF32 = ROOT / "tools/emulation/test_olmdirectionalblur_minimal_pf32_production_20260805.py"
 SMART = ROOT / "tools/emulation/test_olmdirectionalblur_mac_smartrender_adapter_20260717.py"
 INSTALLED = Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin"
-EXPECTED_BINARY_SHA = "5a6e0687eda84d427978a924bbb0722dc716ebbcf149dbb0cb4f7022f323efaa"
 
 
 def run_json(path: Path) -> dict:
@@ -26,10 +30,12 @@ def run_json(path: Path) -> dict:
 
 
 def main() -> int:
+    binary, identity = verified_binary("OLMDirectionalBlur")
+    if Path(identity["installed_bundle"]) != INSTALLED or identity.get("installed_bundle_count") != 1:
+        raise RuntimeError("BLOCKED_FAIL_CLOSED: manifest selects an unexpected DirectionalBlur installation")
     pf16 = run_json(PF16)
     pf32 = run_json(PF32)
     smart = run_json(SMART)
-    binary = INSTALLED / "Contents/MacOS/OLMDirectionalBlur"
     digest = hashlib.sha256(binary.read_bytes()).hexdigest()
     arch = subprocess.run(["lipo", "-archs", str(binary)], capture_output=True, text=True, check=True).stdout.split()
     sign = subprocess.run(["codesign", "--verify", "--deep", "--strict", str(INSTALLED)], capture_output=True)
@@ -39,7 +45,7 @@ def main() -> int:
     )
     if (pf16.get("status") != "pass" or pf32.get("status") != "pass" or
             smart.get("status") != "pass" or not public_effectmain_exact or
-            digest != EXPECTED_BINARY_SHA or
+            digest != identity["sha256"] or
             set(arch) != {"arm64", "x86_64"} or sign.returncode != 0 or len(active) != 1):
         raise RuntimeError("BLOCKED_FAIL_CLOSED: installed completion route is not closed")
     report = {
@@ -58,6 +64,7 @@ def main() -> int:
         "smart_render": {"status": smart["status"], "public_effectmain_exact": public_effectmain_exact,
                          "depths": [case["pixel_format"] for case in smart["cases"]]},
         "installed": {"path": str(INSTALLED), "binary_sha256": digest,
+                      "identity_manifest": str(IDENTITY_MANIFEST.relative_to(ROOT)),
                       "architectures": arch, "codesign": "valid", "active_bundle_count": len(active)},
         "claim_boundary": "AE was not launched; cross-host interactive AE output remains unclaimed",
     }
