@@ -6,7 +6,7 @@
     function write(path, value) { var f=new File(path); f.encoding="UTF-8"; if(!f.open("w")) throw new Error("write: "+path); f.write(value); f.close(); }
     function esc(s) { return String(s).replace(/\\/g,"\\\\").replace(/"/g,'\\"').replace(/\r/g,"\\r").replace(/\n/g,"\\n"); }
     function encode(v) {
-        if (v === null) return "null";
+        if (v === null || v === undefined) return "null";
         if (typeof v === "boolean" || typeof v === "number") return String(v);
         if (typeof v === "string") return '"' + esc(v) + '"';
         if (Object.prototype.toString.call(v) === "[object Array]") { var a=[]; for(var i=0;i<v.length;i++) a.push(encode(v[i])); return "["+a.join(",")+"]"; }

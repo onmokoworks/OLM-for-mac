@@ -405,6 +405,16 @@ static FloatRGBA ComposeMerge2Pixel(
 	return olm::kirakira::compose_merge2_pixel(glow, source, glow_opacity, source_opacity);
 }
 
+static FloatRGBA ComposePremultiplyPixel(
+	const FloatRGBA &glow,
+	const FloatRGBA &source,
+	float glow_opacity,
+	float source_opacity)
+{
+	return olm::kirakira::compose_premultiply_pixel(
+		glow, source, glow_opacity, source_opacity);
+}
+
 static std::vector<FloatRGBA> ResizeNearestRGBA(
 	const std::vector<FloatRGBA> &input,
 	A_long src_width,
@@ -536,7 +546,10 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	std::vector<float> diagonal2 = make_ray(info.diagonal2_length, -45.0 + glow_rotation);
 	std::vector<float> highlight = zero_ray;
 	const A_long highlight_radius = scaled_len(info.highlight_radius);
-	if (highlight_radius > 0 && (info.blur_mode == 1 || info.blur_mode == 2)) {
+	if (highlight_radius > 0 &&
+		(info.blur_mode == 1 || info.blur_mode == 2 || info.blur_mode == 4)) {
+		// The actual Mode-4 Highlight branch shares Mode 2's three isotropic
+		// box-filter calls.  It does not use the directional Mode-4 recurrence.
 		const A_long highlight_passes = info.blur_mode == 1 ? 1 : 3;
 		highlight = IsotropicBoxBlur(
 			seed, work_width, work_height, highlight_radius * 2 + 1, highlight_passes);
@@ -579,17 +592,13 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		for (A_long x = 0; x < work_width; ++x) {
 			const size_t idx = (size_t)y * work_width + x;
 			const FloatRGBA &src = working_pixels[idx];
-			const float src_a = src.a * (float)info.source_opacity;
-			const float glow_a = Clamp01(glow[idx].a * (float)info.glow_opacity);
 			FloatRGBA &out = composed[idx];
 			if (info.merge_mode == 2) {
 				out = ComposeMerge2Pixel(
 					glow[idx], src, (float)info.glow_opacity, (float)info.source_opacity);
 			} else {
-				out.r = 1.0f - (1.0f - src.r) * (1.0f - Clamp01(glow[idx].r * glow_a));
-				out.g = 1.0f - (1.0f - src.g) * (1.0f - Clamp01(glow[idx].g * glow_a));
-				out.b = 1.0f - (1.0f - src.b) * (1.0f - Clamp01(glow[idx].b * glow_a));
-				out.a = src_a;
+				out = ComposePremultiplyPixel(
+					glow[idx], src, (float)info.glow_opacity, (float)info.source_opacity);
 			}
 		}
 	}

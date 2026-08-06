@@ -136,6 +136,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmkirakira_mode2_ramp_production_seam_20260805.py"),
             (sys.executable, "tools/emulation/test_olmkirakira_mode2_ramp_typed_completion_20260805.py"),
             (sys.executable, "tools/emulation/test_olmkirakira_mode4_production_boundary_20260805.py"),
+            (sys.executable, "tools/emulation/test_olmkirakira_mode4_highlight_premultiply_20260806.py"),
             (sys.executable, "tools/emulation/test_olmkirakira_mode4_cropped_typed_installed_20260805.py"),
             (sys.executable, "tools/emulation/test_olmkirakira_mode4_mac_ae_runner_preflight_20260805.py"),
             (sys.executable, "tools/emulation/test_olmkirakira_warp_production_boundary_20260805.py"),

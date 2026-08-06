@@ -1,0 +1,154 @@
+{
+  "schema": "olmkirakira-windows-boundary-mac-ae-exact/1",
+  "case_id": "kk_mapped_bm4_mm1_hi_r5_orange_opaque",
+  "status": "mismatch",
+  "checks": {
+    "request_exists": true,
+    "return_exists": true,
+    "jsx_exists": true,
+    "plugin_exists": true,
+    "depths_exact": true,
+    "rows_unique": true,
+    "windows_members_complete": true
+  },
+  "request_zip": {
+    "path": "handoffs/windows_batch/olm_windows_ae_release_boundary_minimal_20260806.zip",
+    "sha256": "93bd288e6bcbba2fff0d28318fe383f05bede205df223f141724876d0b8118c1"
+  },
+  "return_zip": {
+    "path": "refs/returns/windows/RETURN_OLM_WINDOWS_AE_RELEASE_BOUNDARY_MINIMAL_20260806.zip",
+    "sha256": "e582b0f368deb6dfbb34de2675e382d2222372705da043151d90dc895f7d7a0a"
+  },
+  "installed_plugin": {
+    "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin/Contents/MacOS/OLMKiraKira",
+    "sha256": "84293bd782e9d536ecae0a9e92f2a6890a17d99f7a706dbc53a84366681b50bf"
+  },
+  "rows": [
+    {
+      "row_id": "olmkirakira__controlled_ramps_off_10__kk_mapped_bm4_mm1_hi_r5_orange_opaque__8bpc",
+      "depth": 8,
+      "status": "mismatch",
+      "ae_result": null,
+      "osascript": {
+        "returncode": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "host_identity": {
+        "ae_pids": [
+          66746
+        ],
+        "loaded_kira_modules": [
+          "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin/Contents/MacOS/OLMKiraKira"
+        ],
+        "exact": true
+      },
+      "branches": {
+        "no_effect": {
+          "mac_sha256": "f2c2e2a083ef0ef0b9167073741ae230bd9ec4a0164eb5712c7c3fa090329a5a",
+          "windows_sha256": "f0208d6167fe9c55be9414ec9e6930d690b31e9d44ed2b7544385effc83b16b2",
+          "raw_float32_compare": {
+            "equal": false,
+            "max_absolute_error": null,
+            "nonzero_count": 6220800,
+            "nan_inf_policy": "raw FLOAT32 words; NaN and +/-Inf words must match exactly",
+            "mac_sample_counts": {
+              "nan": 0,
+              "+inf": 0,
+              "-inf": 0
+            },
+            "windows_sample_counts": {
+              "nan": 0,
+              "+inf": 0,
+              "-inf": 0
+            }
+          }
+        },
+        "effect_on": {
+          "mac_sha256": "2899e05a7ef60ea496a2b23b058303846fad19b1e6d64ccd151c5e6341615d29",
+          "windows_sha256": "bce25fcd768d1e374b6f7208bdfae011c2042f26165bca8465bee1473c03b2a9",
+          "raw_float32_compare": {
+            "equal": false,
+            "max_absolute_error": null,
+            "nonzero_count": 6220800,
+            "nan_inf_policy": "raw FLOAT32 words; NaN and +/-Inf words must match exactly",
+            "mac_sample_counts": {
+              "nan": 0,
+              "+inf": 0,
+              "-inf": 0
+            },
+            "windows_sample_counts": {
+              "nan": 0,
+              "+inf": 0,
+              "-inf": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "row_id": "olmkirakira__controlled_ramps_off_10__kk_mapped_bm4_mm1_hi_r5_orange_opaque__16bpc",
+      "depth": 16,
+      "status": "mismatch",
+      "ae_result": null,
+      "osascript": {
+        "returncode": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "host_identity": {
+        "ae_pids": [
+          66746
+        ],
+        "loaded_kira_modules": [
+          "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin/Contents/MacOS/OLMKiraKira"
+        ],
+        "exact": true
+      },
+      "branches": {
+        "no_effect": {
+          "mac_sha256": "e5faedc6db3f21483951da00954aea3393cd3d56f1acbc7537e5e0a0612c8095",
+          "windows_sha256": "99dfb865ba2bbaef960ef139895c307a8f735a9f07477968c7b0decbc3e67d72",
+          "raw_float32_compare": {
+            "equal": false,
+            "max_absolute_error": null,
+            "nonzero_count": 6220800,
+            "nan_inf_policy": "raw FLOAT32 words; NaN and +/-Inf words must match exactly",
+            "mac_sample_counts": {
+              "nan": 0,
+              "+inf": 0,
+              "-inf": 0
+            },
+            "windows_sample_counts": {
+              "nan": 0,
+              "+inf": 0,
+              "-inf": 0
+            }
+          }
+        },
+        "effect_on": {
+          "mac_sha256": "8f5cb3063012ab9359e0c6ee23356bd51ccf1eae494e138b4d8468c148aa9f6d",
+          "windows_sha256": "994743af6194e3280ae3543432d9f1f04dc72b156a83d440ef0beac2a0a169eb",
+          "raw_float32_compare": {
+            "equal": false,
+            "max_absolute_error": null,
+            "nonzero_count": 6220800,
+            "nan_inf_policy": "raw FLOAT32 words; NaN and +/-Inf words must match exactly",
+            "mac_sample_counts": {
+              "nan": 0,
+              "+inf": 0,
+              "-inf": 0
+            },
+            "windows_sample_counts": {
+              "nan": 0,
+              "+inf": 0,
+              "-inf": 0
+            }
+          }
+        }
+      }
+    }
+  ],
+  "claim_boundary": "AE 26.3x87, Software renderer raw 1816, None working space, linear blending off, preserve-RGB straight-alpha opaque_cells_rgba8.png, case kk_mapped_bm4_mm1_hi_r5_orange_opaque, PF8/PF16/PF32 only.",
+  "exact_depths": []
+}

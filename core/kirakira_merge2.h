@@ -66,6 +66,37 @@ inline Pixel compose_merge2_pixel(
     };
 }
 
+// FUN_18114ddc0 merge-mode 1 ("premultiply").  The AEX clamps the two
+// opacity-weighted alphas independently, computes a straight-color weighted
+// mean, and stores their clamped sum as output alpha.  Keep the arithmetic
+// split to preserve the target's float32 rounding boundaries.
+template <typename Pixel>
+inline Pixel compose_premultiply_pixel(
+    const Pixel& glow, const Pixel& source, float glow_opacity, float source_opacity)
+{
+    const volatile float raw_alpha_sum = glow.a + source.a;
+    if (raw_alpha_sum == 0.0f)
+        return {};
+    const volatile float glow_alpha_product = glow.a * glow_opacity;
+    const volatile float source_alpha_product = source_opacity * source.a;
+    const float glow_alpha = clamp_merge2_channel(glow_alpha_product);
+    const float source_alpha = clamp_merge2_channel(source_alpha_product);
+    const volatile float alpha_sum = source_alpha + glow_alpha;
+    if (alpha_sum == 0.0f)
+        return {};
+    const volatile float inverse_alpha = 1.0f / alpha_sum;
+    const volatile float red_sum = source_alpha * source.r + glow_alpha * glow.r;
+    const volatile float green_sum = source_alpha * source.g + glow_alpha * glow.g;
+    const volatile float blue_sum = source_alpha * source.b + glow_alpha * glow.b;
+    const volatile float red = red_sum * inverse_alpha;
+    const volatile float green = green_sum * inverse_alpha;
+    const volatile float blue = blue_sum * inverse_alpha;
+    return {
+        clamp_merge2_channel(red), clamp_merge2_channel(green),
+        clamp_merge2_channel(blue), clamp_merge2_channel(alpha_sum)
+    };
+}
+
 inline bool parse_merge2_ramp_payload(
     const void* bytes,
     std::size_t size,
