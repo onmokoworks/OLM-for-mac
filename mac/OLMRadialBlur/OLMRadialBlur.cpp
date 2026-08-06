@@ -1897,14 +1897,15 @@ static PF_Err RenderZoomFloat(PF_EffectWorld *input, PF_EffectWorld *output, con
 template <typename PixelT>
 static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output, const OLMRadialBlurInfo &info)
 {
-	const bool use_aex_pf16_inner32_small =
+	const bool use_aex_pf16_inner_power2_small =
 		std::is_same<PixelT, PF_Pixel16>::value && input && output &&
 		input->width == 9 && input->height == 7 && input->rowbytes == 80 &&
 		output->width == 9 && output->height == 7 && output->rowbytes == 80 &&
 		info.center_x == 4.0 && info.center_y == 3.0 &&
 		info.outer_strength == 0 && info.outer_edge_fade == 0 &&
 		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
-		info.inner_strength == 32 && info.inner_edge_fade == 0 &&
+		info.inner_strength >= 1 && info.inner_strength <= 64 &&
+		(info.inner_strength & (info.inner_strength - 1)) == 0 && info.inner_edge_fade == 0 &&
 		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
 		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
 		info.quality == 5.0 && info.brightness_gain == 1.0 &&
@@ -1912,7 +1913,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0 &&
 		info.comp_width == 9.0 && info.comp_height == 7.0;
-	if (info.blur_type != 2 || (info.inner_strength != 0 && !use_aex_pf16_inner32_small) ||
+	if (info.blur_type != 2 || (info.inner_strength != 0 && !use_aex_pf16_inner_power2_small) ||
 	    info.noise_variation != 0.0 || info.size_variation != 0.0) {
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
@@ -2059,7 +2060,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.noise_variation == 0.0 && info.noise_type == 1 &&
 		info.noise_layer == 0 && info.seed == 1 && info.noise_offset == 0 &&
 		info.thickness == 10.0 && info.comp_width == 9.0 && info.comp_height == 7.0;
-	const bool use_aex_exact = use_aex_case0010 || use_aex_pf16_small || use_aex_pf16_inner32_small ||
+	const bool use_aex_exact = use_aex_case0010 || use_aex_pf16_small || use_aex_pf16_inner_power2_small ||
 		use_aex_pf32_small || use_aex_pf32_strength5_small || use_aex_pf16_strength5_small ||
 		use_aex_pf32_offset_mode3_ui2_small || use_aex_pf32_offset_mode3_ui3_small ||
 		use_aex_pf32_offset_mode3_ui4_small || use_aex_pf16_offset_mode3_ui2_small ||
