@@ -4,11 +4,25 @@
   "actual_execution": {
     "add_param_calls": 101,
     "out_num_params": 102,
+    "raw_name_region_offset": "0x10..0x2f",
+    "raw_name_regions_all_zero": true,
+    "raw_name_regions_nonzero_count": 0,
     "return_code": 0,
     "suite_acquisitions": []
   },
   "actual_exported_entry": "0x1800025c0",
   "actual_payload_sha256": "916d2425e63f0dcd9f7309a5c914f78ec5d635a51a9ad9ce59a9aa501062cec4",
+  "display_name_boundary": {
+    "actual_aex_contains_nul_terminated_literals": true,
+    "expected_labels": [
+      "Enabled Color Num",
+      "Color"
+    ],
+    "hostless_actual_add_param_name_regions_all_zero": true,
+    "mac_string_table_contains_literals": true,
+    "reason": "The direct exported-entry fixture does not execute the Windows DLL/CRT string-table initializer, so the raw AddParam records cannot prove which embedded literal is bound to each row.",
+    "status": "literal_exact_registration_binding_unproved_hostless"
+  },
   "normalization": "Slider value0..5 are value, valid_min, valid_max, slider_min, slider_max, default. Color value0/value1 are raw 4-byte current/default PF_UnionablePixel values; remaining words are zero.",
   "normalized_record_format": [
     "disk_id",
@@ -23,7 +37,7 @@
     "value5"
   ],
   "not_proven": [
-    "localized parameter names because the hostless AEX fixture does not run the DLL string-table initializer",
+    "per-row display-name binding/localization because the hostless AEX fixture does not run the DLL/CRT string-table initializer; only the two exact embedded literals are proven",
     "native After Effects control creation/layout",
     "add_param failure propagation after a partial schema"
   ],

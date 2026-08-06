@@ -17,6 +17,7 @@ AEX = ROOT / "aex/OLMColorKeep/Plugins/64/2025/ColorKeep.aex"
 AEX_SHA256 = "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86"
 ENTRY = 0x1800025C0
 REPORT = ROOT / "refs/conformance/colorkeep_params_setup_actual_aex_20260805.json"
+MAC_STRINGS = ROOT / "mac/ColorKeep/ColorKeep_Strings.cpp"
 RECORD_WORDS = 10
 
 
@@ -73,11 +74,19 @@ def actual() -> tuple[bytes, dict[str, object]]:
     assert result["rax"] == 0 and len(raw_params) == 101
     assert struct.unpack("<I", loader.read_bytes(out_data + 0x30, 4))[0] == 102
     records = [normalize_windows_param(raw) for raw in raw_params]
+    # PF_ParamDef.name is the 32-byte region at +0x10 in the pinned Win64 ABI.
+    # AexLoader deliberately invokes the exported Effect entry without the
+    # Windows DLL/CRT initializer. Keep that boundary observable: zero names
+    # here must never be promoted into a localized-name parity claim.
+    name_regions = [raw[0x10:0x30] for raw in raw_params]
     return b"".join(struct.pack("<10I", *record) for record in records), {
         "return_code": result["rax"],
         "suite_acquisitions": acquisitions,
         "add_param_calls": len(records),
         "out_num_params": 102,
+        "raw_name_region_offset": "0x10..0x2f",
+        "raw_name_regions_all_zero": all(region == bytes(32) for region in name_regions),
+        "raw_name_regions_nonzero_count": sum(region != bytes(32) for region in name_regions),
     }
 
 
@@ -115,6 +124,11 @@ def unpack_records(payload: bytes) -> list[tuple[int, ...]]:
 
 def main() -> int:
     assert hashlib.sha256(AEX.read_bytes()).hexdigest() == AEX_SHA256
+    aex_bytes = AEX.read_bytes()
+    mac_strings = MAC_STRINGS.read_text(encoding="utf-8")
+    expected_labels = ["Enabled Color Num", "Color"]
+    assert all(label.encode("ascii") + b"\0" in aex_bytes for label in expected_labels)
+    assert all(f'"{label}"' in mac_strings for label in expected_labels)
     actual_payload, meta = actual()
     production_payload = production()
     assert actual_payload == production_payload
@@ -137,11 +151,19 @@ def main() -> int:
             "enabled_count": {"disk_id": 1, "type": "PF_Param_SLIDER", "flags": "0x40", "valid_range": [0, 100], "slider_range": [0, 100], "default": 1},
             "colors": {"count": 100, "disk_ids": [2, 101], "type": "PF_Param_COLOR", "default_argb8_raw": "0x000000ff"},
         },
+        "display_name_boundary": {
+            "status": "literal_exact_registration_binding_unproved_hostless",
+            "expected_labels": expected_labels,
+            "actual_aex_contains_nul_terminated_literals": True,
+            "mac_string_table_contains_literals": True,
+            "hostless_actual_add_param_name_regions_all_zero": meta["raw_name_regions_all_zero"],
+            "reason": "The direct exported-entry fixture does not execute the Windows DLL/CRT string-table initializer, so the raw AddParam records cannot prove which embedded literal is bound to each row.",
+        },
         "payload_bytes": len(actual_payload),
         "actual_payload_sha256": digest,
         "production_payload_sha256": hashlib.sha256(production_payload).hexdigest(),
         "not_proven": [
-            "localized parameter names because the hostless AEX fixture does not run the DLL string-table initializer",
+            "per-row display-name binding/localization because the hostless AEX fixture does not run the DLL/CRT string-table initializer; only the two exact embedded literals are proven",
             "native After Effects control creation/layout",
             "add_param failure propagation after a partial schema",
         ],
