@@ -36,7 +36,8 @@ class ReleaseDocumentationConsistencyTest(unittest.TestCase):
         for phrase in (
             "After Effects `26.3x87`",
             "CPU `SOFTWARE`",
-            "Windows AE 7行だけが保留",
+            "Windows AE 7行は取得・受領検証済み",
+            "Win/Mac pixel equality",
             "AEXにnative PF32 callbackはなく",
             "32bpc projectではAEがclassic integer pluginの前後をhost-convertする",
             "PF8 centered neutral Inner Strength 1〜64",
@@ -86,6 +87,11 @@ class ReleaseDocumentationConsistencyTest(unittest.TestCase):
         status = json.loads(STATUS.read_text(encoding="utf-8"))
         self.assertEqual(status["status"], "release_gate_pass")
         self.assertTrue(status["releasable"])
+        self.assertEqual(status["windows_ae_release_boundary"]["accepted_rows"], 7)
+        self.assertEqual(
+            status["windows_ae_release_boundary"]["state"],
+            "accepted_pending_per_plugin_mac_compare",
+        )
         self.assertEqual(status["mac_ae_representative"]["counts"], {
             "invalid": 0, "pending": 0, "proven": 10,
         })

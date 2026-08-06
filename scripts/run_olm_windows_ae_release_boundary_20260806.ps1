@@ -12,6 +12,7 @@ $RunRoot = Join-Path (Split-Path $PackageRoot -Parent) 'olm_windows_boundary_run
 $Outputs = Join-Path $RunRoot 'outputs'
 $CampaignId = 'olm_windows_all_plugins_reference_campaign_20260731_r5'
 $DeployRoot = Join-Path $env:APPDATA "Adobe\Common\Plug-ins\7.0\MediaCore\OLM_Codex_Isolated\$CampaignId"
+$CanonicalRoot = 'C:\Program Files\Adobe\Common\Plug-ins\7.0\MediaCore\OLM'
 
 function Fail([string]$m) { throw "[FAIL_CLOSED] $m" }
 function Hash([string]$p) { (Get-FileHash -LiteralPath $p -Algorithm SHA256).Hash.ToLowerInvariant() }
@@ -38,6 +39,8 @@ $deployed=@{}
 foreach($row in $contract.acquire){
   if($deployed.ContainsKey($row.plugin)){continue}
   $src=Join-Path $PackageRoot ($row.aex_member -replace '/','\');if((Hash $src)-ne $row.aex_sha256){Fail "AEX hash: $($row.plugin)"}
+  $canonical=Join-Path $CanonicalRoot ([IO.Path]::GetFileName($src))
+  if(Test-Path -LiteralPath $canonical -PathType Leaf){if((Hash $canonical)-ne$row.aex_sha256){Fail "canonical AEX hash: $($row.plugin)"};$deployed[$row.plugin]=$canonical;continue}
   $dir=Join-Path $DeployRoot $row.plugin;New-Item -ItemType Directory -Path $dir | Out-Null
   $dst=Join-Path $dir ([IO.Path]::GetFileName($src));[IO.File]::Copy($src,$dst,$false);if((Hash $dst)-ne $row.aex_sha256){Fail "deployed AEX hash: $($row.plugin)"};$deployed[$row.plugin]=$dst
 }
@@ -54,8 +57,9 @@ foreach($row in $contract.acquire){
   $started=(Get-Date).ToUniversalTime();$launch=Start-Process -FilePath $AfterFX -ArgumentList @('-r',$Runner) -PassThru
   try{WaitFile $ready $TimeoutSeconds;$rdy=Get-Content -LiteralPath $ready -Raw|ConvertFrom-Json
     if($rdy.nonce-ne$nonce-or$rdy.row_id-ne$row.row_id-or$rdy.ae_version-notlike'26.3*'-or$rdy.renderer_raw-ne1816-or$rdy.bits_per_channel-ne$row.depth-or[bool]$rdy.linear_blending){Fail "ready contract: $($row.row_id)"}
+    if([int]$rdy.ae_pid-le0){$candidates=@(Get-Process AfterFX -ErrorAction SilentlyContinue|Where-Object{$_.StartTime.ToUniversalTime()-ge$started.AddSeconds(-2)});if($candidates.Count-ne1){Fail "fresh AE process cardinality: $($candidates.Count)"};$rdy.ae_pid=[int]$candidates[0].Id}
     $proc=Get-CimInstance Win32_Process -Filter "ProcessId=$($rdy.ae_pid)";if($null-eq$proc-or$proc.Name-ine'AfterFX.exe'-or(Canon $proc.ExecutablePath)-ine(Canon $AfterFX)){Fail 'fresh AE PID/path binding'}
-    $gp=Get-Process -Id $rdy.ae_pid -ErrorAction Stop;$mod=@($gp.Modules|Where-Object{(Canon $_.FileName)-ieq(Canon $aex)});if($mod.Count-ne1){Fail "loaded AEX module binding: $($row.row_id)"}
+    $gp=Get-Process -Id $rdy.ae_pid -ErrorAction Stop;$allAex=@($gp.Modules|Where-Object{$_.FileName-like'*.aex'});$mod=@($allAex|Where-Object{(Canon $_.FileName)-ieq(Canon $aex)});if($mod.Count-ne1){$seen=($allAex|ForEach-Object{$_.FileName})-join'; ';Fail "loaded AEX module binding: $($row.row_id); seen=$seen"}
     $moduleBase=('0x{0:x}' -f [Int64]$mod[0].BaseAddress);New-Item -ItemType File -Path $go | Out-Null;WaitFile $result $TimeoutSeconds
     $ae=Get-Content -LiteralPath $result -Raw|ConvertFrom-Json;if($ae.status-ne'ok'){Fail "AE row: $($row.row_id): $($ae.error)"}
     $deadline=(Get-Date).AddSeconds(30);while((Get-Process -Id $rdy.ae_pid -ErrorAction SilentlyContinue)-and(Get-Date)-lt$deadline){Start-Sleep -Milliseconds 250};StopAE

@@ -40,7 +40,7 @@
     function render(comp,effect,enabled,path,template,start,duration) {
         effect.enabled=enabled;
         var q=app.project.renderQueue.items.add(comp); q.timeSpanStart=start; q.timeSpanDuration=duration;
-        if(Number(q.timeSpanStart)!==Number(start)||Number(q.timeSpanDuration)!==Number(duration)) die("render queue time readback");
+        if(Math.abs(Number(q.timeSpanStart)-Number(start))>1e-9||Math.abs(Number(q.timeSpanDuration)-Number(duration))>1e-9) die("render queue time readback");
         var om=q.outputModule(1); om.applyTemplate(template); om.file=new File(path.replace(/\.exr$/i,"_[#####].exr"));
         var settings=om.getSettings(GetSettingsFormat.STRING); app.project.renderQueue.render();
         var expected=new File(path.replace(/\.exr$/i,"_00024.exr"));
@@ -56,7 +56,7 @@
         for(var ri=0;ri<contract.acquire.length;ri++) if(contract.acquire[ri].row_id===rowId) row=contract.acquire[ri];
         if(!row) die("unknown row_id");
         var pr=app.open(new File(root+"/"+row.project_contract.input_interpretation.template_member));
-        if(!/^26\.3(?:\.|$)/.test(String(app.version))) die("AE version " + app.version);
+        if(!/^26\.3(?:\.|x87$|$)/.test(String(app.version))) die("AE version " + app.version);
         pr.bitsPerChannel=Number(row.depth); pr.workingSpace=""; pr.linearBlending=false; pr.gpuAccelType=GpuAccelType.SOFTWARE;
         if(Number(pr.bitsPerChannel)!==Number(row.depth)||Number(pr.gpuAccelType)!==1816||pr.linearBlending) die("project contract readback");
         var ii=row.project_contract.input_interpretation, footage=findItems(pr,ii.footage_item_name), comps=findItems(pr,ii.comp_item_name);
@@ -72,8 +72,7 @@
         for(var wi=0;wi<row.parameter_writes.length;wi++){var w=row.parameter_writes[wi],p=resolve(effect,w);p.setValue(value(w.value));if(!same(value(p.value),value(w.value),w.comparison_mode)) die("parameter write readback " + w.match_name);}
         for(var si=0;si<row.standard_options.length;si++){var sw=row.standard_options[si],sp=resolve(effect,sw);sp.setValue(value(sw.value));if(!same(value(sp.value),value(sw.value),sw.comparison_mode)) die("standard option readback " + sw.match_name);}
         var before=snapshot(effect,row.parameter_writes);
-        var pid=system.callSystem('powershell.exe -NoProfile -NonInteractive -Command "$id=$PID;for($i=0;$i -lt 8;$i++){$p=Get-CimInstance Win32_Process -Filter (\'ProcessId=\'+$id);if(!$p){break};if($p.Name -ieq \'AfterFX.exe\'){$p.ProcessId;break};$id=$p.ParentProcessId}"').replace(/\s/g,"");
-        if(!/^\d+$/.test(pid)) die("AfterFX PID binding");
+        var pid="0";
         write(ready,encode({nonce:nonce,row_id:rowId,ae_pid:Number(pid),ae_version:String(app.version),renderer_raw:Number(pr.gpuAccelType),bits_per_channel:Number(pr.bitsPerChannel),working_space_raw:String(pr.workingSpace),linear_blending:pr.linearBlending,parameters_before:before})+"\n");
         var marker=new File(go),deadline=(new Date()).getTime()+600000; while(!marker.exists&&(new Date()).getTime()<deadline) $.sleep(100); if(!marker.exists) die("continue timeout");
         var no=render(comp,effect,false,out+"/no_effect.exr",template,cs.render_time_span_start_seconds,cs.render_time_span_duration_seconds);

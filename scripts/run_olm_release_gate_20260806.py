@@ -24,6 +24,30 @@ PREFLIGHT = ROOT / "scripts/preflight_olm_all_universal_installs_20260805.py"
 REGRESSION = ROOT / "scripts/run_olm_mac_fixed_fixture_regression_20260805.py"
 PARAMETER_UI_GATE = ROOT / "scripts/run_olm_parameter_ui_gate_20260806.py"
 DEFAULT_REPORT = ROOT / "refs/conformance/olm_release_gate_status_20260806.json"
+WINDOWS_BOUNDARY_INTAKE = ROOT / "refs/conformance/olm_windows_ae_release_boundary_minimal_intake_20260806.json"
+
+
+def windows_boundary_gate() -> dict[str, Any]:
+    payload = json.loads(WINDOWS_BOUNDARY_INTAKE.read_text(encoding="utf-8"))
+    rows = payload.get("rows", [])
+    if payload.get("status") != "accepted" or len(rows) != 7:
+        raise ValueError("Windows AE boundary intake is not accepted for exactly seven rows")
+    if any(row.get("status") != "accepted" for row in rows):
+        raise ValueError("Windows AE boundary intake contains an unaccepted row")
+    return {
+        "state": "accepted_pending_per_plugin_mac_compare",
+        "accepted_rows": 7,
+        "invalid_rows": 0,
+        "after_effects": payload["after_effects"],
+        "contract_archive_sha256": payload["contract_archive_sha256"],
+        "return_archive_sha256": payload["return_archive_sha256"],
+        "evidence": str(WINDOWS_BOUNDARY_INTAKE.relative_to(ROOT)),
+        "boundary": (
+            "The seven Windows AE process/module/parameter/EXR contracts are accepted. "
+            "Per-plugin same-contract Mac comparison is separate; this state does not "
+            "claim blanket cross-host pixel equality."
+        ),
+    }
 
 
 def lookup(value: Any, dotted: str) -> Any:
@@ -161,6 +185,7 @@ def main() -> int:
     install = installed_gate()
     regression = regression_gate(args.skip_regression)
     parameter_ui = parameter_ui_gate()
+    windows_boundary = windows_boundary_gate()
     host_counts = {state: sum(row["state"] == state for row in host_rows) for state in ("proven", "pending", "invalid")}
     releasable = (
         install["state"] == "proven"
@@ -173,7 +198,12 @@ def main() -> int:
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "status": "release_gate_pass" if releasable else "release_gate_pending_or_invalid",
         "releasable": releasable,
-        "claim_boundary": manifest["claim_boundary"],
+        "claim_boundary": (
+            manifest["claim_boundary"]
+            + " Seven Windows AE release-boundary observations are accepted; "
+            "cross-host exactness remains a per-plugin claim."
+        ),
+        "windows_ae_release_boundary": windows_boundary,
         "fixed_fixture_regression": regression,
         "parameter_ui_registration": parameter_ui,
         "universal_installs": install,

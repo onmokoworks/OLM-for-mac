@@ -6,7 +6,8 @@ Mac統合候補は、全10プラグインの固定fixture回帰、インスト�
 bundleのarchitecture／署名／identity検査、および現行Mac AEでの代表ロード・
 レンダーを通過しています。
 
-同一契約による最終cross-host校正は、後述するWindows AE 7行だけが保留です。
+同一契約によるWindows AE 7行は取得・受領検証済みです。現在は、その返却画像と
+Mac AE同一条件レンダーのプラグイン別比較を進めています。
 
 現在のhost証拠は、原則として次の条件を前提とします。
 
@@ -43,7 +44,7 @@ AE import、premultiplication、color management、exportの差は、プラグ�
 ColorKeepでは通常importによる16bpc clamp／色変換、Smoother v1ではalpha 254の
 premultiply→unpremultiply境界を実際に分離しています。
 
-## 保留中のWindows AE境界 — 7行のみ
+## 受領済みWindows AE境界 — 7行
 
 使用するパッケージ：
 
@@ -61,13 +62,29 @@ premultiply→unpremultiply境界を実際に分離しています。
 
 各行でdisabled／effect-onのuncompressed scanline FLOAT32 OpenEXRと、
 `BATCH_CONTRACT.json`指定のprocess／module attestationが必要です。PNG previewは
-返却物として使用しません。証拠再利用対象の残り7プラグインは再レンダーしません。
+返却物として使用しません。今回の返却はこの条件で7行すべて受理されました。
+ただし、受理はWindows観測の成立を意味し、Win/Mac pixel equalityの成立は
+プラグイン別の同一条件比較が完了した行だけに限定します。
 
 パッケージSHA-256：
 
 ```text
 6a060641dc867cbb5cb858136f6fd294fb49d274fa252cec71459bc9b20a4652
 ```
+
+返却物：
+
+`refs/returns/windows/RETURN_OLM_WINDOWS_AE_RELEASE_BOUNDARY_MINIMAL_20260806.zip`
+
+返却物SHA-256：
+
+```text
+e582b0f368deb6dfbb34de2675e382d2222372705da043151d90dc895f7d7a0a
+```
+
+受領記録は
+[`olm_windows_ae_release_boundary_minimal_intake_20260806.json`](olm_windows_ae_release_boundary_minimal_intake_20260806.json)
+を参照してください。
 
 ## 最終Mac検証結果
 
@@ -90,7 +107,7 @@ python3 -m unittest \
 shasum -a 256 refs/reference_requests/olm_windows_ae_release_boundary_minimal_20260806.zip
 ```
 
-Windows返却後：
+Windows返却物の再検証：
 
 ```sh
 python3 scripts/verify_windows_ae_release_boundary_minimal_20260806.py \
@@ -108,4 +125,5 @@ The bounded Mac candidate passes all ten fixed-fixture lanes, ten installed
 Universal/signature/identity checks, and ten current-Mac-AE representative
 load/render witnesses. Exactness claims remain limited to the declared host,
 depths, fixtures, geometries and parameter boundaries. Seven same-contract
-Windows AE calibration rows remain pending.
+Windows AE calibration rows are accepted; per-plugin same-contract Mac
+comparison remains in progress and no blanket cross-host equality is claimed.

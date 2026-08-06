@@ -1,0 +1,20 @@
+{
+  "kind": "olm_windows_ae_release_boundary_minimal_intake",
+  "status": "accepted",
+  "return_archive": "refs/returns/windows/RETURN_OLM_WINDOWS_AE_RELEASE_BOUNDARY_MINIMAL_20260806.zip",
+  "return_archive_sha256": "e582b0f368deb6dfbb34de2675e382d2222372705da043151d90dc895f7d7a0a",
+  "contract_archive": "refs/reference_requests/olm_windows_ae_release_boundary_minimal_20260806.zip",
+  "contract_archive_sha256": "6a060641dc867cbb5cb858136f6fd294fb49d274fa252cec71459bc9b20a4652",
+  "after_effects": "26.3x87",
+  "renderer_raw": 1816,
+  "rows": [
+    {"row_id":"colorkeep__discovery_3__colorkeep_opaque_cells_red_darkgray__8bpc","status":"accepted","no_effect_sha256":"341ec9c810eae60a0dbfea60c9b1d716aa779ca92abbcc3dc236c831869623bd","effect_on_sha256":"3da0f61735e58d087e0e790f17b667efb2920daa8988d193c115160dafd986f7"},
+    {"row_id":"colorkeep__discovery_3__colorkeep_opaque_cells_red_darkgray__16bpc","status":"accepted","no_effect_sha256":"804b738252b35a53a19b3d5a29a9ec9486273d5867181ff6d2687baa5814ad49","effect_on_sha256":"ba0af97fbd53e00d0e869e0ef62c888ece3c62fbb9ea6ed81426581742b9bbb2"},
+    {"row_id":"colorkeep__discovery_3__colorkeep_opaque_cells_red_darkgray__32bpc","status":"accepted","no_effect_sha256":"872493ec10c0d3ff176b9c44634445e854ad48f5567957563fe1b82654724999","effect_on_sha256":"69eb3826d5362a2f793c5b1cb595267ff6f8cc8c35a424f3258637b0f150f449"},
+    {"row_id":"olmkirakira__controlled_ramps_off_10__kk_mapped_bm4_mm1_hi_r5_orange_opaque__8bpc","status":"accepted","no_effect_sha256":"f0208d6167fe9c55be9414ec9e6930d690b31e9d44ed2b7544385effc83b16b2","effect_on_sha256":"bce25fcd768d1e374b6f7208bdfae011c2042f26165bca8465bee1473c03b2a9"},
+    {"row_id":"olmkirakira__controlled_ramps_off_10__kk_mapped_bm4_mm1_hi_r5_orange_opaque__16bpc","status":"accepted","no_effect_sha256":"99dfb865ba2bbaef960ef139895c307a8f735a9f07477968c7b0decbc3e67d72","effect_on_sha256":"994743af6194e3280ae3543432d9f1f04dc72b156a83d440ef0beac2a0a169eb"},
+    {"row_id":"olmkirakira__controlled_ramps_off_10__kk_mapped_bm4_mm1_hi_r5_orange_opaque__32bpc","status":"accepted","no_effect_sha256":"baa4f7125b65c743266317230fdf8dfdcd83689c2ad3f7d00bba2af6e8ec2632","effect_on_sha256":"7074b66b88a91fac5947f2a7ea80e2bae76cf7ca7a7e412a7d42f99add1ef95d"},
+    {"row_id":"olmsmoother_v1__canonical_3__case_0001__16bpc","status":"accepted","no_effect_sha256":"4e8d8e50fa137f014112d21ab2fd450a40aa8fb0ecf48377f9225dd8c80b0235","effect_on_sha256":"c706d254faf2135a68c81f17aae6f7f33f45e7645fe8f13b9fd4d1009ef52b61"}
+  ],
+  "claim_boundary": "This accepts seven hash-bound Windows AE observations and their process/module/parameter/EXR contracts. Cross-host pixel equality is evaluated separately per plugin and depth; acceptance alone does not generalize exactness."
+}

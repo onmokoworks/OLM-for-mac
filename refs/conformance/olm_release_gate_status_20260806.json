@@ -1,5 +1,15 @@
 {
-  "claim_boundary": "Release integration only: ten-lane fixed fixtures, installed Universal identities, and one current-Mac-AE load/render witness per plugin. This manifest does not promote unlisted geometries, parameters, bit depths, or AE exactness.",
+  "claim_boundary": "Release integration only: ten-lane fixed fixtures, installed Universal identities, and one current-Mac-AE load/render witness per plugin. This manifest does not promote unlisted geometries, parameters, bit depths, or AE exactness. Seven Windows AE release-boundary observations are accepted; cross-host exactness remains a per-plugin claim.",
+  "windows_ae_release_boundary": {
+    "state": "accepted_pending_per_plugin_mac_compare",
+    "accepted_rows": 7,
+    "invalid_rows": 0,
+    "after_effects": "26.3x87",
+    "contract_archive_sha256": "6a060641dc867cbb5cb858136f6fd294fb49d274fa252cec71459bc9b20a4652",
+    "return_archive_sha256": "e582b0f368deb6dfbb34de2675e382d2222372705da043151d90dc895f7d7a0a",
+    "evidence": "refs/conformance/olm_windows_ae_release_boundary_minimal_intake_20260806.json",
+    "boundary": "The seven Windows AE process/module/parameter/EXR contracts are accepted. Per-plugin same-contract Mac comparison is separate; this state does not claim blanket cross-host pixel equality."
+  },
   "fixed_fixture_regression": {
     "boundary": "Only commands enumerated by the ten fixed-fixture lanes; slow RadialBlur full replay is excluded.",
     "output_sha256": "bf5970bbcaf47fed933b8602841ec20ce2e0db1a3f2be7d411fefa8b363e19fd",
