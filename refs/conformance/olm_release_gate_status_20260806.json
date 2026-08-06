@@ -1,21 +1,11 @@
 {
   "claim_boundary": "Release integration only: ten-lane fixed fixtures, installed Universal identities, and one current-Mac-AE load/render witness per plugin. This manifest does not promote unlisted geometries, parameters, bit depths, or AE exactness. Seven Windows AE release-boundary observations are accepted; cross-host exactness remains a per-plugin claim.",
-  "windows_ae_release_boundary": {
-    "state": "accepted_pending_per_plugin_mac_compare",
-    "accepted_rows": 7,
-    "invalid_rows": 0,
-    "after_effects": "26.3x87",
-    "contract_archive_sha256": "6a060641dc867cbb5cb858136f6fd294fb49d274fa252cec71459bc9b20a4652",
-    "return_archive_sha256": "e582b0f368deb6dfbb34de2675e382d2222372705da043151d90dc895f7d7a0a",
-    "evidence": "refs/conformance/olm_windows_ae_release_boundary_minimal_intake_20260806.json",
-    "boundary": "The seven Windows AE process/module/parameter/EXR contracts are accepted. Per-plugin same-contract Mac comparison is separate; this state does not claim blanket cross-host pixel equality."
-  },
   "fixed_fixture_regression": {
     "boundary": "Only commands enumerated by the ten fixed-fixture lanes; slow RadialBlur full replay is excluded.",
-    "output_sha256": "bf5970bbcaf47fed933b8602841ec20ce2e0db1a3f2be7d411fefa8b363e19fd",
+    "output_sha256": "b8a090d5b48ab4bef89b2cb1ecf6073cfadc2f1d52f4d011d2837ef843957cbc",
     "returncode": 0,
     "state": "proven",
-    "summary": "PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=423.84s",
+    "summary": "PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=450.94s",
     "tail": [
       "      |                                                      ^",
       "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here",
@@ -39,7 +29,7 @@
       "1 warning generated."
     ]
   },
-  "generated_at": "2026-08-06T09:30:17.605074+00:00",
+  "generated_at": "2026-08-06T15:23:39.101886+00:00",
   "mac_ae_representative": {
     "counts": {
       "invalid": 0,
@@ -282,7 +272,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMKiraKira",
-        "sha256": "aa568ed0ff8ea3cee18901a3d55b059af9c36b88be7a102d1f63ff9ad48d5aba",
+        "sha256": "700d3a91e31aab2ff38fb1e40e2f0d529ef73d3060eb29fc2e018285b8e2ddbe",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -304,7 +294,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMSmoother",
-        "sha256": "1f35d61380bb166c666a5a8f7c4522132ae9c72325fed7d9d29e599724f97c74",
+        "sha256": "8274d2ae87329c5f777a3915cf706576cf9b0a1540f718dc6bfe0dbd22933390",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -331,8 +321,18 @@
         "universal_exact": true
       }
     ],
-    "preflight_status": "ready_for_hash_bound_host_runners",
-    "returncode": 0,
+    "preflight_status": "ae_not_running",
+    "returncode": 2,
     "state": "proven"
+  },
+  "windows_ae_release_boundary": {
+    "accepted_rows": 7,
+    "after_effects": "26.3x87",
+    "boundary": "The seven Windows AE process/module/parameter/EXR contracts are accepted. Per-plugin same-contract Mac comparison is separate; this state does not claim blanket cross-host pixel equality.",
+    "contract_archive_sha256": "6a060641dc867cbb5cb858136f6fd294fb49d274fa252cec71459bc9b20a4652",
+    "evidence": "refs/conformance/olm_windows_ae_release_boundary_minimal_intake_20260806.json",
+    "invalid_rows": 0,
+    "return_archive_sha256": "e582b0f368deb6dfbb34de2675e382d2222372705da043151d90dc895f7d7a0a",
+    "state": "accepted_pending_per_plugin_mac_compare"
   }
 }

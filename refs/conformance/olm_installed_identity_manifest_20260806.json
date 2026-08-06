@@ -6,10 +6,10 @@
     "stable_consecutive_collections": 2,
     "universal_exact": true
   },
-  "accepted_at": "2026-08-06T08:51:59.224106+00:00",
+  "accepted_at": "2026-08-06T15:15:34.464503+00:00",
   "claim_boundary": "Exact installed executable identity, arm64+x86_64 architectures, valid strict code signature, and byte identity with the named local build product. No AE load, UI, or render claim.",
   "configuration": "Debug",
-  "installed_after": "2026-08-06T08:51:59.224106+00:00",
+  "installed_after": "2026-08-06T15:15:34.464503+00:00",
   "plugins": [
     {
       "architectures": [
@@ -95,10 +95,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMKiraKira",
-      "sha256": "aa568ed0ff8ea3cee18901a3d55b059af9c36b88be7a102d1f63ff9ad48d5aba",
+      "sha256": "700d3a91e31aab2ff38fb1e40e2f0d529ef73d3060eb29fc2e018285b8e2ddbe",
       "source_bundle": "mac/OLMKiraKira/Mac/build/Debug/OLMKiraKira.plugin",
       "source_installed_exact": true,
-      "source_sha256": "aa568ed0ff8ea3cee18901a3d55b059af9c36b88be7a102d1f63ff9ad48d5aba",
+      "source_sha256": "700d3a91e31aab2ff38fb1e40e2f0d529ef73d3060eb29fc2e018285b8e2ddbe",
       "universal_exact": true
     },
     {
@@ -125,10 +125,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMSmoother",
-      "sha256": "1f35d61380bb166c666a5a8f7c4522132ae9c72325fed7d9d29e599724f97c74",
+      "sha256": "8274d2ae87329c5f777a3915cf706576cf9b0a1540f718dc6bfe0dbd22933390",
       "source_bundle": "mac/OLMSmoother/Mac/build/Debug/OLMSmoother.plugin",
       "source_installed_exact": true,
-      "source_sha256": "1f35d61380bb166c666a5a8f7c4522132ae9c72325fed7d9d29e599724f97c74",
+      "source_sha256": "8274d2ae87329c5f777a3915cf706576cf9b0a1540f718dc6bfe0dbd22933390",
       "universal_exact": true
     },
     {
