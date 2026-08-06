@@ -1,0 +1,3268 @@
+{
+  "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+  "actual_execution": {
+    "global_fields": {
+      "my_version": 1148928,
+      "out_flags": 33555520,
+      "out_flags2": 134222848
+    },
+    "global_return": 0,
+    "num_params": 224,
+    "params_return": 0,
+    "suite_acquisitions": [
+      {
+        "suite": "PF Handle Suite",
+        "version": 2
+      },
+      {
+        "callback": "PF_HandleSuite.new_handle",
+        "result": "0x20000050",
+        "size": 2808
+      },
+      {
+        "callback": "PF_HandleSuite.lock_handle",
+        "handle": "0x20000050"
+      },
+      {
+        "suite": "AEGP Utility Suite",
+        "version": 13
+      },
+      {
+        "callback": "PF_HandleSuite.unlock_handle",
+        "handle": "0x20000050"
+      },
+      {
+        "suite": "PF Handle Suite",
+        "version": 2
+      },
+      {
+        "callback": "PF_HandleSuite.lock_handle",
+        "handle": "0x20000050"
+      },
+      {
+        "suite": "PF Handle Suite",
+        "version": 2
+      },
+      {
+        "callback": "PF_HandleSuite.unlock_handle",
+        "handle": "0x20000050"
+      }
+    ]
+  },
+  "advertised_num_params_including_input": 224,
+  "commands": {
+    "GLOBAL_SETUP": 1,
+    "PARAMS_SETUP": 4
+  },
+  "entrypoint": "0x18000ffb0",
+  "expected_global_fields": {
+    "my_version": 1148928,
+    "out_flags": 33555520,
+    "out_flags2": 134222848
+  },
+  "global_fields": {
+    "my_version": 1148928,
+    "out_flags": 33555520,
+    "out_flags2": 134222848
+  },
+  "mismatches": [],
+  "normalization_boundary": "Pointer-valued checkbox labels and popup choice pointers are excluded from raw-address comparison. Hostless AEX name formatting is excluded because the variadic Windows sprintf stack tail is outside the callback ABI; fresh Windows AE manifests and source tests separately pin names and choice text. Popup choice count/default are compared.",
+  "normalized_fields": [
+    "order",
+    "disk_id",
+    "param_type",
+    "flags",
+    "ui_flags",
+    "name",
+    "value/default",
+    "valid/UI ranges",
+    "precision/display flags"
+  ],
+  "owned_add_param_rows": 223,
+  "parameters": [
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 1,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 2,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 3,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 13,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 4,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 5,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 7,
+      "popup": {
+        "choices": 65542,
+        "default": 1,
+        "value": 1
+      },
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 522,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 7,
+      "popup": {
+        "choices": 65539,
+        "default": 1,
+        "value": 1
+      },
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 6,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 7,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 8,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 9,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 10,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 11,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 14,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 12,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 13,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 13,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 1,
+      "slider": {
+        "default": 0,
+        "ui_max": 100,
+        "ui_min": -100,
+        "valid_max": 4000,
+        "valid_min": -4000,
+        "value": 0
+      },
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 14,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 7,
+      "popup": {
+        "choices": 65539,
+        "default": 1,
+        "value": 1
+      },
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 20,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 14,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 16,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 13,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 17,
+      "flags": 0,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 1,
+        "ui_max": 100.0,
+        "ui_min": 0.0,
+        "valid_max": 4000.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 18,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 7,
+      "popup": {
+        "choices": 65539,
+        "default": 1,
+        "value": 1
+      },
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 19,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 7,
+      "popup": {
+        "choices": 131075,
+        "default": 2,
+        "value": 2
+      },
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 16,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 14,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 21,
+      "flags": 64,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 1,
+      "slider": {
+        "default": 1,
+        "ui_max": 30,
+        "ui_min": 0,
+        "valid_max": 25,
+        "valid_min": 0,
+        "value": 1
+      },
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 523,
+      "flags": 64,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 524,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 525,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 22,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 526,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 23,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 24,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 25,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 26,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 527,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 528,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 27,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 529,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 28,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 29,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 30,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 31,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 530,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 531,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 32,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 532,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 33,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 34,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 35,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 36,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 533,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 534,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 37,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 535,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 38,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 39,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 40,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 41,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 536,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 537,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 42,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 538,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 43,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 44,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 45,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 46,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 539,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 540,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 47,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 541,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 48,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 49,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 50,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 51,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 542,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 543,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 52,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 544,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 53,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 54,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 55,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 56,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 545,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 546,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 57,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 547,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 58,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 59,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 60,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 61,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 548,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 549,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 62,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 550,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 63,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 64,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 65,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 66,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 551,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 552,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 67,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 553,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 68,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 69,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 70,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 71,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 554,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 555,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 72,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 556,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 73,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 74,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 75,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 76,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 557,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 558,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 77,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 559,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 78,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 79,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 80,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 81,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 560,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 561,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 82,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 562,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 83,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 84,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 85,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 86,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 563,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 564,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 87,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 565,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 88,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 89,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 90,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 91,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 566,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 567,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 92,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 568,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 93,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 94,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 95,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 96,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 569,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 570,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 97,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 571,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 98,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 99,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 100,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 101,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 572,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 573,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 102,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 574,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 103,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 104,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 105,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 106,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 575,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 576,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 107,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 577,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 108,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 109,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 110,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 111,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 578,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 579,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 112,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 580,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 113,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 114,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 115,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 116,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 581,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 582,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 117,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 583,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 118,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 119,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 120,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 121,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 584,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 585,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 122,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 586,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 123,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 124,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 125,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 126,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 587,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 588,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 127,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 589,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 128,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 129,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 130,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 131,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 590,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 591,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 132,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 592,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 133,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 134,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 135,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 136,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 593,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 594,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 137,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 595,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 138,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 139,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 140,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 141,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 596,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "checkbox": {
+        "default": 0,
+        "value": 0
+      },
+      "disk_id": 597,
+      "flags": 0,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 4,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 142,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "color": {
+        "default_argb_raw": "ff000000",
+        "value_argb_raw": "ff000000"
+      },
+      "disk_id": 598,
+      "flags": 32,
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 5,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 143,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 144,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 145,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    },
+    {
+      "disk_id": 146,
+      "flags": 32,
+      "float_slider": {
+        "default": 0.0,
+        "display_flags": 0,
+        "fs_flags": 0,
+        "precision": 4,
+        "ui_max": 1.0,
+        "ui_min": 0.0,
+        "valid_max": 1.0,
+        "valid_min": 0.0,
+        "value": 0.0
+      },
+      "name": "<name: hostless variadic formatting excluded>",
+      "param_type": 10,
+      "ui_flags": 0
+    }
+  ],
+  "raw_capture": {
+    "actual_sha256": "ae6556a2800cb78245e7aa6acef1206b5d579d878cea052e9edbe18b15bc2528",
+    "bytes_per_param": 176,
+    "production_sha256": "aebc40052d69ce88142660ca863ae6eb11b4e0a4132833e3869a9c8048e0af10"
+  },
+  "schema_version": 1,
+  "status": "exact"
+}

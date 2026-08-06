@@ -46,7 +46,7 @@ struct PF_EffectWorld {{ PF_PixelPtr data; A_long rowbytes, width, height; A_sho
 using PF_LayerDef = PF_EffectWorld;
 struct PF_FloatSlider {{ PF_FpLong value; }}; struct PF_Slider {{ A_long value; }}; struct PF_Popup {{ A_long value; }};
 struct PF_BooleanValue {{ bool value; }}; struct PF_ColorDef {{ PF_Pixel8 value; }};
-struct PF_ParamDef {{ union {{ PF_FloatSlider fs_d; PF_Slider sd; PF_Popup pd; PF_BooleanValue bd; PF_ColorDef cd; PF_LayerDef ld; }} u; }};
+struct PF_ParamDef {{ A_u_long flags; union {{ PF_FloatSlider fs_d; PF_Slider sd; PF_Popup pd; PF_BooleanValue bd; PF_ColorDef cd; PF_LayerDef ld; }} u; }};
 struct PF_InData {{ PF_ProgPtr effect_ref; A_long current_time, time_step, time_scale; void *pica_basicP; }};
 struct PF_OutData {{ char return_msg[256]; A_u_long my_version, out_flags, out_flags2; A_long num_params; }};
 struct PF_RenderRequest {{ bool preserve_rgb_of_zero_alpha; }}; struct PF_CheckoutResult {{ PF_LRect result_rect, max_result_rect; A_long ref_width; }};
@@ -73,6 +73,8 @@ static const char *GetStringPtr(int) {{ return ""; }} static PF_Err register_eff
 #define PF_OutFlag2_SUPPORTS_SMART_RENDER 1u
 #define PF_OutFlag2_FLOAT_COLOR_AWARE 2u
 #define PF_OutFlag2_SUPPORTS_GET_FLATTENED_SEQUENCE_DATA 4u
+#define PF_ParamFlag_COLLAPSE_TWIRLY 32u
+#define PF_ParamFlag_SUPERVISE 64u
 #define PF_Precision_TEN_THOUSANDTHS 0
 #define PF_Precision_TENTHS 0
 #define PF_MAX_CHAN16 65535

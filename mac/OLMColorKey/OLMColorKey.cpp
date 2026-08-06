@@ -189,7 +189,7 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_Threshold_Param_Name),
 	                     0.0, 1.0, 0.0, 1.0, 0.0,
-	                     PF_Precision_TEN_THOUSANDTHS, 0, 0,
+	                     PF_Precision_TEN_THOUSANDTHS, 0, PF_ParamFlag_COLLAPSE_TWIRLY,
 	                     THRESHOLD_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
@@ -221,19 +221,19 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_ThresholdR_Param_Name),
 	                     0.0, 1.0, 0.0, 1.0, 0.0,
-	                     PF_Precision_TEN_THOUSANDTHS, 0, 0,
+	                     PF_Precision_TEN_THOUSANDTHS, 0, PF_ParamFlag_COLLAPSE_TWIRLY,
 	                     THRESHOLD_R_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_ThresholdG_Param_Name),
 	                     0.0, 1.0, 0.0, 1.0, 0.0,
-	                     PF_Precision_TEN_THOUSANDTHS, 0, 0,
+	                     PF_Precision_TEN_THOUSANDTHS, 0, PF_ParamFlag_COLLAPSE_TWIRLY,
 	                     THRESHOLD_G_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_ThresholdB_Param_Name),
 	                     0.0, 1.0, 0.0, 1.0, 0.0,
-	                     PF_Precision_TEN_THOUSANDTHS, 0, 0,
+	                     PF_Precision_TEN_THOUSANDTHS, 0, PF_ParamFlag_COLLAPSE_TWIRLY,
 	                     THRESHOLD_B_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
@@ -245,7 +245,7 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_Amount_Param_Name),
-	              -4000, 4000, -4000, 4000, 0,
+	              -4000, 4000, -100, 100, 0,
 	              EDGE_THIN_AMOUNT_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
@@ -262,7 +262,7 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_Amount_Param_Name),
-	                     0.0, 4000.0, 0.0, 4000.0, 0.0,
+	                     0.0, 4000.0, 0.0, 100.0, 0.0,
 	                     PF_Precision_TENTHS, 0, 0,
 	                     EDGE_BLUR_AMOUNT_DISK_ID);
 
@@ -280,12 +280,13 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	PF_END_TOPIC(EDGE_BLUR_GROUP_END_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = PF_ParamFlag_SUPERVISE;
 	PF_ADD_SLIDER(GetStringPtr(StrID_NumberOfColors_Param_Name),
-	              0, OLMCOLORKEY_MAX_COLORS, 0, OLMCOLORKEY_MAX_COLORS, 1,
+	              0, OLMCOLORKEY_MAX_COLORS, 0, 30, 1,
 	              NUMBER_OF_COLORS_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_CHECKBOX(GetStringPtr(StrID_EnableReplace_Param_Name), "", FALSE, 0,
+	PF_ADD_CHECKBOX(GetStringPtr(StrID_EnableReplace_Param_Name), "", FALSE, PF_ParamFlag_SUPERVISE,
 	                ENABLE_REPLACE_DISK_ID);
 
 	for (int i = 0; i < OLMCOLORKEY_MAX_COLORS; ++i) {
@@ -294,7 +295,7 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 
 		MakeIndexedName(name, sizeof(name), GetStringPtr(StrID_UseColor_Param_Name), display_index);
 		AEFX_CLR_STRUCT(def);
-		PF_ADD_CHECKBOX(name, "", i == 0 ? TRUE : FALSE, 0,
+		PF_ADD_CHECKBOX(name, "", FALSE, 0,
 		                USE_COLOR_DISK_ID_FIRST + i * 3);
 
 		MakeIndexedName(name, sizeof(name), GetStringPtr(StrID_UseReplaceColor_Param_Name), display_index);
@@ -304,34 +305,36 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 
 		MakeIndexedName(name, sizeof(name), GetStringPtr(StrID_Color_Param_Name), display_index);
 		AEFX_CLR_STRUCT(def);
+		def.flags = PF_ParamFlag_COLLAPSE_TWIRLY;
 		PF_ADD_COLOR(name, 0, 0, 0, COLOR_DISK_ID_FIRST + i * 5);
 
 		MakeIndexedName(name, sizeof(name), GetStringPtr(StrID_ReplaceColor_Param_Name), display_index);
 		AEFX_CLR_STRUCT(def);
+		def.flags = PF_ParamFlag_COLLAPSE_TWIRLY;
 		PF_ADD_COLOR(name, 0, 0, 0, REPLACE_COLOR_DISK_ID_FIRST + i * 3);
 
 		MakeIndexedName(name, sizeof(name), GetStringPtr(StrID_ThresholdIndexed_Param_Name), display_index);
 		AEFX_CLR_STRUCT(def);
 		PF_ADD_FLOAT_SLIDERX(name, 0.0, 1.0, 0.0, 1.0, 0.0,
-		                     PF_Precision_TEN_THOUSANDTHS, 0, 0,
+		                     PF_Precision_TEN_THOUSANDTHS, 0, PF_ParamFlag_COLLAPSE_TWIRLY,
 		                     THRESHOLD_DISK_ID_FIRST + i * 5);
 
 		MakeIndexedName(name, sizeof(name), GetStringPtr(StrID_ThresholdR_Param_Name), display_index);
 		AEFX_CLR_STRUCT(def);
 		PF_ADD_FLOAT_SLIDERX(name, 0.0, 1.0, 0.0, 1.0, 0.0,
-		                     PF_Precision_TEN_THOUSANDTHS, 0, 0,
+		                     PF_Precision_TEN_THOUSANDTHS, 0, PF_ParamFlag_COLLAPSE_TWIRLY,
 		                     THRESHOLD_R_DISK_ID_FIRST + i * 5);
 
 		MakeIndexedName(name, sizeof(name), GetStringPtr(StrID_ThresholdG_Param_Name), display_index);
 		AEFX_CLR_STRUCT(def);
 		PF_ADD_FLOAT_SLIDERX(name, 0.0, 1.0, 0.0, 1.0, 0.0,
-		                     PF_Precision_TEN_THOUSANDTHS, 0, 0,
+		                     PF_Precision_TEN_THOUSANDTHS, 0, PF_ParamFlag_COLLAPSE_TWIRLY,
 		                     THRESHOLD_G_DISK_ID_FIRST + i * 5);
 
 		MakeIndexedName(name, sizeof(name), GetStringPtr(StrID_ThresholdB_Param_Name), display_index);
 		AEFX_CLR_STRUCT(def);
 		PF_ADD_FLOAT_SLIDERX(name, 0.0, 1.0, 0.0, 1.0, 0.0,
-		                     PF_Precision_TEN_THOUSANDTHS, 0, 0,
+		                     PF_Precision_TEN_THOUSANDTHS, 0, PF_ParamFlag_COLLAPSE_TWIRLY,
 		                     THRESHOLD_B_DISK_ID_FIRST + i * 5);
 	}
 

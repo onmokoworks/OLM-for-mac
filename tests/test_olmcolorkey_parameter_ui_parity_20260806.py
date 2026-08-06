@@ -15,7 +15,7 @@ STRINGS = (ROOT / "mac/OLMColorKey/OLMColorKey_Strings.cpp").read_text(encoding=
 def test_number_of_colors_keeps_abi_but_matches_windows_zero_minimum() -> None:
     assert re.search(
         r"PF_ADD_SLIDER\(GetStringPtr\(StrID_NumberOfColors_Param_Name\),\s*"
-        r"0, OLMCOLORKEY_MAX_COLORS, 0, OLMCOLORKEY_MAX_COLORS, 1,\s*"
+        r"0, OLMCOLORKEY_MAX_COLORS, 0, 30, 1,\s*"
         r"NUMBER_OF_COLORS_DISK_ID\)",
         SOURCE,
     )
@@ -25,10 +25,10 @@ def test_fixed_group_and_control_types_remain_windows_shaped() -> None:
     assert SOURCE.count("PF_ADD_TOPIC(") == 3
     assert SOURCE.count("PF_END_TOPIC(") == 3
     assert SOURCE.count("PF_ADD_POPUP(") == 5
-    assert "PF_ADD_SLIDER(GetStringPtr(StrID_Amount_Param_Name),\n\t              -4000, 4000, -4000, 4000, 0," in SOURCE
+    assert "PF_ADD_SLIDER(GetStringPtr(StrID_Amount_Param_Name),\n\t              -4000, 4000, -100, 100, 0," in SOURCE
     assert re.search(
         r"PF_ADD_FLOAT_SLIDERX\(GetStringPtr\(StrID_Amount_Param_Name\),\s*"
-        r"0\.0, 4000\.0, 0\.0, 4000\.0, 0\.0,\s*PF_Precision_TENTHS",
+        r"0\.0, 4000\.0, 0\.0, 100\.0, 0\.0,\s*PF_Precision_TENTHS",
         SOURCE,
     )
 

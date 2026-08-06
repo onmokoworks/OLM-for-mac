@@ -33,7 +33,7 @@ EXPECTED_FIXED_REGISTRATIONS = [
     ("EDGE_BLUR_AMOUNT_DISK_ID", 0x11, "leaf"),
     ("EDGE_BLUR_DISTANCE_TYPE_DISK_ID", 0x12, "leaf"),
     ("EDGE_BLUR_DIRECTION_DISK_ID", 0x13, "leaf"),
-    ("EDGE_BLUR_GROUP_END_DISK_ID", 1016, "structural"),
+    ("EDGE_BLUR_GROUP_END_DISK_ID", 16, "structural"),
     ("NUMBER_OF_COLORS_DISK_ID", 0x15, "leaf"),
     ("ENABLE_REPLACE_DISK_ID", 0x20B, "leaf"),
 ]
