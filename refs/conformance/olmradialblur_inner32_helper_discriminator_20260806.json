@@ -1,0 +1,89 @@
+{
+  "actual": {
+    "first_max_store_change": {
+      "after": 0.6341338157653809,
+      "after_bits": "0x3f225698",
+      "angle": 150,
+      "before": 0.633974552154541,
+      "before_bits": "0x3f224c28",
+      "radius": 2
+    },
+    "post_accum_sha256": "d12cf7c4be728b8440ade07490e32c13370e7afa5e363b274179462a68cf6364",
+    "post_max_sha256": "1753e6370c8c0bd8a1877ad2aa046b2b747a3e49a54b771e75990c00e5324fa1",
+    "pre_accum_sha256": "b9ad15ac07f2951fb0008d91153225ca28de61182b82b508d6c13178c2a6da8e",
+    "pre_max_sha256": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+    "rows": [
+      {
+        "changed_cells": 1800,
+        "delta_alpha_sum": 22355.51604938507,
+        "radius": 0
+      },
+      {
+        "changed_cells": 1800,
+        "delta_alpha_sum": 21457.25239944458,
+        "radius": 1
+      },
+      {
+        "changed_cells": 1800,
+        "delta_alpha_sum": 18828.681237220764,
+        "radius": 2
+      },
+      {
+        "changed_cells": 1800,
+        "delta_alpha_sum": 19868.994186401367,
+        "radius": 3
+      },
+      {
+        "changed_cells": 1800,
+        "delta_alpha_sum": 20682.22844207287,
+        "radius": 4
+      },
+      {
+        "changed_cells": 1454,
+        "delta_alpha_sum": 15380.795381307602,
+        "radius": 5
+      },
+      {
+        "changed_cells": 701,
+        "delta_alpha_sum": 5837.984462469816,
+        "radius": 6
+      },
+      {
+        "changed_cells": 182,
+        "delta_alpha_sum": 616.3789105340838,
+        "radius": 7
+      },
+      {
+        "changed_cells": 0,
+        "delta_alpha_sum": 0.0,
+        "radius": 8
+      }
+    ]
+  },
+  "candidate_attempts": {
+    "backward_next_row": {
+      "accum_sha256": "44fdb158bab531d3c8b1f099a7837f82d0485c1c2561c6a2065951042d7821d2",
+      "max_sha256": "a43f0297e201a32e426a058a64e9b306de7f546a6b24753e586e27e6f79467c1",
+      "result": "rejected"
+    },
+    "forward_same_row": {
+      "accum_sha256": "e9cb35dfaf588054d23af407c41e25b2b86451293231d0bf3a653fd40712264d",
+      "max_sha256": "1b7f99946c306846b32d4c774216b5294255aaea873370ddb8c6b12d8d3b8a28",
+      "result": "rejected"
+    }
+  },
+  "classification": "Final writer equality from the rejected portable attempts is non-discriminating. The first actual max-store change is radius 2 angle 150; helper accumulation/max ownership remains the first open boundary.",
+  "direct_helper_replay": {
+    "feasible": false,
+    "reason": "Committed plane fixture does not contain the FUN_180001c90 work/config block or its direction-specific 30000-entry weight tables; inventing them would not be an actual-helper replay.",
+    "required_next_capture": [
+      "work/config bytes covering strength, offset mode/value and table pointers",
+      "inner 30000-entry table bytes",
+      "register/stack arguments at first FUN_180001c90 call",
+      "accum/max bytes immediately before and after that single call"
+    ]
+  },
+  "kind": "olmradialblur_inner32_helper_discriminator_20260806",
+  "scope": "Offline actual-AEX pre/post plane discriminator only; no production or AE claim",
+  "status": "rejected_not_production_helper_state_incomplete"
+}
