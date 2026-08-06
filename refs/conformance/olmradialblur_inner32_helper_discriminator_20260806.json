@@ -72,18 +72,17 @@
       "result": "rejected"
     }
   },
-  "classification": "Final writer equality from the rejected portable attempts is non-discriminating. The first actual max-store change is radius 2 angle 150; helper accumulation/max ownership remains the first open boundary.",
+  "classification": "The first actual Inner helper call now replays exactly from captured state. Both portable traversal candidates remain rejected; use the captured call to derive its store sequence before production promotion.",
   "direct_helper_replay": {
-    "feasible": false,
-    "reason": "Committed plane fixture does not contain the FUN_180001c90 work/config block or its direction-specific 30000-entry weight tables; inventing them would not be an actual-helper replay.",
-    "required_next_capture": [
-      "work/config bytes covering strength, offset mode/value and table pointers",
-      "inner 30000-entry table bytes",
-      "register/stack arguments at first FUN_180001c90 call",
-      "accum/max bytes immediately before and after that single call"
-    ]
+    "accum_exact": true,
+    "direction": 1,
+    "feasible": true,
+    "fixture": "olmradialblur_rotation_pf16_inner32_small_actual_aex_20260806",
+    "instructions": 1012,
+    "max_exact": true,
+    "return": "0x1800026ea"
   },
   "kind": "olmradialblur_inner32_helper_discriminator_20260806",
-  "scope": "Offline actual-AEX pre/post plane discriminator only; no production or AE claim",
-  "status": "rejected_not_production_helper_state_incomplete"
+  "scope": "Offline actual-AEX pre/post plane discriminator plus captured first Inner helper direct replay; no production or AE claim",
+  "status": "actual_helper_replay_closed_portable_model_rejected"
 }

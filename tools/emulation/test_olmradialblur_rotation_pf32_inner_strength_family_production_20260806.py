@@ -10,8 +10,10 @@ def sha(x):return hashlib.sha256(x).hexdigest()
 def main():
  if os.environ.get('OLM_RADIAL_AGGREGATE')=='1':
   cases=[]
-  for s in (1,2,4,8,16,32,64):cases.extend(json.loads(Path(f'/tmp/rb_pf32_inner_{s}.json').read_text())['cases'])
-  report={'kind':'olmradialblur_rotation_pf32_inner_strength_family_production_20260806','status':'exact' if all(x['status']=='exact' for x in cases) else 'fail_closed','scope':'Independent native PF32 actual-AEX owner and production 9x7 rowbytes160 Rotation Inner power-of-two family; internal planes plus padded output','strengths':[1,2,4,8,16,32,64],'cases':cases};REPORT.write_text(json.dumps(report,indent=2,sort_keys=True)+'\n');print(json.dumps(report,indent=2,sort_keys=True));return 0 if report['status']=='exact' else 2
+  strengths=(1,2,3,4,5,8,16,31,32,33,63,64)
+  for s in strengths:
+   path=Path(f'/tmp/rb_pf32_nonpow_{s}.json');path=path if path.exists() else Path(f'/tmp/rb_pf32_inner_{s}.json');cases.extend(json.loads(path.read_text())['cases'])
+  report={'kind':'olmradialblur_rotation_pf32_inner_strength_family_production_20260806','status':'exact' if all(x['status']=='exact' for x in cases) else 'fail_closed','scope':'Independent native PF32 actual-AEX owner and production 9x7 rowbytes160 Rotation Inner 1..64 rule witnesses; internal planes plus padded output','admitted_rule':'integer Inner Strength 1..64 inclusive','strengths':list(strengths),'cases':cases};REPORT.write_text(json.dumps(report,indent=2,sort_keys=True)+'\n');print(json.dumps(report,indent=2,sort_keys=True));return 0 if report['status']=='exact' else 2
  rows=[]
  for strength in STRENGTHS:
   base.OUTER_STRENGTH=0;base.INNER_STRENGTH=strength

@@ -1905,8 +1905,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.center_x == 4.0 && info.center_y == 3.0 &&
 		info.outer_strength == 0 && info.outer_edge_fade == 0 &&
 		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
-		info.inner_strength >= 1 && info.inner_strength <= 64 &&
-		(info.inner_strength & (info.inner_strength - 1)) == 0 && info.inner_edge_fade == 0 &&
+		info.inner_strength >= 1 && info.inner_strength <= 64 && info.inner_edge_fade == 0 &&
 		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
 		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
 		info.quality == 5.0 && info.brightness_gain == 1.0 &&

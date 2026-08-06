@@ -1,4 +1,5 @@
 {
+  "admitted_rule": "integer Inner Strength 1..64 inclusive",
   "cases": [
     {
       "effective_span": 0,
@@ -45,6 +46,28 @@
       "status": "exact"
     },
     {
+      "effective_span": 2,
+      "hashes": {
+        "accum": "2b3bb95ea084d6438ea7c240e4d61d13159fe20ce910a682f1dbf4dff4a2bf05",
+        "final_rgba": "9d8c2be8d3926493cf2098a68ff49f2230478aec7f7c49d2ddcfa8adf2a3636d",
+        "max_alpha": "0b0bb73dfb97e16a060bbc47fe586c37c17c239fd22fe4a9c065cdda44eea974",
+        "output": "d648c902d6a7ce45bc37dc54489d7cadc5bfff5d02622f34d1624a353919f891",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+      },
+      "inner_strength": 3,
+      "matches": {
+        "accum": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "status": "exact"
+    },
+    {
       "effective_span": 3,
       "hashes": {
         "accum": "327e595610da8c358c3e2500794ab1182c591d3d9d48d42f009fe092a02a3ac2",
@@ -55,6 +78,28 @@
         "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
       },
       "inner_strength": 4,
+      "matches": {
+        "accum": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "status": "exact"
+    },
+    {
+      "effective_span": 4,
+      "hashes": {
+        "accum": "1cab31e794dc19b2bd14b7079b3cbe452dc977aa65fa444ededc205ac2a0b969",
+        "final_rgba": "bcf923fef8133742ff974474f7d2f3e8b12b98a3553b9081f80f2dfa88742e23",
+        "max_alpha": "fe6cb7db7672ea4364e4f635207b7e08ba60bb55d981d2b4968639a10072c607",
+        "output": "55bc360b9f2c38d414d7ead1f762942abaa8d6a4f60cdce1bc140582896af471",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+      },
+      "inner_strength": 5,
       "matches": {
         "accum": true,
         "final_rgba": true,
@@ -111,6 +156,94 @@
       "status": "exact"
     },
     {
+      "effective_span": 30,
+      "hashes": {
+        "accum": "d7c7f597c1dc3d649d02d537d4a8a02c0db69e25e0cf4e78366683f42915b125",
+        "final_rgba": "b6fdac15bf5932636a12ffbc1455e78300345ffb6c8e4f29af440c0e5e46dee8",
+        "max_alpha": "6a1690c3ef59c9031080e80c2b9d4ffbf8a92eced7f74f637ffcbdbc039417fd",
+        "output": "cd7814e9405aaa0389d969457b26eec6ca8f4cccaed3b74d2312bb56ce727ee7",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+      },
+      "inner_strength": 31,
+      "matches": {
+        "accum": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "status": "exact"
+    },
+    {
+      "effective_span": 31,
+      "hashes": {
+        "accum": "d12cf7c4be728b8440ade07490e32c13370e7afa5e363b274179462a68cf6364",
+        "final_rgba": "8a5df2b125c892a972ba60bae4c1da5498dc36eef2f5dc898dc29ec135c4c91c",
+        "max_alpha": "1753e6370c8c0bd8a1877ad2aa046b2b747a3e49a54b771e75990c00e5324fa1",
+        "output": "4861bfd510e5cd8deff80bc1d6bf542e04dc9dc15bd532815ade7bf83a01c8a9",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+      },
+      "inner_strength": 32,
+      "matches": {
+        "accum": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "status": "exact"
+    },
+    {
+      "effective_span": 32,
+      "hashes": {
+        "accum": "f72e9be4404b20016d100ce8a000f0995e46c42b1a9773fa9b2292d84511ac23",
+        "final_rgba": "4872640e5e62ac1ada827f796a99e1068ec338d5185ffa037b6dd953a75e036a",
+        "max_alpha": "8679ce88a8499ef649cd01e1a7a0baf625f7481784151b9e5d6f4cc7de94e0d2",
+        "output": "a7bfd4fe331756e4e586fd64b4a505f7f78ab03b7d54b90d7836040053674def",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+      },
+      "inner_strength": 33,
+      "matches": {
+        "accum": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "status": "exact"
+    },
+    {
+      "effective_span": 62,
+      "hashes": {
+        "accum": "996b2c2bd3139c27bac8c0d6f7395eb69fa78223ff9cc59c8cb62db24d844308",
+        "final_rgba": "114c5c8d1ff82273dbc0cae1c2436e42d7367fa3b71c2d26430001e1950a41cc",
+        "max_alpha": "8e3eb824bfa0410903dbbe7718d3f56b1da7acfa55f2c147ff68b1891bb7a8c0",
+        "output": "aa835855b7b49ccfe9dd2ca660ca44711436f27b3fd4277d583d4121528ebbbd",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+      },
+      "inner_strength": 63,
+      "matches": {
+        "accum": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "status": "exact"
+    },
+    {
       "effective_span": 63,
       "hashes": {
         "accum": "af4164b0dde16ae9dc671f5b0a302ae8343857fcc79e71e6f2c60c1fdd63e1ae",
@@ -134,14 +267,20 @@
     }
   ],
   "kind": "olmradialblur_rotation_pf16_inner_strength_family_production_20260806",
-  "scope": "Independent actual-AEX owner and production PF16 9x7 rowbytes80 Rotation Inner power-of-two family; internal planes plus padded output",
+  "scope": "Independent actual-AEX owner and production PF16 9x7 rowbytes80 Rotation Inner 1..64 rule witnesses; internal planes plus padded output",
   "status": "exact",
   "strengths": [
     1,
     2,
+    3,
     4,
+    5,
     8,
     16,
+    31,
+    32,
+    33,
+    63,
     64
   ]
 }
