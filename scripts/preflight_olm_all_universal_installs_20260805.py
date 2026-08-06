@@ -17,20 +17,35 @@ from datetime import datetime
 from pathlib import Path
 
 
+ROOT = Path(__file__).resolve().parents[1]
 MEDIA_CORE = Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore"
-INSTALLED_AFTER = datetime.fromisoformat("2026-08-05T19:55:00+09:00")
-EXPECTED = {
-    "OLMBlur": "dd64362e6071cfd93e92f3a4853782752aeb023c54671773bfedb0c496e8afc7",
-    "ColorKeep": "ccc89781fa547450acc3053cb77bff8d6983cd8c6835866c87449e7a64117cce",
-    "OLMColorKey": "34fd47cd04c6665f75a84ffb0d2bb01390823e50d2224059917043cd45350464",
-    "OLMDirectionalBlur": "6a89dd4d9bca3f5b3c7af7782627d1b7b7bb6b0c45afe83945d056f1db7519f0",
-    "OLMDistanceGradation": "656537d052f67a9e7eb4d4ba2c6f5c890fe34e3d2c47069bcfba01854d96055e",
-    "OLMKiraKira": "cd97c6f328bf6a4adbe001662f35c12af405f89a2374046f185f68673df96719",
-    "OLMRadialBlur": "2e079e3c168666c2f3509f8d4c90ab107301880bce43f538cf4e16bcb8047732",
-    "OLMSmoother": "44b199789d086b4f52354dd76fb3a3b107180323221718938d8d8580884028c0",
-    "OLMSmoother2": "fe782f344dcaf8865b778198b0faeb8cecd525062a83f38aca8dc1db74442c34",
-    "OLMToonDilate": "7d2c24d8ad0f7436ee7035e0d926a2abaac1a74bc9305a4223f76230c1fc5537",
+IDENTITY_MANIFEST = ROOT / "refs/conformance/olm_installed_identity_manifest_20260806.json"
+PLUGIN_NAMES = {
+    "OLMBlur", "ColorKeep", "OLMColorKey", "OLMDirectionalBlur",
+    "OLMDistanceGradation", "OLMKiraKira", "OLMRadialBlur",
+    "OLMSmoother", "OLMSmoother2", "OLMToonDilate",
 }
+
+
+def load_identity_manifest() -> tuple[datetime, dict[str, str]]:
+    payload = json.loads(IDENTITY_MANIFEST.read_text(encoding="utf-8"))
+    if payload.get("schema") != "olm.installed-identity-manifest/1":
+        raise ValueError("installed identity manifest schema mismatch")
+    rows = payload.get("plugins")
+    if not isinstance(rows, list) or len(rows) != 10:
+        raise ValueError("installed identity manifest must contain ten plugins")
+    expected = {row["plugin"]: row["sha256"] for row in rows}
+    if set(expected) != PLUGIN_NAMES or any(
+        not isinstance(value, str)
+        or len(value) != 64
+        or any(char not in "0123456789abcdef" for char in value)
+        for value in expected.values()
+    ):
+        raise ValueError("installed identity manifest identities invalid")
+    return datetime.fromisoformat(payload["installed_after"]), expected
+
+
+INSTALLED_AFTER, EXPECTED = load_identity_manifest()
 
 
 def run(*args: str) -> subprocess.CompletedProcess[str]:
@@ -55,7 +70,7 @@ def main() -> int:
     bundles: list[dict[str, object]] = []
     exact = True
     for name, expected_hash in EXPECTED.items():
-        matches = list(MEDIA_CORE.glob(f"{name}.plugin"))
+        matches = list(MEDIA_CORE.rglob(f"{name}.plugin"))
         row: dict[str, object] = {"name": name, "bundle_count": len(matches)}
         if len(matches) != 1:
             exact = False
