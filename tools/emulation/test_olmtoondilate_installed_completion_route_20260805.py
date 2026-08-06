@@ -7,18 +7,16 @@ import json
 import subprocess
 import sys
 from pathlib import Path
+from olm_installed_identity import verified_binary
 
 ROOT = Path(__file__).resolve().parents[2]
 ACTUAL = ROOT / "tools/emulation/probe_olmtoondilate_actual_aex_sequence_smartpre_20260805.py"
 ADAPTER = ROOT / "tools/emulation/test_olmtoondilate_mac_smartrender_adapter_20260717.py"
 DYNAMIC = ROOT / "tools/emulation/test_olmtoondilate_installed_dynamic_all_depths_20260806.py"
 SOURCE = ROOT / "mac/OLMToonDilate/OLMToonDilate.cpp"
-INSTALLED = Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin"
-BINARY = INSTALLED / "Contents/MacOS/OLMToonDilate"
 REPORT = ROOT / "refs/conformance/olmtoondilate_installed_completion_route_20260805.json"
 MARKDOWN = REPORT.with_suffix(".md")
-EXPECTED_BINARY_SHA = "7d2c24d8ad0f7436ee7035e0d926a2abaac1a74bc9305a4223f76230c1fc5537"
-EXPECTED_SOURCE_SHA = "a17aabb11ebb74bdea017528b4bb39c720ec93305fdfcf910c05e762a0507bd6"
+EXPECTED_SOURCE_SHA = "5ffc51877c3f13095acef39a18f473a6ec9c98df770194671e61560d3cfa63ed"
 
 
 def sha(path: Path) -> str:
@@ -33,11 +31,13 @@ def run_json(path: Path) -> dict:
 
 
 def main() -> int:
+    binary, identity = verified_binary("OLMToonDilate")
+    installed = binary.parents[2]
     actual = run_json(ACTUAL)
     adapter = run_json(ADAPTER)
     dynamic = run_json(DYNAMIC)
-    archs = subprocess.run(["lipo", "-archs", str(BINARY)], capture_output=True, text=True, check=True).stdout.split()
-    sign = subprocess.run(["codesign", "--verify", "--deep", "--strict", str(INSTALLED)], capture_output=True)
+    archs = subprocess.run(["lipo", "-archs", str(binary)], capture_output=True, text=True, check=True).stdout.split()
+    sign = subprocess.run(["codesign", "--verify", "--deep", "--strict", str(installed)], capture_output=True)
     selected = [
         "smart_pre_entry_returned", "smart_render_entry_returned",
         "mixed_3x2_all_depths_exact", "radius2_4x2_all_depths_exact",
@@ -49,10 +49,10 @@ def main() -> int:
         "actual_entry_chain_exact": actual.get("status") == "PASS_SEQUENCE_AND_SMARTPRE_ENTRY" and all(actual.get("gates", {}).get(k) for k in selected),
         "production_adapter_exact": adapter.get("status") == "ok",
         "production_source_identity": sha(SOURCE) == EXPECTED_SOURCE_SHA,
-        "installed_binary_identity": sha(BINARY) == EXPECTED_BINARY_SHA,
+        "installed_binary_identity": sha(binary) == identity["sha256"],
         "installed_universal": set(archs) == {"arm64", "x86_64"},
         "installed_codesign_valid": sign.returncode == 0,
-        "single_active_bundle": len(list(INSTALLED.parent.glob("OLMToonDilate.plugin"))) == 1,
+        "single_active_bundle": len(list(installed.parent.glob("OLMToonDilate.plugin"))) == 1,
         "installed_dynamic_entry_exact": dynamic.get("status") == "PASS_INSTALLED_DYNAMIC_ALL_DEPTHS" and all(
             dynamic.get("gates", {}).get(key) for key in ("dlopen_effectmain", "PF8_exact", "PF16_exact", "PF32_bitwise_exact")
         ),
@@ -71,7 +71,7 @@ def main() -> int:
         "actual_aex_sha256": actual["aex_sha256"],
         "actual_report_sha256": sha(ROOT / "refs/conformance/olmtoondilate_actual_aex_sequence_smartpre_20260805.json"),
         "production_source_sha256": sha(SOURCE),
-        "installed": {"path": str(INSTALLED), "binary_sha256": sha(BINARY), "architectures": archs, "codesign": "valid" if sign.returncode == 0 else "invalid"},
+        "installed": {"path": str(installed), "binary_sha256": sha(binary), "architectures": archs, "codesign": "valid" if sign.returncode == 0 else "invalid"},
         "gates": gates,
         "restart_required_from_install_record": False,
         "installed_dynamic_entry": dynamic,

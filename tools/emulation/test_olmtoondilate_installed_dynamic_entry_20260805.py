@@ -3,15 +3,13 @@
 from __future__ import annotations
 import hashlib, json, shutil, subprocess, tempfile
 from pathlib import Path
+from olm_installed_identity import verified_binary
 
 ROOT=Path(__file__).resolve().parents[2]
-BUNDLE=Path.home()/"Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin"
-BINARY=BUNDLE/"Contents/MacOS/OLMToonDilate"
 REPORT=ROOT/"refs/conformance/olmtoondilate_installed_dynamic_entry_20260805.json"
-EXPECTED_SHA="7d2c24d8ad0f7436ee7035e0d926a2abaac1a74bc9305a4223f76230c1fc5537"
 
 def main():
- if hashlib.sha256(BINARY.read_bytes()).hexdigest()!=EXPECTED_SHA:raise RuntimeError("BLOCKED_FAIL_CLOSED: installed binary drifted")
+ BINARY,identity=verified_binary("OLMToonDilate");EXPECTED_SHA=identity["sha256"]
  compiler=shutil.which("clang++");assert compiler
  with tempfile.TemporaryDirectory(prefix="toondilate_installed_dynamic_") as td:
   td=Path(td);src=td/"probe.cpp";exe=td/"probe"

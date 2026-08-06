@@ -8,12 +8,10 @@ import shutil
 import subprocess
 import tempfile
 from pathlib import Path
+from olm_installed_identity import verified_binary
 
 
 ROOT = Path(__file__).resolve().parents[2]
-BUNDLE = Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin"
-BINARY = BUNDLE / "Contents/MacOS/OLMToonDilate"
-EXPECTED_SHA256 = "7d2c24d8ad0f7436ee7035e0d926a2abaac1a74bc9305a4223f76230c1fc5537"
 REPORT = ROOT / "refs/conformance/olmtoondilate_installed_dynamic_all_depths_20260806.json"
 
 
@@ -89,9 +87,8 @@ int main(int argc, char **argv) {
 
 
 def main() -> int:
-    actual_sha = hashlib.sha256(BINARY.read_bytes()).hexdigest()
-    if actual_sha != EXPECTED_SHA256:
-        raise RuntimeError(f"BLOCKED_FAIL_CLOSED: installed binary drifted: {actual_sha}")
+    binary, identity = verified_binary("OLMToonDilate")
+    actual_sha = identity["sha256"]
     compiler = shutil.which("clang++")
     if not compiler:
         raise RuntimeError("BLOCKED_FAIL_CLOSED: clang++ unavailable")
@@ -109,13 +106,13 @@ def main() -> int:
         ], capture_output=True, text=True)
         if build.returncode:
             raise RuntimeError(f"BLOCKED_FAIL_CLOSED: probe build failed\n{build.stderr}")
-        run = subprocess.run([str(executable), str(BINARY)], capture_output=True, text=True)
+        run = subprocess.run([str(executable), str(binary)], capture_output=True, text=True)
         if run.returncode:
             raise RuntimeError(f"BLOCKED_FAIL_CLOSED: probe failed rc={run.returncode}\n{run.stdout}\n{run.stderr}")
     depths = json.loads(run.stdout)
     report = {
         "status": "PASS_INSTALLED_DYNAMIC_ALL_DEPTHS",
-        "installed_binary": str(BINARY),
+        "installed_binary": str(binary),
         "binary_sha256": actual_sha,
         "architecture": "arm64",
         "commands": ["PF_Cmd_SMART_PRE_RENDER", "PF_Cmd_SMART_RENDER"],
