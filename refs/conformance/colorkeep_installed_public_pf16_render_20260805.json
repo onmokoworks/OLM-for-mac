@@ -1,0 +1,32 @@
+{
+  "actual_aex_fixture": "refs/conformance/colorkeep_pf16_extended_range_actual_aex_20260805.argb16",
+  "actual_aex_fixture_sha256": "1fa0ee04a8e57924bfb14a3c57f9ac937c7737486daca69b2bec689f6afe4a5e",
+  "connection_closed": "The installed hash is now exercised through its public rendering entry, real legacy PF16 dispatch, internal worker, and writer in one call chain; no local-symbol shortcut or source recompilation supplies the behavior under test.",
+  "fixture": "PF16 extended-range 4x3, rowbytes40, 8-byte input/output padding",
+  "installed_binary": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/ColorKeep.plugin/Contents/MacOS/ColorKeep",
+  "installed_binary_sha256": "ccc89781fa547450acc3053cb77bff8d6983cd8c6835866c87449e7a64117cce",
+  "installed_output_sha256": "1fa0ee04a8e57924bfb14a3c57f9ac937c7737486daca69b2bec689f6afe4a5e",
+  "not_proven": [
+    "native After Effects suite behavior",
+    "After Effects loaded-module identity",
+    "AE project export"
+  ],
+  "padding_exact": "all three 8-byte output padding regions remain 0xee",
+  "public_path": "dlopen installed bundle -> dlsym EffectMain -> PF_Cmd_RENDER -> CheckoutInfo -> PF iterate16 Suite v2 -> ColorKeep16Func -> output world",
+  "raw_exact": true,
+  "remaining_boundary": "Synthetic suites prove the plugin-side call chain, not AE's suite implementation or AE loading/export of this hash.",
+  "status": "installed_public_entry_to_writer_exact",
+  "synthetic_host_suites": {
+    "PF ColorParamSuite v1": {
+      "acquire": 1,
+      "purpose": "three floating-point key colors",
+      "release": 1
+    },
+    "PF iterate16 Suite v2": {
+      "acquire": 1,
+      "purpose": "12 typed pixel callbacks and rowbytes-aware output writes",
+      "release": 1
+    }
+  },
+  "typed_pixel_callbacks": 12
+}

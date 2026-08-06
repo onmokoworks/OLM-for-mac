@@ -42,6 +42,7 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	PF_ParamDef def;
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = PF_ParamFlag_SUPERVISE;
 	PF_ADD_SLIDER(GetStringPtr(StrID_EnabledColorNum_Param_Name),
 	              0, COLORKEEP_MAX_COLORS,
 	              0, COLORKEEP_MAX_COLORS,
@@ -170,10 +171,13 @@ ColorKeepFloatFunc(void *refcon, A_long, A_long, PF_PixelFloat *inP, PF_PixelFlo
 	bool match = false;
 	for (A_long i = 0; i < info->count; ++i) {
 		const PF_PixelFloat &c = info->colors[i];
-		if (fabsf(inP->red - c.red) <= kColorKeepFloatTolerance &&
-		    fabsf(inP->green - c.green) <= kColorKeepFloatTolerance &&
-		    fabsf(inP->blue - c.blue) <= kColorKeepFloatTolerance &&
-		    fabsf(inP->alpha - c.alpha) <= kColorKeepFloatTolerance) {
+		// Windows 2025 uses COMISS followed by JA for every absolute
+		// difference. Express the same ordered-greater-than rejection so
+		// an unordered (NaN) comparison follows the native fall-through.
+		if (!(fabsf(inP->red - c.red) > kColorKeepFloatTolerance) &&
+		    !(fabsf(inP->green - c.green) > kColorKeepFloatTolerance) &&
+		    !(fabsf(inP->blue - c.blue) > kColorKeepFloatTolerance) &&
+		    !(fabsf(inP->alpha - c.alpha) > kColorKeepFloatTolerance)) {
 			match = true; break;
 		}
 	}
@@ -263,7 +267,11 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	PF_CHECKIN_PARAM(in_data, &enabledParam);
 
 	PF_ColorParamSuite1 *cps = suites.ColorParamSuite1();
-	for (A_long i = 0; i < info.count && !err; ++i) {
+	// The Windows 2025 SmartRender preparation checks out the complete
+	// 100-color parameter surface regardless of the enabled count. Besides
+	// matching dependency tracking, this makes a missing color checkout fail
+	// before any output iteration starts.
+	for (A_long i = 0; i < COLORKEEP_MAX_COLORS && !err; ++i) {
 		PF_ParamDef cp;
 		AEFX_CLR_STRUCT(cp);
 		ERR(PF_CHECKOUT_PARAM(in_data, COLORKEEP_COLOR_FIRST + i,

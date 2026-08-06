@@ -1,0 +1,61 @@
+{
+  "status": "installed_restart_required",
+  "plugin": "ColorKeep",
+  "scope": "current Smart Render PF32 special-value source plus PARAMS_SETUP slider supervision parity",
+  "build": {
+    "command": "xcodebuild -project mac/ColorKeep/Mac/ColorKeep.xcodeproj -configuration Release ARCHS='arm64 x86_64' ONLY_ACTIVE_ARCH=NO CODE_SIGNING_ALLOWED=NO build",
+    "configuration_requested": "Release",
+    "configuration_observed": "Debug",
+    "configuration_note": "The Xcode project has no Release configuration; xcodebuild selected its default Debug configuration and emitted the bundle under build/Debug.",
+    "bundle": "mac/ColorKeep/Mac/build/Debug/ColorKeep.plugin",
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "signed_binary_sha256": "ccc89781fa547450acc3053cb77bff8d6983cd8c6835866c87449e7a64117cce",
+    "bundle_identifier": "com.adobe.AfterEffects.ColorKeep",
+    "bundle_name": "ColorKeep",
+    "signature": "adhoc",
+    "codesign_verify": "valid on disk; satisfies its Designated Requirement"
+  },
+  "install": {
+    "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/ColorKeep.plugin",
+    "installed_binary_sha256": "ccc89781fa547450acc3053cb77bff8d6983cd8c6835866c87449e7a64117cce",
+    "installed_hash_matches_signed_build": true,
+    "installed_architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "installed_info_plist_sha256": "49350ec144e9234dda01f6dfb83564982f4352bf9dc3b6f2e08d111a322725d5",
+    "codesign_verify": "valid on disk; satisfies its Designated Requirement",
+    "installed_executable_witness": "refs/conformance/colorkeep_installed_entry_worker_writer_20260805.json",
+    "installed_public_entry_executed": true,
+    "installed_pf16_worker_writer_actual_aex_raw_exact": true,
+    "installed_public_render_to_writer_witness": "refs/conformance/colorkeep_installed_public_pf16_render_20260805.json",
+    "installed_public_render_to_writer_actual_aex_raw_exact": true
+  },
+  "backup": {
+    "path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoff/mac_plugin_backups/mediacore_20260805_colorkeep_before_params_supervise/ColorKeep.plugin",
+    "previous_binary_sha256": "dd2ba9e9a2d08953a9c45e8d4893d80b4c46655ab6eaf39a77e7c65b9bbdd57a",
+    "previous_architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "recovery": "Move this bundle back to the MediaCore path while After Effects is not running.",
+    "earlier_backup": "/Users/onmk/Documents/Projects/Personal/OLM as/handoff/mac_plugin_backups/mediacore_20260805_colorkeep_before_special_values/ColorKeep.plugin"
+  },
+  "host_identity": {
+    "computer_name": "macbook pro (57)",
+    "machine_architecture": "arm64",
+    "macos": "15.7.2",
+    "after_effects_path": "/Applications/Adobe After Effects 2026/Adobe After Effects 2026.app",
+    "after_effects_version": "26.3.0",
+    "after_effects_pid_during_install": 77384,
+    "after_effects_started": "Wed Aug 5 12:28:22 2026",
+    "after_effects_was_not_stopped": true,
+    "colorkeep_mapping_seen_by_lsof_or_vmmap_after_install": false,
+    "loaded_binary_hash_bound_to_installed_binary": false,
+    "restart_required": true,
+    "claim_boundary": "The on-disk Universal bundle is installed and verified. No AE-host behavior or loaded-binary identity is claimed until AE is restarted and its ColorKeep mapping is bound to this installed hash."
+  }
+}

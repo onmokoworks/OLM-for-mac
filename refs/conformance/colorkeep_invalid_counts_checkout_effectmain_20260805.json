@@ -1,0 +1,91 @@
+{
+  "checkout_failure": {
+    "failing_parameter_index": 57,
+    "legacy_output": "normal",
+    "ordered_checkout_indices": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "return_code": 77,
+    "smart_output": "fully unchanged including padding"
+  },
+  "combined_sha256": "a7fbdeb0ec936e88f135581576a1611380df904a0ddf42970f42faec2c934432",
+  "depths": [
+    "PF8",
+    "PF16",
+    "PF32"
+  ],
+  "invalid_counts": {
+    "above_100": {
+      "oracle": "fresh actual worker count=100",
+      "production": "clamp to 100"
+    },
+    "actual_aex_effectmain_fact": "FUN_180001a90 stores the raw count; >100 would make the worker read beyond its 100-color local buffer and is therefore not adopted as a compatibility behavior",
+    "negative": {
+      "oracle": "fresh actual worker count=0",
+      "production": "clamp to 0"
+    }
+  },
+  "normal_100_regression": "covered separately by colorkeep_max100_effectmain_actual_aex_20260805",
+  "not_proven": [
+    "After Effects host execution/export",
+    "unsafe out-of-bounds behavior for forged count >100"
+  ],
+  "production_change": "SmartRender always checks out Color[0..99], matching actual FUN_180001a90 dependency preparation",
+  "status": "exact"
+}

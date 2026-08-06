@@ -1,0 +1,225 @@
+{
+  "aex": "aex/OLMColorKeep/Plugins/64/2025/ColorKeep.aex",
+  "aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+  "artifacts": {
+    "colorkeep_pf8_expected_actual_aex.argb8": {
+      "path": "refs/mac_validation_fixtures/colorkeep_pf8_20260805/colorkeep_pf8_expected_actual_aex.argb8",
+      "sha256": "29f9080b90d73404359c07439727d3e85b32ea185fe7fde4edd669310ed8a05b"
+    },
+    "colorkeep_pf8_expected_actual_aex.png": {
+      "path": "refs/mac_validation_fixtures/colorkeep_pf8_20260805/colorkeep_pf8_expected_actual_aex.png",
+      "sha256": "ec46d5325b8c265aaed1e0e467750eacbcfb034d2f79c06af70a280706bf0328"
+    },
+    "colorkeep_pf8_input.png": {
+      "path": "refs/mac_validation_fixtures/colorkeep_pf8_20260805/colorkeep_pf8_input.png",
+      "sha256": "3df81d4fba288411f9bb780e3718e3d954857f8d5e39c5eb9be14275d78d77dc"
+    }
+  },
+  "depth": "PF8",
+  "dimensions": [
+    4,
+    3
+  ],
+  "enabled_color_count": 5,
+  "expected_pixels_rgba8": [
+    [
+      255,
+      0,
+      0,
+      255
+    ],
+    [
+      254,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      255,
+      0,
+      255
+    ],
+    [
+      0,
+      254,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      255,
+      255
+    ],
+    [
+      0,
+      0,
+      254,
+      0
+    ],
+    [
+      128,
+      128,
+      128,
+      255
+    ],
+    [
+      129,
+      128,
+      128,
+      0
+    ],
+    [
+      255,
+      255,
+      0,
+      255
+    ],
+    [
+      255,
+      254,
+      0,
+      0
+    ],
+    [
+      17,
+      29,
+      43,
+      0
+    ],
+    [
+      255,
+      0,
+      0,
+      255
+    ]
+  ],
+  "input_pixels_rgba8": [
+    [
+      255,
+      0,
+      0,
+      255
+    ],
+    [
+      254,
+      0,
+      0,
+      255
+    ],
+    [
+      0,
+      255,
+      0,
+      255
+    ],
+    [
+      0,
+      254,
+      0,
+      255
+    ],
+    [
+      0,
+      0,
+      255,
+      255
+    ],
+    [
+      0,
+      0,
+      254,
+      255
+    ],
+    [
+      128,
+      128,
+      128,
+      255
+    ],
+    [
+      129,
+      128,
+      128,
+      255
+    ],
+    [
+      255,
+      255,
+      0,
+      255
+    ],
+    [
+      255,
+      254,
+      0,
+      255
+    ],
+    [
+      17,
+      29,
+      43,
+      255
+    ],
+    [
+      255,
+      0,
+      0,
+      255
+    ]
+  ],
+  "keys_rgba8": [
+    [
+      255,
+      0,
+      0,
+      255
+    ],
+    [
+      0,
+      255,
+      0,
+      255
+    ],
+    [
+      0,
+      0,
+      255,
+      255
+    ],
+    [
+      128,
+      128,
+      128,
+      255
+    ],
+    [
+      255,
+      255,
+      0,
+      255
+    ]
+  ],
+  "not_proven": [
+    "After Effects host dispatch",
+    "After Effects PNG handling of hidden RGB at alpha zero",
+    "installed Mac plug-in AE loading"
+  ],
+  "status": "exact_actual_aex_fixture",
+  "worker_entry": "0x180001580",
+  "worker_instruction_counts": [
+    111,
+    85,
+    111,
+    97,
+    111,
+    103,
+    105,
+    85,
+    111,
+    97,
+    85,
+    111
+  ]
+}

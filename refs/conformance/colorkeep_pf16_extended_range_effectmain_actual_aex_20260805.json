@@ -1,0 +1,268 @@
+{
+  "actual_aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+  "actual_raw_payload": "refs/conformance/colorkeep_pf16_extended_range_actual_aex_20260805.argb16",
+  "actual_raw_sha256": "1fa0ee04a8e57924bfb14a3c57f9ac937c7737486daca69b2bec689f6afe4a5e",
+  "actual_worker_entry": "0x180001280",
+  "boundary": {
+    "first_extended_value": 32769,
+    "nominal_white": 32768,
+    "semantics": "PF16 key colors are quantized from float parameters into nominal AE units. Extended source words do not match nominal-white keys; output preserves all RGB uint16 words and clears alpha only.",
+    "storage_max": 65535
+  },
+  "fixture": "4x3 PF16, rowbytes40, 8-byte input/output padding, three enabled keys",
+  "legacy_matches_actual": true,
+  "padding": "all 8 output padding bytes per row remain 0xee",
+  "production_public_entrypoints": [
+    "EffectMain(PF_Cmd_RENDER)->Render->PF16 iterate",
+    "EffectMain(PF_Cmd_SMART_PRE_RENDER)->EffectMain(PF_Cmd_SMART_RENDER)->PF16 iterate"
+  ],
+  "production_raw_payload": "refs/conformance/colorkeep_pf16_extended_range_mac_production_20260805.argb16",
+  "production_raw_sha256": "1fa0ee04a8e57924bfb14a3c57f9ac937c7737486daca69b2bec689f6afe4a5e",
+  "production_source": "mac/ColorKeep/ColorKeep.cpp",
+  "raw_payload_bytes": 120,
+  "remaining_gaps": [
+    "After Effects host execution/export and loaded-binary identity",
+    "PF16 behavior for malformed parameter floats outside the public color-control range",
+    "host-managed worlds with negative rowbytes or non-zero origin",
+    "public UI entrypoints USER_CHANGED_PARAM and UPDATE_PARAMS_UI against actual AEX host callbacks"
+  ],
+  "selected_gap": "PF16 storage values above AE nominal white (32768) were not covered by an actual-AEX-to-production EffectMain fixture.",
+  "smart_dependencies": {
+    "checkout_count": 101,
+    "ordered_indices": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101
+    ]
+  },
+  "smart_matches_actual": true,
+  "status": "exact_raw_output",
+  "witnesses": [
+    {
+      "case": "nominal_white_exact_match",
+      "expected_match": true,
+      "output_argb_u16": [
+        32768,
+        32768,
+        32768,
+        32768
+      ],
+      "source_argb_u16": [
+        32768,
+        32768,
+        32768,
+        32768
+      ]
+    },
+    {
+      "case": "alpha_one_above_nominal_white",
+      "expected_match": false,
+      "output_argb_u16": [
+        0,
+        32768,
+        32768,
+        32768
+      ],
+      "source_argb_u16": [
+        32769,
+        32768,
+        32768,
+        32768
+      ]
+    },
+    {
+      "case": "red_one_above_nominal_white",
+      "expected_match": false,
+      "output_argb_u16": [
+        0,
+        32769,
+        32768,
+        32768
+      ],
+      "source_argb_u16": [
+        32768,
+        32769,
+        32768,
+        32768
+      ]
+    },
+    {
+      "case": "green_one_above_nominal_white",
+      "expected_match": false,
+      "output_argb_u16": [
+        0,
+        32768,
+        32769,
+        32768
+      ],
+      "source_argb_u16": [
+        32768,
+        32768,
+        32769,
+        32768
+      ]
+    },
+    {
+      "case": "blue_one_above_nominal_white",
+      "expected_match": false,
+      "output_argb_u16": [
+        0,
+        32768,
+        32768,
+        32769
+      ],
+      "source_argb_u16": [
+        32768,
+        32768,
+        32768,
+        32769
+      ]
+    },
+    {
+      "case": "all_channels_uint16_max",
+      "expected_match": false,
+      "output_argb_u16": [
+        0,
+        65535,
+        65535,
+        65535
+      ],
+      "source_argb_u16": [
+        65535,
+        65535,
+        65535,
+        65535
+      ]
+    },
+    {
+      "case": "zero_alpha_extended_rgb_no_match",
+      "expected_match": false,
+      "output_argb_u16": [
+        0,
+        65535,
+        32769,
+        49152
+      ],
+      "source_argb_u16": [
+        0,
+        65535,
+        32769,
+        49152
+      ]
+    },
+    {
+      "case": "fractional_key_exact_match",
+      "expected_match": true,
+      "output_argb_u16": [
+        16384,
+        8192,
+        24576,
+        32768
+      ],
+      "source_argb_u16": [
+        16384,
+        8192,
+        24576,
+        32768
+      ]
+    }
+  ]
+}

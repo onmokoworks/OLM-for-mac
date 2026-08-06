@@ -1,0 +1,252 @@
+{
+  "aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+  "colors_argb_f32_bits": [
+    [
+      "0x3f800000",
+      "0x00000000",
+      "0x3e800000",
+      "0x3f000000"
+    ],
+    [
+      "0x3f400000",
+      "0x3e800000",
+      "0x3f000000",
+      "0x3f400000"
+    ],
+    [
+      "0x3f000000",
+      "0x3f000000",
+      "0x3f400000",
+      "0x3f800000"
+    ],
+    [
+      "0x3e800000",
+      "0x3f400000",
+      "0x3f800000",
+      "0x00000000"
+    ],
+    [
+      "0x3f800000",
+      "0x3f800000",
+      "0x00000000",
+      "0x3e800000"
+    ]
+  ],
+  "depth_results": {
+    "PF16": {
+      "cases": {
+        "fifth_tail_match": {
+          "instructions": 108,
+          "observed_argb_units": [
+            32768,
+            32768,
+            0,
+            8192
+          ],
+          "source_argb_units": [
+            32768,
+            32768,
+            0,
+            8192
+          ]
+        },
+        "first_unrolled_match": {
+          "instructions": 108,
+          "observed_argb_units": [
+            32768,
+            0,
+            8192,
+            16384
+          ],
+          "source_argb_units": [
+            32768,
+            0,
+            8192,
+            16384
+          ]
+        },
+        "fourth_unrolled_match": {
+          "instructions": 108,
+          "observed_argb_units": [
+            8192,
+            24576,
+            32768,
+            0
+          ],
+          "source_argb_units": [
+            8192,
+            24576,
+            32768,
+            0
+          ]
+        },
+        "no_match": {
+          "instructions": 88,
+          "observed_argb_units": [
+            0,
+            32767,
+            0,
+            8192
+          ],
+          "source_argb_units": [
+            32768,
+            32767,
+            0,
+            8192
+          ]
+        }
+      },
+      "enabled_color_argb_units": [
+        [
+          32768,
+          0,
+          8192,
+          16384
+        ],
+        [
+          24576,
+          8192,
+          16384,
+          24576
+        ],
+        [
+          16384,
+          16384,
+          24576,
+          32768
+        ],
+        [
+          8192,
+          24576,
+          32768,
+          0
+        ],
+        [
+          32768,
+          32768,
+          0,
+          8192
+        ]
+      ]
+    },
+    "PF8": {
+      "cases": {
+        "fifth_tail_match": {
+          "instructions": 105,
+          "observed_argb_units": [
+            255,
+            255,
+            0,
+            64
+          ],
+          "source_argb_units": [
+            255,
+            255,
+            0,
+            64
+          ]
+        },
+        "first_unrolled_match": {
+          "instructions": 105,
+          "observed_argb_units": [
+            255,
+            0,
+            64,
+            128
+          ],
+          "source_argb_units": [
+            255,
+            0,
+            64,
+            128
+          ]
+        },
+        "fourth_unrolled_match": {
+          "instructions": 105,
+          "observed_argb_units": [
+            64,
+            191,
+            255,
+            0
+          ],
+          "source_argb_units": [
+            64,
+            191,
+            255,
+            0
+          ]
+        },
+        "no_match": {
+          "instructions": 85,
+          "observed_argb_units": [
+            0,
+            254,
+            0,
+            64
+          ],
+          "source_argb_units": [
+            255,
+            254,
+            0,
+            64
+          ]
+        }
+      },
+      "enabled_color_argb_units": [
+        [
+          255,
+          0,
+          64,
+          128
+        ],
+        [
+          191,
+          64,
+          128,
+          191
+        ],
+        [
+          128,
+          128,
+          191,
+          255
+        ],
+        [
+          64,
+          191,
+          255,
+          0
+        ],
+        [
+          255,
+          255,
+          0,
+          64
+        ]
+      ]
+    }
+  },
+  "not_proven": [
+    "After Effects host/export equivalence",
+    "full-frame iteration",
+    "more than five enabled colors"
+  ],
+  "scope": {
+    "artifact": "Windows ColorKeep 2025 AEX",
+    "depths": [
+      "PF8",
+      "PF16"
+    ],
+    "entries": {
+      "PF16": "0x180001280",
+      "PF8": "0x180001580"
+    },
+    "host": "none; actual PE code under local Unicorn",
+    "paths": [
+      "four-color unrolled group",
+      "one-color scalar tail"
+    ],
+    "shape": "four direct one-pixel calls per depth, five enabled colors"
+  },
+  "status": "exact"
+}

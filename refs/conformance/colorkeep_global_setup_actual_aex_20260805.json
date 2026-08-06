@@ -1,0 +1,29 @@
+{
+  "actual_aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+  "actual_command": 1,
+  "actual_execution": {
+    "return_code": 0,
+    "suite_acquisitions": [
+      [
+        "AEGP Utility Suite",
+        7
+      ]
+    ]
+  },
+  "actual_exported_entry": "0x1800025c0",
+  "actual_payload_sha256": "cde9a1d4c6896017b63da7661ac1714d16acfbe5128c3758ebd683ceefc4916f",
+  "meaning": "The production advertises the same legacy and Smart Render/deep-color capability bitfields as the actual 2025 AEX.",
+  "my_version": "0x00080800",
+  "not_proven": [
+    "host interpretation of each capability bit across AE versions",
+    "native After Effects plugin load/registration",
+    "GLOBAL_SETDOWN because ColorKeep has no implementation branch"
+  ],
+  "out_flags": "0x02000040",
+  "out_flags2": "0x08001400",
+  "payload_format": "little-endian uint32 my_version, out_flags, out_flags2",
+  "payload_hex": "000808004000000200140008",
+  "production_payload_sha256": "cde9a1d4c6896017b63da7661ac1714d16acfbe5128c3758ebd683ceefc4916f",
+  "public_entrypoint": "PF_Cmd_GLOBAL_SETUP",
+  "status": "exact"
+}

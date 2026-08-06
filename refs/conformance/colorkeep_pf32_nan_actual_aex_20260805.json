@@ -1,0 +1,85 @@
+{
+  "aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+  "cases": {
+    "finite_just_outside": {
+      "color_argb_bits": [
+        "0x3f400000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000"
+      ],
+      "instructions": 41,
+      "observed_alpha": 0.0,
+      "observed_argb_bits": [
+        "0x00000000",
+        "0x38d1ecc7",
+        "0x00000000",
+        "0x00000000"
+      ],
+      "source_argb_bits": [
+        "0x3f400000",
+        "0x38d1ecc7",
+        "0x00000000",
+        "0x00000000"
+      ]
+    },
+    "nan_color_red": {
+      "color_argb_bits": [
+        "0x3f400000",
+        "0x7fc00000",
+        "0x00000000",
+        "0x00000000"
+      ],
+      "instructions": 57,
+      "observed_alpha": 0.75,
+      "observed_argb_bits": [
+        "0x3f400000",
+        "0x3e800000",
+        "0x00000000",
+        "0x00000000"
+      ],
+      "source_argb_bits": [
+        "0x3f400000",
+        "0x3e800000",
+        "0x00000000",
+        "0x00000000"
+      ]
+    },
+    "nan_source_red": {
+      "color_argb_bits": [
+        "0x3f400000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000"
+      ],
+      "instructions": 57,
+      "observed_alpha": 0.75,
+      "observed_argb_bits": [
+        "0x3f400000",
+        "0x7fc00000",
+        "0x00000000",
+        "0x00000000"
+      ],
+      "source_argb_bits": [
+        "0x3f400000",
+        "0x7fc00000",
+        "0x00000000",
+        "0x00000000"
+      ]
+    }
+  },
+  "not_proven": [
+    "After Effects host dispatch or export equivalence",
+    "PF8/PF16 full-frame equivalence",
+    "more than one enabled color"
+  ],
+  "proven_fact": "COMISS/JA unordered differences fall through as matches; finite differences above 1e-4 reject",
+  "scope": {
+    "artifact": "Windows ColorKeep 2025 AEX",
+    "depth": "PF32",
+    "entry": "0x180001850",
+    "host": "none; actual PE code under local Unicorn",
+    "shape": "direct one-pixel worker calls, one enabled color"
+  },
+  "status": "exact"
+}

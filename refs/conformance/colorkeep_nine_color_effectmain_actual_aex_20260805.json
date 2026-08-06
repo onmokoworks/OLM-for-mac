@@ -1,0 +1,46 @@
+{
+  "actual_aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+  "combined_output_sha256": "f700feb941a289c4047bbc4b8eb0fcb6089f4933802c2e3f33e49e45066d1b5c",
+  "depth_oracle_sha256": {
+    "PF16": "4e5893eecf118ee8cd5530ca95d9bfdff3b003ffe548d3edb43a9be0edd53a69",
+    "PF32": "6dc99f9cd94270272bc0baf355acfda53bf6180b05c06d155e04dfce54bae732",
+    "PF8": "bc984eb75602ef8035269dad5b09265663067aaa18b2567caf8245d8477c9851"
+  },
+  "dynamic_effectmain_paths": [
+    "legacy PF8",
+    "legacy PF16",
+    "SmartPreRender->SmartRender PF8",
+    "SmartPreRender->SmartRender PF16",
+    "SmartPreRender->SmartRender PF32"
+  ],
+  "enabled_colors": 9,
+  "fixture": "4x3 with 8-byte input/output row padding",
+  "not_proven": [
+    "After Effects host execution/export",
+    "more than nine colors",
+    "other frames or parameter ranges"
+  ],
+  "parameter_dependencies": {
+    "checkout_count": 10,
+    "indices": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ]
+  },
+  "paths_covered": [
+    "first unrolled group indices 0/3",
+    "second unrolled group indices 4/7",
+    "scalar tail index 8",
+    "no-match"
+  ],
+  "production_source": "mac/ColorKeep/ColorKeep.cpp",
+  "status": "exact"
+}

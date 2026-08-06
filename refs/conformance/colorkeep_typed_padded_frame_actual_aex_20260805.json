@@ -1,0 +1,41 @@
+{
+  "aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+  "combined_output_sha256": "cb1bdfcc826a9a6b7b117fa39842490575fab035e0fd128c735e868e7a966329",
+  "depths": {
+    "PF16": {
+      "entry": "0x180001280",
+      "height": 3,
+      "oracle_sha256": "f45a2f2d54e9784d4109569665153f7b316fddb5e0355f4c0e34ca3f3415f5e8",
+      "padding_bytes": 8,
+      "pixels": 12,
+      "rowbytes": 40,
+      "width": 4
+    },
+    "PF32": {
+      "entry": "0x180001850",
+      "height": 3,
+      "oracle_sha256": "a0d333c8ddedb1a2262be2a9d6775bbd8e403ea9bc2adfecdafe7457716692ff",
+      "padding_bytes": 8,
+      "pixels": 12,
+      "rowbytes": 72,
+      "width": 4
+    },
+    "PF8": {
+      "entry": "0x180001580",
+      "height": 3,
+      "oracle_sha256": "d7fe7e14d673ac4af44d9f4b0cd8b391a066d4019b390022fae1aabf61a32088",
+      "padding_bytes": 8,
+      "pixels": 12,
+      "rowbytes": 24,
+      "width": 4
+    }
+  },
+  "dispatch_evidence": "tests/test_colorkeep_windows_callback_contract_20260731.py binds EffectMain legacy/smart commands to the typed callbacks",
+  "not_proven": [
+    "After Effects host execution/export",
+    "frames or parameters outside this fixed fixture"
+  ],
+  "production_source": "mac/ColorKeep/ColorKeep.cpp",
+  "scope": "PF8/PF16/PF32, 4x3, five enabled colors, match/unrolled/tail/no-match pattern, 8-byte row padding",
+  "status": "exact"
+}

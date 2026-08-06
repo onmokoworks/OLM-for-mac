@@ -1,0 +1,419 @@
+{
+  "actual_aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+  "actual_raw_payload": "refs/conformance/colorkeep_pf32_subnormal_actual_aex_20260805.argb32f",
+  "comparison_result": "All source/key zero-versus-subnormal cases match because the fixed 0.0001 tolerance is much larger than every binary32 subnormal. Independent RGB mismatches still clear alpha.",
+  "depth": "PF32 only",
+  "direct_actual_worker_witnesses": {
+    "key_negative_min": {
+      "instructions": 57,
+      "key_bits": [
+        "0x3ea8f5c3",
+        "0x80000001",
+        "0x3ee66666",
+        "0x3f333333"
+      ],
+      "mxcsr_after": "0x00000000",
+      "mxcsr_before": "0x00000000",
+      "output_bits": [
+        "0x3ea8f5c3",
+        "0x80000000",
+        "0x3ee66666",
+        "0x3f333333"
+      ],
+      "source_bits": [
+        "0x3ea8f5c3",
+        "0x80000000",
+        "0x3ee66666",
+        "0x3f333333"
+      ]
+    },
+    "key_positive_min": {
+      "instructions": 57,
+      "key_bits": [
+        "0x3e6147ae",
+        "0x00000001",
+        "0x3eb33333",
+        "0x3f19999a"
+      ],
+      "mxcsr_after": "0x00000000",
+      "mxcsr_before": "0x00000000",
+      "output_bits": [
+        "0x3e6147ae",
+        "0x00000000",
+        "0x3eb33333",
+        "0x3f19999a"
+      ],
+      "source_bits": [
+        "0x3e6147ae",
+        "0x00000000",
+        "0x3eb33333",
+        "0x3f19999a"
+      ]
+    },
+    "negative_max_exact": {
+      "instructions": 57,
+      "key_bits": [
+        "0x3f0ccccd",
+        "0x3f666666",
+        "0x807fffff",
+        "0x3e99999a"
+      ],
+      "mxcsr_after": "0x00000000",
+      "mxcsr_before": "0x00000000",
+      "output_bits": [
+        "0x3f0ccccd",
+        "0x3f666666",
+        "0x807fffff",
+        "0x3e99999a"
+      ],
+      "source_bits": [
+        "0x3f0ccccd",
+        "0x3f666666",
+        "0x807fffff",
+        "0x3e99999a"
+      ]
+    },
+    "positive_max_exact": {
+      "instructions": 57,
+      "key_bits": [
+        "0x3ee147ae",
+        "0x3f4ccccd",
+        "0x007fffff",
+        "0x3e4ccccd"
+      ],
+      "mxcsr_after": "0x00000000",
+      "mxcsr_before": "0x00000000",
+      "output_bits": [
+        "0x3ee147ae",
+        "0x3f4ccccd",
+        "0x007fffff",
+        "0x3e4ccccd"
+      ],
+      "source_bits": [
+        "0x3ee147ae",
+        "0x3f4ccccd",
+        "0x007fffff",
+        "0x3e4ccccd"
+      ]
+    },
+    "source_negative_min": {
+      "instructions": 57,
+      "key_bits": [
+        "0x3de147ae",
+        "0x00000000",
+        "0x3e800000",
+        "0x3f000000"
+      ],
+      "mxcsr_after": "0x00000000",
+      "mxcsr_before": "0x00000000",
+      "output_bits": [
+        "0x3de147ae",
+        "0x80000001",
+        "0x3e800000",
+        "0x3f000000"
+      ],
+      "source_bits": [
+        "0x3de147ae",
+        "0x80000001",
+        "0x3e800000",
+        "0x3f000000"
+      ]
+    },
+    "source_positive_min": {
+      "instructions": 57,
+      "key_bits": [
+        "0x3de147ae",
+        "0x00000000",
+        "0x3e800000",
+        "0x3f000000"
+      ],
+      "mxcsr_after": "0x00000000",
+      "mxcsr_before": "0x00000000",
+      "output_bits": [
+        "0x3de147ae",
+        "0x00000001",
+        "0x3e800000",
+        "0x3f000000"
+      ],
+      "source_bits": [
+        "0x3de147ae",
+        "0x00000001",
+        "0x3e800000",
+        "0x3f000000"
+      ]
+    }
+  },
+  "dynamic_path": "EffectMain(SmartPreRender)->EffectMain(SmartRender)->PF32 iterate",
+  "effectmain_witnesses": [
+    {
+      "case": "source_positive_min_subnormal_vs_zero_key",
+      "expected_match": true,
+      "observed_alpha_bits": "0x3de147ae",
+      "output_bits": [
+        "0x3de147ae",
+        "0x00000001",
+        "0x3e800000",
+        "0x3f000000"
+      ],
+      "source_bits": [
+        "0x3de147ae",
+        "0x00000001",
+        "0x3e800000",
+        "0x3f000000"
+      ]
+    },
+    {
+      "case": "source_negative_min_subnormal_vs_zero_key",
+      "expected_match": true,
+      "observed_alpha_bits": "0x3de147ae",
+      "output_bits": [
+        "0x3de147ae",
+        "0x80000001",
+        "0x3e800000",
+        "0x3f000000"
+      ],
+      "source_bits": [
+        "0x3de147ae",
+        "0x80000001",
+        "0x3e800000",
+        "0x3f000000"
+      ]
+    },
+    {
+      "case": "key_positive_min_subnormal_vs_zero_source",
+      "expected_match": true,
+      "observed_alpha_bits": "0x3e6147ae",
+      "output_bits": [
+        "0x3e6147ae",
+        "0x00000000",
+        "0x3eb33333",
+        "0x3f19999a"
+      ],
+      "source_bits": [
+        "0x3e6147ae",
+        "0x00000000",
+        "0x3eb33333",
+        "0x3f19999a"
+      ]
+    },
+    {
+      "case": "key_negative_min_subnormal_vs_negative_zero_source",
+      "expected_match": true,
+      "observed_alpha_bits": "0x3ea8f5c3",
+      "output_bits": [
+        "0x3ea8f5c3",
+        "0x80000000",
+        "0x3ee66666",
+        "0x3f333333"
+      ],
+      "source_bits": [
+        "0x3ea8f5c3",
+        "0x80000000",
+        "0x3ee66666",
+        "0x3f333333"
+      ]
+    },
+    {
+      "case": "source_key_positive_max_subnormal_exact",
+      "expected_match": true,
+      "observed_alpha_bits": "0x3ee147ae",
+      "output_bits": [
+        "0x3ee147ae",
+        "0x3f4ccccd",
+        "0x007fffff",
+        "0x3e4ccccd"
+      ],
+      "source_bits": [
+        "0x3ee147ae",
+        "0x3f4ccccd",
+        "0x007fffff",
+        "0x3e4ccccd"
+      ]
+    },
+    {
+      "case": "source_key_negative_max_subnormal_exact",
+      "expected_match": true,
+      "observed_alpha_bits": "0x3f0ccccd",
+      "output_bits": [
+        "0x3f0ccccd",
+        "0x3f666666",
+        "0x807fffff",
+        "0x3e99999a"
+      ],
+      "source_bits": [
+        "0x3f0ccccd",
+        "0x3f666666",
+        "0x807fffff",
+        "0x3e99999a"
+      ]
+    },
+    {
+      "case": "source_positive_subnormal_independent_no_match",
+      "expected_match": false,
+      "observed_alpha_bits": "0x00000000",
+      "output_bits": [
+        "0x00000000",
+        "0x00000001",
+        "0x3f7d70a4",
+        "0x3f000000"
+      ],
+      "source_bits": [
+        "0x3de147ae",
+        "0x00000001",
+        "0x3f7d70a4",
+        "0x3f000000"
+      ]
+    },
+    {
+      "case": "key_positive_subnormal_independent_no_match",
+      "expected_match": false,
+      "observed_alpha_bits": "0x00000000",
+      "output_bits": [
+        "0x00000000",
+        "0x3f7d70a4",
+        "0x00000001",
+        "0x3f19999a"
+      ],
+      "source_bits": [
+        "0x3e6147ae",
+        "0x3f7d70a4",
+        "0x00000001",
+        "0x3f19999a"
+      ]
+    }
+  ],
+  "fixture": "4x3 PF32, rowbytes72, 8-byte input/output padding",
+  "fp_environment_boundary": {
+    "ftz_discrimination": "This fixture cannot distinguish gradual underflow from FTZ/DAZ comparison behavior because zero and every subnormal are inside ColorKeep's fixed tolerance. Raw source copying remains bit-exact regardless of the temporary subtraction result.",
+    "macos_arm": "FPCR/FPSR state during the production EffectMain process is not captured or proven.",
+    "mxcsr_interpretation": "This is a Unicorn register observation, not native Windows evidence of FTZ/DAZ state or exception flags.",
+    "native_windows": "MXCSR FTZ, DAZ, exception flags, and trap masks are not proven.",
+    "unicorn_mxcsr_observation": "MXCSR read as 0x00000000 before and after the bounded actual-AEX worker calls."
+  },
+  "not_proven": [
+    "native Windows MXCSR FTZ/DAZ and exception behavior",
+    "macOS arm64 FPCR/FPSR state or exception behavior",
+    "After Effects host execution/export",
+    "PF8/PF16 generalization"
+  ],
+  "padding": "all 8 output padding bytes per row remain 0xee",
+  "production_raw_payload": "refs/conformance/colorkeep_pf32_subnormal_mac_production_20260805.argb32f",
+  "production_raw_sha256": "bf4a3e0e0c8b004fb9d4258f8ebc54ad81d60442dcdd2b529746adf70f3c9393",
+  "production_source": "mac/ColorKeep/ColorKeep.cpp",
+  "raw_copy_result": "Matching output preserves the source subnormal sign and payload bits verbatim in RGB; no-match output preserves source RGB verbatim and clears only alpha.",
+  "raw_output_sha256": "bf4a3e0e0c8b004fb9d4258f8ebc54ad81d60442dcdd2b529746adf70f3c9393",
+  "raw_payload_bytes": 216,
+  "smart_dependencies": {
+    "checkout_count": 101,
+    "ordered_indices": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101
+    ]
+  },
+  "status": "exact_raw_output",
+  "subnormal_bits": {
+    "negative_max": "0x807fffff",
+    "negative_min": "0x80000001",
+    "positive_max": "0x007fffff",
+    "positive_min": "0x00000001"
+  }
+}

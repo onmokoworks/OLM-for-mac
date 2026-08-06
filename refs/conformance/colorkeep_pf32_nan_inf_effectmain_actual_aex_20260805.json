@@ -1,0 +1,262 @@
+{
+  "actual_aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+  "depth": "PF32 only",
+  "dynamic_path": "EffectMain(SmartPreRender)->EffectMain(SmartRender)->PF32 iterate",
+  "enabled_key_cases": [
+    "positive NaN red payload 0x7fc12345",
+    "negative NaN blue payload 0xffc54321",
+    "positive infinity red",
+    "negative infinity green"
+  ],
+  "fixture": "4x3 PF32, rowbytes72, 8-byte input/output padding",
+  "not_proven": [
+    "PF8/PF16 generalization",
+    "After Effects host execution/export",
+    "signaling-NaN exception behavior"
+  ],
+  "raw_output_sha256": "8883708c35dd41619b7a65a9480cbf807da9fea8221e40a9b17fcfef241f4f6c",
+  "semantics": "unordered NaN and same-sign infinity subtraction fall through COMISS/JA as within tolerance when all other components match; finite-vs-infinity and unrelated infinity reject",
+  "smart_dependencies": {
+    "checkout_count": 101,
+    "ordered_indices": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101
+    ]
+  },
+  "source_cases": [
+    "positive/negative NaN payloads",
+    "positive/negative infinity",
+    "finite against infinity key",
+    "infinity no-match"
+  ],
+  "status": "exact",
+  "witnesses": [
+    {
+      "case": 0,
+      "match": true,
+      "output_argb_bits": [
+        "0x3f35c28f",
+        "0x7fc12345",
+        "0x3de147ae",
+        "0x3df5c28f"
+      ],
+      "source_argb_bits": [
+        "0x3f35c28f",
+        "0x7fc12345",
+        "0x3de147ae",
+        "0x3df5c28f"
+      ]
+    },
+    {
+      "case": 1,
+      "match": true,
+      "output_argb_bits": [
+        "0x3f35c28f",
+        "0xffc54321",
+        "0x3de147ae",
+        "0x3df5c28f"
+      ],
+      "source_argb_bits": [
+        "0x3f35c28f",
+        "0xffc54321",
+        "0x3de147ae",
+        "0x3df5c28f"
+      ]
+    },
+    {
+      "case": 2,
+      "match": true,
+      "output_argb_bits": [
+        "0x3f3851ec",
+        "0x3f7d70a4",
+        "0x3e570a3d",
+        "0x3e6147ae"
+      ],
+      "source_argb_bits": [
+        "0x3f3851ec",
+        "0x3f7d70a4",
+        "0x3e570a3d",
+        "0x3e6147ae"
+      ]
+    },
+    {
+      "case": 3,
+      "match": true,
+      "output_argb_bits": [
+        "0x3f3ae148",
+        "0x3e99999a",
+        "0x3e9eb852",
+        "0x3f7d70a4"
+      ],
+      "source_argb_bits": [
+        "0x3f3ae148",
+        "0x3e99999a",
+        "0x3e9eb852",
+        "0x3f7d70a4"
+      ]
+    },
+    {
+      "case": 4,
+      "match": true,
+      "output_argb_bits": [
+        "0x3f3d70a4",
+        "0x7f800000",
+        "0x3ed1eb85",
+        "0x3ed70a3d"
+      ],
+      "source_argb_bits": [
+        "0x3f3d70a4",
+        "0x7f800000",
+        "0x3ed1eb85",
+        "0x3ed70a3d"
+      ]
+    },
+    {
+      "case": 5,
+      "match": true,
+      "output_argb_bits": [
+        "0x3f400000",
+        "0x3f000000",
+        "0xff800000",
+        "0x3f051eb8"
+      ],
+      "source_argb_bits": [
+        "0x3f400000",
+        "0x3f000000",
+        "0xff800000",
+        "0x3f051eb8"
+      ]
+    },
+    {
+      "case": 6,
+      "match": false,
+      "output_argb_bits": [
+        "0x00000000",
+        "0x7f800000",
+        "0x3f1c28f6",
+        "0x3f1eb852"
+      ],
+      "source_argb_bits": [
+        "0x3f428f5c",
+        "0x7f800000",
+        "0x3f1c28f6",
+        "0x3f1eb852"
+      ]
+    },
+    {
+      "case": 7,
+      "match": false,
+      "output_argb_bits": [
+        "0x00000000",
+        "0x3f7d70a4",
+        "0x3ed1eb85",
+        "0x3ed70a3d"
+      ],
+      "source_argb_bits": [
+        "0x3f3d70a4",
+        "0x3f7d70a4",
+        "0x3ed1eb85",
+        "0x3ed70a3d"
+      ]
+    }
+  ]
+}

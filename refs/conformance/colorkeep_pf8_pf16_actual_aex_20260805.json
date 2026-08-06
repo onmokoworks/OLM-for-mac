@@ -1,0 +1,94 @@
+{
+  "aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+  "cases": {
+    "PF16": {
+      "match": {
+        "instructions": 67,
+        "observed_argb_units": [
+          32768,
+          4045,
+          16384,
+          8995
+        ],
+        "source_argb_units": [
+          32768,
+          4045,
+          16384,
+          8995
+        ]
+      },
+      "no_match": {
+        "instructions": 47,
+        "observed_argb_units": [
+          0,
+          4046,
+          16384,
+          8995
+        ],
+        "source_argb_units": [
+          32768,
+          4046,
+          16384,
+          8995
+        ]
+      }
+    },
+    "PF8": {
+      "match": {
+        "instructions": 64,
+        "observed_argb_units": [
+          255,
+          31,
+          128,
+          70
+        ],
+        "source_argb_units": [
+          255,
+          31,
+          128,
+          70
+        ]
+      },
+      "no_match": {
+        "instructions": 44,
+        "observed_argb_units": [
+          0,
+          32,
+          128,
+          70
+        ],
+        "source_argb_units": [
+          255,
+          32,
+          128,
+          70
+        ]
+      }
+    }
+  },
+  "enabled_color_argb_f32_bits": [
+    "0x3f800000",
+    "0x3dfcd680",
+    "0x3f000000",
+    "0x3e8c8c8d"
+  ],
+  "not_proven": [
+    "After Effects host dispatch or export equivalence",
+    "full-frame iteration",
+    "multiple enabled colors at PF8/PF16"
+  ],
+  "scope": {
+    "artifact": "Windows ColorKeep 2025 AEX",
+    "depths": [
+      "PF8",
+      "PF16"
+    ],
+    "entries": {
+      "PF16": "0x180001280",
+      "PF8": "0x180001580"
+    },
+    "host": "none; actual PE code under local Unicorn",
+    "shape": "one pixel, one enabled color, match and one-red-unit no-match"
+  },
+  "status": "exact"
+}

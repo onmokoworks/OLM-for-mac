@@ -17,6 +17,26 @@ HEADER = ROOT / "mac" / "ColorKeep" / "ColorKeep.h"
 
 
 class ColorKeepWindowsContractTests(unittest.TestCase):
+    def test_production_entrypoint_and_bitdepth_dispatch_boundary(self):
+        source = SOURCE.read_text(encoding="utf-8")
+        compact = re.sub(r"\s+", "", source)
+        self.assertIn('"EffectMain"', source)
+        self.assertIn("casePF_Cmd_RENDER:err=Render", compact)
+        self.assertIn("casePF_Cmd_SMART_PRE_RENDER:err=SmartPreRender", compact)
+        self.assertIn("casePF_Cmd_SMART_RENDER:err=SmartRender", compact)
+        self.assertIn("if(PF_WORLD_IS_DEEP(output))", compact)
+        self.assertIn("ColorKeep16Func,output", compact)
+        self.assertIn("ColorKeep8Func,output", compact)
+        self.assertIn("if(bpc==8)", compact)
+        self.assertIn("ColorKeep8Func,output_world", compact)
+        self.assertIn("elseif(bpc==16)", compact)
+        self.assertIn("ColorKeep16Func,output_world", compact)
+        self.assertIn("elseif(bpc==32)", compact)
+        self.assertIn("ColorKeepFloatFunc,output_world", compact)
+        self.assertIn(
+            "for(A_longi=0;i<COLORKEEP_MAX_COLORS&&!err;++i)", compact
+        )
+
     def test_parameter_schema_and_zero_count_ui_boundary(self):
         source = SOURCE.read_text(encoding="utf-8")
         header = HEADER.read_text(encoding="utf-8")
@@ -105,6 +125,8 @@ int main()
     info.colors[0].green = 0.5f;
     info.colors[0].blue = 70.0f / 255.0f;
 
+    // These match/no-match units are also captured from the hash-pinned
+    // actual AEX entries 0x180001580 (PF8) and 0x180001280 (PF16).
     PF_Pixel8 in8 = {};
     in8.alpha = 255; in8.red = 31; in8.green = 128; in8.blue = 70;
     PF_Pixel8 out8 = {};
@@ -149,6 +171,47 @@ int main()
                out16.blue == changed.blue);
     }
 
+    // Five-color PF8/PF16 actual-AEX fixtures cover the four-color unrolled
+    // group and the fifth scalar-tail color independently at each depth.
+    const PF_PixelFloat integerColors[5] = {
+        {1.00f, 0.00f, 0.25f, 0.50f},
+        {0.75f, 0.25f, 0.50f, 0.75f},
+        {0.50f, 0.50f, 0.75f, 1.00f},
+        {0.25f, 0.75f, 1.00f, 0.00f},
+        {1.00f, 1.00f, 0.00f, 0.25f},
+    };
+    memset(&info, 0, sizeof(info));
+    info.count = 5;
+    memcpy(info.colors, integerColors, sizeof(integerColors));
+    const int integerMatchIndices[3] = {0, 3, 4};
+    const PF_Pixel8 inputs8[5] = {
+        {255, 0, 64, 128}, {191, 64, 128, 191}, {128, 128, 191, 255},
+        {64, 191, 255, 0}, {255, 255, 0, 64},
+    };
+    const PF_Pixel16 inputs16[5] = {
+        {32768, 0, 8192, 16384}, {24576, 8192, 16384, 24576},
+        {16384, 16384, 24576, 32768}, {8192, 24576, 32768, 0},
+        {32768, 32768, 0, 8192},
+    };
+    for (int index : integerMatchIndices) {
+        ColorKeep8Func(&info, 0, 0,
+                       const_cast<PF_Pixel8*>(&inputs8[index]), &out8);
+        assert(memcmp(&out8, &inputs8[index], sizeof(out8)) == 0);
+        ColorKeep16Func(&info, 0, 0,
+                        const_cast<PF_Pixel16*>(&inputs16[index]), &out16);
+        assert(memcmp(&out16, &inputs16[index], sizeof(out16)) == 0);
+    }
+    PF_Pixel8 noMatch8 = inputs8[4];
+    noMatch8.red -= 1;
+    ColorKeep8Func(&info, 0, 0, &noMatch8, &out8);
+    assert(out8.alpha == 0 && out8.red == noMatch8.red &&
+           out8.green == noMatch8.green && out8.blue == noMatch8.blue);
+    PF_Pixel16 noMatch16 = inputs16[4];
+    noMatch16.red -= 1;
+    ColorKeep16Func(&info, 0, 0, &noMatch16, &out16);
+    assert(out16.alpha == 0 && out16.red == noMatch16.red &&
+           out16.green == noMatch16.green && out16.blue == noMatch16.blue);
+
     PF_PixelFloat in32 = {};
     PF_PixelFloat out32 = {};
     memset(&info.colors[0], 0, sizeof(info.colors[0]));
@@ -175,6 +238,47 @@ int main()
         assert(out32.red == in32.red && out32.green == in32.green &&
                out32.blue == in32.blue);
     }
+
+    // Windows uses COMISS/JA, so unordered differences fall through as
+    // matches. Preserve this only as a Windows-2025 PF32 callback fact.
+    memset(&info.colors[0], 0, sizeof(info.colors[0]));
+    memset(&in32, 0, sizeof(in32));
+    info.colors[0].alpha = 0.75f;
+    in32.alpha = 0.75f;
+    in32.red = NAN;
+    ColorKeepFloatFunc(&info, 0, 0, &in32, &out32);
+    assert(out32.alpha == 0.75f);
+    assert(isnan(out32.red));
+
+    info.colors[0].red = NAN;
+    in32.red = 0.25f;
+    ColorKeepFloatFunc(&info, 0, 0, &in32, &out32);
+    assert(out32.alpha == 0.75f);
+
+    // Actual-AEX five-color fixtures exercise both its four-color unrolled
+    // group and scalar tail. These values are kept in ARGB field order here.
+    const PF_PixelFloat fiveColors[5] = {
+        {1.0f, 0.10f, 0.20f, 0.30f},
+        {0.9f, 0.15f, 0.25f, 0.35f},
+        {0.8f, 0.40f, 0.50f, 0.60f},
+        {0.7f, 0.65f, 0.75f, 0.85f},
+        {0.6f, 0.123456f, 0.234567f, 0.345678f},
+    };
+    memset(&info, 0, sizeof(info));
+    info.count = 5;
+    memcpy(info.colors, fiveColors, sizeof(fiveColors));
+    const int matchIndices[3] = {0, 3, 4};
+    for (int index : matchIndices) {
+        in32 = fiveColors[index];
+        memset(&out32, 0xA5, sizeof(out32));
+        ColorKeepFloatFunc(&info, 0, 0, &in32, &out32);
+        assert(memcmp(&out32, &in32, sizeof(out32)) == 0);
+    }
+    in32 = {0.55f, 0.91f, 0.81f, 0.71f};
+    ColorKeepFloatFunc(&info, 0, 0, &in32, &out32);
+    assert(out32.alpha == 0.0f);
+    assert(out32.red == in32.red && out32.green == in32.green &&
+           out32.blue == in32.blue);
     return 0;
 }
 '''

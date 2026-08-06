@@ -1,0 +1,29 @@
+{
+  "actual_aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+  "actual_command": 3,
+  "actual_dispatch_evidence": "PE command table maps command 3 to the default return path; bounded execution confirms it.",
+  "actual_execution": {
+    "argument_region_reads": [],
+    "argument_region_writes": [],
+    "argument_regions_unchanged": {
+      "extra": true,
+      "in_data": true,
+      "out_data": true,
+      "output": true,
+      "params": true
+    },
+    "return_code": 0
+  },
+  "actual_exported_entry": "0x1800025c0",
+  "actual_payload_sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+  "contract": "ColorKeep owns no global resources and GLOBAL_SETDOWN is an argument-independent no-op returning PF_Err_NONE.",
+  "not_proven": [
+    "native After Effects call scheduling around process unload",
+    "behavior after unrelated memory corruption or C++ exception state"
+  ],
+  "payload_format": "little-endian uint32 return code",
+  "production_execution": "EffectMain receives deliberately invalid non-null sentinel pointers 0x1..0x5 and returns zero without fault, proving the branch dereferences none of them.",
+  "production_payload_sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+  "public_entrypoint": "PF_Cmd_GLOBAL_SETDOWN",
+  "status": "exact_noop"
+}

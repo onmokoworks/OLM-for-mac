@@ -1,0 +1,114 @@
+{
+  "aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+  "cases": {
+    "fifth_tail_match": {
+      "instructions": 88,
+      "observed_argb_bits": [
+        "0x3f19999a",
+        "0x3dfcd680",
+        "0x3e703255",
+        "0x3eb0fcb5"
+      ],
+      "source_argb_bits": [
+        "0x3f19999a",
+        "0x3dfcd680",
+        "0x3e703255",
+        "0x3eb0fcb5"
+      ]
+    },
+    "first_unrolled_match": {
+      "instructions": 88,
+      "observed_argb_bits": [
+        "0x3f800000",
+        "0x3dcccccd",
+        "0x3e4ccccd",
+        "0x3e99999a"
+      ],
+      "source_argb_bits": [
+        "0x3f800000",
+        "0x3dcccccd",
+        "0x3e4ccccd",
+        "0x3e99999a"
+      ]
+    },
+    "fourth_unrolled_match": {
+      "instructions": 88,
+      "observed_argb_bits": [
+        "0x3f333333",
+        "0x3f266666",
+        "0x3f400000",
+        "0x3f59999a"
+      ],
+      "source_argb_bits": [
+        "0x3f333333",
+        "0x3f266666",
+        "0x3f400000",
+        "0x3f59999a"
+      ]
+    },
+    "no_match": {
+      "instructions": 72,
+      "observed_argb_bits": [
+        "0x00000000",
+        "0x3f68f5c3",
+        "0x3f4f5c29",
+        "0x3f35c28f"
+      ],
+      "source_argb_bits": [
+        "0x3f0ccccd",
+        "0x3f68f5c3",
+        "0x3f4f5c29",
+        "0x3f35c28f"
+      ]
+    }
+  },
+  "enabled_color_argb_bits": [
+    [
+      "0x3f800000",
+      "0x3dcccccd",
+      "0x3e4ccccd",
+      "0x3e99999a"
+    ],
+    [
+      "0x3f666666",
+      "0x3e19999a",
+      "0x3e800000",
+      "0x3eb33333"
+    ],
+    [
+      "0x3f4ccccd",
+      "0x3ecccccd",
+      "0x3f000000",
+      "0x3f19999a"
+    ],
+    [
+      "0x3f333333",
+      "0x3f266666",
+      "0x3f400000",
+      "0x3f59999a"
+    ],
+    [
+      "0x3f19999a",
+      "0x3dfcd680",
+      "0x3e703255",
+      "0x3eb0fcb5"
+    ]
+  ],
+  "not_proven": [
+    "After Effects host dispatch or export equivalence",
+    "PF8/PF16 equivalence",
+    "full-frame iteration or more than five enabled colors"
+  ],
+  "scope": {
+    "artifact": "Windows ColorKeep 2025 AEX",
+    "depth": "PF32",
+    "entry": "0x180001850",
+    "host": "none; actual PE code under local Unicorn",
+    "paths": [
+      "four-color unrolled group",
+      "one-color scalar tail"
+    ],
+    "shape": "four direct one-pixel worker calls, five enabled colors"
+  },
+  "status": "exact"
+}

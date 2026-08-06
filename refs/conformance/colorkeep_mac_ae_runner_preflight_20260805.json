@@ -1,0 +1,18 @@
+{
+  "status": "prepared_not_executed",
+  "ae_was_launched": false,
+  "runner": "scripts/run_colorkeep_pf8_mac_validation_20260805.py",
+  "request": "refs/mac_validation_requests/colorkeep_pf8_mac_ae_validation_20260805.json",
+  "fixture_report": "refs/conformance/colorkeep_pf8_mac_ae_fixture_actual_aex_20260805.json",
+  "preflight_observed": {
+    "installed_binary_sha256": "ccc89781fa547450acc3053cb77bff8d6983cd8c6835866c87449e7a64117cce",
+    "architectures": ["x86_64", "arm64"],
+    "codesign_deep_strict": "passed",
+    "ae_version": "26.3.0",
+    "ae_process_clear_after_preflight": true,
+    "actual_aex_expected_argb8_sha256": "29f9080b90d73404359c07439727d3e85b32ea185fe7fde4edd669310ed8a05b"
+  },
+  "fixed_contract": {"bits_per_channel": 8, "renderer": "SOFTWARE", "working_space": "None", "linear_blending": false, "enabled_color_count": 5, "effect_match_name": "OLM Color Keep"},
+  "fail_closed_execution_gates": ["explicit --execute", "no pre-existing After Effects or aerender process", "exact installed bundle hash", "universal architectures", "strict codesign", "exact AE version", "JSX parameter readback", "vmmap exact module path", "actual-AEX expected RGBA pixel equality"],
+  "claim": "Runner preparation and preflight only; no After Effects host execution or AE-exact claim occurred in this phase."
+}

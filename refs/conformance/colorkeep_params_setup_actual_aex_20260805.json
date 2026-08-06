@@ -1,0 +1,61 @@
+{
+  "actual_aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+  "actual_command": 4,
+  "actual_execution": {
+    "add_param_calls": 101,
+    "out_num_params": 102,
+    "return_code": 0,
+    "suite_acquisitions": []
+  },
+  "actual_exported_entry": "0x1800025c0",
+  "actual_payload_sha256": "916d2425e63f0dcd9f7309a5c914f78ec5d635a51a9ad9ce59a9aa501062cec4",
+  "normalization": "Slider value0..5 are value, valid_min, valid_max, slider_min, slider_max, default. Color value0/value1 are raw 4-byte current/default PF_UnionablePixel values; remaining words are zero.",
+  "normalized_record_format": [
+    "disk_id",
+    "param_type",
+    "flags",
+    "ui_flags",
+    "value0",
+    "value1",
+    "value2",
+    "value3",
+    "value4",
+    "value5"
+  ],
+  "not_proven": [
+    "localized parameter names because the hostless AEX fixture does not run the DLL string-table initializer",
+    "native After Effects control creation/layout",
+    "add_param failure propagation after a partial schema"
+  ],
+  "payload_bytes": 4040,
+  "production_payload_sha256": "916d2425e63f0dcd9f7309a5c914f78ec5d635a51a9ad9ce59a9aa501062cec4",
+  "public_entrypoint": "PF_Cmd_PARAMS_SETUP",
+  "schema": {
+    "add_param_calls": 101,
+    "colors": {
+      "count": 100,
+      "default_argb8_raw": "0x000000ff",
+      "disk_ids": [
+        2,
+        101
+      ],
+      "type": "PF_Param_COLOR"
+    },
+    "enabled_count": {
+      "default": 1,
+      "disk_id": 1,
+      "flags": "0x40",
+      "slider_range": [
+        0,
+        100
+      ],
+      "type": "PF_Param_SLIDER",
+      "valid_range": [
+        0,
+        100
+      ]
+    },
+    "num_params_including_input": 102
+  },
+  "status": "exact"
+}

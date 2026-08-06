@@ -1,0 +1,35 @@
+{
+  "actual_aex_fixture": "refs/conformance/colorkeep_pf16_extended_range_actual_aex_20260805.argb16",
+  "actual_aex_fixture_sha256": "1fa0ee04a8e57924bfb14a3c57f9ac937c7737486daca69b2bec689f6afe4a5e",
+  "connection_closed": "The exact on-disk hash now has an executable public EffectMain identity and a bit-exact PF16 worker/writer result tied to an existing actual-AEX fixture; this no longer relies only on recompiling ColorKeep.cpp in a temporary harness.",
+  "executed_architecture": "arm64",
+  "installed_architectures": [
+    "x86_64",
+    "arm64"
+  ],
+  "installed_binary": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/ColorKeep.plugin/Contents/MacOS/ColorKeep",
+  "installed_binary_sha256": "ccc89781fa547450acc3053cb77bff8d6983cd8c6835866c87449e7a64117cce",
+  "loading": "dlopen(RTLD_NOW|RTLD_LOCAL) of the installed MediaCore Mach-O succeeded",
+  "not_proven": [
+    "After Effects loading of this hash",
+    "AE suite dispatch from EffectMain into the worker",
+    "AE project render/export"
+  ],
+  "public_entry": {
+    "executed_command": "PF_Cmd_GLOBAL_SETUP",
+    "image_offset": "0x6cc",
+    "payload_hex": "000808004000000200140008",
+    "resolution": "dlsym(EffectMain)",
+    "symbol": "_EffectMain"
+  },
+  "raw_exact": true,
+  "remaining_boundary": "The installed Smart/legacy host adapter was not invoked because doing so requires AE host suites. AE process loading and export remain intentionally unclaimed.",
+  "status": "installed_hash_bound_exact",
+  "worker_writer": {
+    "fixture": "PF16 extended-range 4x3, rowbytes40, padding8",
+    "image_offset": "0x1aec",
+    "observed_sha256": "1fa0ee04a8e57924bfb14a3c57f9ac937c7737486daca69b2bec689f6afe4a5e",
+    "resolution": "local Mach-O symbol offset plus dladdr image base",
+    "symbol": "__ZL15ColorKeep16FuncPviiP10PF_Pixel16S1_"
+  }
+}

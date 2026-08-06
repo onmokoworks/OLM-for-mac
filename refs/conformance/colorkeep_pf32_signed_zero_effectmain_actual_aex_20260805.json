@@ -1,0 +1,209 @@
+{
+  "actual_aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+  "cases": [
+    "+0 key / -0 source",
+    "-0 key / +0 source",
+    "-0 key green / +0 source green",
+    "+0 key green / -0 source green",
+    "signed-zero no-match"
+  ],
+  "comparison_semantics": "+0 and -0 compare equal",
+  "depth": "PF32 only",
+  "dynamic_path": "SmartPreRender->SmartRender->PF32 iterate",
+  "fixture": "4x3 PF32, rowbytes72, padding8",
+  "not_proven": [
+    "PF8/PF16 generalization",
+    "After Effects host execution/export"
+  ],
+  "raw_copy_semantics": "matching output preserves the source RGB zero sign bit; it does not canonicalize to the key sign",
+  "raw_output_sha256": "768b57d405ee3a431195446b4d9361063933eae06b25ce7cc2587074298fdcef",
+  "smart_dependencies": {
+    "checkout_count": 101,
+    "ordered_indices": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101
+    ]
+  },
+  "status": "exact",
+  "witnesses": [
+    {
+      "case": 0,
+      "match": true,
+      "output_bits": [
+        "0x3f35c28f",
+        "0x80000000",
+        "0x3de147ae",
+        "0x3df5c28f"
+      ],
+      "source_bits": [
+        "0x3f35c28f",
+        "0x80000000",
+        "0x3de147ae",
+        "0x3df5c28f"
+      ]
+    },
+    {
+      "case": 1,
+      "match": true,
+      "output_bits": [
+        "0x3f3851ec",
+        "0x00000000",
+        "0x3e570a3d",
+        "0x3e6147ae"
+      ],
+      "source_bits": [
+        "0x3f3851ec",
+        "0x00000000",
+        "0x3e570a3d",
+        "0x3e6147ae"
+      ]
+    },
+    {
+      "case": 2,
+      "match": true,
+      "output_bits": [
+        "0x3f3ae148",
+        "0x3e99999a",
+        "0x00000000",
+        "0x3ea3d70a"
+      ],
+      "source_bits": [
+        "0x3f3ae148",
+        "0x3e99999a",
+        "0x00000000",
+        "0x3ea3d70a"
+      ]
+    },
+    {
+      "case": 3,
+      "match": true,
+      "output_bits": [
+        "0x3f3d70a4",
+        "0x3ecccccd",
+        "0x80000000",
+        "0x3ed70a3d"
+      ],
+      "source_bits": [
+        "0x3f3d70a4",
+        "0x3ecccccd",
+        "0x80000000",
+        "0x3ed70a3d"
+      ]
+    },
+    {
+      "case": 4,
+      "match": false,
+      "output_bits": [
+        "0x00000000",
+        "0x80000000",
+        "0x3f028f5c",
+        "0x3f051eb8"
+      ],
+      "source_bits": [
+        "0x3f400000",
+        "0x80000000",
+        "0x3f028f5c",
+        "0x3f051eb8"
+      ]
+    }
+  ]
+}

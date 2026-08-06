@@ -1,0 +1,221 @@
+{
+  "actual_aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+  "depth": "PF32 only",
+  "direct_actual_worker_witnesses": {
+    "key_negative_snan": {
+      "key_bits": [
+        "0x3f3ae148",
+        "0x3e99999a",
+        "0x3e9eb852",
+        "0xff854321"
+      ],
+      "mxcsr_after": "0x00000000",
+      "mxcsr_before": "0x00000000",
+      "output_bits": [
+        "0x3f3ae148",
+        "0x3e99999a",
+        "0x3e9eb852",
+        "0x3f7d70a4"
+      ],
+      "source_bits": [
+        "0x3f3ae148",
+        "0x3e99999a",
+        "0x3e9eb852",
+        "0x3f7d70a4"
+      ]
+    },
+    "key_positive_snan": {
+      "key_bits": [
+        "0x3f3851ec",
+        "0x7f812345",
+        "0x3e570a3d",
+        "0x3e6147ae"
+      ],
+      "mxcsr_after": "0x00000000",
+      "mxcsr_before": "0x00000000",
+      "output_bits": [
+        "0x3f3851ec",
+        "0x3f7d70a4",
+        "0x3e570a3d",
+        "0x3e6147ae"
+      ],
+      "source_bits": [
+        "0x3f3851ec",
+        "0x3f7d70a4",
+        "0x3e570a3d",
+        "0x3e6147ae"
+      ]
+    },
+    "source_negative_snan": {
+      "key_bits": [
+        "0x3f35c28f",
+        "0x3dcccccd",
+        "0x3de147ae",
+        "0x3df5c28f"
+      ],
+      "mxcsr_after": "0x00000000",
+      "mxcsr_before": "0x00000000",
+      "output_bits": [
+        "0x3f35c28f",
+        "0xff854321",
+        "0x3de147ae",
+        "0x3df5c28f"
+      ],
+      "source_bits": [
+        "0x3f35c28f",
+        "0xff854321",
+        "0x3de147ae",
+        "0x3df5c28f"
+      ]
+    },
+    "source_positive_snan": {
+      "key_bits": [
+        "0x3f35c28f",
+        "0x3dcccccd",
+        "0x3de147ae",
+        "0x3df5c28f"
+      ],
+      "mxcsr_after": "0x00000000",
+      "mxcsr_before": "0x00000000",
+      "output_bits": [
+        "0x3f35c28f",
+        "0x7f812345",
+        "0x3de147ae",
+        "0x3df5c28f"
+      ],
+      "source_bits": [
+        "0x3f35c28f",
+        "0x7f812345",
+        "0x3de147ae",
+        "0x3df5c28f"
+      ]
+    }
+  },
+  "dynamic_path": "SmartPreRender->SmartRender->PF32 iterate",
+  "exception_status": {
+    "interpretation": "the local Unicorn backend does not model the SSE invalid-operation status for sNaN; this is not evidence that native x86 raises no exception",
+    "production_equivalence": "raw pixels exact; cross-architecture FP exception flags unproven and intentionally not claimed",
+    "unicorn_observation": "MXCSR remained 0 before/after all calls"
+  },
+  "fixture": "4x3 PF32, rowbytes72, padding8",
+  "not_proven": [
+    "native Windows MXCSR invalid flag",
+    "macOS ARM FPSR equivalence",
+    "signaling trap mode",
+    "PF8/PF16 or AE host/export"
+  ],
+  "quieting": "SUBSS may quiet its temporary result, but the AEX output copies the original source word, so no quiet-bit change is observable in output",
+  "raw_behavior": "source sNaN payload/sign is copied unchanged to RGB output when the unordered comparison matches; key-side sNaN permits an unordered channel match without appearing in output",
+  "raw_output_sha256": "9bf4725ef38f8808417a44dbeb87b04fef3b1a18f290dfce5886d8393b7d2f50",
+  "smart_dependencies": {
+    "checkout_count": 101,
+    "ordered_indices": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101
+    ]
+  },
+  "snan_bits": {
+    "negative": "0xff854321",
+    "positive": "0x7f812345"
+  },
+  "status": "exact_raw_output"
+}
