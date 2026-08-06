@@ -1,7 +1,7 @@
 param(
   [string]$PackageRoot = (Split-Path -Parent (Split-Path -Parent $PSCommandPath)),
   [string]$AfterFX = 'C:\Program Files\Adobe\Adobe After Effects 2026\Support Files\AfterFX.exe',
-  [string]$OutputTemplate = 'OLM EXR 32 Float RGBA No Compression',
+  [string]$OutputTemplate = 'OLM EXR 32 Float',
   [int]$TimeoutSeconds = 900
 )
 $ErrorActionPreference = 'Stop'
