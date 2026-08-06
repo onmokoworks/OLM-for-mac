@@ -1,0 +1,40 @@
+{
+  "gates": {
+    "accum": true,
+    "final_rgba": true,
+    "max_alpha": true,
+    "output": true,
+    "padding_exact": true,
+    "polar": true,
+    "source_scalar": true
+  },
+  "hashes": {
+    "accum": {
+      "actual": "d12cf7c4be728b8440ade07490e32c13370e7afa5e363b274179462a68cf6364",
+      "production": "d12cf7c4be728b8440ade07490e32c13370e7afa5e363b274179462a68cf6364"
+    },
+    "final_rgba": {
+      "actual": "8a5df2b125c892a972ba60bae4c1da5498dc36eef2f5dc898dc29ec135c4c91c",
+      "production": "8a5df2b125c892a972ba60bae4c1da5498dc36eef2f5dc898dc29ec135c4c91c"
+    },
+    "max_alpha": {
+      "actual": "1753e6370c8c0bd8a1877ad2aa046b2b747a3e49a54b771e75990c00e5324fa1",
+      "production": "1753e6370c8c0bd8a1877ad2aa046b2b747a3e49a54b771e75990c00e5324fa1"
+    },
+    "output": {
+      "actual": "4861bfd510e5cd8deff80bc1d6bf542e04dc9dc15bd532815ade7bf83a01c8a9",
+      "production": "4861bfd510e5cd8deff80bc1d6bf542e04dc9dc15bd532815ade7bf83a01c8a9"
+    },
+    "polar": {
+      "actual": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+      "production": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3"
+    },
+    "source_scalar": {
+      "actual": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc",
+      "production": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+    }
+  },
+  "kind": "olmradialblur_rotation_pf16_inner32_small_production_20260806",
+  "scope": "Production PF16 audited 9x7 rowbytes80 Rotation Inner32 tuple only; internal accum/max and padded output against pinned actual-AEX",
+  "status": "exact"
+}
