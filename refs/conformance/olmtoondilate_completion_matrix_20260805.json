@@ -31,7 +31,7 @@
   "installed_completion": {
     "actual_entry_to_typed_writer_to_production_source": "exact",
     "production_source_to_installed_universal_binary": "SHA and codesign identity exact",
-    "installed_dynamic_load": "arm64 EffectMain SmartPreRender/SmartRender PF8 exact",
+    "installed_dynamic_load": "arm64 EffectMain SmartPreRender/SmartRender PF8/PF16/PF32 exact",
     "real_ae_render": "not claimed"
   },
   "selected_gap_closed": "PF32 both-axes-empty SmartRender geometry",

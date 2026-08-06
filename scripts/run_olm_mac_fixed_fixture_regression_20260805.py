@@ -226,6 +226,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmtoondilate_mac_smartrender_adapter_20260717.py"),
             (sys.executable, "tools/emulation/test_olmtoondilate_installed_completion_route_20260805.py"),
             (sys.executable, "tools/emulation/test_olmtoondilate_installed_dynamic_entry_20260805.py"),
+            (sys.executable, "tools/emulation/test_olmtoondilate_installed_dynamic_all_depths_20260806.py"),
         ),
     ),
 )

@@ -1,0 +1,26 @@
+{
+  "status": "PASS_INSTALLED_DYNAMIC_ALL_DEPTHS",
+  "installed_binary": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate",
+  "binary_sha256": "7d2c24d8ad0f7436ee7035e0d926a2abaac1a74bc9305a4223f76230c1fc5537",
+  "architecture": "arm64",
+  "commands": [
+    "PF_Cmd_SMART_PRE_RENDER",
+    "PF_Cmd_SMART_RENDER"
+  ],
+  "fixture": {
+    "dimensions": [
+      3,
+      2
+    ],
+    "radius": 1,
+    "padding": 8,
+    "nonzero_extents": true
+  },
+  "gates": {
+    "dlopen_effectmain": true,
+    "PF8_exact": true,
+    "PF16_exact": true,
+    "PF32_bitwise_exact": true
+  },
+  "claim_boundary": "Installed arm64 EffectMain under focused AE-free callbacks. No real AE host loading or rendering claim."
+}

@@ -11,7 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 ACTUAL = ROOT / "tools/emulation/probe_olmtoondilate_actual_aex_sequence_smartpre_20260805.py"
 ADAPTER = ROOT / "tools/emulation/test_olmtoondilate_mac_smartrender_adapter_20260717.py"
-DYNAMIC = ROOT / "tools/emulation/test_olmtoondilate_installed_dynamic_entry_20260805.py"
+DYNAMIC = ROOT / "tools/emulation/test_olmtoondilate_installed_dynamic_all_depths_20260806.py"
 SOURCE = ROOT / "mac/OLMToonDilate/OLMToonDilate.cpp"
 INSTALLED = Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin"
 BINARY = INSTALLED / "Contents/MacOS/OLMToonDilate"
@@ -53,7 +53,9 @@ def main() -> int:
         "installed_universal": set(archs) == {"arm64", "x86_64"},
         "installed_codesign_valid": sign.returncode == 0,
         "single_active_bundle": len(list(INSTALLED.parent.glob("OLMToonDilate.plugin"))) == 1,
-        "installed_dynamic_entry_exact": dynamic.get("status") == "PASS_INSTALLED_DYNAMIC_ENTRY" and dynamic.get("callbacks", {}).get("exact") is True,
+        "installed_dynamic_entry_exact": dynamic.get("status") == "PASS_INSTALLED_DYNAMIC_ALL_DEPTHS" and all(
+            dynamic.get("gates", {}).get(key) for key in ("dlopen_effectmain", "PF8_exact", "PF16_exact", "PF32_bitwise_exact")
+        ),
     }
     status = "PASS_INSTALLED_COMPLETION_ROUTE" if all(gates.values()) else "BLOCKED_FAIL_CLOSED"
     report = {
@@ -64,7 +66,7 @@ def main() -> int:
             "source-included production EffectMain SmartPreRender/SmartRender exact adapter",
             "current production source SHA identity",
             "current installed signed Universal bundle SHA identity",
-            "installed arm64 EffectMain dynamic SmartPreRender/SmartRender execution",
+            "installed arm64 EffectMain dynamic PF8/PF16/PF32 SmartPreRender/SmartRender execution",
         ],
         "actual_aex_sha256": actual["aex_sha256"],
         "actual_report_sha256": sha(ROOT / "refs/conformance/olmtoondilate_actual_aex_sequence_smartpre_20260805.json"),

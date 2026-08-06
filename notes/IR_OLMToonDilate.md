@@ -242,14 +242,14 @@ synthetic, so this is binary-grounded kernel evidence rather than AE exact.
   actual AEX entrypoint `0x17/0x18` evidence, typed workers/writers, the
   source-included production adapter, current source SHA, and current installed
   signed Universal bundle SHA are checked in one run. This is a transitive
-  identity connection; installed dynamic loading and real AE rendering remain
-  unclaimed, and the prior install record still says restart is required.
+  identity connection; real AE loading and rendering remain unclaimed.
 - The remaining installed edge is now directly exercised rather than only
   transitively identified: an AE-free harness `dlopen`s the installed arm64
   binary, resolves `EffectMain`, and executes SmartPreRender then SmartRender
-  for the PF8 mixed-alpha `3x2` radius-1 fixture. Callback lifecycle, visible
-  typed bytes, and row padding are exact. This proves focused installed dynamic
-  execution, but still does not claim loading or rendering inside real AE.
+  independently for PF8, PF16, and PF32 `3x2` radius-1 fixtures. Callback
+  lifecycle, visible typed words, and row padding are exact at every depth;
+  PF32 comparison is bitwise. This proves focused installed dynamic execution,
+  but still does not claim loading or rendering inside real AE.
 - The real-AE Software phase package is prepared without launching AE. Its
   runner/fixture manifest is pinned to installed SHA `8ac60d57...0ffc`, 32bpc
   FLOAT, Software renderer, SmartPreRender/SmartRender, Search Radius 13
