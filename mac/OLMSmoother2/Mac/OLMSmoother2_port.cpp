@@ -4625,7 +4625,7 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_SmoothRange_Param_Name),
-	              0, 255, 0, 255, 2,
+	              0, 100, 0, 100, 2,
 	              SMOOTH_RANGE_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
@@ -4635,18 +4635,39 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	             VERSION_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+#ifndef OLMSMOOTHER2_SHIM_H
+	def.flags = PF_ParamFlag_SUPERVISE;
+#endif
 	PF_ADD_POPUP(GetStringPtr(StrID_Gamma_Param_Name),
 	             3, GAMMA_NONE,
 	             GetStringPtr(StrID_Gamma_Choices),
 	             GAMMA_MODE_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+#ifdef OLMSMOOTHER2_SHIM_H
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_GammaValue_Param_Name),
 	                     1.0, 2.4, 1.0, 2.4, 2.4,
 	                     PF_Precision_HUNDREDTHS, 0, 0,
 	                     GAMMA_VALUE_DISK_ID);
+#else
+	// The AEX-owned row leaves curve_tolerance at zero. Param_Utils' float
+	// slider helper forces the audio-oriented 0.05 default, so spell out this
+	// definition to preserve the public PARAMS_SETUP payload.
+	def.param_type = PF_Param_FLOAT_SLIDER;
+	PF_STRNNCPY(def.name, GetStringPtr(StrID_GammaValue_Param_Name), sizeof(def.name));
+	def.u.fs_d.valid_min = def.u.fs_d.slider_min = 1.0;
+	def.u.fs_d.valid_max = def.u.fs_d.slider_max = 2.4;
+	def.u.fs_d.value = def.u.fs_d.dephault = 2.4;
+	def.u.fs_d.precision = PF_Precision_HUNDREDTHS;
+	def.u.fs_d.curve_tolerance = 0.0;
+	def.uu.id = GAMMA_VALUE_DISK_ID;
+	ERR(PF_ADD_PARAM(in_data, -1, &def));
+#endif
 
 	AEFX_CLR_STRUCT(def);
+#ifndef OLMSMOOTHER2_SHIM_H
+	def.flags = PF_ParamFlag_SUPERVISE;
+#endif
 	PF_ADD_SLIDER(GetStringPtr(StrID_NumGamma_Param_Name),
 	              0, NUM_GAMMA_COLORS, 0, NUM_GAMMA_COLORS, 1,
 	              NUM_GAMMA_DISK_ID);

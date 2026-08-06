@@ -1,7 +1,7 @@
 {
   "ae_parameter_contract": {
     "default": 2,
-    "maximum": 255,
+    "maximum": 100,
     "minimum": 0,
     "tested": 0
   },
@@ -38,7 +38,7 @@
     }
   ],
   "inverse_lut_sha256": "b7014467dcae06109111302b8c930494950d27b817d1390d6434605795772fbc",
-  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "production_source_sha256": "d8a7a489bb3bc875e998926bdde971ac66f5544c41ff6bc583819bf0daf0a784",
   "scope": "PF16/PF32 natural v2 nonuniform 3x2, Smooth Range=0 lower endpoint, Smoothness=100, key/gamma off, captured LUTs, padded rows",
   "verdict": "PASS_V2_SMOOTH_RANGE_ZERO_LOWER_ENDPOINT_TO_PRODUCTION_EXACT"
 }
