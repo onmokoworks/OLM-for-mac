@@ -32,7 +32,7 @@ Mac AE同一条件レンダーのプラグイン別比較を進めています�
 | OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3；PF8／PF16／PF32限定 | PF16 Type 3 Layerは16×16、angle 45、front 8、back 0、variation 100、neutral size／fade／tail、独立paddingに限定。Layer欠落・寸法不一致・他tupleはfail-close |
 | OLMRadialBlur | Zoom／Rotation／Inner；PF8／PF16／PF32 guard付き | PF8 centered neutral Inner Strength 1〜64は9×7、64×36、640×360で証明。PF16／PF32 Innerは9×7 guardを維持。未記載offset／ratio／angle／quality／repeat／edge／noise／variationはfail-close |
 | OLMSmoother2 | v1／v2 classifier、key／invert、Gamma None／All／Colors、range／extra、palette；PF8／PF16／PF32限定 | PF32 case07はraw artifact exactだが、同一runのWindows process／module証明がなく、process-attested AE exactとは呼ばない |
-| OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur；PF8／PF16／PF32限定 | Mode 4 Highlightの経験的0.62 gainを除去し、aggregationとMerge 1／PF32 writerはactual AEXへ各16 word bit exact。MakeSeed／3-pass 11×11生成を含むfull callerはAEXCompatのchannel-vtable／OpenCV初期化境界として未昇格 |
+| OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur；PF8／PF16／PF32限定 | Mode 4 Highlightの経験的0.62 gainを除去。記録済み4×1、radius 5、orange、directional 0ではactual AEX 16引数full callerのMakeSeed→3-pass 11×11、aggregation、Merge 1／PF32 writerが全段bit exact。未記載shape／tupleへは一般化しない |
 | OLMSmoother v1 | no-key／Color Key、smoothing range；native PF8／PF16 | PF8 canonical 960×540と保持済みkey pathはexact。PF16 walker／subhandler／MainKernel／Executorはactual AEXへ局所・10,000 pixel累積exact。Windows AE EXRの183語差は全点でhost Gamma 2.4境界。AEXにnative PF32 callbackはなく、32bpc projectではAEがclassic integer pluginの前後をhost-convertする |
 
 ## AE host境界
@@ -97,8 +97,8 @@ e582b0f368deb6dfbb34de2675e382d2222372705da043151d90dc895f7d7a0a
 ## 最終Mac検証結果
 
 ```text
-PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=450.94s
-captured-output-sha256 b8a090d5b48ab4bef89b2cb1ecf6073cfadc2f1d52f4d011d2837ef843957cbc
+PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=441.93s
+captured-output-sha256 f254867e68a86b10085f5c3db44dd6b2e5f81409a080e3ccf4aec9043e93a11c
 Mac AE representatives 10 proven / 0 pending / 0 invalid
 Universal installed bundles 10 / 10
 Parameter UI registration 10 / 10（exact 7、bounded 3）

@@ -2,10 +2,10 @@
   "claim_boundary": "Release integration only: ten-lane fixed fixtures, installed Universal identities, and one current-Mac-AE load/render witness per plugin. This manifest does not promote unlisted geometries, parameters, bit depths, or AE exactness. Seven Windows AE release-boundary observations are accepted; cross-host exactness remains a per-plugin claim.",
   "fixed_fixture_regression": {
     "boundary": "Only commands enumerated by the ten fixed-fixture lanes; slow RadialBlur full replay is excluded.",
-    "output_sha256": "b8a090d5b48ab4bef89b2cb1ecf6073cfadc2f1d52f4d011d2837ef843957cbc",
+    "output_sha256": "f254867e68a86b10085f5c3db44dd6b2e5f81409a080e3ccf4aec9043e93a11c",
     "returncode": 0,
     "state": "proven",
-    "summary": "PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=450.94s",
+    "summary": "PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=441.93s",
     "tail": [
       "      |                                                      ^",
       "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here",
@@ -29,7 +29,7 @@
       "1 warning generated."
     ]
   },
-  "generated_at": "2026-08-06T15:23:39.101886+00:00",
+  "generated_at": "2026-08-06T15:45:17.658774+00:00",
   "mac_ae_representative": {
     "counts": {
       "invalid": 0,
@@ -272,7 +272,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMKiraKira",
-        "sha256": "700d3a91e31aab2ff38fb1e40e2f0d529ef73d3060eb29fc2e018285b8e2ddbe",
+        "sha256": "ce70113ad96052247321657bfeaed178233465806ac17d79c4dc8361f96ba395",
         "sha256_exact": true,
         "universal_exact": true
       },

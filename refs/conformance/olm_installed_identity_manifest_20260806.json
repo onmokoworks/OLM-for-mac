@@ -6,10 +6,10 @@
     "stable_consecutive_collections": 2,
     "universal_exact": true
   },
-  "accepted_at": "2026-08-06T15:15:34.464503+00:00",
+  "accepted_at": "2026-08-06T15:37:32.588559+00:00",
   "claim_boundary": "Exact installed executable identity, arm64+x86_64 architectures, valid strict code signature, and byte identity with the named local build product. No AE load, UI, or render claim.",
   "configuration": "Debug",
-  "installed_after": "2026-08-06T15:15:34.464503+00:00",
+  "installed_after": "2026-08-06T15:37:32.588559+00:00",
   "plugins": [
     {
       "architectures": [
@@ -95,10 +95,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMKiraKira",
-      "sha256": "700d3a91e31aab2ff38fb1e40e2f0d529ef73d3060eb29fc2e018285b8e2ddbe",
+      "sha256": "ce70113ad96052247321657bfeaed178233465806ac17d79c4dc8361f96ba395",
       "source_bundle": "mac/OLMKiraKira/Mac/build/Debug/OLMKiraKira.plugin",
       "source_installed_exact": true,
-      "source_sha256": "700d3a91e31aab2ff38fb1e40e2f0d529ef73d3060eb29fc2e018285b8e2ddbe",
+      "source_sha256": "ce70113ad96052247321657bfeaed178233465806ac17d79c4dc8361f96ba395",
       "universal_exact": true
     },
     {
