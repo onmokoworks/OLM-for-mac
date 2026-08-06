@@ -539,7 +539,9 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			info.back_sharp_tail == 0.0 &&
 			(info.noise_variation == 0.0 ||
 			 (info.noise_variation == 100.0 &&
-			  (info.noise_type == 1 || info.noise_type == 2) &&
+			  (info.noise_type == 1 || info.noise_type == 2 ||
+			   (info.noise_type == 3 && noise_layer && noise_layer->data &&
+			    noise_layer->width == input->width && noise_layer->height == input->height)) &&
 			  info.seed == 1 && info.noise_offset == 0 && info.thickness == 3.0 &&
 			  info.front_strength == 8 && info.angle_deg == 45.0)) &&
 			info.render_scale_x == 1.0 && info.render_scale_y == 1.0;
@@ -551,14 +553,21 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 					reinterpret_cast<const std::uint8_t *>(input->data) + y * input->rowbytes,
 					static_cast<std::size_t>(input->width) * sizeof(PF_Pixel16));
 			}
-			const int result = olm_dblur_minimal_argb16(
-				source.data(), destination.data(), input->width, input->height,
-				static_cast<int>(info.front_strength), static_cast<int>(info.back_strength),
-				static_cast<float>(info.brightness_gain),
-				static_cast<float>(info.angle_deg), static_cast<float>(info.noise_variation),
-				static_cast<int>(info.noise_type),
-				static_cast<std::uint32_t>(info.seed), info.noise_offset,
-				static_cast<float>(info.thickness));
+			const int result = info.noise_type == 3
+				? olm_dblur_minimal_layer_argb16(
+					source.data(), destination.data(), input->width, input->height,
+					static_cast<int>(info.front_strength), static_cast<int>(info.back_strength),
+					static_cast<float>(info.brightness_gain), static_cast<float>(info.angle_deg),
+					static_cast<float>(info.noise_variation),
+					reinterpret_cast<const std::uint16_t *>(noise_layer->data),
+					static_cast<int>(noise_layer->rowbytes))
+				: olm_dblur_minimal_argb16(
+					source.data(), destination.data(), input->width, input->height,
+					static_cast<int>(info.front_strength), static_cast<int>(info.back_strength),
+					static_cast<float>(info.brightness_gain), static_cast<float>(info.angle_deg),
+					static_cast<float>(info.noise_variation), static_cast<int>(info.noise_type),
+					static_cast<std::uint32_t>(info.seed), info.noise_offset,
+					static_cast<float>(info.thickness));
 			if (result != 0) return result == -5 ? PF_Err_OUT_OF_MEMORY : PF_Err_INTERNAL_STRUCT_DAMAGED;
 			for (A_long y = 0; y < output->height; ++y) {
 				std::memcpy(reinterpret_cast<std::uint8_t *>(output->data) + y * output->rowbytes,

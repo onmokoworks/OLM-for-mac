@@ -137,6 +137,27 @@ int main() {{ std::printf("{{\\"status\\":\\"pass\\",\\"cases\\":["); bool first
               front,back_strength,(int)back_err,back_exact,back_visible,pad(outb,rb,OUT_PAD)); return 39;
           }
         }
+        if(d==16) {
+          std::vector<std::uint8_t> expected_layer(rb*HEIGHT,OUT_PAD);
+          std::vector<std::uint16_t> src(WIDTH*HEIGHT*4), dst(WIDTH*HEIGHT*4);
+          for(int y=0;y<HEIGHT;++y) std::memcpy(src.data()+y*WIDTH*4,inb.data()+y*rb,WIDTH*ps);
+          if(olm_dblur_minimal_layer_argb16(src.data(),dst.data(),WIDTH,HEIGHT,8,0,
+              1.0f,45.0f,100.0f,reinterpret_cast<const std::uint16_t*>(inb.data()),rb)!=0) return 34;
+          for(int y=0;y<HEIGHT;++y) std::memcpy(expected_layer.data()+y*rb,dst.data()+y*WIDTH*4,WIDTH*ps);
+          std::fill(outb.begin(),outb.end(),OUT_PAD);
+          OLMDirectionalBlurInfo layer{}; layer.angle_deg=45.0; layer.brightness_gain=1.0;
+          layer.front_strength=8; layer.noise_variation=100.0; layer.noise_type=3;
+          layer.seed=1; layer.thickness=3.0; layer.render_scale_x=layer.render_scale_y=1.0;
+          int layer_exact=0;
+          PF_Err layer_err=OLMDirectionalBlurTestRenderWorldWithNoise(&in,&out,&in,&layer,16,&layer_exact);
+          bool layer_visible=true;
+          for(int y=0;y<HEIGHT;++y) layer_visible=layer_visible&&
+            std::memcmp(expected_layer.data()+y*rb,outb.data()+y*rb,WIDTH*ps)==0;
+          if(layer_err!=PF_Err_NONE || layer_exact!=0 || !layer_visible || !pad(outb,rb,OUT_PAD)) {
+            std::fprintf(stderr,"layer3 err=%d exact=%d visible=%d pad=%d\\n",
+              (int)layer_err,layer_exact,layer_visible,pad(outb,rb,OUT_PAD)); return 38;
+          }
+        }
         for(int unsupported_kind=0; unsupported_kind<(d==16?2:1); ++unsupported_kind) {
           OLMDirectionalBlurInfo unsupported{};
           unsupported.angle_deg=0.0; unsupported.brightness_gain=1.0;
@@ -206,12 +227,13 @@ def main() -> int:
         case["smart_render_callbacks"]["checked_layers"] = [0, 17]
         case["public_effectmain_exact"] = True
         case["unsupported_parameter_contract"] = (
-            "fade and Noise3 fail_closed_output_untouched"
+            "fade and Noise3-without-a-valid-Layer fail_closed_output_untouched"
             if case["pixel_format"] == "PF16"
             else "fade fail_closed_output_untouched"
         )
         if case["pixel_format"] == "PF16":
             case["back_family"] = "back-only strength1/2/8 and front1/2/8+back1 production dispatch exact; padding preserved"
+            case["noise_type3_layer"] = "front8/angle45/variation100 valid same-size PF16 Layer production dispatch exact; padding preserved"
     report.update({
         "source": str(SOURCE.relative_to(ROOT)),
         "scope": "Mac-local source-included public EffectMain PF32/PF16 SmartRender output exactly matches the typed core; no interactive AE/Windows claim",

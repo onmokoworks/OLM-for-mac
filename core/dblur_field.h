@@ -22,6 +22,13 @@ extern "C" float olm_dblur_layer_field_argb8(
     int render_origin_x,
     int render_origin_y);
 
+extern "C" float olm_dblur_layer_field_argb16(
+    const std::uint16_t* layer_argb, int layer_width, int layer_height,
+    int layer_rowbytes, int layer_origin_x, int layer_origin_y,
+    float* destination, int work_width, int work_height, int work_col0,
+    int work_row0, int render_width, int render_height, int render_origin_x,
+    int render_origin_y);
+
 extern "C" float olm_dblur_layer_field_argb32(
     const float* layer_argb, int layer_width, int layer_height, int layer_rowbytes,
     int layer_origin_x, int layer_origin_y, float* destination,

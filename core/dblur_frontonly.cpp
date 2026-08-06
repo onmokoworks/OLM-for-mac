@@ -382,7 +382,7 @@ extern "C" int olm_dblur_frontonly_rgba8(const std::uint8_t* input_rgba,
         front_strength, front_alpha_fade, 0.0f, 0.0f, 1.0f);
 }
 
-extern "C" int olm_dblur_minimal_argb16(const std::uint16_t* input_argb,
+static int render_minimal_argb16(const std::uint16_t* input_argb,
                                          std::uint16_t* output_argb,
                                          int width, int height,
                                          int front_strength,
@@ -393,7 +393,9 @@ extern "C" int olm_dblur_minimal_argb16(const std::uint16_t* input_argb,
                                          int noise_type,
                                          std::uint32_t seed,
                                          int noise_offset_ui,
-                                         float thickness_ui) {
+                                         float thickness_ui,
+                                         const std::uint16_t* layer_argb,
+                                         int layer_rowbytes) {
     if (!input_argb || !output_argb || width <= 0 || height <= 0 ||
         (front_strength <= 0 && back_strength <= 0) ||
         front_strength < 0 || back_strength < 0) return -1;
@@ -429,7 +431,25 @@ extern "C" int olm_dblur_minimal_argb16(const std::uint16_t* input_argb,
         const std::vector<float> front_weights = gaussian_weights(front_strength);
         const std::vector<float> back_weights = gaussian_weights(back_strength);
         const float empty = 0.0f;
-        if (noise_variation_percent > 0.0f) {
+        if (noise_variation_percent > 0.0f && noise_type == 3) {
+            if (!layer_argb || layer_rowbytes < width * 8) return -1;
+            std::vector<float> field_source(work_pixels, 0.0f);
+            std::vector<float> field_rotated(work_pixels, 0.0f);
+            olm_dblur_layer_field_argb16(
+                layer_argb, width, height, layer_rowbytes, 0, 0,
+                field_source.data(), work_width, work_height, offset_x, offset_y,
+                width, height, 0, 0);
+            olm_dblur_rotate_scalar_f32(field_source.data(), field_rotated.data(),
+                                        work_width, work_height, angle);
+            olm_dblur_rowdriver_field_f32(
+                0, work_height, a.data(), b.data(), work_width,
+                noise_variation_percent / 100.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+                front_strength > 0 ? front_weights.data() : &empty,
+                back_strength > 0 ? back_weights.data() : &empty,
+                &empty, &empty, denominator.data(), alpha_max.data(),
+                component_map.data(), front_strength, back_strength, 0, 0,
+                field_rotated.data());
+        } else if (noise_variation_percent > 0.0f) {
             std::vector<float> noise; int nw = 0, nh = 0;
             if (!olm::dblur::generate_noise_plane(work_width, work_height, thickness_ui,
                     static_cast<float>(noise_offset_ui) / 36.0f, seed, &noise, &nw, &nh)) return -1;
@@ -472,6 +492,31 @@ extern "C" int olm_dblur_minimal_argb16(const std::uint16_t* input_argb,
     } catch (const std::bad_alloc&) {
         return -5;
     }
+}
+
+extern "C" int olm_dblur_minimal_argb16(const std::uint16_t* input_argb,
+                                         std::uint16_t* output_argb,
+                                         int width, int height,
+                                         int front_strength, int back_strength,
+                                         float brightness_gain, float angle_degrees,
+                                         float noise_variation_percent, int noise_type,
+                                         std::uint32_t seed, int noise_offset_ui,
+                                         float thickness_ui) {
+    return render_minimal_argb16(
+        input_argb, output_argb, width, height, front_strength, back_strength,
+        brightness_gain, angle_degrees, noise_variation_percent, noise_type,
+        seed, noise_offset_ui, thickness_ui, nullptr, 0);
+}
+
+extern "C" int olm_dblur_minimal_layer_argb16(
+    const std::uint16_t* input_argb, std::uint16_t* output_argb,
+    int width, int height, int front_strength, int back_strength,
+    float brightness_gain, float angle_degrees, float noise_variation_percent,
+    const std::uint16_t* layer_argb, int layer_rowbytes) {
+    return render_minimal_argb16(
+        input_argb, output_argb, width, height, front_strength, back_strength,
+        brightness_gain, angle_degrees, noise_variation_percent, 3,
+        1, 0, 3.0f, layer_argb, layer_rowbytes);
 }
 
 extern "C" int olm_dblur_minimal_argb32(const float* input_argb,
