@@ -281,7 +281,7 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_NumberOfColors_Param_Name),
-	              1, OLMCOLORKEY_MAX_COLORS, 1, OLMCOLORKEY_MAX_COLORS, 1,
+	              0, OLMCOLORKEY_MAX_COLORS, 0, OLMCOLORKEY_MAX_COLORS, 1,
 	              NUMBER_OF_COLORS_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
