@@ -117,6 +117,7 @@ LANES = (
     Lane(
         "kirakira",
         (
+            (sys.executable, "tools/emulation/test_olmkirakira_mode3_length9_15x6_exact_boundary_20260806.py"),
             (sys.executable, "tools/emulation/test_olmkirakira_mode3_nonwhitelist_production_20260806.py"),
             (sys.executable, "tools/emulation/test_olmkirakira_mode2_ramp_production_seam_20260805.py"),
             (sys.executable, "tools/emulation/test_olmkirakira_mode2_ramp_typed_completion_20260805.py"),

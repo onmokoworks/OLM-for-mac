@@ -15,7 +15,7 @@ CPP = ROOT / "tools/emulation/test_kirakira_mode3_nonwhitelist_geometry.cpp"
 
 def main() -> int:
     production = SOURCE.read_text(encoding="utf-8")
-    assert "const bool actual_aex_mode3_length = length == 3 || length == 5 || length == 7;" in production
+    assert "length == 3 || length == 5 || length == 7 || length == 9;" in production
     assert "if (blur_mode == 3 && actual_aex_mode3_length)" in production
     assert "exact_mode3_fixture" not in production
     assert "return RotatedAxisBoxBlur(seed, work_width, work_height, len, angle, passes, info.blur_mode);" in production
