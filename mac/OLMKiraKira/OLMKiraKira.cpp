@@ -873,10 +873,11 @@ static PF_Err AddRampParam(PF_InData *in_data, A_short id, A_long disk_id)
 	PF_Err err = NewRampHandle(in_data, DefaultRampData(), &default_handle);
 	if (err) return err;
 	def.param_type = PF_Param_ARBITRARY_DATA;
+	std::strncpy(def.name, "Ramp", sizeof(def.name) - 1);
 	def.ui_width = 0x136;
 	def.ui_height = 0xaa;
-	def.ui_flags = PF_PUI_CONTROL | PF_PUI_ECW_SEPARATOR;
-	def.flags = PF_ParamFlag_SUPERVISE;
+	def.ui_flags = PF_PUI_CONTROL | PF_PUI_DONT_ERASE_CONTROL;
+	def.flags = PF_ParamFlag_SUPERVISE | PF_ParamFlag_START_COLLAPSED;
 	def.uu.id = disk_id;
 	def.u.arb_d.id = id;
 	def.u.arb_d.dephault = default_handle;
@@ -1016,11 +1017,11 @@ static PF_Err ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef 
 	PF_ParamDef def;
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_POPUP(GetStringPtr(StrID_Channel_Param_Name), 4, 1,
+	PF_ADD_POPUP(GetStringPtr(StrID_Channel_Param_Name), 6, 1,
 	             GetStringPtr(StrID_Channel_Choices), CHANNEL_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_POPUP(GetStringPtr(StrID_BlurMode_Param_Name), 4, 2,
+	PF_ADD_POPUP(GetStringPtr(StrID_BlurMode_Param_Name), 3, 2,
 	             GetStringPtr(StrID_BlurMode_Choices), BLUR_MODE_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);

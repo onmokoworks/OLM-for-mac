@@ -1,0 +1,524 @@
+{
+  "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+  "entry_point": "0x181155f20",
+  "event_contract": "PF_Cmd_EVENT + handled/update-now + invalidate retained; live Drawbot inspection is a separate host boundary",
+  "fixed_mac_mismatch": {
+    "after": {
+      "flags": "0x60",
+      "name": "Ramp",
+      "ui_flags": "0x82"
+    },
+    "before": {
+      "flags": "0x40",
+      "name": "",
+      "ui_flags": "0x12"
+    }
+  },
+  "global_setup": {
+    "my_version": 1638400,
+    "out_flags": 33587264,
+    "out_flags2": 134222848
+  },
+  "params_setup": {
+    "num_params_including_input": 41,
+    "return_code": 0,
+    "rows": [
+      {
+        "disk_id": 8,
+        "flags": 64,
+        "name": "Channel",
+        "param_type": 7,
+        "popup": {
+          "choices": 6,
+          "default": 1,
+          "names": "Alpha|Luminance|RGB|Brightness"
+        },
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 9,
+        "flags": 64,
+        "name": "Blur Mode",
+        "param_type": 7,
+        "popup": {
+          "choices": 3,
+          "default": 2,
+          "names": "Box|Approximated Gaussian|Gaussian|Exponential"
+        },
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 17,
+        "flags": 192,
+        "name": "Merge mode",
+        "param_type": 7,
+        "popup": {
+          "choices": 2,
+          "default": 1,
+          "names": "premultiply|add"
+        },
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "checkbox_default": 0,
+        "disk_id": 10,
+        "flags": 0,
+        "name": "Approximated Input",
+        "param_type": 4,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 2,
+        "flags": 0,
+        "float_slider": [
+          52776566456320.0,
+          52776566456320.0,
+          6.8782504194e-314,
+          0.0,
+          0.0,
+          0,
+          0
+        ],
+        "name": "Brightness Gain",
+        "param_type": 10,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 11,
+        "flags": 0,
+        "name": "Strength multiplier",
+        "param_type": 1,
+        "slider": [
+          100,
+          0,
+          1000,
+          0,
+          1000,
+          100
+        ],
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 27,
+        "flags": 0,
+        "float_slider": [
+          0.0078125,
+          0.0078125,
+          2.121995791e-314,
+          0.0,
+          0.0,
+          0,
+          0
+        ],
+        "name": "Fade Out",
+        "param_type": 10,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 7,
+        "flags": 0,
+        "name": "Glow Opacity",
+        "param_type": 1,
+        "slider": [
+          100,
+          0,
+          10000,
+          0,
+          10000,
+          100
+        ],
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 12,
+        "flags": 0,
+        "name": "Source Opacity",
+        "param_type": 1,
+        "slider": [
+          100,
+          0,
+          100,
+          0,
+          100,
+          100
+        ],
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 3,
+        "flags": 0,
+        "name": "Vertical Length",
+        "param_type": 1,
+        "slider": [
+          50,
+          0,
+          1000,
+          0,
+          200,
+          50
+        ],
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "color_default_raw": "0xffffffff",
+        "disk_id": 13,
+        "flags": 0,
+        "name": "Vertical Color",
+        "param_type": 5,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 29,
+        "flags": 0,
+        "name": "Vertical Color Ramp",
+        "param_type": 13,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "checkbox_default": 0,
+        "disk_id": 18,
+        "flags": 0,
+        "name": "Use Ramp",
+        "param_type": 4,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "arbitrary": {
+          "default_size": 608,
+          "id": 19
+        },
+        "disk_id": 19,
+        "flags": 96,
+        "name": "Ramp",
+        "param_type": 11,
+        "ui_flags": 130,
+        "ui_height": 170,
+        "ui_width": 310
+      },
+      {
+        "disk_id": 30,
+        "flags": 0,
+        "name": "",
+        "param_type": 14,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 4,
+        "flags": 0,
+        "name": "Horizontal Length",
+        "param_type": 1,
+        "slider": [
+          50,
+          0,
+          1000,
+          0,
+          200,
+          50
+        ],
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "color_default_raw": "0xffffffff",
+        "disk_id": 14,
+        "flags": 0,
+        "name": "Horizontal Color",
+        "param_type": 5,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 31,
+        "flags": 0,
+        "name": "Horizontal Color Ramp",
+        "param_type": 13,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "checkbox_default": 0,
+        "disk_id": 20,
+        "flags": 0,
+        "name": "Use Ramp",
+        "param_type": 4,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "arbitrary": {
+          "default_size": 608,
+          "id": 21
+        },
+        "disk_id": 21,
+        "flags": 96,
+        "name": "Ramp",
+        "param_type": 11,
+        "ui_flags": 130,
+        "ui_height": 170,
+        "ui_width": 310
+      },
+      {
+        "disk_id": 32,
+        "flags": 0,
+        "name": "",
+        "param_type": 14,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 5,
+        "flags": 0,
+        "name": "Diagonal Length",
+        "param_type": 1,
+        "slider": [
+          50,
+          0,
+          1000,
+          0,
+          200,
+          50
+        ],
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "color_default_raw": "0xffffffff",
+        "disk_id": 15,
+        "flags": 0,
+        "name": "Diagonal Color",
+        "param_type": 5,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 33,
+        "flags": 0,
+        "name": "Diagonal Color Ramp",
+        "param_type": 13,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "checkbox_default": 0,
+        "disk_id": 22,
+        "flags": 0,
+        "name": "Use Ramp",
+        "param_type": 4,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "arbitrary": {
+          "default_size": 608,
+          "id": 23
+        },
+        "disk_id": 23,
+        "flags": 96,
+        "name": "Ramp",
+        "param_type": 11,
+        "ui_flags": 130,
+        "ui_height": 170,
+        "ui_width": 310
+      },
+      {
+        "disk_id": 34,
+        "flags": 0,
+        "name": "",
+        "param_type": 14,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 26,
+        "flags": 0,
+        "name": "Diagonal 2 length",
+        "param_type": 1,
+        "slider": [
+          50,
+          0,
+          1000,
+          0,
+          200,
+          50
+        ],
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "color_default_raw": "0xffffffff",
+        "disk_id": 28,
+        "flags": 0,
+        "name": "Diagonal Color2",
+        "param_type": 5,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 37,
+        "flags": 0,
+        "name": "Diagonal 2 Color Ramp",
+        "param_type": 13,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "checkbox_default": 0,
+        "disk_id": 35,
+        "flags": 0,
+        "name": "Use Ramp",
+        "param_type": 4,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "arbitrary": {
+          "default_size": 608,
+          "id": 36
+        },
+        "disk_id": 36,
+        "flags": 96,
+        "name": "Ramp",
+        "param_type": 11,
+        "ui_flags": 130,
+        "ui_height": 170,
+        "ui_width": 310
+      },
+      {
+        "disk_id": 38,
+        "flags": 0,
+        "name": "",
+        "param_type": 14,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 6,
+        "flags": 0,
+        "name": "Highlight Radius",
+        "param_type": 1,
+        "slider": [
+          0,
+          0,
+          500,
+          0,
+          200,
+          0
+        ],
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "color_default_raw": "0xffffffff",
+        "disk_id": 16,
+        "flags": 0,
+        "name": "Highlight Color",
+        "param_type": 5,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 39,
+        "flags": 0,
+        "name": "Highlight Color Ramp",
+        "param_type": 13,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "checkbox_default": 0,
+        "disk_id": 24,
+        "flags": 0,
+        "name": "Use Ramp",
+        "param_type": 4,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "arbitrary": {
+          "default_size": 608,
+          "id": 25
+        },
+        "disk_id": 25,
+        "flags": 96,
+        "name": "Ramp",
+        "param_type": 11,
+        "ui_flags": 130,
+        "ui_height": 170,
+        "ui_width": 310
+      },
+      {
+        "disk_id": 40,
+        "flags": 0,
+        "name": "",
+        "param_type": 14,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "angle": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "disk_id": 1,
+        "flags": 0,
+        "name": "Glow Rotation",
+        "param_type": 3,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      }
+    ]
+  },
+  "schema": "olmkirakira-ui-setup-actual-aex/1",
+  "status": "exact"
+}

@@ -28,7 +28,7 @@ TableString g_strs[StrID_NUMTYPES] = {
 	{ StrID_DiagonalColor_Param_Name,     "Diagonal Color" },
 	{ StrID_HighlightColor_Param_Name,    "Highlight Color" },
 	{ StrID_MergeMode_Param_Name,         "Merge mode" },
-	{ StrID_MergeMode_Choices,            "Premultiply Add|Add" },
+	{ StrID_MergeMode_Choices,            "premultiply|add" },
 	{ StrID_UseRamp_Param_Name,           "Use Ramp" },
 	{ StrID_VerticalRamp_Param_Name,      "Vertical Color Ramp" },
 	{ StrID_HorizontalRamp_Param_Name,    "Horizontal Color Ramp" },
