@@ -575,11 +575,11 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	             BLUR_TYPE_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_POINT(GetStringPtr(StrID_Center_Param_Name), 960, 540, FALSE,
+	PF_ADD_POINT(GetStringPtr(StrID_Center_Param_Name), 50, 50, FALSE,
 	             CENTER_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_NULL(GetStringPtr(StrID_OuterBlur_Param_Name), OUTER_BLUR_LABEL_DISK_ID);
+	PF_ADD_TOPIC(GetStringPtr(StrID_OuterBlur_Param_Name), OUTER_BLUR_LABEL_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_OuterStrength_Param_Name),
@@ -597,16 +597,15 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	              OUTER_OFFSET_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_OuterEdgeFade_Param_Name),
-	                     0.0, 100.0, 0.0, 100.0, 0.0,
-	                     PF_Precision_TENTHS, 0, 0,
-	                     OUTER_EDGE_FADE_DISK_ID);
+	PF_ADD_SLIDER(GetStringPtr(StrID_OuterEdgeFade_Param_Name),
+	              0, 100, 0, 100, 0,
+	              OUTER_EDGE_FADE_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_NULL(GetStringPtr(StrID_Blank_Param_Name), OUTER_BLANK_DISK_ID);
+	PF_END_TOPIC(OUTER_BLANK_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_NULL(GetStringPtr(StrID_InnerBlur_Param_Name), INNER_BLUR_LABEL_DISK_ID);
+	PF_ADD_TOPIC(GetStringPtr(StrID_InnerBlur_Param_Name), INNER_BLUR_LABEL_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_InnerStrength_Param_Name),
@@ -624,20 +623,19 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	              INNER_OFFSET_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_InnerEdgeFade_Param_Name),
-	                     0.0, 100.0, 0.0, 100.0, 0.0,
-	                     PF_Precision_TENTHS, 0, 0,
-	                     INNER_EDGE_FADE_DISK_ID);
+	PF_ADD_SLIDER(GetStringPtr(StrID_InnerEdgeFade_Param_Name),
+	              0, 100, 0, 100, 0,
+	              INNER_EDGE_FADE_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_NULL(GetStringPtr(StrID_Blank_Param_Name), INNER_BLANK_DISK_ID);
+	PF_END_TOPIC(INNER_BLANK_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_CHECKBOX(GetStringPtr(StrID_RepeatBorder_Param_Name), "", TRUE, 0,
 	                REPEAT_BORDER_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_NULL(GetStringPtr(StrID_Ellipse_Param_Name), ELLIPSE_LABEL_DISK_ID);
+	PF_ADD_TOPIC(GetStringPtr(StrID_Ellipse_Param_Name), ELLIPSE_LABEL_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_Ratio_Param_Name),
@@ -646,24 +644,21 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	                     RATIO_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_Angle_Param_Name),
-	                     -360.0, 360.0, -360.0, 360.0, 0.0,
-	                     PF_Precision_TENTHS, 0, 0,
-	                     ANGLE_DISK_ID);
+	PF_ADD_ANGLE(GetStringPtr(StrID_Angle_Param_Name), 0, ANGLE_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_NULL(GetStringPtr(StrID_Blank_Param_Name), ELLIPSE_BLANK_DISK_ID);
+	PF_END_TOPIC(ELLIPSE_BLANK_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_Quality_Param_Name),
 	                     1.0, 50.0, 1.0, 50.0, 5.0,
-	                     PF_Precision_TENTHS, 0, 0,
+	                     PF_Precision_HUNDREDTHS, 0, 0,
 	                     QUALITY_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_BrightnessGain_Param_Name),
-	                     0.0, 10.0, 0.0, 10.0, 1.0,
-	                     PF_Precision_HUNDREDTHS, 0, 0,
+	                     0.0, 10.0, 0.0, 2.0, 1.0,
+	                     PF_Precision_TENTHS, 0, 0,
 	                     BRIGHTNESS_GAIN_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
@@ -673,7 +668,7 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	                     SIZE_VARIATION_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_NULL(GetStringPtr(StrID_NoiseParams_Param_Name), NOISE_PARAMS_LABEL_DISK_ID);
+	PF_ADD_TOPIC(GetStringPtr(StrID_NoiseParams_Param_Name), NOISE_PARAMS_LABEL_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_NoiseVariation_Param_Name),
@@ -695,18 +690,16 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	              SEED_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_SLIDER(GetStringPtr(StrID_NoiseOffset_Param_Name),
-	              -3000, 3000, -3000, 3000, 0,
-	              NOISE_OFFSET_DISK_ID);
+	PF_ADD_ANGLE(GetStringPtr(StrID_NoiseOffset_Param_Name), 0, NOISE_OFFSET_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_Thickness_Param_Name),
 	                     1.0, 100.0, 1.0, 100.0, 10.0,
-	                     PF_Precision_TENTHS, 0, 0,
+	                     PF_Precision_HUNDREDTHS, 0, 0,
 	                     THICKNESS_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_NULL(GetStringPtr(StrID_Blank_Param_Name), NOISE_BLANK_DISK_ID);
+	PF_END_TOPIC(NOISE_BLANK_DISK_ID);
 
 	out_data->num_params = OLMRADIALBLUR_NUM_PARAMS;
 	return err;
