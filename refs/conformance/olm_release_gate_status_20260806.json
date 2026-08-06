@@ -328,11 +328,11 @@
   "windows_ae_release_boundary": {
     "accepted_rows": 7,
     "after_effects": "26.3x87",
-    "boundary": "The seven Windows AE process/module/parameter/EXR contracts are accepted. Per-plugin same-contract Mac comparison is separate; this state does not claim blanket cross-host pixel equality.",
+    "boundary": "The seven Windows AE process/module/parameter/EXR contracts are accepted. Bounded per-plugin comparisons are complete for ColorKeep PF8/PF16/PF32, OLMKiraKira Mode4 PF32 internals, and OLMSmoother v1 PF16 internals. This state does not claim blanket cross-host exported-pixel equality.",
     "contract_archive_sha256": "6a060641dc867cbb5cb858136f6fd294fb49d274fa252cec71459bc9b20a4652",
     "evidence": "refs/conformance/olm_windows_ae_release_boundary_minimal_intake_20260806.json",
     "invalid_rows": 0,
     "return_archive_sha256": "e582b0f368deb6dfbb34de2675e382d2222372705da043151d90dc895f7d7a0a",
-    "state": "accepted_pending_per_plugin_mac_compare"
+    "state": "accepted_bounded_plugin_comparisons_complete"
   }
 }

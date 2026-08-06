@@ -6,8 +6,9 @@ Mac統合候補は、全10プラグインの固定fixture回帰、インスト�
 bundleのarchitecture／署名／identity検査、および現行Mac AEでの代表ロード・
 レンダーを通過しています。
 
-同一契約によるWindows AE 7行は取得・受領検証済みです。現在は、その返却画像と
-Mac AE同一条件レンダーのプラグイン別比較を進めています。
+同一契約によるWindows AE 7行は取得・受領検証済みです。ColorKeep 3深度、
+OLMKiraKira Mode 4 PF32内部経路、OLMSmoother v1 PF16内部経路のbounded比較も
+完了しています。host入出力変換を含むraw EXRの包括一致へは昇格しません。
 
 現在のhost証拠は、原則として次の条件を前提とします。
 
@@ -133,5 +134,6 @@ The bounded Mac candidate passes all ten fixed-fixture lanes, ten installed
 Universal/signature/identity checks, and ten current-Mac-AE representative
 load/render witnesses. Exactness claims remain limited to the declared host,
 depths, fixtures, geometries and parameter boundaries. Seven same-contract
-Windows AE calibration rows are accepted; per-plugin same-contract Mac
-comparison remains in progress and no blanket cross-host equality is claimed.
+Windows AE calibration rows are accepted and bounded per-plugin comparisons
+are complete. Host color/export transforms remain separate, so no blanket
+cross-host exported-pixel equality is claimed.

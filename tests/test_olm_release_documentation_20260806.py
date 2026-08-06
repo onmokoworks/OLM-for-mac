@@ -90,7 +90,7 @@ class ReleaseDocumentationConsistencyTest(unittest.TestCase):
         self.assertEqual(status["windows_ae_release_boundary"]["accepted_rows"], 7)
         self.assertEqual(
             status["windows_ae_release_boundary"]["state"],
-            "accepted_pending_per_plugin_mac_compare",
+            "accepted_bounded_plugin_comparisons_complete",
         )
         self.assertEqual(status["mac_ae_representative"]["counts"], {
             "invalid": 0, "pending": 0, "proven": 10,

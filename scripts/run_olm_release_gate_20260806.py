@@ -35,7 +35,7 @@ def windows_boundary_gate() -> dict[str, Any]:
     if any(row.get("status") != "accepted" for row in rows):
         raise ValueError("Windows AE boundary intake contains an unaccepted row")
     return {
-        "state": "accepted_pending_per_plugin_mac_compare",
+        "state": "accepted_bounded_plugin_comparisons_complete",
         "accepted_rows": 7,
         "invalid_rows": 0,
         "after_effects": payload["after_effects"],
@@ -44,8 +44,9 @@ def windows_boundary_gate() -> dict[str, Any]:
         "evidence": str(WINDOWS_BOUNDARY_INTAKE.relative_to(ROOT)),
         "boundary": (
             "The seven Windows AE process/module/parameter/EXR contracts are accepted. "
-            "Per-plugin same-contract Mac comparison is separate; this state does not "
-            "claim blanket cross-host pixel equality."
+            "Bounded per-plugin comparisons are complete for ColorKeep PF8/PF16/PF32, "
+            "OLMKiraKira Mode4 PF32 internals, and OLMSmoother v1 PF16 internals. This "
+            "state does not claim blanket cross-host exported-pixel equality."
         ),
     }
 
