@@ -211,6 +211,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmsmoother2_v2_smoothrange255_actual_aex_20260805.py"),
             (sys.executable, "tools/emulation/test_olmsmoother2_v2_key_white_endpoint_actual_aex_20260805.py"),
             (sys.executable, "tools/emulation/test_olmsmoother2_v2_invert_key_white_endpoint_actual_aex_20260806.py"),
+            (sys.executable, "tools/emulation/test_olmsmoother2_v2_invert_white_key_gamma_colors_actual_aex_20260806.py"),
             (sys.executable, "tools/emulation/test_olmsmoother2_effectmain_pf16_chain_installed_20260805.py"),
             (sys.executable, "tools/emulation/test_olmsmoother2_effectmain_pf32_smart_chain_installed_20260805.py"),
         ),
