@@ -1,0 +1,52 @@
+{
+  "ae_parameter_contract": {
+    "default": 2,
+    "maximum": 255,
+    "minimum": 0,
+    "tested": 255
+  },
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "No other Smooth Range/Smoothness combination",
+    "No key/gamma interaction",
+    "No AE host runtime claim"
+  ],
+  "comparison_contract": {
+    "range0_report": "refs/conformance/olmsmoother2_v2_smoothrange0_actual_aex_20260805.json",
+    "range1_report": "refs/conformance/olmsmoother2_v2_nonuniform_actual_aex_20260805.json"
+  },
+  "decode_lut_sha256": "11056c2feda87964204a53471e172ae6fb6039a0c3120f6277c7ff115fe88cba",
+  "fixtures": [
+    {
+      "class_nonzero_bytes": 0,
+      "class_plane_hex": "000000000000000000000000000000000000000000000000",
+      "classifier_instructions": 1504,
+      "depth": "PF16",
+      "differs_from_range0_raw": true,
+      "differs_from_range1_raw": true,
+      "equal": true,
+      "padding_per_row": 6,
+      "padding_preserved": true,
+      "raw_hex": "008000000000000000800000008000800080008000000080a5a5a5a5a5a5008000800080000000800020002000200080006000600060a5a5a5a5a5a5",
+      "worker_instructions": 2451
+    },
+    {
+      "class_nonzero_bytes": 0,
+      "class_plane_hex": "000000000000000000000000000000000000000000000000",
+      "classifier_instructions": 1504,
+      "depth": "PF32",
+      "differs_from_range0_raw": true,
+      "differs_from_range1_raw": true,
+      "equal": true,
+      "padding_per_row": 12,
+      "padding_preserved": true,
+      "raw_hex": "0000803f0000000000000000000000000000803f000000000000803f0000803f0000803f0000803f000000000000803fa5a5a5a5a5a5a5a5a5a5a5a50000803f0000803f0000803f000000000000803ffdff7f3efdff7f3efdff7f3e0000803f0000403f0000403f0000403fa5a5a5a5a5a5a5a5a5a5a5a5",
+      "worker_instructions": 2386
+    }
+  ],
+  "independent_effect_observed_all_depths": true,
+  "inverse_lut_sha256": "b7014467dcae06109111302b8c930494950d27b817d1390d6434605795772fbc",
+  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "scope": "PF16/PF32 natural v2 nonuniform 3x2, Smooth Range=255 upper endpoint, Smoothness=100, Extra Smooth=0, key/gamma off, LUTs, padding",
+  "verdict": "PASS_V2_SMOOTH_RANGE_255_UPPER_ENDPOINT_TO_PRODUCTION_EXACT"
+}

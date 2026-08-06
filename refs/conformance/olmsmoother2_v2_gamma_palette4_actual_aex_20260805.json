@@ -1,0 +1,102 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "No count above 4",
+    "No duplicate/tolerance-tie palette",
+    "No key interaction",
+    "No AE host claim"
+  ],
+  "decode_lut_sha256": "11056c2feda87964204a53471e172ae6fb6039a0c3120f6277c7ff115fe88cba",
+  "fixtures": [
+    {
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1502,
+      "depth": "PF16",
+      "equal": true,
+      "padding_per_row": 6,
+      "padding_preserved": true,
+      "raw_hex": "008000800080000000803f77737819700080008000000000a5a5a5a5a5a50080000000000080008000000080000000803f333f5d7f1ea5a5a5a5a5a5",
+      "worker_instructions": 4944
+    },
+    {
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1502,
+      "depth": "PF32",
+      "equal": true,
+      "padding_per_row": 12,
+      "padding_preserved": true,
+      "raw_hex": "0000803f0000803f0000803f000000000000803ffa7e6e3f60e5703f2631603f0000803f0000803f0000000000000000a5a5a5a5a5a5a5a5a5a5a5a50000803f00000000000000000000803f0000803f000000000000803f000000000000803ff3fdcc3efa7e3a3fd0f7733ea5a5a5a5a5a5a5a5a5a5a5a5",
+      "worker_instructions": 4879
+    }
+  ],
+  "inverse_lut_sha256": "b7014467dcae06109111302b8c930494950d27b817d1390d6434605795772fbc",
+  "palette_contract": {
+    "direct_actual_owner": {
+      "count": 4,
+      "ordered_memory_hex": "0000803f0000803f0000803f0000803f0000803f00000000000000000000803f00000000000000000000803f0000803f000000000000803f000000000000803f",
+      "rows": [
+        {
+          "instructions": 83,
+          "match": true,
+          "role": "first_white"
+        },
+        {
+          "instructions": 92,
+          "match": true,
+          "role": "middle1_red"
+        },
+        {
+          "instructions": 97,
+          "match": true,
+          "role": "middle2_blue"
+        },
+        {
+          "instructions": 112,
+          "match": true,
+          "role": "last_green"
+        },
+        {
+          "instructions": 118,
+          "match": false,
+          "role": "no_match_yellow"
+        }
+      ]
+    },
+    "frame_roles": {
+      "pixel1": "first white",
+      "pixel2": "middle1 red",
+      "pixel3": "middle2 blue",
+      "pixel4": "last green",
+      "pixels0_5": "no-match"
+    },
+    "ordered_rgba": [
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "scope": "PF16/PF32 independent v2 Gamma Colors ordered [white,red,blue,green] count4, gamma2.4, key off, padded3x2, LUTs",
+  "verdict": "PASS_V2_GAMMA_COLORS_ORDERED_PALETTE4_NATURAL_AEX_TO_PRODUCTION_EXACT"
+}

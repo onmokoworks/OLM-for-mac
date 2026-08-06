@@ -1,0 +1,6 @@
+#include <cstdio>
+#include <cstring>
+#include <vector>
+#include "../../mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp"
+template<class P>int run(const char*d,const P p[6],size_t pad){int w=3,h=2;size_t rb=w*sizeof(P)+pad;std::vector<unsigned char>i(rb*h,0x3c),o(rb*h,0xa5);for(int y=0;y<h;y++)for(int x=0;x<w;x++)memcpy(i.data()+y*rb+x*sizeof(P),p+y*w+x,sizeof(P));PF_EffectWorld iw{},ow{};iw.data=i.data();iw.width=w;iw.height=h;iw.rowbytes=rb;iw.extent_hint={0,0,w,h};ow.data=o.data();ow.width=w;ow.height=h;ow.rowbytes=rb;ow.extent_hint={0,0,w,h};PF_ParamDef ds[SM_NUM_PARAMS]{};PF_ParamDef*ps[SM_NUM_PARAMS]{};for(int n=0;n<SM_NUM_PARAMS;n++)ps[n]=ds+n;ds[SM_SMOOTHNESS].u.sd.value=100;ds[SM_SMOOTH_RANGE].u.sd.value=1;ds[SM_VERSION].u.pd.value=SMOOTHER_V2;ds[SM_GAMMA_MODE].u.pd.value=GAMMA_ALL_COLORS;ds[SM_GAMMA_VALUE].u.fs_d.value=2.4;PF_InData id{};if(RenderBits<P>(&id,ps,&iw,&ow))return 2;printf("%s ",d);for(auto b:o)printf("%02x",b);puts("");return 0;}
+int main(){const PF_Pixel16 a[6]={{32768,8192,16384,24576},{32768,24576,8192,16384},{32768,16384,24576,8192},{32768,4096,28672,12288},{32768,28672,12288,4096},{32768,12288,4096,28672}};const PF_PixelFloat b[6]={{1,.25f,.5f,.75f},{1,.75f,.25f,.5f},{1,.5f,.75f,.25f},{1,.125f,.875f,.375f},{1,.875f,.375f,.125f},{1,.375f,.125f,.875f}};if(int e=run("PF16",a,6))return e;return run("PF32",b,12);}

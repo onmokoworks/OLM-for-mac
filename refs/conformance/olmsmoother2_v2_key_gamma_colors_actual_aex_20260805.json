@@ -1,0 +1,148 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "No invert-key plus Gamma Colors claim",
+    "No other palette/key/geometry",
+    "No AE host claim"
+  ],
+  "decode_lut_sha256": "11056c2feda87964204a53471e172ae6fb6039a0c3120f6277c7ff115fe88cba",
+  "fixtures": [
+    {
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffff0000ffffff00",
+      "classifier_instructions": 1461,
+      "depth": "PF16",
+      "equal": true,
+      "key_instructions": 167,
+      "padding_per_row": 6,
+      "padding_preserved": true,
+      "post_key_rgba_f32": [
+        [
+          0.00390625,
+          0.00390625,
+          0.00390625,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.001953125,
+          0.00390625,
+          0.00390625,
+          1.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.00390625,
+          0.00390625,
+          0.00390625,
+          0.0
+        ],
+        [
+          0.375,
+          0.75,
+          0.25,
+          1.0
+        ]
+      ],
+      "raw_hex": "0000800080008000cd6cef717e0108000080400080008000a5a5a5a5a5a533734e00407c000000008000800080009a79642f1c58291da5a5a5a5a5a5",
+      "roles": {
+        "pixel1": "not keyed; first gamma palette entry",
+        "pixel2": "near-key outside",
+        "pixels0_4": "key match; alpha cleared; second gamma palette entry",
+        "pixels3_5": "non-palette controls"
+      },
+      "worker_instructions": 6504
+    },
+    {
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffff0000ffffff00",
+      "classifier_instructions": 1461,
+      "depth": "PF32",
+      "equal": true,
+      "key_instructions": 167,
+      "padding_per_row": 12,
+      "padding_preserved": true,
+      "post_key_rgba_f32": [
+        [
+          0.003921568859368563,
+          0.003921568859368563,
+          0.003921568859368563,
+          0.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0010000000474974513,
+          0.003921568859368563,
+          0.003921568859368563,
+          1.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.003921568859368563,
+          0.003921568859368563,
+          0.003921568859368563,
+          0.0
+        ],
+        [
+          0.375,
+          0.75,
+          0.25,
+          1.0
+        ]
+      ],
+      "raw_hex": "000000008080803b8080803b8080803b9999593f6bc5633f8aeb3e3cd04172390000803f7012833a8080803b8080803ba5a5a5a5a5a5a5a5a5a5a5a56666663f4bd11b3b6f7f783f00000000000000008080803b8080803b8080803b3333733f5862bd3e8937303fe949693ea5a5a5a5a5a5a5a5a5a5a5a5",
+      "roles": {
+        "pixel1": "not keyed; first gamma palette entry",
+        "pixel2": "near-key outside",
+        "pixels0_4": "key match; alpha cleared; second gamma palette entry",
+        "pixels3_5": "non-palette controls"
+      },
+      "worker_instructions": 6439
+    }
+  ],
+  "interaction_contract": {
+    "invert_key": false,
+    "key_rgb": [
+      0.003921568859368563,
+      0.003921568859368563,
+      0.003921568859368563
+    ],
+    "operation_order": "actual key owner clears matching alpha before decode/classifier; Gamma Colors compares RGB and retains keyed RGB as palette candidate",
+    "ordered_palette_rgba": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.003921568859368563,
+        0.003921568859368563,
+        0.003921568859368563,
+        1.0
+      ]
+    ]
+  },
+  "inverse_lut_sha256": "b7014467dcae06109111302b8c930494950d27b817d1390d6434605795772fbc",
+  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "scope": "PF16/PF32 v2 non-invert key then Gamma Colors ordered [red,key], gamma2.4, padded3x2, captured LUTs",
+  "verdict": "PASS_V2_NONINVERT_KEY_PLUS_GAMMA_COLORS_TO_PRODUCTION_EXACT"
+}

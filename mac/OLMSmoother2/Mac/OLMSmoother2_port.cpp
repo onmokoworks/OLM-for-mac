@@ -43,7 +43,7 @@ constexpr float  V255        = 255.0f;    // DAT_180022700
 constexpr float  INV255      = 1.0f / 255.0f; // DAT_180022690
 constexpr float  V32768      = 32768.0f;  // DAT_180022704
 constexpr uint32_t ABSMASK   = 0x7FFFFFFFu; // DAT_180022710
-constexpr float  COLOR_TOL   = 0.001960922f; // DAT_18002268c (3B008081h)
+constexpr float  COLOR_TOL   = 0x1.010102p-9f; // DAT_18002268c (3B008081h)
 
 // sRGB piecewise constants (doubles, matching the Win literal bit patterns)
 constexpr double SRGB_BREAK   = 0.00313066844250060782; // DAT_180022698

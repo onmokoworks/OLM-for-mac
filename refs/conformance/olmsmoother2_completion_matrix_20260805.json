@@ -1,0 +1,57 @@
+{
+  "kind": "olmsmoother2_completion_matrix_20260805",
+  "scope": "commands/version/depth/key/gamma/smoothing/palette evidence inventory",
+  "matrix": {
+    "commands": {
+      "classic_render_depth_dispatch": "proven",
+      "production_effectmain_pf16_dynamic_chain": "proven and joined to actual AEX classifier/worker/writer plus installed identity",
+      "production_effectmain_smartrender_pf32_dynamic_chain": "proven with layer/output callbacks, 15 parameter checkout/checkins, actual AEX core bytes, and installed identity",
+      "smart_render_adapter_preserved": "source-test proven",
+      "actual_AEX_AE_host_command_execution": "not claimed"
+    },
+    "versions": {
+      "v1_actual_classifier_worker_production": "proven PF16/PF32",
+      "v2_actual_classifier_worker_production": "proven PF16/PF32"
+    },
+    "depths": {
+      "PF8": "covered by prior host/adapter ledger slices; not newly exercised in 20260805 emulation fixtures",
+      "PF16": "proven",
+      "PF32": "proven"
+    },
+    "key": {
+      "non_invert_threshold": "proven",
+      "non_invert_white_color_endpoint": "proven exact/inside/outside/far",
+      "invert_threshold": "proven",
+      "non_invert_plus_gamma_colors": "proven",
+      "invert_plus_gamma_colors": "proven"
+    },
+    "gamma": {
+      "none": "proven",
+      "all_colors": "proven",
+      "gamma_colors": "proven",
+      "value_1_identity_endpoint": "proven",
+      "value_2_4_default_upper_endpoint": "proven"
+    },
+    "smoothing": {
+      "smoothness_0_lower_endpoint": "proven",
+      "smoothness_100_default_upper_endpoint": "proven",
+      "smooth_range_0_lower_endpoint": "proven",
+      "smooth_range_1_fixture": "proven",
+      "smooth_range_255_upper_endpoint": "proven with independent output effect versus ranges 0 and 1",
+      "extra_smooth_0_default_lower_endpoint": "proven by prior fixtures",
+      "extra_smooth_100_upper_endpoint": "proven actual-to-production exact; independent output influence not claimed"
+    },
+    "palette": {
+      "counts_1_through_5": "proven natural path",
+      "reorder_and_duplicate_first_match": "proven",
+      "strict_tolerance_tie": "proven",
+      "count_6": "direct-owner-only; prohibited from public contract"
+    }
+  },
+  "largest_closed_gap_this_round": "Extra Smooth=100 public upper endpoint",
+  "next_largest_natural_gap": "Invert-key white color endpoint, consolidated current-fixture PF8 coverage, or an intermediate Gamma Value",
+  "constraints": [
+    "Do not generalize palette count above 5",
+    "No AE-host claim from emulation or adapter-only command tests"
+  ]
+}

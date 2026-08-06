@@ -1,0 +1,68 @@
+{
+  "ae_parameter_contract": {
+    "default": 2.4,
+    "maximum": 2.4,
+    "minimum": 1.0,
+    "tested": 1.0
+  },
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "No Gamma Value outside public 1.0..2.4 range",
+    "No key interaction",
+    "No AE host runtime claim"
+  ],
+  "decode_lut_sha256": "11056c2feda87964204a53471e172ae6fb6039a0c3120f6277c7ff115fe88cba",
+  "fixtures": [
+    {
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1502,
+      "depth": "PF16",
+      "equal": true,
+      "padding_per_row": 6,
+      "padding_preserved": true,
+      "raw_hex": "00800080008000800080737ab41624230080000000000080a5a5a5a5a5a50080000000800000008000400060002000801c6cca1bed50a5a5a5a5a5a5",
+      "worker_instructions": 5162
+    },
+    {
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1502,
+      "depth": "PF32",
+      "equal": true,
+      "padding_per_row": 12,
+      "padding_preserved": true,
+      "raw_hex": "0000803f0000803f0000803f0000803f0000803f0de6743fc49e353ea28f8c3e0000803f00000000000000000000803fa5a5a5a5a5a5a5a5a5a5a5a50000803f000000000000803f000000000000803f0000003f0000403ffdff7f3e0000803f5437583f514d5e3ee8da213fa5a5a5a5a5a5a5a5a5a5a5a5",
+      "worker_instructions": 5097
+    }
+  ],
+  "identity_semantics": "Gamma Colors membership remains active, while selected adaptive exponent 1.0 is the transfer identity endpoint.",
+  "inverse_lut_sha256": "b7014467dcae06109111302b8c930494950d27b817d1390d6434605795772fbc",
+  "palette_contract": {
+    "matched_pixels": [
+      0,
+      1
+    ],
+    "nonmatching_pixels": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "ordered_rgba": [
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "scope": "PF16/PF32 natural v2 Gamma Colors, Gamma Value=1.0 lower/identity endpoint, ordered [white,red], key off, padded3x2, captured LUTs",
+  "verdict": "PASS_V2_GAMMA_COLORS_GAMMA_VALUE_1_IDENTITY_ENDPOINT_TO_PRODUCTION_EXACT"
+}

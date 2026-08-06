@@ -1,0 +1,71 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "No multi-color palette claim",
+    "No Gamma UI mode claim",
+    "No other key color/geometry",
+    "No AE host claim"
+  ],
+  "fixtures": [
+    {
+      "class_plane_hex": "00000000ff00000000000000000000ff00ff000000ffff00",
+      "classifier_instructions": 1316,
+      "depth": "PF16",
+      "equal": true,
+      "padding_per_row": 6,
+      "padding_preserved": true,
+      "palette_owner_instructions": 225,
+      "post_key_alpha": [
+        0.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "raw_hex": "000040008000800000808000800080000080410080008000a5a5a5a5a5a5000000600060006000000000008000800000008000000000a5a5a5a5a5a5",
+      "threshold_relation": [
+        "outside",
+        "exact-key",
+        "inside",
+        "far",
+        "far",
+        "far"
+      ],
+      "worker_instructions": 3364
+    },
+    {
+      "class_plane_hex": "00000000ff00000000000000000000ff00ff000000ffff00",
+      "classifier_instructions": 1316,
+      "depth": "PF32",
+      "equal": true,
+      "padding_per_row": 12,
+      "padding_preserved": true,
+      "palette_owner_instructions": 225,
+      "post_key_alpha": [
+        0.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "raw_hex": "000000008080003b8080803b8080803b0000803f8080803b8080803b8080803b0000803f8380003b8080803b8080803ba5a5a5a5a5a5a5a5a5a5a5a5000000008180003b8080803b8080803b000000000000403f0000403f0000403f00000000000000000000803f0000803fa5a5a5a5a5a5a5a5a5a5a5a5",
+      "threshold_relation": [
+        "outside",
+        "exact-key",
+        "inside",
+        "tie",
+        "far",
+        "far"
+      ],
+      "worker_instructions": 3377
+    }
+  ],
+  "palette_owner": "0x180002930",
+  "pf16_exact_tie_representable": false,
+  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "scope": "PF16/PF32 independent v2 invert key, key RGB=1/255, threshold sides; PF32 exact tie; gamma UI none, LUTs, padded 3x2",
+  "threshold_bits": "0x3b008081",
+  "verdict": "PASS_V2_INVERT_KEY_PALETTE_NATURAL_AEX_TO_PRODUCTION_PADDED_3X2_EXACT"
+}

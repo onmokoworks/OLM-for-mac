@@ -1,0 +1,38 @@
+{
+  "kind": "olmsmoother2_mac_universal_install_boundary_20260805",
+  "status": "installed_restart_required",
+  "built_from": {
+    "project": "mac/OLMSmoother2/Mac/OLMSmoother2.xcodeproj",
+    "configuration": "Debug",
+    "architectures": ["x86_64", "arm64"],
+    "source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9"
+  },
+  "candidate": {
+    "bundle": "/tmp/olmsmoother2_build_20260805/OLMSmoother2.plugin",
+    "binary_sha256": "fe782f344dcaf8865b778198b0faeb8cecd525062a83f38aca8dc1db74442c34",
+    "architectures": ["x86_64", "arm64"],
+    "codesign": "adhoc valid on disk; satisfies designated requirement",
+    "identifier": "com.adobe.AfterEffects.OLMSmoother2"
+  },
+  "installation": {
+    "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother2.plugin",
+    "installed_binary_sha256": "fe782f344dcaf8865b778198b0faeb8cecd525062a83f38aca8dc1db74442c34",
+    "candidate_hash_matches_installed": true,
+    "architectures": ["x86_64", "arm64"],
+    "codesign_verify": "pass",
+    "previous_bundle_backup": "/Users/onmk/Documents/Projects/Personal/OLM as/handoff/mac_plugin_backups/olmsmoother2_20260805_195354/OLMSmoother2.plugin",
+    "previous_binary_sha256": "bad3472d3ce808bdd69f0fa55be493c3d2f76cd7ad8c49b519f03347b3e2cd7b"
+  },
+  "host_identity": {
+    "application": "/Applications/Adobe After Effects 2026/Adobe After Effects 2026.app",
+    "version": "26.3.0",
+    "pid_at_install": 77384,
+    "process_started_local": "Wed Aug 5 12:28:22 2026",
+    "process_was_not_stopped_or_restarted": true,
+    "olmsmoother2_mapping_at_install": null,
+    "mapping_observation": "lsof found no OLMSmoother2 Mach-O mapped in PID 77384 before or after installation"
+  },
+  "restart_required": true,
+  "required_next_event": "Restart After Effects, then bind the loaded OLMSmoother2 mapping to the installed path and SHA-256 before making an AE-host claim.",
+  "ae_host_claim": false
+}

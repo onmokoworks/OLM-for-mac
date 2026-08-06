@@ -53,7 +53,7 @@ struct PF_EffectWorld {
 };
 typedef PF_EffectWorld PF_LayerDef;
 
-#define PF_WORLD_IS_DEEP(W) (0)
+#define PF_WORLD_IS_DEEP(W) ((W) && (W)->bitdepth == 16)
 
 #define PF_TABLE_BITS      12
 #define PF_TABLE_SZ_16     4096
@@ -219,8 +219,14 @@ struct AEGP_SuiteHandler {
 #define PF_ADD_SLIDER(...)        ((void)0)
 #define PF_ADD_POPUP(...)         ((void)0)
 #define PF_ADD_FLOAT_SLIDERX(...) ((void)0)
-#define PF_CHECKOUT_PARAM(...)    (PF_Err_NONE)
-#define PF_CHECKIN_PARAM(...)     ((void)0)
+typedef PF_Err (*CLI_CheckoutParamHook)(A_long, PF_ParamDef *);
+typedef void (*CLI_CheckinParamHook)(PF_ParamDef *);
+static PF_Err cli_default_checkout_param(A_long, PF_ParamDef *) { return PF_Err_NONE; }
+static void cli_default_checkin_param(PF_ParamDef *) {}
+static CLI_CheckoutParamHook g_cli_checkout_param_hook = &cli_default_checkout_param;
+static CLI_CheckinParamHook g_cli_checkin_param_hook = &cli_default_checkin_param;
+#define PF_CHECKOUT_PARAM(IN,I,T,TS,SCALE,OUT) g_cli_checkout_param_hook((I),(OUT))
+#define PF_CHECKIN_PARAM(IN,P) g_cli_checkin_param_hook((P))
 
 enum {
 	StrID_Name = 0,

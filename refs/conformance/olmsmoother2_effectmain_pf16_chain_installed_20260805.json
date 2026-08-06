@@ -1,0 +1,36 @@
+{
+  "actual_aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "chain": [
+    "production EffectMain(PF_Cmd_RENDER)",
+    "PF_WORLD_IS_DEEP -> RenderBits<PF_Pixel16>",
+    "actual AEX natural classifier",
+    "actual AEX PF16 typed worker/writer",
+    "byte-exact padded output",
+    "current installed Universal bundle identity"
+  ],
+  "claims_not_made": [
+    "No AE host execution",
+    "No actual-AEX exported entry invocation in this synthetic classifier fixture",
+    "No PF32 production EffectMain dynamic callback chain in this report"
+  ],
+  "closed_boundary": "production PF_Cmd_RENDER EffectMain -> depth dispatch -> RenderBits, joined byte-exactly to actual AEX natural classifier -> PF16 worker -> writer",
+  "fixture": {
+    "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+    "classifier_instructions": 1504,
+    "padding_preserved": true,
+    "raw_hex": "008000000000000000805d24a379997c0080008000000080a5a5a5a5a5a5008000800080000000800020002000200080f15ed45cff60a5a5a5a5a5a5",
+    "worker_instructions": 4279
+  },
+  "installed": {
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "binary_sha256": "fe782f344dcaf8865b778198b0faeb8cecd525062a83f38aca8dc1db74442c34",
+    "codesign_record": "pass",
+    "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother2.plugin"
+  },
+  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "remaining_largest_boundary": "AE process load/binding of the installed hash and real host command invocation; AE was not operated in this task",
+  "verdict": "PASS_ACTUAL_AEX_CLASSIFIER_WORKER_TO_PRODUCTION_EFFECTMAIN_PF16_INSTALLED_IDENTITY"
+}

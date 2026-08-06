@@ -1,0 +1,85 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "No natural count6 path",
+    "No PF16/PF32 count6 production exactness",
+    "No AE host count6 claim"
+  ],
+  "decision": "Do not implement count6. Count5 is the maximum natural owner/classifier/worker/RenderBits path. Direct-owner count6 is not an AE-host or production exact claim.",
+  "direct_owner": {
+    "count": 6,
+    "fact": "low-level actual AEX a9c0 accepts an independently constructed six-entry vector",
+    "ordered_memory_hex": "0000803f0000803f0000803f0000803f0000803f00000000000000000000803f00000000000000000000803f0000803f000000000000803f000000000000803f0000803f0000803f000000000000803f000000000000803f0000803f0000803f",
+    "ordered_rgba": [
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        1.0
+      ],
+      [
+        1.0,
+        1.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    ],
+    "rows": [
+      {
+        "instructions": 83,
+        "match": true,
+        "role": "first_white"
+      },
+      {
+        "instructions": 112,
+        "match": true,
+        "role": "middle_green"
+      },
+      {
+        "instructions": 145,
+        "match": true,
+        "role": "sixth_last_cyan"
+      },
+      {
+        "instructions": 198,
+        "match": false,
+        "role": "no_match_gray"
+      }
+    ]
+  },
+  "production_contract": {
+    "clamp": "min(p.num_gamma_colors, NUM_GAMMA_COLORS)",
+    "maximum": 5,
+    "source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9"
+  },
+  "public_ae_contract": {
+    "maximum": 5,
+    "slider_max_symbol": "NUM_GAMMA_COLORS",
+    "slots": "SM_GAMMA_COLOR_0..4"
+  },
+  "verdict": "PASS_FAIL_CLOSED_COUNT6_DIRECT_OWNER_ONLY_PUBLIC_CONTRACT_MAX5"
+}

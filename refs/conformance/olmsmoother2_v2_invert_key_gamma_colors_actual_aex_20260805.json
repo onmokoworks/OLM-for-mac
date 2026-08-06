@@ -1,0 +1,148 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "No other palette/key/geometry",
+    "No AE host claim"
+  ],
+  "decode_lut_sha256": "11056c2feda87964204a53471e172ae6fb6039a0c3120f6277c7ff115fe88cba",
+  "fixtures": [
+    {
+      "class_plane_hex": "00000000ff000000ff00000000ff0000ffff0000ffff0000",
+      "classifier_instructions": 1418,
+      "depth": "PF16",
+      "equal": true,
+      "padding_per_row": 6,
+      "padding_preserved": true,
+      "palette_owner_instructions": 231,
+      "post_key_rgba_f32": [
+        [
+          0.00390625,
+          0.00390625,
+          0.00390625,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.001983642578125,
+          0.00390625,
+          0.00390625,
+          1.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.00390625,
+          0.00390625,
+          0.00390625,
+          1.0
+        ],
+        [
+          0.375,
+          0.75,
+          0.25,
+          0.0
+        ]
+      ],
+      "raw_hex": "33738000800080009a196e00800080003373420080008000a5a5a5a5a5a5cd0c80008000800066667e0080008000cd0c5d0080008000a5a5a5a5a5a5",
+      "roles": {
+        "pixel1": "invert-key clears alpha; Gamma Colors index0 red still matches by RGB",
+        "pixel2": "near-key inside; alpha retained",
+        "pixels0_4": "key palette match; alpha retained; Gamma Colors index1",
+        "pixels3_5": "invert-key clears alpha; non-palette controls"
+      },
+      "worker_instructions": 9196
+    },
+    {
+      "class_plane_hex": "00000000ff000000ff00000000ff0000ffff0000ffff0000",
+      "classifier_instructions": 1418,
+      "depth": "PF32",
+      "equal": true,
+      "padding_per_row": 12,
+      "padding_preserved": true,
+      "palette_owner_instructions": 231,
+      "post_key_rgba_f32": [
+        [
+          0.003921568859368563,
+          0.003921568859368563,
+          0.003921568859368563,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0020000000949949026,
+          0.003921568859368563,
+          0.003921568859368563,
+          1.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.003921568859368563,
+          0.003921568859368563,
+          0.003921568859368563,
+          1.0
+        ],
+        [
+          0.375,
+          0.75,
+          0.25,
+          0.0
+        ]
+      ],
+      "raw_hex": "6666663f7f80803b7f80803b7f80803bcdcc4c3eb4e15c3b7f80803b7f80803b6666663f7deb053b7f80803b7f80803ba5a5a5a5a5a5a5a5a5a5a5a5cdcccc3d7f80803b7f80803b7f80803bcccc4c3f4b507c3b7f80803b7f80803bcdcccc3da2e83b3b7f80803b7f80803ba5a5a5a5a5a5a5a5a5a5a5a5",
+      "roles": {
+        "pixel1": "invert-key clears alpha; Gamma Colors index0 red still matches by RGB",
+        "pixel2": "near-key inside; alpha retained",
+        "pixels0_4": "key palette match; alpha retained; Gamma Colors index1",
+        "pixels3_5": "invert-key clears alpha; non-palette controls"
+      },
+      "worker_instructions": 9131
+    }
+  ],
+  "interaction_contract": {
+    "invert_key": true,
+    "key_rgb": [
+      0.003921568859368563,
+      0.003921568859368563,
+      0.003921568859368563
+    ],
+    "membership_witness": "red has alpha cleared by invert-key yet remains Gamma Colors index0 RGB match; key retains alpha and matches index1",
+    "operation_order": "actual invert-key palette owner retains alpha only for key matches before decode/classifier; Gamma Colors subsequently compares RGB independent of alpha",
+    "ordered_palette_rgba": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.003921568859368563,
+        0.003921568859368563,
+        0.003921568859368563,
+        1.0
+      ]
+    ]
+  },
+  "inverse_lut_sha256": "b7014467dcae06109111302b8c930494950d27b817d1390d6434605795772fbc",
+  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "scope": "PF16/PF32 v2 invert-key then Gamma Colors ordered [red,key], gamma2.4, padded3x2, captured LUTs",
+  "verdict": "PASS_V2_INVERT_KEY_PLUS_GAMMA_COLORS_TO_PRODUCTION_EXACT"
+}

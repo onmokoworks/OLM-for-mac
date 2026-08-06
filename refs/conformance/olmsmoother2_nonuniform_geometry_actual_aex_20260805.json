@@ -1,0 +1,35 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "No v2/key/gamma claim",
+    "No other geometry or parameter claim",
+    "No AE host claim"
+  ],
+  "fixtures": [
+    {
+      "class_nonzero_bytes": 10,
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1503,
+      "depth": "PF16",
+      "equal": true,
+      "padding_per_row": 6,
+      "padding_preserved": true,
+      "raw_hex": "008000000000000000800078660e00080080000000800000a5a5a5a5a5a50080000000000080008000800080008000809a41cd44663ea5a5a5a5a5a5",
+      "typed_worker_instructions": 3850
+    },
+    {
+      "class_nonzero_bytes": 10,
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1503,
+      "depth": "PF32",
+      "equal": true,
+      "padding_per_row": 12,
+      "padding_preserved": true,
+      "raw_hex": "0000803f0000000000000000000000000000803f0000703f6666e63d0000803d0000803f000000000000803f00000000a5a5a5a5a5a5a5a5a5a5a5a50000803f00000000000000000000803f0000803f0000803f0000803f0000803f0000803f3333033f9a99093f9a99f93ea5a5a5a5a5a5a5a5a5a5a5a5",
+      "typed_worker_instructions": 3785
+    }
+  ],
+  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "scope": "PF16/PF32 independent padded nonuniform 3x2; v1, key disabled, gamma none, smoothness100, range1, no host",
+  "verdict": "PASS_NATURAL_AEX_CLASSIFIER_C280_TO_PRODUCTION_PADDED_3X2_EXACT"
+}

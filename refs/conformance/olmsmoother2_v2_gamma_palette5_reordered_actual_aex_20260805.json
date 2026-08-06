@@ -1,0 +1,103 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "No count above public maximum 5",
+    "No key interaction",
+    "No AE host claim"
+  ],
+  "decode_lut_sha256": "11056c2feda87964204a53471e172ae6fb6039a0c3120f6277c7ff115fe88cba",
+  "fixtures": [
+    {
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1501,
+      "depth": "PF16",
+      "equal": true,
+      "padding_per_row": 6,
+      "padding_preserved": true,
+      "raw_hex": "00800080008000000080f201737871070080000000000080a5a5a5a5a5a5008000800000000000800080008000800080df2f3f5da028a5a5a5a5a5a5",
+      "worker_instructions": 4990
+    },
+    {
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1501,
+      "depth": "PF32",
+      "equal": true,
+      "padding_per_row": 12,
+      "padding_preserved": true,
+      "raw_hex": "0000803f0000803f0000803f000000000000803f0c31793c60e5703f16146e3d0000803f00000000000000000000803fa5a5a5a5a5a5a5a5a5a5a5a50000803f0000803f00000000000000000000803f0000803f0000803f0000803f0000803fed7cbf3efa7e3a3ffb7ea23ea5a5a5a5a5a5a5a5a5a5a5a5",
+      "worker_instructions": 4925
+    }
+  ],
+  "inverse_lut_sha256": "b7014467dcae06109111302b8c930494950d27b817d1390d6434605795772fbc",
+  "palette_contract": {
+    "direct_actual_owner": [
+      {
+        "index": 0,
+        "instructions": 80,
+        "match": true
+      },
+      {
+        "index": 1,
+        "instructions": 87,
+        "match": true
+      },
+      {
+        "index": 2,
+        "instructions": 102,
+        "match": true
+      },
+      {
+        "index": 3,
+        "instructions": 112,
+        "match": true
+      },
+      {
+        "index": 4,
+        "instructions": 138,
+        "match": true
+      },
+      {
+        "index": null,
+        "instructions": 188,
+        "match": false
+      }
+    ],
+    "ordered_memory_hex": "0000803f0000803f000000000000803f000000000000803f000000000000803f00000000000000000000803f0000803f0000803f00000000000000000000803f0000803f0000803f0000803f0000803f",
+    "ordered_rgba": [
+      [
+        1.0,
+        1.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    ],
+    "transformation": "reverse of [white,red,blue,green,yellow]"
+  },
+  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "scope": "PF16/PF32 natural v2 Gamma Colors reversed established five-color set [yellow,green,blue,red,white], no key, padded3x2, LUTs",
+  "verdict": "PASS_V2_GAMMA_COLORS_REORDERED_PALETTE5_TO_PRODUCTION_EXACT"
+}

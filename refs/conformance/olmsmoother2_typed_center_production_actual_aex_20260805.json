@@ -1,0 +1,44 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "No PF8 claim (already covered by the frozen full-frame lane)",
+    "No non-center classifier/c280 geometry claim",
+    "No v2, key, gamma, smoothing, padding, or multi-pixel claim",
+    "No After Effects host execution claim"
+  ],
+  "comparisons": [
+    {
+      "actual_aex_instructions": 293,
+      "actual_aex_raw_hex": "0050cd0f00403370",
+      "actual_aex_worker": "0x180003990",
+      "depth": "PF16",
+      "equal": true,
+      "production_raw_hex": "0050cd0f00403370",
+      "source_rgba_f32": [
+        0.123443603515625,
+        0.5,
+        0.876556396484375,
+        0.625
+      ]
+    },
+    {
+      "actual_aex_instructions": 277,
+      "actual_aex_raw_hex": "0000203fded6fc3d0000003f2365603f",
+      "actual_aex_worker": "0x1800036e0",
+      "depth": "PF32",
+      "equal": true,
+      "production_raw_hex": "0000203fded6fc3d0000003f2365603f",
+      "source_rgba_f32": [
+        0.12345670163631439,
+        0.5,
+        0.8765432238578796,
+        0.625
+      ]
+    }
+  ],
+  "harness": "tools/emulation/olmsmoother2_typed_center_production_harness_20260805.cpp",
+  "production_source": "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp",
+  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "scope": "PF16/PF32, 1x1 center sample, v1, key disabled, gamma none, smoothness 0, no host",
+  "verdict": "PASS_ACTUAL_AEX_TO_PRODUCTION_TYPED_CENTER_EXACT"
+}

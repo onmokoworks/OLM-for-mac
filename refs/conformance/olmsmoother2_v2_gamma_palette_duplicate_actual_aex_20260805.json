@@ -1,0 +1,84 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "No tolerance-tie palette claim",
+    "No other duplicate position/count",
+    "No key interaction",
+    "No AE host claim"
+  ],
+  "decode_lut_sha256": "11056c2feda87964204a53471e172ae6fb6039a0c3120f6277c7ff115fe88cba",
+  "fixtures": [
+    {
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1501,
+      "depth": "PF16",
+      "equal": true,
+      "padding_per_row": 6,
+      "padding_preserved": true,
+      "raw_hex": "00800000000000800080667cd9743f730080008000000000a5a5a5a5a5a5008000000080000000800040006000200080cd6ea615734aa5a5a5a5a5a5",
+      "worker_instructions": 5158
+    },
+    {
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1501,
+      "depth": "PF32",
+      "equal": true,
+      "padding_per_row": 12,
+      "padding_preserved": true,
+      "raw_hex": "0000803f00000000000000000000803f0000803fcccc783f2eb2693ff97e663f0000803f0000803f0000000000000000a5a5a5a5a5a5a5a5a5a5a5a50000803f000000000000803f000000000000803f0000003f0000403ffdff7f3e0000803f98995d3f162f2d3e60e5143fa5a5a5a5a5a5a5a5a5a5a5a5",
+      "worker_instructions": 5093
+    }
+  ],
+  "inverse_lut_sha256": "b7014467dcae06109111302b8c930494950d27b817d1390d6434605795772fbc",
+  "palette_contract": {
+    "direct_actual_owner": {
+      "count": 3,
+      "first_duplicate_white": {
+        "instructions": 83,
+        "match": true
+      },
+      "first_match_instruction_equal_to_single_entry": true,
+      "middle_red": {
+        "instructions": 92,
+        "match": true
+      },
+      "no_match_blue": {
+        "instructions": 90,
+        "match": false
+      },
+      "ordered_memory_hex": "0000803f0000803f0000803f0000803f0000803f00000000000000000000803f0000803f0000803f0000803f0000803f",
+      "single_white_control": {
+        "instructions": 83,
+        "match": true
+      }
+    },
+    "duplicate_indices": [
+      0,
+      2
+    ],
+    "first_match_semantics": "white instruction count equals single-white control despite duplicate at last index",
+    "ordered_rgba": [
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    ]
+  },
+  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "scope": "PF16/PF32 independent v2 Gamma Colors duplicate ordered [white,red,white], gamma2.4, key off, padded3x2, LUTs",
+  "verdict": "PASS_V2_GAMMA_COLORS_DUPLICATE_ORDER_FIRST_MATCH_TO_PRODUCTION_EXACT"
+}

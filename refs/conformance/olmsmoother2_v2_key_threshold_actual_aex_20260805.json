@@ -1,0 +1,71 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "No invert-key claim",
+    "No Gamma UI mode claim",
+    "No other key color/geometry",
+    "No AE host claim"
+  ],
+  "fixtures": [
+    {
+      "class_plane_hex": "0000000000000000ff00000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1453,
+      "depth": "PF16",
+      "equal": true,
+      "key_instructions": 167,
+      "padding_per_row": 6,
+      "padding_preserved": true,
+      "post_key_alpha": [
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "raw_hex": "000080008000800000004100800080000080400080008000a5a5a5a5a5a500800000008000000080008000000080cd7cd05f755bd05fa5a5a5a5a5a5",
+      "threshold_relation": [
+        "exact-key",
+        "inside",
+        "outside",
+        "far",
+        "far",
+        "far"
+      ],
+      "worker_instructions": 4316
+    },
+    {
+      "class_plane_hex": "0000000000000000ff00000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1453,
+      "depth": "PF32",
+      "equal": true,
+      "key_instructions": 167,
+      "padding_per_row": 12,
+      "padding_preserved": true,
+      "post_key_alpha": [
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "raw_hex": "000000008080803b8080803b8080803b000000008380003b8080803b8080803b0000803f8180003b8080803b8080803ba5a5a5a5a5a5a5a5a5a5a5a50000803f8080003b8080803b8080803b0000803f000000000000803f000000009a99793f72ea363f5b9f3f3fcbea363fa5a5a5a5a5a5a5a5a5a5a5a5",
+      "threshold_relation": [
+        "exact-key",
+        "inside",
+        "tie",
+        "outside",
+        "far",
+        "far"
+      ],
+      "worker_instructions": 4326
+    }
+  ],
+  "key_threshold_f32_bits": "0x3b008081",
+  "pf16_exact_tie_representable": false,
+  "pf16_tie_note": "No PF16 code/key-u8 pair subtracts to the exact threshold float32; adjacent codes 65 (inside) and 64 (outside) bracket it. PF32 exercises exact equality.",
+  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "scope": "PF16/PF32 independent v2 non-invert key enabled, key RGB=1/255, threshold sides; PF32 exact tie; gamma UI none, captured LUTs, padded 3x2",
+  "verdict": "PASS_V2_KEY_THRESHOLD_NATURAL_AEX_TO_PRODUCTION_PADDED_3X2_EXACT"
+}

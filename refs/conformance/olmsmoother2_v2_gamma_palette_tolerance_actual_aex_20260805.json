@@ -1,0 +1,86 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "No PF16 exact tie representation",
+    "No key interaction",
+    "No other palette/geometry",
+    "No AE host claim"
+  ],
+  "decode_lut_sha256": "11056c2feda87964204a53471e172ae6fb6039a0c3120f6277c7ff115fe88cba",
+  "fixtures": [
+    {
+      "class_plane_hex": "00000000000000000000000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1504,
+      "depth": "PF16",
+      "equal": true,
+      "padding_per_row": 6,
+      "padding_preserved": true,
+      "raw_hex": "008040000000000000804100000000000080000000000000a5a5a5a5a5a50080008000000000008000000080000000803529df591f1ba5a5a5a5a5a5",
+      "worker_instructions": 4454
+    },
+    {
+      "class_plane_hex": "00000000000000000000000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1504,
+      "depth": "PF32",
+      "equal": true,
+      "padding_per_row": 12,
+      "padding_preserved": true,
+      "raw_hex": "0000803f8080003b00000000000000000000803f8180003b00000000000000000000803f8380003b0000000000000000a5a5a5a5a5a5a5a5a5a5a5a50000803f0000803f00000000000000000000803f000000000000803f000000000000803f5018b43e1d763d3f01196f3ea5a5a5a5a5a5a5a5a5a5a5a5",
+      "worker_instructions": 4274
+    }
+  ],
+  "inverse_lut_sha256": "b7014467dcae06109111302b8c930494950d27b817d1390d6434605795772fbc",
+  "palette_contract": {
+    "boundary_target_index": 1,
+    "ordered_rgba": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "scope": "PF16/PF32 independent v2 Gamma Colors ordered [red,black], gamma2.4, key off, padded3x2, LUTs; direct actual comparator below/tie/above",
+  "threshold": {
+    "comparison": "strict abs(delta) < threshold",
+    "direct_actual_owner": {
+      "ordered_memory_hex": "0000803f00000000000000000000803f0000000000000000000000000000803f",
+      "rows": [
+        {
+          "candidate_r": 0.0019607841968536377,
+          "candidate_r_bits": "0x3b008080",
+          "instructions": 52,
+          "match": true,
+          "role": "below"
+        },
+        {
+          "candidate_r": 0.0019607844296842813,
+          "candidate_r_bits": "0x3b008081",
+          "instructions": 45,
+          "match": false,
+          "role": "tie"
+        },
+        {
+          "candidate_r": 0.001960784662514925,
+          "candidate_r_bits": "0x3b008082",
+          "instructions": 45,
+          "match": false,
+          "role": "above"
+        }
+      ],
+      "transfer": "disabled only for direct comparator isolation",
+      "version_flag": 1
+    },
+    "f32_bits": "0x3b008081",
+    "pf16_note": "exact tie is not representable; codes 64/65 bracket it"
+  },
+  "verdict": "PASS_V2_GAMMA_COLORS_TOLERANCE_ORDERED_PALETTE_TO_PRODUCTION_EXACT"
+}

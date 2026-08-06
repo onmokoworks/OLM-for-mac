@@ -1,0 +1,44 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "No Gamma Colors mode claim",
+    "No other gamma value/geometry",
+    "No key interaction",
+    "No AE host claim"
+  ],
+  "decode_lut_sha256": "11056c2feda87964204a53471e172ae6fb6039a0c3120f6277c7ff115fe88cba",
+  "fixtures": [
+    {
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1501,
+      "depth": "PF16",
+      "equal": true,
+      "padding_per_row": 6,
+      "padding_preserved": true,
+      "raw_hex": "00800020004000600080005e9a23333d0080004000600020a5a5a5a5a5a5008000100070003000800070003000100080333500160066a5a5a5a5a5a5",
+      "worker_instructions": 4826
+    },
+    {
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1501,
+      "depth": "PF32",
+      "equal": true,
+      "padding_per_row": 12,
+      "padding_preserved": true,
+      "raw_hex": "0000803ffdff7f3e0000003f0000403f0000803f00003c3f66668e3eccccf43e0000803f0000003f0000403ffdff7f3ea5a5a5a5a5a5a5a5a5a5a5a50000803fdeffff3d0000603f0000c03e0000803f0000603f0000c03edeffff3d0000803fccccd43efdff2f3effff4b3fa5a5a5a5a5a5a5a5a5a5a5a5",
+      "worker_instructions": 4761
+    }
+  ],
+  "inverse_lut_sha256": "b7014467dcae06109111302b8c930494950d27b817d1390d6434605795772fbc",
+  "parameter_contract": {
+    "frame_decode_lut_selected_by": "version != v1, independent of Gamma UI",
+    "gamma_value_f32": 2.4000000953674316,
+    "internal_bb10_mode_byte": 1,
+    "typed_inverse_lut_selected_by": "internal version flag 0 and transfer context length/pointer",
+    "ui_name": "All Colors",
+    "ui_popup": 3
+  },
+  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "scope": "PF16/PF32 independent v2 Gamma Correction=All Colors, gamma2.4, key disabled, nonuniform padded3x2, captured LUTs, no host",
+  "verdict": "PASS_V2_GAMMA_ALL_NATURAL_AEX_TO_PRODUCTION_PADDED_3X2_EXACT"
+}

@@ -1,0 +1,80 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "No palette count above 2",
+    "No duplicate/tolerance-tie gamma colors",
+    "No key interaction",
+    "No AE host claim"
+  ],
+  "decode_lut_sha256": "11056c2feda87964204a53471e172ae6fb6039a0c3120f6277c7ff115fe88cba",
+  "fixtures": [
+    {
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1502,
+      "depth": "PF16",
+      "equal": true,
+      "padding_per_row": 6,
+      "padding_preserved": true,
+      "raw_hex": "00800080008000800080d7057a000c740080008000000000a5a5a5a5a5a50080000000800000008000400040004000806d5dac1e0c30a5a5a5a5a5a5",
+      "worker_instructions": 5678
+    },
+    {
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1502,
+      "depth": "PF32",
+      "equal": true,
+      "padding_per_row": 12,
+      "padding_preserved": true,
+      "raw_hex": "0000803f0000803f0000803f0000803f0000803fbdde3a3d4ccc743b9318683f0000803f0000803f0000000000000000a5a5a5a5a5a5a5a5a5a5a5a50000803f000000000000803f000000000000803f0000003f0000003f0000003f0000803f16d93a3f4260753e2631c03ea5a5a5a5a5a5a5a5a5a5a5a5",
+      "worker_instructions": 5613
+    }
+  ],
+  "inverse_lut_sha256": "b7014467dcae06109111302b8c930494950d27b817d1390d6434605795772fbc",
+  "palette_contract": {
+    "count": 2,
+    "direct_actual_aex_probe": {
+      "count": 2,
+      "ordered_rgba_memory_hex": "0000803f0000803f0000803f0000803f0000803f00000000000000000000803f",
+      "rows": [
+        {
+          "instructions": 83,
+          "returned_match": true,
+          "role": "first_match_white"
+        },
+        {
+          "instructions": 92,
+          "returned_match": true,
+          "role": "last_match_red"
+        },
+        {
+          "instructions": 80,
+          "returned_match": false,
+          "role": "no_match_blue"
+        }
+      ]
+    },
+    "fixture_roles": {
+      "pixel_0": "first-entry white match",
+      "pixel_2": "last-entry red match",
+      "pixels_1_3_4_5": "no-match candidates"
+    },
+    "ordered_rgba": [
+      [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "owner_iteration": "FUN_18000a9c0 advances 0x10 bytes until match or end"
+  },
+  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "scope": "PF16/PF32 independent v2 Gamma Colors, ordered two-color palette [white,red], gamma2.4, key off, padded3x2, LUTs",
+  "verdict": "PASS_V2_GAMMA_COLORS_ORDERED_PALETTE2_NATURAL_AEX_TO_PRODUCTION_EXACT"
+}

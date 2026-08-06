@@ -1,0 +1,43 @@
+{
+  "ae_process_observation": {
+    "matching_pids": [],
+    "operation_performed": false
+  },
+  "execution": {
+    "performed": false,
+    "reason": "preflight-only task; AE launch/operation forbidden"
+  },
+  "host_contract": {
+    "expected_loaded_sha256": "fe782f344dcaf8865b778198b0faeb8cecd525062a83f38aca8dc1db74442c34",
+    "loaded_identity_gate": "attestor requires canonical installed path, SHA-256, one vmmap mapping, stable PID/birth token before and after render",
+    "renderer": "SOFTWARE"
+  },
+  "installed": {
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "binary_sha256": "fe782f344dcaf8865b778198b0faeb8cecd525062a83f38aca8dc1db74442c34",
+    "bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother2.plugin",
+    "codesign_verify": "pass"
+  },
+  "next_action": "When authorized, run the PF32 runner with --plugin-path set to the pinned installed bundle, start its attestor, then launch/run the generated wrapper in a fresh AE Software session. PF16 needs a dedicated current-hash runner before host execution.",
+  "status": "ready_not_executed",
+  "targets": {
+    "PF16_classic": {
+      "fixture": "refs/fixtures/olmsmoother2_case07_preserve_rgb_effect_20260727.aep",
+      "fixture_sha256": "689da9c07512f821c869e0e17031db3d05953896e50b6b2385762f26afcf2f0d",
+      "host_runner_status": "fixture and core chain pinned; dedicated current-hash PF16 host runner still separate",
+      "supported_core_chain": "EffectMain PF_Cmd_RENDER -> PF16 RenderBits"
+    },
+    "PF32_smart": {
+      "attestor": "scripts/attest_olmsmoother2_mac_process_20260728.py",
+      "host_runner_status": "ready",
+      "project_template": "refs/fixtures/olmsmoother2_32bpc_preserve_rgb_input_template_20260726.aep",
+      "project_template_sha256": "51fd5403b0a43825f0f6d189c49154ad756f4c565498f733c1fb725377583679",
+      "runner": "scripts/run_olmsmoother2_no_key_32bpc_mac_validation_20260715.py",
+      "runner_sha256": "2c54cfcbd8c203fab475ed1fd20f88b6bbe77866b3ffc2dbe79341097f4a4e1f",
+      "supported_core_chain": "EffectMain PF_Cmd_SMART_RENDER -> PF32 RenderBits"
+    }
+  }
+}

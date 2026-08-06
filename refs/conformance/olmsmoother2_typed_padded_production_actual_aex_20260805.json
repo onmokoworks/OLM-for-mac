@@ -1,0 +1,48 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "No non-uniform classifier or c280 geometry claim",
+    "No v2, key, gamma, or nonzero smoothing claim",
+    "No After Effects host execution claim"
+  ],
+  "fixtures": [
+    {
+      "actual_aex_instructions": 1326,
+      "depth": "PF16",
+      "equal": true,
+      "height": 2,
+      "padding_bytes_per_row": 6,
+      "padding_preserved": true,
+      "raw_hex": "0050cd0f004033700050cd0f004033700050cd0f00403370a5a5a5a5a5a50050cd0f004033700050cd0f004033700050cd0f00403370a5a5a5a5a5a5",
+      "rowbytes": 30,
+      "source_rgba_f32": [
+        0.123443603515625,
+        0.5,
+        0.876556396484375,
+        0.625
+      ],
+      "width": 3
+    },
+    {
+      "actual_aex_instructions": 1261,
+      "depth": "PF32",
+      "equal": true,
+      "height": 2,
+      "padding_bytes_per_row": 12,
+      "padding_preserved": true,
+      "raw_hex": "0000203fded6fc3d0000003f2365603f0000203fded6fc3d0000003f2365603f0000203fded6fc3d0000003f2365603fa5a5a5a5a5a5a5a5a5a5a5a50000203fded6fc3d0000003f2365603f0000203fded6fc3d0000003f2365603f0000203fded6fc3d0000003f2365603fa5a5a5a5a5a5a5a5a5a5a5a5",
+      "rowbytes": 60,
+      "source_rgba_f32": [
+        0.12345670163631439,
+        0.5,
+        0.8765432238578796,
+        0.625
+      ],
+      "width": 3
+    }
+  ],
+  "production_source": "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp",
+  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "scope": "PF16/PF32 independent uniform 3x2 fixtures, v1, key disabled, gamma none, smoothness 0, padded rows, no host",
+  "verdict": "PASS_ACTUAL_AEX_TO_PRODUCTION_TYPED_PADDED_3X2_EXACT"
+}

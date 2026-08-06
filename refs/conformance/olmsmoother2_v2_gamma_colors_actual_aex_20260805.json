@@ -1,0 +1,50 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "No multi-color gamma palette claim",
+    "No other gamma color/value/geometry",
+    "No key interaction",
+    "No AE host claim"
+  ],
+  "decode_lut_sha256": "11056c2feda87964204a53471e172ae6fb6039a0c3120f6277c7ff115fe88cba",
+  "fixtures": [
+    {
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1504,
+      "depth": "PF16",
+      "equal": true,
+      "padding_per_row": 6,
+      "padding_preserved": true,
+      "raw_hex": "008000800080008000802525252525250080008000000000a5a5a5a5a5a50080004000400040008000000080008000801c6d1c6d1c6da5a5a5a5a5a5",
+      "worker_instructions": 5107
+    },
+    {
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1504,
+      "depth": "PF32",
+      "equal": true,
+      "padding_per_row": 12,
+      "padding_preserved": true,
+      "raw_hex": "0000803f0000803f0000803f0000803f0000803fa392943ea392943ea392943e0000803f0000803f0000000000000000a5a5a5a5a5a5a5a5a5a5a5a50000803f0000003f0000003f0000003f0000803f000000000000803f0000803f0000803f11375a3f11375a3f11375a3fa5a5a5a5a5a5a5a5a5a5a5a5",
+      "worker_instructions": 5042
+    }
+  ],
+  "inverse_lut_sha256": "b7014467dcae06109111302b8c930494950d27b817d1390d6434605795772fbc",
+  "parameter_contract": {
+    "gamma_color_count": 1,
+    "gamma_color_rgba": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "gamma_value_f32": 2.4000000953674316,
+    "internal_bb10_mode_byte": 3,
+    "ui_name": "Gamma Colors",
+    "ui_popup": 2,
+    "v2_mode3_predicate": "FUN_18000a9c0 encodes candidates before RGB tolerance comparison"
+  },
+  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "scope": "PF16/PF32 independent v2 Gamma Correction=Gamma Colors, one white palette color, gamma2.4, key disabled, padded3x2, captured LUTs",
+  "verdict": "PASS_V2_GAMMA_COLORS_MODE3_NATURAL_AEX_TO_PRODUCTION_PADDED_3X2_EXACT"
+}

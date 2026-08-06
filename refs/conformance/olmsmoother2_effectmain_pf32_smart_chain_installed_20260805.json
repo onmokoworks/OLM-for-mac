@@ -1,0 +1,43 @@
+{
+  "actual_aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "callback_counts": {
+    "checkout_layer_pixels": 1,
+    "checkout_output": 1,
+    "parameter_checkin": 15,
+    "parameter_checkout": 15
+  },
+  "chain": [
+    "EffectMain PF_Cmd_SMART_RENDER",
+    "checkout_layer_pixels",
+    "checkout_output",
+    "15 ordered parameter checkouts",
+    "RenderBits<PF_PixelFloat>",
+    "15 parameter checkins",
+    "actual AEX natural classifier/PF32 worker/writer exact bytes",
+    "installed Universal identity"
+  ],
+  "claims_not_made": [
+    "No AE host execution",
+    "No actual-AEX exported entry invocation",
+    "No SmartPreRender in this report"
+  ],
+  "closed_boundary": "production EffectMain(PF_Cmd_SMART_RENDER) callback/parameter checkout -> PF32 RenderBits joined byte-exactly to actual AEX classifier/worker/writer",
+  "fixture": {
+    "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+    "classifier_instructions": 1504,
+    "padding_preserved": true,
+    "raw_hex": "0000803f0000000000000000000000000000803f3574913ebe45733f5e32793f0000803f0000803f000000000000803fa5a5a5a5a5a5a5a5a5a5a5a50000803f0000803f0000803f000000000000803ffdff7f3efdff7f3efdff7f3e0000803fd7e23d3f29a8393ffafe413fa5a5a5a5a5a5a5a5a5a5a5a5",
+    "worker_instructions": 4214
+  },
+  "installed": {
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "binary_sha256": "fe782f344dcaf8865b778198b0faeb8cecd525062a83f38aca8dc1db74442c34",
+    "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother2.plugin"
+  },
+  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "remaining_largest_boundary": "actual-AEX exported entry invocation and real AE host load/command binding",
+  "verdict": "PASS_PRODUCTION_EFFECTMAIN_SMARTRENDER_PF32_TO_ACTUAL_AEX_CORE_INSTALLED_IDENTITY"
+}

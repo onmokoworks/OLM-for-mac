@@ -1,0 +1,43 @@
+{
+  "ae_parameter_contract": {
+    "default": 100,
+    "maximum": 100,
+    "minimum": 0,
+    "tested": 0
+  },
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "No other Smoothness/Range combination",
+    "No key or Gamma UI interaction",
+    "No AE host runtime claim"
+  ],
+  "decode_lut_sha256": "11056c2feda87964204a53471e172ae6fb6039a0c3120f6277c7ff115fe88cba",
+  "fixtures": [
+    {
+      "class_nonzero_bytes": 10,
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1504,
+      "depth": "PF16",
+      "equal": true,
+      "padding_per_row": 6,
+      "padding_preserved": true,
+      "raw_hex": "008000000000000000800000008000800080008000000080a5a5a5a5a5a5008000800080000000800020002000200080006000600060a5a5a5a5a5a5",
+      "worker_instructions": 1680
+    },
+    {
+      "class_nonzero_bytes": 10,
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1504,
+      "depth": "PF32",
+      "equal": true,
+      "padding_per_row": 12,
+      "padding_preserved": true,
+      "raw_hex": "0000803f0000000000000000000000000000803f000000000000803f0000803f0000803f0000803f000000000000803fa5a5a5a5a5a5a5a5a5a5a5a50000803f0000803f0000803f000000000000803ffdff7f3efdff7f3efdff7f3e0000803f0000403f0000403f0000403fa5a5a5a5a5a5a5a5a5a5a5a5",
+      "worker_instructions": 1615
+    }
+  ],
+  "inverse_lut_sha256": "b7014467dcae06109111302b8c930494950d27b817d1390d6434605795772fbc",
+  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "scope": "PF16/PF32 natural v2 nonuniform 3x2, Smoothness=0 lower endpoint, Smooth Range=1, key/gamma off, captured LUTs, padded rows",
+  "verdict": "PASS_V2_SMOOTHNESS_ZERO_LOWER_ENDPOINT_TO_PRODUCTION_EXACT"
+}
