@@ -19,6 +19,66 @@
       "raw_sha256": "8a5df2b125c892a972ba60bae4c1da5498dc36eef2f5dc898dc29ec135c4c91c",
       "zlib_sha256": "be33c68df9c1af312458442b1318c827c6d72ff91d4a81166d2b8dacb099bdb9"
     },
+    "first_helper__accum_after": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/first_helper__accum_after.bin.zlib",
+      "raw_sha256": "dd2e3302589047c85a53be7c184b8c0451f963ca20e1c527e17303de2af2d2a1",
+      "zlib_sha256": "b8449966abf066e5e27623b8f27d6a440c5c795b5f49fe54f552f67a5ed04ab7"
+    },
+    "first_helper__accum_before": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/first_helper__accum_before.bin.zlib",
+      "raw_sha256": "b9ad15ac07f2951fb0008d91153225ca28de61182b82b508d6c13178c2a6da8e",
+      "zlib_sha256": "78f9d03e6412aecba54e4dbb0554a4a79342c6f3706bebca3ac3d54e7efa2890"
+    },
+    "first_helper__inner_table": {
+      "bytes": 120000,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/first_helper__inner_table.bin.zlib",
+      "raw_sha256": "1b858f7c458ce368fa6db4b4990ab2ab3f5c3ce93629ddf365284ce027f67fff",
+      "zlib_sha256": "b12e35994a0a7b5e36fdd5ed7bd042f9a7d622c6587feda3dcad0a96cae8d08e"
+    },
+    "first_helper__max_after": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/first_helper__max_after.bin.zlib",
+      "raw_sha256": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+      "zlib_sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    "first_helper__max_before": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/first_helper__max_before.bin.zlib",
+      "raw_sha256": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+      "zlib_sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    "first_helper__replay_accum_after": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/first_helper__replay_accum_after.bin.zlib",
+      "raw_sha256": "dd2e3302589047c85a53be7c184b8c0451f963ca20e1c527e17303de2af2d2a1",
+      "zlib_sha256": "b8449966abf066e5e27623b8f27d6a440c5c795b5f49fe54f552f67a5ed04ab7"
+    },
+    "first_helper__replay_max_after": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/first_helper__replay_max_after.bin.zlib",
+      "raw_sha256": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+      "zlib_sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    "first_helper__stack": {
+      "bytes": 256,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/first_helper__stack.bin.zlib",
+      "raw_sha256": "b0da1ee467d0e97e86f0bada335cdf0a029e3f2513a4429892ee97bb299bd982",
+      "zlib_sha256": "27811b73753203ecf8cf893ba8e3f52e6412f65cf2446c2fb7bf4b9a1018ba92"
+    },
+    "first_helper__work_head": {
+      "bytes": 104,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/first_helper__work_head.bin.zlib",
+      "raw_sha256": "2886e8916105d89f6a95df1545732d50e01621123d2df77f69584efb09e56304",
+      "zlib_sha256": "f23e492428fe97349a1e79471e13c1b3a9466d3ebd3fc8360f307a99e966a9cf"
+    },
+    "first_helper__work_span_config": {
+      "bytes": 64,
+      "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/first_helper__work_span_config.bin.zlib",
+      "raw_sha256": "8a0fa73e4f8dcdd56832892e4e63df795620139a0d31a730e64ed5ea182b792f",
+      "zlib_sha256": "09b6cf8740a39c447e229389269773636adf01fb5568f73924a7b544f5702487"
+    },
     "output": {
       "bytes": 560,
       "path": "refs/fixtures/olmradialblur_rotation_pf16_inner32_small_20260806/output.bin.zlib",
@@ -147,6 +207,929 @@
     }
   },
   "execution": {
+    "all_helper_store_trace": {
+      "all_region_write_count": 1330227,
+      "classification": "compact trace captured, but replaying callback values alone does not reconstruct final accum; full-call semantics not promoted",
+      "helper_store_count": 1330227,
+      "reconstructed_accum_exact": false,
+      "reconstructed_max_exact": true,
+      "sha256": "0b1a7c8b2d7c279a73c6de567a7094f7ce24b32af2ee4bfb6f54f1fe676b9034"
+    },
+    "direct_replay": {
+      "accum_exact": true,
+      "instructions": 1012,
+      "max_exact": true
+    },
+    "first_helper_registers": {
+      "gp": [
+        "0x200011c0",
+        "0x20050390",
+        "0xf0c25c0",
+        "0x1",
+        "0x708",
+        "0x0",
+        "0x2009f544",
+        "0xf0c21e8",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0xf0c25c0",
+        "0x0",
+        "0x2008f804",
+        "0x200befc1"
+      ],
+      "xmm": [
+        "0x0",
+        "0x3f800000",
+        "0x3f7c6cec",
+        "0x3f800000",
+        "0x3f800000",
+        "0x3f800000",
+        "0x3f800000",
+        "0x3f800000",
+        "0x3f05ee00",
+        "0x3ef42400",
+        "0x3d4d0000",
+        "0x0",
+        "0x3f800000",
+        "0x0",
+        "0x0",
+        "0x0"
+      ]
+    },
+    "first_helper_return": "0x1800026ea",
+    "first_inner_helper_write_set": {
+      "candidate_store_discriminator": {
+        "actual_first_store": {
+          "offset": 28796,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "2767ff3f"
+        },
+        "classification": "actual walks cells 1799 down to 1770 and stores alpha, blue, green, red; both current portable candidates store red first and forward chooses cell 1",
+        "portable_backward_first_store": {
+          "channel": "red",
+          "offset": 28784,
+          "region": "accum",
+          "size": 4
+        },
+        "portable_forward_first_store": {
+          "channel": "red",
+          "offset": 16,
+          "region": "accum",
+          "size": 4
+        }
+      },
+      "changed_cells": [
+        [
+          0,
+          1770
+        ],
+        [
+          0,
+          1771
+        ],
+        [
+          0,
+          1772
+        ],
+        [
+          0,
+          1773
+        ],
+        [
+          0,
+          1774
+        ],
+        [
+          0,
+          1775
+        ],
+        [
+          0,
+          1776
+        ],
+        [
+          0,
+          1777
+        ],
+        [
+          0,
+          1778
+        ],
+        [
+          0,
+          1779
+        ],
+        [
+          0,
+          1780
+        ],
+        [
+          0,
+          1781
+        ],
+        [
+          0,
+          1782
+        ],
+        [
+          0,
+          1783
+        ],
+        [
+          0,
+          1784
+        ],
+        [
+          0,
+          1785
+        ],
+        [
+          0,
+          1786
+        ],
+        [
+          0,
+          1787
+        ],
+        [
+          0,
+          1788
+        ],
+        [
+          0,
+          1789
+        ],
+        [
+          0,
+          1790
+        ],
+        [
+          0,
+          1791
+        ],
+        [
+          0,
+          1792
+        ],
+        [
+          0,
+          1793
+        ],
+        [
+          0,
+          1794
+        ],
+        [
+          0,
+          1795
+        ],
+        [
+          0,
+          1796
+        ],
+        [
+          0,
+          1797
+        ],
+        [
+          0,
+          1798
+        ],
+        [
+          0,
+          1799
+        ]
+      ],
+      "count": 30,
+      "max_plane_changed": false,
+      "memory_store_count": 120,
+      "memory_stores": [
+        {
+          "offset": 28796,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "2767ff3f"
+        },
+        {
+          "offset": 28792,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "9a85cc3d"
+        },
+        {
+          "offset": 28788,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "3c92733f"
+        },
+        {
+          "offset": 28784,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "099e853f"
+        },
+        {
+          "offset": 28780,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "e0a0fd3f"
+        },
+        {
+          "offset": 28776,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "d419cb3d"
+        },
+        {
+          "offset": 28772,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "00e1713f"
+        },
+        {
+          "offset": 28768,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "60b0843f"
+        },
+        {
+          "offset": 28764,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "c4b9fa3f"
+        },
+        {
+          "offset": 28760,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "c2c6c83d"
+        },
+        {
+          "offset": 28756,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "501c6f3f"
+        },
+        {
+          "offset": 28752,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "9c2b833f"
+        },
+        {
+          "offset": 28748,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "2ac6f63f"
+        },
+        {
+          "offset": 28744,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "af9cc53d"
+        },
+        {
+          "offset": 28740,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "94576b3f"
+        },
+        {
+          "offset": 28736,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "601a813f"
+        },
+        {
+          "offset": 28732,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "40e1f13f"
+        },
+        {
+          "offset": 28728,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "60b1c13d"
+        },
+        {
+          "offset": 28724,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "b4ac663f"
+        },
+        {
+          "offset": 28720,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "cb157d3f"
+        },
+        {
+          "offset": 28716,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "ce2bec3f"
+        },
+        {
+          "offset": 28712,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "141fbd3d"
+        },
+        {
+          "offset": 28708,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "f63a613f"
+        },
+        {
+          "offset": 28704,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "a51c773f"
+        },
+        {
+          "offset": 28700,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "cecae53f"
+        },
+        {
+          "offset": 28696,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "6603b83d"
+        },
+        {
+          "offset": 28692,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "9c255b3f"
+        },
+        {
+          "offset": 28688,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "fe6f703f"
+        },
+        {
+          "offset": 28684,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "dee5de3f"
+        },
+        {
+          "offset": 28680,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "137eb23d"
+        },
+        {
+          "offset": 28676,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "7092543f"
+        },
+        {
+          "offset": 28672,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "4c39693f"
+        },
+        {
+          "offset": 28668,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "aca5d73f"
+        },
+        {
+          "offset": 28664,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "abafac3d"
+        },
+        {
+          "offset": 28660,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "3ca84d3f"
+        },
+        {
+          "offset": 28656,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "1ea3613f"
+        },
+        {
+          "offset": 28652,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "6d32d03f"
+        },
+        {
+          "offset": 28648,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "62b8a63d"
+        },
+        {
+          "offset": 28644,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "578d463f"
+        },
+        {
+          "offset": 28640,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "83d7593f"
+        },
+        {
+          "offset": 28636,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "75b2c83f"
+        },
+        {
+          "offset": 28632,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "e8b6a03d"
+        },
+        {
+          "offset": 28628,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "50663f3f"
+        },
+        {
+          "offset": 28624,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "9afe513f"
+        },
+        {
+          "offset": 28620,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "0649c13f"
+        },
+        {
+          "offset": 28616,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "7ac79a3d"
+        },
+        {
+          "offset": 28612,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "c854383f"
+        },
+        {
+          "offset": 28608,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "443d4a3f"
+        },
+        {
+          "offset": 28604,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "5a15ba3f"
+        },
+        {
+          "offset": 28600,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "1a03953d"
+        },
+        {
+          "offset": 28596,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "8576313f"
+        },
+        {
+          "offset": 28592,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "30b4423f"
+        },
+        {
+          "offset": 28588,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "f031b33f"
+        },
+        {
+          "offset": 28584,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "fd7e8f3d"
+        },
+        {
+          "offset": 28580,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "cce42a3f"
+        },
+        {
+          "offset": 28576,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "147f3b3f"
+        },
+        {
+          "offset": 28572,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "23b4ac3f"
+        },
+        {
+          "offset": 28568,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "404c8a3d"
+        },
+        {
+          "offset": 28564,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "fab3243f"
+        },
+        {
+          "offset": 28560,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "4bb4343f"
+        },
+        {
+          "offset": 28556,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "0aaca63f"
+        },
+        {
+          "offset": 28552,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "c477853d"
+        },
+        {
+          "offset": 28548,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "6af31e3f"
+        },
+        {
+          "offset": 28544,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "aa642e3f"
+        },
+        {
+          "offset": 28540,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "9124a13f"
+        },
+        {
+          "offset": 28536,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "480a813d"
+        },
+        {
+          "offset": 28532,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "84ad193f"
+        },
+        {
+          "offset": 28528,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "9f9b283f"
+        },
+        {
+          "offset": 28524,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "cc239c3f"
+        },
+        {
+          "offset": 28520,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "55117a3d"
+        },
+        {
+          "offset": 28516,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "14e8143f"
+        },
+        {
+          "offset": 28512,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "855f233f"
+        },
+        {
+          "offset": 28508,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "70ab973f"
+        },
+        {
+          "offset": 28504,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "91e8723d"
+        },
+        {
+          "offset": 28500,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "bba4103f"
+        },
+        {
+          "offset": 28496,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "25b21e3f"
+        },
+        {
+          "offset": 28492,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "6db9933f"
+        },
+        {
+          "offset": 28488,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "f9966c3d"
+        },
+        {
+          "offset": 28484,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "82e10c3f"
+        },
+        {
+          "offset": 28480,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "58911a3f"
+        },
+        {
+          "offset": 28476,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "9b48903f"
+        },
+        {
+          "offset": 28472,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "4814673d"
+        },
+        {
+          "offset": 28468,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "7e99093f"
+        },
+        {
+          "offset": 28464,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "b8f7163f"
+        },
+        {
+          "offset": 28460,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "67518d3f"
+        },
+        {
+          "offset": 28456,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "5f54623d"
+        },
+        {
+          "offset": 28452,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "76c5063f"
+        },
+        {
+          "offset": 28448,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "59dd133f"
+        },
+        {
+          "offset": 28444,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "84ca8a3f"
+        },
+        {
+          "offset": 28440,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "58485e3d"
+        },
+        {
+          "offset": 28436,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "8b5c043f"
+        },
+        {
+          "offset": 28432,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "7e38113f"
+        },
+        {
+          "offset": 28428,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "89a9883f"
+        },
+        {
+          "offset": 28424,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "85df5a3d"
+        },
+        {
+          "offset": 28420,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "ce54023f"
+        },
+        {
+          "offset": 28416,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "44fe0e3f"
+        },
+        {
+          "offset": 28412,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "80e3863f"
+        },
+        {
+          "offset": 28408,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "5a08583d"
+        },
+        {
+          "offset": 28404,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "cea3003f"
+        },
+        {
+          "offset": 28400,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "32230d3f"
+        },
+        {
+          "offset": 28396,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "5f6d853f"
+        },
+        {
+          "offset": 28392,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "2ab1553d"
+        },
+        {
+          "offset": 28388,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "047efe3e"
+        },
+        {
+          "offset": 28384,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "bc9b0b3f"
+        },
+        {
+          "offset": 28380,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "6e3c843f"
+        },
+        {
+          "offset": 28376,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "c8c8533d"
+        },
+        {
+          "offset": 28372,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "6238fc3e"
+        },
+        {
+          "offset": 28368,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "aa5c0a3f"
+        },
+        {
+          "offset": 28364,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "8a46833f"
+        },
+        {
+          "offset": 28360,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "f83e523d"
+        },
+        {
+          "offset": 28356,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "6263fa3e"
+        },
+        {
+          "offset": 28352,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "625b093f"
+        },
+        {
+          "offset": 28348,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "5e82823f"
+        },
+        {
+          "offset": 28344,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "ca04513d"
+        },
+        {
+          "offset": 28340,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "38edf83e"
+        },
+        {
+          "offset": 28336,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "208e083f"
+        },
+        {
+          "offset": 28332,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "82e7813f"
+        },
+        {
+          "offset": 28328,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "c60c503d"
+        },
+        {
+          "offset": 28324,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "d9c5f73e"
+        },
+        {
+          "offset": 28320,
+          "region": "accum",
+          "size": 4,
+          "value_hex": "18ec073f"
+        }
+      ]
+    },
+    "helper_calls": 22349,
     "inner_base_length": 31,
     "owner_instructions": 19687384,
     "setup_instructions": 208,
@@ -158,6 +1141,8 @@
   "gates": {
     "aex_identity": true,
     "all_stages_captured": true,
+    "first_helper_direct_replay": true,
+    "first_helper_hashes_pinned": true,
     "inner_base_length_nonzero": true,
     "instruction_budget": true,
     "key_hashes_pinned": true,
