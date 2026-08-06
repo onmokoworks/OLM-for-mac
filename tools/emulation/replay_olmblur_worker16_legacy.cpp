@@ -12,6 +12,7 @@ const Case kCases[] = {
     {"16bpc_legacy_basic", 12, 12, 3.0f, 100.0f, 2, 1},
     {"16bpc_legacy_large_radius_reverse", 18, 18, 11.0f, 100.0f, 3, 2},
     {"16bpc_legacy_mixed_alpha_reverse", 18, 12, 3.0f, 100.0f, 2, 2},
+    {"16bpc_legacy_smoothness62_5_word_boundaries", 20, 16, 7.0f, 62.5f, 4, 1},
 };
 std::vector<std::uint8_t> read_file(const std::string& path) {
     std::ifstream stream(path, std::ios::binary | std::ios::ate);

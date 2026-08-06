@@ -1,0 +1,55 @@
+{
+  "schema": "olmblur.mac-ae-host-result/1",
+  "status": "render_succeeded_raw_float32_mismatch",
+  "ae_exact_claim": false,
+  "host": {
+    "pid": 63831,
+    "version": "26.3x87",
+    "process_started_local": "Wed Aug 5 23:38:56 2026",
+    "renderer": "SOFTWARE",
+    "bits_per_channel": 32,
+    "working_space": "None",
+    "linear_blending": false
+  },
+  "identity": {
+    "preflight_all_checks": true,
+    "post_vmmap_exact_path": true,
+    "installed_and_loaded_binary_sha256": "dd64362e6071cfd93e92f3a4853782752aeb023c54671773bfedb0c496e8afc7",
+    "binary_predates_process_start": true
+  },
+  "case": {
+    "id": "olmblur__case_0001",
+    "dimensions": [1920, 1080],
+    "params_readback": {"Blur Amount": 129.399993896484, "Blur Smoothness": 100, "Number of Repeat": 1, "Bias Direction": 1, "Legacy": 0}
+  },
+  "outputs": {
+    "no_effect": {
+      "sha256": "a0689c665f81b4222f04b3ee1c0c039af30800ef2db32d99a45792e53aa3f936",
+      "raw_float32_match": true,
+      "mismatched_values": 0,
+      "max_raw_u32_delta": 0
+    },
+    "effect_on": {
+      "sha256": "b7890a690f9fec1f5f46ac1a7206788fd6b3f26b207f0d4a188a86e61201ade0",
+      "raw_float32_match": false,
+      "mismatched_values": 201576,
+      "max_raw_u32_delta": 310132694,
+      "mismatched_values_by_channel": {"A": 0, "B": 0, "G": 0, "R": 201576},
+      "max_raw_u32_delta_by_channel": {"A": 0, "B": 0, "G": 0, "R": 310132694}
+    }
+  },
+  "artifacts": {
+    "root": "refs/reports/olmblur_case0001_current_host_success_20260805",
+    "preflight_sha256": "5730079028a75318a2b2ed65ccad493e767a4cd1f9720198296cca0c86eb2c79",
+    "provenance_sha256": "c7fbd4f580e7472c67fae374d1b2f0fcf878fba9718b98cb7f6ffed31c34739f",
+    "return_sha256": "fe08e186de7cce46cac25c11931fdda5f856413be4aceafbf791b87695745c5b",
+    "comparison_sha256": "87823cb57695239d448246327fc3188d3b2d93e48ae268d49ca71c042706f64e",
+    "validation_report_sha256": "ecb6977b9b8a1571e71fc71b71e76f84c10c33d52ade38e9a18c1e1717f0e35c"
+  },
+  "runner_correction": {
+    "file": "scripts/run_olmblur_32bpc_mac_validation_20260715.py",
+    "change": "Pass an absolute generated-wrapper path to DoScriptFile.",
+    "sha256": "1828610901bf61673b4b8a8779116ee1d53c1bf5a6eb22505169ac97bb3032b8"
+  },
+  "boundary": "This is a current-installed-binary Mac AE host result. The control proves input/output-module identity, but the effect-on branch is not Windows raw FLOAT32 exact. No tuning or production algorithm change was made."
+}

@@ -1,0 +1,63 @@
+{
+  "ae_was_launched_or_operated": false,
+  "checks": {
+    "ae_app_present": true,
+    "ae_version": true,
+    "authoritative_artifacts_complete": false,
+    "authoritative_record_exact": true,
+    "authoritative_record_hash": true,
+    "delegate_hash": true,
+    "formal_matrix_hash": true,
+    "input_hash": true,
+    "install_identity_hash": true,
+    "installed_architectures": true,
+    "installed_binary_hash": true,
+    "installed_codesign": true,
+    "parameter_contract": true,
+    "project_jsx_runner_hash": true,
+    "request_hash": true,
+    "runner_hash": true
+  },
+  "expected_outputs": {
+    "artifacts_present": {},
+    "authoritative_record": "refs/conformance/olmblur_32bpc_case0001_ae_exact_20260727.json",
+    "comparison": "raw FLOAT32 A,B,G,R words; mismatched_values=0 and max_raw_u32_delta=0",
+    "mac_effect_on_sha256": "9fd050776bec978510763dcae12df43e906f9df1dfd5713b2eeb1d0c3ccef5aa",
+    "mac_no_effect_sha256": "528489da7e8d40810833dfeb60d55acf82eb6856b199e1539a099467de4af5fb",
+    "windows_effect_on_sha256": "16d1702eb9b702f280c2d05e3f0b19032da76ce4fb5eb425e2f8e867dbf50cc2",
+    "windows_no_effect_sha256": "98483e6d26127e0e4b89d655715ee81b564a534675bbe3b16b14321f29e48631"
+  },
+  "installed_plugin": {
+    "architectures": ["arm64", "x86_64"],
+    "binary_sha256": "dd64362e6071cfd93e92f3a4853782752aeb023c54671773bfedb0c496e8afc7",
+    "bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMBlur.plugin"
+  },
+  "next_gate": "Restore the four 20260727 authoritative EXRs or recapture the exact hash-bound contract. The runner will not render against the superseded 20260710 reference or self-adopt a current Mac output.",
+  "project_generation": {
+    "mode": "creates a fresh unsaved 32bpc project and closes without saving",
+    "runner": "scripts/run_olmblur_32bpc_mac_validation_20260715.py",
+    "runner_sha256": "1828610901bf61673b4b8a8779116ee1d53c1bf5a6eb22505169ac97bb3032b8"
+  },
+  "runner": "scripts/run_olmblur_case0001_pf32_current_mac_20260805.py",
+  "runner_sha256": "0260d9d68283aeaf3a4d8d2a1297d5c4722e7b96b09eedeeb51045f00e731e7e",
+  "schema": "olmblur.mac-ae-host-phase-readiness/1",
+  "status": "authoritative_recapture_required",
+  "target": {
+    "application": "/Applications/Adobe After Effects 2026/Adobe After Effects 2026.app",
+    "bit_depth": 32,
+    "case": "olmblur__case_0001",
+    "dimensions": [1920, 1080],
+    "frame": 0,
+    "linear_blending": false,
+    "params": {
+      "Bias Direction": 1,
+      "Blur Amount": 129.4,
+      "Blur Smoothness": 100,
+      "Legacy": 0,
+      "Number of Repeat": 1
+    },
+    "renderer": "SOFTWARE",
+    "version": "26.3.0.87",
+    "working_space": "None"
+  }
+}

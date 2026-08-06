@@ -137,7 +137,7 @@ def main() -> int:
         encoding="utf-8",
     )
     if args.dump_js: args.dump_js.write_text(wrapper.read_text(encoding="utf-8"), encoding="utf-8"); print(f"[OK] wrote {args.dump_js}"); return 0
-    script = f'tell application {json.dumps(args.app_name)} to DoScriptFile POSIX file {json.dumps(str(wrapper))} with override\n'
+    script = f'tell application {json.dumps(args.app_name)} to DoScriptFile POSIX file {json.dumps(str(wrapper.resolve()))} with override\n'
     try: proc=subprocess.run(["osascript"], input=script, text=True, capture_output=True, timeout=7200)
     except (OSError, subprocess.TimeoutExpired): print("[FAIL_CLOSED] AE did not produce a return"); return 1
     if proc.returncode != 0 or not result.exists():

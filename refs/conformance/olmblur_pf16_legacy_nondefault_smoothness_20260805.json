@@ -1,0 +1,48 @@
+{
+  "schema": "olmblur.parameter-branch-proof/1",
+  "plugin": "OLMBlur",
+  "status": "actual_aex_worker_to_mac_production_exact",
+  "branch": {
+    "bit_depth": 16,
+    "legacy": 1,
+    "parameter": "Blur Smoothness",
+    "value": 62.5,
+    "production_path": "PF16 Legacy sigma-base and uint16 final-store path"
+  },
+  "params": {
+    "blur_amount": 7.0,
+    "smoothness": 62.5,
+    "repeat": 4,
+    "bias_direction": 1
+  },
+  "fixture": {
+    "id": "16bpc_legacy_smoothness62_5_word_boundaries",
+    "dimensions": [20, 16],
+    "bytes": 2560,
+    "oracle": "actual AEX FUN_180005f20",
+    "oracle_binary_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+    "source_sha256": "d73bbdd3cf1872f20883fa596615702552eadf308e40552763d1eaa698007366",
+    "expected_sha256": "7ac117f2430da7a8d132c1f5318b89218cefa0601100173a99294b1ea175b305",
+    "instructions": 425837,
+    "callback_count": 48,
+    "typed_source_word_counts": {"0": 320, "1": 320, "32767": 320, "32768": 320},
+    "typed_expected_word_counts": {"0": 120, "1": 160, "32767": 120, "32768": 160}
+  },
+  "regression": {
+    "manifest": "tools/emulation/fixtures/olmblur_worker16_legacy/manifest.json",
+    "manifest_sha256": "11ac4c8600f41ce8e3dcbb6aa41999817a3d4dc4c089d563e8f3b1eeb30b53d6",
+    "production_source": "core/olmblur_worker16_legacy.cpp",
+    "production_source_sha256": "b20228bf8c987940d1dd2922eec9984ac9fbcfbb1450f46a28e44fcf857d90da",
+    "replay": "tools/emulation/replay_olmblur_worker16_legacy.cpp",
+    "replay_sha256": "43d54426d57fe78b7b5c13158161de64b7dbc9f33639712a1988a1d7226baa4a",
+    "comparison": "all 2560 bytes exact"
+  },
+  "evidence_boundary": "Executes the actual Windows AEX PF16 Legacy worker with a complete little-endian uint16 A,R,G,B buffer and bounded host-suite shims, then replays that buffer through the Mac production PF16 Legacy worker. This differs from the PF32 Smoothness 37.5 float fixture in value, dimensions, bit depth, input representation, and final typed-store boundary. It does not execute AE parameter checkout/materialization or claim AE-host exactness.",
+  "remaining_gaps": [
+    "Non-default Smoothness is not yet independently retained for PF8.",
+    "PF16 NonLegacy accepts the parameter record but its recovered worker algorithm does not consume Smoothness; that public parameter plumbing remains a separate entrypoint question.",
+    "AE-host parameter materialization and post-restart Universal bundle loading remain pending."
+  ],
+  "production_changed": false,
+  "universal_rebuild_or_install_performed": false
+}

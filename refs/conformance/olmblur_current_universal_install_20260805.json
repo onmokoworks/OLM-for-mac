@@ -1,0 +1,35 @@
+{
+  "date": "2026-08-05",
+  "plugin": "OLMBlur",
+  "build": {
+    "configuration": "Debug",
+    "architectures": ["arm64", "x86_64"],
+    "command": "xcodebuild -project mac/OLMBlur/Mac/OLMBlur.xcodeproj -scheme OLMBlur -configuration Debug -derivedDataPath /tmp/olmblur_universal_20260805 build ARCHS='arm64 x86_64' ONLY_ACTIVE_ARCH=NO CODE_SIGNING_ALLOWED=NO",
+    "result": "success"
+  },
+  "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMBlur.plugin",
+  "binary_sha256": "dd64362e6071cfd93e92f3a4853782752aeb023c54671773bfedb0c496e8afc7",
+  "binary_uuids": {
+    "arm64": "9DD810B8-2298-365D-A9D6-C2E5726FD56D",
+    "x86_64": "362E4360-F89A-393B-8184-1BF44ACAA865"
+  },
+  "codesign": {
+    "kind": "adhoc",
+    "identifier": "com.adobe.AfterEffects.OLMBlur",
+    "cdhash_sha256": "08c4276420f1fb141e144478c7e1e636c8e9b5caa51d867a3f10c014e4a83052",
+    "verification": "codesign --verify --deep --strict passed"
+  },
+  "backup": {
+    "bundle": "/Users/onmk/Library/Application Support/OLM Plugin Backups/20260805_1955/OLMBlur.plugin",
+    "binary_sha256": "c6a9e54b1760fc2c916f4551367666b58c100520b2c6644ebd809d60e3d9d83e"
+  },
+  "host": {
+    "pid": 77384,
+    "executable": "/Applications/Adobe After Effects 2026/Adobe After Effects 2026.app/Contents/MacOS/After Effects",
+    "started": "Wed Aug 5 12:28:22 2026",
+    "olmblur_vmmap_matches": [],
+    "stopped_or_restarted": false,
+    "restart_required": true,
+    "reason": "The running host predates the install and has not mapped OLMBlur; plugin discovery/loading of the installed identity requires a fresh host process."
+  }
+}

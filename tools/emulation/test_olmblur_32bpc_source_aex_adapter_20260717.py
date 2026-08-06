@@ -120,12 +120,12 @@ static std::vector<std::uint8_t> read_file(const char *path) {
 }
 
 int main(int argc, char **argv) {
-  if (argc != 9) return 2;
+  if (argc != 10) return 2;
   const int width = std::atoi(argv[1]), height = std::atoi(argv[2]);
-  const float amount = std::strtof(argv[3], nullptr); const int repeat = std::atoi(argv[4]);
-  const int bias = std::atoi(argv[5]), legacy = std::atoi(argv[6]);
-  const std::vector<std::uint8_t> source = read_file(argv[7]);
-  const std::vector<std::uint8_t> expected = read_file(argv[8]);
+  const float amount = std::strtof(argv[3], nullptr); const float smoothness = std::strtof(argv[4], nullptr);
+  const int repeat = std::atoi(argv[5]); const int bias = std::atoi(argv[6]), legacy = std::atoi(argv[7]);
+  const std::vector<std::uint8_t> source = read_file(argv[8]);
+  const std::vector<std::uint8_t> expected = read_file(argv[9]);
   const int rowbytes = width * 16 + 32; const std::size_t active = static_cast<std::size_t>(width) * 16;
   if (source.size() != active * height || expected.size() != active * height) return 3;
   const std::uint8_t input_pad = 0xA5, output_pad = 0xEE;
@@ -134,7 +134,7 @@ int main(int argc, char **argv) {
   PF_EffectWorld in{input.data(), rowbytes, width, height, 32, {0, 0, width, height}, 0};
   PF_EffectWorld out{output.data(), rowbytes, width, height, 32, {0, 0, width, height}, 0};
   PF_InData in_data{}; in_data.downsample_x = {1, 1}; in_data.downsample_y = {1, 1};
-  BlurParams params{amount, 100.0f, repeat, bias, legacy};
+  BlurParams params{amount, smoothness, repeat, bias, legacy};
   const PF_Err err = BlurRender(&in_data, &in, &out, 32, &params);
   if (err != PF_Err_NONE) { std::fprintf(stderr, "BlurRender returned %d\n", (int)err); return 4; }
   std::size_t mismatches = 0; std::size_t alpha_mismatches = 0; std::size_t padding_mismatches = 0;
@@ -202,7 +202,8 @@ def main() -> int:
             source = base / case["id"] / "source_argb_f32.bin"
             expected = base / case["id"] / "expected_argb_f32.bin"
             run = subprocess.run([str(executable), str(case["width"]), str(case["height"]),
-                                  str(case["blur_amount"]), str(case["repeat"]), str(case["bias_direction"]),
+                                  str(case["blur_amount"]), str(case["smoothness"]),
+                                  str(case["repeat"]), str(case["bias_direction"]),
                                   str(manifest["legacy"]), str(source), str(expected)],
                                  cwd=ROOT, capture_output=True, text=True, check=False)
             if run.returncode:

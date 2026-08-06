@@ -1,0 +1,41 @@
+{
+  "schema": "olmblur.parameter-branch-proof/1",
+  "plugin": "OLMBlur",
+  "status": "actual_aex_worker_to_mac_production_exact",
+  "previous_gap": "All retained PF32 Legacy and NonLegacy fixtures used Blur Smoothness 100.0.",
+  "branch": {
+    "bit_depth": 32,
+    "legacy": 1,
+    "parameter": "Blur Smoothness",
+    "value": 37.5,
+    "production_path": "Legacy sigma_base = ((blur_amount * blur_smoothness) / 100) * (blur_amount / 3)"
+  },
+  "params": {
+    "blur_amount": 11.0,
+    "smoothness": 37.5,
+    "repeat": 3,
+    "bias_direction": 2
+  },
+  "fixture": {
+    "id": "32bpc_legacy_smoothness37_5_full24",
+    "dimensions": [24, 24],
+    "oracle": "actual AEX FUN_1800086d0",
+    "oracle_binary_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+    "source_sha256": "9bd827bc4210a6470e8ee9f03de25f349e77b33148791252b2775a703a876166",
+    "expected_sha256": "a0b48d578a84dda09d4d71d0bb801a70ef0ed92c7f59f32b72ace8bb753ecf44",
+    "bytes": 9216,
+    "instructions": 1793289,
+    "callback_count": 48
+  },
+  "production": {
+    "source": "core/olmblur_worker32_legacy.cpp",
+    "replay": "tools/emulation/replay_olmblur_worker32_legacy.cpp",
+    "comparison": "all 9216 bytes exact"
+  },
+  "evidence_boundary": "Executes the actual Windows AEX PF32 Legacy worker with declared worker params and bounded host-suite shims, then replays the complete typed buffer through the Mac production worker. It does not execute AE parameter checkout/materialization or claim AE-host exactness.",
+  "remaining_gaps": [
+    "Non-default Smoothness is not yet independently retained for PF8 or PF16.",
+    "AE-host parameter materialization and a post-restart load/render of the newly installed Universal bundle remain pending.",
+    "This worker fixture does not prove unrelated public EffectMain command paths."
+  ]
+}

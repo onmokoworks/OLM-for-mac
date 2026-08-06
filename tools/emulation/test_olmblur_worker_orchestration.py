@@ -22,6 +22,12 @@ WORKER = 0x180003710
 CASES = [
     {"id": "8bpc_nonlegacy_basic", "width": 12, "height": 12, "blur_amount": 3.0, "smoothness": 100.0, "repeat": 2, "bias_direction": 1},
     {"id": "8bpc_nonlegacy_large_radius", "width": 18, "height": 18, "blur_amount": 11.0, "smoothness": 100.0, "repeat": 3, "bias_direction": 2},
+    {"id": "8bpc_nonlegacy_case0001_repeat1_large_radius", "width": 24, "height": 24,
+     "blur_amount": 129.4, "smoothness": 100.0, "repeat": 1, "bias_direction": 1,
+     "formal_case": "case0001"},
+    {"id": "8bpc_nonlegacy_case0002_repeat2_large_radius_reverse", "width": 24, "height": 24,
+     "blur_amount": 129.4, "smoothness": 100.0, "repeat": 2, "bias_direction": 2,
+     "formal_case": "case0002"},
 ]
 
 
@@ -85,7 +91,10 @@ def run_case(case: dict) -> tuple[bytes, dict]:
     loader.write_bytes(params + 0x24, struct.pack("<f", case["smoothness"]))
     loader.write_bytes(params + 0x28, struct.pack("<I", case["repeat"]))
     loader.write_bytes(params + 0x2C, struct.pack("<I", case["bias_direction"]))
-    result = loader.call_function(WORKER, int_args=[context, source_world, output_world, params], max_instructions=8_000_000)
+    max_instructions = 8_000_000
+    result = loader.call_function(WORKER, int_args=[context, source_world, output_world, params], max_instructions=max_instructions)
+    if result["instructions"] >= max_instructions:
+        raise RuntimeError(f"AEX worker hit instruction cap for {case['id']}")
     return loader.read_bytes(output_data, len(source)), {"instructions": result["instructions"], "callbacks": events}
 
 

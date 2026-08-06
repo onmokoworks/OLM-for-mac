@@ -26,6 +26,9 @@ const Case kCases[] = {
     {"32bpc_legacy_mixed_alpha_reverse", 18, 12, 3.0f, 100.0f, 2, 2},
     {"32bpc_legacy_declared_248_6_red_boundary", 7, 5, 248.6f, 100.0f, 10, 1},
     {"32bpc_legacy_declared_5_mixed_alpha", 9, 7, 5.0f, 100.0f, 10, 1},
+    {"32bpc_legacy_case0007_repeat1_full24", 24, 24, 5.0f, 100.0f, 1, 1},
+    {"32bpc_legacy_case0003_repeat10_full24", 24, 24, 248.6f, 100.0f, 10, 1},
+    {"32bpc_legacy_smoothness37_5_full24", 24, 24, 11.0f, 37.5f, 3, 2},
 };
 
 std::vector<std::uint8_t> read_file(const std::string& path) {

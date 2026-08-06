@@ -1,0 +1,40 @@
+{
+  "schema": "olmblur.pf32-formal-worker-matrix/1",
+  "plugin": "OLMBlur",
+  "pixel_format": "PF32 little-endian float32 A,R,G,B",
+  "oracle_binary_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+  "coverage": {
+    "declared_formal_cases": ["case0001", "case0002", "case0003", "case0004", "case0005", "case0006", "case0007"],
+    "status": "complete_actual_aex_worker_to_production_exact",
+    "fixture_count": 7
+  },
+  "lanes": {
+    "nonlegacy": {
+      "manifest": "tools/emulation/fixtures/olmblur_worker32_nonlegacy/manifest.json",
+      "manifest_sha256": "03e9d5386c96c75f6173a438c629c47bfb30bef4ad40369dad3e1e032a03e2f8",
+      "production_source": "core/olmblur_worker32_nonlegacy.cpp",
+      "production_source_sha256": "5db95e5c39c6b232254e4011fcd8e47e2f96d1a8909205e49e25075130df5829",
+      "replay": "tools/emulation/replay_olmblur_worker32_nonlegacy.cpp",
+      "replay_sha256": "7120384279b0c07bc32cf9b13c68ee3b0b40eb9b3e2615cf52ffb5b9ba8aa19d",
+      "smoke": "refs/scripts/smoke_olmblur_worker32_nonlegacy.py"
+    },
+    "legacy": {
+      "manifest": "tools/emulation/fixtures/olmblur_worker32_legacy/manifest.json",
+      "manifest_sha256": "53b4f553c3ebc6ad81c4562f251c4624ff55383fcef89c8de4db1e4674227cf5",
+      "production_source": "core/olmblur_worker32_legacy.cpp",
+      "production_source_sha256": "cb861b3dcc572cb2df029ce642c2d7790365e9c92eb81d4735f2b78e71d5f4c3",
+      "replay": "tools/emulation/replay_olmblur_worker32_legacy.cpp",
+      "replay_sha256": "fb4b6813efa26fd68042e9c4a2fa3438a3cee5f2c92e2c42bfaf7e6f42a7924d",
+      "smoke": "refs/scripts/smoke_olmblur_worker32_legacy.py"
+    }
+  },
+  "cases": [
+    {"case": "case0001", "legacy": 0, "params": {"blur_amount": 129.4, "smoothness": 100.0, "repeat": 1, "bias_direction": 1}, "fixture": "32bpc_nonlegacy_case0001_repeat1_large_radius", "source_sha256": "9bd827bc4210a6470e8ee9f03de25f349e77b33148791252b2775a703a876166", "expected_sha256": "1a3e3b5cf75b15d4c18cf578e3d09de5ee602224b1953630d442991d89a14222", "production_replay": "exact"},
+    {"case": "case0002", "legacy": 0, "params": {"blur_amount": 129.4, "smoothness": 100.0, "repeat": 2, "bias_direction": 2}, "fixture": "32bpc_nonlegacy_case0002_repeat2_large_radius_reverse", "source_sha256": "9bd827bc4210a6470e8ee9f03de25f349e77b33148791252b2775a703a876166", "expected_sha256": "361449701b209551690433556bcd8e467ac373ef8fcac939d21b6dd9de7d628d", "production_replay": "exact"},
+    {"case": "case0003", "legacy": 1, "params": {"blur_amount": 248.6, "smoothness": 100.0, "repeat": 10, "bias_direction": 1}, "fixture": "32bpc_legacy_case0003_repeat10_full24", "source_sha256": "9bd827bc4210a6470e8ee9f03de25f349e77b33148791252b2775a703a876166", "expected_sha256": "4f955aa9b2ee1275849c06ccc66574607a3e68b9287c7c262558d4cabc3b7bc2", "production_replay": "exact"},
+    {"case": "case0004", "legacy": 0, "params": {"blur_amount": 125.6, "smoothness": 100.0, "repeat": 4, "bias_direction": 1}, "fixture": "32bpc_nonlegacy_case0004_repeat4_full24", "source_sha256": "9bd827bc4210a6470e8ee9f03de25f349e77b33148791252b2775a703a876166", "expected_sha256": "1e7c3275a17949586fdc804a490949e07a6a40c39b23f3191bf5fca923a463a5", "production_replay": "exact"},
+    {"case": "case0005", "legacy": 0, "params": {"blur_amount": 5.0, "smoothness": 100.0, "repeat": 2, "bias_direction": 1}, "fixture": "32bpc_nonlegacy_case0005_repeat2_full24", "source_sha256": "9bd827bc4210a6470e8ee9f03de25f349e77b33148791252b2775a703a876166", "expected_sha256": "285548bcef5e1776f0bf643e8b433c37729d02355597491def4f24716ed459c4", "production_replay": "exact"},
+    {"case": "case0006", "legacy": 0, "params": {"blur_amount": 5.0, "smoothness": 100.0, "repeat": 10, "bias_direction": 1}, "fixture": "32bpc_nonlegacy_case0006_repeat10_full24", "source_sha256": "9bd827bc4210a6470e8ee9f03de25f349e77b33148791252b2775a703a876166", "expected_sha256": "d5efd0d450aeedd882d99314c4e527af1382549cd409642ed34d15a41a140663", "production_replay": "exact"},
+    {"case": "case0007", "legacy": 1, "params": {"blur_amount": 5.0, "smoothness": 100.0, "repeat": 1, "bias_direction": 1}, "fixture": "32bpc_legacy_case0007_repeat1_full24", "source_sha256": "9bd827bc4210a6470e8ee9f03de25f349e77b33148791252b2775a703a876166", "expected_sha256": "449be0449b3ea9095ed20dd299569a0f57751bf20fd84b1704c4bc4760735343", "production_replay": "exact"}
+  ]
+}

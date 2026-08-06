@@ -1,0 +1,49 @@
+{
+  "schema": "olmblur.parameter-branch-proof/1",
+  "plugin": "OLMBlur",
+  "status": "actual_aex_worker_to_mac_production_exact",
+  "branch": {
+    "bit_depth": 8,
+    "legacy": 1,
+    "parameter": "Blur Smoothness",
+    "value": 43.75,
+    "production_path": "PF8 Legacy sigma-base and uint8 final-store path"
+  },
+  "params": {
+    "blur_amount": 9.0,
+    "smoothness": 43.75,
+    "repeat": 3,
+    "bias_direction": 2
+  },
+  "fixture": {
+    "id": "8bpc_legacy_smoothness43_75_byte_boundaries",
+    "dimensions": [19, 13],
+    "bytes": 988,
+    "oracle": "actual AEX FUN_180007300",
+    "oracle_binary_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+    "source_sha256": "81a9e964e8e74810d0cc4d4dbf5d3522cfc5f1513f6d50b306c3628ddfda39f3",
+    "expected_sha256": "67037ca39d5ffad4a2ae21a1a846cab4778c6c064c5b2e0ee355db62756ebfdf",
+    "instructions": 364445,
+    "callback_count": 48,
+    "typed_source_byte_counts": {"0": 158, "1": 168, "127": 164, "128": 168, "254": 157, "255": 173},
+    "typed_expected_byte_counts": {"0": 168, "1": 41, "127": 88, "128": 91, "254": 41, "255": 41},
+    "partial_alpha_values": [1, 127, 128, 254]
+  },
+  "regression": {
+    "manifest": "tools/emulation/fixtures/olmblur_worker8_legacy/manifest.json",
+    "manifest_sha256": "144d0f8bfdccc6d8d6aa48344addb4dc9b10b280cbdfd585059c35d9f2bf4fa1",
+    "production_source": "core/olmblur_worker8_legacy.cpp",
+    "production_source_sha256": "537b416da3b3f8fca50a2bdf90ff01f8cdb7d8b7369a439e7bf5ce573cf943a4",
+    "replay": "tools/emulation/replay_olmblur_worker8_legacy.cpp",
+    "replay_sha256": "1d47b10bb5b1e7cc03f4a80a56596397347cbfa062212f9cf3d9194dd11e380e",
+    "comparison": "all 988 bytes exact"
+  },
+  "evidence_boundary": "Executes the actual Windows AEX PF8 Legacy worker with a complete native uint8 A,R,G,B buffer and bounded host-suite shims, then replays that buffer through the Mac production PF8 Legacy worker. The byte pattern is independently constructed around 0/1/127/128/254/255 and is not a quantized PF16 or PF32 fixture. It does not execute AE parameter checkout/materialization or claim AE-host exactness.",
+  "remaining_gaps": [
+    "AE-host parameter materialization for non-default Smoothness remains unproven.",
+    "Post-restart loading and rendering with the installed Universal bundle remain pending.",
+    "NonLegacy recovered workers accept but do not consume Smoothness; public entrypoint plumbing remains a separate question."
+  ],
+  "production_changed": false,
+  "universal_rebuild_or_install_performed": false
+}

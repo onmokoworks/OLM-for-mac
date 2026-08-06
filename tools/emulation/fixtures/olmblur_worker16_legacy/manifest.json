@@ -46,6 +46,22 @@
       "expected_sha256": "28b16efe8ef4535661f1f514ff69195e944d1c071d78df1e8f5a8034cbcdc346",
       "instructions": 196858,
       "callback_count": 48
+    },
+    {
+      "id": "16bpc_legacy_smoothness62_5_word_boundaries",
+      "width": 20,
+      "height": 16,
+      "blur_amount": 7.0,
+      "smoothness": 62.5,
+      "repeat": 4,
+      "bias_direction": 1,
+      "pattern": "word_boundaries",
+      "coverage_gap": "first retained PF16 fixture with non-default Blur Smoothness and explicit 0/1/32767/32768 typed words",
+      "claim_boundary": "actual AEX worker FUN_180005f20 to Mac production worker exact; no AE-host parameter materialization claim",
+      "source_sha256": "d73bbdd3cf1872f20883fa596615702552eadf308e40552763d1eaa698007366",
+      "expected_sha256": "7ac117f2430da7a8d132c1f5318b89218cefa0601100173a99294b1ea175b305",
+      "instructions": 425837,
+      "callback_count": 48
     }
   ]
 }

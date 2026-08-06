@@ -18,6 +18,11 @@ const Case kCases[] = {
     {"32bpc_nonlegacy_amount1256_repeat4", 4, 3, 125.6f, 100.0f, 4, 1},
     {"32bpc_nonlegacy_amount5_repeat2", 7, 5, 5.0f, 100.0f, 2, 1},
     {"32bpc_nonlegacy_amount5_repeat10", 7, 5, 5.0f, 100.0f, 10, 1},
+    {"32bpc_nonlegacy_case0001_repeat1_large_radius", 24, 24, 129.4f, 100.0f, 1, 1},
+    {"32bpc_nonlegacy_case0002_repeat2_large_radius_reverse", 24, 24, 129.4f, 100.0f, 2, 2},
+    {"32bpc_nonlegacy_case0004_repeat4_full24", 24, 24, 125.6f, 100.0f, 4, 1},
+    {"32bpc_nonlegacy_case0005_repeat2_full24", 24, 24, 5.0f, 100.0f, 2, 1},
+    {"32bpc_nonlegacy_case0006_repeat10_full24", 24, 24, 5.0f, 100.0f, 10, 1},
 };
 
 std::vector<std::uint8_t> read_file(const std::string& path) {

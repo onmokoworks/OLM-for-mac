@@ -23,6 +23,10 @@ const Case kCases[] = {
     {"8bpc_legacy_large_radius_reverse", 18, 18, 11.0f, 100.0f, 3, 2, false},
     {"8bpc_legacy_mixed_alpha_reverse", 18, 12, 3.0f, 100.0f, 2, 2, true},
     {"8bpc_legacy_case0003_radius248_boundary_gradient", 6, 6, 248.6f, 100.0f, 10, 1, false},
+    {"8bpc_legacy_case0003_repeat10_large_radius_full12", 12, 12, 248.6f, 100.0f, 10, 1, false},
+    {"8bpc_legacy_case0007_repeat1", 16, 16, 5.0f, 100.0f, 1, 1, false},
+    {"8bpc_legacy_bias_reverse_radius1_boundary", 10, 8, 1.0f, 100.0f, 2, 2, false},
+    {"8bpc_legacy_smoothness43_75_byte_boundaries", 19, 13, 9.0f, 43.75f, 3, 2, true},
 };
 
 std::vector<std::uint8_t> read_file(const std::string& path) {

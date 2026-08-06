@@ -35,6 +35,24 @@ CASES = [
     {"id": "32bpc_legacy_declared_5_mixed_alpha", "width": 9, "height": 7,
      "blur_amount": 5.0, "smoothness": 100.0, "repeat": 10,
      "bias_direction": 1, "mixed_alpha": True},
+    {"id": "32bpc_legacy_case0007_repeat1_full24", "width": 24, "height": 24,
+     "blur_amount": 5.0, "smoothness": 100.0, "repeat": 1,
+     "bias_direction": 1, "formal_case": "case0007",
+     "coverage_delta": "24x24 complete buffer; dimensions and repeat count differ "
+                       "from the existing 9x7 amount-5 Legacy fixture"},
+    {"id": "32bpc_legacy_case0003_repeat10_full24", "width": 24, "height": 24,
+     "blur_amount": 248.6, "smoothness": 100.0, "repeat": 10,
+     "bias_direction": 1, "formal_case": "case0003",
+     "coverage_delta": "24x24 complete buffer; expands the existing 7x5 "
+                       "amount-248.6 Legacy boundary fixture",
+     "max_instructions": 100_000_000},
+    {"id": "32bpc_legacy_smoothness37_5_full24", "width": 24, "height": 24,
+     "blur_amount": 11.0, "smoothness": 37.5, "repeat": 3,
+     "bias_direction": 2,
+     "coverage_gap": "first retained PF32 fixture with non-default Blur Smoothness; "
+                     "exercises the Legacy sigma-base parameter path",
+     "claim_boundary": "actual AEX worker FUN_1800086d0 to Mac production "
+                       "worker exact; no AE-host or public-entry materialization claim"},
 ]
 
 
@@ -115,9 +133,14 @@ def run_case(case: dict) -> tuple[bytes, dict]:
     loader.write_bytes(params + 0x28, struct.pack("<I", case["repeat"]))
     loader.write_bytes(params + 0x2C, struct.pack("<I", case["bias_direction"]))
     loader.write_bytes(params + 0x30, b"\x01")
+    max_instructions = case.get("max_instructions", 10_000_000)
     result = loader.call_function(WORKER, int_args=[context, source_world,
                                                      output_world, params],
-                                  max_instructions=10_000_000)
+                                  max_instructions=max_instructions)
+    if result["instructions"] >= max_instructions:
+        raise RuntimeError(
+            f"{case['id']} reached instruction cap {max_instructions}"
+        )
     return loader.read_bytes(output_data, len(source)), {
         "instructions": result["instructions"], "callback_count": len(events)}
 

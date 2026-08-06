@@ -37,6 +37,53 @@ CASES = [
         "formal_width": 960,
         "formal_height": 540,
     },
+    {
+        "id": "8bpc_legacy_case0003_repeat10_large_radius_full12",
+        "width": 12,
+        "height": 12,
+        "blur_amount": 248.6,
+        "smoothness": 100.0,
+        "repeat": 10,
+        "bias_direction": 1,
+        "boundary_gradient": True,
+        "formal_case": "case0003",
+        "max_instructions": 30_000_000,
+    },
+    {
+        "id": "8bpc_legacy_case0007_repeat1",
+        "width": 16,
+        "height": 16,
+        "blur_amount": 5.0,
+        "smoothness": 100.0,
+        "repeat": 1,
+        "bias_direction": 1,
+        "formal_case": "case0007",
+    },
+    {
+        "id": "8bpc_legacy_bias_reverse_radius1_boundary",
+        "width": 10,
+        "height": 8,
+        "blur_amount": 1.0,
+        "smoothness": 100.0,
+        "repeat": 2,
+        "bias_direction": 2,
+        "boundary_gradient": True,
+        "branch": "legacy-bias-reverse-radius1-boundary",
+    },
+    {
+        "id": "8bpc_legacy_smoothness43_75_byte_boundaries",
+        "width": 19,
+        "height": 13,
+        "blur_amount": 9.0,
+        "smoothness": 43.75,
+        "repeat": 3,
+        "bias_direction": 2,
+        "pattern": "byte_boundaries",
+        "coverage_gap": "first retained PF8 fixture with non-default Blur "
+                        "Smoothness and native 0/1/127/128/254/255 byte boundaries",
+        "claim_boundary": "actual AEX worker FUN_180007300 to Mac production "
+                          "worker exact; no AE-host parameter materialization claim",
+    },
 ]
 
 
@@ -47,11 +94,17 @@ def alloc(loader: AexLoader, data: bytes) -> int:
 
 
 def source_bytes(width: int, height: int, mixed_alpha: bool = False,
-                 boundary_gradient: bool = False) -> bytes:
+                 boundary_gradient: bool = False, pattern: str = "") -> bytes:
     data = bytearray()
     for y in range(height):
         for x in range(width):
-            if mixed_alpha:
+            if pattern == "byte_boundaries":
+                values = (0, 1, 127, 128, 254, 255)
+                alpha = values[(x + 5 * y) % len(values)]
+                rgb = (values[(2 * x + y + 1) % len(values)],
+                       values[(x + 3 * y + 2) % len(values)],
+                       values[(5 * x + 2 * y + 3) % len(values)])
+            elif mixed_alpha:
                 boundary = x in (0, width - 1) or y in (0, height - 1)
                 hole = (x * 7 + y * 11) % 13 == 0
                 alpha = 0 if boundary or hole else (32 + ((x * 29 + y * 17) % 4) * 64)
@@ -74,7 +127,8 @@ def source_bytes(width: int, height: int, mixed_alpha: bool = False,
 def run_case(case: dict) -> tuple[bytes, dict]:
     width, height = case["width"], case["height"]
     source = source_bytes(width, height, case.get("mixed_alpha", False),
-                         case.get("boundary_gradient", False))
+                         case.get("boundary_gradient", False),
+                         case.get("pattern", ""))
     loader = AexLoader(str(AEX), verbose=False, fast=True)
     loader.register_libm_impls(max_threads=1)
 
@@ -112,8 +166,9 @@ def run_case(case: dict) -> tuple[bytes, dict]:
     loader.write_bytes(params + 0x28, struct.pack("<I", case["repeat"]))
     loader.write_bytes(params + 0x2C, struct.pack("<I", case["bias_direction"]))
     loader.write_bytes(params + 0x30, b"\x01")
-    result = loader.call_function(WORKER, int_args=[context, source_world, output_world, params], max_instructions=MAX_INSTRUCTIONS)
-    if result["instructions"] >= MAX_INSTRUCTIONS:
+    max_instructions = case.get("max_instructions", MAX_INSTRUCTIONS)
+    result = loader.call_function(WORKER, int_args=[context, source_world, output_world, params], max_instructions=max_instructions)
+    if result["instructions"] >= max_instructions:
         raise RuntimeError(f"AEX worker hit instruction cap for {case['id']}")
     return loader.read_bytes(output_data, len(source)), {"instructions": result["instructions"], "callbacks": events}
 
@@ -135,7 +190,8 @@ def export() -> None:
         directory = FIXTURES / case["id"]
         directory.mkdir(exist_ok=True)
         source = source_bytes(case["width"], case["height"], case.get("mixed_alpha", False),
-                              case.get("boundary_gradient", False))
+                              case.get("boundary_gradient", False),
+                              case.get("pattern", ""))
         (directory / "source_argb.bin").write_bytes(source)
         (directory / "expected_argb.bin").write_bytes(output)
         entry = dict(case)

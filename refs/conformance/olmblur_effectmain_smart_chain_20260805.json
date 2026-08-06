@@ -1,0 +1,40 @@
+{
+  "schema": "olmblur.effectmain-smart-chain-proof/1",
+  "status": "pass",
+  "chain": [
+    "EffectMain(PF_Cmd_SMART_PRE_RENDER)",
+    "checkout_layer callback",
+    "EffectMain(PF_Cmd_SMART_RENDER)",
+    "checkout_layer_pixels callback",
+    "checkout_output callback",
+    "five PF_CHECKOUT_PARAM calls",
+    "BlurRender PF8 NonLegacy"
+  ],
+  "result": {
+    "pre_err": 0,
+    "smart_err": 0,
+    "pre_render_rect_exact": true,
+    "callback_contract_exact": true,
+    "parameter_checkouts": 5,
+    "mismatched_active_bytes": 0,
+    "alpha_mismatches": 0,
+    "padding_mismatches": 0
+  },
+  "fixture": {
+    "id": "8bpc_nonlegacy_basic",
+    "source_sha256": "cd47374c1febd0b96676975e0ec02e97b62417a54f9d351995a8e356f4953c8c",
+    "expected_sha256": "b76687e43911deaf3add6c025f955ae852d599b264e567f0c1c1201939ed823b"
+  },
+  "installed_identity": {
+    "binary": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMBlur.plugin/Contents/MacOS/OLMBlur",
+    "binary_sha256": "dd64362e6071cfd93e92f3a4853782752aeb023c54671773bfedb0c496e8afc7",
+    "architectures": ["arm64", "x86_64"],
+    "install_identity_sha256": "de40690db4fca843720e92a55a3152f69d1563da0d8df147bf6eda59d2caa20e",
+    "binding": "fail-closed preflight before compiling or executing the synthetic chain"
+  },
+  "regression": {
+    "path": "tools/emulation/test_olmblur_effectmain_smart_chain_20260805.py",
+    "sha256": "173b47111b25f81b174d964a20762a12113c1ce8176de0dd532a4e7c0ed1063c"
+  },
+  "evidence_boundary": "This executes Mac production EffectMain from current source with AE-free synthetic suites and connects SMART_PRE_RENDER through SMART_RENDER to BlurRender. It does not execute the Windows AEX exported EffectMain and does not claim an AE-host load or render."
+}

@@ -1,0 +1,93 @@
+{
+  "schema": "olmblur.effectmain-completion-matrix/1",
+  "plugin": "OLMBlur",
+  "oracle_binary_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+  "public_commands": [
+    {"command": "PF_Cmd_ABOUT", "production_implemented": true, "actual_aex_bounded_invocation": false, "status": "source_only"},
+    {"command": "PF_Cmd_GLOBAL_SETUP", "production_implemented": true, "actual_aex_bounded_invocation": false, "status": "source_only"},
+    {"command": "PF_Cmd_PARAMS_SETUP", "production_implemented": true, "actual_aex_bounded_invocation": false, "status": "static_parameter_schema_only"},
+    {"command": "PF_Cmd_RENDER", "production_implemented": true, "actual_aex_bounded_invocation": false, "status": "entrypoint_gap"},
+    {"command": "PF_Cmd_SMART_PRE_RENDER", "production_implemented": true, "production_ae_free_synthetic_invocation": true, "actual_aex_bounded_invocation": false, "status": "production_effectmain_synthetic_exact"},
+    {"command": "PF_Cmd_SMART_RENDER", "production_implemented": true, "production_ae_free_synthetic_invocation": true, "actual_aex_bounded_invocation": false, "status": "production_effectmain_to_blur_render_synthetic_exact"}
+  ],
+  "render_cells": [
+    {"bit_depth": 8, "legacy": 0, "actual_worker_exact": true, "production_blur_render_dispatch_exact": true, "evidence": "tools/emulation/test_olmblur_pf8_nonlegacy_source_aex_adapter_20260805.py", "status": "closed_to_production_render_dispatch"},
+    {"bit_depth": 8, "legacy": 1, "actual_worker_exact": true, "production_blur_render_dispatch_exact": true, "evidence": "tools/emulation/test_olmblur_pf8_legacy_source_aex_adapter_20260805.py", "status": "closed_to_production_render_dispatch"},
+    {"bit_depth": 16, "legacy": 0, "actual_worker_exact": true, "production_blur_render_dispatch_exact": true, "evidence": "tools/emulation/test_olmblur_pf16_nonlegacy_source_aex_adapter_20260805.py", "status": "closed_to_production_render_dispatch"},
+    {"bit_depth": 16, "legacy": 1, "actual_worker_exact": true, "production_blur_render_dispatch_exact": true, "evidence": "tools/emulation/test_olmblur_pf16_legacy_source_aex_adapter_20260805.py", "status": "closed_to_production_render_dispatch"},
+    {"bit_depth": 32, "legacy": 0, "actual_worker_exact": true, "production_blur_render_dispatch_exact": true, "evidence": "tools/emulation/test_olmblur_32bpc_source_aex_adapter_20260717.py", "status": "closed_to_production_render_dispatch"},
+    {"bit_depth": 32, "legacy": 1, "actual_worker_exact": true, "production_blur_render_dispatch_exact": true, "evidence": "tools/emulation/test_olmblur_32bpc_source_aex_adapter_20260717.py", "status": "closed_to_production_render_dispatch"}
+  ],
+  "parameter_branches": [
+    {"parameter": "Blur Amount", "actual_worker_to_production_exact": true, "depths": [8, 16, 32], "families": ["Legacy", "NonLegacy"]},
+    {"parameter": "Number of Repeat", "actual_worker_to_production_exact": true, "depths": [8, 16, 32], "families": ["Legacy", "NonLegacy"]},
+    {"parameter": "Bias Direction", "actual_worker_to_production_exact": true, "values": [1, 2], "depths": [8, 16, 32], "families": ["Legacy", "NonLegacy"]},
+    {"parameter": "Legacy", "actual_worker_to_production_exact": true, "values": [0, 1], "depths": [8, 16, 32]},
+    {"parameter": "Blur Smoothness", "actual_worker_to_production_exact": true, "nondefault_values": {"8": 43.75, "16": 62.5, "32": 37.5}, "families": ["Legacy"], "nonlegacy_note": "recovered NonLegacy workers accept the record but do not consume this field"}
+  ],
+  "newly_closed": {
+    "cell": "PF8 NonLegacy production BlurRender dispatch",
+    "actual_fixture_manifest": "tools/emulation/fixtures/olmblur_worker_orchestration/manifest.json",
+    "manifest_sha256": "40b3225900bb679e03c1a675c1a3877df2335c5822731ae0fe7bed7edcee9b52",
+    "production_source": "mac/OLMBlur/OLMBlur.cpp",
+    "production_source_sha256": "55def455a29f72c04748a784bcd598ddeecb84ec25d475376ea93b6e838e3b02",
+    "regression": "tools/emulation/test_olmblur_pf8_nonlegacy_source_aex_adapter_20260805.py",
+    "regression_sha256": "c023d6623e3a3212702364c6ae1d1951d7ccd9382096a092783fc8857aefbe9f",
+    "cases": 4,
+    "result": "all active bytes exact, source alpha exact, row padding untouched"
+  },
+  "subsequently_closed": {
+    "cell": "PF16 Legacy production BlurRender dispatch",
+    "actual_fixture_manifest": "tools/emulation/fixtures/olmblur_worker16_legacy/manifest.json",
+    "manifest_sha256": "11ac4c8600f41ce8e3dcbb6aa41999817a3d4dc4c089d563e8f3b1eeb30b53d6",
+    "production_source": "mac/OLMBlur/OLMBlur.cpp",
+    "production_source_sha256": "55def455a29f72c04748a784bcd598ddeecb84ec25d475376ea93b6e838e3b02",
+    "regression": "tools/emulation/test_olmblur_pf16_legacy_source_aex_adapter_20260805.py",
+    "regression_sha256": "77e1bf5f6a264540aed73df8129a652627203bcef394e314e3fc9069bc8f18f9",
+    "cases": 4,
+    "result": "all active uint16 bytes exact, two-byte alpha exact, 23-byte row padding untouched"
+  },
+  "latest_closed": {
+    "cell": "PF8 Legacy production BlurRender dispatch",
+    "actual_fixture_manifest": "tools/emulation/fixtures/olmblur_worker8_legacy/manifest.json",
+    "manifest_sha256": "144d0f8bfdccc6d8d6aa48344addb4dc9b10b280cbdfd585059c35d9f2bf4fa1",
+    "production_source": "mac/OLMBlur/OLMBlur.cpp",
+    "production_source_sha256": "55def455a29f72c04748a784bcd598ddeecb84ec25d475376ea93b6e838e3b02",
+    "regression": "tools/emulation/test_olmblur_pf8_legacy_source_aex_adapter_20260805.py",
+    "regression_sha256": "a578b0c04ec8b66fdde2382bc8811f55fb1c2ef21bcf8968dfd885890291892b",
+    "cases": 8,
+    "result": "all active uint8 bytes exact, one-byte alpha exact, 17-byte row padding untouched"
+  },
+  "final_typed_dispatch_closed": {
+    "cell": "PF16 NonLegacy production BlurRender dispatch",
+    "actual_fixture_manifest": "tools/emulation/fixtures/olmblur_worker16_nonlegacy/manifest.json",
+    "manifest_sha256": "2307491879a51887d1774fc02a3fbe03d825d9893d4e028e0a7269c6e8ca3ab9",
+    "production_source": "mac/OLMBlur/OLMBlur.cpp",
+    "production_source_sha256": "55def455a29f72c04748a784bcd598ddeecb84ec25d475376ea93b6e838e3b02",
+    "regression": "tools/emulation/test_olmblur_pf16_nonlegacy_source_aex_adapter_20260805.py",
+    "regression_sha256": "fcf8699758dc36f8aa097c9d62e8bc681f84f3593827a86c4b01221c1d843566",
+    "cases": 2,
+    "result": "all active uint16 bytes exact, two-byte alpha exact, 23-byte row padding untouched"
+  },
+  "production_effectmain_smart_chain": {
+    "regression": "tools/emulation/test_olmblur_effectmain_smart_chain_20260805.py",
+    "regression_sha256": "173b47111b25f81b174d964a20762a12113c1ce8176de0dd532a4e7c0ed1063c",
+    "chain": ["EffectMain(PF_Cmd_SMART_PRE_RENDER)", "synthetic checkout_layer", "EffectMain(PF_Cmd_SMART_RENDER)", "five synthetic parameter checkouts", "BlurRender(PF8 NonLegacy)"],
+    "fixture": "tools/emulation/fixtures/olmblur_worker_orchestration/8bpc_nonlegacy_basic",
+    "source_sha256": "cd47374c1febd0b96676975e0ec02e97b62417a54f9d351995a8e356f4953c8c",
+    "expected_sha256": "b76687e43911deaf3add6c025f955ae852d599b264e567f0c1c1201939ed823b",
+    "installed_binary_sha256": "dd64362e6071cfd93e92f3a4853782752aeb023c54671773bfedb0c496e8afc7",
+    "installed_architectures": ["arm64", "x86_64"],
+    "result": "pre/render errors zero; rect and callback contract exact; active output and alpha exact; PF_COPY row padding exact",
+    "boundary": "Mac production EffectMain compiled from current source with synthetic suites; not an actual-AEX EffectMain or AE-host invocation"
+  },
+  "evidence_boundary": "Worker rows execute actual AEX workers through bounded host-suite shims. Production dispatch rows compile and call Mac BlurRender directly with typed PF worlds and retained actual-AEX outputs. They do not invoke the exported EffectMain symbol or AE parameter checkout, so public-command cells remain explicitly separate.",
+  "typed_blur_render_remaining_gaps": [],
+  "largest_remaining_gaps": [
+    "A bounded actual-AEX exported EffectMain command invocation with parameter checkout and SMART_RENDER callbacks.",
+    "No typed Mac BlurRender adapter cell remains: PF8/PF16/PF32 Legacy and NonLegacy are all closed against retained actual-AEX fixtures.",
+    "ABOUT, GLOBAL_SETUP, PARAMS_SETUP, and RENDER lack standalone actual-AEX command fixtures."
+  ],
+  "production_changed": false,
+  "universal_rebuild_or_install_performed": false
+}

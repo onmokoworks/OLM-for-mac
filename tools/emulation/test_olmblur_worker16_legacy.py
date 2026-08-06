@@ -22,14 +22,28 @@ CASES = [
     {"id": "16bpc_legacy_basic", "width": 12, "height": 12, "blur_amount": 3.0, "smoothness": 100.0, "repeat": 2, "bias_direction": 1},
     {"id": "16bpc_legacy_large_radius_reverse", "width": 18, "height": 18, "blur_amount": 11.0, "smoothness": 100.0, "repeat": 3, "bias_direction": 2},
     {"id": "16bpc_legacy_mixed_alpha_reverse", "width": 18, "height": 12, "blur_amount": 3.0, "smoothness": 100.0, "repeat": 2, "bias_direction": 2, "mixed_alpha": True},
+    {"id": "16bpc_legacy_smoothness62_5_word_boundaries", "width": 20,
+     "height": 16, "blur_amount": 7.0, "smoothness": 62.5,
+     "repeat": 4, "bias_direction": 1, "pattern": "word_boundaries",
+     "coverage_gap": "first retained PF16 fixture with non-default Blur "
+                     "Smoothness and explicit 0/1/32767/32768 typed words",
+     "claim_boundary": "actual AEX worker FUN_180005f20 to Mac production "
+                       "worker exact; no AE-host parameter materialization claim"},
 ]
 
 
-def source_bytes(width: int, height: int, mixed_alpha: bool = False) -> bytes:
+def source_bytes(width: int, height: int, mixed_alpha: bool = False,
+                 pattern: str = "") -> bytes:
     data = bytearray()
     for y in range(height):
         for x in range(width):
-            if mixed_alpha:
+            if pattern == "word_boundaries":
+                words = (0, 1, 32767, 32768)
+                alpha = words[(x + 3 * y) % len(words)]
+                rgb = (words[(x + y + 1) % len(words)],
+                       words[(2 * x + y + 2) % len(words)],
+                       words[(x + 2 * y + 3) % len(words)])
+            elif mixed_alpha:
                 boundary = x in (0, width - 1) or y in (0, height - 1)
                 hole = (x * 7 + y * 11) % 13 == 0
                 alpha = 0 if boundary or hole else 8192 + ((x * 29 + y * 17) % 4) * 16384
@@ -51,7 +65,8 @@ def alloc(loader: AexLoader, data: bytes) -> int:
 
 def run_case(case: dict) -> tuple[bytes, dict]:
     width, height = case["width"], case["height"]
-    source = source_bytes(width, height, case.get("mixed_alpha", False))
+    source = source_bytes(width, height, case.get("mixed_alpha", False),
+                          case.get("pattern", ""))
     loader = AexLoader(str(AEX), verbose=False, fast=True)
     loader.register_libm_impls(max_threads=1)
     loader.register_import_impl("pow", lambda uc, args: (loader.write_xmm_f64(0, math.pow(loader.read_xmm_f64(0), loader.read_xmm_f64(1))) or 0))
@@ -79,7 +94,10 @@ def run_case(case: dict) -> tuple[bytes, dict]:
     loader.write_bytes(params + 0x28, struct.pack("<I", case["repeat"]))
     loader.write_bytes(params + 0x2C, struct.pack("<I", case["bias_direction"]))
     loader.write_bytes(params + 0x30, b"\x01")
-    result = loader.call_function(ENTRY, int_args=[context, source_world, output_world, params], max_instructions=12_000_000)
+    result = loader.call_function(
+        ENTRY, int_args=[context, source_world, output_world, params],
+        max_instructions=case.get("max_instructions", 12_000_000),
+    )
     return loader.read_bytes(output_data, len(source)), {"instructions": result["instructions"], "callbacks": events}
 
 
@@ -87,7 +105,9 @@ def export() -> None:
     FIXTURES.mkdir(parents=True, exist_ok=True)
     manifest = {"schema": "olm.aex.cpu-fixture/1", "plugin": "OLMBlur", "binary_sha256": hashlib.sha256(AEX.read_bytes()).hexdigest(), "entry": hex(ENTRY), "bit_depth": 16, "legacy": 1, "pixel_layout": "little-endian A,R,G,B", "cases": []}
     for case in CASES:
-        source = source_bytes(case["width"], case["height"], case.get("mixed_alpha", False))
+        source = source_bytes(case["width"], case["height"],
+                              case.get("mixed_alpha", False),
+                              case.get("pattern", ""))
         output, run = run_case(case)
         directory = FIXTURES / case["id"]
         directory.mkdir(exist_ok=True)

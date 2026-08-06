@@ -19,6 +19,8 @@ struct Case {
 const Case kCases[] = {
     {"8bpc_nonlegacy_basic", 12, 12, 3.0f, 2, 1},
     {"8bpc_nonlegacy_large_radius", 18, 18, 11.0f, 3, 2},
+    {"8bpc_nonlegacy_case0001_repeat1_large_radius", 24, 24, 129.4f, 1, 1},
+    {"8bpc_nonlegacy_case0002_repeat2_large_radius_reverse", 24, 24, 129.4f, 2, 2},
 };
 
 std::vector<std::uint8_t> read_file(const std::string& path) {

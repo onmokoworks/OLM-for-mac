@@ -26,6 +26,7 @@ from test_olmblur_worker32_nonlegacy import (  # noqa: E402
 
 
 EXPECTED_AEX_SHA256 = "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+AUTHORITATIVE_EXACT_RECORD = ROOT / "refs/conformance/olmblur_32bpc_case0001_ae_exact_20260727.json"
 CASE = {
     "id": "32bpc_nonlegacy_amount1294_repeat1_bias1",
     "width": 4,
@@ -158,6 +159,10 @@ def locate_windows_pair(root: Path) -> tuple[Path, Path]:
 def build_report(windows_root: Path, mac_root: Path) -> dict:
     if sha256(AEX) != EXPECTED_AEX_SHA256:
         raise RuntimeError("current actual-AEX hash does not match the pinned oracle")
+    exact_record = json.loads(AUTHORITATIVE_EXACT_RECORD.read_text(encoding="utf-8"))
+    exact_loaded_sha = exact_record["windows"]["loaded_plugin_proof"]["aex_sha256"]
+    if not exact_record.get("ae_exact_claim") or exact_loaded_sha != EXPECTED_AEX_SHA256:
+        raise RuntimeError("authoritative case_0001 AE-exact record is not bound to the pinned AEX")
     windows_effect, windows_control = locate_windows_pair(windows_root)
     mac_effect = mac_root / "olmblur__case_0001__effect_on.exr"
     mac_control = mac_root / "olmblur__case_0001__no_effect.exr"
@@ -237,17 +242,20 @@ def build_report(windows_root: Path, mac_root: Path) -> dict:
             "bounded_current_aex_repeat1_equals_current_core": actual_aex_output == bounded_core_output,
             "bounded_actual_aex_instructions": actual_aex_run["instructions"],
             "bounded_actual_aex_callback_count": actual_aex_run["callback_count"],
+            "authoritative_same_aex_case0001_ae_exact": True,
+            "authoritative_exact_record": str(AUTHORITATIVE_EXACT_RECORD.relative_to(ROOT)),
+            "authoritative_exact_record_sha256": sha256(AUTHORITATIVE_EXACT_RECORD),
         },
         "hypotheses": {
             "channel_mapping": "rejected",
             "source_stride": "rejected",
             "simd_lane": "rejected_at_worker_boundary_for_the_exact_parameter_tuple",
-            "reference_provenance": "only_remaining_live_explanation; not proven because the Windows loaded-AEX hash and environment attestations are missing",
+            "reference_selection": "retained 20260710 Windows EXR conflicts with the later hash-bound 20260727 same-AEX AE-exact record",
         },
-        "classification": "reference_provenance_unresolved",
+        "classification": "superseded_reference_conflict",
         "ae_exact_claim": False,
         "plugin_source_change": False,
-        "next_required_evidence": "same-run Windows effect/control FLOAT EXR bound to loaded OLMBlur AEX SHA-256 and complete color/output environment readback",
+        "next_required_evidence": "restore the 20260727 authoritative effect/control artifacts, or recapture that exact hash-bound contract; do not tune production to the superseded 20260710 EXR",
     }
 
 
@@ -282,18 +290,17 @@ with that core.
 | channel mapping | rejected | no-op is exact, G/B remain zero, and diverse-ARGB actual-AEX fixtures already pass |
 | source stride | rejected | full 1920x1080 current-core output equals the Mac EXR; padded-row adapter fixtures also pass |
 | SIMD lane | rejected at the worker boundary for this tuple | bounded current AEX and portable core are byte-exact at repeat=1 |
-| reference provenance | only live explanation | retained Windows EXR lacks loaded-AEX SHA and complete color/output attestations |
+| reference selection | superseded-reference conflict | the retained 20260710 EXR conflicts with the later hash-bound 20260727 same-AEX AE-exact record |
 
-This does **not** prove that the retained Windows reference is wrong. It means
-the current source must not be changed from this red-only artifact: all locally
-testable implementation boundaries agree with the pinned current AEX, while the
-Windows artifact cannot be bound to that AEX.
+The current source must not be changed to fit the retained 20260710 artifact:
+all locally testable implementation boundaries agree with the pinned current
+AEX, and the later authoritative same-AEX record is already cross-host exact.
 
 ## Next evidence
 
-Capture a same-run Windows effect/control FLOAT EXR pair with the loaded
-OLMBlur AEX path/SHA-256 and complete working-space, linear-light, and output
-module readback. `AE exact` remains unclaimed.
+Restore the authoritative 20260727 effect/control artifacts, or recapture that
+exact hash-bound contract.  The superseded 20260710 EXR is not a production
+tuning oracle.
 """
 
 
