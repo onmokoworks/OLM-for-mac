@@ -186,6 +186,26 @@ struct LinearEvalBase {
 	virtual float Evaluate(float t) const = 0;
 };
 
+// The Windows evaluators are scalar SSE (`SUBSS`, `MULSS`, `ADDSS`/`DIVSS`).
+// Keep every instruction boundary observable so arm64 cannot contract the
+// expressions into FMAs with a different final truncation result.
+static inline float SseSubF32(float left, float right) {
+	volatile float result = left - right;
+	return result;
+}
+static inline float SseMulF32(float left, float right) {
+	volatile float result = left * right;
+	return result;
+}
+static inline float SseDivF32(float left, float right) {
+	volatile float result = left / right;
+	return result;
+}
+static inline float SseAddF32(float left, float right) {
+	volatile float result = left + right;
+	return result;
+}
+
 // FUN_1800010c0 — LinearOffsetFunction::operator()
 struct LinearOffsetFunction : LinearEvalBase {
 	LinearOffsetFunction(float ofs, float p0) {
@@ -193,7 +213,7 @@ struct LinearOffsetFunction : LinearEvalBase {
 	}
 	float Evaluate(float t) const override {
 		// (v0 - offset) * t + offset
-		return (v0 - offset) * t + offset;
+		return SseAddF32(SseMulF32(SseSubF32(v0, offset), t), offset);
 	}
 };
 
@@ -204,7 +224,7 @@ struct LinearOffsetOneValue : LinearEvalBase {
 	}
 	float Evaluate(float t) const override {
 		if (t != DAT_18000d1f4) {
-			return (v0 - offset) * t + offset;
+			return SseAddF32(SseMulF32(SseSubF32(v0, offset), t), offset);
 		}
 		return v1;  // Win returns *(param_1 + 0x10)
 	}
@@ -220,7 +240,7 @@ struct LinearOffsetZeroOneValue : LinearEvalBase {
 			return v2;  // Win returns *(param_1 + 0x18)
 		}
 		if (t != 0.0f) {
-			return (v0 - offset) * t + offset;
+			return SseAddF32(SseMulF32(SseSubF32(v0, offset), t), offset);
 		}
 		return v1;  // Win returns *(param_1 + 0x10)
 	}
@@ -233,7 +253,7 @@ struct LinearOffsetZeroValue : LinearEvalBase {
 	}
 	float Evaluate(float t) const override {
 		if (t != 0.0f) {
-			return (v0 - offset) * t + offset;
+			return SseAddF32(SseMulF32(SseSubF32(v0, offset), t), offset);
 		}
 		return v1;  // Win returns *(param_1 + 0x10)
 	}
@@ -248,12 +268,12 @@ struct LinearThreeOffsetFunction : LinearEvalBase {
 		float fVar1 = v1;  // Win *(param_1 + 0x10)
 		if (t <= fVar1) {
 			// ((v0 - offset) / v1) * t + offset
-			return ((v0 - offset) / fVar1) * t + offset;
+			return SseAddF32(SseMulF32(SseDivF32(SseSubF32(v0, offset), fVar1), t), offset);
 		}
 		// fVar1 = (v2 - v0) / (1.0 - v1)
-		float slope = (v2 - v0) / (DAT_18000d1f4 - fVar1);
+		float slope = SseDivF32(SseSubF32(v2, v0), SseSubF32(DAT_18000d1f4, fVar1));
 		// (slope * t + v2) - slope
-		return (slope * t + v2) - slope;
+		return SseSubF32(SseAddF32(SseMulF32(slope, t), v2), slope);
 	}
 };
 
@@ -610,14 +630,35 @@ AlphaBlend8(const uint8_t *param_1, float param_2,
 	float fVar1 = DAT_18000d268;
 	float fVar6 = (float)*param_3;
 	float fVar7 = (float)*param_1;
-	float fVar3 = fVar7 * param_2 + fVar6 * param_4;
+	volatile float alpha_first = fVar7 * param_2;
+	volatile float alpha_second = fVar6 * param_4;
+	volatile float alpha_sum = alpha_first + alpha_second;
+	float fVar3 = alpha_sum;
 	float fVar5 = fVar3;
 	if (DAT_18000d268 < fVar3) fVar5 = DAT_18000d268;
 	if (fVar3 < 0.0f) fVar5 = 0.0f;
 
-	float fVar4 = ((float)param_1[1] * param_2 * fVar7 + (float)param_3[1] * param_4 * fVar6) / fVar5;
-	float fVar2 = ((float)param_1[2] * param_2 * fVar7 + (float)param_3[2] * param_4 * fVar6) / fVar5;
-	fVar6        = ((float)param_1[3] * param_2 * fVar7 + (float)param_3[3] * param_4 * fVar6) / fVar5;
+	// FUN_180002060 uses a separate MULSS for every product and ADDSS for the
+	// sum.  In particular it never contracts the final multiply/add into an
+	// FMA.  Apple Silicon otherwise contracts this expression and crosses an
+	// integer truncation boundary for a small set of PF8 pixels.  Volatile
+	// temporaries retain the actual AEX's binary32 rounding points.
+	auto weighted_channel = [](uint8_t first, float first_weight, float first_alpha,
+	                           uint8_t second, float second_weight, float second_alpha,
+	                           float divisor) -> float {
+		volatile float first_product = (float)first * first_weight;
+		first_product = first_product * first_alpha;
+		volatile float second_product = (float)second * second_weight;
+		second_product = second_product * second_alpha;
+		volatile float sum = first_product + second_product;
+		return sum / divisor;
+	};
+	float fVar4 = weighted_channel(param_1[1], param_2, fVar7,
+	                               param_3[1], param_4, fVar6, fVar5);
+	float fVar2 = weighted_channel(param_1[2], param_2, fVar7,
+	                               param_3[2], param_4, fVar6, fVar5);
+	fVar6 = weighted_channel(param_1[3], param_2, fVar7,
+	                         param_3[3], param_4, fVar6, fVar5);
 
 	float fVar3b = fVar6;
 	if (DAT_18000d268 < fVar6) fVar3b = DAT_18000d268;
@@ -2994,17 +3035,11 @@ MainInterpKernel8(RenderState *state, uintptr_t *neigh,
 		local_174 = (param_4 - param_12) / 2 + (param_4 - param_12) % 2;
 		if (param_6 == 1) {
 			iVar8 = (iVar6 - param_13) / 2 + param_13;
-			uVar12 = (uint32_t)((iVar6 - param_13) & 0x80000001);
-			if ((int)uVar12 < 0) {
-				uVar12 = (uint32_t)(((int)uVar12 - 1) | (int)0xfffffffe) + 1;
-			}
-			iVar7 = (int)uVar12 + iVar8;
+			// Same signed remainder as the x64 sign-correction sequence, without
+			// the decompiler form's signed-overflow UB on negative even deltas.
+			iVar7 = (iVar6 - param_13) % 2 + iVar8;
 			iVar9 = (iVar17 - param_14) / 2 + param_14;
-			uVar12 = (uint32_t)((iVar17 - param_14) & 0x80000001);
-			if ((int)uVar12 < 0) {
-				uVar12 = (uint32_t)(((int)uVar12 - 1) | (int)0xfffffffe) + 1;
-			}
-			iVar18 = (int)uVar12 + iVar9;
+			iVar18 = (iVar17 - param_14) % 2 + iVar9;
 			if (iVar7 == param_3) iVar7 = iVar8;
 			if (iVar18 == param_4) iVar18 = iVar9;
 			goto LAB_1800057fa_8;

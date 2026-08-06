@@ -1,0 +1,70 @@
+{
+  "actual_aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+  "claim_boundary": "The four formerly unexplained raw owner pixels are actual-AEX exact. The remaining 98 file pixels are classified only as a Windows AE PNG premultiply/unpremultiply boundary.",
+  "input_sha256": "5276e925f0e7f6de61532a6f9adc3c33a9c8e7330deb0b96eb83f16a30273776",
+  "owner_call": {
+    "center": [
+      288,
+      539
+    ],
+    "direction": 1,
+    "raw_pixels": [
+      {
+        "actual_aex_argb": "ffca51ae",
+        "production_argb": "ffca51ae",
+        "xy": [
+          288,
+          540
+        ]
+      },
+      {
+        "actual_aex_argb": "ffd45475",
+        "production_argb": "ffd45475",
+        "xy": [
+          288,
+          541
+        ]
+      },
+      {
+        "actual_aex_argb": "ffdd5644",
+        "production_argb": "ffdd5644",
+        "xy": [
+          288,
+          549
+        ]
+      },
+      {
+        "actual_aex_argb": "ffde563e",
+        "production_argb": "ffde563e",
+        "xy": [
+          288,
+          550
+        ]
+      }
+    ],
+    "subhandler_words": [
+      1,
+      1,
+      0,
+      288,
+      539,
+      288,
+      575,
+      288,
+      543
+    ]
+  },
+  "production_png_sha256": "22894e32d2f703f617eacec4b7dd6aa084bbe9012def15a8ab0a8205f7679a44",
+  "schema_version": 1,
+  "scope": "OLMSmoother v1 retained case01 PF8 final owner call and separately modeled Windows AE PNG alpha boundary",
+  "status": "exact",
+  "windows_ae_png_boundary": {
+    "all_explained_by_premultiply_round_unpremultiply_truncate": true,
+    "alpha_values": [
+      254
+    ],
+    "claim": "host-boundary model only; not plugin arithmetic",
+    "mismatched_pixels": 98
+  },
+  "windows_ae_png_sha256": "afbf8c8b2a96e3b496179b0b0407a391a46f6efb6e04fa0b524fbb355a745470"
+}
