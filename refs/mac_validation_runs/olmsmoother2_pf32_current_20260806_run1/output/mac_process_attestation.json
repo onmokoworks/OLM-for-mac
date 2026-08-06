@@ -1,0 +1,84 @@
+{
+  "artifacts": {
+    "effect_on": {
+      "exr": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/mac_validation_runs/olmsmoother2_pf32_current_20260806_run1/output/final_random10_olm_smoother_v2_07__effect_on.exr",
+      "exr_sha256": "b31929697edaf60a5e51e6a2b363c2ec400265584e459640911a59290471a2a6",
+      "settings": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/mac_validation_runs/olmsmoother2_pf32_current_20260806_run1/output/final_random10_olm_smoother_v2_07__effect_on_output_module_settings.json",
+      "settings_sha256": "b3e44c327659a5fd792c46126427a0daf856b0ecf0818cac6472603c33d33461"
+    },
+    "no_effect_control": {
+      "exr": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/mac_validation_runs/olmsmoother2_pf32_current_20260806_run1/output/final_random10_olm_smoother_v2_07__no_effect.exr",
+      "exr_sha256": "40695f4eee2459ad1f46060280fe1e15c0806c80144b2f8b99e2ceb31da8a2c6",
+      "settings": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/mac_validation_runs/olmsmoother2_pf32_current_20260806_run1/output/final_random10_olm_smoother_v2_07__no_effect_output_module_settings.json",
+      "settings_sha256": "c1660f54748672fe1d88d61140c4735f4b378876629298a5f7cb737ca95ddec3"
+    }
+  },
+  "challenge_sha256": "299d928629240314db1cae08574a6a01d92db84fe5e4e6e8b0b7bd9aaf738b5f",
+  "invariants": {
+    "exact_vmmap_post": true,
+    "exact_vmmap_pre": true,
+    "post_snapshot_observed_by_attestor": true,
+    "pre_nonce_digest_chain": true,
+    "same_executable": true,
+    "same_module_file": true,
+    "same_pid_birth": true
+  },
+  "kind": "olmsmoother2_mac_process_attestation",
+  "post": {
+    "request_sha256": "909af7d37c5a3ac15b46692eb171b02091f685220fee3dea95413ec843576523",
+    "snapshot": {
+      "module": {
+        "dev": 16777229,
+        "ino": 73597460,
+        "mtime_ns": 1785927214126332241,
+        "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother2.plugin/Contents/MacOS/OLMSmoother2",
+        "sha256": "fe782f344dcaf8865b778198b0faeb8cecd525062a83f38aca8dc1db74442c34",
+        "size": 478192,
+        "vmmap_match_count": 1
+      },
+      "process": {
+        "birth_token": "1785993407:210622",
+        "dev": 16777229,
+        "executable_path": "/Applications/Adobe After Effects 2026/Adobe After Effects 2026.app/Contents/MacOS/After Effects",
+        "executable_sha256": "e24dbf277be8f8dd365d425da90fde442d33fea9de64de95c231cf347821ec46",
+        "ino": 43441599,
+        "mtime_ns": 1782124188691937924,
+        "pid": 88521,
+        "size": 177712
+      }
+    },
+    "snapshot_sha256": "ebfc9b85ba65d11a8ff201516d275dfef5f2c2811d3e81d9133a502ffe6c6b1b"
+  },
+  "pre": {
+    "request_sha256": "b972ae5fb8c75614f0f3013b2f87fe1ea6ea6422a6ad5b83462df28dafebb51d",
+    "snapshot": {
+      "module": {
+        "dev": 16777229,
+        "ino": 73597460,
+        "mtime_ns": 1785927214126332241,
+        "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother2.plugin/Contents/MacOS/OLMSmoother2",
+        "sha256": "fe782f344dcaf8865b778198b0faeb8cecd525062a83f38aca8dc1db74442c34",
+        "size": 478192,
+        "vmmap_match_count": 1
+      },
+      "process": {
+        "birth_token": "1785993407:210622",
+        "dev": 16777229,
+        "executable_path": "/Applications/Adobe After Effects 2026/Adobe After Effects 2026.app/Contents/MacOS/After Effects",
+        "executable_sha256": "e24dbf277be8f8dd365d425da90fde442d33fea9de64de95c231cf347821ec46",
+        "ino": 43441599,
+        "mtime_ns": 1782124188691937924,
+        "pid": 88521,
+        "size": 177712
+      }
+    },
+    "snapshot_sha256": "ebfc9b85ba65d11a8ff201516d275dfef5f2c2811d3e81d9133a502ffe6c6b1b"
+  },
+  "result": {
+    "path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/mac_validation_runs/olmsmoother2_pf32_current_20260806_run1/output/mac_validation_return.json",
+    "sha256": "50fc836830540a7948584b0daccc1d041edc37bee6ede754ba8616576153d41a"
+  },
+  "run_nonce": "694bd2af0794a6bb0fdcf7780e5284bce8e0c67405f048025f6dd66521ca704a",
+  "schema_version": 1,
+  "status": "attested"
+}

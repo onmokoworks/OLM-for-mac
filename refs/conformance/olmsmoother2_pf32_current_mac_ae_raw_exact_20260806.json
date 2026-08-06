@@ -1,0 +1,58 @@
+{
+  "kind": "olmsmoother2_pf32_current_mac_ae_raw_exact_20260806",
+  "status": "raw_float32_exact_artifact_only_missing_windows_process_proof",
+  "case_id": "final_random10_olm_smoother_v2_07",
+  "scope": {
+    "ae_version": "26.3x87",
+    "renderer": "SOFTWARE",
+    "bits_per_channel": 32,
+    "working_space": "None",
+    "linear_blending": false,
+    "dimensions": [1920, 1080],
+    "frame_rate": 24,
+    "input_interpretation": "Preserve RGB",
+    "output": "uncompressed FLOAT RGBA OpenEXR"
+  },
+  "installed_plugin": {
+    "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother2.plugin/Contents/MacOS/OLMSmoother2",
+    "sha256": "fe782f344dcaf8865b778198b0faeb8cecd525062a83f38aca8dc1db74442c34",
+    "architectures": ["x86_64", "arm64"]
+  },
+  "mac_process_attestation": {
+    "status": "attested",
+    "run_nonce": "694bd2af0794a6bb0fdcf7780e5284bce8e0c67405f048025f6dd66521ca704a",
+    "pid": 88521,
+    "vmmap_match_count_pre": 1,
+    "vmmap_match_count_post": 1,
+    "stable_pid_birth": true,
+    "stable_executable": true,
+    "stable_module_file": true
+  },
+  "comparisons": {
+    "no_effect_control": {
+      "mismatched_values": 0,
+      "max_raw_u32_delta": 0
+    },
+    "effect_on": {
+      "mismatched_values": 0,
+      "max_raw_u32_delta": 0
+    }
+  },
+  "gates": {
+    "mac_candidate_return_verified": true,
+    "mac_process_proof_present": true,
+    "windows_artifact_manifest_checks_passed": true,
+    "windows_pf32_input_entry_attestation_present": true,
+    "control_gate_passed": true,
+    "effect_gate_passed": true,
+    "windows_same_run_process_proof_present": false
+  },
+  "ae_exact_claim": false,
+  "claim_boundary": "Current Mac AE host/load/render is raw FLOAT32 exact to the pinned Windows artifacts for this one PF32 case. Cross-host AE exact remains process-unproven because the Windows render lacks same-run process/module attestation.",
+  "evidence": {
+    "run_root": "refs/mac_validation_runs/olmsmoother2_pf32_current_20260806_run1",
+    "attestation": "refs/mac_validation_runs/olmsmoother2_pf32_current_20260806_run1/output/mac_process_attestation.json",
+    "return": "refs/mac_validation_runs/olmsmoother2_pf32_current_20260806_run1/output/mac_validation_return.json",
+    "report": "refs/mac_validation_runs/olmsmoother2_pf32_current_20260806_run1/output/validation_report.json"
+  }
+}

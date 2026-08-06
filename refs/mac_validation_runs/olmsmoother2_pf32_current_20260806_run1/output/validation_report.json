@@ -1,0 +1,63 @@
+{
+  "kind": "olmsmoother2_no_key_32bpc_mac_validation_report",
+  "schema_version": 2,
+  "status": "raw_float32_exact_artifact_only_missing_windows_process_proof",
+  "ae_exact_claim": false,
+  "raw_float32_exact_artifact_classification": true,
+  "case_count": 1,
+  "result_json": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/mac_validation_runs/olmsmoother2_pf32_current_20260806_run1/output/mac_validation_return.json",
+  "mac_candidate_return_verified": true,
+  "mac_process_proof_present": true,
+  "windows_reference_manifest": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/olmsmoother2_case07_windows_preserve_rgb_reference_20260727.json",
+  "windows_artifact_manifest_checks_passed": true,
+  "windows_same_run_process_proof_present": false,
+  "windows_pf32_input_entry_attestation_present": true,
+  "windows_pf32_input_entry_comparison": {
+    "status": "raw_float32_exact",
+    "width": 1920,
+    "height": 1080,
+    "rowbytes": 30720,
+    "channel_order": [
+      "A",
+      "R",
+      "G",
+      "B"
+    ],
+    "word_count": 8294400,
+    "mismatched_words": 0,
+    "max_raw_u32_delta": 0,
+    "raw": {
+      "path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/conformance/fixtures/olmsmoother2_case07_pf32_entry_20260727/pf32_input_entry_argb.bin.gz",
+      "stored_size": 130775,
+      "stored_sha256": "f29cad40b4f0081fa5f279da0e875198a2970ea2d9c1161db7cc2058acf4044c",
+      "uncompressed_size": 33177600,
+      "uncompressed_sha256": "133a9447f8d722a7add9a5c7fc63bcf16b7e77c21cab9aa7c48d84df8677685b"
+    },
+    "exr": {
+      "path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMSmootherv2/olm_bitdepth_32bpc_olmsmoother2_exr_20260710__software_32bpc__fr24__final_random10_olm_smoother_v2_07_before_effects.exr",
+      "sha256": "366eb9e01e7c3c60df59dbcf6fb549a57d2156e95105fbea397de5353736c9fb"
+    },
+    "first_mismatches": []
+  },
+  "raw_float32_comparisons": {
+    "no_effect_control": {
+      "width": 1920,
+      "height": 1080,
+      "mismatched_values": 0,
+      "max_raw_u32_delta": 0
+    },
+    "effect_on": {
+      "width": 1920,
+      "height": 1080,
+      "mismatched_values": 0,
+      "max_raw_u32_delta": 0
+    }
+  },
+  "control_gate_passed": true,
+  "effect_gate_passed": true,
+  "missing_exact_process_proof": [
+    "Windows same-run AfterFX process and loaded OLMSmoother2.aex module identity bound to both compared renders"
+  ],
+  "reason": "both raw FLOAT32 gates and Windows artifact attestation pass; macOS same-run process/module proof passes; AE exact remains forbidden without Windows same-run process/module proof",
+  "next_gate": "capture exact same-run loaded-process/module proof on Windows; macOS proof alone and raw artifact equality are not AE exact"
+}
