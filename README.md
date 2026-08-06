@@ -1,149 +1,161 @@
 # OLM for Mac
 
-OLM Tools の Windows 版 After Effects AEX を、macOS / Apple Silicon 向け
-After Effects plug-in として互換移植する作業リポジトリです。
+Windows版OLM ToolsのAfter Effectsプラグイン（AEX）を、macOS／Apple Silicon向けの
+Universalプラグインとして互換移植するプロジェクトです。
 
-最終目標は、指定した Windows AE Software render と同じ入力、パラメータ、
-bit depth、カラープロファイルでレンダーした Mac AE 出力が `max_diff=0` になる
-ことです。見た目が近いこと、CLI の一致、off-by-1、許容差内は完了ではありません。
+見た目が近いだけの再実装ではありません。対象として明記したAfter Effects、
+Softwareレンダー、bit-depth、入力、geometry、パラメーターについて、Windows AEX／
+Windows AEとピクセルおよび必要な内部値が完全一致することを合格条件にしています。
 
-## 現在地
+## 現在の状態
 
-プラグイン全体を「完了」と呼べるものはまだありません。対応範囲を
-feature / path / bit depth ごとに分け、各セルを `AE exact` まで閉じます。
+2026-08-06時点のMacリリース候補は、次の統合ゲートを通過しています。
 
-| Plug-in | 現在の確定事項 | 次のレーン |
+- 全10プラグインの固定fixture回帰：PASS
+- 現行Mac AEでのロード／代表レンダー：10/10
+- インストール済みUniversal bundle、SHA-256、署名：10/10
+- 対象ホスト：After Effects `26.3x87`、Softwareレンダー
+- 最終Mac統合ゲート：`release_gate_pass`
+
+残っているcross-host校正は、Windows AEで取得する7行だけです。Windowsが利用可能に
+なるまでは、新しいパラメーター族の探索を止め、現在のMac候補を固定しています。
+
+詳しい対応範囲と制限は、次の文書を正とします。
+
+- [日本語リリースノート](refs/conformance/OLM_MAC_RELEASE_NOTES_20260806.md)
+- [プラグイン別の完成対象・証拠境界](refs/conformance/olm_release_completion_matrix_20260806.md)
+- [機械判定された最終ゲート結果](refs/conformance/olm_release_gate_status_20260806.json)
+
+## 対象プラグイン
+
+| プラグイン | 主な対象 | native depth／扱い |
 | --- | --- | --- |
-| ColorKeep | 互換対象外の support/helper | 実Windows参照が必要になった時だけ再開 |
-| OLMBlur | 完全workerの局所AEX再生は進展。Mac AE / Windows参照のプロベナンスを再確認中 | 8/16/32bpcのhash固定参照とhost境界の証明 |
-| OLMColorKey | covered 8bpc / 16bpc slice は `AE exact` | AE 26.3 FLOAT EXRで32bpcを分類 |
-| OLMToonDilate | covered 8bpc / 16bpc slice は `AE exact` | 32bpc EXR参照とholdout展開 |
-| OLMDistanceGradation | 16bpc extended は `7/16 AE exact`。OpenCV正規化からPF16 worldへの丸め境界を再現し、`case_0010/0011`を閉鎖 | Layer/no-bg、field/export、case_0028を別々に証明。現行8bpcは `0/29` のknown-redで、旧29/29記録はバイナリプロベナンス不足 |
-| OLMSmoother v1 | 8bpcの既存sliceは保持。endgame扱い | 独立維持かSmoother2互換かを明示 |
-| OLMSmoother2 | no-key slice は `AE exact`。legacy/key/gammaは局所producer状態まで狭め済み | 0004/0012のlive class-plane / c280 / cce0 witness |
-| OLMDirectionalBlur | front-onlyの限定8bpc slice は `AE exact`。Alpha Fade以降はhost境界待ち | Windows 2025 AEX hash固定のPF input/output witness |
-| OLMRadialBlur | plane layoutはbinary-grounded、Zoom / Rotation / Innerの意味論は未閉鎖 | sampler / prepass / writebackのtyped witness |
-| OLMKiraKira | Blur Mode 1/2 のpass dispatchはgrounded。hotspotは参照プロベナンス分岐 | Merge Mode 2、Blur Mode 3/4、export/placement証明 |
+| OLMBlur | Legacy／NonLegacy、repeat、bias | PF8／PF16／PF32 |
+| ColorKeep | 有効／無効、tolerance、1〜100色 | PF8／PF16／PF32 |
+| OLMColorKey | core、Edge Thin、Edge Blur、replace／color space | PF8／PF16／PF32（限定範囲） |
+| OLMToonDilate | copy／dilate、radius、frontier／tie／corner | PF8／PF16／PF32 |
+| OLMDistanceGradation | Inside／Outside／Both、補間、invert、background、blur | PF8／PF16／PF32（限定範囲） |
+| OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3 | PF8／PF16／PF32（限定範囲） |
+| OLMRadialBlur | Zoom／Rotation／Inner | PF8／PF16／PF32（guard付き） |
+| OLMSmoother2 | key／invert、Gamma、range、palette | PF8／PF16／PF32（限定範囲） |
+| OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur | PF8／PF16／PF32（限定範囲） |
+| OLMSmoother v1 | no-key／Color Key、smoothing range | native PF8／PF16。32bpcはAE host conversion |
 
-`AE exact` の唯一の定義、禁止事項、次の許可アクションは
-[`notes/CONFORMANCE_LEDGER.md`](notes/CONFORMANCE_LEDGER.md) が正です。
-Distance Gradation の直近の閉鎖と8bpc記録の訂正は
-[`refs/conformance/olmdistancegradation_opencv_pf16_boundary_20260711.md`](refs/conformance/olmdistancegradation_opencv_pf16_boundary_20260711.md)
-を参照してください。
+この表は「全パラメーターの直積が完全一致」という意味ではありません。記録済みの
+geometry、入力、値、分岐境界だけが証明対象です。範囲外はリリースノートに明記し、
+実装側でも可能な箇所はfail-closeにしています。
 
-`host_status` は正しさの評価ではありません。「Mac AEでプラグインを開いて、
-いま何を確認してよいか」の目安です。出力が正しいかは
-`correctness_status`、次に進めてよい作業は `work_lane` で判断します。
+## インストールとビルド
 
-## 進め方
-
-1. Windows AEX の objdump / Ghidra / runtime trace から、定数・分岐・丸め・境界処理を読む。
-2. 事実を binary-grounded IR に固定する。
-3. 共有coreまたはCLIで局所fixtureを再生し、仮説を潰す。
-4. Mac AE plug-inへ狭く反映する。
-5. Windows Software参照とMac AE出力を、8bpc、16bpc、32bpcの順に比較する。
-
-PNG差分は症状です。アルゴリズムの確定は、AEX命令列・runtime witness・
-独立オラクルのいずれかで裏付けます。
-
-## 検証
-
-通常のAEなしsmoke:
-
-```sh
-python3 refs/scripts/smoke_all_algorithm_clis.py --profile nonhard
-```
-
-Windows側に必要な次の依頼を確認:
-
-```sh
-python3 scripts/print_next_olm_action.py ~/Downloads /tmp
-```
-
-conformance集計を再生成:
-
-```sh
-python3 scripts/generate_conformance_summary.py
-```
-
-AE-host / runtime trace の返却は、取り込む前に必ず対応するrequest contractと
-expected AEX hashを確認します。返却が要求したwitnessを含まなければ
-`answered_partial` または `failed` として扱い、実装根拠へ昇格しません。
-
-## Windowsとの往復
-
-共有フォルダのルートは環境変数 `OLM_PR_SHARE_ROOT` で指定します。
-
-- `new/`: Mac側が作成した最新request ZIP、またはWindows側の未処理return ZIP
-- `old/`: intake済みのZIP
-
-候補の確認:
-
-```sh
-python3 scripts/list_olm_return_candidates.py "$OLM_PR_SHARE_ROOT/new" "$OLM_PR_SHARE_ROOT/old"
-```
-
-返却の取込:
-
-```sh
-python3 scripts/intake_latest_windows_return_from_share.py --share-root "$OLM_PR_SHARE_ROOT"
-```
-
-pending queueの正本は
-[`refs/reports/pending_runtime_trace_packages.md`](refs/reports/pending_runtime_trace_packages.md)
-です。
-
-## ビルド
-
-全プラグイン:
+全プラグインをビルドします。
 
 ```sh
 scripts/build_all_mac_plugins.sh
 ```
 
-単体例:
+MediaCoreへインストールします。
 
 ```sh
-xcodebuild -project mac/OLMDistanceGradation/Mac/OLMDistanceGradation.xcodeproj \
-  -configuration Debug build
+scripts/install_mac_plugins_to_mediacore.sh
 ```
 
-Mac AE用bundleの配布ZIP:
+配布用ZIPを作成します。
 
 ```sh
 scripts/package_mac_plugins.sh
 ```
 
-## 構成
+同名pluginのバックアップをAdobeの検索パス内へ残すと、重複モーダルが出ます。
+バックアップはMediaCoreの外へ移してください。
 
-| Path | 内容 |
+## 検証
+
+通常の全10プラグイン固定fixture回帰：
+
+```sh
+python3 scripts/run_olm_mac_fixed_fixture_regression_20260805.py
+```
+
+Macリリース統合ゲート（固定fixture、Universal／署名／identity、Mac AE証拠）：
+
+```sh
+python3 scripts/run_olm_release_gate_20260806.py
+```
+
+文書とWindowsパッケージの整合性：
+
+```sh
+python3 -m unittest \
+  tests.test_olm_release_documentation_20260806 \
+  tests.test_windows_ae_release_boundary_minimal_20260806
+```
+
+`Exact`は、その証拠レコード内でのbyte一致、またはraw FLOAT32 word一致です。
+PNGやEXRファイル全体のSHAはmetadataで変わるため、必要に応じて生sampleを比較します。
+
+## Windowsで残っている作業
+
+実行対象は次のhash固定パッケージだけです。
+
+`refs/reference_requests/olm_windows_ae_release_boundary_minimal_20260806.zip`
+
+SHA-256：
+
+```text
+6a060641dc867cbb5cb858136f6fd294fb49d274fa252cec71459bc9b20a4652
+```
+
+取得するのはColorKeep PF8／PF16／PF32、OLMKiraKira Mode 4
+PF8／PF16／PF32、OLMSmoother v1 PF16の計7行です。返却後は次で検証します。
+
+```sh
+python3 scripts/verify_windows_ae_release_boundary_minimal_20260806.py \
+  RETURN_OLM_WINDOWS_AE_RELEASE_BOUNDARY_MINIMAL_20260806.zip
+```
+
+過去の大量のrequestは解析履歴です。現在のリリース作業では再送しません。
+
+## WindowsとMacでAE出力が異なる場合
+
+最終ファイルの差だけでは、プラグイン演算の差と判断しません。次の境界を分けます。
+
+1. 同一の生ピクセルをAEXとMac実装へ渡した演算比較
+2. AE管理world上でのプラグイン入口から出力までの比較
+3. 素材import、premultiply、color management、codecを含む最終書き出し比較
+
+実際に、AEのimportやpremultiply／unpremultiplyで差が生じるケースを確認しています。
+同一入力worldでの演算が完全一致している場合、その差はhost境界として記録します。
+
+## ディレクトリ
+
+| パス | 内容 |
 | --- | --- |
-| `mac/` | Mac After Effects plug-in projects |
-| `core/` | AEX命令列に寄せた共有C++ kernel / worker |
-| `cli/` | AEなしのアルゴリズム検証CLI |
-| `tools/emulation/` | Windows AEX CPU simulation / OpenCV detour / fixture replay |
-| `refs/conformance/` | ケース単位の証拠・判定・受け入れ記録 |
-| `refs/reference_requests/` | Windowsで取得する参照リクエスト |
-| `refs/scripts/` | smoke、比較、依頼生成 |
-| `notes/` | 台帳、IR、ロードマップ、運用ルール |
-| `scripts/` | AE-host実行、runtime trace intake、共有フォルダ操作 |
+| `mac/` | Mac After Effectsプラグイン本体 |
+| `core/` | AEX命令列に合わせた共有kernel／worker |
+| `cli/` | AEなしの局所検証CLI |
+| `tools/emulation/` | AEXCompat、Unicorn、Windows AEX直接再生 |
+| `refs/conformance/` | 完全一致の証拠、完成表、リリースノート |
+| `refs/reference_requests/` | Windows AEへ渡すhash固定パッケージ |
+| `scripts/` | ビルド、Mac AE検証、Windows往復、統合ゲート |
+| `notes/` | 逆解析・調査履歴。現在状態は最新リリース文書を優先 |
 
-大きなローカル生成物（Ghidra DB、AEX/plug-in build、AE render出力、raw trace、
-一時HTML）はGit管理しません。再現に必要なfixture、request contract、要約証拠は
-コミットします。
+## 開発上の原則
 
-## 主要文書
+- 未検証範囲へ完全一致を一般化しない
+- 見た目合わせ、許容差、off-by-1を完成扱いしない
+- Windows実機はAE固有境界の最小観測だけに使う
+- 通常開発はMacのfixture、AEXCompat、Unicorn、Mac AEで完結させる
+- 既に閉じた分岐の近接値を無制限に追加しない
+- 主要モード、bit-depth、分岐境界、実用geometryへ完成作業を集中する
 
-- [`notes/CONFORMANCE_LEDGER.md`](notes/CONFORMANCE_LEDGER.md): 状態、優先順位、禁止事項の正本
-- [`notes/AE_EXACT_CONFORMANCE.md`](notes/AE_EXACT_CONFORMANCE.md): `AE exact` と各状態の定義
-- [`notes/PORTING_ROADMAP.md`](notes/PORTING_ROADMAP.md): 完了までの作業順序
-- [`notes/IR_INDEX_20260621.md`](notes/IR_INDEX_20260621.md): プラグイン別IRの入口
-- [`scripts/README.md`](scripts/README.md): 自動化スクリプトの用途
+低レベルの開発規約は[AGENT_GUIDE.md](AGENT_GUIDE.md)、AEX直接再生は
+[tools/emulation/README.md](tools/emulation/README.md)を参照してください。
 
-## English
+## English summary
 
-Private compatibility-porting workspace for OLM Tools After Effects plug-ins.
-The only completion bar is byte-exact Mac AE output against a declared Windows
-AE Software reference for the same feature, parameters, host profile, and bit
-depth. CLI matches and visual similarity are intermediate evidence, not
-completion.
+This repository ports the Windows OLM After Effects plug-ins to Universal
+macOS/Apple Silicon plug-ins. The Mac release candidate passes all ten fixed
+fixture lanes, ten current-Mac-AE representative renders, and all installed
+Universal/signature/identity checks. Exactness claims remain limited to the
+declared host, depths, fixtures, geometries and parameter boundaries. Seven
+same-contract Windows AE calibration rows remain pending.

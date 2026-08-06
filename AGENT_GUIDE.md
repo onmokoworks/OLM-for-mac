@@ -1,7 +1,18 @@
-# AGENT_GUIDE — read this first (any model: Fable, Opus, Sonnet, Gemini, Codex)
+# AGENT_GUIDE — 最初に読む共通規約
 
 This repo ports Windows AE `.aex` plugins to Apple Silicon/macOS. Multiple models
 work on it in turns. This is the shared contract. It is short on purpose.
+
+## 現在の正本
+
+探索フェーズのledgerやroadmapより、現在は次を優先する。
+
+- `refs/conformance/OLM_MAC_RELEASE_NOTES_20260806.md`
+- `refs/conformance/olm_release_completion_matrix_20260806.md`
+- `refs/conformance/olm_release_gate_status_20260806.json`
+
+Mac側release gateはPASS済み。新しいパラメーター族を増やさず、Windows AEの
+hash固定7行が返るまでは候補を固定する。過去のpending queueを再送しない。
 
 ## The bar
 - **Correctness = exact sample match** against the Windows **CPU Software**
@@ -11,9 +22,10 @@ work on it in turns. This is the shared contract. It is short on purpose.
 - The only completion state is `AE exact`. Everything else is an evidence/work
   state. `notes/CONFORMANCE_LEDGER.md` is the single source of truth for status,
   priority order, and the per-plugin **forbidden actions** — obey those.
-- `notes/PORTING_ROADMAP.md` defines the target set and critical path.
-  `refs/conformance/olm_release_scope.json` is the whole-release gate; a slice
-  can be `AE exact` while the plug-in and release remain incomplete.
+- リリース対象と証拠境界は
+  `refs/conformance/olm_release_completion_matrix_20260806.md`、機械ゲートは
+  `scripts/run_olm_release_gate_20260806.py`が正本。個別sliceのexactを未記載範囲へ
+  一般化しない。
 
 ## How we find truth (in order — cheapest, most reliable first)
 1. **Local emulation of the CPU `.aex`** (`tools/emulation/`). This is the default.
@@ -62,9 +74,12 @@ The OLM-specific ledger/notes don't transfer, but the method does:
 Keep the emulation harness and this guide; leave the OLM ledger behind.
 
 ## Pointers
-- Release scope and orchestration: `notes/PORTING_ROADMAP.md`
+- Current release notes: `refs/conformance/OLM_MAC_RELEASE_NOTES_20260806.md`
+- Current release scope: `refs/conformance/olm_release_completion_matrix_20260806.md`
+- Current release gate: `scripts/run_olm_release_gate_20260806.py`
+- Historical roadmap: `notes/PORTING_ROADMAP.md`
 - Status/priority/forbidden actions: `notes/CONFORMANCE_LEDGER.md`
-- Machine release gate: `refs/conformance/olm_release_scope.json`,
+- Historical scope checker: `refs/conformance/olm_release_scope.json`,
   `scripts/check_olm_release_scope.py`
 - Emulation how-to + perf: `tools/emulation/README.md`, `GOTCHAS.md`
 - Per-plugin IR: `notes/IR_*.md`

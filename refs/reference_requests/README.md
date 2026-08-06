@@ -1,115 +1,60 @@
-# Windows Reference Render Requests
+# Windows AE 参照リクエスト
 
-このフォルダは、Windows AE実機で追加レンダーしてほしい参照ケースの仕様を置く場所です。
+このディレクトリには、Windows AEでしか確認できないhost境界を取得するための
+requestとhash固定ZIPを保存します。
 
-目的:
+## 現在実行するパッケージ
 
-- Mac側のAEなしCLIで、移植アルゴリズムを追加PNGとmanifestに照合する。
-- `ADBE Force CPU GPU` ではなく、`project_gpu_accel_type.current_name` と raw値で実行設定を記録する。
-- CUDA/Software Only差が必要な地点で、推測実装を深追いせず差分参照を取得できるようにする。
+現在のMacリリース候補に必要なのは、次の1ファイルだけです。
 
-共通レンダー条件:
+`olm_windows_ae_release_boundary_minimal_20260806.zip`
 
-- AE version, project path, comp width/height/bpc, selected layer/effect paramsをmanifestへ記録する。
-- 各caseで `before_effects_frame` と effect適用後PNGを保存する。
-- 可能なら同一caseを2セット出す。
-  - `project_gpu_accel_type.current_name = CUDA`
-  - `project_gpu_accel_type.current_name = SOFTWARE`
-- `Compositing Options > GPU Rendering / ADBE Force CPU GPU` は参考値として残すが、GPU/CPU判定には使わない。
+SHA-256：
 
-優先度:
-
-最新の優先順は、固定メモではなく次のコマンドを正とする。
-
-```sh
-python3 refs/scripts/next_reference_actions.py
+```text
+6a060641dc867cbb5cb858136f6fd294fb49d274fa252cec71459bc9b20a4652
 ```
 
-2026-06-06時点の次アクション:
+取得対象は次の7行です。
 
-1. `smoother2_no_key_grid_20260606.json`
-   - OLMSmoother2 no-key v2 の残差を、Smoothness / Smooth Range gridで
-     class-plane firing・sample plane・color-space/writebackに切り分けるためのセット。
-2. `olmcolorkey_replace_colorspace_20260606.json`
-   - OLMColorKey の Enable Replace、非黒キー、複数キー、Lab76/Lab94/YUV/YCrCbを
-     既存9ケースから分離して確認するためのセット。
-3. `directionalblur_context_scale_20260606.json`
-   - OLMDirectionalBlurの `ctx+0x11c / ctx+0x120` render-context scale と
-     非不透明alpha挙動を切るためのセット。
-4. `kirakira_single_ray_20260606.json`
-   - OLMKiraKiraのray order / angle table / helper戻り値scalarを分離するための
-     単独rayセット。
-5. `radialblur_inner_size_variation_20260606.json`
-   - RadialBlur Inner `FUN_180004640` の `+0x40` scatter span/gate planeを、
-     Size Variation非ゼロ参照で切り分けるためのセット。
-6. `radialblur_inner_20260605.json`
-   - OLMRadialBlur Innerの未解決箇所を切るためのセット。
-7. 既存Mac移植扱いのプラグイン確認
-   - `OLMDistanceGradation`
-   - `OLMSmoother2`
-   - その他READMEで port complete 扱いのもの。
-8. OLMSmoother alternate reference
-   - 現参照は過剰発火原因の切り分けが弱いので、単純な高コントラスト素材で追加確認する。
+- ColorKeep：PF8／PF16／PF32
+- OLMKiraKira controlled Mode 4：PF8／PF16／PF32
+- OLMSmoother v1 canonical `case_0001`：PF16
 
-Mac側への取り込み:
+パッケージ内の`README_WINDOWS.md`と`BATCH_CONTRACT.json`を正としてください。
+各行はAE `26.3x87`、Softwareレンダー、固定AEX／入力／パラメーター、
+disabled／effect-onのuncompressed scanline FLOAT32 OpenEXR、process／module
+attestationを要求します。PNG previewだけの返却は受理しません。
+
+## パッケージを検査する
+
+Mac側：
 
 ```sh
-python3 scripts/intake_olm_return.py path/to/packed_reference.zip --quick
+python3 -m unittest tests.test_windows_ae_release_boundary_minimal_20260806
+shasum -a 256 refs/reference_requests/olm_windows_ae_release_boundary_minimal_20260806.zip
 ```
 
-`intake_olm_return.py` は戻りzipを自動判定し、import、request検証、次アクション表示、
-quick aggregate smokeまで一度に走らせる。
-
-低レベルに分けて実行する場合:
+返却後：
 
 ```sh
-python3 refs/scripts/import_and_check_win_reference.py path/to/packed_reference.zip --quick
-python3 refs/scripts/import_win_reference.py path/to/packed_reference.zip --allow-missing-optional-render-sets
-python3 refs/scripts/smoke_reference_requests_after_import.py
-python3 refs/scripts/check_reference_request_status.py
-python3 refs/scripts/audit_olmradialblur_manifest.py
-python3 refs/scripts/smoke_olmradialblur_cpp_inner_cli.py
+python3 scripts/verify_windows_ae_release_boundary_minimal_20260806.py \
+  RETURN_OLM_WINDOWS_AE_RELEASE_BOUNDARY_MINIMAL_20260806.zip
 ```
 
-`import_win_reference.py` は zip/folder 内の `reference_manifest.json` を再帰的に探し、
-`refs/win_references/<zip名>/<effect名>/` にPNGごとコピーします。対応する
-`refs/reference_requests/*.json` が一意に見つかった場合は、その場で
-`verify_reference_request_result.py` も実行します。
+verifierはZIP path safety、process／module attestation、binary／input／setting／
+parameter readback、no-op、FLOAT32 scanline EXR、寸法をfail-closedで検査します。
 
-再開時の基本順序:
+## 過去のrequestについて
 
-1. `check_reference_request_status.py` で対象requestが `covered` になったか確認する。
-2. `smoke_reference_requests_after_import.py` でcovered manifestの検証と登録済みrequest smokeを走らせる。
-3. 結果を `notes/*_ASM_FACTS.md` または `notes/PORTING_BOARD.md` に戻す。
-4. green化または新しい停止条件を確認してから `smoke_all_algorithm_clis.py --profile quick` を走らせる。
+このフォルダに残る多数のJSON、ZIP、handoff文書は逆解析・bit-depth拡張・
+障害切り分けの履歴です。現在の7行と重複するもの、すでにAEXCompat／Unicorn／Mac AEで
+閉じたものを再送しないでください。
 
-代表的な再開コマンド:
+新しいWindows requestを増やすのは、Mac fixtureとAEX直接再生で解決できず、
+完成対象内のAE固有挙動が不足すると確認された場合だけです。
 
-```sh
-python3 refs/scripts/smoke_olmdirectionalblur_cpp_rotated_aex_full_choreo_cli.py
-python3 refs/scripts/smoke_olmradialblur_cpp_inner_source_scatter_prepass_cli.py
-python3 refs/scripts/smoke_olmkirakira_cpp_two_temp_no_fastpath_probe_cli.py
-python3 refs/scripts/smoke_olmsmoother2_cli.py
-python3 refs/scripts/audit_olmcolorkey_manifest.py path/to/imported/OLMColorKey/reference_manifest.json
-```
+最新の対応範囲は次を参照してください。
 
-Win側へ渡すリクエストzip作成:
-
-```sh
-python3 refs/scripts/check_reference_request_status.py
-python3 refs/scripts/package_reference_requests.py --pending --output /tmp/olm_reference_requests_pending_20260606.zip
-python3 refs/scripts/package_reference_requests.py --only kirakira_single_ray_20260606
-```
-
-共有フォルダ運用を使う場合:
-
-```sh
-scripts/publish_windows_request_to_share.sh path/to/request_or_handoff.zip
-```
-
-デフォルトでは `/Volumes/onmk/olm_pr/new` に最新 zip を置き、既存の zip は
-`/Volumes/onmk/olm_pr/old` へ退避します。共有が未マウントなら失敗して止まるので、
-その場合はプロジェクト内の zip をそのまま手動コピーしてください。
-
-生成zipにはこのREADME、選択されたrequest JSON、Win側Codexへそのまま渡すための
-`WIN_CODEX_HANDOFF.md` が入ります。
+- [`../conformance/OLM_MAC_RELEASE_NOTES_20260806.md`](../conformance/OLM_MAC_RELEASE_NOTES_20260806.md)
+- [`../conformance/olm_release_completion_matrix_20260806.md`](../conformance/olm_release_completion_matrix_20260806.md)

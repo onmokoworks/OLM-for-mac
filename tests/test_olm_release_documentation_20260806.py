@@ -11,11 +11,16 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+ROOT_README = ROOT / "README.md"
+REFS_README = ROOT / "refs/README.md"
+SCRIPTS_README = ROOT / "scripts/README.md"
+REQUESTS_README = ROOT / "refs/reference_requests/README.md"
+AGENT_GUIDE = ROOT / "AGENT_GUIDE.md"
 NOTES = ROOT / "refs/conformance/OLM_MAC_RELEASE_NOTES_20260806.md"
 MATRIX = ROOT / "refs/conformance/olm_release_completion_matrix_20260806.md"
 STATUS = ROOT / "refs/conformance/olm_release_gate_status_20260806.json"
 PACKAGE = ROOT / "refs/reference_requests/olm_windows_ae_release_boundary_minimal_20260806.zip"
-PACKAGE_SHA256 = "64f58ef0901d6dc0ba1b67ceb139b63a5ab496cdb9f72868b9fcd6c9dd6db190"
+PACKAGE_SHA256 = "6a060641dc867cbb5cb858136f6fd294fb49d274fa252cec71459bc9b20a4652"
 EXPECTED_ROWS = {
     ("ColorKeep", "colorkeep_opaque_cells_red_darkgray", depth)
     for depth in (8, 16, 32)
@@ -31,13 +36,44 @@ class ReleaseDocumentationConsistencyTest(unittest.TestCase):
         for phrase in (
             "After Effects `26.3x87`",
             "CPU `SOFTWARE`",
-            "exactly seven Windows AE rows",
-            "The AEX has no native PF32 callback",
-            "32bpc projects are AE host-converted",
-            "PF8 centered neutral Inner Strength 1..64",
-            "PF16 Type3 Layer is limited to 16x16",
+            "Windows AE 7行だけが保留",
+            "AEXにnative PF32 callbackはなく",
+            "32bpc projectではAEがclassic integer pluginの前後をhost-convertする",
+            "PF8 centered neutral Inner Strength 1〜64",
+            "PF16 Type 3 Layerは16×16",
         ):
             self.assertIn(phrase, text)
+
+    def test_japanese_entry_documents_point_to_current_release(self) -> None:
+        documents = {
+            ROOT_README: ("Macリリース候補", "release_gate_pass", "Windows AEで取得する7行"),
+            REFS_README: ("日本語リリースノート", "最小7行パッケージ"),
+            SCRIPTS_README: ("現在のリリース作業で使う入口", "run_olm_release_gate_20260806.py"),
+            REQUESTS_README: ("現在実行するパッケージ", "取得対象は次の7行"),
+            AGENT_GUIDE: ("現在の正本", "過去のpending queueを再送しない"),
+        }
+        for path, phrases in documents.items():
+            text = path.read_text(encoding="utf-8")
+            for phrase in phrases:
+                self.assertIn(phrase, text, f"{path}: missing {phrase}")
+
+    def test_release_facing_markdown_links_resolve(self) -> None:
+        import re
+
+        documents = (
+            ROOT_README, REFS_README, SCRIPTS_README, REQUESTS_README,
+            AGENT_GUIDE, NOTES,
+        )
+        broken = []
+        for path in documents:
+            text = path.read_text(encoding="utf-8")
+            for target in re.findall(r"\[[^]]+\]\(([^)]+)\)", text):
+                if "://" in target or target.startswith("#"):
+                    continue
+                resolved = (path.parent / target.split("#", 1)[0]).resolve()
+                if not resolved.exists():
+                    broken.append((str(path.relative_to(ROOT)), target))
+        self.assertEqual(broken, [])
 
     def test_matrix_has_no_superseded_release_holes(self) -> None:
         text = MATRIX.read_text(encoding="utf-8")

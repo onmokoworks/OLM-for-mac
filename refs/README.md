@@ -1,4 +1,22 @@
-# Reference Render Diff Harness
+# refs ディレクトリ案内
+
+このディレクトリには、Windows／Macの参照出力、固定fixture、完全一致の証拠、
+Windows AEへの依頼パッケージを保存します。
+
+現在のリリース判断では、古いPNG差分レポートや探索用requestより次を優先してください。
+
+- [`conformance/OLM_MAC_RELEASE_NOTES_20260806.md`](conformance/OLM_MAC_RELEASE_NOTES_20260806.md)：日本語リリースノート
+- [`conformance/olm_release_completion_matrix_20260806.md`](conformance/olm_release_completion_matrix_20260806.md)：プラグイン別の完成対象と証拠境界
+- [`conformance/olm_release_gate_status_20260806.json`](conformance/olm_release_gate_status_20260806.json)：最終Mac統合ゲート
+- [`reference_requests/olm_windows_ae_release_boundary_minimal_20260806.zip`](reference_requests/olm_windows_ae_release_boundary_minimal_20260806.zip)：保留中のWindows 7観測
+
+`conformance/`の古い日付の記録は、調査過程と判断根拠を保存する履歴です。最新状態を
+決める正本ではありません。現在のWindows作業で過去のpending requestを一括再送せず、
+hash固定された最小7行パッケージだけを使用してください。
+
+## 旧Reference Render Diff Harness
+
+以下は初期のPNG差分harnessの説明です。過去fixtureの再現用として残しています。
 
 `fixtures/test_cellanim.png` is the shared input image for Win/Mac renders.
 

@@ -3,6 +3,32 @@
 このディレクトリの Python / shell スクリプトは、主に「移植そのもの」ではなく、
 Windows 実機との証拠収集、Mac AE 検証、比較、レポート更新を回すためにあります。
 
+## 現在のリリース作業で使う入口
+
+通常回帰：
+
+```sh
+python3 scripts/run_olm_mac_fixed_fixture_regression_20260805.py
+```
+
+Macリリース統合ゲート：
+
+```sh
+python3 scripts/run_olm_release_gate_20260806.py
+```
+
+Windows最小7観測パッケージの再生成と返却検証：
+
+```sh
+python3 scripts/package_windows_ae_release_boundary_minimal_20260806.py
+python3 scripts/verify_windows_ae_release_boundary_minimal_20260806.py RETURN.zip
+```
+
+現在のWindows対象は
+`refs/reference_requests/olm_windows_ae_release_boundary_minimal_20260806.zip`
+だけです。以下に列挙された旧request／pending queue系スクリプトは調査履歴や将来の
+追加校正用であり、現行リリースの通常手順ではありません。
+
 大きく分けると次の6系統です。
 
 ## 1. Windows 往復

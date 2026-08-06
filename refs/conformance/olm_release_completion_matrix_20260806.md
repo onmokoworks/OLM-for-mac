@@ -69,9 +69,12 @@ The final bounded integration command is
 Universal signed installed identities, and ten fixed-fixture lanes are proven.
 The fixed-fixture sub-gate consumes retained Windows-AEX evidence without
 contacting Windows; the current checked-in summary is
-`PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=456.26s` with captured
+`PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=423.84s` with captured
 output SHA-256
-`38a02e68c34185fbb5b4216347e161bac1487c45034b217d6638f2e763e5699d`.
+`bf5970bbcaf47fed933b8602841ec20ce2e0db1a3f2be7d411fefa8b363e19fd`.
+The same checked-in gate also requires all ten parameter-UI registration rows:
+seven are normalized exact and three are explicitly bounded rather than
+silently promoted to native-AE visual or custom-UI exactness.
 
 ## One-shot Windows boundary package
 
