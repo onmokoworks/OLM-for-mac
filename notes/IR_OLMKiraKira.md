@@ -79,8 +79,10 @@ Windows behavior.
     `INTER_NEAREST` downsample/upscale with no alpha-specific handling
   - the bounded actual-AEX owner harness reaches an earlier FilterEngine
     assertion before `FUN_1812639f0`; no runtime resize pixels are claimed
-  - Mac production implementation remains intentionally unwired until a
-    Windows/Mac AE differential validates the primitive and writeback
+  - 2026-07-18: Mac source now wires the binary-shaped half-resolution
+    nearest-neighbor downsample/upscale path in both render paths
+  - Mac/Windows AE behavior remains unvalidated pending a differential for
+    non-identity resize and writeback; this is source-wired, not AE exact
 - `Merge Mode`
   - current Mac source always composes with the merge-mode-1 screen-over path;
     it does not branch on the UI Merge Mode control yet

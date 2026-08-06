@@ -1,0 +1,60 @@
+{
+  "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+  "fake_payload": false,
+  "lifetime": [
+    "PF Handle Suite unlock at vtable+0x10",
+    "temporary checked-out parameter wrapper release via FUN_181232760",
+    "PF Handle Suite release through in_data+0x180 callback slot 1",
+    "destination 0x144-byte copy remains render-state-owned for the render call"
+  ],
+  "mac_connection": "implemented: standard and Smart Render lock/copy/unlock the five 0x144 payloads",
+  "not_sources": [
+    "sequence/global data",
+    "static ramp table",
+    "checkbox value bytes"
+  ],
+  "off_branch": "Use byte zero skips FUN_181154630 and leaves the destination block unconsumed.",
+  "on_pointer_chain": [
+    "EffectBase disk-ID array at effect+0x8..effect+0xac resolves disk ID to parameter index",
+    "in_data+0x180 acquires PF Handle Suite v2",
+    "host parameter checkout returns local_90 handle wrapper",
+    "PF Handle Suite lock at vtable+0x8 returns host object",
+    "payload source is locked_object+0x10",
+    "exactly 0x144 bytes copy to render-state destination"
+  ],
+  "render_owner": "FUN_18114e860",
+  "rows": [
+    {
+      "arbitrary_disk_id": 19,
+      "destination_state_offset": "0x1e8",
+      "name": "vertical",
+      "use_state_offset": "0x83c"
+    },
+    {
+      "arbitrary_disk_id": 21,
+      "destination_state_offset": "0x32c",
+      "name": "horizontal",
+      "use_state_offset": "0x83d"
+    },
+    {
+      "arbitrary_disk_id": 23,
+      "destination_state_offset": "0x470",
+      "name": "diagonal",
+      "use_state_offset": "0x83e"
+    },
+    {
+      "arbitrary_disk_id": 36,
+      "destination_state_offset": "0x5b4",
+      "name": "diagonal2",
+      "use_state_offset": "0x83f"
+    },
+    {
+      "arbitrary_disk_id": 25,
+      "destination_state_offset": "0x6f8",
+      "name": "highlight",
+      "use_state_offset": "0x840"
+    }
+  ],
+  "schema": "olmkirakira-ramp-checkout-dataflow/1",
+  "status": "pointer_chain_lifetime_and_mac_connection_grounded"
+}

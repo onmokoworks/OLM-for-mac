@@ -1,0 +1,12 @@
+{
+  "boundary": {
+    "left_position_bits": "0x00000000",
+    "result": 0,
+    "right_position_bits": "0x80000000"
+  },
+  "live_ae_claimed": false,
+  "rule": "active float fields use numeric equality, so +0.0 equals -0.0; count and changed numeric values still differ",
+  "schema": "olmkirakira-ramp-compare-signed-zero/1",
+  "selector": "PF_Arbitrary_COMPARE_FUNC",
+  "status": "actual_entrypoint_to_shared_core_to_production_exact"
+}

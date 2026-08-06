@@ -1,0 +1,25 @@
+{
+  "adapter": {
+    "input": "direct-actual-AEX consumed 44-byte prefix",
+    "parsed_records": [
+      "count 2",
+      "0.25 1 0 0.25 0.125",
+      "0.75 0 0.5 1 0.875"
+    ],
+    "truncated_payload_fails_closed": true
+  },
+  "aexcompat_gap": false,
+  "aexcompat_note": "The missing surface is an AE arbitrary-data/custom-UI plugin contract; no AEXCompat runtime function was reached or shown missing.",
+  "host_contract": {
+    "actual_windows_checkout_payload": false,
+    "arbitrary_callback_dispatch": true,
+    "arbitrary_param_registration": true,
+    "custom_ui_dispatch": true,
+    "five_arbitrary_param_enum_rows": true,
+    "render_checkout_rows": true
+  },
+  "minimum_next_fixture": "A live Windows ParamCheckout trace containing the host ramp object bytes copied from object+0x10 for one non-default ramp, plus callback/property identity.",
+  "production": "Mac host registers five arbitrary-data parameters, dispatches arbitrary/custom-UI callbacks, and reads checked-out handle payloads without synthesizing Windows object bytes.",
+  "schema": "olmkirakira-mode2-ramp-mac-host-adapter-contract/1",
+  "status": "adapter_exact_host_surface_wired_windows_checkout_payload_unverified"
+}

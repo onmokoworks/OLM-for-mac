@@ -458,6 +458,278 @@
         "uniform_21f_runs": []
       }
     ],
+    "coefficient_generators": [
+      {
+        "entry": {
+          "r8_count": 21,
+          "xmm3_sigma_f64": 2.5
+        },
+        "import_log_begin": 193,
+        "return": {
+          "begin": "0x20006e80",
+          "count": 21,
+          "end": "0x20006f28",
+          "imports_during_generator": [
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "EnterCriticalSection"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "LeaveCriticalSection"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "EnterCriticalSection"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "LeaveCriticalSection"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "SetEvent"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "ResetEvent"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "EnterCriticalSection"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "LeaveCriticalSection"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "EnterCriticalSection"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "LeaveCriticalSection"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "SetEvent"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "ResetEvent"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "EnterCriticalSection"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "LeaveCriticalSection"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "EnterCriticalSection"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "LeaveCriticalSection"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "SetEvent"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "ResetEvent"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "EnterCriticalSection"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "LeaveCriticalSection"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "EnterCriticalSection"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "LeaveCriticalSection"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "SetEvent"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "ResetEvent"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "EnterCriticalSection"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "LeaveCriticalSection"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "EnterCriticalSection"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "LeaveCriticalSection"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "SetEvent"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "ResetEvent"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "EnterCriticalSection"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "LeaveCriticalSection"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "EnterCriticalSection"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "LeaveCriticalSection"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "SetEvent"
+            },
+            {
+              "dll": "KERNEL32.dll",
+              "implemented": false,
+              "name": "ResetEvent"
+            },
+            {
+              "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+              "implemented": true,
+              "name": "malloc"
+            }
+          ],
+          "values_f64": [
+            0.047619047619047616,
+            0.047619047619047616,
+            0.047619047619047616,
+            0.047619047619047616,
+            0.047619047619047616,
+            0.047619047619047616,
+            0.047619047619047616,
+            0.047619047619047616,
+            0.047619047619047616,
+            0.047619047619047616,
+            0.047619047619047616,
+            0.047619047619047616,
+            0.047619047619047616,
+            0.047619047619047616,
+            0.047619047619047616,
+            0.047619047619047616,
+            0.047619047619047616,
+            0.047619047619047616,
+            0.047619047619047616,
+            0.047619047619047616,
+            0.047619047619047616
+          ],
+          "words_u64": [
+            "0x3fa8618618618618",
+            "0x3fa8618618618618",
+            "0x3fa8618618618618",
+            "0x3fa8618618618618",
+            "0x3fa8618618618618",
+            "0x3fa8618618618618",
+            "0x3fa8618618618618",
+            "0x3fa8618618618618",
+            "0x3fa8618618618618",
+            "0x3fa8618618618618",
+            "0x3fa8618618618618",
+            "0x3fa8618618618618",
+            "0x3fa8618618618618",
+            "0x3fa8618618618618",
+            "0x3fa8618618618618",
+            "0x3fa8618618618618",
+            "0x3fa8618618618618",
+            "0x3fa8618618618618",
+            "0x3fa8618618618618",
+            "0x3fa8618618618618",
+            "0x3fa8618618618618"
+          ]
+        }
+      },
+      {
+        "entry": {
+          "r8_count": 1,
+          "xmm3_sigma_f64": 2.5
+        },
+        "import_log_begin": 233,
+        "return": {
+          "begin": "0x20006fa0",
+          "count": 1,
+          "end": "0x20006fa8",
+          "imports_during_generator": [
+            {
+              "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+              "implemented": true,
+              "name": "malloc"
+            }
+          ],
+          "values_f64": [
+            1.0
+          ],
+          "words_u64": [
+            "0x3ff0000000000000"
+          ]
+        }
+      }
+    ],
     "direct_call_runtime": [
       {
         "callsite": "0x181272f2d",
@@ -1072,6 +1344,68 @@
       {
         "point": "FUN_181274e10_entry",
         "xmm2_sigma_f64": 2.5
+      }
+    ],
+    "soft_exp_calls": [
+      {
+        "input_f64": -8.0,
+        "input_u64": "0xc020000000000000",
+        "output_f64": 1.0,
+        "output_u64": "0x3ff0000000000000"
+      },
+      {
+        "input_f64": -6.48,
+        "input_u64": "0xc019eb851eb851ec",
+        "output_f64": 1.0,
+        "output_u64": "0x3ff0000000000000"
+      },
+      {
+        "input_f64": -5.12,
+        "input_u64": "0xc0147ae147ae147b",
+        "output_f64": 1.0,
+        "output_u64": "0x3ff0000000000000"
+      },
+      {
+        "input_f64": -3.92,
+        "input_u64": "0xc00f5c28f5c28f5c",
+        "output_f64": 1.0,
+        "output_u64": "0x3ff0000000000000"
+      },
+      {
+        "input_f64": -2.88,
+        "input_u64": "0xc0070a3d70a3d70a",
+        "output_f64": 1.0,
+        "output_u64": "0x3ff0000000000000"
+      },
+      {
+        "input_f64": -2.0,
+        "input_u64": "0xc000000000000000",
+        "output_f64": 1.0,
+        "output_u64": "0x3ff0000000000000"
+      },
+      {
+        "input_f64": -1.28,
+        "input_u64": "0xbff47ae147ae147b",
+        "output_f64": 1.0,
+        "output_u64": "0x3ff0000000000000"
+      },
+      {
+        "input_f64": -0.72,
+        "input_u64": "0xbfe70a3d70a3d70a",
+        "output_f64": 1.0,
+        "output_u64": "0x3ff0000000000000"
+      },
+      {
+        "input_f64": -0.32,
+        "input_u64": "0xbfd47ae147ae147b",
+        "output_f64": 1.0,
+        "output_u64": "0x3ff0000000000000"
+      },
+      {
+        "input_f64": -0.08,
+        "input_u64": "0xbfb47ae147ae147b",
+        "output_f64": 1.0,
+        "output_u64": "0x3ff0000000000000"
       }
     ],
     "windows_live_minimum_targets": [

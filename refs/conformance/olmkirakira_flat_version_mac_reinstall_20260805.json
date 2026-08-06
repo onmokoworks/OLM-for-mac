@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "kind": "olmkirakira_flat_version_mac_reinstall_20260805",
+  "status": "installed_ready_for_next_launch",
+  "after_effects_running_before_install": false,
+  "after_effects_running_after_install": false,
+  "installed": {
+    "bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin",
+    "binary_sha256": "188abfa8b86115a87fe7a9917046a50c8809e12c2fdd941dc6065d17c73c61fb",
+    "source_hash_match": true,
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "codesign_strict_verify": "pass",
+    "visible_bundle_count": 1
+  },
+  "recoverable_backup": {
+    "bundle": "/Users/onmk/Documents/Projects/Personal/OLM as/handoff/mac_plugin_backups/mediacore_20260805_olmkirakira_before_flat_version/OLMKiraKira.plugin",
+    "binary_sha256": "0b9eb76250cf6301a60a972d1705fe1cc853f8238303335815aa3333f8f1d05e"
+  },
+  "live_ae_claimed": false,
+  "commit_created": false
+}

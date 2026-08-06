@@ -1,6 +1,7 @@
 #include "../../core/kirakira_gaussian.h"
 
 #include <cstdint>
+#include <cstdlib>
 #include <cstdio>
 #include <cstring>
 #include <vector>
@@ -25,6 +26,30 @@ std::uint32_t to_bits(float value)
 
 int main(int argc, char** argv)
 {
+    if ((argc == 2 || argc == 5) &&
+        std::strcmp(argv[1], "--crt-initialized-actual-aex-oracle") == 0) {
+        const int width = argc == 5 ? std::atoi(argv[2]) : 9;
+        const int height = argc == 5 ? std::atoi(argv[3]) : 7;
+        const int length = argc == 5 ? std::atoi(argv[4]) : 5;
+        if (width <= 0 || height <= 0 || length <= 0)
+            return 4;
+        std::vector<float> source(width * height);
+        std::vector<float> destination(width * height);
+        for (int i = 0; i < width * height; ++i) {
+            unsigned int word = 0;
+            if (std::scanf("%x", &word) != 1)
+                return 3;
+            source[i] = from_bits(static_cast<std::uint32_t>(word));
+        }
+        olm::kirakira::HorizontalGaussian gaussian;
+        if (!gaussian.prepare_actual_aex_nonfused(length) ||
+            !gaussian.apply(source.data(), width, destination.data(), width, width, height))
+            return 2;
+        for (int i = 0; i < width * height; ++i)
+            std::printf("%d %08x\n", i, to_bits(destination[i]));
+        return 0;
+    }
+
     if (argc == 2 && std::strcmp(argv[1], "--actual-aex-oracle") == 0) {
         constexpr int width = 9;
         constexpr int height = 7;

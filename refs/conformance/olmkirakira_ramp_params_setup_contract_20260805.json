@@ -1,0 +1,60 @@
+{
+  "actual_aex": {
+    "arbitrary_callback_selectors": "numeric 0..10 recovered and exercised through actual entry_point",
+    "arbitrary_default_payload_size": "0x260 Windows wrapper containing pointer-free 0x144 payload at +0x10",
+    "arbitrary_row_type": "0x0b = PF_Param_ARBITRARY_DATA at disk IDs 19/21/23/36/25",
+    "group_default_argument": 0,
+    "num_params_including_input": 41,
+    "params_setup": "FUN_18114c1a0",
+    "ramp_registration_helper": "FUN_181152eb0",
+    "rows": [
+      {
+        "end_disk_id": 30,
+        "group_disk_id": 29,
+        "name": "Vertical",
+        "spacer_disk_id": 19,
+        "use_disk_id": 18
+      },
+      {
+        "end_disk_id": 32,
+        "group_disk_id": 31,
+        "name": "Horizontal",
+        "spacer_disk_id": 21,
+        "use_disk_id": 20
+      },
+      {
+        "end_disk_id": 34,
+        "group_disk_id": 33,
+        "name": "Diagonal",
+        "spacer_disk_id": 23,
+        "use_disk_id": 22
+      },
+      {
+        "end_disk_id": 38,
+        "group_disk_id": 37,
+        "name": "Diagonal2",
+        "spacer_disk_id": 36,
+        "use_disk_id": 35
+      },
+      {
+        "end_disk_id": 40,
+        "group_disk_id": 39,
+        "name": "Highlight",
+        "spacer_disk_id": 25,
+        "use_disk_id": 24
+      }
+    ],
+    "written_param_type": "0x0d = PF_Param_GROUP_START"
+  },
+  "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+  "limit": null,
+  "mac": {
+    "fake_payload": false,
+    "num_params_including_input": 41,
+    "registration_added": "five GROUP_START/use-checkbox/PF_Param_ARBITRARY_DATA/GROUP_END quartets",
+    "render_payload_checkout": "handle lock/copy/unlock for standard and Smart Render",
+    "setup_exact": true
+  },
+  "schema": "olmkirakira-ramp-params-setup-contract/1",
+  "status": "registration_exact_actual_41_mac_41_canonical_arbitrary"
+}

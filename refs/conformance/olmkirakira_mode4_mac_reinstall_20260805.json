@@ -1,0 +1,13 @@
+{
+  "schema": "olmkirakira-mac-reinstall/1",
+  "date": "2026-08-05",
+  "reason": "Mode4 scalar recurrence production integration",
+  "after_effects_running_before": false,
+  "after_effects_running_after": false,
+  "installed": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin",
+  "backup": "handoff/mac_plugin_backups/mediacore_20260805_olmkirakira_before_mode4_recurrence/OLMKiraKira.plugin",
+  "binary_sha256": "e505e75fef0e83943d4cdc262d38d67a1e477eb7133d539acf1f028cc3c3c670",
+  "architectures": ["x86_64", "arm64"],
+  "codesign_strict": true,
+  "visible_bundle_count": 1
+}

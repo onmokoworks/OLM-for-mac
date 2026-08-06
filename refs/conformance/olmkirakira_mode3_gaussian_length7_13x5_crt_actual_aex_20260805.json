@@ -1,0 +1,3640 @@
+{
+  "FACT": [
+    "The derived probe suppresses only the stop at FUN_181272ec0 and executes the actual embedded Gaussian body.",
+    "The output capture point is the caller instruction at 0x181151105 immediately after the Gaussian call returns.",
+    "The actual-AEX output contains 65 raw float32 words captured after return.",
+    "The captured output has 65 nonzero raw words."
+  ],
+  "INFERENCE": [
+    "Captured words are promoted to the primary oracle only when the caller return hook is reached and exactly width*height CV_32FC1 words decode."
+  ],
+  "blocker": null,
+  "called_imports": [
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x4",
+        "0xd",
+        "0x5"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "EnterCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x4",
+        "0xd",
+        "0x5"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "LeaveCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x10",
+        "0x4",
+        "0xd",
+        "0x5"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20001330"
+    },
+    {
+      "args": [
+        "0x200000b0",
+        "0x4",
+        "0xd",
+        "0x5"
+      ],
+      "dll": "MSVCP140.dll",
+      "implemented": false,
+      "name": "_Mtx_lock",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x200000b0",
+        "0x2",
+        "0xd",
+        "0x5"
+      ],
+      "dll": "MSVCP140.dll",
+      "implemented": false,
+      "name": "_Mtx_unlock",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x2",
+        "0xd",
+        "0x5"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "EnterCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "LeaveCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "SetEvent",
+      "ret": "0x1"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "ResetEvent",
+      "ret": "0x1"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x4",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "FlsGetValue",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x28",
+        "0x4",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20001340"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x4",
+        "0x20001340",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "FlsGetValue",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x20",
+        "0x4",
+        "0x20001340",
+        "0x4"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20001370"
+    },
+    {
+      "args": [
+        "0x100",
+        "0x20",
+        "0x20001340",
+        "0x4"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20001390"
+    },
+    {
+      "args": [
+        "0x20001390",
+        "0x0",
+        "0x0",
+        "0x4"
+      ],
+      "dll": "VCRUNTIME140.dll",
+      "implemented": true,
+      "name": "memmove",
+      "ret": "0x20001390"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x20001370",
+        "0x0",
+        "0x20"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "FlsSetValue",
+      "ret": "0x1"
+    },
+    {
+      "args": [
+        "0x200000b0",
+        "0x20001370",
+        "0x0",
+        "0x20"
+      ],
+      "dll": "MSVCP140.dll",
+      "implemented": false,
+      "name": "_Mtx_lock",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x200000b0",
+        "0x20000250",
+        "0x0",
+        "0x20"
+      ],
+      "dll": "MSVCP140.dll",
+      "implemented": false,
+      "name": "_Mtx_unlock",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x200000b0",
+        "0x20000250",
+        "0x0",
+        "0x20"
+      ],
+      "dll": "MSVCP140.dll",
+      "implemented": false,
+      "name": "_Mtx_lock",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x20001390",
+        "0x0",
+        "0x10",
+        "0x20"
+      ],
+      "dll": "VCRUNTIME140.dll",
+      "implemented": true,
+      "name": "memset",
+      "ret": "0x20001390"
+    },
+    {
+      "args": [
+        "0x200000b0",
+        "0x0",
+        "0x10",
+        "0x20"
+      ],
+      "dll": "MSVCP140.dll",
+      "implemented": false,
+      "name": "_Mtx_unlock",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x4",
+        "0x10",
+        "0x20"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "EnterCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x4",
+        "0x10",
+        "0x20"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "LeaveCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x40",
+        "0x4",
+        "0x10",
+        "0x20"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20001490"
+    },
+    {
+      "args": [
+        "0x181491d58",
+        "0x0",
+        "0x0",
+        "0x202cff"
+      ],
+      "dll": "api-ms-win-crt-environment-l1-1-0.dll",
+      "implemented": false,
+      "name": "getenv",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x20",
+        "0x7",
+        "0x11",
+        "0x202cff"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x200014d0"
+    },
+    {
+      "args": [
+        "0x200014d0",
+        "0x181541ae8",
+        "0x11",
+        "0x202cff"
+      ],
+      "dll": "VCRUNTIME140.dll",
+      "implemented": true,
+      "name": "memcpy",
+      "ret": "0x200014d0"
+    },
+    {
+      "args": [
+        "0x200014d0",
+        "0x53",
+        "0xc",
+        "0x202cff"
+      ],
+      "dll": "VCRUNTIME140.dll",
+      "implemented": false,
+      "name": "memchr",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x200014d0",
+        "0x20",
+        "0xc",
+        "0x202cff"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0xf",
+        "0xc",
+        "0x202cff"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "EnterCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "LeaveCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "SetEvent",
+      "ret": "0x1"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "ResetEvent",
+      "ret": "0x1"
+    },
+    {
+      "args": [
+        "0xf0fefa00000",
+        "0x1814ded80",
+        "0x104",
+        "0x20000fc0"
+      ],
+      "dll": "api-ms-win-crt-math-l1-1-0.dll",
+      "implemented": true,
+      "name": "cos",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0xf0fefa00000",
+        "0x1814ded80",
+        "0x104",
+        "0x20000fc0"
+      ],
+      "dll": "api-ms-win-crt-math-l1-1-0.dll",
+      "implemented": true,
+      "name": "sin",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x20000020",
+        "0x2",
+        "0x8",
+        "0xffffffff"
+      ],
+      "dll": "MSVCP140.dll",
+      "implemented": false,
+      "name": "_Mtx_lock",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x4",
+        "0x8",
+        "0xffffffff"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "EnterCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x4",
+        "0x8",
+        "0xffffffff"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "LeaveCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x8",
+        "0x4",
+        "0x8",
+        "0xffffffff"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x200014f0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x4",
+        "0x8",
+        "0xffffffff"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "EnterCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "LeaveCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "SetEvent",
+      "ret": "0x1"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "ResetEvent",
+      "ret": "0x1"
+    },
+    {
+      "args": [
+        "0x20000020",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "MSVCP140.dll",
+      "implemented": false,
+      "name": "_Mtx_unlock",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x30",
+        "0x40",
+        "0xf0feeb8",
+        "0x1"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "_aligned_malloc",
+      "ret": "0x40010240"
+    },
+    {
+      "args": [
+        "0x68",
+        "0x40",
+        "0xf0feeb8",
+        "0x1"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20001500"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x4",
+        "0x3",
+        "0x2"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "FlsGetValue",
+      "ret": "0x20001370"
+    },
+    {
+      "args": [
+        "0x104",
+        "0x40",
+        "0xf0fec48",
+        "0x1"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "_aligned_malloc",
+      "ret": "0x40010280"
+    },
+    {
+      "args": [
+        "0x68",
+        "0x40",
+        "0xf0fec48",
+        "0x1"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20001570"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x4",
+        "0xd",
+        "0x5"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "FlsGetValue",
+      "ret": "0x20001370"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x4",
+        "0x3",
+        "0x2"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "FlsGetValue",
+      "ret": "0x20001370"
+    },
+    {
+      "args": [
+        "0xf0fe2a0",
+        "0xf0fe3d0",
+        "0xf0fe584",
+        "0x0"
+      ],
+      "dll": "MSVCP140.dll",
+      "implemented": false,
+      "name": "?__ExceptionPtrCreate@@YAXPEAX@Z",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x4",
+        "0xf0fe584",
+        "0x0"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "FlsGetValue",
+      "ret": "0x20001370"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x4",
+        "0xf0fe584",
+        "0x0"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "FlsGetValue",
+      "ret": "0x20001370"
+    },
+    {
+      "args": [
+        "0xd8",
+        "0x4",
+        "0xf0fe584",
+        "0x0"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x200015e0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x4",
+        "0xf0fe584",
+        "0x0"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "EnterCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x4",
+        "0xf0fe584",
+        "0x0"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "LeaveCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x10",
+        "0x4",
+        "0xf0fe584",
+        "0x0"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x200016c0"
+    },
+    {
+      "args": [
+        "0x200000b0",
+        "0x4",
+        "0xf0fe584",
+        "0x0"
+      ],
+      "dll": "MSVCP140.dll",
+      "implemented": false,
+      "name": "_Mtx_lock",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x200000b0",
+        "0x3",
+        "0xf0fe584",
+        "0x0"
+      ],
+      "dll": "MSVCP140.dll",
+      "implemented": false,
+      "name": "_Mtx_unlock",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x3",
+        "0xf0fe584",
+        "0x0"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "EnterCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "LeaveCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "SetEvent",
+      "ret": "0x1"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "ResetEvent",
+      "ret": "0x1"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x4",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "FlsGetValue",
+      "ret": "0x20001370"
+    },
+    {
+      "args": [
+        "0x4",
+        "0x4",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x200016d0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x4",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "EnterCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x4",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "LeaveCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x30",
+        "0x7",
+        "0x20",
+        "0x4"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x200016e0"
+    },
+    {
+      "args": [
+        "0x200016e0",
+        "0x181491c80",
+        "0x20",
+        "0x4"
+      ],
+      "dll": "VCRUNTIME140.dll",
+      "implemented": true,
+      "name": "memcpy",
+      "ret": "0x200016e0"
+    },
+    {
+      "args": [
+        "0x200016e0",
+        "0xf0fe008",
+        "0x20",
+        "0x4"
+      ],
+      "dll": "api-ms-win-crt-environment-l1-1-0.dll",
+      "implemented": false,
+      "name": "getenv",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x200016e0",
+        "0x30",
+        "0x20",
+        "0x4"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x30",
+        "0x20",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "EnterCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "LeaveCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "SetEvent",
+      "ret": "0x1"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "ResetEvent",
+      "ret": "0x1"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x4",
+        "0x200016d0",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "FlsGetValue",
+      "ret": "0x20001370"
+    },
+    {
+      "args": [
+        "0x200000b0",
+        "0x4",
+        "0x200016d0",
+        "0x4"
+      ],
+      "dll": "MSVCP140.dll",
+      "implemented": false,
+      "name": "_Mtx_lock",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x200013a0",
+        "0x0",
+        "0x8",
+        "0x4"
+      ],
+      "dll": "VCRUNTIME140.dll",
+      "implemented": true,
+      "name": "memset",
+      "ret": "0x200013a0"
+    },
+    {
+      "args": [
+        "0x200000b0",
+        "0x0",
+        "0x8",
+        "0x4"
+      ],
+      "dll": "MSVCP140.dll",
+      "implemented": false,
+      "name": "_Mtx_unlock",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x10",
+        "0x0",
+        "0x8",
+        "0x4"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20001710"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x4",
+        "0x200015e0",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "FlsGetValue",
+      "ret": "0x20001370"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x4",
+        "0x200015e0",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "FlsGetValue",
+      "ret": "0x20001370"
+    },
+    {
+      "args": [
+        "0x4000",
+        "0xf0fe368",
+        "0x200015e0",
+        "0x4"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20001720"
+    },
+    {
+      "args": [
+        "0x2000",
+        "0xf0fe368",
+        "0x200015e0",
+        "0x4"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20005720"
+    },
+    {
+      "args": [
+        "0x104",
+        "0x40",
+        "0xf0fd998",
+        "0x2"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "_aligned_malloc",
+      "ret": "0x400103c0"
+    },
+    {
+      "args": [
+        "0x68",
+        "0x40",
+        "0xf0fd998",
+        "0x2"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20007720"
+    },
+    {
+      "args": [
+        "0x82",
+        "0x40",
+        "0xf0fd818",
+        "0x1"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "_aligned_malloc",
+      "ret": "0x40010500"
+    },
+    {
+      "args": [
+        "0x68",
+        "0x40",
+        "0xf0fd818",
+        "0x1"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20007790"
+    },
+    {
+      "args": [
+        "0x40010500",
+        "0x40000100",
+        "0x18148de88",
+        "0xd"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "_aligned_free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x20007790",
+        "0x68",
+        "0x18148de88",
+        "0xd"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x400103c0",
+        "0x40000100",
+        "0x18148de88",
+        "0xd"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "_aligned_free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x20007720",
+        "0x68",
+        "0x18148de88",
+        "0xd"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x20005720",
+        "0x5",
+        "0x18148de88",
+        "0xd"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x20001720",
+        "0x5",
+        "0x18148de88",
+        "0xd"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0xf0fe2a0",
+        "0x5",
+        "0x18148de88",
+        "0xd"
+      ],
+      "dll": "MSVCP140.dll",
+      "implemented": false,
+      "name": "?__ExceptionPtrDestroy@@YAXPEAX@Z",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x40010280",
+        "0x40000100",
+        "0x18148de88",
+        "0xd"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "_aligned_free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x20001570",
+        "0x68",
+        "0x18148de88",
+        "0xd"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x74",
+        "0x40",
+        "0xf0fe6b8",
+        "0x1"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "_aligned_malloc",
+      "ret": "0x400105c0"
+    },
+    {
+      "args": [
+        "0x68",
+        "0x40",
+        "0xf0fe6b8",
+        "0x1"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20007800"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x4",
+        "0x401fffffffffffff",
+        "0x7ffffffffffffd20"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "EnterCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x4",
+        "0x401fffffffffffff",
+        "0x7ffffffffffffd20"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "LeaveCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x19da2747af5c7e",
+        "0x404",
+        "0x67689d1ebd71f690"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "EnterCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "LeaveCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "SetEvent",
+      "ret": "0x1"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "ResetEvent",
+      "ret": "0x1"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "EnterCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "LeaveCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x11eb5ab9ae5e70",
+        "0x404",
+        "0x47ad6ae6b979c0c0"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "EnterCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "LeaveCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "SetEvent",
+      "ret": "0x1"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "ResetEvent",
+      "ret": "0x1"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "EnterCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "LeaveCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x18d76c6c8c38d3",
+        "0x402",
+        "0x635db1b230e34c80"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "EnterCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "LeaveCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "SetEvent",
+      "ret": "0x1"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "ResetEvent",
+      "ret": "0x1"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "EnterCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "LeaveCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x16f55af73548b8",
+        "0x400",
+        "0x5bd56bdcd522e180"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "EnterCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "LeaveCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "SetEvent",
+      "ret": "0x1"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "ResetEvent",
+      "ret": "0x1"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "EnterCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "LeaveCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x1fd3b7b51209ea",
+        "0x3fd",
+        "0x7f4eded44827a850"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "EnterCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "LeaveCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "SetEvent",
+      "ret": "0x1"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "ResetEvent",
+      "ret": "0x1"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "EnterCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "LeaveCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x11b251fad369cd",
+        "0x3fb",
+        "0x46c947eb4da73380"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "EnterCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x1818c3e70",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "LeaveCriticalSection",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "SetEvent",
+      "ret": "0x1"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x0",
+        "0x40000100",
+        "0x4"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "ResetEvent",
+      "ret": "0x1"
+    },
+    {
+      "args": [
+        "0xe8",
+        "0x1d",
+        "0xf0fe0b0",
+        "0x74b90e92468b0580"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20007870"
+    },
+    {
+      "args": [
+        "0x20007870",
+        "0xe8",
+        "0x3fe",
+        "0x1d"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x4",
+        "0x40",
+        "0xf0fe6b8",
+        "0x1"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "_aligned_malloc",
+      "ret": "0x40010640"
+    },
+    {
+      "args": [
+        "0x68",
+        "0x40",
+        "0xf0fe6b8",
+        "0x1"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20007960"
+    },
+    {
+      "args": [
+        "0x8",
+        "0x1",
+        "0xf0fe0b0",
+        "0x4000000000000000"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x200079d0"
+    },
+    {
+      "args": [
+        "0x200079d0",
+        "0x8",
+        "0x3fe",
+        "0x1"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0xe8",
+        "0x40",
+        "0xf0fdba8",
+        "0x1"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "_aligned_malloc",
+      "ret": "0x40010680"
+    },
+    {
+      "args": [
+        "0x68",
+        "0x40",
+        "0xf0fdba8",
+        "0x1"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x200079e0"
+    },
+    {
+      "args": [
+        "0x40010680",
+        "0x40000100",
+        "0x18148de88",
+        "0x40010680"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "_aligned_free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x200079e0",
+        "0x68",
+        "0x18148de88",
+        "0x40010680"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x8",
+        "0x40",
+        "0xf0fdba8",
+        "0x1"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "_aligned_malloc",
+      "ret": "0x40010780"
+    },
+    {
+      "args": [
+        "0x68",
+        "0x40",
+        "0xf0fdba8",
+        "0x1"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20007a50"
+    },
+    {
+      "args": [
+        "0x40010780",
+        "0x40000100",
+        "0x18148de88",
+        "0x40010780"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "_aligned_free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x20007a50",
+        "0x68",
+        "0x18148de88",
+        "0x40010780"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0xe0",
+        "0xf0fdb80",
+        "0xf0fdb50",
+        "0xf0fda20"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20007ac0"
+    },
+    {
+      "args": [
+        "0x100",
+        "0xf0fdb70",
+        "0xf0fdb30",
+        "0xf0fd6b8"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20007ba0"
+    },
+    {
+      "args": [
+        "0x130",
+        "0x8",
+        "0x0",
+        "0xf0fd6b8"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20007ca0"
+    },
+    {
+      "args": [
+        "0x70",
+        "0x0",
+        "0x3fffffffffffffff",
+        "0x5"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20007dd0"
+    },
+    {
+      "args": [
+        "0x20007dd0",
+        "0x0",
+        "0x70",
+        "0x5"
+      ],
+      "dll": "VCRUNTIME140.dll",
+      "implemented": true,
+      "name": "memset",
+      "ret": "0x20007dd0"
+    },
+    {
+      "args": [
+        "0x20007dd0",
+        "0x0",
+        "0x0",
+        "0x5"
+      ],
+      "dll": "VCRUNTIME140.dll",
+      "implemented": true,
+      "name": "memmove",
+      "ret": "0x20007dd0"
+    },
+    {
+      "args": [
+        "0x18",
+        "0x0",
+        "0x0",
+        "0x5"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20007e40"
+    },
+    {
+      "args": [
+        "0x20",
+        "0x0",
+        "0x1fffffffffffffff",
+        "0xd"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20007e60"
+    },
+    {
+      "args": [
+        "0x20007e60",
+        "0x0",
+        "0x20",
+        "0xd"
+      ],
+      "dll": "VCRUNTIME140.dll",
+      "implemented": true,
+      "name": "memset",
+      "ret": "0x20007e60"
+    },
+    {
+      "args": [
+        "0x20007e60",
+        "0x0",
+        "0x0",
+        "0xd"
+      ],
+      "dll": "VCRUNTIME140.dll",
+      "implemented": true,
+      "name": "memmove",
+      "ret": "0x20007e60"
+    },
+    {
+      "args": [
+        "0xa4",
+        "0x0",
+        "0xf0fdf40",
+        "0xd"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20007e80"
+    },
+    {
+      "args": [
+        "0x20007e80",
+        "0x0",
+        "0xa4",
+        "0xd"
+      ],
+      "dll": "VCRUNTIME140.dll",
+      "implemented": true,
+      "name": "memset",
+      "ret": "0x20007e80"
+    },
+    {
+      "args": [
+        "0x20007e80",
+        "0x0",
+        "0x0",
+        "0xd"
+      ],
+      "dll": "VCRUNTIME140.dll",
+      "implemented": true,
+      "name": "memmove",
+      "ret": "0x20007e80"
+    },
+    {
+      "args": [
+        "0x440",
+        "0x0",
+        "0xf0fdf40",
+        "0xd"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20007f30"
+    },
+    {
+      "args": [
+        "0x20007f30",
+        "0x0",
+        "0x440",
+        "0xd"
+      ],
+      "dll": "VCRUNTIME140.dll",
+      "implemented": true,
+      "name": "memset",
+      "ret": "0x20007f30"
+    },
+    {
+      "args": [
+        "0x20007f30",
+        "0x0",
+        "0x0",
+        "0xd"
+      ],
+      "dll": "VCRUNTIME140.dll",
+      "implemented": true,
+      "name": "memmove",
+      "ret": "0x20007f30"
+    },
+    {
+      "args": [
+        "0x20007eb8",
+        "0x20000fc0",
+        "0x34",
+        "0x4"
+      ],
+      "dll": "VCRUNTIME140.dll",
+      "implemented": true,
+      "name": "memcpy",
+      "ret": "0x20007eb8"
+    },
+    {
+      "args": [
+        "0x20007eb8",
+        "0x20000ff4",
+        "0x34",
+        "0x4"
+      ],
+      "dll": "VCRUNTIME140.dll",
+      "implemented": true,
+      "name": "memcpy",
+      "ret": "0x20007eb8"
+    },
+    {
+      "args": [
+        "0x20007eb8",
+        "0x20001028",
+        "0x34",
+        "0x4"
+      ],
+      "dll": "VCRUNTIME140.dll",
+      "implemented": true,
+      "name": "memcpy",
+      "ret": "0x20007eb8"
+    },
+    {
+      "args": [
+        "0x20007eb8",
+        "0x2000105c",
+        "0x34",
+        "0x4"
+      ],
+      "dll": "VCRUNTIME140.dll",
+      "implemented": true,
+      "name": "memcpy",
+      "ret": "0x20007eb8"
+    },
+    {
+      "args": [
+        "0x20007eb8",
+        "0x20001090",
+        "0x34",
+        "0x4"
+      ],
+      "dll": "VCRUNTIME140.dll",
+      "implemented": true,
+      "name": "memcpy",
+      "ret": "0x20007eb8"
+    },
+    {
+      "args": [
+        "0x20007ba0",
+        "0x100",
+        "0x0",
+        "0x4"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x20007ac0",
+        "0xe0",
+        "0x0",
+        "0x4"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x20007e60",
+        "0x20",
+        "0x0",
+        "0x4"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x20007e80",
+        "0xa4",
+        "0x0",
+        "0x4"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x20007f30",
+        "0x440",
+        "0x0",
+        "0x4"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x20007dd0",
+        "0x70",
+        "0x0",
+        "0x4"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x20007ca0",
+        "0x130",
+        "0x0",
+        "0x4"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x20007e40",
+        "0x18",
+        "0x0",
+        "0x4"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x40010640",
+        "0x40000100",
+        "0x18148de88",
+        "0x4"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "_aligned_free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x20007960",
+        "0x68",
+        "0x18148de88",
+        "0x4"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x400105c0",
+        "0x40000100",
+        "0x18148de88",
+        "0x4"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "_aligned_free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x20007800",
+        "0x68",
+        "0x18148de88",
+        "0x4"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0xf0fefa00000",
+        "0x1814ded80",
+        "0x18148de88",
+        "0x4"
+      ],
+      "dll": "api-ms-win-crt-math-l1-1-0.dll",
+      "implemented": true,
+      "name": "cos",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0xf0fefa00000",
+        "0x1814ded80",
+        "0x18148de88",
+        "0x4"
+      ],
+      "dll": "api-ms-win-crt-math-l1-1-0.dll",
+      "implemented": true,
+      "name": "sin",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x30",
+        "0x40",
+        "0xf0fee58",
+        "0x1"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "_aligned_malloc",
+      "ret": "0x400107c0"
+    },
+    {
+      "args": [
+        "0x68",
+        "0x40",
+        "0xf0fee58",
+        "0x1"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20008370"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x4",
+        "0x3",
+        "0x2"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "FlsGetValue",
+      "ret": "0x20001370"
+    },
+    {
+      "args": [
+        "0x40010240",
+        "0x40000100",
+        "0x18148de88",
+        "0x400107f0"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "_aligned_free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x20001500",
+        "0x68",
+        "0x18148de88",
+        "0x400107f0"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x104",
+        "0x40",
+        "0xf0fec48",
+        "0x1"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "_aligned_malloc",
+      "ret": "0x40010800"
+    },
+    {
+      "args": [
+        "0x68",
+        "0x40",
+        "0xf0fec48",
+        "0x1"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x200083e0"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x4",
+        "0xd",
+        "0x5"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "FlsGetValue",
+      "ret": "0x20001370"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x4",
+        "0x3",
+        "0x2"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "FlsGetValue",
+      "ret": "0x20001370"
+    },
+    {
+      "args": [
+        "0xf0fe2a0",
+        "0xf0fe3d0",
+        "0xf0fe584",
+        "0x0"
+      ],
+      "dll": "MSVCP140.dll",
+      "implemented": false,
+      "name": "?__ExceptionPtrCreate@@YAXPEAX@Z",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x4",
+        "0xf0fe584",
+        "0x0"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "FlsGetValue",
+      "ret": "0x20001370"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x4",
+        "0xf0fe584",
+        "0x0"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "FlsGetValue",
+      "ret": "0x20001370"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x4",
+        "0x200015e0",
+        "0x0"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "FlsGetValue",
+      "ret": "0x20001370"
+    },
+    {
+      "args": [
+        "0x4000",
+        "0xf0fe368",
+        "0x200015e0",
+        "0x0"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x20008450"
+    },
+    {
+      "args": [
+        "0x2000",
+        "0xf0fe368",
+        "0x200015e0",
+        "0x0"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x2000c450"
+    },
+    {
+      "args": [
+        "0x104",
+        "0x40",
+        "0xf0fd998",
+        "0x2"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "_aligned_malloc",
+      "ret": "0x40010940"
+    },
+    {
+      "args": [
+        "0x68",
+        "0x40",
+        "0xf0fd998",
+        "0x2"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x2000e450"
+    },
+    {
+      "args": [
+        "0x82",
+        "0x40",
+        "0xf0fd818",
+        "0x1"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "_aligned_malloc",
+      "ret": "0x40010a80"
+    },
+    {
+      "args": [
+        "0x68",
+        "0x40",
+        "0xf0fd818",
+        "0x1"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "malloc",
+      "ret": "0x2000e4c0"
+    },
+    {
+      "args": [
+        "0x40010a80",
+        "0x40000100",
+        "0x18148de88",
+        "0xd"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "_aligned_free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x2000e4c0",
+        "0x68",
+        "0x18148de88",
+        "0xd"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x40010940",
+        "0x40000100",
+        "0x18148de88",
+        "0xd"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "_aligned_free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x2000e450",
+        "0x68",
+        "0x18148de88",
+        "0xd"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x2000c450",
+        "0x5",
+        "0x18148de88",
+        "0xd"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x20008450",
+        "0x5",
+        "0x18148de88",
+        "0xd"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0xf0fe2a0",
+        "0x5",
+        "0x18148de88",
+        "0xd"
+      ],
+      "dll": "MSVCP140.dll",
+      "implemented": false,
+      "name": "?__ExceptionPtrDestroy@@YAXPEAX@Z",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x40010800",
+        "0x40000100",
+        "0x18148de88",
+        "0xd"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "_aligned_free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x200083e0",
+        "0x68",
+        "0x18148de88",
+        "0xd"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x0",
+        "0x4",
+        "0xd",
+        "0x5"
+      ],
+      "dll": "KERNEL32.dll",
+      "implemented": true,
+      "name": "FlsGetValue",
+      "ret": "0x20001370"
+    },
+    {
+      "args": [
+        "0x400107c0",
+        "0x40000100",
+        "0x18148de88",
+        "0x20000e40"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "_aligned_free",
+      "ret": "0x0"
+    },
+    {
+      "args": [
+        "0x20008370",
+        "0x68",
+        "0x18148de88",
+        "0x20000e40"
+      ],
+      "dll": "api-ms-win-crt-heap-l1-1-0.dll",
+      "implemented": true,
+      "name": "free",
+      "ret": "0x0"
+    }
+  ],
+  "entry_capture": [
+    {
+      "input_array": {
+        "flags": "0x1010000",
+        "mat": {
+          "channels": 1,
+          "cols": 13,
+          "data": "0x20000fc0",
+          "depth_code": 5,
+          "dims": 2,
+          "flags": "0x42ff4005",
+          "header": "0x200010d0",
+          "nonzero_word_count": 65,
+          "rows": 5,
+          "sample_first_rows": [
+            [
+              0.004423253703862429,
+              0.027171414345502853,
+              0.06462545692920685,
+              0.11678539216518402,
+              0.1823299676179886,
+              0.263671875,
+              0.3597196936607361,
+              0.40808823704719543
+            ],
+            [
+              0.18014705181121826,
+              0.3345588445663452,
+              0.4889705777168274,
+              0.5134995579719543,
+              0.07720588147640228,
+              0.10661764442920685,
+              0.14338235557079315,
+              0.22357536852359772
+            ]
+          ],
+          "step_bytes": 52,
+          "step_pointer": "0x20001130",
+          "values_f32": [
+            [
+              0.004423253703862429,
+              0.027171414345502853,
+              0.06462545692920685,
+              0.11678539216518402,
+              0.1823299676179886,
+              0.263671875,
+              0.3597196936607361,
+              0.40808823704719543,
+              0.4430147111415863,
+              0.47242650389671326,
+              0.5018382668495178,
+              0.53125,
+              0.4080882668495178
+            ],
+            [
+              0.18014705181121826,
+              0.3345588445663452,
+              0.4889705777168274,
+              0.5134995579719543,
+              0.07720588147640228,
+              0.10661764442920685,
+              0.14338235557079315,
+              0.22357536852359772,
+              0.20220588147640228,
+              0.2297794222831726,
+              0.2591911852359772,
+              0.2886029779911041,
+              0.26056987047195435
+            ],
+            [
+              0.7205882668495178,
+              0.7481618523597717,
+              0.7775735259056091,
+              0.7733226418495178,
+              0.53125,
+              0.6838235855102539,
+              0.8382353186607361,
+              0.871553361415863,
+              0.14705882966518402,
+              0.29963234066963196,
+              0.4540441334247589,
+              0.5908777713775635,
+              0.07123161852359772
+            ],
+            [
+              0.4779411852359772,
+              0.5128676295280457,
+              0.5422794222831726,
+              0.5716911554336548,
+              0.6011029481887817,
+              0.6286764740943909,
+              0.6580882668495178,
+              0.6875,
+              0.7169117331504822,
+              0.7444852590560913,
+              0.7738970518112183,
+              0.810661792755127,
+              0.5285500884056091
+            ],
+            [
+              0.2187500149011612,
+              0.2702205777168274,
+              0.29963237047195435,
+              0.3290441334247589,
+              0.3584558963775635,
+              0.38786765933036804,
+              0.4154411852359772,
+              0.43083640933036804,
+              0.43738511204719543,
+              0.41486674547195435,
+              0.3765510320663452,
+              0.3248506784439087,
+              0.2584443986415863
+            ]
+          ],
+          "word_count": 65,
+          "words_u32": [
+            "0x3b90f0f1",
+            "0x3cde9696",
+            "0x3d845a5a",
+            "0x3def2d2e",
+            "0x3e3ab4b5",
+            "0x3e870000",
+            "0x3eb82d2e",
+            "0x3ed0f0f1",
+            "0x3ee2d2d3",
+            "0x3ef1e1e3",
+            "0x3f007879",
+            "0x3f080000",
+            "0x3ed0f0f2",
+            "0x3e387878",
+            "0x3eab4b4c",
+            "0x3efa5a5a",
+            "0x3f0374b5",
+            "0x3d9e1e1e",
+            "0x3dda5a5a",
+            "0x3e12d2d3",
+            "0x3e64f0f1",
+            "0x3e4f0f0f",
+            "0x3e6b4b4c",
+            "0x3e84b4b5",
+            "0x3e93c3c5",
+            "0x3e85696a",
+            "0x3f387879",
+            "0x3f3f8789",
+            "0x3f470f0f",
+            "0x3f45f879",
+            "0x3f080000",
+            "0x3f2f0f10",
+            "0x3f569697",
+            "0x3f5f1e1f",
+            "0x3e169697",
+            "0x3e996969",
+            "0x3ee87879",
+            "0x3f1743c4",
+            "0x3d91e1e2",
+            "0x3ef4b4b5",
+            "0x3f034b4b",
+            "0x3f0ad2d3",
+            "0x3f125a5a",
+            "0x3f19e1e2",
+            "0x3f20f0f1",
+            "0x3f287879",
+            "0x3f300000",
+            "0x3f378787",
+            "0x3f3e9696",
+            "0x3f461e1e",
+            "0x3f4f8788",
+            "0x3f074f0f",
+            "0x3e600001",
+            "0x3e8a5a5a",
+            "0x3e99696a",
+            "0x3ea87879",
+            "0x3eb78788",
+            "0x3ec69697",
+            "0x3ed4b4b5",
+            "0x3edc9697",
+            "0x3edff0f1",
+            "0x3ed4696a",
+            "0x3ec0cb4c",
+            "0x3ea652d4",
+            "0x3e8452d3"
+          ]
+        },
+        "object": "0x200010d0",
+        "wrapper": "0xf0fed90"
+      },
+      "output_array_before": {
+        "flags": "0x2010000",
+        "mat": {
+          "channels": 1,
+          "cols": 13,
+          "data": "0x20001140",
+          "depth_code": 5,
+          "dims": 2,
+          "flags": "0x42ff4005",
+          "header": "0x20001250",
+          "nonzero_word_count": 0,
+          "rows": 5,
+          "sample_first_rows": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "step_bytes": 52,
+          "step_pointer": "0x200012b0",
+          "values_f32": [
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          ],
+          "word_count": 65,
+          "words_u32": [
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000",
+            "0x00000000"
+          ]
+        },
+        "object": "0x20001250",
+        "wrapper": "0xf0feda8"
+      },
+      "output_wrapper_pointer": 252702120,
+      "register_args_rcx_rdx_r8_r9": [
+        "0xf0fed90",
+        "0xf0feda8",
+        "0x100000000",
+        "0xd"
+      ],
+      "return_address": "0x181151105",
+      "rip": "0x181272ec0",
+      "sigma_x_f64": 3.5,
+      "size": [
+        0,
+        1
+      ]
+    }
+  ],
+  "execution": {
+    "aex": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex",
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "base_status": "completed_without_target_hit",
+    "caller_return": "0x181151105",
+    "entry": "0x181272ec0",
+    "entry_hit_count": 1,
+    "input_nonzero": true,
+    "input_shape": [
+      5,
+      13
+    ],
+    "length": 7,
+    "return_hit_count": 1,
+    "sigma_x": 3.5
+  },
+  "manual_crt_initializers_diagnostic": {
+    "callbacks": [
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x1814857c0",
+        "target": "0x18114bedc"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x1814857c8",
+        "target": "0x18114b920"
+      },
+      {
+        "kind": "_initterm",
+        "result": 1,
+        "slot": "0x1814857d0",
+        "target": "0x18114b950"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x1814857d8",
+        "target": "0x18114b9d0"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x1814857e0",
+        "target": "0x18114bb30"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x1814857e8",
+        "target": "0x18114baf0"
+      },
+      {
+        "kind": "_initterm",
+        "result": 2172883104,
+        "slot": "0x1814857f0",
+        "target": "0x18114bb20"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x1814857f8",
+        "target": "0x18114ba30"
+      },
+      {
+        "kind": "_initterm",
+        "result": 1,
+        "slot": "0x181485800",
+        "target": "0x18114bb50"
+      },
+      {
+        "kind": "_initterm",
+        "result": 536871088,
+        "slot": "0x181485808",
+        "target": "0x18114bb00"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x181485810",
+        "target": "0x18114bb70"
+      },
+      {
+        "kind": "_initterm",
+        "result": 1,
+        "slot": "0x181485818",
+        "target": "0x18114bc10"
+      },
+      {
+        "kind": "_initterm",
+        "result": 1000,
+        "slot": "0x181485820",
+        "target": "0x18114bbf0"
+      },
+      {
+        "kind": "_initterm",
+        "result": 10000,
+        "slot": "0x181485828",
+        "target": "0x18114bbd0"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x181485830",
+        "target": "0x18114bc30"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x181485838",
+        "target": "0x18114bbb0"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x181485840",
+        "target": "0x18114bc50"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x181485848",
+        "target": "0x18114bd70"
+      },
+      {
+        "kind": "_initterm",
+        "result": 1,
+        "slot": "0x181485850",
+        "target": "0x18114bcb0"
+      },
+      {
+        "kind": "_initterm",
+        "result": 1,
+        "slot": "0x181485858",
+        "target": "0x18114bcf0"
+      },
+      {
+        "kind": "_initterm",
+        "result": 1,
+        "slot": "0x181485860",
+        "target": "0x18114bcd0"
+      },
+      {
+        "kind": "_initterm",
+        "result": 1,
+        "slot": "0x181485868",
+        "target": "0x18114bc90"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x181485870",
+        "target": "0x18114bd50"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x181485878",
+        "target": "0x18114bd10"
+      },
+      {
+        "kind": "_initterm",
+        "result": 1,
+        "slot": "0x181485880",
+        "target": "0x18114bd30"
+      },
+      {
+        "kind": "_initterm",
+        "result": 4,
+        "slot": "0x181485888",
+        "target": "0x18114bc60"
+      },
+      {
+        "kind": "_initterm",
+        "result": 536872672,
+        "slot": "0x181485890",
+        "target": "0x18114bda0"
+      },
+      {
+        "kind": "_initterm",
+        "result": 1000,
+        "slot": "0x181485898",
+        "target": "0x18114bdc0"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x1814858a0",
+        "target": "0x18114bde0"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x1814858a8",
+        "target": "0x18114be20"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x1814858b0",
+        "target": "0x18114be30"
+      },
+      {
+        "kind": "_initterm",
+        "result": 2172893520,
+        "slot": "0x1814858b8",
+        "target": "0x18114be40"
+      },
+      {
+        "kind": "_initterm",
+        "result": 2173313440,
+        "slot": "0x1814858c0",
+        "target": "0x18114be60"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x1814858c8",
+        "target": "0x18114bf70"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x1814858d0",
+        "target": "0x18114bef0"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x1814858d8",
+        "target": "0x18114bf10"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x1814858e0",
+        "target": "0x18114bf30"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x1814858e8",
+        "target": "0x18114bf50"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x1814858f0",
+        "target": "0x18114bf90"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x1814858f8",
+        "target": "0x18114bfd0"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x181485900",
+        "target": "0x18114bfb0"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x181485908",
+        "target": "0x18114bff0"
+      },
+      {
+        "kind": "_initterm",
+        "result": 2173453608,
+        "slot": "0x181485910",
+        "target": "0x18114c080"
+      },
+      {
+        "kind": "_initterm",
+        "result": 2173453616,
+        "slot": "0x181485918",
+        "target": "0x18114c040"
+      },
+      {
+        "kind": "_initterm",
+        "result": 0,
+        "slot": "0x181485920",
+        "target": "0x18114c010"
+      },
+      {
+        "kind": "_initterm",
+        "result": 1413754136,
+        "slot": "0x181485928",
+        "target": "0x18114c100"
+      },
+      {
+        "kind": "_initterm",
+        "result": 1413754136,
+        "slot": "0x181485930",
+        "target": "0x18114c120"
+      },
+      {
+        "kind": "_initterm",
+        "result": 1413754136,
+        "slot": "0x181485938",
+        "target": "0x18114c140"
+      },
+      {
+        "kind": "_initterm",
+        "result": 2173453656,
+        "slot": "0x181485940",
+        "target": "0x18114c0c0"
+      },
+      {
+        "kind": "_initterm",
+        "result": 2173453664,
+        "slot": "0x181485948",
+        "target": "0x18114c160"
+      }
+    ],
+    "result": 0
+  },
+  "output_capture": {
+    "output_array_after": {
+      "flags": "0x2010000",
+      "mat": {
+        "channels": 1,
+        "cols": 13,
+        "data": "0x20001140",
+        "depth_code": 5,
+        "dims": 2,
+        "flags": "0x42ff4005",
+        "header": "0x20001250",
+        "nonzero_word_count": 65,
+        "rows": 5,
+        "sample_first_rows": [
+          [
+            0.126739501953125,
+            0.133396178483963,
+            0.1527109444141388,
+            0.18280799686908722,
+            0.2208372801542282,
+            0.2633696496486664,
+            0.3068351149559021,
+            0.3479599952697754
+          ],
+          [
+            0.3088751435279846,
+            0.30540549755096436,
+            0.29566070437431335,
+            0.2815077006816864,
+            0.2656239867210388,
+            0.2508907914161682,
+            0.23967449367046356,
+            0.23325510323047638
+          ]
+        ],
+        "step_bytes": 52,
+        "step_pointer": "0x200012b0",
+        "values_f32": [
+          [
+            0.126739501953125,
+            0.133396178483963,
+            0.1527109444141388,
+            0.18280799686908722,
+            0.2208372801542282,
+            0.2633696496486664,
+            0.3068351149559021,
+            0.3479599952697754,
+            0.38409745693206787,
+            0.41339045763015747,
+            0.43474775552749634,
+            0.44766488671302795,
+            0.45197969675064087
+          ],
+          [
+            0.3088751435279846,
+            0.30540549755096436,
+            0.29566070437431335,
+            0.2815077006816864,
+            0.2656239867210388,
+            0.2508907914161682,
+            0.23967449367046356,
+            0.23325510323047638,
+            0.23155270516872406,
+            0.23332208395004272,
+            0.23664924502372742,
+            0.2395957112312317,
+            0.24074523150920868
+          ],
+          [
+            0.7165120840072632,
+            0.713472843170166,
+            0.7042380571365356,
+            0.6885696053504944,
+            0.666265606880188,
+            0.6376155018806458,
+            0.6037280559539795,
+            0.5667714476585388,
+            0.5298147201538086,
+            0.4964047968387604,
+            0.46988797187805176,
+            0.4528948962688446,
+            0.44704753160476685
+          ],
+          [
+            0.5637970566749573,
+            0.5670311450958252,
+            0.5763998627662659,
+            0.5909622311592102,
+            0.6092992424964905,
+            0.6297436952590942,
+            0.6505640149116516,
+            0.6701707243919373,
+            0.6872772574424744,
+            0.7010032534599304,
+            0.7108868360519409,
+            0.7167943716049194,
+            0.7187532782554626
+          ],
+          [
+            0.31656134128570557,
+            0.31917640566825867,
+            0.3265387713909149,
+            0.3373012840747833,
+            0.3495367765426636,
+            0.36115148663520813,
+            0.37033358216285706,
+            0.375955194234848,
+            0.3778247833251953,
+            0.37670621275901794,
+            0.374064564704895,
+            0.3715841770172119,
+            0.3705902099609375
+          ]
+        ],
+        "word_count": 65,
+        "words_u32": [
+          "0x3e01c800",
+          "0x3e089902",
+          "0x3e1c6042",
+          "0x3e3b3205",
+          "0x3e62232b",
+          "0x3e86d863",
+          "0x3e9d197e",
+          "0x3eb227d0",
+          "0x3ec4a86c",
+          "0x3ed3a7ea",
+          "0x3ede9742",
+          "0x3ee53455",
+          "0x3ee769e2",
+          "0x3e9e24e2",
+          "0x3e9c5e1c",
+          "0x3e9760d7",
+          "0x3e9021c7",
+          "0x3e87ffde",
+          "0x3e8074c2",
+          "0x3e756d3b",
+          "0x3e6eda6d",
+          "0x3e6d1c27",
+          "0x3e6eebfc",
+          "0x3e72542e",
+          "0x3e755894",
+          "0x3e7685eb",
+          "0x3f376d56",
+          "0x3f36a628",
+          "0x3f3448f2",
+          "0x3f304619",
+          "0x3f2a9062",
+          "0x3f233ac5",
+          "0x3f1a8dec",
+          "0x3f1117ef",
+          "0x3f07a1f0",
+          "0x3efe28c5",
+          "0x3ef09528",
+          "0x3ee7e1d7",
+          "0x3ee4e36a",
+          "0x3f105501",
+          "0x3f1128f4",
+          "0x3f138ef1",
+          "0x3f17494d",
+          "0x3f1bfb09",
+          "0x3f2136e2",
+          "0x3f268b5d",
+          "0x3f2b904f",
+          "0x3f2ff167",
+          "0x3f3374f3",
+          "0x3f35fcae",
+          "0x3f377fd6",
+          "0x3f380037",
+          "0x3ea21454",
+          "0x3ea36b17",
+          "0x3ea73017",
+          "0x3eacb2c1",
+          "0x3eb2f67c",
+          "0x3eb8e8d9",
+          "0x3ebd9c5d",
+          "0x3ec07d33",
+          "0x3ec17240",
+          "0x3ec0dfa3",
+          "0x3ebf8564",
+          "0x3ebe4048",
+          "0x3ebdbe00"
+        ]
+      },
+      "object": "0x20001250",
+      "wrapper": "0xf0feda8"
+    },
+    "rip": "0x181151105"
+  },
+  "process_attach_diagnostic": {
+    "entry": "0x18132b650",
+    "imports": [
+      {
+        "args": [
+          "0xf0fefa8",
+          "0x1",
+          "0x0",
+          "0x0"
+        ],
+        "dll": "KERNEL32.dll",
+        "implemented": false,
+        "name": "GetSystemTimeAsFileTime",
+        "ret": 0
+      },
+      {
+        "args": [
+          "0xf0fefa8",
+          "0x1",
+          "0x0",
+          "0x0"
+        ],
+        "dll": "KERNEL32.dll",
+        "implemented": false,
+        "name": "GetCurrentThreadId",
+        "ret": 0
+      },
+      {
+        "args": [
+          "0xf0fefa8",
+          "0x1",
+          "0x0",
+          "0x0"
+        ],
+        "dll": "KERNEL32.dll",
+        "implemented": false,
+        "name": "GetCurrentProcessId",
+        "ret": 0
+      },
+      {
+        "args": [
+          "0xf0fefb0",
+          "0x1",
+          "0x0",
+          "0x0"
+        ],
+        "dll": "KERNEL32.dll",
+        "implemented": false,
+        "name": "QueryPerformanceCounter",
+        "ret": 0
+      },
+      {
+        "args": [
+          "0x1818c3e30",
+          "0x0",
+          "0x2",
+          "0x2"
+        ],
+        "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+        "implemented": false,
+        "name": "_initialize_onexit_table",
+        "ret": 0
+      },
+      {
+        "args": [
+          "0x1818c3e48",
+          "0x0",
+          "0x2",
+          "0x2"
+        ],
+        "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+        "implemented": false,
+        "name": "_initialize_onexit_table",
+        "ret": 0
+      },
+      {
+        "args": [
+          "0x1818c4430",
+          "0x0",
+          "0x2",
+          "0x2"
+        ],
+        "dll": "KERNEL32.dll",
+        "implemented": false,
+        "name": "InitializeSListHead",
+        "ret": 0
+      },
+      {
+        "args": [
+          "0x181485958",
+          "0x181485968",
+          "0x2",
+          "0x2"
+        ],
+        "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+        "implemented": false,
+        "name": "_initterm_e",
+        "ret": 0
+      },
+      {
+        "args": [
+          "0x1814857b8",
+          "0x181485950",
+          "0x2",
+          "0x2"
+        ],
+        "dll": "api-ms-win-crt-runtime-l1-1-0.dll",
+        "implemented": false,
+        "name": "_initterm",
+        "ret": 0
+      },
+      {
+        "args": [
+          "0x180000000",
+          "0x1",
+          "0x0",
+          "0x2"
+        ],
+        "dll": "KERNEL32.dll",
+        "implemented": false,
+        "name": "DisableThreadLibraryCalls",
+        "ret": 0
+      }
+    ],
+    "instructions": 466,
+    "rax": 1
+  },
+  "schema": "olmkirakira-mode3-gaussian-output-actual-aex/1",
+  "status": "captured",
+  "unimplemented_called_imports": [
+    "?__ExceptionPtrCreate@@YAXPEAX@Z",
+    "?__ExceptionPtrDestroy@@YAXPEAX@Z",
+    "_Mtx_lock",
+    "_Mtx_unlock",
+    "getenv",
+    "memchr"
+  ]
+}

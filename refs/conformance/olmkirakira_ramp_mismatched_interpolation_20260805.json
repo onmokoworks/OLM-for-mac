@@ -1,0 +1,30 @@
+{
+  "cases": {
+    "0.25": {
+      "active_payload_hex": "03000000000000000000803f0000803f00000000000000008fc2553f0000803f0000803ff4fd3c3f0000803e0000803f0000803f0000803f0000803f0000803f",
+      "compare_source": 3,
+      "compare_two_stop": 3,
+      "count": 3
+    },
+    "0.5": {
+      "active_payload_hex": "03000000000000000000803f0000803f00000000000000000ad7633f0000803f0000803ff853533f0000003f0000803f0000803f0000803f0000803f0000803f",
+      "compare_source": 3,
+      "compare_two_stop": 3,
+      "count": 3
+    },
+    "0.75": {
+      "active_payload_hex": "03000000000000000000803f0000803f000000000000000085eb713f0000803f0000803ffca9693f0000403f0000803f0000803f0000803f0000803f0000803f",
+      "compare_source": 3,
+      "compare_two_stop": 3,
+      "count": 3
+    }
+  },
+  "host_gate": "AE restart and live keyframe interpolation are not claimed.",
+  "left_count": 3,
+  "max_ulp": 0,
+  "public_entrypoint": "PF_Cmd_ARBITRARY_CALLBACK / PF_Arbitrary_INTERP_FUNC",
+  "right_count": 2,
+  "rule": "output count is max; missing right record repeats its last stop; all five float fields interpolate",
+  "schema": "olmkirakira-ramp-mismatched-interpolation/1",
+  "status": "actual_entrypoint_to_mac_production_exact"
+}

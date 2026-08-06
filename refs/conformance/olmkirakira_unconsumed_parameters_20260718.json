@@ -75,9 +75,9 @@
     "Approximated Input": {
       "disk_id": 10,
       "reader": "FUN_181153d70 boolean -> state+0x50",
-      "semantics": "when render scale is above 0.5, halves working dimensions and lengths, linearly resizes before processing, then resizes back; disabled at scale <= 0.5",
-      "mac": "checked out and retained in render info; non-identity OpenCV resize remains deliberately unwired",
-      "blocked_boundary": "no local independent oracle for non-identity FUN_1812639f0 resize/writeback"
+      "semantics": "when render scale is above 0.5, halves working dimensions and lengths, nearest-neighbor resizes before processing, then resizes back; disabled at scale <= 0.5",
+      "mac": "source-wired to a binary-shaped half-resolution nearest-neighbor path in standard and smart render; Mac/Windows AE behavior is behaviorally unvalidated",
+      "behavioral_validation": "pending Mac/Windows AE differential for non-identity resize/writeback"
     }
   },
   "fact": [
@@ -89,6 +89,6 @@
   ],
   "inference": [
     "The Mac Mode 1/2 highlight primitive uses the existing portable box scaffold; this wiring does not claim OpenCV byte equivalence.",
-    "Approximated Input cannot be completed safely until non-identity resize semantics have an independent local or Windows oracle."
+    "Approximated Input is source-wired to the binary-shaped nearest-neighbor path, but its Mac/Windows AE behavior remains unvalidated pending differential evidence."
   ]
 }

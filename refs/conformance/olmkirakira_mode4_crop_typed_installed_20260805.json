@@ -1,0 +1,36 @@
+{
+  "schema": "olmkirakira-mode4-crop-typed-installed/1",
+  "date": "2026-08-05",
+  "status": "exact_ae_free_chain",
+  "chain": [
+    "actual helper source",
+    "forward warp",
+    "Mode4 recurrence",
+    "inverse warp",
+    "centered ROI crop [0,0,9,7]",
+    "PF8/PF16/PF32 typed writer",
+    "installed universal bundle identity"
+  ],
+  "actual_aex": {
+    "helper_float_words_exact": 63,
+    "centered_roi": [0, 0, 9, 7],
+    "typed_writers": ["FUN_181230b90", "FUN_181230bd0", "FUN_181230c20"]
+  },
+  "typed_argb_hex": {
+    "PF8": "ff2b150a",
+    "PF16_display_order": "800015e90af4057a",
+    "PF32_display_order": "3f8000003e2f4bae3daf4bae3d2f4bae"
+  },
+  "production": {
+    "crop": "core/kirakira_mode4.h::centered_crop_scalar",
+    "writers": "core/kirakira_merge2.h::truncate_merge2_channel and PixelTraits::WriteAexTruncate",
+    "test": "tools/emulation/test_olmkirakira_mode4_cropped_typed_installed_20260805.py"
+  },
+  "installed": {
+    "binary_sha256": "f041bea071ef2d4c8a898490c5a9d00dd4adfc5e12f0ad6a58a26f406590e12f",
+    "build_binary_identical": true,
+    "codesign_strict": true,
+    "architectures": ["x86_64", "arm64"]
+  },
+  "remaining_gate": "Natural EffectMain owner-to-writer delivery inside live AE is not claimed."
+}

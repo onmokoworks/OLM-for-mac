@@ -76,6 +76,9 @@ def main() -> int:
                         "r8": hex(loader.uc.reg_read(UC_X86_REG_R8)),
                         "r11": hex(loader.uc.reg_read(UC_X86_REG_R11)),
                     })
+                if name == "row_finish":
+                    row = loader.uc.reg_read(UC_X86_REG_R11)
+                    item["destination_row_f32"] = loader.read_f32_array(row, 9)
                 hits[name].append(item)
             return hook
 

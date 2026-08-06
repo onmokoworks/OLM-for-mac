@@ -293,6 +293,50 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     loader.register_import_impl("FlsFree", fls_free)
     loader.register_import_impl("_aligned_malloc", aligned_malloc)
     loader.register_import_impl("_aligned_free", aligned_free)
+    if os.environ.get("OLM_KK_MANUAL_CRT_INITIALIZERS_DIAGNOSTIC") == "1":
+        event_handle = loader.host_alloc(8, align=8)
+        loader.register_import_impl("InitializeCriticalSectionAndSpinCount", lambda _uc, _args: 1)
+        loader.register_import_impl("CreateEventW", lambda _uc, _args: event_handle)
+        loader.register_import_impl("DeleteCriticalSection", lambda _uc, _args: 0)
+        loader.register_import_impl("EnterCriticalSection", lambda _uc, _args: 0)
+        loader.register_import_impl("LeaveCriticalSection", lambda _uc, _args: 0)
+        loader.register_import_impl("SetEvent", lambda _uc, _args: 1)
+        loader.register_import_impl("ResetEvent", lambda _uc, _args: 1)
+    if os.environ.get("OLM_KK_PROCESS_ATTACH_DIAGNOSTIC") == "1":
+        # Probe-local experiment only: emulate the loader's process-attach
+        # ordering before the direct helper call. The PE has no TLS callbacks,
+        # so its executable initialization boundary is the DLL entry point.
+        loader.write_bytes(0x50000000 + 0x30, struct.pack("<Q", 0x50000000))
+        loader.write_bytes(0x50000000 + 0x08, struct.pack("<Q", 1))
+        attach = loader.call_function(
+            0x18132B650,
+            int_args=[loader.image_base, 1, 0],
+            max_instructions=20_000_000,
+        )
+        attach_imports = [
+            {"dll": item.dll, "name": item.name,
+             "implemented": item.name in loader.import_impls, "ret": item.ret,
+             "args": [hex(value) for value in item.args]}
+            for item in loader.import_log
+        ]
+        report["process_attach_diagnostic"] = {
+            "entry": "0x18132b650",
+            "rax": attach.get("rax"),
+            "instructions": attach.get("instructions"),
+            "imports": attach_imports,
+        }
+        if os.environ.get("OLM_KK_MANUAL_CRT_INITIALIZERS_DIAGNOSTIC") == "1":
+            loader.enable_crt_initializer_imports()
+            result = loader.import_impls["_initterm"](
+                loader.uc, [0x1814857B8, 0x181485950, 0, 0])
+            report["manual_crt_initializers_diagnostic"] = {
+                "result": result,
+                "callbacks": [
+                    {"kind": item["kind"], "slot": hex(item["slot"]),
+                     "target": hex(item["target"]), "result": item["result"]}
+                    for item in loader.crt_initializer_log
+                ],
+            }
     report["tls_scaffold"] = {
         "mode": "probe-local-windows-tls-fls",
         "gs_0x58": hex(0x50000000 + 0x58),

@@ -1,0 +1,31 @@
+{
+  "actual_noncanonical_results": {
+    "0": {
+      "compare_source": 0,
+      "err": 0,
+      "handle_created": true
+    },
+    "2": {
+      "compare_source": 0,
+      "err": 0,
+      "handle_created": true
+    },
+    "255": {
+      "compare_source": 0,
+      "err": 0,
+      "handle_created": true
+    }
+  },
+  "live_ae_claimed": false,
+  "rule": "byte 0 is accepted but semantically ignored; count begins at byte 1",
+  "schema": "olmkirakira-ramp-flat-version-boundary/1",
+  "selector": "PF_Arbitrary_UNFLATTEN_FUNC",
+  "semantic_compare": "equal",
+  "status": "actual_entrypoint_to_shared_core_to_production_exact",
+  "tested_version_bytes": [
+    0,
+    1,
+    2,
+    255
+  ]
+}

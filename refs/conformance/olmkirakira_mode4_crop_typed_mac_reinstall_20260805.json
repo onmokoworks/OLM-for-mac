@@ -1,0 +1,13 @@
+{
+  "schema": "olmkirakira-mac-reinstall/1",
+  "date": "2026-08-05",
+  "reason": "Mode4 centered crop to actual-exact typed writers",
+  "after_effects_running_before": false,
+  "after_effects_running_after": false,
+  "installed": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin",
+  "backup": "handoff/mac_plugin_backups/mediacore_20260805_olmkirakira_before_mode4_crop_typed/OLMKiraKira.plugin",
+  "binary_sha256": "f041bea071ef2d4c8a898490c5a9d00dd4adfc5e12f0ad6a58a26f406590e12f",
+  "architectures": ["x86_64", "arm64"],
+  "codesign_strict": true,
+  "visible_bundle_count": 1
+}

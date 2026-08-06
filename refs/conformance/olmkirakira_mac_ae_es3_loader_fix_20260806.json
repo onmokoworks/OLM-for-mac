@@ -1,0 +1,27 @@
+{
+  "schema": "olmkirakira-mac-ae-es3-loader-fix/1",
+  "date": "2026-08-06",
+  "status": "static_ready_no_retry",
+  "prior_failure": {
+    "report": "refs/reports/olmkirakira_mode4_case01_mac_render_pid98369_20260806.json",
+    "apple_event": -1712,
+    "loader_trace": null,
+    "ae_return": null,
+    "output": null,
+    "diagnosis": "The monolithic DoScriptFile target provided no parse/runtime trace, so the exact failing line was unobservable. It also assigned app.newProject() directly even though AE26 may return null."
+  },
+  "fix": {
+    "direct_target": "minimal ES3 loader only",
+    "payload": "full Mode4 runner body in a separate absolute payload.jsx",
+    "evaluation": "try { $.evalFile(payloadFile) }",
+    "trace": ["LOADER_ENTER", "LOADER_RETURN", "LOADER_FAIL error/line/file"],
+    "modal_behavior": "no alert and no rethrow",
+    "project_creation": "app.newProject(); then app.project with an explicit null gate",
+    "json_dependency": "none in loader; payload uses its own ES3 serializer"
+  },
+  "verification": [
+    "PASS_OLMKIRAKIRA_MAC_AE_ES3_LOADER_20260806",
+    "PASS_OLMKIRAKIRA_MODE4_MAC_AE_RUNNER_PREFLIGHT_20260805"
+  ],
+  "ae_retry_performed": false
+}

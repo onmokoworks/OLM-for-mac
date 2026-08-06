@@ -1,0 +1,41 @@
+{
+  "schema": "olmkirakira-mode4-mac-ae-runner-prepared/1",
+  "date": "2026-08-05",
+  "status": "prepared_loaded_identity_ready_not_rendered",
+  "runner": "scripts/run_olmkirakira_mode4_case01_mac_ae_20260805.py",
+  "preflight_test": "tools/emulation/test_olmkirakira_mode4_mac_ae_runner_preflight_20260805.py",
+  "case": {
+    "id": "final_random10_olm_kira_kira_01",
+    "renderer": "Software",
+    "bits_per_channel": 32,
+    "resolution_factor": [1, 1],
+    "working_space": "None",
+    "linear_blending": false,
+    "blur_mode": 4,
+    "parameter_source": "hash-pinned canonical Windows reference manifest",
+    "dynamic_project": "fresh 1920x1080, 24fps, one-frame project created only after --run and loaded-module gates pass"
+  },
+  "identity_gates": {
+    "installed_binary_sha256": "f041bea071ef2d4c8a898490c5a9d00dd4adfc5e12f0ad6a58a26f406590e12f",
+    "input_exr_sha256": "8c1d418c7b853cc6f79087215ee86ab0b9eac423953c1a3409af3e120891a7f0",
+    "expected_exr_sha256": "810b76cde27a6590f0f2913d2e4f7bc2c1649c77b128a7c174d46b0088215c1d",
+    "reference_manifest_sha256": "638cb66a60a52f4f9877f0f74937a891d447dc85673c8cca48c0780acf3ec9e7",
+    "run_requires_single_existing_ae_process": true,
+    "run_requires_exact_loaded_module_path_and_sha": true
+  },
+  "safety": {
+    "default_is_preflight_only": true,
+    "runner_never_starts_or_restarts_ae": true,
+    "ae_started_or_operated_during_preparation": false,
+    "render_requires_explicit_run_flag": true
+  },
+  "current_read_only_preflight": {
+    "report": "refs/reports/olmkirakira_mode4_case01_mac_preflight_20260805.json",
+    "ae_pid": 60573,
+    "loaded_identity_exact": true,
+    "run_requested": false,
+    "run_executed": false,
+    "note": "AE was already running when detected; Codex did not start, stop, script, render, or otherwise operate it."
+  },
+  "acceptance": "The returned EXR file SHA-256 must equal the pinned Windows Software/32bpc reference SHA-256; otherwise the run fails closed."
+}

@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import json
+import os
 import pefile
 import struct
 import sys
@@ -18,7 +19,7 @@ from unicorn.x86_const import (
     UC_X86_REG_RSI, UC_X86_REG_RDI, UC_X86_REG_RBP, UC_X86_REG_RSP,
     UC_X86_REG_R8, UC_X86_REG_R9, UC_X86_REG_R10, UC_X86_REG_R11,
     UC_X86_REG_R12, UC_X86_REG_R13, UC_X86_REG_R14, UC_X86_REG_R15,
-    UC_X86_REG_RIP, UC_X86_REG_XMM1, UC_X86_REG_XMM2,
+    UC_X86_REG_RIP, UC_X86_REG_XMM1, UC_X86_REG_XMM2, UC_X86_REG_XMM3,
 )
 
 HERE = Path(__file__).resolve().parent
@@ -165,6 +166,11 @@ def dispatch_snapshot(loader) -> dict[str, Any]:
 class DispatchAuditLoader(OUTPUT.ContinuingAexLoader):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        if os.environ.get("OLM_KK_SYNC_SHIM_DIAGNOSTIC") == "1":
+            def void_success(_uc, _args):
+                return 1
+            for name in ("EnterCriticalSection", "LeaveCriticalSection", "SetEvent", "ResetEvent"):
+                self.register_import_impl(name, void_success)
         self.dispatch_audit: dict[str, Any] = {
             "direct_callee_hits": [],
             "direct_call_runtime": [],
@@ -174,6 +180,8 @@ class DispatchAuditLoader(OUTPUT.ContinuingAexLoader):
             "indirect_runtime_targets": [],
             "allocation_raw": [],
             "sigma_propagation": [],
+            "coefficient_generators": [],
+            "soft_exp_calls": [],
         }
         for target in sorted(DIRECT_TARGETS):
             super().add_code_hook(target, self._callee_hook(target))
@@ -186,6 +194,11 @@ class DispatchAuditLoader(OUTPUT.ContinuingAexLoader):
         OUTPUT.ORIGINAL_LOADER.add_code_hook(self, 0x181266730, self._gaussian_setup_entry)
         OUTPUT.ORIGINAL_LOADER.add_code_hook(self, 0x1812754A0, self._coefficient_helper_entry)
         OUTPUT.ORIGINAL_LOADER.add_code_hook(self, 0x181274E10, self._sigma_consumer_entry)
+        OUTPUT.ORIGINAL_LOADER.add_code_hook(self, 0x181274E83, self._coefficient_generator_call)
+        OUTPUT.ORIGINAL_LOADER.add_code_hook(self, 0x181274E88, self._coefficient_generator_return)
+        OUTPUT.ORIGINAL_LOADER.add_code_hook(self, 0x181275500, self._coefficient_generator_entry)
+        OUTPUT.ORIGINAL_LOADER.add_code_hook(self, 0x181333430, self._soft_exp_entry)
+        OUTPUT.ORIGINAL_LOADER.add_code_hook(self, 0x18133344B, self._soft_exp_return)
 
     def _callee_hook(self, target: int):
         def hook(loader, _address, _size):
@@ -252,6 +265,52 @@ class DispatchAuditLoader(OUTPUT.ContinuingAexLoader):
             "xmm2_sigma_f64": xmm_f64(loader, UC_X86_REG_XMM2),
         })
 
+    def _coefficient_generator_call(self, loader, _address, _size):
+        self.dispatch_audit["coefficient_generators"].append({
+            "import_log_begin": len(loader.import_log),
+        })
+
+    def _coefficient_generator_entry(self, loader, _address, _size):
+        current = self.dispatch_audit["coefficient_generators"][-1]
+        current["entry"] = {
+            "r8_count": loader.uc.reg_read(UC_X86_REG_R8) & 0xFFFFFFFF,
+            "xmm3_sigma_f64": xmm_f64(loader, UC_X86_REG_XMM3),
+        }
+
+    def _coefficient_generator_return(self, loader, _address, _size):
+        rsp = loader.uc.reg_read(UC_X86_REG_RSP)
+        begin = safe_qword(loader, rsp + 0x30) or 0
+        end = safe_qword(loader, rsp + 0x38) or 0
+        count = (end - begin) // 8 if begin and end >= begin else 0
+        raw = loader.read_bytes(begin, count * 8) if 0 < count <= 4096 else b""
+        current = self.dispatch_audit["coefficient_generators"][-1]
+        current["return"] = {
+            "begin": hex(begin),
+            "end": hex(end),
+            "count": count,
+            "words_u64": [f"0x{word:016x}" for word in struct.unpack(f"<{count}Q", raw)] if raw else [],
+            "values_f64": list(struct.unpack(f"<{count}d", raw)) if raw else [],
+            "imports_during_generator": [
+                {"dll": item.dll, "name": item.name, "implemented": item.name in loader.import_impls}
+                for item in loader.import_log[current["import_log_begin"]:]
+            ],
+        }
+
+    def _soft_exp_entry(self, loader, _address, _size):
+        rcx = loader.uc.reg_read(UC_X86_REG_RCX)
+        rdx = loader.uc.reg_read(UC_X86_REG_RDX)
+        self.dispatch_audit["soft_exp_calls"].append({
+            "destination": rcx,
+            "input_u64": f"0x{safe_qword(loader, rdx) or 0:016x}",
+            "input_f64": struct.unpack("<d", loader.read_bytes(rdx, 8))[0],
+        })
+
+    def _soft_exp_return(self, loader, _address, _size):
+        current = self.dispatch_audit["soft_exp_calls"][-1]
+        destination = current.pop("destination")
+        current["output_u64"] = f"0x{safe_qword(loader, destination) or 0:016x}"
+        current["output_f64"] = struct.unpack("<d", loader.read_bytes(destination, 8))[0]
+
     def _entry_hook(self, loader, _address, _size):
         self.dispatch_audit["dispatch_snapshots"].append({
             "point": "gaussian_entry",
@@ -280,6 +339,9 @@ def render(report: dict[str, Any]) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--aex-path", type=Path, default=BASE.DEFAULT_AEX)
+    parser.add_argument("--width", type=int, default=9)
+    parser.add_argument("--height", type=int, default=7)
+    parser.add_argument("--length", type=int, default=5)
     parser.add_argument("--output-json", type=Path, default=DEFAULT_JSON)
     parser.add_argument("--output-md", type=Path, default=DEFAULT_MD)
     parser.add_argument("--max-instructions", type=int, default=50_000_000)
@@ -288,6 +350,8 @@ def main() -> int:
     OUTPUT.ContinuingAexLoader = DispatchAuditLoader
     old_argv = sys.argv
     sys.argv = [str(OUTPUT_PATH), "--aex-path", str(args.aex_path),
+                "--width", str(args.width), "--height", str(args.height),
+                "--length", str(args.length),
                 "--output-json", str(args.output_json), "--output-md", str(args.output_md),
                 "--max-instructions", str(args.max_instructions)]
     try:
@@ -307,23 +371,23 @@ def main() -> int:
         "status": output_report.get("status"),
         "FACT": [
             "The probe reuses the existing actual-AEX Gaussian body and caller-return capture without changing production or the existing probes.",
-            "The captured call contract remains Size(0,1), sigmaX=2.5, and 63 float32 output words after return.",
+            f"The captured call contract uses Size(0,1), sigmaX={args.length * 0.5}, and {args.width * args.height} float32 output words after return.",
             "The dispatch global points at the probe-owned backing store; the embedded initializer populates that store before Gaussian entry and it remains populated at caller return.",
             f"The Gaussian body reached {len(targets)} unique direct callees: {', '.join(targets) if targets else 'none recorded'}.",
             f"Capstone found {len(INDIRECT_CALLS)} RIP/memory indirect callsites in the disassembled interval; {len(audit.get('indirect_call_runtime', []))} executed at runtime.",
             "The executed direct-call order includes FUN_181266730 at sequence 10; its nested static callees include FUN_1812754a0, FUN_181275500, and FUN_181275d70 as coefficient/setup-path candidates.",
-            "The probe-owned allocation 0x400104c0 is 84 bytes and contains 21 identical float32 words 0x3d430c31, approximately 1/21.",
-            "Sigma propagation is intact: FUN_181266730 receives sigmaX=2.5/sigmaY=0.0, the first FUN_1812754a0 call receives sigma=2.5 with kernel size 21, and FUN_181274e10 receives sigma=2.5.",
+            f"Sigma propagation is captured for requested length {args.length} and sigmaX={args.length * 0.5}.",
         ],
         "INFERENCE": [
-            "The initial zero fill is only allocation state; this run proves the AEX initializer replaces it before the Gaussian body, so zero backing is not the cause of the 63/63 mismatch.",
+            "The initial zero fill is only allocation state; coefficient-generator captures are the authoritative kernel witness.",
             "The captured return words are an emulation-path witness, not a pinned OpenCV 4.5.5 oracle, until the indirect kernel/CPU feature path is matched to a live Windows process.",
-            "A uniform 21-tap coefficient buffer is only claimed if a captured aligned allocation contains 21 identical nonzero float32 words; allocation scans are supporting evidence, not symbol identification.",
-            "The uniform 21-tap result is therefore generated with kernel size 21 after intact sigma propagation, not explained by sigma corruption at the captured boundaries.",
+            "Allocation scans are supporting evidence, not symbol identification; generator return values are recorded separately.",
         ],
         "evidence": {
             "aex": str(args.aex_path),
             "aex_sha256": output_report.get("execution", {}).get("aex_sha256"),
+            "process_attach_diagnostic": output_report.get("process_attach_diagnostic"),
+            "manual_crt_initializers_diagnostic": output_report.get("manual_crt_initializers_diagnostic"),
             "entry_hit_count": output_report.get("execution", {}).get("entry_hit_count"),
             "return_hit_count": output_report.get("execution", {}).get("return_hit_count"),
             "output_word_count": len(output_report.get("output_capture", {}).get("output_array_after", {}).get("mat", {}).get("words_u32", [])),
@@ -337,6 +401,8 @@ def main() -> int:
             "indirect_runtime_targets": [hex(target) for target in audit.get("indirect_runtime_targets", [])],
             "allocation_raw": audit.get("allocation_raw", []),
             "sigma_propagation": audit.get("sigma_propagation", []),
+            "coefficient_generators": audit.get("coefficient_generators", []),
+            "soft_exp_calls": audit.get("soft_exp_calls", []),
             "windows_live_minimum_targets": [
                 {"address": "0x181272ec0", "role": "GaussianBlur wrapper entry"},
                 {"address": "0x181266730", "role": "called Gaussian setup/coefficient-path helper"},

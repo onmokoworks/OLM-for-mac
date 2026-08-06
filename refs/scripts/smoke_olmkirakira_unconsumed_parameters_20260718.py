@@ -21,8 +21,12 @@ def main() -> int:
     assert params["Fade Out"]["normalization"]["value"] == 0.20000000298023224
     assert "wired" in params["Fade Out"]["mac"]
     assert "wired" in params["Highlight Radius"]["mac"]
-    assert "deliberately unwired" in params["Approximated Input"]["mac"]
-    assert params["Approximated Input"]["blocked_boundary"]
+    approx = params["Approximated Input"]
+    assert "source-wired" in approx["mac"]
+    assert "binary-shaped" in approx["mac"]
+    assert "behaviorally unvalidated" in approx["mac"]
+    assert approx["behavioral_validation"]
+    assert "blocked_boundary" not in approx
     print("PASS_OLMKIRAKIRA_UNCONSUMED_PARAMETER_REGRESSION")
     return 0
 

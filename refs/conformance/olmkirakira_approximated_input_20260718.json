@@ -2,7 +2,7 @@
   "schema": 1,
   "kind": "olmkirakira_approximated_input_contract_audit",
   "date": "2026-07-18",
-  "status": "binary_grounded_runtime_boundary_before_resize",
+  "status": "implemented_binary_grounded_pending_ae_differential",
   "ae_exact_claim": false,
   "binary": "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex",
   "binary_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
@@ -21,6 +21,11 @@
     "rounding_inside_resize_wrapper": "when dsize is supplied, scale is recomputed as dsize/src_dim; internal fallback uses cvRound, but typed owners supply dsize",
     "type_special_case": "resize wrapper rewrites interpolation 5 to 1 only for source depth 5/6; typed owners pass 0, so this does not apply"
   },
+  "mac_implementation": {
+    "path": "mac/OLMKiraKira/OLMKiraKira.cpp",
+    "contract_present": true,
+    "source_sha256": "54250255d9331899f60b67518a3858b227807a52dc5f434037d8c8cd6cd8296b"
+  },
   "runtime": {
     "fixture": "existing FUN_18114c8f0 common-owner probe; Approximated Input=1 injected in memory",
     "resize_function": "0x1812639f0",
@@ -37,14 +42,15 @@
     "Enabled working dimensions and the five ray lengths use float multiplication followed by int conversion in the typed owners.",
     "Both pre- and post-resize calls pass explicit dsize values and a final interpolation literal of 0.",
     "FUN_1812639f0 is the OpenCV 4.5.5 resize wrapper and FUN_181263fb0 is its resize implementation path.",
-    "The bounded actual-AEX owner run enabled the checkbox in memory and stopped at an existing FilterEngine assertion before the resize entry."
+    "The bounded actual-AEX owner run enabled the checkbox in memory and stopped at an existing FilterEngine assertion before the resize entry.",
+    "The Mac production source implements the statically grounded nearest-neighbor half-resolution branch."
   ],
   "inference": [
     "OpenCV INTER_NEAREST is the typed-owner interpolation contract because the last call argument is literal 0.",
     "Alpha follows ordinary per-channel nearest-neighbor copy for the typed Mat; there is no plugin-level alpha conversion in the wrapper."
   ],
   "limits": [
-    "No production plugin source was changed.",
+    "This audit does not modify production source; it verifies the current checked-in implementation.",
     "The bounded owner harness did not reach FUN_1812639f0, so runtime resize output pixels were not claimed.",
     "The static contract does not by itself prove Mac AE exactness."
   ]

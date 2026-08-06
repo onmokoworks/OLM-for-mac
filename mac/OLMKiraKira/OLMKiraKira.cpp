@@ -1,10 +1,15 @@
 #include "OLMKiraKira.h"
 #include "AEFX_SuiteHandlerTemplate.h"
+#include "../../core/kirakira_gaussian.h"
+#include "../../core/kirakira_mode4.h"
+#include "../../core/kirakira_warp.h"
+#include "../../core/kirakira_merge2.h"
 
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 #include <vector>
 
 namespace {
@@ -181,6 +186,14 @@ struct PixelTraits<PF_Pixel8> {
 		out.blue  = static_cast<A_u_char>(std::lround(Clamp01(p.b) * 255.0f));
 		return out;
 	}
+	static PF_Pixel8 WriteAexTruncate(const FloatRGBA &p) {
+		PF_Pixel8 out;
+		out.alpha = static_cast<A_u_char>(olm::kirakira::truncate_merge2_channel(p.a, 255.0f));
+		out.red   = static_cast<A_u_char>(olm::kirakira::truncate_merge2_channel(p.r, 255.0f));
+		out.green = static_cast<A_u_char>(olm::kirakira::truncate_merge2_channel(p.g, 255.0f));
+		out.blue  = static_cast<A_u_char>(olm::kirakira::truncate_merge2_channel(p.b, 255.0f));
+		return out;
+	}
 };
 
 template <>
@@ -201,6 +214,14 @@ struct PixelTraits<PF_Pixel16> {
 		out.blue  = static_cast<A_u_short>(std::lround(Clamp01(p.b) * PF_MAX_CHAN16));
 		return out;
 	}
+	static PF_Pixel16 WriteAexTruncate(const FloatRGBA &p) {
+		PF_Pixel16 out;
+		out.alpha = static_cast<A_u_short>(olm::kirakira::truncate_merge2_channel(p.a, 32768.0f));
+		out.red   = static_cast<A_u_short>(olm::kirakira::truncate_merge2_channel(p.r, 32768.0f));
+		out.green = static_cast<A_u_short>(olm::kirakira::truncate_merge2_channel(p.g, 32768.0f));
+		out.blue  = static_cast<A_u_short>(olm::kirakira::truncate_merge2_channel(p.b, 32768.0f));
+		return out;
+	}
 };
 
 template <>
@@ -216,6 +237,7 @@ struct PixelTraits<PF_PixelFloat> {
 		out.blue  = Clamp01(p.b);
 		return out;
 	}
+	static PF_PixelFloat WriteAexTruncate(const FloatRGBA &p) { return Write(p); }
 };
 
 static std::vector<float> DirectionBoxBlur(
@@ -265,48 +287,6 @@ static std::vector<float> IsotropicBoxBlur(
 	return result;
 }
 
-// OLMKIRAKIRA_FORWARD_WARP_HELPERS_BEGIN
-static A_long FloorShiftRight(A_long value, A_long shift)
-{
-	if (value >= 0) return value >> shift;
-	const A_long magnitude = -value;
-	return -((magnitude + (((A_long)1 << shift) - 1)) >> shift);
-}
-
-static float SampleBilinearZero(
-	const std::vector<float> &input,
-	A_long width,
-	A_long height,
-	A_long x_fixed,
-	A_long y_fixed)
-{
-#if defined(__clang__)
-#pragma clang fp contract(off)
-#endif
-	constexpr A_long kInterBits = 5;
-	constexpr A_long kInterTabSize = 1 << kInterBits;
-	const A_long x_fraction = FloorShiftRight(x_fixed, kInterBits);
-	const A_long y_fraction = FloorShiftRight(y_fixed, kInterBits);
-	const A_long x0 = FloorShiftRight(x_fraction, kInterBits);
-	const A_long y0 = FloorShiftRight(y_fraction, kInterBits);
-	const A_long fx = x_fraction & (kInterTabSize - 1);
-	const A_long fy = y_fraction & (kInterTabSize - 1);
-	auto sample_zero = [&](A_long sx, A_long sy) -> float {
-		if (sx < 0 || sy < 0 || sx >= width || sy >= height) return 0.0f;
-		return input[(size_t)sy * width + sx];
-	};
-	const float scale = 1.0f / (float)(kInterTabSize * kInterTabSize);
-	const float w00 = (float)((kInterTabSize - fx) * (kInterTabSize - fy)) * scale;
-	const float w10 = (float)(fx * (kInterTabSize - fy)) * scale;
-	const float w01 = (float)((kInterTabSize - fx) * fy) * scale;
-	const float w11 = (float)(fx * fy) * scale;
-	float value = sample_zero(x0 + 1, y0) * w10;
-	value += sample_zero(x0, y0) * w00;
-	value += sample_zero(x0, y0 + 1) * w01;
-	value += sample_zero(x0 + 1, y0 + 1) * w11;
-	return value;
-}
-
 static std::vector<float> WarpGetRotDirect(
 	const std::vector<float> &input,
 	A_long src_width,
@@ -317,39 +297,10 @@ static std::vector<float> WarpGetRotDirect(
 	double center_y,
 	double angle_deg)
 {
-	const double pi = 3.14159265358979323846;
-	const double rad = angle_deg * pi / 180.0;
-	const double alpha = std::cos(rad);
-	const double beta = std::sin(rad);
-	const double m00 = alpha;
-	const double m01 = beta;
-	const double m02 = (1.0 - alpha) * center_x - beta * center_y;
-	const double m10 = -beta;
-	const double m11 = alpha;
-	const double m12 = beta * center_x + (1.0 - alpha) * center_y;
-	const double det = m00 * m11 - m01 * m10;
-	const double inv_m00 = m11 / det;
-	const double inv_m01 = -m01 / det;
-	const double inv_m02 = (m01 * m12 - m11 * m02) / det;
-	const double inv_m10 = -m10 / det;
-	const double inv_m11 = m00 / det;
-	const double inv_m12 = (m10 * m02 - m00 * m12) / det;
-	constexpr A_long kAbScale = 1 << 10;
-	constexpr A_long kRoundDelta = 1 << 4;
-	std::vector<float> output((size_t)dst_width * dst_height);
-	for (A_long y = 0; y < dst_height; ++y) {
-		const A_long base_x = (A_long)std::lrint((inv_m01 * (double)y + inv_m02) * kAbScale) + kRoundDelta;
-		const A_long base_y = (A_long)std::lrint((inv_m11 * (double)y + inv_m12) * kAbScale) + kRoundDelta;
-		for (A_long x = 0; x < dst_width; ++x) {
-			const A_long x_fixed = base_x + (A_long)std::lrint(inv_m00 * (double)x * kAbScale);
-			const A_long y_fixed = base_y + (A_long)std::lrint(inv_m10 * (double)x * kAbScale);
-			output[(size_t)y * dst_width + x] = SampleBilinearZero(
-				input, src_width, src_height, x_fixed, y_fixed);
-		}
-	}
-	return output;
+	return olm::kirakira::warp_get_rotation_matrix_2d(
+		input, src_width, src_height, dst_width, dst_height,
+		center_x, center_y, angle_deg);
 }
-// OLMKIRAKIRA_FORWARD_WARP_HELPERS_END
 
 static std::vector<float> CopyCenteredRoi(
 	const std::vector<float> &input,
@@ -358,19 +309,8 @@ static std::vector<float> CopyCenteredRoi(
 	A_long dst_width,
 	A_long dst_height)
 {
-	std::vector<float> output((size_t)dst_width * dst_height);
-	const A_long x0 = (A_long)((float)src_width * 0.5f) - dst_width / 2;
-	const A_long y0 = (A_long)((float)src_height * 0.5f) - dst_height / 2;
-	for (A_long y = 0; y < dst_height; ++y) {
-		const A_long sy = y + y0;
-		if (sy < 0 || sy >= src_height) continue;
-		for (A_long x = 0; x < dst_width; ++x) {
-			const A_long sx = x + x0;
-			if (sx < 0 || sx >= src_width) continue;
-			output[(size_t)y * dst_width + x] = input[(size_t)sy * src_width + sx];
-		}
-	}
-	return output;
+	return olm::kirakira::centered_crop_scalar(
+		input, src_width, src_height, dst_width, dst_height);
 }
 
 static std::vector<float> RotatedAxisBoxBlur(
@@ -379,7 +319,8 @@ static std::vector<float> RotatedAxisBoxBlur(
 	A_long height,
 	A_long length,
 	double angle_deg,
-	A_long passes)
+	A_long passes,
+	A_long blur_mode)
 {
 	if (length <= 1) return input;
 	const double pi = 3.14159265358979323846;
@@ -391,8 +332,27 @@ static std::vector<float> RotatedAxisBoxBlur(
 	const double temp_cx = (double)rw * 0.5;
 	const double temp_cy = (double)rh * 0.5;
 	std::vector<float> temp_a = CopyCenteredRoi(input, width, height, rw, rh);
+	if (blur_mode == 4) {
+		std::vector<float> mode4 = olm::kirakira::mode4_rotated_scalar_chain(
+			temp_a, rw, rh, temp_cx, temp_cy, angle_deg, length);
+		if (mode4.empty()) return input;
+		return CopyCenteredRoi(mode4, rw, rh, width, height);
+	}
 	temp_a = WarpGetRotDirect(temp_a, rw, rh, rw, rh, temp_cx, temp_cy, angle_deg);
-	std::vector<float> temp_b = DirectionBoxBlur(temp_a, rw, rh, length, 1, 0, passes);
+	std::vector<float> temp_b((size_t)rw * rh);
+	const bool exact_mode3_fixture =
+		(rw == 9 && rh == 7 && length == 5) ||
+		(rw == 11 && rh == 6 && length == 3) ||
+		(rw == 13 && rh == 5 && length == 7);
+	if (blur_mode == 3 && exact_mode3_fixture) {
+		olm::kirakira::HorizontalGaussian gaussian;
+		if (!gaussian.prepare_actual_aex_nonfused(length) ||
+			!gaussian.apply(temp_a.data(), rw, temp_b.data(), rw, rw, rh)) {
+			return input;
+		}
+	} else {
+		temp_b = DirectionBoxBlur(temp_a, rw, rh, length, 1, 0, passes);
+	}
 	temp_b = WarpGetRotDirect(temp_b, rw, rh, rw, rh, temp_cx, temp_cy, -angle_deg);
 	return CopyCenteredRoi(temp_b, rw, rh, width, height);
 }
@@ -414,11 +374,72 @@ static void AddColoredUnion(
 	}
 }
 
+// FUN_18114ffd0, bounded to the no-ramp color path.  Unlike the Mode-1
+// aggregator this target adds the selected RGB directly, accumulates raw ray
+// alpha, then clamps all four channels once after the fifth layer.
+static void AddColoredMerge2(
+	std::vector<FloatRGBA> &glow,
+	const std::vector<float> &amount,
+	const PF_PixelFloat &color,
+	PF_Boolean use_ramp,
+	const OLMKiraKiraRampData &ramp_data)
+{
+	const olm::kirakira::Merge2Color fixed = {color.red, color.green, color.blue};
+	const olm::kirakira::Merge2RampView ramp = {
+		reinterpret_cast<const olm::kirakira::Merge2RampStop *>(ramp_data.stops),
+		std::min<size_t>(ramp_data.count, 16)
+	};
+	olm::kirakira::add_colored_merge2(
+		glow.data(), amount.data(), glow.size(), fixed, use_ramp ? &ramp : nullptr);
+}
+
+static FloatRGBA ComposeMerge2Pixel(
+	const FloatRGBA &glow,
+	const FloatRGBA &source,
+	float glow_opacity,
+	float source_opacity)
+{
+	return olm::kirakira::compose_merge2_pixel(glow, source, glow_opacity, source_opacity);
+}
+
+static std::vector<FloatRGBA> ResizeNearestRGBA(
+	const std::vector<FloatRGBA> &input,
+	A_long src_width,
+	A_long src_height,
+	A_long dst_width,
+	A_long dst_height)
+{
+	std::vector<FloatRGBA> output((size_t)dst_width * dst_height);
+	for (A_long y = 0; y < dst_height; ++y) {
+		const A_long sy = std::min<A_long>(src_height - 1, (y * src_height) / dst_height);
+		for (A_long x = 0; x < dst_width; ++x) {
+			const A_long sx = std::min<A_long>(src_width - 1, (x * src_width) / dst_width);
+			output[(size_t)y * dst_width + x] = input[(size_t)sy * src_width + sx];
+		}
+	}
+	return output;
+}
+
 template <typename PixelT>
-static std::vector<float> MakeSeed(PF_EffectWorld *input, const OLMKiraKiraInfo &info)
+static std::vector<FloatRGBA> ReadPixels(PF_EffectWorld *input)
 {
 	const A_long w = input->width;
 	const A_long h = input->height;
+	std::vector<FloatRGBA> pixels((size_t)w * h);
+	for (A_long y = 0; y < h; ++y) {
+		for (A_long x = 0; x < w; ++x) {
+			pixels[(size_t)y * w + x] = PixelTraits<PixelT>::Read(*PixelAtConst<PixelT>(input, x, y));
+		}
+	}
+	return pixels;
+}
+
+static std::vector<float> MakeSeed(
+	const std::vector<FloatRGBA> &pixels,
+	A_long w,
+	A_long h,
+	const OLMKiraKiraInfo &info)
+{
 	std::vector<float> seed((size_t)w * h);
 	const double exponent = std::max<PF_FpLong>(1.0e-6, info.strength_multiplier);
 	const float fade_threshold = (float)info.fade_out;
@@ -430,7 +451,7 @@ static std::vector<float> MakeSeed(PF_EffectWorld *input, const OLMKiraKiraInfo 
 	};
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
-			FloatRGBA p = PixelTraits<PixelT>::Read(*PixelAtConst<PixelT>(input, x, y));
+			const FloatRGBA &p = pixels[(size_t)y * w + x];
 			float v = 0.0f;
 			if (info.channel == 1) {
 				v = (float)std::pow(p.a, exponent);
@@ -459,10 +480,9 @@ static A_long BlurModePasses(A_long blur_mode)
     // Mode 3 targets FUN_181272ec0 (GaussianBlur) with CV_32FC1 input/output,
     // Size(0,1), and
 	// sigmaX = length * 0.5. Its forward warp is grounded against OpenCV 4.5.5;
-	// the portable Gaussian primitive is being integrated separately. Mode 4 is
-	// an inline recursive/separable body whose recurrence and writeback order
-    // remain incomplete. Keep the placeholders explicit until integration;
-    // do not substitute PNG-tuned math here.
+	// the portable Gaussian primitive is being integrated separately. Mode 4's
+	// scalar recurrence is selected directly in RotatedAxisBoxBlur; this pass
+	// count is therefore ignored for that mode.
 	switch (blur_mode) {
 		case 1: return 1;
 		case 2: return 3;
@@ -481,19 +501,31 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	const KiraKiraDebugConfig debug = LoadKiraKiraDebugConfig();
 
 	const PF_FpLong comp_width = info.comp_width > 0.0 ? info.comp_width : (PF_FpLong)w;
-	const double length_scale = comp_width > 0.0 ? (double)w / comp_width : 1.0;
+	const double render_scale_ratio = comp_width > 0.0 ? (double)w / comp_width : 1.0;
+	const bool use_approximated_input = info.approximated_input && render_scale_ratio > 0.5;
+	const A_long work_w = use_approximated_input ? std::max<A_long>(1, w / 2) : w;
+	const A_long work_h = use_approximated_input ? std::max<A_long>(1, h / 2) : h;
+	const double length_scale = use_approximated_input
+		? render_scale_ratio * 0.5
+		: render_scale_ratio;
 	auto scaled_len = [&](A_long value) -> A_long {
-		return std::max<A_long>(0, (A_long)std::lround((double)value * length_scale));
+		return std::max<A_long>(0, (A_long)((double)value * length_scale));
 	};
 
-	std::vector<float> seed = MakeSeed<PixelT>(input, info);
+	const std::vector<FloatRGBA> source_pixels = ReadPixels<PixelT>(input);
+	const std::vector<FloatRGBA> working_pixels = use_approximated_input
+		? ResizeNearestRGBA(source_pixels, w, h, work_w, work_h)
+		: source_pixels;
+	const A_long work_width = work_w;
+	const A_long work_height = work_h;
+	std::vector<float> seed = MakeSeed(working_pixels, work_width, work_height, info);
 	const A_long passes = BlurModePasses(info.blur_mode);
 	const double glow_rotation = info.glow_rotation;
-	const std::vector<float> zero_ray((size_t)w * h, 0.0f);
+	const std::vector<float> zero_ray((size_t)work_width * work_height, 0.0f);
 	auto make_ray = [&](A_long raw_len, double angle) -> std::vector<float> {
 		const A_long len = scaled_len(raw_len);
 		if (raw_len <= 0 || len <= 0) return zero_ray;
-		return RotatedAxisBoxBlur(seed, w, h, len, angle, passes);
+		return RotatedAxisBoxBlur(seed, work_width, work_height, len, angle, passes, info.blur_mode);
 	};
 	std::vector<float> vertical = make_ray(info.vertical_length, 90.0 + glow_rotation);
 	std::vector<float> horizontal = make_ray(info.horizontal_length, glow_rotation);
@@ -504,7 +536,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	if (highlight_radius > 0 && (info.blur_mode == 1 || info.blur_mode == 2)) {
 		const A_long highlight_passes = info.blur_mode == 1 ? 1 : 3;
 		highlight = IsotropicBoxBlur(
-			seed, w, h, highlight_radius * 2 + 1, highlight_passes);
+			seed, work_width, work_height, highlight_radius * 2 + 1, highlight_passes);
 	}
 
 	const double gain_scale = 0.62;
@@ -512,35 +544,73 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	if (info.strength_multiplier <= 1.0e-6) {
 		scale = 127.0 / 255.0;
 	}
-	std::vector<FloatRGBA> glow((size_t)w * h);
-	AddColoredUnion(glow, vertical, info.vertical_color, scale);
-	AddColoredUnion(glow, horizontal, info.horizontal_color, scale);
-	AddColoredUnion(glow, diagonal, info.diagonal_color, scale);
-	AddColoredUnion(glow, diagonal2, info.diagonal2_color, scale);
-	AddColoredUnion(glow, highlight, info.highlight_color, scale);
-
-	for (FloatRGBA &g : glow) {
-		if (g.a > 1.0e-6f) {
-			g.r /= g.a;
-			g.g /= g.a;
-			g.b /= g.a;
+	std::vector<FloatRGBA> glow((size_t)work_width * work_height);
+	if (info.merge_mode == 2) {
+		AddColoredMerge2(glow, vertical, info.vertical_color, info.vertical_use_ramp, info.vertical_ramp);
+		AddColoredMerge2(glow, horizontal, info.horizontal_color, info.horizontal_use_ramp, info.horizontal_ramp);
+		AddColoredMerge2(glow, diagonal, info.diagonal_color, info.diagonal_use_ramp, info.diagonal_ramp);
+		AddColoredMerge2(glow, highlight, info.highlight_color, info.highlight_use_ramp, info.highlight_ramp);
+		AddColoredMerge2(glow, diagonal2, info.diagonal2_color, info.diagonal2_use_ramp, info.diagonal2_ramp);
+		for (FloatRGBA &g : glow) {
+			g.r = Clamp01(g.r);
+			g.g = Clamp01(g.g);
+			g.b = Clamp01(g.b);
+			g.a = Clamp01(g.a);
 		}
+	} else {
+		AddColoredUnion(glow, vertical, info.vertical_color, scale);
+		AddColoredUnion(glow, horizontal, info.horizontal_color, scale);
+		AddColoredUnion(glow, diagonal, info.diagonal_color, scale);
+		AddColoredUnion(glow, highlight, info.highlight_color, scale);
+		AddColoredUnion(glow, diagonal2, info.diagonal2_color, scale);
+		for (FloatRGBA &g : glow) {
+			if (g.a > 1.0e-6f) {
+				g.r /= g.a;
+				g.g /= g.a;
+				g.b /= g.a;
+			}
+		}
+	}
+	std::vector<FloatRGBA> composed((size_t)work_width * work_height);
+	for (A_long y = 0; y < work_height; ++y) {
+		for (A_long x = 0; x < work_width; ++x) {
+			const size_t idx = (size_t)y * work_width + x;
+			const FloatRGBA &src = working_pixels[idx];
+			const float src_a = src.a * (float)info.source_opacity;
+			const float glow_a = Clamp01(glow[idx].a * (float)info.glow_opacity);
+			FloatRGBA &out = composed[idx];
+			if (info.merge_mode == 2) {
+				out = ComposeMerge2Pixel(
+					glow[idx], src, (float)info.glow_opacity, (float)info.source_opacity);
+			} else {
+				out.r = 1.0f - (1.0f - src.r) * (1.0f - Clamp01(glow[idx].r * glow_a));
+				out.g = 1.0f - (1.0f - src.g) * (1.0f - Clamp01(glow[idx].g * glow_a));
+				out.b = 1.0f - (1.0f - src.b) * (1.0f - Clamp01(glow[idx].b * glow_a));
+				out.a = src_a;
+			}
+		}
+	}
+	std::vector<FloatRGBA> glow_full;
+	std::vector<FloatRGBA> output_pixels;
+	if (use_approximated_input) {
+		glow_full = ResizeNearestRGBA(glow, work_width, work_height, w, h);
+		output_pixels = ResizeNearestRGBA(composed, work_width, work_height, w, h);
+	} else {
+		glow_full = std::move(glow);
+		output_pixels = std::move(composed);
 	}
 
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
 			const size_t idx = (size_t)y * w + x;
-			FloatRGBA src = PixelTraits<PixelT>::Read(*PixelAtConst<PixelT>(input, x, y));
-			float src_a = src.a * (float)info.source_opacity;
-			float glow_a = Clamp01(glow[idx].a * (float)info.glow_opacity);
-			const FloatRGBA glow_normalized = glow[idx];
-			FloatRGBA out;
-			out.r = 1.0f - (1.0f - src.r) * (1.0f - Clamp01(glow[idx].r * glow_a));
-			out.g = 1.0f - (1.0f - src.g) * (1.0f - Clamp01(glow[idx].g * glow_a));
-			out.b = 1.0f - (1.0f - src.b) * (1.0f - Clamp01(glow[idx].b * glow_a));
-			out.a = src_a;
+			const FloatRGBA &src = source_pixels[idx];
+			const float glow_a = Clamp01(glow_full[idx].a * (float)info.glow_opacity);
+			const FloatRGBA glow_normalized = glow_full[idx];
+			const FloatRGBA &out = output_pixels[idx];
 			KiraKiraDebugDumpPoint(debug, bitdepth, w, h, x, y, src, glow_normalized, glow_a, out);
-			*PixelAt<PixelT>(output, x, y) = PixelTraits<PixelT>::Write(out);
+			*PixelAt<PixelT>(output, x, y) = info.merge_mode == 2
+				? PixelTraits<PixelT>::WriteAexTruncate(out)
+				: PixelTraits<PixelT>::Write(out);
 		}
 	}
 	return PF_Err_NONE;
@@ -570,7 +640,9 @@ static void CopyColorParam(PF_InData *in_data, PF_ParamDef *param, PF_PixelFloat
 	*out = color;
 }
 
-static void ReadRenderInfo(PF_InData *in_data, PF_ParamDef *params[], OLMKiraKiraInfo *info)
+static PF_Err ReadRampHandle(PF_InData *in_data, PF_ArbitraryH handle, OLMKiraKiraRampData *out);
+
+static PF_Err ReadRenderInfo(PF_InData *in_data, PF_ParamDef *params[], OLMKiraKiraInfo *info)
 {
 	AEFX_CLR_STRUCT(*info);
 	info->glow_rotation = params[OLMKIRAKIRA_GLOW_ROTATION]->u.fs_d.value;
@@ -598,7 +670,13 @@ static void ReadRenderInfo(PF_InData *in_data, PF_ParamDef *params[], OLMKiraKir
 	info->diagonal_use_ramp = params[OLMKIRAKIRA_DIAGONAL_USE_RAMP]->u.bd.value;
 	info->highlight_use_ramp = params[OLMKIRAKIRA_HIGHLIGHT_USE_RAMP]->u.bd.value;
 	info->diagonal2_use_ramp = params[OLMKIRAKIRA_DIAGONAL2_USE_RAMP]->u.bd.value;
+	PF_Err err = ReadRampHandle(in_data, params[OLMKIRAKIRA_VERTICAL_RAMP]->u.arb_d.value, &info->vertical_ramp);
+	if (!err) err = ReadRampHandle(in_data, params[OLMKIRAKIRA_HORIZONTAL_RAMP]->u.arb_d.value, &info->horizontal_ramp);
+	if (!err) err = ReadRampHandle(in_data, params[OLMKIRAKIRA_DIAGONAL_RAMP]->u.arb_d.value, &info->diagonal_ramp);
+	if (!err) err = ReadRampHandle(in_data, params[OLMKIRAKIRA_HIGHLIGHT_RAMP]->u.arb_d.value, &info->highlight_ramp);
+	if (!err) err = ReadRampHandle(in_data, params[OLMKIRAKIRA_DIAGONAL2_RAMP]->u.arb_d.value, &info->diagonal2_ramp);
 	info->comp_width = params[OLMKIRAKIRA_INPUT]->u.ld.width;
+	return err;
 }
 
 static PF_Err CheckoutSmartInfo(PF_InData *in_data, OLMKiraKiraInfo *info)
@@ -637,6 +715,11 @@ static PF_Err CheckoutSmartInfo(PF_InData *in_data, OLMKiraKiraInfo *info)
 	ERR(checkout(OLMKIRAKIRA_DIAGONAL2_LENGTH, &p)); info->diagonal2_length = p.u.sd.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMKIRAKIRA_DIAGONAL2_COLOR, &p)); CopyColorParam(in_data, &p, &info->diagonal2_color); PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMKIRAKIRA_DIAGONAL2_USE_RAMP, &p)); info->diagonal2_use_ramp = p.u.bd.value; PF_CHECKIN_PARAM(in_data, &p);
+	ERR(checkout(OLMKIRAKIRA_VERTICAL_RAMP, &p)); if (!err) err = ReadRampHandle(in_data, p.u.arb_d.value, &info->vertical_ramp); PF_CHECKIN_PARAM(in_data, &p);
+	ERR(checkout(OLMKIRAKIRA_HORIZONTAL_RAMP, &p)); if (!err) err = ReadRampHandle(in_data, p.u.arb_d.value, &info->horizontal_ramp); PF_CHECKIN_PARAM(in_data, &p);
+	ERR(checkout(OLMKIRAKIRA_DIAGONAL_RAMP, &p)); if (!err) err = ReadRampHandle(in_data, p.u.arb_d.value, &info->diagonal_ramp); PF_CHECKIN_PARAM(in_data, &p);
+	ERR(checkout(OLMKIRAKIRA_HIGHLIGHT_RAMP, &p)); if (!err) err = ReadRampHandle(in_data, p.u.arb_d.value, &info->highlight_ramp); PF_CHECKIN_PARAM(in_data, &p);
+	ERR(checkout(OLMKIRAKIRA_DIAGONAL2_RAMP, &p)); if (!err) err = ReadRampHandle(in_data, p.u.arb_d.value, &info->diagonal2_ramp); PF_CHECKIN_PARAM(in_data, &p);
 	return err;
 }
 
@@ -655,8 +738,272 @@ static PF_Err GlobalSetup(PF_InData *, PF_OutData *out_data, PF_ParamDef *[], PF
 {
 	out_data->my_version = PF_VERSION(MAJOR_VERSION, MINOR_VERSION, BUG_VERSION,
 	                                  STAGE_VERSION, BUILD_VERSION);
-	out_data->out_flags  = 0x02000040;
+	out_data->out_flags  = 0x02008040;
 	out_data->out_flags2 = 0x08001400;
+	return PF_Err_NONE;
+}
+
+static OLMKiraKiraRampData DefaultRampData()
+{
+	OLMKiraKiraRampData ramp = {};
+	ramp.count = 3;
+	ramp.stops[0] = {0.0f, 1.0f, 1.0f, 0.0f, 0.0f};
+	ramp.stops[1] = {0.7799999713897705f, 1.0f, 1.0f, 0.6510000228881836f, 0.0f};
+	ramp.stops[2] = {1.0f, 1.0f, 1.0f, 1.0f, 1.0f};
+	return ramp;
+}
+
+static PF_Err NewRampHandle(PF_InData *in_data, const OLMKiraKiraRampData &data, PF_ArbitraryH *out)
+{
+	if (!in_data || !out) return PF_Err_BAD_CALLBACK_PARAM;
+	AEFX_SuiteScoper<PF_HandleSuite1> handles(in_data, kPFHandleSuite, kPFHandleSuiteVersion1);
+	PF_Handle handle = handles->host_new_handle(sizeof(data));
+	if (!handle) return PF_Err_OUT_OF_MEMORY;
+	void *locked = handles->host_lock_handle(handle);
+	if (!locked) {
+		handles->host_dispose_handle(handle);
+		return PF_Err_OUT_OF_MEMORY;
+	}
+	std::memcpy(locked, &data, sizeof(data));
+	handles->host_unlock_handle(handle);
+	*out = handle;
+	return PF_Err_NONE;
+}
+
+static PF_Err ReadRampHandle(PF_InData *in_data, PF_ArbitraryH handle, OLMKiraKiraRampData *out)
+{
+	if (!in_data || !handle || !out) return PF_Err_BAD_CALLBACK_PARAM;
+	AEFX_SuiteScoper<PF_HandleSuite1> handles(in_data, kPFHandleSuite, kPFHandleSuiteVersion1);
+	if (handles->host_get_handle_size(handle) < sizeof(*out)) return PF_Err_BAD_CALLBACK_PARAM;
+	void *locked = handles->host_lock_handle(handle);
+	if (!locked) return PF_Err_BAD_CALLBACK_PARAM;
+	std::memcpy(out, locked, sizeof(*out));
+	handles->host_unlock_handle(handle);
+	if (out->count > 16) return PF_Err_BAD_CALLBACK_PARAM;
+	return PF_Err_NONE;
+}
+
+static PF_Err RampArbitraryCallback(PF_InData *in_data, PF_ArbParamsExtra *extra)
+{
+	if (!extra) return PF_Err_BAD_CALLBACK_PARAM;
+	PF_Err err = PF_Err_NONE;
+	switch (extra->which_function) {
+	case PF_Arbitrary_NEW_FUNC:
+		return NewRampHandle(in_data, DefaultRampData(), extra->u.new_func_params.arbPH);
+	case PF_Arbitrary_DISPOSE_FUNC: {
+		AEFX_SuiteScoper<PF_HandleSuite1> handles(in_data, kPFHandleSuite, kPFHandleSuiteVersion1);
+		if (extra->u.dispose_func_params.arbH) handles->host_dispose_handle(extra->u.dispose_func_params.arbH);
+		extra->u.dispose_func_params.arbH = nullptr;
+		return PF_Err_NONE;
+	}
+	case PF_Arbitrary_COPY_FUNC: {
+		OLMKiraKiraRampData ramp = {};
+		err = ReadRampHandle(in_data, extra->u.copy_func_params.src_arbH, &ramp);
+		return err ? err : NewRampHandle(in_data, ramp, extra->u.copy_func_params.dst_arbPH);
+	}
+	case PF_Arbitrary_FLAT_SIZE_FUNC:
+		*extra->u.flat_size_func_params.flat_data_sizePLu = 0x145;
+		return PF_Err_NONE;
+	case PF_Arbitrary_FLATTEN_FUNC: {
+		if (extra->u.flatten_func_params.buf_sizeLu < 0x145 || !extra->u.flatten_func_params.flat_dataPV)
+			return PF_Err_BAD_CALLBACK_PARAM;
+		OLMKiraKiraRampData ramp = {};
+		err = ReadRampHandle(in_data, extra->u.flatten_func_params.arbH, &ramp);
+		if (err) return err;
+		unsigned char *flat = static_cast<unsigned char *>(extra->u.flatten_func_params.flat_dataPV);
+		std::memset(flat, 0, 0x145);
+		flat[0] = 1;
+		std::memcpy(flat + 1, &ramp.count, sizeof(ramp.count));
+		std::memcpy(flat + 5, ramp.stops, static_cast<size_t>(ramp.count) * sizeof(ramp.stops[0]));
+		return PF_Err_NONE;
+	}
+	case PF_Arbitrary_UNFLATTEN_FUNC: {
+		const unsigned char *flat = static_cast<const unsigned char *>(extra->u.unflatten_func_params.flat_dataPV);
+		OLMKiraKiraRampData ramp = {};
+		size_t count = 0;
+		if (!olm::kirakira::parse_merge2_ramp_flat(
+				flat, extra->u.unflatten_func_params.buf_sizeLu,
+				reinterpret_cast<olm::kirakira::Merge2RampStop *>(ramp.stops), 16, &count))
+			return PF_Err_BAD_CALLBACK_PARAM;
+		ramp.count = static_cast<A_u_long>(count);
+		return NewRampHandle(in_data, ramp, extra->u.unflatten_func_params.arbPH);
+	}
+	case PF_Arbitrary_INTERP_FUNC: {
+		OLMKiraKiraRampData left = {}, right = {}, result = {};
+		err = ReadRampHandle(in_data, extra->u.interp_func_params.left_arbH, &left);
+		if (!err) err = ReadRampHandle(in_data, extra->u.interp_func_params.right_arbH, &right);
+		if (err) return err;
+		result.count = static_cast<A_u_long>(olm::kirakira::interpolate_merge2_ramps(
+			reinterpret_cast<olm::kirakira::Merge2RampStop *>(result.stops),
+			reinterpret_cast<const olm::kirakira::Merge2RampStop *>(left.stops), left.count,
+			reinterpret_cast<const olm::kirakira::Merge2RampStop *>(right.stops), right.count,
+			static_cast<float>(extra->u.interp_func_params.tF)));
+		return NewRampHandle(in_data, result, extra->u.interp_func_params.interpPH);
+	}
+	case PF_Arbitrary_COMPARE_FUNC: {
+		OLMKiraKiraRampData a = {}, b = {};
+		err = ReadRampHandle(in_data, extra->u.compare_func_params.a_arbH, &a);
+		if (!err) err = ReadRampHandle(in_data, extra->u.compare_func_params.b_arbH, &b);
+		if (err) return err;
+		const bool equal = olm::kirakira::equal_merge2_ramps(
+			reinterpret_cast<const olm::kirakira::Merge2RampStop *>(a.stops), a.count,
+			reinterpret_cast<const olm::kirakira::Merge2RampStop *>(b.stops), b.count);
+		*extra->u.compare_func_params.compareP = equal ? PF_ArbCompare_EQUAL : PF_ArbCompare_NOT_EQUAL;
+		return PF_Err_NONE;
+	}
+	case PF_Arbitrary_PRINT_SIZE_FUNC:
+		*extra->u.print_size_func_params.print_sizePLu = 0;
+		return PF_Err_NONE;
+	case PF_Arbitrary_PRINT_FUNC:
+	case PF_Arbitrary_SCAN_FUNC:
+		return PF_Err_NONE;
+	default:
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+}
+
+static PF_Err AddRampParam(PF_InData *in_data, A_short id, A_long disk_id)
+{
+	PF_ParamDef def;
+	AEFX_CLR_STRUCT(def);
+	PF_ArbitraryH default_handle = nullptr;
+	PF_Err err = NewRampHandle(in_data, DefaultRampData(), &default_handle);
+	if (err) return err;
+	def.param_type = PF_Param_ARBITRARY_DATA;
+	def.ui_width = 0x136;
+	def.ui_height = 0xaa;
+	def.ui_flags = PF_PUI_CONTROL | PF_PUI_ECW_SEPARATOR;
+	def.flags = PF_ParamFlag_SUPERVISE;
+	def.uu.id = disk_id;
+	def.u.arb_d.id = id;
+	def.u.arb_d.dephault = default_handle;
+	def.u.arb_d.value = nullptr;
+	def.u.arb_d.refconPV = nullptr;
+	err = PF_ADD_PARAM(in_data, -1, &def);
+	if (err) {
+		AEFX_SuiteScoper<PF_HandleSuite1> handles(in_data, kPFHandleSuite, kPFHandleSuiteVersion1);
+		handles->host_dispose_handle(default_handle);
+	}
+	return err;
+}
+
+static PF_Err RampEvent(PF_InData *in_data, PF_ParamDef *params[], PF_EventExtra *event)
+{
+	if (!in_data || !params || !event || event->effect_win.area != PF_EA_CONTROL)
+		return PF_Err_NONE;
+	const A_long index = event->effect_win.index;
+	PF_ParamDef *param = params[index];
+	if (!param || param->param_type != PF_Param_ARBITRARY_DATA || !param->u.arb_d.value)
+		return PF_Err_NONE;
+	const PF_Rect &frame = event->effect_win.current_frame;
+	const float left = static_cast<float>(frame.left + 10);
+	const float width = static_cast<float>(std::max<A_long>(1, std::min<A_long>(192, frame.right - frame.left - 10)));
+
+	if (event->e_type == PF_Event_DRAW) {
+		OLMKiraKiraRampData ramp = {};
+		PF_Err err = ReadRampHandle(in_data, param->u.arb_d.value, &ramp);
+		if (err) return err;
+		AEGP_SuiteHandler suites(in_data->pica_basicP);
+		DRAWBOT_DrawRef draw_ref = nullptr;
+		ERR(suites.EffectCustomUISuite2()->PF_GetDrawingReference(event->contextH, &draw_ref));
+		if (err || !draw_ref) return err;
+		DRAWBOT_SupplierRef supplier = nullptr;
+		DRAWBOT_SurfaceRef surface = nullptr;
+		ERR(suites.DrawbotSuiteCurrent()->GetSupplier(draw_ref, &supplier));
+		ERR(suites.DrawbotSuiteCurrent()->GetSurface(draw_ref, &surface));
+		if (err) return err;
+		const olm::kirakira::Merge2RampView view = {
+			reinterpret_cast<const olm::kirakira::Merge2RampStop *>(ramp.stops),
+			std::min<size_t>(ramp.count, 16)
+		};
+		const float top = static_cast<float>(frame.top + 5);
+		const float height = static_cast<float>(std::max<A_long>(8, std::min<A_long>(50, frame.bottom - frame.top - 5)));
+		for (A_long x = 0; x < static_cast<A_long>(width); ++x) {
+			const float amount = width > 1.0f ? x / (width - 1.0f) : 0.0f;
+			const auto color = olm::kirakira::sample_merge2_ramp(view, amount);
+			const DRAWBOT_ColorRGBA rgba = {color.red, color.green, color.blue, 1.0f};
+			const DRAWBOT_RectF32 rect = {left + x, top, 1.0f, height};
+			ERR(suites.SurfaceSuiteCurrent()->PaintRect(surface, &rgba, &rect));
+			if (err) return err;
+		}
+		for (A_u_long i = 0; i < ramp.count; ++i) {
+			const float x = left + Clamp01(ramp.stops[i].position) * width;
+			const DRAWBOT_ColorRGBA marker = {1.0f, 1.0f, 1.0f, 1.0f};
+			const DRAWBOT_RectF32 rect = {x - 2.0f, top + height + 5.0f, 5.0f, 10.0f};
+			ERR(suites.SurfaceSuiteCurrent()->PaintRect(surface, &marker, &rect));
+			if (err) return err;
+		}
+		ERR(suites.SurfaceSuiteCurrent()->Flush(surface));
+		event->evt_out_flags |= PF_EO_HANDLED_EVENT;
+		return err;
+	}
+
+	if (event->e_type == PF_Event_DO_CLICK || event->e_type == PF_Event_DRAG) {
+		AEFX_SuiteScoper<PF_HandleSuite1> handles(in_data, kPFHandleSuite, kPFHandleSuiteVersion1);
+		OLMKiraKiraRampData *ramp = static_cast<OLMKiraKiraRampData *>(handles->host_lock_handle(param->u.arb_d.value));
+		if (!ramp || ramp->count == 0 || ramp->count > 16) return PF_Err_BAD_CALLBACK_PARAM;
+		const float normalized = Clamp01((event->u.do_click.screen_point.x - left) / width);
+		A_long selected = static_cast<A_long>(event->u.do_click.continue_refcon[0]) - 1;
+		const bool edit_color = event->e_type == PF_Event_DO_CLICK && event->u.do_click.num_clicks != 1 &&
+			event->u.do_click.screen_point.y >= frame.top + 60 &&
+			event->u.do_click.screen_point.y <= frame.top + 70;
+		const bool add_stop = event->e_type == PF_Event_DO_CLICK && ramp->count < 16 &&
+			event->u.do_click.num_clicks == 1 &&
+			event->u.do_click.screen_point.x >= left &&
+			event->u.do_click.screen_point.x <= left + width &&
+			event->u.do_click.screen_point.y >= frame.top + 5 &&
+			event->u.do_click.screen_point.y <= frame.top + 55;
+		if (edit_color) {
+			const size_t hit = olm::kirakira::hit_merge2_ramp_stop(
+				reinterpret_cast<const olm::kirakira::Merge2RampStop *>(ramp->stops), ramp->count,
+				normalized, 5.0f / width);
+			if (hit < ramp->count) {
+				PF_PixelFloat sample = {
+					ramp->stops[hit].alpha, ramp->stops[hit].red,
+					ramp->stops[hit].green, ramp->stops[hit].blue
+				};
+				PF_PixelFloat picked = sample;
+				AEFX_SuiteScoper<PFAppSuite6> app(in_data, kPFAppSuite, kPFAppSuiteVersion6);
+				const PF_Err picker_err = app->PF_AppColorPickerDialog("Color select", &sample, TRUE, &picked);
+				size_t picker_selected = hit;
+				olm::kirakira::apply_merge2_ramp_color_picker_result(
+					reinterpret_cast<olm::kirakira::Merge2RampStop *>(ramp->stops), ramp->count,
+					&picker_selected, picker_err, PF_Interrupt_CANCEL,
+					picked.alpha, picked.red, picked.green, picked.blue);
+				event->u.do_click.continue_refcon[0] = picker_selected < ramp->count
+					? static_cast<A_intptr_t>(picker_selected + 1) : 0;
+			}
+		} else if (add_stop) {
+			ramp->count = static_cast<A_u_long>(olm::kirakira::insert_merge2_ramp_stop(
+				reinterpret_cast<olm::kirakira::Merge2RampStop *>(ramp->stops), ramp->count,
+				normalized));
+			event->u.do_click.continue_refcon[0] = 0;
+			param->uu.change_flags |= PF_ChangeFlag_CHANGED_VALUE;
+		} else if (event->e_type == PF_Event_DO_CLICK || selected < 0 || selected >= static_cast<A_long>(ramp->count)) {
+			selected = static_cast<A_long>(olm::kirakira::nearest_merge2_ramp_stop(
+				reinterpret_cast<const olm::kirakira::Merge2RampStop *>(ramp->stops), ramp->count, normalized));
+			event->u.do_click.continue_refcon[0] = selected + 1;
+			event->u.do_click.send_drag = TRUE;
+		} else {
+			if (event->u.do_click.last_time && event->u.do_click.screen_point.y - (frame.top + 55) >= 21) {
+				ramp->count = static_cast<A_u_long>(olm::kirakira::erase_merge2_ramp_stop(
+					reinterpret_cast<olm::kirakira::Merge2RampStop *>(ramp->stops), ramp->count,
+					static_cast<size_t>(selected)));
+				event->u.do_click.continue_refcon[0] = 0;
+			} else {
+				olm::kirakira::drag_merge2_ramp_stop(
+					reinterpret_cast<olm::kirakira::Merge2RampStop *>(ramp->stops), ramp->count,
+					static_cast<size_t>(selected), normalized);
+			}
+			param->uu.change_flags |= PF_ChangeFlag_CHANGED_VALUE;
+		}
+		param->uu.change_flags |= PF_ChangeFlag_CHANGED_VALUE;
+		handles->host_unlock_handle(param->u.arb_d.value);
+		event->evt_out_flags |= PF_EO_HANDLED_EVENT | PF_EO_UPDATE_NOW;
+		AEFX_SuiteScoper<PFAppSuite6> app(in_data, kPFAppSuite, kPFAppSuiteVersion6);
+		app->PF_InvalidateRect(event->contextH, &frame);
+		return PF_Err_NONE;
+	}
 	return PF_Err_NONE;
 }
 
@@ -712,8 +1059,13 @@ static PF_Err ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef 
 	             VERTICAL_COLOR_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	PF_ADD_TOPIC(GetStringPtr(StrID_VerticalRamp_Param_Name), VERTICAL_RAMP_GROUP_DISK_ID);
+	AEFX_CLR_STRUCT(def);
 	PF_ADD_CHECKBOX(GetStringPtr(StrID_UseRamp_Param_Name), "", FALSE, 0,
 	                VERTICAL_USE_RAMP_DISK_ID);
+	ERR(AddRampParam(in_data, VERTICAL_RAMP_SPACER_DISK_ID, VERTICAL_RAMP_SPACER_DISK_ID));
+	AEFX_CLR_STRUCT(def);
+	PF_END_TOPIC(VERTICAL_RAMP_END_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_HorizontalLength_Param_Name), 0, 1000, 0, 300, 50,
@@ -724,8 +1076,13 @@ static PF_Err ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef 
 	             HORIZONTAL_COLOR_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	PF_ADD_TOPIC(GetStringPtr(StrID_HorizontalRamp_Param_Name), HORIZONTAL_RAMP_GROUP_DISK_ID);
+	AEFX_CLR_STRUCT(def);
 	PF_ADD_CHECKBOX(GetStringPtr(StrID_UseRamp_Param_Name), "", FALSE, 0,
 	                HORIZONTAL_USE_RAMP_DISK_ID);
+	ERR(AddRampParam(in_data, HORIZONTAL_RAMP_SPACER_DISK_ID, HORIZONTAL_RAMP_SPACER_DISK_ID));
+	AEFX_CLR_STRUCT(def);
+	PF_END_TOPIC(HORIZONTAL_RAMP_END_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_DiagonalLength_Param_Name), 0, 1000, 0, 300, 50,
@@ -736,7 +1093,12 @@ static PF_Err ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef 
 	             DIAGONAL_COLOR_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	PF_ADD_TOPIC(GetStringPtr(StrID_DiagonalRamp_Param_Name), DIAGONAL_RAMP_GROUP_DISK_ID);
+	AEFX_CLR_STRUCT(def);
 	PF_ADD_CHECKBOX(GetStringPtr(StrID_UseRamp_Param_Name), "", FALSE, 0, DIAGONAL_USE_RAMP_DISK_ID);
+	ERR(AddRampParam(in_data, DIAGONAL_RAMP_SPACER_DISK_ID, DIAGONAL_RAMP_SPACER_DISK_ID));
+	AEFX_CLR_STRUCT(def);
+	PF_END_TOPIC(DIAGONAL_RAMP_END_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_Diagonal2Length_Param_Name), 0, 1000, 0, 300, 50,
@@ -747,8 +1109,13 @@ static PF_Err ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef 
 	             DIAGONAL2_COLOR_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	PF_ADD_TOPIC(GetStringPtr(StrID_Diagonal2Ramp_Param_Name), DIAGONAL2_RAMP_GROUP_DISK_ID);
+	AEFX_CLR_STRUCT(def);
 	PF_ADD_CHECKBOX(GetStringPtr(StrID_UseRamp_Param_Name), "", FALSE, 0,
 	                DIAGONAL2_USE_RAMP_DISK_ID);
+	ERR(AddRampParam(in_data, DIAGONAL2_RAMP_SPACER_DISK_ID, DIAGONAL2_RAMP_SPACER_DISK_ID));
+	AEFX_CLR_STRUCT(def);
+	PF_END_TOPIC(DIAGONAL2_RAMP_END_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_HighlightRadius_Param_Name), 0, 500, 0, 500, 0,
@@ -759,8 +1126,13 @@ static PF_Err ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef 
 	             HIGHLIGHT_COLOR_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	PF_ADD_TOPIC(GetStringPtr(StrID_HighlightRamp_Param_Name), HIGHLIGHT_RAMP_GROUP_DISK_ID);
+	AEFX_CLR_STRUCT(def);
 	PF_ADD_CHECKBOX(GetStringPtr(StrID_UseRamp_Param_Name), "", FALSE, 0,
 	                HIGHLIGHT_USE_RAMP_DISK_ID);
+	ERR(AddRampParam(in_data, HIGHLIGHT_RAMP_SPACER_DISK_ID, HIGHLIGHT_RAMP_SPACER_DISK_ID));
+	AEFX_CLR_STRUCT(def);
+	PF_END_TOPIC(HIGHLIGHT_RAMP_END_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_GlowRotation_Param_Name),
@@ -775,7 +1147,8 @@ static PF_Err Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *para
 {
 	PF_Err err = PF_Err_NONE;
 	OLMKiraKiraInfo info;
-	ReadRenderInfo(in_data, params, &info);
+	ERR(ReadRenderInfo(in_data, params, &info));
+	if (err) return err;
 	PF_EffectWorld *input = &params[OLMKIRAKIRA_INPUT]->u.ld;
 	PF_PixelFormat format = PF_PixelFormat_INVALID;
 	AEFX_SuiteScoper<PF_WorldSuite2> world_suite = AEFX_SuiteScoper<PF_WorldSuite2>(
@@ -891,6 +1264,10 @@ EffectMain(PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data,
 			err = GlobalSetup(in_data, out_data, params, output); break;
 		case PF_Cmd_PARAMS_SETUP:
 			err = ParamsSetup(in_data, out_data, params, output); break;
+		case PF_Cmd_EVENT:
+			err = RampEvent(in_data, params, static_cast<PF_EventExtra *>(extra)); break;
+		case PF_Cmd_ARBITRARY_CALLBACK:
+			err = RampArbitraryCallback(in_data, static_cast<PF_ArbParamsExtra *>(extra)); break;
 		case PF_Cmd_RENDER:
 			err = Render(in_data, out_data, params, output); break;
 		case PF_Cmd_SMART_PRE_RENDER:

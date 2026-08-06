@@ -1,0 +1,61 @@
+{
+  "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+  "arbitrary_callback_dispatch": {
+    "new_dispose_copy": "not safe to implement: no recovered selector-to-method dispatch and no proven allocation size/default bytes",
+    "selectors_proven": [],
+    "status": "not_recovered"
+  },
+  "common_registration_arguments": {
+    "default_handle_source": "derived handler virtual slot +0x18 -> 0x18123abf0 writes the local default handle before AddParam",
+    "handler": "effect+0x200 (RampDataHandler)",
+    "param_flags_or": "0x40",
+    "registered_value_handle": 0,
+    "ui_flags_or": "0x82",
+    "ui_height": "0xaa",
+    "ui_width": "0x136"
+  },
+  "handler_lifetime": {
+    "known_slots": {
+      "+0x00": "dispose stored host handle if non-null",
+      "+0x08": "dispose supplied host handle when handler owns one",
+      "+0x18": "default-handle producer invoked during registration; implementation semantics unresolved"
+    },
+    "vtable": "ae_param::RampDataHandler"
+  },
+  "mac": {
+    "num_params": 36,
+    "reason": "PF_ADD_ARBITRARY requires an owned default handle and callback implementation; registering null or fabricated 0x144 bytes would violate the actual ABI.",
+    "rows_registered": 0,
+    "setup_exact": false
+  },
+  "minimum_next_boundary": "Execute EffectMain PF_Cmd_ARBITRARY_CALLBACK with selectors 0..9 under the setup-created RampDataHandler and capture returned handles/sizes/errors.",
+  "rows": [
+    {
+      "disk_id": 19,
+      "handler_offset": "effect+0x200",
+      "param_type": "0x0b PF_Param_ARBITRARY_DATA"
+    },
+    {
+      "disk_id": 21,
+      "handler_offset": "effect+0x200",
+      "param_type": "0x0b PF_Param_ARBITRARY_DATA"
+    },
+    {
+      "disk_id": 23,
+      "handler_offset": "effect+0x200",
+      "param_type": "0x0b PF_Param_ARBITRARY_DATA"
+    },
+    {
+      "disk_id": 36,
+      "handler_offset": "effect+0x200",
+      "param_type": "0x0b PF_Param_ARBITRARY_DATA"
+    },
+    {
+      "disk_id": 25,
+      "handler_offset": "effect+0x200",
+      "param_type": "0x0b PF_Param_ARBITRARY_DATA"
+    }
+  ],
+  "schema": "olmkirakira-ramp-arbitrary-registration-abi/1",
+  "status": "registration_arguments_and_mac_callbacks_grounded"
+}

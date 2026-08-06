@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "kind": "olmkirakira_ramp_ui_render_mac_install_boundary_20260805",
+  "status": "installed_restart_required",
+  "plugin": {
+    "name": "OLMKiraKira",
+    "bundle_identifier": "com.adobe.AfterEffects.OLMKiraKira",
+    "parameter_count": 41,
+    "features": [
+      "arbitrary ramp rows",
+      "ramp draw/add/drag/delete/color event handling",
+      "Mode2 ramp render"
+    ]
+  },
+  "build": {
+    "configuration": "Debug",
+    "bundle": "/Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMKiraKira/Mac/build/Debug/OLMKiraKira.plugin",
+    "binary_sha256": "bf3d050b630a6c9d0f58b9a16262061ebbc2eb96e22ed0fe537e20f8a05e8c1f",
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "signature": "adhoc",
+    "codesign_verify": "pass"
+  },
+  "installation": {
+    "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin",
+    "binary_sha256": "bf3d050b630a6c9d0f58b9a16262061ebbc2eb96e22ed0fe537e20f8a05e8c1f",
+    "source_hash_match": true,
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "codesign_verify": "pass",
+    "visible_bundle_count": 1,
+    "backup": {
+      "path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoff/mac_plugin_backups/mediacore_20260805_olmkirakira_ramp_ui_render/OLMKiraKira.plugin",
+      "binary_sha256": "421f670fdf26cc61170028e4b65709c8232358f4a63a04f46b498b6dd4b96b0a",
+      "architecture": "arm64"
+    }
+  },
+  "host": {
+    "application": "Adobe After Effects 2026",
+    "version": "26.3.0",
+    "build": "26.3.0.87",
+    "pid_at_install": 77384,
+    "process_start": "Wed Aug 5 12:28:22 2026",
+    "macos": "15.7.2 (24G325)",
+    "machine_architecture": "arm64",
+    "stopped_or_restarted": false,
+    "installed_module_resolved_by_vmmap": false
+  },
+  "claim_boundary": {
+    "new_bundle_installed": true,
+    "new_bundle_loaded_by_after_effects": false,
+    "restart_required": true,
+    "live_host_ui_or_render_claimed": false,
+    "required_next_event": "Restart After Effects, then bind vmmap/lsof module identity to the installed SHA-256 before live UI or render validation."
+  }
+}

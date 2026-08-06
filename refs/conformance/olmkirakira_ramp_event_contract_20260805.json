@@ -1,0 +1,667 @@
+{
+  "actual": {
+    "add_boundary": "FUN_181235bb0 internal event 2: single-click inside [10,5,202,55] appends a sampled stop when count < 16, sorts records, and clears selection",
+    "click_drag_dispatch": "RampDataHandler +0x70 -> RampContainer vslot +0x08",
+    "color_boundary": "FUN_181235bb0 internal event 3: marker double-click calls PF AE App Suite v1 PF_AppColorPickerDialog at +0x38 with alpha/RGB, writes the four returned floats, and retains selection on success",
+    "color_cancel_boundary": "picker 0x205 leaves records unchanged and clears selection; outer event still sets flags 9, parameter change 1, invalidates, and returns 0",
+    "color_error_boundary": "non-cancel picker error with unchanged output leaves records and selection unchanged; outer event still sets flags 9, parameter change 1, invalidates, and returns 0",
+    "command": "PF_Cmd_EVENT = 15",
+    "delete_boundary": "FUN_181235bb0 internal event 5: final drag with y-ramp_y >= 0x15 shifts later records left, decrements count, clears selection",
+    "draw_dispatch": "RampDataHandler +0x68 -> RampContainer vslot +0x00",
+    "effect_control_area_offset": "extra+0x54 == 2",
+    "parameter_index_offset": "extra+0x50",
+    "result": "evt_out_flags at extra+0xcc OR 9; parameter change flag OR 1",
+    "synthetic_entrypoint_add": {
+      "changed_offsets": [
+        16,
+        40,
+        41,
+        42,
+        43,
+        52,
+        53,
+        54,
+        55,
+        60,
+        61,
+        62,
+        72,
+        73,
+        74,
+        78,
+        79,
+        82,
+        83,
+        86,
+        87,
+        90,
+        91,
+        94,
+        95,
+        98,
+        99,
+        356,
+        357,
+        358,
+        359
+      ],
+      "click": [
+        100,
+        40
+      ],
+      "count_before_after": [
+        3,
+        4
+      ],
+      "drag": [
+        100,
+        40
+      ],
+      "event_results": [
+        {
+          "click_count": 1,
+          "evt_out_flags": 9,
+          "invalidation_count": 1,
+          "kind": 2,
+          "last": false,
+          "param_change_flags": 1,
+          "rax": 0
+        },
+        {
+          "click_count": 1,
+          "evt_out_flags": 9,
+          "invalidation_count": 2,
+          "kind": 3,
+          "last": true,
+          "param_change_flags": 1,
+          "rax": 0
+        }
+      ],
+      "invalidations": [
+        {
+          "context": "0x0",
+          "rect": "0x40000c08"
+        },
+        {
+          "context": "0x0",
+          "rect": "0x40000cd8"
+        }
+      ],
+      "picker_calls": [],
+      "ramp_rect_before": [
+        10,
+        5,
+        202,
+        55
+      ],
+      "selected_before_after": [
+        0,
+        -1
+      ],
+      "stops_after": [
+        [
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.46875,
+          1.0,
+          1.0,
+          0.39122599363327026,
+          0.0
+        ],
+        [
+          0.7799999713897705,
+          1.0,
+          1.0,
+          0.6510000228881836,
+          0.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "stops_before": [
+        [
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.7799999713897705,
+          1.0,
+          1.0,
+          0.6510000228881836,
+          0.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "ui_state_handle": "0x40000990"
+    },
+    "synthetic_entrypoint_color": {
+      "changed_offsets": [
+        27,
+        30,
+        31,
+        35,
+        38,
+        39
+      ],
+      "click": [
+        10,
+        65
+      ],
+      "count_before_after": [
+        3,
+        3
+      ],
+      "drag": [
+        10,
+        65
+      ],
+      "event_results": [
+        {
+          "click_count": 1,
+          "evt_out_flags": 9,
+          "invalidation_count": 1,
+          "kind": 2,
+          "last": false,
+          "param_change_flags": 1,
+          "rax": 0
+        },
+        {
+          "click_count": 2,
+          "evt_out_flags": 9,
+          "invalidation_count": 2,
+          "kind": 2,
+          "last": false,
+          "param_change_flags": 1,
+          "rax": 0
+        }
+      ],
+      "invalidations": [
+        {
+          "context": "0x0",
+          "rect": "0x40000c08"
+        },
+        {
+          "context": "0x0",
+          "rect": "0x40000cd8"
+        }
+      ],
+      "picker_calls": [
+        {
+          "after": [
+            0.25,
+            0.125,
+            0.5,
+            0.875
+          ],
+          "before": [
+            1.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "input": "0xf0fe948",
+          "output": "0xf0fe948",
+          "title": "Color select",
+          "use_ws_to_monitor": 252700929
+        }
+      ],
+      "ramp_rect_before": [
+        10,
+        5,
+        202,
+        55
+      ],
+      "selected_before_after": [
+        0,
+        0
+      ],
+      "stops_after": [
+        [
+          0.0,
+          0.25,
+          0.125,
+          0.5,
+          0.875
+        ],
+        [
+          0.7799999713897705,
+          1.0,
+          1.0,
+          0.6510000228881836,
+          0.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "stops_before": [
+        [
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.7799999713897705,
+          1.0,
+          1.0,
+          0.6510000228881836,
+          0.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "ui_state_handle": "0x40000990"
+    },
+    "synthetic_entrypoint_color_cancel": {
+      "changed_offsets": [
+        356,
+        357,
+        358,
+        359
+      ],
+      "click": [
+        10,
+        65
+      ],
+      "count_before_after": [
+        3,
+        3
+      ],
+      "drag": [
+        10,
+        65
+      ],
+      "event_results": [
+        {
+          "click_count": 1,
+          "evt_out_flags": 9,
+          "invalidation_count": 1,
+          "kind": 2,
+          "last": false,
+          "param_change_flags": 1,
+          "rax": 0
+        },
+        {
+          "click_count": 2,
+          "evt_out_flags": 9,
+          "invalidation_count": 2,
+          "kind": 2,
+          "last": false,
+          "param_change_flags": 1,
+          "rax": 0
+        }
+      ],
+      "invalidations": [
+        {
+          "context": "0x0",
+          "rect": "0x40000c08"
+        },
+        {
+          "context": "0x0",
+          "rect": "0x40000cd8"
+        }
+      ],
+      "picker_calls": [
+        {
+          "after": [
+            0.25,
+            0.125,
+            0.5,
+            0.875
+          ],
+          "before": [
+            1.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "input": "0xf0fe948",
+          "output": "0xf0fe948",
+          "title": "Color select",
+          "use_ws_to_monitor": 252700929
+        }
+      ],
+      "ramp_rect_before": [
+        10,
+        5,
+        202,
+        55
+      ],
+      "selected_before_after": [
+        0,
+        -1
+      ],
+      "stops_after": [
+        [
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.7799999713897705,
+          1.0,
+          1.0,
+          0.6510000228881836,
+          0.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "stops_before": [
+        [
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.7799999713897705,
+          1.0,
+          1.0,
+          0.6510000228881836,
+          0.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "ui_state_handle": "0x40000990"
+    },
+    "synthetic_entrypoint_color_error": {
+      "changed_offsets": [],
+      "click": [
+        10,
+        65
+      ],
+      "count_before_after": [
+        3,
+        3
+      ],
+      "drag": [
+        10,
+        65
+      ],
+      "event_results": [
+        {
+          "click_count": 1,
+          "evt_out_flags": 9,
+          "invalidation_count": 1,
+          "kind": 2,
+          "last": false,
+          "param_change_flags": 1,
+          "rax": 0
+        },
+        {
+          "click_count": 2,
+          "evt_out_flags": 9,
+          "invalidation_count": 2,
+          "kind": 2,
+          "last": false,
+          "param_change_flags": 1,
+          "rax": 0
+        }
+      ],
+      "invalidations": [
+        {
+          "context": "0x0",
+          "rect": "0x40000c08"
+        },
+        {
+          "context": "0x0",
+          "rect": "0x40000cd8"
+        }
+      ],
+      "picker_calls": [
+        {
+          "after": [
+            0.25,
+            0.125,
+            0.5,
+            0.875
+          ],
+          "before": [
+            1.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "input": "0xf0fe948",
+          "output": "0xf0fe948",
+          "title": "Color select",
+          "use_ws_to_monitor": 252700929
+        }
+      ],
+      "ramp_rect_before": [
+        10,
+        5,
+        202,
+        55
+      ],
+      "selected_before_after": [
+        0,
+        0
+      ],
+      "stops_after": [
+        [
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.7799999713897705,
+          1.0,
+          1.0,
+          0.6510000228881836,
+          0.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "stops_before": [
+        [
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.7799999713897705,
+          1.0,
+          1.0,
+          0.6510000228881836,
+          0.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "ui_state_handle": "0x40000990"
+    },
+    "synthetic_entrypoint_delete": {
+      "changed_offsets": [
+        16,
+        20,
+        21,
+        22,
+        23,
+        32,
+        33,
+        34,
+        35,
+        40,
+        41,
+        42,
+        52,
+        53,
+        54,
+        58,
+        59,
+        356,
+        357,
+        358,
+        359
+      ],
+      "click": [
+        10,
+        65
+      ],
+      "count_before_after": [
+        3,
+        2
+      ],
+      "drag": [
+        30,
+        80
+      ],
+      "event_results": [
+        {
+          "click_count": 1,
+          "evt_out_flags": 9,
+          "invalidation_count": 1,
+          "kind": 2,
+          "last": false,
+          "param_change_flags": 1,
+          "rax": 0
+        },
+        {
+          "click_count": 1,
+          "evt_out_flags": 9,
+          "invalidation_count": 2,
+          "kind": 3,
+          "last": true,
+          "param_change_flags": 1,
+          "rax": 0
+        }
+      ],
+      "invalidations": [
+        {
+          "context": "0x0",
+          "rect": "0x40000c08"
+        },
+        {
+          "context": "0x0",
+          "rect": "0x40000cd8"
+        }
+      ],
+      "picker_calls": [],
+      "ramp_rect_before": [
+        10,
+        5,
+        202,
+        55
+      ],
+      "selected_before_after": [
+        0,
+        -1
+      ],
+      "stops_after": [
+        [
+          0.7799999713897705,
+          1.0,
+          1.0,
+          0.6510000228881836,
+          0.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "stops_before": [
+        [
+          0.0,
+          1.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.7799999713897705,
+          1.0,
+          1.0,
+          0.6510000228881836,
+          0.0
+        ],
+        [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "ui_state_handle": "0x40000990"
+    },
+    "value_handle_offset": "PF_ParamDef+0x48"
+  },
+  "host_gate": "Live AE Drawbot/context and continuous mouse delivery are not claimed until real-host interaction is captured.",
+  "native": {
+    "add": "single-click in the gradient inserts an alpha-1 stop with sampled RGB, sorts records, and clears continue_refcon",
+    "click": "nearest stop stored in continue_refcon[0], send_drag=true",
+    "color": "marker double-click invokes PF_AppColorPickerDialog and replaces only alpha/RGB while preserving position and selection",
+    "color_returns": "success updates color and keeps selection; cancel keeps record and clears selection; other error keeps both record and selection; all handled events set change/update flags and invalidate",
+    "delete": "final drag below the ramp erases the selected stop, shifts records, and clears continue_refcon",
+    "drag": "position clamped between neighboring stops; change flag and invalidate",
+    "draw": "Drawbot gradient plus stop markers",
+    "synthetic": "selection, drag, both clamps, erase/shift, sampled insert/sort, marker hit, alpha/RGB replacement, cancel, and error pass"
+  },
+  "schema": "olmkirakira-ramp-event-contract/5",
+  "status": "actual_stop_add_delete_color_return_boundaries_grounded_native_synthetic_green"
+}

@@ -1,0 +1,28 @@
+{
+  "schema": "olmkirakira-mode4-production-boundary/1",
+  "date": "2026-08-05",
+  "status": "exact_rotated_scalar_chain_fixture",
+  "actual_aex": {
+    "binary_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "entry": "FUN_181150790 Mode4 CV_32FC1 scalar path",
+    "fixture": "9x7 radius=5",
+    "input_source": "synthetic source Mat passed to the actual helper",
+    "output_source": "actual helper final destination after forward warp, recurrence, and inverse warp",
+    "stages": ["forward_warp", "scalar_recurrence", "inverse_warp"],
+    "float_words_compared_per_stage": 63,
+    "bit_exact": true
+  },
+  "core": "core/kirakira_mode4.h::mode4_rotated_scalar_chain",
+  "production": "mac/OLMKiraKira/OLMKiraKira.cpp::RotatedAxisBoxBlur blur_mode==4",
+  "verification": {
+    "focused": "PASS_OLMKIRAKIRA_MODE4_PRODUCTION_BOUNDARY_20260805",
+    "kirakira_lane": "PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=1",
+    "universal_build": true,
+    "codesign_strict": true
+  },
+  "limits": [
+    "This closes the complete synthetic helper chain through its final CV_32FC1 destination, not the caller's centered crop or typed PF writer.",
+    "No live AE or Windows host equivalence is claimed.",
+    "The multi-channel recurrence branch is not covered because production uses CV_32FC1 scalar buffers."
+  ]
+}

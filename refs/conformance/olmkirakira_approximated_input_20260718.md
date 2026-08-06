@@ -1,6 +1,6 @@
 # OLMKiraKira Approximated Input contract audit (2026-07-18)
 
-Status: **binary_grounded_runtime_boundary_before_resize**
+Status: **implemented_binary_grounded_pending_ae_differential**
 AE exact: **false**
 
 ## Determined contract
@@ -30,7 +30,10 @@ evidence that the resize branch is absent.
 
 `python3 tools/emulation/audit_olmkirakira_approximated_input_20260718.py`
 
-No production plugin source was edited. The next implementation step, if taken,
-should be an isolated resize primitive using OpenCV 4.5.5 `INTER_NEAREST` and
-explicit dsize, followed by a real Windows/Mac AE differential. This report does
-not authorize changing the production plugin by itself.
+The Mac production path implements the grounded branch with explicit
+nearest-neighbor down/up resize, truncated half dimensions and effective ray
+lengths, and compose at working resolution. The focused source contract and
+arm64 build pass. This is still not `AE exact`: the next gate is a matching
+Windows/Mac AE Software differential with Approximated Input enabled.
+
+`python3 tests/test_olmkirakira_approximated_input_resize_contract_20260718.py`

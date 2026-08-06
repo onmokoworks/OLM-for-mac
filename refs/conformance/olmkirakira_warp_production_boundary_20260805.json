@@ -1,0 +1,26 @@
+{
+  "schema": "olmkirakira-warp-production-boundary/1",
+  "date": "2026-08-05",
+  "status": "exact_forward_warp_fixture",
+  "actual_aex": {
+    "report": "refs/conformance/olmkirakira_mode3_forward_warp_contract_actual_aex_20260713.json",
+    "wrapper": "FUN_181297ac0",
+    "fixture": "CV_32FC1 9x7 center=(4.5,3.5) angle=5 degrees",
+    "interpolation": "linear",
+    "border": "constant zero",
+    "float_words_compared": 63,
+    "bit_exact": true
+  },
+  "core": "core/kirakira_warp.h::warp_get_rotation_matrix_2d",
+  "production": "mac/OLMKiraKira/OLMKiraKira.cpp::WarpGetRotDirect",
+  "usage": "The shared primitive is used by both forward and inverse rotations in RotatedAxisBoxBlur.",
+  "verification": {
+    "focused": "PASS_OLMKIRAKIRA_WARP_PRODUCTION_BOUNDARY_20260805",
+    "kirakira_lane": "PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=1"
+  },
+  "limits": [
+    "The captured exact fixture is the forward rotation; inverse rotation uses the same production primitive but does not yet have an independent actual-AEX bit fixture.",
+    "Centered ROI/crop and final typed writer are outside this boundary.",
+    "No live AE or Windows-host claim is made."
+  ]
+}

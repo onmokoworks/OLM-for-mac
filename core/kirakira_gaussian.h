@@ -7,10 +7,9 @@
 
 namespace olm::kirakira {
 
-// Standalone diagnostic primitive for the recovered CV_32FC1 Gaussian contract
-// (Size(0, 1), length * 0.5, borderType=BORDER_DEFAULT). It is intentionally
-// not wired into either production renderer: the live Windows return still
-// disagrees with this primitive and the pinned OpenCV oracle.
+// Recovered CV_32FC1 Gaussian primitive
+// (Size(0, 1), length * 0.5, borderType=BORDER_DEFAULT). Production use is
+// deliberately bounded to cases backed by an exact actual-AEX fixture.
 // Workspace ownership makes repeated calls reusable.
 class HorizontalGaussian {
 public:
@@ -52,6 +51,16 @@ public:
         radius_ = length * 2;
         kernel_.assign(static_cast<std::size_t>(radius_ * 2 + 1),
                        1.0f / static_cast<float>(radius_ * 2 + 1));
+        actual_aex_profile_ = true;
+        return true;
+    }
+
+    // The CRT-initialized x86 AEX uses the ordinary Gaussian coefficients but
+    // its generic 21-tap row body rounds every multiply and add separately.
+    bool prepare_actual_aex_nonfused(int length)
+    {
+        if (!prepare(length))
+            return false;
         actual_aex_profile_ = true;
         return true;
     }

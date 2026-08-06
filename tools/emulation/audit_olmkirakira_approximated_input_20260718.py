@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Audit OLMKiraKira Approximated Input without changing production code.
+"""Audit OLMKiraKira Approximated Input and its grounded Mac implementation.
 
 The checked-in Windows AEX is inspected statically and then exercised through
 the existing bounded common-owner harness with the checkbox enabled in memory.
@@ -24,6 +24,7 @@ REPORT = ROOT / "refs/conformance/olmkirakira_approximated_input_20260718.json"
 REPORT_MD = ROOT / "refs/conformance/olmkirakira_approximated_input_20260718.md"
 OWNER = ROOT / "tools/emulation/test_olmkirakira_mode2_common_owner_20260717.py"
 RESIZE = 0x1812639F0
+MAC_SOURCE = ROOT / "mac/OLMKiraKira/OLMKiraKira.cpp"
 
 
 def require(text: str, needles: list[str], label: str) -> None:
@@ -142,15 +143,33 @@ def main() -> int:
     }
 
     runtime = bounded_actual_run()
+    mac_source = MAC_SOURCE.read_text(encoding="utf-8")
+    implementation_needles = [
+        "info.approximated_input && render_scale_ratio > 0.5",
+        "std::max<A_long>(1, w / 2)",
+        "std::max<A_long>(1, h / 2)",
+        "render_scale_ratio * 0.5",
+        "(A_long)((double)value * length_scale)",
+        "ResizeNearestRGBA(source_pixels, w, h, work_w, work_h)",
+        "ResizeNearestRGBA(composed, work_width, work_height, w, h)",
+    ]
+    implementation_present = all(needle in mac_source for needle in implementation_needles)
     report = {
         "schema": 1,
         "kind": "olmkirakira_approximated_input_contract_audit",
         "date": "2026-07-18",
-        "status": "binary_grounded_runtime_boundary_before_resize" if not runtime["resize_entry_reached"] else "binary_grounded_runtime_resize_entry_captured",
+        "status": ("implemented_binary_grounded_pending_ae_differential" if implementation_present
+                   else ("binary_grounded_runtime_boundary_before_resize" if not runtime["resize_entry_reached"]
+                         else "binary_grounded_runtime_resize_entry_captured")),
         "ae_exact_claim": False,
         "binary": str(AEX.relative_to(ROOT)),
         "binary_sha256": hashlib.sha256(AEX.read_bytes()).hexdigest(),
         "static_contract": static,
+        "mac_implementation": {
+            "path": str(MAC_SOURCE.relative_to(ROOT)),
+            "contract_present": implementation_present,
+            "source_sha256": hashlib.sha256(MAC_SOURCE.read_bytes()).hexdigest(),
+        },
         "runtime": runtime,
         "fact": [
             "The gate is strict render-scale ratio > 0.5; ratio <= 0.5 clears the checkbox state.",
@@ -158,13 +177,14 @@ def main() -> int:
             "Both pre- and post-resize calls pass explicit dsize values and a final interpolation literal of 0.",
             "FUN_1812639f0 is the OpenCV 4.5.5 resize wrapper and FUN_181263fb0 is its resize implementation path.",
             "The bounded actual-AEX owner run enabled the checkbox in memory and stopped at an existing FilterEngine assertion before the resize entry.",
+            "The Mac production source implements the statically grounded nearest-neighbor half-resolution branch." if implementation_present else "The Mac production source does not yet implement the complete grounded branch.",
         ],
         "inference": [
             "OpenCV INTER_NEAREST is the typed-owner interpolation contract because the last call argument is literal 0.",
             "Alpha follows ordinary per-channel nearest-neighbor copy for the typed Mat; there is no plugin-level alpha conversion in the wrapper.",
         ],
         "limits": [
-            "No production plugin source was changed.",
+            "This audit does not modify production source; it verifies the current checked-in implementation.",
             "The bounded owner harness did not reach FUN_1812639f0, so runtime resize output pixels were not claimed.",
             "The static contract does not by itself prove Mac AE exactness.",
         ],
@@ -202,10 +222,13 @@ evidence that the resize branch is absent.
 
 `python3 tools/emulation/audit_olmkirakira_approximated_input_20260718.py`
 
-No production plugin source was edited. The next implementation step, if taken,
-should be an isolated resize primitive using OpenCV 4.5.5 `INTER_NEAREST` and
-explicit dsize, followed by a real Windows/Mac AE differential. This report does
-not authorize changing the production plugin by itself.
+The Mac production path implements the grounded branch with explicit
+nearest-neighbor down/up resize, truncated half dimensions and effective ray
+lengths, and compose at working resolution. The focused source contract and
+arm64 build pass. This is still not `AE exact`: the next gate is a matching
+Windows/Mac AE Software differential with Approximated Input enabled.
+
+`python3 tests/test_olmkirakira_approximated_input_resize_contract_20260718.py`
 """, encoding="utf-8")
     print(json.dumps({"status": report["status"], "interpolation": static["interpolation"], "resize_entry_reached": runtime["resize_entry_reached"], "report": str(REPORT)}))
     return 0

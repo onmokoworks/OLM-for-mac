@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "kind": "olmkirakira_mismatched_interpolation_mac_reinstall_20260805",
+  "status": "installed_ready_for_next_launch",
+  "after_effects_running_before_install": false,
+  "after_effects_running_after_install": false,
+  "build": {
+    "bundle": "/Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMKiraKira/Mac/build/Debug/OLMKiraKira.plugin",
+    "binary_sha256": "0b9eb76250cf6301a60a972d1705fe1cc853f8238303335815aa3333f8f1d05e",
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "codesign_strict_verify": "pass"
+  },
+  "installation": {
+    "bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin",
+    "binary_sha256": "0b9eb76250cf6301a60a972d1705fe1cc853f8238303335815aa3333f8f1d05e",
+    "source_hash_match": true,
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "codesign_strict_verify": "pass",
+    "visible_olmkirakira_bundle_count": 1
+  },
+  "recoverable_backup": {
+    "bundle": "/Users/onmk/Documents/Projects/Personal/OLM as/handoff/mac_plugin_backups/mediacore_20260805_olmkirakira_before_mismatched_interp/OLMKiraKira.plugin",
+    "binary_sha256": "bf3d050b630a6c9d0f58b9a16262061ebbc2eb96e22ed0fe537e20f8a05e8c1f"
+  },
+  "claim_boundary": {
+    "installed_bundle_verified": true,
+    "loaded_by_after_effects": false,
+    "live_host_result_claimed": false,
+    "commit_created": false
+  }
+}

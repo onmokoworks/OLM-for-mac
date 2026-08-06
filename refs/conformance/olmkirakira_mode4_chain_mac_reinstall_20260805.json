@@ -1,0 +1,13 @@
+{
+  "schema": "olmkirakira-mac-reinstall/1",
+  "date": "2026-08-05",
+  "reason": "actual-exact Mode4 forward-warp recurrence inverse-warp helper chain",
+  "after_effects_running_before": false,
+  "after_effects_running_after": false,
+  "installed": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin",
+  "backup": "handoff/mac_plugin_backups/mediacore_20260805_olmkirakira_before_mode4_full_helper_chain/OLMKiraKira.plugin",
+  "binary_sha256": "0350cdd96100754dc77e43abb2da031c4d5865f3b94d8d1df51a7306bcf24dd5",
+  "architectures": ["x86_64", "arm64"],
+  "codesign_strict": true,
+  "visible_bundle_count": 1
+}

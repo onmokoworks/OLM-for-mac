@@ -29,10 +29,9 @@ class OLMKiraKiraSurfaceContractTests(unittest.TestCase):
         self.assertEqual(
             counts,
             {
-                "mapped_plugin_surface": 25,
+                "mapped_plugin_surface": 30,
                 "shared_builtin_passthrough": 2,
                 "unmappable_custom_ramp_payload_row": 5,
-                "unmappable_missing_ramp_row": 5,
                 "unmappable_windows_group_separator": 5,
             },
         )
@@ -43,7 +42,7 @@ class OLMKiraKiraSurfaceContractTests(unittest.TestCase):
             self.mapping_by_match,
         )
         self.assertEqual(result["status"], "unmappable")
-        self.assertEqual(result["code"], "missing_ramp_row_present")
+        self.assertEqual(result["code"], "unmappable_row_present")
 
     def test_mapped_rows_are_accepted_by_match_name(self) -> None:
         request_rows = [
@@ -67,6 +66,13 @@ class OLMKiraKiraSurfaceContractTests(unittest.TestCase):
         self.assertEqual(result["code"], "index_only_request_rejected")
         self.assertEqual(result["accepted_count"], 0)
         self.assertEqual(result["rejected_count"], 4)
+
+    def test_custom_ramp_ui_is_declared_to_the_host(self) -> None:
+        source = (ROOT / "mac/OLMKiraKira/OLMKiraKira.cpp").read_text()
+        pipl = (ROOT / "mac/OLMKiraKira/OLMKiraKiraPiPL.r").read_text()
+        self.assertIn("def.ui_flags = PF_PUI_CONTROL", source)
+        self.assertIn("out_data->out_flags  = 0x02008040;", source)
+        self.assertIn("AE_Effect_Global_OutFlags { 0x02008040 }", pipl)
 
 
 if __name__ == "__main__":

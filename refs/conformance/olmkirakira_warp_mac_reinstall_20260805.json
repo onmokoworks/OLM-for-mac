@@ -1,0 +1,13 @@
+{
+  "schema": "olmkirakira-mac-reinstall/1",
+  "date": "2026-08-05",
+  "reason": "shared actual-exact rotation warp production integration",
+  "after_effects_running_before": false,
+  "after_effects_running_after": false,
+  "installed": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin",
+  "backup": "handoff/mac_plugin_backups/mediacore_20260805_olmkirakira_before_shared_warp/OLMKiraKira.plugin",
+  "binary_sha256": "ccc5b41eaf13f544376a77563bed67d63f5bd9d737c5f1848bd399c5b0b08fd9",
+  "architectures": ["x86_64", "arm64"],
+  "codesign_strict": true,
+  "visible_bundle_count": 1
+}

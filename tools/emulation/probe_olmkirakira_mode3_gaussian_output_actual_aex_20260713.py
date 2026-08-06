@@ -115,6 +115,9 @@ class ContinuingAexLoader(ORIGINAL_LOADER):
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--aex-path", type=Path, default=BASE.DEFAULT_AEX)
+    parser.add_argument("--width", type=int, default=9)
+    parser.add_argument("--height", type=int, default=7)
+    parser.add_argument("--length", type=int, default=5)
     parser.add_argument("--output-json", type=Path, default=DEFAULT_JSON)
     parser.add_argument("--output-md", type=Path, default=DEFAULT_MD)
     parser.add_argument("--max-instructions", type=int, default=50_000_000)
@@ -150,9 +153,9 @@ def main() -> int:
     BASE.mat_header = body_compatible_mat_header
     base_args = argparse.Namespace(
         aex_path=args.aex_path,
-        width=9,
-        height=7,
-        length=5,
+        width=args.width,
+        height=args.height,
+        length=args.length,
         sigma=0.0,
         output_json=args.output_json,
         output_md=args.output_md,
@@ -170,7 +173,8 @@ def main() -> int:
     returned = CONTINUATION["return_hits"][-1] if CONTINUATION["return_hits"] else None
     output = returned["output_array_after"] if returned else None
     words = output.get("mat", {}).get("words_u32", []) if output else []
-    status = "captured" if len(words) == 63 else "blocked"
+    expected_word_count = args.width * args.height
+    status = "captured" if len(words) == expected_word_count else "blocked"
     report = {
         "schema": "olmkirakira-mode3-gaussian-output-actual-aex/1",
         "status": status,
@@ -179,21 +183,23 @@ def main() -> int:
             "The output capture point is the caller instruction at 0x181151105 immediately after the Gaussian call returns.",
         ],
         "INFERENCE": [
-            "Captured words are promoted to the primary oracle only when the caller return hook is reached and exactly 63 CV_32FC1 words decode.",
+            "Captured words are promoted to the primary oracle only when the caller return hook is reached and exactly width*height CV_32FC1 words decode.",
         ],
         "execution": {
             "aex": str(args.aex_path),
             "aex_sha256": base_report.get("aex_sha256"),
             "entry": hex(BASE.FUN_GAUSSIAN),
             "caller_return": hex(CALLER_RETURN),
-            "input_shape": [7, 9],
+            "input_shape": [args.height, args.width],
             "input_nonzero": True,
-            "length": 5,
-            "sigma_x": 2.5,
+            "length": args.length,
+            "sigma_x": args.length * 0.5,
             "base_status": base_report.get("status"),
             "entry_hit_count": len(CONTINUATION["entry_hits"]),
             "return_hit_count": len(CONTINUATION["return_hits"]),
         },
+        "process_attach_diagnostic": base_report.get("process_attach_diagnostic"),
+        "manual_crt_initializers_diagnostic": base_report.get("manual_crt_initializers_diagnostic"),
         "entry_capture": CONTINUATION["entry_hits"],
         "output_capture": returned,
         "called_imports": called_imports,

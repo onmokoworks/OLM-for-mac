@@ -1,0 +1,87 @@
+{
+  "dispatcher": "entry_point command 0x16 -> MyEffect vslot +0x40 (FUN_181151ae0)",
+  "mac": "Canonical version/count/active-records/zero-tail representation implemented with five rows.",
+  "numeric_selector_to_slot": {
+    "0": "+0x18",
+    "1": "+0x08",
+    "10": "+0x60",
+    "2": "+0x20",
+    "3": "+0x38",
+    "4": "+0x28",
+    "5": "+0x30",
+    "6": "+0x48",
+    "7": "+0x40",
+    "8": "+0x50",
+    "9": "+0x58"
+  },
+  "schema": "olmkirakira-ramp-derived-vtable-contract/1",
+  "slots": [
+    {
+      "behavior": "handler-owned handle cleanup",
+      "offset": "+0x00",
+      "target": "0x1812327b0"
+    },
+    {
+      "behavior": "supplied handle dispose path",
+      "offset": "+0x08",
+      "target": "0x181232860"
+    },
+    {
+      "behavior": "allocate and initialize 0x15c handler-owned UI state",
+      "offset": "+0x10",
+      "target": "0x18123aa70"
+    },
+    {
+      "behavior": "NEW/default: allocate and initialize 0x260 arbitrary handle",
+      "offset": "+0x18",
+      "target": "0x18123abf0"
+    },
+    {
+      "behavior": "COPY: allocate destination via +0x18 and copy source state",
+      "offset": "+0x20",
+      "target": "0x18123ace0"
+    },
+    {
+      "behavior": "FLATTEN-like: copy handle ramp payload into flat state",
+      "offset": "+0x28",
+      "target": "0x18123ae70"
+    },
+    {
+      "behavior": "UNFLATTEN-like: allocate via +0x18 and restore flat state",
+      "offset": "+0x30",
+      "target": "0x18123b270"
+    },
+    {
+      "behavior": "FLAT_SIZE: write 0x145",
+      "offset": "+0x38",
+      "target": "0x18123b460"
+    },
+    {
+      "behavior": "COMPARE: lock two handles and write equal/not-equal result",
+      "offset": "+0x40",
+      "target": "0x18123b470"
+    },
+    {
+      "behavior": "INTERPOLATE: allocate destination and blend two ramp payloads",
+      "offset": "+0x48",
+      "target": "0x18123b660"
+    },
+    {
+      "behavior": "PRINT_SIZE: returns zero",
+      "offset": "+0x50",
+      "target": "0x181232910"
+    },
+    {
+      "behavior": "PRINT: no-op",
+      "offset": "+0x58",
+      "target": "0x181232920"
+    },
+    {
+      "behavior": "SCAN: no-op",
+      "offset": "+0x60",
+      "target": "0x181232930"
+    }
+  ],
+  "status": "method_behaviors_and_effectmain_numeric_selector_switch_grounded",
+  "vtable": "0x18148d818"
+}

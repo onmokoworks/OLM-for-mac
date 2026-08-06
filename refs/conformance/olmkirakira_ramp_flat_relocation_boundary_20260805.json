@@ -1,0 +1,69 @@
+{
+  "canonical_flat_sha256": "6c9c01a94e021b281279b42487219ab901d72e5516876c0d1a8cde83f6b2f477",
+  "conclusion": "All relocation differences are in the ignored tail. Actual UNFLATTEN accepts canonical zero-fill and tainted tails, compares equal, and produces bit-exact Mode2 output.",
+  "mac_registration": "canonical deterministic serializer contract is green",
+  "raw_blob_difference_offsets": [
+    321
+  ],
+  "raw_blob_difference_spans": [
+    {
+      "end": 321,
+      "start": 321
+    }
+  ],
+  "runs": [
+    {
+      "difference_from_source_inline": [
+        279,
+        280,
+        281,
+        282,
+        283,
+        322
+      ],
+      "flat_sha256": "f52ad443b45b07d252a2e7d35c1e7f9ff87e2c0896297f3bb7f2dc6a674bc237",
+      "preallocated_host_bytes": 0
+    },
+    {
+      "difference_from_source_inline": [
+        279,
+        280,
+        281,
+        282,
+        283,
+        320,
+        322
+      ],
+      "flat_sha256": "69a2c24424e7d579bcce57f34604337a5e541847ac9a75f3ad65fa26402f3be9",
+      "preallocated_host_bytes": 12288
+    }
+  ],
+  "schema": "olmkirakira-ramp-flat-relocation-boundary/1",
+  "status": "canonical_pointer_free_wire_accepted_semantics_and_mode2_stable",
+  "taint_patterns": [
+    "zero",
+    "0xA5",
+    "allocation-derived byte pattern"
+  ],
+  "wire_fields": {
+    "active_records": {
+      "count": 3,
+      "offset": 5,
+      "record_size": 20
+    },
+    "count": {
+      "offset": 1,
+      "size": 4,
+      "value": 3
+    },
+    "ignored_tail": {
+      "offset": 65,
+      "size": 260
+    },
+    "version": {
+      "offset": 0,
+      "size": 1,
+      "value": 1
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "actual_aex_probe": {
+    "handle_data_bytes": null,
+    "handle_data_sha256": null,
+    "imports": [
+      {
+        "args": [
+          "0x0",
+          "0x0",
+          "0x0",
+          "0x0"
+        ],
+        "dll": "VCRUNTIME140.dll",
+        "name": "_purecall",
+        "ret": "0x0"
+      }
+    ],
+    "instructions": 2,
+    "pf_handle_suite_callbacks": [],
+    "requested_size": null
+  },
+  "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+  "aexcompat_gap": null,
+  "arbitrary_selector_dispatch": {
+    "copy": "unresolved",
+    "dispose": "unresolved",
+    "mapping": [],
+    "new": "unresolved"
+  },
+  "consequence": [
+    "This is the base ArbitraryDataHandler vtable installed transiently by FUN_181232790.",
+    "FUN_1811513a0 overwrites effect+0x200 with the derived RampDataHandler vtable 0x18148d818 before ParamsSetup.",
+    "Therefore this purecall thunk is not reached by the actual ramp registration caller and is not an AEXCompat gap."
+  ],
+  "fake_payload": false,
+  "mac_num_params": 36,
+  "resolution": {
+    "default_handle_slot": "0x1814d66e0",
+    "iat": "0x181485518",
+    "import": "VCRUNTIME140.dll!_purecall",
+    "ramp_handler_vtable": "0x1814d66c8",
+    "slot_target": "0x18132d5e8",
+    "thunk_bytes": "ff252a7f1500"
+  },
+  "schema": "olmkirakira-ramp-default-purecall-boundary/1",
+  "setup_exact": false,
+  "status": "base_vtable_only_not_actual_caller"
+}

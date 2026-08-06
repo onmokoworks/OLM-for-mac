@@ -114,6 +114,10 @@ def main() -> int:
         "checkout(OLMKIRAKIRA_HIGHLIGHT_RADIUS, &p)",
         "params[OLMKIRAKIRA_APPROX_INPUT]->u.bd.value",
         "checkout(OLMKIRAKIRA_APPROX_INPUT, &p)",
+        "const bool use_approximated_input = info.approximated_input && render_scale_ratio > 0.5",
+        "ResizeNearestRGBA(source_pixels, w, h, work_w, work_h)",
+        "glow_full = ResizeNearestRGBA(glow, work_width, work_height, w, h)",
+        "output_pixels = ResizeNearestRGBA(composed, work_width, work_height, w, h)",
         "if (fade_threshold < value)",
         "highlight_radius * 2 + 1",
         "AddColoredUnion(glow, highlight, info.highlight_color, scale);",
@@ -159,9 +163,9 @@ def main() -> int:
             },
             "Approximated Input": {
                 "disk_id": 10, "reader": "FUN_181153d70 boolean -> state+0x50",
-                "semantics": "when render scale is above 0.5, halves working dimensions and lengths, linearly resizes before processing, then resizes back; disabled at scale <= 0.5",
-                "mac": "checked out and retained in render info; non-identity OpenCV resize remains deliberately unwired",
-                "blocked_boundary": "no local independent oracle for non-identity FUN_1812639f0 resize/writeback",
+                "semantics": "when render scale is above 0.5, halves working dimensions and lengths, nearest-neighbor resizes before processing, then resizes back; disabled at scale <= 0.5",
+                "mac": "source-wired to a binary-shaped half-resolution nearest-neighbor path in standard and smart render; Mac/Windows AE behavior is behaviorally unvalidated",
+                "behavioral_validation": "pending Mac/Windows AE differential for non-identity resize/writeback",
             },
         },
         "fact": [
@@ -173,7 +177,7 @@ def main() -> int:
         ],
         "inference": [
             "The Mac Mode 1/2 highlight primitive uses the existing portable box scaffold; this wiring does not claim OpenCV byte equivalence.",
-            "Approximated Input cannot be completed safely until non-identity resize semantics have an independent local or Windows oracle.",
+            "Approximated Input is source-wired to the binary-shaped nearest-neighbor path, but its Mac/Windows AE behavior remains unvalidated pending differential evidence.",
         ],
     }
     REPORT_JSON.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
@@ -188,13 +192,13 @@ AE exact: **false**
 | --- | --- | --- |
 | Fade Out | Disk 27 is a float. `FUN_18114e860` multiplies it by `{fade_scale:.9g}` and Channel 2/4 use it as the knee threshold in `FUN_1811501b0`. | Standard and Smart reads plus the proven Channel 2/4 seed branches are wired. |
 | Highlight Radius | Disk 6 is an integer fifth layer. Radius `r` becomes `(2r+1) x (2r+1)`; Mode 1 uses one box pass and Mode 2 uses three. | Mode 1/2 are wired to the existing portable isotropic box scaffold and Highlight Color. Mode 3/4 remain unresolved. |
-| Approximated Input | Disk 10 controls a half-resolution pre/post-resize branch when render scale is above `{approx_scale}`. | Standard and Smart reads retain the flag, but non-identity resize is deliberately not implemented without an independent oracle. |
+| Approximated Input | Disk 10 controls a half-resolution pre/post-resize branch when render scale is above `{approx_scale}`; the recovered path uses explicit-dsize `INTER_NEAREST` downsample/upscale. | Standard and Smart render are source-wired to a binary-shaped nearest-neighbor path; Mac/Windows AE behavior is behaviorally unvalidated pending differential. |
 
 ## Evidence boundary
 
 The manifest facts come from the 2026-06-29 fresh Windows defaults/ranges captures. Reader offsets and branches are grounded in `FUN_18114e860`, the three typed owners, `FUN_18114f4a0`, and their checked-in assembly. This change does not use PNG tuning and does not claim AE exactness.
 
-`Approximated Input` remains the sole blocked implementation boundary in this three-parameter task: the repository only has a same-shape resize detour, while this path requires non-identity OpenCV resize plus writeback.
+`Approximated Input` is no longer an unwired source boundary: the current Mac source wires the half-resolution nearest-neighbor downsample/upscale shape in both render paths. The implementation is binary-shaped but behaviorally unvalidated pending a Mac/Windows AE differential for non-identity resize and writeback.
 
 ## Re-run
 
@@ -202,8 +206,8 @@ The manifest facts come from the 2026-06-29 fresh Windows defaults/ranges captur
 """, encoding="utf-8")
     print("PASS_OLMKIRAKIRA_UNCONSUMED_PARAMETER_BINARY_AUDIT")
     print(json.dumps({"status": report["status"], "ae_exact": False,
-                      "wired": ["Fade Out", "Highlight Radius"],
-                      "blocked": ["Approximated Input"]}))
+                      "wired": ["Fade Out", "Highlight Radius", "Approximated Input"],
+                      "behaviorally_unvalidated": ["Approximated Input"]}))
     return 0
 
 
