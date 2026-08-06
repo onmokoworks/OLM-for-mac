@@ -138,6 +138,9 @@
             } else {
                 try {
                     var png = new File(pngFolder.fsName + "/" + spec.name + ".png");
+                    if (png.exists && !png.remove()) {
+                        throw new Error("could not remove stale PNG before render: " + png.fsName);
+                    }
                     comp.saveFrameToPng(0.0, png);
                     if (waitForFile(png, 20, 250)) {
                         entry.render_succeeded = true;
