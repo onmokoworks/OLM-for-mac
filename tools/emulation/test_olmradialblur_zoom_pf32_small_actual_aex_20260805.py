@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Independent PF32 Zoom small-frame actual-AEX/production fixture."""
 
-import hashlib, json, struct, subprocess
+import json, struct, subprocess
 import test_olmradialblur_zoom_pf8_small_actual_aex_20260805 as fixture
+from olm_installed_identity import MANIFEST, ROOT, verified_binary
 
 fixture.FIXTURE = fixture.ROOT / "refs/fixtures/olmradialblur_zoom_pf32_small_20260805"
 fixture.REPORT = fixture.ROOT / "refs/conformance/olmradialblur_zoom_pf32_small_actual_aex_20260805.json"
@@ -49,21 +50,23 @@ fixture.source_frame = source_frame
 def main():
     code = fixture.main()
     report = json.loads(fixture.REPORT.read_text())
-    binary = fixture.Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin/Contents/MacOS/OLMRadialBlur"
-    installed_hash = hashlib.sha256(binary.read_bytes()).hexdigest() if binary.is_file() else None
-    arch = subprocess.run(["lipo", "-archs", str(binary)], capture_output=True, text=True).stdout.split() if binary.is_file() else []
+    binary, row = verified_binary("OLMRadialBlur")
+    arch = subprocess.run(["lipo", "-archs", str(binary)], capture_output=True, text=True, check=True).stdout.split()
+    subprocess.run(["codesign", "--verify", "--deep", "--strict", row["installed_bundle"]], check=True)
+    if set(arch) != {"arm64", "x86_64"}:
+        raise AssertionError(f"installed OLMRadialBlur is not Universal: {arch}")
     report["installed_connection"] = {
         "binary": str(binary),
-        "sha256": installed_hash,
-        "expected_current_sha256": "2e079e3c168666c2f3509f8d4c90ab107301880bce43f538cf4e16bcb8047732",
-        "identity_exact": installed_hash == "2e079e3c168666c2f3509f8d4c90ab107301880bce43f538cf4e16bcb8047732",
+        "sha256": row["sha256"],
+        "identity_manifest": str(MANIFEST.relative_to(ROOT)),
+        "identity_exact": True,
         "architectures": arch,
         "source_to_installed_connection": "same current OLMRadialBlur.cpp built, signed, and installed in the preceding PF8 boundary; no production source change in this PF32 pass",
     }
     report["full_path"] = ["PF32 owner 0x180007d30", "Zoom core 0x1800056f0", "pre-blur plane", "post-blur plane", "FUN_180017490 direct-float writer", "current installed Universal bundle"]
     report["production_dispatch"] = "final compared output is emitted by OLMRadialBlurTestRenderWorld(bitdepth=32), not a direct RenderZoomTyped call"
     fixture.REPORT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
-    return code if report["installed_connection"]["identity_exact"] else 1
+    return code
 
 
 if __name__ == "__main__":

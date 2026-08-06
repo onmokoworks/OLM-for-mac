@@ -13,13 +13,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from scripts.report_olmdistancegradation_32bpc_mac_validation_20260715 import compare
+from tools.emulation.olm_installed_identity import MANIFEST as IDENTITY_MANIFEST, verified_binary
 CASE_ID = "final_random10_olm_kira_kira_01"
 REFDIR = ROOT / "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMKiraKira"
 MANIFEST = REFDIR / "reference_manifest.json"
 INPUT = REFDIR / "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_01_before_effects.exr"
 EXPECTED = REFDIR / "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__final_random10_olm_kira_kira_01.exr"
-PLUGIN = Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin/Contents/MacOS/OLMKiraKira"
-PLUGIN_SHA = "cd97c6f328bf6a4adbe001662f35c12af405f89a2374046f185f68673df96719"
+PLUGIN, PLUGIN_IDENTITY = verified_binary("OLMKiraKira")
+PLUGIN_SHA = PLUGIN_IDENTITY["sha256"]
 INPUT_SHA = "8c1d418c7b853cc6f79087215ee86ab0b9eac423953c1a3409af3e120891a7f0"
 EXPECTED_SHA = "810b76cde27a6590f0f2913d2e4f7bc2c1649c77b128a7c174d46b0088215c1d"
 MANIFEST_SHA = "638cb66a60a52f4f9877f0f74937a891d447dc85673c8cca48c0780acf3ec9e7"
@@ -90,7 +91,7 @@ def main():
     checks={"installed_sha":sha(PLUGIN),"installed_sha_matches":sha(PLUGIN)==PLUGIN_SHA,"input_sha_matches":sha(INPUT)==INPUT_SHA,"expected_sha_matches":sha(EXPECTED)==EXPECTED_SHA,"manifest_sha_matches":sha(MANIFEST)==MANIFEST_SHA,"case_contract_exact":error is None,"case_error":error,"mode4_value":dict(params).get("OLM OLM Kira Kira-0009"),"software_renderer":bool(case and case["project_gpu_accel_type"]["current_name"]=="SOFTWARE"),"bpc":32,"ae_pids":pids,"loaded_modules":modules,"loaded_identity_exact":len(pids)==1 and mapped==[expected_path],"clean_single_ae_without_conflicting_kira_module":len(pids)==1 and mapped in ([],[expected_path])}
     static_ready=all(checks[k] for k in ("installed_sha_matches","input_sha_matches","expected_sha_matches","manifest_sha_matches","case_contract_exact","software_renderer"))
     host_ready=static_ready and checks["clean_single_ae_without_conflicting_kira_module"]
-    report={"schema":"olmkirakira-mode4-mac-ae-runner/1","case_id":CASE_ID,"status":"ready_to_bind_after_user_starts_ae" if static_ready and not host_ready else "ready" if host_ready else "blocked","run_requested":a.run,"run_executed":False,"checks":checks,"contract":{"renderer":"Software","bits_per_channel":32,"resolution_factor":[1,1],"working_space":"None","linear_blending":False,"effect_match_name":"OLM OLM Kira Kira","params":params,"expected_exr_sha256":EXPECTED_SHA,"installed_binary_sha256":PLUGIN_SHA}}
+    report={"schema":"olmkirakira-mode4-mac-ae-runner/1","case_id":CASE_ID,"status":"ready_to_bind_after_user_starts_ae" if static_ready and not host_ready else "ready" if host_ready else "blocked","run_requested":a.run,"run_executed":False,"checks":checks,"contract":{"renderer":"Software","bits_per_channel":32,"resolution_factor":[1,1],"working_space":"None","linear_blending":False,"effect_match_name":"OLM OLM Kira Kira","params":params,"expected_exr_sha256":EXPECTED_SHA,"installed_binary_sha256":PLUGIN_SHA,"installed_identity_manifest":str(IDENTITY_MANIFEST.relative_to(ROOT))}}
     a.report.parent.mkdir(parents=True,exist_ok=True)
     if not a.run or not host_ready:
         a.report.write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8");print(json.dumps({"status":report["status"],"report":str(a.report)}));return 0 if static_ready and not a.run else 2

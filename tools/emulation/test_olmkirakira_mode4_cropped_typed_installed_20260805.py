@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 import importlib.util
-import hashlib
 import struct
 import subprocess
 import tempfile
 from pathlib import Path
+from olm_installed_identity import verified_binary
 ROOT = Path(__file__).resolve().parents[2]
 WRITERS = ROOT / "tools/emulation/test_olmkirakira_typed_writers_actual_aex_20260716.py"
-INSTALLED = Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin"
-EXPECTED_INSTALLED_SHA256 = "cd97c6f328bf6a4adbe001662f35c12af405f89a2374046f185f68673df96719"
 def main() -> int:
     with tempfile.TemporaryDirectory(prefix="olmkira-mode4-tail-") as tmp:
         binary = Path(tmp) / "tail"
@@ -32,10 +30,8 @@ def main() -> int:
         assert actual == production, (depth, actual, production)
     source = (ROOT / "mac/OLMKiraKira/OLMKiraKira.cpp").read_text(encoding="utf-8")
     assert "centered_crop_scalar(" in source and "WriteAexTruncate" in source
-    assert INSTALLED.exists()
-    subprocess.run(["codesign", "--verify", "--deep", "--strict", str(INSTALLED)], check=True)
-    installed_binary = INSTALLED / "Contents/MacOS/OLMKiraKira"
-    assert hashlib.sha256(installed_binary.read_bytes()).hexdigest() == EXPECTED_INSTALLED_SHA256
+    installed_binary, installed_row = verified_binary("OLMKiraKira")
+    subprocess.run(["codesign", "--verify", "--deep", "--strict", installed_row["installed_bundle"]], check=True)
     assert set(subprocess.check_output(["lipo", "-archs", str(installed_binary)], text=True).split()) == {"arm64", "x86_64"}
     print("PASS_OLMKIRAKIRA_MODE4_CROP_TYPED_INSTALLED_20260805 " + " ".join(f"{k}={lines[k]}" for k in ("PF8","PF16","PF32")))
     return 0

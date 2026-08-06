@@ -20,6 +20,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 from scripts.compare_float_exr import read_planes
+from tools.emulation.olm_installed_identity import MANIFEST as IDENTITY_MANIFEST, verified_binary
 
 SOURCE = ROOT / "mac/OLMRadialBlur/OLMRadialBlur.cpp"
 DEFAULT_RUN = Path("/tmp/olmradialblur_pf32_20260806.8xa7UB")
@@ -27,7 +28,6 @@ INPUT = ROOT / "refs/win_references/20260604_olm/OLMRadialBlur/case_0009_before_
 MAPPING = ROOT / "refs/fixtures/olmradialblur_case0009_ae_control_u8_to_f32_20260806.json"
 REPORT = ROOT / "refs/conformance/olmradialblur_case0009_pf32_ae_control_replay_20260806.json"
 DIAGNOSTIC_REPORT = ROOT / "refs/conformance/olmradialblur_case0009_pf32_world_capture_result_20260806.json"
-INSTALLED = Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin/Contents/MacOS/OLMRadialBlur"
 WIDTH, HEIGHT = 1920, 1080
 
 
@@ -201,12 +201,14 @@ std::ofstream(argv[2],std::ios::binary).write((char*)output.data(),output.size()
         optional["capture_dir"] = str(args.capture_dir)
         optional["captured_world_checks"] = captured_checks
         ae_return = json.loads((args.source_run / "ae_return.json").read_text(encoding="utf-8"))
+        _installed_binary, installed_row = verified_binary("OLMRadialBlur")
         diagnostic_result = {
             "kind": "olmradialblur_case0009_pf32_world_capture_result_20260806",
             "status": "output_module_premultiply_exact",
             "diagnostic_bundle_sha256": ae_return["plugin"]["sha256"],
-            "normal_restored_bundle_sha256": hashlib.sha256(INSTALLED.read_bytes()).hexdigest(),
-            "normal_restore_identity_exact": hashlib.sha256(INSTALLED.read_bytes()).hexdigest() == "2e079e3c168666c2f3509f8d4c90ab107301880bce43f538cf4e16bcb8047732",
+            "normal_restored_bundle_sha256": installed_row["sha256"],
+            "normal_restore_identity_manifest": str(IDENTITY_MANIFEST.relative_to(ROOT)),
+            "normal_restore_identity_exact": True,
             "normal_restore_preflight": "all_10_installed_identities_exact; ae_not_running",
             "capture": {
                 "input_raw_argb_rows_sha256": hashlib.sha256((args.capture_dir / "input.argb128.rows").read_bytes()).hexdigest(),
