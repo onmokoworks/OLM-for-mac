@@ -1,0 +1,50 @@
+{
+  "kind": "olm_crosshost_linear_input_contract_evidence",
+  "schema_version": 1,
+  "status": "ready_for_mac_and_minimal_windows_observation",
+  "cause_observation": {
+    "source": "refs/conformance/colorkeep_windows_mac_ae_boundary_20260806.json",
+    "plugins_observed": ["ColorKeep", "OLMKiraKira"],
+    "depths": [8, 16, 32],
+    "pixels": 2073600,
+    "effect_off_rgb_mismatched_values_per_row": 6220800,
+    "effect_off_alpha_mismatched_values_per_row": 0,
+    "classification": "host PNG input/color/FLOAT output boundary precedes plugin worker"
+  },
+  "fixture": {
+    "path": "refs/fixtures/olm_crosshost_linear/opaque_cells_linear_float32.exr",
+    "manifest": "refs/fixtures/olm_crosshost_linear/manifest.json",
+    "sha256": "f452bb90cf166ed6cb195eb946f61f513b6f808ecc0e02753cdeaca68aa08a13",
+    "dimensions": [1920, 1080],
+    "sample_type": "FLOAT32",
+    "compression": "none",
+    "color_attributes": "no ICC, gamma, or chromaticities attribute"
+  },
+  "request": {
+    "path": "refs/reference_requests/olm_crosshost_linear_input_20260806.zip",
+    "sha256": "15280cde0e8208c549a7b6ee124cd2e2da2dae8f2ae3f46dc643235e51128c76",
+    "rows": 6,
+    "plugins": ["ColorKeep", "OLMKiraKira"],
+    "depths": [8, 16, 32],
+    "branches_per_row": ["no_effect", "effect_on"]
+  },
+  "preserve_rgb_policy": {
+    "finding": "ExtendScript may expose mainSource.preserveRGB as undefined",
+    "when_available": "set true after replace and require true live readback",
+    "when_unavailable": "attest API unavailability and colorProfileName; do not infer exactness",
+    "authoritative_no_conversion_gate": "cross-host no_effect raw FLOAT32 mismatched words == 0"
+  },
+  "existing_return_reuse": {
+    "reusable": ["AEX hash", "AE process/module binding", "parameter readback", "same-host plugin relation"],
+    "not_reusable": ["PNG-derived no_effect pixels", "PNG-derived effect_on pixels for raw cross-host exactness"]
+  },
+  "remaining_windows_observation": {
+    "rows": 6,
+    "why_minimal": "each representative plugin/depth effect-on path requires one observation; its disabled control is acquired in the same row"
+  },
+  "tests": {
+    "command": "python3 -m unittest tests.test_olm_crosshost_linear_input_20260806 tests.test_strict_float_exr",
+    "result": "10 tests passed"
+  },
+  "claim_boundary": "Artifacts and runners are ready, but no cross-host exact claim exists until a new Windows return and the paired Mac return pass zero-word-delta verification for all six rows."
+}
