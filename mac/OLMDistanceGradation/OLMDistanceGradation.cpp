@@ -43,18 +43,18 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_POPUP(GetStringPtr(StrID_InOut_Param_Name),
-	             3, IN_OUT_BOTH,
+	             3, 0,
 	             GetStringPtr(StrID_InOut_Choices),
 	             IN_OUT_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_InsideThreshold_Param_Name),
-	              0, 1000, 0, 1000, 128,
+	              0, 1000, 0, 512, 128,
 	              INSIDE_THRESHOLD_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_SLIDER(GetStringPtr(StrID_OutsideThreshold_Param_Name),
-	              0, 1000, 0, 1000, 128,
+	              0, 1000, 0, 512, 128,
 	              OUTSIDE_THRESHOLD_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
@@ -88,18 +88,19 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_Power_Param_Name),
 	                     0.01, 5.0, 0.01, 5.0, 1.0,
-	                     PF_Precision_HUNDREDTHS, 0, 0,
+	                     PF_Precision_HUNDREDTHS, 0, PF_ParamFlag_START_COLLAPSED,
 	                     POWER_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_POPUP(GetStringPtr(StrID_BlurMode_Param_Name),
-	             3, BLUR_MODE_NONE,
+	             5, BLUR_MODE_NONE,
 	             GetStringPtr(StrID_BlurMode_Choices),
 	             BLUR_MODE_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = PF_ParamFlag_START_COLLAPSED;
 	PF_ADD_SLIDER(GetStringPtr(StrID_BlurSize_Param_Name),
-	              0, 4096, 0, 4096, 0,
+	              0, 4096, 0, 500, 0,
 	              BLUR_SIZE_DISK_ID);
 
 	out_data->num_params = DG_NUM_PARAMS;

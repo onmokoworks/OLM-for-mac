@@ -24,6 +24,7 @@ EXPECTED = {
 }
 
 REGRESSIONS = [
+    ("test_olmdistancegradation_ui_setup_actual_aex_20260806.py", "PASS_OLMDISTANCEGRADATION_UI_SETUP_ACTUAL_AEX_20260806"),
     ("test_olmdistancegradation_classic_pf16_outside_interp_family_nobg_20260806.py", "PASS_OLMDISTANCEGRADATION_CLASSIC_PF16_OUTSIDE_INTERP_FAMILY_NOBG_EXACT"),
     ("test_olmdistancegradation_classic_pf32_inside_constant_blur_nobg_20260805.py", "PASS_OLMDISTANCEGRADATION_CLASSIC_PF32_INSIDE_CONSTANT_BLUR_NOBG_EXACT"),
     ("test_olmdistancegradation_classic_pf32_both_power_layer_nobg_20260805.py", "PASS_OLMDISTANCEGRADATION_CLASSIC_PF32_BOTH_POWER_LAYER_NOBG_EXACT"),

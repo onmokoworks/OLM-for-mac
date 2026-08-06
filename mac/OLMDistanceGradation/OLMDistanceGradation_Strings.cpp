@@ -18,7 +18,7 @@ TableString g_strs[StrID_NUMTYPES] = {
 	{ StrID_RenderMode_Choices,            "RGB|Layer" },
 	{ StrID_UseBgColor_Param_Name,         "Use Background Color" },
 	{ StrID_GradColor_Param_Name,          "Gradation Color" },
-	{ StrID_BgColor_Param_Name,            "BG Color" },
+	{ StrID_BgColor_Param_Name,            "BG Color " },
 	{ StrID_InterpMode_Param_Name,         "Interpolation Mode" },
 	{ StrID_InterpMode_Choices,            "Constant|Linear|Sphere|Power" },
 	{ StrID_Power_Param_Name,              "Power" },

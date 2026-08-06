@@ -1,0 +1,281 @@
+{
+  "actual_execution": {
+    "add_param_calls": 12,
+    "raw_pf_paramdef_bytes": 2112,
+    "raw_pf_paramdef_sha256": "b3fdff3b03ef8157b2276865e91af31301bdf9d7bc0e77f2c43ec2e1a41916bf",
+    "raw_row_sha256": [
+      "4b72eb36046942755e16a702409dd8e8ed5931b4414d528c8a00b004f02bcbd4",
+      "fb2f43edd0703ed68a27ffdec2ae97d653a9aed47ddf9042710f3a3ec2ab34df",
+      "ac2015c9d8bbe9a61174629aa858f595c5c8e01f1805a34b8dd73bd8264ac0bf",
+      "1ea81ac53447f139ba59507cc16f1416eac9155f510fc3c04242d7d53aea7456",
+      "58607bac84f7cc29ec4c02129219582ca5402c76b4efcac96fbaeb15904864fe",
+      "1cb40447c3a6decdfdb1da18d08ee90583496521d4f64735f475b26fcb838b52",
+      "d47b86d38b6883b6ea00af106d9cf25346713df51d82e49d7a74e4c8099d836f",
+      "a523f35d455f22b733d0e678526374bb0955689e3c4586153c74e2a332bae29e",
+      "afc05768f5977d23534d1fb32f403ddac5b7b8544f277c5a95dc25568d7fe587",
+      "7e155094d28a92385e16fc1863b7f42a1d32dbdea8c34b764cbe2a484a99cb20",
+      "173aba051aa8915dcd74d5c30110a8175d54d8b8227f17b40aa3168b23e32c76",
+      "4282e754c58b97be347a8fbba6f19cc5d2b3a29827e28aa52d5c43dce1f13c51"
+    ],
+    "suite_acquisitions": [
+      [
+        "AEGP Utility Suite",
+        7
+      ]
+    ]
+  },
+  "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+  "entry_point": "0x181174bd0",
+  "fixed_mac_mismatches": [
+    {
+      "after": 0,
+      "before": 3,
+      "field": "default",
+      "parameter": "In/Out"
+    },
+    {
+      "after": 512,
+      "before": 1000,
+      "field": "slider_max",
+      "parameter": "Inside Threshold"
+    },
+    {
+      "after": 512,
+      "before": 1000,
+      "field": "slider_max",
+      "parameter": "Outside Threshold"
+    },
+    {
+      "after": "BG Color ",
+      "before": "BG Color",
+      "field": "name",
+      "parameter": "BG Color"
+    },
+    {
+      "after": 32,
+      "before": 0,
+      "field": "flags",
+      "parameter": "Power"
+    },
+    {
+      "after": 5,
+      "before": 3,
+      "field": "num_choices",
+      "parameter": "Blur Mode"
+    },
+    {
+      "after": 32,
+      "before": 0,
+      "field": "flags",
+      "parameter": "Blur Size"
+    },
+    {
+      "after": 500,
+      "before": 4096,
+      "field": "slider_max",
+      "parameter": "Blur Size"
+    }
+  ],
+  "global_setup": {
+    "error": 0,
+    "my_version": 266752,
+    "out_flags": 100663360,
+    "out_flags2": 134222848
+  },
+  "not_proven": [
+    "native AE control layout",
+    "parameter consumption during render",
+    "localized non-ASCII resources"
+  ],
+  "params_setup": {
+    "error": 0,
+    "num_params": 13,
+    "rows": [
+      {
+        "checkbox": [
+          0,
+          0
+        ],
+        "disk_id": 1,
+        "flags": 0,
+        "name": "Invert",
+        "param_type": 4,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 2,
+        "flags": 0,
+        "name": "In/Out",
+        "param_type": 7,
+        "popup": [
+          3,
+          0,
+          "Inside|Outside|Both"
+        ],
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 3,
+        "flags": 0,
+        "name": "Inside Threshold",
+        "param_type": 1,
+        "slider": [
+          128,
+          0,
+          1000,
+          0,
+          512,
+          128
+        ],
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 4,
+        "flags": 0,
+        "name": "Outside Threshold",
+        "param_type": 1,
+        "slider": [
+          128,
+          0,
+          1000,
+          0,
+          512,
+          128
+        ],
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 5,
+        "flags": 0,
+        "name": "Render Mode",
+        "param_type": 7,
+        "popup": [
+          2,
+          1,
+          "RGB|Layer"
+        ],
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "checkbox": [
+          0,
+          0
+        ],
+        "disk_id": 6,
+        "flags": 0,
+        "name": "Use Background Color",
+        "param_type": 4,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "color": [
+          65535,
+          65535
+        ],
+        "disk_id": 7,
+        "flags": 0,
+        "name": "Gradation Color",
+        "param_type": 5,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "color": [
+          255,
+          255
+        ],
+        "disk_id": 8,
+        "flags": 0,
+        "name": "BG Color ",
+        "param_type": 5,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 9,
+        "flags": 0,
+        "name": "Interpolation Mode",
+        "param_type": 7,
+        "popup": [
+          4,
+          2,
+          "Constant|Linear|Sphere|Power"
+        ],
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 10,
+        "flags": 32,
+        "float_slider": [
+          1.0,
+          0.009999999776482582,
+          5.0,
+          0.009999999776482582,
+          5.0,
+          1.0,
+          2,
+          0,
+          0,
+          0.05000000074505806,
+          0,
+          0.0
+        ],
+        "name": "Power",
+        "param_type": 10,
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 11,
+        "flags": 0,
+        "name": "Blur Mode",
+        "param_type": 7,
+        "popup": [
+          5,
+          1,
+          "No Blur|Blur No Scale|Blur"
+        ],
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      },
+      {
+        "disk_id": 12,
+        "flags": 32,
+        "name": "Blur Size",
+        "param_type": 1,
+        "slider": [
+          0,
+          0,
+          4096,
+          0,
+          500,
+          0
+        ],
+        "ui_flags": 0,
+        "ui_height": 0,
+        "ui_width": 0
+      }
+    ]
+  },
+  "schema": "olmdistancegradation-ui-setup-actual-aex/1",
+  "scope": "GLOBAL_SETUP plus all 12 PARAMS_SETUP add-param rows: order, disk IDs, names including spaces, types, flags, UI dimensions, defaults, ranges, choices and float-slider metadata",
+  "status": "exact"
+}

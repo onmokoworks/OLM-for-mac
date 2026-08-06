@@ -35,6 +35,7 @@ struct PF_PopupData { A_long value; };
 struct PF_FloatSliderData { double value; };
 struct PF_ColorData { PF_Pixel8 value; };
 struct PF_ParamDef {
+	A_u_long flags;
     union {
         PF_BooleanData bd;
         PF_SliderData sd;
@@ -114,6 +115,7 @@ struct AEGP_SuiteHandler {
 #define PF_ADD_POPUP(...) ((void)0)
 #define PF_ADD_FLOAT_SLIDERX(...) ((void)0)
 #define PF_Precision_HUNDREDTHS 2
+#define PF_ParamFlag_START_COLLAPSED 0x20
 #define AEFX_ChannelDepthTpl_h
 
 static inline const char *GetStringPtr(int) { return ""; }
