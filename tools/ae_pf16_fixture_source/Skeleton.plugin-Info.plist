@@ -6,7 +6,10 @@
 <key>CFBundleIdentifier</key><string>com.olm.test.PF16FixtureSource</string>
 <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
 <key>CFBundleName</key><string>$(PRODUCT_NAME)</string>
-<key>CFBundlePackageType</key><string>BNDL</string>
+<key>CFBundlePackageType</key><string>eFKT</string>
+<key>CFBundleSignature</key><string>FXTC</string>
 <key>CFBundleShortVersionString</key><string>1.0</string>
 <key>CFBundleVersion</key><string>1</string>
+<key>LSRequiresCarbon</key><true/>
+<key>NSAppleScriptEnabled</key><string>No</string>
 </dict></plist>

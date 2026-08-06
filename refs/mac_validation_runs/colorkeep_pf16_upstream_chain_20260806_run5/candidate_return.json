@@ -1,0 +1,103 @@
+{
+  "ae_exact_claim": false,
+  "ae_version": "26.3x87",
+  "bpc": 16,
+  "chain_alpha": [
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "chain_expected_actual_aex": [
+    1.0,
+    1.0,
+    1.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "hashes": {
+    "colorkeep": "ccc89781fa547450acc3053cb77bff8d6983cd8c6835866c87449e7a64117cce",
+    "source": "ca098f4309c53d50eb16c67ecadde777c1ac2d29024d03103d46ea6d030b65b8"
+  },
+  "inter_effect_extended_pf16_proven": true,
+  "loaded_mapping": {
+    "colorkeep": true,
+    "pid": 4730,
+    "source": true
+  },
+  "output_rgb_extended_observable": true,
+  "outputs": {
+    "source_colorkeep": {
+      "path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/mac_validation_runs/colorkeep_pf16_upstream_chain_20260806_run5/output/source_colorkeep.exr00000",
+      "sha256": "b1782dd61899e926764346a40cabec97665c49c7298e68d2aedfc161494fa3e5"
+    },
+    "source_only": {
+      "path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/mac_validation_runs/colorkeep_pf16_upstream_chain_20260806_run5/output/source_only.exr00000",
+      "sha256": "84cb24dd6f94f1d5e751eee9435c373692489d055f1c8b77f1f648f9223529df"
+    }
+  },
+  "readback": [
+    [
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      0.25,
+      0.75,
+      1,
+      1
+    ],
+    [
+      0,
+      0,
+      0,
+      1
+    ]
+  ],
+  "source_only_alpha": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.000030517578125,
+    1.999969482421875,
+    0.5,
+    3.0517578125e-05,
+    1.0
+  ],
+  "source_only_expected_output_conversion": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.000030517578125,
+    1.999969482421875,
+    0.5,
+    3.0517578125e-05,
+    1.0
+  ],
+  "status": "host_chain_alpha_discriminator_exact"
+}

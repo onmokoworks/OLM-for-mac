@@ -13,7 +13,7 @@ def main():
   for name in ("Skeleton.cpp","Skeleton.h","Skeleton_Strings.cpp","Skeleton_Strings.h","SkeletonPiPL.r"): shutil.copy2(SOURCE/name,base/name)
   shutil.copy2(SOURCE/"Skeleton.plugin-Info.plist",mac/"Skeleton.plugin-Info.plist");shutil.copytree(PROJECT,mac/"Skeleton.xcodeproj")
   for name in ("Headers","Util","Resources"): (stage/name).symlink_to(ROOT/name)
-  subprocess.run(["xcodebuild","-project",str(mac/"Skeleton.xcodeproj"),"-configuration","Debug","ARCHS=arm64 x86_64","ONLY_ACTIVE_ARCH=NO","CODE_SIGNING_ALLOWED=NO","PRODUCT_NAME=OLMPF16FixtureSource","PRODUCT_BUNDLE_IDENTIFIER=com.olm.test.PF16FixtureSource","build"],check=True)
+  subprocess.run(["xcodebuild","-project",str(mac/"Skeleton.xcodeproj"),"-configuration","Debug","ARCHS=arm64 x86_64","ONLY_ACTIVE_ARCH=NO","CODE_SIGNING_ALLOWED=NO","MACOSX_DEPLOYMENT_TARGET=11.0","PRODUCT_NAME=OLMPF16FixtureSource","PRODUCT_BUNDLE_IDENTIFIER=com.olm.test.PF16FixtureSource","build"],check=True)
   found=list((stage/"tools/ae_pf16_fixture_source/Mac/build").rglob("OLMPF16FixtureSource.plugin"))
   if len(found)!=1: raise RuntimeError(f"product cardinality {found}")
   dest=a.output/"OLMPF16FixtureSource.plugin";shutil.rmtree(dest,ignore_errors=True);shutil.copytree(found[0],dest);subprocess.run(["codesign","--force","--sign","-",str(dest)],check=True)
