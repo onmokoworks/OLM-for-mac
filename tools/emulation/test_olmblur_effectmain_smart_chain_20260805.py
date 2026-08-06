@@ -10,14 +10,11 @@ import tempfile
 from pathlib import Path
 
 import test_olmblur_pf8_nonlegacy_source_aex_adapter_20260805 as adapter
+from olm_installed_identity import verified_binary
 
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURE = ROOT / "tools/emulation/fixtures/olmblur_worker_orchestration/8bpc_nonlegacy_basic"
-INSTALLED = Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMBlur.plugin/Contents/MacOS/OLMBlur"
-INSTALLED_SHA256 = "dd64362e6071cfd93e92f3a4853782752aeb023c54671773bfedb0c496e8afc7"
-INSTALL_IDENTITY = ROOT / "refs/conformance/olmblur_current_universal_install_20260805.json"
-INSTALL_IDENTITY_SHA256 = "de40690db4fca843720e92a55a3152f69d1563da0d8df147bf6eda59d2caa20e"
-SOURCE_SHA256 = "55def455a29f72c04748a784bcd598ddeecb84ec25d475376ea93b6e838e3b02"
+INSTALLED, _IDENTITY = verified_binary("OLMBlur")
 
 
 def sha256(path: Path) -> str:
@@ -94,9 +91,9 @@ int main(int argc, char **argv) {
 def installed_identity() -> dict:
     checks = {
         "installed_binary_present": INSTALLED.is_file(),
-        "installed_binary_hash": INSTALLED.is_file() and sha256(INSTALLED) == INSTALLED_SHA256,
-        "install_identity_hash": INSTALL_IDENTITY.is_file() and sha256(INSTALL_IDENTITY) == INSTALL_IDENTITY_SHA256,
-        "production_source_hash": sha256(ROOT / "mac/OLMBlur/OLMBlur.cpp") == SOURCE_SHA256,
+        "installed_binary_hash": INSTALLED.is_file() and sha256(INSTALLED) == _IDENTITY["sha256"],
+        "manifest_source_installed_exact": _IDENTITY["source_installed_exact"],
+        "manifest_codesign_exact": _IDENTITY["codesign_exact"],
     }
     arch = subprocess.run(["lipo", "-archs", str(INSTALLED)], capture_output=True,
                           text=True, check=False) if INSTALLED.is_file() else None

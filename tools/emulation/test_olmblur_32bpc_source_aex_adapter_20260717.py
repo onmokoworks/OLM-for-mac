@@ -40,8 +40,10 @@ struct PF_LRect { A_long left, top, right, bottom; };
 struct PF_EffectWorld { PF_PixelPtr data; A_long rowbytes, width, height; A_short bitdepth; PF_LRect extent_hint; A_long dephault; };
 using PF_LayerDef = PF_EffectWorld;
 struct PF_FloatSlider { PF_FpLong value; }; struct PF_Fixed { A_long value; };
-struct PF_Slider { A_long value; }; struct PF_Popup { A_long value; }; struct PF_Checkbox { A_long value; };
-struct PF_ParamDef { union { PF_FloatSlider fs_d; PF_Fixed fd; PF_Slider sd; PF_Popup pd; PF_Checkbox bd; PF_LayerDef ld; } u; };
+struct PF_Slider { A_long value; }; struct PF_Popup { A_long value; };
+struct PF_Checkbox { struct { const char *nameptr; } u; A_long value, dephault; };
+struct PF_ParamDef { A_long param_type; char name[32]; A_u_long flags; struct { A_long id; } uu;
+  union { PF_FloatSlider fs_d; PF_Fixed fd; PF_Slider sd; PF_Popup pd; PF_Checkbox bd; PF_LayerDef ld; } u; };
 struct PF_InData { PF_ProgPtr effect_ref; A_long current_time, time_step, time_scale;
   struct { A_long num, den; } downsample_x, downsample_y; void *pica_basicP; };
 struct PF_OutData { char return_msg[256]; A_u_long my_version, out_flags, out_flags2; A_long num_params; };
@@ -87,6 +89,11 @@ static inline const char *GetStringPtr(int) { return ""; }
 #define PF_ADD_SLIDER(...) ((void)0)
 #define PF_ADD_POPUP(...) ((void)0)
 #define PF_ADD_CHECKBOX(...) ((void)0)
+#define PF_ADD_PARAM(...) PF_Err_NONE
+#define PF_Param_CHECKBOX 1
+#define PF_ParamFlag_USE_VALUE_FOR_OLD_PROJECTS 0x80u
+#define PF_ValueDisplayFlag_PERCENT 1
+#define PF_STRNNCPY(dst, src, size) std::snprintf((dst), (size), "%s", (src))
 #define PF_COPY(in, out, a, b) (std::memcpy((out)->data, (in)->data, static_cast<std::size_t>((out)->rowbytes) * (out)->height), PF_Err_NONE)
 #define PF_DEEP_COLOR_AWARE 1
 #define MAJOR_VERSION 1
@@ -94,6 +101,17 @@ static inline const char *GetStringPtr(int) { return ""; }
 #define BUG_VERSION 1
 #define StrID_Name 1
 #define StrID_Description 2
+#define StrID_BlurAmount_Param_Name 3
+#define StrID_BlurSmoothness_Param_Name 4
+#define StrID_Repeat_Param_Name 5
+#define StrID_BiasDirection_Param_Name 6
+#define StrID_BiasDirection_Choices 7
+#define StrID_Legacy_Param_Name 8
+#define BLUR_AMOUNT_DISK_ID 1
+#define BLUR_SMOOTHNESS_DISK_ID 2
+#define REPEAT_DISK_ID 3
+#define BIAS_DIRECTION_DISK_ID 4
+#define LEGACY_DISK_ID 5
 #define OLMBLUR_INPUT 0
 #define OLMBLUR_BLUR_AMOUNT 1
 #define OLMBLUR_BLUR_SMOOTHNESS 2

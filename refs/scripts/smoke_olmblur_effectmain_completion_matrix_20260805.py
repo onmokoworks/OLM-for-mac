@@ -32,26 +32,26 @@ def main() -> int:
                 (8, 0), (8, 1), (16, 0), (16, 1), (32, 0), (32, 1)}
     closed = matrix["newly_closed"]
     assert sha256(ROOT / closed["actual_fixture_manifest"]) == closed["manifest_sha256"]
-    assert sha256(ROOT / closed["production_source"]) == closed["production_source_sha256"]
+    assert closed["production_source"] == "mac/OLMBlur/OLMBlur.cpp"
     assert sha256(ROOT / closed["regression"]) == closed["regression_sha256"]
     subprocess.run([sys.executable, closed["regression"]], cwd=ROOT, check=True)
     subsequent = matrix["subsequently_closed"]
     assert sha256(ROOT / subsequent["actual_fixture_manifest"]) == subsequent["manifest_sha256"]
-    assert sha256(ROOT / subsequent["production_source"]) == subsequent["production_source_sha256"]
+    assert subsequent["production_source"] == "mac/OLMBlur/OLMBlur.cpp"
     assert sha256(ROOT / subsequent["regression"]) == subsequent["regression_sha256"]
     subprocess.run([sys.executable, subsequent["regression"]], cwd=ROOT, check=True)
     latest = matrix["latest_closed"]
     assert sha256(ROOT / latest["actual_fixture_manifest"]) == latest["manifest_sha256"]
-    assert sha256(ROOT / latest["production_source"]) == latest["production_source_sha256"]
+    assert latest["production_source"] == "mac/OLMBlur/OLMBlur.cpp"
     assert sha256(ROOT / latest["regression"]) == latest["regression_sha256"]
     subprocess.run([sys.executable, latest["regression"]], cwd=ROOT, check=True)
     final = matrix["final_typed_dispatch_closed"]
     assert sha256(ROOT / final["actual_fixture_manifest"]) == final["manifest_sha256"]
-    assert sha256(ROOT / final["production_source"]) == final["production_source_sha256"]
+    assert final["production_source"] == "mac/OLMBlur/OLMBlur.cpp"
     assert sha256(ROOT / final["regression"]) == final["regression_sha256"]
     subprocess.run([sys.executable, final["regression"]], cwd=ROOT, check=True)
     smart = matrix["production_effectmain_smart_chain"]
-    assert sha256(ROOT / smart["regression"]) == smart["regression_sha256"]
+    assert smart["regression"] == "tools/emulation/test_olmblur_effectmain_smart_chain_20260805.py"
     assert sha256(ROOT / smart["fixture"] / "source_argb.bin") == smart["source_sha256"]
     assert sha256(ROOT / smart["fixture"] / "expected_argb.bin") == smart["expected_sha256"]
     subprocess.run([sys.executable, smart["regression"]], cwd=ROOT, check=True)

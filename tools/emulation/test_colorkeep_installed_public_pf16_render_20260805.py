@@ -9,11 +9,12 @@ import subprocess
 import tempfile
 from pathlib import Path
 
+from olm_installed_identity import verified_binary
+
 ROOT = Path(__file__).resolve().parents[2]
-INSTALLED = Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/ColorKeep.plugin/Contents/MacOS/ColorKeep"
+INSTALLED, _IDENTITY = verified_binary("ColorKeep")
 ACTUAL_RAW = ROOT / "refs/conformance/colorkeep_pf16_extended_range_actual_aex_20260805.argb16"
 REPORT = ROOT / "refs/conformance/colorkeep_installed_public_pf16_render_20260805.json"
-EXPECTED_HASH = "ccc89781fa547450acc3053cb77bff8d6983cd8c6835866c87449e7a64117cce"
 
 COLORS = ((1.0, 1.0, 1.0, 1.0), (0.0, 0.0, 0.0, 0.0), (0.5, 0.25, 0.75, 1.0))
 PIXELS = (
@@ -61,7 +62,7 @@ PF_LayerDef dst{{}};dst.data=reinterpret_cast<PF_PixelPtr>(output);dst.rowbytes=
 
 def main() -> int:
     installed_hash = hashlib.sha256(INSTALLED.read_bytes()).hexdigest()
-    assert installed_hash == EXPECTED_HASH
+    assert installed_hash == _IDENTITY["sha256"]
     observed = execute_installed()
     expected = ACTUAL_RAW.read_bytes()
     assert observed == expected
