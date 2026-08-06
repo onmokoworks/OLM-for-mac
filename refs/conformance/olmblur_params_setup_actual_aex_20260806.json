@@ -1,0 +1,98 @@
+{
+  "actual_aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+  "actual_command": 4,
+  "actual_execution": {
+    "add_param_calls": 5,
+    "out_num_params": 6,
+    "return_code": 0
+  },
+  "actual_exported_entry": "0x18000a970",
+  "claim_boundary": "Five add_param rows from the actual 2025 public export versus Mac EffectMain, including all type-relevant values, flags, ui_flags, and precision/display fields. Pointer values and inactive union residue are excluded.",
+  "normalized_payload_sha256": "d0c599684792692ba2533755674efa8965bc8ac3fb58203076551d4df1e40537",
+  "not_proven": [
+    "localized host UI rendering",
+    "AE-version-specific interpretation",
+    "render behavior"
+  ],
+  "proven_corrections": [
+    "Blur Amount precision is raw value 2",
+    "Blur Smoothness display_flags includes PERCENT",
+    "Legacy value is true while default is false",
+    "Legacy flags include USE_VALUE_FOR_OLD_PROJECTS"
+  ],
+  "public_entrypoint": "PF_Cmd_PARAMS_SETUP",
+  "rows": [
+    {
+      "disk_id": 5,
+      "flags": 0,
+      "param_type": 10,
+      "ui_flags": 0,
+      "values": {
+        "curve_tolerance_f32": "0x3d4ccccd",
+        "default_f32": "0x40a00000",
+        "display_flags": 0,
+        "fs_flags": 0,
+        "phase_f64": "0x0000000000000000",
+        "precision": 2,
+        "slider_max_f32": "0x42480000",
+        "slider_min_f32": "0x3f800000",
+        "valid_max_f32": "0x447a0000",
+        "valid_min_f32": "0x3f800000",
+        "value_f64": "0x4014000000000000"
+      }
+    },
+    {
+      "disk_id": 6,
+      "flags": 0,
+      "param_type": 2,
+      "ui_flags": 0,
+      "values": {
+        "default": 6553600,
+        "display_flags": 1,
+        "precision": 1,
+        "slider_max": 6553600,
+        "slider_min": 65536,
+        "valid_max": 6553600,
+        "valid_min": 65536,
+        "value": 6553600
+      }
+    },
+    {
+      "disk_id": 3,
+      "flags": 0,
+      "param_type": 1,
+      "ui_flags": 0,
+      "values": {
+        "default": 2,
+        "slider_max": 10,
+        "slider_min": 1,
+        "valid_max": 10,
+        "valid_min": 1,
+        "value": 2
+      }
+    },
+    {
+      "disk_id": 4,
+      "flags": 0,
+      "param_type": 7,
+      "ui_flags": 0,
+      "values": {
+        "default": 1,
+        "num_choices": 2,
+        "value": 1
+      }
+    },
+    {
+      "disk_id": 7,
+      "flags": 128,
+      "param_type": 4,
+      "ui_flags": 0,
+      "values": {
+        "default": 0,
+        "value": 1
+      }
+    }
+  ],
+  "schema": "olmblur.params-setup-actual-aex/1",
+  "status": "exact"
+}

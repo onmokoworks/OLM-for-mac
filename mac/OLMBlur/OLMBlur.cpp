@@ -45,13 +45,14 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_BlurAmount_Param_Name),
 	                     1.0, 1000.0, 1.0, 50.0, 5.0,
-	                     PF_Precision_TENTHS, 0, 0,
+	                     // The 2025 AEX registers raw precision value 2.
+	                     2, 0, 0,
 	                     BLUR_AMOUNT_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_ADD_FIXED(GetStringPtr(StrID_BlurSmoothness_Param_Name),
 	             1, 100, 1, 100, 100,
-	             1, 0, 0,
+	             1, PF_ValueDisplayFlag_PERCENT, 0,
 	             BLUR_SMOOTHNESS_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
@@ -66,9 +67,14 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	             BIAS_DIRECTION_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
-	PF_ADD_CHECKBOX(GetStringPtr(StrID_Legacy_Param_Name),
-	                "", FALSE, 0,
-	                LEGACY_DISK_ID);
+	def.param_type = PF_Param_CHECKBOX;
+	PF_STRNNCPY(def.name, GetStringPtr(StrID_Legacy_Param_Name), sizeof(def.name));
+	def.u.bd.u.nameptr = "";
+	def.u.bd.value = TRUE;
+	def.u.bd.dephault = FALSE;
+	def.flags = PF_ParamFlag_USE_VALUE_FOR_OLD_PROJECTS;
+	def.uu.id = LEGACY_DISK_ID;
+	if ((err = PF_ADD_PARAM(in_data, -1, &def)) != PF_Err_NONE) return err;
 
 	out_data->num_params = OLMBLUR_NUM_PARAMS;
 	return err;
