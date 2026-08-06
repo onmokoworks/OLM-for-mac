@@ -64,6 +64,11 @@
     },
     "interpretation": "The former 1/0.62 scalar discrepancy is removed. Remaining word differences are bounded by the approximate inversion of the independently observed Windows host transfer; the control itself is not raw-exact under that numerical inverse."
   },
+  "exactness_policy": {
+    "inverse_export_use": "diagnostic only; the Windows export transform is non-reversible and is not accepted as pixel-exact evidence",
+    "strong_exact_gate": "refs/conformance/olmkirakira_mode4_highlight_hostless_actual_aex_20260807.json",
+    "strong_gate_boundary": "actual AEX fifth-ray aggregation through Merge-1/PF32 writer; MakeSeed and three-pass Highlight box generation remain upstream"
+  },
   "depth_boundary": {
     "PF32": "focused Mode4 highlight scalar correction verified",
     "PF8_PF16": "not promoted by this PF32 fixture; quantization and host-boundary behavior remain separate gates"

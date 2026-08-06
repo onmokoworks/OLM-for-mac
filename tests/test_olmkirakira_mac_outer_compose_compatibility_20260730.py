@@ -6,6 +6,7 @@ from __future__ import annotations
 import importlib.util
 import unittest
 from pathlib import Path
+from textwrap import dedent
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -28,15 +29,12 @@ AUDIT = load_audit()
 
 
 class MacOuterComposeCompatibilityTests(unittest.TestCase):
-    def test_current_source_is_deterministically_classified_incompatible(self) -> None:
+    def test_current_source_no_longer_contains_the_incompatible_shape(self) -> None:
         report = AUDIT.audit()
-        self.assertEqual(
-            report["classification"],
-            "incompatible-screen-source-alpha-passthrough",
-        )
+        self.assertEqual(report["classification"], "not-classified-incompatible")
         self.assertTrue(report["ae_free"])
-        self.assertTrue(report["source_shape"]["screen_rgb"])
-        self.assertTrue(report["source_shape"]["source_alpha_passthrough"])
+        self.assertFalse(report["source_shape"]["screen_rgb"])
+        self.assertFalse(report["source_shape"]["source_alpha_passthrough"])
 
     def test_unequal_alpha_fixture_separates_all_three_models(self) -> None:
         report = AUDIT.audit()
@@ -91,7 +89,15 @@ class MacOuterComposeCompatibilityTests(unittest.TestCase):
         self.assertEqual(report["classification"], "not-classified-incompatible")
 
     def test_rhs_suffix_mutation_is_rejected(self) -> None:
-        source = AUDIT.MAC_SOURCE.read_text(encoding="utf-8")
+        source = dedent(r"""
+            template <typename PixelT>
+            static PF_Err RenderTyped(PF_EffectWorld *input) {
+                out.r = 1.0f - (1.0f - src.r) * (1.0f - Clamp01(glow[idx].r * glow_a));
+                out.g = 1.0f - (1.0f - src.g) * (1.0f - Clamp01(glow[idx].g * glow_a));
+                out.b = 1.0f - (1.0f - src.b) * (1.0f - Clamp01(glow[idx].b * glow_a));
+                out.a = src_a;
+            }
+        """)
         mutated = source.replace(
             "out.r = 1.0f - (1.0f - src.r) * (1.0f - Clamp01(glow[idx].r * glow_a));",
             "out.r = 1.0f - (1.0f - src.r) * "
@@ -125,7 +131,15 @@ class MacOuterComposeCompatibilityTests(unittest.TestCase):
         self.assertEqual(report["classification"], "not-classified-incompatible")
 
     def test_if_one_active_screen_branch_is_detected(self) -> None:
-        source = AUDIT.MAC_SOURCE.read_text(encoding="utf-8")
+        source = dedent(r"""
+            template <typename PixelT>
+            static PF_Err RenderTyped(PF_EffectWorld *input) {
+                out.r = 1.0f - (1.0f - src.r) * (1.0f - Clamp01(glow[idx].r * glow_a));
+                out.g = 1.0f - (1.0f - src.g) * (1.0f - Clamp01(glow[idx].g * glow_a));
+                out.b = 1.0f - (1.0f - src.b) * (1.0f - Clamp01(glow[idx].b * glow_a));
+                out.a = src_a;
+            }
+        """)
         start = source.index("template <typename PixelT>\nstatic PF_Err RenderTyped")
         opening = source.index("{", start)
         wrapped = source[:opening + 1] + "\n#if 1\n" + source[opening + 1:]

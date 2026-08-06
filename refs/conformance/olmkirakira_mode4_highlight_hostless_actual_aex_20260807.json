@@ -1,0 +1,52 @@
+{
+  "kind": "olmkirakira_mode4_highlight_hostless_actual_aex",
+  "date": "2026-08-07",
+  "status": "exact_from_highlight_plane_through_pf32_writer",
+  "aex": {
+    "path": "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex",
+    "sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+  },
+  "fixture": {
+    "dimensions": [4, 1],
+    "ray_slots": "slots 0..3 are +0.0f; slot 4 is Highlight",
+    "highlight_f32": [0.0, 0.002, 0.2, 0.75],
+    "highlight_color_argb": [1.0, 1.0, 0.25, 0.0625],
+    "brightness_gain": 1.0,
+    "source_rgba": [
+      [0.1, 0.2, 0.3, 1.0],
+      [0.2, 0.3, 0.4, 1.0],
+      [0.3, 0.4, 0.5, 1.0],
+      [0.4, 0.5, 0.6, 1.0]
+    ],
+    "glow_opacity": 1.0,
+    "source_opacity": 1.0,
+    "merge_mode": 1
+  },
+  "actual_aex_calls": [
+    {
+      "function": "FUN_18114fd90",
+      "va": "0x18114fd90",
+      "abi": "Win64; 10 args; RCX/RDX/R8/R9 plus six stack slots; arg 10 is raw FLOAT32 brightness word",
+      "role": "five-ray Mode-1 aggregation and RGB normalization"
+    },
+    {
+      "function": "FUN_18114e460",
+      "va": "0x18114e460",
+      "abi": "Win64; RCX=owner state, RDX=PF32 world descriptor",
+      "role": "Merge-1 outer compose and FUN_181230c20 PF32 ARGB writer"
+    }
+  ],
+  "comparison": {
+    "actual_aex_glow_vs_portable_add_colored_union": "all 16 FLOAT32 words exact",
+    "actual_aex_pf32_vs_portable_compose_and_writer": "all 16 FLOAT32 words exact",
+    "portable_compose": "tools/emulation/olmkirakira_outer_compose_oracle_20260728.py",
+    "production_binding": "portable highlight model replays mac/OLMKiraKira/OLMKiraKira.cpp::AddColoredUnion with Mode4 unit highlight scale"
+  },
+  "boundary": {
+    "proven": "canonical fifth-ray float plane through actual AEX aggregation, Mode-1 compose, and PF32 writer is bit-exact with the portable path",
+    "not_proven": "MakeSeed and the Mode4 three-pass 11x11 Highlight box-filter generation are upstream of this fixture",
+    "full_caller_blocker": "FUN_18114f4a0 requires an AE-owned vtable/channel object, upstream Mat state, and embedded OpenCV TLS/dispatch initialization",
+    "aexcompat_blocker": "guest/crates/aex-guest-worker/src/x64.rs::GuestEngine::call_win64 currently accepts exactly six args; FUN_18114fd90 needs 10 and FUN_18114f4a0 needs 15"
+  },
+  "verification": "python3 tools/emulation/test_olmkirakira_mode4_highlight_hostless_actual_aex_20260807.py"
+}
