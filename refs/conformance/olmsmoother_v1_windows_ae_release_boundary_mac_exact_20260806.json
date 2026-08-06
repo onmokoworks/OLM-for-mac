@@ -1,0 +1,236 @@
+{
+  "schema": "olmsmoother-v1-windows-boundary-mac-ae-exact/1",
+  "row_id": "olmsmoother_v1__canonical_3__case_0001__16bpc",
+  "status": "mismatch",
+  "checks": {
+    "request_sha256_exact": true,
+    "return_exists": true,
+    "jsx_exists": true,
+    "plugin_exists": true,
+    "one_exact_contract_row": true,
+    "native_pf16_contract": true,
+    "windows_members_complete": true,
+    "windows_attestation_exact": true
+  },
+  "request_zip": {
+    "path": "refs/reference_requests/olm_windows_ae_release_boundary_minimal_20260806.zip",
+    "sha256": "6a060641dc867cbb5cb858136f6fd294fb49d274fa252cec71459bc9b20a4652"
+  },
+  "return_zip": {
+    "path": "refs/returns/windows/RETURN_OLM_WINDOWS_AE_RELEASE_BOUNDARY_MINIMAL_20260806.zip",
+    "sha256": "e582b0f368deb6dfbb34de2675e382d2222372705da043151d90dc895f7d7a0a"
+  },
+  "installed_plugin": {
+    "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother.plugin/Contents/MacOS/OLMSmoother",
+    "sha256": "815f335fcc3af66fe42bfa2dde6447ea3c5eda4104972eaf45b03f746e62a043"
+  },
+  "harness": {
+    "runner": {
+      "path": "scripts/run_olmsmoother_v1_windows_boundary_mac_ae_20260806.py",
+      "sha256": "7e47228295c9b2a263e137c592c053b5ea66eda421540410be4f2fd6b03e1955"
+    },
+    "jsx": {
+      "path": "scripts/ae_render_olm_windows_ae_release_boundary_20260806.jsx",
+      "sha256": "20ce9111778d7e88b9f0fdbcb2fa7186159379b1526f12933de5bd88b47b7629"
+    }
+  },
+  "claim_boundary": "AE 26.3x87, Software raw 1816, None working space, linear blending off, preserve-RGB straight-alpha smoother_v1_case0001_rgba8.png, Use Color Key=0, Color Key=white, Do Smooth Range=6, native PF16 only.",
+  "ae_result": {
+    "status": "ok",
+    "row_id": "olmsmoother_v1__canonical_3__case_0001__16bpc",
+    "ae_pid": 0,
+    "ae_version": "26.3x87",
+    "renderer_raw": 1816,
+    "bits_per_channel": 16,
+    "working_space_raw": "None",
+    "linear_blending": false,
+    "parameters_before": [
+      {
+        "match_name": "OLM Smoother-0001",
+        "display_name": "Use Color Key",
+        "property_index": 1,
+        "property_type": 6417,
+        "value": 0
+      },
+      {
+        "match_name": "OLM Smoother-0002",
+        "display_name": "Color Key",
+        "property_index": 2,
+        "property_type": 6418,
+        "value": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "match_name": "OLM Smoother-0003",
+        "display_name": "Do Smooth Range",
+        "property_index": 3,
+        "property_type": 6417,
+        "value": 6
+      }
+    ],
+    "parameters_after": [
+      {
+        "match_name": "OLM Smoother-0001",
+        "display_name": "Use Color Key",
+        "property_index": 1,
+        "property_type": 6417,
+        "value": 0
+      },
+      {
+        "match_name": "OLM Smoother-0002",
+        "display_name": "Color Key",
+        "property_index": 2,
+        "property_type": 6418,
+        "value": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "match_name": "OLM Smoother-0003",
+        "display_name": "Do Smooth Range",
+        "property_index": 3,
+        "property_type": 6417,
+        "value": 6
+      }
+    ],
+    "no_effect_source": "/Users/onmk/Documents/Projects/Personal/OLM as/tmp/olmsmoother_v1_pf16_boundary_subhandler_20260806/mac/olmsmoother_v1__canonical_3__case_0001__16bpc/no_effect_00024.exr",
+    "effect_on_source": "/Users/onmk/Documents/Projects/Personal/OLM as/tmp/olmsmoother_v1_pf16_boundary_subhandler_20260806/mac/olmsmoother_v1__canonical_3__case_0001__16bpc/effect_on_00024.exr",
+    "no_effect_settings": {
+      "Audio Bit Depth": "32 Bit",
+      "Audio Channels": "Stereo",
+      "Audio Sample Rate": "",
+      "Channels": "RGB + Alpha",
+      "Color": "Premultiplied (Matted)",
+      "Crop": "false",
+      "Crop Bottom": "0",
+      "Crop Left": "0",
+      "Crop Right": "0",
+      "Crop Top": "0",
+      "Depth": "Floating Point+",
+      "Format": "OpenEXR Sequence",
+      "Include Project Link": "false",
+      "Include Source XMP Metadata": "false",
+      "Lock Aspect Ratio": "true",
+      "Output Audio": "Off",
+      "Output File Info": {
+        "Full Flat Path": "/Users/onmk/Documents/Projects/Personal/OLM as/tmp/olmsmoother_v1_pf16_boundary_subhandler_20260806/mac/olmsmoother_v1__canonical_3__case_0001__16bpc/no_effect_[#####].exr",
+        "Base Path": "/Users/onmk/Documents/Projects/Personal/OLM as/tmp/olmsmoother_v1_pf16_boundary_subhandler_20260806/mac/olmsmoother_v1__canonical_3__case_0001__16bpc",
+        "Subfolder Path": "",
+        "File Name": "no_effect_[#####].exr",
+        "File Template": "no_effect_[#####].[fileExtension]"
+      },
+      "Post-Render Action": "None",
+      "Resize": "false",
+      "Resize Quality": "High",
+      "Resize to": {
+        "x": 960,
+        "y": 540
+      },
+      "Starting #": "24",
+      "Use Comp Frame Number": "true",
+      "Use Region of Interest": "false",
+      "Video Output": "true"
+    },
+    "effect_on_settings": {
+      "Audio Bit Depth": "32 Bit",
+      "Audio Channels": "Stereo",
+      "Audio Sample Rate": "",
+      "Channels": "RGB + Alpha",
+      "Color": "Premultiplied (Matted)",
+      "Crop": "false",
+      "Crop Bottom": "0",
+      "Crop Left": "0",
+      "Crop Right": "0",
+      "Crop Top": "0",
+      "Depth": "Floating Point+",
+      "Format": "OpenEXR Sequence",
+      "Include Project Link": "false",
+      "Include Source XMP Metadata": "false",
+      "Lock Aspect Ratio": "true",
+      "Output Audio": "Off",
+      "Output File Info": {
+        "Full Flat Path": "/Users/onmk/Documents/Projects/Personal/OLM as/tmp/olmsmoother_v1_pf16_boundary_subhandler_20260806/mac/olmsmoother_v1__canonical_3__case_0001__16bpc/effect_on_[#####].exr",
+        "Base Path": "/Users/onmk/Documents/Projects/Personal/OLM as/tmp/olmsmoother_v1_pf16_boundary_subhandler_20260806/mac/olmsmoother_v1__canonical_3__case_0001__16bpc",
+        "Subfolder Path": "",
+        "File Name": "effect_on_[#####].exr",
+        "File Template": "effect_on_[#####].[fileExtension]"
+      },
+      "Post-Render Action": "None",
+      "Resize": "false",
+      "Resize Quality": "High",
+      "Resize to": {
+        "x": 960,
+        "y": 540
+      },
+      "Starting #": "24",
+      "Use Comp Frame Number": "true",
+      "Use Region of Interest": "false",
+      "Video Output": "true"
+    }
+  },
+  "osascript": {
+    "returncode": 0,
+    "stdout": "0\n",
+    "stderr": ""
+  },
+  "host_identity": {
+    "ae_pids": [
+      72238
+    ],
+    "loaded_smoother_modules": [
+      "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother.plugin/Contents/MacOS/OLMSmoother"
+    ],
+    "exact": true
+  },
+  "parameter_surface_exact": true,
+  "branches": {
+    "no_effect": {
+      "mac_sha256": "ab7bbaedc596520ff70f3539c96bd189f03b66f478c306307f1b9cf77a77df9f",
+      "windows_sha256": "4e8d8e50fa137f014112d21ab2fd450a40aa8fb0ecf48377f9225dd8c80b0235",
+      "raw_float32_compare": {
+        "equal": true,
+        "max_absolute_error": 0,
+        "nonzero_count": 0,
+        "nan_inf_policy": "raw FLOAT32 words; NaN and +/-Inf words must match exactly",
+        "mac_sample_counts": {
+          "nan": 0,
+          "+inf": 0,
+          "-inf": 0
+        },
+        "windows_sample_counts": {
+          "nan": 0,
+          "+inf": 0,
+          "-inf": 0
+        }
+      }
+    },
+    "effect_on": {
+      "mac_sha256": "f2dc18db3c6a2645ea0cbd13e75ac361b5698a3e83958ff463a2f4bdded90dc9",
+      "windows_sha256": "c706d254faf2135a68c81f17aae6f7f33f45e7645fe8f13b9fd4d1009ef52b61",
+      "raw_float32_compare": {
+        "equal": false,
+        "max_absolute_error": null,
+        "nonzero_count": 183,
+        "nan_inf_policy": "raw FLOAT32 words; NaN and +/-Inf words must match exactly",
+        "mac_sample_counts": {
+          "nan": 0,
+          "+inf": 0,
+          "-inf": 0
+        },
+        "windows_sample_counts": {
+          "nan": 0,
+          "+inf": 0,
+          "-inf": 0
+        }
+      }
+    }
+  },
+  "pf16_exact_eligible": false
+}

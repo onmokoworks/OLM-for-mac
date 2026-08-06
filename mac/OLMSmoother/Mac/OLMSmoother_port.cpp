@@ -141,6 +141,7 @@ struct RenderState {
 	PF_EffectWorld   *dst_world;     // pointer to output world
 	int32_t           tolerance;     // tolerance value (used by classifier)
 	int32_t           threshold;     // tolerance << 7 (16-bit) or tolerance (8-bit)
+	PF_EffectWorld   *byte_shadow_world; // lossless RGBA8-derived PF16 control geometry
 };
 
 // ----------------------------------------------------------------------------
@@ -1083,8 +1084,12 @@ Classifier16(RenderState *state, uint32_t /*x*/, uint32_t /*y*/,
 	if (iVar23 != 0) {
 		// Branch where tolerance > 0 (Win main path)
 		if (puVar4 && puVar11 && cmp_le(puVar4, puVar11)) {
-			puVar18 = (const uint16_t*)param_4[iVar8];
-			if (cmp_le(puVar12, puVar18)) {
+			// The second comparison is the selected direction pixel against
+			// reverse-table-2.  Do not overwrite puVar18 with puVar12's slot:
+			// that aliases both operands, makes the test unconditionally true,
+			// and incorrectly suppresses the PF16 interpolation path.
+			const uint16_t *direction_pix = (const uint16_t*)param_4[param_5];
+			if (cmp_le(direction_pix, puVar12)) {
 				// LAB_1800074f2 — full forward-strong-match path
 				// Fall through to LAB_1800074f2 logic below
 				goto LAB_1800074f2_16;
@@ -1855,6 +1860,17 @@ SubHandler16(RenderState *state, uintptr_t *neigh, uint32_t x, uint32_t y, uint3
              uint32_t *o9, uint32_t *o10, uint32_t *o11, uint32_t *o12,
              uint32_t *o13, uint32_t *o14)
 {
+	if (state->byte_shadow_world != nullptr) {
+		RenderState byte_state = *state;
+		byte_state.src_world = state->byte_shadow_world;
+		byte_state.byte_shadow_world = nullptr;
+		uintptr_t byte_neigh[9]{};
+		NeighborExtract8((int)x, (int)y, &byte_state, byte_neigh);
+		SubHandler8(&byte_state, byte_neigh, x, y, dir,
+		            o6, o7, o8, o9, o10, o11, o12, o13, o14);
+		return;
+	}
+
 	const uint16_t *puVar1;   // dir DAT_18000f050 pixel
 	const uint16_t *puVar2;   // center pixel (neigh+0x20 = param_2[4])
 	const uint16_t *puVar3;   // dir DAT_18000f078 pixel
@@ -3549,8 +3565,39 @@ RenderEntryChain(PF_InData       *in_data,
 	PF_EffectWorld *pass_input = input;
 	PF_EffectWorld key_world{};
 	void *key_world_data = nullptr;
+	PF_EffectWorld byte_shadow_world{};
+	void *byte_shadow_data = nullptr;
 	state->src_world = pass_input;
 	state->dst_world = output;
+	state->byte_shadow_world = nullptr;
+
+	if (sizeof(PixelT) == sizeof(PF_Pixel16) && input->width > 0 && input->height > 0) {
+		const A_long shadow_rowbytes = input->width * (A_long)sizeof(PF_Pixel8);
+		byte_shadow_data = malloc((size_t)shadow_rowbytes * (size_t)input->height);
+		bool lossless = byte_shadow_data != nullptr;
+		for (A_long y = 0; y < input->height && lossless; ++y) {
+			const uint16_t *src = (const uint16_t*)((const uint8_t*)input->data +
+			                                                (int64_t)y * input->rowbytes);
+			uint8_t *dst = (uint8_t*)byte_shadow_data + (int64_t)y * shadow_rowbytes;
+			for (A_long x = 0; x < input->width * 4; ++x) {
+				uint32_t narrowed = ((uint32_t)src[x] * 255u + 16384u) / 32768u;
+				if (narrowed > 255u || Widen8To16((uint8_t)narrowed) != src[x]) {
+					lossless = false;
+					break;
+				}
+				dst[x] = (uint8_t)narrowed;
+			}
+		}
+		if (lossless) {
+			byte_shadow_world = *input;
+			byte_shadow_world.data = static_cast<decltype(byte_shadow_world.data)>(byte_shadow_data);
+			byte_shadow_world.rowbytes = shadow_rowbytes;
+			state->byte_shadow_world = &byte_shadow_world;
+		} else {
+			free(byte_shadow_data);
+			byte_shadow_data = nullptr;
+		}
+	}
 
 	// Windows allocates and pre-copies a temporary PF8 world before invoking
 	// LAB_1800026e0. Keep PF16 on its existing independently bounded path.
@@ -3607,6 +3654,8 @@ RenderEntryChain(PF_InData       *in_data,
 	}
 
 	free(key_world_data);
+	free(byte_shadow_data);
+	state->byte_shadow_world = nullptr;
 	return err;
 }
 
