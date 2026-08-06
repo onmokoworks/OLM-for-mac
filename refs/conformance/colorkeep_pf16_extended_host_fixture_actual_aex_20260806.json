@@ -1,0 +1,200 @@
+{
+  "active_dimensions": [
+    4,
+    3
+  ],
+  "actual_aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+  "actual_worker_entry": "0x180001280",
+  "artifacts": {
+    "expected_actual_aex_active.argb16": {
+      "path": "refs/mac_validation_fixtures/colorkeep_pf16_extended_host_20260806/expected_actual_aex_active.argb16",
+      "sha256": "3fa4b9a8cbc1b4f8ec05fd2b1074e11f7b4670f7fa092e2f518bfb7edfb989fa"
+    },
+    "expected_actual_aex_pf16_units_as_float.exr": {
+      "path": "refs/mac_validation_fixtures/colorkeep_pf16_extended_host_20260806/expected_actual_aex_pf16_units_as_float.exr",
+      "sha256": "f753f1daa8ff254adf98ebe82cd9d04380ed4960c45cc26b16a91a56ccaab122"
+    },
+    "input_pf16_units_as_float.exr": {
+      "path": "refs/mac_validation_fixtures/colorkeep_pf16_extended_host_20260806/input_pf16_units_as_float.exr",
+      "sha256": "0d7d0a018372cb321f04ea5ad16b5542bbdc8a04453271b32b5c212f84de4459"
+    }
+  },
+  "claim_boundary": "Only 12 active PF16 pixels and public RGB keys. Row padding and synthetic ColorParam alpha remain exclusively covered by colorkeep_installed_public_pf16_render_20260805.json.",
+  "expected_argb16": [
+    [
+      32768,
+      32768,
+      32768,
+      32768
+    ],
+    [
+      32768,
+      8192,
+      24576,
+      32768
+    ],
+    [
+      32768,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      32769,
+      32768,
+      32768
+    ],
+    [
+      0,
+      32768,
+      32769,
+      32768
+    ],
+    [
+      0,
+      32768,
+      32768,
+      32769
+    ],
+    [
+      0,
+      65535,
+      65535,
+      65535
+    ],
+    [
+      0,
+      32768,
+      32768,
+      32768
+    ],
+    [
+      0,
+      8192,
+      24576,
+      32768
+    ],
+    [
+      0,
+      65535,
+      32769,
+      49152
+    ],
+    [
+      0,
+      32769,
+      1,
+      65535
+    ],
+    [
+      0,
+      12345,
+      23456,
+      34567
+    ]
+  ],
+  "host_dimensions": [
+    4,
+    4
+  ],
+  "input_argb16": [
+    [
+      32768,
+      32768,
+      32768,
+      32768
+    ],
+    [
+      32768,
+      8192,
+      24576,
+      32768
+    ],
+    [
+      32768,
+      0,
+      0,
+      0
+    ],
+    [
+      32768,
+      32769,
+      32768,
+      32768
+    ],
+    [
+      32768,
+      32768,
+      32769,
+      32768
+    ],
+    [
+      32768,
+      32768,
+      32768,
+      32769
+    ],
+    [
+      32768,
+      65535,
+      65535,
+      65535
+    ],
+    [
+      32769,
+      32768,
+      32768,
+      32768
+    ],
+    [
+      65535,
+      8192,
+      24576,
+      32768
+    ],
+    [
+      16384,
+      65535,
+      32769,
+      49152
+    ],
+    [
+      1,
+      32769,
+      1,
+      65535
+    ],
+    [
+      32768,
+      12345,
+      23456,
+      34567
+    ]
+  ],
+  "keys_alpha": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "keys_public_rgb": [
+    [
+      1.0,
+      1.0,
+      1.0
+    ],
+    [
+      0.25,
+      0.75,
+      1.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "pf16_nominal_white": 32768,
+  "schema": "colorkeep.pf16-extended-host-fixture/1",
+  "status": "prepared_actual_aex_active_pixels"
+}

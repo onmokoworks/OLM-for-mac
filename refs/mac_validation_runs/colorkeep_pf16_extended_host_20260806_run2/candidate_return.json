@@ -1,0 +1,134 @@
+{
+  "ae_exact_claim": false,
+  "ae_version": "26.3x87",
+  "bits_per_channel": 16,
+  "comparisons": {
+    "actual_aex_effect": {
+      "height": 4,
+      "max_raw_u32_delta": 1073741568,
+      "mismatched_values": 21,
+      "width": 4
+    },
+    "input_control": {
+      "height": 4,
+      "max_raw_u32_delta": 134217472,
+      "mismatched_values": 14,
+      "width": 4
+    }
+  },
+  "input_interpretation": "hash_bound_preserve_rgb_template",
+  "linear_blending": false,
+  "loaded_plugin_proof": {
+    "binary_predates_process": true,
+    "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/ColorKeep.plugin/Contents/MacOS/ColorKeep",
+    "pid": 88521,
+    "sha256": "ccc89781fa547450acc3053cb77bff8d6983cd8c6835866c87449e7a64117cce",
+    "vmmap_exact_path": true
+  },
+  "outputs": {
+    "control": {
+      "path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/mac_validation_runs/colorkeep_pf16_extended_host_20260806_run2/output/control.exr00000",
+      "settings": {
+        "Audio Bit Depth": "32 Bit",
+        "Audio Channels": "Stereo",
+        "Audio Sample Rate": "",
+        "Channels": "RGB + Alpha",
+        "Color": "Premultiplied (Matted)",
+        "Crop": "false",
+        "Crop Bottom": "0",
+        "Crop Left": "0",
+        "Crop Right": "0",
+        "Crop Top": "0",
+        "Depth": "Floating Point+",
+        "Format": "OpenEXR Sequence",
+        "Include Project Link": "false",
+        "Include Source XMP Metadata": "false",
+        "Lock Aspect Ratio": "true",
+        "Output Audio": "Off",
+        "Output File Info": {
+          "Base Path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/mac_validation_runs/colorkeep_pf16_extended_host_20260806_run2/output",
+          "File Name": "control.exr",
+          "File Template": "control.[fileExtension]",
+          "Full Flat Path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/mac_validation_runs/colorkeep_pf16_extended_host_20260806_run2/output/control.exr",
+          "Subfolder Path": ""
+        },
+        "Post-Render Action": "None",
+        "Resize": "false",
+        "Resize Quality": "High",
+        "Resize to": {
+          "x": 4,
+          "y": 4
+        },
+        "Starting #": "0",
+        "Use Comp Frame Number": "true",
+        "Use Region of Interest": "false",
+        "Video Output": "true"
+      },
+      "sha256": "e5d8935df5bcc69dcc4fd55dbb2bf99c82f3e934fd0117872d396779ce589c41"
+    },
+    "effect_on": {
+      "path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/mac_validation_runs/colorkeep_pf16_extended_host_20260806_run2/output/effect_on.exr00000",
+      "settings": {
+        "Audio Bit Depth": "32 Bit",
+        "Audio Channels": "Stereo",
+        "Audio Sample Rate": "",
+        "Channels": "RGB + Alpha",
+        "Color": "Premultiplied (Matted)",
+        "Crop": "false",
+        "Crop Bottom": "0",
+        "Crop Left": "0",
+        "Crop Right": "0",
+        "Crop Top": "0",
+        "Depth": "Floating Point+",
+        "Format": "OpenEXR Sequence",
+        "Include Project Link": "false",
+        "Include Source XMP Metadata": "false",
+        "Lock Aspect Ratio": "true",
+        "Output Audio": "Off",
+        "Output File Info": {
+          "Base Path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/mac_validation_runs/colorkeep_pf16_extended_host_20260806_run2/output",
+          "File Name": "effect_on.exr",
+          "File Template": "effect_on.[fileExtension]",
+          "Full Flat Path": "/Users/onmk/Documents/Projects/Personal/OLM as/refs/mac_validation_runs/colorkeep_pf16_extended_host_20260806_run2/output/effect_on.exr",
+          "Subfolder Path": ""
+        },
+        "Post-Render Action": "None",
+        "Resize": "false",
+        "Resize Quality": "High",
+        "Resize to": {
+          "x": 4,
+          "y": 4
+        },
+        "Starting #": "0",
+        "Use Comp Frame Number": "true",
+        "Use Region of Interest": "false",
+        "Video Output": "true"
+      },
+      "sha256": "441935a57f1e9f3595549e31e53c66d2a2716cf58e06eb5db1193a480e724233"
+    }
+  },
+  "padding_observed_by_ae": false,
+  "plugin_sha256": "ccc89781fa547450acc3053cb77bff8d6983cd8c6835866c87449e7a64117cce",
+  "public_rgb_readback": [
+    [
+      1,
+      1,
+      1
+    ],
+    [
+      0.25,
+      0.75,
+      1
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "renderer": "SOFTWARE",
+  "separate_installed_padding_leg": "refs/conformance/colorkeep_installed_public_pf16_render_20260805.json",
+  "status": "host_conversion_or_effect_mismatch",
+  "template_sha256": "51fd5403b0a43825f0f6d189c49154ad756f4c565498f733c1fb725377583679",
+  "working_space": "None"
+}
