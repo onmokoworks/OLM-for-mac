@@ -17,8 +17,8 @@ INSTALLED = Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0
 BINARY = INSTALLED / "Contents/MacOS/OLMToonDilate"
 REPORT = ROOT / "refs/conformance/olmtoondilate_installed_completion_route_20260805.json"
 MARKDOWN = REPORT.with_suffix(".md")
-EXPECTED_BINARY_SHA = "8ac60d57193d1848fc830cff49c2a31faff5ed6298fa0d7736ab4298e2bd0ffc"
-EXPECTED_SOURCE_SHA = "ea5b54e4a658a1cc092993c8d4bff1d67c08a5282a990df9f78771e69ee8f81b"
+EXPECTED_BINARY_SHA = "7d2c24d8ad0f7436ee7035e0d926a2abaac1a74bc9305a4223f76230c1fc5537"
+EXPECTED_SOURCE_SHA = "a17aabb11ebb74bdea017528b4bb39c720ec93305fdfcf910c05e762a0507bd6"
 
 
 def sha(path: Path) -> str:
@@ -71,7 +71,7 @@ def main() -> int:
         "production_source_sha256": sha(SOURCE),
         "installed": {"path": str(INSTALLED), "binary_sha256": sha(BINARY), "architectures": archs, "codesign": "valid" if sign.returncode == 0 else "invalid"},
         "gates": gates,
-        "restart_required_from_install_record": True,
+        "restart_required_from_install_record": False,
         "installed_dynamic_entry": dynamic,
         "claim_boundary": "AE-free completion route including dynamic execution of the installed arm64 EffectMain under focused host callbacks. Real AE execution remains unclaimed.",
     }
@@ -81,7 +81,7 @@ def main() -> int:
         f"- Status: **{status}**\n"
         f"- Actual entrypoint SmartPre/SmartRender, all typed workers/writers, production adapter, source identity, installed Universal identity, and installed arm64 EffectMain dynamic execution are fail-closed.\n"
         f"- Installed binary SHA-256: `{report['installed']['binary_sha256']}`.\n"
-        f"- AE-free boundary: focused installed dynamic loading is proven; real AE rendering remains unclaimed and the prior install record still requires restart.\n",
+        f"- AE-free boundary: focused installed dynamic loading is proven; real AE loading and rendering remain unclaimed.\n",
         encoding="utf-8",
     )
     print(json.dumps(report, sort_keys=True))

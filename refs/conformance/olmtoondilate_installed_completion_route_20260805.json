@@ -10,10 +10,10 @@
   ],
   "actual_aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
   "actual_report_sha256": "4c96cae5eb9dde9761dd7b461dfe7c364644797a15534b144262bbf746ed01ec",
-  "production_source_sha256": "ea5b54e4a658a1cc092993c8d4bff1d67c08a5282a990df9f78771e69ee8f81b",
+  "production_source_sha256": "a17aabb11ebb74bdea017528b4bb39c720ec93305fdfcf910c05e762a0507bd6",
   "installed": {
     "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin",
-    "binary_sha256": "8ac60d57193d1848fc830cff49c2a31faff5ed6298fa0d7736ab4298e2bd0ffc",
+    "binary_sha256": "7d2c24d8ad0f7436ee7035e0d926a2abaac1a74bc9305a4223f76230c1fc5537",
     "architectures": [
       "x86_64",
       "arm64"
@@ -30,10 +30,10 @@
     "single_active_bundle": true,
     "installed_dynamic_entry_exact": true
   },
-  "restart_required_from_install_record": true,
+  "restart_required_from_install_record": false,
   "installed_dynamic_entry": {
     "architecture": "arm64",
-    "binary_sha256": "8ac60d57193d1848fc830cff49c2a31faff5ed6298fa0d7736ab4298e2bd0ffc",
+    "binary_sha256": "7d2c24d8ad0f7436ee7035e0d926a2abaac1a74bc9305a4223f76230c1fc5537",
     "callbacks": {
       "checkin": 1,
       "exact": true,

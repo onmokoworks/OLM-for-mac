@@ -1,5 +1,5 @@
 {
-  "status": "PASS_INSTALLED_RESTART_REQUIRED",
+  "status": "PASS_INSTALLED_AE_STOPPED",
   "schema": "olmtoondilate.macos-universal-install/1",
   "build": {
     "project": "mac/OLMToonDilate/Mac/OLMToonDilate.xcodeproj",
@@ -11,7 +11,7 @@
   },
   "binary": {
     "relative_path": "OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate",
-    "sha256": "8ac60d57193d1848fc830cff49c2a31faff5ed6298fa0d7736ab4298e2bd0ffc",
+    "sha256": "7d2c24d8ad0f7436ee7035e0d926a2abaac1a74bc9305a4223f76230c1fc5537",
     "architectures": ["arm64", "x86_64"],
     "mach_o_type": "bundle",
     "bundle_identifier": "com.adobe.AfterEffects.OLMToonDilate"
@@ -24,8 +24,8 @@
   "install": {
     "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin",
     "strategy": "verified sibling staging bundle, then same-volume rename with recoverable prior-bundle backup",
-    "previous_binary_sha256": "731798e1386f04afd181523e3fd55fbf5824a89b7ea97493281217ed5882c36e",
-    "backup_path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin.backup-20260805-1955",
+    "previous_binary_sha256": "8ac60d57193d1848fc830cff49c2a31faff5ed6298fa0d7736ab4298e2bd0ffc",
+    "backup_path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin.backup-20260806-1512",
     "installed_binary_sha256_matches_build": true,
     "installed_codesign_verified": true
   },
@@ -36,11 +36,11 @@
     "macos_build": "24G325",
     "after_effects": {
       "path": "/Applications/Adobe After Effects 2026/Adobe After Effects 2026.app/Contents/MacOS/After Effects",
-      "pid_observed": 77384,
-      "process_started_local": "2026-08-05 12:28:22 +0900",
+      "pid_observed": null,
+      "process_started_local": null,
       "was_stopped_or_restarted": false
     }
   },
-  "restart_required": true,
-  "claim_boundary": "Universal build, ad-hoc signing, safe user MediaCore installation, and host/process identity only. The running AE process predates installation and has not loaded this newly installed binary under observation."
+  "restart_required": false,
+  "claim_boundary": "Universal build, ad-hoc signing, safe user MediaCore installation, and AE-free installed dynamic entry only. Real AE loading and rendering of this binary remain unclaimed."
 }

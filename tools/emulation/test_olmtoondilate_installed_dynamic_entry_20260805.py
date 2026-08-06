@@ -8,7 +8,7 @@ ROOT=Path(__file__).resolve().parents[2]
 BUNDLE=Path.home()/"Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin"
 BINARY=BUNDLE/"Contents/MacOS/OLMToonDilate"
 REPORT=ROOT/"refs/conformance/olmtoondilate_installed_dynamic_entry_20260805.json"
-EXPECTED_SHA="8ac60d57193d1848fc830cff49c2a31faff5ed6298fa0d7736ab4298e2bd0ffc"
+EXPECTED_SHA="7d2c24d8ad0f7436ee7035e0d926a2abaac1a74bc9305a4223f76230c1fc5537"
 
 def main():
  if hashlib.sha256(BINARY.read_bytes()).hexdigest()!=EXPECTED_SHA:raise RuntimeError("BLOCKED_FAIL_CLOSED: installed binary drifted")

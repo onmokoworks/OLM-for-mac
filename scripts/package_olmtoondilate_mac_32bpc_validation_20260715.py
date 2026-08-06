@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE_PACKAGE = ROOT / "refs/runtime_trace_packages/windows_witness_olmtoondilate_32bpc_typed_procedural_samecomp_20260713"
 STEM = "olmtoondilate_mac_32bpc_validation_20260715"
 PLUGIN_BINARY = Path.home() / "Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate"
-EXPECTED_CURRENT_INSTALLED_SHA256 = "8ac60d57193d1848fc830cff49c2a31faff5ed6298fa0d7736ab4298e2bd0ffc"
+EXPECTED_CURRENT_INSTALLED_SHA256 = "7d2c24d8ad0f7436ee7035e0d926a2abaac1a74bc9305a4223f76230c1fc5537"
 EXPECTED_OUTPUT_SHA256 = {
     "no_effect": "00ac6170abefd2bb3fddb7a0f2904c933844597df31b4a039677e1300d5e2764",
     "effect_on": "e31d15b4e2aef24d294c74695f6448d5f90aecc4a989a6c36ee263f4af82ea22",
