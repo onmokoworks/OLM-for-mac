@@ -1,0 +1,161 @@
+{
+  "kind": "olmkirakira_mode4_fullcaller_hostless_exact",
+  "date": "2026-08-07",
+  "status": "exact",
+  "aex": {
+    "path": "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex",
+    "sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+  },
+  "entry": {
+    "function": "FUN_18114f4a0",
+    "va": "0x18114f4a0",
+    "entries": 1
+  },
+  "abi": {
+    "argument_slots": 16,
+    "slot_15": "Merge mode integer (1)",
+    "slot_16": "raw FLOAT32 brightness-gain word (0x3f800000)",
+    "brightness_vtable": "0x181488a38",
+    "vtable_slots": [
+      {
+        "slot": "0x0",
+        "target": "0x18114ec60"
+      },
+      {
+        "slot": "0x8",
+        "target": "0x18114fd90"
+      },
+      {
+        "slot": "0x10",
+        "target": "0x18114ffd0"
+      },
+      {
+        "slot": "0x18",
+        "target": "0x18114eda0"
+      },
+      {
+        "slot": "0x20",
+        "target": "0x18114ed90"
+      }
+    ]
+  },
+  "fixture": {
+    "dimensions": [
+      4,
+      1
+    ],
+    "source_rgba": [
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.058823529411764705,
+        0.058823529411764705,
+        0.058823529411764705,
+        1.0
+      ],
+      [
+        0.11764705882352941,
+        0.11764705882352941,
+        0.11764705882352941,
+        1.0
+      ],
+      [
+        0.17647058823529413,
+        0.17647058823529413,
+        0.17647058823529413,
+        1.0
+      ]
+    ],
+    "blur_mode": 4,
+    "directional_lengths": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "highlight_radius": 5,
+    "highlight_color_argb": [
+      1.0,
+      1.0,
+      0.25,
+      0.0625
+    ],
+    "merge_mode": 1,
+    "brightness_gain": 1.0
+  },
+  "actual_aex": {
+    "highlight_plane_u32": [
+      "0x3db4d777",
+      "0x3db4c04b",
+      "0x3db4a91f",
+      "0x3db491f3"
+    ],
+    "aggregation_u32": [
+      "0x3f800000",
+      "0x3e800000",
+      "0x3d800000",
+      "0x3db4d777",
+      "0x3f7fffff",
+      "0x3e7fffff",
+      "0x3d7fffff",
+      "0x3db4c04b",
+      "0x3f800000",
+      "0x3e800000",
+      "0x3d800000",
+      "0x3db4a91f",
+      "0x3f800000",
+      "0x3e800000",
+      "0x3d800000",
+      "0x3db491f3"
+    ],
+    "final_pf32_argb_u32": [
+      "0x3f800000",
+      "0x3da62b31",
+      "0x3ca62b31",
+      "0x3ba62b31",
+      "0x3f800000",
+      "0x3e0a6577",
+      "0x3d983939",
+      "0x3d722995",
+      "0x3f800000",
+      "0x3e41b67f",
+      "0x3e0374f9",
+      "0x3de7c930",
+      "0x3f800000",
+      "0x3e7908ac",
+      "0x3e3ace7d",
+      "0x3e2b3ff2"
+    ],
+    "suite_acquire_count": 12,
+    "suite_release_count": 12,
+    "fault": null
+  },
+  "comparison": {
+    "highlight_plane_words": 4,
+    "aggregation_words": 16,
+    "final_pf32_words": 16,
+    "max_ulp": 0,
+    "highlight_portable_owner": "core/kirakira_highlight.h (called by mac/OLMKiraKira/OLMKiraKira.cpp)",
+    "compose_portable_owner": "tools/emulation/olmkirakira_outer_compose_oracle_20260728.py"
+  },
+  "scaffold": {
+    "SPBasic": [
+      "AcquireSuite",
+      "ReleaseSuite"
+    ],
+    "PF Handle Suite v2": [
+      "NewHandle",
+      "LockHandle",
+      "UnlockHandle",
+      "DisposeHandle"
+    ],
+    "first_unscaffolded_stop": "indirect NULL call returning to 0x181231f4d while acquiring PF Handle Suite v2",
+    "resolution": "attach host context to argument slot 2 and provide the six callbacks above"
+  },
+  "boundary": "This is a hostless Mac Unicorn execution of the checked-in Windows AEX, not a live Windows/AE render claim. The canonical internal PF32 chain is bit exact through the final writer.",
+  "verification": "python3 tools/emulation/probe_olmkirakira_mode4_fullcaller_scaffold_20260807.py"
+}

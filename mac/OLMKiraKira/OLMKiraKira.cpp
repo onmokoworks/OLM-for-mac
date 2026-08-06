@@ -1,6 +1,7 @@
 #include "OLMKiraKira.h"
 #include "AEFX_SuiteHandlerTemplate.h"
 #include "../../core/kirakira_gaussian.h"
+#include "../../core/kirakira_highlight.h"
 #include "../../core/kirakira_mode4.h"
 #include "../../core/kirakira_warp.h"
 #include "../../core/kirakira_merge2.h"
@@ -272,21 +273,6 @@ static std::vector<float> DirectionBoxBlur(
 	return src;
 }
 
-static std::vector<float> IsotropicBoxBlur(
-	const std::vector<float> &input,
-	A_long width,
-	A_long height,
-	A_long kernel_size,
-	A_long passes)
-{
-	std::vector<float> result = input;
-	for (A_long pass = 0; pass < passes; ++pass) {
-		result = DirectionBoxBlur(result, width, height, kernel_size, 1, 0, 1);
-		result = DirectionBoxBlur(result, width, height, kernel_size, 0, 1, 1);
-	}
-	return result;
-}
-
 static std::vector<float> WarpGetRotDirect(
 	const std::vector<float> &input,
 	A_long src_width,
@@ -551,7 +537,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		// The actual Mode-4 Highlight branch shares Mode 2's three isotropic
 		// box-filter calls.  It does not use the directional Mode-4 recurrence.
 		const A_long highlight_passes = info.blur_mode == 1 ? 1 : 3;
-		highlight = IsotropicBoxBlur(
+		highlight = olm::kirakira::highlight_isotropic_box_blur(
 			seed, work_width, work_height, highlight_radius * 2 + 1, highlight_passes);
 	}
 
