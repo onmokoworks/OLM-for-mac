@@ -5,7 +5,7 @@
 | Commands | Dynamic production EffectMain PF16 classic chain and PF32 SmartRender callback/parameter chain, both joined to actual AEX core and installed identity | Actual-AEX exported entry and AE-host execution are not claimed |
 | Versions | v1 and v2 actual classifier/worker → production for PF16/PF32 | No new host claim |
 | Depths | PF16 and PF32 current emulation fixtures; PF8 prior ledger slices | Consolidated new PF8 fixture is optional |
-| Key | non-invert/invert thresholds, non-invert white endpoint, both Gamma Colors interactions | Invert white endpoint or other color endpoints |
+| Key | non-invert/invert thresholds, non-invert and invert white endpoints, both Gamma Colors interactions | Other color endpoints |
 | Gamma | None, All Colors, Gamma Colors, values 1.0 and 2.4 | Intermediate values |
 | Smoothing | Smoothness 0/100, Range 0/1/255, Extra Smooth 0/100 | Other cross-parameter combinations |
 | Palette | natural counts 1..5, reorder, duplicate, tolerance | Count 6 is direct-owner-only and forbidden publicly |

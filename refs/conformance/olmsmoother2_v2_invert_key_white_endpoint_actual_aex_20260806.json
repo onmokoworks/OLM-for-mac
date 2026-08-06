@@ -1,0 +1,79 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "No Gamma UI interaction",
+    "No multi-color key palette",
+    "No exact PF16 tolerance tie",
+    "No AE host runtime claim"
+  ],
+  "decode_lut_sha256": "11056c2feda87964204a53471e172ae6fb6039a0c3120f6277c7ff115fe88cba",
+  "fixtures": [
+    {
+      "class_plane_hex": "00000000000000000000000000ff00ff00ffff0000ffff00",
+      "classifier_instructions": 1426,
+      "depth": "PF16",
+      "equal": true,
+      "padding_per_row": 6,
+      "padding_preserved": true,
+      "palette_owner_instructions": 231,
+      "post_key_alpha": [
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "raw_hex": "00800080008000800080ff7f008000800080c07f00800080a5a5a5a5a5a50000bf7f0080008000000000000000000000006000600060a5a5a5a5a5a5",
+      "roles": [
+        "exact white match",
+        "inside near-white",
+        "inside threshold side",
+        "outside threshold side",
+        "far black",
+        "far gray"
+      ],
+      "worker_instructions": 3861
+    },
+    {
+      "class_plane_hex": "00000000000000000000000000ff00ff00ffff0000ffff00",
+      "classifier_instructions": 1426,
+      "depth": "PF32",
+      "equal": true,
+      "padding_per_row": 12,
+      "padding_preserved": true,
+      "palette_owner_instructions": 231,
+      "post_key_alpha": [
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "raw_hex": "0000803f0000803f0000803f0000803f0000803f77be7f3f0000803f0000803f0000803f7b837f3f0000803f0000803fa5a5a5a5a5a5a5a5a5a5a5a500000000643b7f3f0000803f0000803f00000000000000000000000000000000000000000000403f0000403f0000403fa5a5a5a5a5a5a5a5a5a5a5a5",
+      "roles": [
+        "exact white match",
+        "inside near-white",
+        "inside threshold side",
+        "outside threshold side",
+        "far black",
+        "far gray"
+      ],
+      "worker_instructions": 3796
+    }
+  ],
+  "inverse_lut_sha256": "b7014467dcae06109111302b8c930494950d27b817d1390d6434605795772fbc",
+  "key_contract": {
+    "invert_semantics": "retain alpha only for strict per-channel tolerance matches",
+    "public_color_endpoint": "255,255,255",
+    "rgb": [
+      1.0,
+      1.0,
+      1.0
+    ]
+  },
+  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "scope": "PF16/PF32 natural v2 invert Key Color white public RGB endpoint, exact/inside/outside/far cases, gamma off, Range1, padded3x2, LUTs",
+  "verdict": "PASS_V2_INVERT_WHITE_KEY_ENDPOINT_TO_PRODUCTION_EXACT"
+}
