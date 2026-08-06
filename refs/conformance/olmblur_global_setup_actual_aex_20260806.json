@@ -1,0 +1,22 @@
+{
+  "actual_aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+  "actual_command": 1,
+  "actual_exported_entry": "0x18000a970",
+  "actual_payload_sha256": "920073b7bbdb1d6c1a1314ad7d518f61c3e616053b11bdcd6575a44fb3bf7612",
+  "actual_return_code": 0,
+  "meaning": "Current production advertises the exact actual-2025-AEX version and capability payload.",
+  "my_version": "0x00090800",
+  "not_proven": [
+    "host interpretation of each capability bit across AE versions",
+    "native After Effects plugin load or registration",
+    "any other public command"
+  ],
+  "out_flags": "0x06000040",
+  "out_flags2": "0x08001400",
+  "payload_format": "little-endian uint32 my_version, out_flags, out_flags2",
+  "payload_hex": "000809004000000600140008",
+  "production_payload_sha256": "920073b7bbdb1d6c1a1314ad7d518f61c3e616053b11bdcd6575a44fb3bf7612",
+  "public_entrypoint": "PF_Cmd_GLOBAL_SETUP",
+  "schema": "olmblur.global-setup-actual-aex/1",
+  "status": "exact"
+}

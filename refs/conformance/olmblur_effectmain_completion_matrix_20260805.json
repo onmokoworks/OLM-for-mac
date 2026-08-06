@@ -4,7 +4,7 @@
   "oracle_binary_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
   "public_commands": [
     {"command": "PF_Cmd_ABOUT", "production_implemented": true, "actual_aex_bounded_invocation": false, "status": "source_only"},
-    {"command": "PF_Cmd_GLOBAL_SETUP", "production_implemented": true, "actual_aex_bounded_invocation": false, "status": "source_only"},
+    {"command": "PF_Cmd_GLOBAL_SETUP", "production_implemented": true, "actual_aex_bounded_invocation": true, "status": "actual_public_export_to_production_exact"},
     {"command": "PF_Cmd_PARAMS_SETUP", "production_implemented": true, "actual_aex_bounded_invocation": false, "status": "static_parameter_schema_only"},
     {"command": "PF_Cmd_RENDER", "production_implemented": true, "actual_aex_bounded_invocation": false, "status": "entrypoint_gap"},
     {"command": "PF_Cmd_SMART_PRE_RENDER", "production_implemented": true, "production_ae_free_synthetic_invocation": true, "actual_aex_bounded_invocation": false, "status": "production_effectmain_synthetic_exact"},
@@ -81,12 +81,22 @@
     "result": "pre/render errors zero; rect and callback contract exact; active output and alpha exact; PF_COPY row padding exact",
     "boundary": "Mac production EffectMain compiled from current source with synthetic suites; not an actual-AEX EffectMain or AE-host invocation"
   },
+  "global_setup_public_entrypoint_closed": {
+    "regression": "tools/emulation/test_olmblur_global_setup_actual_aex_20260806.py",
+    "evidence": "refs/conformance/olmblur_global_setup_actual_aex_20260806.json",
+    "actual_exported_entry": "0x18000a970",
+    "actual_command": 1,
+    "payload": "little-endian uint32 my_version, out_flags, out_flags2",
+    "expected_words": ["0x00090800", "0x06000040", "0x08001400"],
+    "result": "actual 2025 AEX public export and current production EffectMain return zero and write the same 12-byte payload",
+    "boundary": "bounded hostless command invocation; not native AE registration or host interpretation of capability bits"
+  },
   "evidence_boundary": "Worker rows execute actual AEX workers through bounded host-suite shims. Production dispatch rows compile and call Mac BlurRender directly with typed PF worlds and retained actual-AEX outputs. They do not invoke the exported EffectMain symbol or AE parameter checkout, so public-command cells remain explicitly separate.",
   "typed_blur_render_remaining_gaps": [],
   "largest_remaining_gaps": [
     "A bounded actual-AEX exported EffectMain command invocation with parameter checkout and SMART_RENDER callbacks.",
     "No typed Mac BlurRender adapter cell remains: PF8/PF16/PF32 Legacy and NonLegacy are all closed against retained actual-AEX fixtures.",
-    "ABOUT, GLOBAL_SETUP, PARAMS_SETUP, and RENDER lack standalone actual-AEX command fixtures."
+    "ABOUT, PARAMS_SETUP, and RENDER lack standalone actual-AEX command fixtures."
   ],
   "production_changed": false,
   "universal_rebuild_or_install_performed": false
