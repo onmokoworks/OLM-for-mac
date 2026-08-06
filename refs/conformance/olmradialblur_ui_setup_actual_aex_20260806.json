@@ -1,0 +1,710 @@
+{
+  "actual_aex": {
+    "entry": "0x180010540",
+    "globals": {
+      "my_version": 622592,
+      "out_flags": 100696128,
+      "out_flags2": 134222856
+    },
+    "parameters": [
+      {
+        "choices_count": 2,
+        "default": 1,
+        "disk_id": 1,
+        "flags": 98,
+        "index": 1,
+        "name": "Blur Type",
+        "type": 7,
+        "ui_flags": 0
+      },
+      {
+        "default_components": [
+          50.0,
+          50.0
+        ],
+        "disk_id": 2,
+        "flags": 96,
+        "index": 2,
+        "name": "Center",
+        "type": 6,
+        "ui_flags": 0
+      },
+      {
+        "disk_id": 3,
+        "flags": 32,
+        "index": 3,
+        "name": "Outer Blur",
+        "type": 13,
+        "ui_flags": 0
+      },
+      {
+        "default": 0,
+        "disk_id": 4,
+        "flags": 1,
+        "index": 4,
+        "name": "Strength",
+        "slider_max": 2000,
+        "slider_min": 0,
+        "type": 1,
+        "ui_flags": 64,
+        "valid_max": 2000,
+        "valid_min": 0
+      },
+      {
+        "choices_count": 3,
+        "default": 1,
+        "disk_id": 28,
+        "flags": 98,
+        "index": 5,
+        "name": "Offset Mode",
+        "type": 7,
+        "ui_flags": 0
+      },
+      {
+        "default": 0,
+        "disk_id": 29,
+        "flags": 1,
+        "index": 6,
+        "name": "Offset",
+        "slider_max": 500,
+        "slider_min": 0,
+        "type": 1,
+        "ui_flags": 64,
+        "valid_max": 500,
+        "valid_min": 0
+      },
+      {
+        "default": 0,
+        "disk_id": 5,
+        "flags": 1,
+        "index": 7,
+        "name": "Edge Fade",
+        "slider_max": 100,
+        "slider_min": 0,
+        "type": 1,
+        "ui_flags": 64,
+        "valid_max": 100,
+        "valid_min": 0
+      },
+      {
+        "disk_id": 6,
+        "flags": 0,
+        "index": 8,
+        "name": "",
+        "type": 14,
+        "ui_flags": 0
+      },
+      {
+        "disk_id": 7,
+        "flags": 32,
+        "index": 9,
+        "name": "Inner Blur",
+        "type": 13,
+        "ui_flags": 0
+      },
+      {
+        "default": 0,
+        "disk_id": 8,
+        "flags": 1,
+        "index": 10,
+        "name": "Strength",
+        "slider_max": 2000,
+        "slider_min": 0,
+        "type": 1,
+        "ui_flags": 64,
+        "valid_max": 2000,
+        "valid_min": 0
+      },
+      {
+        "choices_count": 3,
+        "default": 1,
+        "disk_id": 30,
+        "flags": 98,
+        "index": 11,
+        "name": "Offset Mode",
+        "type": 7,
+        "ui_flags": 0
+      },
+      {
+        "default": 0,
+        "disk_id": 31,
+        "flags": 1,
+        "index": 12,
+        "name": "Offset",
+        "slider_max": 500,
+        "slider_min": 0,
+        "type": 1,
+        "ui_flags": 64,
+        "valid_max": 500,
+        "valid_min": 0
+      },
+      {
+        "default": 0,
+        "disk_id": 9,
+        "flags": 1,
+        "index": 13,
+        "name": "Edge Fade",
+        "slider_max": 100,
+        "slider_min": 0,
+        "type": 1,
+        "ui_flags": 64,
+        "valid_max": 100,
+        "valid_min": 0
+      },
+      {
+        "disk_id": 10,
+        "flags": 0,
+        "index": 14,
+        "name": "",
+        "type": 14,
+        "ui_flags": 0
+      },
+      {
+        "default": 1,
+        "disk_id": 26,
+        "flags": 98,
+        "index": 15,
+        "name": "Repeat Border",
+        "type": 4,
+        "ui_flags": 0
+      },
+      {
+        "disk_id": 11,
+        "flags": 32,
+        "index": 16,
+        "name": "Ellipse",
+        "type": 13,
+        "ui_flags": 0
+      },
+      {
+        "default": 1.0,
+        "disk_id": 12,
+        "flags": 64,
+        "index": 17,
+        "name": "Ratio",
+        "precision": 2,
+        "slider_max": 5.0,
+        "slider_min": 1.0,
+        "type": 10,
+        "ui_flags": 0,
+        "valid_max": 5.0,
+        "valid_min": 1.0
+      },
+      {
+        "default_components": [
+          0.0
+        ],
+        "disk_id": 13,
+        "flags": 96,
+        "index": 18,
+        "name": "Angle",
+        "type": 3,
+        "ui_flags": 0
+      },
+      {
+        "disk_id": 14,
+        "flags": 0,
+        "index": 19,
+        "name": "",
+        "type": 14,
+        "ui_flags": 0
+      },
+      {
+        "default": 5.0,
+        "disk_id": 15,
+        "flags": 64,
+        "index": 20,
+        "name": "Quality",
+        "precision": 2,
+        "slider_max": 50.0,
+        "slider_min": 1.0,
+        "type": 10,
+        "ui_flags": 0,
+        "valid_max": 50.0,
+        "valid_min": 1.0
+      },
+      {
+        "default": 1.0,
+        "disk_id": 16,
+        "flags": 64,
+        "index": 21,
+        "name": "Brightness Gain",
+        "precision": 1,
+        "slider_max": 2.0,
+        "slider_min": 0.0,
+        "type": 10,
+        "ui_flags": 0,
+        "valid_max": 10.0,
+        "valid_min": 0.0
+      },
+      {
+        "default": 0.0,
+        "disk_id": 17,
+        "flags": 64,
+        "index": 22,
+        "name": "Size Variation",
+        "precision": 1,
+        "slider_max": 100.0,
+        "slider_min": 0.0,
+        "type": 10,
+        "ui_flags": 0,
+        "valid_max": 100.0,
+        "valid_min": 0.0
+      },
+      {
+        "disk_id": 18,
+        "flags": 32,
+        "index": 23,
+        "name": "Noise Parameters",
+        "type": 13,
+        "ui_flags": 0
+      },
+      {
+        "default": 0.0,
+        "disk_id": 19,
+        "flags": 64,
+        "index": 24,
+        "name": "Noise Variation",
+        "precision": 1,
+        "slider_max": 100.0,
+        "slider_min": 0.0,
+        "type": 10,
+        "ui_flags": 0,
+        "valid_max": 100.0,
+        "valid_min": 0.0
+      },
+      {
+        "choices_count": 3,
+        "default": 1,
+        "disk_id": 20,
+        "flags": 98,
+        "index": 25,
+        "name": "Noise Type",
+        "type": 7,
+        "ui_flags": 0
+      },
+      {
+        "disk_id": 21,
+        "flags": 98,
+        "index": 26,
+        "layer_default": 0,
+        "name": "Noise Layer",
+        "type": 0,
+        "ui_flags": 0
+      },
+      {
+        "default": 1,
+        "disk_id": 22,
+        "flags": 1,
+        "index": 27,
+        "name": "Seed",
+        "slider_max": 1000,
+        "slider_min": 1,
+        "type": 1,
+        "ui_flags": 64,
+        "valid_max": 1000,
+        "valid_min": 1
+      },
+      {
+        "default_components": [
+          0.0
+        ],
+        "disk_id": 23,
+        "flags": 96,
+        "index": 28,
+        "name": "Offset",
+        "type": 3,
+        "ui_flags": 0
+      },
+      {
+        "default": 10.0,
+        "disk_id": 24,
+        "flags": 64,
+        "index": 29,
+        "name": "Thickness",
+        "precision": 2,
+        "slider_max": 100.0,
+        "slider_min": 1.0,
+        "type": 10,
+        "ui_flags": 0,
+        "valid_max": 100.0,
+        "valid_min": 1.0
+      },
+      {
+        "disk_id": 25,
+        "flags": 0,
+        "index": 30,
+        "name": "",
+        "type": 14,
+        "ui_flags": 0
+      }
+    ],
+    "path": "plugins_2025/OLMRadialBlur.aex",
+    "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+  },
+  "claims_not_made": [
+    "actual custom preview drawing on Mac",
+    "EVENT selector equivalence",
+    "USER_CHANGED_PARAM or UPDATE_PARAMS_UI equivalence"
+  ],
+  "gates": {
+    "actual_flags_and_ui_flags_durably_recorded": true,
+    "actual_lifecycle_and_30_add_param_calls": true,
+    "global_payloads_durably_recorded": true,
+    "num_params_including_input_exact_31": true,
+    "order_disk_type_name_defaults_ranges_precision_exact": true
+  },
+  "intentional_boundary": {
+    "actual_only_global_bits": [
+      "PF_OutFlag_CUSTOM_UI",
+      "PF_OutFlag_SEND_UPDATE_PARAMS_UI",
+      "PF_OutFlag2_PARAM_GROUP_START_COLLAPSED_FLAG"
+    ],
+    "classification": "custom_ui_not_ported",
+    "parameter_flags_exact": false,
+    "reason": "The actual flags request supervised/custom UI selector behavior. The Mac EffectMain does not implement EVENT, USER_CHANGED_PARAM, or UPDATE_PARAMS_UI; advertising those bits without their handlers is unsafe.",
+    "user_visible_fix": "GROUP_START/GROUP_END and standard AE controls are exact; PF_Param_NO_DATA preview placeholders are absent."
+  },
+  "mac_production": {
+    "globals": {
+      "my_version": 622592,
+      "out_flags": 33554496,
+      "out_flags2": 134222848
+    },
+    "parameters": [
+      {
+        "choices_count": 2,
+        "default": 1,
+        "disk_id": 1,
+        "flags": 0,
+        "index": 1,
+        "name": "Blur Type",
+        "type": 7,
+        "ui_flags": 0
+      },
+      {
+        "default_components": [
+          50.0,
+          50.0
+        ],
+        "disk_id": 2,
+        "flags": 0,
+        "index": 2,
+        "name": "Center",
+        "type": 6,
+        "ui_flags": 0
+      },
+      {
+        "disk_id": 3,
+        "flags": 0,
+        "index": 3,
+        "name": "Outer Blur",
+        "type": 13,
+        "ui_flags": 0
+      },
+      {
+        "default": 0,
+        "disk_id": 4,
+        "flags": 0,
+        "index": 4,
+        "name": "Strength",
+        "slider_max": 2000,
+        "slider_min": 0,
+        "type": 1,
+        "ui_flags": 0,
+        "valid_max": 2000,
+        "valid_min": 0
+      },
+      {
+        "choices_count": 3,
+        "default": 1,
+        "disk_id": 28,
+        "flags": 0,
+        "index": 5,
+        "name": "Offset Mode",
+        "type": 7,
+        "ui_flags": 0
+      },
+      {
+        "default": 0,
+        "disk_id": 29,
+        "flags": 0,
+        "index": 6,
+        "name": "Offset",
+        "slider_max": 500,
+        "slider_min": 0,
+        "type": 1,
+        "ui_flags": 0,
+        "valid_max": 500,
+        "valid_min": 0
+      },
+      {
+        "default": 0,
+        "disk_id": 5,
+        "flags": 0,
+        "index": 7,
+        "name": "Edge Fade",
+        "slider_max": 100,
+        "slider_min": 0,
+        "type": 1,
+        "ui_flags": 0,
+        "valid_max": 100,
+        "valid_min": 0
+      },
+      {
+        "disk_id": 6,
+        "flags": 0,
+        "index": 8,
+        "name": "",
+        "type": 14,
+        "ui_flags": 0
+      },
+      {
+        "disk_id": 7,
+        "flags": 0,
+        "index": 9,
+        "name": "Inner Blur",
+        "type": 13,
+        "ui_flags": 0
+      },
+      {
+        "default": 0,
+        "disk_id": 8,
+        "flags": 0,
+        "index": 10,
+        "name": "Strength",
+        "slider_max": 2000,
+        "slider_min": 0,
+        "type": 1,
+        "ui_flags": 0,
+        "valid_max": 2000,
+        "valid_min": 0
+      },
+      {
+        "choices_count": 3,
+        "default": 1,
+        "disk_id": 30,
+        "flags": 0,
+        "index": 11,
+        "name": "Offset Mode",
+        "type": 7,
+        "ui_flags": 0
+      },
+      {
+        "default": 0,
+        "disk_id": 31,
+        "flags": 0,
+        "index": 12,
+        "name": "Offset",
+        "slider_max": 500,
+        "slider_min": 0,
+        "type": 1,
+        "ui_flags": 0,
+        "valid_max": 500,
+        "valid_min": 0
+      },
+      {
+        "default": 0,
+        "disk_id": 9,
+        "flags": 0,
+        "index": 13,
+        "name": "Edge Fade",
+        "slider_max": 100,
+        "slider_min": 0,
+        "type": 1,
+        "ui_flags": 0,
+        "valid_max": 100,
+        "valid_min": 0
+      },
+      {
+        "disk_id": 10,
+        "flags": 0,
+        "index": 14,
+        "name": "",
+        "type": 14,
+        "ui_flags": 0
+      },
+      {
+        "default": 1,
+        "disk_id": 26,
+        "flags": 0,
+        "index": 15,
+        "name": "Repeat Border",
+        "type": 4,
+        "ui_flags": 0
+      },
+      {
+        "disk_id": 11,
+        "flags": 0,
+        "index": 16,
+        "name": "Ellipse",
+        "type": 13,
+        "ui_flags": 0
+      },
+      {
+        "default": 1.0,
+        "disk_id": 12,
+        "flags": 0,
+        "index": 17,
+        "name": "Ratio",
+        "precision": 2,
+        "slider_max": 5.0,
+        "slider_min": 1.0,
+        "type": 10,
+        "ui_flags": 0,
+        "valid_max": 5.0,
+        "valid_min": 1.0
+      },
+      {
+        "default_components": [
+          0.0
+        ],
+        "disk_id": 13,
+        "flags": 0,
+        "index": 18,
+        "name": "Angle",
+        "type": 3,
+        "ui_flags": 0
+      },
+      {
+        "disk_id": 14,
+        "flags": 0,
+        "index": 19,
+        "name": "",
+        "type": 14,
+        "ui_flags": 0
+      },
+      {
+        "default": 5.0,
+        "disk_id": 15,
+        "flags": 0,
+        "index": 20,
+        "name": "Quality",
+        "precision": 2,
+        "slider_max": 50.0,
+        "slider_min": 1.0,
+        "type": 10,
+        "ui_flags": 0,
+        "valid_max": 50.0,
+        "valid_min": 1.0
+      },
+      {
+        "default": 1.0,
+        "disk_id": 16,
+        "flags": 0,
+        "index": 21,
+        "name": "Brightness Gain",
+        "precision": 1,
+        "slider_max": 2.0,
+        "slider_min": 0.0,
+        "type": 10,
+        "ui_flags": 0,
+        "valid_max": 10.0,
+        "valid_min": 0.0
+      },
+      {
+        "default": 0.0,
+        "disk_id": 17,
+        "flags": 0,
+        "index": 22,
+        "name": "Size Variation",
+        "precision": 1,
+        "slider_max": 100.0,
+        "slider_min": 0.0,
+        "type": 10,
+        "ui_flags": 0,
+        "valid_max": 100.0,
+        "valid_min": 0.0
+      },
+      {
+        "disk_id": 18,
+        "flags": 0,
+        "index": 23,
+        "name": "Noise Parameters",
+        "type": 13,
+        "ui_flags": 0
+      },
+      {
+        "default": 0.0,
+        "disk_id": 19,
+        "flags": 0,
+        "index": 24,
+        "name": "Noise Variation",
+        "precision": 1,
+        "slider_max": 100.0,
+        "slider_min": 0.0,
+        "type": 10,
+        "ui_flags": 0,
+        "valid_max": 100.0,
+        "valid_min": 0.0
+      },
+      {
+        "choices_count": 3,
+        "default": 1,
+        "disk_id": 20,
+        "flags": 0,
+        "index": 25,
+        "name": "Noise Type",
+        "type": 7,
+        "ui_flags": 0
+      },
+      {
+        "disk_id": 21,
+        "flags": 0,
+        "index": 26,
+        "layer_default": 0,
+        "name": "Noise Layer",
+        "type": 0,
+        "ui_flags": 0
+      },
+      {
+        "default": 1,
+        "disk_id": 22,
+        "flags": 0,
+        "index": 27,
+        "name": "Seed",
+        "slider_max": 1000,
+        "slider_min": 1,
+        "type": 1,
+        "ui_flags": 0,
+        "valid_max": 1000,
+        "valid_min": 1
+      },
+      {
+        "default_components": [
+          0.0
+        ],
+        "disk_id": 23,
+        "flags": 0,
+        "index": 28,
+        "name": "Offset",
+        "type": 3,
+        "ui_flags": 0
+      },
+      {
+        "default": 10.0,
+        "disk_id": 24,
+        "flags": 0,
+        "index": 29,
+        "name": "Thickness",
+        "precision": 2,
+        "slider_max": 100.0,
+        "slider_min": 1.0,
+        "type": 10,
+        "ui_flags": 0,
+        "valid_max": 100.0,
+        "valid_min": 1.0
+      },
+      {
+        "disk_id": 25,
+        "flags": 0,
+        "index": 30,
+        "name": "",
+        "type": 14,
+        "ui_flags": 0
+      }
+    ],
+    "source": "mac/OLMRadialBlur/OLMRadialBlur.cpp"
+  },
+  "status": "pass_bounded_public_ui_exact"
+}
