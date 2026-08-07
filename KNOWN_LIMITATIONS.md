@@ -1,0 +1,41 @@
+# OLM for Mac Public Beta — 既知の制限
+
+このベータは、Windows版OLM Toolsの全入力・全geometry・全パラメーター直積に対する
+完全互換を保証しません。`Exact`は、証拠に記録されたAEバージョン、レンダー経路、
+色深度、入力、geometry、設定値におけるbyte／raw word一致を意味します。
+
+## 共通
+
+- 主な検証環境はAfter Effects 26.3x87、CPU Software、working space None、linear
+  blending offです。
+- AEの素材import、premultiply／unpremultiply、色管理、codec、EXR出力はWindowsと
+  macOSで異なる場合があります。同じプラグイン演算でも最終ファイルが一致しないことが
+  あります。
+- GPUレンダー、異なるAEバージョン、第三者ホストは互換性主張の対象外です。
+- 現在のbundleはUniversal／ad-hoc署名を確認していますが、Developer ID署名とApple
+  notarizationは未実施です。ダウンロード先のMacでGatekeeperに拒否される可能性があります。
+- 未証明の設定では、安全のためエラーを返す、処理を拒否する、または限定経路へ入る場合が
+  あります。
+- Windows版と同じcustom UI、プレビュー制御、動的ラベルの全イベント経路は未証明です。
+
+## プラグイン別
+
+- OLMColorKey：Edge Blurのexact証拠は記録済みの小型geometry、single-key、方向、
+  amountの組合せに限定されます。
+- OLMDistanceGradation：主要な各モード・補間・背景・反転・blurは個別に検証していますが、
+  全コントロールの直積は未証明です。PF32 SmartRenderは元AEXのnative機能ではありません。
+- OLMDirectionalBlur：Noise Type 3 LayerのPF16/PF32は、記録済みtupleを中心とする
+  bounded対応です。Layer欠落、寸法不一致、未証明tupleはfail-closeする場合があります。
+- OLMRadialBlur：centered neutral InnerはPF8/PF16/PF32で複数geometryを実AEXと
+  bit完全一致確認済みです。off-center、非unit ratio、angle、quality、repeat、offset、
+  edge fade、noise、variationを含む全組合せは未証明です。custom preview controlも未証明です。
+- OLMSmoother2：key、invert、Gamma、range、paletteの主要分岐はbounded exactです。
+  全パラメーター直積は未証明です。
+- OLMKiraKira：Mode 1〜4の主要経路を実装しています。Mode 4の記録済みtupleは
+  PF8/PF16/PF32のfull callerまでexactですが、任意shape、length、ray、色、方向、
+  ramp／Merge Modeの全組合せとDrawbot custom UIは未証明です。
+- OLMSmoother v1：元AEXのnative depthはPF8/PF16です。32bpcプロジェクトではAEが
+  classic integer pluginの前後を変換するため、native PF32互換とは表現しません。
+
+より詳細な証拠境界は
+[リリース完成表](refs/conformance/olm_release_completion_matrix_20260806.md)を参照してください。

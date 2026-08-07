@@ -49,7 +49,12 @@ def main() -> int:
         "outer_mode2_helper": "out = ComposeMerge2Pixel(" in source,
         "unscaled_alpha_zero_test": "raw_alpha_sum = glow.a + source.a;" in core,
         "source_then_glow_weighting": "red = source_r + glow_r;" in core,
-        "mode2_typed_truncate": "? PixelTraits<PixelT>::WriteAexTruncate(out)" in source,
+        # The actual PF8/PF16 writers use CVTTSS2SI for both merge modes.
+        # The production path therefore no longer needs a mode-2-only ternary.
+        "mode2_typed_truncate": (
+            "*PixelAt<PixelT>(output, x, y) = PixelTraits<PixelT>::WriteAexTruncate(out);"
+            in source
+        ),
         "pf8_scale": "Clamp01(p.a) * 255.0f" in source,
         "pf16_scale": "truncate_merge2_channel(p.a, 32768.0f)" in source,
     }

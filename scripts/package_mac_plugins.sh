@@ -82,6 +82,15 @@ validation_notes="$stage/AE_VALIDATION_CHECKLIST.txt"
 validation_template="$stage/AE_VALIDATION_RESULT.template.json"
 pixel_validation_dir="$stage/AE_PIXEL_VALIDATION"
 
+# Public-facing documentation travels with the binaries. Keep this package
+# self-contained and free of checkout-machine absolute paths.
+cp "$ROOT/docs/INSTALL_JA.md" "$stage/INSTALL_JA.md"
+cp "$ROOT/KNOWN_LIMITATIONS.md" "$stage/KNOWN_LIMITATIONS.md"
+cp "$ROOT/refs/conformance/OLM_MAC_RELEASE_NOTES_20260806.md" "$stage/RELEASE_NOTES_JA.md"
+mkdir -p "$stage/refs/conformance"
+cp "$ROOT/refs/conformance/olm_release_completion_matrix_20260806.md" \
+  "$stage/refs/conformance/olm_release_completion_matrix_20260806.md"
+
 pixel_validation_presets=(
   "OLMBlur:olmblur:ae_pixel_olmblur_20260606:olmblur_request.zip"
   "OLMColorKey:olmcolorkey:ae_pixel_olmcolorkey_20260606:olmcolorkey_request.zip"
@@ -110,9 +119,6 @@ exactly one installed bundle per expected OLM plug-in.
 Manual fallback: copy the *.plugin bundles in this folder into MediaCore, then
 restart After Effects. Before manual copying, remove or move old OLM backup
 folders out of MediaCore; After Effects scans nested backup plug-ins too.
-
-These bundles were packaged from:
-$ROOT
 
 The packaging script verifies each binary has arm64 and x86_64 slices and passes
 codesign --verify before adding it to this archive.
@@ -240,11 +246,15 @@ done
   echo "{"
   echo "  \"kind\": \"olm_mac_plugin_package\","
   echo "  \"configuration\": \"$CONFIGURATION\","
-  echo "  \"source_root\": \"$ROOT\","
+  # Do not publish the packager machine's absolute checkout path.
+  echo "  \"source_root\": \"OLM-for-mac repository\","
   echo "  \"packaged_at\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\","
   echo "  \"install_notes\": \"INSTALL.txt\","
   echo "  \"validation_checklist\": \"AE_VALIDATION_CHECKLIST.txt\","
   echo "  \"validation_result_template\": \"AE_VALIDATION_RESULT.template.json\","
+  echo "  \"install_guide_ja\": \"INSTALL_JA.md\","
+  echo "  \"known_limitations\": \"KNOWN_LIMITATIONS.md\","
+  echo "  \"release_notes_ja\": \"RELEASE_NOTES_JA.md\","
   echo "  \"pixel_reference_profile\": \"$PIXEL_REFERENCE_PROFILE\","
   echo "  \"ae_pixel_validation_requests\": ["
   for idx in "${!pixel_validation_presets[@]}"; do

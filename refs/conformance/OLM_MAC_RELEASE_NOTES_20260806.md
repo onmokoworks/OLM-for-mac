@@ -1,4 +1,4 @@
-# OLM Mac 限定リリースノート — 2026-08-06
+# OLM for Mac Public Beta リリースノート — 2026-08-07
 
 ## リリース候補の状態
 
@@ -21,6 +21,9 @@ OLMKiraKira Mode 4 PF32内部経路、OLMSmoother v1 PF16内部経路のbounded�
 この文書での`Exact`は、該当レコード内のbyte一致、またはraw FLOAT32 word一致です。
 あらゆる画像や全コントロールの直積に対する主張ではありません。
 
+配布候補はUniversal／ad-hoc署名を検証しています。Developer ID署名とAppleの
+notarizationは未実施であり、ダウンロード先のGatekeeperに拒否される可能性があります。
+
 ## 対応範囲と重要な境界
 
 | プラグイン | リリース候補の主要モード／native depth | 重要な証拠境界 |
@@ -31,9 +34,9 @@ OLMKiraKira Mode 4 PF32内部経路、OLMSmoother v1 PF16内部経路のbounded�
 | OLMToonDilate | copy／dilate、fractional radius、frontier／tie／corner／eligibility；PF8／PF16／PF32 | padded／partial／empty worldとradius -1〜4を確認。現行PF32 radius 13 AE代表はhost smoke |
 | OLMDistanceGradation | Inside／Outside／Both、RGB／Layer、Constant／Linear／Sphere／Power、invert／background／blur；PF8／PF16／PF32限定 | 証明済みaxisとfamilyは全コントロール直積ではない。PF32 SmartRenderは元AEXのnative機能ではない |
 | OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3；PF8／PF16／PF32限定 | PF16 Type 3 Layerは16×16、angle 45、front 8、back 0、variation 100、neutral size／fade／tail、独立paddingに限定。Layer欠落・寸法不一致・他tupleはfail-close |
-| OLMRadialBlur | Zoom／Rotation／Inner；PF8／PF16／PF32 guard付き | PF8 centered neutral Inner Strength 1〜64は9×7、64×36、640×360で証明。PF16／PF32 Innerは9×7 guardを維持。未記載offset／ratio／angle／quality／repeat／edge／noise／variationはfail-close |
+| OLMRadialBlur | Zoom／Rotation／Inner；PF8／PF16／PF32 guard付き | PF8 centered neutral Inner Strength 1〜64は9×7、64×36、640×360で証明。さらにPF16／PF32を64×36 padded、PF16を640×360まで実AEXとbit exact確認し、Strength 3／33／64を含む。未記載offset／ratio／angle／quality／repeat／edge／noise／variationの全組合せへは一般化しない |
 | OLMSmoother2 | v1／v2 classifier、key／invert、Gamma None／All／Colors、range／extra、palette；PF8／PF16／PF32限定 | PF32 case07はraw artifact exactだが、同一runのWindows process／module証明がなく、process-attested AE exactとは呼ばない |
-| OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur；PF8／PF16／PF32限定 | Mode 4 Highlightの経験的0.62 gainを除去。記録済み4×1、radius 5、orange、directional 0ではactual AEX 16引数full callerのMakeSeed→3-pass 11×11、aggregation、Merge 1／PF32 writerが全段bit exact。未記載shape／tupleへは一般化しない |
+| OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur；PF8／PF16／PF32限定 | Mode 4 Highlightの経験的0.62 gainを除去。記録済み4×1、radius 5、orange、directional 0ではactual AEX 16引数full callerのMakeSeed→3-pass 11×11、aggregation、Merge 1からPF8／PF16／PF32 writerまで全段bit exact。未記載shape／tupleへは一般化しない |
 | OLMSmoother v1 | no-key／Color Key、smoothing range；native PF8／PF16 | PF8 canonical 960×540と保持済みkey pathはexact。PF16 walker／subhandler／MainKernel／Executorはactual AEXへ局所・10,000 pixel累積exact。Windows AE EXRの183語差は全点でhost Gamma 2.4境界。AEXにnative PF32 callbackはなく、32bpc projectではAEがclassic integer pluginの前後をhost-convertする |
 
 ## AE host境界
@@ -98,8 +101,8 @@ e582b0f368deb6dfbb34de2675e382d2222372705da043151d90dc895f7d7a0a
 ## 最終Mac検証結果
 
 ```text
-PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=441.93s
-captured-output-sha256 f254867e68a86b10085f5c3db44dd6b2e5f81409a080e3ccf4aec9043e93a11c
+PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=435.03s
+captured-output-sha256 f4a7186cfd2d6dc665f6cab35fdcee789564397fb6524c320c115723be2766d6
 Mac AE representatives 10 proven / 0 pending / 0 invalid
 Universal installed bundles 10 / 10
 Parameter UI registration 10 / 10（exact 7、bounded 3）

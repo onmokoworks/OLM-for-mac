@@ -1,0 +1,83 @@
+name: Public Beta 不具合報告
+description: OLM for Mac Public Betaの再現可能な問題を報告します
+title: "[Beta] "
+labels: ["bug", "public-beta"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        共有できない素材や個人情報は添付しないでください。可能なら最小プロジェクトで再現してください。
+  - type: input
+    id: plugin
+    attributes:
+      label: プラグイン名
+      placeholder: OLMRadialBlur
+    validations:
+      required: true
+  - type: input
+    id: ae_version
+    attributes:
+      label: After Effectsバージョン
+      placeholder: 26.3x87
+    validations:
+      required: true
+  - type: dropdown
+    id: machine
+    attributes:
+      label: Mac
+      options:
+        - Apple Silicon
+        - Intel
+    validations:
+      required: true
+  - type: dropdown
+    id: bit_depth
+    attributes:
+      label: プロジェクト色深度
+      options:
+        - 8 bpc
+        - 16 bpc
+        - 32 bpc
+    validations:
+      required: true
+  - type: input
+    id: geometry
+    attributes:
+      label: フレームサイズ
+      placeholder: 1920x1080
+    validations:
+      required: true
+  - type: textarea
+    id: parameters
+    attributes:
+      label: エフェクト設定
+      description: 変更したものだけでなく、可能なら全パラメーター値を記載してください。
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 再現手順
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: 実際の結果・警告文
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期待した結果／Windows版の結果
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: 事前確認
+      options:
+        - label: MediaCore内に同じOLMプラグインが重複していないことを確認しました
+          required: true
+        - label: 重要なプロジェクトではなく、複製または最小プロジェクトで確認しました
+          required: true

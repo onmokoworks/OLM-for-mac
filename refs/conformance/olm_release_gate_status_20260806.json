@@ -2,10 +2,10 @@
   "claim_boundary": "Release integration only: ten-lane fixed fixtures, installed Universal identities, and one current-Mac-AE load/render witness per plugin. This manifest does not promote unlisted geometries, parameters, bit depths, or AE exactness. Seven Windows AE release-boundary observations are accepted; cross-host exactness remains a per-plugin claim.",
   "fixed_fixture_regression": {
     "boundary": "Only commands enumerated by the ten fixed-fixture lanes; slow RadialBlur full replay is excluded.",
-    "output_sha256": "f254867e68a86b10085f5c3db44dd6b2e5f81409a080e3ccf4aec9043e93a11c",
+    "output_sha256": "f4a7186cfd2d6dc665f6cab35fdcee789564397fb6524c320c115723be2766d6",
     "returncode": 0,
     "state": "proven",
-    "summary": "PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=441.93s",
+    "summary": "PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=435.03s",
     "tail": [
       "      |                                                      ^",
       "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here",
@@ -29,7 +29,7 @@
       "1 warning generated."
     ]
   },
-  "generated_at": "2026-08-06T15:45:17.658774+00:00",
+  "generated_at": "2026-08-07T11:49:41.044664+00:00",
   "mac_ae_representative": {
     "counts": {
       "invalid": 0,
@@ -272,7 +272,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMKiraKira",
-        "sha256": "ce70113ad96052247321657bfeaed178233465806ac17d79c4dc8361f96ba395",
+        "sha256": "d0c411c006bc61a7461d24380ec2cc17634bffb2e08b26cc583e06f013908a28",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -283,7 +283,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMRadialBlur",
-        "sha256": "807942d5a3062ca1c9250e444af6dd15f1353fa42142dfcdc8d0b90a8169f558",
+        "sha256": "dfac5965c2400d4141526d1f43ae277c099ac14a781f3bc8bea10165a0f36a29",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -321,8 +321,8 @@
         "universal_exact": true
       }
     ],
-    "preflight_status": "ae_not_running",
-    "returncode": 2,
+    "preflight_status": "ready_for_hash_bound_host_runners",
+    "returncode": 0,
     "state": "proven"
   },
   "windows_ae_release_boundary": {

@@ -1,4 +1,4 @@
-# OLM for Mac
+# OLM for Mac — Public Beta
 
 Windows版OLM ToolsのAfter Effectsプラグイン（AEX）を、macOS／Apple Silicon向けの
 Universalプラグインとして互換移植するプロジェクトです。
@@ -7,9 +7,22 @@ Universalプラグインとして互換移植するプロジェクトです。
 Softwareレンダー、bit-depth、入力、geometry、パラメーターについて、Windows AEX／
 Windows AEとピクセルおよび必要な内部値が完全一致することを合格条件にしています。
 
+## Public Betaについて
+
+このリポジトリは現在、公開ベータとしての配布準備中です。主要な処理経路は
+Windows AEXを直接実行した結果やWindows／Mac AEの保存済み結果と照合していますが、
+Windows版の全入力・全geometry・全パラメーター直積との完全互換を保証する正式版では
+ありません。重要なプロジェクトでは複製を作り、出力を確認してから使用してください。
+
+不具合報告には、プラグイン名、After Effectsのバージョン、プロジェクト色深度、
+フレームサイズ、設定値、再現素材または最小プロジェクトを添えてください。
+
+詳しい導入方法は[インストールガイド](docs/INSTALL_JA.md)、既知の制限は
+[KNOWN_LIMITATIONS.md](KNOWN_LIMITATIONS.md)を参照してください。
+
 ## 現在の状態
 
-2026-08-06時点のMacリリース候補は、次の統合ゲートを通過しています。
+2026-08-07時点のMacリリース候補（Public Beta）は、次の統合ゲートを通過しています。
 
 - 全10プラグインの固定fixture回帰：PASS
 - 現行Mac AEでのロード／代表レンダー：10/10
@@ -17,8 +30,10 @@ Windows AEとピクセルおよび必要な内部値が完全一致すること�
 - 対象ホスト：After Effects `26.3x87`、Softwareレンダー
 - 最終Mac統合ゲート：`release_gate_pass`
 
-残っているcross-host校正は、Windows AEで取得する7行だけです。Windowsが利用可能に
-なるまでは、新しいパラメーター族の探索を止め、現在のMac候補を固定しています。
+Windows AEで取得する7行として固定した同一条件校正は、受領・検証済みです。
+ただしWindows／MacのAE hostが
+素材import、premultiply、色管理、書き出しで異なる場合があるため、最終EXR全体の
+包括的なcross-host一致は主張しません。
 
 詳しい対応範囲と制限は、次の文書を正とします。
 
@@ -93,7 +108,7 @@ python3 -m unittest \
 `Exact`は、その証拠レコード内でのbyte一致、またはraw FLOAT32 word一致です。
 PNGやEXRファイル全体のSHAはmetadataで変わるため、必要に応じて生sampleを比較します。
 
-## Windowsで残っている作業
+## Windows AE境界の記録
 
 実行対象は次のhash固定パッケージだけです。
 
@@ -105,8 +120,8 @@ SHA-256：
 6a060641dc867cbb5cb858136f6fd294fb49d274fa252cec71459bc9b20a4652
 ```
 
-取得するのはColorKeep PF8／PF16／PF32、OLMKiraKira Mode 4
-PF8／PF16／PF32、OLMSmoother v1 PF16の計7行です。返却後は次で検証します。
+ColorKeep PF8／PF16／PF32、OLMKiraKira Mode 4 PF8／PF16／PF32、
+OLMSmoother v1 PF16の計7行を取得・受領済みです。返却物は次で再検証できます。
 
 ```sh
 python3 scripts/verify_windows_ae_release_boundary_minimal_20260806.py \
@@ -154,8 +169,10 @@ python3 scripts/verify_windows_ae_release_boundary_minimal_20260806.py \
 ## English summary
 
 This repository ports the Windows OLM After Effects plug-ins to Universal
-macOS/Apple Silicon plug-ins. The Mac release candidate passes all ten fixed
+macOS/Apple Silicon plug-ins. The Public Beta candidate passes all ten fixed
 fixture lanes, ten current-Mac-AE representative renders, and all installed
 Universal/signature/identity checks. Exactness claims remain limited to the
 declared host, depths, fixtures, geometries and parameter boundaries. Seven
-same-contract Windows AE calibration rows remain pending.
+same-contract Windows AE calibration rows are accepted. This is a bounded
+compatibility claim, not a guarantee over every input, geometry, parameter
+combination, custom UI path, or host color pipeline.
