@@ -55,7 +55,7 @@ def source_frame(output_seed: bool = False) -> bytes:
                     (x * 7919 + y * 911) % 32769,
                 )
             struct.pack_into("<4H", raw, y * ROWBYTES + x * 8, *argb)
-        raw[y * ROWBYTES + VISIBLE:(y + 1) * ROWBYTES] = bytes([0xA0 + y]) * (ROWBYTES - VISIBLE)
+        raw[y * ROWBYTES + VISIBLE:(y + 1) * ROWBYTES] = bytes([(0xA0 + y) & 0xFF]) * (ROWBYTES - VISIBLE)
     return bytes(raw)
 
 
@@ -135,7 +135,7 @@ for(int y=0;y<H;y++)for(int x=0;x<RB-W*8;x++)ob[y*RB+W*8+x]=(unsigned char)(0xa0
 PF_EffectWorld iw{{}},ow{{}};iw.data=(PF_PixelPtr)ib.data();iw.rowbytes=RB;iw.width=W;iw.height=H;ow.data=(PF_PixelPtr)ob.data();ow.rowbytes=RB;ow.width=W;ow.height=H;
 std::vector<float> polar(C*4),scalar(C),accum(C*4),maximum(C),normalized(C*4),finalrgba(W*H*4),coordinates(W*H*2);std::vector<A_u_char> eligibility(C);RadialBlurTestRotationCapture cap{{}};
 cap.polar_rgba=polar.data();cap.eligibility=eligibility.data();cap.source_scalar=scalar.data();cap.accum_rgba=accum.data();cap.max_alpha=maximum.data();cap.normalized_rgba=normalized.data();cap.final_rgba=finalrgba.data();cap.final_coordinates=coordinates.data();cap.capacity_cells=C;cap.capacity_output_pixels=W*H;
-OLMRadialBlurInfo i{{}};i.blur_type=2;i.center_x=4;i.center_y=3;i.outer_strength={FIXTURE_OUTER_STRENGTH};i.outer_offset_mode={FIXTURE_OUTER_OFFSET_MODE};i.outer_offset={FIXTURE_OUTER_OFFSET};i.inner_strength={FIXTURE_INNER_STRENGTH};i.inner_offset_mode=1;i.repeat_border=TRUE;i.ratio=1;i.quality=5;i.brightness_gain=1;i.noise_type=1;i.seed=1;i.thickness=10;i.comp_width=W;i.comp_height=H;
+OLMRadialBlurInfo i{{}};i.blur_type=2;i.center_x={FIXTURE_CENTER_X};i.center_y={FIXTURE_CENTER_Y};i.outer_strength={FIXTURE_OUTER_STRENGTH};i.outer_offset_mode={FIXTURE_OUTER_OFFSET_MODE};i.outer_offset={FIXTURE_OUTER_OFFSET};i.inner_strength={FIXTURE_INNER_STRENGTH};i.inner_offset_mode=1;i.repeat_border=TRUE;i.ratio=1;i.quality=5;i.brightness_gain=1;i.noise_type=1;i.seed=1;i.thickness=10;i.comp_width=W;i.comp_height=H;
 g_rotation_test_capture=&cap;auto e=RenderRotationTyped<PF_Pixel16>(&iw,&ow,i);g_rotation_test_capture=nullptr;if(e||cap.written_cells!=C)return 3;
 std::ofstream(argv[2],std::ios::binary).write((char*)ob.data(),ob.size());std::ofstream(argv[3],std::ios::binary).write((char*)polar.data(),polar.size()*4);std::ofstream(argv[4],std::ios::binary).write((char*)scalar.data(),scalar.size()*4);std::ofstream(argv[5],std::ios::binary).write((char*)accum.data(),accum.size()*4);std::ofstream(argv[6],std::ios::binary).write((char*)maximum.data(),maximum.size()*4);std::ofstream(argv[7],std::ios::binary).write((char*)finalrgba.data(),finalrgba.size()*4);std::ofstream(argv[8],std::ios::binary).write((char*)coordinates.data(),coordinates.size()*4);}}
 ''')

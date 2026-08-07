@@ -1,0 +1,259 @@
+{
+  "admitted_rule": "PF16/PF32 equal positive input/output geometry, centered center/comp, rowbytes >= visible bytes, Inner Strength 1..64, neutral remaining parameters",
+  "aex": {
+    "identity_exact": true,
+    "path": "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+  },
+  "cases": [
+    {
+      "actual_aex_hashes": {
+        "accum": "a7074660df2eec8e3f819d48c52f87fd63d957ab380e73cd9f0c23b6b9429567",
+        "coordinates": "9d5e75f26c2cfc5ba622cf11514dc3fd535437279163e9ba4ca624a44747121f",
+        "final_rgba": "10ef655e7b30688581c59f1fbe409cbec14b2af6b65f503cd3425149a0a09b28",
+        "max_alpha": "8cec5fe999d741bdb7466fa7085d07105205ac9602b723715b7ff599d093168b",
+        "output": "390723b2c13fd3bf3861a002b1aff45038ff155fc8131aab57471c1f574c476c",
+        "polar": "71135389bc8d8abac711970b420c9e5362bbb833c0f6338f848fd233bbe00958",
+        "source_scalar": "0bc32d4eaaa84471a57aad82845e22c1c4dc403f688c5466c7cf6f371bf8fb0d"
+      },
+      "bit_depth": 16,
+      "effective_span": 2,
+      "geometry": {
+        "height": 36,
+        "padding_bytes": 16,
+        "rowbytes": 528,
+        "visible_bytes": 512,
+        "width": 64
+      },
+      "inner_strength": 3,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "production_hashes": {
+        "accum": "a7074660df2eec8e3f819d48c52f87fd63d957ab380e73cd9f0c23b6b9429567",
+        "coordinates": "9d5e75f26c2cfc5ba622cf11514dc3fd535437279163e9ba4ca624a44747121f",
+        "final_rgba": "10ef655e7b30688581c59f1fbe409cbec14b2af6b65f503cd3425149a0a09b28",
+        "max_alpha": "8cec5fe999d741bdb7466fa7085d07105205ac9602b723715b7ff599d093168b",
+        "output": "390723b2c13fd3bf3861a002b1aff45038ff155fc8131aab57471c1f574c476c",
+        "polar": "71135389bc8d8abac711970b420c9e5362bbb833c0f6338f848fd233bbe00958",
+        "source_scalar": "0bc32d4eaaa84471a57aad82845e22c1c4dc403f688c5466c7cf6f371bf8fb0d"
+      },
+      "status": "exact"
+    },
+    {
+      "actual_aex_hashes": {
+        "accum": "7c9150d327129e3a576044a0566f7f91b1443fb76d1e58b79bed501ac93de3a4",
+        "coordinates": "9d5e75f26c2cfc5ba622cf11514dc3fd535437279163e9ba4ca624a44747121f",
+        "final_rgba": "a2d4295cb7b42766c183df4b747e3bc37d95091bd8ec002522cd049c1c3a398e",
+        "max_alpha": "85cdfdc1c6676ff56b999dc89fb4e2cb989c8f5a25d4fff75f131db2c3a05849",
+        "output": "f461cf3951aef1cd1e0851bb2c3225791b9061da3410c85c516ecc69367a714c",
+        "polar": "71135389bc8d8abac711970b420c9e5362bbb833c0f6338f848fd233bbe00958",
+        "source_scalar": "0bc32d4eaaa84471a57aad82845e22c1c4dc403f688c5466c7cf6f371bf8fb0d"
+      },
+      "bit_depth": 16,
+      "effective_span": 32,
+      "geometry": {
+        "height": 36,
+        "padding_bytes": 16,
+        "rowbytes": 528,
+        "visible_bytes": 512,
+        "width": 64
+      },
+      "inner_strength": 33,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "production_hashes": {
+        "accum": "7c9150d327129e3a576044a0566f7f91b1443fb76d1e58b79bed501ac93de3a4",
+        "coordinates": "9d5e75f26c2cfc5ba622cf11514dc3fd535437279163e9ba4ca624a44747121f",
+        "final_rgba": "a2d4295cb7b42766c183df4b747e3bc37d95091bd8ec002522cd049c1c3a398e",
+        "max_alpha": "85cdfdc1c6676ff56b999dc89fb4e2cb989c8f5a25d4fff75f131db2c3a05849",
+        "output": "f461cf3951aef1cd1e0851bb2c3225791b9061da3410c85c516ecc69367a714c",
+        "polar": "71135389bc8d8abac711970b420c9e5362bbb833c0f6338f848fd233bbe00958",
+        "source_scalar": "0bc32d4eaaa84471a57aad82845e22c1c4dc403f688c5466c7cf6f371bf8fb0d"
+      },
+      "status": "exact"
+    },
+    {
+      "actual_aex_hashes": {
+        "accum": "e443a2cef46872d72f9196b7c36df8f711fd4f4be9f89fbf006e052f3b287cb2",
+        "coordinates": "9d5e75f26c2cfc5ba622cf11514dc3fd535437279163e9ba4ca624a44747121f",
+        "final_rgba": "dad7c7cc247122509655616900fd1763ff2302a6af47ad6c7ce55a13d34cf1a1",
+        "max_alpha": "47965aafb9c30c72e3734927f0d2d2402de1d53ebb20b3ce737f74f78ecd2562",
+        "output": "213753ea60fd598ff2e5689e1572a95c895f2da55aab638a9fa5222083c955f9",
+        "polar": "71135389bc8d8abac711970b420c9e5362bbb833c0f6338f848fd233bbe00958",
+        "source_scalar": "0bc32d4eaaa84471a57aad82845e22c1c4dc403f688c5466c7cf6f371bf8fb0d"
+      },
+      "bit_depth": 16,
+      "effective_span": 63,
+      "geometry": {
+        "height": 36,
+        "padding_bytes": 16,
+        "rowbytes": 528,
+        "visible_bytes": 512,
+        "width": 64
+      },
+      "inner_strength": 64,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "production_hashes": {
+        "accum": "e443a2cef46872d72f9196b7c36df8f711fd4f4be9f89fbf006e052f3b287cb2",
+        "coordinates": "9d5e75f26c2cfc5ba622cf11514dc3fd535437279163e9ba4ca624a44747121f",
+        "final_rgba": "dad7c7cc247122509655616900fd1763ff2302a6af47ad6c7ce55a13d34cf1a1",
+        "max_alpha": "47965aafb9c30c72e3734927f0d2d2402de1d53ebb20b3ce737f74f78ecd2562",
+        "output": "213753ea60fd598ff2e5689e1572a95c895f2da55aab638a9fa5222083c955f9",
+        "polar": "71135389bc8d8abac711970b420c9e5362bbb833c0f6338f848fd233bbe00958",
+        "source_scalar": "0bc32d4eaaa84471a57aad82845e22c1c4dc403f688c5466c7cf6f371bf8fb0d"
+      },
+      "status": "exact"
+    },
+    {
+      "actual_aex_hashes": {
+        "accum": "a7074660df2eec8e3f819d48c52f87fd63d957ab380e73cd9f0c23b6b9429567",
+        "coordinates": "9d5e75f26c2cfc5ba622cf11514dc3fd535437279163e9ba4ca624a44747121f",
+        "final_rgba": "10ef655e7b30688581c59f1fbe409cbec14b2af6b65f503cd3425149a0a09b28",
+        "max_alpha": "8cec5fe999d741bdb7466fa7085d07105205ac9602b723715b7ff599d093168b",
+        "output": "f1da206e29c3d0627e89a6be978de27152e8e3e912d9925edea249e5230cb2e8",
+        "polar": "71135389bc8d8abac711970b420c9e5362bbb833c0f6338f848fd233bbe00958",
+        "source_scalar": "0bc32d4eaaa84471a57aad82845e22c1c4dc403f688c5466c7cf6f371bf8fb0d"
+      },
+      "bit_depth": 32,
+      "effective_span": 2,
+      "geometry": {
+        "height": 36,
+        "padding_bytes": 32,
+        "rowbytes": 1056,
+        "visible_bytes": 1024,
+        "width": 64
+      },
+      "inner_strength": 3,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "production_hashes": {
+        "accum": "a7074660df2eec8e3f819d48c52f87fd63d957ab380e73cd9f0c23b6b9429567",
+        "coordinates": "9d5e75f26c2cfc5ba622cf11514dc3fd535437279163e9ba4ca624a44747121f",
+        "final_rgba": "10ef655e7b30688581c59f1fbe409cbec14b2af6b65f503cd3425149a0a09b28",
+        "max_alpha": "8cec5fe999d741bdb7466fa7085d07105205ac9602b723715b7ff599d093168b",
+        "output": "f1da206e29c3d0627e89a6be978de27152e8e3e912d9925edea249e5230cb2e8",
+        "polar": "71135389bc8d8abac711970b420c9e5362bbb833c0f6338f848fd233bbe00958",
+        "source_scalar": "0bc32d4eaaa84471a57aad82845e22c1c4dc403f688c5466c7cf6f371bf8fb0d"
+      },
+      "status": "exact"
+    },
+    {
+      "actual_aex_hashes": {
+        "accum": "7c9150d327129e3a576044a0566f7f91b1443fb76d1e58b79bed501ac93de3a4",
+        "coordinates": "9d5e75f26c2cfc5ba622cf11514dc3fd535437279163e9ba4ca624a44747121f",
+        "final_rgba": "a2d4295cb7b42766c183df4b747e3bc37d95091bd8ec002522cd049c1c3a398e",
+        "max_alpha": "85cdfdc1c6676ff56b999dc89fb4e2cb989c8f5a25d4fff75f131db2c3a05849",
+        "output": "e6926730c2baa24d0e4650f4a319565db4e12d960e4b202e28c574356e1c65ba",
+        "polar": "71135389bc8d8abac711970b420c9e5362bbb833c0f6338f848fd233bbe00958",
+        "source_scalar": "0bc32d4eaaa84471a57aad82845e22c1c4dc403f688c5466c7cf6f371bf8fb0d"
+      },
+      "bit_depth": 32,
+      "effective_span": 32,
+      "geometry": {
+        "height": 36,
+        "padding_bytes": 32,
+        "rowbytes": 1056,
+        "visible_bytes": 1024,
+        "width": 64
+      },
+      "inner_strength": 33,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "production_hashes": {
+        "accum": "7c9150d327129e3a576044a0566f7f91b1443fb76d1e58b79bed501ac93de3a4",
+        "coordinates": "9d5e75f26c2cfc5ba622cf11514dc3fd535437279163e9ba4ca624a44747121f",
+        "final_rgba": "a2d4295cb7b42766c183df4b747e3bc37d95091bd8ec002522cd049c1c3a398e",
+        "max_alpha": "85cdfdc1c6676ff56b999dc89fb4e2cb989c8f5a25d4fff75f131db2c3a05849",
+        "output": "e6926730c2baa24d0e4650f4a319565db4e12d960e4b202e28c574356e1c65ba",
+        "polar": "71135389bc8d8abac711970b420c9e5362bbb833c0f6338f848fd233bbe00958",
+        "source_scalar": "0bc32d4eaaa84471a57aad82845e22c1c4dc403f688c5466c7cf6f371bf8fb0d"
+      },
+      "status": "exact"
+    },
+    {
+      "actual_aex_hashes": {
+        "accum": "e443a2cef46872d72f9196b7c36df8f711fd4f4be9f89fbf006e052f3b287cb2",
+        "coordinates": "9d5e75f26c2cfc5ba622cf11514dc3fd535437279163e9ba4ca624a44747121f",
+        "final_rgba": "dad7c7cc247122509655616900fd1763ff2302a6af47ad6c7ce55a13d34cf1a1",
+        "max_alpha": "47965aafb9c30c72e3734927f0d2d2402de1d53ebb20b3ce737f74f78ecd2562",
+        "output": "94d883b891ee4c9918a9e311b429d4ebd2e730c213c10432ec1029e471a8b291",
+        "polar": "71135389bc8d8abac711970b420c9e5362bbb833c0f6338f848fd233bbe00958",
+        "source_scalar": "0bc32d4eaaa84471a57aad82845e22c1c4dc403f688c5466c7cf6f371bf8fb0d"
+      },
+      "bit_depth": 32,
+      "effective_span": 63,
+      "geometry": {
+        "height": 36,
+        "padding_bytes": 32,
+        "rowbytes": 1056,
+        "visible_bytes": 1024,
+        "width": 64
+      },
+      "inner_strength": 64,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "production_hashes": {
+        "accum": "e443a2cef46872d72f9196b7c36df8f711fd4f4be9f89fbf006e052f3b287cb2",
+        "coordinates": "9d5e75f26c2cfc5ba622cf11514dc3fd535437279163e9ba4ca624a44747121f",
+        "final_rgba": "dad7c7cc247122509655616900fd1763ff2302a6af47ad6c7ce55a13d34cf1a1",
+        "max_alpha": "47965aafb9c30c72e3734927f0d2d2402de1d53ebb20b3ce737f74f78ecd2562",
+        "output": "94d883b891ee4c9918a9e311b429d4ebd2e730c213c10432ec1029e471a8b291",
+        "polar": "71135389bc8d8abac711970b420c9e5362bbb833c0f6338f848fd233bbe00958",
+        "source_scalar": "0bc32d4eaaa84471a57aad82845e22c1c4dc403f688c5466c7cf6f371bf8fb0d"
+      },
+      "status": "exact"
+    }
+  ],
+  "kind": "olmradialblur_rotation_typed_inner_geometry_20260807",
+  "scope": "Offline actual-AEX owner versus Mac production, centered neutral Rotation Inner; native PF16/PF32, padded rowbytes, internal planes and typed output; no Windows host or AE-host claim",
+  "status": "exact"
+}

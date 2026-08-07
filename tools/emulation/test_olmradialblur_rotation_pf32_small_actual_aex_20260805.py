@@ -15,6 +15,7 @@ SOURCE=ROOT/"mac/OLMRadialBlur/OLMRadialBlur.cpp"
 FIXTURE=ROOT/"refs/fixtures/olmradialblur_rotation_pf32_small_20260805"
 REPORT=ROOT/"refs/conformance/olmradialblur_rotation_pf32_small_actual_aex_20260805.json"
 W,H,ROWBYTES=9,7,160; VISIBLE=W*16; OWNER=0x180007D30; ROTATION_RETURN=0x18000835A
+CENTER_X,CENTER_Y=4.0,3.0
 OUTER_STRENGTH,OUTER_OFFSET_MODE,OUTER_OFFSET=4,1,0
 INNER_STRENGTH=0
 AEX_SHA256=base.AEX_SHA256
@@ -40,7 +41,7 @@ def source_frame(output_seed:bool=False)->bytes:
             else:
                 argb=(f32(0.5 if (x+y)%5==0 else 1.0),f32(((x*4093+y*257)%32769)/32768.0),f32(((x*1237+y*3559)%32769)/32768.0),f32(((x*7919+y*911)%32769)/32768.0))
             struct.pack_into("<4f",raw,y*ROWBYTES+x*16,*argb)
-        raw[y*ROWBYTES+VISIBLE:(y+1)*ROWBYTES]=bytes([0xC0+y])*(ROWBYTES-VISIBLE)
+        raw[y*ROWBYTES+VISIBLE:(y+1)*ROWBYTES]=bytes([(0xC0+y)&0xFF])*(ROWBYTES-VISIBLE)
     return bytes(raw)
 
 def build_world(loader:AexLoader,payload:bytes)->tuple[int,int]:
@@ -51,13 +52,14 @@ def build_world(loader:AexLoader,payload:bytes)->tuple[int,int]:
     return world,data
 
 def actual_aex()->dict[str,bytes]:
-    old=(base.W,base.H,base.ROWBYTES,base.VISIBLE,base.OWNER,base.ROTATION_RETURN,base.source_frame,base.build_world,base.FIXTURE_OUTER_STRENGTH,base.FIXTURE_OUTER_OFFSET_MODE,base.FIXTURE_OUTER_OFFSET,base.FIXTURE_INNER_STRENGTH)
+    old=(base.W,base.H,base.ROWBYTES,base.VISIBLE,base.OWNER,base.ROTATION_RETURN,base.source_frame,base.build_world,base.FIXTURE_CENTER_X,base.FIXTURE_CENTER_Y,base.FIXTURE_OUTER_STRENGTH,base.FIXTURE_OUTER_OFFSET_MODE,base.FIXTURE_OUTER_OFFSET,base.FIXTURE_INNER_STRENGTH)
     base.W,base.H,base.ROWBYTES,base.VISIBLE=W,H,ROWBYTES,VISIBLE;base.OWNER=OWNER;base.ROTATION_RETURN=ROTATION_RETURN;base.source_frame=source_frame;base.build_world=build_world
+    base.FIXTURE_CENTER_X,base.FIXTURE_CENTER_Y=CENTER_X,CENTER_Y
     base.FIXTURE_OUTER_STRENGTH,base.FIXTURE_OUTER_OFFSET_MODE,base.FIXTURE_OUTER_OFFSET=OUTER_STRENGTH,OUTER_OFFSET_MODE,OUTER_OFFSET
     base.FIXTURE_INNER_STRENGTH=INNER_STRENGTH
     try:return base.actual_aex()
     finally:
-        (base.W,base.H,base.ROWBYTES,base.VISIBLE,base.OWNER,base.ROTATION_RETURN,base.source_frame,base.build_world,base.FIXTURE_OUTER_STRENGTH,base.FIXTURE_OUTER_OFFSET_MODE,base.FIXTURE_OUTER_OFFSET,base.FIXTURE_INNER_STRENGTH)=old
+        (base.W,base.H,base.ROWBYTES,base.VISIBLE,base.OWNER,base.ROTATION_RETURN,base.source_frame,base.build_world,base.FIXTURE_CENTER_X,base.FIXTURE_CENTER_Y,base.FIXTURE_OUTER_STRENGTH,base.FIXTURE_OUTER_OFFSET_MODE,base.FIXTURE_OUTER_OFFSET,base.FIXTURE_INNER_STRENGTH)=old
 
 def mac_production(expected:dict[str,bytes])->dict[str,bytes]:
     angular,radius=struct.unpack("<II",expected["geometry"]);cells=angular*radius
@@ -68,7 +70,7 @@ def mac_production(expected:dict[str,bytes])->dict[str,bytes]:
 #include "{source}"
 #include <fstream>
 #include <vector>
-int main(int argc,char**argv){{constexpr int W={W},H={H},RB={ROWBYTES},C={cells};std::vector<unsigned char>ib(RB*H),ob(RB*H);std::ifstream(argv[1],std::ios::binary).read((char*)ib.data(),ib.size());for(int y=0;y<H;y++)for(int x=0;x<RB-W*16;x++)ob[y*RB+W*16+x]=(unsigned char)(0xc0+y);PF_EffectWorld iw{{}},ow{{}};iw.data=(PF_PixelPtr)ib.data();iw.rowbytes=RB;iw.width=W;iw.height=H;ow.data=(PF_PixelPtr)ob.data();ow.rowbytes=RB;ow.width=W;ow.height=H;std::vector<float>polar(C*4),scalar(C),accum(C*4),maximum(C),normalized(C*4),finalrgba(W*H*4),coordinates(W*H*2);std::vector<A_u_char>eligibility(C);RadialBlurTestRotationCapture cap{{}};cap.polar_rgba=polar.data();cap.eligibility=eligibility.data();cap.source_scalar=scalar.data();cap.accum_rgba=accum.data();cap.max_alpha=maximum.data();cap.normalized_rgba=normalized.data();cap.final_rgba=finalrgba.data();cap.final_coordinates=coordinates.data();cap.capacity_cells=C;cap.capacity_output_pixels=W*H;OLMRadialBlurInfo i{{}};i.blur_type=2;i.center_x=4;i.center_y=3;i.outer_strength={OUTER_STRENGTH};i.outer_offset_mode={OUTER_OFFSET_MODE};i.outer_offset={OUTER_OFFSET};i.inner_strength={INNER_STRENGTH};i.inner_offset_mode=1;i.repeat_border=TRUE;i.ratio=1;i.quality=5;i.brightness_gain=1;i.noise_type=1;i.seed=1;i.thickness=10;i.comp_width=W;i.comp_height=H;g_rotation_test_capture=&cap;auto e=RenderRotationTyped<PF_PixelFloat>(&iw,&ow,i);g_rotation_test_capture=nullptr;if(e||cap.written_cells!=C)return 3;std::ofstream(argv[2],std::ios::binary).write((char*)ob.data(),ob.size());std::ofstream(argv[3],std::ios::binary).write((char*)polar.data(),polar.size()*4);std::ofstream(argv[4],std::ios::binary).write((char*)scalar.data(),scalar.size()*4);std::ofstream(argv[5],std::ios::binary).write((char*)accum.data(),accum.size()*4);std::ofstream(argv[6],std::ios::binary).write((char*)maximum.data(),maximum.size()*4);std::ofstream(argv[7],std::ios::binary).write((char*)finalrgba.data(),finalrgba.size()*4);std::ofstream(argv[8],std::ios::binary).write((char*)coordinates.data(),coordinates.size()*4);}}
+int main(int argc,char**argv){{constexpr int W={W},H={H},RB={ROWBYTES},C={cells};std::vector<unsigned char>ib(RB*H),ob(RB*H);std::ifstream(argv[1],std::ios::binary).read((char*)ib.data(),ib.size());for(int y=0;y<H;y++)for(int x=0;x<RB-W*16;x++)ob[y*RB+W*16+x]=(unsigned char)(0xc0+y);PF_EffectWorld iw{{}},ow{{}};iw.data=(PF_PixelPtr)ib.data();iw.rowbytes=RB;iw.width=W;iw.height=H;ow.data=(PF_PixelPtr)ob.data();ow.rowbytes=RB;ow.width=W;ow.height=H;std::vector<float>polar(C*4),scalar(C),accum(C*4),maximum(C),normalized(C*4),finalrgba(W*H*4),coordinates(W*H*2);std::vector<A_u_char>eligibility(C);RadialBlurTestRotationCapture cap{{}};cap.polar_rgba=polar.data();cap.eligibility=eligibility.data();cap.source_scalar=scalar.data();cap.accum_rgba=accum.data();cap.max_alpha=maximum.data();cap.normalized_rgba=normalized.data();cap.final_rgba=finalrgba.data();cap.final_coordinates=coordinates.data();cap.capacity_cells=C;cap.capacity_output_pixels=W*H;OLMRadialBlurInfo i{{}};i.blur_type=2;i.center_x={CENTER_X};i.center_y={CENTER_Y};i.outer_strength={OUTER_STRENGTH};i.outer_offset_mode={OUTER_OFFSET_MODE};i.outer_offset={OUTER_OFFSET};i.inner_strength={INNER_STRENGTH};i.inner_offset_mode=1;i.repeat_border=TRUE;i.ratio=1;i.quality=5;i.brightness_gain=1;i.noise_type=1;i.seed=1;i.thickness=10;i.comp_width=W;i.comp_height=H;g_rotation_test_capture=&cap;auto e=RenderRotationTyped<PF_PixelFloat>(&iw,&ow,i);g_rotation_test_capture=nullptr;if(e||cap.written_cells!=C)return 3;std::ofstream(argv[2],std::ios::binary).write((char*)ob.data(),ob.size());std::ofstream(argv[3],std::ios::binary).write((char*)polar.data(),polar.size()*4);std::ofstream(argv[4],std::ios::binary).write((char*)scalar.data(),scalar.size()*4);std::ofstream(argv[5],std::ios::binary).write((char*)accum.data(),accum.size()*4);std::ofstream(argv[6],std::ios::binary).write((char*)maximum.data(),maximum.size()*4);std::ofstream(argv[7],std::ios::binary).write((char*)finalrgba.data(),finalrgba.size()*4);std::ofstream(argv[8],std::ios::binary).write((char*)coordinates.data(),coordinates.size()*4);}}
 ''')
         sdk=subprocess.run(["xcrun","--show-sdk-path"],text=True,capture_output=True,check=True).stdout.strip()
         cmd=["clang++","-std=c++17","-arch","arm64","-O2","-fno-fast-math","-ffp-contract=off","-ffunction-sections","-fdata-sections","-isysroot",sdk,"-I",str(ROOT/"Headers"),"-I",str(ROOT/"Headers/SP"),"-I",str(ROOT/"Util"),"-I",str(ROOT/"Resources"),str(cpp),"-Wl,-dead_strip","-framework","Cocoa","-o",str(exe)]

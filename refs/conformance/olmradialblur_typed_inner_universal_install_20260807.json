@@ -1,0 +1,24 @@
+{
+  "kind": "olmradialblur_typed_inner_universal_install_20260807",
+  "status": "installed_exact",
+  "build": {
+    "command": "xcodebuild -project mac/OLMRadialBlur/Mac/OLMRadialBlur.xcodeproj -target OLMRadialBlur -configuration Debug ARCHS='arm64 x86_64' ONLY_ACTIVE_ARCH=NO CODE_SIGNING_ALLOWED=NO build",
+    "status": "pass",
+    "architectures": ["x86_64", "arm64"]
+  },
+  "signature": {
+    "kind": "adhoc",
+    "identifier": "com.adobe.AfterEffects.OLMRadialBlur",
+    "deep_strict_verify": "pass"
+  },
+  "source_binary_sha256": "dfac5965c2400d4141526d1f43ae277c099ac14a781f3bc8bea10165a0f36a29",
+  "installed_binary_sha256": "dfac5965c2400d4141526d1f43ae277c099ac14a781f3bc8bea10165a0f36a29",
+  "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin",
+  "installed_bundle_count": 1,
+  "backup": {
+    "path": "handoff/mac_plugin_backups/mediacore_20260807_radial_inner_geometry_before_install/OLMRadialBlur.plugin",
+    "previous_binary_sha256": "807942d5a3062ca1c9250e444af6dd15f1353fa42142dfcdc8d0b90a8169f558"
+  },
+  "ae_processes_during_install": 0,
+  "ae_color_depth_warning_relation": "none: all geometry evidence is offline PF_EffectWorld/AEX owner execution; no AE project or output-module setting was created or changed"
+}

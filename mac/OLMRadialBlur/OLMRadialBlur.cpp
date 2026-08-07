@@ -1899,11 +1899,18 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		  info.center_x == (PF_FpLong)input->width / 2.0 &&
 		  info.center_y == (PF_FpLong)input->height / 2.0 &&
 		  info.comp_width == (PF_FpLong)input->width && info.comp_height == (PF_FpLong)input->height) ||
-		 (((std::is_same<PixelT, PF_Pixel16>::value && input->rowbytes == 80 && output->rowbytes == 80) ||
-		   (std::is_same<PixelT, PF_PixelFloat>::value && input->rowbytes == 160 && output->rowbytes == 160)) &&
-		  input->width == 9 && input->height == 7 && output->width == 9 && output->height == 7 &&
-		  info.center_x == 4.0 && info.center_y == 3.0 &&
-		  info.comp_width == 9.0 && info.comp_height == 7.0));
+		 (((std::is_same<PixelT, PF_Pixel16>::value &&
+		    input->rowbytes >= input->width * (A_long)sizeof(PF_Pixel16) &&
+		    output->rowbytes >= output->width * (A_long)sizeof(PF_Pixel16)) ||
+		   (std::is_same<PixelT, PF_PixelFloat>::value &&
+		    input->rowbytes >= input->width * (A_long)sizeof(PF_PixelFloat) &&
+		    output->rowbytes >= output->width * (A_long)sizeof(PF_PixelFloat))) &&
+		  input->width > 0 && input->height > 0 &&
+		  input->width == output->width && input->height == output->height &&
+		  info.center_x == (PF_FpLong)(input->width / 2) &&
+		  info.center_y == (PF_FpLong)(input->height / 2) &&
+		  info.comp_width == (PF_FpLong)input->width &&
+		  info.comp_height == (PF_FpLong)input->height));
 	const bool use_aex_pf16_inner_power2_small =
 		input && output &&
 		use_aex_inner_geometry &&

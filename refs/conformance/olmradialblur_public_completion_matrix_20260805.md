@@ -15,9 +15,18 @@ generic nonzero-offset worker and mismatched after an exact pre-blur plane.
 
 The new bounded production route now matches the actual AEX pre-blur plane,
 post-blur plane, final PF16 bytes, and row padding exactly. The proof does not
-extend to broader mode-2 values/geometries, other mode-3 values/geometries, nonzero inner blur,
-edge fade, ellipse/angle/quality variants, repeat-border off, or noise/size
+extend to broader mode-2 values/geometries, other mode-3 values/geometries,
+nonzero inner offset/edge fade, ellipse/angle/quality variants, repeat-border off, or noise/size
 variation.
+
+Rotationのcentered neutral Innerについては、その後PF16／PF32も9×7固定guardを
+外した。Inner Strength 1〜64の同じactual-AEX経路を使い、padded 64×36の
+Strength 3・33・64でpolar/source-scalar/accum/max-alpha/final/coordinates/outputが
+byte exact、row paddingも保持される。off-centerやoffset／edge fadeなどは引き続き
+fail-closeする。詳細は
+`olmradialblur_rotation_typed_inner_geometry_20260807.{json,md}`。
+PF16は追加の実用geometry代表640×360／Strength 3でも同じ7境界とpaddingが
+byte exact。PF32の直接観測済み拡張境界は64×36までに限定する。
 
 The next matrix-gap pass additionally proves the bounded PF16 Zoom mode 2/UI 2
 path. Broader mode-2 values and geometries remain outside the claim.

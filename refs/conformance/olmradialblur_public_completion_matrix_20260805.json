@@ -13,6 +13,8 @@
     {"family": "Rotation", "bitdepth": "PF8", "boundary": "case0010 Strength4 mode1", "status": "full_frame_exact"},
     {"family": "Rotation", "bitdepth": "PF16", "boundary": "Strength4/5 and Mode3 UI2/UI3, padded 9x7", "status": "production_exact"},
     {"family": "Rotation", "bitdepth": "PF32", "boundary": "Strength4/5 and Mode3 UI2/UI3/UI4, padded 9x7", "status": "production_exact"},
+    {"family": "Rotation Inner", "bitdepth": "PF16", "boundary": "centered neutral Inner Strength 1..64; padded 9x7 and Strength3/33/64 at 64x36, plus Strength3 at 640x360", "status": "dimension_generic_production_exact"},
+    {"family": "Rotation Inner", "bitdepth": "PF32", "boundary": "centered neutral Inner Strength 1..64; padded 9x7 plus actual-AEX Strength3/33/64 at 64x36", "status": "dimension_generic_production_exact"},
     {"family": "Zoom", "bitdepth": "PF32", "boundary": "case0009 outer-only", "status": "internal_exact_and_mac_runner_available"},
     {"family": "Zoom", "bitdepth": "PF32", "boundary": "Strength4 mode1/offset0, independent padded 9x7", "status": "owner_to_planes_to_direct_float_writer_exact"},
     {"family": "Zoom", "bitdepth": "PF16", "boundary": "Strength4/5 mode1, padded 9x7", "status": "production_exact"},
@@ -27,7 +29,7 @@
     {"parameter": "Center/Ratio/Angle/Quality", "proved": ["centered, ratio1, angle0, quality5"], "unproved": ["off-center", "ellipse ratio", "nonzero angle", "other quality"]},
     {"parameter": "Repeat Border", "proved": ["enabled"], "unproved": ["disabled"]},
     {"parameter": "Brightness Gain", "proved": ["1.0"], "unproved": ["non-unit"]},
-    {"parameter": "Inner Strength/Offset/Edge Fade", "proved": ["zero/disabled only"], "unproved": ["nonzero inner worker"]},
+    {"parameter": "Inner Strength/Offset/Edge Fade", "proved": ["Rotation centered neutral Inner Strength 1..64 at PF8/PF16/PF32", "PF16/PF32 padded 64x36 representative strengths 3/33/64", "PF16 padded 640x360 Strength3", "offset mode1 / offset0 / edge fade0"], "unproved": ["other offsets", "nonzero edge fade", "non-neutral tuples"]},
     {"parameter": "Outer Edge Fade", "proved": ["zero"], "unproved": ["nonzero"]},
     {"parameter": "Size/Noise Variation and Noise controls", "proved": ["variation zero"], "unproved": ["nonzero variation/noise families"]}
   ],

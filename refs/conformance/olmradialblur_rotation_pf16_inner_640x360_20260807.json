@@ -1,0 +1,54 @@
+{
+  "admitted_rule": "PF16/PF32 equal positive input/output geometry, centered center/comp, rowbytes >= visible bytes, Inner Strength 1..64, neutral remaining parameters",
+  "aex": {
+    "identity_exact": true,
+    "path": "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+  },
+  "cases": [
+    {
+      "actual_aex_hashes": {
+        "accum": "cd28a5627593ecf055d80491c752c14e1f666a5ca49f37bc9af855e41af90123",
+        "coordinates": "193988a3708a3b113b49567eec7cf0df28646015513269d43310fd3295139c3b",
+        "final_rgba": "1127e9554cbe8d5fc66419a44c3cc92dfc7b9fb0378fa08741e24f2ab8b71471",
+        "max_alpha": "29b406a02f28636af223e2671509a2144f173fae14c03004659c27857e37a089",
+        "output": "0514a3f3194979ceb0f7d8850ba300bd3b865fdf83527bc14624925588d7f604",
+        "polar": "73bdd0166acdd5209a628b9194a6232d8d87a213e49775d4ec00e2b07cf3c5a8",
+        "source_scalar": "7a4499f15e5afae82c1a44b7111581c043c40ef0c4b5c3a523c0ed811174c546"
+      },
+      "bit_depth": 16,
+      "effective_span": 2,
+      "geometry": {
+        "height": 360,
+        "padding_bytes": 16,
+        "rowbytes": 5136,
+        "visible_bytes": 5120,
+        "width": 640
+      },
+      "inner_strength": 3,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "padding_exact": true,
+      "production_hashes": {
+        "accum": "cd28a5627593ecf055d80491c752c14e1f666a5ca49f37bc9af855e41af90123",
+        "coordinates": "193988a3708a3b113b49567eec7cf0df28646015513269d43310fd3295139c3b",
+        "final_rgba": "1127e9554cbe8d5fc66419a44c3cc92dfc7b9fb0378fa08741e24f2ab8b71471",
+        "max_alpha": "29b406a02f28636af223e2671509a2144f173fae14c03004659c27857e37a089",
+        "output": "0514a3f3194979ceb0f7d8850ba300bd3b865fdf83527bc14624925588d7f604",
+        "polar": "73bdd0166acdd5209a628b9194a6232d8d87a213e49775d4ec00e2b07cf3c5a8",
+        "source_scalar": "7a4499f15e5afae82c1a44b7111581c043c40ef0c4b5c3a523c0ed811174c546"
+      },
+      "status": "exact"
+    }
+  ],
+  "kind": "olmradialblur_rotation_typed_inner_geometry_20260807",
+  "scope": "Offline actual-AEX owner versus Mac production, centered neutral Rotation Inner; native PF16/PF32, padded rowbytes, internal planes and typed output; no Windows host or AE-host claim",
+  "status": "exact"
+}
