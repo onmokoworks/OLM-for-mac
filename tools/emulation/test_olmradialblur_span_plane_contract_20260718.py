@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Exact case0009 +0x40 span-plane contract."""
+"""Exact case0009 +0x40 span-plane contract against retained AEX evidence."""
 
 from __future__ import annotations
 
@@ -7,9 +7,7 @@ import hashlib
 import json
 import struct
 import subprocess
-import sys
 import tempfile
-import zlib
 from pathlib import Path
 
 from PIL import Image
@@ -18,10 +16,7 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / "mac/OLMRadialBlur/OLMRadialBlur.cpp"
 INPUT = ROOT / "refs/win_references/20260604_olm/OLMRadialBlur/case_0009_before_effects.png"
-CHECKPOINT = Path(
-    "/private/tmp/olmradialblur_a9d0_boundary_nway_20260718/"
-    "nway_merged_at_normalization_20260718.aexcp"
-)
+EVIDENCE = ROOT / "refs/conformance/olmradialblur_postworker_planes_20260718.json"
 
 WIDTH = 1920
 HEIGHT = 1080
@@ -30,76 +25,40 @@ POLAR_HEIGHT = 1800
 CELLS = POLAR_WIDTH * POLAR_HEIGHT
 PLANE_BYTES = CELLS * 4
 EXPECTED_SHA256 = "2af5c86165c5b96b4c686e05f9e4587b0b1b464efbd389803a9d623e69da9a1f"
-
-MAGIC = b"AEXCP64\x00"
-PREFIX_SIZE = len(MAGIC) + 4 + 8 + 32
+EXPECTED_CHECKPOINT_SHA256 = "480a7b012441b5863418835a8caf2fe16231dc8d7c59252fc05b69ec0407a909"
+EXPECTED_AEX_SHA256 = "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+EXPECTED_INPUT_SHA256 = "7e3527fd86e6dc58ceb3477a4fb86b7d25d27c70060359d6b9c08a70eba075c4"
 
 
 def sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def read_checkpoint_range(path: Path, address: int, size: int) -> bytes:
-    with path.open("rb") as stream:
-        prefix = stream.read(PREFIX_SIZE)
-        if len(prefix) != PREFIX_SIZE or prefix[: len(MAGIC)] != MAGIC:
-            raise AssertionError("invalid checkpoint prefix")
-        version, header_size = struct.unpack("<IQ", prefix[len(MAGIC) : len(MAGIC) + 12])
-        if version != 1:
-            raise AssertionError(f"unsupported checkpoint version: {version}")
-        header_bytes = stream.read(header_size)
-        if sha256_bytes(header_bytes) != prefix[-32:].hex():
-            raise AssertionError("checkpoint header checksum mismatch")
-        header = json.loads(header_bytes.decode("ascii"))
-        regions: dict[str, bytes] = {}
-        for region in header["regions"]:
-            compressed = stream.read(int(region["compressed_size"]))
-            raw = zlib.decompress(compressed)
-            if len(raw) != int(region["size"]):
-                raise AssertionError(f"checkpoint region size mismatch: {region['name']}")
-            if sha256_bytes(raw) != region["sha256"]:
-                raise AssertionError(f"checkpoint region checksum mismatch: {region['name']}")
-            regions[region["name"]] = raw
-        for region in header["regions"]:
-            base = int(region["address"])
-            if base <= address and address + size <= base + int(region["size"]):
-                raw = regions[region["name"]]
-                start = address - base
-                return raw[start : start + size]
-    raise AssertionError(f"checkpoint range is not contained: 0x{address:x}+{size}")
+def validate_retained_evidence() -> None:
+    """Bind the oracle hash to the checked-in checkpoint extraction record.
 
-
-def checkpoint_span_plane() -> bytes:
-    with CHECKPOINT.open("rb") as stream:
-        prefix = stream.read(PREFIX_SIZE)
-        if len(prefix) != PREFIX_SIZE or prefix[: len(MAGIC)] != MAGIC:
-            raise AssertionError("invalid checkpoint prefix")
-        version, header_size = struct.unpack("<IQ", prefix[len(MAGIC) : len(MAGIC) + 12])
-        if version != 1:
-            raise AssertionError("unsupported checkpoint version")
-        header_bytes = stream.read(header_size)
-        if sha256_bytes(header_bytes) != prefix[-32:].hex():
-            raise AssertionError("checkpoint header checksum mismatch")
-        header = json.loads(header_bytes.decode("ascii"))
-        regions: dict[str, bytes] = {}
-        for region in header["regions"]:
-            compressed = stream.read(int(region["compressed_size"]))
-            raw = zlib.decompress(compressed)
-            if sha256_bytes(raw) != region["sha256"]:
-                raise AssertionError(f"checkpoint region checksum mismatch: {region['name']}")
-            regions[region["name"]] = raw
-        if header.get("aex", {}).get("sha256") != "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb":
-            raise AssertionError("checkpoint AEX identity mismatch")
-        captured = header.get("metadata", {}).get("captured", {})
-        work = int(captured.get("zoom_param1") or 0)
-        if not work or int(header["registers"]["gp"]["rip"]) != 0x180005C9F:
-            raise AssertionError("checkpoint is not the pinned pre-normalization case0009 checkpoint")
-        read = lambda address, size: read_checkpoint_range(CHECKPOINT, address, size)
-        pointer = struct.unpack("<Q", read(work + 0x40, 8))[0]
-        plane = read(pointer, PLANE_BYTES)
-        if len(plane) != PLANE_BYTES or sha256_bytes(plane) != EXPECTED_SHA256:
-            raise AssertionError("checkpoint +0x40 span plane identity mismatch")
-        return plane
+    The multi-gigabyte runtime checkpoint was deliberately temporary.  The
+    retained record pins its SHA, AEX/input identities, extraction geometry,
+    checkpoint RIP, and the exact +0x40 plane SHA without pretending that the
+    checkpoint payload itself is checked in.
+    """
+    evidence = json.loads(EVIDENCE.read_text(encoding="utf-8"))
+    identities = evidence.get("identities", {})
+    plane = evidence.get("planes", {}).get("source_scalar_plus_0x40", {})
+    if evidence.get("status") != "pass_bounded_internal_evidence":
+        raise AssertionError("retained span-plane evidence is not passing")
+    if identities.get("checkpoint", {}).get("sha256") != EXPECTED_CHECKPOINT_SHA256:
+        raise AssertionError("retained checkpoint identity mismatch")
+    if identities.get("aex", {}).get("sha256") != EXPECTED_AEX_SHA256:
+        raise AssertionError("retained AEX identity mismatch")
+    if identities.get("input", {}).get("sha256") != EXPECTED_INPUT_SHA256:
+        raise AssertionError("retained case0009 input identity mismatch")
+    if evidence.get("checkpoint", {}).get("rip") != "0x180005c9f":
+        raise AssertionError("retained checkpoint RIP mismatch")
+    if evidence.get("geometry") != {"cells": CELLS, "height": POLAR_HEIGHT, "width": POLAR_WIDTH}:
+        raise AssertionError("retained span-plane geometry mismatch")
+    if plane.get("bytes") != PLANE_BYTES or plane.get("sha256") != EXPECTED_SHA256:
+        raise AssertionError("retained +0x40 span-plane identity mismatch")
 
 
 def write_probe(path: Path) -> None:
@@ -163,36 +122,12 @@ int main(int argc, char** argv) {{
 ''', encoding="ascii")
 
 
-def first_difference(actual: bytes, expected: bytes) -> tuple[int, int | None, int | None, int | None, list[dict[str, object]]]:
-    words = min(len(actual), len(expected)) // 4
-    differing_words = 0
-    first_word = None
-    residuals: list[dict[str, object]] = []
-    for index in range(words):
-        left = actual[index * 4 : index * 4 + 4]
-        right = expected[index * 4 : index * 4 + 4]
-        if left != right:
-            differing_words += 1
-            if first_word is None:
-                first_word = index
-            if len(residuals) < 16:
-                residuals.append({
-                    "word_index": index,
-                    "angle_index": index // POLAR_WIDTH,
-                    "radius_index": index % POLAR_WIDTH,
-                    "actual_bits": f"0x{struct.unpack('<I', left)[0]:08x}",
-                    "expected_bits": f"0x{struct.unpack('<I', right)[0]:08x}",
-                    "actual": struct.unpack('<f', left)[0],
-                    "expected": struct.unpack('<f', right)[0],
-                })
-    first_byte = None if first_word is None else first_word * 4
-    return differing_words, first_byte, len(actual), len(expected), residuals
-
-
 def main() -> int:
-    if not SOURCE.is_file() or not INPUT.is_file() or not CHECKPOINT.is_file():
-        raise AssertionError("required source, case0009 input, or checkpoint is missing")
-    expected = checkpoint_span_plane()
+    if not SOURCE.is_file() or not INPUT.is_file() or not EVIDENCE.is_file():
+        raise AssertionError("required source, case0009 input, or retained evidence is missing")
+    validate_retained_evidence()
+    if sha256_bytes(INPUT.read_bytes()) != EXPECTED_INPUT_SHA256:
+        raise AssertionError("checked-in case0009 input identity mismatch")
     image = Image.open(INPUT).convert("RGBA")
     if image.size != (WIDTH, HEIGHT):
         raise AssertionError(f"unexpected case0009 input size: {image.size}")
@@ -226,18 +161,12 @@ def main() -> int:
         if run.returncode:
             raise AssertionError(run.stdout + run.stderr)
         actual = output_path.read_bytes()
-    differing_words, first_byte, actual_bytes, expected_bytes, residuals = first_difference(actual, expected)
-    differing_bytes = sum(left != right for left, right in zip(actual, expected))
     print(f"compared_float_words={CELLS}")
-    print(f"compared_bytes={expected_bytes}")
+    print(f"compared_bytes={len(actual)}")
     print(f"actual_sha256={sha256_bytes(actual)}")
-    print(f"checkpoint_span_sha256={sha256_bytes(expected)}")
-    print(f"differing_float_words={differing_words}")
-    print(f"differing_bytes={differing_bytes}")
-    print(f"first_difference_byte={first_byte if first_byte is not None else 'none'}")
+    print(f"retained_checkpoint_span_sha256={EXPECTED_SHA256}")
     print("source_factor_plane=constant_1.0")
-    print("residual_words=" + json.dumps(residuals, sort_keys=True, separators=(",", ":")))
-    if actual_bytes != expected_bytes or expected_bytes != PLANE_BYTES or differing_words or differing_bytes:
+    if len(actual) != PLANE_BYTES or sha256_bytes(actual) != EXPECTED_SHA256:
         return 1
     print("PASS_OLMRADIALBLUR_SPAN_PLANE_CONTRACT_20260718")
     return 0
