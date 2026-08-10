@@ -1,60 +1,153 @@
 {
   "actual_aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
-  "actual_exported_probe": {
-    "dropped_unsupported_suite_calls": 0,
-    "error": "selector SMART_RENDER failed in guest: unsupported Win64 import: kernel32.dll!LoadLibraryW",
-    "execution_backend": "unicorn-x86_64",
-    "gpu": {
-      "cleanup_complete": true,
-      "gpu_render_possible": false,
-      "pre_render": {
+  "aexcompat_worker": {
+    "modified_by_olm_task": false,
+    "path": "/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker",
+    "sha256": "72faa93594b83e1f7609429ec60cc878fa2a3a3161a2390947f79a40f48b4539"
+  },
+  "claims_not_made": [
+    "No PF8 Linear exported owner equality",
+    "No PF16 exported owner equality",
+    "No PF32 SmartRender route or equality",
+    "No native After Effects execution",
+    "No external OpenCV backend PE loading"
+  ],
+  "depth_boundaries": [
+    {
+      "depth": "PF16",
+      "error": "selector SMART_RENDER failed in guest: guest callback failed: guest called _CxxThrowException outside the supported selector-abort contract (msvc_type=.H)",
+      "pixel_format": "argb16",
+      "representative": "constant.mode2.bg0",
+      "smart_pre_render": {
         "attempted": true,
         "completed": true,
         "error": 0,
         "selector": "SMART_PRE_RENDER"
       },
-      "pre_render_output_flags": 0,
-      "render": {
+      "smart_render": {
         "attempted": true,
         "completed": false,
         "selector": "SMART_RENDER"
-      },
-      "requested_backend": "cpu",
-      "runtime_ended": false,
-      "runtime_started": false,
-      "setdown": {
-        "attempted": false,
-        "completed": false,
-        "selector": "GPU_DEVICE_SETDOWN"
-      },
-      "setup": {
-        "attempted": false,
-        "completed": false,
-        "selector": "GPU_DEVICE_SETUP"
-      },
-      "transport_finished": false,
-      "transport_prepared": false
+      }
     },
-    "schema_version": 1,
-    "suite_requests": [
-      "AEGP Utility Suite v7",
-      "PF ColorParamSuite v1",
-      "PF Handle Suite v2"
-    ],
-    "unsupported_suite_calls": []
-  },
-  "aexcompat_worker": {
-    "modified_by_olm_task": false,
-    "path": "/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker",
-    "sha256": "d70432b824563dfbc3938573eec2193213f85d7f0718fcd3469574bf601ebdb3"
-  },
-  "claims_not_made": [
-    "No exported SmartRender output comparison",
-    "No proof that SmartRender reaches FUN_181174760 field generation",
-    "No PF32 SmartRender route; the actual AEX has none",
-    "No native After Effects execution in this probe"
+    {
+      "depth": "PF32",
+      "error": "selector SMART_RENDER failed in guest: guest callback failed: guest called _CxxThrowException outside the supported selector-abort contract (msvc_type=.H)",
+      "pixel_format": "argb32f",
+      "representative": "constant.mode2.bg0",
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": false,
+        "selector": "SMART_RENDER"
+      }
+    }
   ],
-  "next_required_generic_abi": "kernel32!LoadLibraryW with bounded loaded-module/path resolution, reference lifetime, failure return, and last-error semantics",
+  "exported_pf8_rows": [
+    {
+      "actual_exported_raw_sha256": "fd53dc5b7999e5a554886dfa1e15807b66161ea4bbbdb5935d890528b871a638",
+      "blur_mode": 2,
+      "bytes_compared": 748,
+      "depth": "PF8",
+      "exact": true,
+      "interpolation": "constant",
+      "production_whole_chain_active_sha256": "fd53dc5b7999e5a554886dfa1e15807b66161ea4bbbdb5935d890528b871a638",
+      "use_background": false
+    },
+    {
+      "actual_exported_raw_sha256": "34234a5f17d758ad70a8ae7cc9ee89b98b27287942d1c71095d685e9b49a6b5c",
+      "blur_mode": 2,
+      "bytes_compared": 748,
+      "depth": "PF8",
+      "exact": true,
+      "interpolation": "constant",
+      "production_whole_chain_active_sha256": "34234a5f17d758ad70a8ae7cc9ee89b98b27287942d1c71095d685e9b49a6b5c",
+      "use_background": true
+    },
+    {
+      "actual_exported_raw_sha256": "3b7fd7a6121fefadf40a80093468dc0846563e2735cb49408a226bf7b308c823",
+      "blur_mode": 3,
+      "bytes_compared": 748,
+      "depth": "PF8",
+      "exact": true,
+      "interpolation": "constant",
+      "production_whole_chain_active_sha256": "3b7fd7a6121fefadf40a80093468dc0846563e2735cb49408a226bf7b308c823",
+      "use_background": false
+    },
+    {
+      "actual_exported_raw_sha256": "5e1897dd19031a2d82fb4fa4987f73a1787155f45c277690fe5c7655893da864",
+      "blur_mode": 3,
+      "bytes_compared": 748,
+      "depth": "PF8",
+      "exact": true,
+      "interpolation": "constant",
+      "production_whole_chain_active_sha256": "5e1897dd19031a2d82fb4fa4987f73a1787155f45c277690fe5c7655893da864",
+      "use_background": true
+    },
+    {
+      "actual_exported_raw_sha256": "963c9a6221ae9d8e4af25de26213a4406873939b48e961e5a9cd0f33c9f022cb",
+      "blur_mode": 2,
+      "bytes_compared": 748,
+      "depth": "PF8",
+      "exact": false,
+      "interpolation": "linear",
+      "production_whole_chain_active_sha256": "692bf7ceb69b8bd9c4bafae116d566e3504059df04a159115bbc8e3b9a2a3a87",
+      "use_background": false
+    },
+    {
+      "actual_exported_raw_sha256": "04b7361841d35e74d1ba8967953be3a3614a59cee34e446e3f6a9f9ce4342f86",
+      "blur_mode": 2,
+      "bytes_compared": 748,
+      "depth": "PF8",
+      "exact": false,
+      "interpolation": "linear",
+      "production_whole_chain_active_sha256": "efc1c61fc7d87f31b672fe188c3f2c8b0565b7ef00adb37146c8344cb2ccedf5",
+      "use_background": true
+    },
+    {
+      "actual_exported_raw_sha256": "6702e5cffbb8847cb220e1d7fafc3840125ff70990fc8e33e2d3e59ce66c69d1",
+      "blur_mode": 3,
+      "bytes_compared": 748,
+      "depth": "PF8",
+      "exact": false,
+      "interpolation": "linear",
+      "production_whole_chain_active_sha256": "6bdced935df747318900e0ec96d25d0287c1f798dde07816f199cdcdf5c9ce27",
+      "use_background": false
+    },
+    {
+      "actual_exported_raw_sha256": "a99a1a239b7caa186d703d462f6f17d546006013b2fd2cc717bf16bb17d0dd88",
+      "blur_mode": 3,
+      "bytes_compared": 748,
+      "depth": "PF8",
+      "exact": false,
+      "interpolation": "linear",
+      "production_whole_chain_active_sha256": "33c9213d6d0b52309be37302ca156ecfe2370a5c4590a05db492e6aed8ea3faf",
+      "use_background": true
+    }
+  ],
+  "fixture": {
+    "height": 11,
+    "input_png_sha256": "683259bea613463bb22679f36a78e6d7b4c26dabdbc90e4da480cf76e9eb626a",
+    "width": 17
+  },
+  "load_library_w_trace": {
+    "external_pe_mapping": false,
+    "requested_in_order": [
+      "C:\\AEXCompat\\opencv_core_parallel_onetbb455_64.dll",
+      "opencv_core_parallel_onetbb455_64.dll",
+      "C:\\AEXCompat\\opencv_core_parallel_tbb455_64.dll",
+      "opencv_core_parallel_tbb455_64.dll",
+      "C:\\AEXCompat\\opencv_core_parallel_openmp455_64.dll",
+      "opencv_core_parallel_openmp455_64.dll"
+    ],
+    "resolution": "all absent -> NULL + ERROR_MOD_NOT_FOUND -> OpenCV built-in fallback",
+    "success_path_symbol": "opencv_core_parallel_plugin_init_v0"
+  },
   "numerical_family_already_exact": {
     "cells": 24,
     "evidence": [
@@ -65,25 +158,10 @@
     "product": "PF8/PF16/PF32 x Constant/Linear x Blur2/3 x Background off/on"
   },
   "owner_facts": {
-    "legacy_pf32_render": "separate classic whole owner FUN_181172a10",
-    "legacy_pf8_pf16_render": "typed composition of a preseeded green-lane field only",
-    "smart_pre_render": "completed with error 0",
-    "smart_render": "entered, then stopped before numerical completion at LoadLibraryW"
+    "PF16": "exported Smart owner throws before output; classic/helper numerical 8 cells remain exact separately",
+    "PF32": "actual AEX has no SmartRender PF32 branch; classic whole owner FUN_181172a10 numerical 8 cells remain exact separately",
+    "PF8": "actual exported SmartPreRender/SmartRender completes all 8 cells; Constant 4 are exact while Linear 4 expose a stable owner-versus-manual-chain residual"
   },
-  "representative_parameters": [
-    "Invert=1",
-    "In/Out=1",
-    "Inside Threshold=4",
-    "Outside Threshold=4",
-    "Render Mode=1",
-    "Use Background Color=0",
-    "Gradation Color=255,28,0,238",
-    "BG Color =255,16,160,48",
-    "Interpolation Mode=1",
-    "Power=1",
-    "Blur Mode=2",
-    "Blur Size=1"
-  ],
-  "schema": "olmdistancegradation.exported-upstream-owner-seam/1",
-  "status": "BLOCKED_AFTER_SMART_PRE_RENDER_AT_LOAD_LIBRARY_W"
+  "schema": "olmdistancegradation.exported-upstream-owner-seam/2",
+  "status": "PF8_EXPORTED_SMART_OWNER_CONSTANT_4_EXACT_LINEAR_4_RESIDUAL_PF16_PF32_EXCEPTION_BOUNDARY"
 }
