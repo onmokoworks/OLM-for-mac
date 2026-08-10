@@ -54,7 +54,16 @@ class MinimalWindowsBoundaryScopeTest(unittest.TestCase):
         rows = {(r["plugin"], r["case_id"], r["depth"]) for r in contract["acquire"]}
         self.assertEqual(rows, EXPECTED)
         self.assertEqual(len(contract["acquire"]), 7)
-        self.assertEqual(embedded_matrix, MATRIX.read_bytes())
+        # The embedded matrix is the immutable request-time contract. The live
+        # matrix may gain later evidence without rewriting the accepted zip.
+        embedded_text = embedded_matrix.decode("utf-8")
+        for phrase in (
+            "ColorKeep controlled calibration at PF8/PF16/PF32",
+            "OLMKiraKira controlled Mode4 calibration at PF8/PF16/PF32",
+            "OLMSmoother v1 PF16, one representative canonical row",
+            "These seven observations belong in one batch.",
+        ):
+            self.assertIn(phrase, embedded_text)
 
 
 if __name__ == "__main__":

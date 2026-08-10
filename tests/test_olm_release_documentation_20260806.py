@@ -80,7 +80,8 @@ class ReleaseDocumentationConsistencyTest(unittest.TestCase):
         text = MATRIX.read_text(encoding="utf-8")
         self.assertNotIn("**Missing Inner representative**", text)
         self.assertNotIn("Real production/host hole", text)
-        self.assertIn("PF8 Inner is geometry-generic only inside its admitted", text)
+        self.assertIn("PF8 is directly witnessed at 9x7, 64x36 and 640x360", text)
+        self.assertIn("PF16 at 9x7, 64x36 and 640x360", text)
         self.assertIn("PF16 Type3 Layer is exact only for 16x16", text)
 
     def test_gate_and_seven_row_package_match_release_notes(self) -> None:

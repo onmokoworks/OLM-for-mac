@@ -61,6 +61,13 @@ def validate_manifest(manifest: dict[str, Any]) -> list[str]:
                 failures.append(f"{prefix}:{key}")
         if row.get("classification") == "bounded_public_registration" and len(row.get("boundary", "")) < 40:
             failures.append(f"{prefix}:bounded_without_explicit_boundary")
+        for check_index, check in enumerate(row.get("dynamic_checks", [])):
+            if not isinstance(check, dict):
+                failures.append(f"{prefix}:dynamic_{check_index}:not_object")
+                continue
+            for key in ("runner", "evidence"):
+                if not isinstance(check.get(key), str) or not check[key].strip():
+                    failures.append(f"{prefix}:dynamic_{check_index}:{key}")
     return failures
 
 
@@ -126,6 +133,62 @@ def evaluate_row(spec: dict[str, Any], run_runner: bool) -> dict[str, Any]:
     if original_evidence is not None and evidence.is_file() and evidence.read_bytes() != original_evidence:
         evidence.write_bytes(original_evidence)
 
+    dynamic_results: list[dict[str, Any]] = []
+    for check_index, check in enumerate(spec.get("dynamic_checks", [])):
+        check_failures: list[str] = []
+        check_runner = ROOT / check["runner"]
+        check_evidence = ROOT / check["evidence"]
+        original_check_evidence = check_evidence.read_bytes() if check_evidence.is_file() else None
+        if not check_runner.is_file():
+            check_failures.append("runner_missing")
+            check_result = {"state": "invalid"}
+        elif run_runner:
+            try:
+                check_proc = subprocess.run(
+                    [sys.executable, str(check_runner)], cwd=ROOT,
+                    capture_output=True, text=True, timeout=180,
+                )
+            except subprocess.TimeoutExpired as exc:
+                check_failures.append("runner_timeout")
+                check_result = {"state": "invalid", "error": str(exc)}
+            else:
+                check_output = check_proc.stdout + check_proc.stderr
+                check_result = {
+                    "state": "proven" if check_proc.returncode == 0 else "invalid",
+                    "returncode": check_proc.returncode,
+                    "output_sha256": hashlib.sha256(check_output.encode()).hexdigest(),
+                    "tail": [line[-1000:] for line in check_output.splitlines()[-8:]],
+                }
+                if check_proc.returncode != 0:
+                    check_failures.append(f"runner_exit:{check_proc.returncode}")
+        else:
+            check_result = {"state": "pending", "reason": "skipped_by_audit_mode"}
+
+        if not check_evidence.is_file():
+            check_failures.append("evidence_missing")
+        else:
+            try:
+                check_payload = json.loads(check_evidence.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError) as exc:
+                check_failures.append(f"evidence_invalid_json:{exc}")
+            else:
+                for dotted, expected in check.get("assertions", {}).items():
+                    try:
+                        actual = lookup(check_payload, dotted)
+                    except KeyError:
+                        check_failures.append(f"missing:{dotted}")
+                    else:
+                        if actual != expected:
+                            check_failures.append(f"mismatch:{dotted}")
+        if (original_check_evidence is not None and check_evidence.is_file()
+                and check_evidence.read_bytes() != original_check_evidence):
+            check_evidence.write_bytes(original_check_evidence)
+        failures.extend(f"dynamic_{check_index}:{failure}" for failure in check_failures)
+        dynamic_results.append({
+            "runner": check["runner"], "evidence": check["evidence"],
+            "runner_result": check_result, "failures": check_failures,
+        })
+
     if failures:
         state = "invalid"
     elif not run_runner:
@@ -138,6 +201,7 @@ def evaluate_row(spec: dict[str, Any], run_runner: bool) -> dict[str, Any]:
         "classification": spec["classification"],
         "runner": spec["runner"],
         "runner_result": runner_result,
+        "dynamic_checks": dynamic_results,
         "evidence": spec["evidence"],
         "boundary": spec["boundary"],
         "failures": failures,

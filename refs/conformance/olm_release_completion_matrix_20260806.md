@@ -1,5 +1,12 @@
 # OLM Mac port release completion matrix — 2026-08-06
 
+> Historical request-time snapshot: the seven rows described below as pending
+> were subsequently returned and accepted. Current status is authoritative in
+> `OLM_MAC_RELEASE_NOTES_20260806.md` and
+> `olm_windows_ae_release_boundary_minimal_intake_20260806.json`. This file
+> retains the original request contract while later algorithm evidence may
+> refine individual geometry rows.
+
 Release-facing status: the bounded Mac integration gate is green; the final
 same-contract Windows AE calibration is still pending for exactly seven rows.
 Those are different claims.  A green Mac gate proves the retained actual-AEX

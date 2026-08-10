@@ -1,6 +1,6 @@
 {
   "schema": "olm.parameter-ui-gate-manifest/1",
-  "claim_boundary": "Hostless actual Windows AEX GLOBAL_SETUP/PARAMS_SETUP registration compared with current Mac production. A passing gate proves only each row's declared normalized registration surface; it does not prove native AE layout, localization, interaction, rendering, or fields explicitly listed as evidence boundaries.",
+  "claim_boundary": "Hostless actual Windows AEX GLOBAL_SETUP/PARAMS_SETUP registration and the enumerated UPDATE_PARAMS_UI or selector callbacks are compared with current Mac production. A passing gate proves only each row's declared normalized registration and dynamic-control surface; it does not prove localization, rendering, unlisted interactions, or fields explicitly listed as evidence boundaries.",
   "accepted_classes": [
     "exact_normalized_registration",
     "bounded_public_registration"
@@ -13,7 +13,12 @@
       "classification": "exact_normalized_registration",
       "assertions": {"status": "exact"},
       "list_lengths": {"rows": 5},
-      "boundary": "Pointer values, inactive union residue, localized host rendering, AE-version interpretation, and render behavior are excluded."
+      "dynamic_checks": [{
+        "runner": "tools/emulation/test_olmblur_update_params_ui_actual_aex_20260810.py",
+        "evidence": "refs/conformance/olmblur_update_params_ui_actual_aex_20260810.json",
+        "assertions": {"status": "exact", "parameter.index": 2}
+      }],
+      "boundary": "Registration and the observed command-14 hidden-state update are exact. Pointer values, localized host rendering, AE-version interpretation, and render behavior are excluded."
     },
     {
       "plugin": "ColorKeep",
@@ -30,7 +35,12 @@
       "classification": "exact_normalized_registration",
       "assertions": {"status": "exact", "owned_add_param_rows": 223},
       "list_lengths": {"mismatches": 0, "parameters": 223},
-      "boundary": "Pointer-valued labels/choice strings and hostless variadic name formatting are excluded; counts, defaults, types, flags, ranges, order, and normalized values are compared."
+      "dynamic_checks": [{
+        "runner": "tools/emulation/test_olmcolorkey_update_params_ui_actual_aex_20260810.py",
+        "evidence": "refs/conformance/olmcolorkey_update_params_ui_actual_aex_20260810.json",
+        "assertions": {"status": "exact"}
+      }],
+      "boundary": "Counts, defaults, types, flags, ranges, order, normalized values, and the enumerated command-14 dynamic states are compared. Pointer-valued labels and hostless variadic formatting are excluded."
     },
     {
       "plugin": "OLMDirectionalBlur",
@@ -38,7 +48,12 @@
       "evidence": "refs/conformance/olmdirectionalblur_ui_setup_actual_aex_20260806.json",
       "classification": "exact_normalized_registration",
       "assertions": {"status": "exact", "production_exact": true, "params_setup.row_count": 21},
-      "boundary": "Normalized hostless GLOBAL_SETUP and all 21 owned registration rows only; native AE control layout and rendering are excluded."
+      "dynamic_checks": [{
+        "runner": "tools/emulation/test_olmdirectionalblur_update_params_ui_actual_aex_20260810.py",
+        "evidence": "refs/conformance/olmdirectionalblur_update_params_ui_actual_aex_20260810.json",
+        "assertions": {"status": "exact_contract_fixed", "selector_param_index": 16}
+      }],
+      "boundary": "Normalized setup, all 21 owned rows, and Noise Type dynamic visibility are exact. Rendering and unenumerated host error behavior are excluded."
     },
     {
       "plugin": "OLMDistanceGradation",
@@ -46,7 +61,12 @@
       "evidence": "refs/conformance/olmdistancegradation_ui_setup_actual_aex_20260806.json",
       "classification": "exact_normalized_registration",
       "assertions": {"status": "exact"},
-      "boundary": "Normalized hostless GLOBAL_SETUP/PARAMS_SETUP only; AE-native layout, localization, interaction, and rendering are excluded."
+      "dynamic_checks": [{
+        "runner": "tools/emulation/test_olmdistancegradation_update_params_ui_actual_aex_20260810.py",
+        "evidence": "refs/conformance/olmdistancegradation_update_params_ui_actual_aex_20260810.json",
+        "assertions": {"status": "exact", "case_count": 144}
+      }],
+      "boundary": "Normalized setup and all 144 public-range command-14 UI combinations are exact. Localization, rendering, and out-of-range values are excluded."
     },
     {
       "plugin": "OLMKiraKira",
@@ -61,8 +81,13 @@
       "runner": "tools/emulation/test_olmradialblur_ui_setup_actual_aex_20260806.py",
       "evidence": "refs/conformance/olmradialblur_ui_setup_actual_aex_20260806.json",
       "classification": "bounded_public_registration",
-      "assertions": {"status": "pass_bounded_public_ui_exact", "gates.num_params_including_input_exact_31": true, "gates.order_disk_type_name_defaults_ranges_precision_exact": true, "intentional_boundary.parameter_flags_exact": false},
-      "boundary": "The public 30-control registration surface is exact. Windows custom UI capability/event flags are intentionally not advertised because the corresponding Mac EVENT/USER_CHANGED/UPDATE handlers are not ported."
+      "assertions": {"status": "pass_bounded_public_ui_exact", "gates.num_params_including_input_exact_31": true, "gates.order_disk_type_name_defaults_ranges_precision_exact": true, "gates.flags_and_ui_flags_exact": true, "gates.no_custom_ui_registration_in_setup": true},
+      "dynamic_checks": [{
+        "runner": "tools/emulation/test_olmradialblur_ui_selectors_actual_aex_20260810.py",
+        "evidence": "refs/conformance/olmradialblur_ui_selectors_actual_aex_20260810.json",
+        "assertions": {"status": "pass_bounded_selector_contract"}
+      }],
+      "boundary": "The public 30-control registration surface and observed UPDATE_PARAMS_UI matrix are exact; actual USER_CHANGED and EVENT are confirmed no-ops. Rendering and unlisted host error behavior are excluded."
     },
     {
       "plugin": "OLMSmoother",
