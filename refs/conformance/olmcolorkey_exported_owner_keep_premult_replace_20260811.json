@@ -1,9 +1,9 @@
 {
   "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
   "aexcompat_worker": {
-    "modified_by_this_task": false,
-    "path": "/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker",
-    "sha256": "66872d8546a0f51bc66cccd66457480931c5fdc959defa7cc67747c2b2097776"
+    "path": "/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue1135-typed-iterate-suites/guest/target/release/aex-guest-worker",
+    "sha256": "16c329a481aef88c00fd6016e79996eecaabf7a588cff084e866b6bd15d411fc",
+    "typed_iterate_suite_fix_commit": "0ee27894"
   },
   "cases": [
     {
@@ -120,14 +120,98 @@
       ]
     },
     {
+      "actual_exported_raw_sha256": "7c99f54bbd53a82bd7994efe74d2698a7b76dcf804dfcfefc1303ec3c9160b94",
+      "bytes": 120,
       "case": "off_off_off",
       "color_keep": false,
       "depth": "PF16",
-      "owner_error": "selector SMART_RENDER returned 13",
-      "owner_status": "blocked_before_full_worker_writer",
+      "owner_status": "exact",
+      "parameter_values": [
+        {
+          "name": "Color Keep",
+          "slot": 1,
+          "value": 0.0
+        },
+        {
+          "name": "Premultiplied Color",
+          "slot": 4,
+          "value": 0.0
+        },
+        {
+          "name": "Number of Colors",
+          "slot": 22,
+          "value": 2.0
+        },
+        {
+          "name": "Enable Replace",
+          "slot": 23,
+          "value": 0.0
+        },
+        {
+          "name": "Use Color 1",
+          "slot": 24,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 1",
+          "slot": 25,
+          "value": 0.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "name": "Color 1",
+          "slot": 26
+        },
+        {
+          "color": [
+            255,
+            230,
+            38,
+            26
+          ],
+          "name": "Replace Color 1",
+          "slot": 27
+        },
+        {
+          "name": "Use Color 2",
+          "slot": 32,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 2",
+          "slot": 33,
+          "value": 0.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            255,
+            0
+          ],
+          "name": "Color 2",
+          "slot": 34
+        },
+        {
+          "color": [
+            255,
+            26,
+            89,
+            242
+          ],
+          "name": "Replace Color 2",
+          "slot": 35
+        }
+      ],
       "pixel_format": "argb16",
       "premultiplied": false,
       "production_complete_buffer_sha256": "7c99f54bbd53a82bd7994efe74d2698a7b76dcf804dfcfefc1303ec3c9160b94",
+      "render_mode": "smart-cpu",
       "replace": false,
       "smart_pre_render": {
         "attempted": true,
@@ -137,7 +221,8 @@
       },
       "smart_render": {
         "attempted": true,
-        "completed": false,
+        "completed": true,
+        "error": 0,
         "selector": "SMART_RENDER"
       },
       "suite_requests": [
@@ -145,18 +230,101 @@
         "AEGP Utility Suite v13",
         "PF ColorParamSuite v1",
         "PF iterate16 Suite v1"
-      ],
-      "unsupported_suite_calls": []
+      ]
     },
     {
+      "actual_exported_raw_sha256": "b4df5ff33cefcec00de77b34c7ee028f7889dcee1d0369353712f976949a5b08",
+      "bytes": 240,
       "case": "off_off_off",
       "color_keep": false,
       "depth": "PF32",
-      "owner_error": "selector SMART_RENDER returned 13",
-      "owner_status": "blocked_before_full_worker_writer",
+      "owner_status": "exact",
+      "parameter_values": [
+        {
+          "name": "Color Keep",
+          "slot": 1,
+          "value": 0.0
+        },
+        {
+          "name": "Premultiplied Color",
+          "slot": 4,
+          "value": 0.0
+        },
+        {
+          "name": "Number of Colors",
+          "slot": 22,
+          "value": 2.0
+        },
+        {
+          "name": "Enable Replace",
+          "slot": 23,
+          "value": 0.0
+        },
+        {
+          "name": "Use Color 1",
+          "slot": 24,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 1",
+          "slot": 25,
+          "value": 0.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "name": "Color 1",
+          "slot": 26
+        },
+        {
+          "color": [
+            255,
+            230,
+            38,
+            26
+          ],
+          "name": "Replace Color 1",
+          "slot": 27
+        },
+        {
+          "name": "Use Color 2",
+          "slot": 32,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 2",
+          "slot": 33,
+          "value": 0.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            255,
+            0
+          ],
+          "name": "Color 2",
+          "slot": 34
+        },
+        {
+          "color": [
+            255,
+            26,
+            89,
+            242
+          ],
+          "name": "Replace Color 2",
+          "slot": 35
+        }
+      ],
       "pixel_format": "argb32f",
       "premultiplied": false,
       "production_complete_buffer_sha256": "b4df5ff33cefcec00de77b34c7ee028f7889dcee1d0369353712f976949a5b08",
+      "render_mode": "smart-cpu",
       "replace": false,
       "smart_pre_render": {
         "attempted": true,
@@ -166,7 +334,8 @@
       },
       "smart_render": {
         "attempted": true,
-        "completed": false,
+        "completed": true,
+        "error": 0,
         "selector": "SMART_RENDER"
       },
       "suite_requests": [
@@ -174,8 +343,7 @@
         "AEGP Utility Suite v13",
         "PF ColorParamSuite v1",
         "PF iterateFloat Suite v1"
-      ],
-      "unsupported_suite_calls": []
+      ]
     },
     {
       "actual_exported_raw_sha256": "47d42fbd89668eceef67a6c80412a85f865ba4a67dff2e1554c6980bb60ec4ae",
@@ -291,14 +459,98 @@
       ]
     },
     {
+      "actual_exported_raw_sha256": "86945f485b598c974f7fe6b228e2b0407edf6e39259cf32032e123fb3a948b4b",
+      "bytes": 120,
       "case": "on_on_on",
       "color_keep": true,
       "depth": "PF16",
-      "owner_error": "selector SMART_RENDER returned 13",
-      "owner_status": "blocked_before_full_worker_writer",
+      "owner_status": "exact",
+      "parameter_values": [
+        {
+          "name": "Color Keep",
+          "slot": 1,
+          "value": 1.0
+        },
+        {
+          "name": "Premultiplied Color",
+          "slot": 4,
+          "value": 1.0
+        },
+        {
+          "name": "Number of Colors",
+          "slot": 22,
+          "value": 2.0
+        },
+        {
+          "name": "Enable Replace",
+          "slot": 23,
+          "value": 1.0
+        },
+        {
+          "name": "Use Color 1",
+          "slot": 24,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 1",
+          "slot": 25,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "name": "Color 1",
+          "slot": 26
+        },
+        {
+          "color": [
+            255,
+            230,
+            38,
+            26
+          ],
+          "name": "Replace Color 1",
+          "slot": 27
+        },
+        {
+          "name": "Use Color 2",
+          "slot": 32,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 2",
+          "slot": 33,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            255,
+            0
+          ],
+          "name": "Color 2",
+          "slot": 34
+        },
+        {
+          "color": [
+            255,
+            26,
+            89,
+            242
+          ],
+          "name": "Replace Color 2",
+          "slot": 35
+        }
+      ],
       "pixel_format": "argb16",
       "premultiplied": true,
       "production_complete_buffer_sha256": "86945f485b598c974f7fe6b228e2b0407edf6e39259cf32032e123fb3a948b4b",
+      "render_mode": "smart-cpu",
       "replace": true,
       "smart_pre_render": {
         "attempted": true,
@@ -308,7 +560,8 @@
       },
       "smart_render": {
         "attempted": true,
-        "completed": false,
+        "completed": true,
+        "error": 0,
         "selector": "SMART_RENDER"
       },
       "suite_requests": [
@@ -316,18 +569,101 @@
         "AEGP Utility Suite v13",
         "PF ColorParamSuite v1",
         "PF iterate16 Suite v1"
-      ],
-      "unsupported_suite_calls": []
+      ]
     },
     {
+      "actual_exported_raw_sha256": "7eacc6a7acc785f33c0d43f2489bde16c8ac83b4a8cc9e3e2f5272bb84698b74",
+      "bytes": 240,
       "case": "on_on_on",
       "color_keep": true,
       "depth": "PF32",
-      "owner_error": "selector SMART_RENDER returned 13",
-      "owner_status": "blocked_before_full_worker_writer",
+      "owner_status": "exact",
+      "parameter_values": [
+        {
+          "name": "Color Keep",
+          "slot": 1,
+          "value": 1.0
+        },
+        {
+          "name": "Premultiplied Color",
+          "slot": 4,
+          "value": 1.0
+        },
+        {
+          "name": "Number of Colors",
+          "slot": 22,
+          "value": 2.0
+        },
+        {
+          "name": "Enable Replace",
+          "slot": 23,
+          "value": 1.0
+        },
+        {
+          "name": "Use Color 1",
+          "slot": 24,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 1",
+          "slot": 25,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "name": "Color 1",
+          "slot": 26
+        },
+        {
+          "color": [
+            255,
+            230,
+            38,
+            26
+          ],
+          "name": "Replace Color 1",
+          "slot": 27
+        },
+        {
+          "name": "Use Color 2",
+          "slot": 32,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 2",
+          "slot": 33,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            255,
+            0
+          ],
+          "name": "Color 2",
+          "slot": 34
+        },
+        {
+          "color": [
+            255,
+            26,
+            89,
+            242
+          ],
+          "name": "Replace Color 2",
+          "slot": 35
+        }
+      ],
       "pixel_format": "argb32f",
       "premultiplied": true,
       "production_complete_buffer_sha256": "7eacc6a7acc785f33c0d43f2489bde16c8ac83b4a8cc9e3e2f5272bb84698b74",
+      "render_mode": "smart-cpu",
       "replace": true,
       "smart_pre_render": {
         "attempted": true,
@@ -337,7 +673,8 @@
       },
       "smart_render": {
         "attempted": true,
-        "completed": false,
+        "completed": true,
+        "error": 0,
         "selector": "SMART_RENDER"
       },
       "suite_requests": [
@@ -345,11 +682,10 @@
         "AEGP Utility Suite v13",
         "PF ColorParamSuite v1",
         "PF iterateFloat Suite v1"
-      ],
-      "unsupported_suite_calls": []
+      ]
     }
   ],
-  "claim_boundary": "The two declared public-toggle representatives are promoted to actual exported Smart owner evidence for PF8 only. PF16/PF32 complete buffers remain declared-record full-worker evidence because the unchanged issue851 worker reaches SmartPreRender but ColorKey SmartRender returns PF_Err 13 before its typed full worker/writer; arbitrary products, native Windows, and After Effects host execution are not claimed.",
+  "claim_boundary": "The two declared public-toggle representatives are actual exported Smart owner evidence for PF8/PF16/PF32. The PF16/PF32 cells require AEXCompat typed iterate Suite wiring commit 0ee27894. Arbitrary parameter products, native Windows, and After Effects host execution are not claimed.",
   "fixture": {
     "dimensions": [
       5,
@@ -459,5 +795,5 @@
   ],
   "production_source_sha256": "1729877106904461894633de4bb400069d000dbcfe08ad723a786d0929af92fa",
   "schema": "olmcolorkey.exported-owner-toggle/1",
-  "verdict": "PARTIAL_EXPORTED_OWNER_PF8_EXACT_PF16_PF32_DISPATCH_BLOCKED"
+  "verdict": "EXACT_EXPORTED_OWNER_ALL_DECLARED_TOGGLE_DEPTH_CELLS"
 }

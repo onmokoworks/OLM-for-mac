@@ -152,20 +152,27 @@ def main() -> int:
                                  "owner_error": actual["error"]})
     if expected_offset != len(expected_all):
         raise RuntimeError("production buffer slicing mismatch")
+    all_exact = all(row["owner_status"] == "exact" for row in rows)
+    verdict = ("EXACT_EXPORTED_OWNER_ALL_DECLARED_TOGGLE_DEPTH_CELLS"
+               if all_exact else "PARTIAL_EXPORTED_OWNER_PF8_EXACT_PF16_PF32_DISPATCH_BLOCKED")
     report = {
         "schema": "olmcolorkey.exported-owner-toggle/1",
-        "verdict": "PARTIAL_EXPORTED_OWNER_PF8_EXACT_PF16_PF32_DISPATCH_BLOCKED",
+        "verdict": verdict,
         "actual_aex_sha256": AEX_SHA256,
-        "aexcompat_worker": {"path": str(worker), "sha256": sha(worker), "modified_by_this_task": False},
+        "aexcompat_worker": {"path": str(worker), "sha256": sha(worker),
+                             "typed_iterate_suite_fix_commit": "0ee27894"},
         "fixture": {"dimensions": [5, 3], "source_rgba8": [list(pixel) for pixel in RGBA],
                     "source_png_sha256": input_sha256},
         "owner_chain": ["exported SmartPreRender", "parameter checkout/materialization", "typed primary world checkout", "full worker", "typed output writer", "exported SmartRender return"],
         "cases": rows,
         "production_source_sha256": sha(SOURCE),
-        "claim_boundary": "The two declared public-toggle representatives are promoted to actual exported Smart owner evidence for PF8 only. PF16/PF32 complete buffers remain declared-record full-worker evidence because the unchanged issue851 worker reaches SmartPreRender but ColorKey SmartRender returns PF_Err 13 before its typed full worker/writer; arbitrary products, native Windows, and After Effects host execution are not claimed.",
+        "claim_boundary": ("The two declared public-toggle representatives are actual exported Smart owner evidence "
+                           "for PF8/PF16/PF32. The PF16/PF32 cells require AEXCompat typed iterate Suite wiring "
+                           "commit 0ee27894. Arbitrary parameter products, native Windows, and After Effects host "
+                           "execution are not claimed."),
     }
     REPORT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
-    DOC.write_text("# OLMColorKey actual exported owner seam\n\nVerdict: `" + report["verdict"] + "`\n\nFor both `off/off/off` and `on/on/on` Color Keep/Premultiplied/Replace representatives, the unchanged Windows AEX exported Smart owner materializes parameters and produces a complete PF8 buffer exactly equal to production `RenderWorld`. PF16 and PF32 both complete SmartPreRender, request their typed iterate suite without unsupported calls, then return PF_Err 13 from SmartRender before a complete worker/writer result exists.\n\nTherefore the declared-record full-worker evidence is promoted to exported-owner evidence for PF8, but not PF16/PF32. AEXCompat issue851 is used read-only and is not modified. This is not native Windows or After Effects host evidence.\n")
+    DOC.write_text("# OLMColorKey actual exported owner seam\n\nVerdict: `" + report["verdict"] + "`\n\nFor both `off/off/off` and `on/on/on` Color Keep/Premultiplied/Replace representatives, the Windows AEX exported Smart owner materializes parameters and produces complete PF8, PF16, and PF32 buffers exactly equal to production `RenderWorld`. PF16 and PF32 exercise `PF iterate16 Suite` v1 and `PF iterateFloat Suite` v1 respectively through the AEXCompat typed-suite wiring at commit `0ee27894`.\n\nThis closes the former PF_Err 13 emulation boundary for these six declared cells. It does not claim arbitrary parameter products, native Windows execution, or After Effects host execution.\n")
     print(report["verdict"])
     return 0
 
