@@ -1,0 +1,371 @@
+{
+  "boundary": "Only the 12 enumerated Mode2 cells are evidence.",
+  "cases": [
+    {
+      "actual_sha256": {
+        "accum": "cf0439fda61c371120e2c8ddddfbecc3fa7991aaeb04347f71660928046f6147",
+        "coordinates": "431b88b00cf7458c7ad2778f75439c8bb49d2b106f2b23bc6632ffaf90e91572",
+        "final_rgba": "3612ccedaeb9cff98d283b5aa5a7c4801d1d9da7efe61c775a311aa5f135d420",
+        "max_alpha": "da8187012394a6e943410b2fce7a9cfb53d5be972f5f05ec72a89c665ba49bab",
+        "output": "dc4e27bcc0a5b9d368a9f0d82557054646af38a28c7ab3d537eb57cdade3c007",
+        "polar": "716f94e45400b1e81763d9b8d0c91810424e84f66b88d31fc71c48f09afc1733",
+        "source_scalar": "460868b09e0f53f289e3a858bba95e644bdb6c19a636a5969289885a7f3552db"
+      },
+      "depth": 8,
+      "effect": "rotation",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 2
+    },
+    {
+      "actual_sha256": {
+        "accum": "9308c9611f9610bb545207cb56d58184aac71deb8f056f7a34f7fa7caf91331d",
+        "coordinates": "431b88b00cf7458c7ad2778f75439c8bb49d2b106f2b23bc6632ffaf90e91572",
+        "final_rgba": "5d232ea8e5af0d6c917e2e9361b25f1b8dab26b74227f9ac9811e6f8f35a68f1",
+        "max_alpha": "da8187012394a6e943410b2fce7a9cfb53d5be972f5f05ec72a89c665ba49bab",
+        "output": "9a78782ead0e8d17a54711ce6528b9ee469b5b332dccc41d59d4b4d11f769867",
+        "polar": "716f94e45400b1e81763d9b8d0c91810424e84f66b88d31fc71c48f09afc1733",
+        "source_scalar": "460868b09e0f53f289e3a858bba95e644bdb6c19a636a5969289885a7f3552db"
+      },
+      "depth": 8,
+      "effect": "rotation",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 4
+    },
+    {
+      "actual_sha256": {
+        "accum": "a37ef8620b4268a4ab0c8d85e3fd4fa4121710af6f55377961a2261cf2f9fa56",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "656dce7425ac102c75ddb1c4b87d41a9455577037974e17cbebb16ddacfa6c4c",
+        "max_alpha": "e277b648cada9ced789dd153377e2b72207a2565cf0bcd2550a346a655c1e51a",
+        "output": "f752a8bb0f70288400f3f2bcecd6803a398577741a7146688cf067b8512deda0",
+        "polar": "560eecc57c1a764bec7a5ee032f1b02c77d54ede89dde49979d4cfa1740f7ed4",
+        "source_scalar": "e468ec1e7afb7b7ef8f52282c441d260ec7f29a643b3ab86884f1d83dabb62b0"
+      },
+      "depth": 8,
+      "effect": "rotation",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 2
+    },
+    {
+      "actual_sha256": {
+        "accum": "ae7ee17e2f1db386526468b0f395411d78da9d6dd7b04eb19704a5a24fcf9ae3",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "077c6f7e72126f76a45c7a35b1c6ca7a7294e8960662adcd93cecea0254ca069",
+        "max_alpha": "e277b648cada9ced789dd153377e2b72207a2565cf0bcd2550a346a655c1e51a",
+        "output": "117bf3a50397e40005fb15598ebd60c2d41f2ec205bfbbddf054a498b826c1b3",
+        "polar": "560eecc57c1a764bec7a5ee032f1b02c77d54ede89dde49979d4cfa1740f7ed4",
+        "source_scalar": "e468ec1e7afb7b7ef8f52282c441d260ec7f29a643b3ab86884f1d83dabb62b0"
+      },
+      "depth": 8,
+      "effect": "rotation",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 4
+    },
+    {
+      "actual_sha256": {
+        "accum": "0ecc53706ea8350a90fb4313739992bf11bd09a7b0786c049bb7bbf88d54eb9c",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "0c99cfc64b35d206e2b19b9e0eed16f09251164b74b24e9c8ec0ce8445f741ed",
+        "max_alpha": "fcc2f0e5a233ad87b4acd4e52dd129e487eda8b7ffdac999cea2e9e9bfedd8e4",
+        "output": "bf79bce9f0741d77dc645a1bb04feb374a9d1bf5b063afec28004db2fdf32f7d",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+      },
+      "depth": 16,
+      "effect": "rotation",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 2
+    },
+    {
+      "actual_sha256": {
+        "accum": "7f2b331eff6283f591ed0a7981d890ecb46b4117fcd32f2abf5ecdaeb6f8ceda",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "774e04598cb69c370a724e66aa2227e8c2eae85b7aa7d2797b2707e03e46eab7",
+        "max_alpha": "fcc2f0e5a233ad87b4acd4e52dd129e487eda8b7ffdac999cea2e9e9bfedd8e4",
+        "output": "9b08f798e0cd6af2269458e1e39f6049742bb10cf6ca3baa4c33b9708407a112",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+      },
+      "depth": 16,
+      "effect": "rotation",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 4
+    },
+    {
+      "actual_sha256": {
+        "accum": "00745ed0fa0d567f33b6c44461203e125dfba8e23d7147e88bca47f31b0d70a2",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "18b43accf53ac0d981b97585f687a604765301ae935c6463ad29c4c6c95d127e",
+        "max_alpha": "39f86a18e7fa04ba0218b5d546b9918c0c90528f9eae17db57ad52c40b05cd91",
+        "output": "03836bd51d0c87a40190b135373ed14b4764b2b792c20e2692aa345b964c4414",
+        "polar": "da0505812a661d8b3cf2e9975b0b8d354b81a280be74c39510d97656920dd020",
+        "source_scalar": "e468ec1e7afb7b7ef8f52282c441d260ec7f29a643b3ab86884f1d83dabb62b0"
+      },
+      "depth": 16,
+      "effect": "rotation",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 2
+    },
+    {
+      "actual_sha256": {
+        "accum": "d7240ddc43cef28c23eb1534d74831db0d08b804952791b8786496ad630406b9",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "867bb5d3797564af931d50a29093fa1f3bfbf7feab8f9dec4326ece25789f988",
+        "max_alpha": "39f86a18e7fa04ba0218b5d546b9918c0c90528f9eae17db57ad52c40b05cd91",
+        "output": "cb163116ffc517412ecb3eec3b3974bd222c58f2722861b45e37e0e4a2f6cff6",
+        "polar": "da0505812a661d8b3cf2e9975b0b8d354b81a280be74c39510d97656920dd020",
+        "source_scalar": "e468ec1e7afb7b7ef8f52282c441d260ec7f29a643b3ab86884f1d83dabb62b0"
+      },
+      "depth": 16,
+      "effect": "rotation",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 4
+    },
+    {
+      "actual_sha256": {
+        "accum": "0ecc53706ea8350a90fb4313739992bf11bd09a7b0786c049bb7bbf88d54eb9c",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "0c99cfc64b35d206e2b19b9e0eed16f09251164b74b24e9c8ec0ce8445f741ed",
+        "max_alpha": "fcc2f0e5a233ad87b4acd4e52dd129e487eda8b7ffdac999cea2e9e9bfedd8e4",
+        "output": "3f525b8a17317db107c6fe428a0121113b626508bfd5e8810b16de16825588b1",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+      },
+      "depth": 32,
+      "effect": "rotation",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 2
+    },
+    {
+      "actual_sha256": {
+        "accum": "7f2b331eff6283f591ed0a7981d890ecb46b4117fcd32f2abf5ecdaeb6f8ceda",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "774e04598cb69c370a724e66aa2227e8c2eae85b7aa7d2797b2707e03e46eab7",
+        "max_alpha": "fcc2f0e5a233ad87b4acd4e52dd129e487eda8b7ffdac999cea2e9e9bfedd8e4",
+        "output": "e637a42426f67001819994d26cd67bdfbc39db746d8bcfb2bdbb230cc26a217e",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+      },
+      "depth": 32,
+      "effect": "rotation",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 4
+    },
+    {
+      "actual_sha256": {
+        "accum": "00745ed0fa0d567f33b6c44461203e125dfba8e23d7147e88bca47f31b0d70a2",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "18b43accf53ac0d981b97585f687a604765301ae935c6463ad29c4c6c95d127e",
+        "max_alpha": "39f86a18e7fa04ba0218b5d546b9918c0c90528f9eae17db57ad52c40b05cd91",
+        "output": "eba36ee074e4b3e1069bcbd0fc5cf1bac631ecb2ab0045a819763177021c43ab",
+        "polar": "da0505812a661d8b3cf2e9975b0b8d354b81a280be74c39510d97656920dd020",
+        "source_scalar": "e468ec1e7afb7b7ef8f52282c441d260ec7f29a643b3ab86884f1d83dabb62b0"
+      },
+      "depth": 32,
+      "effect": "rotation",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 2
+    },
+    {
+      "actual_sha256": {
+        "accum": "d7240ddc43cef28c23eb1534d74831db0d08b804952791b8786496ad630406b9",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "867bb5d3797564af931d50a29093fa1f3bfbf7feab8f9dec4326ece25789f988",
+        "max_alpha": "39f86a18e7fa04ba0218b5d546b9918c0c90528f9eae17db57ad52c40b05cd91",
+        "output": "3bed129530fe1732781653a4a1f28a13bb54013d131e20e8af4c7ee4cfa94b5d",
+        "polar": "da0505812a661d8b3cf2e9975b0b8d354b81a280be74c39510d97656920dd020",
+        "source_scalar": "e468ec1e7afb7b7ef8f52282c441d260ec7f29a643b3ab86884f1d83dabb62b0"
+      },
+      "depth": 32,
+      "effect": "rotation",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 4
+    }
+  ],
+  "exact_cases": 12,
+  "kind": "olmradialblur_rotation_mode2_offset_actual_aex_20260811",
+  "production_method": "Shared-direct bounded Mode2 dynamic-span comparison.",
+  "scope": "Rotation Mode2 PF8/PF16/PF32; 9x7/32x18; Outer Strength4; UI Offset2/4; neutral tuple.",
+  "status": "exact",
+  "total_cases": 12
+}

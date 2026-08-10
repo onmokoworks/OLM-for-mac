@@ -2758,7 +2758,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.center_y == (std::is_same<PixelT, PF_Pixel8>::value
 			? (PF_FpLong)h / 2.0 : (PF_FpLong)(h / 2)) &&
 		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
-		info.outer_offset_mode == 3 && (info.outer_offset == 2 || info.outer_offset == 4) &&
+		(info.outer_offset_mode == 2 || info.outer_offset_mode == 3) &&
+		(info.outer_offset == 2 || info.outer_offset == 4) &&
 		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
 		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
 		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
@@ -2767,6 +2768,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0;
 	const bool use_aex_exact = use_aex_typed_rotation_offcenter_brightness || use_aex_typed_quality_repeat || use_aex_case0010 || use_aex_pf16_small || use_aex_pf16_inner_power2_small ||
+		use_aex_typed_edge_fade_32x18 ||
 		use_aex_typed_rotation_offset_mode3 ||
 		use_aex_pf32_opaque_size_variation_small ||
 		use_aex_pf32_noise_type1_small ||
@@ -3005,12 +3007,18 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			// value, then scales half the radial extent by 1/(ri+1).  Mode 3
 			// selects that dynamic span directly; it does not apply the
 			// fixed-strength path's additional UI-to-worker decrement.
+			const bool use_mode2_dynamic = use_aex_typed_rotation_offset_mode3 &&
+				info.outer_offset_mode == 2;
 			const A_long outer_span = info.outer_offset_mode == 3
 				? DynamicOffsetForRadius(radius_count, std::max<A_long>(0, info.outer_offset - 1), ri)
+				: (use_mode2_dynamic
+					? std::max<A_long>(RotationEffectiveLength(
+						info.outer_strength, 1, 0), DynamicOffsetForRadius(radius_count,
+						std::max<A_long>(0, info.outer_offset - 1), ri))
 				: (use_aex_typed_quality_repeat
 					? (A_long)std::ceil((double)RotationEffectiveLength(
 						info.outer_strength, info.outer_offset_mode, 0) * (info.quality / 5.0))
-					: RotationEffectiveLength(info.outer_strength, info.outer_offset_mode, 0));
+					: RotationEffectiveLength(info.outer_strength, info.outer_offset_mode, 0)));
 			const A_long inner_span = RotationEffectiveLength(info.inner_strength, info.inner_offset_mode, 0);
 			for (A_long ai = 0; ai < angular_count; ++ai) {
 				const size_t source_cell = (size_t)ri * angular_count + ai;

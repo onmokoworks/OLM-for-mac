@@ -117,6 +117,9 @@ def main():
     cells = CELLS
     if "--admitted" in sys.argv:
         cells = [cell for cell in CELLS if cell[0] == "zoom" or cell[4] == 3]
+    mode2_only = "--mode2" in sys.argv
+    if mode2_only:
+        cells = [cell for cell in CELLS if cell[0] == "rotation" and cell[4] == 2]
     with ThreadPoolExecutor(max_workers=6) as pool:
         actuals=dict(zip(cells,pool.map(isolated,cells)))
     rows=[]
@@ -136,8 +139,15 @@ def main():
         print(cell, exact, matches, flush=True)
     count=sum(x["exact"] for x in rows); status="exact" if count==len(rows) else "mismatch"
     report={"kind":"olmradialblur_offset_matrix_actual_aex_20260811","status":status,"scope":"Zoom PF8/PF16/PF32 Mode2/3 and Rotation PF8/PF16/PF32 Mode3; 9x7/32x18; Outer Strength4; UI Offset2/4; centered neutral Ratio1 Angle0 Brightness1 Quality5 Repeat on Noise Type1.","exact_cases":count,"total_cases":len(rows),"cases":rows,"boundary":"Only the 36 admitted cells are evidence. Rotation Mode2 remains fail-closed; other offset modes/values, strengths, geometries, parameters and AE-host behavior remain unproved.","production_method":"Shared-direct comparison against the bounded production predicates."}
-    REPORT.write_text(json.dumps(report,indent=2,sort_keys=True)+"\n")
-    DOC.write_text(f"# OLM RadialBlur Offset matrix — 2026-08-11\n\nStatus: **{status}** ({count}/{len(rows)})\n\nZoomのMode 2/3とRotationのMode 3について、PF8/PF16/PF32、9×7/32×18、Outer Strength 4、UI Offset 2/4をactual AEXの内部planeとtyped outputで比較しました。Rotation Mode 2はscatter規則の解析中で、引き続きfail-closeです。\n")
+    report_path = (ROOT / "refs/conformance/olmradialblur_rotation_mode2_offset_actual_aex_20260811.json") if mode2_only else REPORT
+    doc_path = report_path.with_suffix(".md")
+    if mode2_only:
+        report.update({"kind":"olmradialblur_rotation_mode2_offset_actual_aex_20260811",
+            "scope":"Rotation Mode2 PF8/PF16/PF32; 9x7/32x18; Outer Strength4; UI Offset2/4; neutral tuple.",
+            "boundary":"Only the 12 enumerated Mode2 cells are evidence.",
+            "production_method":"Shared-direct bounded Mode2 dynamic-span comparison."})
+    report_path.write_text(json.dumps(report,indent=2,sort_keys=True)+"\n")
+    doc_path.write_text((f"# OLM RadialBlur Rotation Mode 2 Offset — 2026-08-11\n\nStatus: **{status}** ({count}/{len(rows)})\n\nPF8/PF16/PF32、9×7/32×18、Outer Strength 4、UI Offset 2/4をactual AEXの内部planeとtyped outputで比較しました。\n" if mode2_only else f"# OLM RadialBlur Offset matrix — 2026-08-11\n\nStatus: **{status}** ({count}/{len(rows)})\n\nZoomのMode 2/3とRotationのMode 3について、PF8/PF16/PF32、9×7/32×18、Outer Strength 4、UI Offset 2/4をactual AEXの内部planeとtyped outputで比較しました。Rotation Mode 2はscatter規則の解析中で、引き続きfail-closeです。\n"))
     return 0 if status=="exact" else 1
 
 
