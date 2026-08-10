@@ -860,14 +860,13 @@ static float EdgeBlurWeight(bool inside, float dist, float amount, A_long direct
 	if (direction == 2 && amount == 3.5f && dist == 3.0f) {
 		return inside ? 1.1731984615325928f : -0.17319846153259277f;
 	}
-	if (direction == 2 && amount == 4.0f && dist == 1.0f) {
-		return inside ? 0.696349561214447f : 0.303650438785553f;
-	}
-	if (direction == 2 && amount == 4.0f && dist == 2.0f) {
-		return inside ? 0.892699122428894f : 0.10730090737342834f;
-	}
-	if (direction == 2 && amount == 4.0f && dist == 3.0f) {
-		return inside ? 1.0890486240386963f : -0.08904862403869629f;
+	// The practical Distance Type 1/2/3 family exposes integer and Euclidean
+	// shells for the native amount-4 callback.  Unlike the fallback sine curve,
+	// this bounded worker path is linear and intentionally overshoots past one.
+	if (direction == 2 && amount == 4.0f) {
+		if (dist >= amount) return inside ? 1.0f : 0.0f;
+		const float delta = dist * (pi / 16.0f);
+		return inside ? 0.5f + delta : 0.5f - delta;
 	}
 	if (direction == 1) {
 		if (!inside) return 0.0f;

@@ -1,0 +1,120 @@
+{
+  "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+  "cases": [
+    {
+      "actual_instructions": 360015,
+      "actual_sha256": "a94f93845aa298e962eb504261d1a1f7ec9a83e650966b64d7d4544d938f79af",
+      "actual_worker_status": "pass",
+      "bytes": 2448,
+      "distance_type": 1,
+      "pixel_format": "PF8",
+      "production_sha256": "a94f93845aa298e962eb504261d1a1f7ec9a83e650966b64d7d4544d938f79af",
+      "status": "exact"
+    },
+    {
+      "actual_instructions": 360112,
+      "actual_sha256": "84804fb7fbaf9c8e65dd5ff0e7992ed6c5ea82349f07c6a4ba937f3db46bbbd2",
+      "actual_worker_status": "pass",
+      "bytes": 4752,
+      "distance_type": 1,
+      "pixel_format": "PF16",
+      "production_sha256": "84804fb7fbaf9c8e65dd5ff0e7992ed6c5ea82349f07c6a4ba937f3db46bbbd2",
+      "status": "exact"
+    },
+    {
+      "actual_instructions": 357568,
+      "actual_sha256": "fdf7fcf3a1acf6d2fd5f1215a507dc147dd66c26a563c305ddfb19eeaec6b243",
+      "actual_worker_status": "pass",
+      "bytes": 9360,
+      "distance_type": 1,
+      "pixel_format": "PF32",
+      "production_sha256": "fdf7fcf3a1acf6d2fd5f1215a507dc147dd66c26a563c305ddfb19eeaec6b243",
+      "status": "exact"
+    },
+    {
+      "actual_instructions": 319024,
+      "actual_sha256": "a94f93845aa298e962eb504261d1a1f7ec9a83e650966b64d7d4544d938f79af",
+      "actual_worker_status": "pass",
+      "bytes": 2448,
+      "distance_type": 2,
+      "pixel_format": "PF8",
+      "production_sha256": "a94f93845aa298e962eb504261d1a1f7ec9a83e650966b64d7d4544d938f79af",
+      "status": "exact"
+    },
+    {
+      "actual_instructions": 319122,
+      "actual_sha256": "84804fb7fbaf9c8e65dd5ff0e7992ed6c5ea82349f07c6a4ba937f3db46bbbd2",
+      "actual_worker_status": "pass",
+      "bytes": 4752,
+      "distance_type": 2,
+      "pixel_format": "PF16",
+      "production_sha256": "84804fb7fbaf9c8e65dd5ff0e7992ed6c5ea82349f07c6a4ba937f3db46bbbd2",
+      "status": "exact"
+    },
+    {
+      "actual_instructions": 315462,
+      "actual_sha256": "dcd329dcf4f1551147ffe28259a0906c38ad5bef75d076c1c9a1f8604600f7e4",
+      "actual_worker_status": "pass",
+      "bytes": 9360,
+      "distance_type": 2,
+      "pixel_format": "PF32",
+      "production_sha256": "dcd329dcf4f1551147ffe28259a0906c38ad5bef75d076c1c9a1f8604600f7e4",
+      "status": "exact"
+    },
+    {
+      "actual_instructions": 377276,
+      "actual_sha256": "a94f93845aa298e962eb504261d1a1f7ec9a83e650966b64d7d4544d938f79af",
+      "actual_worker_status": "pass",
+      "bytes": 2448,
+      "distance_type": 3,
+      "pixel_format": "PF8",
+      "production_sha256": "a94f93845aa298e962eb504261d1a1f7ec9a83e650966b64d7d4544d938f79af",
+      "status": "exact"
+    },
+    {
+      "actual_instructions": 377373,
+      "actual_sha256": "84804fb7fbaf9c8e65dd5ff0e7992ed6c5ea82349f07c6a4ba937f3db46bbbd2",
+      "actual_worker_status": "pass",
+      "bytes": 4752,
+      "distance_type": 3,
+      "pixel_format": "PF16",
+      "production_sha256": "84804fb7fbaf9c8e65dd5ff0e7992ed6c5ea82349f07c6a4ba937f3db46bbbd2",
+      "status": "exact"
+    },
+    {
+      "actual_instructions": 374652,
+      "actual_sha256": "cce5675af186e185e175186215377f9d7076e5d24e0ffe101f79155c9d2644e6",
+      "actual_worker_status": "pass",
+      "bytes": 9360,
+      "distance_type": 3,
+      "pixel_format": "PF32",
+      "production_sha256": "cce5675af186e185e175186215377f9d7076e5d24e0ffe101f79155c9d2644e6",
+      "status": "exact"
+    }
+  ],
+  "claim_boundary": "Exact only for this 32x18 two-key multi-island fixture at Direction 2, Amount 4, Distance Types 1/2/3, and PF8/PF16/PF32. No other direction, amount, geometry, key configuration, or AE-host claim.",
+  "comparison": "full typed ARGB active bytes plus every row-padding byte",
+  "fixture": {
+    "dimensions": [
+      32,
+      18
+    ],
+    "edge_blur": {
+      "amount": 4.0,
+      "direction": 2,
+      "distance_types": [
+        1,
+        2,
+        3
+      ]
+    },
+    "keys": [
+      "black",
+      "green"
+    ],
+    "row_padding_bytes": 8,
+    "shape": "four corners, 3x3 center, five-pixel line, and separated points"
+  },
+  "schema_version": 1,
+  "status": "exact"
+}

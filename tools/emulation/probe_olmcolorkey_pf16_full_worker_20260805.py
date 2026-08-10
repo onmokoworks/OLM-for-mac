@@ -108,7 +108,8 @@ def fixture(enabled_key: bool = False, key_shape: str = "single") -> tuple[bytes
 
 
 def parameter_record(enabled_key: bool = False, edge_blur: float = 0.0,
-                     edge_blur_direction: int = 2, key_count: int = 1) -> bytes:
+                     edge_blur_direction: int = 2, key_count: int = 1,
+                     edge_blur_distance_type: int = 2) -> bytes:
     payload = bytearray(0x598)
     struct.pack_into("<i", payload, 0x20, 32 if PIXEL_FORMAT == "PF32" else 16 if PIXEL_FORMAT == "PF16" else 8)
     if enabled_key:
@@ -119,7 +120,7 @@ def parameter_record(enabled_key: bool = False, edge_blur: float = 0.0,
             payload[0x525] = 1  # use_color[1]
             struct.pack_into("<3f", payload, 0x88, 0.0, 1.0, 0.0)
     struct.pack_into("<f", payload, 0x40, edge_blur)
-    struct.pack_into("<i", payload, 0x44, 2)  # diagnostic popup value
+    struct.pack_into("<i", payload, 0x44, edge_blur_distance_type)
     struct.pack_into("<i", payload, 0x48, edge_blur_direction)
     return bytes(payload)
 
@@ -138,7 +139,7 @@ def padded_world(loader: AexLoader, raw: bytes, rowbytes: int) -> int:
 
 def execute_case(aex: Path, enabled_key: bool, edge_blur: float = 0.0,
                  key_shape: str = "single", edge_blur_direction: int = 2,
-                 key_count: int = 1) -> dict[str, object]:
+                 key_count: int = 1, edge_blur_distance_type: int = 2) -> dict[str, object]:
     pixel_bytes = 16 if PIXEL_FORMAT == "PF32" else 8 if PIXEL_FORMAT == "PF16" else 4
     bitdepth = 32 if PIXEL_FORMAT == "PF32" else 16 if PIXEL_FORMAT == "PF16" else 8
     worker = PF32_WORKER if PIXEL_FORMAT == "PF32" else PF16_WORKER if PIXEL_FORMAT == "PF16" else PF8_WORKER
@@ -161,7 +162,8 @@ def execute_case(aex: Path, enabled_key: bool, edge_blur: float = 0.0,
 
     # Independent direct invocation of the actual PF16 per-pixel callback.
     oracle_record = loader.host_alloc(0x598)
-    loader.write_bytes(oracle_record, parameter_record(enabled_key, edge_blur, edge_blur_direction, key_count))
+    loader.write_bytes(oracle_record, parameter_record(enabled_key, edge_blur, edge_blur_direction, key_count,
+                                                       edge_blur_distance_type))
     oracle_output = loader.host_alloc(len(source))
     loader.write_bytes(oracle_output, output_initial)
     pixel_calls = []
@@ -392,7 +394,8 @@ def execute_case(aex: Path, enabled_key: bool, edge_blur: float = 0.0,
         # Windows x64 stack arguments are shifted by the CALL return address:
         # arg5 at +0x28, arg6 (&local_598) at +0x30, arg7 at +0x38.
         record = struct.unpack("<Q", ld.read_bytes(rsp + 0x30, 8))[0]
-        payload = parameter_record(enabled_key, edge_blur, edge_blur_direction, key_count)
+        payload = parameter_record(enabled_key, edge_blur, edge_blur_direction, key_count,
+                                   edge_blur_distance_type)
         # number_of_colors=0, Color Keep=false, Thin=0, Blur=0: every pixel is
         # a non-match and therefore exact passthrough in the native worker.
         ld.write_bytes(record, payload)
@@ -486,7 +489,7 @@ def execute_case(aex: Path, enabled_key: bool, edge_blur: float = 0.0,
         "parameter_record": {**record_capture, "replacement": "fixture-pinned declared record",
                              "enabled_key_count": key_count if enabled_key else 0,
                              "edge_blur_amount": edge_blur,
-                             "edge_blur_distance_type": 2,
+                             "edge_blur_distance_type": edge_blur_distance_type,
                              "edge_blur_direction": edge_blur_direction},
         "execution": {"instructions": call["instructions"], "rax": hex(call["rax"]), "hits": hits, "events": events,
                       "temporary_worlds": temporary_worlds, "temporary_handles": temporary_handles,
