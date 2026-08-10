@@ -1,0 +1,117 @@
+{
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "boundary": "No offset5, NV50, Type2/3, PF8/PF16, other geometry or AE-host claim.",
+  "cases": [
+    {
+      "actual_output_sha256": "aca549cc4699ae1523f5845a29e63962cfe039c2b791d3eaa2cd9842f3d7b4bb",
+      "exact": true,
+      "noise_variation": 25.0,
+      "outer_offset": 2,
+      "outer_offset_mode": 3,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "production_source_scalar_different_bytes": 489
+    },
+    {
+      "actual_output_sha256": "aca549cc4699ae1523f5845a29e63962cfe039c2b791d3eaa2cd9842f3d7b4bb",
+      "exact": true,
+      "noise_variation": 100.0,
+      "outer_offset": 2,
+      "outer_offset_mode": 3,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "production_source_scalar_different_bytes": 2473
+    },
+    {
+      "actual_output_sha256": "2360fa1e0a83c686e6073ff84b4967b8952f44f4c8b5865620882f7c9e24c5a9",
+      "exact": true,
+      "noise_variation": 25.0,
+      "outer_offset": 3,
+      "outer_offset_mode": 3,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "production_source_scalar_different_bytes": 489
+    },
+    {
+      "actual_output_sha256": "d1ad31a570d98e313215d11de54296fbb83b4b1357ac84c4a15a73cd4f767ad4",
+      "exact": true,
+      "noise_variation": 100.0,
+      "outer_offset": 3,
+      "outer_offset_mode": 3,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "production_source_scalar_different_bytes": 2473
+    },
+    {
+      "actual_output_sha256": "3fa6d34a4b607ef1316a412e97ce83bec08438a54cba5482a5eb4f77e4999834",
+      "exact": true,
+      "noise_variation": 25.0,
+      "outer_offset": 4,
+      "outer_offset_mode": 3,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "production_source_scalar_different_bytes": 489
+    },
+    {
+      "actual_output_sha256": "74e98d8af1a3cb19c41b31c8fa37b396fedcb96899f64a58fd522adb85253cd9",
+      "exact": true,
+      "noise_variation": 100.0,
+      "outer_offset": 4,
+      "outer_offset_mode": 3,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "production_source_scalar_different_bytes": 2473
+    }
+  ],
+  "controls": "The same-offset Noise-0 controls remain independently pinned by the three 20260805 Offset-mode-3 fixtures.",
+  "fail_closed": {
+    "offset2_nv50": true,
+    "offset5_nv25": true
+  },
+  "kind": "olmradialblur_rotation_pf32_offset_mode3_noise_type1_actual_aex_20260810",
+  "production_scalar_boundary": "Full source-scalar allocation has the known inactive-cell 1-ULP difference; polar, accum, max-alpha, final, coordinates and padded output are bit exact.",
+  "scope": "Pinned PF32 Rotation 9x7 rowbytes160; Offset mode3 UI 2/3/4 x Noise Type1 25/100; Strength4, Size Variation0, neutral remaining tuple.",
+  "status": "exact_with_inactive_source_scalar_boundary"
+}
