@@ -43,7 +43,7 @@ def export() -> None:
             cases.append(item)
     MANIFEST.write_text(json.dumps({"schema": "olmblur.downsample-xy-cross.actual-aex/1", "plugin": "OLMBlur",
         "actual_aex_sha256": base.AEX_SHA256, "geometry": [24, 24],
-        "composition_rule": "effective Amount = UI Amount * downsample_x; downsample_y is inactive",
+        "composition_rule": "x scales NonLegacy Amount and Legacy radius only; Legacy sigma retains UI Amount; y is inactive",
         "oracle": "hash-pinned actual-AEX typed-worker buffers from the x scaling matrix, reused over y",
         "cases": cases}, indent=2, sort_keys=True) + "\n")
 
@@ -108,7 +108,7 @@ def verify() -> None:
         "actual_aex_sha256": base.AEX_SHA256, "case_count": 96, "geometry": [24,24],
         "matrix": {"depth": [8,16,32], "amount": [5,129.4], "repeat": [1,2], "legacy": [0,1],
                    "downsample_x": [[n,d] for n,d in RATIOS], "downsample_y": [[n,d] for n,d in RATIOS]},
-        "decision": "effective Amount = UI Amount * downsample_x; downsample_y remains inactive even when both ratios are non-unit",
+        "decision": "x scales NonLegacy Amount and Legacy radius only; Legacy sigma retains UI Amount; y remains inactive when both ratios are non-unit",
         "path": "actual-AEX typed worker at x-scaled Amount -> production EffectMain SmartPreRender/SmartRender with both rationals",
         "cases": results, "not_proven": ["native AE preview world sizing", "host-changed world dimensions", "non-square pixel aspect", "other geometry/bias/smoothness"]}, indent=2, sort_keys=True)+"\n")
     print("PASS_OLMBLUR_DOWNSAMPLE_XY_CROSS cases=96 exact_composition=1")

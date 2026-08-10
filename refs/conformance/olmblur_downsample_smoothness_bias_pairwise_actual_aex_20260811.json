@@ -1,0 +1,1314 @@
+{
+  "actual_aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+  "case_count": 48,
+  "cases": [
+    {
+      "id": "pf8_legacy0_oa0",
+      "oa_bits": [
+        0,
+        0,
+        0
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 25,
+        "seen_smoothness_fixed": 1638400
+      }
+    },
+    {
+      "id": "pf8_legacy0_oa1",
+      "oa_bits": [
+        0,
+        0,
+        1
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_legacy0_oa2",
+      "oa_bits": [
+        0,
+        1,
+        0
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_legacy0_oa3",
+      "oa_bits": [
+        0,
+        1,
+        1
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 25,
+        "seen_smoothness_fixed": 1638400
+      }
+    },
+    {
+      "id": "pf8_legacy0_oa4",
+      "oa_bits": [
+        1,
+        0,
+        0
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 25,
+        "seen_smoothness_fixed": 1638400
+      }
+    },
+    {
+      "id": "pf8_legacy0_oa5",
+      "oa_bits": [
+        1,
+        0,
+        1
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_legacy0_oa6",
+      "oa_bits": [
+        1,
+        1,
+        0
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_legacy0_oa7",
+      "oa_bits": [
+        1,
+        1,
+        1
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 25,
+        "seen_smoothness_fixed": 1638400
+      }
+    },
+    {
+      "id": "pf8_legacy1_oa0",
+      "oa_bits": [
+        0,
+        0,
+        0
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 25,
+        "seen_smoothness_fixed": 1638400
+      }
+    },
+    {
+      "id": "pf8_legacy1_oa1",
+      "oa_bits": [
+        0,
+        0,
+        1
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_legacy1_oa2",
+      "oa_bits": [
+        0,
+        1,
+        0
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_legacy1_oa3",
+      "oa_bits": [
+        0,
+        1,
+        1
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 25,
+        "seen_smoothness_fixed": 1638400
+      }
+    },
+    {
+      "id": "pf8_legacy1_oa4",
+      "oa_bits": [
+        1,
+        0,
+        0
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 25,
+        "seen_smoothness_fixed": 1638400
+      }
+    },
+    {
+      "id": "pf8_legacy1_oa5",
+      "oa_bits": [
+        1,
+        0,
+        1
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_legacy1_oa6",
+      "oa_bits": [
+        1,
+        1,
+        0
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_legacy1_oa7",
+      "oa_bits": [
+        1,
+        1,
+        1
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 25,
+        "seen_smoothness_fixed": 1638400
+      }
+    },
+    {
+      "id": "pf16_legacy0_oa0",
+      "oa_bits": [
+        0,
+        0,
+        0
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 25,
+        "seen_smoothness_fixed": 1638400
+      }
+    },
+    {
+      "id": "pf16_legacy0_oa1",
+      "oa_bits": [
+        0,
+        0,
+        1
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_legacy0_oa2",
+      "oa_bits": [
+        0,
+        1,
+        0
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_legacy0_oa3",
+      "oa_bits": [
+        0,
+        1,
+        1
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 25,
+        "seen_smoothness_fixed": 1638400
+      }
+    },
+    {
+      "id": "pf16_legacy0_oa4",
+      "oa_bits": [
+        1,
+        0,
+        0
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 25,
+        "seen_smoothness_fixed": 1638400
+      }
+    },
+    {
+      "id": "pf16_legacy0_oa5",
+      "oa_bits": [
+        1,
+        0,
+        1
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_legacy0_oa6",
+      "oa_bits": [
+        1,
+        1,
+        0
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_legacy0_oa7",
+      "oa_bits": [
+        1,
+        1,
+        1
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 25,
+        "seen_smoothness_fixed": 1638400
+      }
+    },
+    {
+      "id": "pf16_legacy1_oa0",
+      "oa_bits": [
+        0,
+        0,
+        0
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 25,
+        "seen_smoothness_fixed": 1638400
+      }
+    },
+    {
+      "id": "pf16_legacy1_oa1",
+      "oa_bits": [
+        0,
+        0,
+        1
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_legacy1_oa2",
+      "oa_bits": [
+        0,
+        1,
+        0
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_legacy1_oa3",
+      "oa_bits": [
+        0,
+        1,
+        1
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 25,
+        "seen_smoothness_fixed": 1638400
+      }
+    },
+    {
+      "id": "pf16_legacy1_oa4",
+      "oa_bits": [
+        1,
+        0,
+        0
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 25,
+        "seen_smoothness_fixed": 1638400
+      }
+    },
+    {
+      "id": "pf16_legacy1_oa5",
+      "oa_bits": [
+        1,
+        0,
+        1
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_legacy1_oa6",
+      "oa_bits": [
+        1,
+        1,
+        0
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_legacy1_oa7",
+      "oa_bits": [
+        1,
+        1,
+        1
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 25,
+        "seen_smoothness_fixed": 1638400
+      }
+    },
+    {
+      "id": "pf32_legacy0_oa0",
+      "oa_bits": [
+        0,
+        0,
+        0
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 25,
+        "seen_smoothness_fixed": 1638400
+      }
+    },
+    {
+      "id": "pf32_legacy0_oa1",
+      "oa_bits": [
+        0,
+        0,
+        1
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_legacy0_oa2",
+      "oa_bits": [
+        0,
+        1,
+        0
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_legacy0_oa3",
+      "oa_bits": [
+        0,
+        1,
+        1
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 25,
+        "seen_smoothness_fixed": 1638400
+      }
+    },
+    {
+      "id": "pf32_legacy0_oa4",
+      "oa_bits": [
+        1,
+        0,
+        0
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 25,
+        "seen_smoothness_fixed": 1638400
+      }
+    },
+    {
+      "id": "pf32_legacy0_oa5",
+      "oa_bits": [
+        1,
+        0,
+        1
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_legacy0_oa6",
+      "oa_bits": [
+        1,
+        1,
+        0
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_legacy0_oa7",
+      "oa_bits": [
+        1,
+        1,
+        1
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 25,
+        "seen_smoothness_fixed": 1638400
+      }
+    },
+    {
+      "id": "pf32_legacy1_oa0",
+      "oa_bits": [
+        0,
+        0,
+        0
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 25,
+        "seen_smoothness_fixed": 1638400
+      }
+    },
+    {
+      "id": "pf32_legacy1_oa1",
+      "oa_bits": [
+        0,
+        0,
+        1
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_legacy1_oa2",
+      "oa_bits": [
+        0,
+        1,
+        0
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_legacy1_oa3",
+      "oa_bits": [
+        0,
+        1,
+        1
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 25,
+        "seen_smoothness_fixed": 1638400
+      }
+    },
+    {
+      "id": "pf32_legacy1_oa4",
+      "oa_bits": [
+        1,
+        0,
+        0
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 25,
+        "seen_smoothness_fixed": 1638400
+      }
+    },
+    {
+      "id": "pf32_legacy1_oa5",
+      "oa_bits": [
+        1,
+        0,
+        1
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_legacy1_oa6",
+      "oa_bits": [
+        1,
+        1,
+        0
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_legacy1_oa7",
+      "oa_bits": [
+        1,
+        1,
+        1
+      ],
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 25,
+        "seen_smoothness_fixed": 1638400
+      }
+    }
+  ],
+  "coverage": "within each Legacy branch every pair of the six binary factors occurs in all four value combinations",
+  "decision": "downsample_x scales NonLegacy Amount and Legacy radius only; Legacy sigma retains UI Amount; neither axis transforms Smoothness or Bias",
+  "geometry": [
+    24,
+    24
+  ],
+  "matrix": {
+    "amount": [
+      5,
+      129.4
+    ],
+    "bias_direction": [
+      1,
+      2
+    ],
+    "depth": [
+      8,
+      16,
+      32
+    ],
+    "downsample_x": [
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        1
+      ]
+    ],
+    "downsample_y": [
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ]
+    ],
+    "legacy": [
+      0,
+      1
+    ],
+    "repeat": [
+      1,
+      2
+    ],
+    "smoothness": [
+      25,
+      100
+    ]
+  },
+  "not_proven": [
+    "three-way interactions outside covering rows",
+    "native AE world resizing",
+    "other geometry/values"
+  ],
+  "schema": "olmblur.downsample-smoothness-bias-pairwise.production/1",
+  "status": "exact_pairwise"
+}

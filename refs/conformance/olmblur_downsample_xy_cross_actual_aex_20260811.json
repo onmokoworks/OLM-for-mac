@@ -2211,7 +2211,7 @@
       }
     }
   ],
-  "decision": "effective Amount = UI Amount * downsample_x; downsample_y remains inactive even when both ratios are non-unit",
+  "decision": "x scales NonLegacy Amount and Legacy radius only; Legacy sigma retains UI Amount; y remains inactive when both ratios are non-unit",
   "geometry": [
     24,
     24

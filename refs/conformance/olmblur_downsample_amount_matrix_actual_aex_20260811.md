@@ -6,14 +6,15 @@
 - Fixed controls: Smoothness `100`, Bias Direction `1`, `downsample_y=1/1`
 - Cases: 72 complete typed buffers
 
-The oracle calls the pinned actual-AEX typed worker with the effective amount
-`UI Amount × downsample_x.num / downsample_x.den`. The production comparison
-keeps both source and destination worlds at exactly `24×24`, supplies the
-unscaled UI Amount through parameter checkout, and supplies the rational only
-through `PF_InData.downsample_x`. Production
+The oracle calls the pinned actual-AEX typed worker with its real context
+rational. Non-Legacy mutates Amount by that x ratio. Legacy instead scales only
+the integer radius while forming Gaussian sigma from the unscaled UI Amount.
+The production comparison keeps both source and destination worlds at exactly
+`24×24`, supplies the unscaled UI Amount through parameter checkout, and
+supplies the rational only through `PF_InData.downsample_x`. Production
 `EffectMain(PF_Cmd_SMART_PRE_RENDER)` →
 `EffectMain(PF_Cmd_SMART_RENDER)` therefore has to read and apply that host
-contract exactly once to match.
+mode-specific contract to match.
 
 All active bytes and row-padding guards match. This proves the rational scaling
 contract for the bounded matrix; it does not claim native AE preview world

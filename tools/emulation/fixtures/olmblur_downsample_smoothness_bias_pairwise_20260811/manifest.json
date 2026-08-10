@@ -1,0 +1,1360 @@
+{
+  "actual_aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+  "cases": [
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "expected_pf8_legacy0_oa0.bin",
+      "expected_sha256": "5267bd6df610959d99b6c7e8968678a9c8bfd9db400b130444c20426762b594f",
+      "id": "pf8_legacy0_oa0",
+      "instructions": 172587,
+      "legacy": 0,
+      "oa_bits": [
+        0,
+        0,
+        0
+      ],
+      "repeat": 1,
+      "smoothness": 25.0,
+      "source": "source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 2,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "expected_pf8_legacy0_oa1.bin",
+      "expected_sha256": "ff1cdd56fe2575388c64ee8755ed1cc022893ff008e38dc9b654373d36cdb873",
+      "id": "pf8_legacy0_oa1",
+      "instructions": 189974,
+      "legacy": 0,
+      "oa_bits": [
+        0,
+        0,
+        1
+      ],
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 2,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "expected_pf8_legacy0_oa2.bin",
+      "expected_sha256": "ad467479f9e14b7cd3183d4962580f55656e99262bb2542a8f98fec09fbb8178",
+      "id": "pf8_legacy0_oa2",
+      "instructions": 308005,
+      "legacy": 0,
+      "oa_bits": [
+        0,
+        1,
+        0
+      ],
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "expected_pf8_legacy0_oa3.bin",
+      "expected_sha256": "18b286ed4863f146f0115f79bcfb95cdf56830c10149b289b6dc469c8d6882bc",
+      "id": "pf8_legacy0_oa3",
+      "instructions": 325384,
+      "legacy": 0,
+      "oa_bits": [
+        0,
+        1,
+        1
+      ],
+      "repeat": 2,
+      "smoothness": 25.0,
+      "source": "source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 2,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "expected_pf8_legacy0_oa4.bin",
+      "expected_sha256": "fde9ef8dc15060ac6889895bcd70371bfe01b3ee7a740b80997aaf6e1dd184b1",
+      "id": "pf8_legacy0_oa4",
+      "instructions": 324632,
+      "legacy": 0,
+      "oa_bits": [
+        1,
+        0,
+        0
+      ],
+      "repeat": 2,
+      "smoothness": 25.0,
+      "source": "source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "expected_pf8_legacy0_oa5.bin",
+      "expected_sha256": "2600ad414d5450e3652c2b82c74c1d672180010df489daefce1dd7d2dce0ec41",
+      "id": "pf8_legacy0_oa5",
+      "instructions": 328100,
+      "legacy": 0,
+      "oa_bits": [
+        1,
+        0,
+        1
+      ],
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "expected_pf8_legacy0_oa6.bin",
+      "expected_sha256": "d32b90e7c166baf5fb44ccbf1d7524ad0638b627abdb347536c121642a92cf3f",
+      "id": "pf8_legacy0_oa6",
+      "instructions": 189214,
+      "legacy": 0,
+      "oa_bits": [
+        1,
+        1,
+        0
+      ],
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 2,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "expected_pf8_legacy0_oa7.bin",
+      "expected_sha256": "f4bd48e7a04f735d9c78fb378afde5301c114eaa3af7677e706888962c5dc6e5",
+      "id": "pf8_legacy0_oa7",
+      "instructions": 192690,
+      "legacy": 0,
+      "oa_bits": [
+        1,
+        1,
+        1
+      ],
+      "repeat": 1,
+      "smoothness": 25.0,
+      "source": "source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "expected_pf8_legacy1_oa0.bin",
+      "expected_sha256": "e41258e502358459d66e2946c78f02bfefa62ef6e0a96b18c5c013ec1b43d200",
+      "id": "pf8_legacy1_oa0",
+      "instructions": 246241,
+      "legacy": 1,
+      "oa_bits": [
+        0,
+        0,
+        0
+      ],
+      "repeat": 1,
+      "smoothness": 25.0,
+      "source": "source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 2,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "expected_pf8_legacy1_oa1.bin",
+      "expected_sha256": "2566aa028f013d207bffff42119c3b0c64774ca8909ff1febf5361d3739f0dcb",
+      "id": "pf8_legacy1_oa1",
+      "instructions": 501803,
+      "legacy": 1,
+      "oa_bits": [
+        0,
+        0,
+        1
+      ],
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 2,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "expected_pf8_legacy1_oa2.bin",
+      "expected_sha256": "80e212b97f4a00ff650c4018dbc4c3b1cc4aeb8f764e303849e0bb6c5f145648",
+      "id": "pf8_legacy1_oa2",
+      "instructions": 447717,
+      "legacy": 1,
+      "oa_bits": [
+        0,
+        1,
+        0
+      ],
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "expected_pf8_legacy1_oa3.bin",
+      "expected_sha256": "0412941ec1053e65eb72b9a81be3a48020dfc15a86457aeec5eae9a13877ad96",
+      "id": "pf8_legacy1_oa3",
+      "instructions": 958663,
+      "legacy": 1,
+      "oa_bits": [
+        0,
+        1,
+        1
+      ],
+      "repeat": 2,
+      "smoothness": 25.0,
+      "source": "source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 2,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "expected_pf8_legacy1_oa4.bin",
+      "expected_sha256": "1fe167945aa32f4a9bd44de19ccc594349ce13c38b61055fdb9b88eb7e88d6ab",
+      "id": "pf8_legacy1_oa4",
+      "instructions": 629622,
+      "legacy": 1,
+      "oa_bits": [
+        1,
+        0,
+        0
+      ],
+      "repeat": 2,
+      "smoothness": 25.0,
+      "source": "source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "expected_pf8_legacy1_oa5.bin",
+      "expected_sha256": "32775e837f3bb0583123058294ddc9c59d038b017b991b9be6cd76d110053daa",
+      "id": "pf8_legacy1_oa5",
+      "instructions": 2140719,
+      "legacy": 1,
+      "oa_bits": [
+        1,
+        0,
+        1
+      ],
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "expected_pf8_legacy1_oa6.bin",
+      "expected_sha256": "52733f5e3b4fe80f638f0041bb76a22b4fe30db484c655547c366d3d8be64e94",
+      "id": "pf8_legacy1_oa6",
+      "instructions": 337536,
+      "legacy": 1,
+      "oa_bits": [
+        1,
+        1,
+        0
+      ],
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 2,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "expected_pf8_legacy1_oa7.bin",
+      "expected_sha256": "2566aa028f013d207bffff42119c3b0c64774ca8909ff1febf5361d3739f0dcb",
+      "id": "pf8_legacy1_oa7",
+      "instructions": 1092533,
+      "legacy": 1,
+      "oa_bits": [
+        1,
+        1,
+        1
+      ],
+      "repeat": 1,
+      "smoothness": 25.0,
+      "source": "source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "expected_pf16_legacy0_oa0.bin",
+      "expected_sha256": "8016e64f11514cd8a3f742557fdc12685f0b89d27ec19664b687aa1399cad878",
+      "id": "pf16_legacy0_oa0",
+      "instructions": 165037,
+      "legacy": 0,
+      "oa_bits": [
+        0,
+        0,
+        0
+      ],
+      "repeat": 1,
+      "smoothness": 25.0,
+      "source": "source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 2,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "expected_pf16_legacy0_oa1.bin",
+      "expected_sha256": "6fbcd4363606b9bc4802dd972d88100d7c847de28d99e144916d72ca0f469399",
+      "id": "pf16_legacy0_oa1",
+      "instructions": 210596,
+      "legacy": 0,
+      "oa_bits": [
+        0,
+        0,
+        1
+      ],
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 2,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "expected_pf16_legacy0_oa2.bin",
+      "expected_sha256": "24fc96153b359d8d708191850f8bb7cbb50466c5fe5feecda2d0b66b1ed72fda",
+      "id": "pf16_legacy0_oa2",
+      "instructions": 293187,
+      "legacy": 0,
+      "oa_bits": [
+        0,
+        1,
+        0
+      ],
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "expected_pf16_legacy0_oa3.bin",
+      "expected_sha256": "6ef699c0149fb830eea5b3c548809e9c7fd8203a7bece5a18e964d5374994ab3",
+      "id": "pf16_legacy0_oa3",
+      "instructions": 338733,
+      "legacy": 0,
+      "oa_bits": [
+        0,
+        1,
+        1
+      ],
+      "repeat": 2,
+      "smoothness": 25.0,
+      "source": "source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 2,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "expected_pf16_legacy0_oa4.bin",
+      "expected_sha256": "443715036e07962db7873eab51a4e113f8e4137400f48c9af4eddec6b3daea73",
+      "id": "pf16_legacy0_oa4",
+      "instructions": 333928,
+      "legacy": 0,
+      "oa_bits": [
+        1,
+        0,
+        0
+      ],
+      "repeat": 2,
+      "smoothness": 25.0,
+      "source": "source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "expected_pf16_legacy0_oa5.bin",
+      "expected_sha256": "6fe639993144e81cc7f6db126fea0131de168ebb9490bed566d6bc67cc86c9bd",
+      "id": "pf16_legacy0_oa5",
+      "instructions": 341449,
+      "legacy": 0,
+      "oa_bits": [
+        1,
+        0,
+        1
+      ],
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "expected_pf16_legacy0_oa6.bin",
+      "expected_sha256": "ad51762986a80d94016322025dfa1c0e65f707883c027097d64f597abb336c17",
+      "id": "pf16_legacy0_oa6",
+      "instructions": 205778,
+      "legacy": 0,
+      "oa_bits": [
+        1,
+        1,
+        0
+      ],
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 2,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "expected_pf16_legacy0_oa7.bin",
+      "expected_sha256": "602c5753123220e0caa46ff1dfefa8c4e706066305ce2750036c690f7527e8dc",
+      "id": "pf16_legacy0_oa7",
+      "instructions": 213312,
+      "legacy": 0,
+      "oa_bits": [
+        1,
+        1,
+        1
+      ],
+      "repeat": 1,
+      "smoothness": 25.0,
+      "source": "source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "expected_pf16_legacy1_oa0.bin",
+      "expected_sha256": "e0dd1b4a74a456641938effd1c26d3bfd79eb67c3df0307dc48f25e8e34c3d8e",
+      "id": "pf16_legacy1_oa0",
+      "instructions": 233462,
+      "legacy": 1,
+      "oa_bits": [
+        0,
+        0,
+        0
+      ],
+      "repeat": 1,
+      "smoothness": 25.0,
+      "source": "source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 2,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "expected_pf16_legacy1_oa1.bin",
+      "expected_sha256": "2d51385669dce12413013771c33d7aeb417a42bb9a734c738c393e5bc14c66ef",
+      "id": "pf16_legacy1_oa1",
+      "instructions": 600720,
+      "legacy": 1,
+      "oa_bits": [
+        0,
+        0,
+        1
+      ],
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 2,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "expected_pf16_legacy1_oa2.bin",
+      "expected_sha256": "f033149b197cd1bceb99141de64c59e4977d15d2046b9da71fe86d621cb38be8",
+      "id": "pf16_legacy1_oa2",
+      "instructions": 421815,
+      "legacy": 1,
+      "oa_bits": [
+        0,
+        1,
+        0
+      ],
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "expected_pf16_legacy1_oa3.bin",
+      "expected_sha256": "02c44baa3d3c76c76c2870a7ed917d90ff6d30b9c512366559d084eb96678cd3",
+      "id": "pf16_legacy1_oa3",
+      "instructions": 1156753,
+      "legacy": 1,
+      "oa_bits": [
+        0,
+        1,
+        1
+      ],
+      "repeat": 2,
+      "smoothness": 25.0,
+      "source": "source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 2,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "expected_pf16_legacy1_oa4.bin",
+      "expected_sha256": "5e8ef7254ad58f039ac6f38891fb5454e67330b12d2318fc3739c4771395584b",
+      "id": "pf16_legacy1_oa4",
+      "instructions": 688614,
+      "legacy": 1,
+      "oa_bits": [
+        1,
+        0,
+        0
+      ],
+      "repeat": 2,
+      "smoothness": 25.0,
+      "source": "source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "expected_pf16_legacy1_oa5.bin",
+      "expected_sha256": "564d0bbf1583f66c6eab1fb9b92c2feb549ef3e0be95374830c3db8b35cc2ef9",
+      "id": "pf16_legacy1_oa5",
+      "instructions": 2750391,
+      "legacy": 1,
+      "oa_bits": [
+        1,
+        0,
+        1
+      ],
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "expected_pf16_legacy1_oa6.bin",
+      "expected_sha256": "7c33e7331c7acd9447bcc7961b412b27b8c6feeef14b7b10a719cedf63755793",
+      "id": "pf16_legacy1_oa6",
+      "instructions": 367314,
+      "legacy": 1,
+      "oa_bits": [
+        1,
+        1,
+        0
+      ],
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 2,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "expected_pf16_legacy1_oa7.bin",
+      "expected_sha256": "2d51385669dce12413013771c33d7aeb417a42bb9a734c738c393e5bc14c66ef",
+      "id": "pf16_legacy1_oa7",
+      "instructions": 1397090,
+      "legacy": 1,
+      "oa_bits": [
+        1,
+        1,
+        1
+      ],
+      "repeat": 1,
+      "smoothness": 25.0,
+      "source": "source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "expected_pf32_legacy0_oa0.bin",
+      "expected_sha256": "4c833311aabaff23527f82e551e67dc22cc2774d3c83069673fae2bebecfd1ad",
+      "id": "pf32_legacy0_oa0",
+      "instructions": 162398,
+      "legacy": 0,
+      "oa_bits": [
+        0,
+        0,
+        0
+      ],
+      "repeat": 1,
+      "smoothness": 25.0,
+      "source": "source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 2,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "expected_pf32_legacy0_oa1.bin",
+      "expected_sha256": "674a1b55b164b9d9595bdc691cf5003a29e8c577059fa685a01ced09d8e71ce9",
+      "id": "pf32_legacy0_oa1",
+      "instructions": 179163,
+      "legacy": 0,
+      "oa_bits": [
+        0,
+        0,
+        1
+      ],
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 2,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "expected_pf32_legacy0_oa2.bin",
+      "expected_sha256": "392877ebb02b8d75abf8be0cec9c68a26640854755fc0f8011470c930eb7de62",
+      "id": "pf32_legacy0_oa2",
+      "instructions": 297010,
+      "legacy": 0,
+      "oa_bits": [
+        0,
+        1,
+        0
+      ],
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "expected_pf32_legacy0_oa3.bin",
+      "expected_sha256": "6f47b0b8abaef09eb5e1dc5e2d7dc6e891cd8cfb230efb44d67f644780819049",
+      "id": "pf32_legacy0_oa3",
+      "instructions": 313765,
+      "legacy": 0,
+      "oa_bits": [
+        0,
+        1,
+        1
+      ],
+      "repeat": 2,
+      "smoothness": 25.0,
+      "source": "source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 2,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "expected_pf32_legacy0_oa4.bin",
+      "expected_sha256": "16f963397615913f142cf10087d361bf1906b02528f4866c99ebfdd21b0faa8a",
+      "id": "pf32_legacy0_oa4",
+      "instructions": 313014,
+      "legacy": 0,
+      "oa_bits": [
+        1,
+        0,
+        0
+      ],
+      "repeat": 2,
+      "smoothness": 25.0,
+      "source": "source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "expected_pf32_legacy0_oa5.bin",
+      "expected_sha256": "942dd02347f585c116b043ff7acdea7dc45811e2f9b2e11c7db5d946672ffbb9",
+      "id": "pf32_legacy0_oa5",
+      "instructions": 316481,
+      "legacy": 0,
+      "oa_bits": [
+        1,
+        0,
+        1
+      ],
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "expected_pf32_legacy0_oa6.bin",
+      "expected_sha256": "726a0b7f2376bc8174adbd4621c71132d5cdf03fb47d3f6517fffc0446873e5a",
+      "id": "pf32_legacy0_oa6",
+      "instructions": 178402,
+      "legacy": 0,
+      "oa_bits": [
+        1,
+        1,
+        0
+      ],
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 2,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "expected_pf32_legacy0_oa7.bin",
+      "expected_sha256": "602b7aa1086277c7eab21e0c7de89038d4364607bed9092e2e2b506f3c3a030d",
+      "id": "pf32_legacy0_oa7",
+      "instructions": 181879,
+      "legacy": 0,
+      "oa_bits": [
+        1,
+        1,
+        1
+      ],
+      "repeat": 1,
+      "smoothness": 25.0,
+      "source": "source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "expected_pf32_legacy1_oa0.bin",
+      "expected_sha256": "7bf0e28d253430ff06d50e23bbf889eea8777264d6aff3ca68d7866debef293e",
+      "id": "pf32_legacy1_oa0",
+      "instructions": 235001,
+      "legacy": 1,
+      "oa_bits": [
+        0,
+        0,
+        0
+      ],
+      "repeat": 1,
+      "smoothness": 25.0,
+      "source": "source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 2,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "expected_pf32_legacy1_oa1.bin",
+      "expected_sha256": "31079932205da3433d2d989fe4e6adc1bb4450b8987667fce3df7e8d02e64a99",
+      "id": "pf32_legacy1_oa1",
+      "instructions": 482963,
+      "legacy": 1,
+      "oa_bits": [
+        0,
+        0,
+        1
+      ],
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 2,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "expected_pf32_legacy1_oa2.bin",
+      "expected_sha256": "75fc4bff0deec84b74932f2445350968ca683f0821fdfe113e80ee260c9a10ae",
+      "id": "pf32_legacy1_oa2",
+      "instructions": 435324,
+      "legacy": 1,
+      "oa_bits": [
+        0,
+        1,
+        0
+      ],
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "expected_pf32_legacy1_oa3.bin",
+      "expected_sha256": "3cbacddc681747756e365681150f5716d05f98923afb4173716c845e0e6ce52b",
+      "id": "pf32_legacy1_oa3",
+      "instructions": 931077,
+      "legacy": 1,
+      "oa_bits": [
+        0,
+        1,
+        1
+      ],
+      "repeat": 2,
+      "smoothness": 25.0,
+      "source": "source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 2,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "expected_pf32_legacy1_oa4.bin",
+      "expected_sha256": "7fd71e006416e63704a9d2c234814cb033df2c429a88100f615666cf708d99a3",
+      "id": "pf32_legacy1_oa4",
+      "instructions": 612522,
+      "legacy": 1,
+      "oa_bits": [
+        1,
+        0,
+        0
+      ],
+      "repeat": 2,
+      "smoothness": 25.0,
+      "source": "source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "expected_pf32_legacy1_oa5.bin",
+      "expected_sha256": "eec4ee63e89dcfe6b5a08964cd1d833eb594521ce4e05b0e0b653c4a4bf6482d",
+      "id": "pf32_legacy1_oa5",
+      "instructions": 2075430,
+      "legacy": 1,
+      "oa_bits": [
+        1,
+        0,
+        1
+      ],
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "expected_pf32_legacy1_oa6.bin",
+      "expected_sha256": "a0e81a0d6348253e7d06e58ed2cee6ff83ff268663b2050094c9f424823d1e70",
+      "id": "pf32_legacy1_oa6",
+      "instructions": 323933,
+      "legacy": 1,
+      "oa_bits": [
+        1,
+        1,
+        0
+      ],
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 2,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "expected_pf32_legacy1_oa7.bin",
+      "expected_sha256": "31079932205da3433d2d989fe4e6adc1bb4450b8987667fce3df7e8d02e64a99",
+      "id": "pf32_legacy1_oa7",
+      "instructions": 1054875,
+      "legacy": 1,
+      "oa_bits": [
+        1,
+        1,
+        1
+      ],
+      "repeat": 1,
+      "smoothness": 25.0,
+      "source": "source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    }
+  ],
+  "design": "two independent OA(8,6,2) matrices per depth, one per Legacy branch; strength 2",
+  "geometry": [
+    24,
+    24
+  ],
+  "plugin": "OLMBlur",
+  "schema": "olmblur.downsample-smoothness-bias-pairwise.actual-aex/1",
+  "ui_bias": {
+    "1": "Vertical (horizontal then vertical)",
+    "2": "Horizontal (vertical then horizontal)"
+  }
+}

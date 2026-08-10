@@ -845,7 +845,7 @@ static void storeFloat(PF_EffectWorld *dst, const float *rgb)
 static PF_Err
 render_8bpc_legacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *output,
 	                       float blur_amount, float blur_smoothness,
-	                       A_long repeat, A_long bias_dir)
+	                       float render_scale, A_long repeat, A_long bias_dir)
 {
 	const size_t width = (size_t)input->width;
 	const size_t height = (size_t)input->height;
@@ -874,7 +874,7 @@ render_8bpc_legacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *output,
 			blur_smoothness,
 			(size_t)(repeat > 0 ? repeat : 0),
 			(size_t)(bias_dir > 0 ? bias_dir : 0),
-			1.0f
+			render_scale
 		};
 		olm::blur::worker8_legacy::render(
 			source_argb.data(), destination_argb.data(), width, height, params);
@@ -973,7 +973,7 @@ render_16bpc_nonlegacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *outp
 static PF_Err
 render_16bpc_legacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *output,
 	                       float blur_amount, float blur_smoothness,
-	                       A_long repeat, A_long bias_dir)
+	                       float render_scale, A_long repeat, A_long bias_dir)
 {
 	const size_t width = (size_t)input->width;
 	const size_t height = (size_t)input->height;
@@ -1002,7 +1002,7 @@ render_16bpc_legacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *output,
 			blur_smoothness,
 			(size_t)(repeat > 0 ? repeat : 0),
 			(size_t)(bias_dir > 0 ? bias_dir : 0),
-			1.0f
+			render_scale
 		};
 		olm::blur::worker16_legacy::render(
 			(const std::uint8_t*)source_argb16.data(), (std::uint8_t*)destination_argb16.data(),
@@ -1148,7 +1148,7 @@ render_32bpc_nonlegacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *outp
 static PF_Err
 render_32bpc_legacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *output,
 	                       float blur_amount, float blur_smoothness,
-	                       A_long repeat, A_long bias_dir)
+	                       float render_scale, A_long repeat, A_long bias_dir)
 {
 	const size_t width = (size_t)input->width;
 	const size_t height = (size_t)input->height;
@@ -1177,7 +1177,7 @@ render_32bpc_legacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *output,
 			blur_smoothness,
 			(size_t)(repeat > 0 ? repeat : 0),
 			(size_t)(bias_dir > 0 ? bias_dir : 0),
-			1.0f
+			render_scale
 		};
 		olm::blur::worker32_legacy::render(
 			source_argb.data(), destination_argb.data(), width, height, params);
@@ -1209,14 +1209,15 @@ BlurRender(PF_InData *in_data, PF_EffectWorld *input, PF_EffectWorld *output,
 	if (w <= 0 || h <= 0) return err;
 	const BlurObservationConfig observation = load_blur_observation_config();
 
-	float blur_amount = bp->blur_amount;
-	blur_amount *= ((float)in_data->downsample_x.num / (float)in_data->downsample_x.den);
+	const float render_scale =
+		((float)in_data->downsample_x.num / (float)in_data->downsample_x.den);
+	float blur_amount = bp->blur_amount * render_scale;
 	if (blur_amount <= 0) {
 		return PF_COPY(input, output, NULL, NULL);
 	}
 	if (bpc == 8 && bp->legacy) {
 		return render_8bpc_legacy_adapter(
-			input, output, blur_amount, bp->blur_smoothness,
+			input, output, bp->blur_amount, bp->blur_smoothness, render_scale,
 			bp->repeat, bp->bias_dir);
 	}
 	if (bpc == 8 && !bp->legacy) {
@@ -1231,7 +1232,7 @@ BlurRender(PF_InData *in_data, PF_EffectWorld *input, PF_EffectWorld *output,
 	}
 	if (bpc == 16 && bp->legacy) {
 		return render_16bpc_legacy_adapter(
-			input, output, blur_amount, bp->blur_smoothness,
+			input, output, bp->blur_amount, bp->blur_smoothness, render_scale,
 			bp->repeat, bp->bias_dir);
 	}
 	if (bpc == 32 && !bp->legacy) {
@@ -1241,7 +1242,7 @@ BlurRender(PF_InData *in_data, PF_EffectWorld *input, PF_EffectWorld *output,
 	}
 	if (bpc == 32 && bp->legacy) {
 		return render_32bpc_legacy_adapter(
-			input, output, blur_amount, bp->blur_smoothness,
+			input, output, bp->blur_amount, bp->blur_smoothness, render_scale,
 			bp->repeat, bp->bias_dir);
 	}
 

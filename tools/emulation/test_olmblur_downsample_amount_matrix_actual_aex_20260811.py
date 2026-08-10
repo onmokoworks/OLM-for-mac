@@ -11,6 +11,7 @@ import tempfile
 from pathlib import Path
 
 import test_olmblur_amount_repeat_legacy_matrix_actual_aex_20260810 as base
+import test_olmblur_downsample_smoothness_bias_pairwise_actual_aex_20260811 as scaled_worker
 
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURE = Path(__file__).parent / "fixtures/olmblur_downsample_amount_matrix_20260811"
@@ -38,7 +39,11 @@ def export() -> None:
                 for legacy in (0, 1):
                     for num, den in RATIOS:
                         effective = amount * num / den
-                        expected, run = base.run_actual(depth, legacy, effective, repeat, source)
+                        expected, run = scaled_worker.run_actual(depth, {
+                            "downsample_x": (num, den), "amount": amount,
+                            "smoothness": 100.0, "repeat": repeat,
+                            "bias_direction": 1, "legacy": legacy,
+                        }, source)
                         tag = str(amount).replace(".", "_")
                         case_id = f"pf{depth}_amount{tag}_repeat{repeat}_legacy{legacy}_ds{num}_{den}"
                         expected_name = f"expected_{case_id}.bin"
@@ -53,7 +58,7 @@ def export() -> None:
     MANIFEST.write_text(json.dumps({"schema": "olmblur.downsample-amount.actual-aex/1",
         "plugin": "OLMBlur", "actual_aex_sha256": base.AEX_SHA256,
         "geometry": [base.WIDTH, base.HEIGHT], "world_dimensions_constant": True,
-        "contract": "actual typed worker receives UI Amount * PF_InData.downsample_x.num / den",
+        "contract": "NonLegacy consumes x-scaled Amount; Legacy consumes UI Amount plus context x, scaling radius only while sigma uses unscaled Amount",
         "cases": cases}, indent=2, sort_keys=True) + "\n")
 
 
@@ -116,7 +121,7 @@ def verify() -> None:
         "actual_aex_sha256": base.AEX_SHA256, "geometry": [base.WIDTH, base.HEIGHT], "case_count": len(results),
         "matrix": {"depth": [8,16,32], "amount": list(AMOUNTS), "repeat": list(REPEATS), "legacy": [0,1],
                    "downsample_x": [[n,d] for n,d in RATIOS], "smoothness": 100, "bias_direction": 1},
-        "contract": "constant 24x24 worlds; production reads PF_InData rational and scales Amount exactly once",
+        "contract": "constant 24x24 worlds; NonLegacy scales Amount by x; Legacy passes UI Amount and x separately so only radius is scaled",
         "path": "actual-AEX typed worker at effective Amount -> production EffectMain SmartPreRender/SmartRender at UI Amount + downsample rational",
         "cases": results, "not_proven": ["native AE preview world sizing", "actual AEX public SmartRender callback chain", "downsample_y anisotropy", "other geometry/bias/smoothness"]}, indent=2, sort_keys=True)+"\n")
     print("PASS_OLMBLUR_DOWNSAMPLE_AMOUNT_MATRIX cases=72 rational_contract=1 raw_exact=72")

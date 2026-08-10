@@ -73,7 +73,7 @@
     },
     {
       "effective_worker_amount": 2.5,
-      "expected_sha256": "4848dae785b8439896dcde041ef58cd503ec304270599a14a8376b7c79b9e77f",
+      "expected_sha256": "40957aa82190cd70cc28aec5fa855b6d0cc38c849481b59cca7cf5616a407f9a",
       "id": "pf8_amount5_0_repeat1_legacy1_ds1_2",
       "production": {
         "callbacks_ok": true,
@@ -119,7 +119,7 @@
     },
     {
       "effective_worker_amount": 10.0,
-      "expected_sha256": "8cad70125a3ad08828c8811bfec4015fc22535a5802f5d6bad5b5074ef6c7790",
+      "expected_sha256": "52733f5e3b4fe80f638f0041bb76a22b4fe30db484c655547c366d3d8be64e94",
       "id": "pf8_amount5_0_repeat1_legacy1_ds2_1",
       "production": {
         "callbacks_ok": true,
@@ -211,7 +211,7 @@
     },
     {
       "effective_worker_amount": 2.5,
-      "expected_sha256": "d2a4dabd4950065be7c1b9310ca0295490dcdc27291d1353a636f30ac17073a2",
+      "expected_sha256": "bc93c3b1ec6fa28db2c3eecee22502ca5a2da486712627795324f6fe5f16a0df",
       "id": "pf8_amount5_0_repeat2_legacy1_ds1_2",
       "production": {
         "callbacks_ok": true,
@@ -257,7 +257,7 @@
     },
     {
       "effective_worker_amount": 10.0,
-      "expected_sha256": "b19b32a1f589712ddcb44324da3f0156ae04fd7331932c751f48538545330630",
+      "expected_sha256": "68f9a6aed0558645c9245b6a352d5c788eb53c75cc953717bde92c5bb493a196",
       "id": "pf8_amount5_0_repeat2_legacy1_ds2_1",
       "production": {
         "callbacks_ok": true,
@@ -349,7 +349,7 @@
     },
     {
       "effective_worker_amount": 64.7,
-      "expected_sha256": "63667542c845d1557f84e0b7722913b337d9bf685f6fb0815d6760a98306361b",
+      "expected_sha256": "d0bfb6add2f21ec64e56d1ec3e0e66c4c6f71bd48e0fa8291629f664fa488bf9",
       "id": "pf8_amount129_4_repeat1_legacy1_ds1_2",
       "production": {
         "callbacks_ok": true,
@@ -533,7 +533,7 @@
     },
     {
       "effective_worker_amount": 258.8,
-      "expected_sha256": "d0a4b9c9251ffabd156ddeadf5da0e68bb4a9c8d61fd1995943d7d7757f7e6d2",
+      "expected_sha256": "32775e837f3bb0583123058294ddc9c59d038b017b991b9be6cd76d110053daa",
       "id": "pf8_amount129_4_repeat2_legacy1_ds2_1",
       "production": {
         "callbacks_ok": true,
@@ -625,7 +625,7 @@
     },
     {
       "effective_worker_amount": 2.5,
-      "expected_sha256": "c11e357924a52786e5055cf432220447a632ed5561685433fbcffadb174655b4",
+      "expected_sha256": "66a9ca4d41d585af8ff62d44e9e709d93bedef9e8cf3c62b3398107f4131ecce",
       "id": "pf16_amount5_0_repeat1_legacy1_ds1_2",
       "production": {
         "callbacks_ok": true,
@@ -671,7 +671,7 @@
     },
     {
       "effective_worker_amount": 10.0,
-      "expected_sha256": "39b68cd1d8af29d32355c301cbeac2bb1a59d39c7069dd24ed890d71075f849c",
+      "expected_sha256": "7c33e7331c7acd9447bcc7961b412b27b8c6feeef14b7b10a719cedf63755793",
       "id": "pf16_amount5_0_repeat1_legacy1_ds2_1",
       "production": {
         "callbacks_ok": true,
@@ -763,7 +763,7 @@
     },
     {
       "effective_worker_amount": 2.5,
-      "expected_sha256": "7d638474a5a764725b5e8083d8b9583d4f5dd3d7fd434bb13f56cd165091ee88",
+      "expected_sha256": "3671ef42ff760dc9e761946909eb462809103d1d218c6fa624b6220781171e28",
       "id": "pf16_amount5_0_repeat2_legacy1_ds1_2",
       "production": {
         "callbacks_ok": true,
@@ -809,7 +809,7 @@
     },
     {
       "effective_worker_amount": 10.0,
-      "expected_sha256": "db63e67608cfbdd834ec665413d532fa1ec0879b642f0129da20259ee1462442",
+      "expected_sha256": "efb04fbafc394ac12afa30987d464fd4d12d7f7f8cc97a5f748ed04719a9655d",
       "id": "pf16_amount5_0_repeat2_legacy1_ds2_1",
       "production": {
         "callbacks_ok": true,
@@ -901,7 +901,7 @@
     },
     {
       "effective_worker_amount": 64.7,
-      "expected_sha256": "87dc4bf524b276d723aa8c9915a2036183ad4be8f39c8d70872f4c19cfac5ef6",
+      "expected_sha256": "0b669b4da4a111cc3f015f5946d91cc5e43af0935def502b8f19aed21af3e1e8",
       "id": "pf16_amount129_4_repeat1_legacy1_ds1_2",
       "production": {
         "callbacks_ok": true,
@@ -1039,7 +1039,7 @@
     },
     {
       "effective_worker_amount": 64.7,
-      "expected_sha256": "0e7fad34fd3d7fe6c7b0a8f033573e2c71e575e9b7cecce9c5a8db2ec56e9db2",
+      "expected_sha256": "2bd0673ffd6fd3c6c0a4be7f3104ba9b55b96a5130812f19d262971e5d2c69bf",
       "id": "pf16_amount129_4_repeat2_legacy1_ds1_2",
       "production": {
         "callbacks_ok": true,
@@ -1085,7 +1085,7 @@
     },
     {
       "effective_worker_amount": 258.8,
-      "expected_sha256": "30a917a1c08bc3f9d90a33a9ad442232bd52676aeac2c2486dbad58c8d40d955",
+      "expected_sha256": "564d0bbf1583f66c6eab1fb9b92c2feb549ef3e0be95374830c3db8b35cc2ef9",
       "id": "pf16_amount129_4_repeat2_legacy1_ds2_1",
       "production": {
         "callbacks_ok": true,
@@ -1177,7 +1177,7 @@
     },
     {
       "effective_worker_amount": 2.5,
-      "expected_sha256": "d49fd8eec480a8f48633cf505ec52325371d044496aacc84a84fe8152fbbe1d0",
+      "expected_sha256": "c73dd2d92d8fde1780b24c455e55f4f28a0c99cbfb394753c761bad53404d4c7",
       "id": "pf32_amount5_0_repeat1_legacy1_ds1_2",
       "production": {
         "callbacks_ok": true,
@@ -1223,7 +1223,7 @@
     },
     {
       "effective_worker_amount": 10.0,
-      "expected_sha256": "d53200d44ae876c1ae356f82ddb700ef7ff43b025811f6841e07bc773f28abda",
+      "expected_sha256": "a0e81a0d6348253e7d06e58ed2cee6ff83ff268663b2050094c9f424823d1e70",
       "id": "pf32_amount5_0_repeat1_legacy1_ds2_1",
       "production": {
         "callbacks_ok": true,
@@ -1315,7 +1315,7 @@
     },
     {
       "effective_worker_amount": 2.5,
-      "expected_sha256": "137524f3124fc8f75a9f46ce3779700cacb2960413bbd24b020e41a09139b6c9",
+      "expected_sha256": "51d71df4f53eb4bee5955aa678536f9766b063dad64b641ce163583c4554fa51",
       "id": "pf32_amount5_0_repeat2_legacy1_ds1_2",
       "production": {
         "callbacks_ok": true,
@@ -1361,7 +1361,7 @@
     },
     {
       "effective_worker_amount": 10.0,
-      "expected_sha256": "e3106074a052416d29add16f25ede6cd938cacb79103dc8ddb49ef690ed9bf25",
+      "expected_sha256": "fe08ae6dbd81a9e22c14e4058c765b8f7f9384b0ce5e21182d8e723ea949fdb7",
       "id": "pf32_amount5_0_repeat2_legacy1_ds2_1",
       "production": {
         "callbacks_ok": true,
@@ -1453,7 +1453,7 @@
     },
     {
       "effective_worker_amount": 64.7,
-      "expected_sha256": "ba97b99e6892fced94e3ae2520699478a5d3a3b058eee33897219f42dda1cb09",
+      "expected_sha256": "17569ec3ff623c2bb9247f7868860a252d7c7520a5affff8fe226ea3234e57dc",
       "id": "pf32_amount129_4_repeat1_legacy1_ds1_2",
       "production": {
         "callbacks_ok": true,
@@ -1499,7 +1499,7 @@
     },
     {
       "effective_worker_amount": 258.8,
-      "expected_sha256": "c1e2f4ae0372f602f2f009567396bc7a7f13d99cf21c885b646dafd899134dfd",
+      "expected_sha256": "0a946ba1a4c04b5946e2b3dc88314524d69bdff37b1619244c0291401f015c06",
       "id": "pf32_amount129_4_repeat1_legacy1_ds2_1",
       "production": {
         "callbacks_ok": true,
@@ -1591,7 +1591,7 @@
     },
     {
       "effective_worker_amount": 64.7,
-      "expected_sha256": "880eeeea11f5dc3a889586fab584ed12c2acdba0dae6f4746372ddfd3e574b1a",
+      "expected_sha256": "5894b59095825cd91d6cd7d74b0c874c6e9b65ee335e4bdf5675f66a9f9c8ec0",
       "id": "pf32_amount129_4_repeat2_legacy1_ds1_2",
       "production": {
         "callbacks_ok": true,
@@ -1637,7 +1637,7 @@
     },
     {
       "effective_worker_amount": 258.8,
-      "expected_sha256": "4be2587a44d334c82dbfc5c81761c07490cb5d6bf402e9913377b2d3b5a2a6e2",
+      "expected_sha256": "eec4ee63e89dcfe6b5a08964cd1d833eb594521ce4e05b0e0b653c4a4bf6482d",
       "id": "pf32_amount129_4_repeat2_legacy1_ds2_1",
       "production": {
         "callbacks_ok": true,
@@ -1659,7 +1659,7 @@
       }
     }
   ],
-  "contract": "constant 24x24 worlds; production reads PF_InData rational and scales Amount exactly once",
+  "contract": "constant 24x24 worlds; NonLegacy scales Amount by x; Legacy passes UI Amount and x separately so only radius is scaled",
   "geometry": [
     24,
     24

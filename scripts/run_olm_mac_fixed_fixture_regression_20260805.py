@@ -52,6 +52,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmblur_downsample_amount_matrix_actual_aex_20260811.py"),
             (sys.executable, "tools/emulation/test_olmblur_downsample_y_anisotropy_actual_aex_20260811.py"),
             (sys.executable, "tools/emulation/test_olmblur_downsample_xy_cross_actual_aex_20260811.py"),
+            (sys.executable, "tools/emulation/test_olmblur_downsample_smoothness_bias_pairwise_actual_aex_20260811.py"),
         ),
     ),
     Lane(
@@ -102,6 +103,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmcolorkey_edge_thin_family_actual_aex_20260810.py"),
             (sys.executable, "tools/emulation/test_olmcolorkey_colorspace_2_5_matrix_actual_aex_20260810.py"),
             (sys.executable, "tools/emulation/test_olmcolorkey_replace_edge_composition_actual_aex_20260811.py"),
+            (sys.executable, "tools/emulation/test_olmcolorkey_keep_premult_replace_actual_aex_20260811.py"),
             (sys.executable, "tools/emulation/audit_olmcolorkey_entry_writer_installed_connection_20260805.py"),
             (sys.executable, "tools/emulation/audit_olmcolorkey_effectmain_fallback_typed_writer_connection_20260805.py"),
         ),
