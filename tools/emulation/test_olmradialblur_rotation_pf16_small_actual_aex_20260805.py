@@ -23,6 +23,13 @@ VISIBLE = W * 8
 FIXTURE_OUTER_STRENGTH, FIXTURE_OUTER_OFFSET_MODE, FIXTURE_OUTER_OFFSET = 4, 1, 0
 FIXTURE_INNER_STRENGTH = 0
 FIXTURE_CENTER_X, FIXTURE_CENTER_Y = 4.0, 3.0
+FIXTURE_SIZE_VARIATION = 0.0
+FIXTURE_NOISE_VARIATION = 0.0
+FIXTURE_NOISE_TYPE = 1
+FIXTURE_SEED = 1
+FIXTURE_NOISE_OFFSET = 0.0
+FIXTURE_THICKNESS = 10.0
+CAPTURE_NOISE_INTERNALS = False
 OWNER = 0x180006D10
 ROTATION_RETURN = 0x18000733A
 AEX_SHA256 = "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
@@ -76,7 +83,13 @@ def actual_aex() -> dict[str, bytes]:
                    "Outer Offset Mode": FIXTURE_OUTER_OFFSET_MODE,
                    "Outer Offset": FIXTURE_OUTER_OFFSET,
                    "Inner Strength": FIXTURE_INNER_STRENGTH,
-                   "Brightness Gain": 1.0})
+                   "Brightness Gain": 1.0,
+                   "Size Variation": FIXTURE_SIZE_VARIATION,
+                   "Noise Variation": FIXTURE_NOISE_VARIATION,
+                   "Noise Type": FIXTURE_NOISE_TYPE,
+                   "Seed": FIXTURE_SEED,
+                   "Noise Offset": FIXTURE_NOISE_OFFSET,
+                   "Thickness": FIXTURE_THICKNESS})
     loader = AexLoader(str(m4.AEX_PATH), fast=True); loader.register_libm_impls(max_threads=1)
     sp = m4.build_host_suites(loader); render_ctx = m4.build_render_context(loader, sp)
     iw, _ = build_world(loader, source_frame()); ow, output_data = build_world(loader, source_frame(True))
@@ -100,12 +113,36 @@ def actual_aex() -> dict[str, bytes]:
         pointers = {"polar": m4.u64(ld, work + 0xE * 4), "source_scalar": m4.u64(ld, work + 0x10 * 4), "accum": m4.u64(ld, work + 0xF250 * 4), "max_alpha": m4.u64(ld, work + 0xF252 * 4)}
         owner_work = ld.uc.reg_read(UC_X86_REG_RBX)
         captured["planes"] = {"accum": ld.read_bytes(pointers["accum"], cells * 16), "max_alpha": ld.read_bytes(pointers["max_alpha"], cells * 4), "final_rgba": ld.read_bytes(m4.u64(ld, owner_work + 0xA0), W * H * 16)}
+    def noise_generated(ld, _address, _size):
+        if not CAPTURE_NOISE_INTERNALS:
+            return
+        owner_work = ld.uc.reg_read(UC_X86_REG_RBX)
+        noise_struct = owner_work + 0xB0
+        noise_w = struct.unpack("<i", ld.read_bytes(noise_struct + 0x10, 4))[0]
+        noise_h = struct.unpack("<i", ld.read_bytes(noise_struct + 0x14, 4))[0]
+        noise_ptr = m4.u64(ld, noise_struct + 0x08)
+        captured["noise_lattice_geometry"] = struct.pack("<II", noise_w, noise_h)
+        captured["noise_lattice"] = ld.read_bytes(noise_ptr, noise_w * noise_h * 4)
+    def span_composed(ld, _address, _size):
+        if not CAPTURE_NOISE_INTERNALS:
+            return
+        owner_work = ld.uc.reg_read(UC_X86_REG_RBX)
+        captured["source_size_factor"] = ld.read_bytes(m4.u64(ld, owner_work + 0x88), W * H * 4)
+        captured["source_span"] = ld.read_bytes(m4.u64(ld, owner_work + 0x90), W * H * 4)
     loader.add_code_hook(m4.FUN_180004640, entry)
     loader.add_code_hook(m4.FUN_180002780, pre_scatter)
+    noise_generated_hook = 0x180008162 if OWNER == 0x180007D30 else 0x180007142
+    span_composed_hook = 0x1800082F3 if OWNER == 0x180007D30 else 0x1800072D3
+    loader.add_code_hook(noise_generated_hook, noise_generated)
+    loader.add_code_hook(span_composed_hook, span_composed)
     loader.add_code_hook(ROTATION_RETURN, rotation_return)
     loader.call_function(m4.FUN_180008690, int_args=[0, 0, 0, param_ctx, render_ctx], max_instructions=5_000_000)
     loader.call_function(OWNER, int_args=[render_ctx, 0, iw, ow, param_ctx], max_instructions=500_000_000)
-    planes = {**captured["pre_planes"], **captured["planes"]}; planes["output"] = loader.read_bytes(output_data, ROWBYTES * H)
+    planes = {**captured["pre_planes"], **captured["planes"]}
+    for name in ("noise_lattice_geometry", "noise_lattice", "source_size_factor", "source_span"):
+        if name in captured:
+            planes[name] = captured[name]
+    planes["output"] = loader.read_bytes(output_data, ROWBYTES * H)
     coordinates = bytearray()
     angle_scale = struct.unpack("<f", loader.read_bytes(int(captured["work"]) + 8, 4))[0]
     for y in range(H):

@@ -1,0 +1,207 @@
+{
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "artifacts": {
+    "nv0_accum": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_noise_variation_type1_20260810/nv0_accum.bin.zlib",
+      "raw_sha256": "13b28b32ce8db24cde6bd5f93acab3113a192137b77be5f99da09555859d7135",
+      "zlib_sha256": "d5ecc8de65c376ef57c75de86eff824f9184095ec7760dbbb841eefa41962f1f"
+    },
+    "nv0_max_alpha": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_noise_variation_type1_20260810/nv0_max_alpha.bin.zlib",
+      "raw_sha256": "fcc2f0e5a233ad87b4acd4e52dd129e487eda8b7ffdac999cea2e9e9bfedd8e4",
+      "zlib_sha256": "a24081203bfef004eab1aa8640f25b86e6d9f44d3e7378ad763ac49fec58dfa6"
+    },
+    "nv0_noise_lattice": {
+      "bytes": 36,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_noise_variation_type1_20260810/nv0_noise_lattice.bin.zlib",
+      "raw_sha256": "fa6c672e0076e41b89a2af1516e00d19c2d738cca5efbcfafdced54e30ff6140",
+      "zlib_sha256": "6d3deba19451bc89883009bf9b06c4d7b734aa6a0ae80e667838858d24ef2cdb"
+    },
+    "nv0_noise_lattice_geometry": {
+      "bytes": 8,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_noise_variation_type1_20260810/nv0_noise_lattice_geometry.bin.zlib",
+      "raw_sha256": "f9815db16d8d228cca743c75d4cb4ddffd3a6d7cd6518658c9d3bd0e4fe27c82",
+      "zlib_sha256": "ab3cfa22ef5396f02f56733d15a66a6ea4c4b3476bf492772e75faa7ddf69820"
+    },
+    "nv0_output": {
+      "bytes": 1120,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_noise_variation_type1_20260810/nv0_output.bin.zlib",
+      "raw_sha256": "beb7ce8ac537a172873092d1439121019f2dbedee2d3cff04e4f6e3bf5d8ea94",
+      "zlib_sha256": "07defc28157a0e46c3690b1464b124bbb546347e6d119136c5b0f4c9588d9271"
+    },
+    "nv0_source_scalar": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_noise_variation_type1_20260810/nv0_source_scalar.bin.zlib",
+      "raw_sha256": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc",
+      "zlib_sha256": "21d9bf07a607e761267078f796e5c6462d90df31d4e2d66f900655de740a75a4"
+    },
+    "nv0_source_size_factor": {
+      "bytes": 252,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_noise_variation_type1_20260810/nv0_source_size_factor.bin.zlib",
+      "raw_sha256": "39ff7fd58a24b553d268cd73247c2de945d8b5fb8f1ba30b7120250b88e3a366",
+      "zlib_sha256": "901173aa01ba554a4c3d31bb9770b1a92f981a63e1be85a09e7a10f25b8ca032"
+    },
+    "nv0_source_span": {
+      "bytes": 252,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_noise_variation_type1_20260810/nv0_source_span.bin.zlib",
+      "raw_sha256": "39ff7fd58a24b553d268cd73247c2de945d8b5fb8f1ba30b7120250b88e3a366",
+      "zlib_sha256": "901173aa01ba554a4c3d31bb9770b1a92f981a63e1be85a09e7a10f25b8ca032"
+    },
+    "nv100_accum": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_noise_variation_type1_20260810/nv100_accum.bin.zlib",
+      "raw_sha256": "bdbaba080636f5d11e3d8827f28dce358f19c3433526488ebe60e4809f2521dc",
+      "zlib_sha256": "5252bb5a71227f04918b7db33eb2f8caace08125914db9b07155d368179cdfbf"
+    },
+    "nv100_max_alpha": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_noise_variation_type1_20260810/nv100_max_alpha.bin.zlib",
+      "raw_sha256": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+      "zlib_sha256": "2ffa2dbb1641d2e2f4ea08cfe2fdc08349470b0189b98991a89a5603c6c686f3"
+    },
+    "nv100_noise_lattice": {
+      "bytes": 36,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_noise_variation_type1_20260810/nv100_noise_lattice.bin.zlib",
+      "raw_sha256": "fa6c672e0076e41b89a2af1516e00d19c2d738cca5efbcfafdced54e30ff6140",
+      "zlib_sha256": "6d3deba19451bc89883009bf9b06c4d7b734aa6a0ae80e667838858d24ef2cdb"
+    },
+    "nv100_noise_lattice_geometry": {
+      "bytes": 8,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_noise_variation_type1_20260810/nv100_noise_lattice_geometry.bin.zlib",
+      "raw_sha256": "f9815db16d8d228cca743c75d4cb4ddffd3a6d7cd6518658c9d3bd0e4fe27c82",
+      "zlib_sha256": "ab3cfa22ef5396f02f56733d15a66a6ea4c4b3476bf492772e75faa7ddf69820"
+    },
+    "nv100_output": {
+      "bytes": 1120,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_noise_variation_type1_20260810/nv100_output.bin.zlib",
+      "raw_sha256": "119dc6506db1c7768f2db8ed1a91b18748d6ec999ee13d7c7670b15c5d13fc6f",
+      "zlib_sha256": "a27654821195838a2dc07cd7b07402cbe800b154edb1218d3f637650dc7fb2ed"
+    },
+    "nv100_source_scalar": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_noise_variation_type1_20260810/nv100_source_scalar.bin.zlib",
+      "raw_sha256": "fdffc25c11314450f3b025495702329687bf9a7a8fec1fd96940ac2e9d92abfc",
+      "zlib_sha256": "04cde2bba347d73871f0832fceed474f06c181ce8bdf0f144232ffa464f8938f"
+    },
+    "nv100_source_size_factor": {
+      "bytes": 252,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_noise_variation_type1_20260810/nv100_source_size_factor.bin.zlib",
+      "raw_sha256": "39ff7fd58a24b553d268cd73247c2de945d8b5fb8f1ba30b7120250b88e3a366",
+      "zlib_sha256": "901173aa01ba554a4c3d31bb9770b1a92f981a63e1be85a09e7a10f25b8ca032"
+    },
+    "nv100_source_span": {
+      "bytes": 252,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_noise_variation_type1_20260810/nv100_source_span.bin.zlib",
+      "raw_sha256": "189ac64f2d611cfec665334137c78276ca345e071c165c3633a83db525aed702",
+      "zlib_sha256": "8ee1529aedf0cd76ade220a758b1c41fdf1a4483c214094168d47b771ea7226e"
+    },
+    "nv25_accum": {
+      "bytes": 259200,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_noise_variation_type1_20260810/nv25_accum.bin.zlib",
+      "raw_sha256": "b2d981eae0f3e45b0bd3b1978aa27eb73e24a6c8942b8f5ec2258240beaa5faa",
+      "zlib_sha256": "339b2ded70abe1b66b2d50486c8af4c6d7778ca812e9f7d364806f10614b2639"
+    },
+    "nv25_max_alpha": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_noise_variation_type1_20260810/nv25_max_alpha.bin.zlib",
+      "raw_sha256": "3f655c2e4205002cdbc3c51a939a398e1ecba306ffaaf95657ffcb3c9aa483b5",
+      "zlib_sha256": "f84dd1952741eb883bc783666295466cdfbec543bb44e84d9ae10eb6886131f5"
+    },
+    "nv25_noise_lattice": {
+      "bytes": 36,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_noise_variation_type1_20260810/nv25_noise_lattice.bin.zlib",
+      "raw_sha256": "fa6c672e0076e41b89a2af1516e00d19c2d738cca5efbcfafdced54e30ff6140",
+      "zlib_sha256": "6d3deba19451bc89883009bf9b06c4d7b734aa6a0ae80e667838858d24ef2cdb"
+    },
+    "nv25_noise_lattice_geometry": {
+      "bytes": 8,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_noise_variation_type1_20260810/nv25_noise_lattice_geometry.bin.zlib",
+      "raw_sha256": "f9815db16d8d228cca743c75d4cb4ddffd3a6d7cd6518658c9d3bd0e4fe27c82",
+      "zlib_sha256": "ab3cfa22ef5396f02f56733d15a66a6ea4c4b3476bf492772e75faa7ddf69820"
+    },
+    "nv25_output": {
+      "bytes": 1120,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_noise_variation_type1_20260810/nv25_output.bin.zlib",
+      "raw_sha256": "d57b553a8dd12b52f7a8195ba20b4adc4de6769fe8b633793f6e8c7dfd04a0a0",
+      "zlib_sha256": "9aaf05b8162b95e2cd7f5f1783b36265f884de0115b3a9c5daf9327876d11c32"
+    },
+    "nv25_source_scalar": {
+      "bytes": 64800,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_noise_variation_type1_20260810/nv25_source_scalar.bin.zlib",
+      "raw_sha256": "8488080b310dd1edc17f426d2a59797413eb64be517556f326ccd204b45a4822",
+      "zlib_sha256": "1db4ecafa17bce9c34ba77e0fc44b9090edceb0ddd9ca1bb38d4d558d3727907"
+    },
+    "nv25_source_size_factor": {
+      "bytes": 252,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_noise_variation_type1_20260810/nv25_source_size_factor.bin.zlib",
+      "raw_sha256": "39ff7fd58a24b553d268cd73247c2de945d8b5fb8f1ba30b7120250b88e3a366",
+      "zlib_sha256": "901173aa01ba554a4c3d31bb9770b1a92f981a63e1be85a09e7a10f25b8ca032"
+    },
+    "nv25_source_span": {
+      "bytes": 252,
+      "path": "refs/fixtures/olmradialblur_rotation_pf32_noise_variation_type1_20260810/nv25_source_span.bin.zlib",
+      "raw_sha256": "860da930bb525dc1dfc1e22a337539d419767b229db9a5d9027e170ec695d6ca",
+      "zlib_sha256": "3b9ed659a8d7091a509b54def8a11afe669ea4156e4fd88c94a7be242e0da377"
+    }
+  },
+  "boundary": "The full production source-scalar allocation contains inactive-cell 1-ULP differences for nonzero NV, while accum/max/final/output are bit exact. Type 2/3, other seed/offset/thickness, other geometry/depth/mode, and AE-host behavior are not claimed.",
+  "geometry_identical_across_nv": true,
+  "kind": "olmradialblur_rotation_pf32_noise_variation_type1_actual_aex_20260810",
+  "noise_lattice_geometry": {
+    "height": 3,
+    "width": 3
+  },
+  "noise_lattice_identical_across_nv": true,
+  "relation": "source_span = (NV * interpolated_noise + (1-NV)) * source_size_factor; NV is normalized by 0.01",
+  "relations": {
+    "nv0": {
+      "output_raw_sha256": "beb7ce8ac537a172873092d1439121019f2dbedee2d3cff04e4f6e3bf5d8ea94",
+      "production_matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_bit_exact": true,
+      "size_factor_all_one": true,
+      "source_scalar_raw_sha256": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc",
+      "span_formula_bit_exact": true
+    },
+    "nv100": {
+      "output_raw_sha256": "119dc6506db1c7768f2db8ed1a91b18748d6ec999ee13d7c7670b15c5d13fc6f",
+      "production_matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_bit_exact": false,
+      "size_factor_all_one": true,
+      "source_scalar_raw_sha256": "fdffc25c11314450f3b025495702329687bf9a7a8fec1fd96940ac2e9d92abfc",
+      "span_formula_bit_exact": true
+    },
+    "nv25": {
+      "output_raw_sha256": "d57b553a8dd12b52f7a8195ba20b4adc4de6769fe8b633793f6e8c7dfd04a0a0",
+      "production_matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_bit_exact": false,
+      "size_factor_all_one": true,
+      "source_scalar_raw_sha256": "8488080b310dd1edc17f426d2a59797413eb64be517556f326ccd204b45a4822",
+      "span_formula_bit_exact": true
+    }
+  },
+  "scope": "actual AEX; PF32 Rotation 9x7 rowbytes160; neutral outer-only tuple; SV=0; NV=0/25/100; Noise Type=1; Seed=1; Offset=0; Thickness=10",
+  "status": "exact"
+}
