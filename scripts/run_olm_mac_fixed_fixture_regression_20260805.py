@@ -126,6 +126,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmdirectionalblur_pf32_sharp_back_families_actual_aex_20260810.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_mac_smartrender_adapter_20260717.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_pf8_brightness_half_20260805.py"),
+            (sys.executable, "tools/emulation/test_olmdirectionalblur_pf8_size_variation_family_actual_aex_20260811.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_installed_completion_route_20260805.py"),
         ),
     ),
