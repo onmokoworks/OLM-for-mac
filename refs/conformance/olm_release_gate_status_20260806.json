@@ -2,10 +2,10 @@
   "claim_boundary": "Release integration only: ten-lane fixed fixtures, installed Universal identities, and one current-Mac-AE load/render witness per plugin. This manifest does not promote unlisted geometries, parameters, bit depths, or AE exactness. Seven Windows AE release-boundary observations are accepted; cross-host exactness remains a per-plugin claim.",
   "fixed_fixture_regression": {
     "boundary": "Only commands enumerated by the ten fixed-fixture lanes; slow RadialBlur full replay is excluded.",
-    "output_sha256": "2feb0ae96f83a36f887ca6022db8cad38cf229c5492098cb3cbd9e1377292b2f",
+    "output_sha256": "56022592e490cdafc21c8b968111027995da9f126b8dc273017298087ffd24ec",
     "returncode": 0,
     "state": "proven",
-    "summary": "PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=498.68s",
+    "summary": "PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=508.26s",
     "tail": [
       "      |                                                      ^",
       "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here",
@@ -29,7 +29,7 @@
       "1 warning generated."
     ]
   },
-  "generated_at": "2026-08-10T12:14:48.475652+00:00",
+  "generated_at": "2026-08-10T12:35:20.983664+00:00",
   "mac_ae_representative": {
     "counts": {
       "invalid": 0,
@@ -239,7 +239,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMColorKey",
-        "sha256": "6a4244958c40e8bb65a3dfd01c761f4ec933f6fdca12981a3dd87a8f2e7205b5",
+        "sha256": "45515bf85f97f3db23ffae827fcdc4e9ad92207f35af77ac8fa21ed909df59bd",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -250,7 +250,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMDirectionalBlur",
-        "sha256": "1e10fb01aad91a4dbec8c7fdfd2263c4bd01cdf605a461f20f29007f5f45ba80",
+        "sha256": "8541fd0332390396e200f701ef3da0080aff481d4b600422bd9f8be3c3fe6064",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -272,7 +272,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMKiraKira",
-        "sha256": "cecb51976d50681e8e1438b02de352e36eb05b7352c471afdf9b94b761c861d9",
+        "sha256": "f39e354084e1ab8e7fdf071cb0a08e6fce3a89d2c880248d571adb7026532aba",
         "sha256_exact": true,
         "universal_exact": true
       },

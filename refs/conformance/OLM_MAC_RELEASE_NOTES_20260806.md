@@ -30,13 +30,13 @@ notarizationは未実施であり、ダウンロード先のGatekeeperに拒否�
 | --- | --- | --- |
 | OLMBlur | Legacy／NonLegacy、repeat、bias；PF8／PF16／PF32 | 複数のpadded typed fixtureでdimension-generic workerを確認。現行PF32 host smokeはロード／レンダー証拠であり、Windows exact出力の新規主張ではない |
 | ColorKeep | enabled／disabled、tolerance、1〜100色；PF8／PF16／PF32 | Windows/Macのkeep mask、alpha、保持／棄却関係は3深度exact。raw EXRはeffect-off時点の全RGBにhost色変換差があるためcross-host exactへ昇格しない |
-| OLMColorKey | core、Edge Thin、Edge Blur、replace／color-space；PF8／PF16／PF32限定 | Edge Blurは記録済み4×3、corner／center、single-key、方向、amountに限定 |
+| OLMColorKey | core、Edge Thin、Edge Blur、replace／color-space；PF8／PF16／PF32限定 | Edge Blurは記録済み4×3 familyに加え、32×18・black＋green multi-key・amount 4を3深度でexact確認。straight入力はRGBを保持してalphaだけkey処理する |
 | OLMToonDilate | copy／dilate、fractional radius、frontier／tie／corner／eligibility；PF8／PF16／PF32 | padded／partial／empty worldとradius -1〜4を確認。現行PF32 radius 13 AE代表はhost smoke |
 | OLMDistanceGradation | Inside／Outside／Both、RGB／Layer、Constant／Linear／Sphere／Power、invert／background／blur；PF8／PF16／PF32限定 | 証明済みaxisとfamilyは全コントロール直積ではない。元AEXにownerがないPF32 SmartRender要求はhost checkout前にfail-closeする |
-| OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3；PF8／PF16／PF32限定 | PF16 Type 3 Layerは16×16、angle 45、front 8、back 0、variation 100、neutral size／fade／tail、独立paddingに限定。Layer欠落・寸法不一致・他tupleはfail-close |
+| OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3；PF8／PF16／PF32限定 | PF16 Type 3 Layerは16×16の限定tuple。PF32は同geometry・angle 45・front 8・back 0のSize Variation 0〜100をactual AEX exact確認。Layer欠落・寸法不一致・他tupleはfail-close |
 | OLMRadialBlur | Zoom／Rotation／Inner；PF8／PF16／PF32 guard付き | PF8 centered neutral Inner Strength 1〜64は9×7、64×36、640×360で証明。さらにPF16／PF32を64×36 padded、PF16を640×360まで実AEXとbit exact確認。PF32 Rotation 9×7の全alpha正neutral tupleではSize Variation 1／25／100もexact。未記載offset／ratio／angle／quality／repeat／edge／noise／variationの全組合せへは一般化しない |
 | OLMSmoother2 | v1／v2 classifier、key／invert、Gamma None／All／Colors、range／extra、palette；PF8／PF16／PF32限定 | PF8ではv1／v2非均一base、v2 key／invert＋Gamma Colors、およびkey-off Gamma Allをpadded 3×2でraw exact確認。PF32 case07はraw artifact exactだが、同一runのWindows process／module証明がなく、process-attested AE exactとは呼ばない |
-| OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur；PF8／PF16／PF32限定 | Mode 4 Highlightの経験的0.62 gainを除去。記録済み4×1、radius 5、orange、directional 0ではactual AEX 16引数full callerのMakeSeed→3-pass 11×11、aggregation、Merge 1からPF8／PF16／PF32 writerまで全段bit exact。未記載shape／tupleへは一般化しない |
+| OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur；PF8／PF16／PF32限定 | Mode 3 Gaussianは完全actual-AEX fixtureの11×6/3、9×7/5、13×5/7、15×6/9だけを許可し、未証明tupleをMode 2近似へ代用しない。Mode 4の記録済みfull callerはPF8／PF16／PF32 writerまで全段bit exact |
 | OLMSmoother v1 | no-key／Color Key、smoothing range；native PF8／PF16 | PF8 canonical 960×540と保持済みkey pathはexact。PF16はwalker／subhandler／MainKernel／Executorに加え、Color Key callbackとtemporary-world passをpadded 3×2・tolerance 0／6／127／255でraw uint16 exact確認。AEXにnative PF32 callbackはなく、32bpc projectではAEがclassic integer pluginの前後をhost-convertする |
 
 ## AE host境界
@@ -101,8 +101,8 @@ e582b0f368deb6dfbb34de2675e382d2222372705da043151d90dc895f7d7a0a
 ## 最終Mac検証結果
 
 ```text
-PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=498.68s
-captured-output-sha256 2feb0ae96f83a36f887ca6022db8cad38cf229c5492098cb3cbd9e1377292b2f
+PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=508.26s
+captured-output-sha256 56022592e490cdafc21c8b968111027995da9f126b8dc273017298087ffd24ec
 Mac AE representatives 10 proven / 0 pending / 0 invalid
 Universal installed bundles 10 / 10
 Parameter UI registration 10 / 10（exact 7、bounded 3）
