@@ -49,6 +49,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmblur_effectmain_smart_chain_20260805.py"),
             (sys.executable, "tools/emulation/test_olmblur_nondefault_smoothness_effectmain_actual_aex_20260810.py"),
             (sys.executable, "tools/emulation/test_olmblur_amount_repeat_legacy_matrix_actual_aex_20260810.py"),
+            (sys.executable, "tools/emulation/test_olmblur_downsample_amount_matrix_actual_aex_20260811.py"),
         ),
     ),
     Lane(
@@ -114,6 +115,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmdirectionalblur_minimal_pf16_production_20260805.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_pf16_noise_type3_production_20260806.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_pf16_fade_sharp_families_actual_aex_20260811.py"),
+            (sys.executable, "tools/emulation/test_olmdirectionalblur_pf16_size_variation_family_actual_aex_20260811.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_minimal_pf32_production_20260805.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_pf32_size_variation_family_actual_aex_20260810.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_pf32_front_alpha_fade_family_actual_aex_20260810.py"),
@@ -198,6 +200,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmradialblur_production_outer_inputs_20260805.py"),
             (sys.executable, "tools/emulation/test_olmradialblur_rotation_pf16_small_actual_aex_20260805.py"),
             (sys.executable, "tools/emulation/test_olmradialblur_rotation_pf32_small_actual_aex_20260805.py"),
+            (sys.executable, "tools/emulation/test_olmradialblur_rotation_pf32_edge_fade_actual_aex_20260811.py"),
             (sys.executable, "tools/emulation/test_olmradialblur_rotation_pf32_strength5_small_actual_aex_20260805.py"),
             (sys.executable, "tools/emulation/test_olmradialblur_rotation_pf16_strength5_small_actual_aex_20260805.py"),
             (sys.executable, "tools/emulation/test_olmradialblur_zoom_pf16_small_actual_aex_20260805.py"),

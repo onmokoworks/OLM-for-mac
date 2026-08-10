@@ -13,7 +13,7 @@ ROOT = HERE.parents[1]
 sys.path.insert(0, str(HERE))
 import test_m4_case0010 as m4  # noqa: E402
 from aex_loader import AexLoader  # noqa: E402
-from unicorn.x86_const import UC_X86_REG_RBX, UC_X86_REG_RCX, UC_X86_REG_RDX  # noqa: E402
+from unicorn.x86_const import UC_X86_REG_RBX, UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_RSP  # noqa: E402
 
 SOURCE = ROOT / "mac/OLMRadialBlur/OLMRadialBlur.cpp"
 FIXTURE = ROOT / "refs/fixtures/olmradialblur_rotation_pf16_small_20260805"
@@ -22,6 +22,8 @@ W, H, ROWBYTES = 9, 7, 80
 VISIBLE = W * 8
 FIXTURE_OUTER_STRENGTH, FIXTURE_OUTER_OFFSET_MODE, FIXTURE_OUTER_OFFSET = 4, 1, 0
 FIXTURE_INNER_STRENGTH = 0
+FIXTURE_OUTER_EDGE_FADE = 0
+FIXTURE_INNER_EDGE_FADE = 0
 FIXTURE_CENTER_X, FIXTURE_CENTER_Y = 4.0, 3.0
 FIXTURE_SIZE_VARIATION = 0.0
 FIXTURE_NOISE_VARIATION = 0.0
@@ -30,6 +32,7 @@ FIXTURE_SEED = 1
 FIXTURE_NOISE_OFFSET = 0.0
 FIXTURE_THICKNESS = 10.0
 CAPTURE_NOISE_INTERNALS = False
+CAPTURE_EDGE_INTERNALS = False
 OWNER = 0x180006D10
 ROTATION_RETURN = 0x18000733A
 AEX_SHA256 = "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
@@ -83,6 +86,8 @@ def actual_aex() -> dict[str, bytes]:
                    "Outer Offset Mode": FIXTURE_OUTER_OFFSET_MODE,
                    "Outer Offset": FIXTURE_OUTER_OFFSET,
                    "Inner Strength": FIXTURE_INNER_STRENGTH,
+                   "Outer Edge Fade": FIXTURE_OUTER_EDGE_FADE,
+                   "Inner Edge Fade": FIXTURE_INNER_EDGE_FADE,
                    "Brightness Gain": 1.0,
                    "Size Variation": FIXTURE_SIZE_VARIATION,
                    "Noise Variation": FIXTURE_NOISE_VARIATION,
@@ -108,6 +113,13 @@ def actual_aex() -> dict[str, bytes]:
         cells = plane_bytes // 16
         captured["cells"] = cells
         captured["pre_planes"] = {"polar": ld.read_bytes(m4.u64(ld, work + 0xE * 4), cells * 16), "source_scalar": ld.read_bytes(m4.u64(ld, work + 0x10 * 4), cells * 4)}
+        if CAPTURE_EDGE_INTERNALS:
+            return_address = m4.u64(ld, ld.uc.reg_read(UC_X86_REG_RSP))
+            def pre_scatter_return(ret_ld, _ret_address, _ret_size):
+                if "prepass_alpha" not in captured:
+                    captured["prepass_alpha"] = ret_ld.read_bytes(
+                        m4.u64(ret_ld, work + 0x12 * 4), cells * 4)
+            ld.add_code_hook(return_address, pre_scatter_return)
     def rotation_return(ld, _address, _size):
         work = int(captured["work"]); cells = int(captured["cells"])
         pointers = {"polar": m4.u64(ld, work + 0xE * 4), "source_scalar": m4.u64(ld, work + 0x10 * 4), "accum": m4.u64(ld, work + 0xF250 * 4), "max_alpha": m4.u64(ld, work + 0xF252 * 4)}
@@ -142,6 +154,8 @@ def actual_aex() -> dict[str, bytes]:
     for name in ("noise_lattice_geometry", "noise_lattice", "source_size_factor", "source_span"):
         if name in captured:
             planes[name] = captured[name]
+    if "prepass_alpha" in captured:
+        planes["prepass_alpha"] = captured["prepass_alpha"]
     planes["output"] = loader.read_bytes(output_data, ROWBYTES * H)
     coordinates = bytearray()
     angle_scale = struct.unpack("<f", loader.read_bytes(int(captured["work"]) + 8, 4))[0]

@@ -1,0 +1,78 @@
+{
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "boundary": "All four production Edge Fade cases must remain fail-closed until the pre-scatter alpha rule is exact. No Noise/Size intersection, other fade/strength/quality/geometry/depth or AE-host claim.",
+  "cases": [
+    {
+      "actual_hashes": {
+        "accum": "ba4bedddf8d3b9eaa25494d3b5ebe7dbe7f15cfedf8a7cc626c2ec5d963d375b",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "dbf5dcee2cfaf929ec013c2d1808d91406bd20108a12047ad19a7264a5dfd91c",
+        "max_alpha": "88ed2a08c6a8361157a42b36f616f0ad39f0beab6eabd91165e378c2cf62584e",
+        "output": "bc2f8399adc84515a2897b8eaee72d50626a911eadbca5e6384705826ebc4f54",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "prepass_alpha": "12353dffde7679d50072204de25f927abb5975fb76fb499bf06c03aed2a752f6",
+        "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+      },
+      "edge_fade": 50,
+      "kind": "outer",
+      "production_fail_closed": true,
+      "production_returncode": 1,
+      "strength": 4
+    },
+    {
+      "actual_hashes": {
+        "accum": "68c2ba8a061971cb71b43f278368daec887afde999e4200725d7ed4dab13de02",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "96de8eef43821a54fea16f77a173e12096d373d575dd8b4a17b47391fcfcea01",
+        "max_alpha": "904cd361914ba208aabfe1285e8580c7e5b69c4309907c0d0c9467c56e417697",
+        "output": "33d3863c488eddd08a6d5fb5ff01a1787dc934f9d500ad9b85937658978bd316",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "prepass_alpha": "10abbfe9a5cb06e94ec7f7f0e8161b8c5837dedde1f0979df1dd74a79f30957e",
+        "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+      },
+      "edge_fade": 100,
+      "kind": "outer",
+      "production_fail_closed": true,
+      "production_returncode": 1,
+      "strength": 4
+    },
+    {
+      "actual_hashes": {
+        "accum": "3129b9af07f92011337e8af7e20b5386dcc32dd59f50528d869aeda349f8aa58",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "a85c07166143b303da16723fab06f72b468cad8147645f654efd930ac148ff0b",
+        "max_alpha": "f2acd1593a9d7ce4b275cbb1a6810913aadc0c241b32871ffd4ca38d42324444",
+        "output": "e418126d555fed226be6b79a09a1c826e943bc02a71948b969d090dc843ce285",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "prepass_alpha": "9f05172651d4294bbd109c77784983b6ffe55519a27088d81eaaabf0a798b970",
+        "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+      },
+      "edge_fade": 50,
+      "kind": "inner",
+      "production_fail_closed": true,
+      "production_returncode": 1,
+      "strength": 4
+    },
+    {
+      "actual_hashes": {
+        "accum": "ea51b75d9b579a3458090a68ed5294db2ef815831f55090998524d7e1df10985",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "311d4c342dcfea7f0b4424e11170c8b085c25c4ed631c3abe531a852c474ae44",
+        "max_alpha": "0ab04268db080381ac66df30ddf9998cd3673a42c54be8f9df2846026125c0e0",
+        "output": "2dc719ad46f633fdf007f7583bf81a4ca0da426a63d39063603a351817a3007a",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "prepass_alpha": "a9ee149b856c5fb0c59f0834e4dcc9288736cb71a80099427843a8b24689ffa7",
+        "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+      },
+      "edge_fade": 100,
+      "kind": "inner",
+      "production_fail_closed": true,
+      "production_returncode": 1,
+      "strength": 4
+    }
+  ],
+  "kind": "olmradialblur_rotation_pf32_edge_fade_actual_aex_20260811",
+  "scope": "PF32 Rotation 9x7 centered; Outer Strength4 with Outer Edge Fade50/100, or Inner Strength4 with Inner Edge Fade50/100; NV/SV0.",
+  "status": "captured_fail_closed",
+  "supported_observation": "Actual AEX exposes a separate pre-scatter alpha plane. A prior same-radius circular Gaussian candidate preserved polar/source-scalar/coordinates but diverged beginning at accum, so its angular wrap/source-row rule was rejected."
+}
