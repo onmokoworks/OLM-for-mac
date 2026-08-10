@@ -158,7 +158,7 @@ GlobalSetup(PF_InData *, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
 {
 	out_data->my_version = PF_VERSION(MAJOR_VERSION, MINOR_VERSION, BUG_VERSION,
 	                                  STAGE_VERSION, BUILD_VERSION);
-	out_data->out_flags  = 0x02000040;
+	out_data->out_flags  = 0x02000040 | PF_OutFlag_SEND_UPDATE_PARAMS_UI;
 	out_data->out_flags2 = PF_OutFlag2_SUPPORTS_SMART_RENDER |
 	                      PF_OutFlag2_FLOAT_COLOR_AWARE |
 	                      PF_OutFlag2_SUPPORTS_GET_FLATTENED_SEQUENCE_DATA;
@@ -339,6 +339,59 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	}
 
 	out_data->num_params = OLMCOLORKEY_NUM_PARAMS;
+	return err;
+}
+
+static PF_Err
+UpdateParameterUI(PF_InData *in_data, PF_ParamDef *params[])
+{
+	PF_Err err = PF_Err_NONE;
+	AEGP_SuiteHandler suites(in_data->pica_basicP);
+	PF_ParamUtilsSuite3 *param_utils = suites.ParamUtilsSuite3();
+
+	auto set_enabled = [&](A_long index, bool enabled) {
+		if (err != PF_Err_NONE) return;
+		PF_ParamDef copy = *params[index];
+		if (enabled)
+			copy.ui_flags &= ~PF_PUI_DISABLED;
+		else
+			copy.ui_flags |= PF_PUI_DISABLED;
+		err = param_utils->PF_UpdateParamUI(in_data->effect_ref, index, &copy);
+	};
+
+	const bool per_color = params[OLMCOLORKEY_PER_COLOR]->u.bd.value != FALSE;
+	const bool per_component = params[OLMCOLORKEY_PER_COMPONENT]->u.bd.value != FALSE;
+	const bool replace_enabled = params[OLMCOLORKEY_ENABLE_REPLACE]->u.bd.value != FALSE;
+	const A_long color_count = ClampValue<A_long>(
+		params[OLMCOLORKEY_NUMBER_OF_COLORS]->u.sd.value, 0, OLMCOLORKEY_MAX_COLORS);
+
+	set_enabled(OLMCOLORKEY_THRESHOLD, !per_color && !per_component);
+	set_enabled(OLMCOLORKEY_THRESHOLD_R, per_component && !per_color);
+	set_enabled(OLMCOLORKEY_THRESHOLD_G, per_component && !per_color);
+	set_enabled(OLMCOLORKEY_THRESHOLD_B, per_component && !per_color);
+
+	for (int i = 0; i < OLMCOLORKEY_MAX_COLORS; ++i) {
+		const bool active = i < color_count;
+		const A_long first = OLMCOLORKEY_COLOR_FIRST + i * COLOR_PARAM_STRIDE;
+		const bool use_color = params[first + COLOR_OFFSET_USE_COLOR]->u.bd.value != FALSE;
+		const bool use_replace = params[first + COLOR_OFFSET_USE_REPLACE]->u.bd.value != FALSE;
+
+		set_enabled(first + COLOR_OFFSET_USE_COLOR, active);
+		set_enabled(first + COLOR_OFFSET_USE_REPLACE,
+		            active && use_color && replace_enabled);
+		set_enabled(first + COLOR_OFFSET_COLOR, active && use_color);
+		set_enabled(first + COLOR_OFFSET_REPLACE_COLOR,
+		            active && use_color && replace_enabled && use_replace);
+		set_enabled(first + COLOR_OFFSET_THRESHOLD,
+		            active && per_color && !per_component);
+		set_enabled(first + COLOR_OFFSET_THRESHOLD_R,
+		            active && per_color && per_component);
+		set_enabled(first + COLOR_OFFSET_THRESHOLD_G,
+		            active && per_color && per_component);
+		set_enabled(first + COLOR_OFFSET_THRESHOLD_B,
+		            active && per_color && per_component);
+	}
+
 	return err;
 }
 
@@ -1337,6 +1390,8 @@ EffectMain(PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data,
 			err = ParamsSetup(in_data, out_data, params, output); break;
 		case PF_Cmd_RENDER:
 			err = Render(in_data, out_data, params, output); break;
+		case PF_Cmd_UPDATE_PARAMS_UI:
+			err = UpdateParameterUI(in_data, params); break;
 		case PF_Cmd_SMART_PRE_RENDER:
 			err = SmartPreRender(in_data, out_data, (PF_PreRenderExtra*)extra); break;
 		case PF_Cmd_SMART_RENDER:

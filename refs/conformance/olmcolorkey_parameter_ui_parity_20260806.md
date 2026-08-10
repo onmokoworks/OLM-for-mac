@@ -26,3 +26,19 @@ Installed executable SHA-256: `020d2c0634137f94c37991c7c93afa832eba4abc9ba4e6ce7
 Computer Use confirmed the restarted host, but did not obtain a reliable
 accessibility-tree readout of the slider minimum; therefore native visual range
 inspection is not promoted beyond the exact setup-source/build evidence.
+
+## Dynamic enabled state (2026-08-10)
+
+The Windows AEX also advertises `PF_OutFlag_SEND_UPDATE_PARAMS_UI` and its
+command-14 method performs 279 UI operations on every update. The Mac port had
+omitted both the flag and selector, leaving all 25 color blocks active at once.
+The Mac implementation now applies the same combined Effect Controls state:
+the global or per-component threshold controls follow the two threshold-mode
+checkboxes, color blocks above `Number of Colors` are disabled, and Color /
+Replace Color plus their threshold controls follow the Windows Use Color,
+Enable Replace, Use Replace Color, Per Color, and Per Component gates.
+
+`tools/emulation/test_olmcolorkey_update_params_ui_actual_aex_20260810.py`
+executes the actual Windows method for four branch-covering configurations and
+pins every emitted operation. Native AE redraw after installation remains a
+separate host-level visual gate.

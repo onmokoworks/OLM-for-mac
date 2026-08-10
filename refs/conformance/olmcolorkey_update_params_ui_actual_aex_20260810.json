@@ -1,0 +1,31 @@
+{
+  "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+  "actual_method": "0x180001a50",
+  "boundary": "Actual AEX helper calls are executed under Unicorn; native AE redraw remains a host-level visual check.",
+  "cases": [
+    {
+      "calls": 279,
+      "name": "global",
+      "transcript_sha256": "43c1b9745f628c97a3604f53a0061b33edee731f06457917c8421708e6d2fd14"
+    },
+    {
+      "calls": 279,
+      "name": "component",
+      "transcript_sha256": "953828af3febb757ba5d082229023ae29b19d189c221e5845c4e35e893c6908c"
+    },
+    {
+      "calls": 279,
+      "name": "per_color",
+      "transcript_sha256": "0b63a333b5423e36b6bafc69469feb3abafb9a6fb15237655b8aae294ad9a68c"
+    },
+    {
+      "calls": 279,
+      "name": "per_color_component",
+      "transcript_sha256": "64fa7590a064f51c34807ea027a8670d2794039f8a659d886232e54f44dd43cd"
+    }
+  ],
+  "contract": "Windows UPDATE_PARAMS_UI emits 279 deterministic UI operations: global threshold mode plus 25 eight-control color blocks, gated by count/use/replace/per-color/per-component.",
+  "production": "Mac advertises SEND_UPDATE_PARAMS_UI and handles PF_Cmd_UPDATE_PARAMS_UI with the same combined Effect Controls enabled state.",
+  "schema_version": 1,
+  "status": "exact"
+}
