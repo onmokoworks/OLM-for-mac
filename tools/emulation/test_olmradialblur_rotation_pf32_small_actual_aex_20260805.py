@@ -86,7 +86,7 @@ int main(int argc,char**argv){{constexpr int W={W},H={H},RB={ROWBYTES},C={cells}
 
 def main()->int:
     actual=actual_aex();mac=mac_production(actual);FIXTURE.mkdir(parents=True,exist_ok=True);matches={};artifacts={};differences={}
-    source=source_frame();actual_items={"source_pf32":source,**{k:v for k,v in actual.items() if k!="geometry"}}
+    source=source_frame();actual_items={"source_pf32":source,**{k:v for k,v in actual.items() if k not in ("geometry","size_factor")}}
     for name,raw in actual_items.items():
         encoded=zlib.compress(raw,9);path=FIXTURE/f"{name}.bin.zlib";path.write_bytes(encoded);artifacts[name]={"bytes":len(raw),"raw_sha256":sha(raw),"zlib_sha256":sha(encoded),"path":str(path.relative_to(ROOT))}
         if name=="source_pf32":continue
