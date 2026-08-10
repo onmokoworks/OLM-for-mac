@@ -6,7 +6,10 @@
   "actual_aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
   "admitted_rotated_leaf_tuples": [
     {"width": 11, "height": 6, "length": 3, "result": "raw_float32_exact", "word_count": 66},
+    {"width": 9, "height": 7, "length": 3, "result": "raw_float32_exact", "word_count": 63},
     {"width": 9, "height": 7, "length": 5, "result": "raw_float32_exact", "word_count": 63},
+    {"width": 9, "height": 7, "length": 7, "result": "raw_float32_exact", "word_count": 63},
+    {"width": 9, "height": 7, "length": 9, "result": "raw_float32_exact", "word_count": 63},
     {"width": 13, "height": 5, "length": 7, "result": "raw_float32_exact", "word_count": 65},
     {"width": 15, "height": 6, "length": 9, "result": "raw_float32_exact", "word_count": 90}
   ],
@@ -15,13 +18,16 @@
   "focused_regression": "tools/emulation/test_olmkirakira_mode3_nonwhitelist_production_20260806.py",
   "evidence": [
     "refs/conformance/olmkirakira_mode3_gaussian_length3_11x6_crt_actual_aex_20260805.json",
+    "refs/conformance/olmkirakira_mode3_gaussian_9x7_length3_actual_aex_20260810.json",
     "refs/conformance/olmkirakira_mode3_gaussian_crt_initialized_actual_aex_20260805.json",
+    "refs/conformance/olmkirakira_mode3_gaussian_9x7_length7_actual_aex_20260810.json",
+    "refs/conformance/olmkirakira_mode3_gaussian_9x7_length9_actual_aex_20260810.json",
     "refs/conformance/olmkirakira_mode3_gaussian_length7_13x5_crt_actual_aex_20260805.json",
     "refs/conformance/olmkirakira_mode3_gaussian_length9_15x6_crt_actual_aex_20260806.json"
   ],
   "not_proven": [
     "arbitrary geometry for a witnessed length",
-    "a different length at a witnessed geometry",
+    "lengths outside 3/5/7/9 at the witnessed 9x7 geometry",
     "full native-AE Mode 3 rendering at practical resolution",
     "geometry independence of the recovered Gaussian row primitive"
   ]

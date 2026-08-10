@@ -9,7 +9,10 @@ int main()
 
     // Complete actual-AEX Gaussian output fixtures.
     assert(mode3_gaussian_admitted(11, 6, 3));
+    assert(mode3_gaussian_admitted(9, 7, 3));
     assert(mode3_gaussian_admitted(9, 7, 5));
+    assert(mode3_gaussian_admitted(9, 7, 7));
+    assert(mode3_gaussian_admitted(9, 7, 9));
     assert(mode3_gaussian_admitted(13, 5, 7));
     assert(mode3_gaussian_admitted(15, 6, 9));
 
@@ -17,7 +20,6 @@ int main()
     // witnessed geometry does not admit an unwitnessed or mismatched length.
     assert(!mode3_gaussian_admitted(8, 4, 5));
     assert(!mode3_gaussian_admitted(1920, 1080, 5));
-    assert(!mode3_gaussian_admitted(9, 7, 3));
     assert(!mode3_gaussian_admitted(11, 6, 5));
     assert(!mode3_gaussian_admitted(15, 6, 7));
     assert(!mode3_gaussian_admitted(9, 7, 1));
