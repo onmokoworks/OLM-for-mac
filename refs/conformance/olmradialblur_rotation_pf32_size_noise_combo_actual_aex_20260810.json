@@ -1,0 +1,161 @@
+{
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "boundary": "No zero-alpha source, Size Variation values other than 1/25/100, Noise Variation values other than 25/100, Noise Type 2/3, other seed/offset/thickness, geometry, depth, mode, or AE-host claim.",
+  "cases": [
+    {
+      "actual_matches_size_zero_noise_control": {
+        "accum": true,
+        "max_alpha": true,
+        "output": true,
+        "source_scalar": true,
+        "source_size_factor": true,
+        "source_span": true
+      },
+      "exact": true,
+      "noise_variation": 25.0,
+      "output_sha256": "d57b553a8dd12b52f7a8195ba20b4adc4de6769fe8b633793f6e8c7dfd04a0a0",
+      "production_failed_closed": false,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "source_scalar": false
+      },
+      "production_source_scalar_different_bytes": 489,
+      "size_variation": 1.0,
+      "source_size_factor_all_one": true
+    },
+    {
+      "actual_matches_size_zero_noise_control": {
+        "accum": true,
+        "max_alpha": true,
+        "output": true,
+        "source_scalar": true,
+        "source_size_factor": true,
+        "source_span": true
+      },
+      "exact": true,
+      "noise_variation": 100.0,
+      "output_sha256": "119dc6506db1c7768f2db8ed1a91b18748d6ec999ee13d7c7670b15c5d13fc6f",
+      "production_failed_closed": false,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "source_scalar": false
+      },
+      "production_source_scalar_different_bytes": 2473,
+      "size_variation": 1.0,
+      "source_size_factor_all_one": true
+    },
+    {
+      "actual_matches_size_zero_noise_control": {
+        "accum": true,
+        "max_alpha": true,
+        "output": true,
+        "source_scalar": true,
+        "source_size_factor": true,
+        "source_span": true
+      },
+      "exact": true,
+      "noise_variation": 25.0,
+      "output_sha256": "d57b553a8dd12b52f7a8195ba20b4adc4de6769fe8b633793f6e8c7dfd04a0a0",
+      "production_failed_closed": false,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "source_scalar": false
+      },
+      "production_source_scalar_different_bytes": 489,
+      "size_variation": 25.0,
+      "source_size_factor_all_one": true
+    },
+    {
+      "actual_matches_size_zero_noise_control": {
+        "accum": true,
+        "max_alpha": true,
+        "output": true,
+        "source_scalar": true,
+        "source_size_factor": true,
+        "source_span": true
+      },
+      "exact": true,
+      "noise_variation": 100.0,
+      "output_sha256": "119dc6506db1c7768f2db8ed1a91b18748d6ec999ee13d7c7670b15c5d13fc6f",
+      "production_failed_closed": false,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "source_scalar": false
+      },
+      "production_source_scalar_different_bytes": 2473,
+      "size_variation": 25.0,
+      "source_size_factor_all_one": true
+    },
+    {
+      "actual_matches_size_zero_noise_control": {
+        "accum": true,
+        "max_alpha": true,
+        "output": true,
+        "source_scalar": true,
+        "source_size_factor": true,
+        "source_span": true
+      },
+      "exact": true,
+      "noise_variation": 25.0,
+      "output_sha256": "d57b553a8dd12b52f7a8195ba20b4adc4de6769fe8b633793f6e8c7dfd04a0a0",
+      "production_failed_closed": false,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "source_scalar": false
+      },
+      "production_source_scalar_different_bytes": 489,
+      "size_variation": 100.0,
+      "source_size_factor_all_one": true
+    },
+    {
+      "actual_matches_size_zero_noise_control": {
+        "accum": true,
+        "max_alpha": true,
+        "output": true,
+        "source_scalar": true,
+        "source_size_factor": true,
+        "source_span": true
+      },
+      "exact": true,
+      "noise_variation": 100.0,
+      "output_sha256": "119dc6506db1c7768f2db8ed1a91b18748d6ec999ee13d7c7670b15c5d13fc6f",
+      "production_failed_closed": false,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "source_scalar": false
+      },
+      "production_source_scalar_different_bytes": 2473,
+      "size_variation": 100.0,
+      "source_size_factor_all_one": true
+    }
+  ],
+  "kind": "olmradialblur_rotation_pf32_size_noise_combo_actual_aex_20260810",
+  "observed_rule": "On this opaque fixture Size Variation is semantically masked (source_size_factor is 1), so every combined AEX result equals its Size Variation 0 Type-1 Noise control.",
+  "production_scalar_boundary": "As in the independently admitted Type-1 Noise family, the full source-scalar allocation has inactive-cell 1-ULP differences; accum, max-alpha, final RGBA, coordinates, and padded output are bit exact.",
+  "scope": "Pinned actual-AEX PF32 Rotation 9x7 rowbytes160, strictly-positive-alpha source; Size Variation 1/25/100 x Noise Variation 25/100, Noise Type 1; neutral outer-only tuple.",
+  "status": "exact_with_inactive_source_scalar_boundary"
+}

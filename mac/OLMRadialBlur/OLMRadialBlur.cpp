@@ -2009,6 +2009,24 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0 &&
 		info.comp_width == 9.0 && info.comp_height == 7.0;
+	const bool use_aex_pf32_opaque_size_noise_type1_small = input && output &&
+		std::is_same<PixelT, PF_PixelFloat>::value &&
+		input->width == 9 && input->height == 7 && output->width == 9 && output->height == 7 &&
+		input->rowbytes >= 9 * (A_long)sizeof(PF_PixelFloat) &&
+		output->rowbytes >= 9 * (A_long)sizeof(PF_PixelFloat) &&
+		info.center_x == 4.0 && info.center_y == 3.0 &&
+		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
+		info.quality == 5.0 && info.brightness_gain == 1.0 &&
+		(info.size_variation == 1.0 || info.size_variation == 25.0 || info.size_variation == 100.0) &&
+		(info.noise_variation == 25.0 || info.noise_variation == 100.0) &&
+		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
+		info.noise_offset == 0 && info.thickness == 10.0 &&
+		info.comp_width == 9.0 && info.comp_height == 7.0 &&
+		source_alpha_strictly_positive;
 	const bool use_aex_inner_geometry = input && output &&
 		((std::is_same<PixelT, PF_Pixel8>::value &&
 		  input->width > 0 && input->height > 0 &&
@@ -2043,8 +2061,10 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0;
 	if (info.blur_type != 2 || (info.inner_strength != 0 && !use_aex_pf16_inner_power2_small) ||
-	    (info.noise_variation != 0.0 && !use_aex_pf32_noise_type1_small) ||
-	    (info.size_variation != 0.0 && !use_aex_pf32_opaque_size_variation_small)) {
+	    (info.noise_variation != 0.0 && !use_aex_pf32_noise_type1_small &&
+	     !use_aex_pf32_opaque_size_noise_type1_small) ||
+	    (info.size_variation != 0.0 && !use_aex_pf32_opaque_size_variation_small &&
+	     !use_aex_pf32_opaque_size_noise_type1_small)) {
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
 
@@ -2193,6 +2213,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	const bool use_aex_exact = use_aex_case0010 || use_aex_pf16_small || use_aex_pf16_inner_power2_small ||
 		use_aex_pf32_opaque_size_variation_small ||
 		use_aex_pf32_noise_type1_small ||
+		use_aex_pf32_opaque_size_noise_type1_small ||
 		use_aex_pf32_small || use_aex_pf32_strength5_small || use_aex_pf16_strength5_small ||
 		use_aex_pf32_offset_mode3_ui2_small || use_aex_pf32_offset_mode3_ui3_small ||
 		use_aex_pf32_offset_mode3_ui4_small || use_aex_pf16_offset_mode3_ui2_small ||
@@ -2247,7 +2268,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	std::vector<float> rotation_source_scalar((size_t)radius_count * angular_count, 1.0f);
 	std::vector<float> rotation_scalar_source_with_guard((size_t)w * h + 1, 1.0f);
 	rotation_scalar_source_with_guard.back() = 0.0f;
-	if (use_aex_pf32_noise_type1_small) {
+	if (use_aex_pf32_noise_type1_small || use_aex_pf32_opaque_size_noise_type1_small) {
 		std::vector<float> noise_plane;
 		int noise_width = 0;
 		int noise_height = 0;
