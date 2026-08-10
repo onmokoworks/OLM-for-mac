@@ -2,10 +2,10 @@
   "claim_boundary": "Release integration only: ten-lane fixed fixtures, installed Universal identities, and one current-Mac-AE load/render witness per plugin. This manifest does not promote unlisted geometries, parameters, bit depths, or AE exactness. Seven Windows AE release-boundary observations are accepted; cross-host exactness remains a per-plugin claim.",
   "fixed_fixture_regression": {
     "boundary": "Only commands enumerated by the ten fixed-fixture lanes; slow RadialBlur full replay is excluded.",
-    "output_sha256": "f4a7186cfd2d6dc665f6cab35fdcee789564397fb6524c320c115723be2766d6",
+    "output_sha256": "2feb0ae96f83a36f887ca6022db8cad38cf229c5492098cb3cbd9e1377292b2f",
     "returncode": 0,
     "state": "proven",
-    "summary": "PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=435.03s",
+    "summary": "PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=498.68s",
     "tail": [
       "      |                                                      ^",
       "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here",
@@ -29,7 +29,7 @@
       "1 warning generated."
     ]
   },
-  "generated_at": "2026-08-07T11:49:41.044664+00:00",
+  "generated_at": "2026-08-10T12:14:48.475652+00:00",
   "mac_ae_representative": {
     "counts": {
       "invalid": 0,
@@ -120,7 +120,7 @@
     ]
   },
   "parameter_ui_registration": {
-    "boundary": "Hostless actual Windows AEX GLOBAL_SETUP/PARAMS_SETUP registration compared with current Mac production. A passing gate proves only each row's declared normalized registration surface; it does not prove native AE layout, localization, interaction, rendering, or fields explicitly listed as evidence boundaries.",
+    "boundary": "Hostless actual Windows AEX GLOBAL_SETUP/PARAMS_SETUP registration and the enumerated UPDATE_PARAMS_UI or selector callbacks are compared with current Mac production. A passing gate proves only each row's declared normalized registration and dynamic-control surface; it does not prove localization, rendering, unlisted interactions, or fields explicitly listed as evidence boundaries.",
     "bounded_count": 3,
     "counts": {
       "invalid": 0,
@@ -129,7 +129,7 @@
     },
     "plugins": [
       {
-        "boundary": "Pointer values, inactive union residue, localized host rendering, AE-version interpretation, and render behavior are excluded.",
+        "boundary": "Registration and the observed command-14 hidden-state update are exact. Pointer values, localized host rendering, AE-version interpretation, and render behavior are excluded.",
         "classification": "exact_normalized_registration",
         "failures": [],
         "plugin": "OLMBlur",
@@ -143,21 +143,21 @@
         "state": "proven"
       },
       {
-        "boundary": "Pointer-valued labels/choice strings and hostless variadic name formatting are excluded; counts, defaults, types, flags, ranges, order, and normalized values are compared.",
+        "boundary": "Counts, defaults, types, flags, ranges, order, normalized values, and the enumerated command-14 dynamic states are compared. Pointer-valued labels and hostless variadic formatting are excluded.",
         "classification": "exact_normalized_registration",
         "failures": [],
         "plugin": "OLMColorKey",
         "state": "proven"
       },
       {
-        "boundary": "Normalized hostless GLOBAL_SETUP and all 21 owned registration rows only; native AE control layout and rendering are excluded.",
+        "boundary": "Normalized setup, all 21 owned rows, and Noise Type dynamic visibility are exact. Rendering and unenumerated host error behavior are excluded.",
         "classification": "exact_normalized_registration",
         "failures": [],
         "plugin": "OLMDirectionalBlur",
         "state": "proven"
       },
       {
-        "boundary": "Normalized hostless GLOBAL_SETUP/PARAMS_SETUP only; AE-native layout, localization, interaction, and rendering are excluded.",
+        "boundary": "Normalized setup and all 144 public-range command-14 UI combinations are exact. Localization, rendering, and out-of-range values are excluded.",
         "classification": "exact_normalized_registration",
         "failures": [],
         "plugin": "OLMDistanceGradation",
@@ -171,7 +171,7 @@
         "state": "proven"
       },
       {
-        "boundary": "The public 30-control registration surface is exact. Windows custom UI capability/event flags are intentionally not advertised because the corresponding Mac EVENT/USER_CHANGED/UPDATE handlers are not ported.",
+        "boundary": "The public 30-control registration surface and observed UPDATE_PARAMS_UI matrix are exact; actual USER_CHANGED and EVENT are confirmed no-ops. Rendering and unlisted host error behavior are excluded.",
         "classification": "bounded_public_registration",
         "failures": [],
         "plugin": "OLMRadialBlur",
@@ -217,7 +217,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMBlur",
-        "sha256": "2f6016963d0b8abb228ddb0a87c654e82139c72a490be88027bcd118c4aeaea7",
+        "sha256": "13a33d1de04e576353d1364d5046c987cacc87fb7a094d81036b71f66ceddc55",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -239,7 +239,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMColorKey",
-        "sha256": "3b6f0f678d4e269a09d9ff16eb11cbf04d8042d0457a81c99b2daa07f5cea485",
+        "sha256": "6a4244958c40e8bb65a3dfd01c761f4ec933f6fdca12981a3dd87a8f2e7205b5",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -250,7 +250,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMDirectionalBlur",
-        "sha256": "5a6e0687eda84d427978a924bbb0722dc716ebbcf149dbb0cb4f7022f323efaa",
+        "sha256": "1e10fb01aad91a4dbec8c7fdfd2263c4bd01cdf605a461f20f29007f5f45ba80",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -261,7 +261,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMDistanceGradation",
-        "sha256": "f054ff7296dd53654049f5b438f55429f0c9a52034fd01c687b4c352bbe5ca0e",
+        "sha256": "28b067ba5ea93dce261553400a07b4851a327b0f7aea1520b74873c94f35b8bf",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -272,7 +272,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMKiraKira",
-        "sha256": "d0c411c006bc61a7461d24380ec2cc17634bffb2e08b26cc583e06f013908a28",
+        "sha256": "cecb51976d50681e8e1438b02de352e36eb05b7352c471afdf9b94b761c861d9",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -283,7 +283,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMRadialBlur",
-        "sha256": "dfac5965c2400d4141526d1f43ae277c099ac14a781f3bc8bea10165a0f36a29",
+        "sha256": "2b9dc637196b582d70e43fbac3537aca28aad55e75e778eb2cdad6cdd57fc01a",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -294,7 +294,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMSmoother",
-        "sha256": "8274d2ae87329c5f777a3915cf706576cf9b0a1540f718dc6bfe0dbd22933390",
+        "sha256": "27866b533c207e54b38c74a872f4c1a61f876f25b200943203cddfb445029255",
         "sha256_exact": true,
         "universal_exact": true
       },
