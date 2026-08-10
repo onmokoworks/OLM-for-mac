@@ -13,7 +13,8 @@ enum { PF_Err_BAD_CALLBACK_PARAM = -1 };
 enum { PF_Stage_BETA = 0 };
 typedef A_long PF_Cmd;
 enum { PF_Cmd_ABOUT = 0, PF_Cmd_GLOBAL_SETUP, PF_Cmd_PARAMS_SETUP,
-       PF_Cmd_RENDER, PF_Cmd_SMART_PRE_RENDER, PF_Cmd_SMART_RENDER };
+       PF_Cmd_RENDER, PF_Cmd_SMART_PRE_RENDER, PF_Cmd_SMART_RENDER,
+       PF_Cmd_UPDATE_PARAMS_UI };
 
 struct PF_Pixel8 { std::uint8_t alpha, red, green, blue; };
 struct PF_Pixel16 { std::uint16_t alpha, red, green, blue; };
@@ -35,6 +36,7 @@ struct PF_PopupData { A_long value; };
 struct PF_FloatSliderData { double value; };
 struct PF_ColorData { PF_Pixel8 value; };
 struct PF_ParamDef {
+	A_u_long ui_flags;
 	A_u_long flags;
     union {
         PF_BooleanData bd;
@@ -87,6 +89,9 @@ struct PF_ColorParamSuite1 {
     PF_Err (*PF_GetFloatingPointColorFromColorDef)(PF_ProgPtr, PF_ParamDef *, PF_PixelFloat *);
 };
 struct PF_ANSICallbacksSuite1 { int (*sprintf)(char *, const char *, ...); };
+struct PF_ParamUtilsSuite3 {
+    PF_Err PF_UpdateParamUI(PF_ProgPtr, A_long, const PF_ParamDef *) { return PF_Err_NONE; }
+};
 static PF_Err dg_harness_color(PF_ProgPtr, PF_ParamDef *def, PF_PixelFloat *out) {
     out->alpha = def->u.cd.value.alpha / 255.0f;
     out->red = def->u.cd.value.red / 255.0f;
@@ -96,10 +101,12 @@ static PF_Err dg_harness_color(PF_ProgPtr, PF_ParamDef *def, PF_PixelFloat *out)
 }
 static PF_ColorParamSuite1 dg_harness_color_suite = { &dg_harness_color };
 static PF_ANSICallbacksSuite1 dg_harness_ansi_suite = { &std::sprintf };
+static PF_ParamUtilsSuite3 dg_harness_param_utils_suite;
 struct AEGP_SuiteHandler {
     explicit AEGP_SuiteHandler(void *) {}
     PF_ColorParamSuite1 *ColorParamSuite1() { return &dg_harness_color_suite; }
     PF_ANSICallbacksSuite1 *ANSICallbacksSuite1() { return &dg_harness_ansi_suite; }
+    PF_ParamUtilsSuite3 *ParamUtilsSuite3() { return &dg_harness_param_utils_suite; }
 };
 
 #define DllExport
@@ -116,6 +123,7 @@ struct AEGP_SuiteHandler {
 #define PF_ADD_FLOAT_SLIDERX(...) ((void)0)
 #define PF_Precision_HUNDREDTHS 2
 #define PF_ParamFlag_START_COLLAPSED 0x20
+#define PF_PUI_DISABLED 0x20
 #define AEFX_ChannelDepthTpl_h
 
 static inline const char *GetStringPtr(int) { return ""; }
