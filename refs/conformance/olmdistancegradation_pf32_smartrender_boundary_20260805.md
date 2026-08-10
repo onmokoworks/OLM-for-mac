@@ -6,6 +6,6 @@ The actual AEX classic Render dispatch explicitly selects PF32 and calls `FUN_18
 
 SmartPreRender result/max-result rectangle plumbing can be audited independently, but no actual-AEX PF32 SmartRender output world, parameter sequence, sequence/pre-render lifetime, or 2,992-byte result exists to capture. The already exact PF32 fixture belongs to classic `PF_Cmd_RENDER`.
 
-The Mac source contains a direct PF32 SmartRender fallback, but it is not AEX-grounded and is not claimed exact. Reusing either integer SmartRender callback would violate the bit-depth boundary. The next legitimate host proof is a hash-bound AE run showing that 32bpc routes to classic Render while SmartPre/SmartRender remain the 8/16 path.
+The former Mac source contained a direct PF32 SmartRender fallback. It was not AEX-grounded and has now been removed: a Smart request whose bit depth is neither 8 nor 16 returns `PF_Err_BAD_CALLBACK_PARAM` before either host world checkout. Reusing either integer SmartRender callback would violate the bit-depth boundary. The next legitimate host proof is a hash-bound AE run showing that 32bpc routes to classic Render while SmartPre/SmartRender remain the 8/16 path.
 
-`tools/emulation/audit_olmdistancegradation_pf32_smartrender_boundary_20260805.py` locks these dispatch and rectangle facts. Resize and blur remain separate.
+`tools/emulation/audit_olmdistancegradation_pf32_smartrender_boundary_20260805.py` locks these dispatch, guard, and rectangle facts. `tools/emulation/test_olmdistancegradation_pf32_smart_fail_closed_20260810.py` executes the production entry and proves that PF32 is rejected without host checkout. Resize and blur remain separate.

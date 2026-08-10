@@ -1264,6 +1264,13 @@ RenderSmartPF8PreseededField(const PF_EffectWorld *input_world,
 static PF_Err
 SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra)
 {
+	// The retained Windows AEX SmartRender dispatcher has only PF8 and PF16
+	// owners. PF32 is a classic-render-only path; executing our classic float
+	// implementation here would manufacture an ungrounded AEX behavior.
+	if (!extra || !extra->input || !extra->cb ||
+	    (extra->input->bitdepth != 8 && extra->input->bitdepth != 16)) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
 	PF_Err err = PF_Err_NONE;
 	AEGP_SuiteHandler suites(in_data->pica_basicP);
 
@@ -1297,8 +1304,6 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 			err = RenderSmartPF8PreseededField(input_world, output_world);
 		} else if (depth == 16) {
 			err = RenderSmartPF16PreseededField(input_world, output_world);
-		} else {
-			err = RenderBits<PF_PixelFloat>(in_data, params, input_world, output_world);
 		}
 	}
 
