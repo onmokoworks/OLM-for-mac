@@ -1,0 +1,157 @@
+{
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "boundary": "Admission is limited to cells whose polar, source scalar, accumulation, max alpha, final RGBA, inverse coordinates and padded PF32 output all match actual AEX byte-for-byte.",
+  "cells": [
+    {
+      "actual_sha256": {
+        "accum": "1159ea655f37897304a04db663c184deaf38d401d6632cf4be021702f683f503",
+        "coordinates": "4ca5a2931f4e4b18599770726c6aafe9b92816ef4d883abc25fa85f050e98daa",
+        "final_rgba": "dc71d8ce7fe05123ce5fd56adb5644a9377a2607f1146372daa2d86974bf8bf8",
+        "max_alpha": "b3e7752fc3150f071da0fd5f9353e367678256b409409e63fc22ab20edde46ae",
+        "output": "59aea010d19178344aa76a844408afb18b75a4ea906c160748d5785f2a331db2",
+        "polar": "0f7ac779b50ee3b79b6fd8029a1ccef9f6ae45d209d7e3ba85c0eb3673849e62",
+        "source_scalar": "5c3eb2f1b0946303eabb7ad70d1aebd312aa5f1b646948fc668b71816235faeb"
+      },
+      "angle_deg": 0.0,
+      "exact": true,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "ratio": 2.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "1792220cb2173c437ad6119726f4ac2bf57f8b97a10f9111b999aa2faeb48a8e",
+        "coordinates": "891e6e4be9f9c2ce5ec6802675b780b394ab13b694577f657153d4e5724321fa",
+        "final_rgba": "b7af536640e5870404a91e606f3ab4a90253b24f6a155c8ad9287470c843a566",
+        "max_alpha": "08ca5c0cce6675cbbf04a894309859134c4ac8cc76329d1a58778924dd6ffaf2",
+        "output": "89359502935edb7bb02aebd377a71e828394d5c49aaa9cdda408decb0776105a",
+        "polar": "2af7cd30f445d93074ab763d09dd69dbb38bc4db261d07e27d0fcfb8f55f9d5f",
+        "source_scalar": "058320dcc55b5ae2b01146c7bd6c6801420af20e1b16c179528b17dfd05e5f31"
+      },
+      "angle_deg": 30.0,
+      "exact": true,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "ratio": 2.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "3642009cb3f20ff236e3260fc842a4cf33b38fbb2df9c49d2a82036e8ad55f58",
+        "coordinates": "b5ee613158955bdc8ec9d62a2ac5849ca3d91243579408be2613fe50fd6dc659",
+        "final_rgba": "5c1c01b004c63994555c74281b1c0df350a24409b260598f998d931b568ba83f",
+        "max_alpha": "cbed938990c0fe2a6cad23b94c7c5d769db27cfeffaf325b173bc1f6e132cede",
+        "output": "6f420f580131907c51b665e0f23c03bf47dcff62e13e3ebeab0f976bf147b1f9",
+        "polar": "33cc3955761c89b25e4d63727282e5c7d2b53737636f3886bb99ed9c2dbbb541",
+        "source_scalar": "7a63bf5ae82f61131ad7a25051f2dc77d7fa24e57ac3048be9e03884c70f6b34"
+      },
+      "angle_deg": 90.0,
+      "exact": true,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "ratio": 2.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "d0ed6e9f73397fb10a9a9d04b23ce565d4557ed21644820ec9d303c7ace6e013",
+        "coordinates": "2a1d57393743236a960bd8a6ce8b73a9d57eeb095d87e0f1f5127f3022f84d61",
+        "final_rgba": "c096de8666f929f3861cbc1720f5e1a0d7f34d631211207b000c7377f8cc4d78",
+        "max_alpha": "d63124bc444f22bf3e6bdf6897579656887183988c4a514bc42e68f78e16bfb5",
+        "output": "6d8e4640a3c571786898292fc7c36b8daf4c3aa1fe9a178353ceeecfad5f7fe7",
+        "polar": "c3e9c85a3828be6e6c5b8628d2e45d7efaed6ef53f3b68aecbff18da57975db8",
+        "source_scalar": "0dc3891a651fb810725d6291e9303c56acfbd8a543fe7d555601797150174fac"
+      },
+      "angle_deg": 0.0,
+      "exact": true,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "ratio": 5.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "39ef30776726237334d5debfd2f2e78bec3b6f6aeb21d2525443e823c8e91ea7",
+        "coordinates": "c37badf2865583aa061edaee4e693be514912120cadfa2a0aa4c0c8fd2303992",
+        "final_rgba": "0ee93f382b956f90f4976cbe122c4fcb04bb78ac587db3067f453b4652b03391",
+        "max_alpha": "5167584eab4672ebe02c7c59dfbb47ec678a8eccff8087faedcab70fcd32603c",
+        "output": "8d4903ee12d17b683e38ee1aef46476850a515e11f2d1d6ee1e7ac9658f1c477",
+        "polar": "b0f5b7ec9f8de1e69772951400754ec514bc3d2ff23549c779f9fa6a747a6e8d",
+        "source_scalar": "2c42142dc031e2ac206fdc9071d7608b2499c0b48d234dc7daf3e1365cdb66af"
+      },
+      "angle_deg": 30.0,
+      "exact": true,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "ratio": 5.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "5ceb4ce8988eb2d38caa69bf8d3a8821db3ba00544394557fa9138f225dc7616",
+        "coordinates": "91ac593073f8b76a463d3e6865c89bd28925a8153c1f232cce561b2c53ae4447",
+        "final_rgba": "1124ebd6248d2a229cd585f2b089b8a65087671d1bcef9796eb23b9abf790090",
+        "max_alpha": "277ca2dc57ebb68511fdab3e34a2a4901d2f55990305e75807d0fc0a1a090873",
+        "output": "6f2cd89f0c4f0845fb3b2da845e6ee5eb1713f8cc5469b4b1e858b9b09b97113",
+        "polar": "cf3ea01b18ec07e2fa3bb2cddeb56b7f50fe523f19684c2430a3dc81aad4d334",
+        "source_scalar": "9e849d992e4af0a6904826b3595f485d8eb81d7957a657f77dfe0a03a2f012b6"
+      },
+      "angle_deg": 90.0,
+      "exact": true,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "ratio": 5.0
+    }
+  ],
+  "kind": "olmradialblur_rotation_pf32_ellipse_actual_aex_20260811",
+  "planes": [
+    "polar",
+    "source_scalar",
+    "accum",
+    "max_alpha",
+    "final_rgba",
+    "coordinates",
+    "output"
+  ],
+  "scope": "PF32 Rotation padded 9x7 centered; Ratio {2,5} x Angle {0,30,90}; Outer Strength4 and neutral remaining controls.",
+  "status": "exact",
+  "transform": "Forward setup shares Zoom's radians signed16.16 truncation and integer-to-double sin/cos. Rotation has a distinct ellipse multiply order: (radius*ratio)*sin(theta), while Zoom uses radius*(sin(theta)*ratio). Rotation scatter/gather and inverse coordinates are independently compared here."
+}

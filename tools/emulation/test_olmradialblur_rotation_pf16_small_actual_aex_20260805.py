@@ -25,6 +25,7 @@ FIXTURE_INNER_STRENGTH = 0
 FIXTURE_OUTER_EDGE_FADE = 0
 FIXTURE_INNER_EDGE_FADE = 0
 FIXTURE_CENTER_X, FIXTURE_CENTER_Y = 4.0, 3.0
+FIXTURE_RATIO, FIXTURE_ANGLE_DEG = 1.0, 0.0
 FIXTURE_SIZE_VARIATION = 0.0
 FIXTURE_NOISE_VARIATION = 0.0
 FIXTURE_NOISE_TYPE = 1
@@ -95,6 +96,8 @@ def actual_aex() -> dict[str, bytes]:
                    "Seed": FIXTURE_SEED,
                    "Noise Offset": FIXTURE_NOISE_OFFSET,
                    "Thickness": FIXTURE_THICKNESS})
+    params.update({"Ratio": FIXTURE_RATIO,
+                   "Angle": int(round(FIXTURE_ANGLE_DEG * 65536.0))})
     loader = AexLoader(str(m4.AEX_PATH), fast=True); loader.register_libm_impls(max_threads=1)
     sp = m4.build_host_suites(loader); render_ctx = m4.build_render_context(loader, sp)
     iw, _ = build_world(loader, source_frame()); ow, output_data = build_world(loader, source_frame(True))

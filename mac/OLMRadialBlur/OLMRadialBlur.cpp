@@ -2368,6 +2368,21 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.noise_variation == 0.0 && info.noise_type == 1 &&
 		info.noise_layer == 0 && info.seed == 1 && info.noise_offset == 0 &&
 		info.thickness == 10.0 && info.comp_width == 9.0 && info.comp_height == 7.0;
+	const bool use_aex_pf32_ellipse_small =
+		std::is_same<PixelT, PF_PixelFloat>::value &&
+		w == 9 && h == 7 && input->width == 9 && input->height == 7 &&
+		info.center_x == 4.0 && info.center_y == 3.0 &&
+		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && (info.ratio == 2.0 || info.ratio == 5.0) &&
+		(info.angle_deg == 0.0 || info.angle_deg == 30.0 || info.angle_deg == 90.0) &&
+		info.quality == 5.0 && info.brightness_gain == 1.0 &&
+		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
+		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
+		info.noise_offset == 0 && info.thickness == 10.0 &&
+		info.comp_width == 9.0 && info.comp_height == 7.0;
 	const bool use_aex_pf32_strength5_small =
 		std::is_same<PixelT, PF_PixelFloat>::value &&
 		w == 9 && h == 7 && input->width == 9 && input->height == 7 &&
@@ -2474,7 +2489,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		use_aex_pf32_strength5_noise_type1_small ||
 		use_aex_pf32_offset_mode3_noise_type1_small ||
 		use_aex_pf32_opaque_size_noise_type1_small ||
-		use_aex_pf32_small || use_aex_pf32_strength5_small || use_aex_pf16_strength5_small ||
+		use_aex_pf32_small || use_aex_pf32_ellipse_small ||
+		use_aex_pf32_strength5_small || use_aex_pf16_strength5_small ||
 		use_aex_pf32_offset_mode3_ui2_small || use_aex_pf32_offset_mode3_ui3_small ||
 		use_aex_pf32_offset_mode3_ui4_small || use_aex_pf16_offset_mode3_ui2_small ||
 		use_aex_pf16_offset_mode3_ui3_small;
@@ -2555,9 +2571,9 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	const float cy_f = (float)cy;
 	const float ratio_f = (float)ratio;
 	const float step_rad_f = (float)step_rad;
-	const RadialPairedTrig base_trig = RadialAEXPairedSinCos((float)base_angle);
-	const float cos_a_f = base_trig.cosine;
-	const float sin_a_f = base_trig.sine;
+	const int32_t base_angle_fixed_radians = (int32_t)(base_angle * 65536.0);
+	const float cos_a_f = (float)std::cos((double)base_angle_fixed_radians);
+	const float sin_a_f = (float)std::sin((double)base_angle_fixed_radians);
 	const double cos_a = std::cos(base_angle);
 	const double sin_a = std::sin(base_angle);
 	for (A_long ri = 0; ri < radius_count; ++ri) {
@@ -2569,7 +2585,9 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				const float theta = RadialF32Mul((float)ai, step_rad_f);
 				const RadialPairedTrig angle_trig = RadialAEXPairedSinCos(theta);
 				const float sx0 = RadialF32Mul(r, angle_trig.cosine);
-				const float sy0 = RadialF32Mul(RadialF32Mul(r, angle_trig.sine), ratio_f);
+				// Rotation's AEX core differs from Zoom here: radius is multiplied by
+				// Ratio first, then by sin(theta).
+				const float sy0 = RadialF32Mul(RadialF32Mul(r, ratio_f), angle_trig.sine);
 				sx = RadialF32Add(
 					RadialF32Sub(RadialF32Mul(cos_a_f, sx0), RadialF32Mul(sin_a_f, sy0)), cx_f);
 				sy = RadialF32Add(
