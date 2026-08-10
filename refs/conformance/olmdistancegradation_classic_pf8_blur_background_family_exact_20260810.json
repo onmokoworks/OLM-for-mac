@@ -1,0 +1,127 @@
+{
+  "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+  "claims_not_made": [
+    "public classic wrapper and host resize/staging",
+    "Blur Modes 4/5 (separate evidence)",
+    "other sizes/geometries/ownership/render branches",
+    "PF16/PF32",
+    "PF32 SmartRender",
+    "AE host execution"
+  ],
+  "distinctness": "four blurred surfaces and eight final active outputs are pairwise distinct",
+  "rows": [
+    {
+      "blur_mode": 2,
+      "bytes_compared": 869,
+      "fieldgen_trace_events": 3,
+      "interpolation": "constant",
+      "mismatches": 0,
+      "output_active_sha256": "fd53dc5b7999e5a554886dfa1e15807b66161ea4bbbdb5935d890528b871a638",
+      "output_padded_sha256": "787eeb8c11e77f610b299dadd010864b85316e3af9650a5b2f2359cdd4b20e68",
+      "use_background": false
+    },
+    {
+      "blur_mode": 2,
+      "bytes_compared": 869,
+      "fieldgen_trace_events": 3,
+      "interpolation": "constant",
+      "mismatches": 0,
+      "output_active_sha256": "34234a5f17d758ad70a8ae7cc9ee89b98b27287942d1c71095d685e9b49a6b5c",
+      "output_padded_sha256": "70632a0f2733c758d4aa202f5b4bf5454943c869dfab0a074d9de90d2efd0d4b",
+      "use_background": true
+    },
+    {
+      "blur_mode": 3,
+      "bytes_compared": 869,
+      "fieldgen_trace_events": 3,
+      "interpolation": "constant",
+      "mismatches": 0,
+      "output_active_sha256": "3b7fd7a6121fefadf40a80093468dc0846563e2735cb49408a226bf7b308c823",
+      "output_padded_sha256": "1510148bb5fb9b90591605ce5de869a2f71e7b99d11301a58026cb8ba32e245b",
+      "use_background": false
+    },
+    {
+      "blur_mode": 3,
+      "bytes_compared": 869,
+      "fieldgen_trace_events": 3,
+      "interpolation": "constant",
+      "mismatches": 0,
+      "output_active_sha256": "5e1897dd19031a2d82fb4fa4987f73a1787155f45c277690fe5c7655893da864",
+      "output_padded_sha256": "4ef7b066d82c27c53da05e1874c3b6cd91f4d7f690fc22ea83b327f700eea783",
+      "use_background": true
+    },
+    {
+      "blur_mode": 2,
+      "bytes_compared": 869,
+      "fieldgen_trace_events": 3,
+      "interpolation": "linear",
+      "mismatches": 0,
+      "output_active_sha256": "692bf7ceb69b8bd9c4bafae116d566e3504059df04a159115bbc8e3b9a2a3a87",
+      "output_padded_sha256": "e2f9daaa26fc0cc23c2a35a8359f0135241de71f907ae7e57b12d5605cc56857",
+      "use_background": false
+    },
+    {
+      "blur_mode": 2,
+      "bytes_compared": 869,
+      "fieldgen_trace_events": 3,
+      "interpolation": "linear",
+      "mismatches": 0,
+      "output_active_sha256": "efc1c61fc7d87f31b672fe188c3f2c8b0565b7ef00adb37146c8344cb2ccedf5",
+      "output_padded_sha256": "3dcf4a266c14483d84f7e5d4adeb847d0b626dc93c779af4b596cd74f2a65dd2",
+      "use_background": true
+    },
+    {
+      "blur_mode": 3,
+      "bytes_compared": 869,
+      "fieldgen_trace_events": 3,
+      "interpolation": "linear",
+      "mismatches": 0,
+      "output_active_sha256": "6bdced935df747318900e0ec96d25d0287c1f798dde07816f199cdcdf5c9ce27",
+      "output_padded_sha256": "dbb2c6db32a0eaedb3ba10e4f0ec2080d9dc609e2cd34b6d48e3ff5749fdf0df",
+      "use_background": false
+    },
+    {
+      "blur_mode": 3,
+      "bytes_compared": 869,
+      "fieldgen_trace_events": 3,
+      "interpolation": "linear",
+      "mismatches": 0,
+      "output_active_sha256": "33c9213d6d0b52309be37302ca156ecfe2370a5c4590a05db492e6aed8ea3faf",
+      "output_padded_sha256": "440520931859b91194aa6e920ab7250a609ac289a28a3d64a8b939b62f2df510",
+      "use_background": true
+    }
+  ],
+  "schema": "olmdistancegradation.classic-pf8-blur-background-family/1",
+  "scope": "PF8 17x11 padded actual numerical chain FUN_181174760 -> FUN_1812864d0 -> FUN_181170870; Inside/RGB, invert on, threshold4, blur size1, full resolution; Constant/Linear x Background off/on x mode2/3",
+  "status": "exact",
+  "surfaces": {
+    "constant.mode2": {
+      "blur_instructions": 13107,
+      "blurred_sha256": "393cf156e1a1837880c7468167a4b6cb0d62a4d8ad7fdf85d2054855d1c78619",
+      "field_sha256": "a7949b3cd602260af3a7ae9e81b99aafde9b0fe415c0c40d172af84c12ccbbe5",
+      "preblur_sha256": "a7949b3cd602260af3a7ae9e81b99aafde9b0fe415c0c40d172af84c12ccbbe5",
+      "staged_u8_sha256": "9399f5e5e39195aa6db8763fc8aa142da9ed9a03c8645156bc1e08b08ca2c464"
+    },
+    "constant.mode3": {
+      "blur_instructions": 22279,
+      "blurred_sha256": "83cebbbd7ea2719c8aa6a2a612e9f08a7d4d1b7ae33d5e45251a107fc5613491",
+      "field_sha256": "a7949b3cd602260af3a7ae9e81b99aafde9b0fe415c0c40d172af84c12ccbbe5",
+      "preblur_sha256": "a7949b3cd602260af3a7ae9e81b99aafde9b0fe415c0c40d172af84c12ccbbe5",
+      "staged_u8_sha256": "804c5d3ea782510413a185dc3f91d8b60e84102d32a7cb8d67cdd157010ccb91"
+    },
+    "linear.mode2": {
+      "blur_instructions": 13107,
+      "blurred_sha256": "fb3a3e7ab8035af6785ed671a9c2456e2af885a667427ce67af8d086104a38d3",
+      "field_sha256": "6023adbb0e42b6b1269594e72c2f58f5caf3ce8ece80b68da2f06f384aea623c",
+      "preblur_sha256": "6023adbb0e42b6b1269594e72c2f58f5caf3ce8ece80b68da2f06f384aea623c",
+      "staged_u8_sha256": "d71f06d68c288964ea24e1de3b5bd71d03ed61758e605684ddfb7e15b4191ca5"
+    },
+    "linear.mode3": {
+      "blur_instructions": 22279,
+      "blurred_sha256": "7026157d29a503e880e256b6716e81363bc87eded1ccc106c5c686d644b291c7",
+      "field_sha256": "6023adbb0e42b6b1269594e72c2f58f5caf3ce8ece80b68da2f06f384aea623c",
+      "preblur_sha256": "6023adbb0e42b6b1269594e72c2f58f5caf3ce8ece80b68da2f06f384aea623c",
+      "staged_u8_sha256": "b52fa5d3dd9421a65506e439aa3d3bcc60a177b67f85fba5bf9645f99d7c2a00"
+    }
+  }
+}

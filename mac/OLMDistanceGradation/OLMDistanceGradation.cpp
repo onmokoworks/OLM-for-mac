@@ -908,7 +908,8 @@ static inline void compose_pixel(
 		     p.pixel_size == sizeof(PF_PixelFloat)) &&
 		    p.in_out == IN_OUT_INSIDE && d_alpha <= 0.0f) {
 			out_r = out_g = out_b = 0.0f;
-			if (p.pixel_size == sizeof(PF_Pixel16) && p.render_mode == RENDER_MODE_RGB &&
+			if ((p.pixel_size == sizeof(PF_Pixel16) || p.pixel_size == sizeof(PF_Pixel8)) &&
+			    p.render_mode == RENDER_MODE_RGB &&
 			    p.interp_mode != INTERP_CONSTANT && p.blur_mode != BLUR_MODE_NONE &&
 			    p.blur_size > 0) {
 				out_g = X;

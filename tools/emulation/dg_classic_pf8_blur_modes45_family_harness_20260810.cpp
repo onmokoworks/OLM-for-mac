@@ -14,14 +14,15 @@ static std::vector<std::uint8_t> read_all(const char *path) {
 }
 
 int main(int argc, char **argv) {
-	if (argc != 5) return 2;
+	if (argc != 6) return 2;
 	auto source = read_all(argv[1]);
 	auto expected = read_all(argv[2]);
 	const std::string interp(argv[3]);
-	const int blur = std::atoi(argv[4]);
+	const bool background = std::atoi(argv[4]) != 0;
+	const int blur = std::atoi(argv[5]);
 	constexpr int w = 17, h = 11, input_rowbytes = 75, output_rowbytes = 79;
 	if (source.size() != input_rowbytes * h || expected.size() != output_rowbytes * h ||
-	    (interp != "constant" && interp != "linear") || blur < 3 || blur > 5) return 3;
+	    (interp != "constant" && interp != "linear") || blur < 2 || blur > 5) return 3;
 
 	std::vector<std::uint8_t> output(output_rowbytes * h, 0xa5);
 	PF_LayerDef input{source.data(), w, h, input_rowbytes, 8, {0, 0, w, h}};
@@ -35,7 +36,7 @@ int main(int argc, char **argv) {
 	storage[DG_INSIDE_THRESHOLD].u.sd.value = 4;
 	storage[DG_OUTSIDE_THRESHOLD].u.sd.value = 4;
 	storage[DG_RENDER_MODE].u.pd.value = RENDER_MODE_RGB;
-	storage[DG_USE_BG_COLOR].u.bd.value = 0;
+	storage[DG_USE_BG_COLOR].u.bd.value = background;
 	storage[DG_GRAD_COLOR].u.cd.value = {255, 28, 0, 238};
 	storage[DG_BG_COLOR].u.cd.value = {255, 16, 160, 48};
 	storage[DG_INTERP_MODE].u.pd.value = interp == "constant" ? INTERP_CONSTANT : INTERP_LINEAR;
@@ -50,7 +51,8 @@ int main(int argc, char **argv) {
 	size_t mismatches = 0;
 	for (size_t i = 0; i < output.size(); ++i) mismatches += output[i] != expected[i];
 	if (mismatches) {
-		std::fprintf(stderr, "mismatched bytes=%zu interp=%s blur=%d\n", mismatches, interp.c_str(), blur);
+		std::fprintf(stderr, "mismatched bytes=%zu interp=%s background=%d blur=%d\n",
+		             mismatches, interp.c_str(), background ? 1 : 0, blur);
 		for (size_t i = 0, shown = 0; i < output.size() && shown < 16; ++i) {
 			if (output[i] != expected[i]) {
 				std::fprintf(stderr, "bad %zu got %u expected %u\n", i,
@@ -60,6 +62,7 @@ int main(int argc, char **argv) {
 		}
 		return 1;
 	}
-	std::printf("PASS interp=%s blur=%d bytes=%zu mismatches=0\n", interp.c_str(), blur, output.size());
+	std::printf("PASS interp=%s background=%d blur=%d bytes=%zu mismatches=0\n",
+	            interp.c_str(), background ? 1 : 0, blur, output.size());
 	return 0;
 }

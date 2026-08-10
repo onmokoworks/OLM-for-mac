@@ -174,7 +174,7 @@ def main():
                 )
                 expected_path.write_bytes(expected)
                 run = subprocess.run([str(executable), str(source_path), str(expected_path),
-                                      interp_name, str(blur_mode)], capture_output=True, text=True)
+                                      interp_name, "0", str(blur_mode)], capture_output=True, text=True)
                 assert run.returncode == 0, run.stderr
                 print(run.stdout, end="")
                 rows.append({
