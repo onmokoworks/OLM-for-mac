@@ -1680,6 +1680,19 @@ static PF_Err RenderZoomTyped(
 #endif
 )
 {
+	const bool use_aex_zoom_geometry = input && output && input->data && output->data &&
+		input->width > 0 && input->height > 0 && input->width == output->width &&
+		input->height == output->height &&
+		info.comp_width == (PF_FpLong)input->width && info.comp_height == (PF_FpLong)input->height &&
+		info.center_x == (std::is_same<PixelT, PF_Pixel8>::value
+			? (PF_FpLong)input->width / 2.0 : (PF_FpLong)(input->width / 2)) &&
+		info.center_y == (std::is_same<PixelT, PF_Pixel8>::value
+			? (PF_FpLong)input->height / 2.0 : (PF_FpLong)(input->height / 2));
+	if (!use_aex_zoom_geometry || info.repeat_border == FALSE || info.ratio != 1.0 ||
+		info.angle_deg != 0.0 || info.quality != 5.0 || info.brightness_gain != 1.0 ||
+		info.size_variation != 0.0 || info.outer_edge_fade != 0 || info.inner_edge_fade != 0) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
 	const bool use_aex_pf32_zoom_noise_type1_small = input && output &&
 		std::is_same<PixelT, PF_PixelFloat>::value &&
 		input->width > 0 && input->height > 0 &&
@@ -2411,6 +2424,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		use_aex_pf32_offset_mode3_ui2_small || use_aex_pf32_offset_mode3_ui3_small ||
 		use_aex_pf32_offset_mode3_ui4_small || use_aex_pf16_offset_mode3_ui2_small ||
 		use_aex_pf16_offset_mode3_ui3_small;
+	if (!use_aex_exact) return PF_Err_BAD_CALLBACK_PARAM;
 	const RadialBlurDebugConfig debug = LoadRadialBlurDebugConfig();
 	FloatImage src;
 	src.width = w;
