@@ -601,7 +601,10 @@ static int render_minimal_argb32(const float* input_argb,
         const float angle = static_cast<float>(
             ((static_cast<double>(angle_degrees) + 90.0) / 180.0) * kPi);
         olm_dblur_rotate_rgba_f32(a.data(), b.data(), ww, wh, angle);
-        a = b; std::fill(b.begin(), b.end(), 0.0f);
+		const int workers = std::min(wh, 32);
+		const int processed_rows = (wh / workers) * workers;
+		a = b;
+		std::fill(b.begin(), b.begin() + static_cast<std::size_t>(processed_rows) * ww * 4, 0.0f);
         float component_divisor = 1.0f;
         if (size_variation_percent != 0.0f || front_sharp_tail_percent != 0.0f ||
             back_sharp_tail_percent != 0.0f) {
@@ -626,7 +629,7 @@ static int render_minimal_argb32(const float* input_argb,
             olm_dblur_layer_field_argb32(layer_argb, width, height, layer_rowbytes,
                 0, 0, field_source.data(), ww, wh, ox, oy, width, height, 0, 0);
             olm_dblur_rotate_scalar_f32(field_source.data(), field_rotated.data(), ww, wh, angle);
-            olm_dblur_rowdriver_field_f32(0, wh, a.data(), b.data(), ww,
+            olm_dblur_rowdriver_field_f32(0, processed_rows, a.data(), b.data(), ww,
                 noise_variation_percent / 100.0f, size_variation_percent / 100.0f,
                 component_divisor, front_sharp_tail_percent / 100.0f,
                 back_sharp_tail_percent / 100.0f,
@@ -640,7 +643,7 @@ static int render_minimal_argb32(const float* input_argb,
             if (!olm::dblur::generate_noise_plane(
                     ww, wh, thickness_ui, static_cast<float>(noise_offset_ui) / 36.0f,
                     seed, &noise, &nw, &nh)) return -1;
-            olm_dblur_rowdriver_noise_f32(0, wh, a.data(), b.data(), ww,
+            olm_dblur_rowdriver_noise_f32(0, processed_rows, a.data(), b.data(), ww,
                 noise_variation_percent / 100.0f, size_variation_percent / 100.0f,
                 component_divisor, front_sharp_tail_percent / 100.0f,
                 back_sharp_tail_percent / 100.0f,
@@ -650,7 +653,7 @@ static int render_minimal_argb32(const float* input_argb,
                 front_alpha_fade, back_alpha_fade,
                 noise.data(), nw, thickness_ui, noise_type == 1 ? 1 : 0);
         } else {
-            olm_dblur_rowdriver_f32(0, wh, a.data(), b.data(), ww, 1, 1.0f,
+            olm_dblur_rowdriver_f32(0, processed_rows, a.data(), b.data(), ww, 1, 1.0f,
                 size_variation_percent / 100.0f, component_divisor,
                 front_sharp_tail_percent / 100.0f,
                 back_sharp_tail_percent / 100.0f,

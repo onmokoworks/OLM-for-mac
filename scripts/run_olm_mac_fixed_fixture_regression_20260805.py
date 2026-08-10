@@ -132,6 +132,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmdirectionalblur_pf8_size_variation_family_actual_aex_20260811.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_size_back_crosses_all_depths_actual_aex_20260811.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_noise_types23_size_matrix_actual_aex_20260811.py"),
+            (sys.executable, "tools/emulation/test_olmdirectionalblur_pf32_size_coeff_geometry_matrix_actual_aex_20260811.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_installed_completion_route_20260805.py"),
         ),
     ),

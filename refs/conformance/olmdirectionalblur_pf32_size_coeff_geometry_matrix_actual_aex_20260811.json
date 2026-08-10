@@ -1,0 +1,603 @@
+{
+  "admission": "Only the listed tuples at 16x16 and 32x18 are admitted by the new cross predicate.",
+  "coefficient_order": "Size builds component map/divisor; the selected front/back Fade prepass or Sharp coefficient then enters the shared float rowdriver. PF32 preserves raw float writer words.",
+  "depth": "PF32",
+  "fixed_route": {
+    "angle": 45,
+    "brightness_gain": 1,
+    "noise": 0,
+    "render_scale": [
+      1,
+      1
+    ]
+  },
+  "geometries": [
+    [
+      16,
+      16
+    ],
+    [
+      32,
+      18
+    ]
+  ],
+  "matrix": {
+    "front_and_back_size_x_fade": {
+      "fade": [
+        50,
+        100
+      ],
+      "size": [
+        25,
+        50,
+        100
+      ]
+    },
+    "front_and_back_size_x_sharp": {
+      "sharp": [
+        50,
+        100
+      ],
+      "size": [
+        50
+      ]
+    }
+  },
+  "not_proven": [
+    "64x36 or other geometry",
+    "front and back simultaneously nonzero",
+    "noise combinations",
+    "other values",
+    "native AE export"
+  ],
+  "plugin": "OLMDirectionalBlur",
+  "rectangular_work_contract": "32x18 expands to a 40x40 work world. The AEX divides 40 rows across 32 workers, overwrites processed rows 0..31, and retains the rotated-source contents already present in destination rows 32..39 before rotate-back.",
+  "representatives": [
+    {
+      "alpha_fade": 50,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        16,
+        16
+      ],
+      "input_rowbytes": 288,
+      "raw_sha256": "1dd250a464a75452ad043fdb033a09e3e83063addc7d625a67437d5751bbbbe2",
+      "sharp_tail": 0.0,
+      "side": "front",
+      "size_variation_percent": 25.0
+    },
+    {
+      "alpha_fade": 100,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        16,
+        16
+      ],
+      "input_rowbytes": 288,
+      "raw_sha256": "d9e26bca3694f0a7a20436bac3252c1fe6aacce2991dd3daff9df83fbf1955e8",
+      "sharp_tail": 0.0,
+      "side": "front",
+      "size_variation_percent": 25.0
+    },
+    {
+      "alpha_fade": 50,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        16,
+        16
+      ],
+      "input_rowbytes": 288,
+      "raw_sha256": "1dd250a464a75452ad043fdb033a09e3e83063addc7d625a67437d5751bbbbe2",
+      "sharp_tail": 0.0,
+      "side": "front",
+      "size_variation_percent": 50.0
+    },
+    {
+      "alpha_fade": 100,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        16,
+        16
+      ],
+      "input_rowbytes": 288,
+      "raw_sha256": "d9e26bca3694f0a7a20436bac3252c1fe6aacce2991dd3daff9df83fbf1955e8",
+      "sharp_tail": 0.0,
+      "side": "front",
+      "size_variation_percent": 50.0
+    },
+    {
+      "alpha_fade": 50,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        16,
+        16
+      ],
+      "input_rowbytes": 288,
+      "raw_sha256": "1dd250a464a75452ad043fdb033a09e3e83063addc7d625a67437d5751bbbbe2",
+      "sharp_tail": 0.0,
+      "side": "front",
+      "size_variation_percent": 100.0
+    },
+    {
+      "alpha_fade": 100,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        16,
+        16
+      ],
+      "input_rowbytes": 288,
+      "raw_sha256": "d9e26bca3694f0a7a20436bac3252c1fe6aacce2991dd3daff9df83fbf1955e8",
+      "sharp_tail": 0.0,
+      "side": "front",
+      "size_variation_percent": 100.0
+    },
+    {
+      "alpha_fade": 0,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        16,
+        16
+      ],
+      "input_rowbytes": 288,
+      "raw_sha256": "18d2b2f763cae705566c0e6196b16e01b529c480bcb65f9095f2f32f72cfd3dd",
+      "sharp_tail": 50.0,
+      "side": "front",
+      "size_variation_percent": 50.0
+    },
+    {
+      "alpha_fade": 0,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        16,
+        16
+      ],
+      "input_rowbytes": 288,
+      "raw_sha256": "b1d736b50cd12f3ecc6415e714e765acbc73d54ffc3a68e36b19d8f39df292ec",
+      "sharp_tail": 100.0,
+      "side": "front",
+      "size_variation_percent": 50.0
+    },
+    {
+      "alpha_fade": 50,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        16,
+        16
+      ],
+      "input_rowbytes": 288,
+      "raw_sha256": "82404474be2bf1a7bbdf05273293658878534cf2162903a6bd98aea131e5bf5e",
+      "sharp_tail": 0.0,
+      "side": "back",
+      "size_variation_percent": 25.0
+    },
+    {
+      "alpha_fade": 100,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        16,
+        16
+      ],
+      "input_rowbytes": 288,
+      "raw_sha256": "bded780bcb0181dcd7419e8ea0effb01b4a63b958309ca27661fdecdd83352d7",
+      "sharp_tail": 0.0,
+      "side": "back",
+      "size_variation_percent": 25.0
+    },
+    {
+      "alpha_fade": 50,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        16,
+        16
+      ],
+      "input_rowbytes": 288,
+      "raw_sha256": "82404474be2bf1a7bbdf05273293658878534cf2162903a6bd98aea131e5bf5e",
+      "sharp_tail": 0.0,
+      "side": "back",
+      "size_variation_percent": 50.0
+    },
+    {
+      "alpha_fade": 100,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        16,
+        16
+      ],
+      "input_rowbytes": 288,
+      "raw_sha256": "bded780bcb0181dcd7419e8ea0effb01b4a63b958309ca27661fdecdd83352d7",
+      "sharp_tail": 0.0,
+      "side": "back",
+      "size_variation_percent": 50.0
+    },
+    {
+      "alpha_fade": 50,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        16,
+        16
+      ],
+      "input_rowbytes": 288,
+      "raw_sha256": "82404474be2bf1a7bbdf05273293658878534cf2162903a6bd98aea131e5bf5e",
+      "sharp_tail": 0.0,
+      "side": "back",
+      "size_variation_percent": 100.0
+    },
+    {
+      "alpha_fade": 100,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        16,
+        16
+      ],
+      "input_rowbytes": 288,
+      "raw_sha256": "bded780bcb0181dcd7419e8ea0effb01b4a63b958309ca27661fdecdd83352d7",
+      "sharp_tail": 0.0,
+      "side": "back",
+      "size_variation_percent": 100.0
+    },
+    {
+      "alpha_fade": 0,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        16,
+        16
+      ],
+      "input_rowbytes": 288,
+      "raw_sha256": "ce58bd9fc12b7c599b6be958e458088ffd839dd4ca9513d835d3ec580070b56e",
+      "sharp_tail": 50.0,
+      "side": "back",
+      "size_variation_percent": 50.0
+    },
+    {
+      "alpha_fade": 0,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        16,
+        16
+      ],
+      "input_rowbytes": 288,
+      "raw_sha256": "d2916d335bd69b1361e01966176f92847577c2bbe9c79cca2a4cdf8684588dba",
+      "sharp_tail": 100.0,
+      "side": "back",
+      "size_variation_percent": 50.0
+    },
+    {
+      "alpha_fade": 50,
+      "byte_count": 9216,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        32,
+        18
+      ],
+      "input_rowbytes": 544,
+      "raw_sha256": "a2b51e649b49296063b5dfee27e2855bce93b130ad796b845d517c1d1ec9b2e1",
+      "sharp_tail": 0.0,
+      "side": "front",
+      "size_variation_percent": 25.0
+    },
+    {
+      "alpha_fade": 100,
+      "byte_count": 9216,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        32,
+        18
+      ],
+      "input_rowbytes": 544,
+      "raw_sha256": "42ffaf5738b284dc4c8fc4fcd9dd29f37f22cfeb6bc5df211eeaf9e2dacf189b",
+      "sharp_tail": 0.0,
+      "side": "front",
+      "size_variation_percent": 25.0
+    },
+    {
+      "alpha_fade": 50,
+      "byte_count": 9216,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        32,
+        18
+      ],
+      "input_rowbytes": 544,
+      "raw_sha256": "a2b51e649b49296063b5dfee27e2855bce93b130ad796b845d517c1d1ec9b2e1",
+      "sharp_tail": 0.0,
+      "side": "front",
+      "size_variation_percent": 50.0
+    },
+    {
+      "alpha_fade": 100,
+      "byte_count": 9216,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        32,
+        18
+      ],
+      "input_rowbytes": 544,
+      "raw_sha256": "42ffaf5738b284dc4c8fc4fcd9dd29f37f22cfeb6bc5df211eeaf9e2dacf189b",
+      "sharp_tail": 0.0,
+      "side": "front",
+      "size_variation_percent": 50.0
+    },
+    {
+      "alpha_fade": 50,
+      "byte_count": 9216,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        32,
+        18
+      ],
+      "input_rowbytes": 544,
+      "raw_sha256": "a2b51e649b49296063b5dfee27e2855bce93b130ad796b845d517c1d1ec9b2e1",
+      "sharp_tail": 0.0,
+      "side": "front",
+      "size_variation_percent": 100.0
+    },
+    {
+      "alpha_fade": 100,
+      "byte_count": 9216,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        32,
+        18
+      ],
+      "input_rowbytes": 544,
+      "raw_sha256": "42ffaf5738b284dc4c8fc4fcd9dd29f37f22cfeb6bc5df211eeaf9e2dacf189b",
+      "sharp_tail": 0.0,
+      "side": "front",
+      "size_variation_percent": 100.0
+    },
+    {
+      "alpha_fade": 0,
+      "byte_count": 9216,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        32,
+        18
+      ],
+      "input_rowbytes": 544,
+      "raw_sha256": "f348d7d469fc20f3a64231e7b8620781f909967bc8a537eb72f87c921cfe422c",
+      "sharp_tail": 50.0,
+      "side": "front",
+      "size_variation_percent": 50.0
+    },
+    {
+      "alpha_fade": 0,
+      "byte_count": 9216,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        32,
+        18
+      ],
+      "input_rowbytes": 544,
+      "raw_sha256": "637ffe0ff1650b7f3f8dccc376b683d8e12b2c2653d257e00431974ac623be08",
+      "sharp_tail": 100.0,
+      "side": "front",
+      "size_variation_percent": 50.0
+    },
+    {
+      "alpha_fade": 50,
+      "byte_count": 9216,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        32,
+        18
+      ],
+      "input_rowbytes": 544,
+      "raw_sha256": "edf94b575b2392910bf0b3d594030cfa7c37a7b392ae84b878b906cf3e204af4",
+      "sharp_tail": 0.0,
+      "side": "back",
+      "size_variation_percent": 25.0
+    },
+    {
+      "alpha_fade": 100,
+      "byte_count": 9216,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        32,
+        18
+      ],
+      "input_rowbytes": 544,
+      "raw_sha256": "cc911cf4b98349da18371df5974699ddea45da8db27a2344ef8b66ec19935806",
+      "sharp_tail": 0.0,
+      "side": "back",
+      "size_variation_percent": 25.0
+    },
+    {
+      "alpha_fade": 50,
+      "byte_count": 9216,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        32,
+        18
+      ],
+      "input_rowbytes": 544,
+      "raw_sha256": "edf94b575b2392910bf0b3d594030cfa7c37a7b392ae84b878b906cf3e204af4",
+      "sharp_tail": 0.0,
+      "side": "back",
+      "size_variation_percent": 50.0
+    },
+    {
+      "alpha_fade": 100,
+      "byte_count": 9216,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        32,
+        18
+      ],
+      "input_rowbytes": 544,
+      "raw_sha256": "cc911cf4b98349da18371df5974699ddea45da8db27a2344ef8b66ec19935806",
+      "sharp_tail": 0.0,
+      "side": "back",
+      "size_variation_percent": 50.0
+    },
+    {
+      "alpha_fade": 50,
+      "byte_count": 9216,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        32,
+        18
+      ],
+      "input_rowbytes": 544,
+      "raw_sha256": "edf94b575b2392910bf0b3d594030cfa7c37a7b392ae84b878b906cf3e204af4",
+      "sharp_tail": 0.0,
+      "side": "back",
+      "size_variation_percent": 100.0
+    },
+    {
+      "alpha_fade": 100,
+      "byte_count": 9216,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        32,
+        18
+      ],
+      "input_rowbytes": 544,
+      "raw_sha256": "cc911cf4b98349da18371df5974699ddea45da8db27a2344ef8b66ec19935806",
+      "sharp_tail": 0.0,
+      "side": "back",
+      "size_variation_percent": 100.0
+    },
+    {
+      "alpha_fade": 0,
+      "byte_count": 9216,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        32,
+        18
+      ],
+      "input_rowbytes": 544,
+      "raw_sha256": "d43a75cfe8d0e6329d4c551d75fdd09a3ab5e3a3b1e684db475dc3ee8969b534",
+      "sharp_tail": 50.0,
+      "side": "back",
+      "size_variation_percent": 50.0
+    },
+    {
+      "alpha_fade": 0,
+      "byte_count": 9216,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "geometry": [
+        32,
+        18
+      ],
+      "input_rowbytes": 544,
+      "raw_sha256": "5e7c532b9e3ed244609cee62f1a285f95a18b87a94daa7a5d26425b2e2fe0693",
+      "sharp_tail": 100.0,
+      "side": "back",
+      "size_variation_percent": 50.0
+    }
+  ],
+  "schema_version": 1,
+  "status": "exact_bounded_matrix"
+}
