@@ -1,0 +1,2413 @@
+{
+  "actual_aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+  "cases": [
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 2.5,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount5_0_repeat1_legacy0_ds1_2.bin",
+      "expected_sha256": "5267bd6df610959d99b6c7e8968678a9c8bfd9db400b130444c20426762b594f",
+      "id": "pf8_amount5_0_repeat1_legacy0_ds1_2_dy1_2",
+      "instructions": 172587,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount5_0_repeat1_legacy0_ds1_2",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 2.5,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount5_0_repeat1_legacy0_ds1_2.bin",
+      "expected_sha256": "5267bd6df610959d99b6c7e8968678a9c8bfd9db400b130444c20426762b594f",
+      "id": "pf8_amount5_0_repeat1_legacy0_ds1_2_dy2_1",
+      "instructions": 172587,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount5_0_repeat1_legacy0_ds1_2",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 10.0,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount5_0_repeat1_legacy0_ds2_1.bin",
+      "expected_sha256": "d32b90e7c166baf5fb44ccbf1d7524ad0638b627abdb347536c121642a92cf3f",
+      "id": "pf8_amount5_0_repeat1_legacy0_ds2_1_dy1_2",
+      "instructions": 189214,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount5_0_repeat1_legacy0_ds2_1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 10.0,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount5_0_repeat1_legacy0_ds2_1.bin",
+      "expected_sha256": "d32b90e7c166baf5fb44ccbf1d7524ad0638b627abdb347536c121642a92cf3f",
+      "id": "pf8_amount5_0_repeat1_legacy0_ds2_1_dy2_1",
+      "instructions": 189214,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount5_0_repeat1_legacy0_ds2_1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 2.5,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount5_0_repeat1_legacy1_ds1_2.bin",
+      "expected_sha256": "4848dae785b8439896dcde041ef58cd503ec304270599a14a8376b7c79b9e77f",
+      "id": "pf8_amount5_0_repeat1_legacy1_ds1_2_dy1_2",
+      "instructions": 246238,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount5_0_repeat1_legacy1_ds1_2",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 2.5,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount5_0_repeat1_legacy1_ds1_2.bin",
+      "expected_sha256": "4848dae785b8439896dcde041ef58cd503ec304270599a14a8376b7c79b9e77f",
+      "id": "pf8_amount5_0_repeat1_legacy1_ds1_2_dy2_1",
+      "instructions": 246238,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount5_0_repeat1_legacy1_ds1_2",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 10.0,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount5_0_repeat1_legacy1_ds2_1.bin",
+      "expected_sha256": "8cad70125a3ad08828c8811bfec4015fc22535a5802f5d6bad5b5074ef6c7790",
+      "id": "pf8_amount5_0_repeat1_legacy1_ds2_1_dy1_2",
+      "instructions": 337536,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount5_0_repeat1_legacy1_ds2_1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 10.0,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount5_0_repeat1_legacy1_ds2_1.bin",
+      "expected_sha256": "8cad70125a3ad08828c8811bfec4015fc22535a5802f5d6bad5b5074ef6c7790",
+      "id": "pf8_amount5_0_repeat1_legacy1_ds2_1_dy2_1",
+      "instructions": 337536,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount5_0_repeat1_legacy1_ds2_1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 2.5,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount5_0_repeat2_legacy0_ds1_2.bin",
+      "expected_sha256": "040a79bf96a2bc86acbe701389ddcc02bfe4916a0a00ee9444d0e35840c14a08",
+      "id": "pf8_amount5_0_repeat2_legacy0_ds1_2_dy1_2",
+      "instructions": 308001,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount5_0_repeat2_legacy0_ds1_2",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 2.5,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount5_0_repeat2_legacy0_ds1_2.bin",
+      "expected_sha256": "040a79bf96a2bc86acbe701389ddcc02bfe4916a0a00ee9444d0e35840c14a08",
+      "id": "pf8_amount5_0_repeat2_legacy0_ds1_2_dy2_1",
+      "instructions": 308001,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount5_0_repeat2_legacy0_ds1_2",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 10.0,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount5_0_repeat2_legacy0_ds2_1.bin",
+      "expected_sha256": "6b1e90406c9e79266231f7fa97ff71f8f546617e601615c671dc9d0c8703e3d7",
+      "id": "pf8_amount5_0_repeat2_legacy0_ds2_1_dy1_2",
+      "instructions": 324628,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount5_0_repeat2_legacy0_ds2_1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 10.0,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount5_0_repeat2_legacy0_ds2_1.bin",
+      "expected_sha256": "6b1e90406c9e79266231f7fa97ff71f8f546617e601615c671dc9d0c8703e3d7",
+      "id": "pf8_amount5_0_repeat2_legacy0_ds2_1_dy2_1",
+      "instructions": 324628,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount5_0_repeat2_legacy0_ds2_1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 2.5,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount5_0_repeat2_legacy1_ds1_2.bin",
+      "expected_sha256": "d2a4dabd4950065be7c1b9310ca0295490dcdc27291d1353a636f30ac17073a2",
+      "id": "pf8_amount5_0_repeat2_legacy1_ds1_2_dy1_2",
+      "instructions": 447458,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount5_0_repeat2_legacy1_ds1_2",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 2.5,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount5_0_repeat2_legacy1_ds1_2.bin",
+      "expected_sha256": "d2a4dabd4950065be7c1b9310ca0295490dcdc27291d1353a636f30ac17073a2",
+      "id": "pf8_amount5_0_repeat2_legacy1_ds1_2_dy2_1",
+      "instructions": 447458,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount5_0_repeat2_legacy1_ds1_2",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 10.0,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount5_0_repeat2_legacy1_ds2_1.bin",
+      "expected_sha256": "b19b32a1f589712ddcb44324da3f0156ae04fd7331932c751f48538545330630",
+      "id": "pf8_amount5_0_repeat2_legacy1_ds2_1_dy1_2",
+      "instructions": 629785,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount5_0_repeat2_legacy1_ds2_1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 10.0,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount5_0_repeat2_legacy1_ds2_1.bin",
+      "expected_sha256": "b19b32a1f589712ddcb44324da3f0156ae04fd7331932c751f48538545330630",
+      "id": "pf8_amount5_0_repeat2_legacy1_ds2_1_dy2_1",
+      "instructions": 629785,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount5_0_repeat2_legacy1_ds2_1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 64.7,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount129_4_repeat1_legacy0_ds1_2.bin",
+      "expected_sha256": "aca45ec64a188f66a13175b7136f8280f495fe5127a79584664fd8a57758baa3",
+      "id": "pf8_amount129_4_repeat1_legacy0_ds1_2_dy1_2",
+      "instructions": 189970,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount129_4_repeat1_legacy0_ds1_2",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 64.7,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount129_4_repeat1_legacy0_ds1_2.bin",
+      "expected_sha256": "aca45ec64a188f66a13175b7136f8280f495fe5127a79584664fd8a57758baa3",
+      "id": "pf8_amount129_4_repeat1_legacy0_ds1_2_dy2_1",
+      "instructions": 189970,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount129_4_repeat1_legacy0_ds1_2",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 258.8,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount129_4_repeat1_legacy0_ds2_1.bin",
+      "expected_sha256": "9aaa831011d5d6b140c730679148b9250791ca6543add664936d67a9978147da",
+      "id": "pf8_amount129_4_repeat1_legacy0_ds2_1_dy1_2",
+      "instructions": 192686,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount129_4_repeat1_legacy0_ds2_1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 258.8,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount129_4_repeat1_legacy0_ds2_1.bin",
+      "expected_sha256": "9aaa831011d5d6b140c730679148b9250791ca6543add664936d67a9978147da",
+      "id": "pf8_amount129_4_repeat1_legacy0_ds2_1_dy2_1",
+      "instructions": 192686,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount129_4_repeat1_legacy0_ds2_1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 64.7,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount129_4_repeat1_legacy1_ds1_2.bin",
+      "expected_sha256": "63667542c845d1557f84e0b7722913b337d9bf685f6fb0815d6760a98306361b",
+      "id": "pf8_amount129_4_repeat1_legacy1_ds1_2_dy1_2",
+      "instructions": 501978,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount129_4_repeat1_legacy1_ds1_2",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 64.7,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount129_4_repeat1_legacy1_ds1_2.bin",
+      "expected_sha256": "63667542c845d1557f84e0b7722913b337d9bf685f6fb0815d6760a98306361b",
+      "id": "pf8_amount129_4_repeat1_legacy1_ds1_2_dy2_1",
+      "instructions": 501978,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount129_4_repeat1_legacy1_ds1_2",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 258.8,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount129_4_repeat1_legacy1_ds2_1.bin",
+      "expected_sha256": "d1076ae0e3f5053b413111267c96d024ed32ba68434e1f8b64e68e370a2a04bb",
+      "id": "pf8_amount129_4_repeat1_legacy1_ds2_1_dy1_2",
+      "instructions": 1092913,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount129_4_repeat1_legacy1_ds2_1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 258.8,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount129_4_repeat1_legacy1_ds2_1.bin",
+      "expected_sha256": "d1076ae0e3f5053b413111267c96d024ed32ba68434e1f8b64e68e370a2a04bb",
+      "id": "pf8_amount129_4_repeat1_legacy1_ds2_1_dy2_1",
+      "instructions": 1092913,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount129_4_repeat1_legacy1_ds2_1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 64.7,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount129_4_repeat2_legacy0_ds1_2.bin",
+      "expected_sha256": "18b286ed4863f146f0115f79bcfb95cdf56830c10149b289b6dc469c8d6882bc",
+      "id": "pf8_amount129_4_repeat2_legacy0_ds1_2_dy1_2",
+      "instructions": 325384,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount129_4_repeat2_legacy0_ds1_2",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 64.7,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount129_4_repeat2_legacy0_ds1_2.bin",
+      "expected_sha256": "18b286ed4863f146f0115f79bcfb95cdf56830c10149b289b6dc469c8d6882bc",
+      "id": "pf8_amount129_4_repeat2_legacy0_ds1_2_dy2_1",
+      "instructions": 325384,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount129_4_repeat2_legacy0_ds1_2",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 258.8,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount129_4_repeat2_legacy0_ds2_1.bin",
+      "expected_sha256": "2600ad414d5450e3652c2b82c74c1d672180010df489daefce1dd7d2dce0ec41",
+      "id": "pf8_amount129_4_repeat2_legacy0_ds2_1_dy1_2",
+      "instructions": 328100,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount129_4_repeat2_legacy0_ds2_1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 258.8,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount129_4_repeat2_legacy0_ds2_1.bin",
+      "expected_sha256": "2600ad414d5450e3652c2b82c74c1d672180010df489daefce1dd7d2dce0ec41",
+      "id": "pf8_amount129_4_repeat2_legacy0_ds2_1_dy2_1",
+      "instructions": 328100,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount129_4_repeat2_legacy0_ds2_1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 64.7,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount129_4_repeat2_legacy1_ds1_2.bin",
+      "expected_sha256": "0412941ec1053e65eb72b9a81be3a48020dfc15a86457aeec5eae9a13877ad96",
+      "id": "pf8_amount129_4_repeat2_legacy1_ds1_2_dy1_2",
+      "instructions": 958710,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount129_4_repeat2_legacy1_ds1_2",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 64.7,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount129_4_repeat2_legacy1_ds1_2.bin",
+      "expected_sha256": "0412941ec1053e65eb72b9a81be3a48020dfc15a86457aeec5eae9a13877ad96",
+      "id": "pf8_amount129_4_repeat2_legacy1_ds1_2_dy2_1",
+      "instructions": 958710,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount129_4_repeat2_legacy1_ds1_2",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 258.8,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount129_4_repeat2_legacy1_ds2_1.bin",
+      "expected_sha256": "d0a4b9c9251ffabd156ddeadf5da0e68bb4a9c8d61fd1995943d7d7757f7e6d2",
+      "id": "pf8_amount129_4_repeat2_legacy1_ds2_1_dy1_2",
+      "instructions": 2140788,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount129_4_repeat2_legacy1_ds2_1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 258.8,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf8_amount129_4_repeat2_legacy1_ds2_1.bin",
+      "expected_sha256": "d0a4b9c9251ffabd156ddeadf5da0e68bb4a9c8d61fd1995943d7d7757f7e6d2",
+      "id": "pf8_amount129_4_repeat2_legacy1_ds2_1_dy2_1",
+      "instructions": 2140788,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount129_4_repeat2_legacy1_ds2_1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 2.5,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount5_0_repeat1_legacy0_ds1_2.bin",
+      "expected_sha256": "8016e64f11514cd8a3f742557fdc12685f0b89d27ec19664b687aa1399cad878",
+      "id": "pf16_amount5_0_repeat1_legacy0_ds1_2_dy1_2",
+      "instructions": 165037,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount5_0_repeat1_legacy0_ds1_2",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 2.5,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount5_0_repeat1_legacy0_ds1_2.bin",
+      "expected_sha256": "8016e64f11514cd8a3f742557fdc12685f0b89d27ec19664b687aa1399cad878",
+      "id": "pf16_amount5_0_repeat1_legacy0_ds1_2_dy2_1",
+      "instructions": 165037,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount5_0_repeat1_legacy0_ds1_2",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 10.0,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount5_0_repeat1_legacy0_ds2_1.bin",
+      "expected_sha256": "ad51762986a80d94016322025dfa1c0e65f707883c027097d64f597abb336c17",
+      "id": "pf16_amount5_0_repeat1_legacy0_ds2_1_dy1_2",
+      "instructions": 205778,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount5_0_repeat1_legacy0_ds2_1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 10.0,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount5_0_repeat1_legacy0_ds2_1.bin",
+      "expected_sha256": "ad51762986a80d94016322025dfa1c0e65f707883c027097d64f597abb336c17",
+      "id": "pf16_amount5_0_repeat1_legacy0_ds2_1_dy2_1",
+      "instructions": 205778,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount5_0_repeat1_legacy0_ds2_1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 2.5,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount5_0_repeat1_legacy1_ds1_2.bin",
+      "expected_sha256": "c11e357924a52786e5055cf432220447a632ed5561685433fbcffadb174655b4",
+      "id": "pf16_amount5_0_repeat1_legacy1_ds1_2_dy1_2",
+      "instructions": 233462,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount5_0_repeat1_legacy1_ds1_2",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 2.5,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount5_0_repeat1_legacy1_ds1_2.bin",
+      "expected_sha256": "c11e357924a52786e5055cf432220447a632ed5561685433fbcffadb174655b4",
+      "id": "pf16_amount5_0_repeat1_legacy1_ds1_2_dy2_1",
+      "instructions": 233462,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount5_0_repeat1_legacy1_ds1_2",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 10.0,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount5_0_repeat1_legacy1_ds2_1.bin",
+      "expected_sha256": "39b68cd1d8af29d32355c301cbeac2bb1a59d39c7069dd24ed890d71075f849c",
+      "id": "pf16_amount5_0_repeat1_legacy1_ds2_1_dy1_2",
+      "instructions": 367314,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount5_0_repeat1_legacy1_ds2_1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 10.0,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount5_0_repeat1_legacy1_ds2_1.bin",
+      "expected_sha256": "39b68cd1d8af29d32355c301cbeac2bb1a59d39c7069dd24ed890d71075f849c",
+      "id": "pf16_amount5_0_repeat1_legacy1_ds2_1_dy2_1",
+      "instructions": 367314,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount5_0_repeat1_legacy1_ds2_1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 2.5,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount5_0_repeat2_legacy0_ds1_2.bin",
+      "expected_sha256": "5f32916c838c59e856fa1f03b0d53bbdf2d0becdb23def9e4959fe91e6abba09",
+      "id": "pf16_amount5_0_repeat2_legacy0_ds1_2_dy1_2",
+      "instructions": 293180,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount5_0_repeat2_legacy0_ds1_2",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 2.5,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount5_0_repeat2_legacy0_ds1_2.bin",
+      "expected_sha256": "5f32916c838c59e856fa1f03b0d53bbdf2d0becdb23def9e4959fe91e6abba09",
+      "id": "pf16_amount5_0_repeat2_legacy0_ds1_2_dy2_1",
+      "instructions": 293180,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount5_0_repeat2_legacy0_ds1_2",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 10.0,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount5_0_repeat2_legacy0_ds2_1.bin",
+      "expected_sha256": "19cd5464a9371c16d2bdfc1c778823eea900a6720735b02829c5be21a16dee5a",
+      "id": "pf16_amount5_0_repeat2_legacy0_ds2_1_dy1_2",
+      "instructions": 333921,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount5_0_repeat2_legacy0_ds2_1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 10.0,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount5_0_repeat2_legacy0_ds2_1.bin",
+      "expected_sha256": "19cd5464a9371c16d2bdfc1c778823eea900a6720735b02829c5be21a16dee5a",
+      "id": "pf16_amount5_0_repeat2_legacy0_ds2_1_dy2_1",
+      "instructions": 333921,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount5_0_repeat2_legacy0_ds2_1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 2.5,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount5_0_repeat2_legacy1_ds1_2.bin",
+      "expected_sha256": "7d638474a5a764725b5e8083d8b9583d4f5dd3d7fd434bb13f56cd165091ee88",
+      "id": "pf16_amount5_0_repeat2_legacy1_ds1_2_dy1_2",
+      "instructions": 421624,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount5_0_repeat2_legacy1_ds1_2",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 2.5,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount5_0_repeat2_legacy1_ds1_2.bin",
+      "expected_sha256": "7d638474a5a764725b5e8083d8b9583d4f5dd3d7fd434bb13f56cd165091ee88",
+      "id": "pf16_amount5_0_repeat2_legacy1_ds1_2_dy2_1",
+      "instructions": 421624,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount5_0_repeat2_legacy1_ds1_2",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 10.0,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount5_0_repeat2_legacy1_ds2_1.bin",
+      "expected_sha256": "db63e67608cfbdd834ec665413d532fa1ec0879b642f0129da20259ee1462442",
+      "id": "pf16_amount5_0_repeat2_legacy1_ds2_1_dy1_2",
+      "instructions": 689009,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount5_0_repeat2_legacy1_ds2_1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 10.0,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount5_0_repeat2_legacy1_ds2_1.bin",
+      "expected_sha256": "db63e67608cfbdd834ec665413d532fa1ec0879b642f0129da20259ee1462442",
+      "id": "pf16_amount5_0_repeat2_legacy1_ds2_1_dy2_1",
+      "instructions": 689009,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount5_0_repeat2_legacy1_ds2_1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 64.7,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount129_4_repeat1_legacy0_ds1_2.bin",
+      "expected_sha256": "fb8cc2bd954e3e04ea12e58662de36e6fde3307e79cd680481cbfffc6b690c9f",
+      "id": "pf16_amount129_4_repeat1_legacy0_ds1_2_dy1_2",
+      "instructions": 210590,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount129_4_repeat1_legacy0_ds1_2",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 64.7,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount129_4_repeat1_legacy0_ds1_2.bin",
+      "expected_sha256": "fb8cc2bd954e3e04ea12e58662de36e6fde3307e79cd680481cbfffc6b690c9f",
+      "id": "pf16_amount129_4_repeat1_legacy0_ds1_2_dy2_1",
+      "instructions": 210590,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount129_4_repeat1_legacy0_ds1_2",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 258.8,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount129_4_repeat1_legacy0_ds2_1.bin",
+      "expected_sha256": "62606bddfc32435a6e6585912c8a30a46e0b0667e7ec9aff1ad894cdbbaad415",
+      "id": "pf16_amount129_4_repeat1_legacy0_ds2_1_dy1_2",
+      "instructions": 213306,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount129_4_repeat1_legacy0_ds2_1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 258.8,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount129_4_repeat1_legacy0_ds2_1.bin",
+      "expected_sha256": "62606bddfc32435a6e6585912c8a30a46e0b0667e7ec9aff1ad894cdbbaad415",
+      "id": "pf16_amount129_4_repeat1_legacy0_ds2_1_dy2_1",
+      "instructions": 213306,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount129_4_repeat1_legacy0_ds2_1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 64.7,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount129_4_repeat1_legacy1_ds1_2.bin",
+      "expected_sha256": "87dc4bf524b276d723aa8c9915a2036183ad4be8f39c8d70872f4c19cfac5ef6",
+      "id": "pf16_amount129_4_repeat1_legacy1_ds1_2_dy1_2",
+      "instructions": 601141,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount129_4_repeat1_legacy1_ds1_2",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 64.7,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount129_4_repeat1_legacy1_ds1_2.bin",
+      "expected_sha256": "87dc4bf524b276d723aa8c9915a2036183ad4be8f39c8d70872f4c19cfac5ef6",
+      "id": "pf16_amount129_4_repeat1_legacy1_ds1_2_dy2_1",
+      "instructions": 601141,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount129_4_repeat1_legacy1_ds1_2",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 258.8,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount129_4_repeat1_legacy1_ds2_1.bin",
+      "expected_sha256": "f0098a6343bb0126242843202e936331cad80a84a7af7e7af1e2d9a1d5718b8d",
+      "id": "pf16_amount129_4_repeat1_legacy1_ds2_1_dy1_2",
+      "instructions": 1397895,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount129_4_repeat1_legacy1_ds2_1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 258.8,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount129_4_repeat1_legacy1_ds2_1.bin",
+      "expected_sha256": "f0098a6343bb0126242843202e936331cad80a84a7af7e7af1e2d9a1d5718b8d",
+      "id": "pf16_amount129_4_repeat1_legacy1_ds2_1_dy2_1",
+      "instructions": 1397895,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount129_4_repeat1_legacy1_ds2_1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 64.7,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount129_4_repeat2_legacy0_ds1_2.bin",
+      "expected_sha256": "6ef699c0149fb830eea5b3c548809e9c7fd8203a7bece5a18e964d5374994ab3",
+      "id": "pf16_amount129_4_repeat2_legacy0_ds1_2_dy1_2",
+      "instructions": 338733,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount129_4_repeat2_legacy0_ds1_2",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 64.7,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount129_4_repeat2_legacy0_ds1_2.bin",
+      "expected_sha256": "6ef699c0149fb830eea5b3c548809e9c7fd8203a7bece5a18e964d5374994ab3",
+      "id": "pf16_amount129_4_repeat2_legacy0_ds1_2_dy2_1",
+      "instructions": 338733,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount129_4_repeat2_legacy0_ds1_2",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 258.8,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount129_4_repeat2_legacy0_ds2_1.bin",
+      "expected_sha256": "6fe639993144e81cc7f6db126fea0131de168ebb9490bed566d6bc67cc86c9bd",
+      "id": "pf16_amount129_4_repeat2_legacy0_ds2_1_dy1_2",
+      "instructions": 341449,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount129_4_repeat2_legacy0_ds2_1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 258.8,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount129_4_repeat2_legacy0_ds2_1.bin",
+      "expected_sha256": "6fe639993144e81cc7f6db126fea0131de168ebb9490bed566d6bc67cc86c9bd",
+      "id": "pf16_amount129_4_repeat2_legacy0_ds2_1_dy2_1",
+      "instructions": 341449,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount129_4_repeat2_legacy0_ds2_1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 64.7,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount129_4_repeat2_legacy1_ds1_2.bin",
+      "expected_sha256": "0e7fad34fd3d7fe6c7b0a8f033573e2c71e575e9b7cecce9c5a8db2ec56e9db2",
+      "id": "pf16_amount129_4_repeat2_legacy1_ds1_2_dy1_2",
+      "instructions": 1156959,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount129_4_repeat2_legacy1_ds1_2",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 64.7,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount129_4_repeat2_legacy1_ds1_2.bin",
+      "expected_sha256": "0e7fad34fd3d7fe6c7b0a8f033573e2c71e575e9b7cecce9c5a8db2ec56e9db2",
+      "id": "pf16_amount129_4_repeat2_legacy1_ds1_2_dy2_1",
+      "instructions": 1156959,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount129_4_repeat2_legacy1_ds1_2",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 258.8,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount129_4_repeat2_legacy1_ds2_1.bin",
+      "expected_sha256": "30a917a1c08bc3f9d90a33a9ad442232bd52676aeac2c2486dbad58c8d40d955",
+      "id": "pf16_amount129_4_repeat2_legacy1_ds2_1_dy1_2",
+      "instructions": 2750625,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount129_4_repeat2_legacy1_ds2_1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 258.8,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf16_amount129_4_repeat2_legacy1_ds2_1.bin",
+      "expected_sha256": "30a917a1c08bc3f9d90a33a9ad442232bd52676aeac2c2486dbad58c8d40d955",
+      "id": "pf16_amount129_4_repeat2_legacy1_ds2_1_dy2_1",
+      "instructions": 2750625,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount129_4_repeat2_legacy1_ds2_1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 2.5,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount5_0_repeat1_legacy0_ds1_2.bin",
+      "expected_sha256": "4c833311aabaff23527f82e551e67dc22cc2774d3c83069673fae2bebecfd1ad",
+      "id": "pf32_amount5_0_repeat1_legacy0_ds1_2_dy1_2",
+      "instructions": 162398,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount5_0_repeat1_legacy0_ds1_2",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 2.5,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount5_0_repeat1_legacy0_ds1_2.bin",
+      "expected_sha256": "4c833311aabaff23527f82e551e67dc22cc2774d3c83069673fae2bebecfd1ad",
+      "id": "pf32_amount5_0_repeat1_legacy0_ds1_2_dy2_1",
+      "instructions": 162398,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount5_0_repeat1_legacy0_ds1_2",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 10.0,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount5_0_repeat1_legacy0_ds2_1.bin",
+      "expected_sha256": "726a0b7f2376bc8174adbd4621c71132d5cdf03fb47d3f6517fffc0446873e5a",
+      "id": "pf32_amount5_0_repeat1_legacy0_ds2_1_dy1_2",
+      "instructions": 178402,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount5_0_repeat1_legacy0_ds2_1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 10.0,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount5_0_repeat1_legacy0_ds2_1.bin",
+      "expected_sha256": "726a0b7f2376bc8174adbd4621c71132d5cdf03fb47d3f6517fffc0446873e5a",
+      "id": "pf32_amount5_0_repeat1_legacy0_ds2_1_dy2_1",
+      "instructions": 178402,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount5_0_repeat1_legacy0_ds2_1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 2.5,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount5_0_repeat1_legacy1_ds1_2.bin",
+      "expected_sha256": "d49fd8eec480a8f48633cf505ec52325371d044496aacc84a84fe8152fbbe1d0",
+      "id": "pf32_amount5_0_repeat1_legacy1_ds1_2_dy1_2",
+      "instructions": 235001,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount5_0_repeat1_legacy1_ds1_2",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 2.5,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount5_0_repeat1_legacy1_ds1_2.bin",
+      "expected_sha256": "d49fd8eec480a8f48633cf505ec52325371d044496aacc84a84fe8152fbbe1d0",
+      "id": "pf32_amount5_0_repeat1_legacy1_ds1_2_dy2_1",
+      "instructions": 235001,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount5_0_repeat1_legacy1_ds1_2",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 10.0,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount5_0_repeat1_legacy1_ds2_1.bin",
+      "expected_sha256": "d53200d44ae876c1ae356f82ddb700ef7ff43b025811f6841e07bc773f28abda",
+      "id": "pf32_amount5_0_repeat1_legacy1_ds2_1_dy1_2",
+      "instructions": 323933,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount5_0_repeat1_legacy1_ds2_1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 10.0,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount5_0_repeat1_legacy1_ds2_1.bin",
+      "expected_sha256": "d53200d44ae876c1ae356f82ddb700ef7ff43b025811f6841e07bc773f28abda",
+      "id": "pf32_amount5_0_repeat1_legacy1_ds2_1_dy2_1",
+      "instructions": 323933,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount5_0_repeat1_legacy1_ds2_1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 2.5,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount5_0_repeat2_legacy0_ds1_2.bin",
+      "expected_sha256": "28f202d2bab154d9e94387910c82d3de157607f8b09ccc4c77ab1bc079725889",
+      "id": "pf32_amount5_0_repeat2_legacy0_ds1_2_dy1_2",
+      "instructions": 297005,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount5_0_repeat2_legacy0_ds1_2",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 2.5,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount5_0_repeat2_legacy0_ds1_2.bin",
+      "expected_sha256": "28f202d2bab154d9e94387910c82d3de157607f8b09ccc4c77ab1bc079725889",
+      "id": "pf32_amount5_0_repeat2_legacy0_ds1_2_dy2_1",
+      "instructions": 297005,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount5_0_repeat2_legacy0_ds1_2",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 10.0,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount5_0_repeat2_legacy0_ds2_1.bin",
+      "expected_sha256": "8be89fd23b809a3cafbe3e27d684c7a797450ce37fda25e1f9889f6497f9fb0c",
+      "id": "pf32_amount5_0_repeat2_legacy0_ds2_1_dy1_2",
+      "instructions": 313009,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount5_0_repeat2_legacy0_ds2_1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 10.0,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount5_0_repeat2_legacy0_ds2_1.bin",
+      "expected_sha256": "8be89fd23b809a3cafbe3e27d684c7a797450ce37fda25e1f9889f6497f9fb0c",
+      "id": "pf32_amount5_0_repeat2_legacy0_ds2_1_dy2_1",
+      "instructions": 313009,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount5_0_repeat2_legacy0_ds2_1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 2.5,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount5_0_repeat2_legacy1_ds1_2.bin",
+      "expected_sha256": "137524f3124fc8f75a9f46ce3779700cacb2960413bbd24b020e41a09139b6c9",
+      "id": "pf32_amount5_0_repeat2_legacy1_ds1_2_dy1_2",
+      "instructions": 435079,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount5_0_repeat2_legacy1_ds1_2",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 2.5,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount5_0_repeat2_legacy1_ds1_2.bin",
+      "expected_sha256": "137524f3124fc8f75a9f46ce3779700cacb2960413bbd24b020e41a09139b6c9",
+      "id": "pf32_amount5_0_repeat2_legacy1_ds1_2_dy2_1",
+      "instructions": 435079,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount5_0_repeat2_legacy1_ds1_2",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 10.0,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount5_0_repeat2_legacy1_ds2_1.bin",
+      "expected_sha256": "e3106074a052416d29add16f25ede6cd938cacb79103dc8ddb49ef690ed9bf25",
+      "id": "pf32_amount5_0_repeat2_legacy1_ds2_1_dy1_2",
+      "instructions": 612684,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount5_0_repeat2_legacy1_ds2_1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 10.0,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount5_0_repeat2_legacy1_ds2_1.bin",
+      "expected_sha256": "e3106074a052416d29add16f25ede6cd938cacb79103dc8ddb49ef690ed9bf25",
+      "id": "pf32_amount5_0_repeat2_legacy1_ds2_1_dy2_1",
+      "instructions": 612684,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount5_0_repeat2_legacy1_ds2_1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 64.7,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount129_4_repeat1_legacy0_ds1_2.bin",
+      "expected_sha256": "221c68da812e3dd01479ef8b6dad536c260db623c98edac2103e7f9f2e2edc63",
+      "id": "pf32_amount129_4_repeat1_legacy0_ds1_2_dy1_2",
+      "instructions": 179158,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount129_4_repeat1_legacy0_ds1_2",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 64.7,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount129_4_repeat1_legacy0_ds1_2.bin",
+      "expected_sha256": "221c68da812e3dd01479ef8b6dad536c260db623c98edac2103e7f9f2e2edc63",
+      "id": "pf32_amount129_4_repeat1_legacy0_ds1_2_dy2_1",
+      "instructions": 179158,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount129_4_repeat1_legacy0_ds1_2",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 258.8,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount129_4_repeat1_legacy0_ds2_1.bin",
+      "expected_sha256": "fbff414de780b4f486f44524e0711ac2d07c5c7831b4586fb40fe9f4c3ef44e6",
+      "id": "pf32_amount129_4_repeat1_legacy0_ds2_1_dy1_2",
+      "instructions": 181874,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount129_4_repeat1_legacy0_ds2_1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 258.8,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount129_4_repeat1_legacy0_ds2_1.bin",
+      "expected_sha256": "fbff414de780b4f486f44524e0711ac2d07c5c7831b4586fb40fe9f4c3ef44e6",
+      "id": "pf32_amount129_4_repeat1_legacy0_ds2_1_dy2_1",
+      "instructions": 181874,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount129_4_repeat1_legacy0_ds2_1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 64.7,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount129_4_repeat1_legacy1_ds1_2.bin",
+      "expected_sha256": "ba97b99e6892fced94e3ae2520699478a5d3a3b058eee33897219f42dda1cb09",
+      "id": "pf32_amount129_4_repeat1_legacy1_ds1_2_dy1_2",
+      "instructions": 483128,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount129_4_repeat1_legacy1_ds1_2",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 64.7,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount129_4_repeat1_legacy1_ds1_2.bin",
+      "expected_sha256": "ba97b99e6892fced94e3ae2520699478a5d3a3b058eee33897219f42dda1cb09",
+      "id": "pf32_amount129_4_repeat1_legacy1_ds1_2_dy2_1",
+      "instructions": 483128,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount129_4_repeat1_legacy1_ds1_2",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 258.8,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount129_4_repeat1_legacy1_ds2_1.bin",
+      "expected_sha256": "c1e2f4ae0372f602f2f009567396bc7a7f13d99cf21c885b646dafd899134dfd",
+      "id": "pf32_amount129_4_repeat1_legacy1_ds2_1_dy1_2",
+      "instructions": 1055146,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount129_4_repeat1_legacy1_ds2_1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 258.8,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount129_4_repeat1_legacy1_ds2_1.bin",
+      "expected_sha256": "c1e2f4ae0372f602f2f009567396bc7a7f13d99cf21c885b646dafd899134dfd",
+      "id": "pf32_amount129_4_repeat1_legacy1_ds2_1_dy2_1",
+      "instructions": 1055146,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount129_4_repeat1_legacy1_ds2_1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 64.7,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount129_4_repeat2_legacy0_ds1_2.bin",
+      "expected_sha256": "6f47b0b8abaef09eb5e1dc5e2d7dc6e891cd8cfb230efb44d67f644780819049",
+      "id": "pf32_amount129_4_repeat2_legacy0_ds1_2_dy1_2",
+      "instructions": 313765,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount129_4_repeat2_legacy0_ds1_2",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 64.7,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount129_4_repeat2_legacy0_ds1_2.bin",
+      "expected_sha256": "6f47b0b8abaef09eb5e1dc5e2d7dc6e891cd8cfb230efb44d67f644780819049",
+      "id": "pf32_amount129_4_repeat2_legacy0_ds1_2_dy2_1",
+      "instructions": 313765,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount129_4_repeat2_legacy0_ds1_2",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 258.8,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount129_4_repeat2_legacy0_ds2_1.bin",
+      "expected_sha256": "942dd02347f585c116b043ff7acdea7dc45811e2f9b2e11c7db5d946672ffbb9",
+      "id": "pf32_amount129_4_repeat2_legacy0_ds2_1_dy1_2",
+      "instructions": 316481,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount129_4_repeat2_legacy0_ds2_1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 258.8,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount129_4_repeat2_legacy0_ds2_1.bin",
+      "expected_sha256": "942dd02347f585c116b043ff7acdea7dc45811e2f9b2e11c7db5d946672ffbb9",
+      "id": "pf32_amount129_4_repeat2_legacy0_ds2_1_dy2_1",
+      "instructions": 316481,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount129_4_repeat2_legacy0_ds2_1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 64.7,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount129_4_repeat2_legacy1_ds1_2.bin",
+      "expected_sha256": "880eeeea11f5dc3a889586fab584ed12c2acdba0dae6f4746372ddfd3e574b1a",
+      "id": "pf32_amount129_4_repeat2_legacy1_ds1_2_dy1_2",
+      "instructions": 931167,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount129_4_repeat2_legacy1_ds1_2",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        2
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 64.7,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount129_4_repeat2_legacy1_ds1_2.bin",
+      "expected_sha256": "880eeeea11f5dc3a889586fab584ed12c2acdba0dae6f4746372ddfd3e574b1a",
+      "id": "pf32_amount129_4_repeat2_legacy1_ds1_2_dy2_1",
+      "instructions": 931167,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount129_4_repeat2_legacy1_ds1_2",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "effective_worker_amount": 258.8,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount129_4_repeat2_legacy1_ds2_1.bin",
+      "expected_sha256": "4be2587a44d334c82dbfc5c81761c07490cb5d6bf402e9913377b2d3b5a2a6e2",
+      "id": "pf32_amount129_4_repeat2_legacy1_ds2_1_dy1_2",
+      "instructions": 2075364,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount129_4_repeat2_legacy1_ds2_1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        2,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "effective_worker_amount": 258.8,
+      "expected": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/expected_pf32_amount129_4_repeat2_legacy1_ds2_1.bin",
+      "expected_sha256": "4be2587a44d334c82dbfc5c81761c07490cb5d6bf402e9913377b2d3b5a2a6e2",
+      "id": "pf32_amount129_4_repeat2_legacy1_ds2_1_dy2_1",
+      "instructions": 2075364,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount129_4_repeat2_legacy1_ds2_1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_downsample_amount_matrix_20260811/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    }
+  ],
+  "composition_rule": "effective Amount = UI Amount * downsample_x; downsample_y is inactive",
+  "geometry": [
+    24,
+    24
+  ],
+  "oracle": "hash-pinned actual-AEX typed-worker buffers from the x scaling matrix, reused over y",
+  "plugin": "OLMBlur",
+  "schema": "olmblur.downsample-xy-cross.actual-aex/1"
+}
