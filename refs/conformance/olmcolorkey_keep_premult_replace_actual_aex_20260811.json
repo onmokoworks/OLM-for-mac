@@ -1,0 +1,497 @@
+{
+  "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+  "cases": [
+    {
+      "actual_sha256": "404628e2fa7e746831f69fd8f0b13f890d3b65c4f09c18598c03d95c36ebfec0",
+      "bytes": 364,
+      "color_keep": false,
+      "native_full_worker_path": true,
+      "pixel_format": "PF8",
+      "premultiplied": false,
+      "production_sha256": "404628e2fa7e746831f69fd8f0b13f890d3b65c4f09c18598c03d95c36ebfec0",
+      "replace": false,
+      "shared_probe_status": "diagnostic_mismatch",
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "32f1919fe497cded18920d2dbc2ca49c9f2dbe08f43ffa46248af3f5d2f988ac",
+      "bytes": 672,
+      "color_keep": false,
+      "native_full_worker_path": true,
+      "pixel_format": "PF16",
+      "premultiplied": false,
+      "production_sha256": "32f1919fe497cded18920d2dbc2ca49c9f2dbe08f43ffa46248af3f5d2f988ac",
+      "replace": false,
+      "shared_probe_status": "diagnostic_mismatch",
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "e7cec8b45f2707f67a7edc16240143635825e782a8ec0ec7062ce624b46539a4",
+      "bytes": 1288,
+      "color_keep": false,
+      "native_full_worker_path": true,
+      "pixel_format": "PF32",
+      "premultiplied": false,
+      "production_sha256": "e7cec8b45f2707f67a7edc16240143635825e782a8ec0ec7062ce624b46539a4",
+      "replace": false,
+      "shared_probe_status": "diagnostic_mismatch",
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "404628e2fa7e746831f69fd8f0b13f890d3b65c4f09c18598c03d95c36ebfec0",
+      "bytes": 364,
+      "color_keep": false,
+      "native_full_worker_path": true,
+      "pixel_format": "PF8",
+      "premultiplied": false,
+      "production_sha256": "404628e2fa7e746831f69fd8f0b13f890d3b65c4f09c18598c03d95c36ebfec0",
+      "replace": true,
+      "shared_probe_status": "diagnostic_mismatch",
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "32f1919fe497cded18920d2dbc2ca49c9f2dbe08f43ffa46248af3f5d2f988ac",
+      "bytes": 672,
+      "color_keep": false,
+      "native_full_worker_path": true,
+      "pixel_format": "PF16",
+      "premultiplied": false,
+      "production_sha256": "32f1919fe497cded18920d2dbc2ca49c9f2dbe08f43ffa46248af3f5d2f988ac",
+      "replace": true,
+      "shared_probe_status": "diagnostic_mismatch",
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "e7cec8b45f2707f67a7edc16240143635825e782a8ec0ec7062ce624b46539a4",
+      "bytes": 1288,
+      "color_keep": false,
+      "native_full_worker_path": true,
+      "pixel_format": "PF32",
+      "premultiplied": false,
+      "production_sha256": "e7cec8b45f2707f67a7edc16240143635825e782a8ec0ec7062ce624b46539a4",
+      "replace": true,
+      "shared_probe_status": "diagnostic_mismatch",
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "73494820791640794290f6f76cca420c05f186f78e3d2f3ba19827f9e31a5e20",
+      "bytes": 364,
+      "color_keep": false,
+      "native_full_worker_path": true,
+      "pixel_format": "PF8",
+      "premultiplied": true,
+      "production_sha256": "73494820791640794290f6f76cca420c05f186f78e3d2f3ba19827f9e31a5e20",
+      "replace": false,
+      "shared_probe_status": "diagnostic_mismatch",
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "a0a805174161c771bf4ce467ea1fe9cc5074e0e48ea5a8cc309cbdf6cd28584f",
+      "bytes": 672,
+      "color_keep": false,
+      "native_full_worker_path": true,
+      "pixel_format": "PF16",
+      "premultiplied": true,
+      "production_sha256": "a0a805174161c771bf4ce467ea1fe9cc5074e0e48ea5a8cc309cbdf6cd28584f",
+      "replace": false,
+      "shared_probe_status": "diagnostic_mismatch",
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "9f9cc6330301d889b32888ee0c5f380b47782dc6beed01584e1de0dc9540d2e2",
+      "bytes": 1288,
+      "color_keep": false,
+      "native_full_worker_path": true,
+      "pixel_format": "PF32",
+      "premultiplied": true,
+      "production_sha256": "9f9cc6330301d889b32888ee0c5f380b47782dc6beed01584e1de0dc9540d2e2",
+      "replace": false,
+      "shared_probe_status": "diagnostic_mismatch",
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "73494820791640794290f6f76cca420c05f186f78e3d2f3ba19827f9e31a5e20",
+      "bytes": 364,
+      "color_keep": false,
+      "native_full_worker_path": true,
+      "pixel_format": "PF8",
+      "premultiplied": true,
+      "production_sha256": "73494820791640794290f6f76cca420c05f186f78e3d2f3ba19827f9e31a5e20",
+      "replace": true,
+      "shared_probe_status": "diagnostic_mismatch",
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "a0a805174161c771bf4ce467ea1fe9cc5074e0e48ea5a8cc309cbdf6cd28584f",
+      "bytes": 672,
+      "color_keep": false,
+      "native_full_worker_path": true,
+      "pixel_format": "PF16",
+      "premultiplied": true,
+      "production_sha256": "a0a805174161c771bf4ce467ea1fe9cc5074e0e48ea5a8cc309cbdf6cd28584f",
+      "replace": true,
+      "shared_probe_status": "diagnostic_mismatch",
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "9f9cc6330301d889b32888ee0c5f380b47782dc6beed01584e1de0dc9540d2e2",
+      "bytes": 1288,
+      "color_keep": false,
+      "native_full_worker_path": true,
+      "pixel_format": "PF32",
+      "premultiplied": true,
+      "production_sha256": "9f9cc6330301d889b32888ee0c5f380b47782dc6beed01584e1de0dc9540d2e2",
+      "replace": true,
+      "shared_probe_status": "diagnostic_mismatch",
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "5aea912d1e2c4b39c0429c4cf7414447a49c9c76158d25836bc4aabcb82b6068",
+      "bytes": 364,
+      "color_keep": true,
+      "native_full_worker_path": true,
+      "pixel_format": "PF8",
+      "premultiplied": false,
+      "production_sha256": "5aea912d1e2c4b39c0429c4cf7414447a49c9c76158d25836bc4aabcb82b6068",
+      "replace": false,
+      "shared_probe_status": "diagnostic_mismatch",
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "f49ac56dba5ba8b6532a79af96ccc5782ed979bdcd65af21fe3e652b4f8596fc",
+      "bytes": 672,
+      "color_keep": true,
+      "native_full_worker_path": true,
+      "pixel_format": "PF16",
+      "premultiplied": false,
+      "production_sha256": "f49ac56dba5ba8b6532a79af96ccc5782ed979bdcd65af21fe3e652b4f8596fc",
+      "replace": false,
+      "shared_probe_status": "diagnostic_mismatch",
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "55a7d3f4d9ddfb25904d886e2880166d99569d6556b4dcee2b409a2b5ff44e76",
+      "bytes": 1288,
+      "color_keep": true,
+      "native_full_worker_path": true,
+      "pixel_format": "PF32",
+      "premultiplied": false,
+      "production_sha256": "55a7d3f4d9ddfb25904d886e2880166d99569d6556b4dcee2b409a2b5ff44e76",
+      "replace": false,
+      "shared_probe_status": "diagnostic_mismatch",
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "f09b45b09ffe817db7d61b8eec6741e95a86158a4f4fbcd6dfcc65d18222f6d5",
+      "bytes": 364,
+      "color_keep": true,
+      "native_full_worker_path": true,
+      "pixel_format": "PF8",
+      "premultiplied": false,
+      "production_sha256": "f09b45b09ffe817db7d61b8eec6741e95a86158a4f4fbcd6dfcc65d18222f6d5",
+      "replace": true,
+      "shared_probe_status": "diagnostic_mismatch",
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "be708de32b131d8e8ea6cab67dabaaf4b4c9453464d6c742d6d035cd3384a233",
+      "bytes": 672,
+      "color_keep": true,
+      "native_full_worker_path": true,
+      "pixel_format": "PF16",
+      "premultiplied": false,
+      "production_sha256": "be708de32b131d8e8ea6cab67dabaaf4b4c9453464d6c742d6d035cd3384a233",
+      "replace": true,
+      "shared_probe_status": "diagnostic_mismatch",
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "b0ae44b17a4ceb3add9c2853cb1e228edf041168ec94af2512f0d6e8fc273b83",
+      "bytes": 1288,
+      "color_keep": true,
+      "native_full_worker_path": true,
+      "pixel_format": "PF32",
+      "premultiplied": false,
+      "production_sha256": "b0ae44b17a4ceb3add9c2853cb1e228edf041168ec94af2512f0d6e8fc273b83",
+      "replace": true,
+      "shared_probe_status": "diagnostic_mismatch",
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "79af29cec1bcc2ff480284ef35b7bb34d2dd7c43832bc901e98b3967dbeb71ba",
+      "bytes": 364,
+      "color_keep": true,
+      "native_full_worker_path": true,
+      "pixel_format": "PF8",
+      "premultiplied": true,
+      "production_sha256": "79af29cec1bcc2ff480284ef35b7bb34d2dd7c43832bc901e98b3967dbeb71ba",
+      "replace": false,
+      "shared_probe_status": "diagnostic_mismatch",
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "2363249b4ad2ec42f197415b92b646fc808323b68b06ac6d499622a449156dcc",
+      "bytes": 672,
+      "color_keep": true,
+      "native_full_worker_path": true,
+      "pixel_format": "PF16",
+      "premultiplied": true,
+      "production_sha256": "2363249b4ad2ec42f197415b92b646fc808323b68b06ac6d499622a449156dcc",
+      "replace": false,
+      "shared_probe_status": "diagnostic_mismatch",
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "819025272237449d5ea137bf9b3b5726e541bd2afe31a177ed8dbfe8faa2afb8",
+      "bytes": 1288,
+      "color_keep": true,
+      "native_full_worker_path": true,
+      "pixel_format": "PF32",
+      "premultiplied": true,
+      "production_sha256": "819025272237449d5ea137bf9b3b5726e541bd2afe31a177ed8dbfe8faa2afb8",
+      "replace": false,
+      "shared_probe_status": "diagnostic_mismatch",
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "4a8c3515d531c760b3e399bb024749e07e2d3b149666cc79dc9cecc657db2fc9",
+      "bytes": 364,
+      "color_keep": true,
+      "native_full_worker_path": true,
+      "pixel_format": "PF8",
+      "premultiplied": true,
+      "production_sha256": "4a8c3515d531c760b3e399bb024749e07e2d3b149666cc79dc9cecc657db2fc9",
+      "replace": true,
+      "shared_probe_status": "diagnostic_mismatch",
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "7ced1509322d1261c08f8a79945fb4108f5a3ffa39c64ef1386fc0cf3d0c25f8",
+      "bytes": 672,
+      "color_keep": true,
+      "native_full_worker_path": true,
+      "pixel_format": "PF16",
+      "premultiplied": true,
+      "production_sha256": "7ced1509322d1261c08f8a79945fb4108f5a3ffa39c64ef1386fc0cf3d0c25f8",
+      "replace": true,
+      "shared_probe_status": "diagnostic_mismatch",
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "e3705f56b7fda5a0e88e15c60d77df47e6a779c654fe6cc200a2eeeb3e661b6a",
+      "bytes": 1288,
+      "color_keep": true,
+      "native_full_worker_path": true,
+      "pixel_format": "PF32",
+      "premultiplied": true,
+      "production_sha256": "e3705f56b7fda5a0e88e15c60d77df47e6a779c654fe6cc200a2eeeb3e661b6a",
+      "replace": true,
+      "shared_probe_status": "diagnostic_mismatch",
+      "status": "exact"
+    }
+  ],
+  "claim_boundary": "Exact only for the declared 11x7 two-key padded fixture, Color Keep off/on, Premultiplied off/on, Replace off/on, and PF8/PF16/PF32 through the actual AEX full worker. Threshold, Edge, other key colors/counts, geometry, and native AE-host parameter materialization are not claimed.",
+  "comparison": "actual AEX full worker versus production RenderWorld; full typed ARGB active bytes and every padding byte",
+  "fixture": {
+    "dimensions": [
+      11,
+      7
+    ],
+    "keys": [
+      "black",
+      "green"
+    ],
+    "roles": [
+      "opaque accepted keys",
+      "fractional-alpha keys",
+      "alpha-zero hidden red/green RGB",
+      "rejected near-green",
+      "fractional-alpha asymmetric background"
+    ],
+    "row_padding_bytes": 8
+  },
+  "interaction_assertions": [
+    {
+      "assertion": "premultiplied_changes_classifier",
+      "color_keep": false,
+      "passed": true,
+      "pixel_format": "PF8",
+      "replace": false
+    },
+    {
+      "assertion": "premultiplied_changes_classifier",
+      "color_keep": false,
+      "passed": true,
+      "pixel_format": "PF8",
+      "replace": true
+    },
+    {
+      "assertion": "premultiplied_changes_classifier",
+      "color_keep": true,
+      "passed": true,
+      "pixel_format": "PF8",
+      "replace": false
+    },
+    {
+      "assertion": "premultiplied_changes_classifier",
+      "color_keep": true,
+      "passed": true,
+      "pixel_format": "PF8",
+      "replace": true
+    },
+    {
+      "assertion": "replace_invisible_when_color_keep_off",
+      "passed": true,
+      "pixel_format": "PF8",
+      "premultiplied": false
+    },
+    {
+      "assertion": "replace_visible_when_color_keep_on",
+      "passed": true,
+      "pixel_format": "PF8",
+      "premultiplied": false
+    },
+    {
+      "assertion": "replace_invisible_when_color_keep_off",
+      "passed": true,
+      "pixel_format": "PF8",
+      "premultiplied": true
+    },
+    {
+      "assertion": "replace_visible_when_color_keep_on",
+      "passed": true,
+      "pixel_format": "PF8",
+      "premultiplied": true
+    },
+    {
+      "assertion": "premultiplied_changes_classifier",
+      "color_keep": false,
+      "passed": true,
+      "pixel_format": "PF16",
+      "replace": false
+    },
+    {
+      "assertion": "premultiplied_changes_classifier",
+      "color_keep": false,
+      "passed": true,
+      "pixel_format": "PF16",
+      "replace": true
+    },
+    {
+      "assertion": "premultiplied_changes_classifier",
+      "color_keep": true,
+      "passed": true,
+      "pixel_format": "PF16",
+      "replace": false
+    },
+    {
+      "assertion": "premultiplied_changes_classifier",
+      "color_keep": true,
+      "passed": true,
+      "pixel_format": "PF16",
+      "replace": true
+    },
+    {
+      "assertion": "replace_invisible_when_color_keep_off",
+      "passed": true,
+      "pixel_format": "PF16",
+      "premultiplied": false
+    },
+    {
+      "assertion": "replace_visible_when_color_keep_on",
+      "passed": true,
+      "pixel_format": "PF16",
+      "premultiplied": false
+    },
+    {
+      "assertion": "replace_invisible_when_color_keep_off",
+      "passed": true,
+      "pixel_format": "PF16",
+      "premultiplied": true
+    },
+    {
+      "assertion": "replace_visible_when_color_keep_on",
+      "passed": true,
+      "pixel_format": "PF16",
+      "premultiplied": true
+    },
+    {
+      "assertion": "premultiplied_changes_classifier",
+      "color_keep": false,
+      "passed": true,
+      "pixel_format": "PF32",
+      "replace": false
+    },
+    {
+      "assertion": "premultiplied_changes_classifier",
+      "color_keep": false,
+      "passed": true,
+      "pixel_format": "PF32",
+      "replace": true
+    },
+    {
+      "assertion": "premultiplied_changes_classifier",
+      "color_keep": true,
+      "passed": true,
+      "pixel_format": "PF32",
+      "replace": false
+    },
+    {
+      "assertion": "premultiplied_changes_classifier",
+      "color_keep": true,
+      "passed": true,
+      "pixel_format": "PF32",
+      "replace": true
+    },
+    {
+      "assertion": "replace_invisible_when_color_keep_off",
+      "passed": true,
+      "pixel_format": "PF32",
+      "premultiplied": false
+    },
+    {
+      "assertion": "replace_visible_when_color_keep_on",
+      "passed": true,
+      "pixel_format": "PF32",
+      "premultiplied": false
+    },
+    {
+      "assertion": "replace_invisible_when_color_keep_off",
+      "passed": true,
+      "pixel_format": "PF32",
+      "premultiplied": true
+    },
+    {
+      "assertion": "replace_visible_when_color_keep_on",
+      "passed": true,
+      "pixel_format": "PF32",
+      "premultiplied": true
+    }
+  ],
+  "matrix": {
+    "color_keep": [
+      false,
+      true
+    ],
+    "pixel_formats": [
+      "PF8",
+      "PF16",
+      "PF32"
+    ],
+    "premultiplied": [
+      false,
+      true
+    ],
+    "replace": [
+      false,
+      true
+    ]
+  },
+  "schema_version": 1,
+  "status": "exact",
+  "toggle_ownership": {
+    "color_keep": "inverts the classifier mask at writeback and gates replacement visibility",
+    "premultiplied": "input interpretation before classifier; RGB is multiplied by alpha only for comparison, while rejected writeback remains alpha-only and preserves hidden RGB",
+    "replace": "changes RGB for accepted keyed pixels only when Color Keep is enabled; alpha classification is unchanged"
+  }
+}

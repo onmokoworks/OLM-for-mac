@@ -1234,12 +1234,10 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			                            : matched[(size_t)y * (size_t)w + (size_t)x] == 0;
 			keep_mask[(size_t)y * (size_t)w + (size_t)x] = keep ? 1 : 0;
 			if (!keep) {
-				// The Windows worker preserves straight RGB while keying alpha.
-				// Premultiplied input keeps the historical all-channel clear.
-				if (info.premultiplied)
-					OLMCKPixelTraits<PixelT>::zero(*outP);
-				else
-					OLMCKPixelTraits<PixelT>::zero_alpha(*outP);
+				// Premultiplied changes the classifier input above, not ownership
+				// of the stored RGB.  The native writer always clears alpha only;
+				// hidden RGB therefore survives at alpha zero in both modes.
+				OLMCKPixelTraits<PixelT>::zero_alpha(*outP);
 			}
 			// Replacement precedes the Edge Thin/Blur orchestration in the AEX.
 			// On straight input its RGB therefore survives a later alpha clear.
