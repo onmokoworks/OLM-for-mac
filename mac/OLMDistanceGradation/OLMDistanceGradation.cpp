@@ -856,14 +856,6 @@ static inline void compose_pixel(
 	case IN_OUT_OUTSIDE: d_alpha = 1.0f - src_a; if (d_alpha < 0) d_alpha = 0; break;
 	default:             d_alpha = 1.0f; break; // BOTH
 	}
-	if (p.pixel_size == sizeof(PF_PixelFloat) &&
-	    p.in_out == IN_OUT_INSIDE && p.render_mode == RENDER_MODE_RGB && !p.use_bg &&
-	    p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0) {
-		out_a = out_r = out_g = X;
-		out_b = field_aux;
-		return;
-	}
-
 	// RGB selection:
 	//   render_mode == 1 (RGB)   -> gradation color (default)
 	//   render_mode == 2 (Layer) -> source color
@@ -874,31 +866,14 @@ static inline void compose_pixel(
 		ir = src_r; ig = src_g; ib = src_b;
 	}
 
-	// The PF32 whole-render owner does not enter the PF8/PF16 color callback.
-	// In the independently captured Inside + RGB + background branch it merges
-	// the final scalar ownership field into all four float channels. Multiple
-	// opaque/transparent and field 0/1 discriminators, plus the full 17x11
-	// owner output, ground this branch without importing integer staging rules.
-	if (p.pixel_size == sizeof(PF_PixelFloat) &&
-	    p.in_out == IN_OUT_INSIDE && p.render_mode == RENDER_MODE_RGB && p.use_bg) {
-		if (p.interp_mode != INTERP_CONSTANT &&
-		    p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0) {
-			out_a = out_r = out_g = X;
-			out_b = field_aux;
-			return;
-		}
-		float scalar = d_alpha * X;
-		out_a = out_r = out_g = out_b = scalar;
-		if (p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0)
-			out_b = field_aux;
-		return;
-	}
-
 	if (p.use_bg) {
 		float oneX = 1.0f - X;
-		out_r = oneX * p.bg_color.red   + X * ir;
-		out_g = oneX * p.bg_color.green + X * ig;
-		out_b = oneX * p.bg_color.blue  + X * ib;
+		volatile float bg_r = oneX * p.bg_color.red, fg_r = X * ir;
+		volatile float bg_g = oneX * p.bg_color.green, fg_g = X * ig;
+		volatile float bg_b = oneX * p.bg_color.blue, fg_b = X * ib;
+		out_r = bg_r + fg_r;
+		out_g = bg_g + fg_g;
+		out_b = bg_b + fg_b;
 		out_a = d_alpha;            // use_bg: alpha = d_alpha (full)
 		// The PF16 AEX callback clears the complete pixel when an Inside
 		// source is outside the ownership mask.  Keeping background RGB under
@@ -908,11 +883,12 @@ static inline void compose_pixel(
 		     p.pixel_size == sizeof(PF_PixelFloat)) &&
 		    p.in_out == IN_OUT_INSIDE && d_alpha <= 0.0f) {
 			out_r = out_g = out_b = 0.0f;
-			if ((p.pixel_size == sizeof(PF_Pixel16) || p.pixel_size == sizeof(PF_Pixel8)) &&
+			if ((p.pixel_size == sizeof(PF_Pixel16) || p.pixel_size == sizeof(PF_Pixel8) ||
+			     p.pixel_size == sizeof(PF_PixelFloat)) &&
 			    p.render_mode == RENDER_MODE_RGB &&
 			    p.interp_mode != INTERP_CONSTANT && p.blur_mode != BLUR_MODE_NONE &&
 			    p.blur_size > 0) {
-				if (p.pixel_size == sizeof(PF_Pixel8)) out_r = field_aux;
+				out_r = p.pixel_size == sizeof(PF_Pixel8) ? field_aux : X;
 				out_g = X;
 			}
 		}
@@ -936,11 +912,14 @@ static inline void compose_pixel(
 			}
 			return;
 		}
-		if (p.pixel_size == sizeof(PF_Pixel16) && p.in_out == IN_OUT_INSIDE &&
+		if ((p.pixel_size == sizeof(PF_Pixel16) || p.pixel_size == sizeof(PF_PixelFloat)) &&
+		    p.in_out == IN_OUT_INSIDE &&
 		    p.render_mode == RENDER_MODE_RGB && d_alpha <= 0.0f) {
-			out_r = out_b = 0.0f;
-			out_g = (p.interp_mode != INTERP_CONSTANT &&
-			         p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0) ? X : 0.0f;
+			out_r = out_g = out_b = 0.0f;
+			if (p.interp_mode != INTERP_CONSTANT &&
+			    p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0) {
+				out_r = out_g = X;
+			}
 			return;
 		}
 		if ((p.pixel_size == sizeof(PF_Pixel16) || p.pixel_size == sizeof(PF_Pixel8)) &&

@@ -75,22 +75,24 @@ def main() -> int:
                             "suite_requests": payload["suite_requests"]})
     assert len(rows) == 16 and all(row["smart_render_completed"] and row["cleanup_complete"] for row in rows)
     exact_cells = sum(row["exact"] for row in rows)
+    assert exact_cells == 16
     report = {"schema": "olmdistancegradation.exported-typed-owner-matrix/1",
-        "status": "PASS_PF16_PF32_EXPORTED_SMART_OWNER_16_CELL_COMPLETE_4_EXACT_12_RESIDUAL",
+        "status": "PASS_PF16_PF32_EXPORTED_SMART_OWNER_16_CELL_EXACT",
         "actual_aex_sha256": sha(AEX), "worker_sha256": sha(worker),
         "fixture": {"width": 17, "height": 11, "input_png_sha256": input_png_sha256},
         "summary": {"cells": 16, "completed": 16, "exact": exact_cells,
-                    "pf16_constant_exact": 4, "pf16_linear_residual": 4, "pf32_residual": 8},
-        "rows": rows, "claims_not_made": ["No native After Effects execution", "No PF32 GPU SmartRender claim"]}
+                    "pf16_exact": 8, "pf32_exact": 8},
+        "rows": rows, "claims_not_made": ["No native After Effects execution",
+            "No PF32 GPU SmartRender claim", "No Mac PF32 Smart admission or field-staging claim"]}
     REPORT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     DOC.write_text("# OLMDistanceGradation exported typed owner matrix\n\n"
-        "Status: **PASS_PF16_PF32_EXPORTED_SMART_OWNER_16_CELL_COMPLETE_4_EXACT_12_RESIDUAL**.\n\n"
+        "Status: **PASS_PF16_PF32_EXPORTED_SMART_OWNER_16_CELL_EXACT**.\n\n"
         "The unchanged Windows AEX completed exported SmartPreRender/SmartRender for PF16 and PF32 "
-        "across Constant/Linear × Blur 2/3 × Background off/on. PF16 Constant is byte-exact in all "
-        "four cells. PF16 Linear has four complete-buffer residuals, and PF32 has eight; these are now "
-        "render-path differences rather than host ABI failures. PF16 acquires `PF iterate16 "
+        "across Constant/Linear × Blur 2/3 × Background off/on. All sixteen tight 17×11 buffers "
+        "match production `RenderBits` byte-for-byte. PF16 acquires `PF iterate16 "
         "Suite` v1 and PF32 acquires `PF iterateFloat Suite` v1; no `_CxxThrowException` continuation "
-        "or exception swallowing is used.\n")
+        "or exception swallowing is used. This proves the bounded production RenderBits tuples only; "
+        "Mac PF32 Smart admission and field staging remain a separate evidence boundary.\n")
     print(report["status"])
     return 0
 
