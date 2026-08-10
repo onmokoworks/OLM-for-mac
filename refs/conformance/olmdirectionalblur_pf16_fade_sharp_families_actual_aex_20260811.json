@@ -1,0 +1,219 @@
+{
+  "admission": "Only the listed fixed-route representatives are admitted.",
+  "depth": "PF16",
+  "families": {
+    "Back Alpha Fade": [
+      0,
+      50,
+      100
+    ],
+    "Back Sharp Tail": [
+      0,
+      50,
+      100
+    ],
+    "Front Alpha Fade": [
+      0,
+      50,
+      100
+    ],
+    "Front Sharp Tail": [
+      0,
+      50,
+      100
+    ],
+    "natural_cross": {
+      "back_alpha_fade": 50,
+      "back_sharp_tail": 50
+    }
+  },
+  "fixed_route": {
+    "angle": 45,
+    "brightness_gain": 1,
+    "geometry": "16x16 padded ARGB64",
+    "noise_variation": 0,
+    "render_scale": [
+      1,
+      1
+    ],
+    "size_variation": 0
+  },
+  "not_proven": [
+    "other geometry",
+    "other values",
+    "other combinations",
+    "PF8/PF32 inference",
+    "native AE export"
+  ],
+  "plugin": "OLMDirectionalBlur",
+  "quantization": "Input words are normalized by 32768, the same float gaussian/prepass/component/accum/max rowdriver is used, and output truncates normalized channels after multiplication by 32768.",
+  "representatives": [
+    {
+      "back_alpha_fade": 0,
+      "back_sharp_tail": 0,
+      "back_strength": 0,
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "family": "front_baseline",
+      "front_alpha_fade": 0,
+      "front_sharp_tail": 0,
+      "front_strength": 8,
+      "raw_sha256": "3b71a8e7c929b102d74142d778218db8ade316bdc2da60e9e204db5c9be7393c"
+    },
+    {
+      "back_alpha_fade": 0,
+      "back_sharp_tail": 0,
+      "back_strength": 0,
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "family": "front_fade",
+      "front_alpha_fade": 50,
+      "front_sharp_tail": 0,
+      "front_strength": 8,
+      "raw_sha256": "6564f5274f52559b0cf868678a2146ceb9c3a6fd2fe6a8c23a8dc86093620133"
+    },
+    {
+      "back_alpha_fade": 0,
+      "back_sharp_tail": 0,
+      "back_strength": 0,
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "family": "front_fade",
+      "front_alpha_fade": 100,
+      "front_sharp_tail": 0,
+      "front_strength": 8,
+      "raw_sha256": "66e9edf80741b59a1a8c8e8bbdcc18f4a192e48f4307daebbf6043c4365fd663"
+    },
+    {
+      "back_alpha_fade": 0,
+      "back_sharp_tail": 0,
+      "back_strength": 0,
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "family": "front_sharp",
+      "front_alpha_fade": 0,
+      "front_sharp_tail": 50,
+      "front_strength": 8,
+      "raw_sha256": "d497d67db6efa1d240994d6638a69e7ee975080790d6c6ac7b8a874198f90554"
+    },
+    {
+      "back_alpha_fade": 0,
+      "back_sharp_tail": 0,
+      "back_strength": 0,
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "family": "front_sharp",
+      "front_alpha_fade": 0,
+      "front_sharp_tail": 100,
+      "front_strength": 8,
+      "raw_sha256": "fcc162f781ab744dff5fec576979a268c5d760050057035ad7f59d3562299d74"
+    },
+    {
+      "back_alpha_fade": 0,
+      "back_sharp_tail": 0,
+      "back_strength": 8,
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "family": "back_baseline",
+      "front_alpha_fade": 0,
+      "front_sharp_tail": 0,
+      "front_strength": 0,
+      "raw_sha256": "0a2059d3b76dcb7908bfeda0a14bdec7630414ac33c31f2284f76b1c08be85e6"
+    },
+    {
+      "back_alpha_fade": 50,
+      "back_sharp_tail": 0,
+      "back_strength": 8,
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "family": "back_fade",
+      "front_alpha_fade": 0,
+      "front_sharp_tail": 0,
+      "front_strength": 0,
+      "raw_sha256": "a9c501fb589f392dcf38ebceb8c4c40b83c6975d97018f02313ec9d8f233735d"
+    },
+    {
+      "back_alpha_fade": 100,
+      "back_sharp_tail": 0,
+      "back_strength": 8,
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "family": "back_fade",
+      "front_alpha_fade": 0,
+      "front_sharp_tail": 0,
+      "front_strength": 0,
+      "raw_sha256": "b471f0db55bbf71fb643d0f72154412f38843fd5705933427ab45ecd29eac94b"
+    },
+    {
+      "back_alpha_fade": 0,
+      "back_sharp_tail": 50,
+      "back_strength": 8,
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "family": "back_sharp",
+      "front_alpha_fade": 0,
+      "front_sharp_tail": 0,
+      "front_strength": 0,
+      "raw_sha256": "37f51122d04392d87c8694d3adee05e71a74355b90a2cc7497ccdcf754684e17"
+    },
+    {
+      "back_alpha_fade": 0,
+      "back_sharp_tail": 100,
+      "back_strength": 8,
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "family": "back_sharp",
+      "front_alpha_fade": 0,
+      "front_sharp_tail": 0,
+      "front_strength": 0,
+      "raw_sha256": "09b33bff23e607cc66f6a53f8ade88b785c6bb3d40e13bbc6373222390b78e4a"
+    },
+    {
+      "back_alpha_fade": 50,
+      "back_sharp_tail": 50,
+      "back_strength": 8,
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "family": "back_fade_sharp_cross",
+      "front_alpha_fade": 0,
+      "front_sharp_tail": 0,
+      "front_strength": 0,
+      "raw_sha256": "12d452e97a91864b9a03fea3d6d7e0fd625a6f29026e5d155d0d1a1423e56d70"
+    }
+  ],
+  "schema_version": 1,
+  "status": "exact_bounded_families"
+}

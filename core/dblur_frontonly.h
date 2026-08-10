@@ -32,6 +32,13 @@ extern "C" int olm_dblur_minimal_layer_argb16(
     int width, int height, int front_strength, int back_strength,
     float brightness_gain, float angle_degrees, float noise_variation_percent,
     const std::uint16_t* layer_argb, int layer_rowbytes);
+extern "C" int olm_dblur_full_argb16(
+    const std::uint16_t* input_argb, std::uint16_t* output_argb,
+    int width, int height, int front_strength, int front_alpha_fade,
+    float front_sharp_tail_percent, int back_strength, int back_alpha_fade,
+    float back_sharp_tail_percent, float brightness_gain, float angle_degrees,
+    float noise_variation_percent, int noise_type, std::uint32_t seed,
+    int noise_offset_ui, float thickness_ui);
 extern "C" int olm_dblur_minimal_argb32(const float* input_argb,
                                          float* output_argb,
                                          int width, int height,
