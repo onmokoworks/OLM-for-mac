@@ -31,7 +31,7 @@
     {"parameter": "Brightness Gain", "proved": ["1.0"], "unproved": ["non-unit"]},
     {"parameter": "Inner Strength/Offset/Edge Fade", "proved": ["Rotation centered neutral Inner Strength 1..64 at PF8/PF16/PF32", "PF16/PF32 padded 64x36 representative strengths 3/33/64", "PF16 padded 640x360 Strength3", "offset mode1 / offset0 / edge fade0"], "unproved": ["other offsets", "nonzero edge fade", "non-neutral tuples"]},
     {"parameter": "Outer Edge Fade", "proved": ["zero"], "unproved": ["nonzero"]},
-    {"parameter": "Size/Noise Variation and Noise controls", "proved": ["variation zero"], "unproved": ["nonzero variation/noise families"]}
+    {"parameter": "Size/Noise Variation and Noise controls", "proved": ["variation zero", "PF32 Rotation padded 9x7 neutral outer-only tuple: Size Variation 1/25/100 when every source alpha is strictly positive"], "unproved": ["other nonzero Size Variation values", "Size Variation with any zero-alpha source pixel", "nonzero Noise Variation", "other Size Variation bit depths/geometries/tuples"]}
   ],
   "largest_structural_gap_selected": {
     "boundary": "Zoom PF16 outer offset mode3/UI2",

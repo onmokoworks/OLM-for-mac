@@ -1,0 +1,127 @@
+{
+  "admitted_rule": "For this strictly-positive-alpha tuple, witnessed Size Variation values 1/25/100 are semantically masked: actual-AEX and production captured internal planes plus padded output equal Size Variation 0 byte-for-byte.",
+  "aex": {
+    "path": "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+  },
+  "baseline_zero_variation_hashes": {
+    "accum": "13b28b32ce8db24cde6bd5f93acab3113a192137b77be5f99da09555859d7135",
+    "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+    "final_rgba": "d7e30cdd2e7b7906fa2dac18107c7fedacde052635ee7d660d9665975a38b765",
+    "geometry": "f094fef3fd4069e896df760d7d610f18066ee614c3b993cb8377ec33b8236e32",
+    "max_alpha": "fcc2f0e5a233ad87b4acd4e52dd129e487eda8b7ffdac999cea2e9e9bfedd8e4",
+    "output": "beb7ce8ac537a172873092d1439121019f2dbedee2d3cff04e4f6e3bf5d8ea94",
+    "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+    "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+  },
+  "boundary": "No claim for any zero-alpha pixel, Noise Variation, PF8/PF16, other geometry, or other parameter tuple.",
+  "cases": [
+    {
+      "hashes": {
+        "accum": "13b28b32ce8db24cde6bd5f93acab3113a192137b77be5f99da09555859d7135",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "d7e30cdd2e7b7906fa2dac18107c7fedacde052635ee7d660d9665975a38b765",
+        "geometry": "f094fef3fd4069e896df760d7d610f18066ee614c3b993cb8377ec33b8236e32",
+        "max_alpha": "fcc2f0e5a233ad87b4acd4e52dd129e487eda8b7ffdac999cea2e9e9bfedd8e4",
+        "output": "beb7ce8ac537a172873092d1439121019f2dbedee2d3cff04e4f6e3bf5d8ea94",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+      },
+      "matches_zero_variation": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "geometry": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "size_variation": 1.0
+    },
+    {
+      "hashes": {
+        "accum": "13b28b32ce8db24cde6bd5f93acab3113a192137b77be5f99da09555859d7135",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "d7e30cdd2e7b7906fa2dac18107c7fedacde052635ee7d660d9665975a38b765",
+        "geometry": "f094fef3fd4069e896df760d7d610f18066ee614c3b993cb8377ec33b8236e32",
+        "max_alpha": "fcc2f0e5a233ad87b4acd4e52dd129e487eda8b7ffdac999cea2e9e9bfedd8e4",
+        "output": "beb7ce8ac537a172873092d1439121019f2dbedee2d3cff04e4f6e3bf5d8ea94",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+      },
+      "matches_zero_variation": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "geometry": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "size_variation": 25.0
+    },
+    {
+      "hashes": {
+        "accum": "13b28b32ce8db24cde6bd5f93acab3113a192137b77be5f99da09555859d7135",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "d7e30cdd2e7b7906fa2dac18107c7fedacde052635ee7d660d9665975a38b765",
+        "geometry": "f094fef3fd4069e896df760d7d610f18066ee614c3b993cb8377ec33b8236e32",
+        "max_alpha": "fcc2f0e5a233ad87b4acd4e52dd129e487eda8b7ffdac999cea2e9e9bfedd8e4",
+        "output": "beb7ce8ac537a172873092d1439121019f2dbedee2d3cff04e4f6e3bf5d8ea94",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+      },
+      "matches_zero_variation": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "geometry": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "size_variation": 100.0
+    }
+  ],
+  "fail_closed_gate": {
+    "one_zero_alpha_pixel_rejected": true
+  },
+  "kind": "olmradialblur_rotation_pf32_size_variation_opaque_actual_aex_20260810",
+  "scope": "Pinned actual-AEX PF32 Rotation 9x7 rowbytes160, all source alpha strictly positive (0.5 or 1.0), Size Variation 1/25/100; all other parameters use the existing neutral outer-only tuple.",
+  "source_alpha": {
+    "contains_zero": false,
+    "maximum": 1.0,
+    "minimum": 0.5
+  },
+  "status": "exact_actual_aex_and_production_semantic_noop_family"
+}

@@ -36,6 +36,13 @@ ARGB8 padded source. Its pre-blur plane, post-blur plane, output bytes, and row
 padding match the actual AEX exactly after aligning the PF8 reader with the
 AEX's rounded reciprocal `MULSS` sequence.
 
+A bounded nonzero Size Variation family is also exact for PF32 Rotation 9×7,
+the neutral outer-only tuple, and source alpha strictly greater than zero at
+every pixel. Actual-AEX Size Variation 1, 25, and 100 have byte-identical
+internal planes and padded output to value 0, and production matches them.
+Any zero-alpha pixel, another bit depth/geometry/tuple, and all nonzero Noise
+Variation remain fail-closed.
+
 The next connection audit proves an independent reduced PF32 Zoom path from
 owner `0x180007d30` through the pre/post float planes and direct float writer to
 the current installed Universal bundle. This closes the previously split PF32
