@@ -42,11 +42,20 @@
         "prepass_alpha": "12353dffde7679d50072204de25f927abb5975fb76fb499bf06c03aed2a752f6",
         "source_scalar": "8488080b310dd1edc17f426d2a59797413eb64be517556f326ccd204b45a4822"
       },
-      "first_mismatch_stage": "source_scalar (captured candidate residual before fail-closed admission)",
+      "first_mismatch_stage": null,
       "kind": "outer",
-      "matches": null,
-      "production_fail_closed": true,
-      "production_returncode": 1,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "prepass_alpha": true,
+        "source_scalar": true
+      },
+      "production_fail_closed": false,
+      "production_returncode": 0,
       "variation": "noise25"
     },
     {
@@ -89,17 +98,25 @@
         "prepass_alpha": "9ae1089d2e8330838e73e208e19e4641aec83a3b83c379523600ccb4d0f549b7",
         "source_scalar": "8488080b310dd1edc17f426d2a59797413eb64be517556f326ccd204b45a4822"
       },
-      "first_mismatch_stage": "source_scalar (captured candidate residual before fail-closed admission)",
+      "first_mismatch_stage": null,
       "kind": "inner",
-      "matches": null,
-      "production_fail_closed": true,
-      "production_returncode": 1,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "prepass_alpha": true,
+        "source_scalar": true
+      },
+      "production_fail_closed": false,
+      "production_returncode": 0,
       "variation": "noise25"
     }
   ],
   "kind": "olmradialblur_rotation_pf32_edge_fade_intersections_actual_aex_20260811",
-  "noise_residual": "Outer NV25 candidate was exact from prepass through output but retained known inactive source-scalar ULP differences. Inner NV25 first diverged at source_scalar and propagated to prepass/max-alpha, although final RGBA/output were exact. Both Noise intersections remain fail-closed.",
-  "ordering": "The AEX constructs source size/noise planes before polar sampling. FUN_180002780 consumes the separately sampled size-factor slot (+0x14), while later scatter consumes the noise-composed source-scalar/span slot (+0x10).",
+  "ordering": "The AEX constructs source size/noise planes before polar sampling. Its Radial noise sampler uses scalar float32 smoothstep/tap accumulation order; later scatter consumes the sampled noise-composed span slot (+0x10). The Inner prepass boundary reads the float immediately after polar, which is source_scalar[0] in this allocation, before repairing the angular wrap.",
   "scope": "PF32 Rotation centered 9x7 Quality5; Outer or Inner Strength4 Edge Fade50 crossed with opaque Size Variation50 or Noise Type1 NV25 Seed1 Offset0 Thickness10.",
-  "status": "exact_size50_noise_fail_closed"
+  "status": "exact"
 }

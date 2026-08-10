@@ -111,7 +111,7 @@ def main() -> int:
         "relation": "source_span = (NV * interpolated_noise + (1-NV)) * source_size_factor; NV is normalized by 0.01",
         "relations": relations,
         "artifacts": artifacts,
-        "boundary": "The full production source-scalar allocation contains inactive-cell 1-ULP differences for nonzero NV, while accum/max/final/output are bit exact. Type 2/3, other seed/offset/thickness, other geometry/depth/mode, and AE-host behavior are not claimed.",
+        "boundary": "The full production source-scalar allocation and accum/max/final/output are bit exact for the bounded Type-1 family. Type 2/3, other seed/offset/thickness, other geometry/depth/mode, and AE-host behavior are not claimed.",
     }
     REPORT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     print(json.dumps(report, indent=2, sort_keys=True))

@@ -61,6 +61,38 @@ static float RadialF32Sub(float lhs, float rhs)
 	return result;
 }
 
+static float SampleRadialNoisePlaneAEX(
+	const float *samples, A_long stride, float cell_size, A_long x, A_long y)
+{
+	const float sample_x = RadialF32Div((float)x, cell_size);
+	const float sample_y = RadialF32Div((float)y, cell_size);
+	const A_long ix = (A_long)sample_x;
+	const A_long iy = (A_long)sample_y;
+	const float fraction_x = RadialF32Sub(sample_x, (float)ix);
+	const float fraction_y = RadialF32Sub(sample_y, (float)iy);
+	const float smooth_x = RadialF32Mul(
+		RadialF32Sub(3.0f, RadialF32Add(fraction_x, fraction_x)),
+		RadialF32Mul(fraction_x, fraction_x));
+	const float smooth_y = RadialF32Mul(
+		RadialF32Sub(3.0f, RadialF32Add(fraction_y, fraction_y)),
+		RadialF32Mul(fraction_y, fraction_y));
+	const float inverse_x = RadialF32Sub(1.0f, smooth_x);
+	const float inverse_y = RadialF32Sub(1.0f, smooth_y);
+	const size_t top = (size_t)iy * stride + ix;
+	const size_t bottom = (size_t)(iy + 1) * stride + ix;
+	float bottom_left = RadialF32Mul(inverse_x, smooth_y);
+	bottom_left = RadialF32Mul(bottom_left, samples[bottom]);
+	float bottom_right = RadialF32Mul(smooth_y, smooth_x);
+	bottom_right = RadialF32Mul(bottom_right, samples[bottom + 1]);
+	float top_right = RadialF32Mul(inverse_y, smooth_x);
+	top_right = RadialF32Mul(top_right, samples[top + 1]);
+	float top_left = RadialF32Mul(inverse_x, inverse_y);
+	top_left = RadialF32Mul(top_left, samples[top]);
+	const float bottom_sum = RadialF32Add(bottom_right, bottom_left);
+	const float top_sum = RadialF32Add(top_right, top_left);
+	return RadialF32Add(top_sum, bottom_sum);
+}
+
 static float RadialF32Sqrt(float value)
 {
 	volatile float result = std::sqrt(value);
@@ -1642,6 +1674,7 @@ struct RadialBlurTestRotationCapture {
 	float *polar_rgba = nullptr;
 	A_u_char *eligibility = nullptr;
 	float *source_scalar = nullptr;
+	float *source_span = nullptr;
 	float *prepass_alpha = nullptr;
 	float *accum_rgba = nullptr;
 	float *max_alpha = nullptr;
@@ -2168,8 +2201,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0 &&
 		info.comp_width == 9.0 && info.comp_height == 7.0;
-	const bool use_aex_pf32_edge_fade_size50_small =
-		use_aex_pf32_edge_fade_intersection_small && info.size_variation == 50.0;
+	const bool use_aex_pf32_edge_fade_cross_small =
+		use_aex_pf32_edge_fade_intersection_small;
 	const bool use_aex_pf32_strength5_noise_type1_small = input && output &&
 		std::is_same<PixelT, PF_PixelFloat>::value &&
 		input->width == 9 && input->height == 7 && output->width == 9 && output->height == 7 &&
@@ -2255,18 +2288,18 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0;
 	if (info.blur_type != 2 || (info.inner_strength != 0 && !use_aex_pf16_inner_power2_small &&
-	    !use_aex_pf32_inner_edge_fade_small && !use_aex_pf32_edge_fade_size50_small) ||
+	    !use_aex_pf32_inner_edge_fade_small && !use_aex_pf32_edge_fade_cross_small) ||
 	    ((info.outer_edge_fade != 0 || info.inner_edge_fade != 0) &&
 	     !use_aex_pf32_outer_edge_fade_small && !use_aex_pf32_inner_edge_fade_small &&
-	     !use_aex_pf32_edge_fade_size50_small) ||
+	     !use_aex_pf32_edge_fade_cross_small) ||
 	    (info.noise_variation != 0.0 && !use_aex_pf32_noise_type1_small &&
 	     !use_aex_pf32_strength5_noise_type1_small &&
 	     !use_aex_pf32_offset_mode3_noise_type1_small &&
 	     !use_aex_pf32_opaque_size_noise_type1_small &&
-	     !use_aex_pf32_edge_fade_size50_small) ||
+	     !use_aex_pf32_edge_fade_cross_small) ||
 	    (info.size_variation != 0.0 && !use_aex_pf32_opaque_size_variation_small &&
 	     !use_aex_pf32_opaque_size_noise_type1_small &&
-	     !use_aex_pf32_edge_fade_size50_small)) {
+	     !use_aex_pf32_edge_fade_cross_small)) {
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
 
@@ -2487,12 +2520,11 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				&noise_plane, &noise_width, &noise_height)) {
 			return PF_Err_OUT_OF_MEMORY;
 		}
-		const olm::dblur::NoisePlaneView noise_view{
-			noise_plane.data(), noise_width, (float)info.thickness};
 		const float nv = (float)info.noise_variation * 0.01f;
 		for (A_long y = 0; y < h; ++y) {
 			for (A_long x = 0; x < w; ++x) {
-				const float noise = olm::dblur::sample_noise_plane(noise_view, x, y, true);
+				const float noise = SampleRadialNoisePlaneAEX(
+					noise_plane.data(), noise_width, (float)info.thickness, x, y);
 				rotation_scalar_source_with_guard[(size_t)y * w + x] =
 					RadialF32Add(RadialF32Mul(nv, noise), RadialF32Sub(1.0f, nv));
 			}
@@ -2562,7 +2594,12 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			? ZoomGaussianWeights(inner_fade_span) : std::vector<float>{1.0f};
 		auto polar_alpha_linear = [&](long long linear_cell) -> float {
 			if (linear_cell < 0) return 0.0f;
-			if (linear_cell >= (long long)radius_count * angular_count) return 1.0f;
+			if (linear_cell >= (long long)radius_count * angular_count) {
+				const size_t scalar_index = (size_t)(linear_cell -
+					(long long)radius_count * angular_count);
+				return scalar_index < rotation_source_scalar.size()
+					? rotation_source_scalar[scalar_index] : 0.0f;
+			}
 			return polar.rgba[(size_t)linear_cell * 4 + 3];
 		};
 		for (A_long ri = 0; ri < radius_count; ++ri) {
@@ -2716,6 +2753,10 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			std::memcpy(capture.polar_rgba, polar.rgba.data(), cells * 4 * sizeof(float));
 			std::memcpy(capture.eligibility, polar_valid.data(), cells * sizeof(A_u_char));
 			std::memcpy(capture.source_scalar, rotation_source_scalar.data(), cells * sizeof(float));
+			if (capture.source_span) {
+				std::memcpy(capture.source_span, rotation_scalar_source_with_guard.data(),
+					(size_t)w * h * sizeof(float));
+			}
 			if (capture.prepass_alpha) {
 				std::memcpy(capture.prepass_alpha, prepass_alpha.data(), cells * sizeof(float));
 			}

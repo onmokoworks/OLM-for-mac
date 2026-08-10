@@ -146,7 +146,7 @@
       "zlib_sha256": "3b9ed659a8d7091a509b54def8a11afe669ea4156e4fd88c94a7be242e0da377"
     }
   },
-  "boundary": "The full production source-scalar allocation contains inactive-cell 1-ULP differences for nonzero NV, while accum/max/final/output are bit exact. Type 2/3, other seed/offset/thickness, other geometry/depth/mode, and AE-host behavior are not claimed.",
+  "boundary": "The full production source-scalar allocation and accum/max/final/output are bit exact for the bounded Type-1 family. Type 2/3, other seed/offset/thickness, other geometry/depth/mode, and AE-host behavior are not claimed.",
   "geometry_identical_across_nv": true,
   "kind": "olmradialblur_rotation_pf32_noise_variation_type1_actual_aex_20260810",
   "noise_lattice_geometry": {
@@ -181,7 +181,7 @@
         "output": true,
         "polar": true
       },
-      "production_source_scalar_bit_exact": false,
+      "production_source_scalar_bit_exact": true,
       "size_factor_all_one": true,
       "source_scalar_raw_sha256": "fdffc25c11314450f3b025495702329687bf9a7a8fec1fd96940ac2e9d92abfc",
       "span_formula_bit_exact": true
@@ -196,7 +196,7 @@
         "output": true,
         "polar": true
       },
-      "production_source_scalar_bit_exact": false,
+      "production_source_scalar_bit_exact": true,
       "size_factor_all_one": true,
       "source_scalar_raw_sha256": "8488080b310dd1edc17f426d2a59797413eb64be517556f326ccd204b45a4822",
       "span_formula_bit_exact": true

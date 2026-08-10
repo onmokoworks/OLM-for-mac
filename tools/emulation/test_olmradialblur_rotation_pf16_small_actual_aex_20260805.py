@@ -112,7 +112,7 @@ def actual_aex() -> dict[str, bytes]:
             raise RuntimeError(f"invalid Rotation plane allocation: {hex(accum_ptr)}..{hex(max_ptr)}")
         cells = plane_bytes // 16
         captured["cells"] = cells
-        captured["pre_planes"] = {"polar": ld.read_bytes(m4.u64(ld, work + 0xE * 4), cells * 16), "source_scalar": ld.read_bytes(m4.u64(ld, work + 0x10 * 4), cells * 4)}
+        captured["pre_planes"] = {"polar": ld.read_bytes(m4.u64(ld, work + 0xE * 4), cells * 16), "source_scalar": ld.read_bytes(m4.u64(ld, work + 0x10 * 4), cells * 4), "size_factor": ld.read_bytes(m4.u64(ld, work + 0x14 * 4), cells * 4)}
         if CAPTURE_EDGE_INTERNALS:
             polar_ptr = m4.u64(ld, work + 0xE * 4)
             captured["polar_guard_before"] = ld.read_bytes(polar_ptr - 64, 64)

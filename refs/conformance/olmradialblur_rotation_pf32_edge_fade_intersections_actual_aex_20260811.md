@@ -1,5 +1,5 @@
 # OLM RadialBlur PF32 Edge Fade intersections — 2026-08-11
 
-Status: **exact_size50_noise_fail_closed**
+Status: **exact**
 
-Outer and Inner Edge Fade50 × opaque Size Variation50 are exact across every captured plane and are admitted narrowly. Noise Variation25 is localized separately: the Outer candidate reached exact prepass/output but retained source-scalar ULP differences; Inner also differed in prepass/max-alpha. Both Noise intersections therefore remain fail-closed. The AEX Edge Fade prepass consumes the sampled size-factor slot, while scatter later consumes the noise-composed span slot.
+Outer and Inner Edge Fade50 crossed with opaque Size Variation50 or Type1 Noise Variation25 are exact across polar, source scalar, prepass, accumulation, max alpha, final RGBA, coordinates, and padded output. Radial noise interpolation uses the AEX scalar float32 instruction order. At the Inner angular boundary, the prepass reads the adjacent source-scalar allocation once before repairing the wrap.
