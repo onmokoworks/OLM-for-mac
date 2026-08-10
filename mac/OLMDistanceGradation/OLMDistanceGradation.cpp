@@ -841,6 +841,14 @@ static inline void compose_pixel(
 		    p.in_out == IN_OUT_INSIDE && d_alpha <= 0.0f) {
 			out_r = out_g = out_b = 0.0f;
 		}
+		// The actual PF16 Outside/Layer/background callback applies the same
+		// ownership clearing on the opposite side of the mask.  This branch is
+		// intentionally limited to the independently exercised typed contract;
+		// other depths/render modes remain separate evidence boundaries.
+		if (p.pixel_size == sizeof(PF_Pixel16) && p.in_out == IN_OUT_OUTSIDE &&
+		    p.render_mode == RENDER_MODE_LAYER && d_alpha <= 0.0f) {
+			out_r = out_g = out_b = 0.0f;
+		}
 	} else {
 		out_a = d_alpha * X;        // no bg: alpha = d_alpha * X
 		if ((p.pixel_size == sizeof(PF_Pixel16) || p.pixel_size == sizeof(PF_Pixel8)) &&
