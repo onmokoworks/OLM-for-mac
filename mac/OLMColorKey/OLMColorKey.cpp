@@ -789,6 +789,21 @@ static float EdgeBlurWeight(bool inside, float dist, float amount, A_long direct
 		if (dist == 1.0f) return 0.4999999701976776f;
 		return 1.0f;
 	}
+	// Practical 32x18 two-key captures close the endpoint and the widest
+	// representative public amount for direction 3.  The keyed side remains
+	// transparent; PF32 exposes three outside shells at amount 4, whereas the
+	// integer temporary planes store pixel distance in 255-unit steps and reach
+	// the fully opaque branch immediately.
+	if (direction == 3 && amount == 1.0f) {
+		return inside ? 1.0f : 0.0f;
+	}
+	if (direction == 3 && amount == 4.0f) {
+		if (!inside) return 0.0f;
+		if (dist == 1.0f) return 0.10730093717575073f;
+		if (dist == 2.0f) return 0.5f;
+		if (dist == 3.0f) return 0.8926990628242493f;
+		return 1.0f;
+	}
 	// Independently captured direction-4 amount-2 boundary.  Although the
 	// current witness equals direction 3, keep the branch separate so evidence
 	// from one public direction is never generalized to the other.
@@ -1270,7 +1285,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				const PixelT *inP = PixelAtConst<PixelT>(input, x, y);
 				PixelT *outP = PixelAt<PixelT>(output, x, y);
 				if (!keep && weight != 0.0f &&
-				    !(info.edge_blur_direction == 3 && info.edge_blur_amount == 2.0) &&
+				    info.edge_blur_direction != 3 &&
 				    !(info.edge_blur_direction == 4 && info.edge_blur_amount == 2.0) &&
 				    !(info.edge_blur_direction == 0 && info.edge_blur_amount == 2.0)) {
 					OLMCKPixelTraits<PixelT>::restore_alpha(*outP, *inP);

@@ -38,6 +38,42 @@
       "status": "exact"
     },
     {
+      "actual_instructions": 319024,
+      "actual_sha256": "a94f93845aa298e962eb504261d1a1f7ec9a83e650966b64d7d4544d938f79af",
+      "actual_worker_status": "pass",
+      "amount": 1.0,
+      "bytes": 2448,
+      "case": "direction2_amount1",
+      "direction": 2,
+      "pixel_format": "PF8",
+      "production_sha256": "a94f93845aa298e962eb504261d1a1f7ec9a83e650966b64d7d4544d938f79af",
+      "status": "exact"
+    },
+    {
+      "actual_instructions": 319122,
+      "actual_sha256": "84804fb7fbaf9c8e65dd5ff0e7992ed6c5ea82349f07c6a4ba937f3db46bbbd2",
+      "actual_worker_status": "pass",
+      "amount": 1.0,
+      "bytes": 4752,
+      "case": "direction2_amount1",
+      "direction": 2,
+      "pixel_format": "PF16",
+      "production_sha256": "84804fb7fbaf9c8e65dd5ff0e7992ed6c5ea82349f07c6a4ba937f3db46bbbd2",
+      "status": "exact"
+    },
+    {
+      "actual_instructions": 313279,
+      "actual_sha256": "cf9205db44efaacdc0f44c28ed3c76300b9b85575caaabc2c6c26d8a386f5b53",
+      "actual_worker_status": "pass",
+      "amount": 1.0,
+      "bytes": 9360,
+      "case": "direction2_amount1",
+      "direction": 2,
+      "pixel_format": "PF32",
+      "production_sha256": "cf9205db44efaacdc0f44c28ed3c76300b9b85575caaabc2c6c26d8a386f5b53",
+      "status": "exact"
+    },
+    {
       "actual_instructions": 315969,
       "actual_sha256": "97aedf4ca10a02c7f998004f1998784702ca3fc3f6cbc86ea7b7ea4721d6159d",
       "actual_worker_status": "pass",
@@ -108,9 +144,81 @@
       "pixel_format": "PF32",
       "production_sha256": "331bf0f2b414a4d043b6d265b5cad444fe2ee803656471ca52ff19331478efbe",
       "status": "exact"
+    },
+    {
+      "actual_instructions": 317893,
+      "actual_sha256": "47a7fc531a12dddb9ed27e4a145f52ce440ed871a87813f8aceaafc4211dbc43",
+      "actual_worker_status": "pass",
+      "amount": 1.0,
+      "bytes": 2448,
+      "case": "direction3_amount1",
+      "direction": 3,
+      "pixel_format": "PF8",
+      "production_sha256": "47a7fc531a12dddb9ed27e4a145f52ce440ed871a87813f8aceaafc4211dbc43",
+      "status": "exact"
+    },
+    {
+      "actual_instructions": 317991,
+      "actual_sha256": "97c28bf1f52dbc09b15eab7a3b3702ef3dc9b8401660525baf890d50cdeca866",
+      "actual_worker_status": "pass",
+      "amount": 1.0,
+      "bytes": 4752,
+      "case": "direction3_amount1",
+      "direction": 3,
+      "pixel_format": "PF16",
+      "production_sha256": "97c28bf1f52dbc09b15eab7a3b3702ef3dc9b8401660525baf890d50cdeca866",
+      "status": "exact"
+    },
+    {
+      "actual_instructions": 312148,
+      "actual_sha256": "e18979b8731565ebf1fd622f32fcddc62caf837dbe81eb53400ec4961ac87e64",
+      "actual_worker_status": "pass",
+      "amount": 1.0,
+      "bytes": 9360,
+      "case": "direction3_amount1",
+      "direction": 3,
+      "pixel_format": "PF32",
+      "production_sha256": "e18979b8731565ebf1fd622f32fcddc62caf837dbe81eb53400ec4961ac87e64",
+      "status": "exact"
+    },
+    {
+      "actual_instructions": 317893,
+      "actual_sha256": "47a7fc531a12dddb9ed27e4a145f52ce440ed871a87813f8aceaafc4211dbc43",
+      "actual_worker_status": "pass",
+      "amount": 4.0,
+      "bytes": 2448,
+      "case": "direction3_amount4",
+      "direction": 3,
+      "pixel_format": "PF8",
+      "production_sha256": "47a7fc531a12dddb9ed27e4a145f52ce440ed871a87813f8aceaafc4211dbc43",
+      "status": "exact"
+    },
+    {
+      "actual_instructions": 317991,
+      "actual_sha256": "97c28bf1f52dbc09b15eab7a3b3702ef3dc9b8401660525baf890d50cdeca866",
+      "actual_worker_status": "pass",
+      "amount": 4.0,
+      "bytes": 4752,
+      "case": "direction3_amount4",
+      "direction": 3,
+      "pixel_format": "PF16",
+      "production_sha256": "97c28bf1f52dbc09b15eab7a3b3702ef3dc9b8401660525baf890d50cdeca866",
+      "status": "exact"
+    },
+    {
+      "actual_instructions": 315052,
+      "actual_sha256": "68a11c3fa603323f0f40d3d02017237a0551f20e9bcb51a423d353cc51552d47",
+      "actual_worker_status": "pass",
+      "amount": 4.0,
+      "bytes": 9360,
+      "case": "direction3_amount4",
+      "direction": 3,
+      "pixel_format": "PF32",
+      "production_sha256": "68a11c3fa603323f0f40d3d02017237a0551f20e9bcb51a423d353cc51552d47",
+      "status": "exact"
     }
   ],
-  "claim_boundary": "Exact for this 32x18 two-key multi-island 16:9 fixture at PF8/PF16/PF32 for direction 2 amount 4 and direction 1 amounts 1 and 4. This expands spatial topology, a non-direction-2 path, and non-tight-row evidence, but does not claim arbitrary dimensions, directions, amounts, key colors, or AE-host rendering.",
+  "claim_boundary": "Exact for this 32x18 two-key multi-island 16:9 fixture at PF8/PF16/PF32 for public directions 1, 2, and 3 at representative endpoint amounts 1 and 4. This expands spatial topology, closes every public direction at the selected amount boundaries, and covers non-tight rows, but does not claim arbitrary dimensions, intermediate amounts, key colors, or AE-host rendering.",
   "comparison": "full typed ARGB active bytes plus every row-padding byte",
   "fixture": {
     "aspect": "16:9",
@@ -127,6 +235,11 @@
       },
       {
         "amount": 1.0,
+        "direction": 2,
+        "name": "direction2_amount1"
+      },
+      {
+        "amount": 1.0,
         "direction": 1,
         "name": "direction1_amount1"
       },
@@ -134,6 +247,16 @@
         "amount": 4.0,
         "direction": 1,
         "name": "direction1_amount4"
+      },
+      {
+        "amount": 1.0,
+        "direction": 3,
+        "name": "direction3_amount1"
+      },
+      {
+        "amount": 4.0,
+        "direction": 3,
+        "name": "direction3_amount4"
       }
     ],
     "keys": [
