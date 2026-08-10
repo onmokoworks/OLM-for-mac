@@ -1,0 +1,1711 @@
+{
+  "actual_aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+  "case_count": 72,
+  "cases": [
+    {
+      "effective_worker_amount": 2.5,
+      "expected_sha256": "5267bd6df610959d99b6c7e8968678a9c8bfd9db400b130444c20426762b594f",
+      "id": "pf8_amount5_0_repeat1_legacy0_ds1_2",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 5.0,
+      "expected_sha256": "68744a057641010bbde9b5d5f4226d0df2d49d1ff063e44bf7ac2ce37263feae",
+      "id": "pf8_amount5_0_repeat1_legacy0_ds1_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 10.0,
+      "expected_sha256": "d32b90e7c166baf5fb44ccbf1d7524ad0638b627abdb347536c121642a92cf3f",
+      "id": "pf8_amount5_0_repeat1_legacy0_ds2_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 2.5,
+      "expected_sha256": "4848dae785b8439896dcde041ef58cd503ec304270599a14a8376b7c79b9e77f",
+      "id": "pf8_amount5_0_repeat1_legacy1_ds1_2",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 5.0,
+      "expected_sha256": "0301eadd30bafadf2f386d8620d778aa9d20f198e4594ead0e30d952ee26750a",
+      "id": "pf8_amount5_0_repeat1_legacy1_ds1_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 10.0,
+      "expected_sha256": "8cad70125a3ad08828c8811bfec4015fc22535a5802f5d6bad5b5074ef6c7790",
+      "id": "pf8_amount5_0_repeat1_legacy1_ds2_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 2.5,
+      "expected_sha256": "040a79bf96a2bc86acbe701389ddcc02bfe4916a0a00ee9444d0e35840c14a08",
+      "id": "pf8_amount5_0_repeat2_legacy0_ds1_2",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 5.0,
+      "expected_sha256": "f5baedf4594bdb26239158ac31494bd1b3821caa968c6c63d944d5306ad50505",
+      "id": "pf8_amount5_0_repeat2_legacy0_ds1_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 10.0,
+      "expected_sha256": "6b1e90406c9e79266231f7fa97ff71f8f546617e601615c671dc9d0c8703e3d7",
+      "id": "pf8_amount5_0_repeat2_legacy0_ds2_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 2.5,
+      "expected_sha256": "d2a4dabd4950065be7c1b9310ca0295490dcdc27291d1353a636f30ac17073a2",
+      "id": "pf8_amount5_0_repeat2_legacy1_ds1_2",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 5.0,
+      "expected_sha256": "7b783e6a10ea28e7bdf0849d929f6f3ea36c88dd1b04a9839877b5ebddc2c2d2",
+      "id": "pf8_amount5_0_repeat2_legacy1_ds1_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 10.0,
+      "expected_sha256": "b19b32a1f589712ddcb44324da3f0156ae04fd7331932c751f48538545330630",
+      "id": "pf8_amount5_0_repeat2_legacy1_ds2_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 64.7,
+      "expected_sha256": "aca45ec64a188f66a13175b7136f8280f495fe5127a79584664fd8a57758baa3",
+      "id": "pf8_amount129_4_repeat1_legacy0_ds1_2",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 129.4,
+      "expected_sha256": "ccbe9b917238d76e187b21f9054abd1ccbf10235d05e9fd51b268d1139cc8bef",
+      "id": "pf8_amount129_4_repeat1_legacy0_ds1_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 258.8,
+      "expected_sha256": "9aaa831011d5d6b140c730679148b9250791ca6543add664936d67a9978147da",
+      "id": "pf8_amount129_4_repeat1_legacy0_ds2_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 64.7,
+      "expected_sha256": "63667542c845d1557f84e0b7722913b337d9bf685f6fb0815d6760a98306361b",
+      "id": "pf8_amount129_4_repeat1_legacy1_ds1_2",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 129.4,
+      "expected_sha256": "f5ce4e67ddc5b007454d8648402c34031f969a252210ac76824eea2e292ed5a6",
+      "id": "pf8_amount129_4_repeat1_legacy1_ds1_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 258.8,
+      "expected_sha256": "d1076ae0e3f5053b413111267c96d024ed32ba68434e1f8b64e68e370a2a04bb",
+      "id": "pf8_amount129_4_repeat1_legacy1_ds2_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 64.7,
+      "expected_sha256": "18b286ed4863f146f0115f79bcfb95cdf56830c10149b289b6dc469c8d6882bc",
+      "id": "pf8_amount129_4_repeat2_legacy0_ds1_2",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 129.4,
+      "expected_sha256": "1ab78e3ea76355d8287e61088f365dc71c377f644ca66d92a770f3228e77dc43",
+      "id": "pf8_amount129_4_repeat2_legacy0_ds1_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 258.8,
+      "expected_sha256": "2600ad414d5450e3652c2b82c74c1d672180010df489daefce1dd7d2dce0ec41",
+      "id": "pf8_amount129_4_repeat2_legacy0_ds2_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 64.7,
+      "expected_sha256": "0412941ec1053e65eb72b9a81be3a48020dfc15a86457aeec5eae9a13877ad96",
+      "id": "pf8_amount129_4_repeat2_legacy1_ds1_2",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 129.4,
+      "expected_sha256": "0412941ec1053e65eb72b9a81be3a48020dfc15a86457aeec5eae9a13877ad96",
+      "id": "pf8_amount129_4_repeat2_legacy1_ds1_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 258.8,
+      "expected_sha256": "d0a4b9c9251ffabd156ddeadf5da0e68bb4a9c8d61fd1995943d7d7757f7e6d2",
+      "id": "pf8_amount129_4_repeat2_legacy1_ds2_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 2.5,
+      "expected_sha256": "8016e64f11514cd8a3f742557fdc12685f0b89d27ec19664b687aa1399cad878",
+      "id": "pf16_amount5_0_repeat1_legacy0_ds1_2",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 5.0,
+      "expected_sha256": "9b26b1fee5cf05dd39473a8d385c7d80843d8bda8c25541c86a1d1c25ed6ce43",
+      "id": "pf16_amount5_0_repeat1_legacy0_ds1_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 10.0,
+      "expected_sha256": "ad51762986a80d94016322025dfa1c0e65f707883c027097d64f597abb336c17",
+      "id": "pf16_amount5_0_repeat1_legacy0_ds2_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 2.5,
+      "expected_sha256": "c11e357924a52786e5055cf432220447a632ed5561685433fbcffadb174655b4",
+      "id": "pf16_amount5_0_repeat1_legacy1_ds1_2",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 5.0,
+      "expected_sha256": "c22524ff901f905cc2d9354a0a6a47ed5aecd1dcc0d46fc79439d5ee069593fc",
+      "id": "pf16_amount5_0_repeat1_legacy1_ds1_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 10.0,
+      "expected_sha256": "39b68cd1d8af29d32355c301cbeac2bb1a59d39c7069dd24ed890d71075f849c",
+      "id": "pf16_amount5_0_repeat1_legacy1_ds2_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 2.5,
+      "expected_sha256": "5f32916c838c59e856fa1f03b0d53bbdf2d0becdb23def9e4959fe91e6abba09",
+      "id": "pf16_amount5_0_repeat2_legacy0_ds1_2",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 5.0,
+      "expected_sha256": "e317807bb9c28f5f9e87e53ec228cc1cbed6cf706c7b39edbfc0e9ef2cd9c200",
+      "id": "pf16_amount5_0_repeat2_legacy0_ds1_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 10.0,
+      "expected_sha256": "19cd5464a9371c16d2bdfc1c778823eea900a6720735b02829c5be21a16dee5a",
+      "id": "pf16_amount5_0_repeat2_legacy0_ds2_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 2.5,
+      "expected_sha256": "7d638474a5a764725b5e8083d8b9583d4f5dd3d7fd434bb13f56cd165091ee88",
+      "id": "pf16_amount5_0_repeat2_legacy1_ds1_2",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 5.0,
+      "expected_sha256": "55ceb1064942b5768d5d15ca9ec149ad6231767b8fcbba4e87997566d45060d4",
+      "id": "pf16_amount5_0_repeat2_legacy1_ds1_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 10.0,
+      "expected_sha256": "db63e67608cfbdd834ec665413d532fa1ec0879b642f0129da20259ee1462442",
+      "id": "pf16_amount5_0_repeat2_legacy1_ds2_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 64.7,
+      "expected_sha256": "fb8cc2bd954e3e04ea12e58662de36e6fde3307e79cd680481cbfffc6b690c9f",
+      "id": "pf16_amount129_4_repeat1_legacy0_ds1_2",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 129.4,
+      "expected_sha256": "8e884ac75fd8fa2751c2353789459d51efca961a3f724af27758c5b53821fc99",
+      "id": "pf16_amount129_4_repeat1_legacy0_ds1_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 258.8,
+      "expected_sha256": "62606bddfc32435a6e6585912c8a30a46e0b0667e7ec9aff1ad894cdbbaad415",
+      "id": "pf16_amount129_4_repeat1_legacy0_ds2_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 64.7,
+      "expected_sha256": "87dc4bf524b276d723aa8c9915a2036183ad4be8f39c8d70872f4c19cfac5ef6",
+      "id": "pf16_amount129_4_repeat1_legacy1_ds1_2",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 129.4,
+      "expected_sha256": "f0098a6343bb0126242843202e936331cad80a84a7af7e7af1e2d9a1d5718b8d",
+      "id": "pf16_amount129_4_repeat1_legacy1_ds1_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 258.8,
+      "expected_sha256": "f0098a6343bb0126242843202e936331cad80a84a7af7e7af1e2d9a1d5718b8d",
+      "id": "pf16_amount129_4_repeat1_legacy1_ds2_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 64.7,
+      "expected_sha256": "6ef699c0149fb830eea5b3c548809e9c7fd8203a7bece5a18e964d5374994ab3",
+      "id": "pf16_amount129_4_repeat2_legacy0_ds1_2",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 129.4,
+      "expected_sha256": "b453aac399101f45f88bf5aea1b97ed601694e8afa2a053f0740981a07d89916",
+      "id": "pf16_amount129_4_repeat2_legacy0_ds1_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 258.8,
+      "expected_sha256": "6fe639993144e81cc7f6db126fea0131de168ebb9490bed566d6bc67cc86c9bd",
+      "id": "pf16_amount129_4_repeat2_legacy0_ds2_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 64.7,
+      "expected_sha256": "0e7fad34fd3d7fe6c7b0a8f033573e2c71e575e9b7cecce9c5a8db2ec56e9db2",
+      "id": "pf16_amount129_4_repeat2_legacy1_ds1_2",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 129.4,
+      "expected_sha256": "cac4afa73b72990f39b40f1760a160b3264df869d8c9a33b3ec77571604b83ca",
+      "id": "pf16_amount129_4_repeat2_legacy1_ds1_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 258.8,
+      "expected_sha256": "30a917a1c08bc3f9d90a33a9ad442232bd52676aeac2c2486dbad58c8d40d955",
+      "id": "pf16_amount129_4_repeat2_legacy1_ds2_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 2.5,
+      "expected_sha256": "4c833311aabaff23527f82e551e67dc22cc2774d3c83069673fae2bebecfd1ad",
+      "id": "pf32_amount5_0_repeat1_legacy0_ds1_2",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 5.0,
+      "expected_sha256": "67434329bbf79181bee87025df1e93fbfd8f5fa2a7598b9431d0124a2d26cd0d",
+      "id": "pf32_amount5_0_repeat1_legacy0_ds1_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 10.0,
+      "expected_sha256": "726a0b7f2376bc8174adbd4621c71132d5cdf03fb47d3f6517fffc0446873e5a",
+      "id": "pf32_amount5_0_repeat1_legacy0_ds2_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 2.5,
+      "expected_sha256": "d49fd8eec480a8f48633cf505ec52325371d044496aacc84a84fe8152fbbe1d0",
+      "id": "pf32_amount5_0_repeat1_legacy1_ds1_2",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 5.0,
+      "expected_sha256": "c6d1a9aaee1917b0e08d9915cb16f037f4a4b3e94251481dbe1f84250d5450a5",
+      "id": "pf32_amount5_0_repeat1_legacy1_ds1_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 10.0,
+      "expected_sha256": "d53200d44ae876c1ae356f82ddb700ef7ff43b025811f6841e07bc773f28abda",
+      "id": "pf32_amount5_0_repeat1_legacy1_ds2_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 2.5,
+      "expected_sha256": "28f202d2bab154d9e94387910c82d3de157607f8b09ccc4c77ab1bc079725889",
+      "id": "pf32_amount5_0_repeat2_legacy0_ds1_2",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 5.0,
+      "expected_sha256": "2b9a3e7fd54bbd842745611117320785cbe7e6a6bd69a1053d60568fea2d8fb3",
+      "id": "pf32_amount5_0_repeat2_legacy0_ds1_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 10.0,
+      "expected_sha256": "8be89fd23b809a3cafbe3e27d684c7a797450ce37fda25e1f9889f6497f9fb0c",
+      "id": "pf32_amount5_0_repeat2_legacy0_ds2_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 2.5,
+      "expected_sha256": "137524f3124fc8f75a9f46ce3779700cacb2960413bbd24b020e41a09139b6c9",
+      "id": "pf32_amount5_0_repeat2_legacy1_ds1_2",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 5.0,
+      "expected_sha256": "f0c24443625ad1bd626b3192f483d14946e5f233dcb377288dcabc6df7c52b46",
+      "id": "pf32_amount5_0_repeat2_legacy1_ds1_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 10.0,
+      "expected_sha256": "e3106074a052416d29add16f25ede6cd938cacb79103dc8ddb49ef690ed9bf25",
+      "id": "pf32_amount5_0_repeat2_legacy1_ds2_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 64.7,
+      "expected_sha256": "221c68da812e3dd01479ef8b6dad536c260db623c98edac2103e7f9f2e2edc63",
+      "id": "pf32_amount129_4_repeat1_legacy0_ds1_2",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 129.4,
+      "expected_sha256": "a441eddae2203be1533c328853eab65ef1d068978d449c61dca39c8b3ba3233a",
+      "id": "pf32_amount129_4_repeat1_legacy0_ds1_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 258.8,
+      "expected_sha256": "fbff414de780b4f486f44524e0711ac2d07c5c7831b4586fb40fe9f4c3ef44e6",
+      "id": "pf32_amount129_4_repeat1_legacy0_ds2_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 64.7,
+      "expected_sha256": "ba97b99e6892fced94e3ae2520699478a5d3a3b058eee33897219f42dda1cb09",
+      "id": "pf32_amount129_4_repeat1_legacy1_ds1_2",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 129.4,
+      "expected_sha256": "565a47d116b099e1f3d40d49897b2c75a7dbad4a6a64d828e87f1df4b0f10fad",
+      "id": "pf32_amount129_4_repeat1_legacy1_ds1_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 258.8,
+      "expected_sha256": "c1e2f4ae0372f602f2f009567396bc7a7f13d99cf21c885b646dafd899134dfd",
+      "id": "pf32_amount129_4_repeat1_legacy1_ds2_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 64.7,
+      "expected_sha256": "6f47b0b8abaef09eb5e1dc5e2d7dc6e891cd8cfb230efb44d67f644780819049",
+      "id": "pf32_amount129_4_repeat2_legacy0_ds1_2",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 129.4,
+      "expected_sha256": "17f145081e50e988c85f4782779ecd177ef58c001f452843eed8c844d623fe4b",
+      "id": "pf32_amount129_4_repeat2_legacy0_ds1_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 258.8,
+      "expected_sha256": "942dd02347f585c116b043ff7acdea7dc45811e2f9b2e11c7db5d946672ffbb9",
+      "id": "pf32_amount129_4_repeat2_legacy0_ds2_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 64.7,
+      "expected_sha256": "880eeeea11f5dc3a889586fab584ed12c2acdba0dae6f4746372ddfd3e574b1a",
+      "id": "pf32_amount129_4_repeat2_legacy1_ds1_2",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 129.4,
+      "expected_sha256": "c6aaa55d89f2de4086d7afb53ee1130e38dceaa71f3bef337c62eb1481a80a4c",
+      "id": "pf32_amount129_4_repeat2_legacy1_ds1_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "effective_worker_amount": 258.8,
+      "expected_sha256": "4be2587a44d334c82dbfc5c81761c07490cb5d6bf402e9913377b2d3b5a2a6e2",
+      "id": "pf32_amount129_4_repeat2_legacy1_ds2_1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    }
+  ],
+  "contract": "constant 24x24 worlds; production reads PF_InData rational and scales Amount exactly once",
+  "geometry": [
+    24,
+    24
+  ],
+  "matrix": {
+    "amount": [
+      5.0,
+      129.4
+    ],
+    "bias_direction": 1,
+    "depth": [
+      8,
+      16,
+      32
+    ],
+    "downsample_x": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ]
+    ],
+    "legacy": [
+      0,
+      1
+    ],
+    "repeat": [
+      1,
+      2
+    ],
+    "smoothness": 100
+  },
+  "not_proven": [
+    "native AE preview world sizing",
+    "actual AEX public SmartRender callback chain",
+    "downsample_y anisotropy",
+    "other geometry/bias/smoothness"
+  ],
+  "path": "actual-AEX typed worker at effective Amount -> production EffectMain SmartPreRender/SmartRender at UI Amount + downsample rational",
+  "schema": "olmblur.downsample-amount.production/1",
+  "status": "exact"
+}
