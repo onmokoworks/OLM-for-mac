@@ -12,7 +12,12 @@ namespace olm::kirakira {
 inline bool mode4_rotated_scalar_admitted(
 	int width, int height, int radius, double angle_degrees)
 {
-	return width == 9 && height == 7 && radius == 5 && angle_degrees == 5.0;
+	if (radius != 5) return false;
+	return (width == 9 && height == 7 &&
+			(angle_degrees == 0.0 || angle_degrees == 5.0)) ||
+		(width == 9 && height == 9 &&
+			(angle_degrees == 45.0 || angle_degrees == -45.0 ||
+			 angle_degrees == 90.0));
 }
 
 // Recovered FUN_181150790 Mode4 scalar (CV_32FC1) row recurrence.

@@ -11,12 +11,16 @@ int main()
 	constexpr int width = 9;
 	constexpr int height = 7;
 	if (!olm::kirakira::mode4_rotated_scalar_admitted(9, 7, 5, 5.0)) return 10;
+	if (!olm::kirakira::mode4_rotated_scalar_admitted(9, 7, 5, 0.0)) return 18;
+	if (!olm::kirakira::mode4_rotated_scalar_admitted(9, 9, 5, 45.0)) return 19;
+	if (!olm::kirakira::mode4_rotated_scalar_admitted(9, 9, 5, -45.0)) return 20;
+	if (!olm::kirakira::mode4_rotated_scalar_admitted(9, 9, 5, 90.0)) return 21;
 	if (olm::kirakira::mode4_rotated_scalar_admitted(9, 7, 4, 5.0)) return 11;
 	if (olm::kirakira::mode4_rotated_scalar_admitted(9, 7, 6, 5.0)) return 12;
 	if (olm::kirakira::mode4_rotated_scalar_admitted(7, 9, 5, 5.0)) return 13;
 	if (olm::kirakira::mode4_rotated_scalar_admitted(1920, 1080, 5, 5.0)) return 14;
 	if (olm::kirakira::mode4_rotated_scalar_admitted(0, 7, 5, 5.0)) return 15;
-	if (olm::kirakira::mode4_rotated_scalar_admitted(9, 7, 5, 0.0)) return 16;
+	if (olm::kirakira::mode4_rotated_scalar_admitted(9, 7, 5, 45.0)) return 16;
 	if (olm::kirakira::mode4_rotated_scalar_admitted(9, 7, 5, -5.0)) return 17;
 	constexpr std::array<std::uint32_t, width * height> source_bits = {
 		0x3c3c3c3c,0x3d634b4c,0x3dd9a5a6,0x3e2e9697,0x3e7ba5a6,0x3eb0f0f1,0x3ee8787a,0x3ef71697,0x3e6e1e1e,

@@ -5,14 +5,15 @@
   "actual_aex": {
     "binary_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
     "entry": "FUN_181150790 Mode4 CV_32FC1 scalar path",
-    "fixture": "9x7 radius=5",
+    "fixture": "radius=5: 9x7 angles 0/5 degrees; 9x9 angles 45/-45/90 degrees",
     "input_source": "synthetic source Mat passed to the actual helper",
     "output_source": "actual helper final destination after forward warp, recurrence, and inverse warp",
     "stages": ["forward_warp", "scalar_recurrence", "inverse_warp"],
-    "float_words_compared_per_stage": 63,
+    "float_words_compared_per_stage": "63 for 9x7; 81 for 9x9",
     "bit_exact": true
   },
   "core": "core/kirakira_mode4.h::mode4_rotated_scalar_chain",
+  "canonical_angle_evidence": "refs/conformance/olmkirakira_mode4_canonical_angles_actual_aex_20260810.json",
   "production": "mac/OLMKiraKira/OLMKiraKira.cpp::RotatedAxisBoxBlur blur_mode==4",
   "verification": {
     "focused": "PASS_OLMKIRAKIRA_MODE4_PRODUCTION_BOUNDARY_20260805",

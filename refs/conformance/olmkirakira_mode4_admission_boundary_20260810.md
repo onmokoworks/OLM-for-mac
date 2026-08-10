@@ -1,17 +1,21 @@
 # OLMKiraKira Mode 4 admission boundary — 2026-08-10
 
-The only complete actual-AEX directional Mode 4 fixture is the rotated scalar
-leaf at `9×7`, radius/length `5`, angle `5°`. Its forward warp, scalar
-recurrence, and inverse warp each compare all 63 raw FLOAT32 words exactly.
+The complete actual-AEX directional Mode 4 fixtures cover radius/length `5` at
+the original `9×7 / 5°` leaf and the default-rotation canonical ray family:
+`9×7 / 0°`, plus `9×9 / 45°`, `9×9 / -45°`, and `9×9 / 90°`.
+Forward warp, scalar recurrence, and inverse warp compare every raw FLOAT32
+word exactly in each case (63 words per 9×7 stage, 81 per 9×9 stage).
 
-Production now admits precisely `(rw=9, rh=7, length=5, angle=5°)`. Every other Mode 4
+Production admits precisely those five tuples. Every other Mode 4
 directional tuple returns the unblurred input ray. It does not run the recovered
 recurrence outside its evidence boundary and does not substitute Mode 1, 2, or
 3 behavior.
 
-The admission regression positively checks `9×7/5` and negatively checks
-adjacent radii, transposed geometry, practical `1920×1080`, invalid width, and
-angles `0°` and `-5°`.
+The canonical public-route regression also verifies that source work geometry
+`5×3`, Glow Rotation `0°`, and the four named directional controls route to
+`0°`, `45°`, `-45°`, and `90°` with the admitted `9×7`/`9×9` leaves.
+Adjacent radii, mismatched geometry/angle pairs, practical `1920×1080`, invalid
+width, and `-5°` remain rejected.
 The existing exact recurrence/helper-chain fixture remains unchanged.
 
 The downstream `9×7/5` centered-crop and PF8/PF16/PF32 writer fixture remains

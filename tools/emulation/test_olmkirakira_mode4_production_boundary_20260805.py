@@ -28,11 +28,13 @@ def main() -> int:
     assert "mode4_rotated_scalar_chain(" in source
     report = json.loads(REPORT.read_text(encoding="utf-8"))
     assert report["status"] == "explicit_complete_actual_aex_fixture_boundary"
-    assert report["admitted_rotated_leaf_tuples"] == [{
-        "width": 9, "height": 7, "radius_or_length": 5, "angle_degrees": 5.0,
-        "stages": ["forward_warp", "scalar_recurrence", "inverse_warp"],
-        "raw_float32_words_per_stage": 63, "result": "exact",
-    }]
+    assert [(row["width"], row["height"], row["radius_or_length"], row["angle_degrees"])
+            for row in report["admitted_rotated_leaf_tuples"]] == [
+        (9, 7, 5, 0.0), (9, 7, 5, 5.0), (9, 9, 5, 45.0),
+        (9, 9, 5, -45.0), (9, 9, 5, 90.0),
+    ]
+    assert all(row["stages"] == ["forward_warp", "scalar_recurrence", "inverse_warp"]
+               and row["result"] == "exact" for row in report["admitted_rotated_leaf_tuples"])
     assert report["unsupported_tuple_behavior"] == (
         "return the unblurred input ray; no recurrence or alternate blur substitution"
     )
