@@ -1,0 +1,86 @@
+{
+  "actual_aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+  "cases": [
+    {
+      "actual_expected_sha256": "67037ca39d5ffad4a2ae21a1a846cab4778c6c064c5b2e0ee355db62756ebfdf",
+      "bit_depth": 8,
+      "case": "8bpc_legacy_smoothness43_75_byte_boundaries",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 9,
+        "seen_smoothness": 43.75,
+        "seen_smoothness_fixed": 2867200
+      },
+      "smoothness": 43.75
+    },
+    {
+      "actual_expected_sha256": "7ac117f2430da7a8d132c1f5318b89218cefa0601100173a99294b1ea175b305",
+      "bit_depth": 16,
+      "case": "16bpc_legacy_smoothness62_5_word_boundaries",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 7,
+        "seen_smoothness": 62.5,
+        "seen_smoothness_fixed": 4096000
+      },
+      "smoothness": 62.5
+    },
+    {
+      "actual_expected_sha256": "a0b48d578a84dda09d4d71d0bb801a70ef0ed92c7f59f32b72ace8bb753ecf44",
+      "bit_depth": 32,
+      "case": "32bpc_legacy_smoothness37_5_full24",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 11,
+        "seen_smoothness": 37.5,
+        "seen_smoothness_fixed": 2457600
+      },
+      "smoothness": 37.5
+    }
+  ],
+  "not_proven": [
+    "actual Windows AEX public SmartRender callback chain",
+    "native AE parameter materialization/layout",
+    "other Smoothness values or geometries"
+  ],
+  "path": "synthetic AE parameter checkout -> Mac production EffectMain(SMART_PRE_RENDER/SMART_RENDER) -> typed Legacy renderer",
+  "schema": "olmblur.nondefault-smoothness-effectmain/1",
+  "scope": "PF8/PF16/PF32 Legacy representative non-default Smoothness values; retained actual-AEX worker output versus public Mac production EffectMain",
+  "status": "exact"
+}
