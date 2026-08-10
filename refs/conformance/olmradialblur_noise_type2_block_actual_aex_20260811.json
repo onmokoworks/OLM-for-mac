@@ -1,0 +1,754 @@
+{
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "boundary": "Rotation Thickness3 may differ in inactive source-scalar cells; all consumed planes and visible output are exact. Output row padding is caller-owned and production preserves its seed.",
+  "cases": [
+    {
+      "bytes": {
+        "output": 308,
+        "post_blur": 230400,
+        "pre_blur": 230400
+      },
+      "depth": 8,
+      "exact": true,
+      "hashes": {
+        "output": "6e06349b7eb5984266d2d21d7615e20a62fd6acd3e1c3a6e5a6dd2162e91b26b",
+        "post_blur": "b0777010fde273658bd69323f462ad8da0f0555c50a81cf798f6312f987d3dd8",
+        "pre_blur": "6930c5266f720297dda2d31e88c20f9ac05bf6103cdba82c4becc0190d444055"
+      },
+      "missing": [],
+      "mode": "zoom",
+      "noise_variation": 25.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_padding_preserved": true,
+      "thickness": 3.0
+    },
+    {
+      "bytes": {
+        "output": 308,
+        "post_blur": 230400,
+        "pre_blur": 230400
+      },
+      "depth": 8,
+      "exact": true,
+      "hashes": {
+        "output": "d4ea4e02c9a18b87c9ece560a8d44bd16ad9cb8c886566db0a4f7c2b6a1e2f7a",
+        "post_blur": "4cd8fa45dd0a7f4dd0a2238df6853b927c93d1d1efd9f49ccd2529d32a9571bc",
+        "pre_blur": "6930c5266f720297dda2d31e88c20f9ac05bf6103cdba82c4becc0190d444055"
+      },
+      "missing": [],
+      "mode": "zoom",
+      "noise_variation": 25.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_padding_preserved": true,
+      "thickness": 10.0
+    },
+    {
+      "bytes": {
+        "output": 308,
+        "post_blur": 230400,
+        "pre_blur": 230400
+      },
+      "depth": 8,
+      "exact": true,
+      "hashes": {
+        "output": "e51eca37a9e8513641116d3302af7ff5a3706e17e8eeb1e3283ae2f88a6221c4",
+        "post_blur": "c551718945af4b5c9f59df08f45b19d81ebcd5492ccee0ecc255389bfd19720b",
+        "pre_blur": "6930c5266f720297dda2d31e88c20f9ac05bf6103cdba82c4becc0190d444055"
+      },
+      "missing": [],
+      "mode": "zoom",
+      "noise_variation": 100.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_padding_preserved": true,
+      "thickness": 3.0
+    },
+    {
+      "bytes": {
+        "output": 308,
+        "post_blur": 230400,
+        "pre_blur": 230400
+      },
+      "depth": 8,
+      "exact": true,
+      "hashes": {
+        "output": "412a096dc249c2543deb25c7e678010bc29655768ef91b6b2de75fbf49c4fc5f",
+        "post_blur": "ef37bd37fe40ae1b9ab4c8b6449a29ebc9627c565046c456d3638e53cd3ab109",
+        "pre_blur": "6930c5266f720297dda2d31e88c20f9ac05bf6103cdba82c4becc0190d444055"
+      },
+      "missing": [],
+      "mode": "zoom",
+      "noise_variation": 100.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_padding_preserved": true,
+      "thickness": 10.0
+    },
+    {
+      "bytes": {
+        "output": 560,
+        "post_blur": 259200,
+        "pre_blur": 259200
+      },
+      "depth": 16,
+      "exact": true,
+      "hashes": {
+        "output": "2e48eb13c1bee6ccd5fb45c40d8e9788e987b59a86bf673db804e70a43b7c4f2",
+        "post_blur": "b5fe3275be0df0f57494c531c82da6ab0c282cbd5c394c677ea7a769ee370ae7",
+        "pre_blur": "27c95680ec8f1d897eeddcd456456bfad1ae1406c121e7f39a6a1e9863d72dc0"
+      },
+      "missing": [],
+      "mode": "zoom",
+      "noise_variation": 25.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_padding_preserved": true,
+      "thickness": 3.0
+    },
+    {
+      "bytes": {
+        "output": 560,
+        "post_blur": 259200,
+        "pre_blur": 259200
+      },
+      "depth": 16,
+      "exact": true,
+      "hashes": {
+        "output": "26f8b2f6aff65b020eb6f96c1bcf54c5a464fe3e5f327b3d4d69ab1acc5b4f22",
+        "post_blur": "60d551ef6a17d214f59f161ae26776308fb71e640033975c6dc59aa1bce3053c",
+        "pre_blur": "27c95680ec8f1d897eeddcd456456bfad1ae1406c121e7f39a6a1e9863d72dc0"
+      },
+      "missing": [],
+      "mode": "zoom",
+      "noise_variation": 25.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_padding_preserved": true,
+      "thickness": 10.0
+    },
+    {
+      "bytes": {
+        "output": 560,
+        "post_blur": 259200,
+        "pre_blur": 259200
+      },
+      "depth": 16,
+      "exact": true,
+      "hashes": {
+        "output": "8162e954dae077c96234fe0682b66ff3c990d2faae5450bab6ec3953d0fa06a7",
+        "post_blur": "5f3b65edf077a7451efa0e4a40fa2ed871ae82789849522ee3576b1e1f05483c",
+        "pre_blur": "27c95680ec8f1d897eeddcd456456bfad1ae1406c121e7f39a6a1e9863d72dc0"
+      },
+      "missing": [],
+      "mode": "zoom",
+      "noise_variation": 100.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_padding_preserved": true,
+      "thickness": 3.0
+    },
+    {
+      "bytes": {
+        "output": 560,
+        "post_blur": 259200,
+        "pre_blur": 259200
+      },
+      "depth": 16,
+      "exact": true,
+      "hashes": {
+        "output": "6c3539ba59320e100cf790476422b1b5c1b5fdad8dc9dc09df8bf684f545251c",
+        "post_blur": "cd4307ff05e4c6357a1ebe4b8be4216f37a64a49f379045e876a5a440c2f4dd6",
+        "pre_blur": "27c95680ec8f1d897eeddcd456456bfad1ae1406c121e7f39a6a1e9863d72dc0"
+      },
+      "missing": [],
+      "mode": "zoom",
+      "noise_variation": 100.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_padding_preserved": true,
+      "thickness": 10.0
+    },
+    {
+      "bytes": {
+        "output": 1120,
+        "post_blur": 259200,
+        "pre_blur": 259200
+      },
+      "depth": 32,
+      "exact": true,
+      "hashes": {
+        "output": "eaff45de600f6fc9a82dc6bc96eefddbcfe008d8279187cfb6c92f25bbc4400e",
+        "post_blur": "238c703ecde891b3ecef7c388dd0e7cd7fab250667c296f823f745b92185232c",
+        "pre_blur": "65468046f663d30ac544be430c965ee2c305193561e09d4bf9753747e4cb24ff"
+      },
+      "missing": [],
+      "mode": "zoom",
+      "noise_variation": 25.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_padding_preserved": true,
+      "thickness": 3.0
+    },
+    {
+      "bytes": {
+        "output": 1120,
+        "post_blur": 259200,
+        "pre_blur": 259200
+      },
+      "depth": 32,
+      "exact": true,
+      "hashes": {
+        "output": "f6c99a9da495437861ef06d96b6188f52c783d41977885b475fabfa89c8ea1a7",
+        "post_blur": "f98da4f128a5774d2619f220b4a1bbf2716894dbe1768f423cfd9f28c651f4ff",
+        "pre_blur": "65468046f663d30ac544be430c965ee2c305193561e09d4bf9753747e4cb24ff"
+      },
+      "missing": [],
+      "mode": "zoom",
+      "noise_variation": 25.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_padding_preserved": true,
+      "thickness": 10.0
+    },
+    {
+      "bytes": {
+        "output": 1120,
+        "post_blur": 259200,
+        "pre_blur": 259200
+      },
+      "depth": 32,
+      "exact": true,
+      "hashes": {
+        "output": "bdbb2f47ce33aa952e3b31269dcba1de397cc6fed3c4389c03170bb986e183f2",
+        "post_blur": "b0f28ebac2018879d0ccdaa11eb64cd80bc39c3bf1f1beae4d88ac0a4976fe26",
+        "pre_blur": "65468046f663d30ac544be430c965ee2c305193561e09d4bf9753747e4cb24ff"
+      },
+      "missing": [],
+      "mode": "zoom",
+      "noise_variation": 100.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_padding_preserved": true,
+      "thickness": 3.0
+    },
+    {
+      "bytes": {
+        "output": 1120,
+        "post_blur": 259200,
+        "pre_blur": 259200
+      },
+      "depth": 32,
+      "exact": true,
+      "hashes": {
+        "output": "6ef1ab7678d72532c2ac527489a9721e714bdbaa44be753fb0a33e18fc764ad1",
+        "post_blur": "60f1760f90efdbc080fbd3f63f47205c0ab9f6955d8612a1eb4b3e96f2360459",
+        "pre_blur": "65468046f663d30ac544be430c965ee2c305193561e09d4bf9753747e4cb24ff"
+      },
+      "missing": [],
+      "mode": "zoom",
+      "noise_variation": 100.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_padding_preserved": true,
+      "thickness": 10.0
+    },
+    {
+      "bytes": {
+        "accum": 230400,
+        "coordinates": 504,
+        "final_rgba": 1008,
+        "max_alpha": 57600,
+        "output": 308,
+        "polar": 230400,
+        "source_scalar": 57600
+      },
+      "depth": 8,
+      "exact": true,
+      "hashes": {
+        "accum": "8bc1d2f5f7816474ace2832efd423751cf30bf172d76e3cbcd23e1ec0870adfc",
+        "coordinates": "431b88b00cf7458c7ad2778f75439c8bb49d2b106f2b23bc6632ffaf90e91572",
+        "final_rgba": "6403f95be89294b4b5a0c8f0aef52d7ec2eee208b30f7ac3dbd1fcb820dc9b74",
+        "max_alpha": "a5643805939512bff65658094f0f5e2cd7dcba96344431b8a2b2b58c9d4744d3",
+        "output": "8225242645054bc016103a56325719d346c31236680e81dbf1ffa6745c5368fc",
+        "polar": "716f94e45400b1e81763d9b8d0c91810424e84f66b88d31fc71c48f09afc1733",
+        "source_scalar": "f38ed60ee30e332d22c2350ea2bad47d3c89ccd09e733b7f5062112342e4db80"
+      },
+      "missing": [],
+      "mode": "rotation",
+      "noise_variation": 25.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "production_padding_preserved": true,
+      "thickness": 3.0
+    },
+    {
+      "bytes": {
+        "accum": 230400,
+        "coordinates": 504,
+        "final_rgba": 1008,
+        "max_alpha": 57600,
+        "output": 308,
+        "polar": 230400,
+        "source_scalar": 57600
+      },
+      "depth": 8,
+      "exact": true,
+      "hashes": {
+        "accum": "3d32488f39be65944d9d82da1de0746221fe21c50478053046a138c3a6d92660",
+        "coordinates": "431b88b00cf7458c7ad2778f75439c8bb49d2b106f2b23bc6632ffaf90e91572",
+        "final_rgba": "bd07d12bab1dac468603f75c8053368ca20ea7422b268f21b3cecb4d84e11fc2",
+        "max_alpha": "a5643805939512bff65658094f0f5e2cd7dcba96344431b8a2b2b58c9d4744d3",
+        "output": "8225242645054bc016103a56325719d346c31236680e81dbf1ffa6745c5368fc",
+        "polar": "716f94e45400b1e81763d9b8d0c91810424e84f66b88d31fc71c48f09afc1733",
+        "source_scalar": "305e641322267462b91dc8d1fb99352ae5728d53ab7bdf85c2aab0de76a392d4"
+      },
+      "missing": [],
+      "mode": "rotation",
+      "noise_variation": 25.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "production_padding_preserved": true,
+      "thickness": 10.0
+    },
+    {
+      "bytes": {
+        "accum": 230400,
+        "coordinates": 504,
+        "final_rgba": 1008,
+        "max_alpha": 57600,
+        "output": 308,
+        "polar": 230400,
+        "source_scalar": 57600
+      },
+      "depth": 8,
+      "exact": true,
+      "hashes": {
+        "accum": "4f09e97ed8830ed08601ead1b99abb06955d22e83861b0c50a5f4b8ab100f1cd",
+        "coordinates": "431b88b00cf7458c7ad2778f75439c8bb49d2b106f2b23bc6632ffaf90e91572",
+        "final_rgba": "658db3192f748365487a4bd18bc85fdd7c01b437379636d6ef6bdc2bf19cc058",
+        "max_alpha": "edf7d749b6bb9734e528648f63357c276e343ee1624159e8dcff885915cfbb7b",
+        "output": "7a705e50bf8a903ab363a80d73ff6c8a097259c4d34771c8d69eca3ddf311132",
+        "polar": "716f94e45400b1e81763d9b8d0c91810424e84f66b88d31fc71c48f09afc1733",
+        "source_scalar": "29edd8ba4833e60f18c38ac8406b1c6795b130b5720a875ef61aabbf3e5fa4c4"
+      },
+      "missing": [],
+      "mode": "rotation",
+      "noise_variation": 100.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "production_padding_preserved": true,
+      "thickness": 3.0
+    },
+    {
+      "bytes": {
+        "accum": 230400,
+        "coordinates": 504,
+        "final_rgba": 1008,
+        "max_alpha": 57600,
+        "output": 308,
+        "polar": 230400,
+        "source_scalar": 57600
+      },
+      "depth": 8,
+      "exact": true,
+      "hashes": {
+        "accum": "133b7680e50f0aabe4e684a8f6f6956b8d0bc0c22408eb593089505fe2bdb121",
+        "coordinates": "431b88b00cf7458c7ad2778f75439c8bb49d2b106f2b23bc6632ffaf90e91572",
+        "final_rgba": "0065cc372adfddf592e2eec2bae923b79ba70ca9dcee0afdcade711da07173b0",
+        "max_alpha": "edf7d749b6bb9734e528648f63357c276e343ee1624159e8dcff885915cfbb7b",
+        "output": "388d75dd47fcb954312cf481e93d77fddfcd5018b044eb249adc3f22d86a8d31",
+        "polar": "716f94e45400b1e81763d9b8d0c91810424e84f66b88d31fc71c48f09afc1733",
+        "source_scalar": "659530bbdba2d154f444931492db4ba744fc8bc214220e251b93305e43425378"
+      },
+      "missing": [],
+      "mode": "rotation",
+      "noise_variation": 100.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "production_padding_preserved": true,
+      "thickness": 10.0
+    },
+    {
+      "bytes": {
+        "accum": 259200,
+        "coordinates": 504,
+        "final_rgba": 1008,
+        "max_alpha": 64800,
+        "output": 560,
+        "polar": 259200,
+        "source_scalar": 64800
+      },
+      "depth": 16,
+      "exact": true,
+      "hashes": {
+        "accum": "ddf990cbe171552bf09d7ba5e5c599a8c4644fd4e6fba2327c43cb0e972de0f8",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "386f5a44258c0362ed7f9bbd99046affec74a9a93672cf1582fc4351a6f90f33",
+        "max_alpha": "3f655c2e4205002cdbc3c51a939a398e1ecba306ffaaf95657ffcb3c9aa483b5",
+        "output": "5cf43a5045738f4842893b34bc6deba5b0c0951ed4629d1938de1360a2f281a5",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "23417f72659db14df19e852db847bb3e12a66bee5a5127f67cf090609f034900"
+      },
+      "missing": [],
+      "mode": "rotation",
+      "noise_variation": 25.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "production_padding_preserved": true,
+      "thickness": 3.0
+    },
+    {
+      "bytes": {
+        "accum": 259200,
+        "coordinates": 504,
+        "final_rgba": 1008,
+        "max_alpha": 64800,
+        "output": 560,
+        "polar": 259200,
+        "source_scalar": 64800
+      },
+      "depth": 16,
+      "exact": true,
+      "hashes": {
+        "accum": "00ae6e396d69ccd23d2b05f1199f7fbd4bb35d9027c12cd4503ea330bfb98054",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "3dcf9a38baf338b180057321cea41b3d9f8787ac1850c21dd40d7a3b2ff220ca",
+        "max_alpha": "3f655c2e4205002cdbc3c51a939a398e1ecba306ffaaf95657ffcb3c9aa483b5",
+        "output": "5833c07c289e7d697d92a17bbcdb2ef04b919c55263d7cd29d7aebb521280d8b",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "c7ed9f8ff32e09c1be37ec0b6511c748dc0370ce7f0800e1d4a768529e5abc5e"
+      },
+      "missing": [],
+      "mode": "rotation",
+      "noise_variation": 25.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "production_padding_preserved": true,
+      "thickness": 10.0
+    },
+    {
+      "bytes": {
+        "accum": 259200,
+        "coordinates": 504,
+        "final_rgba": 1008,
+        "max_alpha": 64800,
+        "output": 560,
+        "polar": 259200,
+        "source_scalar": 64800
+      },
+      "depth": 16,
+      "exact": true,
+      "hashes": {
+        "accum": "d1c506fd5b2e1cb63285c7847e2c87282178055eb781f8e11a0bb0268a5dbfc3",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "42b672cc39130a10a00a93bd2bdad6d6bd82c0467157f8b93436c8462110116a",
+        "max_alpha": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+        "output": "37b6d9291942c71b1758e781993b3ee7fba501b12ee5000fed42439205013e53",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "6a1773a2aafa696ccb5b1a87f15f855e692051e13bf773a03e732a69f7ca4269"
+      },
+      "missing": [],
+      "mode": "rotation",
+      "noise_variation": 100.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "production_padding_preserved": true,
+      "thickness": 3.0
+    },
+    {
+      "bytes": {
+        "accum": 259200,
+        "coordinates": 504,
+        "final_rgba": 1008,
+        "max_alpha": 64800,
+        "output": 560,
+        "polar": 259200,
+        "source_scalar": 64800
+      },
+      "depth": 16,
+      "exact": true,
+      "hashes": {
+        "accum": "b9ad15ac07f2951fb0008d91153225ca28de61182b82b508d6c13178c2a6da8e",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "4e2aaba81ed8cd926854841a976ed1ab7dc323e3ddbb89bf6af7d11c87201580",
+        "max_alpha": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+        "output": "cf63fdf14516b0e06f22321240f11af5bbde0fa1ffe712f0aff2ed8fc56ca091",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "f3ad36496f42cc317f0b8beff2a8d2a3f4090bd4da3a7625d2ec39ec329617ba"
+      },
+      "missing": [],
+      "mode": "rotation",
+      "noise_variation": 100.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "production_padding_preserved": true,
+      "thickness": 10.0
+    },
+    {
+      "bytes": {
+        "accum": 259200,
+        "coordinates": 504,
+        "final_rgba": 1008,
+        "max_alpha": 64800,
+        "output": 1120,
+        "polar": 259200,
+        "source_scalar": 64800
+      },
+      "depth": 32,
+      "exact": true,
+      "hashes": {
+        "accum": "ddf990cbe171552bf09d7ba5e5c599a8c4644fd4e6fba2327c43cb0e972de0f8",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "386f5a44258c0362ed7f9bbd99046affec74a9a93672cf1582fc4351a6f90f33",
+        "max_alpha": "3f655c2e4205002cdbc3c51a939a398e1ecba306ffaaf95657ffcb3c9aa483b5",
+        "output": "6e784a273d76bb03ae097d76f9c28fe2c05442e43c71c271152c3b7424a0f21b",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "23417f72659db14df19e852db847bb3e12a66bee5a5127f67cf090609f034900"
+      },
+      "missing": [],
+      "mode": "rotation",
+      "noise_variation": 25.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": false,
+        "polar": true,
+        "source_scalar": false
+      },
+      "production_padding_preserved": true,
+      "thickness": 3.0
+    },
+    {
+      "bytes": {
+        "accum": 259200,
+        "coordinates": 504,
+        "final_rgba": 1008,
+        "max_alpha": 64800,
+        "output": 1120,
+        "polar": 259200,
+        "source_scalar": 64800
+      },
+      "depth": 32,
+      "exact": true,
+      "hashes": {
+        "accum": "00ae6e396d69ccd23d2b05f1199f7fbd4bb35d9027c12cd4503ea330bfb98054",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "3dcf9a38baf338b180057321cea41b3d9f8787ac1850c21dd40d7a3b2ff220ca",
+        "max_alpha": "3f655c2e4205002cdbc3c51a939a398e1ecba306ffaaf95657ffcb3c9aa483b5",
+        "output": "d57b553a8dd12b52f7a8195ba20b4adc4de6769fe8b633793f6e8c7dfd04a0a0",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "c7ed9f8ff32e09c1be37ec0b6511c748dc0370ce7f0800e1d4a768529e5abc5e"
+      },
+      "missing": [],
+      "mode": "rotation",
+      "noise_variation": 25.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": false,
+        "polar": true,
+        "source_scalar": true
+      },
+      "production_padding_preserved": true,
+      "thickness": 10.0
+    },
+    {
+      "bytes": {
+        "accum": 259200,
+        "coordinates": 504,
+        "final_rgba": 1008,
+        "max_alpha": 64800,
+        "output": 1120,
+        "polar": 259200,
+        "source_scalar": 64800
+      },
+      "depth": 32,
+      "exact": true,
+      "hashes": {
+        "accum": "d1c506fd5b2e1cb63285c7847e2c87282178055eb781f8e11a0bb0268a5dbfc3",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "42b672cc39130a10a00a93bd2bdad6d6bd82c0467157f8b93436c8462110116a",
+        "max_alpha": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+        "output": "d9ec31eb5c609d4c1c0135b0928e341c05d31d5512fc7496b033f49c5b6ab1e6",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "6a1773a2aafa696ccb5b1a87f15f855e692051e13bf773a03e732a69f7ca4269"
+      },
+      "missing": [],
+      "mode": "rotation",
+      "noise_variation": 100.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": false,
+        "polar": true,
+        "source_scalar": false
+      },
+      "production_padding_preserved": true,
+      "thickness": 3.0
+    },
+    {
+      "bytes": {
+        "accum": 259200,
+        "coordinates": 504,
+        "final_rgba": 1008,
+        "max_alpha": 64800,
+        "output": 1120,
+        "polar": 259200,
+        "source_scalar": 64800
+      },
+      "depth": 32,
+      "exact": true,
+      "hashes": {
+        "accum": "b9ad15ac07f2951fb0008d91153225ca28de61182b82b508d6c13178c2a6da8e",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "4e2aaba81ed8cd926854841a976ed1ab7dc323e3ddbb89bf6af7d11c87201580",
+        "max_alpha": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+        "output": "aca549cc4699ae1523f5845a29e63962cfe039c2b791d3eaa2cd9842f3d7b4bb",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "f3ad36496f42cc317f0b8beff2a8d2a3f4090bd4da3a7625d2ec39ec329617ba"
+      },
+      "missing": [],
+      "mode": "rotation",
+      "noise_variation": 100.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": false,
+        "polar": true,
+        "source_scalar": true
+      },
+      "production_padding_preserved": true,
+      "thickness": 10.0
+    }
+  ],
+  "kind": "olmradialblur_noise_type2_block_actual_aex_20260811",
+  "observed_rule": "Type 2 uses the Type-1 deterministic noise plane but samples the containing block cell without smooth interpolation.",
+  "scope": "9x7 centered neutral ellipse/strength; Zoom and Rotation; PF8/PF16/PF32; Block NV25/100, seed1, offset0, thickness3/10",
+  "status": "exact_with_inactive_rotation_source_scalar_boundary"
+}
