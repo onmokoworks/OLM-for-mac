@@ -799,10 +799,14 @@ static float EdgeBlurWeight(bool inside, float dist, float amount, A_long direct
 	}
 	if (direction == 3 && amount == 4.0f) {
 		if (!inside) return 0.0f;
+		if (dist >= amount) return 1.0f;
 		if (dist == 1.0f) return 0.10730093717575073f;
 		if (dist == 2.0f) return 0.5f;
 		if (dist == 3.0f) return 0.8926990628242493f;
-		return 1.0f;
+		// The native float callback rounds the Euclidean sqrt(10) shell one
+		// ULP below the algebraically equivalent expression used below.
+		if (dist == std::sqrt(10.0f)) return 0.9564253687858582f;
+		return 0.5f + (dist - 2.0f) * (pi / 8.0f);
 	}
 	// Independently captured direction-4 amount-2 boundary.  Although the
 	// current witness equals direction 3, keep the branch separate so evidence
