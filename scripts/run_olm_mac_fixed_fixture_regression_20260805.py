@@ -98,6 +98,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmcolorkey_practical_distance_types_all_depths_20260810.py"),
             (sys.executable, "tools/emulation/test_olmcolorkey_edge_thin_family_actual_aex_20260810.py"),
             (sys.executable, "tools/emulation/test_olmcolorkey_colorspace_2_5_matrix_actual_aex_20260810.py"),
+            (sys.executable, "tools/emulation/test_olmcolorkey_replace_edge_composition_actual_aex_20260811.py"),
             (sys.executable, "tools/emulation/audit_olmcolorkey_entry_writer_installed_connection_20260805.py"),
             (sys.executable, "tools/emulation/audit_olmcolorkey_effectmain_fallback_typed_writer_connection_20260805.py"),
         ),
@@ -112,6 +113,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmdirectionalblur_noise_type3_layer_size_contract_20260805.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_minimal_pf16_production_20260805.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_pf16_noise_type3_production_20260806.py"),
+            (sys.executable, "tools/emulation/test_olmdirectionalblur_pf16_fade_sharp_families_actual_aex_20260811.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_minimal_pf32_production_20260805.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_pf32_size_variation_family_actual_aex_20260810.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_pf32_front_alpha_fade_family_actual_aex_20260810.py"),
@@ -143,6 +145,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmdistancegradation_classic_pf32_blur_background_family_20260810.py"),
             (sys.executable, "tools/emulation/test_olmdistancegradation_classic_pf8_blur_modes45_family_20260810.py"),
             (sys.executable, "tools/emulation/test_olmdistancegradation_classic_pf8_blur_background_family_20260810.py"),
+            (sys.executable, "tools/emulation/audit_olmdistancegradation_exported_render_owner_boundary_20260811.py"),
         ),
     ),
     Lane(
