@@ -1,0 +1,606 @@
+{
+  "cells": [
+    {
+      "angle": 0.0,
+      "effect": "zoom",
+      "exact": true,
+      "geometry": [
+        9,
+        7,
+        80
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "ratio": 2.0,
+      "sha256": {
+        "output": "0fd61b037478986bdfdda2719376c111e4fd419e3e28945c929569fc1a62f795",
+        "post_blur": "240092580e5825f365811c8cc24a0366528952c71acf47cbbdb4b894daf4de74",
+        "pre_blur": "4579a99fc98552d672a21302ac32a43722aeb650d92f7af294edc3bfe788a42d"
+      }
+    },
+    {
+      "angle": 30.0,
+      "effect": "zoom",
+      "exact": true,
+      "geometry": [
+        9,
+        7,
+        80
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "ratio": 2.0,
+      "sha256": {
+        "output": "51b2b317c5690b864852ff8ca98c4ea684b9c918a67f7fe41a907c9225c9b547",
+        "post_blur": "fefb29e4ff14cc2bdc8be43747f6a36f8c25f4fec2372b851c349928212917c1",
+        "pre_blur": "3a08fe300626586bb8d369afb83f1cce58dc1dfe023fd7d337ebc7389323bce6"
+      }
+    },
+    {
+      "angle": 90.0,
+      "effect": "zoom",
+      "exact": true,
+      "geometry": [
+        9,
+        7,
+        80
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "ratio": 2.0,
+      "sha256": {
+        "output": "b3a82037502082188debec0b9a55413ed40e17212e1f3dc31b12604a0841656e",
+        "post_blur": "2cbdf8607c2f557e21ac8bbe83cf813697fa073ee6d83d782e0cd2053084a3e5",
+        "pre_blur": "d0a558dc6730c2e2a412028bbcb9881445d3bce2e7660e9fef9a168d25b7854d"
+      }
+    },
+    {
+      "angle": 0.0,
+      "effect": "zoom",
+      "exact": true,
+      "geometry": [
+        9,
+        7,
+        80
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "ratio": 5.0,
+      "sha256": {
+        "output": "2b315b2861e154e69c364a4aa8b8511b561235bfb6489fb22711515255d7d674",
+        "post_blur": "d80a4d2cd9e2c36ac65b55c1bb329054329fc4909cfbc2bc5a7fa7bd328b5891",
+        "pre_blur": "d026982b562476a68fe0cd3618f191e64bca9cc1bd7af0dfd225d0291175cd36"
+      }
+    },
+    {
+      "angle": 30.0,
+      "effect": "zoom",
+      "exact": true,
+      "geometry": [
+        9,
+        7,
+        80
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "ratio": 5.0,
+      "sha256": {
+        "output": "293db72637bcb24269f64d2f291b31892be369b79f74177e5681aedf1e883c17",
+        "post_blur": "f7b23a5bb7559ef9fc19656acb91f494de55673c2f9a22cf98f87dcaa6a4ef28",
+        "pre_blur": "99c68e605c8df5712bb5535b8a35d11c43a40484c287ee9947b32a3c7e6aabf3"
+      }
+    },
+    {
+      "angle": 90.0,
+      "effect": "zoom",
+      "exact": true,
+      "geometry": [
+        9,
+        7,
+        80
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "ratio": 5.0,
+      "sha256": {
+        "output": "720756316689bfe7de0d18b7c9043f3f4397cc1d7df5855d0ab538c14b30709f",
+        "post_blur": "d594cd2bdc2d1340fcf06991ca64e80178d89e01960fafdba299c4daaa258334",
+        "pre_blur": "16c53046e8e5acdaf9d70f1c33269b7703bbfcb4dd29ad0161103287ce31f4db"
+      }
+    },
+    {
+      "angle": 0.0,
+      "effect": "zoom",
+      "exact": true,
+      "geometry": [
+        32,
+        18,
+        272
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "ratio": 2.0,
+      "sha256": {
+        "output": "6d16ccd675a0be3935706c6361dfc40b663cec24dc564955b2de67db41ad10a5",
+        "post_blur": "09cdc13e0fdcacf441c4d9cb574f1bd88960ce0c59f10abf003187f020aefce3",
+        "pre_blur": "2154cbe828b0cf05f4b8a973a85d8e37199a5df3a590694acee32a0611bc23a1"
+      }
+    },
+    {
+      "angle": 30.0,
+      "effect": "zoom",
+      "exact": true,
+      "geometry": [
+        32,
+        18,
+        272
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "ratio": 2.0,
+      "sha256": {
+        "output": "82d9622f3364aefdacc092f042ec5ef9698e612add7957b526896694571e2ee1",
+        "post_blur": "1f98dc938956908c95ae092c0bff8b48607bdb9accc20c70f5dd870b0c3a6cec",
+        "pre_blur": "5ee683b9d120431f20338d94112004724f25d537a9f4a18d6bd2d1cf143fd1e7"
+      }
+    },
+    {
+      "angle": 90.0,
+      "effect": "zoom",
+      "exact": true,
+      "geometry": [
+        32,
+        18,
+        272
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "ratio": 2.0,
+      "sha256": {
+        "output": "9954baa4f28aab0878295a64a433cdd1fd17e57319f216c3f79964222bbfd9d5",
+        "post_blur": "b55ab15c6ce172063608809aebfc2fb3afc38efc7155ddb262e04c76585365f1",
+        "pre_blur": "bb975d3916545ebd9fb6118e4da4a6ad7e1ea83c019851d420d0ef634abdabfa"
+      }
+    },
+    {
+      "angle": 0.0,
+      "effect": "zoom",
+      "exact": true,
+      "geometry": [
+        32,
+        18,
+        272
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "ratio": 5.0,
+      "sha256": {
+        "output": "dddc63e457b0963536496a0b96c6b1c9b0121f73ed5229c5bb166820cc9a309e",
+        "post_blur": "428d04ac4304f88a8159318a19747ed479ed154552c705605fe021f8df694159",
+        "pre_blur": "982edcbf12490cb47fa7c7f3aa98464bacdf96c1cd6452a6281ae64fb667469e"
+      }
+    },
+    {
+      "angle": 30.0,
+      "effect": "zoom",
+      "exact": true,
+      "geometry": [
+        32,
+        18,
+        272
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "ratio": 5.0,
+      "sha256": {
+        "output": "5021a57e467292d259bcde1b31e83f04aeab0fcdbeba1b1d569193a3fde87a7b",
+        "post_blur": "c277a90c20da769ba20b5f69022fe06d1281235c63dbd9fb77fc87fbd7d2e4c5",
+        "pre_blur": "9d76224a359384949c179f158fd0428064a2c246df8e4bb29288d7271a3253f4"
+      }
+    },
+    {
+      "angle": 90.0,
+      "effect": "zoom",
+      "exact": true,
+      "geometry": [
+        32,
+        18,
+        272
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "ratio": 5.0,
+      "sha256": {
+        "output": "af28c64b3197e61e5c2c3677875be18caf3694e8b84e7fb53953d81be1c63c06",
+        "post_blur": "86da74506d530723e476ec9823063e871dc8bf4ac2f90d7aecbf8f2ee8a15744",
+        "pre_blur": "3b774791369e53ebaa3e3999a53e15873a704d5c99d1f7428dd1930755a12362"
+      }
+    },
+    {
+      "angle": 0.0,
+      "effect": "rotation",
+      "exact": true,
+      "geometry": [
+        9,
+        7,
+        80
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "ratio": 2.0,
+      "sha256": {
+        "accum": "1159ea655f37897304a04db663c184deaf38d401d6632cf4be021702f683f503",
+        "coordinates": "4ca5a2931f4e4b18599770726c6aafe9b92816ef4d883abc25fa85f050e98daa",
+        "final_rgba": "dc71d8ce7fe05123ce5fd56adb5644a9377a2607f1146372daa2d86974bf8bf8",
+        "max_alpha": "b3e7752fc3150f071da0fd5f9353e367678256b409409e63fc22ab20edde46ae",
+        "output": "b0e5075f2800e2a3aef1e2f60771e1661344529da0da2dcea352e8253f6223ee",
+        "polar": "0f7ac779b50ee3b79b6fd8029a1ccef9f6ae45d209d7e3ba85c0eb3673849e62",
+        "source_scalar": "5c3eb2f1b0946303eabb7ad70d1aebd312aa5f1b646948fc668b71816235faeb"
+      }
+    },
+    {
+      "angle": 30.0,
+      "effect": "rotation",
+      "exact": true,
+      "geometry": [
+        9,
+        7,
+        80
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "ratio": 2.0,
+      "sha256": {
+        "accum": "1792220cb2173c437ad6119726f4ac2bf57f8b97a10f9111b999aa2faeb48a8e",
+        "coordinates": "891e6e4be9f9c2ce5ec6802675b780b394ab13b694577f657153d4e5724321fa",
+        "final_rgba": "b7af536640e5870404a91e606f3ab4a90253b24f6a155c8ad9287470c843a566",
+        "max_alpha": "08ca5c0cce6675cbbf04a894309859134c4ac8cc76329d1a58778924dd6ffaf2",
+        "output": "3df3778efb534c7dad7d77cc9d8edf4166c91015209648c6b64304886f09a1d1",
+        "polar": "2af7cd30f445d93074ab763d09dd69dbb38bc4db261d07e27d0fcfb8f55f9d5f",
+        "source_scalar": "058320dcc55b5ae2b01146c7bd6c6801420af20e1b16c179528b17dfd05e5f31"
+      }
+    },
+    {
+      "angle": 90.0,
+      "effect": "rotation",
+      "exact": true,
+      "geometry": [
+        9,
+        7,
+        80
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "ratio": 2.0,
+      "sha256": {
+        "accum": "3642009cb3f20ff236e3260fc842a4cf33b38fbb2df9c49d2a82036e8ad55f58",
+        "coordinates": "b5ee613158955bdc8ec9d62a2ac5849ca3d91243579408be2613fe50fd6dc659",
+        "final_rgba": "5c1c01b004c63994555c74281b1c0df350a24409b260598f998d931b568ba83f",
+        "max_alpha": "cbed938990c0fe2a6cad23b94c7c5d769db27cfeffaf325b173bc1f6e132cede",
+        "output": "7ec8b739683c4ee2dd3126443bb2970bcf05365f555dd2a8cf5ba4837db28922",
+        "polar": "33cc3955761c89b25e4d63727282e5c7d2b53737636f3886bb99ed9c2dbbb541",
+        "source_scalar": "7a63bf5ae82f61131ad7a25051f2dc77d7fa24e57ac3048be9e03884c70f6b34"
+      }
+    },
+    {
+      "angle": 0.0,
+      "effect": "rotation",
+      "exact": true,
+      "geometry": [
+        9,
+        7,
+        80
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "ratio": 5.0,
+      "sha256": {
+        "accum": "d0ed6e9f73397fb10a9a9d04b23ce565d4557ed21644820ec9d303c7ace6e013",
+        "coordinates": "2a1d57393743236a960bd8a6ce8b73a9d57eeb095d87e0f1f5127f3022f84d61",
+        "final_rgba": "c096de8666f929f3861cbc1720f5e1a0d7f34d631211207b000c7377f8cc4d78",
+        "max_alpha": "d63124bc444f22bf3e6bdf6897579656887183988c4a514bc42e68f78e16bfb5",
+        "output": "f0a1ee22346f2d0e01c1293db109ef3bdcc3f1798b60768f39f9113aca4850bb",
+        "polar": "c3e9c85a3828be6e6c5b8628d2e45d7efaed6ef53f3b68aecbff18da57975db8",
+        "source_scalar": "0dc3891a651fb810725d6291e9303c56acfbd8a543fe7d555601797150174fac"
+      }
+    },
+    {
+      "angle": 30.0,
+      "effect": "rotation",
+      "exact": true,
+      "geometry": [
+        9,
+        7,
+        80
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "ratio": 5.0,
+      "sha256": {
+        "accum": "39ef30776726237334d5debfd2f2e78bec3b6f6aeb21d2525443e823c8e91ea7",
+        "coordinates": "c37badf2865583aa061edaee4e693be514912120cadfa2a0aa4c0c8fd2303992",
+        "final_rgba": "0ee93f382b956f90f4976cbe122c4fcb04bb78ac587db3067f453b4652b03391",
+        "max_alpha": "5167584eab4672ebe02c7c59dfbb47ec678a8eccff8087faedcab70fcd32603c",
+        "output": "2762d6fb10362512d4b65367c2fec48120b81ff4313caac78f7f81e3ecafbbaa",
+        "polar": "b0f5b7ec9f8de1e69772951400754ec514bc3d2ff23549c779f9fa6a747a6e8d",
+        "source_scalar": "2c42142dc031e2ac206fdc9071d7608b2499c0b48d234dc7daf3e1365cdb66af"
+      }
+    },
+    {
+      "angle": 90.0,
+      "effect": "rotation",
+      "exact": true,
+      "geometry": [
+        9,
+        7,
+        80
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "ratio": 5.0,
+      "sha256": {
+        "accum": "5ceb4ce8988eb2d38caa69bf8d3a8821db3ba00544394557fa9138f225dc7616",
+        "coordinates": "91ac593073f8b76a463d3e6865c89bd28925a8153c1f232cce561b2c53ae4447",
+        "final_rgba": "1124ebd6248d2a229cd585f2b089b8a65087671d1bcef9796eb23b9abf790090",
+        "max_alpha": "277ca2dc57ebb68511fdab3e34a2a4901d2f55990305e75807d0fc0a1a090873",
+        "output": "8008747667259c21c1915e604e29c18dacd2fda793cdade2aeeab2f564d76633",
+        "polar": "cf3ea01b18ec07e2fa3bb2cddeb56b7f50fe523f19684c2430a3dc81aad4d334",
+        "source_scalar": "9e849d992e4af0a6904826b3595f485d8eb81d7957a657f77dfe0a03a2f012b6"
+      }
+    },
+    {
+      "angle": 0.0,
+      "effect": "rotation",
+      "exact": true,
+      "geometry": [
+        32,
+        18,
+        272
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "ratio": 2.0,
+      "sha256": {
+        "accum": "2ab0c6f4657868785b697c260acbe66a228e0d9204bbaea7a96c71575829cbd6",
+        "coordinates": "b2f01f459c58ee3f3cf65e13f4cb3bb073ca741f872117f189fcb9a48bccf0b3",
+        "final_rgba": "912a354c225b14856896611524a18add753e4a77860563ed65bc291da6fded4d",
+        "max_alpha": "203dcd21a0570024ca503f4ca8afb5e6d0a817e4df7f657a96ce3fc47126beef",
+        "output": "ca10c98695b3f4da4676dc1a76263f3411caebbf01bfbf78365eea32d4f297d1",
+        "polar": "6b1d901a9b6c7a9d4013b478c157ed5f1025dd817abddcc9c1266ff43304fba7",
+        "source_scalar": "e3da2a6a0a26033f0f13b4adad229ea74f35fcb0c04a4b694102edf68b4ca695"
+      }
+    },
+    {
+      "angle": 30.0,
+      "effect": "rotation",
+      "exact": true,
+      "geometry": [
+        32,
+        18,
+        272
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "ratio": 2.0,
+      "sha256": {
+        "accum": "6bc8fd06b2d4738a285cafba68b15fae82d0866401e01516cf4ae76aa00858d4",
+        "coordinates": "d250a55e2bc857a26319cc89e93951313e660fc36975a6ad1557203606a2b1c9",
+        "final_rgba": "e6f9d048b1ca8e4ed076862df36faadbbffbdd89a4ce1f1238631bb77a56579e",
+        "max_alpha": "928ddee50e88379ca6cb70015ac20a8c61c1c255fba50b8a363ef5e2abbb3420",
+        "output": "fb832d3955d157861456150e7bab4f6b71d43cac5fbabb4e02c6c2d88be21300",
+        "polar": "eb8fbbfad6d633440683cbe52ae67b9cc6edc8f9b1ea70b359aebcdbd43212ee",
+        "source_scalar": "2b506df310162e68d82d0cc495419d12f7215926922de306a06940ac2e6f2676"
+      }
+    },
+    {
+      "angle": 90.0,
+      "effect": "rotation",
+      "exact": true,
+      "geometry": [
+        32,
+        18,
+        272
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "ratio": 2.0,
+      "sha256": {
+        "accum": "2de88a29d47588912a5d0058725c98e88be895503d16940139f7658d90652229",
+        "coordinates": "d8fb505cd69a91b1915bcf2c1eeed64de185c107147d00fff71091023bdcbb36",
+        "final_rgba": "7998b0a71f6aab30c070e5c8453e46dddfdc37bde5e1d2db1d0ac98091191339",
+        "max_alpha": "1608e6b82ff11dba3dccf6d5cf5a8f28c7016fb48f919c3a0cb0d03d166425a9",
+        "output": "f84197b2790909eb185505412f648b64f3f84613421f1190ff68aae4a3b82dc7",
+        "polar": "f31055ff88aa176cd90eb1a1943a9cd18f15bd425dd4de0b4683dc22dc8c8dd2",
+        "source_scalar": "418adf3a7039603a7c70a8b603e3a94e3165c0cf81510e488ed6c73638ef6fcf"
+      }
+    },
+    {
+      "angle": 0.0,
+      "effect": "rotation",
+      "exact": true,
+      "geometry": [
+        32,
+        18,
+        272
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "ratio": 5.0,
+      "sha256": {
+        "accum": "64c9433f36af537fac34df502b6dba7383ba3fe49734fe858e11c37c0a94e610",
+        "coordinates": "8511215a02e73b7fa8a07f91b6eb0d96e8e0eb66fdda035942de1eaf10795933",
+        "final_rgba": "d2b8802c742c27a6fb52bda6db72b6a36f2df11247ee55adfcd8415400b1da96",
+        "max_alpha": "cd7889b076e24afca1bea49a93b6360a0f7b0c26c4b340aa61ce1cf3be81225a",
+        "output": "bc7e8a8cb299bcf1b8d3e3b05bdab264a52f268dcbd9fac4c8e9cace483d49a0",
+        "polar": "8d81c65a5a3ceb26df2674563c57b084739bf9c8c8943754b7ea4047a74c9ed1",
+        "source_scalar": "cf9213ed4bc7a06d1b237eac21bda5ed14652806c7cfb01750cad3d5dc3b417a"
+      }
+    },
+    {
+      "angle": 30.0,
+      "effect": "rotation",
+      "exact": true,
+      "geometry": [
+        32,
+        18,
+        272
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "ratio": 5.0,
+      "sha256": {
+        "accum": "8e1b74fae370da7e38974afe2c62b0399ad283a212a49299a4bb4d627596bbcf",
+        "coordinates": "d0129a31263dc292be271f9dc528048cfc7da1609722af875b131ea9889589f7",
+        "final_rgba": "be34f2b7397e7dd1878b81e06641d22bccf6e1a2ae993d00f550beec0a7d3c2d",
+        "max_alpha": "dc965b60d2b87eeec62b3dc2e0e6d0c2e01bfc232087e3980e8b1b1ae7086348",
+        "output": "e98d8b54238a152c7cc2a5176086f6988893812f39a514b6fa2e6428b77d991f",
+        "polar": "ae60ed1b1d111e08da924a4cb87b11c6e2935b8a9b4a49a2eb42fd14f23dcb17",
+        "source_scalar": "c7ce55ffaef0a680c7e6cae002241ec5e7341244d3b230ac69dd4be392d411c6"
+      }
+    },
+    {
+      "angle": 90.0,
+      "effect": "rotation",
+      "exact": true,
+      "geometry": [
+        32,
+        18,
+        272
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "ratio": 5.0,
+      "sha256": {
+        "accum": "1d335f7f86c76e069e780115ac4bbbc6a35f8a2e96c41523fc19c12fcb3c2adb",
+        "coordinates": "97393b46c6f78ab355d2580c047ed0b7e73090ffd2b801f64f923abdcae3895c",
+        "final_rgba": "93ebba34ea21c4a3eed1758dc477906da3f19b2c67b665301c5bfd6254229060",
+        "max_alpha": "e8be5d3b6b150fa8e6af1f92afcc83c57563c7d7a6132eaba8f48951ce91c40b",
+        "output": "ad0413980d33cc84092ac28898e00c254861ca9daa6d28f06ae8c29ea843033b",
+        "polar": "43b71ea180fb8ac47281d40c4e30802f02b130731e60939b9b62e737e6d40c3c",
+        "source_scalar": "0dfe4a28fc524cd8128e30ebd93794cb850b8b4cba8b965549cb124ba22e96d8"
+      }
+    }
+  ],
+  "status": "exact",
+  "writer_boundary": "Actual owner final plane retains HDR RGB, while the PF16 typed writer saturates RGB above 1.0 before truncation; alpha is not covered by this rule."
+}

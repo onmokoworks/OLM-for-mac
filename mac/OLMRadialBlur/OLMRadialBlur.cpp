@@ -1158,6 +1158,13 @@ struct RadialZoomPixelTraits<PF_Pixel8> {
 		pixel.blue = (A_u_char)ClampFloat((float)std::floor(state.final_rgb[2] * 255.0 + rgb_epsilon), 0.0f, 255.0f);
 		pixel.alpha = (A_u_char)ClampFloat((float)std::floor(state.alpha * 255.0), 0.0f, 255.0f);
 	}
+	static void WriteZoom(PF_Pixel8 &pixel, const RadialBlurOuterSampleState &state, bool use_fft)
+	{
+		Write(pixel, state, use_fft);
+		// FUN_1800173f0 converts Zoom alpha to an integer and stores the low
+		// byte without the RGB upper saturation step.
+		pixel.alpha = (A_u_char)(int)std::floor(state.alpha * 255.0f);
+	}
 };
 
 template <>
@@ -1182,6 +1189,15 @@ struct RadialZoomPixelTraits<PF_Pixel16> {
 		pixel.blue = Store(state.final_rgb[2]);
 		pixel.alpha = Store(state.alpha);
 	}
+	static void WriteZoom(PF_Pixel16 &pixel, const RadialBlurOuterSampleState &state, bool)
+	{
+		// The Zoom PF16 owner saturates only brightness-scaled RGB at 1.0
+		// before FUN_180017440. Rotation reaches the writer without this step.
+		pixel.red = Store(state.final_rgb[0] >= 1.0f ? 1.0f : state.final_rgb[0]);
+		pixel.green = Store(state.final_rgb[1] >= 1.0f ? 1.0f : state.final_rgb[1]);
+		pixel.blue = Store(state.final_rgb[2] >= 1.0f ? 1.0f : state.final_rgb[2]);
+		pixel.alpha = Store(state.alpha);
+	}
 };
 
 template <>
@@ -1201,6 +1217,10 @@ struct RadialZoomPixelTraits<PF_PixelFloat> {
 		pixel.green = state.final_rgb[1];
 		pixel.blue = state.final_rgb[2];
 		pixel.alpha = state.alpha;
+	}
+	static void WriteZoom(PF_PixelFloat &pixel, const RadialBlurOuterSampleState &state, bool use_fft)
+	{
+		Write(pixel, state, use_fft);
 	}
 };
 
@@ -1721,10 +1741,16 @@ static PF_Err RenderZoomTyped(
 			? (PF_FpLong)input->width / 2.0 : (PF_FpLong)(input->width / 2)) &&
 		info.center_y == (std::is_same<PixelT, PF_Pixel8>::value
 			? (PF_FpLong)input->height / 2.0 : (PF_FpLong)(input->height / 2));
-	const bool use_aex_pf32_zoom_ellipse_geometry = input && output && use_aex_zoom_geometry &&
-		std::is_same<PixelT, PF_PixelFloat>::value &&
-		input->rowbytes >= input->width * (A_long)sizeof(PF_PixelFloat) &&
-		output->rowbytes >= output->width * (A_long)sizeof(PF_PixelFloat) &&
+	const bool use_aex_typed_zoom_ellipse_geometry = input && output && use_aex_zoom_geometry &&
+		input->rowbytes >= input->width * (A_long)sizeof(PixelT) &&
+		output->rowbytes >= output->width * (A_long)sizeof(PixelT) &&
+		(std::is_same<PixelT, PF_PixelFloat>::value ||
+		 (std::is_same<PixelT, PF_Pixel16>::value &&
+		  ((input->width == 9 && input->height == 7) ||
+		   (input->width == 32 && input->height == 18))) ||
+		 (std::is_same<PixelT, PF_Pixel8>::value &&
+		  ((input->width == 9 && input->height == 7) ||
+		   (input->width == 32 && input->height == 18)))) &&
 		info.outer_strength == 4 && info.outer_offset_mode == 1 && info.outer_offset == 0 &&
 		info.inner_strength == 0 && info.inner_offset_mode == 1 && info.inner_offset == 0 &&
 		info.repeat_border != FALSE && (info.ratio == 2.0 || info.ratio == 5.0) &&
@@ -1735,7 +1761,7 @@ static PF_Err RenderZoomTyped(
 		info.noise_offset == 0 && info.thickness == 10.0 &&
 		info.outer_edge_fade == 0 && info.inner_edge_fade == 0;
 	if (!use_aex_zoom_geometry || info.repeat_border == FALSE ||
-		(!use_aex_pf32_zoom_ellipse_geometry && (info.ratio != 1.0 || info.angle_deg != 0.0)) ||
+		(!use_aex_typed_zoom_ellipse_geometry && (info.ratio != 1.0 || info.angle_deg != 0.0)) ||
 		info.quality != 5.0 || info.brightness_gain != 1.0 ||
 		info.size_variation != 0.0 || info.outer_edge_fade != 0 || info.inner_edge_fade != 0) {
 		return PF_Err_BAD_CALLBACK_PARAM;
@@ -2051,7 +2077,10 @@ static PF_Err RenderZoomTyped(
 				fx, fy, xi, x1, y0, y1, sample, sample_valid, (float)info.brightness_gain,
 				RadialZoomPixelTraits<PixelT>::kStrictNonzeroAlpha);
 			PixelT *out = PixelAt<PixelT>(output, x, y);
-			RadialZoomPixelTraits<PixelT>::Write(*out, outer_state, use_fft_convolution);
+			const bool exact_pf8_ellipse_store =
+				std::is_same<PixelT, PF_Pixel8>::value && use_aex_typed_zoom_ellipse_geometry;
+			RadialZoomPixelTraits<PixelT>::WriteZoom(
+				*out, outer_state, use_fft_convolution || exact_pf8_ellipse_store);
 			if (debug.dump_path && RadialBlurDebugHasPoint(debug, x, y)) {
 				auto sample_source = [&](A_long px, A_long py, int c) -> float {
 					return polar.rgba[((size_t)py * radius_count + px) * 4 + c];
@@ -2365,9 +2394,12 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.noise_variation == 0.0 && info.noise_type == 1 &&
 		info.noise_layer == 0 && info.seed == 1 && info.noise_offset == 0 &&
 		info.thickness == 10.0 && info.comp_width == 9.0 && info.comp_height == 7.0;
-	const bool use_aex_pf32_ellipse_geometry =
-		std::is_same<PixelT, PF_PixelFloat>::value &&
-		use_aex_inner_geometry &&
+	const bool use_aex_typed_ellipse_geometry = use_aex_inner_geometry &&
+		(std::is_same<PixelT, PF_PixelFloat>::value ||
+		 (std::is_same<PixelT, PF_Pixel16>::value &&
+		  ((w == 9 && h == 7) || (w == 32 && h == 18))) ||
+		 (std::is_same<PixelT, PF_Pixel8>::value &&
+		  ((w == 9 && h == 7) || (w == 32 && h == 18)))) &&
 		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
 		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
 		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
@@ -2484,7 +2516,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		use_aex_pf32_strength5_noise_type1_small ||
 		use_aex_pf32_offset_mode3_noise_type1_small ||
 		use_aex_pf32_opaque_size_noise_type1_small ||
-		use_aex_pf32_small || use_aex_pf32_ellipse_geometry ||
+		use_aex_pf32_small || use_aex_typed_ellipse_geometry ||
 		use_aex_pf32_strength5_small || use_aex_pf16_strength5_small ||
 		use_aex_pf32_offset_mode3_ui2_small || use_aex_pf32_offset_mode3_ui3_small ||
 		use_aex_pf32_offset_mode3_ui4_small || use_aex_pf16_offset_mode3_ui2_small ||
