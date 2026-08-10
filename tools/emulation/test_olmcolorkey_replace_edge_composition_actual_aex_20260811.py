@@ -23,6 +23,8 @@ MODES = (
     {"name": "thin_negative4", "thin": -4, "blur": 0.0},
     {"name": "thin_positive4", "thin": 4, "blur": 0.0},
     {"name": "blur_direction2_amount4", "thin": 0, "blur": 4.0},
+    {"name": "thin_negative4_blur_direction2_amount4", "thin": -4, "blur": 4.0},
+    {"name": "thin_positive4_blur_direction2_amount4", "thin": 4, "blur": 4.0},
 )
 REPLACEMENTS = ((0.90, 0.10, 0.75), (0.95, 0.55, 0.05))
 REPORT = ROOT / "refs/conformance/olmcolorkey_replace_edge_composition_actual_aex_20260811.json"
@@ -86,7 +88,7 @@ def parameter_record(enabled_key: bool = False, edge_blur: float = 0.0,
 
 CUSTOM_MAIN = r'''
 int main(){g_color_suite=g_color_suite_instance;g_ansi_suite=g_ansi_suite_instance;
-constexpr int W=13,H=11,P=8;struct Mode{int thin;float blur;};const Mode modes[]={{0,0},{-4,0},{4,0},{0,4}};
+constexpr int W=13,H=11,P=8;struct Mode{int thin;float blur;};const Mode modes[]={{0,0},{-4,0},{4,0},{0,4},{-4,4},{4,4}};
 for(int replace: {0,1})for(Mode mode:modes)for(int depth: {8,16,32}){
  int ps=depth==8?4:depth==16?8:16,rb=W*ps+P;std::vector<std::uint8_t>inb(rb*H,0xA5),outb(rb*H,0xCC);
  auto keyat=[](int x,int y){bool ring=x>=1&&x<=6&&y>=1&&y<=6&&!(x>=3&&x<=4&&y>=3&&y<=4);bool slope=y>=2&&y<=6&&x>=8&&x<=8+(y-2);bool island=y==9&&(x==10||x==11);return ring||island?1:slope?2:0;};
@@ -137,7 +139,10 @@ def main() -> int:
                 act=b"".join(bytes.fromhex(r)+b"\xCC"*PADDING for r in case["captures"]["output_active_rows_hex"]);exact=act==prod
                 hits=case["execution"]["hits"];native=hits["smart_worker"]==1 and hits["parameter_materialize"]==1
                 outputs[(replace,mode["name"],fmt)]=act;passed &= exact and native
-                rows.append({"replace":replace,"edge_mode":mode["name"],"pixel_format":fmt,"status":"exact" if exact else "mismatch","bytes":size,"native_full_worker_path":native,"actual_worker_status":case["status"],"actual_sha256":hashlib.sha256(act).hexdigest(),"production_sha256":hashlib.sha256(prod).hexdigest(),"alpha_sha256":hashlib.sha256(alpha_plane(act,pb)).hexdigest()})
+                callback_counts={}
+                for event in case["execution"]["events"]:
+                    callback_counts[event["callback"]]=callback_counts.get(event["callback"],0)+1
+                rows.append({"replace":replace,"edge_mode":mode["name"],"pixel_format":fmt,"status":"exact" if exact else "mismatch","bytes":size,"native_full_worker_path":native,"actual_worker_status":case["status"],"actual_sha256":hashlib.sha256(act).hexdigest(),"production_sha256":hashlib.sha256(prod).hexdigest(),"alpha_sha256":hashlib.sha256(alpha_plane(act,pb)).hexdigest(),"native_blur_apply_calls":len(case["execution"]["blur_apply_weights"]),"native_callback_counts":callback_counts,"native_temporary_world_sha256":[w["sha256"] for w in case["execution"]["temporary_worlds"]]})
     topology=[]
     for mode in MODES:
         for fmt,pb in FORMATS.items():
@@ -147,11 +152,32 @@ def main() -> int:
     for replace in (False,True):
         for fmt,pb in FORMATS.items():
             base=alpha_plane(outputs[(replace,"none",fmt)],pb)
-            for name in ("thin_negative4","thin_positive4","blur_direction2_amount4"):
+            for name in ("thin_negative4","thin_positive4","blur_direction2_amount4",
+                         "thin_negative4_blur_direction2_amount4",
+                         "thin_positive4_blur_direction2_amount4"):
                 passed &= alpha_plane(outputs[(replace,name,fmt)],pb)!=base
+
+            # This fixture deliberately reaches uniform mattes after either
+            # Thin sign.  The native worker still executes Blur once per pixel;
+            # its output consequently equals the Thin-only result while
+            # differing from Blur-only.  Requiring the callback count prevents
+            # a false pass from silently skipping the second stage.
+            for thin_name, combo_name in (
+                ("thin_negative4", "thin_negative4_blur_direction2_amount4"),
+                ("thin_positive4", "thin_positive4_blur_direction2_amount4"),
+            ):
+                combo = outputs[(replace,combo_name,fmt)]
+                passed &= combo == outputs[(replace,thin_name,fmt)]
+                passed &= combo != outputs[(replace,"blur_direction2_amount4",fmt)]
+                combo_row = next(r for r in rows if r["replace"] == replace and
+                                 r["edge_mode"] == combo_name and r["pixel_format"] == fmt)
+                passed &= combo_row["native_callback_counts"].get("PF_HandleSuite.new_handle",0) == 1
+                passed &= combo_row["native_callback_counts"].get("PF_HandleSuite.dispose_handle",0) == 1
+                if fmt == "PF16":
+                    passed &= combo_row["native_blur_apply_calls"] == WIDTH * HEIGHT
     passed &= offset==len(candidate)
-    report={"schema_version":1,"status":"exact" if passed else "mismatch","fixture":{"dimensions":[WIDTH,HEIGHT],"shape":"black asymmetric ring with hole plus green sloped triangle and disconnected black island","replacement_colors":[list(x) for x in REPLACEMENTS],"row_padding_bytes":PADDING},"matrix":{"replace":[False,True],"edge_modes":[x["name"] for x in MODES],"pixel_formats":list(FORMATS)},"actual_aex_sha256":actual_probe.AEX_SHA256,"comparison":"actual AEX full worker versus production RenderWorld; full typed ARGB active bytes and every padding byte","cases":rows,"composition_assertions":topology,"claim_boundary":"Exact for the declared 13x11 two-key fixture, Replace off/on, Edge none/Thin -4/Thin +4/Blur Direction 2 Amount 4, and PF8/PF16/PF32. Other simultaneous Thin+Blur settings, directions, amounts, geometry, and AE-host execution are not claimed."}
-    REPORT.write_text(json.dumps(report,indent=2,sort_keys=True)+"\n");MD.write_text("# OLMColorKey Replace × Edge composition\n\n"+f"Status: **{report['status']}**\n\nReplace changes RGB while preserving the Edge-derived alpha topology in every depth/mode pair. Each nonzero Edge mode independently differs from the no-Edge topology. The actual Windows AEX full worker and production `RenderWorld` are raw-exact in all 24 cells.\n\n"+f"Boundary: {report['claim_boundary']}\n")
+    report={"schema_version":1,"status":"exact" if passed else "mismatch","fixture":{"dimensions":[WIDTH,HEIGHT],"shape":"black asymmetric ring with hole plus green sloped triangle and disconnected black island","replacement_colors":[list(x) for x in REPLACEMENTS],"row_padding_bytes":PADDING},"matrix":{"replace":[False,True],"edge_modes":[x["name"] for x in MODES],"pixel_formats":list(FORMATS)},"actual_aex_sha256":actual_probe.AEX_SHA256,"comparison":"actual AEX full worker versus production RenderWorld; full typed ARGB active bytes and every padding byte","cases":rows,"composition_assertions":topology,"claim_boundary":"Exact for the declared 13x11 two-key fixture, Replace off/on, Edge none/Thin -4/Thin +4/Blur Direction 2 Amount 4, the two Thin+Blur combinations, and PF8/PF16/PF32. Other directions, amounts, geometry, and AE-host execution are not claimed."}
+    REPORT.write_text(json.dumps(report,indent=2,sort_keys=True)+"\n");MD.write_text("# OLMColorKey Replace × Edge composition\n\n"+f"Status: **{report['status']}**\n\nReplace changes RGB while preserving the Edge-derived alpha topology in every depth/mode pair. Each nonzero Edge mode independently differs from no Edge. Thin ±4 saturates this compact fixture to a uniform matte, so each simultaneous output equals Thin-only; nevertheless every actual-AEX depth executes the Blur handle lifecycle after Thin, PF16 executes all 143 captured Blur apply callbacks, and the intermediate temporary-world hashes are retained per case. This proves the composed stage is executed rather than skipped. The actual Windows AEX full worker and production `RenderWorld` are raw-exact in all 36 cells.\n\n"+f"Boundary: {report['claim_boundary']}\n")
     print(("PASS" if passed else "FAIL")+f"_OLMCOLORKEY_REPLACE_EDGE_COMPOSITION_ACTUAL_AEX_20260811 cases={len(rows)} bytes={offset}");return 0 if passed else 3
 
 

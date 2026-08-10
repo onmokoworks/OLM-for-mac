@@ -7,7 +7,17 @@
       "alpha_sha256": "02f9db2147132efed24fa77ba62e8802f8740ec95e4cda843f8d7f0197cf4bbd",
       "bytes": 660,
       "edge_mode": "none",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_Iterate8": 1,
+        "SPBasic.AcquireSuite": 1,
+        "SPBasic.ReleaseSuite": 1,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 1
+      },
       "native_full_worker_path": true,
+      "native_temporary_world_sha256": [],
       "pixel_format": "PF8",
       "production_sha256": "8786eb8e165c9fbb6d084e89f18a4ea9fbd73b8a442667f0fc3c978b8a9a45e1",
       "replace": false,
@@ -19,7 +29,17 @@
       "alpha_sha256": "3f1ca0d141e2e55381ad1329f5441cbad8f7672c6e6389be148eaf3d47de0dc5",
       "bytes": 1232,
       "edge_mode": "none",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_Iterate16": 1,
+        "SPBasic.AcquireSuite": 1,
+        "SPBasic.ReleaseSuite": 1,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 1
+      },
       "native_full_worker_path": true,
+      "native_temporary_world_sha256": [],
       "pixel_format": "PF16",
       "production_sha256": "4561193adbfae0cfd7c13994f56f61aa21d19373d790a2e779500367ca7b800c",
       "replace": false,
@@ -31,7 +51,17 @@
       "alpha_sha256": "cbe1cbfffb3f723d79ad40195afa5f023366a371c83f14af7aa93976adb575c3",
       "bytes": 2376,
       "edge_mode": "none",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_IterateFloat": 1,
+        "SPBasic.AcquireSuite": 1,
+        "SPBasic.ReleaseSuite": 1,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 1
+      },
       "native_full_worker_path": true,
+      "native_temporary_world_sha256": [],
       "pixel_format": "PF32",
       "production_sha256": "fd2b397522449c1f0bbc2d2fb63d1eb974cb43134a6570cc442f549a3a9840f7",
       "replace": false,
@@ -43,7 +73,23 @@
       "alpha_sha256": "660b0fd63d20d0f2b3aa7179d51400a3f10089a6a065c32c03b34c99ccbe5074",
       "bytes": 660,
       "edge_mode": "thin_negative4",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_Iterate8": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 7,
+        "SPBasic.ReleaseSuite": 7,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
       "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "7b2ad9b766e21d442fd2b2434d6cdc11429ec403087be639b70e0ae3f07a3a6e",
+        "9f19b01eedad2f0ded2dd3927ff40c35a80156ae976f101494d642f643ce90a4",
+        "2f329134686a44ee0362fd0c8b5d071e38bade32a5389e31282f64f565e76759"
+      ],
       "pixel_format": "PF8",
       "production_sha256": "c9887f9fe92aba9973564145c41585e7fe9f48a3cf455396a8941c76308349f4",
       "replace": false,
@@ -55,7 +101,23 @@
       "alpha_sha256": "d6adee5297740696cddfab4ecb8fa53a1960b50629e2c8b38730891cc93cf60c",
       "bytes": 1232,
       "edge_mode": "thin_negative4",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_Iterate16": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 7,
+        "SPBasic.ReleaseSuite": 7,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
       "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "2abda147ff53e30f77e66d3f3ae17d93ce0355d090854ace498a4135c97d03d2",
+        "95dee715af162b8a77bd32f9d7e6e75f205d52da0ecafa1ea16ffcd421b3fb06",
+        "2f329134686a44ee0362fd0c8b5d071e38bade32a5389e31282f64f565e76759"
+      ],
       "pixel_format": "PF16",
       "production_sha256": "c24ce56a2244d706b3421105c657b0839cd20e6752606bb7f707d6ba2e7be1dc",
       "replace": false,
@@ -67,7 +129,23 @@
       "alpha_sha256": "0fcf40c74177936605ea861fa5eac3ab108c9ecaa13c579cf3f6846389b113a1",
       "bytes": 2376,
       "edge_mode": "thin_negative4",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_IterateFloat": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 7,
+        "SPBasic.ReleaseSuite": 7,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
       "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "a2fb90dbcf65edb8c3ea72c5cdd11edc7303d111882cea0a9d9288ab41d4a482",
+        "31ce8b63b4a49739068577cac50ca8ed3c95601171ec1011a8ef419133667de7",
+        "2f329134686a44ee0362fd0c8b5d071e38bade32a5389e31282f64f565e76759"
+      ],
       "pixel_format": "PF32",
       "production_sha256": "23415e2d00cefa87e023ae874cbe01e2309738752dbfd59ad19b70211a9199ce",
       "replace": false,
@@ -79,7 +157,23 @@
       "alpha_sha256": "dab1504910a4334d9414413d80d8d103b5f84536a8e1bc94c58c9bd9350abf23",
       "bytes": 660,
       "edge_mode": "thin_positive4",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_Iterate8": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 7,
+        "SPBasic.ReleaseSuite": 7,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
       "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "b0255c6b8f0a18f941ac64962a03b17ac0f72d090582544f7bae8b67d55659fd",
+        "9f19b01eedad2f0ded2dd3927ff40c35a80156ae976f101494d642f643ce90a4",
+        "2f329134686a44ee0362fd0c8b5d071e38bade32a5389e31282f64f565e76759"
+      ],
       "pixel_format": "PF8",
       "production_sha256": "65b7a31abd1f53960c03519eb4fdb58c2eca09e48b732acb9034a4da8d6d3ac7",
       "replace": false,
@@ -91,7 +185,23 @@
       "alpha_sha256": "491c7e3994035b4190946fb4b792401d4761bd4965daa7fd33a1eba6ec5fe7d7",
       "bytes": 1232,
       "edge_mode": "thin_positive4",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_Iterate16": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 7,
+        "SPBasic.ReleaseSuite": 7,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
       "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "e8411cf2a7436e962ddb1ac02c8ef262e9ab2338de087ede543e4f2cc9abc685",
+        "95dee715af162b8a77bd32f9d7e6e75f205d52da0ecafa1ea16ffcd421b3fb06",
+        "2f329134686a44ee0362fd0c8b5d071e38bade32a5389e31282f64f565e76759"
+      ],
       "pixel_format": "PF16",
       "production_sha256": "2af2873ddb803b78b547498e324e60efafec9fcabb0f0281b9f1983c79e83c2a",
       "replace": false,
@@ -103,7 +213,23 @@
       "alpha_sha256": "e7097fac683ea3ca36be4d8cc214958d266e38f844f5b2562d07c51674b7d231",
       "bytes": 2376,
       "edge_mode": "thin_positive4",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_IterateFloat": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 7,
+        "SPBasic.ReleaseSuite": 7,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
       "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "97e7ff968f04a1fe269a9fb50c92f0252c26443d73721812ce5f9e8a2842ff2b",
+        "31ce8b63b4a49739068577cac50ca8ed3c95601171ec1011a8ef419133667de7",
+        "2f329134686a44ee0362fd0c8b5d071e38bade32a5389e31282f64f565e76759"
+      ],
       "pixel_format": "PF32",
       "production_sha256": "59f9423b1ce290ccbf53e9e5430808f47b682d8ebf15872c92713810dd98186b",
       "replace": false,
@@ -115,7 +241,27 @@
       "alpha_sha256": "2fed21a8cf8d063093b4badbc1287145c6686f9c5c3a4e00501b2d8befc376ef",
       "bytes": 660,
       "edge_mode": "blur_direction2_amount4",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_HandleSuite.dispose_handle": 1,
+        "PF_HandleSuite.lock_handle": 1,
+        "PF_HandleSuite.new_handle": 1,
+        "PF_HandleSuite.unlock_handle": 1,
+        "PF_Iterate8": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 10,
+        "SPBasic.ReleaseSuite": 10,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
       "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "0f56c1876bb6564beb6c180a9b9bfccdd129836e8967a7b252c51c8fb96d5128",
+        "9f19b01eedad2f0ded2dd3927ff40c35a80156ae976f101494d642f643ce90a4",
+        "48fa4c1ea5373c9a3b6adce995615ede5ad123d0cdd414b8f23fa110583e47b6"
+      ],
       "pixel_format": "PF8",
       "production_sha256": "ff8ef6021e4e86a0edcf3487d36741d880b6d3a6388f8b4f9e68126dab0c1851",
       "replace": false,
@@ -127,7 +273,27 @@
       "alpha_sha256": "5d4d372dffbab26eea51eaec1a924b9093bd89df1adbec3a7a9ba4cdc5a03c0b",
       "bytes": 1232,
       "edge_mode": "blur_direction2_amount4",
+      "native_blur_apply_calls": 143,
+      "native_callback_counts": {
+        "PF_HandleSuite.dispose_handle": 1,
+        "PF_HandleSuite.lock_handle": 1,
+        "PF_HandleSuite.new_handle": 1,
+        "PF_HandleSuite.unlock_handle": 1,
+        "PF_Iterate16": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 10,
+        "SPBasic.ReleaseSuite": 10,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
       "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "123d06fda245e7f0f6cad8e53a718c5f3cec9e5497ffbb1909292e02f4ed0714",
+        "95dee715af162b8a77bd32f9d7e6e75f205d52da0ecafa1ea16ffcd421b3fb06",
+        "48fa4c1ea5373c9a3b6adce995615ede5ad123d0cdd414b8f23fa110583e47b6"
+      ],
       "pixel_format": "PF16",
       "production_sha256": "d4cc83158f9a0cfda8543e302466940cec3f3f213db6f3d7aef37ddad16a04c9",
       "replace": false,
@@ -139,9 +305,221 @@
       "alpha_sha256": "92fba0e4d4d1107c1c9652b92aa9acb9d757b3bc22be9fa257b3e2217d863c20",
       "bytes": 2376,
       "edge_mode": "blur_direction2_amount4",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_HandleSuite.dispose_handle": 1,
+        "PF_HandleSuite.lock_handle": 1,
+        "PF_HandleSuite.new_handle": 1,
+        "PF_HandleSuite.unlock_handle": 1,
+        "PF_IterateFloat": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 10,
+        "SPBasic.ReleaseSuite": 10,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
       "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "1976c23cff0020d6f0161223e05664866a0cd3d0e84746f40b005e83c9fce3ba",
+        "31ce8b63b4a49739068577cac50ca8ed3c95601171ec1011a8ef419133667de7",
+        "0b237991f0b8aadcdcf858f160c87f4e529e8718e5bf0700ef3ff18e5e5d1817"
+      ],
       "pixel_format": "PF32",
       "production_sha256": "2275d229ebd21f75f5d6a4b3cff81403a5f47b02e22121f7ee79589b192646e2",
+      "replace": false,
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "c9887f9fe92aba9973564145c41585e7fe9f48a3cf455396a8941c76308349f4",
+      "actual_worker_status": "pass",
+      "alpha_sha256": "660b0fd63d20d0f2b3aa7179d51400a3f10089a6a065c32c03b34c99ccbe5074",
+      "bytes": 660,
+      "edge_mode": "thin_negative4_blur_direction2_amount4",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_HandleSuite.dispose_handle": 1,
+        "PF_HandleSuite.lock_handle": 1,
+        "PF_HandleSuite.new_handle": 1,
+        "PF_HandleSuite.unlock_handle": 1,
+        "PF_Iterate8": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 10,
+        "SPBasic.ReleaseSuite": 10,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
+      "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "7b2ad9b766e21d442fd2b2434d6cdc11429ec403087be639b70e0ae3f07a3a6e",
+        "8623fb188b0ea5d9010a55d140c8cf03ef1ae40a2e77855028e626d6315c2265",
+        "7f9b4a482e9adcd137729490d018170187be62c60183e6d32376e016703e46f7"
+      ],
+      "pixel_format": "PF8",
+      "production_sha256": "c9887f9fe92aba9973564145c41585e7fe9f48a3cf455396a8941c76308349f4",
+      "replace": false,
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "c24ce56a2244d706b3421105c657b0839cd20e6752606bb7f707d6ba2e7be1dc",
+      "actual_worker_status": "pass",
+      "alpha_sha256": "d6adee5297740696cddfab4ecb8fa53a1960b50629e2c8b38730891cc93cf60c",
+      "bytes": 1232,
+      "edge_mode": "thin_negative4_blur_direction2_amount4",
+      "native_blur_apply_calls": 143,
+      "native_callback_counts": {
+        "PF_HandleSuite.dispose_handle": 1,
+        "PF_HandleSuite.lock_handle": 1,
+        "PF_HandleSuite.new_handle": 1,
+        "PF_HandleSuite.unlock_handle": 1,
+        "PF_Iterate16": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 10,
+        "SPBasic.ReleaseSuite": 10,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
+      "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "2abda147ff53e30f77e66d3f3ae17d93ce0355d090854ace498a4135c97d03d2",
+        "a2e064e6554bac034d9e46be00824fbe783880d6ba1fc9405fc2e573baa3fea7",
+        "7f9b4a482e9adcd137729490d018170187be62c60183e6d32376e016703e46f7"
+      ],
+      "pixel_format": "PF16",
+      "production_sha256": "c24ce56a2244d706b3421105c657b0839cd20e6752606bb7f707d6ba2e7be1dc",
+      "replace": false,
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "23415e2d00cefa87e023ae874cbe01e2309738752dbfd59ad19b70211a9199ce",
+      "actual_worker_status": "pass",
+      "alpha_sha256": "0fcf40c74177936605ea861fa5eac3ab108c9ecaa13c579cf3f6846389b113a1",
+      "bytes": 2376,
+      "edge_mode": "thin_negative4_blur_direction2_amount4",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_HandleSuite.dispose_handle": 1,
+        "PF_HandleSuite.lock_handle": 1,
+        "PF_HandleSuite.new_handle": 1,
+        "PF_HandleSuite.unlock_handle": 1,
+        "PF_IterateFloat": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 10,
+        "SPBasic.ReleaseSuite": 10,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
+      "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "a2fb90dbcf65edb8c3ea72c5cdd11edc7303d111882cea0a9d9288ab41d4a482",
+        "db4b4c8ac23c98210a1a09733c43e6bfedc81795e5653a1cfbd92d1d766232a9",
+        "7f9b4a482e9adcd137729490d018170187be62c60183e6d32376e016703e46f7"
+      ],
+      "pixel_format": "PF32",
+      "production_sha256": "23415e2d00cefa87e023ae874cbe01e2309738752dbfd59ad19b70211a9199ce",
+      "replace": false,
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "65b7a31abd1f53960c03519eb4fdb58c2eca09e48b732acb9034a4da8d6d3ac7",
+      "actual_worker_status": "pass",
+      "alpha_sha256": "dab1504910a4334d9414413d80d8d103b5f84536a8e1bc94c58c9bd9350abf23",
+      "bytes": 660,
+      "edge_mode": "thin_positive4_blur_direction2_amount4",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_HandleSuite.dispose_handle": 1,
+        "PF_HandleSuite.lock_handle": 1,
+        "PF_HandleSuite.new_handle": 1,
+        "PF_HandleSuite.unlock_handle": 1,
+        "PF_Iterate8": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 10,
+        "SPBasic.ReleaseSuite": 10,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
+      "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "b0255c6b8f0a18f941ac64962a03b17ac0f72d090582544f7bae8b67d55659fd",
+        "8623fb188b0ea5d9010a55d140c8cf03ef1ae40a2e77855028e626d6315c2265",
+        "7f9b4a482e9adcd137729490d018170187be62c60183e6d32376e016703e46f7"
+      ],
+      "pixel_format": "PF8",
+      "production_sha256": "65b7a31abd1f53960c03519eb4fdb58c2eca09e48b732acb9034a4da8d6d3ac7",
+      "replace": false,
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "2af2873ddb803b78b547498e324e60efafec9fcabb0f0281b9f1983c79e83c2a",
+      "actual_worker_status": "pass",
+      "alpha_sha256": "491c7e3994035b4190946fb4b792401d4761bd4965daa7fd33a1eba6ec5fe7d7",
+      "bytes": 1232,
+      "edge_mode": "thin_positive4_blur_direction2_amount4",
+      "native_blur_apply_calls": 143,
+      "native_callback_counts": {
+        "PF_HandleSuite.dispose_handle": 1,
+        "PF_HandleSuite.lock_handle": 1,
+        "PF_HandleSuite.new_handle": 1,
+        "PF_HandleSuite.unlock_handle": 1,
+        "PF_Iterate16": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 10,
+        "SPBasic.ReleaseSuite": 10,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
+      "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "e8411cf2a7436e962ddb1ac02c8ef262e9ab2338de087ede543e4f2cc9abc685",
+        "a2e064e6554bac034d9e46be00824fbe783880d6ba1fc9405fc2e573baa3fea7",
+        "7f9b4a482e9adcd137729490d018170187be62c60183e6d32376e016703e46f7"
+      ],
+      "pixel_format": "PF16",
+      "production_sha256": "2af2873ddb803b78b547498e324e60efafec9fcabb0f0281b9f1983c79e83c2a",
+      "replace": false,
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "59f9423b1ce290ccbf53e9e5430808f47b682d8ebf15872c92713810dd98186b",
+      "actual_worker_status": "pass",
+      "alpha_sha256": "e7097fac683ea3ca36be4d8cc214958d266e38f844f5b2562d07c51674b7d231",
+      "bytes": 2376,
+      "edge_mode": "thin_positive4_blur_direction2_amount4",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_HandleSuite.dispose_handle": 1,
+        "PF_HandleSuite.lock_handle": 1,
+        "PF_HandleSuite.new_handle": 1,
+        "PF_HandleSuite.unlock_handle": 1,
+        "PF_IterateFloat": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 10,
+        "SPBasic.ReleaseSuite": 10,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
+      "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "97e7ff968f04a1fe269a9fb50c92f0252c26443d73721812ce5f9e8a2842ff2b",
+        "db4b4c8ac23c98210a1a09733c43e6bfedc81795e5653a1cfbd92d1d766232a9",
+        "7f9b4a482e9adcd137729490d018170187be62c60183e6d32376e016703e46f7"
+      ],
+      "pixel_format": "PF32",
+      "production_sha256": "59f9423b1ce290ccbf53e9e5430808f47b682d8ebf15872c92713810dd98186b",
       "replace": false,
       "status": "exact"
     },
@@ -151,7 +529,17 @@
       "alpha_sha256": "02f9db2147132efed24fa77ba62e8802f8740ec95e4cda843f8d7f0197cf4bbd",
       "bytes": 660,
       "edge_mode": "none",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_Iterate8": 1,
+        "SPBasic.AcquireSuite": 1,
+        "SPBasic.ReleaseSuite": 1,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 1
+      },
       "native_full_worker_path": true,
+      "native_temporary_world_sha256": [],
       "pixel_format": "PF8",
       "production_sha256": "49f62698bb03fa1c09414950ac2dd73a534a4716d6f55cb51b71084e489e08c9",
       "replace": true,
@@ -163,7 +551,17 @@
       "alpha_sha256": "3f1ca0d141e2e55381ad1329f5441cbad8f7672c6e6389be148eaf3d47de0dc5",
       "bytes": 1232,
       "edge_mode": "none",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_Iterate16": 1,
+        "SPBasic.AcquireSuite": 1,
+        "SPBasic.ReleaseSuite": 1,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 1
+      },
       "native_full_worker_path": true,
+      "native_temporary_world_sha256": [],
       "pixel_format": "PF16",
       "production_sha256": "66fac9f73970280043cc26784bbf71549770e6a33dbb89b0f7631fb52b0a3889",
       "replace": true,
@@ -175,7 +573,17 @@
       "alpha_sha256": "cbe1cbfffb3f723d79ad40195afa5f023366a371c83f14af7aa93976adb575c3",
       "bytes": 2376,
       "edge_mode": "none",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_IterateFloat": 1,
+        "SPBasic.AcquireSuite": 1,
+        "SPBasic.ReleaseSuite": 1,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 1
+      },
       "native_full_worker_path": true,
+      "native_temporary_world_sha256": [],
       "pixel_format": "PF32",
       "production_sha256": "d2c145ea56526ead8f8a1deb74d81d5482e0af30bc809ba0f6caa5d8ca0e194d",
       "replace": true,
@@ -187,7 +595,23 @@
       "alpha_sha256": "660b0fd63d20d0f2b3aa7179d51400a3f10089a6a065c32c03b34c99ccbe5074",
       "bytes": 660,
       "edge_mode": "thin_negative4",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_Iterate8": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 7,
+        "SPBasic.ReleaseSuite": 7,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
       "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "72c4e9b789b8eed34eced147ff2bb4a4d1cb9aab45952e99bd1503087f479c06",
+        "9f19b01eedad2f0ded2dd3927ff40c35a80156ae976f101494d642f643ce90a4",
+        "2f329134686a44ee0362fd0c8b5d071e38bade32a5389e31282f64f565e76759"
+      ],
       "pixel_format": "PF8",
       "production_sha256": "2a14487d7415dce7e8176d4b33f54e67dbb0d9f1e27c7d739b8ae76b83b8e68a",
       "replace": true,
@@ -199,7 +623,23 @@
       "alpha_sha256": "d6adee5297740696cddfab4ecb8fa53a1960b50629e2c8b38730891cc93cf60c",
       "bytes": 1232,
       "edge_mode": "thin_negative4",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_Iterate16": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 7,
+        "SPBasic.ReleaseSuite": 7,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
       "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "b5023ea6f1495795ea4a41ecbac3c5238e8a70d1c4a06c401cddbcdb6dc69d2a",
+        "95dee715af162b8a77bd32f9d7e6e75f205d52da0ecafa1ea16ffcd421b3fb06",
+        "2f329134686a44ee0362fd0c8b5d071e38bade32a5389e31282f64f565e76759"
+      ],
       "pixel_format": "PF16",
       "production_sha256": "4a98f006d04a83fd402c17aeaba7d46d552d941493f06e50d30191cb7481028e",
       "replace": true,
@@ -211,7 +651,23 @@
       "alpha_sha256": "0fcf40c74177936605ea861fa5eac3ab108c9ecaa13c579cf3f6846389b113a1",
       "bytes": 2376,
       "edge_mode": "thin_negative4",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_IterateFloat": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 7,
+        "SPBasic.ReleaseSuite": 7,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
       "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "fd4225d95f756a8e8007d96cc86e2a55b1f39848361778e13e808d1e0801e916",
+        "31ce8b63b4a49739068577cac50ca8ed3c95601171ec1011a8ef419133667de7",
+        "2f329134686a44ee0362fd0c8b5d071e38bade32a5389e31282f64f565e76759"
+      ],
       "pixel_format": "PF32",
       "production_sha256": "b4590f5b459c48ff77e5f589f8779430b13813d0cb10c5439aea696f072c592d",
       "replace": true,
@@ -223,7 +679,23 @@
       "alpha_sha256": "dab1504910a4334d9414413d80d8d103b5f84536a8e1bc94c58c9bd9350abf23",
       "bytes": 660,
       "edge_mode": "thin_positive4",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_Iterate8": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 7,
+        "SPBasic.ReleaseSuite": 7,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
       "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "c3628d9e5e8f24784fe982fd56cbfa91c6a747960b201c1440d1ae6ee23e56cf",
+        "9f19b01eedad2f0ded2dd3927ff40c35a80156ae976f101494d642f643ce90a4",
+        "2f329134686a44ee0362fd0c8b5d071e38bade32a5389e31282f64f565e76759"
+      ],
       "pixel_format": "PF8",
       "production_sha256": "44b95e6a461fad5b871ab91a5e00551219ecac6644f5010c86759cb5bcf572df",
       "replace": true,
@@ -235,7 +707,23 @@
       "alpha_sha256": "491c7e3994035b4190946fb4b792401d4761bd4965daa7fd33a1eba6ec5fe7d7",
       "bytes": 1232,
       "edge_mode": "thin_positive4",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_Iterate16": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 7,
+        "SPBasic.ReleaseSuite": 7,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
       "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "8459f3ea35e44921e48c6d87fd76d545a8d6f5a8ee3a2ccf40b9f3ddbf21f404",
+        "95dee715af162b8a77bd32f9d7e6e75f205d52da0ecafa1ea16ffcd421b3fb06",
+        "2f329134686a44ee0362fd0c8b5d071e38bade32a5389e31282f64f565e76759"
+      ],
       "pixel_format": "PF16",
       "production_sha256": "1776f88fb08d255b8a29422a664a207165461cb4107ee2d6aa10f1ba6a258086",
       "replace": true,
@@ -247,7 +735,23 @@
       "alpha_sha256": "e7097fac683ea3ca36be4d8cc214958d266e38f844f5b2562d07c51674b7d231",
       "bytes": 2376,
       "edge_mode": "thin_positive4",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_IterateFloat": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 7,
+        "SPBasic.ReleaseSuite": 7,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
       "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "7407f2af9e2986bbec4e3ce6ec9a2260e098b03c4a52548cd96bb49d2ecfe35b",
+        "31ce8b63b4a49739068577cac50ca8ed3c95601171ec1011a8ef419133667de7",
+        "2f329134686a44ee0362fd0c8b5d071e38bade32a5389e31282f64f565e76759"
+      ],
       "pixel_format": "PF32",
       "production_sha256": "454511ec737cc7fac387d7a4cb67800babdf136625ef6dc1b8916d65bccb4d79",
       "replace": true,
@@ -259,7 +763,27 @@
       "alpha_sha256": "2fed21a8cf8d063093b4badbc1287145c6686f9c5c3a4e00501b2d8befc376ef",
       "bytes": 660,
       "edge_mode": "blur_direction2_amount4",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_HandleSuite.dispose_handle": 1,
+        "PF_HandleSuite.lock_handle": 1,
+        "PF_HandleSuite.new_handle": 1,
+        "PF_HandleSuite.unlock_handle": 1,
+        "PF_Iterate8": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 10,
+        "SPBasic.ReleaseSuite": 10,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
       "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "820bea506bec8855c085e6f395121695ab623f4ac664f9ef56bbd07d0f283373",
+        "9f19b01eedad2f0ded2dd3927ff40c35a80156ae976f101494d642f643ce90a4",
+        "48fa4c1ea5373c9a3b6adce995615ede5ad123d0cdd414b8f23fa110583e47b6"
+      ],
       "pixel_format": "PF8",
       "production_sha256": "c4797d00dfe430ccadd59c60985145fb34fdbd03bef9d9406bc0eea321039ff2",
       "replace": true,
@@ -271,7 +795,27 @@
       "alpha_sha256": "5d4d372dffbab26eea51eaec1a924b9093bd89df1adbec3a7a9ba4cdc5a03c0b",
       "bytes": 1232,
       "edge_mode": "blur_direction2_amount4",
+      "native_blur_apply_calls": 143,
+      "native_callback_counts": {
+        "PF_HandleSuite.dispose_handle": 1,
+        "PF_HandleSuite.lock_handle": 1,
+        "PF_HandleSuite.new_handle": 1,
+        "PF_HandleSuite.unlock_handle": 1,
+        "PF_Iterate16": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 10,
+        "SPBasic.ReleaseSuite": 10,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
       "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "2b786242dd9be380c869652a67d437d38aaee4986fb3cb028bac481f8daf2ce1",
+        "95dee715af162b8a77bd32f9d7e6e75f205d52da0ecafa1ea16ffcd421b3fb06",
+        "48fa4c1ea5373c9a3b6adce995615ede5ad123d0cdd414b8f23fa110583e47b6"
+      ],
       "pixel_format": "PF16",
       "production_sha256": "d7fac3d1873b4a42bfeae51ab089052ef56a70eaea5629f9ae0c0963b4926b12",
       "replace": true,
@@ -283,14 +827,226 @@
       "alpha_sha256": "92fba0e4d4d1107c1c9652b92aa9acb9d757b3bc22be9fa257b3e2217d863c20",
       "bytes": 2376,
       "edge_mode": "blur_direction2_amount4",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_HandleSuite.dispose_handle": 1,
+        "PF_HandleSuite.lock_handle": 1,
+        "PF_HandleSuite.new_handle": 1,
+        "PF_HandleSuite.unlock_handle": 1,
+        "PF_IterateFloat": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 10,
+        "SPBasic.ReleaseSuite": 10,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
       "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "c8ff4dd727bc517d12bad35ae2ebf61b5543eef4c1cd310788a769a8e669a8d9",
+        "31ce8b63b4a49739068577cac50ca8ed3c95601171ec1011a8ef419133667de7",
+        "0b237991f0b8aadcdcf858f160c87f4e529e8718e5bf0700ef3ff18e5e5d1817"
+      ],
       "pixel_format": "PF32",
       "production_sha256": "7944ddbd095a0862374d675540b1a0dd476a4acc120ff59c92e0661802656392",
       "replace": true,
       "status": "exact"
+    },
+    {
+      "actual_sha256": "2a14487d7415dce7e8176d4b33f54e67dbb0d9f1e27c7d739b8ae76b83b8e68a",
+      "actual_worker_status": "pass",
+      "alpha_sha256": "660b0fd63d20d0f2b3aa7179d51400a3f10089a6a065c32c03b34c99ccbe5074",
+      "bytes": 660,
+      "edge_mode": "thin_negative4_blur_direction2_amount4",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_HandleSuite.dispose_handle": 1,
+        "PF_HandleSuite.lock_handle": 1,
+        "PF_HandleSuite.new_handle": 1,
+        "PF_HandleSuite.unlock_handle": 1,
+        "PF_Iterate8": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 10,
+        "SPBasic.ReleaseSuite": 10,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
+      "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "72c4e9b789b8eed34eced147ff2bb4a4d1cb9aab45952e99bd1503087f479c06",
+        "8623fb188b0ea5d9010a55d140c8cf03ef1ae40a2e77855028e626d6315c2265",
+        "7f9b4a482e9adcd137729490d018170187be62c60183e6d32376e016703e46f7"
+      ],
+      "pixel_format": "PF8",
+      "production_sha256": "2a14487d7415dce7e8176d4b33f54e67dbb0d9f1e27c7d739b8ae76b83b8e68a",
+      "replace": true,
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "4a98f006d04a83fd402c17aeaba7d46d552d941493f06e50d30191cb7481028e",
+      "actual_worker_status": "pass",
+      "alpha_sha256": "d6adee5297740696cddfab4ecb8fa53a1960b50629e2c8b38730891cc93cf60c",
+      "bytes": 1232,
+      "edge_mode": "thin_negative4_blur_direction2_amount4",
+      "native_blur_apply_calls": 143,
+      "native_callback_counts": {
+        "PF_HandleSuite.dispose_handle": 1,
+        "PF_HandleSuite.lock_handle": 1,
+        "PF_HandleSuite.new_handle": 1,
+        "PF_HandleSuite.unlock_handle": 1,
+        "PF_Iterate16": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 10,
+        "SPBasic.ReleaseSuite": 10,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
+      "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "b5023ea6f1495795ea4a41ecbac3c5238e8a70d1c4a06c401cddbcdb6dc69d2a",
+        "a2e064e6554bac034d9e46be00824fbe783880d6ba1fc9405fc2e573baa3fea7",
+        "7f9b4a482e9adcd137729490d018170187be62c60183e6d32376e016703e46f7"
+      ],
+      "pixel_format": "PF16",
+      "production_sha256": "4a98f006d04a83fd402c17aeaba7d46d552d941493f06e50d30191cb7481028e",
+      "replace": true,
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "b4590f5b459c48ff77e5f589f8779430b13813d0cb10c5439aea696f072c592d",
+      "actual_worker_status": "pass",
+      "alpha_sha256": "0fcf40c74177936605ea861fa5eac3ab108c9ecaa13c579cf3f6846389b113a1",
+      "bytes": 2376,
+      "edge_mode": "thin_negative4_blur_direction2_amount4",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_HandleSuite.dispose_handle": 1,
+        "PF_HandleSuite.lock_handle": 1,
+        "PF_HandleSuite.new_handle": 1,
+        "PF_HandleSuite.unlock_handle": 1,
+        "PF_IterateFloat": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 10,
+        "SPBasic.ReleaseSuite": 10,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
+      "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "fd4225d95f756a8e8007d96cc86e2a55b1f39848361778e13e808d1e0801e916",
+        "db4b4c8ac23c98210a1a09733c43e6bfedc81795e5653a1cfbd92d1d766232a9",
+        "7f9b4a482e9adcd137729490d018170187be62c60183e6d32376e016703e46f7"
+      ],
+      "pixel_format": "PF32",
+      "production_sha256": "b4590f5b459c48ff77e5f589f8779430b13813d0cb10c5439aea696f072c592d",
+      "replace": true,
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "44b95e6a461fad5b871ab91a5e00551219ecac6644f5010c86759cb5bcf572df",
+      "actual_worker_status": "pass",
+      "alpha_sha256": "dab1504910a4334d9414413d80d8d103b5f84536a8e1bc94c58c9bd9350abf23",
+      "bytes": 660,
+      "edge_mode": "thin_positive4_blur_direction2_amount4",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_HandleSuite.dispose_handle": 1,
+        "PF_HandleSuite.lock_handle": 1,
+        "PF_HandleSuite.new_handle": 1,
+        "PF_HandleSuite.unlock_handle": 1,
+        "PF_Iterate8": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 10,
+        "SPBasic.ReleaseSuite": 10,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
+      "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "c3628d9e5e8f24784fe982fd56cbfa91c6a747960b201c1440d1ae6ee23e56cf",
+        "8623fb188b0ea5d9010a55d140c8cf03ef1ae40a2e77855028e626d6315c2265",
+        "7f9b4a482e9adcd137729490d018170187be62c60183e6d32376e016703e46f7"
+      ],
+      "pixel_format": "PF8",
+      "production_sha256": "44b95e6a461fad5b871ab91a5e00551219ecac6644f5010c86759cb5bcf572df",
+      "replace": true,
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "1776f88fb08d255b8a29422a664a207165461cb4107ee2d6aa10f1ba6a258086",
+      "actual_worker_status": "pass",
+      "alpha_sha256": "491c7e3994035b4190946fb4b792401d4761bd4965daa7fd33a1eba6ec5fe7d7",
+      "bytes": 1232,
+      "edge_mode": "thin_positive4_blur_direction2_amount4",
+      "native_blur_apply_calls": 143,
+      "native_callback_counts": {
+        "PF_HandleSuite.dispose_handle": 1,
+        "PF_HandleSuite.lock_handle": 1,
+        "PF_HandleSuite.new_handle": 1,
+        "PF_HandleSuite.unlock_handle": 1,
+        "PF_Iterate16": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 10,
+        "SPBasic.ReleaseSuite": 10,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
+      "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "8459f3ea35e44921e48c6d87fd76d545a8d6f5a8ee3a2ccf40b9f3ddbf21f404",
+        "a2e064e6554bac034d9e46be00824fbe783880d6ba1fc9405fc2e573baa3fea7",
+        "7f9b4a482e9adcd137729490d018170187be62c60183e6d32376e016703e46f7"
+      ],
+      "pixel_format": "PF16",
+      "production_sha256": "1776f88fb08d255b8a29422a664a207165461cb4107ee2d6aa10f1ba6a258086",
+      "replace": true,
+      "status": "exact"
+    },
+    {
+      "actual_sha256": "454511ec737cc7fac387d7a4cb67800babdf136625ef6dc1b8916d65bccb4d79",
+      "actual_worker_status": "pass",
+      "alpha_sha256": "e7097fac683ea3ca36be4d8cc214958d266e38f844f5b2562d07c51674b7d231",
+      "bytes": 2376,
+      "edge_mode": "thin_positive4_blur_direction2_amount4",
+      "native_blur_apply_calls": 0,
+      "native_callback_counts": {
+        "PF_HandleSuite.dispose_handle": 1,
+        "PF_HandleSuite.lock_handle": 1,
+        "PF_HandleSuite.new_handle": 1,
+        "PF_HandleSuite.unlock_handle": 1,
+        "PF_IterateFloat": 1,
+        "PF_WorldSuite.access": 3,
+        "PF_WorldSuite.dispose": 3,
+        "SPBasic.AcquireSuite": 10,
+        "SPBasic.ReleaseSuite": 10,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "worker_prepare": 2
+      },
+      "native_full_worker_path": true,
+      "native_temporary_world_sha256": [
+        "7407f2af9e2986bbec4e3ce6ec9a2260e098b03c4a52548cd96bb49d2ecfe35b",
+        "db4b4c8ac23c98210a1a09733c43e6bfedc81795e5653a1cfbd92d1d766232a9",
+        "7f9b4a482e9adcd137729490d018170187be62c60183e6d32376e016703e46f7"
+      ],
+      "pixel_format": "PF32",
+      "production_sha256": "454511ec737cc7fac387d7a4cb67800babdf136625ef6dc1b8916d65bccb4d79",
+      "replace": true,
+      "status": "exact"
     }
   ],
-  "claim_boundary": "Exact for the declared 13x11 two-key fixture, Replace off/on, Edge none/Thin -4/Thin +4/Blur Direction 2 Amount 4, and PF8/PF16/PF32. Other simultaneous Thin+Blur settings, directions, amounts, geometry, and AE-host execution are not claimed.",
+  "claim_boundary": "Exact for the declared 13x11 two-key fixture, Replace off/on, Edge none/Thin -4/Thin +4/Blur Direction 2 Amount 4, the two Thin+Blur combinations, and PF8/PF16/PF32. Other directions, amounts, geometry, and AE-host execution are not claimed.",
   "comparison": "actual AEX full worker versus production RenderWorld; full typed ARGB active bytes and every padding byte",
   "composition_assertions": [
     {
@@ -364,6 +1120,42 @@
       "pixel_format": "PF32",
       "replace_changes_rgb": true,
       "replace_preserves_alpha_topology": true
+    },
+    {
+      "edge_mode": "thin_negative4_blur_direction2_amount4",
+      "pixel_format": "PF8",
+      "replace_changes_rgb": true,
+      "replace_preserves_alpha_topology": true
+    },
+    {
+      "edge_mode": "thin_negative4_blur_direction2_amount4",
+      "pixel_format": "PF16",
+      "replace_changes_rgb": true,
+      "replace_preserves_alpha_topology": true
+    },
+    {
+      "edge_mode": "thin_negative4_blur_direction2_amount4",
+      "pixel_format": "PF32",
+      "replace_changes_rgb": true,
+      "replace_preserves_alpha_topology": true
+    },
+    {
+      "edge_mode": "thin_positive4_blur_direction2_amount4",
+      "pixel_format": "PF8",
+      "replace_changes_rgb": true,
+      "replace_preserves_alpha_topology": true
+    },
+    {
+      "edge_mode": "thin_positive4_blur_direction2_amount4",
+      "pixel_format": "PF16",
+      "replace_changes_rgb": true,
+      "replace_preserves_alpha_topology": true
+    },
+    {
+      "edge_mode": "thin_positive4_blur_direction2_amount4",
+      "pixel_format": "PF32",
+      "replace_changes_rgb": true,
+      "replace_preserves_alpha_topology": true
     }
   ],
   "fixture": {
@@ -391,7 +1183,9 @@
       "none",
       "thin_negative4",
       "thin_positive4",
-      "blur_direction2_amount4"
+      "blur_direction2_amount4",
+      "thin_negative4_blur_direction2_amount4",
+      "thin_positive4_blur_direction2_amount4"
     ],
     "pixel_formats": [
       "PF8",
