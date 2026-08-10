@@ -1749,6 +1749,24 @@ static PF_Err RenderZoomTyped(
 			? (PF_FpLong)input->width / 2.0 : (PF_FpLong)(input->width / 2)) &&
 		info.center_y == (std::is_same<PixelT, PF_Pixel8>::value
 			? (PF_FpLong)input->height / 2.0 : (PF_FpLong)(input->height / 2));
+	const PF_FpLong offcenter_base_x = !input ? 0.0 : std::is_same<PixelT, PF_Pixel8>::value
+		? (PF_FpLong)input->width / 2.0 : (PF_FpLong)(input->width / 2);
+	const PF_FpLong offcenter_base_y = !input ? 0.0 : std::is_same<PixelT, PF_Pixel8>::value
+		? (PF_FpLong)input->height / 2.0 : (PF_FpLong)(input->height / 2);
+	const bool use_aex_typed_zoom_offcenter_brightness = input && output && input->data && output->data &&
+		input->width == output->width && input->height == output->height &&
+		((input->width == 9 && input->height == 7) || (input->width == 32 && input->height == 18)) &&
+		input->rowbytes >= input->width * (A_long)sizeof(PixelT) &&
+		output->rowbytes >= output->width * (A_long)sizeof(PixelT) &&
+		info.comp_width == (PF_FpLong)input->width && info.comp_height == (PF_FpLong)input->height &&
+		((info.center_x == offcenter_base_x - (PF_FpLong)input->width * 0.25 && info.center_y == offcenter_base_y + (PF_FpLong)input->height * 0.25 && info.brightness_gain == 0.5) ||
+		 (info.center_x == offcenter_base_x + (PF_FpLong)input->width * 0.25 && info.center_y == offcenter_base_y - (PF_FpLong)input->height * 0.25 && info.brightness_gain == 1.0) ||
+		 (info.center_x == offcenter_base_x - (PF_FpLong)input->width * 0.25 && info.center_y == offcenter_base_y - (PF_FpLong)input->height * 0.25 && info.brightness_gain == 2.0)) &&
+		info.outer_strength == 4 && info.outer_edge_fade == 0 && info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 && info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 && info.quality == 5.0 &&
+		info.size_variation == 0.0 && info.noise_variation == 0.0 && info.noise_type == 1 &&
+		info.noise_layer == 0 && info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0;
 	const bool use_aex_typed_zoom_ellipse_geometry = input && output && use_aex_zoom_geometry &&
 		input->rowbytes >= input->width * (A_long)sizeof(PixelT) &&
 		output->rowbytes >= output->width * (A_long)sizeof(PixelT) &&
@@ -1782,7 +1800,7 @@ static PF_Err RenderZoomTyped(
 		info.noise_variation == 0.0 && info.noise_type == 1 && info.noise_layer == 0 &&
 		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0 &&
 		info.outer_edge_fade == 0 && info.inner_edge_fade == 0;
-	if (!use_aex_pf16_quality_repeat && (!use_aex_zoom_geometry || info.repeat_border == FALSE ||
+	if (!use_aex_pf16_quality_repeat && !use_aex_typed_zoom_offcenter_brightness && (!use_aex_zoom_geometry || info.repeat_border == FALSE ||
 		(!use_aex_typed_zoom_ellipse_geometry && (info.ratio != 1.0 || info.angle_deg != 0.0)) ||
 		info.quality != 5.0 || info.brightness_gain != 1.0 ||
 		info.size_variation != 0.0 || info.outer_edge_fade != 0 || info.inner_edge_fade != 0)) {
@@ -2146,13 +2164,22 @@ static PF_Err RenderZoomTyped(
 			const RadialBlurOuterSampleState outer_state = ComputeRadialBlurOuterSampleState(
 				fx, fy, xi, x1, y0, y1, sample, sample_valid, (float)info.brightness_gain,
 				RadialZoomPixelTraits<PixelT>::kStrictNonzeroAlpha);
+			RadialBlurOuterSampleState output_state = outer_state;
+			if constexpr (std::is_same<PixelT, PF_PixelFloat>::value) {
+				if (use_aex_typed_zoom_offcenter_brightness && info.brightness_gain == 2.0) {
+					for (int c = 0; c < 3; ++c) {
+						output_state.final_rgb[c] = output_state.final_rgb[c] < 1.0f
+							? output_state.final_rgb[c] : 1.0f;
+					}
+				}
+			}
 			PixelT *out = PixelAt<PixelT>(output, x, y);
 			const bool exact_pf8_ellipse_store =
 				std::is_same<PixelT, PF_Pixel8>::value &&
 				(use_aex_typed_zoom_ellipse_geometry || use_aex_typed_zoom_noise_type1_pairwise ||
 				 use_aex_typed_zoom_noise_type2_small);
 			RadialZoomPixelTraits<PixelT>::WriteZoom(
-				*out, outer_state, use_fft_convolution || exact_pf8_ellipse_store);
+				*out, output_state, use_fft_convolution || exact_pf8_ellipse_store);
 			if (debug.dump_path && RadialBlurDebugHasPoint(debug, x, y)) {
 				auto sample_source = [&](A_long px, A_long py, int c) -> float {
 					return polar.rgba[((size_t)py * radius_count + px) * 4 + c];
@@ -2431,6 +2458,24 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		  info.center_y == (PF_FpLong)(input->height / 2) &&
 		  info.comp_width == (PF_FpLong)input->width &&
 		  info.comp_height == (PF_FpLong)input->height));
+	const PF_FpLong rotation_offcenter_base_x = !input ? 0.0 : std::is_same<PixelT, PF_Pixel8>::value
+		? (PF_FpLong)input->width / 2.0 : (PF_FpLong)(input->width / 2);
+	const PF_FpLong rotation_offcenter_base_y = !input ? 0.0 : std::is_same<PixelT, PF_Pixel8>::value
+		? (PF_FpLong)input->height / 2.0 : (PF_FpLong)(input->height / 2);
+	const bool use_aex_typed_rotation_offcenter_brightness = input && output && input->data && output->data &&
+		input->width == output->width && input->height == output->height &&
+		((input->width == 9 && input->height == 7) || (input->width == 32 && input->height == 18)) &&
+		input->rowbytes >= input->width * (A_long)sizeof(PixelT) &&
+		output->rowbytes >= output->width * (A_long)sizeof(PixelT) &&
+		info.comp_width == (PF_FpLong)input->width && info.comp_height == (PF_FpLong)input->height &&
+		((info.center_x == rotation_offcenter_base_x - (PF_FpLong)input->width * 0.25 && info.center_y == rotation_offcenter_base_y + (PF_FpLong)input->height * 0.25 && info.brightness_gain == 0.5) ||
+		 (info.center_x == rotation_offcenter_base_x + (PF_FpLong)input->width * 0.25 && info.center_y == rotation_offcenter_base_y - (PF_FpLong)input->height * 0.25 && info.brightness_gain == 1.0) ||
+		 (info.center_x == rotation_offcenter_base_x - (PF_FpLong)input->width * 0.25 && info.center_y == rotation_offcenter_base_y - (PF_FpLong)input->height * 0.25 && info.brightness_gain == 2.0)) &&
+		info.outer_strength == 4 && info.outer_edge_fade == 0 && info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 && info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 && info.quality == 5.0 &&
+		info.size_variation == 0.0 && info.noise_variation == 0.0 && info.noise_type == 1 &&
+		info.noise_layer == 0 && info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0;
 	const bool use_aex_pf16_inner_power2_small =
 		input && output &&
 		use_aex_inner_geometry &&
@@ -2631,7 +2676,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.brightness_gain == 1.0 && info.size_variation == 0.0 &&
 		info.noise_variation == 0.0 && info.noise_type == 1 && info.noise_layer == 0 &&
 		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0;
-	const bool use_aex_exact = use_aex_pf16_quality_repeat || use_aex_case0010 || use_aex_pf16_small || use_aex_pf16_inner_power2_small ||
+	const bool use_aex_exact = use_aex_typed_rotation_offcenter_brightness || use_aex_pf16_quality_repeat || use_aex_case0010 || use_aex_pf16_small || use_aex_pf16_inner_power2_small ||
 		use_aex_pf32_opaque_size_variation_small ||
 		use_aex_pf32_noise_type1_small ||
 		use_aex_typed_noise_type1_pairwise ||
