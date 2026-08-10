@@ -1,0 +1,537 @@
+{
+  "actual_witness_status": "complete",
+  "boundary": "Only the enumerated shared-production tuples are admitted. Other strengths, fade values, offsets, geometry, parameters, Rotation, and AE-host behavior remain outside this evidence.",
+  "cases": [
+    {
+      "actual_fade50_differs_from_fade0": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": false
+      },
+      "actual_matches_mode1_offset0_edge_fade": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "actual_sha256": {
+        "output": "759a35b30d36d42ee41ffdc74889b7906efa6566c55b49bfd485dd606063462f",
+        "post_blur": "3230cf0345f01a10791b8561df1d71004ca0c6db7e787f5c5dffdb0637d44e01",
+        "pre_blur": "502c5f90cee33cc441279c145e85f02b2bf95d140372be199e4b495516155093"
+      },
+      "depth": 8,
+      "differences": {
+        "output": {
+          "actual_hex": "",
+          "different_bytes": 0,
+          "first_byte_offset": 2448,
+          "production_hex": ""
+        },
+        "post_blur": {
+          "actual_hex": "",
+          "different_bytes": 0,
+          "first_byte_offset": 604800,
+          "production_hex": ""
+        },
+        "pre_blur": {
+          "actual_hex": "",
+          "different_bytes": 0,
+          "first_byte_offset": 604800,
+          "production_hex": ""
+        }
+      },
+      "exact": true,
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 2,
+      "outer_edge_fade": 50,
+      "production_fade50_differs_from_fade0": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": false
+      }
+    },
+    {
+      "actual_fade50_differs_from_fade0": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": false
+      },
+      "actual_matches_mode1_offset0_edge_fade": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "actual_sha256": {
+        "output": "759a35b30d36d42ee41ffdc74889b7906efa6566c55b49bfd485dd606063462f",
+        "post_blur": "3230cf0345f01a10791b8561df1d71004ca0c6db7e787f5c5dffdb0637d44e01",
+        "pre_blur": "502c5f90cee33cc441279c145e85f02b2bf95d140372be199e4b495516155093"
+      },
+      "depth": 8,
+      "differences": {
+        "output": {
+          "actual_hex": "",
+          "different_bytes": 0,
+          "first_byte_offset": 2448,
+          "production_hex": ""
+        },
+        "post_blur": {
+          "actual_hex": "",
+          "different_bytes": 0,
+          "first_byte_offset": 604800,
+          "production_hex": ""
+        },
+        "pre_blur": {
+          "actual_hex": "",
+          "different_bytes": 0,
+          "first_byte_offset": 604800,
+          "production_hex": ""
+        }
+      },
+      "exact": true,
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 4,
+      "outer_edge_fade": 50,
+      "production_fade50_differs_from_fade0": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": false
+      }
+    },
+    {
+      "actual_fade50_differs_from_fade0": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": false
+      },
+      "actual_matches_mode1_offset0_edge_fade": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "actual_sha256": {
+        "output": "7b6f6a2cd6bb2f2684344977b38184817f77473b5bea58b9d40a3c02730849f0",
+        "post_blur": "4007607d5f6bc44326d90f1583c01fa5cc16cc13e36035daffd4bdaf5a9bf2ea",
+        "pre_blur": "525ce83c5615d08156b147eb2a14935e6d458233e77c159ee10790522002778d"
+      },
+      "depth": 16,
+      "differences": {
+        "output": {
+          "actual_hex": "",
+          "different_bytes": 0,
+          "first_byte_offset": 4896,
+          "production_hex": ""
+        },
+        "post_blur": {
+          "actual_hex": "",
+          "different_bytes": 0,
+          "first_byte_offset": 604800,
+          "production_hex": ""
+        },
+        "pre_blur": {
+          "actual_hex": "",
+          "different_bytes": 0,
+          "first_byte_offset": 604800,
+          "production_hex": ""
+        }
+      },
+      "exact": true,
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 2,
+      "outer_edge_fade": 50,
+      "production_fade50_differs_from_fade0": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": false
+      }
+    },
+    {
+      "actual_fade50_differs_from_fade0": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": false
+      },
+      "actual_matches_mode1_offset0_edge_fade": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "actual_sha256": {
+        "output": "7b6f6a2cd6bb2f2684344977b38184817f77473b5bea58b9d40a3c02730849f0",
+        "post_blur": "4007607d5f6bc44326d90f1583c01fa5cc16cc13e36035daffd4bdaf5a9bf2ea",
+        "pre_blur": "525ce83c5615d08156b147eb2a14935e6d458233e77c159ee10790522002778d"
+      },
+      "depth": 16,
+      "differences": {
+        "output": {
+          "actual_hex": "",
+          "different_bytes": 0,
+          "first_byte_offset": 4896,
+          "production_hex": ""
+        },
+        "post_blur": {
+          "actual_hex": "",
+          "different_bytes": 0,
+          "first_byte_offset": 604800,
+          "production_hex": ""
+        },
+        "pre_blur": {
+          "actual_hex": "",
+          "different_bytes": 0,
+          "first_byte_offset": 604800,
+          "production_hex": ""
+        }
+      },
+      "exact": true,
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 4,
+      "outer_edge_fade": 50,
+      "production_fade50_differs_from_fade0": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": false
+      }
+    },
+    {
+      "actual_fade50_differs_from_fade0": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": false
+      },
+      "actual_matches_mode1_offset0_edge_fade": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "actual_sha256": {
+        "output": "f0a436d91f3d2b5e549babf78a456aa0dc1088d1cd31dd159eed455f3181860b",
+        "post_blur": "16fdbcd5e42d8fb58bb71c9191d8ad99d1847781fa561a7c5efa3c2cc0a79485",
+        "pre_blur": "5fd11ebfc3f1ffea7b01e98cb50f7095ab699db25080cd4f1af361f534a156f7"
+      },
+      "depth": 32,
+      "differences": {
+        "output": {
+          "actual_hex": "",
+          "different_bytes": 0,
+          "first_byte_offset": 9504,
+          "production_hex": ""
+        },
+        "post_blur": {
+          "actual_hex": "",
+          "different_bytes": 0,
+          "first_byte_offset": 604800,
+          "production_hex": ""
+        },
+        "pre_blur": {
+          "actual_hex": "",
+          "different_bytes": 0,
+          "first_byte_offset": 604800,
+          "production_hex": ""
+        }
+      },
+      "exact": true,
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 2,
+      "outer_edge_fade": 50,
+      "production_fade50_differs_from_fade0": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": false
+      }
+    },
+    {
+      "actual_fade50_differs_from_fade0": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": false
+      },
+      "actual_matches_mode1_offset0_edge_fade": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "actual_sha256": {
+        "output": "f0a436d91f3d2b5e549babf78a456aa0dc1088d1cd31dd159eed455f3181860b",
+        "post_blur": "16fdbcd5e42d8fb58bb71c9191d8ad99d1847781fa561a7c5efa3c2cc0a79485",
+        "pre_blur": "5fd11ebfc3f1ffea7b01e98cb50f7095ab699db25080cd4f1af361f534a156f7"
+      },
+      "depth": 32,
+      "differences": {
+        "output": {
+          "actual_hex": "",
+          "different_bytes": 0,
+          "first_byte_offset": 9504,
+          "production_hex": ""
+        },
+        "post_blur": {
+          "actual_hex": "",
+          "different_bytes": 0,
+          "first_byte_offset": 604800,
+          "production_hex": ""
+        },
+        "pre_blur": {
+          "actual_hex": "",
+          "different_bytes": 0,
+          "first_byte_offset": 604800,
+          "production_hex": ""
+        }
+      },
+      "exact": true,
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 4,
+      "outer_edge_fade": 50,
+      "production_fade50_differs_from_fade0": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": false
+      }
+    }
+  ],
+  "edge_fade_family": [
+    {
+      "actual_sha256": {
+        "output": "0f872c2aa5fad7707505916f9dffe06c4ef31ccf76b6c92eae7d800b9ec744b3",
+        "post_blur": "990bfdb98e891499b2a5477c6f603f18e5304b420ae094094872eafbe14137f9",
+        "pre_blur": "502c5f90cee33cc441279c145e85f02b2bf95d140372be199e4b495516155093"
+      },
+      "depth": 8,
+      "exact": true,
+      "outer_edge_fade": 0,
+      "outer_offset_mode": 1,
+      "outer_offset_ui": 0,
+      "outer_strength": 4,
+      "plane_sizes": {
+        "output": 2448,
+        "post_blur": 604800,
+        "pre_blur": 604800
+      },
+      "production_matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      }
+    },
+    {
+      "actual_sha256": {
+        "output": "759a35b30d36d42ee41ffdc74889b7906efa6566c55b49bfd485dd606063462f",
+        "post_blur": "3230cf0345f01a10791b8561df1d71004ca0c6db7e787f5c5dffdb0637d44e01",
+        "pre_blur": "502c5f90cee33cc441279c145e85f02b2bf95d140372be199e4b495516155093"
+      },
+      "depth": 8,
+      "exact": true,
+      "outer_edge_fade": 50,
+      "outer_offset_mode": 1,
+      "outer_offset_ui": 0,
+      "outer_strength": 4,
+      "plane_sizes": {
+        "output": 2448,
+        "post_blur": 604800,
+        "pre_blur": 604800
+      },
+      "production_matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      }
+    },
+    {
+      "actual_sha256": {
+        "output": "f6fa487c9418ac7e950143cca77e83280366f67a9cc2acde792bbe6d42a9d679",
+        "post_blur": "1e7bc589ab49d238d38d21d9c4d72564c1cb49a9e1e0090a1500ea7aa4bcb2d6",
+        "pre_blur": "502c5f90cee33cc441279c145e85f02b2bf95d140372be199e4b495516155093"
+      },
+      "depth": 8,
+      "exact": true,
+      "outer_edge_fade": 100,
+      "outer_offset_mode": 1,
+      "outer_offset_ui": 0,
+      "outer_strength": 4,
+      "plane_sizes": {
+        "output": 2448,
+        "post_blur": 604800,
+        "pre_blur": 604800
+      },
+      "production_matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      }
+    },
+    {
+      "actual_sha256": {
+        "output": "62a2d24f4799ee12ead161e9d11d8c86c6cb7d5b0a7697724cab97c95cecdb8d",
+        "post_blur": "bb9ffe69b401a6d6cd19250790db74566293f703a7c07a4fdf2750a8b16ac771",
+        "pre_blur": "525ce83c5615d08156b147eb2a14935e6d458233e77c159ee10790522002778d"
+      },
+      "depth": 16,
+      "exact": true,
+      "outer_edge_fade": 0,
+      "outer_offset_mode": 1,
+      "outer_offset_ui": 0,
+      "outer_strength": 4,
+      "plane_sizes": {
+        "output": 4896,
+        "post_blur": 604800,
+        "pre_blur": 604800
+      },
+      "production_matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      }
+    },
+    {
+      "actual_sha256": {
+        "output": "7b6f6a2cd6bb2f2684344977b38184817f77473b5bea58b9d40a3c02730849f0",
+        "post_blur": "4007607d5f6bc44326d90f1583c01fa5cc16cc13e36035daffd4bdaf5a9bf2ea",
+        "pre_blur": "525ce83c5615d08156b147eb2a14935e6d458233e77c159ee10790522002778d"
+      },
+      "depth": 16,
+      "exact": true,
+      "outer_edge_fade": 50,
+      "outer_offset_mode": 1,
+      "outer_offset_ui": 0,
+      "outer_strength": 4,
+      "plane_sizes": {
+        "output": 4896,
+        "post_blur": 604800,
+        "pre_blur": 604800
+      },
+      "production_matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      }
+    },
+    {
+      "actual_sha256": {
+        "output": "e46225dac6563b1b14122a96d1094683b135b5a994b609e81ef79fb5b635b10a",
+        "post_blur": "0da3f0153fc6c68cc4954b67667ed5cdcb593b7181c73c032c9593911f0230cb",
+        "pre_blur": "525ce83c5615d08156b147eb2a14935e6d458233e77c159ee10790522002778d"
+      },
+      "depth": 16,
+      "exact": true,
+      "outer_edge_fade": 100,
+      "outer_offset_mode": 1,
+      "outer_offset_ui": 0,
+      "outer_strength": 4,
+      "plane_sizes": {
+        "output": 4896,
+        "post_blur": 604800,
+        "pre_blur": 604800
+      },
+      "production_matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      }
+    },
+    {
+      "actual_sha256": {
+        "output": "73787441422c98da508e0616621b305b77e1eb1874ce7f4cfbdfa9a2a10171cf",
+        "post_blur": "1c1766f221b40b61a378ee75f765b88d4629569e3b28ad5487084fa2097be532",
+        "pre_blur": "5fd11ebfc3f1ffea7b01e98cb50f7095ab699db25080cd4f1af361f534a156f7"
+      },
+      "depth": 32,
+      "exact": true,
+      "outer_edge_fade": 0,
+      "outer_offset_mode": 1,
+      "outer_offset_ui": 0,
+      "outer_strength": 4,
+      "plane_sizes": {
+        "output": 9504,
+        "post_blur": 604800,
+        "pre_blur": 604800
+      },
+      "production_matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      }
+    },
+    {
+      "actual_sha256": {
+        "output": "f0a436d91f3d2b5e549babf78a456aa0dc1088d1cd31dd159eed455f3181860b",
+        "post_blur": "16fdbcd5e42d8fb58bb71c9191d8ad99d1847781fa561a7c5efa3c2cc0a79485",
+        "pre_blur": "5fd11ebfc3f1ffea7b01e98cb50f7095ab699db25080cd4f1af361f534a156f7"
+      },
+      "depth": 32,
+      "exact": true,
+      "outer_edge_fade": 50,
+      "outer_offset_mode": 1,
+      "outer_offset_ui": 0,
+      "outer_strength": 4,
+      "plane_sizes": {
+        "output": 9504,
+        "post_blur": 604800,
+        "pre_blur": 604800
+      },
+      "production_matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      }
+    },
+    {
+      "actual_sha256": {
+        "output": "f129a3c734179ecef475ba0d65ee87d9971c3b5d1252621337e60ac2a1956f70",
+        "post_blur": "09f04e06fe4a1b38630fe4d8c3f2978f4b3db30e24c139c7736aaefa8d6fe336",
+        "pre_blur": "5fd11ebfc3f1ffea7b01e98cb50f7095ab699db25080cd4f1af361f534a156f7"
+      },
+      "depth": 32,
+      "exact": true,
+      "outer_edge_fade": 100,
+      "outer_offset_mode": 1,
+      "outer_offset_ui": 0,
+      "outer_strength": 4,
+      "plane_sizes": {
+        "output": 9504,
+        "post_blur": 604800,
+        "pre_blur": 604800
+      },
+      "production_matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      }
+    }
+  ],
+  "fade_observation": "Fade0/50/100 have identical pre-blur planes within each depth; Fade changes begin in the actual AEX Zoom blur pass and are reproduced byte-exactly by shared production in the admitted family.",
+  "interaction_observation": "Each crossed actual-AEX capture is byte-identical to the same-depth Edge Fade50 Mode1/Offset0 actual capture when the reported baseline map is all true.",
+  "kind": "olmradialblur_zoom_edge_fade_actual_aex_witness_20260811",
+  "plane_contract": [
+    "pre_blur float32 RGBA",
+    "post_blur float32 RGBA",
+    "typed output including row padding"
+  ],
+  "scope": "Zoom centered 32x18 PF8/PF16/PF32, Outer Strength4, Edge Fade0/50/100 with Mode1/Offset0, plus Fade50 pairwise Offset Mode2/UI2 and Mode3/UI4; internal float planes and padded typed output.",
+  "status": "exact"
+}

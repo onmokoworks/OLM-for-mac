@@ -1,0 +1,238 @@
+{
+  "boundary": "Only the enumerated shared-production Fade50 centered 32x18 Mode2/UI4 and Mode3/UI4 tuples are admitted. Fade100, Mode2/UI2, other values/geometries, and AE-host behavior remain unproved.",
+  "cases": [
+    {
+      "depth": 8,
+      "edge_fade": 50,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "prepass_alpha": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 2,
+      "side": "outer",
+      "strength": 4
+    },
+    {
+      "depth": 8,
+      "edge_fade": 50,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "prepass_alpha": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 3,
+      "side": "outer",
+      "strength": 4
+    },
+    {
+      "depth": 8,
+      "edge_fade": 50,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "prepass_alpha": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 2,
+      "side": "inner",
+      "strength": 4
+    },
+    {
+      "depth": 8,
+      "edge_fade": 50,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "prepass_alpha": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 3,
+      "side": "inner",
+      "strength": 4
+    },
+    {
+      "depth": 16,
+      "edge_fade": 50,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "prepass_alpha": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 2,
+      "side": "outer",
+      "strength": 4
+    },
+    {
+      "depth": 16,
+      "edge_fade": 50,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "prepass_alpha": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 3,
+      "side": "outer",
+      "strength": 4
+    },
+    {
+      "depth": 16,
+      "edge_fade": 50,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "prepass_alpha": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 2,
+      "side": "inner",
+      "strength": 4
+    },
+    {
+      "depth": 16,
+      "edge_fade": 50,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "prepass_alpha": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 3,
+      "side": "inner",
+      "strength": 4
+    },
+    {
+      "depth": 32,
+      "edge_fade": 50,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "prepass_alpha": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 2,
+      "side": "outer",
+      "strength": 4
+    },
+    {
+      "depth": 32,
+      "edge_fade": 50,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "prepass_alpha": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 3,
+      "side": "outer",
+      "strength": 4
+    },
+    {
+      "depth": 32,
+      "edge_fade": 50,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "prepass_alpha": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 2,
+      "side": "inner",
+      "strength": 4
+    },
+    {
+      "depth": 32,
+      "edge_fade": 50,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "prepass_alpha": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 3,
+      "side": "inner",
+      "strength": 4
+    }
+  ],
+  "exact_cases": 12,
+  "kind": "olmradialblur_rotation_edge_offset_32x18_probe_20260811",
+  "scope": "Rotation centered 32x18, PF8/PF16/PF32, matching Outer/Inner Strength4 + Edge Fade50 x Offset Mode2/UI4 or Mode3/UI4; opposite side and remaining controls neutral.",
+  "status": "exact",
+  "total_cases": 12
+}

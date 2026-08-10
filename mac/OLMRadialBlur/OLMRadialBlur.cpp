@@ -1333,7 +1333,11 @@ static FloatImage BuildZoomAEXOuterOnlyPolar(
 	const std::vector<float> &source_scalar_plane,
 	A_long outer_strength,
 	const std::vector<float> *inner_weights = nullptr,
-	A_long inner_strength = 0)
+	A_long inner_strength = 0,
+	const std::vector<float> *outer_fade_weights = nullptr,
+	A_long outer_fade_span = 0,
+	const std::vector<float> *inner_fade_weights = nullptr,
+	A_long inner_fade_span = 0)
 {
 	const A_long radius_count = polar.width;
 	const A_long angular_count = polar.height;
@@ -1357,10 +1361,45 @@ static FloatImage BuildZoomAEXOuterOnlyPolar(
 				const A_long ai = next_row.fetch_add(1, std::memory_order_relaxed);
 				if (ai >= angular_count) break;
 				const size_t row_cell = (size_t)ai * radius_count;
+				std::vector<float> faded_source_scalar((size_t)radius_count);
 				for (A_long ri = 0; ri < radius_count; ++ri) {
 					const size_t cell = row_cell + ri;
 					const size_t rgba = cell * 4;
-					const float source_scalar = source_scalar_plane[cell];
+					// B150 receives the size-factor plane (+0x48), while the later
+					// strength scatter consumes the noise-composed span plane.  The
+					// admitted SV0 fade tuples have a size factor of exactly one even
+					// where the sampled scatter span falls below one at the outer edge.
+					const float factor = (outer_fade_span > 0 || inner_fade_span > 0)
+						? 1.0f : span_plane[cell];
+					float source_scalar = source_scalar_plane[cell];
+					if ((outer_fade_span > 0 || inner_fade_span > 0) &&
+						(polar.rgba[rgba + 3] == 0.0f || factor == 0.0f || source_scalar == 0.0f)) {
+						source_scalar = 0.0f;
+					} else if (outer_fade_span > 0 || inner_fade_span > 0) {
+						float weighted_alpha = polar.rgba[rgba + 3];
+						float weight_sum = 1.0f;
+						const float inverse_factor = RadialF32Div(1.0f, factor);
+						const A_long outer_limit = std::min<A_long>(ri,
+							(A_long)RadialF32Mul((float)outer_fade_span, factor));
+						for (A_long k = 1; outer_fade_weights && k < outer_limit; ++k) {
+							const A_long table_index = (A_long)RadialF32Mul((float)k, inverse_factor);
+							const float weight = (*outer_fade_weights)[(size_t)table_index];
+							weighted_alpha = RadialF32Add(weighted_alpha, RadialF32Mul(
+								weight, polar.rgba[(cell - (size_t)k) * 4 + 3]));
+							weight_sum = RadialF32Add(weight_sum, weight);
+						}
+						const A_long inner_limit = std::min<A_long>(radius_count - ri,
+							(A_long)RadialF32Mul((float)inner_fade_span, factor));
+						for (A_long k = 1; inner_fade_weights && k < inner_limit; ++k) {
+							const A_long table_index = (A_long)RadialF32Mul((float)k, inverse_factor);
+							const float weight = (*inner_fade_weights)[(size_t)table_index];
+							weighted_alpha = RadialF32Add(weighted_alpha, RadialF32Mul(
+								weight, polar.rgba[(cell + (size_t)k) * 4 + 3]));
+							weight_sum = RadialF32Add(weight_sum, weight);
+						}
+						source_scalar = RadialF32Div(weighted_alpha, weight_sum);
+					}
+					faded_source_scalar[(size_t)ri] = source_scalar;
 					for (int c = 0; c < 3; ++c) {
 						normalized.rgba[rgba + c] = RadialF32Mul(
 							polar.rgba[rgba + c], source_scalar);
@@ -1371,7 +1410,7 @@ static FloatImage BuildZoomAEXOuterOnlyPolar(
 
 				for (A_long source_ri = 0; source_ri < radius_count; ++source_ri) {
 					const size_t source_cell = row_cell + source_ri;
-					const float source_scalar = source_scalar_plane[source_cell];
+					const float source_scalar = faded_source_scalar[(size_t)source_ri];
 					const float span = span_plane[source_cell];
 					if (eligibility[source_cell] == 0 || source_scalar == 0.0f || span == 0.0f) continue;
 					const A_long strength_limit = (A_long)RadialF32Mul((float)outer_strength, span);
@@ -1829,6 +1868,22 @@ static PF_Err RenderZoomTyped(
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0 &&
 		info.outer_edge_fade == 0 && info.inner_edge_fade == 0;
+	const bool use_aex_typed_zoom_edge_fade_32x18 = input && output && use_aex_zoom_geometry &&
+		input->width == 32 && input->height == 18 &&
+		input->rowbytes >= input->width * (A_long)sizeof(PixelT) &&
+		output->rowbytes >= output->width * (A_long)sizeof(PixelT) &&
+		info.outer_strength == 4 &&
+		(info.outer_edge_fade == 50 || info.outer_edge_fade == 100) &&
+		((info.outer_offset_mode == 1 && info.outer_offset == 0) ||
+		 (info.outer_edge_fade == 50 && info.outer_offset_mode == 2 && info.outer_offset == 2) ||
+		 (info.outer_edge_fade == 50 && info.outer_offset_mode == 3 && info.outer_offset == 4)) &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
+		info.quality == 5.0 && info.brightness_gain == 1.0 &&
+		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
+		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
+		info.noise_offset == 0 && info.thickness == 10.0;
 	const bool use_aex_typed_zoom_size_variation_32x18 = input && output &&
 		use_aex_zoom_geometry && input->width == 32 && input->height == 18 &&
 		input->rowbytes >= input->width * (A_long)sizeof(PixelT) &&
@@ -1843,7 +1898,7 @@ static PF_Err RenderZoomTyped(
 		info.noise_variation == 0.0 && info.noise_type == 1 && info.noise_layer == 0 &&
 		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0 &&
 		source_alpha_strictly_positive;
-	if (!use_aex_typed_zoom_size_variation_32x18 && !use_aex_typed_zoom_offset_matrix && !use_aex_typed_quality_repeat && !use_aex_typed_zoom_offcenter_brightness && (!use_aex_zoom_geometry || info.repeat_border == FALSE ||
+	if (!use_aex_typed_zoom_edge_fade_32x18 && !use_aex_typed_zoom_size_variation_32x18 && !use_aex_typed_zoom_offset_matrix && !use_aex_typed_quality_repeat && !use_aex_typed_zoom_offcenter_brightness && (!use_aex_zoom_geometry || info.repeat_border == FALSE ||
 		(!use_aex_typed_zoom_ellipse_geometry && (info.ratio != 1.0 || info.angle_deg != 0.0)) ||
 		info.quality != 5.0 || info.brightness_gain != 1.0 ||
 		info.size_variation != 0.0 || info.outer_edge_fade != 0 || info.inner_edge_fade != 0)) {
@@ -2062,6 +2117,7 @@ static PF_Err RenderZoomTyped(
 		use_aex_typed_zoom_inner_offset_pairwise ||
 		use_aex_pf16_bounded_offset_small ||
 		use_aex_typed_zoom_offset_matrix ||
+		use_aex_typed_zoom_edge_fade_32x18 ||
 		use_aex_typed_zoom_size_variation_32x18;
 	std::vector<float> span_plane;
 	std::vector<float> source_factor_with_guard;
@@ -2179,7 +2235,8 @@ static PF_Err RenderZoomTyped(
 	FloatImage blurred;
 	if (use_aex_outer_only) {
 		OLMRadialBlurInfo worker_info = info;
-		if (use_aex_pf16_bounded_offset_small || use_aex_typed_zoom_offset_matrix) {
+		if (use_aex_pf16_bounded_offset_small || use_aex_typed_zoom_offset_matrix ||
+			use_aex_typed_zoom_edge_fade_32x18) {
 			// These bounded Strength-4 states all select the AEX's length-4
 			// outer worker after its owner-to-worker parameter conversion.
 			worker_info.outer_offset_mode = 1;
@@ -2191,11 +2248,16 @@ static PF_Err RenderZoomTyped(
 		const std::vector<float> inner_weights = use_aex_zoom_inner
 			? ZoomGaussianWeights(info.inner_strength)
 			: std::vector<float>();
+		const A_long outer_fade_span = use_aex_typed_zoom_edge_fade_32x18
+			? info.outer_edge_fade : 0;
+		const std::vector<float> outer_fade_weights = outer_fade_span > 0
+			? ZoomGaussianWeights(outer_fade_span) : std::vector<float>();
 		blurred = BuildZoomAEXOuterOnlyPolar(
 			polar, ZoomGaussianWeights(ZoomEffectiveLength(worker_info)), polar_valid,
 			span_plane, source_scalar_plane, worker_info.outer_strength,
 			use_aex_zoom_inner ? &inner_weights : nullptr,
-			use_aex_zoom_inner ? info.inner_strength : 0);
+			use_aex_zoom_inner ? info.inner_strength : 0,
+			outer_fade_span > 0 ? &outer_fade_weights : nullptr, outer_fade_span);
 	} else {
 		blurred = BuildZoomBlurredPolar(polar, info, debug, &use_fft_convolution);
 	}
@@ -2260,7 +2322,8 @@ static PF_Err RenderZoomTyped(
 			}
 			if constexpr (std::is_same<PixelT, PF_PixelFloat>::value) {
 				if ((use_aex_typed_zoom_offcenter_brightness && info.brightness_gain == 2.0) ||
-					use_aex_typed_zoom_inner_pairwise || use_aex_typed_zoom_inner_offset_pairwise) {
+					use_aex_typed_zoom_inner_pairwise || use_aex_typed_zoom_inner_offset_pairwise ||
+					use_aex_typed_zoom_edge_fade_32x18) {
 					for (int c = 0; c < 3; ++c) {
 						output_state.final_rgb[c] = output_state.final_rgb[c] < 1.0f
 							? output_state.final_rgb[c] : 1.0f;
@@ -2272,7 +2335,7 @@ static PF_Err RenderZoomTyped(
 				std::is_same<PixelT, PF_Pixel8>::value &&
 				(use_aex_typed_zoom_ellipse_geometry || use_aex_typed_zoom_noise_type1_pairwise ||
 				 use_aex_typed_zoom_noise_type2_small || use_aex_typed_zoom_inner_pairwise ||
-				 use_aex_typed_zoom_inner_offset_pairwise);
+				 use_aex_typed_zoom_inner_offset_pairwise || use_aex_typed_zoom_edge_fade_32x18);
 			if constexpr (std::is_same<PixelT, PF_Pixel8>::value) {
 				if (use_aex_typed_zoom_inner_pairwise || use_aex_typed_zoom_inner_offset_pairwise) {
 					// The bounded PF8 Inner owner converts all four float channels
@@ -2637,6 +2700,24 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0;
+	const bool use_aex_typed_rotation_edge_offset_32x18 = input && output &&
+		use_aex_inner_geometry && input->width == 32 && input->height == 18 &&
+		input->rowbytes >= input->width * (A_long)sizeof(PixelT) &&
+		output->rowbytes >= output->width * (A_long)sizeof(PixelT) &&
+		(((info.outer_strength == 4 && info.outer_edge_fade == 50 &&
+		   (info.outer_offset_mode == 2 || info.outer_offset_mode == 3) &&
+		   info.outer_offset == 4 && info.inner_strength == 0 &&
+		   info.inner_edge_fade == 0 && info.inner_offset_mode == 1 && info.inner_offset == 0) ||
+		  (info.outer_strength == 0 && info.outer_edge_fade == 0 &&
+		   info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		   info.inner_strength == 4 && info.inner_edge_fade == 50 &&
+		   (info.inner_offset_mode == 2 || info.inner_offset_mode == 3) &&
+		   info.inner_offset == 4))) &&
+		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
+		info.quality == 5.0 && info.brightness_gain == 1.0 &&
+		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
+		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
+		info.noise_offset == 0 && info.thickness == 10.0;
 	const bool use_aex_typed_rotation_dual_strength_32x18 = input && output &&
 		use_aex_inner_geometry && input->width == 32 && input->height == 18 &&
 		input->rowbytes >= input->width * (A_long)sizeof(PixelT) &&
@@ -2665,11 +2746,13 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0 &&
 		source_alpha_strictly_positive;
 	if (info.blur_type != 2 || (info.inner_strength != 0 &&
+	    !use_aex_typed_rotation_edge_offset_32x18 &&
 	    !use_aex_typed_rotation_dual_strength_32x18 &&
 	    !use_aex_typed_rotation_inner_offset_pairwise && !use_aex_pf16_inner_power2_small &&
 	    !use_aex_pf32_inner_edge_fade_small && !use_aex_pf32_edge_fade_cross_small &&
 	    !use_aex_typed_edge_fade_32x18) ||
 	    ((info.outer_edge_fade != 0 || info.inner_edge_fade != 0) &&
+	     !use_aex_typed_rotation_edge_offset_32x18 &&
 	     !use_aex_pf32_outer_edge_fade_small && !use_aex_pf32_inner_edge_fade_small &&
 	     !use_aex_pf32_edge_fade_cross_small && !use_aex_typed_edge_fade_32x18) ||
 	    (info.noise_variation != 0.0 && !use_aex_pf32_noise_type1_small &&
@@ -2879,7 +2962,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0;
-	const bool use_aex_exact = use_aex_typed_rotation_dual_strength_32x18 || use_aex_typed_rotation_size_variation_32x18 || use_aex_typed_rotation_inner_offset_pairwise || use_aex_typed_rotation_offcenter_brightness || use_aex_typed_quality_repeat || use_aex_case0010 || use_aex_pf16_small || use_aex_pf16_inner_power2_small ||
+	const bool use_aex_exact = use_aex_typed_rotation_edge_offset_32x18 || use_aex_typed_rotation_dual_strength_32x18 || use_aex_typed_rotation_size_variation_32x18 || use_aex_typed_rotation_inner_offset_pairwise || use_aex_typed_rotation_offcenter_brightness || use_aex_typed_quality_repeat || use_aex_case0010 || use_aex_pf16_small || use_aex_pf16_inner_power2_small ||
 		use_aex_typed_edge_fade_32x18 ||
 		use_aex_typed_rotation_offset_mode3 ||
 		use_aex_pf32_opaque_size_variation_small ||
@@ -3119,7 +3202,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			// value, then scales half the radial extent by 1/(ri+1).  Mode 3
 			// selects that dynamic span directly; it does not apply the
 			// fixed-strength path's additional UI-to-worker decrement.
-			const bool use_mode2_dynamic = use_aex_typed_rotation_offset_mode3 &&
+			const bool use_mode2_dynamic = (use_aex_typed_rotation_offset_mode3 ||
+				use_aex_typed_rotation_edge_offset_32x18) &&
 				info.outer_offset_mode == 2;
 			const A_long outer_span = info.outer_offset_mode == 3
 				? DynamicOffsetForRadius(radius_count, std::max<A_long>(0, info.outer_offset - 1), ri)
@@ -3133,11 +3217,13 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 					: RotationEffectiveLength(info.outer_strength, info.outer_offset_mode, 0)));
 			// Inner offset uses the same owner-to-worker conversion as the outer
 			// offset: the UI value is zero-based once, then scaled by radius.
-			const A_long inner_span = use_aex_typed_rotation_inner_offset_pairwise &&
+			const bool use_dynamic_inner_offset = use_aex_typed_rotation_inner_offset_pairwise ||
+				use_aex_typed_rotation_edge_offset_32x18;
+			const A_long inner_span = use_dynamic_inner_offset &&
 				info.inner_offset_mode == 3
 				? DynamicOffsetForRadius(
 					radius_count, std::max<A_long>(0, info.inner_offset - 1), ri)
-				: (use_aex_typed_rotation_inner_offset_pairwise && info.inner_offset_mode == 2
+				: (use_dynamic_inner_offset && info.inner_offset_mode == 2
 					? std::max<A_long>(
 						RotationEffectiveLength(info.inner_strength, 1, 0),
 						DynamicOffsetForRadius(
