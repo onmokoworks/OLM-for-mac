@@ -1,0 +1,94 @@
+{
+  "admitted_rule": "The fixed 16x16 PF32 Type-1 route adds the Noise 25 control and Fade 50/100 crossed with Noise 25/100; Fade 0 x Noise 100 was already admitted by the independent Noise family.",
+  "combination": "Front Alpha Fade x Noise Variation (Type 1)",
+  "depth": "PF32",
+  "fixed_route": {
+    "angle": 45,
+    "back_strength": 0,
+    "brightness_gain": 1,
+    "front_strength": 8,
+    "geometry": "16x16 padded ARGB128",
+    "noise_offset": 0,
+    "noise_type": 1,
+    "render_scale": [
+      1,
+      1
+    ],
+    "seed": 1,
+    "sharp_tail": 0,
+    "size_variation": 0,
+    "thickness": 3
+  },
+  "not_proven": [
+    "other geometry or pixel depth",
+    "Noise Type 2/3 combinations",
+    "other Fade or Noise Variation values",
+    "combinations with nonzero Size Variation, sharp tail, back blur/fade, other angle/strength, seed/offset/thickness, or downsample",
+    "native After Effects render/export"
+  ],
+  "plugin": "OLMDirectionalBlur",
+  "representatives": [
+    {
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "front_alpha_fade": 0,
+      "noise_type": 1,
+      "noise_variation_percent": 25.0,
+      "raw_sha256": "a0f5e1deee28cce8362fcf078c62ef0bfb8ec23ed296f88089015de35bab6d25",
+      "worker": "olm_dblur_minimal_argb32"
+    },
+    {
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "front_alpha_fade": 50,
+      "noise_type": 1,
+      "noise_variation_percent": 25.0,
+      "raw_sha256": "1dd250a464a75452ad043fdb033a09e3e83063addc7d625a67437d5751bbbbe2",
+      "worker": "olm_dblur_minimal_fade_argb32"
+    },
+    {
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "front_alpha_fade": 50,
+      "noise_type": 1,
+      "noise_variation_percent": 100.0,
+      "raw_sha256": "74fa164432b268b4e14bd28d4fb517f62bbdecfd5b780da5bef68aff8231c2d1",
+      "worker": "olm_dblur_minimal_fade_argb32"
+    },
+    {
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "front_alpha_fade": 100,
+      "noise_type": 1,
+      "noise_variation_percent": 25.0,
+      "raw_sha256": "d9e26bca3694f0a7a20436bac3252c1fe6aacce2991dd3daff9df83fbf1955e8",
+      "worker": "olm_dblur_minimal_fade_argb32"
+    },
+    {
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "front_alpha_fade": 100,
+      "noise_type": 1,
+      "noise_variation_percent": 100.0,
+      "raw_sha256": "dd7516f646d417b9e9e58938fcb026330c518c26fdf40d433d0e1492cc8a3c40",
+      "worker": "olm_dblur_minimal_fade_argb32"
+    }
+  ],
+  "schema_version": 1,
+  "status": "exact_bounded_combination"
+}

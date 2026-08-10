@@ -113,6 +113,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmdirectionalblur_pf32_front_alpha_fade_family_actual_aex_20260810.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_pf32_fade_size_combination_actual_aex_20260810.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_pf32_size_noise_type1_combination_actual_aex_20260810.py"),
+            (sys.executable, "tools/emulation/test_olmdirectionalblur_pf32_fade_noise_type1_combination_actual_aex_20260810.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_mac_smartrender_adapter_20260717.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_pf8_brightness_half_20260805.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_installed_completion_route_20260805.py"),
