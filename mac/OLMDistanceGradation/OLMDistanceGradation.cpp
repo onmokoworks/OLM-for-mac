@@ -107,6 +107,81 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	return err;
 }
 
+static PF_Err
+UpdateParamEnabled(PF_InData *in_data, A_long index, bool disabled)
+{
+	PF_Err err = PF_Err_NONE;
+	PF_ParamDef copy;
+	AEFX_CLR_STRUCT(copy);
+	ERR(PF_CHECKOUT_PARAM(in_data, index, in_data->current_time,
+	                      in_data->time_step, in_data->time_scale, &copy));
+	if (!err) {
+		// The Windows AEX replaces the UI flags with exactly one of these two
+		// values; it does not preserve unrelated bits from the checked-out copy.
+		copy.ui_flags = disabled ? PF_PUI_DISABLED : 0;
+		AEGP_SuiteHandler suites(in_data->pica_basicP);
+		ERR(suites.ParamUtilsSuite3()->PF_UpdateParamUI(
+			in_data->effect_ref, index, &copy));
+	}
+	PF_CHECKIN_PARAM(in_data, &copy);
+	return err;
+}
+
+static PF_Err
+UpdateParamsUI(PF_InData *in_data)
+{
+	PF_Err err = PF_Err_NONE;
+	PF_ParamDef value;
+
+	AEFX_CLR_STRUCT(value);
+	ERR(PF_CHECKOUT_PARAM(in_data, DG_INTERP_MODE, in_data->current_time,
+	                      in_data->time_step, in_data->time_scale, &value));
+	const A_long interp_mode = value.u.pd.value;
+	PF_CHECKIN_PARAM(in_data, &value);
+	if (err) return err;
+	if (!err) ERR(UpdateParamEnabled(in_data, DG_POWER, interp_mode != INTERP_POWER));
+	if (err) return err;
+
+	AEFX_CLR_STRUCT(value);
+	if (!err) ERR(PF_CHECKOUT_PARAM(in_data, DG_IN_OUT, in_data->current_time,
+	                                in_data->time_step, in_data->time_scale, &value));
+	const A_long in_out = value.u.pd.value;
+	PF_CHECKIN_PARAM(in_data, &value);
+	if (err) return err;
+	if (!err) ERR(UpdateParamEnabled(in_data, DG_OUTSIDE_THRESHOLD, in_out == IN_OUT_INSIDE));
+	if (err) return err;
+	if (!err) ERR(UpdateParamEnabled(in_data, DG_INSIDE_THRESHOLD, in_out == IN_OUT_OUTSIDE));
+	if (err) return err;
+
+	AEFX_CLR_STRUCT(value);
+	if (!err) ERR(PF_CHECKOUT_PARAM(in_data, DG_RENDER_MODE, in_data->current_time,
+	                                in_data->time_step, in_data->time_scale, &value));
+	const A_long render_mode = value.u.pd.value;
+	PF_CHECKIN_PARAM(in_data, &value);
+	if (err) return err;
+
+	AEFX_CLR_STRUCT(value);
+	if (!err) ERR(PF_CHECKOUT_PARAM(in_data, DG_USE_BG_COLOR, in_data->current_time,
+	                                in_data->time_step, in_data->time_scale, &value));
+	const bool use_bg = value.u.bd.value != 0;
+	PF_CHECKIN_PARAM(in_data, &value);
+	if (err) return err;
+	if (!err) ERR(UpdateParamEnabled(in_data, DG_GRAD_COLOR, render_mode != RENDER_MODE_RGB));
+	if (err) return err;
+	if (!err) ERR(UpdateParamEnabled(in_data, DG_BG_COLOR, !use_bg));
+	if (err) return err;
+
+	AEFX_CLR_STRUCT(value);
+	if (!err) ERR(PF_CHECKOUT_PARAM(in_data, DG_BLUR_MODE, in_data->current_time,
+	                                in_data->time_step, in_data->time_scale, &value));
+	const A_long blur_mode = value.u.pd.value;
+	PF_CHECKIN_PARAM(in_data, &value);
+	if (err) return err;
+	if (!err) ERR(UpdateParamEnabled(in_data, DG_BLUR_SIZE, blur_mode == BLUR_MODE_NONE));
+
+	return err;
+}
+
 // ============================================================================
 // Params snapshot
 // ============================================================================
@@ -1251,6 +1326,9 @@ PF_Err EffectMain(PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data,
 			break;
 		case PF_Cmd_PARAMS_SETUP:
 			err = ParamsSetup(in_data, out_data, params, output);
+			break;
+		case PF_Cmd_UPDATE_PARAMS_UI:
+			err = UpdateParamsUI(in_data);
 			break;
 		case PF_Cmd_RENDER:
 			err = Render(in_data, out_data, params, output);
