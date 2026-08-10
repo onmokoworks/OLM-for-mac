@@ -164,7 +164,8 @@ python3 scripts/verify_windows_ae_release_boundary_minimal_20260806.py \
 - 主要モード、bit-depth、分岐境界、実用geometryへ完成作業を集中する
 
 低レベルの開発規約は[AGENT_GUIDE.md](AGENT_GUIDE.md)、AEX直接再生は
-[tools/emulation/README.md](tools/emulation/README.md)を参照してください。
+[tools/emulation/README.md](tools/emulation/README.md)、公開対象とローカル解析資料の境界は
+[docs/REPOSITORY_POLICY_JA.md](docs/REPOSITORY_POLICY_JA.md)を参照してください。
 
 ## English summary
 

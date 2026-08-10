@@ -47,6 +47,7 @@ disasm/v1_analysis/*.log
 /trace_s2.py
 /mac/OLMSmoother2/patch.py
 /mac/OLMSmoother2/patch_class_plane.py
+/tmp/
 
 # Upstream binary/doc package snapshots kept locally, not in this source repo
 aex/
@@ -63,6 +64,11 @@ refs/runs/
 refs/returns/
 refs/win_references/
 refs/runtime_trace_packages/
+refs/mac_validation_runs/
+refs/mac_validation_fixtures/
+refs/mac_validation_requests/
+refs/requests/
+refs/fixtures/Adobe After Effects 自動保存/
 handoff/
 handoffs/
 refs/upstream_official/**/zips/
