@@ -204,6 +204,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmradialblur_rotation_pf16_small_actual_aex_20260805.py"),
             (sys.executable, "tools/emulation/test_olmradialblur_rotation_pf32_small_actual_aex_20260805.py"),
             (sys.executable, "tools/emulation/test_olmradialblur_rotation_pf32_edge_fade_actual_aex_20260811.py"),
+            (sys.executable, "tools/emulation/test_olmradialblur_rotation_pf32_edge_fade_intersections_actual_aex_20260811.py"),
             (sys.executable, "tools/emulation/test_olmradialblur_rotation_pf32_strength5_small_actual_aex_20260805.py"),
             (sys.executable, "tools/emulation/test_olmradialblur_rotation_pf16_strength5_small_actual_aex_20260805.py"),
             (sys.executable, "tools/emulation/test_olmradialblur_zoom_pf16_small_actual_aex_20260805.py"),

@@ -2139,6 +2139,24 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.brightness_gain == 1.0 && info.size_variation == 0.0 && info.noise_variation == 0.0 &&
 		info.noise_type == 1 && info.seed == 1 && info.thickness == 10.0 &&
 		info.comp_width == 9.0 && info.comp_height == 7.0;
+	const bool use_aex_pf32_edge_fade_intersection_small = input && output &&
+		std::is_same<PixelT, PF_PixelFloat>::value && input->width == 9 && input->height == 7 &&
+		output->width == 9 && output->height == 7 && info.center_x == 4.0 && info.center_y == 3.0 &&
+		(((info.outer_strength == 4 && info.outer_edge_fade == 50 && info.inner_strength == 0 &&
+		   info.inner_edge_fade == 0) ||
+		  (info.outer_strength == 0 && info.outer_edge_fade == 0 && info.inner_strength == 4 &&
+		   info.inner_edge_fade == 50))) &&
+		info.outer_offset_mode == 1 && info.outer_offset == 0 && info.inner_offset_mode == 1 &&
+		info.inner_offset == 0 && info.repeat_border != FALSE && info.ratio == 1.0 &&
+		info.angle_deg == 0.0 && info.quality == 5.0 && info.brightness_gain == 1.0 &&
+		((info.size_variation == 50.0 && info.noise_variation == 0.0 &&
+		  source_alpha_strictly_positive) ||
+		 (info.size_variation == 0.0 && info.noise_variation == 25.0)) &&
+		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
+		info.noise_offset == 0 && info.thickness == 10.0 &&
+		info.comp_width == 9.0 && info.comp_height == 7.0;
+	const bool use_aex_pf32_edge_fade_size50_small =
+		use_aex_pf32_edge_fade_intersection_small && info.size_variation == 50.0;
 	const bool use_aex_pf32_strength5_noise_type1_small = input && output &&
 		std::is_same<PixelT, PF_PixelFloat>::value &&
 		input->width == 9 && input->height == 7 && output->width == 9 && output->height == 7 &&
@@ -2224,15 +2242,18 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0;
 	if (info.blur_type != 2 || (info.inner_strength != 0 && !use_aex_pf16_inner_power2_small &&
-	    !use_aex_pf32_inner_edge_fade_small) ||
+	    !use_aex_pf32_inner_edge_fade_small && !use_aex_pf32_edge_fade_size50_small) ||
 	    ((info.outer_edge_fade != 0 || info.inner_edge_fade != 0) &&
-	     !use_aex_pf32_outer_edge_fade_small && !use_aex_pf32_inner_edge_fade_small) ||
+	     !use_aex_pf32_outer_edge_fade_small && !use_aex_pf32_inner_edge_fade_small &&
+	     !use_aex_pf32_edge_fade_size50_small) ||
 	    (info.noise_variation != 0.0 && !use_aex_pf32_noise_type1_small &&
 	     !use_aex_pf32_strength5_noise_type1_small &&
 	     !use_aex_pf32_offset_mode3_noise_type1_small &&
-	     !use_aex_pf32_opaque_size_noise_type1_small) ||
+	     !use_aex_pf32_opaque_size_noise_type1_small &&
+	     !use_aex_pf32_edge_fade_size50_small) ||
 	    (info.size_variation != 0.0 && !use_aex_pf32_opaque_size_variation_small &&
-	     !use_aex_pf32_opaque_size_noise_type1_small)) {
+	     !use_aex_pf32_opaque_size_noise_type1_small &&
+	     !use_aex_pf32_edge_fade_size50_small)) {
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
 
@@ -2382,6 +2403,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		use_aex_pf32_opaque_size_variation_small ||
 		use_aex_pf32_noise_type1_small ||
 		use_aex_pf32_outer_edge_fade_small || use_aex_pf32_inner_edge_fade_small ||
+		use_aex_pf32_edge_fade_intersection_small ||
 		use_aex_pf32_strength5_noise_type1_small ||
 		use_aex_pf32_offset_mode3_noise_type1_small ||
 		use_aex_pf32_opaque_size_noise_type1_small ||
@@ -2441,7 +2463,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	rotation_scalar_source_with_guard.back() = 0.0f;
 	if (use_aex_pf32_noise_type1_small || use_aex_pf32_strength5_noise_type1_small ||
 		use_aex_pf32_offset_mode3_noise_type1_small ||
-		use_aex_pf32_opaque_size_noise_type1_small) {
+		use_aex_pf32_opaque_size_noise_type1_small ||
+		(use_aex_pf32_edge_fade_intersection_small && info.noise_variation != 0.0)) {
 		std::vector<float> noise_plane;
 		int noise_width = 0;
 		int noise_height = 0;
@@ -2540,10 +2563,21 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				}
 				float alpha_sum = polar.rgba[dst + 3];
 				float weight_sum = 1.0f;
+				// FUN_180002780 receives worker +0x14 (sampled size factor), not
+				// +0x10 (noise-composed scatter span).  The admitted opaque/SV0
+				// intersection fixtures have an exact size factor of one.
+				const float fade_factor = info.size_variation != 0.0
+					? rotation_source_scalar[cell] : 1.0f;
+				const float inverse_fade_factor = RadialF32Div(1.0f, fade_factor);
+				const A_long effective_outer_fade_span = (A_long)RadialF32Mul(
+					(float)outer_fade_span, fade_factor);
+				const A_long effective_inner_fade_span = (A_long)RadialF32Mul(
+					(float)inner_fade_span, fade_factor);
 				long long outer_pointer = (long long)cell - 1;
 				A_long outer_position = ai;
-				for (A_long offset = 1; offset < outer_fade_span; ++offset) {
-					const float weight = outer_fade_weights[(size_t)offset];
+				for (A_long offset = 1; offset < effective_outer_fade_span; ++offset) {
+					const A_long weight_index = (A_long)RadialF32Mul((float)offset, inverse_fade_factor);
+					const float weight = outer_fade_weights[(size_t)weight_index];
 					alpha_sum = RadialF32Add(alpha_sum, RadialF32Mul(
 						polar_alpha_linear(outer_pointer), weight));
 					weight_sum = RadialF32Add(weight_sum, weight);
@@ -2556,8 +2590,9 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				}
 				long long inner_pointer = (long long)cell + 1;
 				A_long inner_position = ai;
-				for (A_long offset = 1; offset < inner_fade_span; ++offset) {
-					const float weight = inner_fade_weights[(size_t)offset];
+				for (A_long offset = 1; offset < effective_inner_fade_span; ++offset) {
+					const A_long weight_index = (A_long)RadialF32Mul((float)offset, inverse_fade_factor);
+					const float weight = inner_fade_weights[(size_t)weight_index];
 					alpha_sum = RadialF32Add(alpha_sum, RadialF32Mul(
 						polar_alpha_linear(inner_pointer), weight));
 					weight_sum = RadialF32Add(weight_sum, weight);
