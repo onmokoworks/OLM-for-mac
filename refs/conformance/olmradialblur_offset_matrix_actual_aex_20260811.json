@@ -1,0 +1,899 @@
+{
+  "boundary": "Only the 36 admitted cells are evidence. Rotation Mode2 remains fail-closed; other offset modes/values, strengths, geometries, parameters and AE-host behavior remain unproved.",
+  "cases": [
+    {
+      "actual_sha256": {
+        "output": "2ad487f47350b3993c0b5abb1935cee0dbbb406faa5c182aea23b84d984c608c",
+        "post_blur": "8f6c4f85e39ed9fe5e83f5051b8bdd95defeb345b789e6e9d671ee4902862cfd",
+        "pre_blur": "6930c5266f720297dda2d31e88c20f9ac05bf6103cdba82c4becc0190d444055"
+      },
+      "depth": 8,
+      "effect": "zoom",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 2
+    },
+    {
+      "actual_sha256": {
+        "output": "2ad487f47350b3993c0b5abb1935cee0dbbb406faa5c182aea23b84d984c608c",
+        "post_blur": "8f6c4f85e39ed9fe5e83f5051b8bdd95defeb345b789e6e9d671ee4902862cfd",
+        "pre_blur": "6930c5266f720297dda2d31e88c20f9ac05bf6103cdba82c4becc0190d444055"
+      },
+      "depth": 8,
+      "effect": "zoom",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 4
+    },
+    {
+      "actual_sha256": {
+        "output": "2ad487f47350b3993c0b5abb1935cee0dbbb406faa5c182aea23b84d984c608c",
+        "post_blur": "8f6c4f85e39ed9fe5e83f5051b8bdd95defeb345b789e6e9d671ee4902862cfd",
+        "pre_blur": "6930c5266f720297dda2d31e88c20f9ac05bf6103cdba82c4becc0190d444055"
+      },
+      "depth": 8,
+      "effect": "zoom",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 2
+    },
+    {
+      "actual_sha256": {
+        "output": "2ad487f47350b3993c0b5abb1935cee0dbbb406faa5c182aea23b84d984c608c",
+        "post_blur": "8f6c4f85e39ed9fe5e83f5051b8bdd95defeb345b789e6e9d671ee4902862cfd",
+        "pre_blur": "6930c5266f720297dda2d31e88c20f9ac05bf6103cdba82c4becc0190d444055"
+      },
+      "depth": 8,
+      "effect": "zoom",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 4
+    },
+    {
+      "actual_sha256": {
+        "output": "0f872c2aa5fad7707505916f9dffe06c4ef31ccf76b6c92eae7d800b9ec744b3",
+        "post_blur": "990bfdb98e891499b2a5477c6f603f18e5304b420ae094094872eafbe14137f9",
+        "pre_blur": "502c5f90cee33cc441279c145e85f02b2bf95d140372be199e4b495516155093"
+      },
+      "depth": 8,
+      "effect": "zoom",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 2
+    },
+    {
+      "actual_sha256": {
+        "output": "0f872c2aa5fad7707505916f9dffe06c4ef31ccf76b6c92eae7d800b9ec744b3",
+        "post_blur": "990bfdb98e891499b2a5477c6f603f18e5304b420ae094094872eafbe14137f9",
+        "pre_blur": "502c5f90cee33cc441279c145e85f02b2bf95d140372be199e4b495516155093"
+      },
+      "depth": 8,
+      "effect": "zoom",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 4
+    },
+    {
+      "actual_sha256": {
+        "output": "0f872c2aa5fad7707505916f9dffe06c4ef31ccf76b6c92eae7d800b9ec744b3",
+        "post_blur": "990bfdb98e891499b2a5477c6f603f18e5304b420ae094094872eafbe14137f9",
+        "pre_blur": "502c5f90cee33cc441279c145e85f02b2bf95d140372be199e4b495516155093"
+      },
+      "depth": 8,
+      "effect": "zoom",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 2
+    },
+    {
+      "actual_sha256": {
+        "output": "0f872c2aa5fad7707505916f9dffe06c4ef31ccf76b6c92eae7d800b9ec744b3",
+        "post_blur": "990bfdb98e891499b2a5477c6f603f18e5304b420ae094094872eafbe14137f9",
+        "pre_blur": "502c5f90cee33cc441279c145e85f02b2bf95d140372be199e4b495516155093"
+      },
+      "depth": 8,
+      "effect": "zoom",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 4
+    },
+    {
+      "actual_sha256": {
+        "output": "834ccf82d467e477b08f2ce23c92b6bb8551051163fa48117ab31808e1a17709",
+        "post_blur": "d85a97a70daaab76fb339bcb21b31125e88b87c076bbe5005b1216e8374140ab",
+        "pre_blur": "27c95680ec8f1d897eeddcd456456bfad1ae1406c121e7f39a6a1e9863d72dc0"
+      },
+      "depth": 16,
+      "effect": "zoom",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 2
+    },
+    {
+      "actual_sha256": {
+        "output": "834ccf82d467e477b08f2ce23c92b6bb8551051163fa48117ab31808e1a17709",
+        "post_blur": "d85a97a70daaab76fb339bcb21b31125e88b87c076bbe5005b1216e8374140ab",
+        "pre_blur": "27c95680ec8f1d897eeddcd456456bfad1ae1406c121e7f39a6a1e9863d72dc0"
+      },
+      "depth": 16,
+      "effect": "zoom",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 4
+    },
+    {
+      "actual_sha256": {
+        "output": "834ccf82d467e477b08f2ce23c92b6bb8551051163fa48117ab31808e1a17709",
+        "post_blur": "d85a97a70daaab76fb339bcb21b31125e88b87c076bbe5005b1216e8374140ab",
+        "pre_blur": "27c95680ec8f1d897eeddcd456456bfad1ae1406c121e7f39a6a1e9863d72dc0"
+      },
+      "depth": 16,
+      "effect": "zoom",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 2
+    },
+    {
+      "actual_sha256": {
+        "output": "834ccf82d467e477b08f2ce23c92b6bb8551051163fa48117ab31808e1a17709",
+        "post_blur": "d85a97a70daaab76fb339bcb21b31125e88b87c076bbe5005b1216e8374140ab",
+        "pre_blur": "27c95680ec8f1d897eeddcd456456bfad1ae1406c121e7f39a6a1e9863d72dc0"
+      },
+      "depth": 16,
+      "effect": "zoom",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 4
+    },
+    {
+      "actual_sha256": {
+        "output": "62a2d24f4799ee12ead161e9d11d8c86c6cb7d5b0a7697724cab97c95cecdb8d",
+        "post_blur": "bb9ffe69b401a6d6cd19250790db74566293f703a7c07a4fdf2750a8b16ac771",
+        "pre_blur": "525ce83c5615d08156b147eb2a14935e6d458233e77c159ee10790522002778d"
+      },
+      "depth": 16,
+      "effect": "zoom",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 2
+    },
+    {
+      "actual_sha256": {
+        "output": "62a2d24f4799ee12ead161e9d11d8c86c6cb7d5b0a7697724cab97c95cecdb8d",
+        "post_blur": "bb9ffe69b401a6d6cd19250790db74566293f703a7c07a4fdf2750a8b16ac771",
+        "pre_blur": "525ce83c5615d08156b147eb2a14935e6d458233e77c159ee10790522002778d"
+      },
+      "depth": 16,
+      "effect": "zoom",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 4
+    },
+    {
+      "actual_sha256": {
+        "output": "62a2d24f4799ee12ead161e9d11d8c86c6cb7d5b0a7697724cab97c95cecdb8d",
+        "post_blur": "bb9ffe69b401a6d6cd19250790db74566293f703a7c07a4fdf2750a8b16ac771",
+        "pre_blur": "525ce83c5615d08156b147eb2a14935e6d458233e77c159ee10790522002778d"
+      },
+      "depth": 16,
+      "effect": "zoom",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 2
+    },
+    {
+      "actual_sha256": {
+        "output": "62a2d24f4799ee12ead161e9d11d8c86c6cb7d5b0a7697724cab97c95cecdb8d",
+        "post_blur": "bb9ffe69b401a6d6cd19250790db74566293f703a7c07a4fdf2750a8b16ac771",
+        "pre_blur": "525ce83c5615d08156b147eb2a14935e6d458233e77c159ee10790522002778d"
+      },
+      "depth": 16,
+      "effect": "zoom",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 4
+    },
+    {
+      "actual_sha256": {
+        "output": "17889d6d9d5f0f74c39c72a847eeefe51638e3fc6b4c4403cc300e46ccb55d01",
+        "post_blur": "a946ef09d52d4c498de2e532f8654405461e73c7524d3af99883afb0c2e3b65a",
+        "pre_blur": "65468046f663d30ac544be430c965ee2c305193561e09d4bf9753747e4cb24ff"
+      },
+      "depth": 32,
+      "effect": "zoom",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 2
+    },
+    {
+      "actual_sha256": {
+        "output": "17889d6d9d5f0f74c39c72a847eeefe51638e3fc6b4c4403cc300e46ccb55d01",
+        "post_blur": "a946ef09d52d4c498de2e532f8654405461e73c7524d3af99883afb0c2e3b65a",
+        "pre_blur": "65468046f663d30ac544be430c965ee2c305193561e09d4bf9753747e4cb24ff"
+      },
+      "depth": 32,
+      "effect": "zoom",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 4
+    },
+    {
+      "actual_sha256": {
+        "output": "17889d6d9d5f0f74c39c72a847eeefe51638e3fc6b4c4403cc300e46ccb55d01",
+        "post_blur": "a946ef09d52d4c498de2e532f8654405461e73c7524d3af99883afb0c2e3b65a",
+        "pre_blur": "65468046f663d30ac544be430c965ee2c305193561e09d4bf9753747e4cb24ff"
+      },
+      "depth": 32,
+      "effect": "zoom",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 2
+    },
+    {
+      "actual_sha256": {
+        "output": "17889d6d9d5f0f74c39c72a847eeefe51638e3fc6b4c4403cc300e46ccb55d01",
+        "post_blur": "a946ef09d52d4c498de2e532f8654405461e73c7524d3af99883afb0c2e3b65a",
+        "pre_blur": "65468046f663d30ac544be430c965ee2c305193561e09d4bf9753747e4cb24ff"
+      },
+      "depth": 32,
+      "effect": "zoom",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 4
+    },
+    {
+      "actual_sha256": {
+        "output": "73787441422c98da508e0616621b305b77e1eb1874ce7f4cfbdfa9a2a10171cf",
+        "post_blur": "1c1766f221b40b61a378ee75f765b88d4629569e3b28ad5487084fa2097be532",
+        "pre_blur": "5fd11ebfc3f1ffea7b01e98cb50f7095ab699db25080cd4f1af361f534a156f7"
+      },
+      "depth": 32,
+      "effect": "zoom",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 2
+    },
+    {
+      "actual_sha256": {
+        "output": "73787441422c98da508e0616621b305b77e1eb1874ce7f4cfbdfa9a2a10171cf",
+        "post_blur": "1c1766f221b40b61a378ee75f765b88d4629569e3b28ad5487084fa2097be532",
+        "pre_blur": "5fd11ebfc3f1ffea7b01e98cb50f7095ab699db25080cd4f1af361f534a156f7"
+      },
+      "depth": 32,
+      "effect": "zoom",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 2,
+      "offset_ui": 4
+    },
+    {
+      "actual_sha256": {
+        "output": "73787441422c98da508e0616621b305b77e1eb1874ce7f4cfbdfa9a2a10171cf",
+        "post_blur": "1c1766f221b40b61a378ee75f765b88d4629569e3b28ad5487084fa2097be532",
+        "pre_blur": "5fd11ebfc3f1ffea7b01e98cb50f7095ab699db25080cd4f1af361f534a156f7"
+      },
+      "depth": 32,
+      "effect": "zoom",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 2
+    },
+    {
+      "actual_sha256": {
+        "output": "73787441422c98da508e0616621b305b77e1eb1874ce7f4cfbdfa9a2a10171cf",
+        "post_blur": "1c1766f221b40b61a378ee75f765b88d4629569e3b28ad5487084fa2097be532",
+        "pre_blur": "5fd11ebfc3f1ffea7b01e98cb50f7095ab699db25080cd4f1af361f534a156f7"
+      },
+      "depth": 32,
+      "effect": "zoom",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 4
+    },
+    {
+      "actual_sha256": {
+        "accum": "578ae96d68a318ed2bef81f9cd2ef1f3fbc926f9d4ae04d0320a5d3faf65626f",
+        "coordinates": "431b88b00cf7458c7ad2778f75439c8bb49d2b106f2b23bc6632ffaf90e91572",
+        "final_rgba": "834f9924079c3c44b2c0183565ad2ddc3cbdef300b13dcf37ec5a39bb908ac7d",
+        "max_alpha": "edf7d749b6bb9734e528648f63357c276e343ee1624159e8dcff885915cfbb7b",
+        "output": "96cfcaa3a79191f87493713c4f72b34f1a6e5c606d5a1e7d49329a555fff1183",
+        "polar": "716f94e45400b1e81763d9b8d0c91810424e84f66b88d31fc71c48f09afc1733",
+        "source_scalar": "460868b09e0f53f289e3a858bba95e644bdb6c19a636a5969289885a7f3552db"
+      },
+      "depth": 8,
+      "effect": "rotation",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 2
+    },
+    {
+      "actual_sha256": {
+        "accum": "038e93f50a2583b9fd6208a708234fcf41aec3dc81803e35086bba290333c6d2",
+        "coordinates": "431b88b00cf7458c7ad2778f75439c8bb49d2b106f2b23bc6632ffaf90e91572",
+        "final_rgba": "a88d68bddd0cb6193a1f33f23c2dd55f6fe16946e4e44069fe2dc437e57ac944",
+        "max_alpha": "edf7d749b6bb9734e528648f63357c276e343ee1624159e8dcff885915cfbb7b",
+        "output": "e14513a1cc6e3fc6efbf45649415def6bc4de2d81e8b4589ce9608baa365f217",
+        "polar": "716f94e45400b1e81763d9b8d0c91810424e84f66b88d31fc71c48f09afc1733",
+        "source_scalar": "460868b09e0f53f289e3a858bba95e644bdb6c19a636a5969289885a7f3552db"
+      },
+      "depth": 8,
+      "effect": "rotation",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 4
+    },
+    {
+      "actual_sha256": {
+        "accum": "6061267307313821feb881c97a42ec0e9f1654477fc3d7547d9c3e49d4215125",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "aaf481fc00db4d19c535c6ae2778efce62cd379f290659fb1c4643ccc97ba9fe",
+        "max_alpha": "7e010dbd1e58de29d937920113f7119bf228bd90355e9946c113a9870aa41339",
+        "output": "84cbfc1abb0e288ea6f147cc3899cd4449bbdd0ba366d9c4b59e4f89b9463c9e",
+        "polar": "560eecc57c1a764bec7a5ee032f1b02c77d54ede89dde49979d4cfa1740f7ed4",
+        "source_scalar": "e468ec1e7afb7b7ef8f52282c441d260ec7f29a643b3ab86884f1d83dabb62b0"
+      },
+      "depth": 8,
+      "effect": "rotation",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 2
+    },
+    {
+      "actual_sha256": {
+        "accum": "a5ef718bb781e00c61b1cc63e328e76d7da5a0968e89f2a26cf9cc935fa5ace5",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "c5397fee52a82427de04c3c2e762538e6afa090b2ce64e80d41ce73950eba47d",
+        "max_alpha": "7e010dbd1e58de29d937920113f7119bf228bd90355e9946c113a9870aa41339",
+        "output": "243b3c7731637bdbc5bb25e477cc89f8c3a5aaa4cc36159158f043861eae5caa",
+        "polar": "560eecc57c1a764bec7a5ee032f1b02c77d54ede89dde49979d4cfa1740f7ed4",
+        "source_scalar": "e468ec1e7afb7b7ef8f52282c441d260ec7f29a643b3ab86884f1d83dabb62b0"
+      },
+      "depth": 8,
+      "effect": "rotation",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 4
+    },
+    {
+      "actual_sha256": {
+        "accum": "d9bb8c3313c184cb14cbc8766f9eb2a2fc976899f6e180863323ea08bf11e927",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "a8f64911ad3b79539265ecf281ad914bae0344d8d12f881d5e4567b2a1cb7be4",
+        "max_alpha": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+        "output": "2fea9479250e1a5021bf283a263858fb3f10a7fbf17c04833b06eb033c24a47b",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+      },
+      "depth": 16,
+      "effect": "rotation",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 2
+    },
+    {
+      "actual_sha256": {
+        "accum": "0ddf8481cbd51ff20d11d085beff66ae34787554a507fb411d0163f6265cf0fc",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "874e10885088e49fe7bc2375ed7e330bf0c42df5c62a8de3ac13e69ff14c4d71",
+        "max_alpha": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+        "output": "bcb99285deba933ccad831f7b5ccbbb1c347dbd4910f2497f1cd87dd02fa8b54",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+      },
+      "depth": 16,
+      "effect": "rotation",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 4
+    },
+    {
+      "actual_sha256": {
+        "accum": "1308484aabc9085f5d0ede595528848a9948cf13b0058646ae48a0885fd09612",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "62eade6b3235a10677fe07cfc568d2954b42f66107cb217e685bee6377949d99",
+        "max_alpha": "6e827b098131aa6d596c227fa3819e940cc355399ebe86dc5127efc9d46534f4",
+        "output": "0b563c557281fdaaa76638a5a4677238323f34e83ddfa98bc8eac6d5355ef25b",
+        "polar": "da0505812a661d8b3cf2e9975b0b8d354b81a280be74c39510d97656920dd020",
+        "source_scalar": "e468ec1e7afb7b7ef8f52282c441d260ec7f29a643b3ab86884f1d83dabb62b0"
+      },
+      "depth": 16,
+      "effect": "rotation",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 2
+    },
+    {
+      "actual_sha256": {
+        "accum": "fa2ec8c2ca7837148da39c70c5b5f116c0600a76559c2a1250d82937c3a327b1",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "22bed98c0d1455cd28bd50baee96f48d5cb05a6b17a6a6a0eaabeefca841bcac",
+        "max_alpha": "6e827b098131aa6d596c227fa3819e940cc355399ebe86dc5127efc9d46534f4",
+        "output": "7f65b82a24ad92686543d8e591824beeafcb6e2c69e54fdc5f122e124e70b94d",
+        "polar": "da0505812a661d8b3cf2e9975b0b8d354b81a280be74c39510d97656920dd020",
+        "source_scalar": "e468ec1e7afb7b7ef8f52282c441d260ec7f29a643b3ab86884f1d83dabb62b0"
+      },
+      "depth": 16,
+      "effect": "rotation",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 4
+    },
+    {
+      "actual_sha256": {
+        "accum": "d9bb8c3313c184cb14cbc8766f9eb2a2fc976899f6e180863323ea08bf11e927",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "a8f64911ad3b79539265ecf281ad914bae0344d8d12f881d5e4567b2a1cb7be4",
+        "max_alpha": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+        "output": "58a6abdad0804ece2ae1fae6a25a85ec7a4de84bf57c5a990721fe8c50edcef5",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+      },
+      "depth": 32,
+      "effect": "rotation",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 2
+    },
+    {
+      "actual_sha256": {
+        "accum": "0ddf8481cbd51ff20d11d085beff66ae34787554a507fb411d0163f6265cf0fc",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "874e10885088e49fe7bc2375ed7e330bf0c42df5c62a8de3ac13e69ff14c4d71",
+        "max_alpha": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+        "output": "a7cc9b703f6551cbce40b667ac6bb8838575baf027780325f32671ea4d1147ab",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+      },
+      "depth": 32,
+      "effect": "rotation",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 4
+    },
+    {
+      "actual_sha256": {
+        "accum": "1308484aabc9085f5d0ede595528848a9948cf13b0058646ae48a0885fd09612",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "62eade6b3235a10677fe07cfc568d2954b42f66107cb217e685bee6377949d99",
+        "max_alpha": "6e827b098131aa6d596c227fa3819e940cc355399ebe86dc5127efc9d46534f4",
+        "output": "3da19c02549ec184cf7a459fbd41dc8b74c05ef949962257083260fca985e1e4",
+        "polar": "da0505812a661d8b3cf2e9975b0b8d354b81a280be74c39510d97656920dd020",
+        "source_scalar": "e468ec1e7afb7b7ef8f52282c441d260ec7f29a643b3ab86884f1d83dabb62b0"
+      },
+      "depth": 32,
+      "effect": "rotation",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 2
+    },
+    {
+      "actual_sha256": {
+        "accum": "fa2ec8c2ca7837148da39c70c5b5f116c0600a76559c2a1250d82937c3a327b1",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "22bed98c0d1455cd28bd50baee96f48d5cb05a6b17a6a6a0eaabeefca841bcac",
+        "max_alpha": "6e827b098131aa6d596c227fa3819e940cc355399ebe86dc5127efc9d46534f4",
+        "output": "7624fa1591dab47a976c3a66325a58b1a28a9b71ec95c365af22bb59c6076aa2",
+        "polar": "da0505812a661d8b3cf2e9975b0b8d354b81a280be74c39510d97656920dd020",
+        "source_scalar": "e468ec1e7afb7b7ef8f52282c441d260ec7f29a643b3ab86884f1d83dabb62b0"
+      },
+      "depth": 32,
+      "effect": "rotation",
+      "exact": true,
+      "first_differences": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset_mode": 3,
+      "offset_ui": 4
+    }
+  ],
+  "exact_cases": 36,
+  "kind": "olmradialblur_offset_matrix_actual_aex_20260811",
+  "production_method": "Shared-direct comparison against the bounded production predicates.",
+  "scope": "Zoom PF8/PF16/PF32 Mode2/3 and Rotation PF8/PF16/PF32 Mode3; 9x7/32x18; Outer Strength4; UI Offset2/4; centered neutral Ratio1 Angle0 Brightness1 Quality5 Repeat on Noise Type1.",
+  "status": "exact",
+  "total_cases": 36
+}

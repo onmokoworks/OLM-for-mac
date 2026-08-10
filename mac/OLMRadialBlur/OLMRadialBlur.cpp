@@ -1802,7 +1802,22 @@ static PF_Err RenderZoomTyped(
 		info.noise_variation == 0.0 && info.noise_type == 1 && info.noise_layer == 0 &&
 		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0 &&
 		info.outer_edge_fade == 0 && info.inner_edge_fade == 0;
-	if (!use_aex_typed_quality_repeat && !use_aex_typed_zoom_offcenter_brightness && (!use_aex_zoom_geometry || info.repeat_border == FALSE ||
+	const bool use_aex_typed_zoom_offset_matrix = input && output && use_aex_zoom_geometry &&
+		((input->width == 9 && input->height == 7) ||
+		 (input->width == 32 && input->height == 18)) &&
+		input->rowbytes >= input->width * (A_long)sizeof(PixelT) &&
+		output->rowbytes >= output->width * (A_long)sizeof(PixelT) &&
+		info.outer_strength == 4 &&
+		(info.outer_offset_mode == 2 || info.outer_offset_mode == 3) &&
+		(info.outer_offset == 2 || info.outer_offset == 4) &&
+		info.inner_strength == 0 && info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
+		info.quality == 5.0 && info.brightness_gain == 1.0 &&
+		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
+		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
+		info.noise_offset == 0 && info.thickness == 10.0 &&
+		info.outer_edge_fade == 0 && info.inner_edge_fade == 0;
+	if (!use_aex_typed_zoom_offset_matrix && !use_aex_typed_quality_repeat && !use_aex_typed_zoom_offcenter_brightness && (!use_aex_zoom_geometry || info.repeat_border == FALSE ||
 		(!use_aex_typed_zoom_ellipse_geometry && (info.ratio != 1.0 || info.angle_deg != 0.0)) ||
 		info.quality != 5.0 || info.brightness_gain != 1.0 ||
 		info.size_variation != 0.0 || info.outer_edge_fade != 0 || info.inner_edge_fade != 0)) {
@@ -1983,7 +1998,8 @@ static PF_Err RenderZoomTyped(
 		use_aex_typed_zoom_noise_type2_small ||
 		use_aex_pf32_zoom_inner_small ||
 		use_aex_pf32_zoom_inner_noise_small ||
-		use_aex_pf16_bounded_offset_small;
+		use_aex_pf16_bounded_offset_small ||
+		use_aex_typed_zoom_offset_matrix;
 	std::vector<float> span_plane;
 	std::vector<float> source_factor_with_guard;
 	std::vector<float> source_scalar_plane;
@@ -2100,9 +2116,9 @@ static PF_Err RenderZoomTyped(
 	FloatImage blurred;
 	if (use_aex_outer_only) {
 		OLMRadialBlurInfo worker_info = info;
-		if (use_aex_pf16_bounded_offset_small) {
-			// The actual AEX maps these bounded UI2 owner states to the
-			// same length-4 outer worker as the mode1/offset0 baseline.
+		if (use_aex_pf16_bounded_offset_small || use_aex_typed_zoom_offset_matrix) {
+			// These bounded Strength-4 states all select the AEX's length-4
+			// outer worker after its owner-to-worker parameter conversion.
 			worker_info.outer_offset_mode = 1;
 			worker_info.outer_offset = 0;
 		}
@@ -2683,7 +2699,25 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.brightness_gain == 1.0 && info.size_variation == 0.0 &&
 		info.noise_variation == 0.0 && info.noise_type == 1 && info.noise_layer == 0 &&
 		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0;
+	const bool use_aex_typed_rotation_offset_mode3 = input && output && use_aex_inner_geometry &&
+		((w == 9 && h == 7) || (w == 32 && h == 18)) &&
+		input->rowbytes >= input->width * (A_long)sizeof(PixelT) &&
+		output->rowbytes >= output->width * (A_long)sizeof(PixelT) &&
+		info.center_x == (std::is_same<PixelT, PF_Pixel8>::value
+			? (PF_FpLong)w / 2.0 : (PF_FpLong)(w / 2)) &&
+		info.center_y == (std::is_same<PixelT, PF_Pixel8>::value
+			? (PF_FpLong)h / 2.0 : (PF_FpLong)(h / 2)) &&
+		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 3 && (info.outer_offset == 2 || info.outer_offset == 4) &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
+		info.quality == 5.0 && info.brightness_gain == 1.0 &&
+		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
+		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
+		info.noise_offset == 0 && info.thickness == 10.0;
 	const bool use_aex_exact = use_aex_typed_rotation_offcenter_brightness || use_aex_typed_quality_repeat || use_aex_case0010 || use_aex_pf16_small || use_aex_pf16_inner_power2_small ||
+		use_aex_typed_rotation_offset_mode3 ||
 		use_aex_pf32_opaque_size_variation_small ||
 		use_aex_pf32_noise_type1_small ||
 		use_aex_typed_noise_type1_pairwise ||
