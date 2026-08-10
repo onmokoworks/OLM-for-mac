@@ -1,0 +1,67 @@
+{
+  "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+  "command": "PF_Cmd_RENDER (0x0b)",
+  "dynamic_dispatches": [
+    {
+      "active_sha256": "4ae34c2cfbdf2ccfa6d3fa18887ec36b0f5e3582166c148a7cf7c1a346fe9fc3",
+      "compose_callback": "0x181170870",
+      "depth": 8,
+      "fieldgen_reached_from_exported_render": false,
+      "input_padding_unchanged": true,
+      "input_rowbytes": 75,
+      "iterate_callback": "PF_Iterate8",
+      "output_padding_unchanged": true,
+      "output_rowbytes": 79,
+      "pixels": 187,
+      "preseeded_field_bytes": 748,
+      "typed_wrapper": "0x181170380"
+    },
+    {
+      "active_sha256": "933549c7c130c8a95d5abc5d33890f48f2786930945a1605269a5705629d8aa4",
+      "compose_callback": "0x181170480",
+      "depth": 16,
+      "fieldgen_reached_from_exported_render": false,
+      "input_padding_unchanged": true,
+      "input_rowbytes": 146,
+      "iterate_callback": "PF_Iterate16",
+      "output_padding_unchanged": true,
+      "output_rowbytes": 150,
+      "pixels": 187,
+      "preseeded_field_bytes": 1496,
+      "typed_wrapper": "0x181170280"
+    }
+  ],
+  "exported_entry": "0x181174bd0",
+  "forbidden_workarounds": [
+    "call the numerical helpers separately and label that exported-owner coverage",
+    "reuse the PF16 branch for PF32",
+    "treat a probe-supplied field seed as AEX host staging evidence"
+  ],
+  "minimum_missing_host_relation": [
+    "the AE-owned or sequence-owned call that runs FUN_181170ff0/sibling field staging before command 0x0b",
+    "the exact transfer of that staged world into command 0x0b's output-world argument",
+    "for PF32, the host route that calls whole owner FUN_181172a10 because command 0x0b has no PF32 branch"
+  ],
+  "production_comparison": "not performed: Mac EffectMain PF_Cmd_RENDER owns field generation, while the actual exported command owns only typed composition; comparing them as the same route would manufacture a false equivalence",
+  "requested_representatives": {
+    "PF16 Linear+BG+Gaussian": "cannot be generated at exported command 0x0b; a preseeded PF16 field is required",
+    "PF32 Linear+Gaussian": "not dispatched by exported command 0x0b",
+    "PF8 Mode4 median": "cannot be distinguished at exported command 0x0b; Blur Mode is upstream of this typed compose owner"
+  },
+  "required_precondition": "the output world active pixels already contain the typed field consumed from the green lane; the exported command does not generate or resize that field",
+  "schema": "olmdistancegradation.exported-render-owner-boundary/1",
+  "static_dispatch": {
+    "bit_clear": "FUN_181170380 / PF8 typed compose",
+    "bit_set": "FUN_181170280 / PF16 typed compose",
+    "fieldgen_target": null,
+    "pf32_target": null,
+    "selector": "output world byte +0x10 bit 0",
+    "verified_instructions": [
+      "181174da9  MOV R8,qword ptr [R10]",
+      "181174db6  TEST byte ptr [R9 + 0x10],0x1",
+      "181174df1  CALL 0x181170280",
+      "181174e31  CALL 0x181170380"
+    ]
+  },
+  "status": "blocked_by_actual_aex_architecture"
+}
