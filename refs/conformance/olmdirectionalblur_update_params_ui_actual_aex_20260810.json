@@ -1,0 +1,493 @@
+{
+  "actual_aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+  "actual_execution_boundary": "The exported actual-AEX command-14 path runs under Unicorn. Only AE host suite callbacks are modeled; the plugin implementation, branch, stream lookup, flag-setting sequence, and cleanup execute unmodified.",
+  "actual_exported_entry": "0x1800083f0",
+  "cases": {
+    "0": {
+      "checked_in_param_count": 1,
+      "checked_out_param_indices": [
+        16
+      ],
+      "effect_dispose_count": 1,
+      "hidden_by_param_index": {
+        "17": true,
+        "18": false,
+        "19": false,
+        "20": false
+      },
+      "noise_type": 0,
+      "return_code": 0,
+      "set_calls": [
+        [
+          17,
+          2,
+          0,
+          1
+        ],
+        [
+          18,
+          2,
+          0,
+          0
+        ],
+        [
+          19,
+          2,
+          0,
+          0
+        ],
+        [
+          20,
+          2,
+          0,
+          0
+        ]
+      ],
+      "stream_dispose_order": [
+        17,
+        18,
+        19,
+        20
+      ],
+      "suite_acquisitions": [
+        [
+          "AEGP PF Interface Suite",
+          1
+        ],
+        [
+          "AEGP Layer Suite",
+          11
+        ],
+        [
+          "AEGP Stream Suite",
+          7
+        ],
+        [
+          "AEGP Dynamic Stream Suite",
+          3
+        ],
+        [
+          "AEGP Stream Suite",
+          7
+        ],
+        [
+          "AEGP Dynamic Stream Suite",
+          3
+        ],
+        [
+          "AEGP Stream Suite",
+          7
+        ],
+        [
+          "AEGP Dynamic Stream Suite",
+          3
+        ],
+        [
+          "AEGP Stream Suite",
+          7
+        ],
+        [
+          "AEGP Dynamic Stream Suite",
+          3
+        ],
+        [
+          "AEGP Effect Suite",
+          3
+        ]
+      ]
+    },
+    "1": {
+      "checked_in_param_count": 1,
+      "checked_out_param_indices": [
+        16
+      ],
+      "effect_dispose_count": 1,
+      "hidden_by_param_index": {
+        "17": true,
+        "18": false,
+        "19": false,
+        "20": false
+      },
+      "noise_type": 1,
+      "return_code": 0,
+      "set_calls": [
+        [
+          17,
+          2,
+          0,
+          1
+        ],
+        [
+          18,
+          2,
+          0,
+          0
+        ],
+        [
+          19,
+          2,
+          0,
+          0
+        ],
+        [
+          20,
+          2,
+          0,
+          0
+        ]
+      ],
+      "stream_dispose_order": [
+        17,
+        18,
+        19,
+        20
+      ],
+      "suite_acquisitions": [
+        [
+          "AEGP PF Interface Suite",
+          1
+        ],
+        [
+          "AEGP Layer Suite",
+          11
+        ],
+        [
+          "AEGP Stream Suite",
+          7
+        ],
+        [
+          "AEGP Dynamic Stream Suite",
+          3
+        ],
+        [
+          "AEGP Stream Suite",
+          7
+        ],
+        [
+          "AEGP Dynamic Stream Suite",
+          3
+        ],
+        [
+          "AEGP Stream Suite",
+          7
+        ],
+        [
+          "AEGP Dynamic Stream Suite",
+          3
+        ],
+        [
+          "AEGP Stream Suite",
+          7
+        ],
+        [
+          "AEGP Dynamic Stream Suite",
+          3
+        ],
+        [
+          "AEGP Effect Suite",
+          3
+        ]
+      ]
+    },
+    "2": {
+      "checked_in_param_count": 1,
+      "checked_out_param_indices": [
+        16
+      ],
+      "effect_dispose_count": 1,
+      "hidden_by_param_index": {
+        "17": true,
+        "18": false,
+        "19": false,
+        "20": false
+      },
+      "noise_type": 2,
+      "return_code": 0,
+      "set_calls": [
+        [
+          17,
+          2,
+          0,
+          1
+        ],
+        [
+          18,
+          2,
+          0,
+          0
+        ],
+        [
+          19,
+          2,
+          0,
+          0
+        ],
+        [
+          20,
+          2,
+          0,
+          0
+        ]
+      ],
+      "stream_dispose_order": [
+        17,
+        18,
+        19,
+        20
+      ],
+      "suite_acquisitions": [
+        [
+          "AEGP PF Interface Suite",
+          1
+        ],
+        [
+          "AEGP Layer Suite",
+          11
+        ],
+        [
+          "AEGP Stream Suite",
+          7
+        ],
+        [
+          "AEGP Dynamic Stream Suite",
+          3
+        ],
+        [
+          "AEGP Stream Suite",
+          7
+        ],
+        [
+          "AEGP Dynamic Stream Suite",
+          3
+        ],
+        [
+          "AEGP Stream Suite",
+          7
+        ],
+        [
+          "AEGP Dynamic Stream Suite",
+          3
+        ],
+        [
+          "AEGP Stream Suite",
+          7
+        ],
+        [
+          "AEGP Dynamic Stream Suite",
+          3
+        ],
+        [
+          "AEGP Effect Suite",
+          3
+        ]
+      ]
+    },
+    "3": {
+      "checked_in_param_count": 1,
+      "checked_out_param_indices": [
+        16
+      ],
+      "effect_dispose_count": 1,
+      "hidden_by_param_index": {
+        "17": false,
+        "18": true,
+        "19": true,
+        "20": true
+      },
+      "noise_type": 3,
+      "return_code": 0,
+      "set_calls": [
+        [
+          17,
+          2,
+          0,
+          0
+        ],
+        [
+          18,
+          2,
+          0,
+          1
+        ],
+        [
+          19,
+          2,
+          0,
+          1
+        ],
+        [
+          20,
+          2,
+          0,
+          1
+        ]
+      ],
+      "stream_dispose_order": [
+        17,
+        18,
+        19,
+        20
+      ],
+      "suite_acquisitions": [
+        [
+          "AEGP PF Interface Suite",
+          1
+        ],
+        [
+          "AEGP Layer Suite",
+          11
+        ],
+        [
+          "AEGP Stream Suite",
+          7
+        ],
+        [
+          "AEGP Dynamic Stream Suite",
+          3
+        ],
+        [
+          "AEGP Stream Suite",
+          7
+        ],
+        [
+          "AEGP Dynamic Stream Suite",
+          3
+        ],
+        [
+          "AEGP Stream Suite",
+          7
+        ],
+        [
+          "AEGP Dynamic Stream Suite",
+          3
+        ],
+        [
+          "AEGP Stream Suite",
+          7
+        ],
+        [
+          "AEGP Dynamic Stream Suite",
+          3
+        ],
+        [
+          "AEGP Effect Suite",
+          3
+        ]
+      ]
+    },
+    "4": {
+      "checked_in_param_count": 1,
+      "checked_out_param_indices": [
+        16
+      ],
+      "effect_dispose_count": 1,
+      "hidden_by_param_index": {
+        "17": true,
+        "18": false,
+        "19": false,
+        "20": false
+      },
+      "noise_type": 4,
+      "return_code": 0,
+      "set_calls": [
+        [
+          17,
+          2,
+          0,
+          1
+        ],
+        [
+          18,
+          2,
+          0,
+          0
+        ],
+        [
+          19,
+          2,
+          0,
+          0
+        ],
+        [
+          20,
+          2,
+          0,
+          0
+        ]
+      ],
+      "stream_dispose_order": [
+        17,
+        18,
+        19,
+        20
+      ],
+      "suite_acquisitions": [
+        [
+          "AEGP PF Interface Suite",
+          1
+        ],
+        [
+          "AEGP Layer Suite",
+          11
+        ],
+        [
+          "AEGP Stream Suite",
+          7
+        ],
+        [
+          "AEGP Dynamic Stream Suite",
+          3
+        ],
+        [
+          "AEGP Stream Suite",
+          7
+        ],
+        [
+          "AEGP Dynamic Stream Suite",
+          3
+        ],
+        [
+          "AEGP Stream Suite",
+          7
+        ],
+        [
+          "AEGP Dynamic Stream Suite",
+          3
+        ],
+        [
+          "AEGP Stream Suite",
+          7
+        ],
+        [
+          "AEGP Dynamic Stream Suite",
+          3
+        ],
+        [
+          "AEGP Effect Suite",
+          3
+        ]
+      ]
+    }
+  },
+  "command": {
+    "name": "PF_Cmd_UPDATE_PARAMS_UI",
+    "value": 14
+  },
+  "controlled_param_indices": [
+    17,
+    18,
+    19,
+    20
+  ],
+  "not_proven": [
+    "native After Effects visible redraw",
+    "host failure propagation for individual suite calls",
+    "behavior when UPDATE_PARAMS_UI is invoked without a valid effect context"
+  ],
+  "observable_contract": "Noise Type == 3 shows Noise Layer and hides Seed, Noise Offset, and Thickness; every other observed integer does the inverse. Each stream is updated in index order with AEGP_DynStreamFlag_HIDDEN, undoable=false, then disposed; the effect ref is disposed once.",
+  "plugin": "OLMDirectionalBlur",
+  "production_source": "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp",
+  "schema_version": 1,
+  "selector_param_index": 16,
+  "status": "exact_contract_fixed"
+}

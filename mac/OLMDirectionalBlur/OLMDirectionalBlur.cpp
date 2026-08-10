@@ -15,6 +15,7 @@
 #include <vector>
 
 static constexpr PF_FpLong kPi = 3.141592653589793238462643383279502884;
+static AEGP_PluginID g_aegp_plugin_id = 0;
 
 static void UnionLRect(const PF_LRect *src, PF_LRect *dst)
 {
@@ -41,13 +42,18 @@ About(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
 }
 
 static PF_Err
-GlobalSetup(PF_InData *, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
+GlobalSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
 {
 	out_data->my_version = PF_VERSION(MAJOR_VERSION, MINOR_VERSION, BUG_VERSION,
 	                                  STAGE_VERSION, BUILD_VERSION);
 	out_data->out_flags  = 0x06000040;
 	out_data->out_flags2 = 0x08001408;
-	return PF_Err_NONE;
+	// Source-included parameter-layout probes have no host suite table. A real
+	// AE GLOBAL_SETUP always supplies one; register there, as the AEX does.
+	if (!in_data || !in_data->pica_basicP) return PF_Err_NONE;
+	AEGP_SuiteHandler suites(in_data->pica_basicP);
+	return suites.UtilitySuite6()->AEGP_RegisterWithAEGP(
+		nullptr, "OLMDirectionalBlur", &g_aegp_plugin_id);
 }
 
 static PF_Err
@@ -147,6 +153,67 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	PF_END_TOPIC(NOISE_BLANK_DISK_ID);
 
 	out_data->num_params = OLMDIRECTIONALBLUR_NUM_PARAMS;
+	return err;
+}
+
+static PF_Err
+UpdateParamsUI(PF_InData *in_data)
+{
+	if (!in_data) return PF_Err_BAD_CALLBACK_PARAM;
+	PF_Err err = PF_Err_NONE;
+	PF_ParamDef noise_type_param;
+	AEFX_CLR_STRUCT(noise_type_param);
+	ERR(PF_CHECKOUT_PARAM(in_data, OLMDIRECTIONALBLUR_NOISE_TYPE,
+		in_data->current_time, in_data->time_step, in_data->time_scale,
+		&noise_type_param));
+	if (err) return err;
+	const A_Boolean layer_mode = noise_type_param.u.pd.value == 3 ? TRUE : FALSE;
+	PF_CHECKIN_PARAM(in_data, &noise_type_param);
+
+	AEFX_SuiteScoper<AEGP_PFInterfaceSuite1> pf_interface(
+		in_data, kAEGPPFInterfaceSuite, kAEGPPFInterfaceSuiteVersion1);
+	AEFX_SuiteScoper<AEGP_StreamSuite6> streams(
+		in_data, kAEGPStreamSuite, kAEGPStreamSuiteVersion6);
+	AEFX_SuiteScoper<AEGP_DynamicStreamSuite4> dynamic_streams(
+		in_data, kAEGPDynamicStreamSuite, kAEGPDynamicStreamSuiteVersion4);
+	AEFX_SuiteScoper<AEGP_EffectSuite5> effects(
+		in_data, kAEGPEffectSuite, kAEGPEffectSuiteVersion5);
+
+	AEGP_EffectRefH effect = nullptr;
+	ERR(pf_interface->AEGP_GetNewEffectForEffect(
+		g_aegp_plugin_id, in_data->effect_ref, &effect));
+	if (!err && effect) {
+		const struct {
+			PF_ParamIndex index;
+			A_Boolean hidden;
+		} controls[] = {
+			{OLMDIRECTIONALBLUR_NOISE_LAYER,
+			 static_cast<A_Boolean>(layer_mode ? FALSE : TRUE)},
+			{OLMDIRECTIONALBLUR_SEED, layer_mode},
+			{OLMDIRECTIONALBLUR_NOISE_OFFSET, layer_mode},
+			{OLMDIRECTIONALBLUR_THICKNESS, layer_mode},
+		};
+		for (const auto &control : controls) {
+			AEGP_StreamRefH stream = nullptr;
+			ERR(streams->AEGP_GetNewEffectStreamByIndex(
+				g_aegp_plugin_id, effect, control.index, &stream));
+			if (!err && stream) {
+				AEGP_DynStreamFlags ignored_flags = 0;
+				ERR(dynamic_streams->AEGP_GetDynamicStreamFlags(stream, &ignored_flags));
+				ERR(dynamic_streams->AEGP_SetDynamicStreamFlag(
+					stream, AEGP_DynStreamFlag_HIDDEN, FALSE, control.hidden));
+			}
+			if (stream) {
+				const PF_Err dispose_err = streams->AEGP_DisposeStream(stream);
+				if (!err) err = dispose_err;
+			}
+			if (err) break;
+		}
+	}
+	if (effect) {
+		const PF_Err dispose_err = effects->AEGP_DisposeEffect(effect);
+		if (!err) err = dispose_err;
+	}
 	return err;
 }
 
@@ -892,6 +959,9 @@ PF_Err EffectMain(PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data,
 			break;
 		case PF_Cmd_PARAMS_SETUP:
 			err = ParamsSetup(in_data, out_data, params, output);
+			break;
+		case PF_Cmd_UPDATE_PARAMS_UI:
+			err = UpdateParamsUI(in_data);
 			break;
 		case PF_Cmd_RENDER:
 			err = Render(in_data, out_data, params, output);
