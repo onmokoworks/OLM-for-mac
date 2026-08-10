@@ -1,0 +1,138 @@
+{
+  "boundary": "This probe establishes that the Zoom consumer receives and uses the nontrivial Size Variation prepass. It does not by itself expose the owner source-size-factor/source-span arrays or prove the current Mac implementation exact.",
+  "cases": [
+    {
+      "actual_sha256": {
+        "output": "0d0f85b257b39d202043d6f969587f7632760b717acf94e148656852965ec129",
+        "post_blur": "8a27c65c90212e47a85cfbd6b77c2668f7f652d53246aefb3775ed83bfc06112",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c"
+      },
+      "depth": 8,
+      "differs_from_size0": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": false
+      },
+      "size0_sha256": {
+        "output": "eb7a363f9e4040a8d2d0353d6f6bf18b15785691c481ca1026ba13f6f70c79e0",
+        "post_blur": "1c1f824d56b8e3556da38d316c3bb8855c5dc4971710f3f07ff007a0a2cd15a4",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c"
+      },
+      "size_variation": 25.0
+    },
+    {
+      "actual_sha256": {
+        "output": "031129c572db8bc12474a908f8d29223b8a1d613d9b28a6a3e36325119faa2e6",
+        "post_blur": "94d09a5cc7bc89b029d2819f99117147f0b194c8a3ae8ba698c400be7fea8c5d",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c"
+      },
+      "depth": 8,
+      "differs_from_size0": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": false
+      },
+      "size0_sha256": {
+        "output": "eb7a363f9e4040a8d2d0353d6f6bf18b15785691c481ca1026ba13f6f70c79e0",
+        "post_blur": "1c1f824d56b8e3556da38d316c3bb8855c5dc4971710f3f07ff007a0a2cd15a4",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c"
+      },
+      "size_variation": 100.0
+    },
+    {
+      "actual_sha256": {
+        "output": "2f21c5964c87c05455753dc440222c882fb6aa300baa981ff644095f9b6df233",
+        "post_blur": "969948a4034fa94ca3920501be7c6b0abb384d2ee0db7f9a96103772f74f91b7",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c"
+      },
+      "depth": 16,
+      "differs_from_size0": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": false
+      },
+      "size0_sha256": {
+        "output": "1720234e9ef969e6f0263a6c50aeed44461143b601c2dbe6947ab66bc21e9374",
+        "post_blur": "757f90b6c6a8656be3c88e281f84e36d89b4c49d1c2afe0840bd10cb261c23ac",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c"
+      },
+      "size_variation": 25.0
+    },
+    {
+      "actual_sha256": {
+        "output": "acfe1cfb70363429e05e08bc2ff8cfa2dfa899079cfa435264159d716c2ea6a6",
+        "post_blur": "06b1dd85c6080f4d75c7bd76279a8923307e03a2b3a893d2b952483032b6d5d0",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c"
+      },
+      "depth": 16,
+      "differs_from_size0": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": false
+      },
+      "size0_sha256": {
+        "output": "1720234e9ef969e6f0263a6c50aeed44461143b601c2dbe6947ab66bc21e9374",
+        "post_blur": "757f90b6c6a8656be3c88e281f84e36d89b4c49d1c2afe0840bd10cb261c23ac",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c"
+      },
+      "size_variation": 100.0
+    },
+    {
+      "actual_sha256": {
+        "output": "d591b5d142cca960f9a2f1a101de034135a95b0fbd6ac21221b51fc9341ddd05",
+        "post_blur": "1da23fa0e97e196975e3b6e8e991e8d4d1cbe863a3a105d86d01f981bff11d8e",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb"
+      },
+      "depth": 32,
+      "differs_from_size0": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": false
+      },
+      "size0_sha256": {
+        "output": "7b1e04192d18f7205a96be5e207d41325dc7b05859b6de1044b794b5ecf5944c",
+        "post_blur": "bd0ca2136f9400d456e3ba1328f035aa7e5ba0b98109a3a3adfeec0fc8538c90",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb"
+      },
+      "size_variation": 25.0
+    },
+    {
+      "actual_sha256": {
+        "output": "ce32644f596331ce4e1c5cd291e58f1abc35ccdc46c38b5d1ff9496637c23bcf",
+        "post_blur": "31bf9a44483b27b3707d3d83064547b4338afa8b3a24eb595bb9fe838f9484f7",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb"
+      },
+      "depth": 32,
+      "differs_from_size0": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": false
+      },
+      "size0_sha256": {
+        "output": "7b1e04192d18f7205a96be5e207d41325dc7b05859b6de1044b794b5ecf5944c",
+        "post_blur": "bd0ca2136f9400d456e3ba1328f035aa7e5ba0b98109a3a3adfeec0fc8538c90",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb"
+      },
+      "size_variation": 100.0
+    }
+  ],
+  "compared": [
+    "pre_blur_float32_plane",
+    "post_blur_float32_plane",
+    "typed_padded_output"
+  ],
+  "fixture": {
+    "component_areas": [
+      1,
+      4,
+      9
+    ],
+    "connectivity": "four-connected",
+    "source_generator": "tools/emulation/probe_olmradialblur_zoom_size_variation_components_actual_aex_20260811.py",
+    "transparent_pixel_count": 562
+  },
+  "kind": "olmradialblur_zoom_size_variation_components_actual_aex_20260811",
+  "ordering_witness": "For all six typed/value cells, pre_blur is byte-identical to Size0 while post_blur and output differ. Size Variation is therefore consumed after initial polar sampling and before/during the strength collapse.",
+  "scope": "Pinned actual AEX; Zoom 32x18 centered Outer4/Inner0 neutral tuple; PF8/PF16/PF32; Size Variation 25/100 against Size0; transparent background with separated four-connected opaque component areas 1,4,9.",
+  "status": "6/6 actual-AEX Zoom post-sampling consumers distinguish nonzero Size Variation"
+}
