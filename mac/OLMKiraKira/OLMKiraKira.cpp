@@ -740,13 +740,19 @@ static PF_Err About(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], P
 	return PF_Err_NONE;
 }
 
-static PF_Err GlobalSetup(PF_InData *, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
+static PF_Err GlobalSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
 {
 	out_data->my_version = PF_VERSION(MAJOR_VERSION, MINOR_VERSION, BUG_VERSION,
 	                                  STAGE_VERSION, BUILD_VERSION);
 	out_data->out_flags  = 0x02008040;
 	out_data->out_flags2 = 0x08001400;
-	return PF_Err_NONE;
+
+	// Match the Windows plug-in's global AEGP registration. ECW event-surface
+	// registration itself is performed by PF_REGISTER_UI in ParamsSetup below.
+	static AEGP_PluginID plugin_id = 0;
+	AEGP_SuiteHandler suites(in_data->pica_basicP);
+	return suites.UtilitySuite6()->AEGP_RegisterWithAEGP(
+		nullptr, "OLM Kira Kira", &plugin_id);
 }
 
 static OLMKiraKiraRampData DefaultRampData()
@@ -870,6 +876,11 @@ static PF_Err RampArbitraryCallback(PF_InData *in_data, PF_ArbParamsExtra *extra
 
 static PF_Err AddRampParam(PF_InData *in_data, A_short id, A_long disk_id)
 {
+	// PF_ArbitraryDef::refconPV is opaque to the host and is passed back to
+	// PF_Cmd_ARBITRARY_CALLBACKS. The Windows owner uses one stable non-null
+	// handler address for all five ramps, so keep the same identity/lifetime
+	// contract even though the native callback does not need handler state.
+	static const char ramp_handler_refcon = 0;
 	PF_ParamDef def;
 	AEFX_CLR_STRUCT(def);
 	PF_ArbitraryH default_handle = nullptr;
@@ -885,7 +896,7 @@ static PF_Err AddRampParam(PF_InData *in_data, A_short id, A_long disk_id)
 	def.u.arb_d.id = id;
 	def.u.arb_d.dephault = default_handle;
 	def.u.arb_d.value = nullptr;
-	def.u.arb_d.refconPV = nullptr;
+	def.u.arb_d.refconPV = const_cast<char *>(&ramp_handler_refcon);
 	err = PF_ADD_PARAM(in_data, -1, &def);
 	if (err) {
 		AEFX_SuiteScoper<PF_HandleSuite1> handles(in_data, kPFHandleSuite, kPFHandleSuiteVersion1);
@@ -1145,6 +1156,15 @@ static PF_Err ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef 
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_GlowRotation_Param_Name),
 	                     -360.0, 360.0, -180.0, 180.0, 0.0,
 	                     PF_Precision_TENTHS, 0, 0, GLOW_ROTATION_DISK_ID);
+
+	// Register the ECW event surface after defining its custom controls. The
+	// Windows AEX registers exactly PF_CustomEFlag_EFFECT with all dimensions
+	// and alignments zero. Without this call AE creates no effect-window
+	// context and crashes in CECCustomControl::GetContext before PF_Event_DRAW.
+	PF_CustomUIInfo custom_ui;
+	AEFX_CLR_STRUCT(custom_ui);
+	custom_ui.events = PF_CustomEFlag_EFFECT;
+	ERR(PF_REGISTER_UI(in_data, &custom_ui));
 
 	out_data->num_params = OLMKIRAKIRA_NUM_PARAMS;
 	return err;

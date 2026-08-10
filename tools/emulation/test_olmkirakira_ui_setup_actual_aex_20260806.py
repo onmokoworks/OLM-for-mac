@@ -68,10 +68,20 @@ def run_actual() -> tuple[dict[str, int], list[dict[str, object]]]:
         callbacks("size", lambda _current, args: allocations.get(args[0], 0)),
         callbacks("resize", zero)))
 
+    registrations: list[dict[str, object]] = []
+
+    def register_with_aegp(current: AexLoader, args: list[int]) -> int:
+        registrations.append({
+            "global_refcon": args[0],
+            "plugin_name": cstr(args[1]),
+        })
+        current.write_bytes(args[2], struct.pack("<i", 42))
+        return 0
+
     utility = loader.host_alloc(0x50)
     loader.write_bytes(utility, bytes(0x50))
     loader.write_bytes(utility + 0x48, struct.pack("<Q", callbacks(
-        "register_ui", lambda current, args: current.write_bytes(args[2], struct.pack("<i", 42)) or 0)))
+        "register_with_aegp", register_with_aegp)))
 
     def cstr(address: int, limit: int = 256) -> str:
         return loader.read_bytes(address, limit).split(b"\0", 1)[0].decode("ascii")
@@ -93,6 +103,7 @@ def run_actual() -> tuple[dict[str, int], list[dict[str, object]]]:
         "my_version": u32(loader.read_bytes(out_data, 0x300), 0),
         "out_flags": u32(loader.read_bytes(out_data, 0x300), 0x60),
         "out_flags2": u32(loader.read_bytes(out_data, 0x300), 0x190),
+        "aegp_registrations": registrations,
     }
 
     # PARAMS_SETUP uses the already-proven concrete owner object. Its string-copy
@@ -107,7 +118,18 @@ def run_actual() -> tuple[dict[str, int], list[dict[str, object]]]:
     loader.write_bytes(utils + 0x150, struct.pack("<Q", callbacks("copy_string", copy_string)))
     loader.write_bytes(in_data + 0xB0, struct.pack("<Q", utils))
     loader.write_bytes(in_data + 0xB8, struct.pack("<Q", 0x1234))
-    loader.write_bytes(in_data + 0x28, struct.pack("<Q", callbacks("pixel_formats", zero)))
+    custom_ui_registrations: list[dict[str, object]] = []
+
+    def register_custom_ui(current: AexLoader, args: list[int]) -> int:
+        words = list(struct.unpack("<10i", current.read_bytes(args[1], 40)))
+        custom_ui_registrations.append({
+            "effect_ref": args[0],
+            "words": words,
+        })
+        return 0
+
+    loader.write_bytes(in_data + 0x28, struct.pack("<Q", callbacks(
+        "register_custom_ui", register_custom_ui)))
     effect = loader.host_alloc(0x260)
     loader.write_bytes(effect, bytes(0x260))
     loader.call_function(CTOR, [effect], max_instructions=300_000)
@@ -119,6 +141,7 @@ def run_actual() -> tuple[dict[str, int], list[dict[str, object]]]:
     setup_result = loader.call_function(ENTRY, [4, in_data, out_data, 0, 0, 0], max_instructions=5_000_000)
     assert setup_result["rax"] == 0 and len(raw) == 40
     assert u32(loader.read_bytes(out_data, 0x300), 0x30) == 41
+    global_setup["custom_ui_registrations"] = custom_ui_registrations
 
     rows = []
     for blob in raw:
@@ -144,8 +167,11 @@ def run_actual() -> tuple[dict[str, int], list[dict[str, object]]]:
         elif kind == 5:
             row["color_default_raw"] = f"0x{u32(blob, 60):08x}"
         elif kind == 11:
+            refcon = struct.unpack_from("<Q", blob, 80)[0]
             row["arbitrary"] = {"id": struct.unpack_from("<h", blob, 56)[0],
-                                "default_size": allocations[struct.unpack_from("<Q", blob, 64)[0]]}
+                                "default_size": allocations[struct.unpack_from("<Q", blob, 64)[0]],
+                                "refcon_nonnull": refcon != 0,
+                                "refcon_effect_delta": refcon - effect}
         elif kind == 3:
             row["angle"] = list(struct.unpack_from("<4i", blob, 56))
         rows.append(row)
@@ -155,7 +181,16 @@ def run_actual() -> tuple[dict[str, int], list[dict[str, object]]]:
 def main() -> int:
     assert hashlib.sha256(AEX.read_bytes()).hexdigest() == SHA
     global_setup, rows = run_actual()
-    assert global_setup == {"my_version": 0x00190000, "out_flags": 0x02008040, "out_flags2": 0x08001400}
+    assert global_setup == {
+        "my_version": 0x00190000,
+        "out_flags": 0x02008040,
+        "out_flags2": 0x08001400,
+        "aegp_registrations": [{"global_refcon": 0, "plugin_name": "OLM Kira Kira"}],
+        "custom_ui_registrations": [{
+            "effect_ref": 0x1234,
+            "words": [0, 4, 0, 0, 0, 0, 0, 0, 0, 0],
+        }],
+    }
     assert [(r["disk_id"], r["param_type"], r["name"]) for r in rows] == EXPECTED
     assert [r["popup"] for r in rows[:3]] == [
         {"choices": 6, "default": 1, "names": "Alpha|Luminance|RGB|Brightness"},
@@ -167,13 +202,18 @@ def main() -> int:
     assert all(r["name"] == "Ramp" and r["ui_width"] == 310 and r["ui_height"] == 170 for r in ramp_rows)
     assert all(r["ui_flags"] == 0x82 and r["flags"] == 0x60 for r in ramp_rows)
     assert [r["arbitrary"] for r in ramp_rows] == [
-        {"id": disk_id, "default_size": 0x260} for disk_id in (19, 21, 23, 36, 25)]
+        {"id": disk_id, "default_size": 0x260, "refcon_nonnull": True,
+         "refcon_effect_delta": 0x200}
+        for disk_id in (19, 21, 23, 36, 25)]
 
     mac = MAC.read_text(encoding="utf-8")
     strings = STRINGS.read_text(encoding="utf-8")
     assert 'std::strncpy(def.name, "Ramp", sizeof(def.name) - 1);' in mac
     assert "PF_PUI_CONTROL | PF_PUI_DONT_ERASE_CONTROL" in mac
     assert "PF_ParamFlag_SUPERVISE | PF_ParamFlag_START_COLLAPSED" in mac
+    assert "def.u.arb_d.refconPV = const_cast<char *>(&ramp_handler_refcon);" in mac
+    assert 'AEGP_RegisterWithAEGP(\n\t\tnullptr, "OLM Kira Kira", &plugin_id)' in mac
+    assert "PF_REGISTER_UI(in_data, &custom_ui)" in mac
     assert '"Premultiply Add|Add"' not in strings
     assert '"premultiply|add"' in strings
     assert "PF_Cmd_EVENT" in mac and "PF_EO_HANDLED_EVENT" in mac and "PF_InvalidateRect" in mac
@@ -183,10 +223,22 @@ def main() -> int:
         "aex_sha256": SHA, "entry_point": hex(ENTRY), "global_setup": global_setup,
         "params_setup": {"return_code": 0, "num_params_including_input": 41, "rows": rows},
         "fixed_mac_mismatch": {
-            "before": {"name": "", "ui_flags": "0x12", "flags": "0x40"},
-            "after": {"name": "Ramp", "ui_flags": "0x82", "flags": "0x60"},
+            "before": {
+                "name": "", "ui_flags": "0x12", "flags": "0x40",
+                "aegp_registration": False, "custom_ui_registration": False,
+                "ramp_refcon": None,
+            },
+            "after": {
+                "name": "Ramp", "ui_flags": "0x82", "flags": "0x60",
+                "aegp_registration": "OLM Kira Kira",
+                "custom_ui_registration_words": [0, 4, 0, 0, 0, 0, 0, 0, 0, 0],
+                "ramp_refcon": "one stable opaque address shared by five rows",
+            },
         },
-        "event_contract": "PF_Cmd_EVENT + handled/update-now + invalidate retained; live Drawbot inspection is a separate host boundary",
+        "event_contract": (
+            "PF_Cmd_EVENT + handled/update-now + invalidate retained; AE 26.3.0.87 arm64 "
+            "live Drawbot expansion and click insertion passed on 2026-08-10"
+        ),
     }
     REPORT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print("PASS_OLMKIRAKIRA_UI_SETUP_ACTUAL_AEX_20260806 rows=40 ramps=5 global=exact")

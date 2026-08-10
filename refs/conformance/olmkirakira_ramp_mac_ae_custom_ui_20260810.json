@@ -1,0 +1,46 @@
+{
+  "schema": "olmkirakira-ramp-mac-ae-custom-ui/1",
+  "status": "pass",
+  "date": "2026-08-10",
+  "host": {
+    "application": "Adobe After Effects",
+    "architecture": "arm64",
+    "version": "26.3.0.87"
+  },
+  "plugin": {
+    "architectures": ["x86_64", "arm64"],
+    "binary_sha256": "21e89157d769d824cea0f177663812e89ca48a60d9a5d747adaed433d0e0dbe5"
+  },
+  "failure": {
+    "crash_dump_sha256": "75cf8d1937f44fdd88a3c1f11788f9cc710c9c7a66d2be2c59292b593ffc2768",
+    "frame": "CECCustomControl::GetContext(dvaui::drawbot::Drawbot*) + 52",
+    "null_value": "CECCustomTitle::GetContext result (x21)",
+    "plugin_event_reached": false
+  },
+  "actual_aex_contract": {
+    "aegp_registration": {
+      "global_refcon": 0,
+      "plugin_name": "OLM Kira Kira"
+    },
+    "custom_ui_registration_words": [0, 4, 0, 0, 0, 0, 0, 0, 0, 0],
+    "ramp_refcon": {
+      "shared_by_rows": 5,
+      "effect_owner_delta": 512,
+      "nonnull": true
+    }
+  },
+  "live_steps": [
+    "created 1920x1080 composition",
+    "created black solid",
+    "applied OLM Kira Kira",
+    "expanded Vertical Color Ramp",
+    "expanded Ramp",
+    "observed gradient and three default stops",
+    "clicked gradient and observed fourth stop"
+  ],
+  "scope": {
+    "proved": ["ECW context creation", "Drawbot default draw", "click insertion"],
+    "synthetic_only": ["continuous drag", "deletion", "color picker"],
+    "renderer_equivalence_widened": false
+  }
+}

@@ -1,20 +1,60 @@
 {
   "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
   "entry_point": "0x181155f20",
-  "event_contract": "PF_Cmd_EVENT + handled/update-now + invalidate retained; live Drawbot inspection is a separate host boundary",
+  "event_contract": "PF_Cmd_EVENT + handled/update-now + invalidate retained; AE 26.3.0.87 arm64 live Drawbot expansion and click insertion passed on 2026-08-10",
   "fixed_mac_mismatch": {
     "after": {
+      "aegp_registration": "OLM Kira Kira",
+      "custom_ui_registration_words": [
+        0,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
       "flags": "0x60",
       "name": "Ramp",
+      "ramp_refcon": "one stable opaque address shared by five rows",
       "ui_flags": "0x82"
     },
     "before": {
+      "aegp_registration": false,
+      "custom_ui_registration": false,
       "flags": "0x40",
       "name": "",
+      "ramp_refcon": null,
       "ui_flags": "0x12"
     }
   },
   "global_setup": {
+    "aegp_registrations": [
+      {
+        "global_refcon": 0,
+        "plugin_name": "OLM Kira Kira"
+      }
+    ],
+    "custom_ui_registrations": [
+      {
+        "effect_ref": 4660,
+        "words": [
+          0,
+          4,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
     "my_version": 1638400,
     "out_flags": 33587264,
     "out_flags2": 134222848
@@ -211,7 +251,9 @@
       {
         "arbitrary": {
           "default_size": 608,
-          "id": 19
+          "id": 19,
+          "refcon_effect_delta": 512,
+          "refcon_nonnull": true
         },
         "disk_id": 19,
         "flags": 96,
@@ -279,7 +321,9 @@
       {
         "arbitrary": {
           "default_size": 608,
-          "id": 21
+          "id": 21,
+          "refcon_effect_delta": 512,
+          "refcon_nonnull": true
         },
         "disk_id": 21,
         "flags": 96,
@@ -347,7 +391,9 @@
       {
         "arbitrary": {
           "default_size": 608,
-          "id": 23
+          "id": 23,
+          "refcon_effect_delta": 512,
+          "refcon_nonnull": true
         },
         "disk_id": 23,
         "flags": 96,
@@ -415,7 +461,9 @@
       {
         "arbitrary": {
           "default_size": 608,
-          "id": 36
+          "id": 36,
+          "refcon_effect_delta": 512,
+          "refcon_nonnull": true
         },
         "disk_id": 36,
         "flags": 96,
@@ -483,7 +531,9 @@
       {
         "arbitrary": {
           "default_size": 608,
-          "id": 25
+          "id": 25,
+          "refcon_effect_delta": 512,
+          "refcon_nonnull": true
         },
         "disk_id": 25,
         "flags": 96,
