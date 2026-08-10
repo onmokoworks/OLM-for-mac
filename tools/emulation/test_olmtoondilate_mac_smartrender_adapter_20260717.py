@@ -37,7 +37,7 @@ ALPHA0_ALL_DEPTHS_REPORT_SHA256 = "d3b19edeb54e88614d8cdf21f92c132dcde559f49f9f1
 NONPOSITIVE_REPORT = ROOT / "refs/conformance/olmtoondilate_nonpositive_radius_all_depths_20260805.json"
 NONPOSITIVE_REPORT_SHA256 = "db3ff858e53101827b4e6369aaa733350b44c14ce4f3130b97f506ed90366d0c"
 ACTUAL_ENTRY_REPORT = ROOT / "refs/conformance/olmtoondilate_actual_aex_sequence_smartpre_20260805.json"
-ACTUAL_ENTRY_REPORT_SHA256 = "e6263696fb164df6fab582a3a1b8cc7ef321f93bf555f683a927ba84e83b0995"
+ACTUAL_ENTRY_REPORT_SHA256 = "7713103e879a1da5eb2d0758c917229f353bd1fd2f08533516e4c8fdb1194e1e"
 AEX = ROOT / "aex/OLMToonDilate/Plugins/64/2025/OLMToonDilate.aex"
 AEX_SHA256 = "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
 
@@ -108,7 +108,7 @@ def verify_fixture_identity() -> None:
     if nonpositive.get("status") != "PASS_NONPOSITIVE_RADIUS_ALL_DEPTHS" or not all(nonpositive.get("gates", {}).values()):
         raise RuntimeError("BLOCKED_FAIL_CLOSED: nonpositive-radius fixture is not exact")
     actual_entry = json.loads(ACTUAL_ENTRY_REPORT.read_text(encoding="utf-8"))
-    if actual_entry.get("status") != "PASS_SEQUENCE_AND_SMARTPRE_ENTRY" or not all(actual_entry.get("gates", {}).get(key) for key in ("radius2_4x2_all_depths_exact", "radius3_pf8_5x1_exact", "radius3_pf16_5x1_exact", "radius3_pf32_5x1_exact", "radius4_pf8_6x1_exact", "radius4_pf16_6x1_exact", "radius4_pf32_6x1_exact", "fractional_radius_2_01_pf8_exact", "fractional_radius_2_5_pf32_exact", "fractional_radius_3_25_pf16_exact", "downsample_radius_matrix_all_depths_exact", "legacy_render_public_noop_all_depths_exact", "empty_width_pf8_exact", "empty_height_pf16_exact", "empty_both_pf32_exact")):
+    if actual_entry.get("status") != "PASS_SEQUENCE_AND_SMARTPRE_ENTRY" or not all(actual_entry.get("gates", {}).get(key) for key in ("radius2_4x2_all_depths_exact", "radius3_pf8_5x1_exact", "radius3_pf16_5x1_exact", "radius3_pf32_5x1_exact", "radius4_pf8_6x1_exact", "radius4_pf16_6x1_exact", "radius4_pf32_6x1_exact", "fractional_radius_2_01_pf8_exact", "fractional_radius_2_5_pf32_exact", "fractional_radius_3_25_pf16_exact", "downsample_radius_matrix_all_depths_exact", "high_radius_downsample_competing_seed_matrix_exact", "legacy_render_public_noop_all_depths_exact", "empty_width_pf8_exact", "empty_height_pf16_exact", "empty_both_pf32_exact")):
         raise RuntimeError("BLOCKED_FAIL_CLOSED: actual entrypoint radius-2/3 fixture is not exact")
 
 
@@ -150,7 +150,7 @@ struct PF_EffectWorld {{ PF_PixelPtr data; A_long rowbytes, width, height; short
 using PF_LayerDef = PF_EffectWorld;
 struct PF_FloatSlider {{ PF_FpLong value; }};
 struct PF_ParamDef {{ union {{ PF_FloatSlider fs_d; PF_LayerDef ld; }} u; }};
-struct PF_InData {{ PF_ProgPtr effect_ref; A_long current_time, time_step, time_scale; void *pica_basicP; }};
+struct PF_InData {{ PF_ProgPtr effect_ref; A_long current_time, time_step, time_scale; void *pica_basicP; struct {{ A_long num, den; }} downsample_x; }};
 struct PF_OutData {{ char return_msg[256]; A_u_long my_version, out_flags, out_flags2; A_long num_params; }};
 struct PF_RenderRequest {{ bool preserve_rgb_of_zero_alpha; }};
 struct PF_CheckoutResult {{ PF_LRect result_rect, max_result_rect; A_long ref_width; }};
@@ -421,6 +421,17 @@ bool pf32_empty_both_case() {{
     constexpr int W=0,H=0,RB=24;std::vector<std::uint8_t>ib(RB,0xAC),ob(RB,0xCE);PF_EffectWorld input{{ib.data(),RB,W,H,32,{{3051,3053,3051,3053}}}},output{{ob.data(),RB,W,H,32,{{4257,4259,4257,4259}}}};State st{{&input,&output}};st.width=W;st.height=H;PF_InData in{{&st,0,1,1,nullptr}};PF_OutData out{{}};PF_RenderRequest req{{false}};PF_PreRenderInput pi{{req}};PF_PreRenderOutput po{{}};PF_PreRenderCallbacks pcb{{pre_checkout}};PF_PreRenderExtra pre{{&pi,&po,&pcb}};
     if(EffectMain(PF_Cmd_SMART_PRE_RENDER,&in,&out,nullptr,nullptr,&pre)!=PF_Err_NONE)return false;PF_SmartRenderInput ri{{32,po.pre_render_data}};PF_SmartRenderCallbacks rcb{{pixels_checkout,output_checkout,checkin}};PF_SmartRenderExtra render{{&ri,&rcb}};g_radius=4.0;bool ok=EffectMain(PF_Cmd_SMART_RENDER,&in,&out,nullptr,nullptr,&render)==PF_Err_NONE;for(auto b:ob)ok=ok&&b==0xCE;ok=ok&&input.extent_hint.left==3051&&input.extent_hint.top==3053&&output.extent_hint.left==4257&&output.extent_hint.top==4259;if(po.delete_pre_render_data_func)po.delete_pre_render_data_func(po.pre_render_data);return ok;
 }}
+template <typename Pixel> bool high_radius_downsample_case(short depth,double radius,int num,int den) {{
+    constexpr int W=513,H=17,PADN=13;const int ps=sizeof(Pixel),rb=W*ps+PADN;std::vector<std::uint8_t>ib(rb*H,0xB9),ob(rb*H,OUT_PAD),core(rb*H,OUT_PAD);Pixel A{{}},B{{}},C{{}},Z{{}};
+    if constexpr(sizeof(Pixel)==4){{A=Pixel{{255,17,71,131}};B=Pixel{{255,211,83,29}};C=Pixel{{127,47,101,173}};Z=Pixel{{0,233,149,61}};}}
+    else if constexpr(sizeof(Pixel)==8){{A=Pixel{{32768,1701,7102,13103}};B=Pixel{{32768,21101,8302,2903}};C=Pixel{{16384,4701,10102,17303}};Z=Pixel{{0,23301,14902,6103}};}}
+    else{{A=Pixel{{1.0f,.17f,.71f,.131f}};B=Pixel{{1.0f,.811f,.283f,.929f}};C=Pixel{{.5f,.047f,.101f,.173f}};Z=Pixel{{0.0f,.933f,.149f,.061f}};}}
+    for(int y=0;y<H;++y)for(int x=0;x<W;++x)std::memcpy(ib.data()+y*rb+x*ps,&C,ps);std::memcpy(ib.data()+4*rb,&A,ps);std::memcpy(ib.data()+12*rb+300*ps,&B,ps);std::memcpy(ib.data()+8*rb+512*ps,&Z,ps);
+    PF_EffectWorld input{{ib.data(),rb,W,H,depth,{{11,13,11+W,13+H}}}},output{{ob.data(),rb,W,H,depth,{{17,19,17+W,19+H}}}},expected{{core.data(),rb,W,H,depth,{{17,19,17+W,19+H}}}};OLMToonDilateInfo info{{radius,(PF_FpLong)W*den/num}};bool ok=RenderWorld(&input,&expected,info,depth)==PF_Err_NONE;
+    State st{{&input,&output}};st.width=W;st.height=H;st.ref_width=(W*den+num/2)/num;PF_InData in{{&st,0,1,1,nullptr}};in.downsample_x={{num,den}};PF_OutData out{{}};PF_RenderRequest req{{false}};PF_PreRenderInput pi{{req}};PF_PreRenderOutput po{{}};PF_PreRenderCallbacks pcb{{pre_checkout}};PF_PreRenderExtra pre{{&pi,&po,&pcb}};
+    if(EffectMain(PF_Cmd_SMART_PRE_RENDER,&in,&out,nullptr,nullptr,&pre)!=PF_Err_NONE)return false;PF_SmartRenderInput ri{{depth,po.pre_render_data}};PF_SmartRenderCallbacks rcb{{pixels_checkout,output_checkout,checkin}};PF_SmartRenderExtra render{{&ri,&rcb}};g_radius=radius;ok=ok&&EffectMain(PF_Cmd_SMART_RENDER,&in,&out,nullptr,nullptr,&render)==PF_Err_NONE;
+    for(int y=0;y<H;++y){{ok=ok&&std::memcmp(ob.data()+y*rb,core.data()+y*rb,W*ps)==0;for(int i=W*ps;i<rb;++i)ok=ok&&ob[y*rb+i]==OUT_PAD;}}ok=ok&&std::memcmp(ob.data()+8*rb+512*ps,&Z,ps)==0&&st.pre_checkout==1&&st.pixels_checkout==1&&st.output_checkout==1&&st.checkin==1;if(po.delete_pre_render_data_func)po.delete_pre_render_data_func(po.pre_render_data);return ok;
+}}
 bool malformed_world_guard_cases() {{
     std::uint8_t input_bytes[64]={{}},output_bytes[64]={{}};size_t count=999;
     PF_EffectWorld input{{input_bytes,16,2,2,32,{{0,0,2,2}}}},output{{output_bytes,32,2,2,32,{{0,0,2,2}}}};
@@ -489,12 +500,13 @@ int main() {{
     bool pf32Fractional=pf32_fractional_radius_2_5_5x1_case();
     bool pf16Fractional=pf16_fractional_radius_3_25_6x1_case();
     bool downsampleMatrix=downsample_radius_case<PF_Pixel8>(8,6,3)&&downsample_radius_case<PF_Pixel8>(8,12,2)&&downsample_radius_case<PF_Pixel8>(8,3,5)&&downsample_radius_case<PF_Pixel16>(16,6,3)&&downsample_radius_case<PF_Pixel16>(16,12,2)&&downsample_radius_case<PF_Pixel16>(16,3,5)&&downsample_radius_case<PF_PixelFloat>(32,6,3)&&downsample_radius_case<PF_PixelFloat>(32,12,2)&&downsample_radius_case<PF_PixelFloat>(32,3,5);
+    bool highRadiusMatrix=true;for(double r:{{50.0,100.0}})for(auto ds:{{std::pair<int,int>{{1,2}},{{1,1}},{{2,1}}}})highRadiusMatrix=highRadiusMatrix&&high_radius_downsample_case<PF_Pixel8>(8,r,ds.first,ds.second)&&high_radius_downsample_case<PF_Pixel16>(16,r,ds.first,ds.second)&&high_radius_downsample_case<PF_PixelFloat>(32,r,ds.first,ds.second);
     bool legacyNoop=legacy_render_noop_case<PF_Pixel8>(8,0.0)&&legacy_render_noop_case<PF_Pixel8>(8,2.01)&&legacy_render_noop_case<PF_Pixel16>(16,0.0)&&legacy_render_noop_case<PF_Pixel16>(16,2.01)&&legacy_render_noop_case<PF_PixelFloat>(32,0.0)&&legacy_render_noop_case<PF_PixelFloat>(32,2.01);
     bool pf8Empty=pf8_empty_width_case();
     bool pf16EmptyHeight=pf16_empty_height_case();
     bool pf32EmptyBoth=pf32_empty_both_case();
     bool malformedWorldGuards=malformed_world_guard_cases();
-    if (!(positive8 && positive16 && positive32 && positive8Radius2 && positive16Radius2 && positive32Radius2 && pf8Radius3Tie && pf16Radius3Tie && pf32Radius3Tie && pf8Corner && pf16Corner && pf32Corner && pf32Alpha0 && nonpositive && nonzeroExtent && nonzeroExtent16 && nonzeroExtent32 && mixed3x2 && mixedRadius2 && pf32Radius3Partial && pf16Radius3Partial && pf8Radius3Partial && pf8Radius4Partial && pf16Radius4Partial && pf32Radius4Partial && pf8Fractional && pf32Fractional && pf16Fractional && downsampleMatrix && legacyNoop && pf8Empty && pf16EmptyHeight && pf32EmptyBoth && malformedWorldGuards)) return 60;
+    if (!(positive8 && positive16 && positive32 && positive8Radius2 && positive16Radius2 && positive32Radius2 && pf8Radius3Tie && pf16Radius3Tie && pf32Radius3Tie && pf8Corner && pf16Corner && pf32Corner && pf32Alpha0 && nonpositive && nonzeroExtent && nonzeroExtent16 && nonzeroExtent32 && mixed3x2 && mixedRadius2 && pf32Radius3Partial && pf16Radius3Partial && pf8Radius3Partial && pf16Radius4Partial && pf32Radius4Partial && pf8Radius4Partial && pf8Fractional && pf32Fractional && pf16Fractional && downsampleMatrix && highRadiusMatrix && legacyNoop && pf8Empty && pf16EmptyHeight && pf32EmptyBoth && malformedWorldGuards)) return 60;
     std::printf("],\\\"positive_radius_fixture\\\":{{\\\"radius\\\":1,\\\"PF8_exact\\\":true,\\\"PF16_exact\\\":true,\\\"PF32_exact\\\":true}},\\\"PF8_radius2_shape_fixture\\\":{{\\\"dimensions\\\":[5,3],\\\"radius\\\":2,\\\"visible_argb_exact\\\":true}},\\\"PF16_radius2_shape_fixture\\\":{{\\\"dimensions\\\":[5,3],\\\"radius\\\":2,\\\"visible_exact_4_word\\\":true}},\\\"PF32_radius2_shape_fixture\\\":{{\\\"dimensions\\\":[5,3],\\\"radius\\\":2,\\\"visible_exact_4_word\\\":true}},\\\"PF8_radius3_boundary_tie_fixture\\\":{{\\\"dimensions\\\":[7,3],\\\"radius\\\":3,\\\"scan_asymmetric_tie_exact\\\":true}},\\\"PF16_radius3_boundary_tie_fixture\\\":{{\\\"dimensions\\\":[7,3],\\\"radius\\\":3,\\\"scan_asymmetric_tie_exact\\\":true}},\\\"PF32_radius3_boundary_tie_fixture\\\":{{\\\"dimensions\\\":[7,3],\\\"radius\\\":3,\\\"raw_float32_exact\\\":true}}}}\\n"); return 0;
 }}
 ''', encoding="utf-8")
@@ -544,6 +556,7 @@ def main() -> int:
     report["pf32_fractional_radius_2_5_5x1_production"] = {"requested_radius": 2.5, "effective_radius": 3, "dimensions": [5, 1], "rowbytes": 88, "ceil_frontier_3_propagated": True, "distance_4_raw_float32_preserved": True, "nonzero_extents_padding_exact": True}
     report["pf16_fractional_radius_3_25_6x1_production"] = {"requested_radius": 3.25, "effective_radius": 4, "dimensions": [6, 1], "rowbytes": 56, "ceil_frontier_4_propagated": True, "distance_5_raw_uint16_preserved": True, "nonzero_extents_padding_exact": True}
     report["downsample_radius_2_01_production"] = {"dimensions": [6, 1], "comp_width_to_output_width_ratios": [1, 2, 0.5], "effective_radii": [3, 2, 5], "PF8_exact": True, "PF16_exact": True, "PF32_exact": True, "smartpre_ref_width_contract": True}
+    report["high_radius_downsample_competing_seed_production"] = {"dimensions": [513, 17], "radii": [50, 100], "downsample_x": [[1, 2], [1, 1], [2, 1]], "effective_radii": [25, 50, 100, 200], "case_count": 18, "PF8_exact": True, "PF16_exact": True, "PF32_exact": True, "public_smartpre_to_smartrender_matches_core": True, "odd_width_uses_exact_rational_downsample": True, "unreached_alpha0_straight_rgb_and_padding_preserved": True}
     report["legacy_render_public_noop_production"] = {"radii": [0.0, 2.01], "PF8_output_untouched": True, "PF16_output_untouched": True, "PF32_output_untouched": True, "matches_actual_constant_zero_owner": "FUN_1801a7840"}
     report["pf8_empty_width_production"] = {"dimensions": [0, 1], "radius": 4, "rowbytes": 8, "empty_output_padding_unchanged": True, "nonzero_origin_zero_width_extents_unchanged": True}
     report["pf16_empty_height_production"] = {"dimensions": [1, 0], "radius": 4, "rowbytes": 16, "empty_output_backing_unchanged": True, "nonzero_origin_zero_height_extents_unchanged": True}
@@ -564,7 +577,7 @@ def main() -> int:
     }
     report["claim_boundary"] = (
         "Mac-local source-included SmartRender adapter proof. Positive-radius expected behavior is "
-        "bounded by the cited actual-AEX typed worker fixtures; no Mac AE host-exact expansion claim."
+        "bounded by the cited actual-AEX typed worker fixtures, including the 18-cell high-radius/downsample family; no Mac AE host-exact expansion claim."
     )
     print(json.dumps(report, sort_keys=True))
     return 0

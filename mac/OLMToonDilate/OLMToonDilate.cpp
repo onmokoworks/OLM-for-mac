@@ -318,7 +318,14 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 	OLMToonDilateInfo info;
 	info.search_radius = radius_param.u.fs_d.value;
 	info.comp_width = input_world->width;
-	if (PreRenderData *pre = reinterpret_cast<PreRenderData *>(extra->input->pre_render_data)) {
+	if (in_data->downsample_x.num > 0 && in_data->downsample_x.den > 0) {
+		// The AEX worker scales Search Radius from the host's rational
+		// downsample_x pair.  Reconstructing this from integer ref/output
+		// widths is off by one for odd-sized worlds at enlarged render scales.
+		info.comp_width = (PF_FpLong)input_world->width *
+		                  (PF_FpLong)in_data->downsample_x.den /
+		                  (PF_FpLong)in_data->downsample_x.num;
+	} else if (PreRenderData *pre = reinterpret_cast<PreRenderData *>(extra->input->pre_render_data)) {
 		if (pre->comp_width > 0.0) info.comp_width = pre->comp_width;
 	}
 	PF_CHECKIN_PARAM(in_data, &radius_param);
