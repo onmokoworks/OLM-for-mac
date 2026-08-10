@@ -1,5 +1,12 @@
 # OLM parameter surface audit (2026-07-18)
 
+> **Historical snapshot.** The KiraKira missing-ramp statements below were
+> superseded on 2026-08-05/06. The current Mac implementation registers all
+> five arbitrary Ramp rows and the full 41-parameter surface. See
+> `olmkirakira_parameter_surface_current_20260810.md` and
+> `olmkirakira_ui_setup_actual_aex_20260806.json`. Do not use this July audit
+> as the current release surface.
+
 Scope: Mac source/PiPL plus the Windows AE cold-start defaults/ranges manifests.
 `OLMSmoother2` and `OLMRadialBlur` are intentionally excluded from source edits
 for this audit.

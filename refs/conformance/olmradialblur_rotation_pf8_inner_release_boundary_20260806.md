@@ -1,5 +1,9 @@
 # OLMRadialBlur PF8 Rotation Inner release boundary (2026-08-06)
 
+> **Historical snapshot.** The statement below that PF16/PF32 are restricted
+> to 9x7 was superseded by the 2026-08-07 typed-geometry implementation and
+> evidence. See `olmradialblur_rotation_typed_inner_geometry_20260807.md`.
+
 - Actual owner: `0x180007520` from AEX SHA-256 `ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb`.
 - Independent PF8 input and PF8 writer were used; no PF16/PF32 source or quantization result was reused.
 - The 9x7 padded fixture proves strengths `1,2,3,4,5,8,16,31,32,33,63,64`, including both boundaries and non-power-of-two transitions. Every polar/source-scalar/accum/max/final/output comparison is byte-exact.

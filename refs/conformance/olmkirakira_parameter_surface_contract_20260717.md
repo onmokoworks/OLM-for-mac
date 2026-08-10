@@ -1,5 +1,13 @@
 # OLMKiraKira Parameter Surface Contract
 
+> **Historical snapshot / superseded.** The unmappable Ramp rows described in
+> this document were implemented afterward. Current status is the complete
+> 41-parameter Mac registration surface with five arbitrary Ramp rows, exact
+> against the pinned actual AEX registration record. See
+> `olmkirakira_parameter_surface_current_20260810.md`. The remaining boundary
+> is native-AE visual interaction and a live Windows checkout payload for a
+> non-default ramp, not missing parameter registration.
+
 - Requested artifact date: `2026-07-17`
 - Generated on: `2026-07-17`
 - Scope: bounded Windows-manifest-to-Mac-surface validation only.

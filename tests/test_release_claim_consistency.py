@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Keep release-facing RadialBlur claims synchronized with retained evidence."""
+"""Keep release-facing claims synchronized with retained evidence."""
 
 from __future__ import annotations
 
@@ -19,6 +19,15 @@ def main() -> int:
     )
     matrix = (ROOT / "refs/conformance/olm_release_completion_matrix_20260806.md").read_text()
     limitations = (ROOT / "KNOWN_LIMITATIONS.md").read_text()
+    kira_ui = json.loads(
+        (ROOT / "refs/conformance/olmkirakira_ui_setup_actual_aex_20260806.json").read_text()
+    )
+    kira_current = (
+        ROOT / "refs/conformance/olmkirakira_parameter_surface_current_20260810.md"
+    ).read_text()
+    kira_old = (
+        ROOT / "refs/conformance/olmkirakira_parameter_surface_contract_20260717.md"
+    ).read_text()
 
     assert typed["status"] == "exact"
     observed = {
@@ -43,7 +52,17 @@ def main() -> int:
     assert "PF32 at 9x7 and 64x36" in matrix
     assert "PF8/PF16が640×360、PF32が" in limitations
     assert "64×36" in limitations
-    print("PASS_RELEASE_CLAIM_CONSISTENCY radial_typed_geometry=1")
+    assert kira_ui["status"] == "exact"
+    assert kira_ui["params_setup"]["num_params_including_input"] == 41
+    ramp_rows = [
+        row for row in kira_ui["params_setup"]["rows"]
+        if row.get("param_type") == 11 and row.get("name") == "Ramp"
+    ]
+    assert len(ramp_rows) == 5
+    assert all(row["arbitrary"]["default_size"] == 608 for row in ramp_rows)
+    assert "registration exact; native-host interaction bounded" in kira_current
+    assert "Historical snapshot / superseded" in kira_old
+    print("PASS_RELEASE_CLAIM_CONSISTENCY radial_typed_geometry=1 kira_surface=1")
     return 0
 
 
