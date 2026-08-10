@@ -1,0 +1,268 @@
+{
+  "boundary": "PF8/PF16, off-center or comp/world-scaled geometry, nonpositive/mismatched worlds, other ratios/angles and other parameter families remain outside this admission.",
+  "geometry": {
+    "center": [
+      16.0,
+      9.0
+    ],
+    "height": 18,
+    "rowbytes": 528,
+    "width": 32
+  },
+  "kind": "olmradialblur_pf32_ellipse_32x18_actual_aex_20260811",
+  "rotation": {
+    "cells": [
+      {
+        "actual_sha256": {
+          "accum": "abeb86c4c98ac539ba6a3a5e08eedbe733d21548641d4402330af3c55daac37d",
+          "coordinates": "b2f01f459c58ee3f3cf65e13f4cb3bb073ca741f872117f189fcb9a48bccf0b3",
+          "final_rgba": "bc60503755a110a279a1c05fae54e36cffc6a37cd3262a7b1736922e4b09311f",
+          "max_alpha": "7606104dd9833e4d9d4cd4e2ec5d2454f64788e2864331bdfcd8197e51b9d5da",
+          "output": "d66ffbb869d7fcfffe00f10067a78750cf23f9adcd2e587a19f6723f8d087ae8",
+          "polar": "d2c6f5780ef62bc1454e575591fded6b893d64ae6e1456850f3cfbcb491bb08f",
+          "source_scalar": "e3da2a6a0a26033f0f13b4adad229ea74f35fcb0c04a4b694102edf68b4ca695"
+        },
+        "angle_deg": 0.0,
+        "exact": true,
+        "matches": {
+          "accum": true,
+          "coordinates": true,
+          "final_rgba": true,
+          "max_alpha": true,
+          "output": true,
+          "polar": true,
+          "source_scalar": true
+        },
+        "ratio": 2.0
+      },
+      {
+        "actual_sha256": {
+          "accum": "e48e8690f5a0547ef76639a0f0107b5079a4ad423fa9f7d31f02b4c477e4cb40",
+          "coordinates": "d250a55e2bc857a26319cc89e93951313e660fc36975a6ad1557203606a2b1c9",
+          "final_rgba": "5b03993bc3c8bc73352a925b6f169e8eabe3d054821b21a17e52b7d853cdf6d4",
+          "max_alpha": "f449928d896a6e15767a616a951232f2da339e8516e2f7831ae7011216a70b17",
+          "output": "041acae7b9fe3b50edcaf909765533ee9a1be971e46c1768c75d20d0d946c6ee",
+          "polar": "06e55c97a05438ced69100162fb47a400ebfd7697137b33936554577e343161e",
+          "source_scalar": "2b506df310162e68d82d0cc495419d12f7215926922de306a06940ac2e6f2676"
+        },
+        "angle_deg": 30.0,
+        "exact": true,
+        "matches": {
+          "accum": true,
+          "coordinates": true,
+          "final_rgba": true,
+          "max_alpha": true,
+          "output": true,
+          "polar": true,
+          "source_scalar": true
+        },
+        "ratio": 2.0
+      },
+      {
+        "actual_sha256": {
+          "accum": "642252dd4ae7210c3ed376dc7600ac5b6658b5811dd9ec8bcfd6685a4ff69e61",
+          "coordinates": "d8fb505cd69a91b1915bcf2c1eeed64de185c107147d00fff71091023bdcbb36",
+          "final_rgba": "f540efc382a6a6dcb90aa318fee83c89b06b4f8c4716c618914600c0dbce370c",
+          "max_alpha": "a3b89386f254af14e6f10006e37e8737e65158da08df0f573d7126ee06972533",
+          "output": "b42dbc55514cdf4ca96df74d531e7a56fdf094d4feba9057c39d1a59d538a650",
+          "polar": "08a26008637395afad6ee0f696ff549adad0e87167f9a8ba1288dab27affc2ca",
+          "source_scalar": "418adf3a7039603a7c70a8b603e3a94e3165c0cf81510e488ed6c73638ef6fcf"
+        },
+        "angle_deg": 90.0,
+        "exact": true,
+        "matches": {
+          "accum": true,
+          "coordinates": true,
+          "final_rgba": true,
+          "max_alpha": true,
+          "output": true,
+          "polar": true,
+          "source_scalar": true
+        },
+        "ratio": 2.0
+      },
+      {
+        "actual_sha256": {
+          "accum": "5bf6646f22be0085ed4bef591f94aa614628d80ae53dcaf2316cb033c9900e89",
+          "coordinates": "8511215a02e73b7fa8a07f91b6eb0d96e8e0eb66fdda035942de1eaf10795933",
+          "final_rgba": "661fa9769b1aba30e5e61f4a52a1cf9d9730bfe42892a1c28b33b704f4bd7d6b",
+          "max_alpha": "5186f6cdaa7559b2d8d89dd26271103aa91ea3e7c709b077de3587e795d90d61",
+          "output": "fed7601253d3ea11b1c9dbed1e023a8727f88abb9a1f5cf05f485424fc186331",
+          "polar": "b6f659701837b314cc96f39189b3b729d8751646e451707635984a7ac87a99a6",
+          "source_scalar": "cf9213ed4bc7a06d1b237eac21bda5ed14652806c7cfb01750cad3d5dc3b417a"
+        },
+        "angle_deg": 0.0,
+        "exact": true,
+        "matches": {
+          "accum": true,
+          "coordinates": true,
+          "final_rgba": true,
+          "max_alpha": true,
+          "output": true,
+          "polar": true,
+          "source_scalar": true
+        },
+        "ratio": 5.0
+      },
+      {
+        "actual_sha256": {
+          "accum": "2f29b5f58793a4d32f2809f0489a042a3ae46b9feae0a33e28f569d661968c7c",
+          "coordinates": "d0129a31263dc292be271f9dc528048cfc7da1609722af875b131ea9889589f7",
+          "final_rgba": "8b85a908f9b64e7ffde840a4dd41aae7f231a307c85d3b525e3e732cfafece1b",
+          "max_alpha": "17b8852ee866a981dc40ce7572ffcc600d75e49937a8946ca3f1f5d30bb2cfbd",
+          "output": "5236089d7a88e102e801fc1a54a7ffcf520a9e633000794337456ff7a7b4379f",
+          "polar": "b90acba0df9540dcfb0d765c494bb44cfea1aafe82a1bcb7376e12ab02a353ce",
+          "source_scalar": "c7ce55ffaef0a680c7e6cae002241ec5e7341244d3b230ac69dd4be392d411c6"
+        },
+        "angle_deg": 30.0,
+        "exact": true,
+        "matches": {
+          "accum": true,
+          "coordinates": true,
+          "final_rgba": true,
+          "max_alpha": true,
+          "output": true,
+          "polar": true,
+          "source_scalar": true
+        },
+        "ratio": 5.0
+      },
+      {
+        "actual_sha256": {
+          "accum": "9d9b436825bb2b555a57453f4cdb6c6e8656949f196fd6e56cd956f1fea5f914",
+          "coordinates": "97393b46c6f78ab355d2580c047ed0b7e73090ffd2b801f64f923abdcae3895c",
+          "final_rgba": "00b173d6349e125e02223014d1f12dd3b949e3330e600d9f7d196b8a04b7c781",
+          "max_alpha": "5c7d45d2f1d9b2054115e7829bd98d97e9fcf41fcc0a8ce53a44bad4e6d9d806",
+          "output": "795b19a8e603057f8ec38def4a890eb672bf56f53614da723ebcd6501cb4f321",
+          "polar": "70b9b64b74abdda49e5508e20e4f759df21b580d8591a74897a3d47d13b1b4c7",
+          "source_scalar": "0dfe4a28fc524cd8128e30ebd93794cb850b8b4cba8b965549cb124ba22e96d8"
+        },
+        "angle_deg": 90.0,
+        "exact": true,
+        "matches": {
+          "accum": true,
+          "coordinates": true,
+          "final_rgba": true,
+          "max_alpha": true,
+          "output": true,
+          "polar": true,
+          "source_scalar": true
+        },
+        "ratio": 5.0
+      }
+    ],
+    "exact": true,
+    "planes": [
+      "polar",
+      "source_scalar",
+      "accum",
+      "max_alpha",
+      "final_rgba",
+      "coordinates",
+      "output"
+    ]
+  },
+  "rule": "The 9x7 ellipse transform and its distinct Zoom/Rotation float multiply orders are geometry-independent for centered, positive, same-shape PF32 worlds with valid rowbytes and comp dimensions equal to the world.",
+  "scope": "PF32 padded 32x18 centered same-shape comp/world; Zoom and Rotation; Ratio {2,5} x Angle {0,30,90}; Outer Strength4 neutral tuple.",
+  "status": "exact",
+  "zoom": {
+    "cells": [
+      {
+        "actual_sha256": {
+          "output": "5603a760f4da4a0c2f48b4dcb4d029cca53184a9d65ded39b48f2adbde7a65f1",
+          "post_blur": "dec6f719e205051e3f0e6ec57b314fb445245111901ca74fd5d2f63c82eeb142",
+          "pre_blur": "2c354e28153d2eedf70f7a80f713c0e2f7f49f24d1861f337ad015a6aa3ab951"
+        },
+        "angle_deg": 0.0,
+        "exact": true,
+        "matches": {
+          "output": true,
+          "post_blur": true,
+          "pre_blur": true
+        },
+        "ratio": 2.0
+      },
+      {
+        "actual_sha256": {
+          "output": "a47dac3c4f34e7698bb354fc6b3bc3c638d7081e96065fac0117d8d4946de6ce",
+          "post_blur": "2f689eea19b9fe6a2333161d3308fe16d36bbf5c61b38e55f3f848f2a8fd7f0c",
+          "pre_blur": "acf5a8ff36ee65206f5c4c9fa5696dad2a91993067af5796acc4aff6e82c6318"
+        },
+        "angle_deg": 30.0,
+        "exact": true,
+        "matches": {
+          "output": true,
+          "post_blur": true,
+          "pre_blur": true
+        },
+        "ratio": 2.0
+      },
+      {
+        "actual_sha256": {
+          "output": "70842c2757c1616a790cdb95db8d15ec62748ad3b81c24b15d9cdbb8c32684ab",
+          "post_blur": "d71ac7428dff18678945cdb3332248096bc6f57ddefa5c7c40a9ba8edb31de8c",
+          "pre_blur": "a41e69dc349a34b7379f3cd94817b73fdfd5b65e52ddd3fb309326d8ae0c11cd"
+        },
+        "angle_deg": 90.0,
+        "exact": true,
+        "matches": {
+          "output": true,
+          "post_blur": true,
+          "pre_blur": true
+        },
+        "ratio": 2.0
+      },
+      {
+        "actual_sha256": {
+          "output": "917f05ab33a0d69a5b41ef06516fee80189afb38ffa4ffb1dd141c597cd78bcd",
+          "post_blur": "a5dad9feb816f14e90d5d9df63cdbf40a78b5aaaac200f23e6cd1e871077709c",
+          "pre_blur": "d5bf49ad71d1df27d519837983fce8e6ca4a7efce7e25ea8f3358c3986b14fa1"
+        },
+        "angle_deg": 0.0,
+        "exact": true,
+        "matches": {
+          "output": true,
+          "post_blur": true,
+          "pre_blur": true
+        },
+        "ratio": 5.0
+      },
+      {
+        "actual_sha256": {
+          "output": "c69d1c57cad008b8ecf836c403bb5690a191c7dfa57619b9dae46c51aec56cc2",
+          "post_blur": "f424a2c7e7de19750a2177648f60a9d8520fb8199e0a532b0dbb9b7804d95a22",
+          "pre_blur": "ef37a7b36f92ccdc0c2f8e326dfe410bd7bb9d815f09e1070660185fdaae3bcf"
+        },
+        "angle_deg": 30.0,
+        "exact": true,
+        "matches": {
+          "output": true,
+          "post_blur": true,
+          "pre_blur": true
+        },
+        "ratio": 5.0
+      },
+      {
+        "actual_sha256": {
+          "output": "e4722cc1d34836fa30350b5da04cfbec40a0a6ed52d8d2d88b260d13575146b5",
+          "post_blur": "ce7bc951f50806f7f9220cbb99187250c5c37569384480a71087f216f0d5c94f",
+          "pre_blur": "14aecd8f5bc7c22a68275acfcf51dfb2bd2ca7458abf4e9204dafbd8f3c1d12c"
+        },
+        "angle_deg": 90.0,
+        "exact": true,
+        "matches": {
+          "output": true,
+          "post_blur": true,
+          "pre_blur": true
+        },
+        "ratio": 5.0
+      }
+    ],
+    "exact": true,
+    "planes": [
+      "pre_blur",
+      "post_blur",
+      "output"
+    ]
+  }
+}

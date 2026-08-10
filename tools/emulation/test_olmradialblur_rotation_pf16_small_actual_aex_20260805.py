@@ -110,10 +110,11 @@ def actual_aex() -> dict[str, bytes]:
         work = int(captured["work"])
         accum_ptr = m4.u64(ld, work + 0xF250 * 4)
         max_ptr = m4.u64(ld, work + 0xF252 * 4)
-        plane_bytes = max_ptr - accum_ptr
-        if plane_bytes <= 0 or plane_bytes % 16:
-            raise RuntimeError(f"invalid Rotation plane allocation: {hex(accum_ptr)}..{hex(max_ptr)}")
-        cells = plane_bytes // 16
+        min_radius = struct.unpack("<i", ld.read_bytes(work + 0x0C, 4))[0]
+        max_radius = struct.unpack("<i", ld.read_bytes(work + 0x10, 4))[0]
+        cells = (max_radius - min_radius + 1) * 1800
+        if cells <= 0 or max_ptr <= accum_ptr:
+            raise RuntimeError(f"invalid Rotation geometry/allocation: r={min_radius}..{max_radius}, {hex(accum_ptr)}..{hex(max_ptr)}")
         captured["cells"] = cells
         captured["pre_planes"] = {"polar": ld.read_bytes(m4.u64(ld, work + 0xE * 4), cells * 16), "source_scalar": ld.read_bytes(m4.u64(ld, work + 0x10 * 4), cells * 4), "size_factor": ld.read_bytes(m4.u64(ld, work + 0x14 * 4), cells * 4)}
         if CAPTURE_EDGE_INTERNALS:
