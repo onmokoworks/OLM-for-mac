@@ -109,6 +109,8 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmdirectionalblur_pf16_noise_type3_production_20260806.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_minimal_pf32_production_20260805.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_pf32_size_variation_family_actual_aex_20260810.py"),
+            (sys.executable, "tools/emulation/test_olmdirectionalblur_pf32_front_alpha_fade_family_actual_aex_20260810.py"),
+            (sys.executable, "tools/emulation/test_olmdirectionalblur_pf32_fade_size_combination_actual_aex_20260810.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_mac_smartrender_adapter_20260717.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_pf8_brightness_half_20260805.py"),
             (sys.executable, "tools/emulation/test_olmdirectionalblur_installed_completion_route_20260805.py"),
@@ -128,6 +130,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmdistancegradation_classic_pf16_both_power_layer_nobg_20260805.py"),
             (sys.executable, "tools/emulation/test_olmdistancegradation_classic_pf32_both_power_layer_nobg_20260805.py"),
             (sys.executable, "tools/emulation/test_olmdistancegradation_classic_pf32_inside_constant_blur_nobg_20260805.py"),
+            (sys.executable, "tools/emulation/test_olmdistancegradation_classic_pf16_background_combos_20260810.py"),
         ),
     ),
     Lane(

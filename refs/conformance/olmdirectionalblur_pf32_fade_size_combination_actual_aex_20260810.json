@@ -1,0 +1,68 @@
+{
+  "admitted_rule": "Only this 16x16 PF32 route admits simultaneous nonzero Front Alpha Fade and Size Variation, within both public 0..100 ranges.",
+  "combination": "Front Alpha Fade x Size Variation",
+  "depth": "PF32",
+  "fixed_route": {
+    "angle": 45,
+    "back_strength": 0,
+    "brightness_gain": 1,
+    "front_strength": 8,
+    "geometry": "16x16 padded ARGB128",
+    "render_scale": [
+      1,
+      1
+    ],
+    "tail_noise": 0
+  },
+  "not_proven": [
+    "other geometry or pixel depth",
+    "combinations with sharp tail, back blur/fade, noise, other angle/strength, or downsample",
+    "native After Effects render/export",
+    "values outside either public 0..100 range"
+  ],
+  "plugin": "OLMDirectionalBlur",
+  "representatives": [
+    {
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "front_alpha_fade": 50,
+      "raw_sha256": "1dd250a464a75452ad043fdb033a09e3e83063addc7d625a67437d5751bbbbe2",
+      "size_variation_percent": 25.0
+    },
+    {
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "front_alpha_fade": 50,
+      "raw_sha256": "1dd250a464a75452ad043fdb033a09e3e83063addc7d625a67437d5751bbbbe2",
+      "size_variation_percent": 100.0
+    },
+    {
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "front_alpha_fade": 100,
+      "raw_sha256": "d9e26bca3694f0a7a20436bac3252c1fe6aacce2991dd3daff9df83fbf1955e8",
+      "size_variation_percent": 25.0
+    },
+    {
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "front_alpha_fade": 100,
+      "raw_sha256": "d9e26bca3694f0a7a20436bac3252c1fe6aacce2991dd3daff9df83fbf1955e8",
+      "size_variation_percent": 100.0
+    }
+  ],
+  "schema_version": 1,
+  "status": "exact_bounded_combination"
+}

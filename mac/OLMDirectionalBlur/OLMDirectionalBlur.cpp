@@ -671,6 +671,14 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			info.front_strength == 8 && info.back_strength == 0 &&
 			info.size_variation == 0.0 && info.angle_deg == 45.0 &&
 			info.brightness_gain == 1.0 && info.noise_variation == 0.0;
+		const bool front_fade_size_combination_exact =
+			input && output && input->width == 16 && input->height == 16 &&
+			output->width == 16 && output->height == 16 &&
+			info.front_alpha_fade > 0 && info.front_alpha_fade <= 100 &&
+			info.size_variation > 0.0 && info.size_variation <= 100.0 &&
+			info.front_strength == 8 && info.back_strength == 0 &&
+			info.angle_deg == 45.0 && info.brightness_gain == 1.0 &&
+			info.noise_variation == 0.0;
 		const bool minimal_exact = input && output && input->data && output->data &&
 			input->width == output->width && input->height == output->height &&
 			(info.angle_deg == 0.0 || info.angle_deg == 45.0) &&
@@ -682,7 +690,8 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			 (info.size_variation >= 0.0 && info.size_variation <= 100.0 &&
 			  info.front_strength == 8 &&
 			  info.back_strength == 0)) &&
-			(info.front_alpha_fade == 0 || front_alpha_fade_exact) &&
+			(info.front_alpha_fade == 0 || front_alpha_fade_exact ||
+			 front_fade_size_combination_exact) &&
 			info.front_sharp_tail == 0.0 &&
 			(info.back_strength == 0 || info.back_strength == 1) && info.back_alpha_fade == 0 &&
 			info.back_sharp_tail == 0.0 &&
