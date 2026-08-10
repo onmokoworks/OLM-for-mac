@@ -1,0 +1,835 @@
+{
+  "actual_generated_noise_sha256": {
+    "1": "6a2fc963c6d45098fd57da4389aee8f753c287318c152c7cc3b7af6f2bee2cd1",
+    "2": "5090ef3ab834e89d7e223a6a54112dc897b29466be6d62ba1cfce1aa748909c1"
+  },
+  "all_source_span_formula_bit_exact": true,
+  "binary_rule": "source_span = f32(f32(f32(noise * NV) + f32(1-NV)) * source_size_factor); size factor is multiplied last; zero is tested by exact equality.",
+  "boundary": "Only these 24 shared-direct cells and the fixed component fixture are admitted. Other masks, geometry, values, seed/offset/thickness, Type3, and AE-host output remain unproven.",
+  "cases": [
+    {
+      "depth": 8,
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "sha256": {
+        "final_rgba": "b1b01977395ff57732fcabe6eecfd93f280b7650ac5255a66d2a22fcb3527be1",
+        "output": "5d7487b57a354d16c7d55205f2ce5de466f3b639f78711c0df6e8191b46b68f0",
+        "post_blur": "848dff07cef03547c1fded40e9d8d79c6b662a7e88c18b3f7771b31c9f1fe180",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "af043aac85cfa6412a48f2d6206f88dfd476968fc53348d96aa241ab6c268e3f"
+      },
+      "size_variation": 25.0,
+      "source_size_factor_unique": [
+        0.75,
+        0.7777777910232544,
+        0.8611111044883728,
+        1.0
+      ],
+      "source_span_formula_bit_exact": true,
+      "source_span_min_max": [
+        0.5625,
+        0.8271431922912598
+      ],
+      "zero_factor": 0,
+      "zero_span": 0
+    },
+    {
+      "depth": 8,
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "sha256": {
+        "final_rgba": "667a275852b0baacf7baf4b982b4654beb0b008c12292127988236fa2a485940",
+        "output": "d14b8d6d992ae73324c8425bc674516234e8f7fbc89b1dd2ce4314febad86c9e",
+        "post_blur": "eb54e6a7a594722c4f12fcf1a7ae6f9f412759224c6999edf4c3f82eed60f77b",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "8af0adcb8c7372324020c38d7e122a38e2f207608af03b8e73abae20b5c382ce"
+      },
+      "size_variation": 25.0,
+      "source_size_factor_unique": [
+        0.75,
+        0.7777777910232544,
+        0.8611111044883728,
+        1.0
+      ],
+      "source_span_formula_bit_exact": true,
+      "source_span_min_max": [
+        0.5625,
+        0.8086915612220764
+      ],
+      "zero_factor": 0,
+      "zero_span": 0
+    },
+    {
+      "depth": 8,
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "sha256": {
+        "final_rgba": "f7914c9c045e5817f7eda68955e64807a60d1583ecc872519cde3ea2444f7f96",
+        "output": "4c90cfa6d6426f21e39361944341104ad41f68b6a0ae4ab54704e18e86ff2f25",
+        "post_blur": "64d67580803be4e7856739a6113604d95c195e0823435e5492d1566247e82fbc",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "7bcb96f82316fd25c20790db2aaed2fe987db33f4ed73663f7d6b1a7f0a69450"
+      },
+      "size_variation": 25.0,
+      "source_size_factor_unique": [
+        0.75,
+        0.7777777910232544,
+        0.8611111044883728,
+        1.0
+      ],
+      "source_span_formula_bit_exact": true,
+      "source_span_min_max": [
+        0.0,
+        0.75
+      ],
+      "zero_factor": 0,
+      "zero_span": 8
+    },
+    {
+      "depth": 8,
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "sha256": {
+        "final_rgba": "5f9ad6e8094c2761f566761d0754710edcc1f4d106c92fb01b6790e46cfa5e81",
+        "output": "6ece3b46e131465b8448cf2a1dd63e8225c71638e04b7d7aaff24b2649c31c15",
+        "post_blur": "1010dfe779e5bf967615308ab9b6e9681c700d40358837e0edc32b5580b04c36",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "f1c2c11f47ef90d3950ce1f6d9ca2d5e5e65dcc36f4c7310793c18cf3a619eab"
+      },
+      "size_variation": 25.0,
+      "source_size_factor_unique": [
+        0.75,
+        0.7777777910232544,
+        0.8611111044883728,
+        1.0
+      ],
+      "source_span_formula_bit_exact": true,
+      "source_span_min_max": [
+        0.0,
+        0.75
+      ],
+      "zero_factor": 0,
+      "zero_span": 16
+    },
+    {
+      "depth": 8,
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "sha256": {
+        "final_rgba": "736f92cb0c1bcc4690348a288581058d014f3398c4a14cdab6bc65148708cc42",
+        "output": "7aea4ef2b1dd0b56ed68d55830a02a719469ad32002839d9ec72de7ec0e690c1",
+        "post_blur": "186416e290e9a698209a748a7550a90daa3ab36c3f63b5fcd2b2dcbc41eb39cd",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "fa1610ce83be33bdae598ac5abd50205c6565ed8e0aa5bab535df1c818ecc62b"
+      },
+      "size_variation": 100.0,
+      "source_size_factor_unique": [
+        0.0,
+        0.1111111119389534,
+        0.4444444477558136,
+        1.0
+      ],
+      "source_span_formula_bit_exact": true,
+      "source_span_min_max": [
+        0.0,
+        0.7825857996940613
+      ],
+      "zero_factor": 562,
+      "zero_span": 562
+    },
+    {
+      "depth": 8,
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "sha256": {
+        "final_rgba": "fef13aa7bec773b93f79f74464d3c2825134b03f4e9d6f96ca24c8fd427683a4",
+        "output": "d1867f60e81560e12764c828e868f6f15b9942b05489eb80419c5bff898dda1e",
+        "post_blur": "60f213313f38f4edcc85bc2d79d35e791f3d3cc391de0aa8b64fb15b88e27b81",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "14f174c0a124fb851998f8ab47d8951f0f1ed73170a80f1b932b19c4e237f0b7"
+      },
+      "size_variation": 100.0,
+      "source_size_factor_unique": [
+        0.0,
+        0.1111111119389534,
+        0.4444444477558136,
+        1.0
+      ],
+      "source_span_formula_bit_exact": true,
+      "source_span_min_max": [
+        0.0,
+        0.7691125273704529
+      ],
+      "zero_factor": 562,
+      "zero_span": 562
+    },
+    {
+      "depth": 8,
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "sha256": {
+        "final_rgba": "e80e019f7cf1d56b03cacf535f8b66e28f9c2ce66d470224b75f8d6fe9fae0a0",
+        "output": "52358bb66ac35576714d315ca256398e825dcd0aac415756fc8cc054355254ac",
+        "post_blur": "f3e5c797d92b48903d169c5c29ca64eb395a66d32ba00a292c337a3f72c81e14",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "5238b1cb73115522848143ec770bb1d913116104f9be9652bd99efe85f44ebae"
+      },
+      "size_variation": 100.0,
+      "source_size_factor_unique": [
+        0.0,
+        0.1111111119389534,
+        0.4444444477558136,
+        1.0
+      ],
+      "source_span_formula_bit_exact": true,
+      "source_span_min_max": [
+        0.0,
+        0.3743171691894531
+      ],
+      "zero_factor": 562,
+      "zero_span": 562
+    },
+    {
+      "depth": 8,
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "sha256": {
+        "final_rgba": "e80e019f7cf1d56b03cacf535f8b66e28f9c2ce66d470224b75f8d6fe9fae0a0",
+        "output": "52358bb66ac35576714d315ca256398e825dcd0aac415756fc8cc054355254ac",
+        "post_blur": "f3e5c797d92b48903d169c5c29ca64eb395a66d32ba00a292c337a3f72c81e14",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "f66574abd393e22b455fce5b0b19bcbb7fffd214f15ff32dfa3895ceee392bde"
+      },
+      "size_variation": 100.0,
+      "source_size_factor_unique": [
+        0.0,
+        0.1111111119389534,
+        0.4444444477558136,
+        1.0
+      ],
+      "source_span_formula_bit_exact": true,
+      "source_span_min_max": [
+        0.0,
+        0.3362233340740204
+      ],
+      "zero_factor": 562,
+      "zero_span": 562
+    },
+    {
+      "depth": 16,
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "sha256": {
+        "final_rgba": "904e3f220b879ca865384d0679d9e6180b09aa9c69ae02ee10b186b1b33a4a21",
+        "output": "ab2a246cfc215a69c5cc2df888e0e15abf79f79c994254f702384ed5740f5850",
+        "post_blur": "c9d3fe0e7b52d32291a31882491047dfe7389b2966492bc5c635dc65d8ecd907",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "af043aac85cfa6412a48f2d6206f88dfd476968fc53348d96aa241ab6c268e3f"
+      },
+      "size_variation": 25.0,
+      "source_size_factor_unique": [
+        0.75,
+        0.7777777910232544,
+        0.8611111044883728,
+        1.0
+      ],
+      "source_span_formula_bit_exact": true,
+      "source_span_min_max": [
+        0.5625,
+        0.8271431922912598
+      ],
+      "zero_factor": 0,
+      "zero_span": 0
+    },
+    {
+      "depth": 16,
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "sha256": {
+        "final_rgba": "4d62f3dcd38648892793a6eeef429582b4b67fcf8959962c5a81d3a084512720",
+        "output": "66adb6713bba12e0cc0ae2d4e991e866ff224ddd75e1feb8e45ea09045a4aa7e",
+        "post_blur": "8e20e67dcc98150b77de38412e6d3cafccf46e643956f505fae4a6d844274268",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "8af0adcb8c7372324020c38d7e122a38e2f207608af03b8e73abae20b5c382ce"
+      },
+      "size_variation": 25.0,
+      "source_size_factor_unique": [
+        0.75,
+        0.7777777910232544,
+        0.8611111044883728,
+        1.0
+      ],
+      "source_span_formula_bit_exact": true,
+      "source_span_min_max": [
+        0.5625,
+        0.8086915612220764
+      ],
+      "zero_factor": 0,
+      "zero_span": 0
+    },
+    {
+      "depth": 16,
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "sha256": {
+        "final_rgba": "1c164244a43ab2149021f313495be96d74288a4a7319a51123616430b03f2d77",
+        "output": "44fc9adcd966964a95c721af3d53b9f99b8b77fac7adc654801d9349f51e28b0",
+        "post_blur": "d0ebf08e6c923ac38ae6e55afd494fcde24c534fa56e16fbaf8ca4e9449a5936",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "7bcb96f82316fd25c20790db2aaed2fe987db33f4ed73663f7d6b1a7f0a69450"
+      },
+      "size_variation": 25.0,
+      "source_size_factor_unique": [
+        0.75,
+        0.7777777910232544,
+        0.8611111044883728,
+        1.0
+      ],
+      "source_span_formula_bit_exact": true,
+      "source_span_min_max": [
+        0.0,
+        0.75
+      ],
+      "zero_factor": 0,
+      "zero_span": 8
+    },
+    {
+      "depth": 16,
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "sha256": {
+        "final_rgba": "a906a93dfb8eab7fd6a2a392b37098c2e44f4c274bfcf0c7ef87f8f98fb22e8c",
+        "output": "2b40dfada8e2e9c034d0d531242f557a437b131651501afbdeac8120eb5d0f61",
+        "post_blur": "769d29b293c1ab7cf6a05c225f0c84548d1fe761444d776484153e0bc602c517",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "f1c2c11f47ef90d3950ce1f6d9ca2d5e5e65dcc36f4c7310793c18cf3a619eab"
+      },
+      "size_variation": 25.0,
+      "source_size_factor_unique": [
+        0.75,
+        0.7777777910232544,
+        0.8611111044883728,
+        1.0
+      ],
+      "source_span_formula_bit_exact": true,
+      "source_span_min_max": [
+        0.0,
+        0.75
+      ],
+      "zero_factor": 0,
+      "zero_span": 16
+    },
+    {
+      "depth": 16,
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "sha256": {
+        "final_rgba": "f43e58528ba1af78244c47f03c9a5b40f11807ab6252ed5d64239f41ea4c006b",
+        "output": "fb4cfffecef32869d79920a34157c3b611c11793b702e1fb8a260bb1ae38c491",
+        "post_blur": "5e5ac3f20ac763ce84dba5f1f3535de60b0fe49defe8f404abc46182a7e41a47",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "fa1610ce83be33bdae598ac5abd50205c6565ed8e0aa5bab535df1c818ecc62b"
+      },
+      "size_variation": 100.0,
+      "source_size_factor_unique": [
+        0.0,
+        0.1111111119389534,
+        0.4444444477558136,
+        1.0
+      ],
+      "source_span_formula_bit_exact": true,
+      "source_span_min_max": [
+        0.0,
+        0.7825857996940613
+      ],
+      "zero_factor": 562,
+      "zero_span": 562
+    },
+    {
+      "depth": 16,
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "sha256": {
+        "final_rgba": "6fcf1f480163d17fbcff38a63df6a1c57b65e57c7f687801d5f163086342c88d",
+        "output": "076a21a63a9afbcbbce08dfeb70c5839ec2e6ce99e2de5393899ed3b350835fa",
+        "post_blur": "e32efc1a21ff6b80365ff2c7ac96d2773d630839b8d428212f84378564e6efaf",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "14f174c0a124fb851998f8ab47d8951f0f1ed73170a80f1b932b19c4e237f0b7"
+      },
+      "size_variation": 100.0,
+      "source_size_factor_unique": [
+        0.0,
+        0.1111111119389534,
+        0.4444444477558136,
+        1.0
+      ],
+      "source_span_formula_bit_exact": true,
+      "source_span_min_max": [
+        0.0,
+        0.7691125273704529
+      ],
+      "zero_factor": 562,
+      "zero_span": 562
+    },
+    {
+      "depth": 16,
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "sha256": {
+        "final_rgba": "870e31208ff098b2e328c8c53db565a7b84bbf2e71c195a3fabb49e70b2044cf",
+        "output": "7af171d2b44b4459bcf4b20797645e9b451c94b6c51e31f2966d8c8887e2a55a",
+        "post_blur": "21caf0c1f836bf4fae9baec3f78a9061ac9926b08d558198a5ec20f1e1117a9c",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "5238b1cb73115522848143ec770bb1d913116104f9be9652bd99efe85f44ebae"
+      },
+      "size_variation": 100.0,
+      "source_size_factor_unique": [
+        0.0,
+        0.1111111119389534,
+        0.4444444477558136,
+        1.0
+      ],
+      "source_span_formula_bit_exact": true,
+      "source_span_min_max": [
+        0.0,
+        0.3743171691894531
+      ],
+      "zero_factor": 562,
+      "zero_span": 562
+    },
+    {
+      "depth": 16,
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "sha256": {
+        "final_rgba": "870e31208ff098b2e328c8c53db565a7b84bbf2e71c195a3fabb49e70b2044cf",
+        "output": "7af171d2b44b4459bcf4b20797645e9b451c94b6c51e31f2966d8c8887e2a55a",
+        "post_blur": "21caf0c1f836bf4fae9baec3f78a9061ac9926b08d558198a5ec20f1e1117a9c",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "f66574abd393e22b455fce5b0b19bcbb7fffd214f15ff32dfa3895ceee392bde"
+      },
+      "size_variation": 100.0,
+      "source_size_factor_unique": [
+        0.0,
+        0.1111111119389534,
+        0.4444444477558136,
+        1.0
+      ],
+      "source_span_formula_bit_exact": true,
+      "source_span_min_max": [
+        0.0,
+        0.3362233340740204
+      ],
+      "zero_factor": 562,
+      "zero_span": 562
+    },
+    {
+      "depth": 32,
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "sha256": {
+        "final_rgba": "c948d56fb472cdd799caf96eb86f45890eafff6b578c769f5982f68b6e7ecca3",
+        "output": "3021d5e95a48e33b3ff48a2cd8cc6bab9b18448eae49b8b84ee0a5118edef7cc",
+        "post_blur": "6395182e2a7f7bfaa56b6b85c61e439f657ef27b263d48387a6fe47c54338651",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "af043aac85cfa6412a48f2d6206f88dfd476968fc53348d96aa241ab6c268e3f"
+      },
+      "size_variation": 25.0,
+      "source_size_factor_unique": [
+        0.75,
+        0.7777777910232544,
+        0.8611111044883728,
+        1.0
+      ],
+      "source_span_formula_bit_exact": true,
+      "source_span_min_max": [
+        0.5625,
+        0.8271431922912598
+      ],
+      "zero_factor": 0,
+      "zero_span": 0
+    },
+    {
+      "depth": 32,
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "sha256": {
+        "final_rgba": "64719ccdd3aec3bc7e0366c1c0b189b660414354f32cb472fbc6ca5998e685d8",
+        "output": "49db2e877bc7f23821daf3e3b473fc01dd5635591f00665ade2faaed83bfd6cb",
+        "post_blur": "24a7480cdee77521fc867908befe10989f74a40621a3596948db56ca4bca49cd",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "8af0adcb8c7372324020c38d7e122a38e2f207608af03b8e73abae20b5c382ce"
+      },
+      "size_variation": 25.0,
+      "source_size_factor_unique": [
+        0.75,
+        0.7777777910232544,
+        0.8611111044883728,
+        1.0
+      ],
+      "source_span_formula_bit_exact": true,
+      "source_span_min_max": [
+        0.5625,
+        0.8086915612220764
+      ],
+      "zero_factor": 0,
+      "zero_span": 0
+    },
+    {
+      "depth": 32,
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "sha256": {
+        "final_rgba": "c07ac36326cbc34328914929349211856c9039f7d65592d3b2bd975309a1cccd",
+        "output": "481295063df3c944152fbcdadf6ce02f200d1a130dac5f465306b35310f0c159",
+        "post_blur": "38a2548dc0798ff3692daf29477305ad1ab27d064d4b9962df1a55aaa70f0438",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "7bcb96f82316fd25c20790db2aaed2fe987db33f4ed73663f7d6b1a7f0a69450"
+      },
+      "size_variation": 25.0,
+      "source_size_factor_unique": [
+        0.75,
+        0.7777777910232544,
+        0.8611111044883728,
+        1.0
+      ],
+      "source_span_formula_bit_exact": true,
+      "source_span_min_max": [
+        0.0,
+        0.75
+      ],
+      "zero_factor": 0,
+      "zero_span": 8
+    },
+    {
+      "depth": 32,
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "sha256": {
+        "final_rgba": "b05f2c90f5f91a3df3219603fb0ffa7a1d4526af7415fac15b1f53ead5cdc565",
+        "output": "e2c4ac4176fa9a1a8039681f7b6d5cd0bc2cf1790c5ee2caca2e0047464c4ac5",
+        "post_blur": "8ad140f5daa9bf94193fde62f4abd3bd5df8c0b1aa84f0794b22e3760d79d6c4",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "f1c2c11f47ef90d3950ce1f6d9ca2d5e5e65dcc36f4c7310793c18cf3a619eab"
+      },
+      "size_variation": 25.0,
+      "source_size_factor_unique": [
+        0.75,
+        0.7777777910232544,
+        0.8611111044883728,
+        1.0
+      ],
+      "source_span_formula_bit_exact": true,
+      "source_span_min_max": [
+        0.0,
+        0.75
+      ],
+      "zero_factor": 0,
+      "zero_span": 16
+    },
+    {
+      "depth": 32,
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "sha256": {
+        "final_rgba": "24fff22e683ea46fe47fee68b2bd0d443e4c121254efd07e5ad4eb3f38454964",
+        "output": "a739447a52045b665fc2827bca1d9f8b228d13dfe686e17862ea29945251813c",
+        "post_blur": "1d6034452a309d7b1732e8d3f0cd26bfb26141d117b6de6983a0170041cc10ec",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "fa1610ce83be33bdae598ac5abd50205c6565ed8e0aa5bab535df1c818ecc62b"
+      },
+      "size_variation": 100.0,
+      "source_size_factor_unique": [
+        0.0,
+        0.1111111119389534,
+        0.4444444477558136,
+        1.0
+      ],
+      "source_span_formula_bit_exact": true,
+      "source_span_min_max": [
+        0.0,
+        0.7825857996940613
+      ],
+      "zero_factor": 562,
+      "zero_span": 562
+    },
+    {
+      "depth": 32,
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "sha256": {
+        "final_rgba": "78f2c7f5410c39186066b1040a3501aa37ec0a62d1135ae00db2e0bc109fe2f6",
+        "output": "39b3907516c3adadab75b4a902dec9d44380cd10150db137af91d3b1e27a663a",
+        "post_blur": "c0b42528662fd88cf6cb265187ce7101503710bda841ddb5467465f820f0b2e2",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "14f174c0a124fb851998f8ab47d8951f0f1ed73170a80f1b932b19c4e237f0b7"
+      },
+      "size_variation": 100.0,
+      "source_size_factor_unique": [
+        0.0,
+        0.1111111119389534,
+        0.4444444477558136,
+        1.0
+      ],
+      "source_span_formula_bit_exact": true,
+      "source_span_min_max": [
+        0.0,
+        0.7691125273704529
+      ],
+      "zero_factor": 562,
+      "zero_span": 562
+    },
+    {
+      "depth": 32,
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "sha256": {
+        "final_rgba": "26f8e1711669833c665096fe31a70da3f656af8063c7345ca4e790d6d4f111ae",
+        "output": "902ea63aaf5d768c35db4f3dc667692dcaafbd21e360fc3f74d3b58391a674b7",
+        "post_blur": "12423803491f0d814fc7c548b7eb2881cf2653e1d5fec39ffc2435bee0e3ed1b",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "5238b1cb73115522848143ec770bb1d913116104f9be9652bd99efe85f44ebae"
+      },
+      "size_variation": 100.0,
+      "source_size_factor_unique": [
+        0.0,
+        0.1111111119389534,
+        0.4444444477558136,
+        1.0
+      ],
+      "source_span_formula_bit_exact": true,
+      "source_span_min_max": [
+        0.0,
+        0.3743171691894531
+      ],
+      "zero_factor": 562,
+      "zero_span": 562
+    },
+    {
+      "depth": 32,
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "sha256": {
+        "final_rgba": "26f8e1711669833c665096fe31a70da3f656af8063c7345ca4e790d6d4f111ae",
+        "output": "902ea63aaf5d768c35db4f3dc667692dcaafbd21e360fc3f74d3b58391a674b7",
+        "post_blur": "12423803491f0d814fc7c548b7eb2881cf2653e1d5fec39ffc2435bee0e3ed1b",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "f66574abd393e22b455fce5b0b19bcbb7fffd214f15ff32dfa3895ceee392bde"
+      },
+      "size_variation": 100.0,
+      "source_size_factor_unique": [
+        0.0,
+        0.1111111119389534,
+        0.4444444477558136,
+        1.0
+      ],
+      "source_span_formula_bit_exact": true,
+      "source_span_min_max": [
+        0.0,
+        0.3362233340740204
+      ],
+      "zero_factor": 562,
+      "zero_span": 562
+    }
+  ],
+  "compared_or_captured": [
+    "source_size_factor",
+    "source_span",
+    "pre_blur",
+    "post_blur",
+    "owner_final_rgba",
+    "typed_padded_output"
+  ],
+  "cross_depth": {
+    "sv100_nv100_type1": {
+      "source_size_factor_identical_pf8_pf16_pf32": true,
+      "source_span_identical_pf8_pf16_pf32": true
+    },
+    "sv100_nv100_type2": {
+      "source_size_factor_identical_pf8_pf16_pf32": true,
+      "source_span_identical_pf8_pf16_pf32": true
+    },
+    "sv100_nv25_type1": {
+      "source_size_factor_identical_pf8_pf16_pf32": true,
+      "source_span_identical_pf8_pf16_pf32": true
+    },
+    "sv100_nv25_type2": {
+      "source_size_factor_identical_pf8_pf16_pf32": true,
+      "source_span_identical_pf8_pf16_pf32": true
+    },
+    "sv25_nv100_type1": {
+      "source_size_factor_identical_pf8_pf16_pf32": true,
+      "source_span_identical_pf8_pf16_pf32": true
+    },
+    "sv25_nv100_type2": {
+      "source_size_factor_identical_pf8_pf16_pf32": true,
+      "source_span_identical_pf8_pf16_pf32": true
+    },
+    "sv25_nv25_type1": {
+      "source_size_factor_identical_pf8_pf16_pf32": true,
+      "source_span_identical_pf8_pf16_pf32": true
+    },
+    "sv25_nv25_type2": {
+      "source_size_factor_identical_pf8_pf16_pf32": true,
+      "source_span_identical_pf8_pf16_pf32": true
+    }
+  },
+  "generated_noise_controls": {
+    "1": {
+      "actual_generated_noise_identical_pf8_pf16_pf32": true,
+      "portable_shared_sampler_different_float_count": 0
+    },
+    "2": {
+      "actual_generated_noise_identical_pf8_pf16_pf32": true,
+      "portable_shared_sampler_different_float_count": 0
+    }
+  },
+  "kind": "olmradialblur_zoom_size_noise_components_actual_aex_20260811",
+  "scope": "Pinned actual AEX; centered Zoom 32x18; PF8/PF16/PF32; disconnected component areas 1/4/9; SV25/100 x NV25/100 x Noise Type1/2; seed1 offset0 thickness10; Outer4 neutral tuple.",
+  "status": "24/24 actual-AEX source-span and shared-direct output exact",
+  "structural_note": "Zoom has no separately exposed accum/max-alpha planes; post_blur is its normalized worker result and owner_final_rgba is the inverse-transform result before typed packing."
+}

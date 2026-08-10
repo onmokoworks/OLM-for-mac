@@ -91,4 +91,91 @@ inline bool generate_noise_plane(int source_width, int source_height,
     return true;
 }
 
+// RadialBlur FUN_180009680 sampler.  The
+// interpolated branch deliberately preserves the AEX's scalar-float weight
+// products and its lower-pair / upper-pair accumulation tree.
+inline float sample_radial_noise_plane(const NoisePlaneView& plane, int x, int y,
+                                       bool interpolate) {
+    const float inverse_cell_size = 1.0f / plane.cell_size;
+    const float sample_x = static_cast<float>(x) * inverse_cell_size;
+    const float sample_y = static_cast<float>(y) * inverse_cell_size;
+    const int ix = static_cast<int>(sample_x);
+    const int iy = static_cast<int>(sample_y);
+    const int first = iy * plane.stride + ix;
+    if (!interpolate) {
+        return plane.samples[first];
+    }
+
+    const float fraction_x = sample_x - static_cast<float>(ix);
+    const float fraction_y = sample_y - static_cast<float>(iy);
+    const float square_x = fraction_x * fraction_x;
+    const float square_y = fraction_y * fraction_y;
+    const float smooth_x = (3.0f - (fraction_x + fraction_x)) * square_x;
+    const float smooth_y = (3.0f - (fraction_y + fraction_y)) * square_y;
+    const float inverse_x = 1.0f - smooth_x;
+    const float inverse_y = 1.0f - smooth_y;
+    const float lower_left = (inverse_x * smooth_y) *
+                             plane.samples[first + plane.stride];
+    const float lower_right = (smooth_y * smooth_x) *
+                              plane.samples[first + plane.stride + 1];
+    const float upper_right = (inverse_y * smooth_x) *
+                              plane.samples[first + 1];
+    const float upper_left = (inverse_x * inverse_y) * plane.samples[first];
+    const float lower = lower_right + lower_left;
+    const float upper = upper_right + upper_left;
+    return upper + lower;
+}
+
+inline bool generate_radial_noise_plane(int source_width, int source_height,
+                                        float cell_size, float offset, std::uint32_t seed,
+                                        std::vector<float>* output, int* plane_width,
+                                        int* plane_height) {
+    if (source_width <= 0 || source_height <= 0 || cell_size <= 0.0f ||
+        output == nullptr || plane_width == nullptr || plane_height == nullptr) {
+        return false;
+    }
+    *plane_width = static_cast<int>(static_cast<float>(source_width) / cell_size + 3.0f);
+    *plane_height = static_cast<int>(static_cast<float>(source_height) / cell_size + 3.0f);
+    if (*plane_width <= 0 || *plane_height <= 0) {
+        return false;
+    }
+
+    std::mt19937 random(seed);
+    // The AEX uses MSVC's generate_canonical<float, 24> shape here.  For a
+    // 32-bit MT result that is one draw, rounded to float before division by
+    // 2^32.  Keeping the conversion in double changes a sizeable subset of
+    // the generated lattice even though the values remain visually close.
+    constexpr float kUint32Range = 4294967296.0f;
+    const auto next_unit = [&random]() {
+        return static_cast<float>(random()) / kUint32Range;
+    };
+    std::vector<float> table(101);
+    for (float& value : table) {
+        const float unit = next_unit();
+        value = (unit + unit) - 1.0f;
+    }
+
+    output->resize(static_cast<std::size_t>(*plane_width) * *plane_height);
+    for (float& value : *output) {
+        const float base = static_cast<float>(next_unit());
+        float table_position = next_unit() * 100.0f + offset;
+        while (table_position >= 100.0f) {
+            table_position -= 100.0f;
+        }
+        const int table_index = static_cast<int>(table_position);
+        const float fraction = table_position - static_cast<float>(table_index);
+        const float square = fraction * fraction;
+        const float smooth = (3.0f - (fraction + fraction)) * square;
+        // Preserve the two separate 0.5f products used by FUN_180009380.
+        // Factoring the half out after interpolation is not bit-equivalent.
+        const float left = ((1.0f - smooth) *
+                            table[static_cast<std::size_t>(table_index)]) * 0.5f;
+        const float right = (smooth *
+                             table[static_cast<std::size_t>(table_index + 1)]) * 0.5f;
+        const float combined = base + (left + right);
+        value = combined < 0.0f ? 0.0f : (combined > 1.0f ? 1.0f : combined);
+    }
+    return true;
+}
+
 }  // namespace olm::dblur
