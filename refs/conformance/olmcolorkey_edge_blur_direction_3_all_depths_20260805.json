@@ -41,7 +41,7 @@
     }
   ],
   "claim_boundary": "Bounded actual full-worker to production source-adapter proof only; no other direction, amount, shape, or AE-host claim.",
-  "production_source_sha256": "52febf06cefea8b281ab9b2b6060c783ea77e45321b7c63ff755848151e55c05",
+  "production_source_sha256": "91165211f1b63a1861b1c241c5f50c79528c7238610926709d1ce37909b1257b",
   "scope": "4x3 single black key, Edge Blur amount 2.0, direction 3, PF8/PF16/PF32",
   "status": "pass"
 }

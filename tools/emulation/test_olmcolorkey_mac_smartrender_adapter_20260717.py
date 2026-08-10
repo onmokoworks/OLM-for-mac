@@ -65,6 +65,7 @@ template <typename T> struct AEFX_SuiteScoper {{ T suite; AEFX_SuiteScoper(PF_In
 static constexpr const char *kPFWorldSuite = "PF World Suite"; static constexpr A_long kPFWorldSuiteVersion2 = 2;
 static const char *GetStringPtr(int) {{ return ""; }} static PF_Err register_effect(...) {{ return PF_Err_NONE; }}
 #define OLMCOLORKEY_H
+#define OLMCOLORKEY_HOSTLESS_RENDER_HARNESS 1
 #define _H_AEFX_SUITE_HELPER_TEMPLATE
 #define AE_OS_MAC 1
 #define DllExport

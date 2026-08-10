@@ -187,44 +187,44 @@
       ]
     }
   ],
-  "closed_boundary": "Current source rebuild has byte-exact executable __text/__const sections in the installed Universal bundle; actual center-key all-depth entry/worker/writer evidence and the production EffectMain adapter are connected without relying on historical PNGs.",
+  "closed_boundary": "The accepted identity-manifest source product is byte-exact with the installed Universal bundle; actual center-key all-depth entry/worker/writer evidence and the production EffectMain adapter are connected without relying on historical PNGs.",
   "executable_sections": {
     "arm64": {
       "__const": {
-        "installed": "f8442fae3de6861a871722b0346046aae03399f013bd13d91249d2c03d2954d2",
-        "rebuilt": "f8442fae3de6861a871722b0346046aae03399f013bd13d91249d2c03d2954d2"
+        "accepted_source": "f8442fae3de6861a871722b0346046aae03399f013bd13d91249d2c03d2954d2",
+        "installed": "f8442fae3de6861a871722b0346046aae03399f013bd13d91249d2c03d2954d2"
       },
       "__text": {
-        "installed": "f2df4a68cb29d288529d9cd9d853fa2ce76c8379bfaae8f347c46808c825ab41",
-        "rebuilt": "f2df4a68cb29d288529d9cd9d853fa2ce76c8379bfaae8f347c46808c825ab41"
+        "accepted_source": "65a6e268b89b1cc04cdc5b018fa1cd4a6bf4bd222c101ddd2ae0a65b08677157",
+        "installed": "65a6e268b89b1cc04cdc5b018fa1cd4a6bf4bd222c101ddd2ae0a65b08677157"
       }
     },
     "x86_64": {
       "__const": {
-        "installed": "787e6c2a907fb19b05506a77a65e246d413a90199fb6977358b9bc2d6378cf1e",
-        "rebuilt": "787e6c2a907fb19b05506a77a65e246d413a90199fb6977358b9bc2d6378cf1e"
+        "accepted_source": "d2253090b50c4fe3c14d3e2a5abc8bf86360457c1df4032886a9126a2a4552d3",
+        "installed": "d2253090b50c4fe3c14d3e2a5abc8bf86360457c1df4032886a9126a2a4552d3"
       },
       "__text": {
-        "installed": "c29dd56f011c6e123246d48796548b8c929240fd82d27f1ed8fd608f340117de",
-        "rebuilt": "c29dd56f011c6e123246d48796548b8c929240fd82d27f1ed8fd608f340117de"
+        "accepted_source": "15c16dcd7c4f99aac172f9be224bfef2573e2a56e9ea3f5a4b9c9b9f5d27129d",
+        "installed": "15c16dcd7c4f99aac172f9be224bfef2573e2a56e9ea3f5a4b9c9b9f5d27129d"
       }
     }
   },
   "gates": {
+    "accepted_manifest_source_installed_exact": true,
+    "accepted_source_installed_text_const_exact": true,
     "actual_entry_worker_writer_all_depths": true,
     "installed_codesign_valid": true,
     "installed_effectmain_and_smartrender_symbols": true,
     "installed_universal": true,
-    "production_effectmain_adapter_passes": true,
-    "rebuild_succeeded": true,
-    "rebuilt_installed_text_const_exact": true
+    "production_effectmain_adapter_passes": true
   },
   "installed": {
     "observed_ae_pids": [
-      37363
+      3903
     ],
     "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMColorKey.plugin",
-    "sha256": "34fd47cd04c6665f75a84ffb0d2bb01390823e50d2224059917043cd45350464"
+    "sha256": "548f3138bcf4deb302669ba689eaa70e4202c20ebd1363e3557c9d93ad91a458"
   },
   "remaining_boundary": "No current AE-host render or loaded-module mapping claim; this audit does not start, stop, or inspect a loaded plugin module in AE.",
   "status": "pass"

@@ -28,14 +28,14 @@
       "pixel_format": "PF32"
     }
   ],
-  "closed_boundary": "For the independent center-key PF8/PF16/PF32 fixture, public EffectMain PF_Cmd_RENDER reaches RenderWorld's typed writer and produces a full-buffer byte-exact result to the proven SmartRender path; rebuilt executable sections equal the installed bundle.",
+  "closed_boundary": "For the independent center-key PF8/PF16/PF32 fixture, public EffectMain PF_Cmd_RENDER reaches RenderWorld's typed writer and produces a full-buffer byte-exact result to the proven SmartRender path; accepted identity-manifest source sections equal the installed bundle.",
   "connection_gates": {
+    "accepted_source_installed_sections_exact": true,
     "actual_entry_worker_writer_connected": true,
     "all_depth_fallback_cases": true,
-    "installed_codesign_universal": true,
-    "rebuilt_installed_sections_exact": true
+    "installed_codesign_universal": true
   },
-  "installed_sha256": "34fd47cd04c6665f75a84ffb0d2bb01390823e50d2224059917043cd45350464",
+  "installed_sha256": "548f3138bcf4deb302669ba689eaa70e4202c20ebd1363e3557c9d93ad91a458",
   "remaining_boundary": "No arbitrary geometry/parameter or current AE-host render claim.",
   "status": "pass"
 }

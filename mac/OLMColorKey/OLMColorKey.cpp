@@ -158,7 +158,10 @@ GlobalSetup(PF_InData *, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
 {
 	out_data->my_version = PF_VERSION(MAJOR_VERSION, MINOR_VERSION, BUG_VERSION,
 	                                  STAGE_VERSION, BUILD_VERSION);
-	out_data->out_flags  = 0x02000040 | PF_OutFlag_SEND_UPDATE_PARAMS_UI;
+	out_data->out_flags  = 0x02000040;
+#ifndef OLMCOLORKEY_HOSTLESS_RENDER_HARNESS
+	out_data->out_flags |= PF_OutFlag_SEND_UPDATE_PARAMS_UI;
+#endif
 	out_data->out_flags2 = PF_OutFlag2_SUPPORTS_SMART_RENDER |
 	                      PF_OutFlag2_FLOAT_COLOR_AWARE |
 	                      PF_OutFlag2_SUPPORTS_GET_FLATTENED_SEQUENCE_DATA;
@@ -342,6 +345,7 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	return err;
 }
 
+#ifndef OLMCOLORKEY_HOSTLESS_RENDER_HARNESS
 static PF_Err
 UpdateParameterUI(PF_InData *in_data, PF_ParamDef *params[])
 {
@@ -394,6 +398,7 @@ UpdateParameterUI(PF_InData *in_data, PF_ParamDef *params[])
 
 	return err;
 }
+#endif
 
 static A_long ColorParamIndex(int i, int offset)
 {
@@ -1390,8 +1395,10 @@ EffectMain(PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data,
 			err = ParamsSetup(in_data, out_data, params, output); break;
 		case PF_Cmd_RENDER:
 			err = Render(in_data, out_data, params, output); break;
+#ifndef OLMCOLORKEY_HOSTLESS_RENDER_HARNESS
 		case PF_Cmd_UPDATE_PARAMS_UI:
 			err = UpdateParameterUI(in_data, params); break;
+#endif
 		case PF_Cmd_SMART_PRE_RENDER:
 			err = SmartPreRender(in_data, out_data, (PF_PreRenderExtra*)extra); break;
 		case PF_Cmd_SMART_RENDER:
