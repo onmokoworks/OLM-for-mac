@@ -29,7 +29,7 @@ def main() -> int:
     assert report["status"] == "explicit_actual_aex_fixture_boundary"
     assert [(row["width"], row["height"], row["length"]) for row in report["admitted_rotated_leaf_tuples"]] == [
         (11, 6, 3), (9, 7, 3), (9, 7, 5), (9, 7, 7), (9, 7, 9),
-        (13, 5, 7), (15, 6, 9)
+        (9, 7, 50), (9, 9, 50), (13, 5, 7), (15, 6, 9)
     ]
     assert report["unsupported_tuple_behavior"] == "return the unblurred input ray; never substitute Mode 2"
     with tempfile.TemporaryDirectory(prefix="olmkira-mode3-general-") as td:
@@ -39,7 +39,7 @@ def main() -> int:
             str(CPP), "-o", str(exe),
         ], cwd=ROOT, check=True)
         subprocess.run([str(exe)], cwd=ROOT, check=True)
-    print("PASS_OLMKIRAKIRA_MODE3_NONWHITELIST_PRODUCTION_20260806 admitted=7 unsupported=fail_closed")
+    print("PASS_OLMKIRAKIRA_MODE3_NONWHITELIST_PRODUCTION_20260806 admitted=9 unsupported=fail_closed")
     return 0
 
 

@@ -10,6 +10,8 @@
     {"width": 9, "height": 7, "length": 5, "result": "raw_float32_exact", "word_count": 63},
     {"width": 9, "height": 7, "length": 7, "result": "raw_float32_exact", "word_count": 63},
     {"width": 9, "height": 7, "length": 9, "result": "raw_float32_exact", "word_count": 63},
+    {"width": 9, "height": 7, "length": 50, "result": "raw_float32_exact", "word_count": 63},
+    {"width": 9, "height": 9, "length": 50, "result": "raw_float32_exact", "word_count": 81},
     {"width": 13, "height": 5, "length": 7, "result": "raw_float32_exact", "word_count": 65},
     {"width": 15, "height": 6, "length": 9, "result": "raw_float32_exact", "word_count": 90}
   ],
@@ -22,12 +24,13 @@
     "refs/conformance/olmkirakira_mode3_gaussian_crt_initialized_actual_aex_20260805.json",
     "refs/conformance/olmkirakira_mode3_gaussian_9x7_length7_actual_aex_20260810.json",
     "refs/conformance/olmkirakira_mode3_gaussian_9x7_length9_actual_aex_20260810.json",
+    "refs/conformance/olmkirakira_mode3_default50_canonical_actual_aex_20260810.json",
     "refs/conformance/olmkirakira_mode3_gaussian_length7_13x5_crt_actual_aex_20260805.json",
     "refs/conformance/olmkirakira_mode3_gaussian_length9_15x6_crt_actual_aex_20260806.json"
   ],
   "not_proven": [
     "arbitrary geometry for a witnessed length",
-    "lengths outside 3/5/7/9 at the witnessed 9x7 geometry",
+    "lengths outside 3/5/7/9/50 at 9x7 and outside 50 at 9x9",
     "full native-AE Mode 3 rendering at practical resolution",
     "geometry independence of the recovered Gaussian row primitive"
   ]

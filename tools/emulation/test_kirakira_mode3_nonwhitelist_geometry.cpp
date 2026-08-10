@@ -13,6 +13,8 @@ int main()
     assert(mode3_gaussian_admitted(9, 7, 5));
     assert(mode3_gaussian_admitted(9, 7, 7));
     assert(mode3_gaussian_admitted(9, 7, 9));
+    assert(mode3_gaussian_admitted(9, 7, 50));
+    assert(mode3_gaussian_admitted(9, 9, 50));
     assert(mode3_gaussian_admitted(13, 5, 7));
     assert(mode3_gaussian_admitted(15, 6, 9));
 
@@ -24,6 +26,9 @@ int main()
     assert(!mode3_gaussian_admitted(15, 6, 7));
     assert(!mode3_gaussian_admitted(9, 7, 1));
     assert(!mode3_gaussian_admitted(9, 7, 11));
+    assert(!mode3_gaussian_admitted(9, 7, 49));
+    assert(!mode3_gaussian_admitted(9, 7, 51));
+    assert(!mode3_gaussian_admitted(9, 9, 5));
     assert(!mode3_gaussian_admitted(0, 7, 5));
     return 0;
 }
