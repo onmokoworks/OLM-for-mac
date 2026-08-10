@@ -21,7 +21,7 @@ AEX = ROOT / "aex/OLMColorKey/Plugins/64/2025/OLMColorKey.aex"
 SOURCE = ROOT / "mac/OLMColorKey/OLMColorKey.cpp"
 REPORT = ROOT / "refs/conformance/olmcolorkey_exported_owner_keep_premult_replace_20260811.json"
 DOC = REPORT.with_suffix(".md")
-DEFAULT_WORKER = Path("/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker")
+DEFAULT_WORKER = Path("/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue1135-typed-iterate-suites/guest/target/release/aex-guest-worker")
 AEX_SHA256 = "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c"
 DEPTHS = {"PF8": ("argb8", 4), "PF16": ("argb16", 8), "PF32": ("argb32f", 16)}
 CASES = (
@@ -83,7 +83,7 @@ def main() -> int:
         raise RuntimeError("pinned ColorKey AEX hash drift")
     worker = Path(os.environ.get("OLM_AEX_GUEST_WORKER", str(DEFAULT_WORKER)))
     if not worker.is_file():
-        raise RuntimeError("issue851 AEXCompat worker missing")
+        raise RuntimeError("typed-iterate AEXCompat worker missing")
     expected_all = production()
     expected_offset, rows = 0, []
     with tempfile.TemporaryDirectory(prefix="olmck_exported_owner_") as raw:
@@ -174,7 +174,7 @@ def main() -> int:
     REPORT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     DOC.write_text("# OLMColorKey actual exported owner seam\n\nVerdict: `" + report["verdict"] + "`\n\nFor both `off/off/off` and `on/on/on` Color Keep/Premultiplied/Replace representatives, the Windows AEX exported Smart owner materializes parameters and produces complete PF8, PF16, and PF32 buffers exactly equal to production `RenderWorld`. PF16 and PF32 exercise `PF iterate16 Suite` v1 and `PF iterateFloat Suite` v1 respectively through the AEXCompat typed-suite wiring at commit `0ee27894`.\n\nThis closes the former PF_Err 13 emulation boundary for these six declared cells. It does not claim arbitrary parameter products, native Windows execution, or After Effects host execution.\n")
     print(report["verdict"])
-    return 0
+    return 0 if all_exact else 1
 
 
 if __name__ == "__main__":
