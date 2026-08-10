@@ -1,0 +1,15 @@
+{
+  "actual_aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+  "calls": 20000,
+  "claims_not_made": [
+    "exhaustive 32769^8 tuples",
+    "full PF16 render exactness",
+    "PF32"
+  ],
+  "closed_rule": "scalar-SSE binary32 boundaries and signed luma conversion toward zero",
+  "domain": "deterministic colored ARGB16 ordered pairs; each component uniform in 0..32768",
+  "schema_version": 1,
+  "seed": "0x51a001",
+  "status": "exact",
+  "verdict": "PASS_COLORCOMPARE16_COLORED_20000_CALLS_EXACT"
+}

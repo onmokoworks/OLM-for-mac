@@ -45,3 +45,13 @@ extern "C" int olmsmoother_v1_effectmain_render16_matrix(
   return render_effectmain(source, destination, width, height, rowbytes, 16,
                            use_key, key_r, key_g, key_b, tolerance);
 }
+
+extern "C" int32_t olmsmoother_v1_color_compare8(
+    const uint8_t *first, const uint8_t *second) {
+  return ColorCompare8(first, second);
+}
+
+extern "C" int32_t olmsmoother_v1_color_compare16(
+    const uint16_t *first, const uint16_t *second) {
+  return ColorCompare16(first, second);
+}

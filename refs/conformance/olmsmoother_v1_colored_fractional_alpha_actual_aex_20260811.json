@@ -1,0 +1,188 @@
+{
+  "actual_aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+  "cases": [
+    {
+      "actual_sha256": "857098461b6fcccc8ebe20be592b03da2e451ffb6a3d4709576bd67ed28c491c",
+      "depth": 8,
+      "mismatched_bytes": 0,
+      "production_sha256": "857098461b6fcccc8ebe20be592b03da2e451ffb6a3d4709576bd67ed28c491c",
+      "tolerance": 0,
+      "use_key": 0
+    },
+    {
+      "actual_sha256": "f920f597eaefcbb6d85579130e572da6b57ce43df2ae1d2f10dfd272d5b49ec0",
+      "depth": 8,
+      "mismatched_bytes": 0,
+      "production_sha256": "f920f597eaefcbb6d85579130e572da6b57ce43df2ae1d2f10dfd272d5b49ec0",
+      "tolerance": 6,
+      "use_key": 0
+    },
+    {
+      "actual_sha256": "0a7747d59c8a3524483713f6ab62faf23ee98120b490bb9ead50c3bb97d29749",
+      "depth": 8,
+      "mismatched_bytes": 0,
+      "production_sha256": "0a7747d59c8a3524483713f6ab62faf23ee98120b490bb9ead50c3bb97d29749",
+      "tolerance": 127,
+      "use_key": 0
+    },
+    {
+      "actual_sha256": "9dc1b69207dd0ef646a7e748694b2be60b96f6140f7b844036bd7a59bce64db2",
+      "depth": 8,
+      "mismatched_bytes": 0,
+      "production_sha256": "9dc1b69207dd0ef646a7e748694b2be60b96f6140f7b844036bd7a59bce64db2",
+      "tolerance": 255,
+      "use_key": 0
+    },
+    {
+      "actual_sha256": "81e272e011b0625b909891b86194251b2887cdd8ea8fb1a22c7cd4f3b36fb534",
+      "depth": 8,
+      "mismatched_bytes": 0,
+      "production_sha256": "81e272e011b0625b909891b86194251b2887cdd8ea8fb1a22c7cd4f3b36fb534",
+      "tolerance": 0,
+      "use_key": 1
+    },
+    {
+      "actual_sha256": "fbcf0e19d371966d71f93ad02fcc92a04bf67a5be374d17eebf639ade63f65d6",
+      "depth": 8,
+      "mismatched_bytes": 0,
+      "production_sha256": "fbcf0e19d371966d71f93ad02fcc92a04bf67a5be374d17eebf639ade63f65d6",
+      "tolerance": 6,
+      "use_key": 1
+    },
+    {
+      "actual_sha256": "bbfcc22fb040dc518e864299a3a7c80a404f087a3fe52f054ef929862e47f18e",
+      "depth": 8,
+      "mismatched_bytes": 0,
+      "production_sha256": "bbfcc22fb040dc518e864299a3a7c80a404f087a3fe52f054ef929862e47f18e",
+      "tolerance": 127,
+      "use_key": 1
+    },
+    {
+      "actual_sha256": "6ac0b85c4cb62f8de4a1f162ba34ea4d527d4c05adb2a1e6d1583359397d7b0c",
+      "depth": 8,
+      "mismatched_bytes": 0,
+      "production_sha256": "6ac0b85c4cb62f8de4a1f162ba34ea4d527d4c05adb2a1e6d1583359397d7b0c",
+      "tolerance": 255,
+      "use_key": 1
+    },
+    {
+      "actual_sha256": "bacb3b2bbd6e7d7188a9e869ba1be42bc2b4a1cd5fdff68d1107d07842de90bf",
+      "depth": 16,
+      "mismatched_bytes": 0,
+      "production_sha256": "bacb3b2bbd6e7d7188a9e869ba1be42bc2b4a1cd5fdff68d1107d07842de90bf",
+      "tolerance": 0,
+      "use_key": 0
+    },
+    {
+      "actual_sha256": "c3b4df65a3c2ee03511db4d4d89ecac788866ab5752f0d2f6477656918bf2750",
+      "depth": 16,
+      "mismatched_bytes": 0,
+      "production_sha256": "c3b4df65a3c2ee03511db4d4d89ecac788866ab5752f0d2f6477656918bf2750",
+      "tolerance": 6,
+      "use_key": 0
+    },
+    {
+      "actual_sha256": "d499a83fac1cb0838dcc3a53c889866af985290fa954975454c6a0d6d5323e6a",
+      "depth": 16,
+      "mismatched_bytes": 38,
+      "production_sha256": "9c21abe93cba1dbf379f391b5315a6315c6787a71300f9b9201c21032ee487d6",
+      "tolerance": 127,
+      "use_key": 0
+    },
+    {
+      "actual_sha256": "c7b47a3ce355079228a5af20c1b02bd75c922481e04fd9bba8dd3eb61e3365f8",
+      "depth": 16,
+      "mismatched_bytes": 0,
+      "production_sha256": "c7b47a3ce355079228a5af20c1b02bd75c922481e04fd9bba8dd3eb61e3365f8",
+      "tolerance": 255,
+      "use_key": 0
+    },
+    {
+      "actual_sha256": "aae4ea8e4eb29e9ce45f54a6dc66561bbcd97df8b1afdd8aa1f1eab2ad645eaa",
+      "depth": 16,
+      "mismatched_bytes": 0,
+      "production_sha256": "aae4ea8e4eb29e9ce45f54a6dc66561bbcd97df8b1afdd8aa1f1eab2ad645eaa",
+      "tolerance": 0,
+      "use_key": 1
+    },
+    {
+      "actual_sha256": "3944d18a84f18e6bf18507373c49a670160b9509e2d08515214a7262e424073b",
+      "depth": 16,
+      "mismatched_bytes": 0,
+      "production_sha256": "3944d18a84f18e6bf18507373c49a670160b9509e2d08515214a7262e424073b",
+      "tolerance": 6,
+      "use_key": 1
+    },
+    {
+      "actual_sha256": "b7e59b7602314937cf6d2216e7686af6003dee9c5906cebc1b3f4179f11ed863",
+      "depth": 16,
+      "mismatched_bytes": 16,
+      "production_sha256": "2475e7041ff89204ed4160b5652b1acf08cb7e06a353043c1018c5028b2db6ea",
+      "tolerance": 127,
+      "use_key": 1
+    },
+    {
+      "actual_sha256": "50ffc9b322e870f77a7c3e44eabebf5a49c85f1cfbf95a088b8a0bd183e8a40c",
+      "depth": 16,
+      "mismatched_bytes": 0,
+      "production_sha256": "50ffc9b322e870f77a7c3e44eabebf5a49c85f1cfbf95a088b8a0bd183e8a40c",
+      "tolerance": 255,
+      "use_key": 1
+    }
+  ],
+  "claims_not_made": [
+    "arbitrary RGB/alpha inputs",
+    "PF32 native arithmetic",
+    "AE host/export color management",
+    "PF16 colored fractional-alpha exactness"
+  ],
+  "fixture": {
+    "alpha_codes": [
+      0,
+      1,
+      32,
+      64,
+      96,
+      127,
+      128,
+      160,
+      191,
+      224,
+      254,
+      255
+    ],
+    "dimensions": [
+      7,
+      5
+    ],
+    "key_islands": [
+      [
+        0,
+        0
+      ],
+      [
+        3,
+        2
+      ],
+      [
+        6,
+        4
+      ]
+    ],
+    "key_rgb8": [
+      202,
+      187,
+      230
+    ],
+    "padding_bytes_per_row": 8,
+    "rgb": "independent affine R/G/B sequences clamped to alpha (premultiplied-valid)"
+  },
+  "schema_version": 1,
+  "scope": "actual exported PF_Cmd_RENDER vs production EffectMain; colored padded 7x5; alpha 0/1/32/64/96/127/128/160/191/224/254/255; key off/on; tolerance 0/6/127/255; PF8/PF16",
+  "status": "mixed",
+  "summary": {
+    "exact_cells": 14,
+    "mismatching_cells": 2
+  },
+  "verdict": "V1_COLORED_FRACTIONAL_ALPHA_BOUNDARY_RECORDED"
+}
