@@ -1,5 +1,5 @@
 # OLM RadialBlur PF32 Rotation Edge Fade — 2026-08-11
 
-Status: **captured_fail_closed**
+Status: **exact**
 
-Actual AEX Outer and Inner Edge Fade 50/100 are captured from the polar stage through the separate pre-scatter alpha plane, accum/max/final, coordinates, and padded output. A same-radius circular Gaussian candidate was rejected after diverging at accum; the angular wrap/source-row rule remains unresolved. The regression requires all four production paths to remain fail-closed.
+The actual AEX and production agree through polar, source scalar, the separate prepass-alpha plane, accum/max-alpha, final RGBA, coordinates, and padded output for Outer/Inner Fade 50/100. The recovered rule uses zero-based spans 49/99, direct span-sized Gaussian tables, and one linear cross-row tap before within-row wrapping.

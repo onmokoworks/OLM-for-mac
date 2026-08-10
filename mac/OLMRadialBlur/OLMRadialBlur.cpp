@@ -1642,6 +1642,7 @@ struct RadialBlurTestRotationCapture {
 	float *polar_rgba = nullptr;
 	A_u_char *eligibility = nullptr;
 	float *source_scalar = nullptr;
+	float *prepass_alpha = nullptr;
 	float *accum_rgba = nullptr;
 	float *max_alpha = nullptr;
 	float *normalized_rgba = nullptr;
@@ -2117,6 +2118,27 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0 &&
 		info.comp_width == 9.0 && info.comp_height == 7.0;
+	const bool use_aex_pf32_outer_edge_fade_small = input && output &&
+		std::is_same<PixelT, PF_PixelFloat>::value && input->width == 9 && input->height == 7 &&
+		output->width == 9 && output->height == 7 && info.center_x == 4.0 && info.center_y == 3.0 &&
+		info.outer_strength == 4 && (info.outer_edge_fade == 50 || info.outer_edge_fade == 100) &&
+		info.outer_offset_mode == 1 && info.outer_offset == 0 && info.inner_strength == 0 &&
+		info.inner_edge_fade == 0 && info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
+		info.quality == 5.0 && info.brightness_gain == 1.0 && info.size_variation == 0.0 &&
+		info.noise_variation == 0.0 && info.noise_type == 1 && info.seed == 1 &&
+		info.thickness == 10.0 && info.comp_width == 9.0 && info.comp_height == 7.0;
+	const bool use_aex_pf32_inner_edge_fade_small = input && output &&
+		std::is_same<PixelT, PF_PixelFloat>::value && input->width == 9 && input->height == 7 &&
+		output->width == 9 && output->height == 7 && info.center_x == 4.0 && info.center_y == 3.0 &&
+		info.outer_strength == 0 && info.outer_edge_fade == 0 && info.outer_offset_mode == 1 &&
+		info.outer_offset == 0 && info.inner_strength == 4 &&
+		(info.inner_edge_fade == 50 || info.inner_edge_fade == 100) &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 && info.repeat_border != FALSE &&
+		info.ratio == 1.0 && info.angle_deg == 0.0 && info.quality == 5.0 &&
+		info.brightness_gain == 1.0 && info.size_variation == 0.0 && info.noise_variation == 0.0 &&
+		info.noise_type == 1 && info.seed == 1 && info.thickness == 10.0 &&
+		info.comp_width == 9.0 && info.comp_height == 7.0;
 	const bool use_aex_pf32_strength5_noise_type1_small = input && output &&
 		std::is_same<PixelT, PF_PixelFloat>::value &&
 		input->width == 9 && input->height == 7 && output->width == 9 && output->height == 7 &&
@@ -2201,7 +2223,10 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0;
-	if (info.blur_type != 2 || (info.inner_strength != 0 && !use_aex_pf16_inner_power2_small) ||
+	if (info.blur_type != 2 || (info.inner_strength != 0 && !use_aex_pf16_inner_power2_small &&
+	    !use_aex_pf32_inner_edge_fade_small) ||
+	    ((info.outer_edge_fade != 0 || info.inner_edge_fade != 0) &&
+	     !use_aex_pf32_outer_edge_fade_small && !use_aex_pf32_inner_edge_fade_small) ||
 	    (info.noise_variation != 0.0 && !use_aex_pf32_noise_type1_small &&
 	     !use_aex_pf32_strength5_noise_type1_small &&
 	     !use_aex_pf32_offset_mode3_noise_type1_small &&
@@ -2356,6 +2381,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	const bool use_aex_exact = use_aex_case0010 || use_aex_pf16_small || use_aex_pf16_inner_power2_small ||
 		use_aex_pf32_opaque_size_variation_small ||
 		use_aex_pf32_noise_type1_small ||
+		use_aex_pf32_outer_edge_fade_small || use_aex_pf32_inner_edge_fade_small ||
 		use_aex_pf32_strength5_noise_type1_small ||
 		use_aex_pf32_offset_mode3_noise_type1_small ||
 		use_aex_pf32_opaque_size_noise_type1_small ||
@@ -2488,11 +2514,64 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		accum.height = radius_count;
 		accum.rgba.resize((size_t)radius_count * angular_count * 4);
 		std::vector<float> max_alpha((size_t)radius_count * angular_count);
+		std::vector<float> prepass_alpha((size_t)radius_count * angular_count);
+		// Setup truncates the host's zero-based slider value: UI 50/100 arrives
+		// at FUN_180002780 as 49/99 for this Quality-5 fixture.
+		const A_long outer_fade_span = std::max<A_long>(0, info.outer_edge_fade - 1);
+		const A_long inner_fade_span = std::max<A_long>(0, info.inner_edge_fade - 1);
+		const std::vector<float> outer_fade_weights = outer_fade_span > 1
+			? ZoomGaussianWeights(outer_fade_span) : std::vector<float>{1.0f};
+		const std::vector<float> inner_fade_weights = inner_fade_span > 1
+			? ZoomGaussianWeights(inner_fade_span) : std::vector<float>{1.0f};
+		auto polar_alpha_linear = [&](long long linear_cell) -> float {
+			if (linear_cell < 0) return 0.0f;
+			if (linear_cell >= (long long)radius_count * angular_count) return 1.0f;
+			return polar.rgba[(size_t)linear_cell * 4 + 3];
+		};
 		for (A_long ri = 0; ri < radius_count; ++ri) {
 			for (A_long ai = 0; ai < angular_count; ++ai) {
 				const size_t cell = (size_t)ri * angular_count + ai;
 				const size_t dst = cell * 4;
-				const float alpha = polar.rgba[dst + 3];
+				if (polar.rgba[dst + 3] == 0.0f || rotation_source_scalar[cell] == 0.0f) {
+					prepass_alpha[cell] = 0.0f;
+					for (int c = 0; c < 4; ++c) accum.rgba[dst + c] = 0.0f;
+					max_alpha[cell] = 0.0f;
+					continue;
+				}
+				float alpha_sum = polar.rgba[dst + 3];
+				float weight_sum = 1.0f;
+				long long outer_pointer = (long long)cell - 1;
+				A_long outer_position = ai;
+				for (A_long offset = 1; offset < outer_fade_span; ++offset) {
+					const float weight = outer_fade_weights[(size_t)offset];
+					alpha_sum = RadialF32Add(alpha_sum, RadialF32Mul(
+						polar_alpha_linear(outer_pointer), weight));
+					weight_sum = RadialF32Add(weight_sum, weight);
+					--outer_position;
+					if (outer_position < 0) {
+						outer_position = angular_count - 1;
+						outer_pointer = (long long)ri * angular_count + angular_count - 1;
+					}
+					--outer_pointer;
+				}
+				long long inner_pointer = (long long)cell + 1;
+				A_long inner_position = ai;
+				for (A_long offset = 1; offset < inner_fade_span; ++offset) {
+					const float weight = inner_fade_weights[(size_t)offset];
+					alpha_sum = RadialF32Add(alpha_sum, RadialF32Mul(
+						polar_alpha_linear(inner_pointer), weight));
+					weight_sum = RadialF32Add(weight_sum, weight);
+					const A_long next_position = inner_position + 1;
+					if (next_position < angular_count) {
+						inner_position = next_position;
+					} else {
+						inner_position = 0;
+						inner_pointer = (long long)ri * angular_count;
+					}
+					++inner_pointer;
+				}
+				const float alpha = RadialF32Div(alpha_sum, weight_sum);
+				prepass_alpha[cell] = alpha;
 				for (int c = 0; c < 3; ++c) {
 					accum.rgba[dst + c] = RadialF32Mul(alpha, polar.rgba[dst + c]);
 				}
@@ -2513,7 +2592,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			for (A_long ai = 0; ai < angular_count; ++ai) {
 				const size_t source_cell = (size_t)ri * angular_count + ai;
 				const size_t source = source_cell * 4;
-				const float seed_alpha = polar.rgba[source + 3];
+				const float seed_alpha = prepass_alpha[source_cell];
 				const float span_factor = rotation_source_scalar[source_cell];
 				if (!polar_valid[source_cell] || seed_alpha == 0.0f || span_factor == 0.0f) continue;
 				const A_long effective_span = std::max<A_long>(0, std::min<A_long>(
@@ -2588,6 +2667,9 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			std::memcpy(capture.polar_rgba, polar.rgba.data(), cells * 4 * sizeof(float));
 			std::memcpy(capture.eligibility, polar_valid.data(), cells * sizeof(A_u_char));
 			std::memcpy(capture.source_scalar, rotation_source_scalar.data(), cells * sizeof(float));
+			if (capture.prepass_alpha) {
+				std::memcpy(capture.prepass_alpha, prepass_alpha.data(), cells * sizeof(float));
+			}
 			std::memcpy(capture.accum_rgba, accum.rgba.data(), cells * 4 * sizeof(float));
 			std::memcpy(capture.max_alpha, max_alpha.data(), cells * sizeof(float));
 			std::memcpy(capture.normalized_rgba, blurred.rgba.data(), cells * 4 * sizeof(float));

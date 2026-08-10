@@ -1,6 +1,6 @@
 {
   "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
-  "boundary": "All four production Edge Fade cases must remain fail-closed until the pre-scatter alpha rule is exact. No Noise/Size intersection, other fade/strength/quality/geometry/depth or AE-host claim.",
+  "boundary": "No Noise/Size intersection, other fade/strength/quality/geometry/depth or AE-host claim.",
   "cases": [
     {
       "actual_hashes": {
@@ -15,8 +15,17 @@
       },
       "edge_fade": 50,
       "kind": "outer",
-      "production_fail_closed": true,
-      "production_returncode": 1,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "prepass_alpha": true,
+        "source_scalar": true
+      },
+      "production_returncode": 0,
       "strength": 4
     },
     {
@@ -32,8 +41,17 @@
       },
       "edge_fade": 100,
       "kind": "outer",
-      "production_fail_closed": true,
-      "production_returncode": 1,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "prepass_alpha": true,
+        "source_scalar": true
+      },
+      "production_returncode": 0,
       "strength": 4
     },
     {
@@ -49,8 +67,17 @@
       },
       "edge_fade": 50,
       "kind": "inner",
-      "production_fail_closed": true,
-      "production_returncode": 1,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "prepass_alpha": true,
+        "source_scalar": true
+      },
+      "production_returncode": 0,
       "strength": 4
     },
     {
@@ -66,13 +93,27 @@
       },
       "edge_fade": 100,
       "kind": "inner",
-      "production_fail_closed": true,
-      "production_returncode": 1,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "prepass_alpha": true,
+        "source_scalar": true
+      },
+      "production_returncode": 0,
       "strength": 4
     }
   ],
+  "instruction_evidence": {
+    "inner": "0x180002ab0 increments the logical angle and reads the existing R9 pointer before row repair",
+    "outer": "0x1800028f0 reads [RDX] before JNS wrap repair at 0x18000291c",
+    "table": "FUN_18000b680 generates span-sized Gaussian values directly"
+  },
   "kind": "olmradialblur_rotation_pf32_edge_fade_actual_aex_20260811",
   "scope": "PF32 Rotation 9x7 centered; Outer Strength4 with Outer Edge Fade50/100, or Inner Strength4 with Inner Edge Fade50/100; NV/SV0.",
-  "status": "captured_fail_closed",
-  "supported_observation": "Actual AEX exposes a separate pre-scatter alpha plane. A prior same-radius circular Gaussian candidate preserved polar/source-scalar/coordinates but diverged beginning at accum, so its angular wrap/source-row rule was rejected."
+  "status": "exact",
+  "supported_observation": "FUN_180002780 uses zero-based fade spans (50/100 become 49/99), direct span-sized Gaussian tables, and a linear first tap across angular row boundaries before wrapping subsequent taps within the row."
 }

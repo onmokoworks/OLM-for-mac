@@ -114,6 +114,12 @@ def actual_aex() -> dict[str, bytes]:
         captured["cells"] = cells
         captured["pre_planes"] = {"polar": ld.read_bytes(m4.u64(ld, work + 0xE * 4), cells * 16), "source_scalar": ld.read_bytes(m4.u64(ld, work + 0x10 * 4), cells * 4)}
         if CAPTURE_EDGE_INTERNALS:
+            polar_ptr = m4.u64(ld, work + 0xE * 4)
+            captured["polar_guard_before"] = ld.read_bytes(polar_ptr - 64, 64)
+            captured["polar_guard_after"] = ld.read_bytes(polar_ptr + cells * 16, 64)
+            captured["edge_spans"] = ld.read_bytes(work + 0x3C930, 8)
+            captured["outer_edge_table"] = ld.read_bytes(work + 0x3A9F0, 512)
+            captured["inner_edge_table"] = ld.read_bytes(work + 0x3B990, 512)
             return_address = m4.u64(ld, ld.uc.reg_read(UC_X86_REG_RSP))
             def pre_scatter_return(ret_ld, _ret_address, _ret_size):
                 if "prepass_alpha" not in captured:
@@ -125,6 +131,11 @@ def actual_aex() -> dict[str, bytes]:
         pointers = {"polar": m4.u64(ld, work + 0xE * 4), "source_scalar": m4.u64(ld, work + 0x10 * 4), "accum": m4.u64(ld, work + 0xF250 * 4), "max_alpha": m4.u64(ld, work + 0xF252 * 4)}
         owner_work = ld.uc.reg_read(UC_X86_REG_RBX)
         captured["planes"] = {"accum": ld.read_bytes(pointers["accum"], cells * 16), "max_alpha": ld.read_bytes(pointers["max_alpha"], cells * 4), "final_rgba": ld.read_bytes(m4.u64(ld, owner_work + 0xA0), W * H * 16)}
+    def outer_first_weight(ld, _address, _size):
+        if CAPTURE_EDGE_INTERNALS and "outer_first_sample_delta" not in captured and "work" in captured:
+            polar_ptr = m4.u64(ld, int(captured["work"]) + 0xE * 4)
+            sample_ptr = ld.uc.reg_read(UC_X86_REG_RDX)
+            captured["outer_first_sample_delta"] = struct.pack("<q", sample_ptr - polar_ptr)
     def noise_generated(ld, _address, _size):
         if not CAPTURE_NOISE_INTERNALS:
             return
@@ -143,6 +154,7 @@ def actual_aex() -> dict[str, bytes]:
         captured["source_span"] = ld.read_bytes(m4.u64(ld, owner_work + 0x90), W * H * 4)
     loader.add_code_hook(m4.FUN_180004640, entry)
     loader.add_code_hook(m4.FUN_180002780, pre_scatter)
+    loader.add_code_hook(0x180002907, outer_first_weight)
     noise_generated_hook = 0x180008162 if OWNER == 0x180007D30 else 0x180007142
     span_composed_hook = 0x1800082F3 if OWNER == 0x180007D30 else 0x1800072D3
     loader.add_code_hook(noise_generated_hook, noise_generated)
@@ -156,6 +168,13 @@ def actual_aex() -> dict[str, bytes]:
             planes[name] = captured[name]
     if "prepass_alpha" in captured:
         planes["prepass_alpha"] = captured["prepass_alpha"]
+        planes["polar_guard_before"] = captured["polar_guard_before"]
+        planes["polar_guard_after"] = captured["polar_guard_after"]
+        planes["edge_spans"] = captured["edge_spans"]
+        planes["outer_edge_table"] = captured["outer_edge_table"]
+        planes["inner_edge_table"] = captured["inner_edge_table"]
+        if "outer_first_sample_delta" in captured:
+            planes["outer_first_sample_delta"] = captured["outer_first_sample_delta"]
     planes["output"] = loader.read_bytes(output_data, ROWBYTES * H)
     coordinates = bytearray()
     angle_scale = struct.unpack("<f", loader.read_bytes(int(captured["work"]) + 8, 4))[0]
