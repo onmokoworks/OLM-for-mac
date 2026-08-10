@@ -1,0 +1,171 @@
+{
+  "actual_aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+  "combined_output_sha256": "ba3b843fc6b19441800ae014e12f711687da25499c79b2c2b8e8abfaf8b25161",
+  "dynamic_effectmain_paths_per_fixture": [
+    "legacy PF8",
+    "legacy PF16",
+    "SmartPreRender->SmartRender PF8",
+    "SmartPreRender->SmartRender PF16",
+    "SmartPreRender->SmartRender PF32"
+  ],
+  "family": "enabled count 5/100 x late palette index x typed equality/PF32 fixed tolerance x alpha",
+  "fixtures": [
+    {
+      "case_names": {
+        "PF16": [
+          "last_enabled_exact",
+          "first_disabled_exact",
+          "last_enabled_alpha_plus_one",
+          "last_enabled_red_plus_one",
+          "independent_no_match"
+        ],
+        "PF32": [
+          "last_enabled_exact",
+          "first_disabled_exact",
+          "last_enabled_alpha_inside",
+          "last_enabled_alpha_outside",
+          "last_enabled_green_tie",
+          "last_enabled_green_above",
+          "independent_no_match"
+        ],
+        "PF8": [
+          "last_enabled_exact",
+          "first_disabled_exact",
+          "last_enabled_alpha_plus_one",
+          "last_enabled_red_plus_one",
+          "independent_no_match"
+        ]
+      },
+      "depth_oracle_sha256": {
+        "PF16": "6212024d98b15a316bcd4a28fa3c233af2c736d2c647eb969ef381ade2324b67",
+        "PF32": "6b38ff8a247a28d353061ac95dadfe21e2ae54654a0716e3ddb833fff714619b",
+        "PF8": "c3c6b7672356bd167acee7e8aca7c9499dea7c97733aa47911cd07b50001c19e"
+      },
+      "effectmain_output_sha256": "152e79ff0abae001969fbc2ab2c551cf2f8296bfe8efc943bd39104261018899",
+      "enabled_count": 5,
+      "semantic_assertions": {
+        "PF16": {
+          "cases_seen": {
+            "first_disabled_exact": 3,
+            "independent_no_match": 2,
+            "last_enabled_alpha_plus_one": 2,
+            "last_enabled_exact": 3,
+            "last_enabled_red_plus_one": 2
+          },
+          "nonzero_rejected_alpha_clears": 9,
+          "reject_rgb_retention_assertions": 9
+        },
+        "PF32": {
+          "cases_seen": {
+            "first_disabled_exact": 2,
+            "independent_no_match": 1,
+            "last_enabled_alpha_inside": 2,
+            "last_enabled_alpha_outside": 2,
+            "last_enabled_exact": 2,
+            "last_enabled_green_above": 1,
+            "last_enabled_green_tie": 2
+          },
+          "nonzero_rejected_alpha_clears": 6,
+          "reject_rgb_retention_assertions": 6
+        },
+        "PF8": {
+          "cases_seen": {
+            "first_disabled_exact": 3,
+            "independent_no_match": 2,
+            "last_enabled_alpha_plus_one": 2,
+            "last_enabled_exact": 3,
+            "last_enabled_red_plus_one": 2
+          },
+          "nonzero_rejected_alpha_clears": 9,
+          "reject_rgb_retention_assertions": 9
+        }
+      }
+    },
+    {
+      "case_names": {
+        "PF16": [
+          "last_enabled_exact",
+          "penultimate_enabled_exact",
+          "last_enabled_alpha_plus_one",
+          "last_enabled_red_plus_one",
+          "independent_no_match"
+        ],
+        "PF32": [
+          "last_enabled_exact",
+          "penultimate_enabled_exact",
+          "last_enabled_alpha_inside",
+          "last_enabled_alpha_outside",
+          "last_enabled_green_tie",
+          "last_enabled_green_above",
+          "independent_no_match"
+        ],
+        "PF8": [
+          "last_enabled_exact",
+          "penultimate_enabled_exact",
+          "last_enabled_alpha_plus_one",
+          "last_enabled_red_plus_one",
+          "independent_no_match"
+        ]
+      },
+      "depth_oracle_sha256": {
+        "PF16": "0a1f3d7babc3f0de4b4c1de7e801929494393146b6c3928b40c0cdc9c3a5d8d8",
+        "PF32": "2a772539f16139c366473ed8d2e8fab620edab1f1dcbca700639f7142e938fc4",
+        "PF8": "2f091811abd9aaf5fb86d1269ee317945dfc118dd98431b779f04ecf1ffa8cb2"
+      },
+      "effectmain_output_sha256": "93756bbacde45f1ffa25a890b419e26b64037e39b83cb6eda33e91232071a16c",
+      "enabled_count": 100,
+      "semantic_assertions": {
+        "PF16": {
+          "cases_seen": {
+            "independent_no_match": 2,
+            "last_enabled_alpha_plus_one": 2,
+            "last_enabled_exact": 3,
+            "last_enabled_red_plus_one": 2,
+            "penultimate_enabled_exact": 3
+          },
+          "nonzero_rejected_alpha_clears": 6,
+          "reject_rgb_retention_assertions": 6
+        },
+        "PF32": {
+          "cases_seen": {
+            "independent_no_match": 1,
+            "last_enabled_alpha_inside": 2,
+            "last_enabled_alpha_outside": 2,
+            "last_enabled_exact": 2,
+            "last_enabled_green_above": 1,
+            "last_enabled_green_tie": 2,
+            "penultimate_enabled_exact": 2
+          },
+          "nonzero_rejected_alpha_clears": 4,
+          "reject_rgb_retention_assertions": 4
+        },
+        "PF8": {
+          "cases_seen": {
+            "independent_no_match": 2,
+            "last_enabled_alpha_plus_one": 2,
+            "last_enabled_exact": 3,
+            "last_enabled_red_plus_one": 2,
+            "penultimate_enabled_exact": 3
+          },
+          "nonzero_rejected_alpha_clears": 6,
+          "reject_rgb_retention_assertions": 6
+        }
+      }
+    }
+  ],
+  "nonzero_contracts": [
+    "the first disabled exact key is rejected at count 5",
+    "the last enabled key is retained at counts 5 and 100",
+    "integer alpha/RGB +1 mismatches reject",
+    "PF32 alpha just inside tolerance retains and the next f32 rejects",
+    "PF32 exact tolerance tie retains and one-ULP-above rejects",
+    "every rejection preserves all source RGB component bits and clears alpha",
+    "all output row padding remains untouched"
+  ],
+  "not_proven": [
+    "After Effects host execution/export",
+    "other palettes, frames, or parameter combinations"
+  ],
+  "production_source": "mac/ColorKeep/ColorKeep.cpp",
+  "status": "exact"
+}

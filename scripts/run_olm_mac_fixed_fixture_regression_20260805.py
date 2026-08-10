@@ -56,6 +56,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_colorkeep_disabled_effectmain_actual_aex_20260805.py"),
             (sys.executable, "tools/emulation/test_colorkeep_fixed_tolerance_effectmain_actual_aex_20260805.py"),
             (sys.executable, "tools/emulation/test_colorkeep_max100_effectmain_actual_aex_20260805.py"),
+            (sys.executable, "tools/emulation/test_colorkeep_count_late_boundary_combo_actual_aex_20260810.py"),
             (sys.executable, "tools/emulation/test_colorkeep_invalid_counts_checkout_effectmain_20260805.py"),
             (sys.executable, "tools/emulation/test_colorkeep_duplicate_colors_effectmain_actual_aex_20260805.py"),
             (sys.executable, "tools/emulation/test_colorkeep_pf32_nan_inf_effectmain_actual_aex_20260805.py"),
