@@ -1,8 +1,9 @@
 {
-  "boundary": "PF8 only. Zoom admits all 12 cells; Rotation 32x18 admits all 6 and Rotation 9x7 admits only Quality5 Repeat-on. The other five Rotation 9x7 cells fail closed. Rotation 32x18 Quality1/3 allocation-tail bytes are non-consumed; final_rgba, coordinates and output are exact.",
+  "boundary": "PF8 only. All 24 cells are admitted. Rotation Quality1/3 compares the active Quality*360 angular prefix; the unused tail of the owner's fixed Quality5 allocation is recorded but excluded. Every consumed plane and visible output is exact.",
   "cases": [
     {
       "admitted": true,
+      "allocation_tail": {},
       "consumer_exact": true,
       "exact": true,
       "fail_closed": false,
@@ -22,6 +23,7 @@
     },
     {
       "admitted": true,
+      "allocation_tail": {},
       "consumer_exact": true,
       "exact": true,
       "fail_closed": false,
@@ -41,6 +43,7 @@
     },
     {
       "admitted": true,
+      "allocation_tail": {},
       "consumer_exact": true,
       "exact": true,
       "fail_closed": false,
@@ -60,6 +63,7 @@
     },
     {
       "admitted": true,
+      "allocation_tail": {},
       "consumer_exact": true,
       "exact": true,
       "fail_closed": false,
@@ -79,6 +83,7 @@
     },
     {
       "admitted": true,
+      "allocation_tail": {},
       "consumer_exact": true,
       "exact": true,
       "fail_closed": false,
@@ -98,6 +103,7 @@
     },
     {
       "admitted": true,
+      "allocation_tail": {},
       "consumer_exact": true,
       "exact": true,
       "fail_closed": false,
@@ -117,6 +123,7 @@
     },
     {
       "admitted": true,
+      "allocation_tail": {},
       "consumer_exact": true,
       "exact": true,
       "fail_closed": false,
@@ -136,6 +143,7 @@
     },
     {
       "admitted": true,
+      "allocation_tail": {},
       "consumer_exact": true,
       "exact": true,
       "fail_closed": false,
@@ -155,6 +163,7 @@
     },
     {
       "admitted": true,
+      "allocation_tail": {},
       "consumer_exact": true,
       "exact": true,
       "fail_closed": false,
@@ -174,6 +183,7 @@
     },
     {
       "admitted": true,
+      "allocation_tail": {},
       "consumer_exact": true,
       "exact": true,
       "fail_closed": false,
@@ -193,6 +203,7 @@
     },
     {
       "admitted": true,
+      "allocation_tail": {},
       "consumer_exact": true,
       "exact": true,
       "fail_closed": false,
@@ -212,6 +223,7 @@
     },
     {
       "admitted": true,
+      "allocation_tail": {},
       "consumer_exact": true,
       "exact": true,
       "fail_closed": false,
@@ -230,82 +242,228 @@
       "repeat_border": true
     },
     {
-      "admitted": false,
-      "consumer_exact": false,
-      "exact": false,
-      "fail_closed": true,
+      "admitted": true,
+      "allocation_tail": {
+        "accum": {
+          "active_bytes": 46080,
+          "actual_tail_bytes": 184320,
+          "consumed": false,
+          "full_allocation_exact": false
+        },
+        "max_alpha": {
+          "active_bytes": 11520,
+          "actual_tail_bytes": 46080,
+          "consumed": false,
+          "full_allocation_exact": false
+        },
+        "polar": {
+          "active_bytes": 46080,
+          "actual_tail_bytes": 184320,
+          "consumed": false,
+          "full_allocation_exact": false
+        },
+        "source_scalar": {
+          "active_bytes": 11520,
+          "actual_tail_bytes": 46080,
+          "consumed": false,
+          "full_allocation_exact": false
+        }
+      },
+      "consumer_exact": true,
+      "exact": true,
+      "fail_closed": false,
       "first_diffs": {},
       "geometry": [
         9,
         7
       ],
-      "matches": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
       "mode": "rotation",
       "quality": 1.0,
       "repeat_border": false
     },
     {
-      "admitted": false,
-      "consumer_exact": false,
-      "exact": false,
-      "fail_closed": true,
+      "admitted": true,
+      "allocation_tail": {
+        "accum": {
+          "active_bytes": 46080,
+          "actual_tail_bytes": 184320,
+          "consumed": false,
+          "full_allocation_exact": false
+        },
+        "max_alpha": {
+          "active_bytes": 11520,
+          "actual_tail_bytes": 46080,
+          "consumed": false,
+          "full_allocation_exact": false
+        },
+        "polar": {
+          "active_bytes": 46080,
+          "actual_tail_bytes": 184320,
+          "consumed": false,
+          "full_allocation_exact": false
+        },
+        "source_scalar": {
+          "active_bytes": 11520,
+          "actual_tail_bytes": 46080,
+          "consumed": false,
+          "full_allocation_exact": false
+        }
+      },
+      "consumer_exact": true,
+      "exact": true,
+      "fail_closed": false,
       "first_diffs": {},
       "geometry": [
         9,
         7
       ],
-      "matches": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
       "mode": "rotation",
       "quality": 1.0,
       "repeat_border": true
     },
     {
-      "admitted": false,
-      "consumer_exact": false,
-      "exact": false,
-      "fail_closed": true,
+      "admitted": true,
+      "allocation_tail": {
+        "accum": {
+          "active_bytes": 138240,
+          "actual_tail_bytes": 92160,
+          "consumed": false,
+          "full_allocation_exact": false
+        },
+        "max_alpha": {
+          "active_bytes": 34560,
+          "actual_tail_bytes": 23040,
+          "consumed": false,
+          "full_allocation_exact": false
+        },
+        "polar": {
+          "active_bytes": 138240,
+          "actual_tail_bytes": 92160,
+          "consumed": false,
+          "full_allocation_exact": false
+        },
+        "source_scalar": {
+          "active_bytes": 34560,
+          "actual_tail_bytes": 23040,
+          "consumed": false,
+          "full_allocation_exact": true
+        }
+      },
+      "consumer_exact": true,
+      "exact": true,
+      "fail_closed": false,
       "first_diffs": {},
       "geometry": [
         9,
         7
       ],
-      "matches": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
       "mode": "rotation",
       "quality": 3.0,
       "repeat_border": false
     },
     {
-      "admitted": false,
-      "consumer_exact": false,
-      "exact": false,
-      "fail_closed": true,
+      "admitted": true,
+      "allocation_tail": {
+        "accum": {
+          "active_bytes": 138240,
+          "actual_tail_bytes": 92160,
+          "consumed": false,
+          "full_allocation_exact": false
+        },
+        "max_alpha": {
+          "active_bytes": 34560,
+          "actual_tail_bytes": 23040,
+          "consumed": false,
+          "full_allocation_exact": false
+        },
+        "polar": {
+          "active_bytes": 138240,
+          "actual_tail_bytes": 92160,
+          "consumed": false,
+          "full_allocation_exact": false
+        },
+        "source_scalar": {
+          "active_bytes": 34560,
+          "actual_tail_bytes": 23040,
+          "consumed": false,
+          "full_allocation_exact": true
+        }
+      },
+      "consumer_exact": true,
+      "exact": true,
+      "fail_closed": false,
       "first_diffs": {},
       "geometry": [
         9,
         7
       ],
-      "matches": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
       "mode": "rotation",
       "quality": 3.0,
       "repeat_border": true
     },
     {
-      "admitted": false,
-      "consumer_exact": false,
-      "exact": false,
-      "fail_closed": true,
+      "admitted": true,
+      "allocation_tail": {},
+      "consumer_exact": true,
+      "exact": true,
+      "fail_closed": false,
       "first_diffs": {},
       "geometry": [
         9,
         7
       ],
-      "matches": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
       "mode": "rotation",
       "quality": 5.0,
       "repeat_border": false
     },
     {
       "admitted": true,
+      "allocation_tail": {},
       "consumer_exact": true,
       "exact": true,
       "fail_closed": false,
@@ -329,43 +487,48 @@
     },
     {
       "admitted": true,
-      "consumer_exact": true,
-      "exact": false,
-      "fail_closed": false,
-      "first_diffs": {
+      "allocation_tail": {
         "accum": {
-          "actual": 255,
-          "byte_offset": 120961,
-          "production": 0
+          "active_bytes": 120960,
+          "actual_tail_bytes": 483840,
+          "consumed": false,
+          "full_allocation_exact": false
         },
         "max_alpha": {
-          "actual": 190,
-          "byte_offset": 30272,
-          "production": 0
+          "active_bytes": 30240,
+          "actual_tail_bytes": 120960,
+          "consumed": false,
+          "full_allocation_exact": false
         },
         "polar": {
-          "actual": 128,
-          "byte_offset": 120962,
-          "production": 0
+          "active_bytes": 120960,
+          "actual_tail_bytes": 483840,
+          "consumed": false,
+          "full_allocation_exact": false
         },
         "source_scalar": {
-          "actual": 128,
-          "byte_offset": 60546,
-          "production": 0
+          "active_bytes": 30240,
+          "actual_tail_bytes": 120960,
+          "consumed": false,
+          "full_allocation_exact": false
         }
       },
+      "consumer_exact": true,
+      "exact": true,
+      "fail_closed": false,
+      "first_diffs": {},
       "geometry": [
         32,
         18
       ],
       "matches": {
-        "accum": false,
+        "accum": true,
         "coordinates": true,
         "final_rgba": true,
-        "max_alpha": false,
+        "max_alpha": true,
         "output": true,
-        "polar": false,
-        "source_scalar": false
+        "polar": true,
+        "source_scalar": true
       },
       "mode": "rotation",
       "quality": 1.0,
@@ -373,43 +536,48 @@
     },
     {
       "admitted": true,
-      "consumer_exact": true,
-      "exact": false,
-      "fail_closed": false,
-      "first_diffs": {
+      "allocation_tail": {
         "accum": {
-          "actual": 255,
-          "byte_offset": 120961,
-          "production": 0
+          "active_bytes": 120960,
+          "actual_tail_bytes": 483840,
+          "consumed": false,
+          "full_allocation_exact": false
         },
         "max_alpha": {
-          "actual": 190,
-          "byte_offset": 30272,
-          "production": 0
+          "active_bytes": 30240,
+          "actual_tail_bytes": 120960,
+          "consumed": false,
+          "full_allocation_exact": false
         },
         "polar": {
-          "actual": 128,
-          "byte_offset": 120962,
-          "production": 0
+          "active_bytes": 120960,
+          "actual_tail_bytes": 483840,
+          "consumed": false,
+          "full_allocation_exact": false
         },
         "source_scalar": {
-          "actual": 128,
-          "byte_offset": 60546,
-          "production": 0
+          "active_bytes": 30240,
+          "actual_tail_bytes": 120960,
+          "consumed": false,
+          "full_allocation_exact": false
         }
       },
+      "consumer_exact": true,
+      "exact": true,
+      "fail_closed": false,
+      "first_diffs": {},
       "geometry": [
         32,
         18
       ],
       "matches": {
-        "accum": false,
+        "accum": true,
         "coordinates": true,
         "final_rgba": true,
-        "max_alpha": false,
+        "max_alpha": true,
         "output": true,
-        "polar": false,
-        "source_scalar": false
+        "polar": true,
+        "source_scalar": true
       },
       "mode": "rotation",
       "quality": 1.0,
@@ -417,37 +585,47 @@
     },
     {
       "admitted": true,
-      "consumer_exact": true,
-      "exact": false,
-      "fail_closed": false,
-      "first_diffs": {
+      "allocation_tail": {
         "accum": {
-          "actual": 255,
-          "byte_offset": 362881,
-          "production": 0
+          "active_bytes": 362880,
+          "actual_tail_bytes": 241920,
+          "consumed": false,
+          "full_allocation_exact": false
         },
         "max_alpha": {
-          "actual": 190,
-          "byte_offset": 90752,
-          "production": 0
+          "active_bytes": 90720,
+          "actual_tail_bytes": 60480,
+          "consumed": false,
+          "full_allocation_exact": false
         },
         "polar": {
-          "actual": 128,
-          "byte_offset": 362882,
-          "production": 0
+          "active_bytes": 362880,
+          "actual_tail_bytes": 241920,
+          "consumed": false,
+          "full_allocation_exact": false
+        },
+        "source_scalar": {
+          "active_bytes": 90720,
+          "actual_tail_bytes": 60480,
+          "consumed": false,
+          "full_allocation_exact": true
         }
       },
+      "consumer_exact": true,
+      "exact": true,
+      "fail_closed": false,
+      "first_diffs": {},
       "geometry": [
         32,
         18
       ],
       "matches": {
-        "accum": false,
+        "accum": true,
         "coordinates": true,
         "final_rgba": true,
-        "max_alpha": false,
+        "max_alpha": true,
         "output": true,
-        "polar": false,
+        "polar": true,
         "source_scalar": true
       },
       "mode": "rotation",
@@ -456,37 +634,47 @@
     },
     {
       "admitted": true,
-      "consumer_exact": true,
-      "exact": false,
-      "fail_closed": false,
-      "first_diffs": {
+      "allocation_tail": {
         "accum": {
-          "actual": 255,
-          "byte_offset": 362881,
-          "production": 0
+          "active_bytes": 362880,
+          "actual_tail_bytes": 241920,
+          "consumed": false,
+          "full_allocation_exact": false
         },
         "max_alpha": {
-          "actual": 190,
-          "byte_offset": 90752,
-          "production": 0
+          "active_bytes": 90720,
+          "actual_tail_bytes": 60480,
+          "consumed": false,
+          "full_allocation_exact": false
         },
         "polar": {
-          "actual": 128,
-          "byte_offset": 362882,
-          "production": 0
+          "active_bytes": 362880,
+          "actual_tail_bytes": 241920,
+          "consumed": false,
+          "full_allocation_exact": false
+        },
+        "source_scalar": {
+          "active_bytes": 90720,
+          "actual_tail_bytes": 60480,
+          "consumed": false,
+          "full_allocation_exact": true
         }
       },
+      "consumer_exact": true,
+      "exact": true,
+      "fail_closed": false,
+      "first_diffs": {},
       "geometry": [
         32,
         18
       ],
       "matches": {
-        "accum": false,
+        "accum": true,
         "coordinates": true,
         "final_rgba": true,
-        "max_alpha": false,
+        "max_alpha": true,
         "output": true,
-        "polar": false,
+        "polar": true,
         "source_scalar": true
       },
       "mode": "rotation",
@@ -495,6 +683,7 @@
     },
     {
       "admitted": true,
+      "allocation_tail": {},
       "consumer_exact": true,
       "exact": true,
       "fail_closed": false,
@@ -518,6 +707,7 @@
     },
     {
       "admitted": true,
+      "allocation_tail": {},
       "consumer_exact": true,
       "exact": true,
       "fail_closed": false,
@@ -540,10 +730,10 @@
       "repeat_border": true
     }
   ],
-  "consumer_exact_cases": 19,
-  "exact_cases": 15,
-  "fail_closed_cases": 5,
+  "consumer_exact_cases": 24,
+  "exact_cases": 24,
+  "fail_closed_cases": 0,
   "kind": "olmradialblur_pf8_quality_repeat_actual_aex_20260811",
-  "status": "exact-with-fail-closed-boundary",
+  "status": "semantic-exact",
   "total_cases": 24
 }

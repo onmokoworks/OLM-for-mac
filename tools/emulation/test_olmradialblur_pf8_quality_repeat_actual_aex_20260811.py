@@ -104,8 +104,7 @@ def main():
     for cell in CELLS:
         mode, _, w, h, quality, repeat, _ = cell
         actual = actuals[cell]
-        should_admit = mode == "zoom" or (w == 32 and h == 18) or (
-            w == 9 and h == 7 and quality == 5.0 and bool(repeat))
+        should_admit = True
         try:
             prod = production(cell, actual)
         except (AssertionError, subprocess.CalledProcessError):
@@ -118,12 +117,33 @@ def main():
             print(cell, "fail-closed", flush=True)
             continue
         planes = ("pre_blur", "post_blur", "output") if mode == "zoom" else ("polar", "source_scalar", "accum", "max_alpha", "final_rgba", "coordinates", "output")
-        matches = {p: prod[p] == actual[p] for p in planes}
+        allocation_tail = {}
+        matches = {}
+        for p in planes:
+            # Rotation's owner always allocates the Quality-5 (1800-angle)
+            # scratch capacity.  Quality 1/3 only writes and consumes the
+            # Quality*360 prefix; the remainder is allocator residue in the
+            # AEX capture and is deliberately excluded from semantic equality.
+            if mode == "rotation" and quality < 5.0 and p in (
+                    "polar", "source_scalar", "accum", "max_alpha"):
+                bytes_per_cell = 16 if p in ("polar", "accum") else 4
+                _, radius_count = struct.unpack("<II", actual["geometry"])
+                active_bytes = int(quality * 360) * radius_count * bytes_per_cell
+                matches[p] = prod[p][:active_bytes] == actual[p][:active_bytes]
+                allocation_tail[p] = {
+                    "active_bytes": active_bytes,
+                    "actual_tail_bytes": len(actual[p]) - active_bytes,
+                    "full_allocation_exact": prod[p] == actual[p],
+                    "consumed": False,
+                }
+            else:
+                matches[p] = prod[p] == actual[p]
         diffs = {p: first_diff(actual[p], prod[p]) for p in planes if not matches[p]}
         consumer_planes = ("output",) if mode == "zoom" else ("final_rgba", "coordinates", "output")
         row = {"mode": mode, "geometry": [w, h], "quality": quality,
                "repeat_border": bool(repeat), "admitted": True, "fail_closed": False,
                "matches": matches, "first_diffs": diffs,
+               "allocation_tail": allocation_tail,
                "consumer_exact": all(matches[p] for p in consumer_planes),
                "exact": all(matches.values())}
         rows.append(row)
@@ -131,13 +151,13 @@ def main():
     exact = sum(r["exact"] for r in rows)
     consumer_exact = sum(r["consumer_exact"] for r in rows)
     fail_closed = sum(r.get("fail_closed", False) for r in rows)
-    status = "exact-with-fail-closed-boundary" if consumer_exact == 19 and fail_closed == 5 else "mismatch"
+    status = "semantic-exact" if consumer_exact == 24 and exact == 24 and fail_closed == 0 else "mismatch"
     report = {"kind": "olmradialblur_pf8_quality_repeat_actual_aex_20260811", "status": status,
               "exact_cases": exact, "consumer_exact_cases": consumer_exact,
               "fail_closed_cases": fail_closed, "total_cases": len(rows), "cases": rows,
-              "boundary": "PF8 only. Zoom admits all 12 cells; Rotation 32x18 admits all 6 and Rotation 9x7 admits only Quality5 Repeat-on. The other five Rotation 9x7 cells fail closed. Rotation 32x18 Quality1/3 allocation-tail bytes are non-consumed; final_rgba, coordinates and output are exact."}
+              "boundary": "PF8 only. All 24 cells are admitted. Rotation Quality1/3 compares the active Quality*360 angular prefix; the unused tail of the owner's fixed Quality5 allocation is recorded but excluded. Every consumed plane and visible output is exact."}
     REPORT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
-    return 0 if status == "exact-with-fail-closed-boundary" else 1
+    return 0 if status == "semantic-exact" else 1
 
 
 if __name__ == "__main__":
