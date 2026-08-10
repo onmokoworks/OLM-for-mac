@@ -1,0 +1,397 @@
+{
+  "cells": [
+    {
+      "depth": 8,
+      "first_diffs": {},
+      "hashes": {
+        "accum": "ddbd1c1466ce6cabd1e1c6b5eec815cfb856f109a5414a54cd855c9453fda5f0",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "57ae0f7d1094732615fec632a07c4e1fc19207293b6f13323111bb6daf8ef21c",
+        "max_alpha": "e277b648cada9ced789dd153377e2b72207a2565cf0bcd2550a346a655c1e51a",
+        "output": "f118a8462c00bbf5603c71a2ad54e3923fbd6302a370ba5c2c81bde44ea04e58",
+        "polar": "560eecc57c1a764bec7a5ee032f1b02c77d54ede89dde49979d4cfa1740f7ed4",
+        "source_scalar": "e468ec1e7afb7b7ef8f52282c441d260ec7f29a643b3ab86884f1d83dabb62b0"
+      },
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "size_factor": {
+        "count": 37800,
+        "max": 1.000000238418579,
+        "min": 0.9999998211860657,
+        "unique": [
+          0.9999998211860657,
+          0.9999998807907104,
+          0.9999999403953552,
+          1.0,
+          1.0000001192092896,
+          1.000000238418579
+        ],
+        "unique_count": 6
+      },
+      "size_variation": 1.0,
+      "span": null
+    },
+    {
+      "depth": 8,
+      "first_diffs": {},
+      "hashes": {
+        "accum": "ddbd1c1466ce6cabd1e1c6b5eec815cfb856f109a5414a54cd855c9453fda5f0",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "57ae0f7d1094732615fec632a07c4e1fc19207293b6f13323111bb6daf8ef21c",
+        "max_alpha": "e277b648cada9ced789dd153377e2b72207a2565cf0bcd2550a346a655c1e51a",
+        "output": "f118a8462c00bbf5603c71a2ad54e3923fbd6302a370ba5c2c81bde44ea04e58",
+        "polar": "560eecc57c1a764bec7a5ee032f1b02c77d54ede89dde49979d4cfa1740f7ed4",
+        "source_scalar": "e468ec1e7afb7b7ef8f52282c441d260ec7f29a643b3ab86884f1d83dabb62b0"
+      },
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "size_factor": {
+        "count": 37800,
+        "max": 1.000000238418579,
+        "min": 0.9999998211860657,
+        "unique": [
+          0.9999998211860657,
+          0.9999998807907104,
+          0.9999999403953552,
+          1.0,
+          1.0000001192092896,
+          1.000000238418579
+        ],
+        "unique_count": 6
+      },
+      "size_variation": 25.0,
+      "span": null
+    },
+    {
+      "depth": 8,
+      "first_diffs": {},
+      "hashes": {
+        "accum": "ddbd1c1466ce6cabd1e1c6b5eec815cfb856f109a5414a54cd855c9453fda5f0",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "57ae0f7d1094732615fec632a07c4e1fc19207293b6f13323111bb6daf8ef21c",
+        "max_alpha": "e277b648cada9ced789dd153377e2b72207a2565cf0bcd2550a346a655c1e51a",
+        "output": "f118a8462c00bbf5603c71a2ad54e3923fbd6302a370ba5c2c81bde44ea04e58",
+        "polar": "560eecc57c1a764bec7a5ee032f1b02c77d54ede89dde49979d4cfa1740f7ed4",
+        "source_scalar": "e468ec1e7afb7b7ef8f52282c441d260ec7f29a643b3ab86884f1d83dabb62b0"
+      },
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "size_factor": {
+        "count": 37800,
+        "max": 1.000000238418579,
+        "min": 0.9999998211860657,
+        "unique": [
+          0.9999998211860657,
+          0.9999998807907104,
+          0.9999999403953552,
+          1.0,
+          1.0000001192092896,
+          1.000000238418579
+        ],
+        "unique_count": 6
+      },
+      "size_variation": 100.0,
+      "span": null
+    },
+    {
+      "depth": 16,
+      "first_diffs": {},
+      "hashes": {
+        "accum": "5f2808240747555909d27f53daa110a46d7f77459e175185e43bdf97f03878e8",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "e462b3473c95272edf436e8a75121a7197c68ed1025497c28db49b8f2f9b0c1a",
+        "max_alpha": "39f86a18e7fa04ba0218b5d546b9918c0c90528f9eae17db57ad52c40b05cd91",
+        "output": "367905db6813ec528a0be407beaee51415ff333884312ede975455c5056eb370",
+        "polar": "da0505812a661d8b3cf2e9975b0b8d354b81a280be74c39510d97656920dd020",
+        "source_scalar": "e468ec1e7afb7b7ef8f52282c441d260ec7f29a643b3ab86884f1d83dabb62b0",
+        "source_size_factor": "c8a0219b9191bba318304cfa5bb6861d98b9dbcb3bbcfd4171ca4048ffe60f57",
+        "source_span": "c8a0219b9191bba318304cfa5bb6861d98b9dbcb3bbcfd4171ca4048ffe60f57"
+      },
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "size_factor": {
+        "count": 37800,
+        "max": 1.000000238418579,
+        "min": 0.9999998211860657,
+        "unique": [
+          0.9999998211860657,
+          0.9999998807907104,
+          0.9999999403953552,
+          1.0,
+          1.0000001192092896,
+          1.000000238418579
+        ],
+        "unique_count": 6
+      },
+      "size_variation": 1.0,
+      "span": {
+        "max": 1065353216,
+        "min": 1065353216,
+        "unique": [
+          1065353216
+        ]
+      }
+    },
+    {
+      "depth": 16,
+      "first_diffs": {},
+      "hashes": {
+        "accum": "5f2808240747555909d27f53daa110a46d7f77459e175185e43bdf97f03878e8",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "e462b3473c95272edf436e8a75121a7197c68ed1025497c28db49b8f2f9b0c1a",
+        "max_alpha": "39f86a18e7fa04ba0218b5d546b9918c0c90528f9eae17db57ad52c40b05cd91",
+        "output": "367905db6813ec528a0be407beaee51415ff333884312ede975455c5056eb370",
+        "polar": "da0505812a661d8b3cf2e9975b0b8d354b81a280be74c39510d97656920dd020",
+        "source_scalar": "e468ec1e7afb7b7ef8f52282c441d260ec7f29a643b3ab86884f1d83dabb62b0",
+        "source_size_factor": "c8a0219b9191bba318304cfa5bb6861d98b9dbcb3bbcfd4171ca4048ffe60f57",
+        "source_span": "c8a0219b9191bba318304cfa5bb6861d98b9dbcb3bbcfd4171ca4048ffe60f57"
+      },
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "size_factor": {
+        "count": 37800,
+        "max": 1.000000238418579,
+        "min": 0.9999998211860657,
+        "unique": [
+          0.9999998211860657,
+          0.9999998807907104,
+          0.9999999403953552,
+          1.0,
+          1.0000001192092896,
+          1.000000238418579
+        ],
+        "unique_count": 6
+      },
+      "size_variation": 25.0,
+      "span": {
+        "max": 1065353216,
+        "min": 1065353216,
+        "unique": [
+          1065353216
+        ]
+      }
+    },
+    {
+      "depth": 16,
+      "first_diffs": {},
+      "hashes": {
+        "accum": "5f2808240747555909d27f53daa110a46d7f77459e175185e43bdf97f03878e8",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "e462b3473c95272edf436e8a75121a7197c68ed1025497c28db49b8f2f9b0c1a",
+        "max_alpha": "39f86a18e7fa04ba0218b5d546b9918c0c90528f9eae17db57ad52c40b05cd91",
+        "output": "367905db6813ec528a0be407beaee51415ff333884312ede975455c5056eb370",
+        "polar": "da0505812a661d8b3cf2e9975b0b8d354b81a280be74c39510d97656920dd020",
+        "source_scalar": "e468ec1e7afb7b7ef8f52282c441d260ec7f29a643b3ab86884f1d83dabb62b0",
+        "source_size_factor": "c8a0219b9191bba318304cfa5bb6861d98b9dbcb3bbcfd4171ca4048ffe60f57",
+        "source_span": "c8a0219b9191bba318304cfa5bb6861d98b9dbcb3bbcfd4171ca4048ffe60f57"
+      },
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "size_factor": {
+        "count": 37800,
+        "max": 1.000000238418579,
+        "min": 0.9999998211860657,
+        "unique": [
+          0.9999998211860657,
+          0.9999998807907104,
+          0.9999999403953552,
+          1.0,
+          1.0000001192092896,
+          1.000000238418579
+        ],
+        "unique_count": 6
+      },
+      "size_variation": 100.0,
+      "span": {
+        "max": 1065353216,
+        "min": 1065353216,
+        "unique": [
+          1065353216
+        ]
+      }
+    },
+    {
+      "depth": 32,
+      "first_diffs": {},
+      "hashes": {
+        "accum": "5f2808240747555909d27f53daa110a46d7f77459e175185e43bdf97f03878e8",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "e462b3473c95272edf436e8a75121a7197c68ed1025497c28db49b8f2f9b0c1a",
+        "max_alpha": "39f86a18e7fa04ba0218b5d546b9918c0c90528f9eae17db57ad52c40b05cd91",
+        "output": "0cff2b16fa89a443cb9428265993fd7b1515e595b2eb27df0970a4ffe8f0d805",
+        "polar": "da0505812a661d8b3cf2e9975b0b8d354b81a280be74c39510d97656920dd020",
+        "source_scalar": "e468ec1e7afb7b7ef8f52282c441d260ec7f29a643b3ab86884f1d83dabb62b0",
+        "source_size_factor": "c8a0219b9191bba318304cfa5bb6861d98b9dbcb3bbcfd4171ca4048ffe60f57",
+        "source_span": "c8a0219b9191bba318304cfa5bb6861d98b9dbcb3bbcfd4171ca4048ffe60f57"
+      },
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "size_factor": {
+        "count": 37800,
+        "max": 1.000000238418579,
+        "min": 0.9999998211860657,
+        "unique": [
+          0.9999998211860657,
+          0.9999998807907104,
+          0.9999999403953552,
+          1.0,
+          1.0000001192092896,
+          1.000000238418579
+        ],
+        "unique_count": 6
+      },
+      "size_variation": 1.0,
+      "span": {
+        "max": 1065353216,
+        "min": 1065353216,
+        "unique": [
+          1065353216
+        ]
+      }
+    },
+    {
+      "depth": 32,
+      "first_diffs": {},
+      "hashes": {
+        "accum": "5f2808240747555909d27f53daa110a46d7f77459e175185e43bdf97f03878e8",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "e462b3473c95272edf436e8a75121a7197c68ed1025497c28db49b8f2f9b0c1a",
+        "max_alpha": "39f86a18e7fa04ba0218b5d546b9918c0c90528f9eae17db57ad52c40b05cd91",
+        "output": "0cff2b16fa89a443cb9428265993fd7b1515e595b2eb27df0970a4ffe8f0d805",
+        "polar": "da0505812a661d8b3cf2e9975b0b8d354b81a280be74c39510d97656920dd020",
+        "source_scalar": "e468ec1e7afb7b7ef8f52282c441d260ec7f29a643b3ab86884f1d83dabb62b0",
+        "source_size_factor": "c8a0219b9191bba318304cfa5bb6861d98b9dbcb3bbcfd4171ca4048ffe60f57",
+        "source_span": "c8a0219b9191bba318304cfa5bb6861d98b9dbcb3bbcfd4171ca4048ffe60f57"
+      },
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "size_factor": {
+        "count": 37800,
+        "max": 1.000000238418579,
+        "min": 0.9999998211860657,
+        "unique": [
+          0.9999998211860657,
+          0.9999998807907104,
+          0.9999999403953552,
+          1.0,
+          1.0000001192092896,
+          1.000000238418579
+        ],
+        "unique_count": 6
+      },
+      "size_variation": 25.0,
+      "span": {
+        "max": 1065353216,
+        "min": 1065353216,
+        "unique": [
+          1065353216
+        ]
+      }
+    },
+    {
+      "depth": 32,
+      "first_diffs": {},
+      "hashes": {
+        "accum": "5f2808240747555909d27f53daa110a46d7f77459e175185e43bdf97f03878e8",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "e462b3473c95272edf436e8a75121a7197c68ed1025497c28db49b8f2f9b0c1a",
+        "max_alpha": "39f86a18e7fa04ba0218b5d546b9918c0c90528f9eae17db57ad52c40b05cd91",
+        "output": "0cff2b16fa89a443cb9428265993fd7b1515e595b2eb27df0970a4ffe8f0d805",
+        "polar": "da0505812a661d8b3cf2e9975b0b8d354b81a280be74c39510d97656920dd020",
+        "source_scalar": "e468ec1e7afb7b7ef8f52282c441d260ec7f29a643b3ab86884f1d83dabb62b0",
+        "source_size_factor": "c8a0219b9191bba318304cfa5bb6861d98b9dbcb3bbcfd4171ca4048ffe60f57",
+        "source_span": "c8a0219b9191bba318304cfa5bb6861d98b9dbcb3bbcfd4171ca4048ffe60f57"
+      },
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "size_factor": {
+        "count": 37800,
+        "max": 1.000000238418579,
+        "min": 0.9999998211860657,
+        "unique": [
+          0.9999998211860657,
+          0.9999998807907104,
+          0.9999999403953552,
+          1.0,
+          1.0000001192092896,
+          1.000000238418579
+        ],
+        "unique_count": 6
+      },
+      "size_variation": 100.0,
+      "span": {
+        "max": 1065353216,
+        "min": 1065353216,
+        "unique": [
+          1065353216
+        ]
+      }
+    }
+  ],
+  "kind": "olmradialblur_rotation_size_variation_32x18_actual_aex_20260811",
+  "scope": "Rotation 32x18 centered Outer4 Inner0 neutral tuple; PF8/PF16/PF32; Size Variation 1/25/100.",
+  "status": "18-cell parent matrix Rotation half: 9/9 internal planes and padded output byte exact"
+}

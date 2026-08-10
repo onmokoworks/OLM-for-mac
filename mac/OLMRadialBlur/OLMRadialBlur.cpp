@@ -1749,6 +1749,18 @@ static PF_Err RenderZoomTyped(
 			? (PF_FpLong)input->width / 2.0 : (PF_FpLong)(input->width / 2)) &&
 		info.center_y == (std::is_same<PixelT, PF_Pixel8>::value
 			? (PF_FpLong)input->height / 2.0 : (PF_FpLong)(input->height / 2));
+	bool source_alpha_strictly_positive = info.size_variation != 0.0 &&
+		input && input->data && input->width > 0 && input->height > 0 &&
+		input->rowbytes >= input->width * (A_long)sizeof(PixelT);
+	for (A_long y = 0; source_alpha_strictly_positive && y < input->height; ++y) {
+		for (A_long x = 0; x < input->width; ++x) {
+			const PixelT *pixel = PixelAtConst<PixelT>(input, x, y);
+			if (!(RadialZoomPixelTraits<PixelT>::Read(*pixel, 3) > 0.0f)) {
+				source_alpha_strictly_positive = false;
+				break;
+			}
+		}
+	}
 	const PF_FpLong offcenter_base_x = !input ? 0.0 : std::is_same<PixelT, PF_Pixel8>::value
 		? (PF_FpLong)input->width / 2.0 : (PF_FpLong)(input->width / 2);
 	const PF_FpLong offcenter_base_y = !input ? 0.0 : std::is_same<PixelT, PF_Pixel8>::value
@@ -1817,7 +1829,21 @@ static PF_Err RenderZoomTyped(
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0 &&
 		info.outer_edge_fade == 0 && info.inner_edge_fade == 0;
-	if (!use_aex_typed_zoom_offset_matrix && !use_aex_typed_quality_repeat && !use_aex_typed_zoom_offcenter_brightness && (!use_aex_zoom_geometry || info.repeat_border == FALSE ||
+	const bool use_aex_typed_zoom_size_variation_32x18 = input && output &&
+		use_aex_zoom_geometry && input->width == 32 && input->height == 18 &&
+		input->rowbytes >= input->width * (A_long)sizeof(PixelT) &&
+		output->rowbytes >= output->width * (A_long)sizeof(PixelT) &&
+		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
+		info.quality == 5.0 && info.brightness_gain == 1.0 &&
+		(info.size_variation == 1.0 || info.size_variation == 25.0 || info.size_variation == 100.0) &&
+		info.noise_variation == 0.0 && info.noise_type == 1 && info.noise_layer == 0 &&
+		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0 &&
+		source_alpha_strictly_positive;
+	if (!use_aex_typed_zoom_size_variation_32x18 && !use_aex_typed_zoom_offset_matrix && !use_aex_typed_quality_repeat && !use_aex_typed_zoom_offcenter_brightness && (!use_aex_zoom_geometry || info.repeat_border == FALSE ||
 		(!use_aex_typed_zoom_ellipse_geometry && (info.ratio != 1.0 || info.angle_deg != 0.0)) ||
 		info.quality != 5.0 || info.brightness_gain != 1.0 ||
 		info.size_variation != 0.0 || info.outer_edge_fade != 0 || info.inner_edge_fade != 0)) {
@@ -2035,7 +2061,8 @@ static PF_Err RenderZoomTyped(
 		use_aex_typed_zoom_inner_pairwise ||
 		use_aex_typed_zoom_inner_offset_pairwise ||
 		use_aex_pf16_bounded_offset_small ||
-		use_aex_typed_zoom_offset_matrix;
+		use_aex_typed_zoom_offset_matrix ||
+		use_aex_typed_zoom_size_variation_32x18;
 	std::vector<float> span_plane;
 	std::vector<float> source_factor_with_guard;
 	std::vector<float> source_scalar_plane;
@@ -2610,6 +2637,20 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0;
+	const bool use_aex_typed_rotation_size_variation_32x18 = input && output &&
+		use_aex_inner_geometry && input->width == 32 && input->height == 18 &&
+		input->rowbytes >= input->width * (A_long)sizeof(PixelT) &&
+		output->rowbytes >= output->width * (A_long)sizeof(PixelT) &&
+		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
+		info.quality == 5.0 && info.brightness_gain == 1.0 &&
+		(info.size_variation == 1.0 || info.size_variation == 25.0 || info.size_variation == 100.0) &&
+		info.noise_variation == 0.0 && info.noise_type == 1 && info.noise_layer == 0 &&
+		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0 &&
+		source_alpha_strictly_positive;
 	if (info.blur_type != 2 || (info.inner_strength != 0 &&
 	    !use_aex_typed_rotation_inner_offset_pairwise && !use_aex_pf16_inner_power2_small &&
 	    !use_aex_pf32_inner_edge_fade_small && !use_aex_pf32_edge_fade_cross_small &&
@@ -2624,6 +2665,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	     !use_aex_pf32_opaque_size_noise_type1_small &&
 	     !use_aex_pf32_edge_fade_cross_small) ||
 	    (info.size_variation != 0.0 && !use_aex_pf32_opaque_size_variation_small &&
+	     !use_aex_typed_rotation_size_variation_32x18 &&
 	     !use_aex_pf32_opaque_size_noise_type1_small &&
 	     !use_aex_pf32_edge_fade_cross_small)) {
 		return PF_Err_BAD_CALLBACK_PARAM;
@@ -2823,7 +2865,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0;
-	const bool use_aex_exact = use_aex_typed_rotation_inner_offset_pairwise || use_aex_typed_rotation_offcenter_brightness || use_aex_typed_quality_repeat || use_aex_case0010 || use_aex_pf16_small || use_aex_pf16_inner_power2_small ||
+	const bool use_aex_exact = use_aex_typed_rotation_size_variation_32x18 || use_aex_typed_rotation_inner_offset_pairwise || use_aex_typed_rotation_offcenter_brightness || use_aex_typed_quality_repeat || use_aex_case0010 || use_aex_pf16_small || use_aex_pf16_inner_power2_small ||
 		use_aex_typed_edge_fade_32x18 ||
 		use_aex_typed_rotation_offset_mode3 ||
 		use_aex_pf32_opaque_size_variation_small ||
