@@ -5,7 +5,10 @@
       "actual_instructions": 319024,
       "actual_sha256": "a94f93845aa298e962eb504261d1a1f7ec9a83e650966b64d7d4544d938f79af",
       "actual_worker_status": "pass",
+      "amount": 4.0,
       "bytes": 2448,
+      "case": "direction2_amount4",
+      "direction": 2,
       "pixel_format": "PF8",
       "production_sha256": "a94f93845aa298e962eb504261d1a1f7ec9a83e650966b64d7d4544d938f79af",
       "status": "exact"
@@ -14,7 +17,10 @@
       "actual_instructions": 319122,
       "actual_sha256": "84804fb7fbaf9c8e65dd5ff0e7992ed6c5ea82349f07c6a4ba937f3db46bbbd2",
       "actual_worker_status": "pass",
+      "amount": 4.0,
       "bytes": 4752,
+      "case": "direction2_amount4",
+      "direction": 2,
       "pixel_format": "PF16",
       "production_sha256": "84804fb7fbaf9c8e65dd5ff0e7992ed6c5ea82349f07c6a4ba937f3db46bbbd2",
       "status": "exact"
@@ -23,13 +29,88 @@
       "actual_instructions": 315462,
       "actual_sha256": "dcd329dcf4f1551147ffe28259a0906c38ad5bef75d076c1c9a1f8604600f7e4",
       "actual_worker_status": "pass",
+      "amount": 4.0,
       "bytes": 9360,
+      "case": "direction2_amount4",
+      "direction": 2,
       "pixel_format": "PF32",
       "production_sha256": "dcd329dcf4f1551147ffe28259a0906c38ad5bef75d076c1c9a1f8604600f7e4",
       "status": "exact"
+    },
+    {
+      "actual_instructions": 315969,
+      "actual_sha256": "97aedf4ca10a02c7f998004f1998784702ca3fc3f6cbc86ea7b7ea4721d6159d",
+      "actual_worker_status": "pass",
+      "amount": 1.0,
+      "bytes": 2448,
+      "case": "direction1_amount1",
+      "direction": 1,
+      "pixel_format": "PF8",
+      "production_sha256": "97aedf4ca10a02c7f998004f1998784702ca3fc3f6cbc86ea7b7ea4721d6159d",
+      "status": "exact"
+    },
+    {
+      "actual_instructions": 316067,
+      "actual_sha256": "3058a4df0a2234f488193aa71cc19cd10571381b91c8fe26937ea51879684628",
+      "actual_worker_status": "pass",
+      "amount": 1.0,
+      "bytes": 4752,
+      "case": "direction1_amount1",
+      "direction": 1,
+      "pixel_format": "PF16",
+      "production_sha256": "3058a4df0a2234f488193aa71cc19cd10571381b91c8fe26937ea51879684628",
+      "status": "exact"
+    },
+    {
+      "actual_instructions": 310224,
+      "actual_sha256": "d9ee41f08417b45d03f48cceaf57e5cf23321243c2126fb2152f2096749b5e3a",
+      "actual_worker_status": "pass",
+      "amount": 1.0,
+      "bytes": 9360,
+      "case": "direction1_amount1",
+      "direction": 1,
+      "pixel_format": "PF32",
+      "production_sha256": "d9ee41f08417b45d03f48cceaf57e5cf23321243c2126fb2152f2096749b5e3a",
+      "status": "exact"
+    },
+    {
+      "actual_instructions": 315969,
+      "actual_sha256": "97aedf4ca10a02c7f998004f1998784702ca3fc3f6cbc86ea7b7ea4721d6159d",
+      "actual_worker_status": "pass",
+      "amount": 4.0,
+      "bytes": 2448,
+      "case": "direction1_amount4",
+      "direction": 1,
+      "pixel_format": "PF8",
+      "production_sha256": "97aedf4ca10a02c7f998004f1998784702ca3fc3f6cbc86ea7b7ea4721d6159d",
+      "status": "exact"
+    },
+    {
+      "actual_instructions": 316067,
+      "actual_sha256": "3058a4df0a2234f488193aa71cc19cd10571381b91c8fe26937ea51879684628",
+      "actual_worker_status": "pass",
+      "amount": 4.0,
+      "bytes": 4752,
+      "case": "direction1_amount4",
+      "direction": 1,
+      "pixel_format": "PF16",
+      "production_sha256": "3058a4df0a2234f488193aa71cc19cd10571381b91c8fe26937ea51879684628",
+      "status": "exact"
+    },
+    {
+      "actual_instructions": 310233,
+      "actual_sha256": "331bf0f2b414a4d043b6d265b5cad444fe2ee803656471ca52ff19331478efbe",
+      "actual_worker_status": "pass",
+      "amount": 4.0,
+      "bytes": 9360,
+      "case": "direction1_amount4",
+      "direction": 1,
+      "pixel_format": "PF32",
+      "production_sha256": "331bf0f2b414a4d043b6d265b5cad444fe2ee803656471ca52ff19331478efbe",
+      "status": "exact"
     }
   ],
-  "claim_boundary": "Exact for this 32x18 multi-island 16:9 fixture at PF8/PF16/PF32. This expands spatial topology and non-tight-row evidence, but does not claim arbitrary dimensions, arbitrary key colors, or AE-host rendering.",
+  "claim_boundary": "Exact for this 32x18 two-key multi-island 16:9 fixture at PF8/PF16/PF32 for direction 2 amount 4 and direction 1 amounts 1 and 4. This expands spatial topology, a non-direction-2 path, and non-tight-row evidence, but does not claim arbitrary dimensions, directions, amounts, key colors, or AE-host rendering.",
   "comparison": "full typed ARGB active bytes plus every row-padding byte",
   "fixture": {
     "aspect": "16:9",
@@ -37,11 +118,24 @@
       32,
       18
     ],
-    "edge_blur": {
-      "amount": 4.0,
-      "direction": 2,
-      "distance_type": 2
-    },
+    "distance_type": 2,
+    "edge_blur_cases": [
+      {
+        "amount": 4.0,
+        "direction": 2,
+        "name": "direction2_amount4"
+      },
+      {
+        "amount": 1.0,
+        "direction": 1,
+        "name": "direction1_amount1"
+      },
+      {
+        "amount": 4.0,
+        "direction": 1,
+        "name": "direction1_amount4"
+      }
+    ],
     "keys": [
       "black",
       "green"

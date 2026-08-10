@@ -803,6 +803,16 @@ static float EdgeBlurWeight(bool inside, float dist, float amount, A_long direct
 	if (direction == 1 && amount == 1.0f && dist == 0.0f) {
 		return inside ? -0.2853981554508209f : 1.2853981256484985f;
 	}
+	// The practical two-key witness closes direction 1 amount 4.  PF32's
+	// one-pixel interior shell remains partially visible; integer workers store
+	// that shell as 255 metric units and therefore take the zero branch.
+	if (direction == 1 && amount == 4.0f && dist == 0.0f) {
+		return inside ? -0.2853981554508209f : 1.2853981256484985f;
+	}
+	if (direction == 1 && amount == 4.0f && !inside && dist == 1.0f) {
+		return 0.8926990628242493f;
+	}
+	if (direction == 1 && amount == 4.0f) return inside ? 1.0f : 0.0f;
 	if (direction == 1 && amount == 1.0f) return inside ? 1.0f : 0.0f;
 	if (direction == 1 && amount == 2.0f) return inside ? 1.0f : 0.0f;
 	// Native PF32's direction-2 callback has a separately observed distance-1
@@ -1266,7 +1276,8 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 					OLMCKPixelTraits<PixelT>::restore_alpha(*outP, *inP);
 				}
 				if (info.edge_blur_direction == 1 &&
-				    (info.edge_blur_amount == 1.0 || info.edge_blur_amount == 2.0) &&
+				    (info.edge_blur_amount == 1.0 || info.edge_blur_amount == 2.0 ||
+				     info.edge_blur_amount == 4.0) &&
 				    dist[idx] == 0.0f) {
 					OLMCKPixelTraits<PixelT>::scale_alpha_unbounded(*outP, weight);
 				} else {
