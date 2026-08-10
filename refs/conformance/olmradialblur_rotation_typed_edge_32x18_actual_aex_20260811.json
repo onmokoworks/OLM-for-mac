@@ -1,0 +1,248 @@
+{
+  "admission_boundary": "Only the listed 12 depth/kind/fade cells at centered 32x18 are admitted by this evidence.",
+  "cases": [
+    {
+      "depth": 8,
+      "edge_fade": 50,
+      "first_diffs": {},
+      "kind": "outer",
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "prepass_actual_captured": true,
+      "prepass_production_exported": true,
+      "seven_plane_exact": true,
+      "strength": 4
+    },
+    {
+      "depth": 8,
+      "edge_fade": 100,
+      "first_diffs": {},
+      "kind": "outer",
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "prepass_actual_captured": true,
+      "prepass_production_exported": true,
+      "seven_plane_exact": true,
+      "strength": 4
+    },
+    {
+      "depth": 8,
+      "edge_fade": 50,
+      "first_diffs": {},
+      "kind": "inner",
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "prepass_actual_captured": true,
+      "prepass_production_exported": true,
+      "seven_plane_exact": true,
+      "strength": 4
+    },
+    {
+      "depth": 8,
+      "edge_fade": 100,
+      "first_diffs": {},
+      "kind": "inner",
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "prepass_actual_captured": true,
+      "prepass_production_exported": true,
+      "seven_plane_exact": true,
+      "strength": 4
+    },
+    {
+      "depth": 16,
+      "edge_fade": 50,
+      "first_diffs": {},
+      "kind": "outer",
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "prepass_actual_captured": true,
+      "prepass_production_exported": true,
+      "seven_plane_exact": true,
+      "strength": 4
+    },
+    {
+      "depth": 16,
+      "edge_fade": 100,
+      "first_diffs": {},
+      "kind": "outer",
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "prepass_actual_captured": true,
+      "prepass_production_exported": true,
+      "seven_plane_exact": true,
+      "strength": 4
+    },
+    {
+      "depth": 16,
+      "edge_fade": 50,
+      "first_diffs": {},
+      "kind": "inner",
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "prepass_actual_captured": true,
+      "prepass_production_exported": true,
+      "seven_plane_exact": true,
+      "strength": 4
+    },
+    {
+      "depth": 16,
+      "edge_fade": 100,
+      "first_diffs": {},
+      "kind": "inner",
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "prepass_actual_captured": true,
+      "prepass_production_exported": true,
+      "seven_plane_exact": true,
+      "strength": 4
+    },
+    {
+      "depth": 32,
+      "edge_fade": 50,
+      "first_diffs": {},
+      "kind": "outer",
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "prepass_actual_captured": true,
+      "prepass_production_exported": true,
+      "seven_plane_exact": true,
+      "strength": 4
+    },
+    {
+      "depth": 32,
+      "edge_fade": 100,
+      "first_diffs": {},
+      "kind": "outer",
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "prepass_actual_captured": true,
+      "prepass_production_exported": true,
+      "seven_plane_exact": true,
+      "strength": 4
+    },
+    {
+      "depth": 32,
+      "edge_fade": 50,
+      "first_diffs": {},
+      "kind": "inner",
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "prepass_actual_captured": true,
+      "prepass_production_exported": true,
+      "seven_plane_exact": true,
+      "strength": 4
+    },
+    {
+      "depth": 32,
+      "edge_fade": 100,
+      "first_diffs": {},
+      "kind": "inner",
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "prepass_actual_captured": true,
+      "prepass_production_exported": true,
+      "seven_plane_exact": true,
+      "strength": 4
+    }
+  ],
+  "comparison_planes": [
+    "polar",
+    "source_scalar",
+    "accum",
+    "max_alpha",
+    "final_rgba",
+    "coordinates",
+    "output"
+  ],
+  "configuration_guard": "The PF32 wrapper globals and its shared PF16 owner fixture must both receive the requested Strength. Setting only the fixture is overwritten by the wrapper immediately before actual-AEX execution.",
+  "kind": "olmradialblur_rotation_typed_edge_32x18_actual_aex_20260811",
+  "scope": "Rotation centered 32x18, PF8/PF16/PF32, Outer or Inner Strength4 with matching Edge Fade50/100; neutral remaining parameters.",
+  "seven_plane_exact_cases": 12,
+  "status": "exact",
+  "total_cases": 12
+}

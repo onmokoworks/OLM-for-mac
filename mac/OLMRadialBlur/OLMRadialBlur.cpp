@@ -2436,6 +2436,26 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.brightness_gain == 1.0 && info.size_variation == 0.0 && info.noise_variation == 0.0 &&
 		info.noise_type == 1 && info.seed == 1 && info.thickness == 10.0 &&
 		info.comp_width == 9.0 && info.comp_height == 7.0;
+	const bool use_aex_typed_edge_fade_32x18 = input && output &&
+		input->width == 32 && input->height == 18 &&
+		output->width == 32 && output->height == 18 &&
+		input->rowbytes >= input->width * (A_long)sizeof(PixelT) &&
+		output->rowbytes >= output->width * (A_long)sizeof(PixelT) &&
+		info.center_x == 16.0 && info.center_y == 9.0 &&
+		(((info.outer_strength == 4 && info.inner_strength == 0 &&
+		   (info.outer_edge_fade == 50 || info.outer_edge_fade == 100) &&
+		   info.inner_edge_fade == 0) ||
+		  (info.outer_strength == 0 && info.inner_strength == 4 &&
+		   info.outer_edge_fade == 0 &&
+		   (info.inner_edge_fade == 50 || info.inner_edge_fade == 100)))) &&
+		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
+		info.quality == 5.0 && info.brightness_gain == 1.0 &&
+		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
+		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
+		info.noise_offset == 0 && info.thickness == 10.0 &&
+		info.comp_width == 32.0 && info.comp_height == 18.0;
 	const bool use_aex_pf32_edge_fade_intersection_small = input && output &&
 		std::is_same<PixelT, PF_PixelFloat>::value && input->width == 9 && input->height == 7 &&
 		output->width == 9 && output->height == 7 && info.center_x == 4.0 && info.center_y == 3.0 &&
@@ -2557,10 +2577,11 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0;
 	if (info.blur_type != 2 || (info.inner_strength != 0 && !use_aex_pf16_inner_power2_small &&
-	    !use_aex_pf32_inner_edge_fade_small && !use_aex_pf32_edge_fade_cross_small) ||
+	    !use_aex_pf32_inner_edge_fade_small && !use_aex_pf32_edge_fade_cross_small &&
+	    !use_aex_typed_edge_fade_32x18) ||
 	    ((info.outer_edge_fade != 0 || info.inner_edge_fade != 0) &&
 	     !use_aex_pf32_outer_edge_fade_small && !use_aex_pf32_inner_edge_fade_small &&
-	     !use_aex_pf32_edge_fade_cross_small) ||
+	     !use_aex_pf32_edge_fade_cross_small && !use_aex_typed_edge_fade_32x18) ||
 	    (info.noise_variation != 0.0 && !use_aex_pf32_noise_type1_small &&
 	     !use_aex_typed_noise_type1_pairwise && !use_aex_typed_noise_type2_small &&
 	     !use_aex_pf32_strength5_noise_type1_small &&
