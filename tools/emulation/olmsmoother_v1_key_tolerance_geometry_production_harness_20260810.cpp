@@ -55,3 +55,12 @@ extern "C" int32_t olmsmoother_v1_color_compare16(
     const uint16_t *first, const uint16_t *second) {
   return ColorCompare16(first, second);
 }
+
+extern "C" int32_t olmsmoother_v1_classifier16_matrix(
+    uint16_t *source, int32_t width, int32_t height, int32_t rowbytes,
+    int32_t x, int32_t y, int32_t direction, int32_t tolerance) {
+  PF_EffectWorld world{}; world.data=source; world.width=width; world.height=height; world.rowbytes=rowbytes;
+  RenderState state{}; state.src_world=&world; state.tolerance_hi=tolerance;
+  uintptr_t neighbors[10]{}; NeighborExtract16(x,y,&state,neighbors);
+  return Classifier16(&state,x,y,neighbors,direction);
+}

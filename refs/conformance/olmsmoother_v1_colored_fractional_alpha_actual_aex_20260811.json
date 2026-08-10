@@ -84,8 +84,8 @@
     {
       "actual_sha256": "d499a83fac1cb0838dcc3a53c889866af985290fa954975454c6a0d6d5323e6a",
       "depth": 16,
-      "mismatched_bytes": 38,
-      "production_sha256": "9c21abe93cba1dbf379f391b5315a6315c6787a71300f9b9201c21032ee487d6",
+      "mismatched_bytes": 0,
+      "production_sha256": "d499a83fac1cb0838dcc3a53c889866af985290fa954975454c6a0d6d5323e6a",
       "tolerance": 127,
       "use_key": 0
     },
@@ -116,8 +116,8 @@
     {
       "actual_sha256": "b7e59b7602314937cf6d2216e7686af6003dee9c5906cebc1b3f4179f11ed863",
       "depth": 16,
-      "mismatched_bytes": 16,
-      "production_sha256": "2475e7041ff89204ed4160b5652b1acf08cb7e06a353043c1018c5028b2db6ea",
+      "mismatched_bytes": 0,
+      "production_sha256": "b7e59b7602314937cf6d2216e7686af6003dee9c5906cebc1b3f4179f11ed863",
       "tolerance": 127,
       "use_key": 1
     },
@@ -133,8 +133,7 @@
   "claims_not_made": [
     "arbitrary RGB/alpha inputs",
     "PF32 native arithmetic",
-    "AE host/export color management",
-    "PF16 colored fractional-alpha exactness"
+    "AE host/export color management"
   ],
   "fixture": {
     "alpha_codes": [
@@ -179,10 +178,10 @@
   },
   "schema_version": 1,
   "scope": "actual exported PF_Cmd_RENDER vs production EffectMain; colored padded 7x5; alpha 0/1/32/64/96/127/128/160/191/224/254/255; key off/on; tolerance 0/6/127/255; PF8/PF16",
-  "status": "mixed",
+  "status": "exact",
   "summary": {
-    "exact_cells": 14,
-    "mismatching_cells": 2
+    "exact_cells": 16,
+    "mismatching_cells": 0
   },
-  "verdict": "V1_COLORED_FRACTIONAL_ALPHA_BOUNDARY_RECORDED"
+  "verdict": "PASS_V1_COLORED_FRACTIONAL_ALPHA_16_CELLS_EXACT"
 }

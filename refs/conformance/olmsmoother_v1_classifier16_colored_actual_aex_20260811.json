@@ -1,0 +1,15 @@
+{
+  "actual_aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+  "calls": 140,
+  "claims_not_made": [
+    "other arbitrary fixtures",
+    "kernel accumulator",
+    "PF32"
+  ],
+  "closed_stage": "input neighborhood through PF16 classification plane",
+  "domain": "premultiplied colored fractional-alpha 7x5 fixture; tolerance 127; directions 5/3/1/7",
+  "entry": "0x180006a90",
+  "schema_version": 1,
+  "status": "exact",
+  "verdict": "PASS_CLASSIFIER16_COLORED_TOL127_140_CALLS_EXACT"
+}

@@ -869,6 +869,8 @@ NeighborExtract8(int param_1, int param_2, RenderState *state, uintptr_t *param_
 // ============================================================================
 static int32_t Classifier16(RenderState *state, uint32_t x, uint32_t y,
                             const uintptr_t *neigh, uint32_t dir);
+static int32_t Classifier16Exact(RenderState *state, uint32_t x, uint32_t y,
+                                 const uintptr_t *neigh, uint32_t dir);
 static int32_t Classifier8 (RenderState *state, uint32_t x, uint32_t y,
                             const uintptr_t *neigh, uint32_t dir);
 static uint16_t* EdgeWalker16(RenderState *state, int x, int y, int dir1, uint32_t dir2,
@@ -1015,9 +1017,11 @@ DispatchDirection8(RenderState *state, uintptr_t *neigh,
 // state field: tolerance_hi (state+0xc).
 // ============================================================================
 static int32_t
-Classifier16(RenderState *state, uint32_t /*x*/, uint32_t /*y*/,
+Classifier16(RenderState *state, uint32_t x, uint32_t y,
              const uintptr_t *param_4, uint32_t param_5)
 {
+	return Classifier16Exact(state, x, y, param_4, param_5);
+
 	uint16_t uVar1;
 	int iVar2, iVar3;
 	const uint16_t *puVar4, *puVar5, *puVar11, *puVar12, *puVar18;
@@ -2378,6 +2382,19 @@ struct SubHandler8Memory {
 	uint64_t addflags(uint64_t a,uint64_t b,int w){const uint64_t mask=w==64?~0ull:((1ull<<w)-1);a&=mask;b&=mask;uint64_t r=(a+b)&mask;zf=r==0;sf=(r>>(w-1))&1;of=((~(a^b)&(a^r))>>(w-1))&1;return r;}
 	void logicflags(uint64_t r,int w){const uint64_t mask=w==64?~0ull:((1ull<<w)-1);r&=mask;zf=r==0;sf=(r>>(w-1))&1;of=false;}
 };
+
+static int32_t
+Classifier16Exact(RenderState *state, uint32_t x, uint32_t y,
+                  const uintptr_t *neigh, uint32_t dir)
+{
+	SubHandler8Regs R; SubHandler8Memory M; uint64_t T=0;
+	M.state=state; M.world=state->src_world; M.pf16=true;
+	R.rcx=(uintptr_t)state; R.rdx=x; R.r8=y; R.r9=(uintptr_t)neigh;
+	R.rsp=SubHandler8Memory::kStack+0x800;
+	M.write64(R.rsp,0xdeadbeefdeadbeefull);
+	M.write64(R.rsp+0x28,dir);
+#include "OLMSmoother_classifier16.generated.inc"
+}
 
 static uint16_t*
 EdgeWalker16Exact(RenderState *state, int x, int y, int dir1, uint32_t dir2,

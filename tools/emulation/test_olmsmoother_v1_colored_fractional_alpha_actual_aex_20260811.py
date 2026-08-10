@@ -38,18 +38,19 @@ def main():
                     actual,_=base.actual(depth,payload,rowbytes,use_key,tolerance,codes[depth])
                     production=base.production(lib,depth,payload,rowbytes,use_key,tolerance)
                     mismatch=sum(a!=b for a,b in zip(actual,production))
+                    assert mismatch==0,(depth,use_key,tolerance,mismatch)
                     rows.append({'depth':depth,'use_key':use_key,'tolerance':tolerance,
                       'actual_sha256':hashlib.sha256(actual).hexdigest(),
                       'production_sha256':hashlib.sha256(production).hexdigest(),
                       'mismatched_bytes':mismatch})
     finally: temporary.cleanup()
     exact=sum(r['mismatched_bytes']==0 for r in rows)
-    report={'schema_version':1,'status':'mixed','verdict':'V1_COLORED_FRACTIONAL_ALPHA_BOUNDARY_RECORDED',
+    report={'schema_version':1,'status':'exact','verdict':'PASS_V1_COLORED_FRACTIONAL_ALPHA_16_CELLS_EXACT',
       'actual_aex_sha256':base.AEX_SHA,'scope':'actual exported PF_Cmd_RENDER vs production EffectMain; colored padded 7x5; alpha 0/1/32/64/96/127/128/160/191/224/254/255; key off/on; tolerance 0/6/127/255; PF8/PF16',
       'fixture':{'dimensions':[7,5],'padding_bytes_per_row':8,'key_rgb8':base.KEY,'key_islands':[[0,0],[3,2],[6,4]],'rgb':'independent affine R/G/B sequences clamped to alpha (premultiplied-valid)','alpha_codes':[0,1,32,64,96,127,128,160,191,224,254,255]},
       'summary':{'exact_cells':exact,'mismatching_cells':len(rows)-exact},
-      'cases':rows,'claims_not_made':['arbitrary RGB/alpha inputs','PF32 native arithmetic','AE host/export color management','PF16 colored fractional-alpha exactness']}
+      'cases':rows,'claims_not_made':['arbitrary RGB/alpha inputs','PF32 native arithmetic','AE host/export color management']}
     REPORT.write_text(json.dumps(report,indent=2,sort_keys=True)+'\n')
-    DOC.write_text('# OLMSmoother v1 colored fractional-alpha boundary\n\nVerdict: `'+report['verdict']+'`\n\nA premultiplied, non-grayscale padded 7×5 fixture crosses twelve alpha codes, effective Color Key off/on, four representative smoothing tolerances, and PF8/PF16. '+str(exact)+' of sixteen exported Windows AEX versus production EffectMain cells are byte-exact; the JSON preserves the remaining PF16 boundary instead of promoting it to an exactness claim. This does not claim native PF32 behavior.\n')
+    DOC.write_text('# OLMSmoother v1 colored fractional-alpha boundary\n\nVerdict: `'+report['verdict']+'`\n\nA premultiplied, non-grayscale padded 7×5 fixture crosses twelve alpha codes, effective Color Key off/on, four representative smoothing tolerances, and PF8/PF16. All sixteen exported Windows AEX versus production EffectMain cells are byte-exact after replacing the reconstructed PF16 classifier with its full actual-AEX CFG. This does not claim native PF32 behavior.\n')
     print(report['verdict'])
 if __name__=='__main__':main()
