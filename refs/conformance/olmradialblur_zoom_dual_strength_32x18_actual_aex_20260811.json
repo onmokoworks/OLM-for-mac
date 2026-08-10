@@ -1,0 +1,103 @@
+{
+  "cases": [
+    {
+      "actual_sha256": {
+        "output": "2faac9e5e3845a5a94ad644e3a270bbf5a0f7472bcc13b6a39e2bd6fb23eff88",
+        "post_blur": "5ad1f0f4a213a1a8b4817ed57142d91d28c0c3872d6b90bb2eba88e1ba365894",
+        "pre_blur": "502c5f90cee33cc441279c145e85f02b2bf95d140372be199e4b495516155093"
+      },
+      "depth": 8,
+      "diffs": {},
+      "inner_strength": 2,
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "outer_strength": 4
+    },
+    {
+      "actual_sha256": {
+        "output": "293543aff4c7546a0d945be53a9901238e2d80f24e08052ec84fb28e40fabc14",
+        "post_blur": "05ff39fa0c4481ee3606edaf9999f9ec3a4fbabb5351b3c97b0171f11601231d",
+        "pre_blur": "502c5f90cee33cc441279c145e85f02b2bf95d140372be199e4b495516155093"
+      },
+      "depth": 8,
+      "diffs": {},
+      "inner_strength": 4,
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "outer_strength": 4
+    },
+    {
+      "actual_sha256": {
+        "output": "f9ba3665161948f380f3035d57db684a9ce4e09ed86db225ada594a8c317a52a",
+        "post_blur": "134ff8e2ae1cd8144f5bdb9407b51f0b03a84c1de7ec4035d59ef10e03ff06c2",
+        "pre_blur": "525ce83c5615d08156b147eb2a14935e6d458233e77c159ee10790522002778d"
+      },
+      "depth": 16,
+      "diffs": {},
+      "inner_strength": 2,
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "outer_strength": 4
+    },
+    {
+      "actual_sha256": {
+        "output": "9d3f5091a4d2665d2a333ca419f071415f7c35370be36326e7af2d999765680d",
+        "post_blur": "8ce566534131752066f6b52bc4cf49f295bcd80315c4a20204a07121e623a8d1",
+        "pre_blur": "525ce83c5615d08156b147eb2a14935e6d458233e77c159ee10790522002778d"
+      },
+      "depth": 16,
+      "diffs": {},
+      "inner_strength": 4,
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "outer_strength": 4
+    },
+    {
+      "actual_sha256": {
+        "output": "e2c1ca125d90981bf9d4b31fc347566c32a71f07eb45c89ad91269b367f1b0d1",
+        "post_blur": "bde4d49a232b305fadc9fa92acb8e824e1e4aacb2aa94abd9d022dd5d1a5d103",
+        "pre_blur": "5fd11ebfc3f1ffea7b01e98cb50f7095ab699db25080cd4f1af361f534a156f7"
+      },
+      "depth": 32,
+      "diffs": {},
+      "inner_strength": 2,
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "outer_strength": 4
+    },
+    {
+      "actual_sha256": {
+        "output": "c9e51183ea9218d1600b7fa2369fe69aaa26feacc81d6a98288d94f5e9f7b577",
+        "post_blur": "fb27da197fc577bc48d8deabae4adeb4e536050fa1533c15a281064b46a3c29b",
+        "pre_blur": "5fd11ebfc3f1ffea7b01e98cb50f7095ab699db25080cd4f1af361f534a156f7"
+      },
+      "depth": 32,
+      "diffs": {},
+      "inner_strength": 4,
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "outer_strength": 4
+    }
+  ],
+  "kind": "olmradialblur_zoom_dual_strength_32x18_actual_aex_20260811",
+  "scope": "centered 32x18 Zoom, PF8/PF16/PF32, Outer4 + Inner2/4, neutral remaining controls",
+  "status": "6/6 internal planes and padded output byte exact"
+}

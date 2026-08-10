@@ -1,0 +1,223 @@
+{
+  "cases": [
+    {
+      "actual_sizes": {
+        "accum": 604800,
+        "coordinates": 4608,
+        "final_rgba": 9216,
+        "max_alpha": 151200,
+        "output": 2448,
+        "polar": 604800,
+        "prepass_alpha": 151200,
+        "source_scalar": 151200
+      },
+      "depth": 8,
+      "first_diffs": {},
+      "inner_strength": 2,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "prepass_alpha": true,
+        "source_scalar": true
+      },
+      "outer_strength": 4,
+      "production_sizes": {
+        "accum": 604800,
+        "coordinates": 4608,
+        "final_rgba": 9216,
+        "max_alpha": 151200,
+        "output": 2448,
+        "polar": 604800,
+        "prepass_alpha": 151200,
+        "source_scalar": 151200
+      }
+    },
+    {
+      "actual_sizes": {
+        "accum": 604800,
+        "coordinates": 4608,
+        "final_rgba": 9216,
+        "max_alpha": 151200,
+        "output": 2448,
+        "polar": 604800,
+        "prepass_alpha": 151200,
+        "source_scalar": 151200
+      },
+      "depth": 8,
+      "first_diffs": {},
+      "inner_strength": 4,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "prepass_alpha": true,
+        "source_scalar": true
+      },
+      "outer_strength": 4,
+      "production_sizes": {
+        "accum": 604800,
+        "coordinates": 4608,
+        "final_rgba": 9216,
+        "max_alpha": 151200,
+        "output": 2448,
+        "polar": 604800,
+        "prepass_alpha": 151200,
+        "source_scalar": 151200
+      }
+    },
+    {
+      "actual_sizes": {
+        "accum": 604800,
+        "coordinates": 4608,
+        "final_rgba": 9216,
+        "max_alpha": 151200,
+        "output": 4896,
+        "polar": 604800,
+        "prepass_alpha": 151200,
+        "source_scalar": 151200
+      },
+      "depth": 16,
+      "first_diffs": {},
+      "inner_strength": 2,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "prepass_alpha": true,
+        "source_scalar": true
+      },
+      "outer_strength": 4,
+      "production_sizes": {
+        "accum": 604800,
+        "coordinates": 4608,
+        "final_rgba": 9216,
+        "max_alpha": 151200,
+        "output": 4896,
+        "polar": 604800,
+        "prepass_alpha": 151200,
+        "source_scalar": 151200
+      }
+    },
+    {
+      "actual_sizes": {
+        "accum": 604800,
+        "coordinates": 4608,
+        "final_rgba": 9216,
+        "max_alpha": 151200,
+        "output": 4896,
+        "polar": 604800,
+        "prepass_alpha": 151200,
+        "source_scalar": 151200
+      },
+      "depth": 16,
+      "first_diffs": {},
+      "inner_strength": 4,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "prepass_alpha": true,
+        "source_scalar": true
+      },
+      "outer_strength": 4,
+      "production_sizes": {
+        "accum": 604800,
+        "coordinates": 4608,
+        "final_rgba": 9216,
+        "max_alpha": 151200,
+        "output": 4896,
+        "polar": 604800,
+        "prepass_alpha": 151200,
+        "source_scalar": 151200
+      }
+    },
+    {
+      "actual_sizes": {
+        "accum": 604800,
+        "coordinates": 4608,
+        "final_rgba": 9216,
+        "max_alpha": 151200,
+        "output": 9504,
+        "polar": 604800,
+        "prepass_alpha": 151200,
+        "source_scalar": 151200
+      },
+      "depth": 32,
+      "first_diffs": {},
+      "inner_strength": 2,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "prepass_alpha": true,
+        "source_scalar": true
+      },
+      "outer_strength": 4,
+      "production_sizes": {
+        "accum": 604800,
+        "coordinates": 4608,
+        "final_rgba": 9216,
+        "max_alpha": 151200,
+        "output": 9504,
+        "polar": 604800,
+        "prepass_alpha": 151200,
+        "source_scalar": 151200
+      }
+    },
+    {
+      "actual_sizes": {
+        "accum": 604800,
+        "coordinates": 4608,
+        "final_rgba": 9216,
+        "max_alpha": 151200,
+        "output": 9504,
+        "polar": 604800,
+        "prepass_alpha": 151200,
+        "source_scalar": 151200
+      },
+      "depth": 32,
+      "first_diffs": {},
+      "inner_strength": 4,
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "prepass_alpha": true,
+        "source_scalar": true
+      },
+      "outer_strength": 4,
+      "production_sizes": {
+        "accum": 604800,
+        "coordinates": 4608,
+        "final_rgba": 9216,
+        "max_alpha": 151200,
+        "output": 9504,
+        "polar": 604800,
+        "prepass_alpha": 151200,
+        "source_scalar": 151200
+      }
+    }
+  ],
+  "kind": "olmradialblur_rotation_dual_strength_32x18_actual_aex_20260811",
+  "scope": "centered 32x18 Rotation, Outer4 + Inner2/4, neutral remaining controls",
+  "status": "6/6 internal planes and padded output byte exact"
+}
