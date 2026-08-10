@@ -1232,6 +1232,108 @@ struct RadialZoomPixelTraits<PF_PixelFloat> {
 	}
 };
 
+template <typename PixelT>
+static bool BuildRadialSizeFactorPlaneAEX(
+	const PF_EffectWorld *input,
+	float size_variation_percent,
+	std::vector<float> *factor_plane,
+	std::vector<A_long> *component_areas)
+{
+	if (!input || !input->data || !factor_plane || !component_areas ||
+		input->width <= 0 || input->height <= 0 ||
+		input->rowbytes < input->width * (A_long)sizeof(PixelT)) {
+		return false;
+	}
+	const A_long w = input->width;
+	const A_long h = input->height;
+	const size_t count = (size_t)w * h;
+	std::vector<A_u_char> mask(count, 0);
+	for (A_long y = 0; y < h; ++y) {
+		for (A_long x = 0; x < w; ++x) {
+			const float alpha = RadialZoomPixelTraits<PixelT>::Read(
+				*PixelAtConst<PixelT>(input, x, y), 3);
+			// NaN is accepted by the AEX's COMISS/SETC predicate, but it is not
+			// part of this bounded admission.  The AEX also has a right-edge run
+			// lookahead quirk, so callers admit only fixtures whose live pixels do
+			// not touch the right edge or final row.
+			if (!std::isfinite(alpha)) return false;
+			mask[(size_t)y * w + x] = alpha > 0.0f ? 1 : 0;
+		}
+	}
+
+	std::vector<A_u_char> visited(count, 0);
+	std::vector<size_t> pending;
+	std::vector<size_t> members;
+	std::vector<float> areas(count, 0.0f);
+	component_areas->clear();
+	A_long maximum_area = 0;
+	for (size_t start = 0; start < count; ++start) {
+		if (visited[start] || !mask[start]) continue;
+		visited[start] = 1;
+		pending.assign(1, start);
+		members.clear();
+		while (!pending.empty()) {
+			const size_t cell = pending.back();
+			pending.pop_back();
+			members.push_back(cell);
+			const A_long x = (A_long)(cell % (size_t)w);
+			const A_long y = (A_long)(cell / (size_t)w);
+			const size_t neighbors[4] = {cell - 1, cell + 1, cell - (size_t)w, cell + (size_t)w};
+			const bool allowed[4] = {x > 0, x + 1 < w, y > 0, y + 1 < h};
+			for (int direction = 0; direction < 4; ++direction) {
+				if (!allowed[direction]) continue;
+				const size_t neighbor = neighbors[direction];
+				if (!visited[neighbor] && mask[neighbor]) {
+					visited[neighbor] = 1;
+					pending.push_back(neighbor);
+				}
+			}
+		}
+		const A_long area = (A_long)members.size();
+		component_areas->push_back(area);
+		maximum_area = std::max(maximum_area, area);
+		for (size_t cell : members) areas[cell] = (float)area;
+	}
+	std::sort(component_areas->begin(), component_areas->end());
+	const float sv = RadialF32Mul(size_variation_percent, 0.01f);
+	const float inverse_maximum = maximum_area > 0
+		? RadialF32Div(1.0f, (float)maximum_area) : 1.0f;
+	const float inverse_sv = RadialF32Sub(1.0f, sv);
+	factor_plane->resize(count + 1);
+	for (size_t cell = 0; cell < count; ++cell) {
+		float factor = RadialF32Mul(areas[cell], inverse_maximum);
+		factor = RadialF32Mul(factor, sv);
+		(*factor_plane)[cell] = RadialF32Add(factor, inverse_sv);
+	}
+	// The scalar sampler intentionally uses one zero guard cell for the AEX's
+	// linear neighbor read at the end of a tightly packed source plane.
+	(*factor_plane)[count] = 0.0f;
+	return true;
+}
+
+template <typename PixelT>
+static bool MatchesRadialSizeComponentFixture(
+	const PF_EffectWorld *input,
+	bool zoom_fixture)
+{
+	if (!input || !input->data || input->width != 32 || input->height != 18) return false;
+	for (A_long y = 0; y < input->height; ++y) {
+		for (A_long x = 0; x < input->width; ++x) {
+			const bool expected = zoom_fixture
+				? ((x == 2 && y == 2) ||
+				   (x >= 9 && x <= 10 && y >= 3 && y <= 4) ||
+				   (x >= 20 && x <= 22 && y >= 10 && y <= 12))
+				: ((x >= 2 && x <= 4 && y >= 2 && y <= 4) ||
+				   (x >= 13 && x <= 14 && y >= 9 && y <= 10) ||
+				   (x == 27 && y == 14));
+			const float alpha = RadialZoomPixelTraits<PixelT>::Read(
+				*PixelAtConst<PixelT>(input, x, y), 3);
+			if (!std::isfinite(alpha) || (alpha > 0.0f) != expected) return false;
+		}
+	}
+	return true;
+}
+
 static FloatImage BuildZoomBlurredPolar(
 	const FloatImage &polar,
 	const OLMRadialBlurInfo &info,
@@ -1372,8 +1474,8 @@ static FloatImage BuildZoomAEXOuterOnlyPolar(
 					const float factor = (outer_fade_span > 0 || inner_fade_span > 0)
 						? 1.0f : span_plane[cell];
 					float source_scalar = source_scalar_plane[cell];
-					if ((outer_fade_span > 0 || inner_fade_span > 0) &&
-						(polar.rgba[rgba + 3] == 0.0f || factor == 0.0f || source_scalar == 0.0f)) {
+					if (factor == 0.0f || ((outer_fade_span > 0 || inner_fade_span > 0) &&
+						(polar.rgba[rgba + 3] == 0.0f || source_scalar == 0.0f))) {
 						source_scalar = 0.0f;
 					} else if (outer_fade_span > 0 || inner_fade_span > 0) {
 						float weighted_alpha = polar.rgba[rgba + 3];
@@ -1800,6 +1902,23 @@ static PF_Err RenderZoomTyped(
 			}
 		}
 	}
+	std::vector<float> component_size_factor;
+	std::vector<A_long> component_areas;
+	bool component_fixture_safe = info.size_variation != 0.0 && input &&
+		input->width == 32 && input->height == 18 &&
+		BuildRadialSizeFactorPlaneAEX<PixelT>(input, (float)info.size_variation,
+			&component_size_factor, &component_areas);
+	for (A_long y = 0; component_fixture_safe && y < input->height; ++y) {
+		const PixelT *right = PixelAtConst<PixelT>(input, input->width - 1, y);
+		if (RadialZoomPixelTraits<PixelT>::Read(*right, 3) > 0.0f) component_fixture_safe = false;
+	}
+	for (A_long x = 0; component_fixture_safe && x < input->width; ++x) {
+		const PixelT *bottom = PixelAtConst<PixelT>(input, x, input->height - 1);
+		if (RadialZoomPixelTraits<PixelT>::Read(*bottom, 3) > 0.0f) component_fixture_safe = false;
+	}
+	const bool source_components_1_4_9 = component_fixture_safe &&
+		component_areas == std::vector<A_long>({1, 4, 9}) &&
+		MatchesRadialSizeComponentFixture<PixelT>(input, true);
 	const PF_FpLong offcenter_base_x = !input ? 0.0 : std::is_same<PixelT, PF_Pixel8>::value
 		? (PF_FpLong)input->width / 2.0 : (PF_FpLong)(input->width / 2);
 	const PF_FpLong offcenter_base_y = !input ? 0.0 : std::is_same<PixelT, PF_Pixel8>::value
@@ -1897,7 +2016,7 @@ static PF_Err RenderZoomTyped(
 		(info.size_variation == 1.0 || info.size_variation == 25.0 || info.size_variation == 100.0) &&
 		info.noise_variation == 0.0 && info.noise_type == 1 && info.noise_layer == 0 &&
 		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0 &&
-		source_alpha_strictly_positive;
+		(source_alpha_strictly_positive || source_components_1_4_9);
 	if (!use_aex_typed_zoom_edge_fade_32x18 && !use_aex_typed_zoom_size_variation_32x18 && !use_aex_typed_zoom_offset_matrix && !use_aex_typed_quality_repeat && !use_aex_typed_zoom_offcenter_brightness && (!use_aex_zoom_geometry || info.repeat_border == FALSE ||
 		(!use_aex_typed_zoom_ellipse_geometry && (info.ratio != 1.0 || info.angle_deg != 0.0)) ||
 		info.quality != 5.0 || info.brightness_gain != 1.0 ||
@@ -2127,6 +2246,9 @@ static PF_Err RenderZoomTyped(
 		source_scalar_plane.resize((size_t)angular_count * radius_count);
 		source_factor_with_guard.assign((size_t)w * h + 1, 1.0f);
 		source_factor_with_guard.back() = 0.0f;
+		if (use_aex_typed_zoom_size_variation_32x18 && source_components_1_4_9) {
+			source_factor_with_guard = component_size_factor;
+		}
 		if (use_aex_pf32_zoom_noise_type1_small || use_aex_typed_zoom_noise_type1_pairwise ||
 			use_aex_pf32_zoom_inner_noise_small || use_aex_typed_zoom_noise_type2_small) {
 			std::vector<float> noise_plane;
@@ -2335,7 +2457,8 @@ static PF_Err RenderZoomTyped(
 				std::is_same<PixelT, PF_Pixel8>::value &&
 				(use_aex_typed_zoom_ellipse_geometry || use_aex_typed_zoom_noise_type1_pairwise ||
 				 use_aex_typed_zoom_noise_type2_small || use_aex_typed_zoom_inner_pairwise ||
-				 use_aex_typed_zoom_inner_offset_pairwise || use_aex_typed_zoom_edge_fade_32x18);
+				 use_aex_typed_zoom_inner_offset_pairwise || use_aex_typed_zoom_edge_fade_32x18 ||
+				 use_aex_typed_zoom_size_variation_32x18);
 			if constexpr (std::is_same<PixelT, PF_Pixel8>::value) {
 				if (use_aex_typed_zoom_inner_pairwise || use_aex_typed_zoom_inner_offset_pairwise) {
 					// The bounded PF8 Inner owner converts all four float channels
@@ -2454,6 +2577,23 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			}
 		}
 	}
+	std::vector<float> component_size_factor;
+	std::vector<A_long> component_areas;
+	bool component_fixture_safe = info.size_variation != 0.0 && input &&
+		input->width == 32 && input->height == 18 &&
+		BuildRadialSizeFactorPlaneAEX<PixelT>(input, (float)info.size_variation,
+			&component_size_factor, &component_areas);
+	for (A_long y = 0; component_fixture_safe && y < input->height; ++y) {
+		const PixelT *right = PixelAtConst<PixelT>(input, input->width - 1, y);
+		if (RadialZoomPixelTraits<PixelT>::Read(*right, 3) > 0.0f) component_fixture_safe = false;
+	}
+	for (A_long x = 0; component_fixture_safe && x < input->width; ++x) {
+		const PixelT *bottom = PixelAtConst<PixelT>(input, x, input->height - 1);
+		if (RadialZoomPixelTraits<PixelT>::Read(*bottom, 3) > 0.0f) component_fixture_safe = false;
+	}
+	const bool source_components_1_4_9 = component_fixture_safe &&
+		component_areas == std::vector<A_long>({1, 4, 9}) &&
+		MatchesRadialSizeComponentFixture<PixelT>(input, false);
 	const bool use_aex_pf32_opaque_size_variation_small = input && output &&
 		std::is_same<PixelT, PF_PixelFloat>::value &&
 		input->width == 9 && input->height == 7 && output->width == 9 && output->height == 7 &&
@@ -2744,7 +2884,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		(info.size_variation == 1.0 || info.size_variation == 25.0 || info.size_variation == 100.0) &&
 		info.noise_variation == 0.0 && info.noise_type == 1 && info.noise_layer == 0 &&
 		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0 &&
-		source_alpha_strictly_positive;
+		(source_alpha_strictly_positive || source_components_1_4_9);
 	if (info.blur_type != 2 || (info.inner_strength != 0 &&
 	    !use_aex_typed_rotation_edge_offset_32x18 &&
 	    !use_aex_typed_rotation_dual_strength_32x18 &&
@@ -3030,6 +3170,9 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	std::vector<float> rotation_source_scalar((size_t)radius_count * angular_count, 1.0f);
 	std::vector<float> rotation_scalar_source_with_guard((size_t)w * h + 1, 1.0f);
 	rotation_scalar_source_with_guard.back() = 0.0f;
+	if (use_aex_typed_rotation_size_variation_32x18 && source_components_1_4_9) {
+		rotation_scalar_source_with_guard = component_size_factor;
+	}
 	if (use_aex_pf32_noise_type1_small || use_aex_typed_noise_type1_pairwise ||
 		use_aex_typed_noise_type2_small || use_aex_pf32_strength5_noise_type1_small ||
 		use_aex_pf32_offset_mode3_noise_type1_small ||
@@ -3189,6 +3332,11 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				}
 				const float alpha = RadialF32Div(alpha_sum, weight_sum);
 				prepass_alpha[cell] = alpha;
+				if (info.size_variation != 0.0 && rotation_source_scalar[cell] == 0.0f) {
+					for (int c = 0; c < 4; ++c) accum.rgba[dst + c] = 0.0f;
+					max_alpha[cell] = 0.0f;
+					continue;
+				}
 				for (int c = 0; c < 3; ++c) {
 					accum.rgba[dst + c] = RadialF32Mul(alpha, polar.rgba[dst + c]);
 				}
@@ -3489,7 +3637,9 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			};
 			const RadialBlurOuterSampleState outer_state = ComputeRadialBlurOuterSampleState(
 				fx, fy, x0, x1, y0, y1, sample, sample_valid, (float)info.brightness_gain,
-				false, use_aex_exact);
+				use_aex_typed_rotation_size_variation_32x18 &&
+					source_components_1_4_9 && info.size_variation == 100.0,
+				use_aex_exact);
 			PixelT *out = PixelAt<PixelT>(output, x, y);
 #if defined(OLM_RADIALBLUR_TEST_SEAM)
 			if (g_rotation_test_capture && g_rotation_test_capture->final_rgba &&

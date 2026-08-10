@@ -1,5 +1,5 @@
 {
-  "boundary": "This probe establishes that the Zoom consumer receives and uses the nontrivial Size Variation prepass. It does not by itself expose the owner source-size-factor/source-span arrays or prove the current Mac implementation exact.",
+  "boundary": "Exact only for the six enumerated Zoom typed/value cells and this fixed component fixture. The probe does not expose the owner source-size-factor/source-span arrays; other component shapes, connectivity, values, geometries, modes, and parameter interactions remain unproved.",
   "cases": [
     {
       "actual_sha256": {
@@ -12,6 +12,22 @@
         "output": true,
         "post_blur": true,
         "pre_blur": false
+      },
+      "production_diagnostics": {
+        "output_difference": {
+          "byte_count": 0,
+          "first": null,
+          "padding_byte_count": 0
+        },
+        "post_blur_first_float_difference": {
+          "first": null,
+          "float_count": 0
+        }
+      },
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
       },
       "size0_sha256": {
         "output": "eb7a363f9e4040a8d2d0353d6f6bf18b15785691c481ca1026ba13f6f70c79e0",
@@ -32,6 +48,22 @@
         "post_blur": true,
         "pre_blur": false
       },
+      "production_diagnostics": {
+        "output_difference": {
+          "byte_count": 0,
+          "first": null,
+          "padding_byte_count": 0
+        },
+        "post_blur_first_float_difference": {
+          "first": null,
+          "float_count": 0
+        }
+      },
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
       "size0_sha256": {
         "output": "eb7a363f9e4040a8d2d0353d6f6bf18b15785691c481ca1026ba13f6f70c79e0",
         "post_blur": "1c1f824d56b8e3556da38d316c3bb8855c5dc4971710f3f07ff007a0a2cd15a4",
@@ -50,6 +82,22 @@
         "output": true,
         "post_blur": true,
         "pre_blur": false
+      },
+      "production_diagnostics": {
+        "output_difference": {
+          "byte_count": 0,
+          "first": null,
+          "padding_byte_count": 0
+        },
+        "post_blur_first_float_difference": {
+          "first": null,
+          "float_count": 0
+        }
+      },
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
       },
       "size0_sha256": {
         "output": "1720234e9ef969e6f0263a6c50aeed44461143b601c2dbe6947ab66bc21e9374",
@@ -70,6 +118,22 @@
         "post_blur": true,
         "pre_blur": false
       },
+      "production_diagnostics": {
+        "output_difference": {
+          "byte_count": 0,
+          "first": null,
+          "padding_byte_count": 0
+        },
+        "post_blur_first_float_difference": {
+          "first": null,
+          "float_count": 0
+        }
+      },
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
       "size0_sha256": {
         "output": "1720234e9ef969e6f0263a6c50aeed44461143b601c2dbe6947ab66bc21e9374",
         "post_blur": "757f90b6c6a8656be3c88e281f84e36d89b4c49d1c2afe0840bd10cb261c23ac",
@@ -89,6 +153,22 @@
         "post_blur": true,
         "pre_blur": false
       },
+      "production_diagnostics": {
+        "output_difference": {
+          "byte_count": 0,
+          "first": null,
+          "padding_byte_count": 0
+        },
+        "post_blur_first_float_difference": {
+          "first": null,
+          "float_count": 0
+        }
+      },
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
       "size0_sha256": {
         "output": "7b1e04192d18f7205a96be5e207d41325dc7b05859b6de1044b794b5ecf5944c",
         "post_blur": "bd0ca2136f9400d456e3ba1328f035aa7e5ba0b98109a3a3adfeec0fc8538c90",
@@ -107,6 +187,22 @@
         "output": true,
         "post_blur": true,
         "pre_blur": false
+      },
+      "production_diagnostics": {
+        "output_difference": {
+          "byte_count": 0,
+          "first": null,
+          "padding_byte_count": 0
+        },
+        "post_blur_first_float_difference": {
+          "first": null,
+          "float_count": 0
+        }
+      },
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
       },
       "size0_sha256": {
         "output": "7b1e04192d18f7205a96be5e207d41325dc7b05859b6de1044b794b5ecf5944c",
@@ -133,6 +229,7 @@
   },
   "kind": "olmradialblur_zoom_size_variation_components_actual_aex_20260811",
   "ordering_witness": "For all six typed/value cells, pre_blur is byte-identical to Size0 while post_blur and output differ. Size Variation is therefore consumed after initial polar sampling and before/during the strength collapse.",
+  "production": "Current shared OLMRadialBlur.cpp compiled directly for each typed cell; all three compared artifacts byte-exact against actual AEX.",
   "scope": "Pinned actual AEX; Zoom 32x18 centered Outer4/Inner0 neutral tuple; PF8/PF16/PF32; Size Variation 25/100 against Size0; transparent background with separated four-connected opaque component areas 1,4,9.",
-  "status": "6/6 actual-AEX Zoom post-sampling consumers distinguish nonzero Size Variation"
+  "status": "6/6 actual-AEX Zoom post-sampling consumers distinguished; shared-direct production exact"
 }
