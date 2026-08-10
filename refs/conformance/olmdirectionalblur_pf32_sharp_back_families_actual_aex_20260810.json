@@ -1,0 +1,175 @@
+{
+  "admission": "Only the listed fixed-route representatives are admitted; neighboring values and cross-families remain fail-closed.",
+  "depth": "PF32",
+  "families": {
+    "Back Alpha Fade": [
+      0,
+      50,
+      100
+    ],
+    "Back Sharp Tail": [
+      0,
+      50,
+      100
+    ],
+    "Front Sharp Tail": [
+      0,
+      50,
+      100
+    ],
+    "natural_cross": {
+      "back_alpha_fade": 50,
+      "back_sharp_tail": 50
+    }
+  },
+  "fixed_route": {
+    "angle": 45,
+    "brightness_gain": 1,
+    "geometry": "16x16 padded ARGB128",
+    "noise_variation": 0,
+    "render_scale": [
+      1,
+      1
+    ],
+    "size_variation": 0
+  },
+  "not_proven": [
+    "PF16",
+    "other geometry",
+    "other values",
+    "front/back simultaneous blur",
+    "size/noise/fade/tail combinations",
+    "native AE export"
+  ],
+  "plugin": "OLMDirectionalBlur",
+  "representatives": [
+    {
+      "back_alpha_fade": 0,
+      "back_sharp_tail": 0,
+      "back_strength": 0,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "family": "front_sharp",
+      "front_sharp_tail": 0,
+      "front_strength": 8,
+      "raw_sha256": "a0f5e1deee28cce8362fcf078c62ef0bfb8ec23ed296f88089015de35bab6d25"
+    },
+    {
+      "back_alpha_fade": 0,
+      "back_sharp_tail": 0,
+      "back_strength": 0,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "family": "front_sharp",
+      "front_sharp_tail": 50,
+      "front_strength": 8,
+      "raw_sha256": "18d2b2f763cae705566c0e6196b16e01b529c480bcb65f9095f2f32f72cfd3dd"
+    },
+    {
+      "back_alpha_fade": 0,
+      "back_sharp_tail": 0,
+      "back_strength": 0,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "family": "front_sharp",
+      "front_sharp_tail": 100,
+      "front_strength": 8,
+      "raw_sha256": "b1d736b50cd12f3ecc6415e714e765acbc73d54ffc3a68e36b19d8f39df292ec"
+    },
+    {
+      "back_alpha_fade": 0,
+      "back_sharp_tail": 0,
+      "back_strength": 8,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "family": "back_alpha_fade",
+      "front_sharp_tail": 0,
+      "front_strength": 0,
+      "raw_sha256": "0bd494052301ebe93916cac3e3eea985076d77ac32ee6344d648b9119973eca3"
+    },
+    {
+      "back_alpha_fade": 50,
+      "back_sharp_tail": 0,
+      "back_strength": 8,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "family": "back_alpha_fade",
+      "front_sharp_tail": 0,
+      "front_strength": 0,
+      "raw_sha256": "82404474be2bf1a7bbdf05273293658878534cf2162903a6bd98aea131e5bf5e"
+    },
+    {
+      "back_alpha_fade": 100,
+      "back_sharp_tail": 0,
+      "back_strength": 8,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "family": "back_alpha_fade",
+      "front_sharp_tail": 0,
+      "front_strength": 0,
+      "raw_sha256": "bded780bcb0181dcd7419e8ea0effb01b4a63b958309ca27661fdecdd83352d7"
+    },
+    {
+      "back_alpha_fade": 0,
+      "back_sharp_tail": 50,
+      "back_strength": 8,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "family": "back_sharp",
+      "front_sharp_tail": 0,
+      "front_strength": 0,
+      "raw_sha256": "ce58bd9fc12b7c599b6be958e458088ffd839dd4ca9513d835d3ec580070b56e"
+    },
+    {
+      "back_alpha_fade": 0,
+      "back_sharp_tail": 100,
+      "back_strength": 8,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "family": "back_sharp",
+      "front_sharp_tail": 0,
+      "front_strength": 0,
+      "raw_sha256": "d2916d335bd69b1361e01966176f92847577c2bbe9c79cca2a4cdf8684588dba"
+    },
+    {
+      "back_alpha_fade": 50,
+      "back_sharp_tail": 50,
+      "back_strength": 8,
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "family": "back_fade_sharp_cross",
+      "front_sharp_tail": 0,
+      "front_strength": 0,
+      "raw_sha256": "fa2f3424e0e2fd4cb350a4388afcaf4a8187cbf9576a0720874104371f166cdc"
+    }
+  ],
+  "schema_version": 1,
+  "status": "exact_bounded_families"
+}

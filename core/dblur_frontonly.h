@@ -54,6 +54,14 @@ extern "C" int olm_dblur_minimal_fade_argb32(
     float noise_variation_percent, int noise_type, std::uint32_t seed,
     int noise_offset_ui, float thickness_ui, const float* layer_argb,
     int layer_rowbytes);
+extern "C" int olm_dblur_full_argb32(
+    const float* input_argb, float* output_argb, int width, int height,
+    int front_strength, int front_alpha_fade, float front_sharp_tail_percent,
+    int back_strength, int back_alpha_fade, float back_sharp_tail_percent,
+    float size_variation_percent, float angle_degrees, float brightness_gain,
+    float noise_variation_percent, int noise_type, std::uint32_t seed,
+    int noise_offset_ui, float thickness_ui, const float* layer_argb,
+    int layer_rowbytes);
 
 // Extended mode-1 front-only path. `render_scale` is the AE downsample scale
 // already projected onto the blur direction; size/sharp values are UI

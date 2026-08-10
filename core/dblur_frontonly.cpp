@@ -525,6 +525,9 @@ static int render_minimal_argb32(const float* input_argb,
                                  int front_strength,
                                  int back_strength,
                                  int front_alpha_fade,
+                                 float front_sharp_tail_percent,
+                                 int back_alpha_fade,
+                                 float back_sharp_tail_percent,
                                  float size_variation_percent,
                                  float angle_degrees,
                                  float brightness_gain,
@@ -536,7 +539,9 @@ static int render_minimal_argb32(const float* input_argb,
                                  const float* layer_argb,
                                  int layer_rowbytes) {
     if (!input_argb || !output_argb || width <= 0 || height <= 0 ||
-        (front_strength <= 0 && back_strength <= 0) || front_alpha_fade < 0) return -1;
+        (front_strength <= 0 && back_strength <= 0) || front_alpha_fade < 0 ||
+        back_alpha_fade < 0 || !std::isfinite(front_sharp_tail_percent) ||
+        !std::isfinite(back_sharp_tail_percent)) return -1;
     try {
         const float diagonal = std::sqrt(static_cast<float>(width * width + height * height));
         const int half_span = 2 - static_cast<int>(diagonal * -0.5f);
@@ -555,7 +560,8 @@ static int render_minimal_argb32(const float* input_argb,
         olm_dblur_rotate_rgba_f32(a.data(), b.data(), ww, wh, angle);
         a = b; std::fill(b.begin(), b.end(), 0.0f);
         float component_divisor = 1.0f;
-        if (size_variation_percent != 0.0f) {
+        if (size_variation_percent != 0.0f || front_sharp_tail_percent != 0.0f ||
+            back_sharp_tail_percent != 0.0f) {
             component_divisor = build_component_map(a, ww, wh, &map);
             if (component_divisor <= 0.0f) component_divisor = 1.0f;
         } else {
@@ -565,9 +571,13 @@ static int render_minimal_argb32(const float* input_argb,
         const std::vector<float> back_weights = gaussian_weights(back_strength);
         const std::vector<float> prepass_front_weights =
             gaussian_weights(std::max(front_alpha_fade, 1));
+        const std::vector<float> prepass_back_weights =
+            gaussian_weights(std::max(back_alpha_fade, 1));
         const float empty = 0.0f;
         const float* prepass_front =
             front_alpha_fade > 0 ? prepass_front_weights.data() : &empty;
+        const float* prepass_back =
+            back_alpha_fade > 0 ? prepass_back_weights.data() : &empty;
         if (noise_variation_percent > 0.0f && noise_type == 3) {
             std::vector<float> field_source(wp, 0.0f), field_rotated(wp, 0.0f);
             olm_dblur_layer_field_argb32(layer_argb, width, height, layer_rowbytes,
@@ -575,11 +585,12 @@ static int render_minimal_argb32(const float* input_argb,
             olm_dblur_rotate_scalar_f32(field_source.data(), field_rotated.data(), ww, wh, angle);
             olm_dblur_rowdriver_field_f32(0, wh, a.data(), b.data(), ww,
                 noise_variation_percent / 100.0f, size_variation_percent / 100.0f,
-                component_divisor, 0.0f, 0.0f,
+                component_divisor, front_sharp_tail_percent / 100.0f,
+                back_sharp_tail_percent / 100.0f,
                 front_strength > 0 ? front_weights.data() : &empty,
-                back_strength > 0 ? back_weights.data() : &empty, prepass_front, &empty,
+                back_strength > 0 ? back_weights.data() : &empty, prepass_front, prepass_back,
                 den.data(), alpha.data(), map.data(), front_strength, back_strength,
-                front_alpha_fade, 0,
+                front_alpha_fade, back_alpha_fade,
                 field_rotated.data());
         } else if (noise_variation_percent > 0.0f) {
             std::vector<float> noise; int nw = 0, nh = 0;
@@ -588,19 +599,22 @@ static int render_minimal_argb32(const float* input_argb,
                     seed, &noise, &nw, &nh)) return -1;
             olm_dblur_rowdriver_noise_f32(0, wh, a.data(), b.data(), ww,
                 noise_variation_percent / 100.0f, size_variation_percent / 100.0f,
-                component_divisor, 0.0f, 0.0f,
+                component_divisor, front_sharp_tail_percent / 100.0f,
+                back_sharp_tail_percent / 100.0f,
                 front_strength > 0 ? front_weights.data() : &empty,
-                back_strength > 0 ? back_weights.data() : &empty, prepass_front, &empty,
+                back_strength > 0 ? back_weights.data() : &empty, prepass_front, prepass_back,
                 den.data(), alpha.data(), map.data(), front_strength, back_strength,
-                front_alpha_fade, 0,
+                front_alpha_fade, back_alpha_fade,
                 noise.data(), nw, thickness_ui, noise_type == 1 ? 1 : 0);
         } else {
             olm_dblur_rowdriver_f32(0, wh, a.data(), b.data(), ww, 1, 1.0f,
                 size_variation_percent / 100.0f, component_divisor,
-                0.0f, 0.0f, front_strength > 0 ? front_weights.data() : &empty,
-                back_strength > 0 ? back_weights.data() : &empty, prepass_front, &empty,
+                front_sharp_tail_percent / 100.0f,
+                back_sharp_tail_percent / 100.0f,
+                front_strength > 0 ? front_weights.data() : &empty,
+                back_strength > 0 ? back_weights.data() : &empty, prepass_front, prepass_back,
                 den.data(), alpha.data(), map.data(), front_strength, back_strength,
-                front_alpha_fade, 0);
+                front_alpha_fade, back_alpha_fade);
         }
         for (std::size_t p = 0; p < wp; ++p) if (den[p] > 0.0f) {
             b[p * 4] /= den[p]; b[p * 4 + 1] /= den[p]; b[p * 4 + 2] /= den[p];
@@ -635,7 +649,7 @@ extern "C" int olm_dblur_minimal_argb32(const float* input_argb,
                                          int layer_rowbytes) {
     return render_minimal_argb32(
         input_argb, output_argb, width, height, front_strength, back_strength,
-        0, size_variation_percent, angle_degrees, brightness_gain,
+        0, 0.0f, 0, 0.0f, size_variation_percent, angle_degrees, brightness_gain,
         noise_variation_percent, noise_type, seed, noise_offset_ui,
         thickness_ui, layer_argb, layer_rowbytes);
 }
@@ -649,7 +663,23 @@ extern "C" int olm_dblur_minimal_fade_argb32(
     int layer_rowbytes) {
     return render_minimal_argb32(
         input_argb, output_argb, width, height, front_strength, back_strength,
-        front_alpha_fade, size_variation_percent, angle_degrees, brightness_gain,
+        front_alpha_fade, 0.0f, 0, 0.0f, size_variation_percent, angle_degrees, brightness_gain,
         noise_variation_percent, noise_type, seed, noise_offset_ui,
         thickness_ui, layer_argb, layer_rowbytes);
+}
+
+extern "C" int olm_dblur_full_argb32(
+    const float* input_argb, float* output_argb, int width, int height,
+    int front_strength, int front_alpha_fade, float front_sharp_tail_percent,
+    int back_strength, int back_alpha_fade, float back_sharp_tail_percent,
+    float size_variation_percent, float angle_degrees, float brightness_gain,
+    float noise_variation_percent, int noise_type, std::uint32_t seed,
+    int noise_offset_ui, float thickness_ui, const float* layer_argb,
+    int layer_rowbytes) {
+    return render_minimal_argb32(
+        input_argb, output_argb, width, height, front_strength, back_strength,
+        front_alpha_fade, front_sharp_tail_percent, back_alpha_fade,
+        back_sharp_tail_percent, size_variation_percent, angle_degrees,
+        brightness_gain, noise_variation_percent, noise_type, seed,
+        noise_offset_ui, thickness_ui, layer_argb, layer_rowbytes);
 }
