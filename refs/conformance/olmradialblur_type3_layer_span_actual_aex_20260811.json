@@ -1,0 +1,310 @@
+{
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "formula": "f32(f32(f32(NV*luma)+f32(1-NV))*size_factor)",
+  "luminance": "f32((double(f32(R*A))*0.299 + double(f32(G*A))*0.587) + double(f32(B*A))*0.114)",
+  "not_admitted": [
+    "RenderWorld Type3",
+    "native AE checkout conversion",
+    "other geometry/origins",
+    "pixel output"
+  ],
+  "origin_rule": "layer local=(input.left-layer.left+x,input.top-layer.top+y); OOB luminance=0",
+  "plugin": "OLMRadialBlur",
+  "rows": [
+    {
+      "composer": "0x180006830",
+      "converted_argb": [
+        [
+          0.501960813999176,
+          0.7490196228027344,
+          0.250980406999588,
+          1.0
+        ],
+        [
+          1.0,
+          0.125490203499794,
+          0.501960813999176,
+          0.874509871006012
+        ]
+      ],
+      "converter": "0x1800172f0",
+      "depth": 8,
+      "invariance_control": {
+        "exact": true,
+        "noise_offset": -17.25,
+        "seed": 3735928559,
+        "span_sha256": "be3b4c6797c0808630840eabdb38ffd951142cc45eb5cd42b143160fdeae272b",
+        "thickness": 99.0
+      },
+      "mapped_luma": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.24359272420406342,
+        0.43186670541763306
+      ],
+      "noise_offset": 0.0,
+      "noise_variation": 25,
+      "seed": 1,
+      "span_sha256": "be3b4c6797c0808630840eabdb38ffd951142cc45eb5cd42b143160fdeae272b",
+      "span_words": [
+        1044381696,
+        1052770304,
+        1058013184,
+        1061158912,
+        1057078884,
+        1050983111
+      ],
+      "thickness": 3.0
+    },
+    {
+      "composer": "0x180006830",
+      "converted_argb": [
+        [
+          0.501960813999176,
+          0.7490196228027344,
+          0.250980406999588,
+          1.0
+        ],
+        [
+          1.0,
+          0.125490203499794,
+          0.501960813999176,
+          0.874509871006012
+        ]
+      ],
+      "converter": "0x1800172f0",
+      "depth": 8,
+      "invariance_control": {
+        "exact": true,
+        "noise_offset": -17.25,
+        "seed": 3735928559,
+        "span_sha256": "e845137447d51ad7e3c21803cb21135dea81d23f62784312c943468e888b3568",
+        "thickness": 99.0
+      },
+      "mapped_luma": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.24359272420406342,
+        0.43186670541763306
+      ],
+      "noise_offset": 0.0,
+      "noise_variation": 100,
+      "seed": 1,
+      "span_sha256": "e845137447d51ad7e3c21803cb21135dea81d23f62784312c943468e888b3568",
+      "span_words": [
+        0,
+        0,
+        0,
+        0,
+        1042015803,
+        1042667066
+      ],
+      "thickness": 3.0
+    },
+    {
+      "composer": "0x1800065c0",
+      "converted_argb": [
+        [
+          0.5,
+          0.75,
+          0.25,
+          1.0
+        ],
+        [
+          1.0,
+          0.125,
+          0.5,
+          0.875
+        ]
+      ],
+      "converter": "0x180017360",
+      "depth": 16,
+      "invariance_control": {
+        "exact": true,
+        "noise_offset": -17.25,
+        "seed": 3735928559,
+        "span_sha256": "9267b1d2d54677a2d8f4f50723e5b3687896ebc34bce6588c0a605e03d92f539",
+        "thickness": 99.0
+      },
+      "mapped_luma": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.24250000715255737,
+        0.43062499165534973
+      ],
+      "noise_offset": 0.0,
+      "noise_variation": 25,
+      "seed": 1,
+      "span_sha256": "9267b1d2d54677a2d8f4f50723e5b3687896ebc34bce6588c0a605e03d92f539",
+      "span_words": [
+        1044381696,
+        1052770304,
+        1058013184,
+        1061158912,
+        1057076019,
+        1050979205
+      ],
+      "thickness": 3.0
+    },
+    {
+      "composer": "0x1800065c0",
+      "converted_argb": [
+        [
+          0.5,
+          0.75,
+          0.25,
+          1.0
+        ],
+        [
+          1.0,
+          0.125,
+          0.5,
+          0.875
+        ]
+      ],
+      "converter": "0x180017360",
+      "depth": 16,
+      "invariance_control": {
+        "exact": true,
+        "noise_offset": -17.25,
+        "seed": 3735928559,
+        "span_sha256": "31cbf2d6e2aa2288ba15e62d0e66bdf5e8781e43de47b41b78048ba52ee31c67",
+        "thickness": 99.0
+      },
+      "mapped_luma": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.24250000715255737,
+        0.43062499165534973
+      ],
+      "noise_offset": 0.0,
+      "noise_variation": 100,
+      "seed": 1,
+      "span_sha256": "31cbf2d6e2aa2288ba15e62d0e66bdf5e8781e43de47b41b78048ba52ee31c67",
+      "span_words": [
+        0,
+        0,
+        0,
+        0,
+        1041969972,
+        1042635817
+      ],
+      "thickness": 3.0
+    },
+    {
+      "composer": "0x180006aa0",
+      "converted_argb": [
+        [
+          0.5,
+          0.75,
+          0.25,
+          1.0
+        ],
+        [
+          1.0,
+          0.125,
+          0.5,
+          0.875
+        ]
+      ],
+      "converter": "0x1800173d0",
+      "depth": 32,
+      "invariance_control": {
+        "exact": true,
+        "noise_offset": -17.25,
+        "seed": 3735928559,
+        "span_sha256": "9267b1d2d54677a2d8f4f50723e5b3687896ebc34bce6588c0a605e03d92f539",
+        "thickness": 99.0
+      },
+      "mapped_luma": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.24250000715255737,
+        0.43062499165534973
+      ],
+      "noise_offset": 0.0,
+      "noise_variation": 25,
+      "seed": 1,
+      "span_sha256": "9267b1d2d54677a2d8f4f50723e5b3687896ebc34bce6588c0a605e03d92f539",
+      "span_words": [
+        1044381696,
+        1052770304,
+        1058013184,
+        1061158912,
+        1057076019,
+        1050979205
+      ],
+      "thickness": 3.0
+    },
+    {
+      "composer": "0x180006aa0",
+      "converted_argb": [
+        [
+          0.5,
+          0.75,
+          0.25,
+          1.0
+        ],
+        [
+          1.0,
+          0.125,
+          0.5,
+          0.875
+        ]
+      ],
+      "converter": "0x1800173d0",
+      "depth": 32,
+      "invariance_control": {
+        "exact": true,
+        "noise_offset": -17.25,
+        "seed": 3735928559,
+        "span_sha256": "31cbf2d6e2aa2288ba15e62d0e66bdf5e8781e43de47b41b78048ba52ee31c67",
+        "thickness": 99.0
+      },
+      "mapped_luma": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.24250000715255737,
+        0.43062499165534973
+      ],
+      "noise_offset": 0.0,
+      "noise_variation": 100,
+      "seed": 1,
+      "span_sha256": "31cbf2d6e2aa2288ba15e62d0e66bdf5e8781e43de47b41b78048ba52ee31c67",
+      "span_words": [
+        0,
+        0,
+        0,
+        0,
+        1041969972,
+        1042635817
+      ],
+      "thickness": 3.0
+    }
+  ],
+  "schema_version": 1,
+  "scope": "Type 3 Layer-to-span composer only; direct actual-AEX execution, 3x2 equal-size worlds, shifted origins",
+  "static_control_flow": {
+    "luminance": "0x18000b630",
+    "parameter_checkout": "0x1800088b0-0x1800088c9",
+    "pf16_owner_validation": "0x180007058-0x18000714f",
+    "pf32_owner_validation": "0x180008078-0x18000816f",
+    "pf8_owner_validation": "0x180007868-0x18000795f",
+    "seed_offset_thickness": "Type3 bypasses FUN_180009380, its only generator call supplied with ctx+0xfc/+0x100/+0x104",
+    "zoom_rotation": "composition precedes blur_type dispatch at 0x1800072d3/0x180007ae3/0x1800082f3"
+  },
+  "status": "exact_static_and_executed_composer_contract",
+  "zero_fill_boundary": "A zero-filled checked-out world yields zero luminance; a null/rejected world skips composition and can leave allocator-zero span. Neither observation proves native AE Type3 output."
+}
