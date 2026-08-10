@@ -1200,11 +1200,12 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		// irrespective of the popup selection.  Integer planes encode boundary
 		// depth as 0, 255, 510, ... while PF32 uses the equivalent pixel-domain
 		// distance with the boundary at one.
-		const A_long thin_distance_type = 1;
+		const A_long thin_distance_type = info.color_keep
+		    ? info.edge_thin_distance_type : 1;
 		std::vector<float> dist = MatteDistanceTo(nonmatch, w, h, thin_distance_type);
 		const float amount = (float)std::fabs(info.edge_thin_amount);
 		for (A_long i = 0; i < w * h; ++i) {
-			const float native_dist = OLMCKPixelTraits<PixelT>::is_32bpc()
+			const float native_dist = (info.color_keep || OLMCKPixelTraits<PixelT>::is_32bpc())
 			    ? dist[i] : std::max(0.0f, dist[i] - 1.0f) * 255.0f;
 			matched[i] = (matched[i] && native_dist > amount) ? 1 : 0;
 		}
@@ -1213,9 +1214,13 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		// PF8/PF16 store the positive expansion plane in 255 metric units;
 		// PF32 stores pixel distances.  The same typed-plane distinction also
 		// appears in Edge Blur and is observable before final quantization here.
-		const float distance_scale = OLMCKPixelTraits<PixelT>::is_32bpc() ? 1.0f : 255.0f;
+		const float distance_scale = (info.color_keep || OLMCKPixelTraits<PixelT>::is_32bpc()) ? 1.0f : 255.0f;
+		const float limit = (float)info.edge_thin_amount +
+		    ((info.color_keep &&
+		      (info.edge_thin_distance_type == 0 || info.edge_thin_distance_type == 2))
+		         ? 2.0f : 0.0f);
 		for (A_long i = 0; i < w * h; ++i) {
-			matched[i] = (matched[i] || dist[i] * distance_scale <= info.edge_thin_amount) ? 1 : 0;
+			matched[i] = (matched[i] || dist[i] * distance_scale <= limit) ? 1 : 0;
 		}
 	}
 
@@ -1236,13 +1241,15 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				else
 					OLMCKPixelTraits<PixelT>::zero_alpha(*outP);
 			}
-			else {
-				size_t idx = (size_t)y * (size_t)w + (size_t)x;
-				int key_index = matched_index[idx];
-				if (info.color_keep && info.enable_replace && key_index >= 0 &&
-				    key_index < OLMCOLORKEY_MAX_COLORS && info.use_replace_color[key_index]) {
-					OLMCKPixelTraits<PixelT>::replace_rgb(*outP, info.replace_colors[key_index]);
-				}
+			// Replacement precedes the Edge Thin/Blur orchestration in the AEX.
+			// On straight input its RGB therefore survives a later alpha clear.
+			// Premultiplied pixels retain the historical all-channel clear.
+			size_t idx = (size_t)y * (size_t)w + (size_t)x;
+			int key_index = matched_index[idx];
+			if (info.color_keep && info.enable_replace && key_index >= 0 &&
+			    key_index < OLMCOLORKEY_MAX_COLORS && info.use_replace_color[key_index] &&
+			    (keep || !info.premultiplied)) {
+				OLMCKPixelTraits<PixelT>::replace_rgb(*outP, info.replace_colors[key_index]);
 			}
 		}
 	}
@@ -1311,6 +1318,9 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				    (info.edge_blur_amount == 1.0 || info.edge_blur_amount == 2.0 ||
 				     info.edge_blur_amount == 4.0) &&
 				    dist[idx] == 0.0f) {
+					OLMCKPixelTraits<PixelT>::scale_alpha_unbounded(*outP, weight);
+				} else if (info.color_keep && info.edge_blur_direction == 2 &&
+				           info.edge_blur_amount == 4.0) {
 					OLMCKPixelTraits<PixelT>::scale_alpha_unbounded(*outP, weight);
 				} else {
 					OLMCKPixelTraits<PixelT>::scale_alpha_only(*outP, weight);
