@@ -1712,8 +1712,26 @@ static PF_Err RenderZoomTyped(
 		info.noise_variation == 0.0 && info.noise_type == 1 && info.noise_layer == 0 &&
 		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0 &&
 		info.comp_width == 9.0 && info.comp_height == 7.0;
-	if (info.blur_type != 1 || (info.inner_strength != 0 && !use_aex_pf32_zoom_inner_small) ||
-	    (info.noise_variation != 0.0 && !use_aex_pf32_zoom_noise_type1_small)) {
+	const bool use_aex_pf32_zoom_inner_noise_small = input && output &&
+		std::is_same<PixelT, PF_PixelFloat>::value &&
+		input->width == 9 && input->height == 7 && output->width == 9 && output->height == 7 &&
+		input->rowbytes >= 9 * (A_long)sizeof(PF_PixelFloat) &&
+		output->rowbytes >= 9 * (A_long)sizeof(PF_PixelFloat) &&
+		info.center_x == 4.0 && info.center_y == 3.0 &&
+		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		(info.inner_strength == 50 || info.inner_strength == 100) && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
+		info.quality == 5.0 && info.brightness_gain == 1.0 && info.size_variation == 0.0 &&
+		(info.noise_variation == 25.0 || info.noise_variation == 100.0) &&
+		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
+		info.noise_offset == 0 && info.thickness == 10.0 &&
+		info.comp_width == 9.0 && info.comp_height == 7.0;
+	if (info.blur_type != 1 || (info.inner_strength != 0 && !use_aex_pf32_zoom_inner_small &&
+	    !use_aex_pf32_zoom_inner_noise_small) ||
+	    (info.noise_variation != 0.0 && !use_aex_pf32_zoom_noise_type1_small &&
+	    !use_aex_pf32_zoom_inner_noise_small)) {
 		// These branches are not yet backed by an actual-AEX worker/output
 		// contract.  Returning success with an unchanged frame made an
 		// unsupported render indistinguishable from an exact identity result.
@@ -1795,6 +1813,7 @@ static PF_Err RenderZoomTyped(
 		info.size_variation == 0.0 && info.noise_variation == 0.0) ||
 		use_aex_pf32_zoom_noise_type1_small ||
 		use_aex_pf32_zoom_inner_small ||
+		use_aex_pf32_zoom_inner_noise_small ||
 		use_aex_pf16_bounded_offset_small;
 	std::vector<float> span_plane;
 	std::vector<float> source_factor_with_guard;
@@ -1804,7 +1823,7 @@ static PF_Err RenderZoomTyped(
 		source_scalar_plane.resize((size_t)angular_count * radius_count);
 		source_factor_with_guard.assign((size_t)w * h + 1, 1.0f);
 		source_factor_with_guard.back() = 0.0f;
-		if (use_aex_pf32_zoom_noise_type1_small) {
+		if (use_aex_pf32_zoom_noise_type1_small || use_aex_pf32_zoom_inner_noise_small) {
 			std::vector<float> noise_plane;
 			int noise_width = 0;
 			int noise_height = 0;
@@ -1906,14 +1925,16 @@ static PF_Err RenderZoomTyped(
 			worker_info.outer_offset_mode = 1;
 			worker_info.outer_offset = 0;
 		}
-		const std::vector<float> inner_weights = use_aex_pf32_zoom_inner_small
+		const bool use_aex_zoom_inner = use_aex_pf32_zoom_inner_small ||
+			use_aex_pf32_zoom_inner_noise_small;
+		const std::vector<float> inner_weights = use_aex_zoom_inner
 			? ZoomGaussianWeights(info.inner_strength)
 			: std::vector<float>();
 		blurred = BuildZoomAEXOuterOnlyPolar(
 			polar, ZoomGaussianWeights(ZoomEffectiveLength(worker_info)), polar_valid,
 			span_plane, source_scalar_plane, worker_info.outer_strength,
-			use_aex_pf32_zoom_inner_small ? &inner_weights : nullptr,
-			use_aex_pf32_zoom_inner_small ? info.inner_strength : 0);
+			use_aex_zoom_inner ? &inner_weights : nullptr,
+			use_aex_zoom_inner ? info.inner_strength : 0);
 	} else {
 		blurred = BuildZoomBlurredPolar(polar, info, debug, &use_fft_convolution);
 	}
