@@ -1,0 +1,313 @@
+{
+  "actual_aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+  "claims_not_made": [
+    "No native After Effects execution",
+    "No PF32 GPU SmartRender claim"
+  ],
+  "fixture": {
+    "height": 11,
+    "input_png_sha256": "683259bea613463bb22679f36a78e6d7b4c26dabdbc90e4da480cf76e9eb626a",
+    "width": 17
+  },
+  "rows": [
+    {
+      "actual_exported_raw_sha256": "167fdc90816747a20784e28f4621cdff2c6c4c28d7ccf15707dd3b54ad0d400e",
+      "blur_mode": 2,
+      "bytes_compared": 1496,
+      "cleanup_complete": true,
+      "depth": "PF16",
+      "exact": true,
+      "interpolation": "constant",
+      "production_renderbits_sha256": "167fdc90816747a20784e28f4621cdff2c6c4c28d7ccf15707dd3b54ad0d400e",
+      "smart_render_completed": true,
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF ColorParamSuite v1",
+        "PF Handle Suite v2",
+        "PF iterate16 Suite v1"
+      ],
+      "use_background": false
+    },
+    {
+      "actual_exported_raw_sha256": "d71d1b1f0b4a63319c8f09f3c429df79bef008902782ae6f2d0b785703c8f74a",
+      "blur_mode": 2,
+      "bytes_compared": 1496,
+      "cleanup_complete": true,
+      "depth": "PF16",
+      "exact": true,
+      "interpolation": "constant",
+      "production_renderbits_sha256": "d71d1b1f0b4a63319c8f09f3c429df79bef008902782ae6f2d0b785703c8f74a",
+      "smart_render_completed": true,
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF ColorParamSuite v1",
+        "PF Handle Suite v2",
+        "PF iterate16 Suite v1"
+      ],
+      "use_background": true
+    },
+    {
+      "actual_exported_raw_sha256": "d323fd86053d4781ec7812f30b635c7174dacc690cf18143686cc8709f3a033e",
+      "blur_mode": 3,
+      "bytes_compared": 1496,
+      "cleanup_complete": true,
+      "depth": "PF16",
+      "exact": true,
+      "interpolation": "constant",
+      "production_renderbits_sha256": "d323fd86053d4781ec7812f30b635c7174dacc690cf18143686cc8709f3a033e",
+      "smart_render_completed": true,
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF ColorParamSuite v1",
+        "PF Handle Suite v2",
+        "PF iterate16 Suite v1"
+      ],
+      "use_background": false
+    },
+    {
+      "actual_exported_raw_sha256": "76fea7c61cb720464911ac0bc9acedc990c87d375dfa5a44ff229a28567120fb",
+      "blur_mode": 3,
+      "bytes_compared": 1496,
+      "cleanup_complete": true,
+      "depth": "PF16",
+      "exact": true,
+      "interpolation": "constant",
+      "production_renderbits_sha256": "76fea7c61cb720464911ac0bc9acedc990c87d375dfa5a44ff229a28567120fb",
+      "smart_render_completed": true,
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF ColorParamSuite v1",
+        "PF Handle Suite v2",
+        "PF iterate16 Suite v1"
+      ],
+      "use_background": true
+    },
+    {
+      "actual_exported_raw_sha256": "ea3b50624ad9eb7ce025e68b03725a9312e21a4fbac606b21badeaa1d14ddd3d",
+      "blur_mode": 2,
+      "bytes_compared": 1496,
+      "cleanup_complete": true,
+      "depth": "PF16",
+      "exact": false,
+      "interpolation": "linear",
+      "production_renderbits_sha256": "dbf9dab0521a040268082844b99f0f9c5ab5307d6a5cd7459b41acca144bdad5",
+      "smart_render_completed": true,
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF ColorParamSuite v1",
+        "PF Handle Suite v2",
+        "PF iterate16 Suite v1"
+      ],
+      "use_background": false
+    },
+    {
+      "actual_exported_raw_sha256": "133f53ecd789a57213210104b528e9bda022dd68881fc4705f80f9734695f60f",
+      "blur_mode": 2,
+      "bytes_compared": 1496,
+      "cleanup_complete": true,
+      "depth": "PF16",
+      "exact": false,
+      "interpolation": "linear",
+      "production_renderbits_sha256": "748c54f2cd5c486407deee6e733773bcbbfa27a4b84eac677f330f7f3664d5d7",
+      "smart_render_completed": true,
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF ColorParamSuite v1",
+        "PF Handle Suite v2",
+        "PF iterate16 Suite v1"
+      ],
+      "use_background": true
+    },
+    {
+      "actual_exported_raw_sha256": "07cb762da9ac3f4f76000b1a8550ed7e803de4f0436d6946614b6ec280e403bd",
+      "blur_mode": 3,
+      "bytes_compared": 1496,
+      "cleanup_complete": true,
+      "depth": "PF16",
+      "exact": false,
+      "interpolation": "linear",
+      "production_renderbits_sha256": "36162a7726e83f30a54213c6b279686ef6ed2f369c69929b220cdd0fec7722d0",
+      "smart_render_completed": true,
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF ColorParamSuite v1",
+        "PF Handle Suite v2",
+        "PF iterate16 Suite v1"
+      ],
+      "use_background": false
+    },
+    {
+      "actual_exported_raw_sha256": "d01832152ab18759d6675f4a52cc9f1671045cb3912d608d4c9746a7f82048a8",
+      "blur_mode": 3,
+      "bytes_compared": 1496,
+      "cleanup_complete": true,
+      "depth": "PF16",
+      "exact": false,
+      "interpolation": "linear",
+      "production_renderbits_sha256": "a40951b0a307d9ea06e102bde9187ba3cfb7892a29f64b8a0891868f1a42389c",
+      "smart_render_completed": true,
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF ColorParamSuite v1",
+        "PF Handle Suite v2",
+        "PF iterate16 Suite v1"
+      ],
+      "use_background": true
+    },
+    {
+      "actual_exported_raw_sha256": "81136341cb0e594972d94aa20e212ef1ee8c995701b08954b448e30c3909d858",
+      "blur_mode": 2,
+      "bytes_compared": 2992,
+      "cleanup_complete": true,
+      "depth": "PF32",
+      "exact": false,
+      "interpolation": "constant",
+      "production_renderbits_sha256": "6c67eef96bf35a1a6d36b57d3a9d8173a9e5673868897fdff19792da5e2ed759",
+      "smart_render_completed": true,
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF ColorParamSuite v1",
+        "PF Handle Suite v2",
+        "PF iterateFloat Suite v1"
+      ],
+      "use_background": false
+    },
+    {
+      "actual_exported_raw_sha256": "685e8b89c805c98d6c710614d113c40a4a491fc5ed538e0dfaf4f87913a775b4",
+      "blur_mode": 2,
+      "bytes_compared": 2992,
+      "cleanup_complete": true,
+      "depth": "PF32",
+      "exact": false,
+      "interpolation": "constant",
+      "production_renderbits_sha256": "6c67eef96bf35a1a6d36b57d3a9d8173a9e5673868897fdff19792da5e2ed759",
+      "smart_render_completed": true,
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF ColorParamSuite v1",
+        "PF Handle Suite v2",
+        "PF iterateFloat Suite v1"
+      ],
+      "use_background": true
+    },
+    {
+      "actual_exported_raw_sha256": "bae47bd00b3dd5dcff38fff498fb65fb1495120da5179b1e5e96253e456ba6db",
+      "blur_mode": 3,
+      "bytes_compared": 2992,
+      "cleanup_complete": true,
+      "depth": "PF32",
+      "exact": false,
+      "interpolation": "constant",
+      "production_renderbits_sha256": "9d846b3c9415993291ae8a3c1b29db87aa8b6fc6b21e9764dc8561634cd00898",
+      "smart_render_completed": true,
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF ColorParamSuite v1",
+        "PF Handle Suite v2",
+        "PF iterateFloat Suite v1"
+      ],
+      "use_background": false
+    },
+    {
+      "actual_exported_raw_sha256": "33adf193583fbc36003288be85b4837b4fcff1148d962fd5beaf103c0f748e4e",
+      "blur_mode": 3,
+      "bytes_compared": 2992,
+      "cleanup_complete": true,
+      "depth": "PF32",
+      "exact": false,
+      "interpolation": "constant",
+      "production_renderbits_sha256": "9d846b3c9415993291ae8a3c1b29db87aa8b6fc6b21e9764dc8561634cd00898",
+      "smart_render_completed": true,
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF ColorParamSuite v1",
+        "PF Handle Suite v2",
+        "PF iterateFloat Suite v1"
+      ],
+      "use_background": true
+    },
+    {
+      "actual_exported_raw_sha256": "12cc7441d306111fb52a6a78eaeae00f95f92f4f29eed8c94f25f6eef64d1db9",
+      "blur_mode": 2,
+      "bytes_compared": 2992,
+      "cleanup_complete": true,
+      "depth": "PF32",
+      "exact": false,
+      "interpolation": "linear",
+      "production_renderbits_sha256": "3823960773c01acf7268c77e2fdefde1e11778845646a6f0438f85ef0345eaed",
+      "smart_render_completed": true,
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF ColorParamSuite v1",
+        "PF Handle Suite v2",
+        "PF iterateFloat Suite v1"
+      ],
+      "use_background": false
+    },
+    {
+      "actual_exported_raw_sha256": "a1ce8da3b902a20f08e028593395d8ac3918d58a64c6e784b8911da04973fae4",
+      "blur_mode": 2,
+      "bytes_compared": 2992,
+      "cleanup_complete": true,
+      "depth": "PF32",
+      "exact": false,
+      "interpolation": "linear",
+      "production_renderbits_sha256": "3823960773c01acf7268c77e2fdefde1e11778845646a6f0438f85ef0345eaed",
+      "smart_render_completed": true,
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF ColorParamSuite v1",
+        "PF Handle Suite v2",
+        "PF iterateFloat Suite v1"
+      ],
+      "use_background": true
+    },
+    {
+      "actual_exported_raw_sha256": "357d42ab3289fe397bf87c3fbe217c1bc4a8021ce73d72f95658f58f715bde04",
+      "blur_mode": 3,
+      "bytes_compared": 2992,
+      "cleanup_complete": true,
+      "depth": "PF32",
+      "exact": false,
+      "interpolation": "linear",
+      "production_renderbits_sha256": "d11d6447175669cac31557a32e38df5c85bcf35359d48e2fd1de9ab855ea890b",
+      "smart_render_completed": true,
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF ColorParamSuite v1",
+        "PF Handle Suite v2",
+        "PF iterateFloat Suite v1"
+      ],
+      "use_background": false
+    },
+    {
+      "actual_exported_raw_sha256": "ce9c0128b70be5c52c46f62e8f67d00a361c332efa0ab25165a80ddc879f3b1e",
+      "blur_mode": 3,
+      "bytes_compared": 2992,
+      "cleanup_complete": true,
+      "depth": "PF32",
+      "exact": false,
+      "interpolation": "linear",
+      "production_renderbits_sha256": "d11d6447175669cac31557a32e38df5c85bcf35359d48e2fd1de9ab855ea890b",
+      "smart_render_completed": true,
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF ColorParamSuite v1",
+        "PF Handle Suite v2",
+        "PF iterateFloat Suite v1"
+      ],
+      "use_background": true
+    }
+  ],
+  "schema": "olmdistancegradation.exported-typed-owner-matrix/1",
+  "status": "PASS_PF16_PF32_EXPORTED_SMART_OWNER_16_CELL_COMPLETE_4_EXACT_12_RESIDUAL",
+  "summary": {
+    "cells": 16,
+    "completed": 16,
+    "exact": 4,
+    "pf16_constant_exact": 4,
+    "pf16_linear_residual": 4,
+    "pf32_residual": 8
+  },
+  "worker_sha256": "eaa6be471ae2bb7c4557046c868f31ee7ca15621abb0c9277d5c2601523d57b3"
+}
