@@ -7,15 +7,14 @@
 
 namespace olm::kirakira {
 
-// Length 3 and the UI-default Length 50 are geometry-general above the bounded
-// minimum leaf size. Other lengths remain admitted only at complete fixtures.
+// The witnessed public length family is geometry-general above the bounded
+// minimum leaf size. Smaller leaves remain admitted only at complete fixtures.
 inline bool mode3_gaussian_admitted(int width, int height, int length)
 {
-    if (width >= 9 && height >= 7 && (length == 3 || length == 50))
+    if (width >= 9 && height >= 7 &&
+        (length == 3 || length == 5 || length == 7 || length == 9 || length == 50))
         return true;
     return (width == 11 && height == 6 && length == 3) ||
-           (width == 9  && height == 7 &&
-            (length == 5 || length == 7 || length == 9)) ||
            (width == 13 && height == 5 && length == 7) ||
            (width == 15 && height == 6 && length == 9);
 }

@@ -42,12 +42,12 @@ def main() -> int:
     assert report["geometry_general_contract"] == {
         "minimum_width": 9,
         "minimum_height": 7,
-        "lengths": [3, 50],
+        "lengths": [3, 5, 7, 9, 50],
         "result": "raw_float32_exact_across_representative_geometry_and_dispatch_classes",
         "evidence": "refs/conformance/olmkirakira_mode3_geometry_generalization_actual_aex_20260810.json",
         "focused_regression": "tools/emulation/test_olmkirakira_mode3_geometry_generalization_actual_aex_20260810.py",
     }
-    print("PASS_OLMKIRAKIRA_MODE3_NONWHITELIST_PRODUCTION_20260806 general=length3,50 exceptions=9 unsupported=fail_closed")
+    print("PASS_OLMKIRAKIRA_MODE3_NONWHITELIST_PRODUCTION_20260806 general=length3,5,7,9,50 exceptions=9 unsupported=fail_closed")
     return 0
 
 

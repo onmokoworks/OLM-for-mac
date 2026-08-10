@@ -20,18 +20,18 @@ EXPECTED_AEX_SHA = "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e038
 def main() -> int:
     report = json.loads(REPORT.read_text(encoding="utf-8"))
     assert report["status"] == "captured" and report["aex_sha256"] == EXPECTED_AEX_SHA
-    assert len(report["cases"]) == 14
+    assert len(report["cases"]) == 32
     assert {(c["width"], c["height"]) for c in report["cases"]} == {
         (36, 22), (39, 39), (39, 30), (68, 40), (74, 74), (75, 57),
     }
-    assert {c["length"] for c in report["cases"]} == {3, 50}
+    assert {c["length"] for c in report["cases"]} == {3, 5, 7, 9, 50}
     assert {c["angle_degrees"] for c in report["cases"]} == {0, 17, 45, -45}
     assert all(c["crt_initializer_callbacks"] == 50 and
                c["gaussian_entry_hits"] == c["gaussian_return_hits"] == 1 and
                c["warp_call_count"] == 2 for c in report["cases"])
 
     core = CORE.read_text(encoding="utf-8")
-    assert "width >= 9 && height >= 7 && (length == 3 || length == 50)" in core
+    assert "length == 3 || length == 5 || length == 7 || length == 9 || length == 50" in core
     production = PRODUCTION.read_text(encoding="utf-8")
     assert "mode3_gaussian_admitted(rw, rh, length)" in production
     assert "if (blur_mode == 3 && !mode3_admitted) return input;" in production
@@ -60,8 +60,8 @@ def main() -> int:
                 total_words += len(words)
             finals.add((case["width"], case["height"], case["length"],
                         case["angle_degrees"], tuple(actual["final"])))
-    assert total_words == 104850 and len(finals) == 14
-    print("PASS_OLMKIRAKIRA_MODE3_GEOMETRY_GENERALIZATION_ACTUAL_AEX_20260810 cases=14 words=104850 max_ulp=0")
+    assert total_words == 248436 and len(finals) == 32
+    print("PASS_OLMKIRAKIRA_MODE3_GEOMETRY_GENERALIZATION_ACTUAL_AEX_20260810 cases=32 words=248436 max_ulp=0")
     return 0
 
 

@@ -1,7 +1,7 @@
 # OLMKiraKira Mode 3 admission boundary — 2026-08-10
 
 Mode 3 has a bounded geometry-general contract for rotated leaves at least
-`9×7` and Length `3` or UI-default `50`. Production also retains the smaller
+`9×7` and Length `3/5/7/9` or UI-default `50`. Production also retains the smaller
 or other-Length exact tuples below:
 
 | width | height | length | exact words |
@@ -18,9 +18,9 @@ or other-Length exact tuples below:
 
 The general contract is backed by source geometries `32×18` and `64×36`, leaf
 dimensions `36×22`, `39×30`, `39×39`, `68×40`, `74×74`, and `75×57`, angles
-`0°`, `45°`, `-45°`, and oblique `17°`, and Length `3/50`. Across 14 complete
-actual-AEX chains, forward warp, Gaussian, and inverse warp compare 104,850 of
-104,850 float32 words exactly. Odd/even, square/non-square, and multiple width
+`0°`, `45°`, `-45°`, and oblique `17°`, and Length `3/5/7/9/50`. Across 32 complete
+actual-AEX chains, forward warp, Gaussian, and inverse warp compare 248,436 of
+248,436 float32 words exactly. Odd/even, square/non-square, and multiple width
 residue classes are represented. The actual-profile portable Gaussian has no
 geometry-specific implementation branch.
 
@@ -44,5 +44,5 @@ both Diagonal rays reach 9x9. Each ray is exact through forward warp, actual
 Gaussian return, and inverse warp. The public route and typed writer selection
 are structurally connected; a native-AE four-ray final render is not claimed.
 
-Still unproven: geometry-general behavior for Lengths other than `3` and `50`,
+Still unproven: geometry-general behavior for Lengths outside `3/5/7/9/50`,
 leaf dimensions below `9×7` except listed tuples, and native-AE final rendering.

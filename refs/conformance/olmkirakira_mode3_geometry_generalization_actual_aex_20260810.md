@@ -1,6 +1,6 @@
 # OLMKiraKira Mode 3 geometry-general contract（2026-08-10）
 
-Mode 3のLength `3`とUI既定Length `50`について、rotated leafが最低`9×7`
+Mode 3のLength `3/5/7/9`とUI既定Length `50`について、rotated leafが最低`9×7`
 以上ならgeometry-generalとしてproductionへ接続した。
 
 Windows AEX hash `60997c…99f7`をprocess attachし、50件のCRT initializerを
@@ -9,9 +9,9 @@ Windows AEX hash `60997c…99f7`をprocess attachし、50件のCRT initializer�
 - source 32×18由来: 36×22、39×30、39×39
 - source 64×36由来: 68×40、74×74、75×57
 - angle: 0°、45°、-45°、非標準17°
-- Length: 3、50
+- Length: 3、5、7、9、50
 
-14ケースのforward warp、Gaussian return、inverse warp、合計104,850個の
+32ケースのforward warp、Gaussian return、inverse warp、合計248,436個の
 float32 wordがportable productionと完全一致した。幅36/39/68/74/75により
 奇数・偶数と複数の剰余class、正方形・非正方形を含む。productionの
 actual-AEX profileはgeometry別の分岐を持たず、同じreflect101 scalar loopを使う。
