@@ -443,6 +443,31 @@ static void box_blur_separable(float *mat, long w, long h, int ksize)
 	}
 }
 
+// Legacy cvSmooth mode 3 (CV_MEDIAN).  The retained AEX uses replicated
+// borders and an odd square aperture.  Keep the temporary source separate:
+// OpenCV's median pass never consumes values written earlier in the scan.
+static void median_blur(float *mat, long w, long h, int ksize)
+{
+	if (!mat || w <= 0 || h <= 0 || ksize <= 1) return;
+	const int radius = ksize / 2;
+	std::vector<float> source(mat, mat + (size_t)w * h);
+	std::vector<float> window((size_t)ksize * ksize);
+	for (long y = 0; y < h; ++y) {
+		for (long x = 0; x < w; ++x) {
+			size_t n = 0;
+			for (int ky = -radius; ky <= radius; ++ky) {
+				const long sy = std::max(0L, std::min(h - 1, y + ky));
+				for (int kx = -radius; kx <= radius; ++kx) {
+					const long sx = std::max(0L, std::min(w - 1, x + kx));
+					window[n++] = source[(size_t)sy * w + sx];
+				}
+			}
+			std::nth_element(window.begin(), window.begin() + n / 2, window.begin() + n);
+			mat[(size_t)y * w + x] = window[n / 2];
+		}
+	}
+}
+
 // ============================================================================
 // Helpers: pixel fetch / store (alpha, red, green, blue order in AE)
 // ============================================================================
@@ -736,15 +761,23 @@ static void build_distance_field(
 
 	// Blur: the Windows owner always converts the full-resolution Blur Size to
 	// current-resolution pixels. Blur Mode selects the cvSmooth primitive:
-	// mode 2 uses normalized box blur and mode 3 uses Gaussian blur. This is
-	// independent of the interpolation mode used before the blur stage.
+	// mode 2 uses normalized box blur, mode 3 Gaussian, mode 4 median, and
+	// mode 5 the legacy bilateral call.  With the AEX's zero sigma arguments,
+	// the scalar float field is returned unchanged by mode 5.
 	if (p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0) {
 		long bs = (long)((float)p.blur_size * ds + 0.5f);
 		if (bs < 1) bs = 1;
 		int ksize = (int)(2 * bs + 1);
 		if (ksize > 1) {
-			if (p.blur_mode == BLUR_MODE_NO_SCALE) box_blur_separable(df.x.data(), w, h, ksize);
-			else gauss_blur_separable(df.x.data(), w, h, ksize);
+			if (p.blur_mode == BLUR_MODE_NO_SCALE) {
+				box_blur_separable(df.x.data(), w, h, ksize);
+			} else if (p.blur_mode == BLUR_MODE_SCALE) {
+				gauss_blur_separable(df.x.data(), w, h, ksize);
+			} else if (p.blur_mode == BLUR_MODE_MEDIAN) {
+				median_blur(df.x.data(), w, h, ksize);
+			} else if (p.blur_mode == BLUR_MODE_BILATERAL) {
+				// Intentional no-op; see the zero-sigma actual-AEX fixture.
+			}
 		}
 	}
 
@@ -891,6 +924,15 @@ static inline void compose_pixel(
 		}
 	} else {
 		out_a = d_alpha * X;        // no bg: alpha = d_alpha * X
+		if (p.pixel_size == sizeof(PF_Pixel8) && p.in_out == IN_OUT_INSIDE &&
+		    p.render_mode == RENDER_MODE_RGB && d_alpha <= 0.0f) {
+			out_r = out_g = out_b = 0.0f;
+			if (p.interp_mode != INTERP_CONSTANT && p.blur_mode != BLUR_MODE_NONE &&
+			    p.blur_size > 0) {
+				out_g = X;
+			}
+			return;
+		}
 		if (p.pixel_size == sizeof(PF_Pixel16) && p.in_out == IN_OUT_INSIDE &&
 		    p.render_mode == RENDER_MODE_RGB && d_alpha <= 0.0f) {
 			out_r = out_b = 0.0f;

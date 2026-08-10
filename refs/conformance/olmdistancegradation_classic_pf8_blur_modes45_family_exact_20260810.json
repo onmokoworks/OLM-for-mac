@@ -1,0 +1,101 @@
+{
+  "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+  "alias_result": "modes 3, 4, and 5 are pairwise distinct for both interpolation inputs",
+  "claims_not_made": [
+    "public classic wrapper and host resize/staging",
+    "other blur sizes",
+    "other geometry or ownership/render/background branches",
+    "PF16/PF32",
+    "PF32 SmartRender",
+    "AE host execution"
+  ],
+  "rows": [
+    {
+      "blur_instructions": 22279,
+      "blur_mode": 3,
+      "blurred_sha256": "83cebbbd7ea2719c8aa6a2a612e9f08a7d4d1b7ae33d5e45251a107fc5613491",
+      "bytes_compared": 869,
+      "field_sha256": "a7949b3cd602260af3a7ae9e81b99aafde9b0fe415c0c40d172af84c12ccbbe5",
+      "fieldgen_trace_events": 3,
+      "interpolation": "constant",
+      "mismatches": 0,
+      "output_active_sha256": "3b7fd7a6121fefadf40a80093468dc0846563e2735cb49408a226bf7b308c823",
+      "preblur_sha256": "a7949b3cd602260af3a7ae9e81b99aafde9b0fe415c0c40d172af84c12ccbbe5",
+      "staged_u8_sha256": "804c5d3ea782510413a185dc3f91d8b60e84102d32a7cb8d67cdd157010ccb91"
+    },
+    {
+      "blur_instructions": 18832,
+      "blur_mode": 4,
+      "blurred_sha256": "f0adeed487792c06cf10c93ca7f7cde5afcf85858aa1d113bb02f8d1290b18bd",
+      "bytes_compared": 869,
+      "field_sha256": "a7949b3cd602260af3a7ae9e81b99aafde9b0fe415c0c40d172af84c12ccbbe5",
+      "fieldgen_trace_events": 3,
+      "interpolation": "constant",
+      "mismatches": 0,
+      "output_active_sha256": "34f32402c86566443c44ecac0b080b6599c9c2cd0ad2954d7f6e4a9f5956a84c",
+      "preblur_sha256": "a7949b3cd602260af3a7ae9e81b99aafde9b0fe415c0c40d172af84c12ccbbe5",
+      "staged_u8_sha256": "e277907024f6623e8527ff98ef0e1c19e772978289ae812d83ce9bd35d7b5b2f"
+    },
+    {
+      "blur_instructions": 59708,
+      "blur_mode": 5,
+      "blurred_sha256": "a7949b3cd602260af3a7ae9e81b99aafde9b0fe415c0c40d172af84c12ccbbe5",
+      "bytes_compared": 869,
+      "field_sha256": "a7949b3cd602260af3a7ae9e81b99aafde9b0fe415c0c40d172af84c12ccbbe5",
+      "fieldgen_trace_events": 3,
+      "interpolation": "constant",
+      "mismatches": 0,
+      "output_active_sha256": "d16da87d817ed68332edfb995632fc25122c4e8d46f9122d76cf7bd1325cb427",
+      "preblur_sha256": "a7949b3cd602260af3a7ae9e81b99aafde9b0fe415c0c40d172af84c12ccbbe5",
+      "staged_u8_sha256": "602728c1700e17c4c85eb744d2cb1e6db84ec1facb3481da40f66c8e6b9a0661"
+    },
+    {
+      "blur_instructions": 22279,
+      "blur_mode": 3,
+      "blurred_sha256": "7026157d29a503e880e256b6716e81363bc87eded1ccc106c5c686d644b291c7",
+      "bytes_compared": 869,
+      "field_sha256": "6023adbb0e42b6b1269594e72c2f58f5caf3ce8ece80b68da2f06f384aea623c",
+      "fieldgen_trace_events": 3,
+      "interpolation": "linear",
+      "mismatches": 0,
+      "output_active_sha256": "6bdced935df747318900e0ec96d25d0287c1f798dde07816f199cdcdf5c9ce27",
+      "preblur_sha256": "6023adbb0e42b6b1269594e72c2f58f5caf3ce8ece80b68da2f06f384aea623c",
+      "staged_u8_sha256": "b52fa5d3dd9421a65506e439aa3d3bcc60a177b67f85fba5bf9645f99d7c2a00"
+    },
+    {
+      "blur_instructions": 18832,
+      "blur_mode": 4,
+      "blurred_sha256": "da2095176815467385253801a07ace5b0d36cf47f731bb1ed8c296816819593a",
+      "bytes_compared": 869,
+      "field_sha256": "6023adbb0e42b6b1269594e72c2f58f5caf3ce8ece80b68da2f06f384aea623c",
+      "fieldgen_trace_events": 3,
+      "interpolation": "linear",
+      "mismatches": 0,
+      "output_active_sha256": "effca3b896bf0973b70b03261eab30ea54f8722fb67092b70b1c7dfbf354f08f",
+      "preblur_sha256": "6023adbb0e42b6b1269594e72c2f58f5caf3ce8ece80b68da2f06f384aea623c",
+      "staged_u8_sha256": "824cde1689e3702664ffabd57dcf2d97a49611c266be63d30e49add78d521bb6"
+    },
+    {
+      "blur_instructions": 59496,
+      "blur_mode": 5,
+      "blurred_sha256": "6023adbb0e42b6b1269594e72c2f58f5caf3ce8ece80b68da2f06f384aea623c",
+      "bytes_compared": 869,
+      "field_sha256": "6023adbb0e42b6b1269594e72c2f58f5caf3ce8ece80b68da2f06f384aea623c",
+      "fieldgen_trace_events": 3,
+      "interpolation": "linear",
+      "mismatches": 0,
+      "output_active_sha256": "b1a815e020b2ff454a36528e5a7805648efa09d2a677b08d01d288afee751795",
+      "preblur_sha256": "6023adbb0e42b6b1269594e72c2f58f5caf3ce8ece80b68da2f06f384aea623c",
+      "staged_u8_sha256": "10835b3db5dcc49eab7f96e9a1bea6ae26d2d6aaf17b55bbc780d70f8223cec5"
+    }
+  ],
+  "schema": "olmdistancegradation.classic-pf8-blur-modes45-family/1",
+  "scope": "PF8 17x11 padded classic numerical chain using actual FUN_181174760, FUN_1812864d0, and FUN_181170870; Inside RGB, invert on, threshold 4, blur size 1, full resolution, background off; Constant/Linear x public Blur Modes 3/4/5",
+  "semantics": {
+    "3": "Gaussian",
+    "4": "median with replicated border",
+    "5": "zero-sigma bilateral; identity on this scalar fixture"
+  },
+  "source_active_sha256": "c6115884c1cf96930a63072a155fbc9bf2a32f3ec0556b9843c4dc7e5221aaba",
+  "status": "exact"
+}

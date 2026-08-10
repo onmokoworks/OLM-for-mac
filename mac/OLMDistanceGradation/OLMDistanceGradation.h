@@ -91,7 +91,9 @@ enum {
 enum {
 	BLUR_MODE_NONE      = 1,
 	BLUR_MODE_NO_SCALE  = 2,
-	BLUR_MODE_SCALE     = 3
+	BLUR_MODE_SCALE     = 3,
+	BLUR_MODE_MEDIAN    = 4,
+	BLUR_MODE_BILATERAL = 5
 };
 
 extern "C" {
