@@ -1654,8 +1654,10 @@ static PF_Err RenderZoomTyped(
 {
 	const bool use_aex_pf32_zoom_noise_type1_small = input && output &&
 		std::is_same<PixelT, PF_PixelFloat>::value &&
-		input->width == 9 && input->height == 7 && output->width == 9 && output->height == 7 &&
-		info.center_x == 4.0 && info.center_y == 3.0 &&
+		input->width > 0 && input->height > 0 &&
+		input->width == output->width && input->height == output->height &&
+		info.center_x == (PF_FpLong)(input->width / 2) &&
+		info.center_y == (PF_FpLong)(input->height / 2) &&
 		input->rowbytes >= input->width * (A_long)sizeof(PF_PixelFloat) &&
 		output->rowbytes >= output->width * (A_long)sizeof(PF_PixelFloat) &&
 		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
@@ -1667,7 +1669,7 @@ static PF_Err RenderZoomTyped(
 		(info.noise_variation == 25.0 || info.noise_variation == 100.0) &&
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0 &&
-		info.comp_width == 9.0 && info.comp_height == 7.0;
+		info.comp_width == (PF_FpLong)input->width && info.comp_height == (PF_FpLong)input->height;
 	if (info.blur_type != 1 || info.inner_strength != 0 ||
 	    (info.noise_variation != 0.0 && !use_aex_pf32_zoom_noise_type1_small)) {
 		// These branches are not yet backed by an actual-AEX worker/output
