@@ -15,7 +15,9 @@
 #include <vector>
 
 static constexpr PF_FpLong kPi = 3.141592653589793238462643383279502884;
+#if !defined(OLM_DBLUR_TEST_SEAM)
 static AEGP_PluginID g_aegp_plugin_id = 0;
+#endif
 
 static void UnionLRect(const PF_LRect *src, PF_LRect *dst)
 {
@@ -48,12 +50,16 @@ GlobalSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	                                  STAGE_VERSION, BUILD_VERSION);
 	out_data->out_flags  = 0x06000040;
 	out_data->out_flags2 = 0x08001408;
+#if !defined(OLM_DBLUR_TEST_SEAM)
 	// Source-included parameter-layout probes have no host suite table. A real
 	// AE GLOBAL_SETUP always supplies one; register there, as the AEX does.
 	if (!in_data || !in_data->pica_basicP) return PF_Err_NONE;
 	AEGP_SuiteHandler suites(in_data->pica_basicP);
 	return suites.UtilitySuite6()->AEGP_RegisterWithAEGP(
 		nullptr, "OLMDirectionalBlur", &g_aegp_plugin_id);
+#else
+	return PF_Err_NONE;
+#endif
 }
 
 static PF_Err
@@ -156,6 +162,7 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	return err;
 }
 
+#if !defined(OLM_DBLUR_TEST_SEAM)
 static PF_Err
 UpdateParamsUI(PF_InData *in_data)
 {
@@ -216,6 +223,7 @@ UpdateParamsUI(PF_InData *in_data)
 	}
 	return err;
 }
+#endif
 
 template <typename PixelT>
 static PixelT *PixelAt(PF_EffectWorld *world, A_long x, A_long y)
@@ -960,9 +968,11 @@ PF_Err EffectMain(PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data,
 		case PF_Cmd_PARAMS_SETUP:
 			err = ParamsSetup(in_data, out_data, params, output);
 			break;
+#if !defined(OLM_DBLUR_TEST_SEAM)
 		case PF_Cmd_UPDATE_PARAMS_UI:
 			err = UpdateParamsUI(in_data);
 			break;
+#endif
 		case PF_Cmd_RENDER:
 			err = Render(in_data, out_data, params, output);
 			break;
