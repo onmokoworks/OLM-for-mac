@@ -3,49 +3,11 @@
   "aexcompat_worker": {
     "modified_by_olm_task": false,
     "path": "/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker",
-    "sha256": "72faa93594b83e1f7609429ec60cc878fa2a3a3161a2390947f79a40f48b4539"
+    "sha256": "eaa6be471ae2bb7c4557046c868f31ee7ca15621abb0c9277d5c2601523d57b3"
   },
   "claims_not_made": [
-    "No PF16 exported owner equality",
-    "No PF32 SmartRender route or equality",
     "No native After Effects execution",
-    "No external OpenCV backend PE loading"
-  ],
-  "depth_boundaries": [
-    {
-      "depth": "PF16",
-      "error": "selector SMART_RENDER failed in guest: guest callback failed: guest called _CxxThrowException outside the supported selector-abort contract (msvc_type=.H)",
-      "pixel_format": "argb16",
-      "representative": "constant.mode2.bg0",
-      "smart_pre_render": {
-        "attempted": true,
-        "completed": true,
-        "error": 0,
-        "selector": "SMART_PRE_RENDER"
-      },
-      "smart_render": {
-        "attempted": true,
-        "completed": false,
-        "selector": "SMART_RENDER"
-      }
-    },
-    {
-      "depth": "PF32",
-      "error": "selector SMART_RENDER failed in guest: guest callback failed: guest called _CxxThrowException outside the supported selector-abort contract (msvc_type=.H)",
-      "pixel_format": "argb32f",
-      "representative": "constant.mode2.bg0",
-      "smart_pre_render": {
-        "attempted": true,
-        "completed": true,
-        "error": 0,
-        "selector": "SMART_PRE_RENDER"
-      },
-      "smart_render": {
-        "attempted": true,
-        "completed": false,
-        "selector": "SMART_RENDER"
-      }
-    }
+    "No Mac partial-world/origin claim"
   ],
   "exported_pf8_rows": [
     {
@@ -134,40 +96,22 @@
     "input_png_sha256": "683259bea613463bb22679f36a78e6d7b4c26dabdbc90e4da480cf76e9eb626a",
     "width": 17
   },
-  "linear_residual_localization": {
-    "field_and_blur": "green lane/output alpha equals the existing fieldgen+blur staged matrix",
-    "first_difference": "compose auxiliary red lane was zero in production/manual staging but equals blurred X in the actual owner",
-    "fix": "stage blurred X as PF8 Linear+blur field_aux and preserve it in zero-ownership RGB compose",
-    "four_complete_buffers_exact_after_fix": true,
-    "parameter_materialization": "exact in worker report: RGB, inside threshold 4, interpolation 2, power 1, requested background and blur values"
-  },
-  "load_library_w_trace": {
-    "external_pe_mapping": false,
-    "requested_in_order": [
-      "C:\\AEXCompat\\opencv_core_parallel_onetbb455_64.dll",
-      "opencv_core_parallel_onetbb455_64.dll",
-      "C:\\AEXCompat\\opencv_core_parallel_tbb455_64.dll",
-      "opencv_core_parallel_tbb455_64.dll",
-      "C:\\AEXCompat\\opencv_core_parallel_openmp455_64.dll",
-      "opencv_core_parallel_openmp455_64.dll"
-    ],
-    "resolution": "all absent -> NULL + ERROR_MOD_NOT_FOUND -> OpenCV built-in fallback",
-    "success_path_symbol": "opencv_core_parallel_plugin_init_v0"
-  },
-  "numerical_family_already_exact": {
-    "cells": 24,
-    "evidence": [
-      "refs/conformance/olmdistancegradation_classic_pf8_blur_background_family_exact_20260810.md",
-      "refs/conformance/olmdistancegradation_classic_pf16_blur_background_family_exact_20260810.md",
-      "refs/conformance/olmdistancegradation_classic_pf32_blur_background_family_exact_20260810.md"
-    ],
-    "product": "PF8/PF16/PF32 x Constant/Linear x Blur2/3 x Background off/on"
-  },
   "owner_facts": {
-    "PF16": "exported Smart owner throws before output; classic/helper numerical 8 cells remain exact separately",
-    "PF32": "actual AEX has no SmartRender PF32 branch; classic whole owner FUN_181172a10 numerical 8 cells remain exact separately",
-    "PF8": "actual exported SmartPreRender/SmartRender completes all 8 cells and matches production whole-chain active bytes"
+    "PF16": "exported Smart owner 8/8 exact; classic owner remains separately exact",
+    "PF32": "exported Smart owner 8/8 exact; classic FUN_181172a10 remains separately exact",
+    "PF8": "exported Smart owner 8/8 exact"
   },
-  "schema": "olmdistancegradation.exported-upstream-owner-seam/2",
-  "status": "PASS_PF8_EXPORTED_SMART_OWNER_8_CELL_EXACT_PF16_PF32_EXCEPTION_BOUNDARY"
+  "schema": "olmdistancegradation.exported-upstream-owner-seam/3",
+  "status": "PASS_EXPORTED_SMART_OWNER_ALL_DEPTHS_BOUNDED_EXACT",
+  "typed_owner_evidence": {
+    "path": "refs/conformance/olmdistancegradation_exported_typed_owner_matrix_20260811.json",
+    "status": "PASS_PF16_PF32_EXPORTED_SMART_OWNER_16_CELL_EXACT",
+    "summary": {
+      "cells": 16,
+      "completed": 16,
+      "exact": 16,
+      "pf16_exact": 8,
+      "pf32_exact": 8
+    }
+  }
 }

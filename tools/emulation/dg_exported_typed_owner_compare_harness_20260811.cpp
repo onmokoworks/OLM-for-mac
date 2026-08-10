@@ -42,7 +42,7 @@ static int render(const std::vector<std::uint8_t> &source, const char *output_pa
 	PF_InData in_data{};
 	in_data.downsample_x = {1, 1};
 	in_data.downsample_y = {1, 1};
-	if (RenderBits<Pixel>(&in_data, params, &input, &destination) != 0) return 4;
+	if (RenderBits<Pixel>(&in_data, params, &input, &destination, true) != 0) return 4;
 	std::ofstream stream(output_path, std::ios::binary);
 	stream.write(reinterpret_cast<const char *>(output.data()), static_cast<std::streamsize>(output.size()));
 	return stream ? 0 : 5;

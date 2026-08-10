@@ -114,7 +114,11 @@ struct AEGP_SuiteHandler {
 #define PF_VERSION(A, B, C, D, E) (0u)
 #define AEFX_CLR_STRUCT(S) std::memset(&(S), 0, sizeof(S))
 #define ERR(X) do { if (err == PF_Err_NONE) err = (X); } while (0)
-#define PF_CHECKOUT_PARAM(...) (PF_Err_NONE)
+static PF_Err (*dg_harness_checkout_param)(A_long, PF_ParamDef *) = nullptr;
+static PF_Err dg_harness_checkout(A_long index, PF_ParamDef *param) {
+    return dg_harness_checkout_param ? dg_harness_checkout_param(index, param) : PF_Err_NONE;
+}
+#define PF_CHECKOUT_PARAM(IN, INDEX, TIME, STEP, SCALE, PARAM) dg_harness_checkout((INDEX), (PARAM))
 #define PF_CHECKIN_PARAM(...) ((void)0)
 #define PF_ADD_CHECKBOX(...) ((void)0)
 #define PF_ADD_COLOR(...) ((void)0)

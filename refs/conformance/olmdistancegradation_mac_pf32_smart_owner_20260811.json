@@ -1,0 +1,19 @@
+{
+  "harness_sha256": "d6f0b3d6460686f410656fa0b03d9254b8ccb5d8235b1c9cf607b293a5bfe27d",
+  "not_proven": [
+    "native After Effects execution",
+    "partial-world/origin translation",
+    "arbitrary Smart parameter and geometry products"
+  ],
+  "production_source_sha256": "a3fe695085821c35b9e210c84ae48167fd87d11e4d1366ff4825e61b71abe465",
+  "proved": [
+    "SmartRender admits bitdepth 32",
+    "checkout_layer_pixels and checkout_output worlds",
+    "parameter checkout feeds production RenderBits",
+    "blank output receives nonzero generated field/output",
+    "complete padded PF32 buffer equals direct smart-owner RenderBits",
+    "unsupported depth fails closed"
+  ],
+  "schema": "olmdistancegradation.mac-pf32-smart-owner/1",
+  "status": "PASS_OLMDISTANCEGRADATION_MAC_PF32_SMART_OWNER"
+}

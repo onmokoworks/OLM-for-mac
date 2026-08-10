@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
 	PF_InData in_data{};
 	in_data.downsample_x = {1, 1};
 	in_data.downsample_y = {1, 1};
-	if (RenderBits<PF_Pixel8>(&in_data, params, &input, &result) != PF_Err_NONE) return 4;
+	if (RenderBits<PF_Pixel8>(&in_data, params, &input, &result, true) != PF_Err_NONE) return 4;
 
 	size_t mismatches = 0;
 	for (size_t i = 0; i < output.size(); ++i) mismatches += output[i] != expected[i];

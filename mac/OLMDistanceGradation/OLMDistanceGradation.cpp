@@ -204,6 +204,7 @@ struct DGParams {
 	float         ds_x;
 	float         ds_y;
 	size_t        pixel_size;       // sizeof(render pixel P); selects the source-mask alpha rule
+	bool          smart_owner;      // exported Smart owner routing, distinct from legacy classic owner
 };
 
 static PF_Err
@@ -752,12 +753,12 @@ static void build_distance_field(
 		for (long i = 0; i < w * h; ++i) df.x[i] = std::max(inside[i], outside[i]);
 	}
 
-	bool constant_blur = (p.interp_mode == INTERP_CONSTANT &&
-	                      p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0);
+	bool blurred = p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0;
+	bool constant_blur = p.interp_mode == INTERP_CONSTANT && blurred;
 	if (constant_blur) {
 		for (long i = 0; i < w * h; ++i) df.x[i] = (df.x[i] >= 1.0f) ? 1.0f : 0.0f;
 	}
-	if (constant_blur) df.pre_blur_x = df.x;
+	if (blurred && (!p.smart_owner || constant_blur)) df.pre_blur_x = df.x;
 
 	// Blur: the Windows owner always converts the full-resolution Blur Size to
 	// current-resolution pixels. Blur Mode selects the cvSmooth primitive:
@@ -821,7 +822,7 @@ static inline void compose_pixel(
 	// The classic PF32 owner bypasses the typed integer color callback for this
 	// branch and merges its raw float ownership field into all four channels.
 	// Consequently Sphere and invert do not transform the exported scalar.
-	if (p.pixel_size == sizeof(PF_PixelFloat) &&
+	if (!p.smart_owner && p.pixel_size == sizeof(PF_PixelFloat) &&
 	    p.in_out == IN_OUT_OUTSIDE && p.render_mode == RENDER_MODE_RGB && !p.use_bg) {
 		out_a = out_r = out_g = out_b = X;
 		return;
@@ -856,6 +857,13 @@ static inline void compose_pixel(
 	case IN_OUT_OUTSIDE: d_alpha = 1.0f - src_a; if (d_alpha < 0) d_alpha = 0; break;
 	default:             d_alpha = 1.0f; break; // BOTH
 	}
+	if (!p.smart_owner && p.pixel_size == sizeof(PF_PixelFloat) &&
+	    p.in_out == IN_OUT_INSIDE && p.render_mode == RENDER_MODE_RGB && !p.use_bg &&
+	    p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0) {
+		out_a = out_r = out_g = X;
+		out_b = field_aux;
+		return;
+	}
 	// RGB selection:
 	//   render_mode == 1 (RGB)   -> gradation color (default)
 	//   render_mode == 2 (Layer) -> source color
@@ -865,15 +873,32 @@ static inline void compose_pixel(
 	} else {
 		ir = src_r; ig = src_g; ib = src_b;
 	}
+	if (!p.smart_owner && p.pixel_size == sizeof(PF_PixelFloat) &&
+	    p.in_out == IN_OUT_INSIDE && p.render_mode == RENDER_MODE_RGB && p.use_bg) {
+		if (p.interp_mode != INTERP_CONSTANT &&
+		    p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0) {
+			out_a = out_r = out_g = X;
+			out_b = field_aux;
+			return;
+		}
+		float scalar = d_alpha * X;
+		out_a = out_r = out_g = out_b = scalar;
+		if (p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0) out_b = field_aux;
+		return;
+	}
 
 	if (p.use_bg) {
 		float oneX = 1.0f - X;
-		volatile float bg_r = oneX * p.bg_color.red, fg_r = X * ir;
-		volatile float bg_g = oneX * p.bg_color.green, fg_g = X * ig;
-		volatile float bg_b = oneX * p.bg_color.blue, fg_b = X * ib;
-		out_r = bg_r + fg_r;
-		out_g = bg_g + fg_g;
-		out_b = bg_b + fg_b;
+		if (p.smart_owner) {
+			volatile float bg_r = oneX * p.bg_color.red, fg_r = X * ir;
+			volatile float bg_g = oneX * p.bg_color.green, fg_g = X * ig;
+			volatile float bg_b = oneX * p.bg_color.blue, fg_b = X * ib;
+			out_r = bg_r + fg_r; out_g = bg_g + fg_g; out_b = bg_b + fg_b;
+		} else {
+			out_r = oneX * p.bg_color.red + X * ir;
+			out_g = oneX * p.bg_color.green + X * ig;
+			out_b = oneX * p.bg_color.blue + X * ib;
+		}
 		out_a = d_alpha;            // use_bg: alpha = d_alpha (full)
 		// The PF16 AEX callback clears the complete pixel when an Inside
 		// source is outside the ownership mask.  Keeping background RGB under
@@ -884,11 +909,12 @@ static inline void compose_pixel(
 		    p.in_out == IN_OUT_INSIDE && d_alpha <= 0.0f) {
 			out_r = out_g = out_b = 0.0f;
 			if ((p.pixel_size == sizeof(PF_Pixel16) || p.pixel_size == sizeof(PF_Pixel8) ||
-			     p.pixel_size == sizeof(PF_PixelFloat)) &&
+			     (p.smart_owner && p.pixel_size == sizeof(PF_PixelFloat))) &&
 			    p.render_mode == RENDER_MODE_RGB &&
 			    p.interp_mode != INTERP_CONSTANT && p.blur_mode != BLUR_MODE_NONE &&
 			    p.blur_size > 0) {
-				out_r = p.pixel_size == sizeof(PF_Pixel8) ? field_aux : X;
+				out_r = p.pixel_size == sizeof(PF_Pixel8) ? field_aux
+				      : (p.smart_owner ? X : 0.0f);
 				out_g = X;
 			}
 		}
@@ -912,13 +938,15 @@ static inline void compose_pixel(
 			}
 			return;
 		}
-		if ((p.pixel_size == sizeof(PF_Pixel16) || p.pixel_size == sizeof(PF_PixelFloat)) &&
+		if ((p.pixel_size == sizeof(PF_Pixel16) ||
+		     (p.smart_owner && p.pixel_size == sizeof(PF_PixelFloat))) &&
 		    p.in_out == IN_OUT_INSIDE &&
 		    p.render_mode == RENDER_MODE_RGB && d_alpha <= 0.0f) {
 			out_r = out_g = out_b = 0.0f;
 			if (p.interp_mode != INTERP_CONSTANT &&
 			    p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0) {
-				out_r = out_g = X;
+				out_g = X;
+				if (p.smart_owner) out_r = X;
 			}
 			return;
 		}
@@ -1165,7 +1193,7 @@ template<> void shade_scanline<PF_PixelFloat>(
 template<typename P>
 static PF_Err
 RenderBits(PF_InData *in_data, PF_ParamDef *params[],
-           PF_LayerDef *input, PF_LayerDef *output)
+           PF_LayerDef *input, PF_LayerDef *output, bool smart_owner = false)
 {
 	PF_Err err = PF_Err_NONE;
 	// RenderBits is a same-shape typed kernel.  The Windows owner stages any
@@ -1188,6 +1216,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	long h = output->height;
 	p.w = w; p.h = h;
 	p.pixel_size = sizeof(P);
+	p.smart_owner = smart_owner;
 
 	// Extract normalized alpha for DT
 	std::vector<float> alpha((size_t)w * h, 0.0f);
@@ -1346,11 +1375,9 @@ RenderSmartPF8PreseededField(const PF_EffectWorld *input_world,
 static PF_Err
 SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra)
 {
-	// The retained Windows AEX SmartRender dispatcher has only PF8 and PF16
-	// owners. PF32 is a classic-render-only path; executing our classic float
-	// implementation here would manufacture an ungrounded AEX behavior.
 	if (!extra || !extra->input || !extra->cb ||
-	    (extra->input->bitdepth != 8 && extra->input->bitdepth != 16)) {
+	    (extra->input->bitdepth != 8 && extra->input->bitdepth != 16 &&
+	     extra->input->bitdepth != 32)) {
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
 	PF_Err err = PF_Err_NONE;
@@ -1383,9 +1410,11 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 		(void)bps;
 		short depth = extra->input->bitdepth;
 		if (depth == 8) {
-			err = RenderSmartPF8PreseededField(input_world, output_world);
+			err = RenderBits<PF_Pixel8>(in_data, params, input_world, output_world, true);
 		} else if (depth == 16) {
-			err = RenderSmartPF16PreseededField(input_world, output_world);
+			err = RenderBits<PF_Pixel16>(in_data, params, input_world, output_world, true);
+		} else if (depth == 32) {
+			err = RenderBits<PF_PixelFloat>(in_data, params, input_world, output_world, true);
 		}
 	}
 

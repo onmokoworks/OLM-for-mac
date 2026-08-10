@@ -204,12 +204,13 @@ def main():
         "alias_result": "modes 3, 4, and 5 are pairwise distinct for both interpolation inputs",
         "source_active_sha256": hashlib.sha256(source_active).hexdigest(),
         "rows": rows,
-        "claims_not_made": ["public classic wrapper and host resize/staging", "other blur sizes", "other geometry or ownership/render/background branches", "PF16/PF32", "PF32 SmartRender", "AE host execution"],
+        "claims_not_made": ["public classic wrapper and host resize/staging", "other blur sizes", "other geometry or ownership/render/background branches", "PF16/PF32", "AE host execution"],
     }
     REPORT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     DOC.write_text(
         "# OLMDistanceGradation PF8 Blur Modes 4/5\n\n"
-        "Status: **exact** for the declared bounded classic path.\n\n"
+        "Status: **exact** for the declared bounded exported-Smart path. The historical filename "
+        "predates the explicit classic/Smart owner split.\n\n"
         "The actual Windows AEX's five-choice Blur Mode popup is not an alias surface. "
         "On the padded 17x11 transparent-island fixture, modes 3, 4, and 5 produce "
         "pairwise-distinct internal blurred fields and final PF8 outputs for both Constant "

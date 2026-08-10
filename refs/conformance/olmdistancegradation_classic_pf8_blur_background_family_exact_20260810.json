@@ -5,7 +5,6 @@
     "Blur Modes 4/5 (separate evidence)",
     "other sizes/geometries/ownership/render branches",
     "PF16/PF32",
-    "PF32 SmartRender",
     "AE host execution"
   ],
   "distinctness": "four blurred surfaces and eight final active outputs are pairwise distinct",

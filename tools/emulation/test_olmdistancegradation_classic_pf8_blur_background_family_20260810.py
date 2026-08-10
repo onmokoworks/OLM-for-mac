@@ -134,12 +134,13 @@ def main():
         "surfaces": surfaces,
         "rows": rows,
         "distinctness": "four blurred surfaces and eight final active outputs are pairwise distinct",
-        "claims_not_made": ["public classic wrapper and host resize/staging", "Blur Modes 4/5 (separate evidence)", "other sizes/geometries/ownership/render branches", "PF16/PF32", "PF32 SmartRender", "AE host execution"],
+        "claims_not_made": ["public classic wrapper and host resize/staging", "Blur Modes 4/5 (separate evidence)", "other sizes/geometries/ownership/render branches", "PF16/PF32", "AE host execution"],
     }
     REPORT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     DOC.write_text(
         "# OLMDistanceGradation PF8 blur × background family\n\n"
-        "Status: **exact** for the declared bounded numerical chain.\n\n"
+        "Status: **exact** for the declared bounded exported-Smart numerical chain. The "
+        "historical filename predates the owner split; it is not a public classic-owner claim.\n\n"
         "A padded 17x11 transparent-island fixture crosses Constant/Linear, Background "
         "off/on, and Blur Mode 2 box/3 Gaussian. The hash-pinned actual Windows AEX "
         "executes `FUN_181174760`, `FUN_1812864d0`, and all 187 PF8 `FUN_181170870` "
