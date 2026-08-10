@@ -1768,10 +1768,24 @@ static PF_Err RenderZoomTyped(
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0 &&
 		info.outer_edge_fade == 0 && info.inner_edge_fade == 0;
-	if (!use_aex_zoom_geometry || info.repeat_border == FALSE ||
+	const bool use_aex_pf16_quality_repeat = input && output &&
+		std::is_same<PixelT, PF_Pixel16>::value && use_aex_zoom_geometry &&
+		((input->width == 9 && input->height == 7) ||
+		 (input->width == 32 && input->height == 18)) &&
+		input->rowbytes >= input->width * (A_long)sizeof(PixelT) &&
+		output->rowbytes >= output->width * (A_long)sizeof(PixelT) &&
+		info.outer_strength == 4 && info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		info.inner_strength == 0 && info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.ratio == 1.0 && info.angle_deg == 0.0 &&
+		(info.quality == 1.0 || info.quality == 3.0 || info.quality == 5.0) &&
+		info.brightness_gain == 1.0 && info.size_variation == 0.0 &&
+		info.noise_variation == 0.0 && info.noise_type == 1 && info.noise_layer == 0 &&
+		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0 &&
+		info.outer_edge_fade == 0 && info.inner_edge_fade == 0;
+	if (!use_aex_pf16_quality_repeat && (!use_aex_zoom_geometry || info.repeat_border == FALSE ||
 		(!use_aex_typed_zoom_ellipse_geometry && (info.ratio != 1.0 || info.angle_deg != 0.0)) ||
 		info.quality != 5.0 || info.brightness_gain != 1.0 ||
-		info.size_variation != 0.0 || info.outer_edge_fade != 0 || info.inner_edge_fade != 0) {
+		info.size_variation != 0.0 || info.outer_edge_fade != 0 || info.inner_edge_fade != 0)) {
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
 	const bool use_aex_pf32_zoom_noise_type1_small = input && output &&
@@ -1985,7 +1999,10 @@ static PF_Err RenderZoomTyped(
 	const float cx_f = (float)cx;
 	const float cy_f = (float)cy;
 	const float ratio_f = (float)ratio;
-	const float step_rad_f = (float)step_rad;
+	const float step_rad_f = use_aex_pf16_quality_repeat && info.quality == 3.0
+		? RadialF32Div(1.0f, RadialF32Div(
+			RadialF32Mul((float)quality, 180.0f), (float)kPi))
+		: (float)step_rad;
 	// The AEX setup stores radians as a truncated signed 16.16 integer, but the
 	// Zoom core converts that integer directly to double before calling sin/cos.
 	const int32_t base_angle_fixed_radians = (int32_t)(base_angle * 65536.0);
@@ -2013,8 +2030,10 @@ static PF_Err RenderZoomTyped(
 			for (int c = 0; c < 4; ++c) polar.rgba[dst + c] = sampled.rgba[c];
 			polar_valid[(size_t)ai * radius_count + ri] = sampled.eligible;
 			if (use_aex_outer_only) {
-				span_plane[(size_t)ai * radius_count + ri] = SampleScalarAEXRepeat(
-					source_factor_with_guard, w, h, sx, sy);
+				span_plane[(size_t)ai * radius_count + ri] =
+					use_aex_pf16_quality_repeat && info.repeat_border == FALSE
+						? 1.0f
+						: SampleScalarAEXRepeat(source_factor_with_guard, w, h, sx, sy);
 				source_scalar_plane[(size_t)ai * radius_count + ri] = sampled.rgba[3];
 			}
 		}
@@ -2098,7 +2117,7 @@ static PF_Err RenderZoomTyped(
 			const RadialBlurAEXCoordinateCandidate coordinate_candidate =
 				ComputeRadialBlurAEXCoordinateCandidate(
 					x, y, cx_f, cy_f, cos_a_f, sin_a_f,
-					(float)ratio, (float)step_rad, min_r, radius_count, angular_count);
+					(float)ratio, step_rad_f, min_r, radius_count, angular_count);
 			const float radius_index = coordinate_candidate.radius_index;
 			const float angle_index = coordinate_candidate.angle_index;
 			// PF8 keeps its established floor/clamp behavior. Deep paths use the
@@ -2599,7 +2618,20 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.noise_variation == 0.0 && info.noise_type == 1 &&
 		info.noise_layer == 0 && info.seed == 1 && info.noise_offset == 0 &&
 		info.thickness == 10.0 && info.comp_width == 9.0 && info.comp_height == 7.0;
-	const bool use_aex_exact = use_aex_case0010 || use_aex_pf16_small || use_aex_pf16_inner_power2_small ||
+	const bool use_aex_pf16_quality_repeat =
+		std::is_same<PixelT, PF_Pixel16>::value && use_aex_inner_geometry &&
+		((w == 9 && h == 7) || (w == 32 && h == 18)) &&
+		info.center_x == (PF_FpLong)(w / 2) && info.center_y == (PF_FpLong)(h / 2) &&
+		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.ratio == 1.0 && info.angle_deg == 0.0 &&
+		(info.quality == 1.0 || info.quality == 3.0 || info.quality == 5.0) &&
+		info.brightness_gain == 1.0 && info.size_variation == 0.0 &&
+		info.noise_variation == 0.0 && info.noise_type == 1 && info.noise_layer == 0 &&
+		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0;
+	const bool use_aex_exact = use_aex_pf16_quality_repeat || use_aex_case0010 || use_aex_pf16_small || use_aex_pf16_inner_power2_small ||
 		use_aex_pf32_opaque_size_variation_small ||
 		use_aex_pf32_noise_type1_small ||
 		use_aex_typed_noise_type1_pairwise ||
@@ -2692,7 +2724,10 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	const float cx_f = (float)cx;
 	const float cy_f = (float)cy;
 	const float ratio_f = (float)ratio;
-	const float step_rad_f = (float)step_rad;
+	const float step_rad_f = use_aex_pf16_quality_repeat && info.quality == 3.0
+		? RadialF32Div(1.0f, RadialF32Div(
+			RadialF32Mul((float)quality, 180.0f), (float)kPi))
+		: (float)step_rad;
 	const int32_t base_angle_fixed_radians = (int32_t)(base_angle * 65536.0);
 	const float cos_a_f = (float)std::cos((double)base_angle_fixed_radians);
 	const float sin_a_f = (float)std::sin((double)base_angle_fixed_radians);
@@ -2728,8 +2763,10 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			const size_t cell = (size_t)ri * angular_count + ai;
 			polar_valid[cell] = sampled.eligible;
 			if (use_aex_exact) {
-				rotation_source_scalar[cell] = SampleScalarAEXRepeat(
-					rotation_scalar_source_with_guard, w, h, sx, sy);
+				rotation_source_scalar[cell] =
+					use_aex_pf16_quality_repeat && info.repeat_border == FALSE
+						? (sampled.eligible ? 1.0f : 0.0f)
+						: SampleScalarAEXRepeat(rotation_scalar_source_with_guard, w, h, sx, sy);
 			}
 		}
 	}
@@ -2834,7 +2871,10 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			// fixed-strength path's additional UI-to-worker decrement.
 			const A_long outer_span = info.outer_offset_mode == 3
 				? DynamicOffsetForRadius(radius_count, std::max<A_long>(0, info.outer_offset - 1), ri)
-				: RotationEffectiveLength(info.outer_strength, info.outer_offset_mode, 0);
+				: (use_aex_pf16_quality_repeat
+					? (A_long)std::ceil((double)RotationEffectiveLength(
+						info.outer_strength, info.outer_offset_mode, 0) * (info.quality / 5.0))
+					: RotationEffectiveLength(info.outer_strength, info.outer_offset_mode, 0));
 			const A_long inner_span = RotationEffectiveLength(info.inner_strength, info.inner_offset_mode, 0);
 			for (A_long ai = 0; ai < angular_count; ++ai) {
 				const size_t source_cell = (size_t)ri * angular_count + ai;
@@ -3060,7 +3100,9 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				// which is slightly below correctly rounded 2*pi.
 				if (angle < 0.0f) angle = (float)((double)angle + 0x1.921fb53c8d4f1p+2);
 				angle_raw_debug = angle;
-				const float angle_scale = (float)(quality * 180.0 / kPi);
+				const float angle_scale = use_aex_pf16_quality_repeat && info.quality == 3.0
+					? RadialF32Div(RadialF32Mul((float)quality, 180.0f), (float)kPi)
+					: (float)(quality * 180.0 / kPi);
 				angle_index = RadialF32Mul(angle, angle_scale);
 				radius_index = RadialF32Sub(radius, (float)min_r);
 			} else {

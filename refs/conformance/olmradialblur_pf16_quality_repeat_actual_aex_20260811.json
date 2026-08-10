@@ -1,0 +1,1079 @@
+{
+  "cells": [
+    {
+      "actual_sha256": {
+        "output": "409df30d2cf863e4d68453a117810289311020a7de0000bcb27b93f1854278aa",
+        "post_blur": "3cd8025c7facb45963ef31e728b5ed222063e508a92c4adcfeefe23fa2cef306",
+        "pre_blur": "74af15dae5251bfecf18c7bfb77fcc56e91b9f7b9a2cebdde3196492c62f0bb4"
+      },
+      "depth": 16,
+      "exact": true,
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "plane_bytes": {
+        "output": 560,
+        "post_blur": 51840,
+        "pre_blur": 51840
+      },
+      "polar_geometry": [
+        360,
+        9
+      ],
+      "quality": 1.0,
+      "repeat_border": false
+    },
+    {
+      "actual_sha256": {
+        "output": "d1516be07806367d5c71a4ce1e30e374ccb2586f9a160241855f07d6d2779340",
+        "post_blur": "391932ba2bf25cef403e3993c55daa87de5aeae4d038da0257e2b82339f94916",
+        "pre_blur": "beeff8efe1833db3ed21d893c83a22aa27fbdbac97f0d7439c2ba099b9195610"
+      },
+      "depth": 16,
+      "exact": true,
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "plane_bytes": {
+        "output": 560,
+        "post_blur": 51840,
+        "pre_blur": 51840
+      },
+      "polar_geometry": [
+        360,
+        9
+      ],
+      "quality": 1.0,
+      "repeat_border": true
+    },
+    {
+      "actual_sha256": {
+        "output": "07fac14415fb71f0a923d88e75ac7b28b965ec920f6463031f289629737c50f0",
+        "post_blur": "63dbdcf64f984cd0c0dcffbaca3edd3692b77be2bbc8946ee328b1d9fe1b0bc9",
+        "pre_blur": "c3f0e71aef4bba000e6aec94952e9d4cc9b28c6bd018b5f4a9f6bfc4b7430c36"
+      },
+      "depth": 16,
+      "exact": true,
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "plane_bytes": {
+        "output": 560,
+        "post_blur": 155520,
+        "pre_blur": 155520
+      },
+      "polar_geometry": [
+        1080,
+        9
+      ],
+      "quality": 3.0,
+      "repeat_border": false
+    },
+    {
+      "actual_sha256": {
+        "output": "45d31849008bcadcd14a4abda88daa65a7eebdb414617a47ea4056cf6000f51a",
+        "post_blur": "e94ee36dffd081c9b798fc59dad46cb10ea61ebe18c5cf073edeb1f4dbeb34a9",
+        "pre_blur": "9684e774d25e43de9468bd4fb01e21cd8e57ae1e5f847ce75f4e035793c9d9a9"
+      },
+      "depth": 16,
+      "exact": true,
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "plane_bytes": {
+        "output": 560,
+        "post_blur": 155520,
+        "pre_blur": 155520
+      },
+      "polar_geometry": [
+        1080,
+        9
+      ],
+      "quality": 3.0,
+      "repeat_border": true
+    },
+    {
+      "actual_sha256": {
+        "output": "6cc56400fe185a74adfa51a38987f7057218175dfd86410b12e447793ecbde2f",
+        "post_blur": "49c6589d3b452e9fa815952eb383bc2c462994a926178a875ae92872bd242e76",
+        "pre_blur": "903170bd2cb9dbdc83a384169ae350b3f99071913cd42f36c035bb64e9467330"
+      },
+      "depth": 16,
+      "exact": true,
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "plane_bytes": {
+        "output": 560,
+        "post_blur": 259200,
+        "pre_blur": 259200
+      },
+      "polar_geometry": [
+        1800,
+        9
+      ],
+      "quality": 5.0,
+      "repeat_border": false
+    },
+    {
+      "actual_sha256": {
+        "output": "0b0bff1ccc6023d1583775165dde69dd2d0b0f97e7af946062f737ab6fc893aa",
+        "post_blur": "d85a97a70daaab76fb339bcb21b31125e88b87c076bbe5005b1216e8374140ab",
+        "pre_blur": "27c95680ec8f1d897eeddcd456456bfad1ae1406c121e7f39a6a1e9863d72dc0"
+      },
+      "depth": 16,
+      "exact": true,
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "plane_bytes": {
+        "output": 560,
+        "post_blur": 259200,
+        "pre_blur": 259200
+      },
+      "polar_geometry": [
+        1800,
+        9
+      ],
+      "quality": 5.0,
+      "repeat_border": true
+    },
+    {
+      "actual_sha256": {
+        "output": "a8b9dc71696e83872c682425146a13acf33962a6e2eceb57e052734d66ebb75a",
+        "post_blur": "6ad5d68d6895fd2bc90edfdedd95026bada6e355834dc44c0048aa2faebc55da",
+        "pre_blur": "9b9e93568e0ac2b3e997acfbaedc06a527ea550a3106fda4f60333c167f7ece1"
+      },
+      "depth": 16,
+      "exact": true,
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "plane_bytes": {
+        "output": 4896,
+        "post_blur": 120960,
+        "pre_blur": 120960
+      },
+      "polar_geometry": [
+        360,
+        21
+      ],
+      "quality": 1.0,
+      "repeat_border": false
+    },
+    {
+      "actual_sha256": {
+        "output": "ef09a2c488b9a0f922b5fc9d0eab2db2c3cc275ed6b02c33bb0b0ba74254687b",
+        "post_blur": "64a910d0e26bba0aa55b267443e846c0ed6c97773b58e50665b1fbb9df03042c",
+        "pre_blur": "66bae516a4a777e5c77237e948aaf68184739901144fab4ac84861ae3d54c4bc"
+      },
+      "depth": 16,
+      "exact": true,
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "plane_bytes": {
+        "output": 4896,
+        "post_blur": 120960,
+        "pre_blur": 120960
+      },
+      "polar_geometry": [
+        360,
+        21
+      ],
+      "quality": 1.0,
+      "repeat_border": true
+    },
+    {
+      "actual_sha256": {
+        "output": "7e1721855a9307cb632d06a0bb9337b99ace3901d125e99422059224f46c2d15",
+        "post_blur": "a3415fcf236768ea28322775bf0892f4aefed366fdacccb60ea9637380734f8f",
+        "pre_blur": "152ba7de32e0572cef032774b2446a3bf4f5ad7f60c9e19f032e474001528f45"
+      },
+      "depth": 16,
+      "exact": true,
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "plane_bytes": {
+        "output": 4896,
+        "post_blur": 362880,
+        "pre_blur": 362880
+      },
+      "polar_geometry": [
+        1080,
+        21
+      ],
+      "quality": 3.0,
+      "repeat_border": false
+    },
+    {
+      "actual_sha256": {
+        "output": "bfdd3291c91065b9a1e1c76ccd8be9df4c844ee71383696cf10a1e03fcf1d952",
+        "post_blur": "6669e71d032e19ed212931842005e578b19eed04f78592762ac4405a796e9e1d",
+        "pre_blur": "1c79a7b1184a2a1cbc9c8c8131606c09ae0f78249ecaacf577cdf4cfc9296d90"
+      },
+      "depth": 16,
+      "exact": true,
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "plane_bytes": {
+        "output": 4896,
+        "post_blur": 362880,
+        "pre_blur": 362880
+      },
+      "polar_geometry": [
+        1080,
+        21
+      ],
+      "quality": 3.0,
+      "repeat_border": true
+    },
+    {
+      "actual_sha256": {
+        "output": "c7f807a67d42c4ae64fd167ef9230e10574a8dbe0af32acd0d85184eec9c07e2",
+        "post_blur": "1fe7f1dd474f369106c68922a5ac3537ec8baf186b832ff8a458057f3be55d07",
+        "pre_blur": "c8f2b6e5b28ed6ee37103594e4ca7f2803abb392f8486bd38ba0de447e8af449"
+      },
+      "depth": 16,
+      "exact": true,
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "plane_bytes": {
+        "output": 4896,
+        "post_blur": 604800,
+        "pre_blur": 604800
+      },
+      "polar_geometry": [
+        1800,
+        21
+      ],
+      "quality": 5.0,
+      "repeat_border": false
+    },
+    {
+      "actual_sha256": {
+        "output": "62a2d24f4799ee12ead161e9d11d8c86c6cb7d5b0a7697724cab97c95cecdb8d",
+        "post_blur": "bb9ffe69b401a6d6cd19250790db74566293f703a7c07a4fdf2750a8b16ac771",
+        "pre_blur": "525ce83c5615d08156b147eb2a14935e6d458233e77c159ee10790522002778d"
+      },
+      "depth": 16,
+      "exact": true,
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "plane_bytes": {
+        "output": 4896,
+        "post_blur": 604800,
+        "pre_blur": 604800
+      },
+      "polar_geometry": [
+        1800,
+        21
+      ],
+      "quality": 5.0,
+      "repeat_border": true
+    },
+    {
+      "actual_sha256": {
+        "accum": "45c0d96ec436a63bcbf6a226ac3a8239fcafdbc9efb82e63b8ace178ca53d55a",
+        "coordinates": "101d951ae65a0d882a76a1090fe5bb071ff4ba8a29f463147f9b32f03da50edd",
+        "final_rgba": "a16c3e255803f9cec4cc4a5f39c01a1fc0651a66772a2ab7c6de5f3177d00707",
+        "max_alpha": "fcf963da282910c0dfcef0932d8061e0b74a0f3aaf2b52c86814e32bf4c82400",
+        "output": "63174d758199fcf9c4863352c52596819684181eb25a57a10b01518dfa27c800",
+        "polar": "a7c476606a8b43542cad5808139a9baca9004a757e851dce8b8fdbe617549a08",
+        "source_scalar": "cc79bdc88de40df7ff9cf6dd660a4403088fd44577376a2064e2ce4262543d6d"
+      },
+      "depth": 16,
+      "exact": true,
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "plane_bytes": {
+        "accum": 51840,
+        "coordinates": 504,
+        "final_rgba": 1008,
+        "max_alpha": 12960,
+        "output": 560,
+        "polar": 51840,
+        "source_scalar": 12960
+      },
+      "polar_geometry": [
+        360,
+        9
+      ],
+      "quality": 1.0,
+      "repeat_border": false
+    },
+    {
+      "actual_sha256": {
+        "accum": "fa8e3a8578d9b318988419a408d097758872245614d87025864ddaabf1d7b249",
+        "coordinates": "101d951ae65a0d882a76a1090fe5bb071ff4ba8a29f463147f9b32f03da50edd",
+        "final_rgba": "d4efb3ccc0270f960b53c16500b8d52ada2526eb40a425a4b138d495b48d7128",
+        "max_alpha": "2d19ead8e26ef732667df1c5c31cb1d6a171a92a2d59d504be45aaba40fe06d8",
+        "output": "63174d758199fcf9c4863352c52596819684181eb25a57a10b01518dfa27c800",
+        "polar": "f198492d8a94c77db92e154bfac12e49b5e5fc4fe511478259c1eba57c0dc2c6",
+        "source_scalar": "63d0159452f42d51ec46592309b6fdeb89ef60ff1d86a6e8391988b71ba6d88e"
+      },
+      "depth": 16,
+      "exact": true,
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "plane_bytes": {
+        "accum": 51840,
+        "coordinates": 504,
+        "final_rgba": 1008,
+        "max_alpha": 12960,
+        "output": 560,
+        "polar": 51840,
+        "source_scalar": 12960
+      },
+      "polar_geometry": [
+        360,
+        9
+      ],
+      "quality": 1.0,
+      "repeat_border": true
+    },
+    {
+      "actual_sha256": {
+        "accum": "f261c2921e6969e976ffc7da73b48e0203036805a90a051fa45007ac3d04d71c",
+        "coordinates": "b93ed06ba4d444cbca92f013dbfcc676573e1b6d055e512ec199a2f697c5a269",
+        "final_rgba": "a00805a154e274acbc64e096e6e712754fbcd37eeb2005fdf2871005072966f9",
+        "max_alpha": "49756c685c53511abbcca6ff7029e1558142f8401e3996529340164de9770681",
+        "output": "32174df834d74fe793c4cd06ba35cdb5fae22bc969be1b1fe3d8fca1040da5ec",
+        "polar": "604d41e0b61ca2bc953488702fcdc1e1bd317ccbb7c295258ebb4d77789433e9",
+        "source_scalar": "e1bf4cfa899afd5cd15f8c6912556b95fb05bd5cb609d2bb2dd43d52dfa45d27"
+      },
+      "depth": 16,
+      "exact": true,
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "plane_bytes": {
+        "accum": 155520,
+        "coordinates": 504,
+        "final_rgba": 1008,
+        "max_alpha": 38880,
+        "output": 560,
+        "polar": 155520,
+        "source_scalar": 38880
+      },
+      "polar_geometry": [
+        1080,
+        9
+      ],
+      "quality": 3.0,
+      "repeat_border": false
+    },
+    {
+      "actual_sha256": {
+        "accum": "ed7b3f548de1a92c7bd0275e3845360d02d91ecc5561e76b7a41d8fc2e5ea2b8",
+        "coordinates": "b93ed06ba4d444cbca92f013dbfcc676573e1b6d055e512ec199a2f697c5a269",
+        "final_rgba": "8edcde2b43cb7fb9ed2f0000096ff710eb0ba5b3cfbdcf426a166a8d047fed2f",
+        "max_alpha": "a06b4847b2351de9f748cf13efaeaa57480bc66d74b9d9f2eaa6ab5c247fb0be",
+        "output": "b9d997124f05c334299f86d68909e245e46ba1d509332f279b5a58547bce15d9",
+        "polar": "61b0bfb057dfb9405fdca98c271dde9a3f2fa2698e2b67a42bd8e10dc36dcf54",
+        "source_scalar": "62402c230bb7b51820c8749055daae4c4be6e366fd14e36e85a4c75d8c0e62c1"
+      },
+      "depth": 16,
+      "exact": true,
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "plane_bytes": {
+        "accum": 155520,
+        "coordinates": 504,
+        "final_rgba": 1008,
+        "max_alpha": 38880,
+        "output": 560,
+        "polar": 155520,
+        "source_scalar": 38880
+      },
+      "polar_geometry": [
+        1080,
+        9
+      ],
+      "quality": 3.0,
+      "repeat_border": true
+    },
+    {
+      "actual_sha256": {
+        "accum": "8c3fdfdb5d3aa975cdaaa07a40d57bb38265ac8e9591aa04a7d59ac9724dbed7",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "42fc147c7ffc5e7fc01f6e35994dfb493d520a141e52d4996e0b7b40d1a3d169",
+        "max_alpha": "2800a86d9b9c0a61f1335878e6c9b2a7c3945d845728d5bcd9090cca8b0cbed7",
+        "output": "a9851399b654e2cfbc5863dcaf55831bc178d62a20dc2b2363d4b5b0848d997d",
+        "polar": "4b889d9f1026d701040c57df630372458a917ed9766b46ec9db1daf24e968d84",
+        "source_scalar": "342710c0e5a08101b51585717814fbc16f9a9ef86276268be854f99a6b78a27d"
+      },
+      "depth": 16,
+      "exact": true,
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "plane_bytes": {
+        "accum": 259200,
+        "coordinates": 504,
+        "final_rgba": 1008,
+        "max_alpha": 64800,
+        "output": 560,
+        "polar": 259200,
+        "source_scalar": 64800
+      },
+      "polar_geometry": [
+        1800,
+        9
+      ],
+      "quality": 5.0,
+      "repeat_border": false
+    },
+    {
+      "actual_sha256": {
+        "accum": "13b28b32ce8db24cde6bd5f93acab3113a192137b77be5f99da09555859d7135",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "d7e30cdd2e7b7906fa2dac18107c7fedacde052635ee7d660d9665975a38b765",
+        "max_alpha": "fcc2f0e5a233ad87b4acd4e52dd129e487eda8b7ffdac999cea2e9e9bfedd8e4",
+        "output": "2f6d2242202f22b82cc91d73923974d5432187af5b6b4a9b9bbee7989105f055",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+      },
+      "depth": 16,
+      "exact": true,
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "plane_bytes": {
+        "accum": 259200,
+        "coordinates": 504,
+        "final_rgba": 1008,
+        "max_alpha": 64800,
+        "output": 560,
+        "polar": 259200,
+        "source_scalar": 64800
+      },
+      "polar_geometry": [
+        1800,
+        9
+      ],
+      "quality": 5.0,
+      "repeat_border": true
+    },
+    {
+      "actual_sha256": {
+        "accum": "62bd3a45d87f3c5524c3ef54040f76a2018a2e2db15be097be5116ce6830719a",
+        "coordinates": "ee1c1aa79aad5873fe41be27a633f1fe39ffa899b979fc1560820b13f6c61b53",
+        "final_rgba": "0f2000132eff96c007d439e3fbe8284ccbd3ed7fac71142aefb8f59c9927b3a5",
+        "max_alpha": "2a21cf46f04bbe98fedcd84dad5f442db51eef697f5cbfd57b2bfb0e5f8af150",
+        "output": "39b5e769d580812012096f262b8dd950fb86c31e2b088a92ed59bdc008ab743a",
+        "polar": "3d2b906d07edc694aec0590f37ae544a944aa0cc53cb37b3c427116172eaca02",
+        "source_scalar": "78606841ae432c99abbbc0ad8799609e400f55e73bf5710c8aadbfc2bc9ed299"
+      },
+      "depth": 16,
+      "exact": true,
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "plane_bytes": {
+        "accum": 120960,
+        "coordinates": 4608,
+        "final_rgba": 9216,
+        "max_alpha": 30240,
+        "output": 4896,
+        "polar": 120960,
+        "source_scalar": 30240
+      },
+      "polar_geometry": [
+        360,
+        21
+      ],
+      "quality": 1.0,
+      "repeat_border": false
+    },
+    {
+      "actual_sha256": {
+        "accum": "9e684971b3f7bada8748ed90ba4789c1ed747cbed8429fe703bdfe734b48be48",
+        "coordinates": "ee1c1aa79aad5873fe41be27a633f1fe39ffa899b979fc1560820b13f6c61b53",
+        "final_rgba": "db4045166134aa75010d848132a3e47bf4b5a9c61f831bb784b80b62e9ef919d",
+        "max_alpha": "14b76aac872238deedf16cf7ad8d1e7f3bce25c4f5f0d516c27bf0152eb98839",
+        "output": "bcd4b3c65d12fc5813ebaaf63296d4778f8fdbf83b955ec44c912db4101da63e",
+        "polar": "64ea39956f34423be6a5af4a14169f5b25a292973cd8834aae238251bb0264e2",
+        "source_scalar": "dc4371b9bc8afb99dca31e243748ad1b11a163c951ac4b9ec2c731d6faf364d5"
+      },
+      "depth": 16,
+      "exact": true,
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "plane_bytes": {
+        "accum": 120960,
+        "coordinates": 4608,
+        "final_rgba": 9216,
+        "max_alpha": 30240,
+        "output": 4896,
+        "polar": 120960,
+        "source_scalar": 30240
+      },
+      "polar_geometry": [
+        360,
+        21
+      ],
+      "quality": 1.0,
+      "repeat_border": true
+    },
+    {
+      "actual_sha256": {
+        "accum": "95f8c3aebee1c7c91399205abdaf7ed6819ce7eba8f44758b11928ac37707a88",
+        "coordinates": "7886f209cc3b42c213365e9c548697efc1a390816a45937478beeb314186fc56",
+        "final_rgba": "e015f245b4eb3c93a77ebf59aef3f6493b6e3dd595065f4f36dfa616b122b815",
+        "max_alpha": "ff68b0dd34ff373194956d091cd820588b2f69783e96adf926067e9bec4a028a",
+        "output": "dc11c4deea3544b3d1d514b640eabb0961e8b4980df4ebfa65c3856b161947fa",
+        "polar": "153cf607c14505a280974929f01eac5b2173d667207f42f99116b808af935a07",
+        "source_scalar": "2ac4f760fb69b9aa117308c9b1245446798028019b526f3045baeeea0aeefa9e"
+      },
+      "depth": 16,
+      "exact": true,
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "plane_bytes": {
+        "accum": 362880,
+        "coordinates": 4608,
+        "final_rgba": 9216,
+        "max_alpha": 90720,
+        "output": 4896,
+        "polar": 362880,
+        "source_scalar": 90720
+      },
+      "polar_geometry": [
+        1080,
+        21
+      ],
+      "quality": 3.0,
+      "repeat_border": false
+    },
+    {
+      "actual_sha256": {
+        "accum": "ae082715614f2eb44f5b96a0ac7a3504b9b6e3796acb1ffc06eb182fb5dafc92",
+        "coordinates": "7886f209cc3b42c213365e9c548697efc1a390816a45937478beeb314186fc56",
+        "final_rgba": "c55bf08c0e4ec253e7c2c40ee4aa603a79a8878193222a4dab4c2f2202b103bc",
+        "max_alpha": "4861e132c656f7a9bcee62f1bf5765f76f7df8819d83679268dbfeb475db25bc",
+        "output": "8e0248aa3dae13cb11c1022eaa89144048219c9f18a5235d2f01b7b9f854c3fd",
+        "polar": "42ab493c49e056542852ad1d5db604add90432109727607b701036f6f655dcde",
+        "source_scalar": "32541390934a510e25b3f13ae744854fe756542aa8e4e32b99cef0e16975683d"
+      },
+      "depth": 16,
+      "exact": true,
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "plane_bytes": {
+        "accum": 362880,
+        "coordinates": 4608,
+        "final_rgba": 9216,
+        "max_alpha": 90720,
+        "output": 4896,
+        "polar": 362880,
+        "source_scalar": 90720
+      },
+      "polar_geometry": [
+        1080,
+        21
+      ],
+      "quality": 3.0,
+      "repeat_border": true
+    },
+    {
+      "actual_sha256": {
+        "accum": "c4672346cf999b689e552d7958d471b5926745fb571998dad6a1b8de82059620",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "e4924c41481631bbd2f29f4f5fd0ac9d8fd60093d38b7398bcad8f9281af013a",
+        "max_alpha": "528f741b920e9039fe5496c5ed83621cfddc37c4e64f6fffed9646d6271f2e08",
+        "output": "34915a0aafdaf0abeff54eb595218e10f371cb7c223a625f1b88356de279ac10",
+        "polar": "e73936fd4fdad616a0093a64239f61981bc0d3c84e4ef06e3d8b3fc4875a246f",
+        "source_scalar": "171ac0bfd302468b9e7692a473899aa612d108ca976bed9e43f76187ccb98599"
+      },
+      "depth": 16,
+      "exact": true,
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "plane_bytes": {
+        "accum": 604800,
+        "coordinates": 4608,
+        "final_rgba": 9216,
+        "max_alpha": 151200,
+        "output": 4896,
+        "polar": 604800,
+        "source_scalar": 151200
+      },
+      "polar_geometry": [
+        1800,
+        21
+      ],
+      "quality": 5.0,
+      "repeat_border": false
+    },
+    {
+      "actual_sha256": {
+        "accum": "5f2808240747555909d27f53daa110a46d7f77459e175185e43bdf97f03878e8",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "e462b3473c95272edf436e8a75121a7197c68ed1025497c28db49b8f2f9b0c1a",
+        "max_alpha": "39f86a18e7fa04ba0218b5d546b9918c0c90528f9eae17db57ad52c40b05cd91",
+        "output": "367905db6813ec528a0be407beaee51415ff333884312ede975455c5056eb370",
+        "polar": "da0505812a661d8b3cf2e9975b0b8d354b81a280be74c39510d97656920dd020",
+        "source_scalar": "e468ec1e7afb7b7ef8f52282c441d260ec7f29a643b3ab86884f1d83dabb62b0"
+      },
+      "depth": 16,
+      "exact": true,
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "plane_bytes": {
+        "accum": 604800,
+        "coordinates": 4608,
+        "final_rgba": 9216,
+        "max_alpha": 151200,
+        "output": 4896,
+        "polar": 604800,
+        "source_scalar": 151200
+      },
+      "polar_geometry": [
+        1800,
+        21
+      ],
+      "quality": 5.0,
+      "repeat_border": true
+    }
+  ],
+  "evidence_boundary": "Production comparison compiles the current shared OLMRadialBlur.cpp and exercises its bounded PF16-only Quality/Repeat predicate.",
+  "integration_candidate": {
+    "admission": "PF16 only, centered neutral tuple, 9x7/32x18, Quality {1,3,5}, Repeat either.",
+    "quality_3": "angle_scale=(Quality*180.0f)/(float)pi; step_rad=1.0f/angle_scale. Quality 1/5 retain the existing rounding path.",
+    "repeat_off_rotation_scalar": "sampled.eligible ? 1.0f : 0.0f.",
+    "repeat_off_zoom_span": "1.0f for this neutral source-factor family (equivalent to normalizing valid bilinear taps).",
+    "rotation_span": "ceil(RotationEffectiveLength(strength)*Quality/5)."
+  },
+  "kind": "olmradialblur_pf16_quality_repeat_actual_aex_20260811",
+  "repeat_off_vs_on": [
+    {
+      "different_planes": [
+        "pre_blur",
+        "post_blur",
+        "output"
+      ],
+      "geometry": [
+        9,
+        7
+      ],
+      "mode": "zoom",
+      "quality": 1.0,
+      "same_planes": []
+    },
+    {
+      "different_planes": [
+        "pre_blur",
+        "post_blur",
+        "output"
+      ],
+      "geometry": [
+        9,
+        7
+      ],
+      "mode": "zoom",
+      "quality": 3.0,
+      "same_planes": []
+    },
+    {
+      "different_planes": [
+        "pre_blur",
+        "post_blur",
+        "output"
+      ],
+      "geometry": [
+        9,
+        7
+      ],
+      "mode": "zoom",
+      "quality": 5.0,
+      "same_planes": []
+    },
+    {
+      "different_planes": [
+        "pre_blur",
+        "post_blur",
+        "output"
+      ],
+      "geometry": [
+        32,
+        18
+      ],
+      "mode": "zoom",
+      "quality": 1.0,
+      "same_planes": []
+    },
+    {
+      "different_planes": [
+        "pre_blur",
+        "post_blur",
+        "output"
+      ],
+      "geometry": [
+        32,
+        18
+      ],
+      "mode": "zoom",
+      "quality": 3.0,
+      "same_planes": []
+    },
+    {
+      "different_planes": [
+        "pre_blur",
+        "post_blur",
+        "output"
+      ],
+      "geometry": [
+        32,
+        18
+      ],
+      "mode": "zoom",
+      "quality": 5.0,
+      "same_planes": []
+    },
+    {
+      "different_planes": [
+        "polar",
+        "source_scalar",
+        "accum",
+        "max_alpha",
+        "final_rgba"
+      ],
+      "geometry": [
+        9,
+        7
+      ],
+      "mode": "rotation",
+      "quality": 1.0,
+      "same_planes": [
+        "coordinates",
+        "output"
+      ]
+    },
+    {
+      "different_planes": [
+        "polar",
+        "source_scalar",
+        "accum",
+        "max_alpha",
+        "final_rgba",
+        "output"
+      ],
+      "geometry": [
+        9,
+        7
+      ],
+      "mode": "rotation",
+      "quality": 3.0,
+      "same_planes": [
+        "coordinates"
+      ]
+    },
+    {
+      "different_planes": [
+        "polar",
+        "source_scalar",
+        "accum",
+        "max_alpha",
+        "final_rgba",
+        "output"
+      ],
+      "geometry": [
+        9,
+        7
+      ],
+      "mode": "rotation",
+      "quality": 5.0,
+      "same_planes": [
+        "coordinates"
+      ]
+    },
+    {
+      "different_planes": [
+        "polar",
+        "source_scalar",
+        "accum",
+        "max_alpha",
+        "final_rgba",
+        "output"
+      ],
+      "geometry": [
+        32,
+        18
+      ],
+      "mode": "rotation",
+      "quality": 1.0,
+      "same_planes": [
+        "coordinates"
+      ]
+    },
+    {
+      "different_planes": [
+        "polar",
+        "source_scalar",
+        "accum",
+        "max_alpha",
+        "final_rgba",
+        "output"
+      ],
+      "geometry": [
+        32,
+        18
+      ],
+      "mode": "rotation",
+      "quality": 3.0,
+      "same_planes": [
+        "coordinates"
+      ]
+    },
+    {
+      "different_planes": [
+        "polar",
+        "source_scalar",
+        "accum",
+        "max_alpha",
+        "final_rgba",
+        "output"
+      ],
+      "geometry": [
+        32,
+        18
+      ],
+      "mode": "rotation",
+      "quality": 5.0,
+      "same_planes": [
+        "coordinates"
+      ]
+    }
+  ],
+  "scope": "PF16 actual owner only; Zoom/Rotation, 9x7/32x18, Quality{1,3,5}, Repeat Border{off,on}, neutral centered tuple.",
+  "status": "exact"
+}
