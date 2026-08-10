@@ -1,0 +1,299 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "No other geometry or cross-parameter combination",
+    "No key/gamma interaction",
+    "No AE-host execution claim"
+  ],
+  "decode_lut_sha256": "11056c2feda87964204a53471e172ae6fb6039a0c3120f6277c7ff115fe88cba",
+  "fixture_rgb_u8": [
+    [
+      206,
+      55,
+      161
+    ],
+    [
+      86,
+      55,
+      26
+    ],
+    [
+      43,
+      73,
+      217
+    ],
+    [
+      231,
+      16,
+      235
+    ],
+    [
+      116,
+      106,
+      230
+    ],
+    [
+      1,
+      9,
+      43
+    ],
+    [
+      91,
+      38,
+      34
+    ],
+    [
+      99,
+      183,
+      84
+    ],
+    [
+      230,
+      125,
+      149
+    ],
+    [
+      208,
+      155,
+      60
+    ],
+    [
+      168,
+      21,
+      161
+    ],
+    [
+      233,
+      157,
+      226
+    ],
+    [
+      8,
+      57,
+      119
+    ],
+    [
+      159,
+      56,
+      196
+    ],
+    [
+      232,
+      156,
+      109
+    ],
+    [
+      50,
+      140,
+      246
+    ],
+    [
+      229,
+      135,
+      20
+    ],
+    [
+      36,
+      6,
+      46
+    ],
+    [
+      176,
+      107,
+      229
+    ],
+    [
+      168,
+      83,
+      193
+    ],
+    [
+      235,
+      7,
+      162
+    ],
+    [
+      225,
+      133,
+      142
+    ],
+    [
+      159,
+      155,
+      17
+    ],
+    [
+      39,
+      112,
+      149
+    ],
+    [
+      138,
+      142,
+      192
+    ]
+  ],
+  "fixtures": [
+    {
+      "class_nonzero_bytes": 67,
+      "class_plane_sha256": "73611226d3a3994fd50cf5a3ce89e2fce4e0b2a2391bff30da87b010c8cbf560",
+      "classifier_instructions": 7946,
+      "depth": "PF8",
+      "equal": true,
+      "extra_smooth": 0,
+      "padding_per_row": 5,
+      "padding_preserved": true,
+      "raw_hex": "ffce37a1ff56371aff2b49d9ffe231e5ff746ae6a5a5a5a5a5ff01092bff7a455dff7d9080ffd87e94ffce965fa5a5a5a5a5ffa815a1ffc281b5ff77628cffa148bfffe49873a5a5a5a5a5ff328cf6ffca8082ff7f576fffa26bd4ffac59c0a5a5a5a5a5ffeb07a2ffe1858eff9f9b11ff277095ff8a8abfa5a5a5a5a5",
+      "raw_sha256": "d59315c6e19874b095475e3b357e85586ba51a4f598151a2e3dcbfff7abd8624",
+      "smooth_range": 2,
+      "typed_worker_instructions": 26681,
+      "variant": "base"
+    },
+    {
+      "class_nonzero_bytes": 0,
+      "class_plane_sha256": "cd00e292c5970d3c5e2f0ffa5171e555bc46bfc4faddfb4a418b6840b86e79a3",
+      "classifier_instructions": 7946,
+      "depth": "PF8",
+      "equal": true,
+      "extra_smooth": 0,
+      "padding_per_row": 5,
+      "padding_preserved": true,
+      "raw_hex": "ffce37a1ff56371aff2b49d9ffe710ebff746ae6a5a5a5a5a5ff01092bff5b2622ff63b754ffe67d95ffd09b3ca5a5a5a5a5ffa815a1ffe99de2ff083977ff9f38c4ffe89c6da5a5a5a5a5ff328cf6ffe58714ff24062effb06be5ffa853c1a5a5a5a5a5ffeb07a2ffe1858eff9f9b11ff277095ff8a8ec0a5a5a5a5a5",
+      "raw_sha256": "4d2ced0bb25c90b3c94708a0a9d30f5e905c2873ac0f42731929acfa8c0291c4",
+      "smooth_range": 100,
+      "typed_worker_instructions": 11345,
+      "variant": "range100"
+    },
+    {
+      "class_nonzero_bytes": 67,
+      "class_plane_sha256": "73611226d3a3994fd50cf5a3ce89e2fce4e0b2a2391bff30da87b010c8cbf560",
+      "classifier_instructions": 7946,
+      "depth": "PF8",
+      "equal": true,
+      "extra_smooth": 100,
+      "padding_per_row": 5,
+      "padding_preserved": true,
+      "raw_hex": "ffce37a1ff56371aff2b49d9ffe231e5ff746ae6a5a5a5a5a5ff01092bff844d6bff7d9080ffd87e94ffce965fa5a5a5a5a5ffa815a1ffc281b5ff77628cffa148bfffe49873a5a5a5a5a5ff328cf6ffca8082ff7f576fffa26bd4ffac59c0a5a5a5a5a5ffeb07a2ffe1858eff9f9b11ff277095ff8a8abfa5a5a5a5a5",
+      "raw_sha256": "3ba0cd9c54359374916b360019304a1b81db148f3dcee5573e5cfacd697780b2",
+      "smooth_range": 2,
+      "typed_worker_instructions": 26690,
+      "variant": "extra100"
+    },
+    {
+      "class_nonzero_bytes": 67,
+      "class_plane_sha256": "73611226d3a3994fd50cf5a3ce89e2fce4e0b2a2391bff30da87b010c8cbf560",
+      "classifier_instructions": 7946,
+      "depth": "PF16",
+      "equal": true,
+      "extra_smooth": 0,
+      "padding_per_row": 7,
+      "padding_preserved": true,
+      "raw_hex": "008067679c1bd15000802b2b9c1b0d0d00809615a524ed6c0080a0715f18e47200803a3a35357373a5a5a5a5a5a5a500808100850496150080103d84229a2e0080df3e78487f400080636c0a3f3f4a0080a0673a4bc72fa5a5a5a5a5a5a5008054548b0ad15000806c618f40f45a0080bb3bfa3056460080955043240f6000806072574cb039a5a5a5a5a5a5a50080191946467b7b00809065054062410080fa3fd52bb137008080518235776a00806956d62c6360a5a5a5a5a5a5a50080f675840351510080f170c34247470080d04fce4d8908008094133838cb4a00803b451945ff5fa5a5a5a5a5a5a5",
+      "raw_sha256": "8fd9e6fa4aa726686d9334c52c98faf5972213c49103478dc5bb77b7d4e4c564",
+      "smooth_range": 2,
+      "typed_worker_instructions": 26682,
+      "variant": "base"
+    },
+    {
+      "class_nonzero_bytes": 0,
+      "class_plane_sha256": "cd00e292c5970d3c5e2f0ffa5171e555bc46bfc4faddfb4a418b6840b86e79a3",
+      "classifier_instructions": 7946,
+      "depth": "PF16",
+      "equal": true,
+      "extra_smooth": 0,
+      "padding_per_row": 7,
+      "padding_preserved": true,
+      "raw_hex": "008067679c1bd15000802b2b9c1b0d0d00809615a524ed6c0080f4730808f67500803a3a35357373a5a5a5a5a5a5a500808100850496150080ae2d131311110080b231dc5b2a2a00807373bf3ecb4a00806868ce4d1e1ea5a5a5a5a5a5a5008054548b0ad1500080f574cf4e7171008004049d1cbc3b0080d04f1c1c6262008074744e4eb736a5a5a5a5a5a5a50080191946467b7b0080f372c4430a0a008012120303171700805858b635f37200805454aa29e160a5a5a5a5a5a5a50080f675840351510080f170c34247470080d04fce4d8908008094133838cb4a0080454547476060a5a5a5a5a5a5a5",
+      "raw_sha256": "78f646e138a754ebfa7011045af4bd3330f38551ed8c3dbbdc92177d75f0b5b0",
+      "smooth_range": 100,
+      "typed_worker_instructions": 11346,
+      "variant": "range100"
+    },
+    {
+      "class_nonzero_bytes": 67,
+      "class_plane_sha256": "73611226d3a3994fd50cf5a3ce89e2fce4e0b2a2391bff30da87b010c8cbf560",
+      "classifier_instructions": 7946,
+      "depth": "PF16",
+      "equal": true,
+      "extra_smooth": 100,
+      "padding_per_row": 7,
+      "padding_preserved": true,
+      "raw_hex": "008067679c1bd15000802b2b9c1b0d0d00809615a524ed6c0080a0715f18e47200803a3a35357373a5a5a5a5a5a5a5008081008504961500800442da2695350080df3e78487f400080636c0a3f3f4a0080a0673a4bc72fa5a5a5a5a5a5a5008054548b0ad15000806c618f40f45a0080bb3bfa3056460080955043240f6000806072574cb039a5a5a5a5a5a5a50080191946467b7b00809065054062410080fa3fd52bb137008080518235776a00806956d62c6360a5a5a5a5a5a5a50080f675840351510080f170c34247470080d04fce4d8908008094133838cb4a00803b451945ff5fa5a5a5a5a5a5a5",
+      "raw_sha256": "7eabc1fea3c46124a462691519186a65dbec80efa386f794ebe7d92f80dc8951",
+      "smooth_range": 2,
+      "typed_worker_instructions": 26691,
+      "variant": "extra100"
+    },
+    {
+      "class_nonzero_bytes": 67,
+      "class_plane_sha256": "73611226d3a3994fd50cf5a3ce89e2fce4e0b2a2391bff30da87b010c8cbf560",
+      "classifier_instructions": 7946,
+      "depth": "PF32",
+      "equal": true,
+      "extra_smooth": 0,
+      "padding_per_row": 13,
+      "padding_preserved": true,
+      "raw_hex": "0000803fcfce4e3fdedc5c3ea3a1213f0000803facacac3ededc5c3ea1d0d03d0000803fa5ac2c3e9392923edad9593f0000803ff33f633f29f5423e3fc8653f0000803fe9e8e83ed6d4d43ee7e6663fa5a5a5a5a5a5a5a5a5a5a5a5a50000803f8080803b9190103da5ac2c3e0000803f9c3df43eed108a3e0267ba3effff7f3f7d7dfb3eebef103fcdfe003f0000803fcfc5583fbf28fc3e037d143f0000803f70404f3f8074163f4a1dbf3ea5a5a5a5a5a5a5a5a5a5a5a5a50000803fa9a8283fa4a8a83da3a1213fffff7f3f6bd8423fac1d013f0fe8353fffff7f3f2febee3e10e6c33eeaac0c3f0000803fb42a213f240c913e851e403f0000803fafc0643f36af183f6cbde63ea5a5a5a5a5a5a5a5a5a5a5a5a50000803fc7c8483e8d8c0c3ff7f6763fffff7f3fae1f4b3fa009003f8bc4023fffff7f3f2ce8ff3e4a55af3eacc5de3e0000803f6b01233f2a06d63ed9ed543f0000803f95d32c3f6258b33efec5403fa5a5a5a5a5a5a5a5a5a5a5a5a50000803feceb6b3fe0e0e03ca3a2223f0000803fe2e1613f8685053f8f8e0e3f0000803f9f9f1f3f9c9b1b3f6e88883d0000803f989c1c3ee0e0e03e9695153f0000803fe7750a3f02330a3f4fff3f3fa5a5a5a5a5a5a5a5a5a5a5a5a5",
+      "raw_sha256": "a523890b7a93c60cd7e99fb1a8a3e83dc835cacce36859ab3473a37d85a0532a",
+      "smooth_range": 2,
+      "typed_worker_instructions": 26430,
+      "variant": "base"
+    },
+    {
+      "class_nonzero_bytes": 0,
+      "class_plane_sha256": "cd00e292c5970d3c5e2f0ffa5171e555bc46bfc4faddfb4a418b6840b86e79a3",
+      "classifier_instructions": 7946,
+      "depth": "PF32",
+      "equal": true,
+      "extra_smooth": 0,
+      "padding_per_row": 13,
+      "padding_preserved": true,
+      "raw_hex": "0000803fcfce4e3fdedc5c3ea3a1213f0000803facacac3ededc5c3ea1d0d03d0000803fa5ac2c3e9392923edad9593f0000803fe8e7673f1480803deceb6b3f0000803fe9e8e83ed6d4d43ee7e6663fa5a5a5a5a5a5a5a5a5a5a5a5a50000803f8080803b9190103da5ac2c3e0000803fb7b6b63e9298183e8788083e0000803fc6c6c63eb8b7373fa8a8a83e0000803fe7e6663ffbfafa3e9695153f0000803fd1d0503f9c9b1b3ff0f0703ea5a5a5a5a5a5a5a5a5a5a5a5a50000803fa9a8283fa4a8a83da3a1213f0000803fe9e9693f9e9d1d3fe4e2623f0000803f8080003de3e4643eefeeee3e0000803f9f9f1f3fdde0603ec5c4443f0000803fe9e8683f9d9c1c3fdbdada3ea5a5a5a5a5a5a5a5a5a5a5a5a50000803fc7c8483e8d8c0c3ff7f6763f0000803fe6e5653f8887073f8ca0a03d0000803f8590103ec1c0c03cb6b8383e0000803fb1b0303fd8d6d63ee6e5653f0000803fa9a8283fa7a6a63ec2c1413fa5a5a5a5a5a5a5a5a5a5a5a5a50000803feceb6b3fe0e0e03ca3a2223f0000803fe2e1613f8685053f8f8e0e3f0000803f9f9f1f3f9c9b1b3f6e88883d0000803f989c1c3ee0e0e03e9695153f0000803f8b8a0a3f8f8e0e3fc1c0403fa5a5a5a5a5a5a5a5a5a5a5a5a5",
+      "raw_sha256": "9daa8a4689225b53ab96350ee04d7c102d9e87ed09833d0a98c63522d503d11c",
+      "smooth_range": 100,
+      "typed_worker_instructions": 11094,
+      "variant": "range100"
+    },
+    {
+      "class_nonzero_bytes": 67,
+      "class_plane_sha256": "73611226d3a3994fd50cf5a3ce89e2fce4e0b2a2391bff30da87b010c8cbf560",
+      "classifier_instructions": 7946,
+      "depth": "PF32",
+      "equal": true,
+      "extra_smooth": 100,
+      "padding_per_row": 13,
+      "padding_preserved": true,
+      "raw_hex": "0000803fcfce4e3fdedc5c3ea3a1213f0000803facacac3ededc5c3ea1d0d03d0000803fa5ac2c3e9392923edad9593f0000803ff33f633f29f5423e3fc8653f0000803fe9e8e83ed6d4d43ee7e6663fa5a5a5a5a5a5a5a5a5a5a5a5a50000803f8080803b9190103da5ac2c3effff7f3ffd07043f02679b3e7454d63effff7f3f7d7dfb3eebef103fcdfe003f0000803fcfc5583fbf28fc3e037d143f0000803f70404f3f8074163f4a1dbf3ea5a5a5a5a5a5a5a5a5a5a5a5a50000803fa9a8283fa4a8a83da3a1213fffff7f3f6bd8423fac1d013f0fe8353fffff7f3f2febee3e10e6c33eeaac0c3f0000803fb42a213f240c913e851e403f0000803fafc0643f36af183f6cbde63ea5a5a5a5a5a5a5a5a5a5a5a5a50000803fc7c8483e8d8c0c3ff7f6763fffff7f3fae1f4b3fa009003f8bc4023fffff7f3f2ce8ff3e4a55af3eacc5de3e0000803f6b01233f2a06d63ed9ed543f0000803f95d32c3f6258b33efec5403fa5a5a5a5a5a5a5a5a5a5a5a5a50000803feceb6b3fe0e0e03ca3a2223f0000803fe2e1613f8685053f8f8e0e3f0000803f9f9f1f3f9c9b1b3f6e88883d0000803f989c1c3ee0e0e03e9695153f0000803fe7750a3f02330a3f4fff3f3fa5a5a5a5a5a5a5a5a5a5a5a5a5",
+      "raw_sha256": "f58d20f5c9373338716299aeeb1de7a8eb9ea09335944aad534c3abe70c02916",
+      "smooth_range": 2,
+      "typed_worker_instructions": 26439,
+      "variant": "extra100"
+    }
+  ],
+  "independent_effect_contract": {
+    "all_three_raw_outputs_distinct_per_depth": true,
+    "extra100_preserves_classifier_plane_but_changes_worker_output": true,
+    "range100_changes_classifier_plane": true
+  },
+  "inverse_lut_sha256": "b7014467dcae06109111302b8c930494950d27b817d1390d6434605795772fbc",
+  "production_source_sha256": "d8a7a489bb3bc875e998926bdde971ac66f5544c41ff6bc583819bf0daf0a784",
+  "public_ui_contract": {
+    "extra_smooth": {
+      "default": 0,
+      "maximum": 100,
+      "minimum": 0,
+      "tested": [
+        0,
+        100
+      ]
+    },
+    "smooth_range": {
+      "default": 2,
+      "maximum": 100,
+      "minimum": 0,
+      "tested": 100
+    }
+  },
+  "scope": "PF8/PF16/PF32 v2 key/gamma off, Smoothness100; baseline Range2/Extra0 versus public Range100 and public Extra100, padded5x5",
+  "verdict": "PASS_PUBLIC_RANGE100_AND_EXTRA0_100_INDEPENDENT_EFFECT_ALL_DEPTHS_EXACT"
+}

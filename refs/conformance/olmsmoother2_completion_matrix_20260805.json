@@ -43,9 +43,10 @@
       "smoothness_100_default_upper_endpoint": "proven",
       "smooth_range_0_lower_endpoint": "proven",
       "smooth_range_1_fixture": "proven",
-      "smooth_range_255_upper_endpoint": "proven with independent output effect versus ranges 0 and 1",
+      "smooth_range_100_public_upper_endpoint": "proven with independent output effect at PF8/PF16/PF32 on padded 5x5 fixture",
+      "smooth_range_255_internal_out_of_ui": "proven with independent output effect versus ranges 0 and 1; not a public endpoint",
       "extra_smooth_0_default_lower_endpoint": "proven by prior fixtures",
-      "extra_smooth_100_upper_endpoint": "proven actual-to-production exact; independent output influence not claimed"
+      "extra_smooth_100_upper_endpoint": "proven actual-to-production exact with independent output influence at PF8/PF16/PF32 on padded 5x5 fixture"
     },
     "palette": {
       "counts_1_through_5": "proven natural path",
@@ -55,7 +56,7 @@
     }
   },
   "largest_closed_gap_this_round": "Extra Smooth=100 public upper endpoint",
-  "next_largest_natural_gap": "PF8 smoothing endpoint interactions, other intermediate Gamma Values, or other key color endpoints",
+  "next_largest_natural_gap": "Other smoothing cross-parameter interactions, intermediate Gamma Values, or other key color endpoints",
   "constraints": [
     "Do not generalize palette count above 5",
     "No AE-host claim from emulation or adapter-only command tests"

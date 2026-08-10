@@ -1,0 +1,10 @@
+#include <cmath>
+#include <cstdio>
+#include <cstring>
+#include <vector>
+#include "../../mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp"
+
+static constexpr int W=5,H=5,N=25;
+static const unsigned char RGB[N][3]={{206,55,161},{86,55,26},{43,73,217},{231,16,235},{116,106,230},{1,9,43},{91,38,34},{99,183,84},{230,125,149},{208,155,60},{168,21,161},{233,157,226},{8,57,119},{159,56,196},{232,156,109},{50,140,246},{229,135,20},{36,6,46},{176,107,229},{168,83,193},{235,7,162},{225,133,142},{159,155,17},{39,112,149},{138,142,192}};
+template<class P> static int run(const char*depth,const char*mode,const P*p,int range,int extra){size_t pad=std::is_same<P,PF_Pixel8>::value?5:(std::is_same<P,PF_Pixel16>::value?7:13),rb=W*sizeof(P)+pad;std::vector<unsigned char>i(rb*H,0x3c),o(rb*H,0xa5);for(int y=0;y<H;y++)for(int x=0;x<W;x++)memcpy(i.data()+y*rb+x*sizeof(P),p+y*W+x,sizeof(P));PF_EffectWorld iw{},ow{};iw.data=i.data();iw.width=W;iw.height=H;iw.rowbytes=rb;iw.extent_hint={0,0,W,H};ow.data=o.data();ow.width=W;ow.height=H;ow.rowbytes=rb;ow.extent_hint={0,0,W,H};PF_ParamDef d[SM_NUM_PARAMS]{};PF_ParamDef*q[SM_NUM_PARAMS]{};for(int n=0;n<SM_NUM_PARAMS;n++)q[n]=d+n;d[SM_SMOOTHNESS].u.sd.value=100;d[SM_EXTRA_SMOOTH].u.sd.value=extra;d[SM_SMOOTH_RANGE].u.sd.value=range;d[SM_VERSION].u.pd.value=SMOOTHER_V2;d[SM_GAMMA_MODE].u.pd.value=GAMMA_NONE;d[SM_GAMMA_VALUE].u.fs_d.value=2.4;PF_InData id{};if(RenderBits<P>(&id,q,&iw,&ow))return 2;printf("%s_%s ",depth,mode);for(auto b:o)printf("%02x",b);puts("");return 0;}
+int main(){PF_Pixel8 p8[N]{};PF_Pixel16 p16[N]{};PF_PixelFloat p32[N]{};for(int i=0;i<N;i++){p8[i]={255,RGB[i][0],RGB[i][1],RGB[i][2]};p16[i].alpha=32768;p16[i].red=(unsigned short)std::lround(RGB[i][0]*32768.0/255.0);p16[i].green=(unsigned short)std::lround(RGB[i][1]*32768.0/255.0);p16[i].blue=(unsigned short)std::lround(RGB[i][2]*32768.0/255.0);p32[i]={1.f,RGB[i][0]/255.f,RGB[i][1]/255.f,RGB[i][2]/255.f};}for(auto m:{0,1,2}){const char*name=m==0?"base":(m==1?"range100":"extra100");int range=m==1?100:2,extra=m==2?100:0;if(run("PF8",name,p8,range,extra)||run("PF16",name,p16,range,extra)||run("PF32",name,p32,range,extra))return 2;}return 0;}

@@ -14,13 +14,16 @@ DOC=ROOT/'refs/conformance/olmsmoother2_nonuniform_geometry_actual_aex_20260805.
 
 def req(x,m):
     if not x: raise RuntimeError('FAIL CLOSED: '+m)
-def desc(l,b,stride):
-    p=l.bump_alloc(24,align=16);l.write_bytes(p,struct.pack('<QiiQ',b,W,H,stride));return p
+def desc(l,b,stride,width=W,height=H):
+    p=l.bump_alloc(24,align=16);l.write_bytes(p,struct.pack('<QiiQ',b,width,height,stride));return p
 class SmallStatic(SerialVcomp):
+    def __init__(self, loader, height=H):
+        self.height=height
+        super().__init__(loader)
     def static_init(self,uc,args):
-        req(args==[0,H-1,1,1],f'static args {args}')
+        req(args==[0,self.height-1,1,1],f'static args {args}')
         rsp=uc.reg_read(typed.UC_X86_REG_RSP); first=struct.unpack('<Q',self.loader.read_bytes(rsp+0x28,8))[0]; last=struct.unpack('<Q',self.loader.read_bytes(rsp+0x30,8))[0]
-        self.loader.write_bytes(first,struct.pack('<i',0));self.loader.write_bytes(last,struct.pack('<i',H-1));self.static_events.append({'first':0,'last':H-1});return 0
+        self.loader.write_bytes(first,struct.pack('<i',0));self.loader.write_bytes(last,struct.pack('<i',self.height-1));self.static_events.append({'first':0,'last':self.height-1});return 0
 class Dynamic(typed.SerialDynamic):
     def next(self,_uc,args):
         req(self.active is not None,'dynamic before init');self.next_calls+=1
