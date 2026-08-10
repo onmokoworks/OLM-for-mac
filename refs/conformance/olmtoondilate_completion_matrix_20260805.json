@@ -5,14 +5,14 @@
     "sequence_setup_0x01": "actual entrypoint exact",
     "smart_pre_render_0x17": "actual entrypoint exact under probe-local checkout seam",
     "smart_render_0x18": "actual entrypoint to production exact for bounded fixtures",
-    "legacy_render": "not covered by this SmartRender campaign",
+    "legacy_render_0x0b": "actual public owner is a constant-zero no-op; production matches for radius 0/2.01 at PF8/PF16/PF32",
     "global_and_parameter_setup": "actual AEX raw GLOBAL_SETUP and complete one-row PARAMS_SETUP surface exact"
   },
   "bitdepths": {"PF8": "covered", "PF16": "covered", "PF32": "covered"},
   "radius": {
     "nonpositive": "0 and -1 all-depth exact",
     "integer": "1 through 4 all-depth bounded exact",
-    "fractional": "PF8 2.01, PF32 2.5, PF16 3.25 exact"
+    "fractional": "PF8 2.01, PF32 2.5, PF16 3.25 exact; radius 2.01 downsample matrix exact at every depth"
   },
   "geometry": {
     "partial_padded_nonzero_extent": "all-depth exact",
@@ -25,7 +25,7 @@
   "metadata": {
     "rowbytes_padding_guards": "bounded exact",
     "nonzero_extent_headers": "probe-local unchanged and buffer-local exact",
-    "composition_width_scaling": "not proven: exact actual-AEX host field/layout is not established",
+    "composition_width_scaling": "bounded exact: actual worker reads PF_InData.downsample_x num/den at 0x11c/0x120; ratios 1/1, 1/2, 2/1 produce effective radii 3, 2, 5 for radius 2.01 at PF8/PF16/PF32; production ref_width/output-width route matches",
     "real_ae_layout_and_execution": "not claimed"
   },
   "installed_completion": {
@@ -34,7 +34,7 @@
     "installed_dynamic_load": "arm64 EffectMain SmartPreRender/SmartRender PF8/PF16/PF32 exact",
     "real_ae_render": "not claimed"
   },
-  "selected_gap_closed": "PF32 both-axes-empty SmartRender geometry",
-  "actual_report_sha256": "4c96cae5eb9dde9761dd7b461dfe7c364644797a15534b144262bbf746ed01ec",
-  "legacy_render_observation": "PF_Cmd_RENDER 0x0b returned under the current probe ABI without acquiring PF World Suite or producing expected output; remains unproved rather than inferred"
+  "selected_gap_closed": "legacy PF_Cmd_RENDER public no-op and all-depth downsample scaling",
+  "actual_report_sha256": "e6263696fb164df6fab582a3a1b8cc7ef321f93bf555f683a927ba84e83b0995",
+  "legacy_render_observation": "entry command 0x0b resolves the sequence owner through PF Handle Suite, then calls constant-zero stub FUN_1801a7840; radius 0/2.01 at PF8/PF16/PF32 leave params and worlds untouched and perform no render suite or pixel callback"
 }

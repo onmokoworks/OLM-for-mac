@@ -16,7 +16,7 @@ DYNAMIC = ROOT / "tools/emulation/test_olmtoondilate_installed_dynamic_all_depth
 SOURCE = ROOT / "mac/OLMToonDilate/OLMToonDilate.cpp"
 REPORT = ROOT / "refs/conformance/olmtoondilate_installed_completion_route_20260805.json"
 MARKDOWN = REPORT.with_suffix(".md")
-EXPECTED_SOURCE_SHA = "5ffc51877c3f13095acef39a18f473a6ec9c98df770194671e61560d3cfa63ed"
+EXPECTED_SOURCE_SHA = "57608ffc8cc009a55e678e0bee015adcdee91f14c7493aeda32975d0ac5a0d87"
 
 
 def sha(path: Path) -> str:
@@ -43,6 +43,7 @@ def main() -> int:
         "mixed_3x2_all_depths_exact", "radius2_4x2_all_depths_exact",
         "radius3_pf8_5x1_exact", "radius3_pf16_5x1_exact", "radius3_pf32_5x1_exact",
         "radius4_pf8_6x1_exact", "radius4_pf16_6x1_exact", "radius4_pf32_6x1_exact",
+        "downsample_radius_matrix_all_depths_exact", "legacy_render_public_noop_all_depths_exact",
         "empty_width_pf8_exact", "empty_height_pf16_exact", "empty_both_pf32_exact",
     ]
     gates = {
@@ -63,6 +64,7 @@ def main() -> int:
         "route": [
             "actual AEX entry_point command 0x17 SmartPreRender",
             "actual AEX entry_point command 0x18 typed PF8/PF16/PF32 workers and writers",
+            "actual and production public legacy PF_Cmd_RENDER constant-zero no-op",
             "source-included production EffectMain SmartPreRender/SmartRender exact adapter",
             "current production source SHA identity",
             "current installed signed Universal bundle SHA identity",

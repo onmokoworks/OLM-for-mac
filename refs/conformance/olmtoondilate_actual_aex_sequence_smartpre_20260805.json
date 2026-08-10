@@ -3797,6 +3797,146 @@
       "version": 2
     },
     {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
       "kind": "PF32_empty_both_checkout_layer_pixels"
     },
     {
@@ -3819,11 +3959,11 @@
     {
       "kind": "handle_alloc",
       "size": 1,
-      "handle": "0x40004100"
+      "handle": "0x40005b30"
     },
     {
       "kind": "handle_lock",
-      "handle": "0x40004100"
+      "handle": "0x40005b30"
     },
     {
       "kind": "release_suite",
@@ -3837,11 +3977,11 @@
     },
     {
       "kind": "handle_unlock",
-      "handle": "0x40004100"
+      "handle": "0x40005b30"
     },
     {
       "kind": "handle_dispose",
-      "handle": "0x40004100"
+      "handle": "0x40005b30"
     },
     {
       "kind": "release_suite",
@@ -3895,45 +4035,146 @@
     "fractional_radius_3_25_pf16_exact": true,
     "handle_not_disposed_before_smartpre": true,
     "downsample_radius_matrix_all_depths_exact": true,
+    "legacy_render_public_noop_all_depths_exact": true,
     "empty_width_pf8_exact": true,
     "empty_height_pf16_exact": true,
     "empty_both_pf32_exact": true
   },
   "not_proven": [
     "AE host execution",
-    "whether real AE passes extent/origin metadata at this probe-local +0x30 layout",
-    "legacy PF_Cmd_RENDER: probe ABI returned without acquiring PF World Suite or producing the expected output"
+    "whether real AE passes extent/origin metadata at this probe-local +0x30 layout"
   ],
-  "claim_boundary": "actual-AEX SmartPreRender-to-SmartRender entrypoint with bounded typed partial/empty geometry and downsample_x ratios 1, 1/2, and 2 at radius 2.01 for PF8/PF16/PF32 under probe-local suite seams",
-  "not_proven_observations": {
-    "legacy_render_0x0b": {
-      "command": "0x0b PF_Cmd_RENDER",
-      "depth": 8,
-      "dimensions": [
-        4,
-        1
+  "claim_boundary": "actual-AEX public legacy Render no-op plus SmartPreRender-to-SmartRender with bounded typed partial/empty geometry and downsample_x ratios 1, 1/2, and 2 at radius 2.01 for PF8/PF16/PF32 under probe-local suite seams",
+  "legacy_render_public_noop": {
+    "entry_dispatch": "command 0x0b -> FUN_1801a7840",
+    "owner": "FUN_1801a7840 is a constant-zero return stub",
+    "cases": {
+      "8": [
+        {
+          "command": "0x0b PF_Cmd_RENDER",
+          "depth": 8,
+          "radius": 0.0,
+          "entry_returned": true,
+          "input_world_untouched": true,
+          "output_world_untouched": true,
+          "param_headers_untouched": true,
+          "guards_untouched": true,
+          "owner_recovery_handle_activity_only": true,
+          "event_kinds": [
+            "acquire_suite",
+            "handle_lock",
+            "release_suite",
+            "acquire_suite",
+            "handle_unlock",
+            "release_suite"
+          ],
+          "output_sha256": "db3ef41a5aeea34a252cb25a3456a10e19d8dba5c29698ad185ebc5b4e1d116d"
+        },
+        {
+          "command": "0x0b PF_Cmd_RENDER",
+          "depth": 8,
+          "radius": 2.01,
+          "entry_returned": true,
+          "input_world_untouched": true,
+          "output_world_untouched": true,
+          "param_headers_untouched": true,
+          "guards_untouched": true,
+          "owner_recovery_handle_activity_only": true,
+          "event_kinds": [
+            "acquire_suite",
+            "handle_lock",
+            "release_suite",
+            "acquire_suite",
+            "handle_unlock",
+            "release_suite"
+          ],
+          "output_sha256": "4f68af1e741bbae98e4e3c47874307f0418d3785149e01dc33b3f5601dd7f488"
+        }
       ],
-      "radius": 2,
-      "rowbytes": 24,
-      "input_extent": [
-        1001,
-        1003,
-        1005,
-        1004
+      "16": [
+        {
+          "command": "0x0b PF_Cmd_RENDER",
+          "depth": 16,
+          "radius": 0.0,
+          "entry_returned": true,
+          "input_world_untouched": true,
+          "output_world_untouched": true,
+          "param_headers_untouched": true,
+          "guards_untouched": true,
+          "owner_recovery_handle_activity_only": true,
+          "event_kinds": [
+            "acquire_suite",
+            "handle_lock",
+            "release_suite",
+            "acquire_suite",
+            "handle_unlock",
+            "release_suite"
+          ],
+          "output_sha256": "c64e2a2336519a51a9445eae1eaf4d29c0732a0b8e08cfb2e3fa56ac7540d0bb"
+        },
+        {
+          "command": "0x0b PF_Cmd_RENDER",
+          "depth": 16,
+          "radius": 2.01,
+          "entry_returned": true,
+          "input_world_untouched": true,
+          "output_world_untouched": true,
+          "param_headers_untouched": true,
+          "guards_untouched": true,
+          "owner_recovery_handle_activity_only": true,
+          "event_kinds": [
+            "acquire_suite",
+            "handle_lock",
+            "release_suite",
+            "acquire_suite",
+            "handle_unlock",
+            "release_suite"
+          ],
+          "output_sha256": "26f634ca78cb8037385fe424a15d71beba2292bf7f80b505bf31cc9a1bee1526"
+        }
       ],
-      "output_extent": [
-        1307,
-        1309,
-        1311,
-        1310
-      ],
-      "entry_returned": true,
-      "legacy_frontier_2_and_distance_3_preservation_exact": false,
-      "typed_bytes_padding_exact": false,
-      "world_suite_get_pixel_format_called": false,
-      "headers_unchanged": true,
-      "guards_untouched": true,
-      "actual_sha256": "e1e2833dc7fb701a540edd8da753ff033af2624ede4848c03df76aee22a46920"
+      "32": [
+        {
+          "command": "0x0b PF_Cmd_RENDER",
+          "depth": 32,
+          "radius": 0.0,
+          "entry_returned": true,
+          "input_world_untouched": true,
+          "output_world_untouched": true,
+          "param_headers_untouched": true,
+          "guards_untouched": true,
+          "owner_recovery_handle_activity_only": true,
+          "event_kinds": [
+            "acquire_suite",
+            "handle_lock",
+            "release_suite",
+            "acquire_suite",
+            "handle_unlock",
+            "release_suite"
+          ],
+          "output_sha256": "9171942a0852f18e151c8f3698aee365d41871fd51937c5eed3bdcf3ba55e80e"
+        },
+        {
+          "command": "0x0b PF_Cmd_RENDER",
+          "depth": 32,
+          "radius": 2.01,
+          "entry_returned": true,
+          "input_world_untouched": true,
+          "output_world_untouched": true,
+          "param_headers_untouched": true,
+          "guards_untouched": true,
+          "owner_recovery_handle_activity_only": true,
+          "event_kinds": [
+            "acquire_suite",
+            "handle_lock",
+            "release_suite",
+            "acquire_suite",
+            "handle_unlock",
+            "release_suite"
+          ],
+          "output_sha256": "9d049a6ff2591ddab70b24610aac425e3a7eb7715952fc8ff15a069fec2a2047"
+        }
+      ]
     }
   }
 }

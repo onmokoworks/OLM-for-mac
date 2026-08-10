@@ -365,7 +365,9 @@ EffectMain(PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data,
 		case PF_Cmd_PARAMS_SETUP:
 			err = ParamsSetup(in_data, out_data, params, output); break;
 		case PF_Cmd_RENDER:
-			err = Render(in_data, out_data, params, output); break;
+			// The Windows AEX public legacy-render owner is an intentional no-op.
+			// Rendering is implemented exclusively by the advertised Smart Render path.
+			break;
 		case PF_Cmd_SMART_PRE_RENDER:
 			err = SmartPreRender(in_data, out_data, (PF_PreRenderExtra*)extra); break;
 		case PF_Cmd_SMART_RENDER:
