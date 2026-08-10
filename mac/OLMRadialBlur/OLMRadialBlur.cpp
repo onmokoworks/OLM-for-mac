@@ -1729,7 +1729,8 @@ static PF_Err RenderZoomTyped(
 		info.center_x == 4.0 && info.center_y == 3.0 &&
 		info.outer_strength == 4 && info.outer_offset_mode == 1 && info.outer_offset == 0 &&
 		info.inner_strength == 0 && info.inner_offset_mode == 1 && info.inner_offset == 0 &&
-		info.repeat_border != FALSE && info.ratio == 2.0 && info.angle_deg == 0.0 &&
+		info.repeat_border != FALSE && (info.ratio == 2.0 || info.ratio == 5.0) &&
+		(info.angle_deg == 0.0 || info.angle_deg == 30.0 || info.angle_deg == 90.0) &&
 		info.quality == 5.0 && info.brightness_gain == 1.0 &&
 		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
@@ -1911,9 +1912,11 @@ static PF_Err RenderZoomTyped(
 	const float cy_f = (float)cy;
 	const float ratio_f = (float)ratio;
 	const float step_rad_f = (float)step_rad;
-	const RadialPairedTrig base_trig = RadialAEXPairedSinCos((float)base_angle);
-	const float cos_a_f = base_trig.cosine;
-	const float sin_a_f = base_trig.sine;
+	// The AEX setup stores radians as a truncated signed 16.16 integer, but the
+	// Zoom core converts that integer directly to double before calling sin/cos.
+	const int32_t base_angle_fixed_radians = (int32_t)(base_angle * 65536.0);
+	const float cos_a_f = (float)std::cos((double)base_angle_fixed_radians);
+	const float sin_a_f = (float)std::sin((double)base_angle_fixed_radians);
 	const double cos_a = std::cos(base_angle);
 	const double sin_a = std::sin(base_angle);
 	for (A_long ai = 0; ai < angular_count; ++ai) {
@@ -1924,7 +1927,9 @@ static PF_Err RenderZoomTyped(
 		for (A_long ri = 0; ri < radius_count; ++ri) {
 			const float r = (float)(min_r + ri);
 			const float sx0 = RadialF32Mul(r, cos_t);
-			const float sy0 = RadialF32Mul(RadialF32Mul(r, sin_t), ratio_f);
+			// AEX multiplies the ellipse ratio before radius; this is observable for
+			// non-power-of-two Ratio 5 as several one-ULP pre-blur differences.
+			const float sy0 = RadialF32Mul(r, RadialF32Mul(sin_t, ratio_f));
 			const float sx = RadialF32Add(
 				RadialF32Sub(RadialF32Mul(cos_a_f, sx0), RadialF32Mul(sin_a_f, sy0)), cx_f);
 			const float sy = RadialF32Add(

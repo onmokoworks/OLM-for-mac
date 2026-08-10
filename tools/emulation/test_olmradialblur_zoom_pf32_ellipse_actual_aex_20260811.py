@@ -64,29 +64,26 @@ def main() -> int:
         cell_exact = rc == 0 and all(matches.values())
         exact &= cell_exact
         rows.append({"ratio": ratio, "angle_deg": angle, "matches": matches,
+                     "actual_transform_setup": actual[(ratio, angle)]["transform_setup"],
                      "geometry": list(__import__("struct").unpack("<II", actual[(ratio, angle)]["geometry"])),
                      "actual_sha256": {key: sha(actual[(ratio, angle)][key])
                                        for key in ("pre_blur", "post_blur", "output")},
                      "exact": cell_exact})
-    admitted = next(row for row in rows if row["ratio"] == 2.0 and row["angle_deg"] == 0.0)
-    rejected = [row for row in rows if row is not admitted]
-    admitted_exact = admitted["exact"]
-    boundary_starts_at_preblur = all(not row["matches"].get("pre_blur", False) for row in rejected)
-    status = "bounded_exact" if admitted_exact and boundary_starts_at_preblur else "mismatch"
+    status = "exact" if exact else "mismatch"
     report = {
         "kind": "olmradialblur_zoom_pf32_ellipse_actual_aex_20260811",
         "status": status,
         "scope": "PF32 Zoom padded 9x7 centered; Ratio {2,5} x Angle {0,30,90}; Quality5, Repeat on, Brightness1, Outer Strength4, neutral offsets/fades/size/noise.",
         "aex_sha256": zoom.fixture.AEX_SHA256,
         "cells": rows,
-        "mapping": "The production candidate forms sx0=r*cos(theta), sy0=r*sin(theta)*ratio in float order, rotates that pair by Angle, then adds the centered world coordinate. Ratio2/Angle0 proves the ratio scaling and centered world-coordinate placement. Nonzero Angle and Ratio5 diverge at pre-blur, so their transform details are not claimed.",
+        "mapping": "AEX stores Ratio as float bits and Angle as truncated signed 16.16 radians. It converts the Angle integer directly to double, calls double sin/cos, then casts each result to float. Per polar cell it forms cos(theta) and sin(theta) with the paired float helper, multiplies sin(theta)*ratio before multiplying by radius, rotates with mul/sub/addss order, then adds the centered world coordinate.",
         "worker": "Eligibility and source-alpha scalar are sampled at the transformed world coordinate. Outer accumulation proceeds in increasing-radius/source order, tracks max alpha, normalizes once, and feeds the existing inverse sampler/writer.",
-        "boundary": "Admission is limited to PF32 9x7 Ratio2/Angle0. The other five captured cells diverge at pre-blur and remain fail-closed, as do other geometry, depth, controls and Rotation.",
+        "boundary": "Admission is limited to the six PF32 9x7 Ratio{2,5} x Angle{0,30,90} cells. Other ratio/angle values, geometry, depth, controls and Rotation remain fail-closed or separately evidenced.",
     }
     REPORT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
-    DOC.write_text(f"# OLM RadialBlur PF32 Zoom ellipse — 2026-08-11\n\nStatus: **{status}**\n\nRatio 2/5 × Angle 0/30/90 の6セルを捕捉しました。Ratio 2・Angle 0 は actual AEX と production の pre-blur、post-blur、padded PF32 output が全段 byte-exact です。他の5セルは pre-blur から差があるため admission せず、証拠境界として残します。\n")
+    DOC.write_text(f"# OLM RadialBlur PF32 Zoom ellipse — 2026-08-11\n\nStatus: **{status}**\n\nRatio 2/5 × Angle 0/30/90 の6セルで、actual AEX と production の pre-blur、post-blur、padded PF32 output が全段 byte-exact です。Angle は radians の16.16整数を AEX と同じく直接 double sin/cos へ渡し、Ratio は `sin(theta) * ratio` を先にfloat演算してからradiusを掛けます。\n")
     print(json.dumps({"status": status, "cells": len(rows)}, sort_keys=True))
-    return 0 if status == "bounded_exact" else 1
+    return 0 if status == "exact" else 1
 
 
 if __name__ == "__main__":

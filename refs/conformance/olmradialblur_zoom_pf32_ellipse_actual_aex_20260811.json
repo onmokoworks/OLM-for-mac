@@ -1,12 +1,18 @@
 {
   "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
-  "boundary": "Admission is limited to PF32 9x7 Ratio2/Angle0. The other five captured cells diverge at pre-blur and remain fail-closed, as do other geometry, depth, controls and Rotation.",
+  "boundary": "Admission is limited to the six PF32 9x7 Ratio{2,5} x Angle{0,30,90} cells. Other ratio/angle values, geometry, depth, controls and Rotation remain fail-closed or separately evidenced.",
   "cells": [
     {
       "actual_sha256": {
         "output": "7443d4e9becc272ce0e118c7acbc9346e3a75948656aeda858cbd3828b38a3e3",
         "post_blur": "bd0913087833a2d41b671c1005c67c5009a112842f87ff0ed428ac3eaad71641",
         "pre_blur": "d0869eca211f68b65ccf8575b86225e87226d43e0111acaa11703f6833fb644c"
+      },
+      "actual_transform_setup": {
+        "angle_i32": 0,
+        "center_x_f64": 4.0,
+        "center_y_f64": 3.0,
+        "ratio_f32": 2.0
       },
       "angle_deg": 0.0,
       "exact": true,
@@ -27,13 +33,23 @@
         "post_blur": "996afa5c0639ebd7eae6fe5e87b51be83aad5cfee0d60162c6500e54ce222038",
         "pre_blur": "0d3e1eefa8a2dd194f13f82095255097e976f567f30dc59864e50ee7c9d0fdce"
       },
+      "actual_transform_setup": {
+        "angle_i32": 34314,
+        "center_x_f64": 4.0,
+        "center_y_f64": 3.0,
+        "ratio_f32": 2.0
+      },
       "angle_deg": 30.0,
-      "exact": false,
+      "exact": true,
       "geometry": [
         1800,
         9
       ],
-      "matches": {},
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
       "ratio": 2.0
     },
     {
@@ -42,13 +58,23 @@
         "post_blur": "fe9cfb8c01735973a759a1547365c86cad1014bf3cec810dc0e5f883aec9f8d8",
         "pre_blur": "10cec6b2582b5ca43fbb64dfd12ec328f49d59559116ad6afbe8d2da1873fec4"
       },
+      "actual_transform_setup": {
+        "angle_i32": 102943,
+        "center_x_f64": 4.0,
+        "center_y_f64": 3.0,
+        "ratio_f32": 2.0
+      },
       "angle_deg": 90.0,
-      "exact": false,
+      "exact": true,
       "geometry": [
         1800,
         9
       ],
-      "matches": {},
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
       "ratio": 2.0
     },
     {
@@ -57,13 +83,23 @@
         "post_blur": "70e3e38de138fa400e5ddd95d51e28179abd623b60a31e79a6794f43bb63e2c9",
         "pre_blur": "11483b63b4aab76083c6f51723650fcbc31e01512634c453e5ef8a1cb0a74c35"
       },
+      "actual_transform_setup": {
+        "angle_i32": 0,
+        "center_x_f64": 4.0,
+        "center_y_f64": 3.0,
+        "ratio_f32": 5.0
+      },
       "angle_deg": 0.0,
-      "exact": false,
+      "exact": true,
       "geometry": [
         1800,
         9
       ],
-      "matches": {},
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
       "ratio": 5.0
     },
     {
@@ -72,13 +108,23 @@
         "post_blur": "7b5d9027937d5b00405290d520165676fb6d132582e851217cc4852966f8d27f",
         "pre_blur": "94b0f07891a0be45ede81221778fa9533145724df826fdfdc6482371707736d6"
       },
+      "actual_transform_setup": {
+        "angle_i32": 34314,
+        "center_x_f64": 4.0,
+        "center_y_f64": 3.0,
+        "ratio_f32": 5.0
+      },
       "angle_deg": 30.0,
-      "exact": false,
+      "exact": true,
       "geometry": [
         1800,
         9
       ],
-      "matches": {},
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
       "ratio": 5.0
     },
     {
@@ -87,19 +133,29 @@
         "post_blur": "ab783a0a46885e3129cac0ca6f0edd48043cce9daf9261c1b6b694add60a60d2",
         "pre_blur": "47819095b3eb01927de30d8f1b75c1750fa1336863a0e4f7e0946263f050bb04"
       },
+      "actual_transform_setup": {
+        "angle_i32": 102943,
+        "center_x_f64": 4.0,
+        "center_y_f64": 3.0,
+        "ratio_f32": 5.0
+      },
       "angle_deg": 90.0,
-      "exact": false,
+      "exact": true,
       "geometry": [
         1800,
         9
       ],
-      "matches": {},
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
       "ratio": 5.0
     }
   ],
   "kind": "olmradialblur_zoom_pf32_ellipse_actual_aex_20260811",
-  "mapping": "The production candidate forms sx0=r*cos(theta), sy0=r*sin(theta)*ratio in float order, rotates that pair by Angle, then adds the centered world coordinate. Ratio2/Angle0 proves the ratio scaling and centered world-coordinate placement. Nonzero Angle and Ratio5 diverge at pre-blur, so their transform details are not claimed.",
+  "mapping": "AEX stores Ratio as float bits and Angle as truncated signed 16.16 radians. It converts the Angle integer directly to double, calls double sin/cos, then casts each result to float. Per polar cell it forms cos(theta) and sin(theta) with the paired float helper, multiplies sin(theta)*ratio before multiplying by radius, rotates with mul/sub/addss order, then adds the centered world coordinate.",
   "scope": "PF32 Zoom padded 9x7 centered; Ratio {2,5} x Angle {0,30,90}; Quality5, Repeat on, Brightness1, Outer Strength4, neutral offsets/fades/size/noise.",
-  "status": "bounded_exact",
+  "status": "exact",
   "worker": "Eligibility and source-alpha scalar are sampled at the transformed world coordinate. Outer accumulation proceeds in increasing-radius/source order, tracks max alpha, normalizes once, and feeds the existing inverse sampler/writer."
 }

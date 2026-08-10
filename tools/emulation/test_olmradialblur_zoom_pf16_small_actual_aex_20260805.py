@@ -5,7 +5,7 @@ import json, struct, subprocess, tempfile
 from pathlib import Path
 
 import test_olmradialblur_rotation_pf16_small_actual_aex_20260805 as fixture
-from unicorn.x86_const import UC_X86_REG_RBX, UC_X86_REG_RCX
+from unicorn.x86_const import UC_X86_REG_RBX, UC_X86_REG_RCX, UC_X86_REG_RDX
 
 fixture.FIXTURE = fixture.ROOT / "refs/fixtures/olmradialblur_zoom_pf16_small_20260805"
 fixture.REPORT = fixture.ROOT / "refs/conformance/olmradialblur_zoom_pf16_small_actual_aex_20260805.json"
@@ -59,6 +59,13 @@ def actual_aex():
 
     def entry(ld, _address, _size):
         captured["work"] = ld.uc.reg_read(UC_X86_REG_RCX)
+        setup = ld.uc.reg_read(UC_X86_REG_RDX)
+        captured["transform_setup"] = {
+            "ratio_f32": struct.unpack("<f", ld.read_bytes(setup + 0x78, 4))[0],
+            "angle_i32": struct.unpack("<i", ld.read_bytes(setup + 0x7C, 4))[0],
+            "center_x_f64": struct.unpack("<d", ld.read_bytes(setup + 0x28, 8))[0],
+            "center_y_f64": struct.unpack("<d", ld.read_bytes(setup + 0x30, 8))[0],
+        }
 
     def collapse(ld, _address, _size):
         if "pre_blur" in captured:
