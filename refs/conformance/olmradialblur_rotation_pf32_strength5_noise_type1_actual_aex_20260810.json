@@ -1,0 +1,53 @@
+{
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "boundary": "No Strength other than 5, NV other than 25/100, Type2/3, Size Variation, other seed/offset/thickness, geometry, depth, mode, or AE-host claim.",
+  "cases": [
+    {
+      "actual_output_differs_from_strength5_noise0": true,
+      "actual_output_sha256": "eaca6d098caceec39f577743a885ce042349506627c1f2557c1220800e107cb8",
+      "exact": true,
+      "noise_variation": 25.0,
+      "outer_strength": 5,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "production_source_scalar_different_bytes": 489
+    },
+    {
+      "actual_output_differs_from_strength5_noise0": true,
+      "actual_output_sha256": "66800afa935e561a14a72fa0c58f3166f86977eacc2505c192c0b7ff400b2174",
+      "exact": true,
+      "noise_variation": 100.0,
+      "outer_strength": 5,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "production_source_scalar_different_bytes": 2473
+    }
+  ],
+  "control": {
+    "noise_variation": 0,
+    "outer_strength": 5,
+    "output_sha256": "f32900f11ea537c4b818879f6b04d1a473e8ab09101ee008170f1d2b2eb408ca"
+  },
+  "fail_closed": {
+    "strength5_nv50": true,
+    "strength6_nv25": true
+  },
+  "kind": "olmradialblur_rotation_pf32_strength5_noise_type1_actual_aex_20260810",
+  "production_scalar_boundary": "The complete source-scalar allocation retains the independently documented inactive-cell 1-ULP difference. Polar, accum, max-alpha, final RGBA, coordinates, and padded output are bit exact.",
+  "scope": "Pinned PF32 Rotation 9x7 rowbytes160; Outer Strength 5; Noise Variation Type1 25/100; Size Variation 0; otherwise neutral tuple.",
+  "status": "exact_with_inactive_source_scalar_boundary"
+}
