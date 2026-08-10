@@ -1927,8 +1927,24 @@ static PF_Err RenderZoomTyped(
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0 &&
 		info.comp_width == 32.0 && info.comp_height == 18.0;
+	const bool use_aex_typed_zoom_inner_offset_pairwise = input && output && use_aex_zoom_geometry &&
+		((input->width == 9 && input->height == 7) ||
+		 (input->width == 32 && input->height == 18)) &&
+		input->rowbytes >= input->width * (A_long)sizeof(PixelT) &&
+		output->rowbytes >= output->width * (A_long)sizeof(PixelT) &&
+		info.outer_strength == 0 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		info.inner_strength == 4 && info.inner_edge_fade == 0 &&
+		(info.inner_offset_mode == 2 || info.inner_offset_mode == 3) &&
+		(info.inner_offset == 2 || info.inner_offset == 4) &&
+		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
+		info.quality == 5.0 && info.brightness_gain == 1.0 &&
+		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
+		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
+		info.noise_offset == 0 && info.thickness == 10.0;
 	if (info.blur_type != 1 || (info.inner_strength != 0 && !use_aex_pf32_zoom_inner_small &&
-	    !use_aex_pf32_zoom_inner_noise_small && !use_aex_typed_zoom_inner_pairwise) ||
+	    !use_aex_pf32_zoom_inner_noise_small && !use_aex_typed_zoom_inner_pairwise &&
+	    !use_aex_typed_zoom_inner_offset_pairwise) ||
 	    (info.noise_variation != 0.0 && !use_aex_pf32_zoom_noise_type1_small &&
 	    !use_aex_typed_zoom_noise_type1_pairwise && !use_aex_typed_zoom_noise_type2_small &&
 	    !use_aex_pf32_zoom_inner_noise_small)) {
@@ -2017,6 +2033,7 @@ static PF_Err RenderZoomTyped(
 		use_aex_pf32_zoom_inner_small ||
 		use_aex_pf32_zoom_inner_noise_small ||
 		use_aex_typed_zoom_inner_pairwise ||
+		use_aex_typed_zoom_inner_offset_pairwise ||
 		use_aex_pf16_bounded_offset_small ||
 		use_aex_typed_zoom_offset_matrix;
 	std::vector<float> span_plane;
@@ -2142,7 +2159,8 @@ static PF_Err RenderZoomTyped(
 			worker_info.outer_offset = 0;
 		}
 		const bool use_aex_zoom_inner = use_aex_pf32_zoom_inner_small ||
-			use_aex_pf32_zoom_inner_noise_small || use_aex_typed_zoom_inner_pairwise;
+			use_aex_pf32_zoom_inner_noise_small || use_aex_typed_zoom_inner_pairwise ||
+			use_aex_typed_zoom_inner_offset_pairwise;
 		const std::vector<float> inner_weights = use_aex_zoom_inner
 			? ZoomGaussianWeights(info.inner_strength)
 			: std::vector<float>();
@@ -2203,7 +2221,7 @@ static PF_Err RenderZoomTyped(
 				RadialZoomPixelTraits<PixelT>::kStrictNonzeroAlpha);
 			RadialBlurOuterSampleState output_state = outer_state;
 			if constexpr (std::is_same<PixelT, PF_Pixel8>::value) {
-				if (use_aex_typed_zoom_inner_pairwise) {
+				if (use_aex_typed_zoom_inner_pairwise || use_aex_typed_zoom_inner_offset_pairwise) {
 					// The PF8 owner saturates positive RGB overflow before its raw
 					// CVTT/low-byte writer, but intentionally leaves negative RGB
 					// unclamped (where it wraps through the stored low byte).
@@ -2215,7 +2233,7 @@ static PF_Err RenderZoomTyped(
 			}
 			if constexpr (std::is_same<PixelT, PF_PixelFloat>::value) {
 				if ((use_aex_typed_zoom_offcenter_brightness && info.brightness_gain == 2.0) ||
-					use_aex_typed_zoom_inner_pairwise) {
+					use_aex_typed_zoom_inner_pairwise || use_aex_typed_zoom_inner_offset_pairwise) {
 					for (int c = 0; c < 3; ++c) {
 						output_state.final_rgb[c] = output_state.final_rgb[c] < 1.0f
 							? output_state.final_rgb[c] : 1.0f;
@@ -2226,9 +2244,10 @@ static PF_Err RenderZoomTyped(
 			const bool exact_pf8_ellipse_store =
 				std::is_same<PixelT, PF_Pixel8>::value &&
 				(use_aex_typed_zoom_ellipse_geometry || use_aex_typed_zoom_noise_type1_pairwise ||
-				 use_aex_typed_zoom_noise_type2_small || use_aex_typed_zoom_inner_pairwise);
+				 use_aex_typed_zoom_noise_type2_small || use_aex_typed_zoom_inner_pairwise ||
+				 use_aex_typed_zoom_inner_offset_pairwise);
 			if constexpr (std::is_same<PixelT, PF_Pixel8>::value) {
-				if (use_aex_typed_zoom_inner_pairwise) {
+				if (use_aex_typed_zoom_inner_pairwise || use_aex_typed_zoom_inner_offset_pairwise) {
 					// The bounded PF8 Inner owner converts all four float channels
 					// with CVTTSS2SI. RGB saturates only its upper bound; negative
 					// values and alpha are stored through their low byte.
@@ -2576,7 +2595,23 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0;
-	if (info.blur_type != 2 || (info.inner_strength != 0 && !use_aex_pf16_inner_power2_small &&
+	const bool use_aex_typed_rotation_inner_offset_pairwise = input && output && use_aex_inner_geometry &&
+		((input->width == 9 && input->height == 7) ||
+		 (input->width == 32 && input->height == 18)) &&
+		input->rowbytes >= input->width * (A_long)sizeof(PixelT) &&
+		output->rowbytes >= output->width * (A_long)sizeof(PixelT) &&
+		info.outer_strength == 0 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		info.inner_strength == 4 && info.inner_edge_fade == 0 &&
+		(info.inner_offset_mode == 2 || info.inner_offset_mode == 3) &&
+		(info.inner_offset == 2 || info.inner_offset == 4) &&
+		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
+		info.quality == 5.0 && info.brightness_gain == 1.0 &&
+		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
+		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
+		info.noise_offset == 0 && info.thickness == 10.0;
+	if (info.blur_type != 2 || (info.inner_strength != 0 &&
+	    !use_aex_typed_rotation_inner_offset_pairwise && !use_aex_pf16_inner_power2_small &&
 	    !use_aex_pf32_inner_edge_fade_small && !use_aex_pf32_edge_fade_cross_small &&
 	    !use_aex_typed_edge_fade_32x18) ||
 	    ((info.outer_edge_fade != 0 || info.inner_edge_fade != 0) &&
@@ -2788,7 +2823,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0;
-	const bool use_aex_exact = use_aex_typed_rotation_offcenter_brightness || use_aex_typed_quality_repeat || use_aex_case0010 || use_aex_pf16_small || use_aex_pf16_inner_power2_small ||
+	const bool use_aex_exact = use_aex_typed_rotation_inner_offset_pairwise || use_aex_typed_rotation_offcenter_brightness || use_aex_typed_quality_repeat || use_aex_case0010 || use_aex_pf16_small || use_aex_pf16_inner_power2_small ||
 		use_aex_typed_edge_fade_32x18 ||
 		use_aex_typed_rotation_offset_mode3 ||
 		use_aex_pf32_opaque_size_variation_small ||
@@ -3040,7 +3075,18 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 					? (A_long)std::ceil((double)RotationEffectiveLength(
 						info.outer_strength, info.outer_offset_mode, 0) * (info.quality / 5.0))
 					: RotationEffectiveLength(info.outer_strength, info.outer_offset_mode, 0)));
-			const A_long inner_span = RotationEffectiveLength(info.inner_strength, info.inner_offset_mode, 0);
+			// Inner offset uses the same owner-to-worker conversion as the outer
+			// offset: the UI value is zero-based once, then scaled by radius.
+			const A_long inner_span = use_aex_typed_rotation_inner_offset_pairwise &&
+				info.inner_offset_mode == 3
+				? DynamicOffsetForRadius(
+					radius_count, std::max<A_long>(0, info.inner_offset - 1), ri)
+				: (use_aex_typed_rotation_inner_offset_pairwise && info.inner_offset_mode == 2
+					? std::max<A_long>(
+						RotationEffectiveLength(info.inner_strength, 1, 0),
+						DynamicOffsetForRadius(
+							radius_count, std::max<A_long>(0, info.inner_offset - 1), ri))
+					: RotationEffectiveLength(info.inner_strength, info.inner_offset_mode, 0));
 			for (A_long ai = 0; ai < angular_count; ++ai) {
 				const size_t source_cell = (size_t)ri * angular_count + ai;
 				const size_t source = source_cell * 4;
