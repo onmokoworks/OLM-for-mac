@@ -43,6 +43,13 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def evidence_path(path: Path) -> str:
+    try:
+        return str(path.resolve().relative_to(ROOT.resolve()))
+    except ValueError:
+        return str(path)
+
+
 def words(plane: bytes) -> list[bytes]:
     return [plane[offset : offset + 4] for offset in range(0, len(plane), 4)]
 
@@ -223,8 +230,8 @@ def build_report(windows_root: Path, mac_root: Path) -> dict:
         "artifacts": {
             "windows_effect": {"path": str(windows_effect.relative_to(ROOT)), "sha256": sha256(windows_effect)},
             "windows_control": {"path": str(windows_control.relative_to(ROOT)), "sha256": sha256(windows_control)},
-            "mac_effect": {"path": str(mac_effect), "sha256": sha256(mac_effect)},
-            "mac_control": {"path": str(mac_control), "sha256": sha256(mac_control)},
+            "mac_effect": {"path": evidence_path(mac_effect), "sha256": sha256(mac_effect)},
+            "mac_control": {"path": evidence_path(mac_control), "sha256": sha256(mac_control)},
             "actual_aex_sha256": EXPECTED_AEX_SHA256,
         },
         "facts": {

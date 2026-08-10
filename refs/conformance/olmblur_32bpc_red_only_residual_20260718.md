@@ -27,15 +27,14 @@ with that core.
 | channel mapping | rejected | no-op is exact, G/B remain zero, and diverse-ARGB actual-AEX fixtures already pass |
 | source stride | rejected | full 1920x1080 current-core output equals the Mac EXR; padded-row adapter fixtures also pass |
 | SIMD lane | rejected at the worker boundary for this tuple | bounded current AEX and portable core are byte-exact at repeat=1 |
-| reference provenance | only live explanation | retained Windows EXR lacks loaded-AEX SHA and complete color/output attestations |
+| reference selection | superseded-reference conflict | the retained 20260710 EXR conflicts with the later hash-bound 20260727 same-AEX AE-exact record |
 
-This does **not** prove that the retained Windows reference is wrong. It means
-the current source must not be changed from this red-only artifact: all locally
-testable implementation boundaries agree with the pinned current AEX, while the
-Windows artifact cannot be bound to that AEX.
+The current source must not be changed to fit the retained 20260710 artifact:
+all locally testable implementation boundaries agree with the pinned current
+AEX, and the later authoritative same-AEX record is already cross-host exact.
 
 ## Next evidence
 
-Capture a same-run Windows effect/control FLOAT EXR pair with the loaded
-OLMBlur AEX path/SHA-256 and complete working-space, linear-light, and output
-module readback. `AE exact` remains unclaimed.
+Restore the authoritative 20260727 effect/control artifacts, or recapture that
+exact hash-bound contract.  The superseded 20260710 EXR is not a production
+tuning oracle.

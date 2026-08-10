@@ -51,7 +51,18 @@ def main() -> int:
     assert report["hypotheses"]["channel_mapping"] == "rejected"
     assert report["hypotheses"]["source_stride"] == "rejected"
     assert report["hypotheses"]["simd_lane"].startswith("rejected")
-    assert report["classification"] == "reference_provenance_unresolved"
+    assert report["hypotheses"]["reference_selection"].startswith(
+        "retained 20260710 Windows EXR conflicts"
+    )
+    assert report["facts"]["authoritative_same_aex_case0001_ae_exact"] is True
+    authoritative = ROOT / report["facts"]["authoritative_exact_record"]
+    assert sha256(authoritative) == report["facts"]["authoritative_exact_record_sha256"]
+    exact = json.loads(authoritative.read_text(encoding="utf-8"))
+    assert exact["ae_exact_claim"] is True
+    assert exact["windows"]["loaded_plugin_proof"]["aex_sha256"] == EXPECTED_AEX_SHA256
+    assert exact["comparison"]["effect_on"]["mismatched_values"] == 0
+    assert exact["comparison"]["no_effect_control"]["mismatched_values"] == 0
+    assert report["classification"] == "superseded_reference_conflict"
     assert report["ae_exact_claim"] is False
     assert report["plugin_source_change"] is False
     print(json.dumps({"status": "pass", "instructions": run["instructions"]}, sort_keys=True))

@@ -20,12 +20,12 @@
       "sha256": "d9d18cfac512f14f2f7eefcd0a6d12eede07a0105538c5dc61e2b70eeb26533d"
     },
     "mac_effect": {
-      "path": "/private/tmp/olmblur_32bpc_repeat1_20260718_092625_return/olmblur__case_0001__effect_on.exr",
-      "sha256": "b533a4ca6bd0afd495144de5df0f5819991d67cabb5f859998d673ec22842f9e"
+      "path": "refs/reports/olmblur_case0001_current_host_success_20260805/output/olmblur__case_0001__effect_on.exr",
+      "sha256": "b7890a690f9fec1f5f46ac1a7206788fd6b3f26b207f0d4a188a86e61201ade0"
     },
     "mac_control": {
-      "path": "/private/tmp/olmblur_32bpc_repeat1_20260718_092625_return/olmblur__case_0001__no_effect.exr",
-      "sha256": "ccd01840782ee5e77211a82b585beafc6790e96bf08b6598a69d10c9d4276854"
+      "path": "refs/reports/olmblur_case0001_current_host_success_20260805/output/olmblur__case_0001__no_effect.exr",
+      "sha256": "a0689c665f81b4222f04b3ee1c0c039af30800ef2db32d99a45792e53aa3f936"
     },
     "actual_aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
   },
@@ -68,16 +68,19 @@
     "full_current_core_vs_windows_mismatched_words": 201576,
     "bounded_current_aex_repeat1_equals_current_core": true,
     "bounded_actual_aex_instructions": 11643,
-    "bounded_actual_aex_callback_count": 48
+    "bounded_actual_aex_callback_count": 48,
+    "authoritative_same_aex_case0001_ae_exact": true,
+    "authoritative_exact_record": "refs/conformance/olmblur_32bpc_case0001_ae_exact_20260727.json",
+    "authoritative_exact_record_sha256": "bfc16951adcc91fe9e1fbbdcbfd24ff3c7a0962a018fde9423463610382c0fbd"
   },
   "hypotheses": {
     "channel_mapping": "rejected",
     "source_stride": "rejected",
     "simd_lane": "rejected_at_worker_boundary_for_the_exact_parameter_tuple",
-    "reference_provenance": "only_remaining_live_explanation; not proven because the Windows loaded-AEX hash and environment attestations are missing"
+    "reference_selection": "retained 20260710 Windows EXR conflicts with the later hash-bound 20260727 same-AEX AE-exact record"
   },
-  "classification": "reference_provenance_unresolved",
+  "classification": "superseded_reference_conflict",
   "ae_exact_claim": false,
   "plugin_source_change": false,
-  "next_required_evidence": "same-run Windows effect/control FLOAT EXR bound to loaded OLMBlur AEX SHA-256 and complete color/output environment readback"
+  "next_required_evidence": "restore the 20260727 authoritative effect/control artifacts, or recapture that exact hash-bound contract; do not tune production to the superseded 20260710 EXR"
 }
