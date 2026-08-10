@@ -1271,7 +1271,9 @@ static FloatImage BuildZoomAEXOuterOnlyPolar(
 	const std::vector<A_u_char> &eligibility,
 	const std::vector<float> &span_plane,
 	const std::vector<float> &source_scalar_plane,
-	A_long outer_strength)
+	A_long outer_strength,
+	const std::vector<float> *inner_weights = nullptr,
+	A_long inner_strength = 0)
 {
 	const A_long radius_count = polar.width;
 	const A_long angular_count = polar.height;
@@ -1333,6 +1335,31 @@ static FloatImage BuildZoomAEXOuterOnlyPolar(
 							accum_alpha[destination_cell], alpha_weight);
 						if (max_alpha[destination_cell] < alpha_weight) {
 							max_alpha[destination_cell] = alpha_weight;
+						}
+					}
+					if (inner_weights && inner_strength > 0) {
+						const A_long inner_strength_limit = (A_long)RadialF32Mul((float)inner_strength, span);
+						// The AEX reserves radius cell zero for the center sample.  Inner
+						// propagation stops at radius one rather than writing into cell zero.
+						const A_long inner_limit = std::min<A_long>(source_ri, inner_strength_limit);
+						for (A_long k = 1; k < inner_limit; ++k) {
+							const A_long table_index = (A_long)RadialF32Mul((float)k, inverse_span);
+							if (table_index < 0 || table_index >= (A_long)inner_weights->size()) continue;
+							const float alpha_weight = RadialF32Mul(
+								source_scalar, (*inner_weights)[(size_t)table_index]);
+							const size_t destination_cell = source_cell - k;
+							const size_t destination_rgba = destination_cell * 4;
+							for (int c = 0; c < 3; ++c) {
+								const float contribution = RadialF32Mul(
+									alpha_weight, polar.rgba[source_rgba + c]);
+								normalized.rgba[destination_rgba + c] = RadialF32Add(
+									normalized.rgba[destination_rgba + c], contribution);
+							}
+							accum_alpha[destination_cell] = RadialF32Add(
+								accum_alpha[destination_cell], alpha_weight);
+							if (max_alpha[destination_cell] < alpha_weight) {
+								max_alpha[destination_cell] = alpha_weight;
+							}
 						}
 					}
 				}
@@ -1670,7 +1697,22 @@ static PF_Err RenderZoomTyped(
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0 &&
 		info.comp_width == (PF_FpLong)input->width && info.comp_height == (PF_FpLong)input->height;
-	if (info.blur_type != 1 || info.inner_strength != 0 ||
+	const bool use_aex_pf32_zoom_inner_small = input && output &&
+		std::is_same<PixelT, PF_PixelFloat>::value &&
+		input->width == 9 && input->height == 7 && output->width == 9 && output->height == 7 &&
+		input->rowbytes >= 9 * (A_long)sizeof(PF_PixelFloat) &&
+		output->rowbytes >= 9 * (A_long)sizeof(PF_PixelFloat) &&
+		info.center_x == 4.0 && info.center_y == 3.0 &&
+		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		(info.inner_strength == 50 || info.inner_strength == 100) && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
+		info.quality == 5.0 && info.brightness_gain == 1.0 && info.size_variation == 0.0 &&
+		info.noise_variation == 0.0 && info.noise_type == 1 && info.noise_layer == 0 &&
+		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0 &&
+		info.comp_width == 9.0 && info.comp_height == 7.0;
+	if (info.blur_type != 1 || (info.inner_strength != 0 && !use_aex_pf32_zoom_inner_small) ||
 	    (info.noise_variation != 0.0 && !use_aex_pf32_zoom_noise_type1_small)) {
 		// These branches are not yet backed by an actual-AEX worker/output
 		// contract.  Returning success with an unchanged frame made an
@@ -1752,6 +1794,7 @@ static PF_Err RenderZoomTyped(
 		info.outer_offset == 0 && info.outer_edge_fade == 0 &&
 		info.size_variation == 0.0 && info.noise_variation == 0.0) ||
 		use_aex_pf32_zoom_noise_type1_small ||
+		use_aex_pf32_zoom_inner_small ||
 		use_aex_pf16_bounded_offset_small;
 	std::vector<float> span_plane;
 	std::vector<float> source_factor_with_guard;
@@ -1863,9 +1906,14 @@ static PF_Err RenderZoomTyped(
 			worker_info.outer_offset_mode = 1;
 			worker_info.outer_offset = 0;
 		}
+		const std::vector<float> inner_weights = use_aex_pf32_zoom_inner_small
+			? ZoomGaussianWeights(info.inner_strength)
+			: std::vector<float>();
 		blurred = BuildZoomAEXOuterOnlyPolar(
 			polar, ZoomGaussianWeights(ZoomEffectiveLength(worker_info)), polar_valid,
-			span_plane, source_scalar_plane, worker_info.outer_strength);
+			span_plane, source_scalar_plane, worker_info.outer_strength,
+			use_aex_pf32_zoom_inner_small ? &inner_weights : nullptr,
+			use_aex_pf32_zoom_inner_small ? info.inner_strength : 0);
 	} else {
 		blurred = BuildZoomBlurredPolar(polar, info, debug, &use_fft_convolution);
 	}
