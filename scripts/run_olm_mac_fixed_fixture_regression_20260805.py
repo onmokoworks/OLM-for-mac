@@ -159,6 +159,7 @@ LANES = (
         "radialblur",
         (
             (sys.executable, "tools/emulation/test_olmradialblur_ui_setup_actual_aex_20260806.py"),
+            (sys.executable, "tools/emulation/test_olmradialblur_ui_selectors_actual_aex_20260810.py"),
             (sys.executable, "tools/emulation/test_olmradialblur_unsupported_variation_fail_closed_20260806.py"),
             (sys.executable, "tools/emulation/test_olmradialblur_case0009_pf32_ae_control_replay_20260806.py"),
             (sys.executable, "tools/emulation/test_olmradialblur_case0010_rotation_mac_production_planes_20260805.py"),
