@@ -16,7 +16,9 @@
   notarizationは未実施です。ダウンロード先のMacでGatekeeperに拒否される可能性があります。
 - 未証明の設定では、安全のためエラーを返す、処理を拒否する、または限定経路へ入る場合が
   あります。
-- Windows版と同じcustom UI、プレビュー制御、動的ラベルの全イベント経路は未証明です。
+- 公開パラメーターの順序・型・名前・初期値・範囲はactual AEXの30定義と比較しています。
+  一方、Windows版と同じcustom preview描画、クリック操作、動的ラベルのEVENT／UPDATE
+  経路は未移植・未証明です。現行Mac版は、それらのcustom UI capabilityをAEへ広告しません。
 
 ## プラグイン別
 
@@ -27,8 +29,10 @@
 - OLMDirectionalBlur：Noise Type 3 LayerのPF16/PF32は、記録済みtupleを中心とする
   bounded対応です。Layer欠落、寸法不一致、未証明tupleはfail-closeする場合があります。
 - OLMRadialBlur：centered neutral InnerはPF8/PF16/PF32で複数geometryを実AEXと
-  bit完全一致確認済みです。off-center、非unit ratio、angle、quality、repeat、offset、
-  edge fade、noise、variationを含む全組合せは未証明です。custom preview controlも未証明です。
+  bit完全一致確認済みです。直接観測済みの最大geometryはPF8/PF16が640×360、PF32が
+  64×36です。off-center、非unit ratio、angle、quality、repeat、offset、
+  edge fade、noise、variationを含む全組合せは未証明です。Windows独自のcustom preview
+  描画と操作も未証明です。
 - OLMSmoother2：key、invert、Gamma、range、paletteの主要分岐はbounded exactです。
   全パラメーター直積は未証明です。
 - OLMKiraKira：Mode 1〜4の主要経路を実装しています。Mode 4の記録済みtupleは
