@@ -1,4 +1,4 @@
-# OLM for Mac Public Beta リリースノート — 2026-08-07
+# OLM for Mac Public Beta リリースノート — 2026-08-10
 
 ## リリース候補の状態
 
@@ -101,8 +101,8 @@ e582b0f368deb6dfbb34de2675e382d2222372705da043151d90dc895f7d7a0a
 ## 最終Mac検証結果
 
 ```text
-PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=435.03s
-captured-output-sha256 f4a7186cfd2d6dc665f6cab35fdcee789564397fb6524c320c115723be2766d6
+PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=443.20s
+captured-output-sha256 20d39d0fe4994c5ec4bd832e56538e1eb85240938bbf32b04407b5aa6c7adda3
 Mac AE representatives 10 proven / 0 pending / 0 invalid
 Universal installed bundles 10 / 10
 Parameter UI registration 10 / 10（exact 7、bounded 3）
