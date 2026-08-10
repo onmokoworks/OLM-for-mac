@@ -740,8 +740,10 @@ ColorCompare16(const uint16_t *param_1, const uint16_t *param_2)
 		if (iVar1 == 0) iVar1 = 1;
 
 		float fVar5x;
-		if (_X <= 0.0f) fVar5x = floorf(_X);
-		else            fVar5x = ceilf(_X);
+		// The PE imports at 0x18000c424/0x18000c41e truncate the signed luma
+		// delta toward zero (the old decompiler labels had floor/ceil swapped).
+		if (_X <= 0.0f) fVar5x = ceilf(_X);
+		else            fVar5x = floorf(_X);
 		uint32_t uVar3x = (uint32_t)(int32_t)fVar5x;
 		int32_t iVar2 = (int32_t)((uVar3x ^ (uint32_t)((int32_t)uVar3x >> 31)) -
 		                          (uint32_t)((int32_t)uVar3x >> 31));
@@ -763,31 +765,30 @@ ColorCompare8(const uint8_t *param_1, const uint8_t *param_2)
 	     ((param_1[3] != param_2[3]) || (param_1[2] != param_2[2]) ||
 	      (*param_1 != *param_2)))) {
 		uint32_t uVar3 = (uint32_t)*param_1 - (uint32_t)*param_2;
-		float fVar5 = (float)*param_1 / DAT_18000d268;
+		float fVar5 = SseDivF32((float)*param_1, DAT_18000d268);
 		uint32_t uVar4 = (uint32_t)((int32_t)uVar3 >> 31);
-		float fVar6 = (float)*param_2 / DAT_18000d268;
-		float _X = ((float)param_1[1] * fVar5 * _DAT_18000d258 +
-		            (float)param_1[2] * fVar5 * _DAT_18000d25c +
-		            (float)param_1[3] * fVar5 * _DAT_18000d254) -
-		           ((float)param_2[1] * fVar6 * _DAT_18000d258 +
-		            (float)param_2[2] * fVar6 * _DAT_18000d25c +
-		            (float)param_2[3] * fVar6 * _DAT_18000d254);
-		float diff_a = (float)((float)param_1[1] * fVar5 - (float)param_2[1] * fVar6);
-		float diff_b = (float)((float)param_1[3] * fVar5 - (float)param_2[3] * fVar6);
-		float diff_c = (float)((float)param_1[2] * fVar5 - (float)param_2[2] * fVar6);
+		float fVar6 = SseDivF32((float)*param_2, DAT_18000d268);
+		float p1r=SseMulF32((float)param_1[1],fVar5), p1g=SseMulF32((float)param_1[2],fVar5), p1b=SseMulF32((float)param_1[3],fVar5);
+		float p2r=SseMulF32((float)param_2[1],fVar6), p2g=SseMulF32((float)param_2[2],fVar6), p2b=SseMulF32((float)param_2[3],fVar6);
+		float l1=SseAddF32(SseAddF32(SseMulF32(p1r,_DAT_18000d258),SseMulF32(p1g,_DAT_18000d25c)),SseMulF32(p1b,_DAT_18000d254));
+		float l2=SseAddF32(SseAddF32(SseMulF32(p2r,_DAT_18000d258),SseMulF32(p2g,_DAT_18000d25c)),SseMulF32(p2b,_DAT_18000d254));
+		float _X=SseSubF32(l1,l2);
+		float diff_a=SseSubF32(p1r,p2r), diff_b=SseSubF32(p1b,p2b), diff_c=SseSubF32(p1g,p2g);
 		uint32_t a_bits = (*reinterpret_cast<uint32_t*>(&diff_a)) & DAT_18000d270;
 		uint32_t b_bits = (*reinterpret_cast<uint32_t*>(&diff_b)) & DAT_18000d270;
 		uint32_t c_bits = (*reinterpret_cast<uint32_t*>(&diff_c)) & DAT_18000d270;
 		float fa = *reinterpret_cast<float*>(&a_bits);
 		float fb = *reinterpret_cast<float*>(&b_bits);
 		float fc = *reinterpret_cast<float*>(&c_bits);
-		int32_t iVar1 = (int32_t)((float)(int32_t)((uVar3 ^ uVar4) - uVar4) + fa + fb + fc);
+		float metric=SseAddF32((float)(int32_t)((uVar3^uVar4)-uVar4),fa);
+		metric=SseAddF32(metric,fb); metric=SseAddF32(metric,fc);
+		int32_t iVar1=(int32_t)metric;
 		iVar1 = (int32_t)(((uint32_t)(iVar1 >> 31) & 3u) + (uint32_t)iVar1) >> 2;
 		if (iVar1 == 0) iVar1 = 1;
 
 		float fVar5x;
-		if (_X <= 0.0f) fVar5x = floorf(_X);
-		else            fVar5x = ceilf(_X);
+		if (_X <= 0.0f) fVar5x = ceilf(_X);
+		else            fVar5x = floorf(_X);
 		uint32_t uVar3x = (uint32_t)(int32_t)fVar5x;
 		int32_t iVar2 = (int32_t)((uVar3x ^ (uint32_t)((int32_t)uVar3x >> 31)) -
 		                          (uint32_t)((int32_t)uVar3x >> 31));

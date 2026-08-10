@@ -40,18 +40,24 @@ def main():
                                  'actual_sha256':hashlib.sha256(win).hexdigest(),
                                  'production_sha256':hashlib.sha256(mac).hexdigest()})
     finally: temporary.cleanup()
-    pf16=[r for r in rows if r['depth']==16]; pf8=[r for r in rows if r['depth']==8]
-    assert all(r['mismatched_bytes']==0 for r in pf16)
-    residual=[r for r in pf8 if r['mismatched_bytes']]
-    assert [(r['use_key'],r['tolerance'],r['mismatched_bytes']) for r in residual]==[(0,6,9),(1,6,9)]
-    report={'schema_version':1,'status':'bounded','verdict':'PASS_PF16_MULTIVALUE_RAMP_FMA_EXACT_PF8_RESIDUAL_RECORDED',
+    assert all(r['mismatched_bytes']==0 for r in rows)
+    report={'schema_version':1,'status':'exact','verdict':'PASS_PF8_PF16_MULTIVALUE_RAMP_ALL_20_CELLS_EXACT',
       'actual_aex_sha256':base.AEX_SHA,
       'scope':'padded nonuniform 7x5 multivalue grayscale ramp with five exact-key islands; Use Key off/on x tolerance 0/1/6/127/255 x PF8/PF16',
       'pf16_closed_boundary':'all 10 exported PF_Cmd_RENDER versus production EffectMain cells are byte exact after preserving Windows MULSS/MULSS/ADDSS binary32 rounding in AlphaBlend16',
-      'pf8_open_boundary':'tolerance 6 differs by nine RGB bytes in each key state; all other eight PF8 cells are exact; no PF8 production change is claimed by this report',
+      'pf8_closed_boundary':'all 10 cells are exact after matching scalar-SSE operation boundaries and the AEX signed-luma truncation-toward-zero import behavior in ColorCompare8',
+      'pf8_diagnosis':{'pre_fix_residual':'tolerance 6, key off/on, three pixels, nine RGB bytes',
+        'first_pixel_xy':[4,1],
+        'actual_executor_order_before_fix':[
+          {'direction':7,'start':[4,1],'end':[4,1],'source_color_xy':[4,0],'other_color_xy':[4,1],'weight':0.875,'use_source':1,'leading_span':-1},
+          {'direction':5,'start':[4,1],'end':[4,1],'source_color_xy':[3,1],'other_color_xy':[4,1],'weight':0.875,'use_source':1,'leading_span':-1},
+          {'direction':5,'start':[4,1],'end':[4,1],'source_color_xy':[4,1],'other_color_xy':[5,1],'weight':0.125,'use_source':1,'leading_span':0},
+          {'direction':7,'start':[4,1],'end':[4,1],'source_color_xy':[4,1],'other_color_xy':[4,2],'weight':0.125,'use_source':1,'leading_span':0}],
+        'production_before_fix':'the fourth callback was absent because ColorCompare8 rounded signed luma away from zero and changed the SubHandler caller decision',
+        'worker_replay':'the complete four-call sequence was independently exact, excluding worker math, source/destination pointer normalization, and iterate order as causes'},
       'fixture':{'width':7,'height':5,'padding_bytes_per_row':8,'key_rgb8':base.KEY,'background':'grayscale (x*17+y*23)&255'},
-      'cases':rows,'claims_not_made':['PF8 tolerance-6 ramp exactness','arbitrary multivalue inputs','PF32','AE host/export color management']}
+      'cases':rows,'claims_not_made':['arbitrary multivalue inputs','PF32','AE host/export color management']}
     REPORT.write_text(json.dumps(report,indent=2,sort_keys=True)+'\n')
-    DOC.write_text('# OLMSmoother v1 multivalue ramp boundary\n\nVerdict: `'+report['verdict']+'`\n\nPF16 is byte-exact in all ten key/tolerance cells after retaining the Windows scalar-SSE rounding points in `AlphaBlend16`. PF8 remains explicitly open at tolerance 6: both key states differ by nine RGB bytes; the other eight PF8 cells are exact. No PF8 workaround is admitted.\n')
+    DOC.write_text('# OLMSmoother v1 multivalue ramp boundary\n\nVerdict: `'+report['verdict']+'`\n\nPF8 and PF16 are byte-exact in all twenty key/tolerance cells. PF16 retains the Windows scalar-SSE rounding points in `AlphaBlend16`. PF8 now follows the AEX scalar-SSE operation boundaries and its signed-luma truncation-toward-zero imports in `ColorCompare8`; this restores the missing caller executor callbacks without pixel-specific handling.\n')
     print(report['verdict'])
 if __name__=='__main__': main()

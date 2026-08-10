@@ -22,9 +22,9 @@
     {
       "actual_sha256": "543e36d24c48c74ff7b4917ca1fbc25d24f9664d99a560339700a3e7c9d06016",
       "depth": 8,
-      "first_mismatch": 53,
-      "mismatched_bytes": 9,
-      "production_sha256": "fd1aa2e597d6c62afff0e3918b8cafff22f063f7243fe920d7345844255281e8",
+      "first_mismatch": null,
+      "mismatched_bytes": 0,
+      "production_sha256": "543e36d24c48c74ff7b4917ca1fbc25d24f9664d99a560339700a3e7c9d06016",
       "tolerance": 6,
       "use_key": 0
     },
@@ -67,9 +67,9 @@
     {
       "actual_sha256": "d0a0bb6723668f688e671e5238306a051251aadeb1e66b0437a2e5f9bac6bb1b",
       "depth": 8,
-      "first_mismatch": 53,
-      "mismatched_bytes": 9,
-      "production_sha256": "eb2ed0b354b8fa72911d0c96d547b5edf90003e185ce04c6027d2cbbed6a349a",
+      "first_mismatch": null,
+      "mismatched_bytes": 0,
+      "production_sha256": "d0a0bb6723668f688e671e5238306a051251aadeb1e66b0437a2e5f9bac6bb1b",
       "tolerance": 6,
       "use_key": 1
     },
@@ -183,7 +183,6 @@
     }
   ],
   "claims_not_made": [
-    "PF8 tolerance-6 ramp exactness",
     "arbitrary multivalue inputs",
     "PF32",
     "AE host/export color management"
@@ -200,9 +199,108 @@
     "width": 7
   },
   "pf16_closed_boundary": "all 10 exported PF_Cmd_RENDER versus production EffectMain cells are byte exact after preserving Windows MULSS/MULSS/ADDSS binary32 rounding in AlphaBlend16",
-  "pf8_open_boundary": "tolerance 6 differs by nine RGB bytes in each key state; all other eight PF8 cells are exact; no PF8 production change is claimed by this report",
+  "pf8_closed_boundary": "all 10 cells are exact after matching scalar-SSE operation boundaries and the AEX signed-luma truncation-toward-zero import behavior in ColorCompare8",
+  "pf8_diagnosis": {
+    "actual_executor_order_before_fix": [
+      {
+        "direction": 7,
+        "end": [
+          4,
+          1
+        ],
+        "leading_span": -1,
+        "other_color_xy": [
+          4,
+          1
+        ],
+        "source_color_xy": [
+          4,
+          0
+        ],
+        "start": [
+          4,
+          1
+        ],
+        "use_source": 1,
+        "weight": 0.875
+      },
+      {
+        "direction": 5,
+        "end": [
+          4,
+          1
+        ],
+        "leading_span": -1,
+        "other_color_xy": [
+          4,
+          1
+        ],
+        "source_color_xy": [
+          3,
+          1
+        ],
+        "start": [
+          4,
+          1
+        ],
+        "use_source": 1,
+        "weight": 0.875
+      },
+      {
+        "direction": 5,
+        "end": [
+          4,
+          1
+        ],
+        "leading_span": 0,
+        "other_color_xy": [
+          5,
+          1
+        ],
+        "source_color_xy": [
+          4,
+          1
+        ],
+        "start": [
+          4,
+          1
+        ],
+        "use_source": 1,
+        "weight": 0.125
+      },
+      {
+        "direction": 7,
+        "end": [
+          4,
+          1
+        ],
+        "leading_span": 0,
+        "other_color_xy": [
+          4,
+          2
+        ],
+        "source_color_xy": [
+          4,
+          1
+        ],
+        "start": [
+          4,
+          1
+        ],
+        "use_source": 1,
+        "weight": 0.125
+      }
+    ],
+    "first_pixel_xy": [
+      4,
+      1
+    ],
+    "pre_fix_residual": "tolerance 6, key off/on, three pixels, nine RGB bytes",
+    "production_before_fix": "the fourth callback was absent because ColorCompare8 rounded signed luma away from zero and changed the SubHandler caller decision",
+    "worker_replay": "the complete four-call sequence was independently exact, excluding worker math, source/destination pointer normalization, and iterate order as causes"
+  },
   "schema_version": 1,
   "scope": "padded nonuniform 7x5 multivalue grayscale ramp with five exact-key islands; Use Key off/on x tolerance 0/1/6/127/255 x PF8/PF16",
-  "status": "bounded",
-  "verdict": "PASS_PF16_MULTIVALUE_RAMP_FMA_EXACT_PF8_RESIDUAL_RECORDED"
+  "status": "exact",
+  "verdict": "PASS_PF8_PF16_MULTIVALUE_RAMP_ALL_20_CELLS_EXACT"
 }

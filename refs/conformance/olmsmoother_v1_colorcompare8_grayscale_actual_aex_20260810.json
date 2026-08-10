@@ -1,0 +1,12 @@
+{
+  "actual_aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+  "calls": 66049,
+  "claims_not_made": [
+    "arbitrary RGB/alpha tuples"
+  ],
+  "closed_rule": "scalar-SSE binary32 boundaries and signed luma conversion toward zero",
+  "domain": "ordered pairs of all opaque grayscale RGB 0..255 plus key RGB (202,187,230)",
+  "schema_version": 1,
+  "status": "exact",
+  "verdict": "PASS_COLORCOMPARE8_GRAYSCALE_KEY_66049_CALLS_EXACT"
+}
