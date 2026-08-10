@@ -1,0 +1,89 @@
+{
+  "actual_aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+  "actual_exported_probe": {
+    "dropped_unsupported_suite_calls": 0,
+    "error": "selector SMART_RENDER failed in guest: unsupported Win64 import: kernel32.dll!LoadLibraryW",
+    "execution_backend": "unicorn-x86_64",
+    "gpu": {
+      "cleanup_complete": true,
+      "gpu_render_possible": false,
+      "pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "pre_render_output_flags": 0,
+      "render": {
+        "attempted": true,
+        "completed": false,
+        "selector": "SMART_RENDER"
+      },
+      "requested_backend": "cpu",
+      "runtime_ended": false,
+      "runtime_started": false,
+      "setdown": {
+        "attempted": false,
+        "completed": false,
+        "selector": "GPU_DEVICE_SETDOWN"
+      },
+      "setup": {
+        "attempted": false,
+        "completed": false,
+        "selector": "GPU_DEVICE_SETUP"
+      },
+      "transport_finished": false,
+      "transport_prepared": false
+    },
+    "schema_version": 1,
+    "suite_requests": [
+      "AEGP Utility Suite v7",
+      "PF ColorParamSuite v1",
+      "PF Handle Suite v2"
+    ],
+    "unsupported_suite_calls": []
+  },
+  "aexcompat_worker": {
+    "modified_by_olm_task": false,
+    "path": "/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker",
+    "sha256": "d70432b824563dfbc3938573eec2193213f85d7f0718fcd3469574bf601ebdb3"
+  },
+  "claims_not_made": [
+    "No exported SmartRender output comparison",
+    "No proof that SmartRender reaches FUN_181174760 field generation",
+    "No PF32 SmartRender route; the actual AEX has none",
+    "No native After Effects execution in this probe"
+  ],
+  "next_required_generic_abi": "kernel32!LoadLibraryW with bounded loaded-module/path resolution, reference lifetime, failure return, and last-error semantics",
+  "numerical_family_already_exact": {
+    "cells": 24,
+    "evidence": [
+      "refs/conformance/olmdistancegradation_classic_pf8_blur_background_family_exact_20260810.md",
+      "refs/conformance/olmdistancegradation_classic_pf16_blur_background_family_exact_20260810.md",
+      "refs/conformance/olmdistancegradation_classic_pf32_blur_background_family_exact_20260810.md"
+    ],
+    "product": "PF8/PF16/PF32 x Constant/Linear x Blur2/3 x Background off/on"
+  },
+  "owner_facts": {
+    "legacy_pf32_render": "separate classic whole owner FUN_181172a10",
+    "legacy_pf8_pf16_render": "typed composition of a preseeded green-lane field only",
+    "smart_pre_render": "completed with error 0",
+    "smart_render": "entered, then stopped before numerical completion at LoadLibraryW"
+  },
+  "representative_parameters": [
+    "Invert=1",
+    "In/Out=1",
+    "Inside Threshold=4",
+    "Outside Threshold=4",
+    "Render Mode=1",
+    "Use Background Color=0",
+    "Gradation Color=255,28,0,238",
+    "BG Color =255,16,160,48",
+    "Interpolation Mode=1",
+    "Power=1",
+    "Blur Mode=2",
+    "Blur Size=1"
+  ],
+  "schema": "olmdistancegradation.exported-upstream-owner-seam/1",
+  "status": "BLOCKED_AFTER_SMART_PRE_RENDER_AT_LOAD_LIBRARY_W"
+}
