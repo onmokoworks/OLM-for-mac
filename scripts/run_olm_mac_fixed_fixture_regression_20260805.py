@@ -224,6 +224,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmsmoother2_pf8_gamma_all_actual_aex_20260810.py"),
             (sys.executable, "tools/emulation/test_olmsmoother2_public_smoothing_endpoints_actual_aex_20260810.py"),
             (sys.executable, "tools/emulation/test_olmsmoother2_combined_parameters_actual_aex_20260810.py"),
+            (sys.executable, "tools/emulation/test_olmsmoother2_gamma_all_key_smoothing_actual_aex_20260810.py"),
             (sys.executable, "tools/emulation/test_olmsmoother2_nonuniform_geometry_actual_aex_20260805.py"),
             (sys.executable, "tools/emulation/test_olmsmoother2_v2_nonuniform_actual_aex_20260805.py"),
             (sys.executable, "tools/emulation/test_olmsmoother2_v2_key_threshold_actual_aex_20260805.py"),
