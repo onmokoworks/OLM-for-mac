@@ -20,7 +20,7 @@ def main():
         "checkout_input_then_output": smart.index("checkout_layer_pixels") < smart.index("checkout_output"),
         "all_public_params_checked_out": "for (int i = 1; i < OLMRADIALBLUR_NUM_PARAMS; ++i)" in smart and "PF_CHECKOUT_PARAM" in smart,
         "pre_render_dimensions_consumed": "pre_render_data" in smart and "pre->comp_width" in smart and "pre->comp_height" in smart,
-        "smart_bitdepth_routes_renderworld": "RenderWorld(input_world, output_world, info, extra->input->bitdepth)" in smart,
+        "smart_bitdepth_routes_renderworld": "RenderWorld(input_world, output_world, noise_world, info, extra->input->bitdepth)" in smart,
         "input_checked_in": "checkin_layer_pixels" in smart,
     }
     pf32 = json.loads(PF32_REPORT.read_text())

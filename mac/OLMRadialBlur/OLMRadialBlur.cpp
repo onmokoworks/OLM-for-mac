@@ -3440,8 +3440,40 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	return PF_Err_NONE;
 }
 
-static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output, const OLMRadialBlurInfo &info, short bitdepth)
+static bool RequiresNoiseLayer(const OLMRadialBlurInfo &info)
 {
+	return info.noise_type == 3 && info.noise_variation > 0.0;
+}
+
+static PF_Err ValidateNoiseLayerWorld(const PF_EffectWorld *noise_world, short bitdepth)
+{
+	if (!noise_world || !noise_world->data || noise_world->width <= 0 ||
+		noise_world->height <= 0 || noise_world->rowbytes <= 0) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	A_long pixel_bytes = 0;
+	switch (bitdepth) {
+	case 8: pixel_bytes = (A_long)sizeof(PF_Pixel8); break;
+	case 16: pixel_bytes = (A_long)sizeof(PF_Pixel16); break;
+	case 32: pixel_bytes = (A_long)sizeof(PF_PixelFloat); break;
+	default: return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	if (noise_world->rowbytes / pixel_bytes < noise_world->width) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	return PF_Err_NONE;
+}
+
+static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
+	PF_EffectWorld *noise_world, const OLMRadialBlurInfo &info, short bitdepth)
+{
+	if (RequiresNoiseLayer(info)) {
+		PF_Err noise_err = ValidateNoiseLayerWorld(noise_world, bitdepth);
+		if (noise_err) return noise_err;
+		// Host plumbing is established, but the AEX's layer-derived scalar plane
+		// is not admitted until its numerical contract has an exact witness.
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
 	if (bitdepth == 8) {
 		if (info.blur_type == 2) return RenderRotationTyped<PF_Pixel8>(input, output, info);
 		return RenderZoom8(input, output, info);
@@ -3457,6 +3489,12 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	return PF_Err_BAD_CALLBACK_PARAM;
 }
 
+static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
+	const OLMRadialBlurInfo &info, short bitdepth)
+{
+	return RenderWorld(input, output, NULL, info, bitdepth);
+}
+
 #if defined(OLM_RADIALBLUR_TEST_SEAM)
 extern "C" PF_Err OLMRadialBlurTestRenderWorld(
 	PF_EffectWorld *input,
@@ -3466,6 +3504,17 @@ extern "C" PF_Err OLMRadialBlurTestRenderWorld(
 {
 	if (!input || !output || !info) return PF_Err_BAD_CALLBACK_PARAM;
 	return RenderWorld(input, output, *info, bitdepth);
+}
+
+extern "C" PF_Err OLMRadialBlurTestRenderWorldWithNoiseLayer(
+	PF_EffectWorld *input,
+	PF_EffectWorld *output,
+	PF_EffectWorld *noise_world,
+	const OLMRadialBlurInfo *info,
+	short bitdepth)
+{
+	if (!input || !output || !info) return PF_Err_BAD_CALLBACK_PARAM;
+	return RenderWorld(input, output, noise_world, *info, bitdepth);
 }
 
 extern "C" PF_Err OLMRadialBlurTestRenderRotation8AndCapture(
@@ -3808,13 +3857,41 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	default:
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
-	return RenderWorld(input, output, info, bitdepth);
+	PF_EffectWorld *noise_world = NULL;
+	if (RequiresNoiseLayer(info)) {
+		if (!params[OLMRADIALBLUR_NOISE_LAYER]) return PF_Err_BAD_CALLBACK_PARAM;
+		noise_world = &params[OLMRADIALBLUR_NOISE_LAYER]->u.ld;
+		PF_PixelFormat noise_format = PF_PixelFormat_INVALID;
+		err = world_suite->PF_GetPixelFormat(noise_world, &noise_format);
+		if (err) return err;
+		if (noise_format != format) return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	return RenderWorld(input, output, noise_world, info, bitdepth);
 }
 
 typedef struct {
 	PF_FpLong comp_width;
 	PF_FpLong comp_height;
+	PF_Boolean requires_noise_layer;
 } PreRenderData;
+
+struct SmartPixelCheckoutGuard {
+	PF_InData *in_data;
+	PF_SmartRenderExtra *extra;
+	bool input_checked_out = false;
+	bool noise_checked_out = false;
+	~SmartPixelCheckoutGuard()
+	{
+		if (noise_checked_out) {
+			extra->cb->checkin_layer_pixels(
+				in_data->effect_ref, OLMRADIALBLUR_NOISE_LAYER);
+		}
+		if (input_checked_out) {
+			extra->cb->checkin_layer_pixels(
+				in_data->effect_ref, OLMRADIALBLUR_INPUT);
+		}
+	}
+};
 
 static void DeletePreRenderData(void *data)
 {
@@ -3895,19 +3972,54 @@ SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 {
 	PF_Err err = PF_Err_NONE;
 	PF_RenderRequest req = extra->input->output_request;
-	PF_CheckoutResult in_result;
+	PF_CheckoutResult in_result = {};
+	PF_CheckoutResult noise_result = {};
+	PF_ParamDef noise_type;
+	PF_ParamDef noise_variation;
+	AEFX_CLR_STRUCT(noise_type);
+	AEFX_CLR_STRUCT(noise_variation);
+	bool noise_type_checked_out = false;
+	bool noise_variation_checked_out = false;
+	bool requires_noise_layer = false;
+
+	err = PF_CHECKOUT_PARAM(in_data, OLMRADIALBLUR_NOISE_TYPE,
+		in_data->current_time, in_data->time_step, in_data->time_scale, &noise_type);
+	noise_type_checked_out = err == PF_Err_NONE;
+	if (!err) {
+		err = PF_CHECKOUT_PARAM(in_data, OLMRADIALBLUR_NOISE_VARIATION,
+			in_data->current_time, in_data->time_step, in_data->time_scale, &noise_variation);
+		noise_variation_checked_out = err == PF_Err_NONE;
+	}
+	if (!err) {
+		requires_noise_layer = noise_type.u.pd.value == 3 &&
+			noise_variation.u.fs_d.value > 0.0;
+	}
+	if (noise_variation_checked_out) PF_CHECKIN_PARAM(in_data, &noise_variation);
+	if (noise_type_checked_out) PF_CHECKIN_PARAM(in_data, &noise_type);
+	if (err) return err;
 
 	req.preserve_rgb_of_zero_alpha = TRUE;
 	ERR(extra->cb->checkout_layer(in_data->effect_ref,
 		OLMRADIALBLUR_INPUT, OLMRADIALBLUR_INPUT, &req, in_data->current_time,
 		in_data->time_step, in_data->time_scale, &in_result));
+	if (!err && requires_noise_layer) {
+		ERR(extra->cb->checkout_layer(in_data->effect_ref,
+			OLMRADIALBLUR_NOISE_LAYER, OLMRADIALBLUR_NOISE_LAYER, &req,
+			in_data->current_time, in_data->time_step, in_data->time_scale,
+			&noise_result));
+	}
 
 	if (!err) {
 		UnionLRect(&in_result.result_rect, &extra->output->result_rect);
 		UnionLRect(&in_result.max_result_rect, &extra->output->max_result_rect);
+		if (requires_noise_layer) {
+			UnionLRect(&noise_result.result_rect, &extra->output->result_rect);
+			UnionLRect(&noise_result.max_result_rect, &extra->output->max_result_rect);
+		}
 		PreRenderData *pre = new PreRenderData;
 		pre->comp_width = in_result.ref_width > 0 ? (PF_FpLong)in_result.ref_width : 0.0;
 		pre->comp_height = in_result.ref_height > 0 ? (PF_FpLong)in_result.ref_height : 0.0;
+		pre->requires_noise_layer = requires_noise_layer ? TRUE : FALSE;
 		extra->output->pre_render_data = pre;
 		extra->output->delete_pre_render_data_func = DeletePreRenderData;
 	}
@@ -3915,50 +4027,79 @@ SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 }
 
 static PF_Err
-SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
+SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra)
 {
 	PF_Err err = PF_Err_NONE;
 	PF_EffectWorld *input_world  = NULL;
+	PF_EffectWorld *noise_world  = NULL;
 	PF_EffectWorld *output_world = NULL;
-	ERR(extra->cb->checkout_layer_pixels(in_data->effect_ref, OLMRADIALBLUR_INPUT, &input_world));
-	ERR(extra->cb->checkout_output(in_data->effect_ref, &output_world));
-	if (err || !input_world || !output_world) {
-		extra->cb->checkin_layer_pixels(in_data->effect_ref, OLMRADIALBLUR_INPUT);
-		return err;
+	SmartPixelCheckoutGuard pixel_guard{in_data, extra};
+	const PreRenderData *pre =
+		reinterpret_cast<const PreRenderData *>(extra->input->pre_render_data);
+	const bool requires_noise_layer = pre && pre->requires_noise_layer != FALSE;
+
+	err = extra->cb->checkout_layer_pixels(
+		in_data->effect_ref, OLMRADIALBLUR_INPUT, &input_world);
+	pixel_guard.input_checked_out = err == PF_Err_NONE;
+	if (!err && (!input_world || !input_world->data)) err = PF_Err_BAD_CALLBACK_PARAM;
+	if (!err && requires_noise_layer) {
+		err = extra->cb->checkout_layer_pixels(
+			in_data->effect_ref, OLMRADIALBLUR_NOISE_LAYER, &noise_world);
+		pixel_guard.noise_checked_out = err == PF_Err_NONE;
+		if (!err && (!noise_world || !noise_world->data)) err = PF_Err_BAD_CALLBACK_PARAM;
+	}
+	if (!err) {
+		err = extra->cb->checkout_output(in_data->effect_ref, &output_world);
+		if (!err && (!output_world || !output_world->data)) err = PF_Err_BAD_CALLBACK_PARAM;
 	}
 
 	PF_ParamDef checked[OLMRADIALBLUR_NUM_PARAMS];
 	PF_ParamDef *param_ptrs[OLMRADIALBLUR_NUM_PARAMS] = {};
-	for (int i = 1; i < OLMRADIALBLUR_NUM_PARAMS; ++i) {
+	bool param_checked_out[OLMRADIALBLUR_NUM_PARAMS] = {};
+	for (int i = 1; !err && i < OLMRADIALBLUR_NUM_PARAMS; ++i) {
 		AEFX_CLR_STRUCT(checked[i]);
-		ERR(PF_CHECKOUT_PARAM(in_data, i, in_data->current_time,
-		                      in_data->time_step, in_data->time_scale, &checked[i]));
-		param_ptrs[i] = &checked[i];
+		err = PF_CHECKOUT_PARAM(in_data, i, in_data->current_time,
+			in_data->time_step, in_data->time_scale, &checked[i]);
+		if (!err) {
+			param_checked_out[i] = true;
+			param_ptrs[i] = &checked[i];
+		}
 	}
 	param_ptrs[OLMRADIALBLUR_INPUT] = NULL;
 
-	PF_FpLong comp_w = input_world->width;
-	PF_FpLong comp_h = input_world->height;
-	if (PreRenderData *pre = reinterpret_cast<PreRenderData *>(extra->input->pre_render_data)) {
+	PF_FpLong comp_w = input_world ? input_world->width : 0.0;
+	PF_FpLong comp_h = input_world ? input_world->height : 0.0;
+	if (pre) {
 		if (pre->comp_width > 0.0) comp_w = pre->comp_width;
 		if (pre->comp_height > 0.0) comp_h = pre->comp_height;
 	}
 
 	if (!err) {
 		OLMRadialBlurInfo info = InfoFromParams(param_ptrs, comp_w, comp_h);
+		if (RequiresNoiseLayer(info) != requires_noise_layer) {
+			err = PF_Err_BAD_CALLBACK_PARAM;
+		}
+		if (!err && requires_noise_layer) {
+			AEFX_SuiteScoper<PF_WorldSuite2> world_suite = AEFX_SuiteScoper<PF_WorldSuite2>(
+				in_data, kPFWorldSuite, kPFWorldSuiteVersion2, out_data);
+			PF_PixelFormat input_format = PF_PixelFormat_INVALID;
+			PF_PixelFormat noise_format = PF_PixelFormat_INVALID;
+			err = world_suite->PF_GetPixelFormat(input_world, &input_format);
+			if (!err) err = world_suite->PF_GetPixelFormat(noise_world, &noise_format);
+			if (!err && input_format != noise_format) err = PF_Err_BAD_CALLBACK_PARAM;
+		}
 		#if defined(OLM_RADIALBLUR_DIAGNOSTIC_CAPTURE)
-		ERR(CaptureDiagnosticPF32World("input", input_world, info, extra->input->bitdepth));
+		if (!err) ERR(CaptureDiagnosticPF32World("input", input_world, info, extra->input->bitdepth));
 		#endif
-		ERR(RenderWorld(input_world, output_world, info, extra->input->bitdepth));
+		if (!err) ERR(RenderWorld(input_world, output_world, noise_world, info, extra->input->bitdepth));
 		#if defined(OLM_RADIALBLUR_DIAGNOSTIC_CAPTURE)
 		if (!err) ERR(CaptureDiagnosticPF32World("output", output_world, info, extra->input->bitdepth));
 		#endif
 	}
 
 	for (int i = 1; i < OLMRADIALBLUR_NUM_PARAMS; ++i) {
-		PF_CHECKIN_PARAM(in_data, &checked[i]);
+		if (param_checked_out[i]) PF_CHECKIN_PARAM(in_data, &checked[i]);
 	}
-	extra->cb->checkin_layer_pixels(in_data->effect_ref, OLMRADIALBLUR_INPUT);
 	return err;
 }
 
