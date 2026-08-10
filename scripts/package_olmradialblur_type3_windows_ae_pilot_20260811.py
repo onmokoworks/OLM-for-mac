@@ -37,7 +37,7 @@ def build(output: Path = OUTPUT) -> Path:
             (ROOT/"scripts/olmradialblur_type3_pf32_pilot_contract_20260811.py",stage/"tools/olmradialblur_type3_pf32_pilot_contract_20260811.py")):
             target.parent.mkdir(exist_ok=True);shutil.copy2(source,target)
         (stage/"README_WINDOWS.md").write_text(
-            "# OLMRadialBlur Type 3 PF32 pilot\n\nRun `RUN_WINDOWS.ps1`. Exactly eight fresh AE 26.3x87 Software processes are used. "
+            "# OLMRadialBlur Type 3 PF32 pilot\n\nRun `RUN_WINDOWS.ps1`. Exactly eight fresh AE 25.2x131 Software processes are used. "
             "If AE exposes `OLM RadialBlur-0021` as `NO_VALUE`, the runner stops with `NOISE_LAYER_BINDING_UNAVAILABLE`; "
             "an output made with the default None layer is never accepted.\n")
         output.parent.mkdir(parents=True,exist_ok=True);write_zip(stage,output)

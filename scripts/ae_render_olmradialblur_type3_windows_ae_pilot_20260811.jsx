@@ -12,7 +12,7 @@
  try{
   if(!root||!id||!out||!ready||!go||!result||!nonce||!templ)throw Error("runner environment incomplete");
   var c=js(root+"/BATCH_CONTRACT.json"),row=null;for(var i=0;i<c.rows.length;i++)if(c.rows[i].row_id===id)row=c.rows[i];if(!row)throw Error("unknown row");
-  if(!/^26\.3(?:\.|x87$|$)/.test(String(app.version)))throw Error("AE version "+app.version);
+  if(!/^25\.2(?:\.|x131$|$)/.test(String(app.version)))throw Error("AE version "+app.version);
   app.newProject();var pr=app.project;pr.bitsPerChannel=32;pr.workingSpace="";pr.linearBlending=false;pr.gpuAccelType=GpuAccelType.SOFTWARE;
   if(pr.bitsPerChannel!==32||Number(pr.gpuAccelType)!==1816||pr.linearBlending)throw Error("project contract readback");
   var primary=pr.importFile(new ImportOptions(new File(root+"/"+row.source_member))),noise=pr.importFile(new ImportOptions(new File(root+"/"+row.noise_layer_member)));primary.mainSource.alphaMode=AlphaMode.STRAIGHT;noise.mainSource.alphaMode=AlphaMode.STRAIGHT;

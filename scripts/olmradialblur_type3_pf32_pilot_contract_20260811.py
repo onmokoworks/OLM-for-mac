@@ -2,7 +2,7 @@
 from __future__ import annotations
 import hashlib,json,struct,zlib
 from pathlib import Path
-AEX_SHA256="ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb";AE_VERSION="26.3x87";OUTPUT_TEMPLATE="OLM EXR 32 Float";WIDTH,HEIGHT=9,7
+AEX_SHA256="ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb";AE_VERSION="25.2x131";OUTPUT_TEMPLATE="OLM EXR 32 Float";WIDTH,HEIGHT=9,7
 def digest(b:bytes)->str:return hashlib.sha256(b).hexdigest()
 def canonical_hash(v:object)->str:return digest(json.dumps(v,sort_keys=True,separators=(",",":")).encode())
 def png_rgba(kind:str)->bytes:
@@ -29,7 +29,7 @@ def cases()->list[dict]:
  return out
 def contract(files:dict[str,bytes])->dict:
  if len({digest(b) for b in files.values()})!=3:raise ValueError("primary/pattern/inverse fixtures must have distinct hashes")
- return {"schema":"olmradialblur-type3-windows-ae-pilot/1","package_id":"olmradialblur_type3_windows_ae_pilot_20260811","target":{"ae_version":AE_VERSION,"ae_file_version":[26,3,0,87],"renderer":"Software","renderer_raw":1816,"depth":32,"output_template":OUTPUT_TEMPLATE},"plugin":{"member":"aex/OLMRadialBlur.aex","sha256":AEX_SHA256},"fixtures":{n:{"member":f"inputs/{n}.png","sha256":digest(b),"dimensions":[9,7],"alpha":"straight"}for n,b in files.items()},"rows":cases(),"process_contract":{"fresh_afterfx_per_row":True,"expected_rows":8,"all_ae_pids_unique":True},"noise_layer_binding":{"write_then_readback_required":True,"known_risk":"PF layer stream may expose PropertyValueType.NO_VALUE to ExtendScript","fail_closed_code":"NOISE_LAYER_BINDING_UNAVAILABLE","forbidden_fallback":"rendering with PF_LayerDefault_NONE"},"claim_boundary":"PF32, AE 26.3x87 Software, fixed 9x7 fixture, Zoom/Rotation x pattern/inverse Noise Layer x repeat2 only"}
+ return {"schema":"olmradialblur-type3-windows-ae-pilot/1","package_id":"olmradialblur_type3_windows_ae_pilot_20260811","target":{"ae_version":AE_VERSION,"ae_file_version":[25,2,0,131],"renderer":"Software","renderer_raw":1816,"depth":32,"output_template":OUTPUT_TEMPLATE},"plugin":{"member":"aex/OLMRadialBlur.aex","sha256":AEX_SHA256},"fixtures":{n:{"member":f"inputs/{n}.png","sha256":digest(b),"dimensions":[9,7],"alpha":"straight"}for n,b in files.items()},"rows":cases(),"process_contract":{"fresh_afterfx_per_row":True,"expected_rows":8,"all_ae_pids_unique":True},"noise_layer_binding":{"write_then_readback_required":True,"known_risk":"PF layer stream may expose PropertyValueType.NO_VALUE to ExtendScript","fail_closed_code":"NOISE_LAYER_BINDING_UNAVAILABLE","forbidden_fallback":"rendering with PF_LayerDefault_NONE"},"claim_boundary":"PF32, AE 25.2x131 Software, fixed 9x7 fixture, Zoom/Rotation x pattern/inverse Noise Layer x repeat2 only"}
 def validate_return(package_root:Path,return_root:Path)->dict:
  req=json.loads((package_root/"BATCH_CONTRACT.json").read_text(encoding="utf-8"));got=[]
  for exp in req["rows"]:
