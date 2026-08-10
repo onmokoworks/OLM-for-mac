@@ -1,0 +1,28 @@
+{
+  "schema": "olmkirakira.mode3-admission-boundary/1",
+  "status": "explicit_actual_aex_fixture_boundary",
+  "plugin": "OLMKiraKira",
+  "mode": 3,
+  "actual_aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+  "admitted_rotated_leaf_tuples": [
+    {"width": 11, "height": 6, "length": 3, "result": "raw_float32_exact", "word_count": 66},
+    {"width": 9, "height": 7, "length": 5, "result": "raw_float32_exact", "word_count": 63},
+    {"width": 13, "height": 5, "length": 7, "result": "raw_float32_exact", "word_count": 65},
+    {"width": 15, "height": 6, "length": 9, "result": "raw_float32_exact", "word_count": 90}
+  ],
+  "unsupported_tuple_behavior": "return the unblurred input ray; never substitute Mode 2",
+  "production_predicate": "olm::kirakira::mode3_gaussian_admitted(rw, rh, length)",
+  "focused_regression": "tools/emulation/test_olmkirakira_mode3_nonwhitelist_production_20260806.py",
+  "evidence": [
+    "refs/conformance/olmkirakira_mode3_gaussian_length3_11x6_crt_actual_aex_20260805.json",
+    "refs/conformance/olmkirakira_mode3_gaussian_crt_initialized_actual_aex_20260805.json",
+    "refs/conformance/olmkirakira_mode3_gaussian_length7_13x5_crt_actual_aex_20260805.json",
+    "refs/conformance/olmkirakira_mode3_gaussian_length9_15x6_crt_actual_aex_20260806.json"
+  ],
+  "not_proven": [
+    "arbitrary geometry for a witnessed length",
+    "a different length at a witnessed geometry",
+    "full native-AE Mode 3 rendering at practical resolution",
+    "geometry independence of the recovered Gaussian row primitive"
+  ]
+}

@@ -7,6 +7,16 @@
 
 namespace olm::kirakira {
 
+// Admission is intentionally a set of complete actual-AEX leaf fixtures, not
+// a claim that the recovered row primitive generalizes to arbitrary geometry.
+inline bool mode3_gaussian_admitted(int width, int height, int length)
+{
+    return (width == 11 && height == 6 && length == 3) ||
+           (width == 9  && height == 7 && length == 5) ||
+           (width == 13 && height == 5 && length == 7) ||
+           (width == 15 && height == 6 && length == 9);
+}
+
 // Recovered CV_32FC1 Gaussian primitive
 // (Size(0, 1), length * 0.5, borderType=BORDER_DEFAULT). Production use is
 // deliberately bounded to cases backed by an exact actual-AEX fixture.

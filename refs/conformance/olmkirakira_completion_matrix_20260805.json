@@ -49,14 +49,14 @@
       "Mode1": "covered_existing",
       "Mode2": "covered_ramp_and_typed",
       "Mode3": "covered_fixed_fixtures",
-      "Mode4": "covered_fixed_helper_and_current_mac_ae_pf32_case01"
+      "Mode4": "partial_existing"
     },
     "ui": {
       "draw_add_drag_delete_color": "synthetic_exact",
       "live_Drawbot_and_modal_delivery": "host_gate"
     }
   },
-  "remaining_max_gate": "none_for_frozen_release_matrix; retain explicit Mode4 geometry/parameter/depth evidence boundaries",
+  "remaining_max_gate": "natural full EffectMain owner-to-writer execution inside live AE",
   "schema": "olmkirakira-completion-matrix/1",
-  "status": "frozen_release_matrix_closed"
+  "status": "largest_ae_free_gap_closed"
 }

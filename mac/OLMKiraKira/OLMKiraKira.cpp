@@ -326,14 +326,14 @@ static std::vector<float> RotatedAxisBoxBlur(
 	}
 	temp_a = WarpGetRotDirect(temp_a, rw, rh, rw, rh, temp_cx, temp_cy, angle_deg);
 	std::vector<float> temp_b((size_t)rw * rh);
-	// Actual-AEX captures prove that the CRT-initialized Gaussian row body is
-	// independent of image geometry for these recovered kernel lengths.  Keep
-	// the length boundary explicit until another coefficient profile has an
-	// actual-AEX witness, but do not restrict the same row primitive to the
-	// four geometries used to recover it.
-	const bool actual_aex_mode3_length =
-		length == 3 || length == 5 || length == 7 || length == 9;
-	if (blur_mode == 3 && actual_aex_mode3_length) {
+	// Mode 3 is admitted only at complete actual-AEX leaf fixtures.  The row
+	// primitive is numerically exact there, but geometry independence has not
+	// been proved.  Unsupported Mode-3 tuples fail closed instead of silently
+	// substituting the Mode-2 box approximation.
+	const bool mode3_admitted =
+		olm::kirakira::mode3_gaussian_admitted(rw, rh, length);
+	if (blur_mode == 3 && !mode3_admitted) return input;
+	if (blur_mode == 3) {
 		olm::kirakira::HorizontalGaussian gaussian;
 		if (!gaussian.prepare_actual_aex_nonfused(length) ||
 			!gaussian.apply(temp_a.data(), rw, temp_b.data(), rw, rw, rh)) {
