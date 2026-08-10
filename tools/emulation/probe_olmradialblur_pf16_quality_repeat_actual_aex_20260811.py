@@ -183,7 +183,7 @@ def main() -> int:
     }
     REPORT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     print(json.dumps({"status": status, "cells": len(rows)}, sort_keys=True))
-    return 0 if status == "captured" else 1
+    return 0 if status == "exact" else 1
 
 
 if __name__ == "__main__":
