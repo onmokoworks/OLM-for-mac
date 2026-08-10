@@ -558,8 +558,8 @@ GlobalSetup(PF_InData *, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
 {
 	out_data->my_version = PF_VERSION(MAJOR_VERSION, MINOR_VERSION, BUG_VERSION,
 	                                  STAGE_VERSION, BUILD_VERSION);
-	out_data->out_flags  = 0x02000040;
-	out_data->out_flags2 = 0x08001400;
+	out_data->out_flags  = 0x06008040;
+	out_data->out_flags2 = 0x08001408;
 	return PF_Err_NONE;
 }
 
@@ -570,33 +570,43 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	PF_ParamDef def;
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x62;
 	PF_ADD_POPUP(GetStringPtr(StrID_BlurType_Param_Name),
 	             2, 1, GetStringPtr(StrID_BlurType_Choices),
 	             BLUR_TYPE_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x60;
 	PF_ADD_POINT(GetStringPtr(StrID_Center_Param_Name), 50, 50, FALSE,
 	             CENTER_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x20;
 	PF_ADD_TOPIC(GetStringPtr(StrID_OuterBlur_Param_Name), OUTER_BLUR_LABEL_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x1;
+	def.ui_flags = 0x40;
 	PF_ADD_SLIDER(GetStringPtr(StrID_OuterStrength_Param_Name),
 	              0, 2000, 0, 2000, 0,
 	              OUTER_STRENGTH_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x62;
 	PF_ADD_POPUP(GetStringPtr(StrID_OuterOffsetMode_Param_Name),
 	             3, 1, GetStringPtr(StrID_OffsetMode_Choices),
 	             OUTER_OFFSET_MODE_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x1;
+	def.ui_flags = 0x40;
 	PF_ADD_SLIDER(GetStringPtr(StrID_OuterOffset_Param_Name),
 	              0, 500, 0, 500, 0,
 	              OUTER_OFFSET_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x1;
+	def.ui_flags = 0x40;
 	PF_ADD_SLIDER(GetStringPtr(StrID_OuterEdgeFade_Param_Name),
 	              0, 100, 0, 100, 0,
 	              OUTER_EDGE_FADE_DISK_ID);
@@ -605,24 +615,32 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	PF_END_TOPIC(OUTER_BLANK_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x20;
 	PF_ADD_TOPIC(GetStringPtr(StrID_InnerBlur_Param_Name), INNER_BLUR_LABEL_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x1;
+	def.ui_flags = 0x40;
 	PF_ADD_SLIDER(GetStringPtr(StrID_InnerStrength_Param_Name),
 	              0, 2000, 0, 2000, 0,
 	              INNER_STRENGTH_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x62;
 	PF_ADD_POPUP(GetStringPtr(StrID_InnerOffsetMode_Param_Name),
 	             3, 1, GetStringPtr(StrID_OffsetMode_Choices),
 	             INNER_OFFSET_MODE_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x1;
+	def.ui_flags = 0x40;
 	PF_ADD_SLIDER(GetStringPtr(StrID_InnerOffset_Param_Name),
 	              0, 500, 0, 500, 0,
 	              INNER_OFFSET_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x1;
+	def.ui_flags = 0x40;
 	PF_ADD_SLIDER(GetStringPtr(StrID_InnerEdgeFade_Param_Name),
 	              0, 100, 0, 100, 0,
 	              INNER_EDGE_FADE_DISK_ID);
@@ -631,77 +649,132 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	PF_END_TOPIC(INNER_BLANK_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x62;
 	PF_ADD_CHECKBOX(GetStringPtr(StrID_RepeatBorder_Param_Name), "", TRUE, 0,
 	                REPEAT_BORDER_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x20;
 	PF_ADD_TOPIC(GetStringPtr(StrID_Ellipse_Param_Name), ELLIPSE_LABEL_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x40;
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_Ratio_Param_Name),
 	                     1.0, 5.0, 1.0, 5.0, 1.0,
-	                     PF_Precision_HUNDREDTHS, 0, 0,
+	                     PF_Precision_HUNDREDTHS, 0, 0x40,
 	                     RATIO_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x60;
 	PF_ADD_ANGLE(GetStringPtr(StrID_Angle_Param_Name), 0, ANGLE_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_END_TOPIC(ELLIPSE_BLANK_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x40;
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_Quality_Param_Name),
 	                     1.0, 50.0, 1.0, 50.0, 5.0,
-	                     PF_Precision_HUNDREDTHS, 0, 0,
+	                     PF_Precision_HUNDREDTHS, 0, 0x40,
 	                     QUALITY_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x40;
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_BrightnessGain_Param_Name),
 	                     0.0, 10.0, 0.0, 2.0, 1.0,
-	                     PF_Precision_TENTHS, 0, 0,
+	                     PF_Precision_TENTHS, 0, 0x40,
 	                     BRIGHTNESS_GAIN_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x40;
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_SizeVariation_Param_Name),
 	                     0.0, 100.0, 0.0, 100.0, 0.0,
-	                     PF_Precision_TENTHS, 0, 0,
+	                     PF_Precision_TENTHS, 0, 0x40,
 	                     SIZE_VARIATION_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x20;
 	PF_ADD_TOPIC(GetStringPtr(StrID_NoiseParams_Param_Name), NOISE_PARAMS_LABEL_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x40;
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_NoiseVariation_Param_Name),
 	                     0.0, 100.0, 0.0, 100.0, 0.0,
-	                     PF_Precision_TENTHS, 0, 0,
+	                     PF_Precision_TENTHS, 0, 0x40,
 	                     NOISE_VARIATION_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x62;
 	PF_ADD_POPUP(GetStringPtr(StrID_NoiseType_Param_Name),
 	             3, 1, GetStringPtr(StrID_NoiseType_Choices),
 	             NOISE_TYPE_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x62;
 	PF_ADD_LAYER(GetStringPtr(StrID_NoiseLayer_Param_Name), PF_LayerDefault_NONE, NOISE_LAYER_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x1;
+	def.ui_flags = 0x40;
 	PF_ADD_SLIDER(GetStringPtr(StrID_Seed_Param_Name),
 	              1, 1000, 1, 1000, 1,
 	              SEED_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x60;
 	PF_ADD_ANGLE(GetStringPtr(StrID_NoiseOffset_Param_Name), 0, NOISE_OFFSET_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
+	def.flags = 0x40;
 	PF_ADD_FLOAT_SLIDERX(GetStringPtr(StrID_Thickness_Param_Name),
 	                     1.0, 100.0, 1.0, 100.0, 10.0,
-	                     PF_Precision_HUNDREDTHS, 0, 0,
+	                     PF_Precision_HUNDREDTHS, 0, 0x40,
 	                     THICKNESS_DISK_ID);
 
 	AEFX_CLR_STRUCT(def);
 	PF_END_TOPIC(NOISE_BLANK_DISK_ID);
 
 	out_data->num_params = OLMRADIALBLUR_NUM_PARAMS;
+	return err;
+}
+
+static PF_Err
+UpdateParamsUI(PF_InData *in_data, PF_ParamDef *params[])
+{
+	if (!params) return PF_Err_NONE;
+	PF_Err err = PF_Err_NONE;
+	AEGP_SuiteHandler suites(in_data->pica_basicP);
+	PF_ParamUtilsSuite3 *param_utils = suites.ParamUtilsSuite3();
+
+	auto set_disabled = [&](A_long index, bool disabled) {
+		if (err || !params[index]) return;
+		PF_ParamDef copy = *params[index];
+		if (disabled) copy.ui_flags |= PF_PUI_DISABLED;
+		else copy.ui_flags &= ~PF_PUI_DISABLED;
+		err = param_utils->PF_UpdateParamUI(in_data->effect_ref, index, &copy);
+	};
+
+	const bool rotation = params[OLMRADIALBLUR_BLUR_TYPE] &&
+		params[OLMRADIALBLUR_BLUR_TYPE]->u.pd.value == 2;
+	const bool outer_strength_disabled = rotation &&
+		params[OLMRADIALBLUR_OUTER_OFFSET_MODE] &&
+		params[OLMRADIALBLUR_OUTER_OFFSET_MODE]->u.pd.value == 3;
+	const bool inner_strength_disabled = rotation &&
+		params[OLMRADIALBLUR_INNER_OFFSET_MODE] &&
+		params[OLMRADIALBLUR_INNER_OFFSET_MODE]->u.pd.value == 3;
+	set_disabled(OLMRADIALBLUR_OUTER_STRENGTH, outer_strength_disabled);
+	set_disabled(OLMRADIALBLUR_OUTER_OFFSET, !rotation);
+	set_disabled(OLMRADIALBLUR_OUTER_OFFSET_MODE, !rotation);
+	set_disabled(OLMRADIALBLUR_INNER_STRENGTH, inner_strength_disabled);
+	set_disabled(OLMRADIALBLUR_INNER_OFFSET, !rotation);
+	set_disabled(OLMRADIALBLUR_INNER_OFFSET_MODE, !rotation);
+
+	const bool layer_noise = params[OLMRADIALBLUR_NOISE_TYPE] &&
+		params[OLMRADIALBLUR_NOISE_TYPE]->u.pd.value == 3;
+	set_disabled(OLMRADIALBLUR_NOISE_LAYER, !layer_noise);
+	set_disabled(OLMRADIALBLUR_SEED, layer_noise);
+	set_disabled(OLMRADIALBLUR_NOISE_OFFSET, layer_noise);
+	set_disabled(OLMRADIALBLUR_THICKNESS, layer_noise);
 	return err;
 }
 
@@ -3152,6 +3225,15 @@ PF_Err EffectMain(PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data,
 			break;
 		case PF_Cmd_RENDER:
 			err = Render(in_data, out_data, params, output);
+			break;
+		case PF_Cmd_UPDATE_PARAMS_UI:
+			err = UpdateParamsUI(in_data, params);
+			break;
+		case PF_Cmd_USER_CHANGED_PARAM:
+		case PF_Cmd_EVENT:
+			// The pinned AEX handlers are no-ops for the current standard
+			// parameter surface. EVENT only dispatches for a legacy custom
+			// parameter type which none of the 30 definitions uses.
 			break;
 		case PF_Cmd_SMART_PRE_RENDER:
 			err = SmartPreRender(in_data, out_data, reinterpret_cast<PF_PreRenderExtra *>(extra));

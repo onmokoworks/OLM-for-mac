@@ -1,0 +1,98 @@
+{
+  "actual_aex": {
+    "dispatcher_entry": "0x180010540",
+    "executed": {
+      "event_null_extra_return": 0,
+      "user_changed_param_null_extra_return": 0
+    },
+    "methods": {
+      "event": "0x18000bc20",
+      "update_params_ui": "0x180003ca0",
+      "user_changed_param": "0x18000bc00"
+    },
+    "path": "plugins_2025/OLMRadialBlur.aex",
+    "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "update_machine_code_disk_ids": [
+      1,
+      4,
+      8,
+      20,
+      21,
+      22,
+      23,
+      24,
+      28,
+      29,
+      30,
+      31
+    ],
+    "vtable": "0x180021e98"
+  },
+  "boundary": "Actual USER_CHANGED_PARAM and null-EVENT execute under Unicorn; UPDATE_PARAMS_UI branch identity and disk-ID dependency graph are pinned from executable bytes, while its AE-owned stream traversal is validated in Mac production with a host-suite probe. Mac AE interaction remains a separate gate.",
+  "contract": {
+    "event": "no-op for the current standard parameter surface",
+    "other_noise": "disable Noise Layer; enable Seed/Offset/Thickness",
+    "rotation": "enable Offset Mode/Offset; disable Strength only for Offset Mode=3",
+    "source_layer_noise": "enable Noise Layer; disable Seed/Offset/Thickness",
+    "user_changed_param": "no-op",
+    "zoom": "disable both Offset Mode/Offset pairs"
+  },
+  "kind": "olmradialblur_ui_selectors_actual_aex_20260810",
+  "mac_production": {
+    "source": "mac/OLMRadialBlur/OLMRadialBlur.cpp",
+    "update_matrix": [
+      {
+        "case": "zoom_noise_random",
+        "disabled": [
+          6,
+          5,
+          12,
+          11,
+          26
+        ],
+        "enabled": [
+          4,
+          10,
+          27,
+          28,
+          29
+        ]
+      },
+      {
+        "case": "rotation_offsets",
+        "disabled": [
+          26
+        ],
+        "enabled": [
+          4,
+          6,
+          5,
+          10,
+          12,
+          11,
+          27,
+          28,
+          29
+        ]
+      },
+      {
+        "case": "rotation_source_layer",
+        "disabled": [
+          4,
+          10,
+          27,
+          28,
+          29
+        ],
+        "enabled": [
+          6,
+          5,
+          12,
+          11,
+          26
+        ]
+      }
+    ]
+  },
+  "status": "pass_bounded_selector_contract"
+}

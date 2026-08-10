@@ -169,37 +169,30 @@ def main() -> int:
     assert [public(row) for row in actual_rows] == [public(row) for row in mac_rows]
     actual_flag_pairs = [[row["flags"], row["ui_flags"]] for row in actual_rows]
     mac_flag_pairs = [[row["flags"], row["ui_flags"]] for row in mac_rows]
-    assert actual_flag_pairs != mac_flag_pairs
+    assert actual_flag_pairs == mac_flag_pairs
     assert actual_globals == {"my_version": 0x98000, "out_flags": 0x06008040, "out_flags2": 0x08001408}
-    assert mac_globals == {"my_version": 0x00098000, "out_flags": 0x02000040, "out_flags2": 0x08001400}
+    assert mac_globals == actual_globals
     report = {
         "status": "pass_bounded_public_ui_exact",
         "actual_aex": {"path": str(AEX.relative_to(ROOT)), "sha256": AEX_SHA256,
-                       "entry": hex(ENTRY), "globals": actual_globals, "parameters": actual_rows},
+                       "entry": hex(ENTRY), "globals": actual_globals,
+                       "parameters": actual_rows},
         "mac_production": {"source": "mac/OLMRadialBlur/OLMRadialBlur.cpp",
                            "globals": mac_globals, "parameters": mac_rows},
         "gates": {"actual_lifecycle_and_30_add_param_calls": True,
                   "order_disk_type_name_defaults_ranges_precision_exact": True,
                   "num_params_including_input_exact_31": True,
-                  "actual_flags_and_ui_flags_durably_recorded": True,
-                  "global_payloads_durably_recorded": True},
-        "intentional_boundary": {
-            "classification": "custom_ui_not_ported",
-            "actual_only_global_bits": ["PF_OutFlag_CUSTOM_UI", "PF_OutFlag_SEND_UPDATE_PARAMS_UI",
-                                        "PF_OutFlag2_PARAM_GROUP_START_COLLAPSED_FLAG"],
-            "parameter_flags_exact": False,
-            "reason": "The actual flags request supervised/custom UI selector behavior. The Mac EffectMain does not implement EVENT, USER_CHANGED_PARAM, or UPDATE_PARAMS_UI; advertising those bits without their handlers is unsafe.",
-            "user_visible_fix": "GROUP_START/GROUP_END and standard AE controls are exact; PF_Param_NO_DATA preview placeholders are absent.",
-        },
-        "claims_not_made": ["actual custom preview drawing on Mac", "EVENT selector equivalence",
-                            "USER_CHANGED_PARAM or UPDATE_PARAMS_UI equivalence"],
+                  "flags_and_ui_flags_exact": True,
+                  "global_payloads_exact": True,
+                  "no_custom_ui_registration_in_setup": True},
+        "boundary": "Setup/registration exactness only; dynamic UPDATE_PARAMS_UI is covered by its focused selector contract test.",
     }
     REPORT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     DOC.write_text("# OLM RadialBlur UI setup actual-AEX gate — 2026-08-06\n\n"
-                   "Status: **PASS (bounded public UI exact)**\n\n"
+                   "Status: **PASS (setup and registration exact)**\n\n"
                    "The pinned Windows AEX executes `GLOBAL_SETUP -> PARAMS_SETUP` under Unicorn and emits all 30 definitions. The current Mac source emits the same public order, disk IDs, types, names, defaults, ranges, and precision.\n\n"
-                   "The actual AEX's supervised/custom-UI flags and related global bits are recorded but intentionally not advertised on Mac until its EVENT/UPDATE handlers are ported. Group controls use native GROUP_START/GROUP_END, so the former unsupported NO_DATA preview controls are no longer present.\n")
-    print("PASS_OLMRADIALBLUR_UI_SETUP_ACTUAL_AEX rows=30 public_exact=1 custom_ui_boundary=1")
+                   "The Mac implementation now emits the exact global flags and per-parameter flags/UI flags. The actual setup does not call `PF_REGISTER_UI`; neither does Mac. Group controls remain native GROUP_START/GROUP_END, and no unsupported NO_DATA preview placeholder is present. Dynamic enable-state behavior is covered by the focused selector contract gate.\n")
+    print("PASS_OLMRADIALBLUR_UI_SETUP_ACTUAL_AEX rows=30 flags=exact register_ui=none")
     return 0
 
 
