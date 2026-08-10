@@ -537,6 +537,212 @@
       "optional_checkin_not_called": true,
       "actual_sha256": "d868657da1c0caf30a54e23897c4b6753032a6a648e62e67e6945022b4bf1aa9"
     },
+    "downsample_x_radius_2_01_matrix": {
+      "8": [
+        {
+          "depth": 8,
+          "dimensions": [
+            7,
+            1
+          ],
+          "requested_radius": 2.01,
+          "comp_width_to_output_width_ratio": 1,
+          "downsample_x": {
+            "num": 1,
+            "den": 1
+          },
+          "expected_effective_radius": 3,
+          "smart_pre_returned": true,
+          "smart_render_returned": true,
+          "frontier_and_preservation_exact": true,
+          "typed_bytes_padding_exact": true,
+          "headers_unchanged": true,
+          "guards_untouched": true,
+          "optional_checkin_not_called": true,
+          "actual_sha256": "ff5c07289d0f2a05c173a1a91ad8082c4c6038a8e44741ea5556e965c3bdbf19"
+        },
+        {
+          "depth": 8,
+          "dimensions": [
+            7,
+            1
+          ],
+          "requested_radius": 2.01,
+          "comp_width_to_output_width_ratio": 2,
+          "downsample_x": {
+            "num": 1,
+            "den": 2
+          },
+          "expected_effective_radius": 2,
+          "smart_pre_returned": true,
+          "smart_render_returned": true,
+          "frontier_and_preservation_exact": true,
+          "typed_bytes_padding_exact": true,
+          "headers_unchanged": true,
+          "guards_untouched": true,
+          "optional_checkin_not_called": true,
+          "actual_sha256": "ebfff58ffdacb3eefe308dc696145e46da67af395789e4963f5b728656320dd8"
+        },
+        {
+          "depth": 8,
+          "dimensions": [
+            7,
+            1
+          ],
+          "requested_radius": 2.01,
+          "comp_width_to_output_width_ratio": 0.5,
+          "downsample_x": {
+            "num": 2,
+            "den": 1
+          },
+          "expected_effective_radius": 5,
+          "smart_pre_returned": true,
+          "smart_render_returned": true,
+          "frontier_and_preservation_exact": true,
+          "typed_bytes_padding_exact": true,
+          "headers_unchanged": true,
+          "guards_untouched": true,
+          "optional_checkin_not_called": true,
+          "actual_sha256": "2eb9ddea53bf771e5e67dcf31afdc1ef5771a52a9148e1a690ef1ca150ed295d"
+        }
+      ],
+      "16": [
+        {
+          "depth": 16,
+          "dimensions": [
+            7,
+            1
+          ],
+          "requested_radius": 2.01,
+          "comp_width_to_output_width_ratio": 1,
+          "downsample_x": {
+            "num": 1,
+            "den": 1
+          },
+          "expected_effective_radius": 3,
+          "smart_pre_returned": true,
+          "smart_render_returned": true,
+          "frontier_and_preservation_exact": true,
+          "typed_bytes_padding_exact": true,
+          "headers_unchanged": true,
+          "guards_untouched": true,
+          "optional_checkin_not_called": true,
+          "actual_sha256": "91eac46c7d6fe0154f942552c7f68bccbc4c6154c9f11fbc1d33e414fb4d7eb6"
+        },
+        {
+          "depth": 16,
+          "dimensions": [
+            7,
+            1
+          ],
+          "requested_radius": 2.01,
+          "comp_width_to_output_width_ratio": 2,
+          "downsample_x": {
+            "num": 1,
+            "den": 2
+          },
+          "expected_effective_radius": 2,
+          "smart_pre_returned": true,
+          "smart_render_returned": true,
+          "frontier_and_preservation_exact": true,
+          "typed_bytes_padding_exact": true,
+          "headers_unchanged": true,
+          "guards_untouched": true,
+          "optional_checkin_not_called": true,
+          "actual_sha256": "d84d891406b7bb036c32b735adfd10d3e736d6a749d7a55756550f8b63e21d24"
+        },
+        {
+          "depth": 16,
+          "dimensions": [
+            7,
+            1
+          ],
+          "requested_radius": 2.01,
+          "comp_width_to_output_width_ratio": 0.5,
+          "downsample_x": {
+            "num": 2,
+            "den": 1
+          },
+          "expected_effective_radius": 5,
+          "smart_pre_returned": true,
+          "smart_render_returned": true,
+          "frontier_and_preservation_exact": true,
+          "typed_bytes_padding_exact": true,
+          "headers_unchanged": true,
+          "guards_untouched": true,
+          "optional_checkin_not_called": true,
+          "actual_sha256": "bc9ff5b260d3bd59845755a182a8d6053c89d039f1efb7898c1025ec4cd9ed4c"
+        }
+      ],
+      "32": [
+        {
+          "depth": 32,
+          "dimensions": [
+            7,
+            1
+          ],
+          "requested_radius": 2.01,
+          "comp_width_to_output_width_ratio": 1,
+          "downsample_x": {
+            "num": 1,
+            "den": 1
+          },
+          "expected_effective_radius": 3,
+          "smart_pre_returned": true,
+          "smart_render_returned": true,
+          "frontier_and_preservation_exact": true,
+          "typed_bytes_padding_exact": true,
+          "headers_unchanged": true,
+          "guards_untouched": true,
+          "optional_checkin_not_called": true,
+          "actual_sha256": "472da9941c6560566a0b287a10aee914ef569826d103f5c0629fb3a74cd09157"
+        },
+        {
+          "depth": 32,
+          "dimensions": [
+            7,
+            1
+          ],
+          "requested_radius": 2.01,
+          "comp_width_to_output_width_ratio": 2,
+          "downsample_x": {
+            "num": 1,
+            "den": 2
+          },
+          "expected_effective_radius": 2,
+          "smart_pre_returned": true,
+          "smart_render_returned": true,
+          "frontier_and_preservation_exact": true,
+          "typed_bytes_padding_exact": true,
+          "headers_unchanged": true,
+          "guards_untouched": true,
+          "optional_checkin_not_called": true,
+          "actual_sha256": "90eb18dfe30991e63dee468d83abb9c29940efefffb97eeea75459eba0dd2dc5"
+        },
+        {
+          "depth": 32,
+          "dimensions": [
+            7,
+            1
+          ],
+          "requested_radius": 2.01,
+          "comp_width_to_output_width_ratio": 0.5,
+          "downsample_x": {
+            "num": 2,
+            "den": 1
+          },
+          "expected_effective_radius": 5,
+          "smart_pre_returned": true,
+          "smart_render_returned": true,
+          "frontier_and_preservation_exact": true,
+          "typed_bytes_padding_exact": true,
+          "headers_unchanged": true,
+          "guards_untouched": true,
+          "optional_checkin_not_called": true,
+          "actual_sha256": "473a01b01283b9265c0d142810d6eee635298f83b036e12b610d8b7a607e27d1"
+        }
+      ]
+    },
     "empty_width_pf8_0x1": {
       "depth": 8,
       "dimensions": [
@@ -2179,6 +2385,1230 @@
       "version": 2
     },
     {
+      "kind": "smartpre_checkout_layer",
+      "args": [
+        "0x1234",
+        "0x0",
+        "0x0",
+        "0xf0fee10"
+      ],
+      "stack_args_5_to_8": [
+        "0x200000000",
+        "0x200000000",
+        "0x100000000",
+        "0xf0fee40"
+      ],
+      "checkout_result": "0xf0fee40",
+      "result_rect": [
+        10,
+        20,
+        13,
+        22
+      ],
+      "max_result_rect": [
+        9,
+        19,
+        14,
+        23
+      ]
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "PF8_ds1_1_checkout_layer_pixels"
+    },
+    {
+      "kind": "PF8_ds1_1_checkout_output"
+    },
+    {
+      "kind": "parameter_checkout_seam",
+      "radius": 2.01,
+      "output": "0xf0feee8"
+    },
+    {
+      "kind": "PF_COPY",
+      "visible_bytes": 28
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_alloc",
+      "size": 28,
+      "handle": "0x40002760"
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x40002760"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x40002760"
+    },
+    {
+      "kind": "handle_dispose",
+      "handle": "0x40002760"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "smartpre_checkout_layer",
+      "args": [
+        "0x1234",
+        "0x0",
+        "0x0",
+        "0xf0fee10"
+      ],
+      "stack_args_5_to_8": [
+        "0x200000000",
+        "0x200000000",
+        "0x100000000",
+        "0xf0fee40"
+      ],
+      "checkout_result": "0xf0fee40",
+      "result_rect": [
+        10,
+        20,
+        13,
+        22
+      ],
+      "max_result_rect": [
+        9,
+        19,
+        14,
+        23
+      ]
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "PF8_ds1_2_checkout_layer_pixels"
+    },
+    {
+      "kind": "PF8_ds1_2_checkout_output"
+    },
+    {
+      "kind": "parameter_checkout_seam",
+      "radius": 2.01,
+      "output": "0xf0feee8"
+    },
+    {
+      "kind": "PF_COPY",
+      "visible_bytes": 28
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_alloc",
+      "size": 28,
+      "handle": "0x40002910"
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x40002910"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x40002910"
+    },
+    {
+      "kind": "handle_dispose",
+      "handle": "0x40002910"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "smartpre_checkout_layer",
+      "args": [
+        "0x1234",
+        "0x0",
+        "0x0",
+        "0xf0fee10"
+      ],
+      "stack_args_5_to_8": [
+        "0x200000000",
+        "0x200000000",
+        "0x100000000",
+        "0xf0fee40"
+      ],
+      "checkout_result": "0xf0fee40",
+      "result_rect": [
+        10,
+        20,
+        13,
+        22
+      ],
+      "max_result_rect": [
+        9,
+        19,
+        14,
+        23
+      ]
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "PF8_ds2_1_checkout_layer_pixels"
+    },
+    {
+      "kind": "PF8_ds2_1_checkout_output"
+    },
+    {
+      "kind": "parameter_checkout_seam",
+      "radius": 2.01,
+      "output": "0xf0feee8"
+    },
+    {
+      "kind": "PF_COPY",
+      "visible_bytes": 28
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_alloc",
+      "size": 28,
+      "handle": "0x40002ac0"
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x40002ac0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x40002ac0"
+    },
+    {
+      "kind": "handle_dispose",
+      "handle": "0x40002ac0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "smartpre_checkout_layer",
+      "args": [
+        "0x1234",
+        "0x0",
+        "0x0",
+        "0xf0fee10"
+      ],
+      "stack_args_5_to_8": [
+        "0x200000000",
+        "0x200000000",
+        "0x100000000",
+        "0xf0fee40"
+      ],
+      "checkout_result": "0xf0fee40",
+      "result_rect": [
+        10,
+        20,
+        13,
+        22
+      ],
+      "max_result_rect": [
+        9,
+        19,
+        14,
+        23
+      ]
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "PF16_ds1_1_checkout_layer_pixels"
+    },
+    {
+      "kind": "PF16_ds1_1_checkout_output"
+    },
+    {
+      "kind": "parameter_checkout_seam",
+      "radius": 2.01,
+      "output": "0xf0feee8"
+    },
+    {
+      "kind": "PF_COPY",
+      "visible_bytes": 56
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_alloc",
+      "size": 28,
+      "handle": "0x40002cb0"
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x40002cb0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x40002cb0"
+    },
+    {
+      "kind": "handle_dispose",
+      "handle": "0x40002cb0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "smartpre_checkout_layer",
+      "args": [
+        "0x1234",
+        "0x0",
+        "0x0",
+        "0xf0fee10"
+      ],
+      "stack_args_5_to_8": [
+        "0x200000000",
+        "0x200000000",
+        "0x100000000",
+        "0xf0fee40"
+      ],
+      "checkout_result": "0xf0fee40",
+      "result_rect": [
+        10,
+        20,
+        13,
+        22
+      ],
+      "max_result_rect": [
+        9,
+        19,
+        14,
+        23
+      ]
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "PF16_ds1_2_checkout_layer_pixels"
+    },
+    {
+      "kind": "PF16_ds1_2_checkout_output"
+    },
+    {
+      "kind": "parameter_checkout_seam",
+      "radius": 2.01,
+      "output": "0xf0feee8"
+    },
+    {
+      "kind": "PF_COPY",
+      "visible_bytes": 56
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_alloc",
+      "size": 28,
+      "handle": "0x40002ea0"
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x40002ea0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x40002ea0"
+    },
+    {
+      "kind": "handle_dispose",
+      "handle": "0x40002ea0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "smartpre_checkout_layer",
+      "args": [
+        "0x1234",
+        "0x0",
+        "0x0",
+        "0xf0fee10"
+      ],
+      "stack_args_5_to_8": [
+        "0x200000000",
+        "0x200000000",
+        "0x100000000",
+        "0xf0fee40"
+      ],
+      "checkout_result": "0xf0fee40",
+      "result_rect": [
+        10,
+        20,
+        13,
+        22
+      ],
+      "max_result_rect": [
+        9,
+        19,
+        14,
+        23
+      ]
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "PF16_ds2_1_checkout_layer_pixels"
+    },
+    {
+      "kind": "PF16_ds2_1_checkout_output"
+    },
+    {
+      "kind": "parameter_checkout_seam",
+      "radius": 2.01,
+      "output": "0xf0feee8"
+    },
+    {
+      "kind": "PF_COPY",
+      "visible_bytes": 56
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_alloc",
+      "size": 28,
+      "handle": "0x40003090"
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x40003090"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x40003090"
+    },
+    {
+      "kind": "handle_dispose",
+      "handle": "0x40003090"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "smartpre_checkout_layer",
+      "args": [
+        "0x1234",
+        "0x0",
+        "0x0",
+        "0xf0fee10"
+      ],
+      "stack_args_5_to_8": [
+        "0x200000000",
+        "0x200000000",
+        "0x100000000",
+        "0xf0fee40"
+      ],
+      "checkout_result": "0xf0fee40",
+      "result_rect": [
+        10,
+        20,
+        13,
+        22
+      ],
+      "max_result_rect": [
+        9,
+        19,
+        14,
+        23
+      ]
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "PF32_ds1_1_checkout_layer_pixels"
+    },
+    {
+      "kind": "PF32_ds1_1_checkout_output"
+    },
+    {
+      "kind": "parameter_checkout_seam",
+      "radius": 2.01,
+      "output": "0xf0feee8"
+    },
+    {
+      "kind": "PF_COPY",
+      "visible_bytes": 112
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_alloc",
+      "size": 28,
+      "handle": "0x400032e0"
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x400032e0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x400032e0"
+    },
+    {
+      "kind": "handle_dispose",
+      "handle": "0x400032e0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "smartpre_checkout_layer",
+      "args": [
+        "0x1234",
+        "0x0",
+        "0x0",
+        "0xf0fee10"
+      ],
+      "stack_args_5_to_8": [
+        "0x200000000",
+        "0x200000000",
+        "0x100000000",
+        "0xf0fee40"
+      ],
+      "checkout_result": "0xf0fee40",
+      "result_rect": [
+        10,
+        20,
+        13,
+        22
+      ],
+      "max_result_rect": [
+        9,
+        19,
+        14,
+        23
+      ]
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "PF32_ds1_2_checkout_layer_pixels"
+    },
+    {
+      "kind": "PF32_ds1_2_checkout_output"
+    },
+    {
+      "kind": "parameter_checkout_seam",
+      "radius": 2.01,
+      "output": "0xf0feee8"
+    },
+    {
+      "kind": "PF_COPY",
+      "visible_bytes": 112
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_alloc",
+      "size": 28,
+      "handle": "0x40003530"
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x40003530"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x40003530"
+    },
+    {
+      "kind": "handle_dispose",
+      "handle": "0x40003530"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "smartpre_checkout_layer",
+      "args": [
+        "0x1234",
+        "0x0",
+        "0x0",
+        "0xf0fee10"
+      ],
+      "stack_args_5_to_8": [
+        "0x200000000",
+        "0x200000000",
+        "0x100000000",
+        "0xf0fee40"
+      ],
+      "checkout_result": "0xf0fee40",
+      "result_rect": [
+        10,
+        20,
+        13,
+        22
+      ],
+      "max_result_rect": [
+        9,
+        19,
+        14,
+        23
+      ]
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "PF32_ds2_1_checkout_layer_pixels"
+    },
+    {
+      "kind": "PF32_ds2_1_checkout_output"
+    },
+    {
+      "kind": "parameter_checkout_seam",
+      "radius": 2.01,
+      "output": "0xf0feee8"
+    },
+    {
+      "kind": "PF_COPY",
+      "visible_bytes": 112
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_alloc",
+      "size": 28,
+      "handle": "0x40003780"
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x40003780"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x40003780"
+    },
+    {
+      "kind": "handle_dispose",
+      "handle": "0x40003780"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_unlock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "acquire_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
+      "kind": "handle_lock",
+      "handle": "0x400002c0"
+    },
+    {
+      "kind": "release_suite",
+      "name": "PF Handle Suite",
+      "version": 2
+    },
+    {
       "kind": "PF8_empty_checkout_layer_pixels"
     },
     {
@@ -2201,11 +3631,11 @@
     {
       "kind": "handle_alloc",
       "size": 1,
-      "handle": "0x40002720"
+      "handle": "0x400038f0"
     },
     {
       "kind": "handle_lock",
-      "handle": "0x40002720"
+      "handle": "0x400038f0"
     },
     {
       "kind": "release_suite",
@@ -2219,11 +3649,11 @@
     },
     {
       "kind": "handle_unlock",
-      "handle": "0x40002720"
+      "handle": "0x400038f0"
     },
     {
       "kind": "handle_dispose",
-      "handle": "0x40002720"
+      "handle": "0x400038f0"
     },
     {
       "kind": "release_suite",
@@ -2281,11 +3711,11 @@
     {
       "kind": "handle_alloc",
       "size": 1,
-      "handle": "0x40002880"
+      "handle": "0x40003a50"
     },
     {
       "kind": "handle_lock",
-      "handle": "0x40002880"
+      "handle": "0x40003a50"
     },
     {
       "kind": "release_suite",
@@ -2299,11 +3729,11 @@
     },
     {
       "kind": "handle_unlock",
-      "handle": "0x40002880"
+      "handle": "0x40003a50"
     },
     {
       "kind": "handle_dispose",
-      "handle": "0x40002880"
+      "handle": "0x40003a50"
     },
     {
       "kind": "release_suite",
@@ -2389,11 +3819,11 @@
     {
       "kind": "handle_alloc",
       "size": 1,
-      "handle": "0x40002f30"
+      "handle": "0x40004100"
     },
     {
       "kind": "handle_lock",
-      "handle": "0x40002f30"
+      "handle": "0x40004100"
     },
     {
       "kind": "release_suite",
@@ -2407,11 +3837,11 @@
     },
     {
       "kind": "handle_unlock",
-      "handle": "0x40002f30"
+      "handle": "0x40004100"
     },
     {
       "kind": "handle_dispose",
-      "handle": "0x40002f30"
+      "handle": "0x40004100"
     },
     {
       "kind": "release_suite",
@@ -2464,17 +3894,17 @@
     "fractional_radius_2_5_pf32_exact": true,
     "fractional_radius_3_25_pf16_exact": true,
     "handle_not_disposed_before_smartpre": true,
-    "empty_height_pf16_exact": true,
+    "downsample_radius_matrix_all_depths_exact": true,
     "empty_width_pf8_exact": true,
+    "empty_height_pf16_exact": true,
     "empty_both_pf32_exact": true
   },
   "not_proven": [
     "AE host execution",
     "whether real AE passes extent/origin metadata at this probe-local +0x30 layout",
-    "composition-width scaling because the exact actual-AEX host metadata field/layout is not established",
     "legacy PF_Cmd_RENDER: probe ABI returned without acquiring PF World Suite or producing the expected output"
   ],
-  "claim_boundary": "actual-AEX SmartRender entrypoint with bounded typed partial and all-depth empty-axis geometry under probe-local suite seams",
+  "claim_boundary": "actual-AEX SmartPreRender-to-SmartRender entrypoint with bounded typed partial/empty geometry and downsample_x ratios 1, 1/2, and 2 at radius 2.01 for PF8/PF16/PF32 under probe-local suite seams",
   "not_proven_observations": {
     "legacy_render_0x0b": {
       "command": "0x0b PF_Cmd_RENDER",

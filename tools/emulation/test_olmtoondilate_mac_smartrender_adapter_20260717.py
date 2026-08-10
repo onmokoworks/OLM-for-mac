@@ -37,7 +37,7 @@ ALPHA0_ALL_DEPTHS_REPORT_SHA256 = "d3b19edeb54e88614d8cdf21f92c132dcde559f49f9f1
 NONPOSITIVE_REPORT = ROOT / "refs/conformance/olmtoondilate_nonpositive_radius_all_depths_20260805.json"
 NONPOSITIVE_REPORT_SHA256 = "db3ff858e53101827b4e6369aaa733350b44c14ce4f3130b97f506ed90366d0c"
 ACTUAL_ENTRY_REPORT = ROOT / "refs/conformance/olmtoondilate_actual_aex_sequence_smartpre_20260805.json"
-ACTUAL_ENTRY_REPORT_SHA256 = "4c96cae5eb9dde9761dd7b461dfe7c364644797a15534b144262bbf746ed01ec"
+ACTUAL_ENTRY_REPORT_SHA256 = "59371b8981e061762d9abe767bf1cca56fafb7e18131725113e43f507c96d05e"
 AEX = ROOT / "aex/OLMToonDilate/Plugins/64/2025/OLMToonDilate.aex"
 AEX_SHA256 = "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
 
@@ -108,7 +108,7 @@ def verify_fixture_identity() -> None:
     if nonpositive.get("status") != "PASS_NONPOSITIVE_RADIUS_ALL_DEPTHS" or not all(nonpositive.get("gates", {}).values()):
         raise RuntimeError("BLOCKED_FAIL_CLOSED: nonpositive-radius fixture is not exact")
     actual_entry = json.loads(ACTUAL_ENTRY_REPORT.read_text(encoding="utf-8"))
-    if actual_entry.get("status") != "PASS_SEQUENCE_AND_SMARTPRE_ENTRY" or not all(actual_entry.get("gates", {}).get(key) for key in ("radius2_4x2_all_depths_exact", "radius3_pf8_5x1_exact", "radius3_pf16_5x1_exact", "radius3_pf32_5x1_exact", "radius4_pf8_6x1_exact", "radius4_pf16_6x1_exact", "radius4_pf32_6x1_exact", "fractional_radius_2_01_pf8_exact", "fractional_radius_2_5_pf32_exact", "fractional_radius_3_25_pf16_exact", "empty_width_pf8_exact", "empty_height_pf16_exact", "empty_both_pf32_exact")):
+    if actual_entry.get("status") != "PASS_SEQUENCE_AND_SMARTPRE_ENTRY" or not all(actual_entry.get("gates", {}).get(key) for key in ("radius2_4x2_all_depths_exact", "radius3_pf8_5x1_exact", "radius3_pf16_5x1_exact", "radius3_pf32_5x1_exact", "radius4_pf8_6x1_exact", "radius4_pf16_6x1_exact", "radius4_pf32_6x1_exact", "fractional_radius_2_01_pf8_exact", "fractional_radius_2_5_pf32_exact", "fractional_radius_3_25_pf16_exact", "downsample_radius_matrix_all_depths_exact", "empty_width_pf8_exact", "empty_height_pf16_exact", "empty_both_pf32_exact")):
         raise RuntimeError("BLOCKED_FAIL_CLOSED: actual entrypoint radius-2/3 fixture is not exact")
 
 
@@ -213,12 +213,20 @@ void fill(std::vector<std::uint8_t> &v, int pixel_size) {{
     }}
 }}
 bool padding(const std::vector<std::uint8_t> &v, int rowbytes, std::uint8_t value) {{ for (int y = 0; y < HEIGHT; ++y) for (int i = rowbytes - PADDING; i < rowbytes; ++i) if (v[y * rowbytes + i] != value) return false; return true; }}
-struct State {{ PF_EffectWorld *input; PF_EffectWorld *output; int pre_checkout = 0, pixels_checkout = 0, output_checkout = 0, checkin = 0; bool preserve = false; int width = WIDTH, height = HEIGHT, result_left = 0, result_top = 0; }};
+struct State {{ PF_EffectWorld *input; PF_EffectWorld *output; int pre_checkout = 0, pixels_checkout = 0, output_checkout = 0, checkin = 0; bool preserve = false; int width = WIDTH, height = HEIGHT, result_left = 0, result_top = 0, ref_width = 0; }};
 State *state(PF_ProgPtr p) {{ return static_cast<State *>(p); }}
-PF_Err pre_checkout(PF_ProgPtr p, A_long, A_long, PF_RenderRequest *req, A_long, A_long, A_long, PF_CheckoutResult *out) {{ auto *s = state(p); ++s->pre_checkout; s->preserve = req->preserve_rgb_of_zero_alpha; out->result_rect = {{s->result_left, s->result_top, s->result_left+s->width, s->result_top+s->height}}; out->max_result_rect = out->result_rect; out->ref_width = s->width; return PF_Err_NONE; }}
+PF_Err pre_checkout(PF_ProgPtr p, A_long, A_long, PF_RenderRequest *req, A_long, A_long, A_long, PF_CheckoutResult *out) {{ auto *s = state(p); ++s->pre_checkout; s->preserve = req->preserve_rgb_of_zero_alpha; out->result_rect = {{s->result_left, s->result_top, s->result_left+s->width, s->result_top+s->height}}; out->max_result_rect = out->result_rect; out->ref_width = s->ref_width > 0 ? s->ref_width : s->width; return PF_Err_NONE; }}
 PF_Err pixels_checkout(PF_ProgPtr p, A_long, PF_EffectWorld **out) {{ auto *s = state(p); ++s->pixels_checkout; *out = s->input; return PF_Err_NONE; }}
 PF_Err output_checkout(PF_ProgPtr p, PF_EffectWorld **out) {{ auto *s = state(p); ++s->output_checkout; *out = s->output; return PF_Err_NONE; }}
 PF_Err checkin(PF_ProgPtr p, A_long) {{ ++state(p)->checkin; return PF_Err_NONE; }}
+template <typename Pixel> bool downsample_radius_case(short depth, int ref_width, int effective_radius) {{
+    constexpr int W=6,H=1;const int pixel_size=sizeof(Pixel),rowbytes=W*pixel_size+12;std::vector<std::uint8_t>ib(rowbytes,0xB4),ob(rowbytes,OUT_PAD);Pixel seed{{}};
+    if constexpr(sizeof(Pixel)==4)seed=Pixel{{255,29,53,101}};else if constexpr(sizeof(Pixel)==8)seed=Pixel{{32768,2901,5302,10103}};else seed=Pixel{{1.0f,.29f,.53f,.101f}};
+    for(int x=0;x<W;++x){{Pixel p{{}};if(x==0)p=seed;else if constexpr(sizeof(Pixel)==4)p=Pixel{{(std::uint8_t)(32+x),(std::uint8_t)(31+x),(std::uint8_t)(41+x),(std::uint8_t)(51+x)}};else if constexpr(sizeof(Pixel)==8)p=Pixel{{(std::uint16_t)(4096+x),(std::uint16_t)(3101+x),(std::uint16_t)(4102+x),(std::uint16_t)(5103+x)}};else p=Pixel{{.125f+x/100.0f,.31f+x/100.0f,.41f+x/100.0f,.51f+x/100.0f}};std::memcpy(ib.data()+x*pixel_size,&p,pixel_size);}}
+    PF_EffectWorld input{{ib.data(),rowbytes,W,H,depth,{{11,13,18,14}}}},output{{ob.data(),rowbytes,W,H,depth,{{21,23,28,24}}}};State st{{&input,&output}};st.width=W;st.height=H;st.ref_width=ref_width;PF_InData in{{&st,0,1,1,nullptr}};PF_OutData out{{}};PF_RenderRequest req{{false}};PF_PreRenderInput pi{{req}};PF_PreRenderOutput po{{}};PF_PreRenderCallbacks pcb{{pre_checkout}};PF_PreRenderExtra pre{{&pi,&po,&pcb}};
+    if(EffectMain(PF_Cmd_SMART_PRE_RENDER,&in,&out,nullptr,nullptr,&pre)!=PF_Err_NONE)return false;PF_SmartRenderInput ri{{depth,po.pre_render_data}};PF_SmartRenderCallbacks rcb{{pixels_checkout,output_checkout,checkin}};PF_SmartRenderExtra render{{&ri,&rcb}};g_radius=2.01;bool ok=EffectMain(PF_Cmd_SMART_RENDER,&in,&out,nullptr,nullptr,&render)==PF_Err_NONE;
+    for(int x=0;x<W;++x){{const std::uint8_t *expected=x<=effective_radius?reinterpret_cast<const std::uint8_t*>(&seed):ib.data()+x*pixel_size;ok=ok&&std::memcmp(ob.data()+x*pixel_size,expected,pixel_size)==0;}}for(int i=W*pixel_size;i<rowbytes;++i)ok=ok&&ob[i]==OUT_PAD;ok=ok&&st.pre_checkout==1&&st.pixels_checkout==1&&st.output_checkout==1&&st.checkin==1;if(po.delete_pre_render_data_func)po.delete_pre_render_data_func(po.pre_render_data);return ok;
+}}
 template <typename Pixel> bool positive_radius_case(short depth, double radius) {{
     const int pixel_size = sizeof(Pixel), rowbytes = WIDTH * pixel_size + PADDING;
     std::vector<std::uint8_t> input_bytes(rowbytes * HEIGHT, PAD), output_bytes(rowbytes * HEIGHT, OUT_PAD);
@@ -477,11 +485,12 @@ int main() {{
     bool pf8Fractional=pf8_fractional_radius_2_01_5x1_case();
     bool pf32Fractional=pf32_fractional_radius_2_5_5x1_case();
     bool pf16Fractional=pf16_fractional_radius_3_25_6x1_case();
+    bool downsampleMatrix=downsample_radius_case<PF_Pixel8>(8,6,3)&&downsample_radius_case<PF_Pixel8>(8,12,2)&&downsample_radius_case<PF_Pixel8>(8,3,5)&&downsample_radius_case<PF_Pixel16>(16,6,3)&&downsample_radius_case<PF_Pixel16>(16,12,2)&&downsample_radius_case<PF_Pixel16>(16,3,5)&&downsample_radius_case<PF_PixelFloat>(32,6,3)&&downsample_radius_case<PF_PixelFloat>(32,12,2)&&downsample_radius_case<PF_PixelFloat>(32,3,5);
     bool pf8Empty=pf8_empty_width_case();
     bool pf16EmptyHeight=pf16_empty_height_case();
     bool pf32EmptyBoth=pf32_empty_both_case();
     bool malformedWorldGuards=malformed_world_guard_cases();
-    if (!(positive8 && positive16 && positive32 && positive8Radius2 && positive16Radius2 && positive32Radius2 && pf8Radius3Tie && pf16Radius3Tie && pf32Radius3Tie && pf8Corner && pf16Corner && pf32Corner && pf32Alpha0 && nonpositive && nonzeroExtent && nonzeroExtent16 && nonzeroExtent32 && mixed3x2 && mixedRadius2 && pf32Radius3Partial && pf16Radius3Partial && pf8Radius3Partial && pf8Radius4Partial && pf16Radius4Partial && pf32Radius4Partial && pf8Fractional && pf32Fractional && pf16Fractional && pf8Empty && pf16EmptyHeight && pf32EmptyBoth && malformedWorldGuards)) return 60;
+    if (!(positive8 && positive16 && positive32 && positive8Radius2 && positive16Radius2 && positive32Radius2 && pf8Radius3Tie && pf16Radius3Tie && pf32Radius3Tie && pf8Corner && pf16Corner && pf32Corner && pf32Alpha0 && nonpositive && nonzeroExtent && nonzeroExtent16 && nonzeroExtent32 && mixed3x2 && mixedRadius2 && pf32Radius3Partial && pf16Radius3Partial && pf8Radius3Partial && pf8Radius4Partial && pf16Radius4Partial && pf32Radius4Partial && pf8Fractional && pf32Fractional && pf16Fractional && downsampleMatrix && pf8Empty && pf16EmptyHeight && pf32EmptyBoth && malformedWorldGuards)) return 60;
     std::printf("],\\\"positive_radius_fixture\\\":{{\\\"radius\\\":1,\\\"PF8_exact\\\":true,\\\"PF16_exact\\\":true,\\\"PF32_exact\\\":true}},\\\"PF8_radius2_shape_fixture\\\":{{\\\"dimensions\\\":[5,3],\\\"radius\\\":2,\\\"visible_argb_exact\\\":true}},\\\"PF16_radius2_shape_fixture\\\":{{\\\"dimensions\\\":[5,3],\\\"radius\\\":2,\\\"visible_exact_4_word\\\":true}},\\\"PF32_radius2_shape_fixture\\\":{{\\\"dimensions\\\":[5,3],\\\"radius\\\":2,\\\"visible_exact_4_word\\\":true}},\\\"PF8_radius3_boundary_tie_fixture\\\":{{\\\"dimensions\\\":[7,3],\\\"radius\\\":3,\\\"scan_asymmetric_tie_exact\\\":true}},\\\"PF16_radius3_boundary_tie_fixture\\\":{{\\\"dimensions\\\":[7,3],\\\"radius\\\":3,\\\"scan_asymmetric_tie_exact\\\":true}},\\\"PF32_radius3_boundary_tie_fixture\\\":{{\\\"dimensions\\\":[7,3],\\\"radius\\\":3,\\\"raw_float32_exact\\\":true}}}}\\n"); return 0;
 }}
 ''', encoding="utf-8")
@@ -530,6 +539,7 @@ def main() -> int:
     report["pf8_fractional_radius_2_01_5x1_production"] = {"requested_radius": 2.01, "effective_radius": 3, "dimensions": [5, 1], "rowbytes": 28, "ceil_frontier_3_propagated": True, "distance_4_raw_uint8_preserved": True, "nonzero_extents_padding_exact": True}
     report["pf32_fractional_radius_2_5_5x1_production"] = {"requested_radius": 2.5, "effective_radius": 3, "dimensions": [5, 1], "rowbytes": 88, "ceil_frontier_3_propagated": True, "distance_4_raw_float32_preserved": True, "nonzero_extents_padding_exact": True}
     report["pf16_fractional_radius_3_25_6x1_production"] = {"requested_radius": 3.25, "effective_radius": 4, "dimensions": [6, 1], "rowbytes": 56, "ceil_frontier_4_propagated": True, "distance_5_raw_uint16_preserved": True, "nonzero_extents_padding_exact": True}
+    report["downsample_radius_2_01_production"] = {"dimensions": [6, 1], "comp_width_to_output_width_ratios": [1, 2, 0.5], "effective_radii": [3, 2, 5], "PF8_exact": True, "PF16_exact": True, "PF32_exact": True, "smartpre_ref_width_contract": True}
     report["pf8_empty_width_production"] = {"dimensions": [0, 1], "radius": 4, "rowbytes": 8, "empty_output_padding_unchanged": True, "nonzero_origin_zero_width_extents_unchanged": True}
     report["pf16_empty_height_production"] = {"dimensions": [1, 0], "radius": 4, "rowbytes": 16, "empty_output_backing_unchanged": True, "nonzero_origin_zero_height_extents_unchanged": True}
     report["pf32_empty_both_production"] = {"dimensions": [0, 0], "radius": 4, "rowbytes": 24, "empty_output_backing_unchanged": True, "nonzero_origin_zero_size_extents_unchanged": True}
