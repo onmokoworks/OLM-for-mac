@@ -53,6 +53,7 @@ def compile_probe(directory: Path) -> Path:
         str(ROOT / "mac/OLMBlur/OLMBlur.cpp").replace("\\", "\\\\").replace('"', '\\"')),
         encoding="utf-8")
     command = [compiler, "-std=c++17", "-arch", "arm64", "-O2",
+               "-DOLMBLUR_HOSTLESS_RENDER_HARNESS=1",
                "-fno-fast-math", "-ffp-contract=off", "-isysroot", sdk,
                "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
                "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"),

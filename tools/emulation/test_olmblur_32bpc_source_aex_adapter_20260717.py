@@ -186,7 +186,8 @@ def compile_probe(directory: Path) -> Path:
         ),
         encoding="utf-8",
     )
-    command = [compiler, "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math", "-ffp-contract=off",
+    command = [compiler, "-std=c++17", "-arch", "arm64", "-O2",
+               "-DOLMBLUR_HOSTLESS_RENDER_HARNESS=1", "-fno-fast-math", "-ffp-contract=off",
                "-isysroot", sdk.stdout.strip(), "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
                "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"), "-I", str(ROOT / "core"),
                str(source), str(ROOT / "core/olmblur_helper.cpp"), str(ROOT / "core/olmblur_fullworker_helper.cpp"),

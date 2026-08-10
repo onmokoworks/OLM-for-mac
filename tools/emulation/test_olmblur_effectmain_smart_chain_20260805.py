@@ -115,7 +115,8 @@ def main() -> int:
             encoding="utf-8")
         executable = directory / "probe"
         sdk = subprocess.run(["xcrun", "--show-sdk-path"], capture_output=True, text=True, check=True).stdout.strip()
-        compile_command = ["clang++", "-std=c++17", "-arch", "arm64", "-O2", "-fno-fast-math",
+        compile_command = ["clang++", "-std=c++17", "-arch", "arm64", "-O2",
+                           "-DOLMBLUR_HOSTLESS_RENDER_HARNESS=1", "-fno-fast-math",
                            "-ffp-contract=off", "-isysroot", sdk, "-I", str(ROOT / "Headers"),
                            "-I", str(ROOT / "Headers/SP"), "-I", str(ROOT / "Util"),
                            "-I", str(ROOT / "Resources"), "-I", str(ROOT / "core"), str(source),

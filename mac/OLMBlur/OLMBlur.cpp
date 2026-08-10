@@ -80,6 +80,7 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	return err;
 }
 
+#if !defined(OLMBLUR_HOSTLESS_RENDER_HARNESS)
 static PF_Err
 UpdateParamsUI(PF_InData *in_data)
 {
@@ -113,6 +114,7 @@ UpdateParamsUI(PF_InData *in_data)
 	}
 	return err;
 }
+#endif
 
 struct BlurParams {
 	float blur_amount;
@@ -1479,8 +1481,10 @@ EffectMain(PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data,
 			err = GlobalSetup(in_data, out_data, params, output); break;
 		case PF_Cmd_PARAMS_SETUP:
 			err = ParamsSetup(in_data, out_data, params, output); break;
+#if !defined(OLMBLUR_HOSTLESS_RENDER_HARNESS)
 		case PF_Cmd_UPDATE_PARAMS_UI:
 			err = UpdateParamsUI(in_data); break;
+#endif
 		case PF_Cmd_RENDER:
 			err = Render(in_data, out_data, params, output); break;
 		case PF_Cmd_SMART_PRE_RENDER:
