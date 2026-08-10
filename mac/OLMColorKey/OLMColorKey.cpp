@@ -1196,13 +1196,27 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	if (info.edge_thin_amount < 0.0) {
 		std::vector<u_char> nonmatch((size_t)w * (size_t)h, 0);
 		for (A_long i = 0; i < w * h; ++i) nonmatch[i] = matched[i] ? 0 : 1;
-		std::vector<float> dist = MatteDistanceTo(nonmatch, w, h, info.edge_thin_distance_type);
-		float limit = (float)std::fabs(info.edge_thin_amount) +
-		              ((info.edge_thin_distance_type == 0 || info.edge_thin_distance_type == 2) ? 1.0f : 0.0f);
-		for (A_long i = 0; i < w * h; ++i) matched[i] = (matched[i] && dist[i] > limit) ? 1 : 0;
+		// The native negative Edge Thin path uses its boundary/chessboard plane
+		// irrespective of the popup selection.  Integer planes encode boundary
+		// depth as 0, 255, 510, ... while PF32 uses the equivalent pixel-domain
+		// distance with the boundary at one.
+		const A_long thin_distance_type = 1;
+		std::vector<float> dist = MatteDistanceTo(nonmatch, w, h, thin_distance_type);
+		const float amount = (float)std::fabs(info.edge_thin_amount);
+		for (A_long i = 0; i < w * h; ++i) {
+			const float native_dist = OLMCKPixelTraits<PixelT>::is_32bpc()
+			    ? dist[i] : std::max(0.0f, dist[i] - 1.0f) * 255.0f;
+			matched[i] = (matched[i] && native_dist > amount) ? 1 : 0;
+		}
 	} else if (info.edge_thin_amount > 0.0) {
 		std::vector<float> dist = MatteDistanceTo(matched, w, h, info.edge_thin_distance_type);
-		for (A_long i = 0; i < w * h; ++i) matched[i] = (matched[i] || dist[i] <= info.edge_thin_amount) ? 1 : 0;
+		// PF8/PF16 store the positive expansion plane in 255 metric units;
+		// PF32 stores pixel distances.  The same typed-plane distinction also
+		// appears in Edge Blur and is observable before final quantization here.
+		const float distance_scale = OLMCKPixelTraits<PixelT>::is_32bpc() ? 1.0f : 255.0f;
+		for (A_long i = 0; i < w * h; ++i) {
+			matched[i] = (matched[i] || dist[i] * distance_scale <= info.edge_thin_amount) ? 1 : 0;
+		}
 	}
 
 	std::vector<u_char> keep_mask((size_t)w * (size_t)h, 0);
