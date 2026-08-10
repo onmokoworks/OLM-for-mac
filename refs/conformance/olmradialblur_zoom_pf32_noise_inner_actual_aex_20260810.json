@@ -1,0 +1,61 @@
+{
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "boundary": "Noise exact only for 9x7 PF32 neutral outer tuple. Inner Strength is captured but remains fail-closed pending a production two-sided producer. No 32x18/general geometry claim.",
+  "inner_boundary": [
+    {
+      "actual_hashes": {
+        "output": "5135f9bb759a527a3c7b5ccd89b65d1465f52bc47e919d1973df228205097dc0",
+        "post_blur": "60801556dad7f60c47c191ffce1158aae2d3f4fb78a4c54e0bca6c99063f4787",
+        "pre_blur": "65468046f663d30ac544be430c965ee2c305193561e09d4bf9753747e4cb24ff"
+      },
+      "actual_output_differs_inner0": true,
+      "inner_strength": 50.0,
+      "production_fail_closed": true
+    },
+    {
+      "actual_hashes": {
+        "output": "666f9b593468c79d46d7fb2fe2b70ea956fcc99d006c312b4e3e8f9d76386907",
+        "post_blur": "b1944cbc86180211c1c4348f46e95c2e649c36592b4610db65586f978a65cca6",
+        "pre_blur": "65468046f663d30ac544be430c965ee2c305193561e09d4bf9753747e4cb24ff"
+      },
+      "actual_output_differs_inner0": true,
+      "inner_strength": 100.0,
+      "production_fail_closed": true
+    }
+  ],
+  "kind": "olmradialblur_zoom_pf32_noise_inner_actual_aex_20260810",
+  "noise_family": [
+    {
+      "exact": true,
+      "hashes": {
+        "output": "f6c99a9da495437861ef06d96b6188f52c783d41977885b475fabfa89c8ea1a7",
+        "post_blur": "6d6a0d7c753e10b7760ded8c2723bc6ba95b8eca1df127e3fa7b03a4f4c8bbdd",
+        "pre_blur": "65468046f663d30ac544be430c965ee2c305193561e09d4bf9753747e4cb24ff"
+      },
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "noise_variation": 25.0,
+      "output_differs_noise0": true
+    },
+    {
+      "exact": true,
+      "hashes": {
+        "output": "9c1d8cbf75bd5558cc5820e26c344a83cb56fb38524ae31549342f00d1530b1c",
+        "post_blur": "d7b487dfc3ca232e734d4fa8058b3ef11a6b7a197adbf7088c63ac8ccd25080d",
+        "pre_blur": "65468046f663d30ac544be430c965ee2c305193561e09d4bf9753747e4cb24ff"
+      },
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "noise_variation": 100.0,
+      "output_differs_noise0": true
+    }
+  ],
+  "scope": "PF32 Zoom 9x7 padded; outer Strength4; Noise Type1 NV25/100 and separate Inner Strength50/100 captures.",
+  "status": "noise_exact_inner_captured_fail_closed"
+}

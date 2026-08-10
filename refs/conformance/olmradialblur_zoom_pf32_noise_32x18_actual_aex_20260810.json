@@ -1,0 +1,43 @@
+{
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "boundary": "Independent second geometry is intentionally not admitted until final coordinate/output mapping is exact.",
+  "cases": [
+    {
+      "actual_hashes": {
+        "output": "2dbf503120381a3f145907c785d48385b20647e904509cd6ccb0111ad9ec64e1",
+        "post_blur": "e06ba872ab5e45c7ce6e6c746ce31a5bca7eff6128ab2d3622f917410003fec1",
+        "pre_blur": "2931b7f19884c86178d48926919932e6d3e41bbd4f79f713c6a25581955b62cb"
+      },
+      "noise_variation": 0.0,
+      "output_differs_noise0": true
+    },
+    {
+      "actual_hashes": {
+        "output": "0275fa496fbac0b8c59ab41e4c3e7eca9d595724e728c501fa8a6d73f56ce378",
+        "post_blur": "1d2d629fa39961c9f4896876bc3bdcad4df32775a00fcade35546ce39da776aa",
+        "pre_blur": "2931b7f19884c86178d48926919932e6d3e41bbd4f79f713c6a25581955b62cb"
+      },
+      "noise_variation": 25.0,
+      "output_differs_noise0": true
+    },
+    {
+      "actual_hashes": {
+        "output": "f2fc79c2b648d278ec120e2d7bcd8582312bdd6e6aa36a468e82e7fefa803afc",
+        "post_blur": "7e38d8cb4efa749a255769d00eebe2a997e97c20a243dfccdd1e064035b718c0",
+        "pre_blur": "2931b7f19884c86178d48926919932e6d3e41bbd4f79f713c6a25581955b62cb"
+      },
+      "noise_variation": 100.0,
+      "output_differs_noise0": true
+    }
+  ],
+  "diagnostic_prior_to_fail_close": {
+    "interpretation": "The noise/span producer generalizes to 32x18, but final inverse-coordinate/output mapping does not.",
+    "output_exact": false,
+    "post_blur_exact": true,
+    "pre_blur_exact": true
+  },
+  "kind": "olmradialblur_zoom_pf32_noise_32x18_actual_aex_20260810",
+  "production_fail_closed_nv25": true,
+  "scope": "PF32 Zoom 32x18 rowbytes528; outer Strength4; Type1 NV0/25/100; centered neutral tuple.",
+  "status": "actual_captured_final_mapping_fail_closed"
+}

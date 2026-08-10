@@ -1652,8 +1652,24 @@ static PF_Err RenderZoomTyped(
 #endif
 )
 {
+	const bool use_aex_pf32_zoom_noise_type1_small = input && output &&
+		std::is_same<PixelT, PF_PixelFloat>::value &&
+		input->width == 9 && input->height == 7 && output->width == 9 && output->height == 7 &&
+		info.center_x == 4.0 && info.center_y == 3.0 &&
+		input->rowbytes >= input->width * (A_long)sizeof(PF_PixelFloat) &&
+		output->rowbytes >= output->width * (A_long)sizeof(PF_PixelFloat) &&
+		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
+		info.quality == 5.0 && info.brightness_gain == 1.0 && info.size_variation == 0.0 &&
+		(info.noise_variation == 25.0 || info.noise_variation == 100.0) &&
+		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
+		info.noise_offset == 0 && info.thickness == 10.0 &&
+		info.comp_width == 9.0 && info.comp_height == 7.0;
 	if (info.blur_type != 1 || info.inner_strength != 0 ||
-	    info.noise_variation != 0.0) {
+	    (info.noise_variation != 0.0 && !use_aex_pf32_zoom_noise_type1_small)) {
 		// These branches are not yet backed by an actual-AEX worker/output
 		// contract.  Returning success with an unchanged frame made an
 		// unsupported render indistinguishable from an exact identity result.
@@ -1733,6 +1749,7 @@ static PF_Err RenderZoomTyped(
 		info.inner_strength == 0 && info.inner_offset == 0 && info.inner_edge_fade == 0 &&
 		info.outer_offset == 0 && info.outer_edge_fade == 0 &&
 		info.size_variation == 0.0 && info.noise_variation == 0.0) ||
+		use_aex_pf32_zoom_noise_type1_small ||
 		use_aex_pf16_bounded_offset_small;
 	std::vector<float> span_plane;
 	std::vector<float> source_factor_with_guard;
@@ -1742,6 +1759,26 @@ static PF_Err RenderZoomTyped(
 		source_scalar_plane.resize((size_t)angular_count * radius_count);
 		source_factor_with_guard.assign((size_t)w * h + 1, 1.0f);
 		source_factor_with_guard.back() = 0.0f;
+		if (use_aex_pf32_zoom_noise_type1_small) {
+			std::vector<float> noise_plane;
+			int noise_width = 0;
+			int noise_height = 0;
+			if (!olm::dblur::generate_noise_plane(
+					w, h, (float)info.thickness, 0.0f, (std::uint32_t)info.seed,
+					&noise_plane, &noise_width, &noise_height)) {
+				return PF_Err_OUT_OF_MEMORY;
+			}
+			const olm::dblur::NoisePlaneView noise_view{
+				noise_plane.data(), noise_width, (float)info.thickness};
+			const float nv = (float)info.noise_variation * 0.01f;
+			for (A_long y = 0; y < h; ++y) {
+				for (A_long x = 0; x < w; ++x) {
+					const float noise = olm::dblur::sample_noise_plane(noise_view, x, y, true);
+					source_factor_with_guard[(size_t)y * w + x] =
+						RadialF32Add(RadialF32Mul(nv, noise), RadialF32Sub(1.0f, nv));
+				}
+			}
+		}
 	}
 	const float cx_f = (float)cx;
 	const float cy_f = (float)cy;

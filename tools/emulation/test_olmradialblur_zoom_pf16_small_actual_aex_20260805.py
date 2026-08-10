@@ -22,6 +22,10 @@ ZOOM_RETURN = 0x180007302
 OUTER_STRENGTH = 4
 OUTER_OFFSET_MODE = 1
 OUTER_OFFSET = 0
+INNER_STRENGTH = 0
+NOISE_VARIATION = 0.0
+CENTER_X = 4.0
+CENTER_Y = 3.0
 KIND = "olmradialblur_zoom_pf16_small_actual_aex_20260805"
 SCOPE = "independent PF16 Zoom outer-only Strength 4, mode 1/offset 0, padded 9x7; no PF32/PF8 quantization reuse or AE-host claim"
 PIXEL_CPP = "PF_Pixel16"
@@ -33,8 +37,9 @@ RENDER_WORLD_BITDEPTH = 16
 def actual_aex():
     params = fixture.m4.load_case0010_params()
     params.update({
-        "Blur Type": 1, "Center": (4.0, 3.0), "Quality": 5.0,
+        "Blur Type": 1, "Center": (CENTER_X, CENTER_Y), "Quality": 5.0,
         "Outer Strength": OUTER_STRENGTH, "Outer Offset Mode": OUTER_OFFSET_MODE, "Outer Offset": OUTER_OFFSET,
+        "Inner Strength": INNER_STRENGTH, "Noise Variation": NOISE_VARIATION,
         "Brightness Gain": 1.0,
     })
     loader = fixture.AexLoader(str(fixture.m4.AEX_PATH), fast=True)
@@ -105,7 +110,7 @@ std::vector<unsigned char> ib(RB*H),ob(RB*H);std::ifstream(argv[1],std::ios::bin
 for(int y=0;y<H;y++)for(int x=0;x<RB-W*{PIXEL_BYTES};x++)ob[y*RB+W*{PIXEL_BYTES}+x]=(unsigned char)(0xa0+y);
 PF_EffectWorld iw{{}},ow{{}};iw.data=(PF_PixelPtr)ib.data();iw.rowbytes=RB;iw.width=W;iw.height=H;ow.data=(PF_PixelPtr)ob.data();ow.rowbytes=RB;ow.width=W;ow.height=H;
 std::vector<float> pre(C*4),post(C*4);RadialBlurTestPolarCapture cap{{}};cap.pre_blur_rgba=pre.data();cap.post_blur_rgba=post.data();cap.capacity_floats=C*4;
-OLMRadialBlurInfo i{{}};i.blur_type=1;i.center_x=4;i.center_y=3;i.outer_strength={OUTER_STRENGTH};i.outer_offset_mode={OUTER_OFFSET_MODE};i.outer_offset={OUTER_OFFSET};i.inner_offset_mode=1;i.repeat_border=TRUE;i.ratio=1;i.quality=5;i.brightness_gain=1;i.noise_type=1;i.seed=1;i.thickness=10;i.comp_width=W;i.comp_height=H;
+OLMRadialBlurInfo i{{}};i.blur_type=1;i.center_x={CENTER_X};i.center_y={CENTER_Y};i.outer_strength={OUTER_STRENGTH};i.outer_offset_mode={OUTER_OFFSET_MODE};i.outer_offset={OUTER_OFFSET};i.inner_strength={INNER_STRENGTH};i.inner_offset_mode=1;i.repeat_border=TRUE;i.ratio=1;i.quality=5;i.brightness_gain=1;i.noise_variation={NOISE_VARIATION};i.noise_type=1;i.seed=1;i.thickness=10;i.comp_width=W;i.comp_height=H;
 auto e=RenderZoomTyped<{PIXEL_CPP}>(&iw,&ow,i,&cap);if(e||cap.written_floats!=C*4)return 3;
 if ({str(USE_RENDER_WORLD_FINAL).lower()}) {{
 for(int y=0;y<H;y++)for(int x=0;x<RB-W*{PIXEL_BYTES};x++)ob[y*RB+W*{PIXEL_BYTES}+x]=(unsigned char)(0xa0+y);
