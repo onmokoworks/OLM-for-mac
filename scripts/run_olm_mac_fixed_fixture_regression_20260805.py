@@ -91,6 +91,7 @@ LANES = (
             (sys.executable, "tools/emulation/audit_olmcolorkey_edge_blur_direction_0_all_depths_20260805.py"),
             (sys.executable, "tools/emulation/audit_olmcolorkey_edge_blur_direction_1_amount_1_all_depths_20260805.py"),
             (sys.executable, "tools/emulation/audit_olmcolorkey_edge_blur_center_geometry_all_depths_20260805.py"),
+            (sys.executable, "tools/emulation/test_olmcolorkey_practical_multi_geometry_all_depths_20260810.py"),
             (sys.executable, "tools/emulation/audit_olmcolorkey_entry_writer_installed_connection_20260805.py"),
             (sys.executable, "tools/emulation/audit_olmcolorkey_effectmain_fallback_typed_writer_connection_20260805.py"),
         ),

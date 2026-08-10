@@ -61,8 +61,9 @@ def fixture(enabled_key: bool = False, key_shape: str = "single") -> tuple[bytes
                                  32768, 4096 + x * 1024, 8192 + y * 1024, 12288)
             else:
                 struct.pack_into("<4B", raw, y * rowbytes + x * pixel_bytes,
-                                 255, 32 + x * 8, 64 + y * 8, 96)
+                                 255, 32 + (x % 16) * 8, 64 + (y % 16) * 8, 96)
     if enabled_key:
+        green_keyed: set[tuple[int, int]] = set()
         if key_shape == "single":
             keyed = {(0, 0)}
         elif key_shape == "center":
@@ -71,6 +72,26 @@ def fixture(enabled_key: bool = False, key_shape: str = "single") -> tuple[bytes
             keyed = {(x, 0) for x in range(WIDTH)}
         elif key_shape == "all":
             keyed = {(x, y) for y in range(HEIGHT) for x in range(WIDTH)}
+        elif key_shape == "practical_multi":
+            if WIDTH < 8 or HEIGHT < 8:
+                raise ValueError("practical_multi requires at least 8x8")
+            keyed = {
+                (2, 2), (WIDTH - 3, 2), (2, HEIGHT - 3),
+                (WIDTH - 3, HEIGHT - 3),
+            }
+            keyed.update(
+                (x, y)
+                for y in range(HEIGHT // 2 - 1, HEIGHT // 2 + 2)
+                for x in range(WIDTH // 2 - 1, WIDTH // 2 + 2)
+            )
+            keyed.update((WIDTH // 4 + x, HEIGHT // 3) for x in range(5))
+            green_keyed = {
+                (WIDTH // 3, HEIGHT // 2),
+                (WIDTH // 3 + 1, HEIGHT // 2),
+                (WIDTH * 2 // 3, HEIGHT // 3),
+                (WIDTH * 2 // 3, HEIGHT * 2 // 3),
+                (WIDTH // 2, HEIGHT // 4),
+            }
         else:
             raise ValueError(f"unknown key shape: {key_shape}")
         for x, y in keyed:
@@ -78,17 +99,25 @@ def fixture(enabled_key: bool = False, key_shape: str = "single") -> tuple[bytes
                              y * rowbytes + x * pixel_bytes,
                              *((1.0, 0.0, 0.0, 0.0) if PIXEL_FORMAT == "PF32" else
                                (32768, 0, 0, 0) if PIXEL_FORMAT == "PF16" else (255, 0, 0, 0)))
+        for x, y in green_keyed:
+            struct.pack_into("<4f" if PIXEL_FORMAT == "PF32" else "<4H" if PIXEL_FORMAT == "PF16" else "<4B", raw,
+                             y * rowbytes + x * pixel_bytes,
+                             *((1.0, 0.0, 1.0, 0.0) if PIXEL_FORMAT == "PF32" else
+                               (32768, 0, 32768, 0) if PIXEL_FORMAT == "PF16" else (255, 0, 255, 0)))
     return bytes(raw), rowbytes
 
 
 def parameter_record(enabled_key: bool = False, edge_blur: float = 0.0,
-                     edge_blur_direction: int = 2) -> bytes:
+                     edge_blur_direction: int = 2, key_count: int = 1) -> bytes:
     payload = bytearray(0x598)
     struct.pack_into("<i", payload, 0x20, 32 if PIXEL_FORMAT == "PF32" else 16 if PIXEL_FORMAT == "PF16" else 8)
     if enabled_key:
-        struct.pack_into("<i", payload, 0x38, 1)  # number_of_colors
+        struct.pack_into("<i", payload, 0x38, key_count)  # number_of_colors
         payload[0x524] = 1  # use_color[0]
         # key RGB at +0x78/+0x7c/+0x80 and threshold at +0x50 remain 0.
+        if key_count == 2:
+            payload[0x525] = 1  # use_color[1]
+            struct.pack_into("<3f", payload, 0x88, 0.0, 1.0, 0.0)
     struct.pack_into("<f", payload, 0x40, edge_blur)
     struct.pack_into("<i", payload, 0x44, 2)  # diagnostic popup value
     struct.pack_into("<i", payload, 0x48, edge_blur_direction)
@@ -108,7 +137,8 @@ def padded_world(loader: AexLoader, raw: bytes, rowbytes: int) -> int:
 
 
 def execute_case(aex: Path, enabled_key: bool, edge_blur: float = 0.0,
-                 key_shape: str = "single", edge_blur_direction: int = 2) -> dict[str, object]:
+                 key_shape: str = "single", edge_blur_direction: int = 2,
+                 key_count: int = 1) -> dict[str, object]:
     pixel_bytes = 16 if PIXEL_FORMAT == "PF32" else 8 if PIXEL_FORMAT == "PF16" else 4
     bitdepth = 32 if PIXEL_FORMAT == "PF32" else 16 if PIXEL_FORMAT == "PF16" else 8
     worker = PF32_WORKER if PIXEL_FORMAT == "PF32" else PF16_WORKER if PIXEL_FORMAT == "PF16" else PF8_WORKER
@@ -131,7 +161,7 @@ def execute_case(aex: Path, enabled_key: bool, edge_blur: float = 0.0,
 
     # Independent direct invocation of the actual PF16 per-pixel callback.
     oracle_record = loader.host_alloc(0x598)
-    loader.write_bytes(oracle_record, parameter_record(enabled_key, edge_blur, edge_blur_direction))
+    loader.write_bytes(oracle_record, parameter_record(enabled_key, edge_blur, edge_blur_direction, key_count))
     oracle_output = loader.host_alloc(len(source))
     loader.write_bytes(oracle_output, output_initial)
     pixel_calls = []
@@ -362,7 +392,7 @@ def execute_case(aex: Path, enabled_key: bool, edge_blur: float = 0.0,
         # Windows x64 stack arguments are shifted by the CALL return address:
         # arg5 at +0x28, arg6 (&local_598) at +0x30, arg7 at +0x38.
         record = struct.unpack("<Q", ld.read_bytes(rsp + 0x30, 8))[0]
-        payload = parameter_record(enabled_key, edge_blur, edge_blur_direction)
+        payload = parameter_record(enabled_key, edge_blur, edge_blur_direction, key_count)
         # number_of_colors=0, Color Keep=false, Thin=0, Blur=0: every pixel is
         # a non-match and therefore exact passthrough in the native worker.
         ld.write_bytes(record, payload)
@@ -454,7 +484,7 @@ def execute_case(aex: Path, enabled_key: bool, edge_blur: float = 0.0,
                         worker_hit_key: hex(worker), "pixel_callback": hex(pixel_callback),
                         "final_pixel_callback": hex(final_callback)},
         "parameter_record": {**record_capture, "replacement": "fixture-pinned declared record",
-                             "enabled_black_key_count": 1 if enabled_key else 0,
+                             "enabled_key_count": key_count if enabled_key else 0,
                              "edge_blur_amount": edge_blur,
                              "edge_blur_distance_type": 2,
                              "edge_blur_direction": edge_blur_direction},

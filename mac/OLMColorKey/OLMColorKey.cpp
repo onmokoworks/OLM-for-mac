@@ -910,6 +910,7 @@ struct OLMCKPixelTraits<PF_Pixel8> {
 	static float b(const PF_Pixel8 &p) { return (float)p.blue / 255.0f; }
 	static float a(const PF_Pixel8 &p) { return (float)p.alpha / 255.0f; }
 	static void zero(PF_Pixel8 &p) { p.alpha = p.red = p.green = p.blue = 0; }
+	static void zero_alpha(PF_Pixel8 &p) { p.alpha = 0; }
 	static void replace_rgb(PF_Pixel8 &p, const PF_PixelFloat &rep)
 	{
 		p.red = (A_u_char)ClampValue<int>((int)(rep.red * 255.0f), 0, 255);
@@ -942,6 +943,7 @@ struct OLMCKPixelTraits<PF_Pixel16> {
 	static float b(const PF_Pixel16 &p) { return (float)p.blue / max_chan(); }
 	static float a(const PF_Pixel16 &p) { return (float)p.alpha / max_chan(); }
 	static void zero(PF_Pixel16 &p) { p.alpha = p.red = p.green = p.blue = 0; }
+	static void zero_alpha(PF_Pixel16 &p) { p.alpha = 0; }
 	static void replace_rgb(PF_Pixel16 &p, const PF_PixelFloat &rep)
 	{
 		int maxv = (int)PF_MAX_CHAN16;
@@ -976,6 +978,7 @@ struct OLMCKPixelTraits<PF_PixelFloat> {
 	static float b(const PF_PixelFloat &p) { return p.blue; }
 	static float a(const PF_PixelFloat &p) { return p.alpha; }
 	static void zero(PF_PixelFloat &p) { p.alpha = p.red = p.green = p.blue = 0.0f; }
+	static void zero_alpha(PF_PixelFloat &p) { p.alpha = 0.0f; }
 	static void replace_rgb(PF_PixelFloat &p, const PF_PixelFloat &rep)
 	{
 		p.red = rep.red;
@@ -1183,7 +1186,14 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			bool keep = info.color_keep ? matched[(size_t)y * (size_t)w + (size_t)x] != 0
 			                            : matched[(size_t)y * (size_t)w + (size_t)x] == 0;
 			keep_mask[(size_t)y * (size_t)w + (size_t)x] = keep ? 1 : 0;
-			if (!keep) OLMCKPixelTraits<PixelT>::zero(*outP);
+			if (!keep) {
+				// The Windows worker preserves straight RGB while keying alpha.
+				// Premultiplied input keeps the historical all-channel clear.
+				if (info.premultiplied)
+					OLMCKPixelTraits<PixelT>::zero(*outP);
+				else
+					OLMCKPixelTraits<PixelT>::zero_alpha(*outP);
+			}
 			else {
 				size_t idx = (size_t)y * (size_t)w + (size_t)x;
 				int key_index = matched_index[idx];
