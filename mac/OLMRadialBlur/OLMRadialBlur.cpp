@@ -1807,6 +1807,28 @@ static PF_Err RenderZoomTyped(
 		info.noise_type == 2 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && (info.thickness == 3.0 || info.thickness == 10.0) &&
 		info.comp_width == 9.0 && info.comp_height == 7.0;
+	const bool use_aex_typed_zoom_noise_type1_pairwise = input && output &&
+		(std::is_same<PixelT, PF_Pixel8>::value || std::is_same<PixelT, PF_Pixel16>::value) &&
+		((input->width == 9 && input->height == 7) ||
+		 (input->width == 32 && input->height == 18)) &&
+		input->width == output->width && input->height == output->height &&
+		input->rowbytes >= input->width * (A_long)sizeof(PixelT) &&
+		output->rowbytes >= output->width * (A_long)sizeof(PixelT) &&
+		info.center_x == (std::is_same<PixelT, PF_Pixel8>::value
+			? (PF_FpLong)input->width / 2.0 : (PF_FpLong)(input->width / 2)) &&
+		info.center_y == (std::is_same<PixelT, PF_Pixel8>::value
+			? (PF_FpLong)input->height / 2.0 : (PF_FpLong)(input->height / 2)) &&
+		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 1 && info.outer_offset == 0 && info.inner_strength == 0 &&
+		info.inner_edge_fade == 0 && info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
+		info.quality == 5.0 && info.brightness_gain == 1.0 && info.size_variation == 0.0 &&
+		info.noise_type == 1 && info.noise_layer == 0 &&
+		((info.noise_variation == 25.0 && info.seed == 1 && info.noise_offset == 0 && info.thickness == 3.0) ||
+		 (info.noise_variation == 25.0 && info.seed == 2 && info.noise_offset == 1 && info.thickness == 10.0) ||
+		 (info.noise_variation == 100.0 && info.seed == 1 && info.noise_offset == 1 && info.thickness == 3.0) ||
+		 (info.noise_variation == 100.0 && info.seed == 2 && info.noise_offset == 0 && info.thickness == 10.0)) &&
+		info.comp_width == (PF_FpLong)input->width && info.comp_height == (PF_FpLong)input->height;
 	const bool use_aex_pf32_zoom_inner_small = input && output &&
 		std::is_same<PixelT, PF_PixelFloat>::value &&
 		input->width == 9 && input->height == 7 && output->width == 9 && output->height == 7 &&
@@ -1840,7 +1862,8 @@ static PF_Err RenderZoomTyped(
 		info.comp_width == 9.0 && info.comp_height == 7.0;
 	if (info.blur_type != 1 || (info.inner_strength != 0 && !use_aex_pf32_zoom_inner_small &&
 	    !use_aex_pf32_zoom_inner_noise_small) ||
-	    (info.noise_variation != 0.0 && !use_aex_pf32_zoom_noise_type1_small && !use_aex_typed_zoom_noise_type2_small &&
+	    (info.noise_variation != 0.0 && !use_aex_pf32_zoom_noise_type1_small &&
+	    !use_aex_typed_zoom_noise_type1_pairwise && !use_aex_typed_zoom_noise_type2_small &&
 	    !use_aex_pf32_zoom_inner_noise_small)) {
 		// These branches are not yet backed by an actual-AEX worker/output
 		// contract.  Returning success with an unchanged frame made an
@@ -1922,6 +1945,7 @@ static PF_Err RenderZoomTyped(
 		info.outer_offset == 0 && info.outer_edge_fade == 0 &&
 		info.size_variation == 0.0 && info.noise_variation == 0.0) ||
 		use_aex_pf32_zoom_noise_type1_small ||
+		use_aex_typed_zoom_noise_type1_pairwise ||
 		use_aex_typed_zoom_noise_type2_small ||
 		use_aex_pf32_zoom_inner_small ||
 		use_aex_pf32_zoom_inner_noise_small ||
@@ -1934,12 +1958,13 @@ static PF_Err RenderZoomTyped(
 		source_scalar_plane.resize((size_t)angular_count * radius_count);
 		source_factor_with_guard.assign((size_t)w * h + 1, 1.0f);
 		source_factor_with_guard.back() = 0.0f;
-		if (use_aex_pf32_zoom_noise_type1_small || use_aex_pf32_zoom_inner_noise_small || use_aex_typed_zoom_noise_type2_small) {
+		if (use_aex_pf32_zoom_noise_type1_small || use_aex_typed_zoom_noise_type1_pairwise ||
+			use_aex_pf32_zoom_inner_noise_small || use_aex_typed_zoom_noise_type2_small) {
 			std::vector<float> noise_plane;
 			int noise_width = 0;
 			int noise_height = 0;
 			if (!olm::dblur::generate_noise_plane(
-					w, h, (float)info.thickness, 0.0f, (std::uint32_t)info.seed,
+					w, h, (float)info.thickness, (float)info.noise_offset, (std::uint32_t)info.seed,
 					&noise_plane, &noise_width, &noise_height)) {
 				return PF_Err_OUT_OF_MEMORY;
 			}
@@ -2105,7 +2130,8 @@ static PF_Err RenderZoomTyped(
 			PixelT *out = PixelAt<PixelT>(output, x, y);
 			const bool exact_pf8_ellipse_store =
 				std::is_same<PixelT, PF_Pixel8>::value &&
-				(use_aex_typed_zoom_ellipse_geometry || use_aex_typed_zoom_noise_type2_small);
+				(use_aex_typed_zoom_ellipse_geometry || use_aex_typed_zoom_noise_type1_pairwise ||
+				 use_aex_typed_zoom_noise_type2_small);
 			RadialZoomPixelTraits<PixelT>::WriteZoom(
 				*out, outer_state, use_fft_convolution || exact_pf8_ellipse_store);
 			if (debug.dump_path && RadialBlurDebugHasPoint(debug, x, y)) {
@@ -2253,6 +2279,28 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.noise_type == 2 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && (info.thickness == 3.0 || info.thickness == 10.0) &&
 		info.comp_width == 9.0 && info.comp_height == 7.0;
+	const bool use_aex_typed_noise_type1_pairwise = input && output &&
+		(std::is_same<PixelT, PF_Pixel8>::value || std::is_same<PixelT, PF_Pixel16>::value) &&
+		((input->width == 9 && input->height == 7) ||
+		 (input->width == 32 && input->height == 18)) &&
+		input->width == output->width && input->height == output->height &&
+		input->rowbytes >= input->width * (A_long)sizeof(PixelT) &&
+		output->rowbytes >= output->width * (A_long)sizeof(PixelT) &&
+		info.center_x == (std::is_same<PixelT, PF_Pixel8>::value
+			? (PF_FpLong)input->width / 2.0 : (PF_FpLong)(input->width / 2)) &&
+		info.center_y == (std::is_same<PixelT, PF_Pixel8>::value
+			? (PF_FpLong)input->height / 2.0 : (PF_FpLong)(input->height / 2)) &&
+		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 1 && info.outer_offset == 0 && info.inner_strength == 0 &&
+		info.inner_edge_fade == 0 && info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
+		info.quality == 5.0 && info.brightness_gain == 1.0 && info.size_variation == 0.0 &&
+		info.noise_type == 1 && info.noise_layer == 0 &&
+		((info.noise_variation == 25.0 && info.seed == 1 && info.noise_offset == 0 && info.thickness == 3.0) ||
+		 (info.noise_variation == 25.0 && info.seed == 2 && info.noise_offset == 1 && info.thickness == 10.0) ||
+		 (info.noise_variation == 100.0 && info.seed == 1 && info.noise_offset == 1 && info.thickness == 3.0) ||
+		 (info.noise_variation == 100.0 && info.seed == 2 && info.noise_offset == 0 && info.thickness == 10.0)) &&
+		info.comp_width == (PF_FpLong)input->width && info.comp_height == (PF_FpLong)input->height;
 	const bool use_aex_pf32_outer_edge_fade_small = input && output &&
 		std::is_same<PixelT, PF_PixelFloat>::value && input->width == 9 && input->height == 7 &&
 		output->width == 9 && output->height == 7 && info.center_x == 4.0 && info.center_y == 3.0 &&
@@ -2381,7 +2429,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	    ((info.outer_edge_fade != 0 || info.inner_edge_fade != 0) &&
 	     !use_aex_pf32_outer_edge_fade_small && !use_aex_pf32_inner_edge_fade_small &&
 	     !use_aex_pf32_edge_fade_cross_small) ||
-	    (info.noise_variation != 0.0 && !use_aex_pf32_noise_type1_small && !use_aex_typed_noise_type2_small &&
+	    (info.noise_variation != 0.0 && !use_aex_pf32_noise_type1_small &&
+	     !use_aex_typed_noise_type1_pairwise && !use_aex_typed_noise_type2_small &&
 	     !use_aex_pf32_strength5_noise_type1_small &&
 	     !use_aex_pf32_offset_mode3_noise_type1_small &&
 	     !use_aex_pf32_opaque_size_noise_type1_small &&
@@ -2553,6 +2602,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	const bool use_aex_exact = use_aex_case0010 || use_aex_pf16_small || use_aex_pf16_inner_power2_small ||
 		use_aex_pf32_opaque_size_variation_small ||
 		use_aex_pf32_noise_type1_small ||
+		use_aex_typed_noise_type1_pairwise ||
 		use_aex_typed_noise_type2_small ||
 		use_aex_pf32_outer_edge_fade_small || use_aex_pf32_inner_edge_fade_small ||
 		use_aex_pf32_edge_fade_intersection_small ||
@@ -2615,7 +2665,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	std::vector<float> rotation_source_scalar((size_t)radius_count * angular_count, 1.0f);
 	std::vector<float> rotation_scalar_source_with_guard((size_t)w * h + 1, 1.0f);
 	rotation_scalar_source_with_guard.back() = 0.0f;
-	if (use_aex_pf32_noise_type1_small || use_aex_typed_noise_type2_small || use_aex_pf32_strength5_noise_type1_small ||
+	if (use_aex_pf32_noise_type1_small || use_aex_typed_noise_type1_pairwise ||
+		use_aex_typed_noise_type2_small || use_aex_pf32_strength5_noise_type1_small ||
 		use_aex_pf32_offset_mode3_noise_type1_small ||
 		use_aex_pf32_opaque_size_noise_type1_small ||
 		(use_aex_pf32_edge_fade_intersection_small && info.noise_variation != 0.0)) {
@@ -2623,7 +2674,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		int noise_width = 0;
 		int noise_height = 0;
 		if (!olm::dblur::generate_noise_plane(
-				w, h, (float)info.thickness, 0.0f, (std::uint32_t)info.seed,
+				w, h, (float)info.thickness, (float)info.noise_offset, (std::uint32_t)info.seed,
 				&noise_plane, &noise_width, &noise_height)) {
 			return PF_Err_OUT_OF_MEMORY;
 		}
@@ -2716,7 +2767,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			for (A_long ai = 0; ai < angular_count; ++ai) {
 				const size_t cell = (size_t)ri * angular_count + ai;
 				const size_t dst = cell * 4;
-				if (polar.rgba[dst + 3] == 0.0f || rotation_source_scalar[cell] == 0.0f) {
+				if (polar.rgba[dst + 3] == 0.0f) {
 					prepass_alpha[cell] = 0.0f;
 					for (int c = 0; c < 4; ++c) accum.rgba[dst + c] = 0.0f;
 					max_alpha[cell] = 0.0f;

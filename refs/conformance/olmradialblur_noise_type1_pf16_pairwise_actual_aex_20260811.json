@@ -1,0 +1,458 @@
+{
+  "boundary": "All 16 enumerated pairwise cells are consumed-plane/output exact. Other combinations remain unproved.",
+  "cases": [
+    {
+      "exact": true,
+      "geometry": [
+        9,
+        7,
+        80
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "noise_variation": 25.0,
+      "offset": 0.0,
+      "returncode": 0,
+      "seed": 1,
+      "sha256": {
+        "output": "c0e27f7344de7025dc6895c96511d202b810dc8a044bf1a2560a9a72aaca6940",
+        "post_blur": "7f3532e5dd2777a701513ff306483dd3a33fdbdedd078e798a7e74fc57f95942",
+        "pre_blur": "27c95680ec8f1d897eeddcd456456bfad1ae1406c121e7f39a6a1e9863d72dc0"
+      },
+      "thickness": 3.0
+    },
+    {
+      "exact": true,
+      "geometry": [
+        9,
+        7,
+        80
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "noise_variation": 25.0,
+      "offset": 1.0,
+      "returncode": 0,
+      "seed": 2,
+      "sha256": {
+        "output": "26f8b2f6aff65b020eb6f96c1bcf54c5a464fe3e5f327b3d4d69ab1acc5b4f22",
+        "post_blur": "e5fdffdcea2d23cef28aaf4ed1bc380fe8d3365c5c77c66276d3d02f7750f498",
+        "pre_blur": "27c95680ec8f1d897eeddcd456456bfad1ae1406c121e7f39a6a1e9863d72dc0"
+      },
+      "thickness": 10.0
+    },
+    {
+      "exact": true,
+      "geometry": [
+        9,
+        7,
+        80
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "noise_variation": 100.0,
+      "offset": 1.0,
+      "returncode": 0,
+      "seed": 1,
+      "sha256": {
+        "output": "2824da749973a2eec4f7e061f5d20719ccc529db54c2fcdecf0301ceed4ef9e0",
+        "post_blur": "ff8d0cf0fd4983b7820b1cd8088acb0dd4f1d7e4e849947e5c86d3d545fdd65b",
+        "pre_blur": "27c95680ec8f1d897eeddcd456456bfad1ae1406c121e7f39a6a1e9863d72dc0"
+      },
+      "thickness": 3.0
+    },
+    {
+      "exact": true,
+      "geometry": [
+        9,
+        7,
+        80
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "noise_variation": 100.0,
+      "offset": 0.0,
+      "returncode": 0,
+      "seed": 2,
+      "sha256": {
+        "output": "53152f9d316d2e3d59bbe9c0ecc650bf96e09ed428c5a086cefed42a35929bc5",
+        "post_blur": "3f1e4acd9039c757779a9fb67ed208132539946a0edc7938de6faef42bfe2033",
+        "pre_blur": "27c95680ec8f1d897eeddcd456456bfad1ae1406c121e7f39a6a1e9863d72dc0"
+      },
+      "thickness": 10.0
+    },
+    {
+      "exact": true,
+      "geometry": [
+        32,
+        18,
+        272
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "noise_variation": 25.0,
+      "offset": 0.0,
+      "returncode": 0,
+      "seed": 1,
+      "sha256": {
+        "output": "045254ac7d792ec43a46d32e26604e42d907c7a5c94177e8868370b5da3621d7",
+        "post_blur": "1f3f78798b5716b0999f9a0bc95b9d4ed369124b741f989cbefd1094727eed05",
+        "pre_blur": "525ce83c5615d08156b147eb2a14935e6d458233e77c159ee10790522002778d"
+      },
+      "thickness": 3.0
+    },
+    {
+      "exact": true,
+      "geometry": [
+        32,
+        18,
+        272
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "noise_variation": 25.0,
+      "offset": 1.0,
+      "returncode": 0,
+      "seed": 2,
+      "sha256": {
+        "output": "434106adced85c4673c377d5545f98c651871d29f724e5c97619a77abd1dc188",
+        "post_blur": "ac02051d3c6d88bc3874fcec4e0f84963241e43ff1d95819e2dc2ebe21e3279e",
+        "pre_blur": "525ce83c5615d08156b147eb2a14935e6d458233e77c159ee10790522002778d"
+      },
+      "thickness": 10.0
+    },
+    {
+      "exact": true,
+      "geometry": [
+        32,
+        18,
+        272
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "noise_variation": 100.0,
+      "offset": 1.0,
+      "returncode": 0,
+      "seed": 1,
+      "sha256": {
+        "output": "787c53ff4214212708f36c74f1340ef633b81ce0e3688f111a0c554dd6fa20b8",
+        "post_blur": "94f095d1e29b64b00f1ccd21179d370642cec1f21299fb42c8b5f537f921f88b",
+        "pre_blur": "525ce83c5615d08156b147eb2a14935e6d458233e77c159ee10790522002778d"
+      },
+      "thickness": 3.0
+    },
+    {
+      "exact": true,
+      "geometry": [
+        32,
+        18,
+        272
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "noise_variation": 100.0,
+      "offset": 0.0,
+      "returncode": 0,
+      "seed": 2,
+      "sha256": {
+        "output": "997507b38417bb536767fbcba958781566bf3eaca84f8f3f011a1e42e213cea3",
+        "post_blur": "8f9b1691785053290255dcb98f74409c1c9efda5bb39a026b8818b97f8740b97",
+        "pre_blur": "525ce83c5615d08156b147eb2a14935e6d458233e77c159ee10790522002778d"
+      },
+      "thickness": 10.0
+    },
+    {
+      "exact": true,
+      "geometry": [
+        9,
+        7,
+        80
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "mode": "rotation",
+      "noise_variation": 25.0,
+      "offset": 0.0,
+      "returncode": 0,
+      "seed": 1,
+      "sha256": {
+        "accum": "0113552a6be27376632ca84bc8bb55327c34df7887d85a3bc005738638fa2e5d",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "3dcf9a38baf338b180057321cea41b3d9f8787ac1850c21dd40d7a3b2ff220ca",
+        "max_alpha": "3f655c2e4205002cdbc3c51a939a398e1ecba306ffaaf95657ffcb3c9aa483b5",
+        "output": "5833c07c289e7d697d92a17bbcdb2ef04b919c55263d7cd29d7aebb521280d8b",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "0b544af3e0e5328d0b83e089c2475bf7866cd7916cd6614c89a27fc91aabb4e6"
+      },
+      "thickness": 3.0
+    },
+    {
+      "exact": true,
+      "geometry": [
+        9,
+        7,
+        80
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "mode": "rotation",
+      "noise_variation": 25.0,
+      "offset": 1.0,
+      "returncode": 0,
+      "seed": 2,
+      "sha256": {
+        "accum": "c4715b775089fd50702cae50ccc0ceb037856aeaeb89f06bbf2327104dfad84c",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "3dcf9a38baf338b180057321cea41b3d9f8787ac1850c21dd40d7a3b2ff220ca",
+        "max_alpha": "3f655c2e4205002cdbc3c51a939a398e1ecba306ffaaf95657ffcb3c9aa483b5",
+        "output": "5833c07c289e7d697d92a17bbcdb2ef04b919c55263d7cd29d7aebb521280d8b",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "0d18d48832b56d7996cc0529a4109cea4d028a87293cdcfffd163ad17fda59f2"
+      },
+      "thickness": 10.0
+    },
+    {
+      "exact": true,
+      "geometry": [
+        9,
+        7,
+        80
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "mode": "rotation",
+      "noise_variation": 100.0,
+      "offset": 1.0,
+      "returncode": 0,
+      "seed": 1,
+      "sha256": {
+        "accum": "1b20b8e3f8c79f4cf2bf73ef9b4269a06447b8549f7a8f980d6bb854ee9825be",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "62d836d56afbb313c2fb51f8196cb081d6f932ea747fe16145ed9a831fc0fd7c",
+        "max_alpha": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+        "output": "06ce479c6b4b86021f55ff7fde91bb1607472b8971e6e06eb90a1e95d31af56e",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "9f04c23bb22b9eeac2fdd727620ae0df4cdc64c5b23a7efce54c4601a6876481"
+      },
+      "thickness": 3.0
+    },
+    {
+      "exact": true,
+      "geometry": [
+        9,
+        7,
+        80
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "mode": "rotation",
+      "noise_variation": 100.0,
+      "offset": 0.0,
+      "returncode": 0,
+      "seed": 2,
+      "sha256": {
+        "accum": "ac2a12729c40fb3fdd4cec831b2d97c09191756882558bf40921a98cdbc48bb3",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "82c32c6f212834fe85ce10c9aacbeadede199cab78dd1623ee4c7c4057cd7411",
+        "max_alpha": "3f655c2e4205002cdbc3c51a939a398e1ecba306ffaaf95657ffcb3c9aa483b5",
+        "output": "385763a2ebde70a0b3453bdf84c2b891820ec4933921b21bcf7ecdc09cff3c2c",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "a38c16f2fc5d6f8b6327cfd7465d6ae72f31755daf7dde03622d24d516042f0c"
+      },
+      "thickness": 10.0
+    },
+    {
+      "exact": true,
+      "geometry": [
+        32,
+        18,
+        272
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "mode": "rotation",
+      "noise_variation": 25.0,
+      "offset": 0.0,
+      "returncode": 0,
+      "seed": 1,
+      "sha256": {
+        "accum": "b5700c414870a85c425b77616317c8a79e7c7c124414ada92f6b1fbad589413a",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "1b140ef1b64ece0fa6114901490d4fd92e8ff2d66a9d89ba2fd7102138e8916a",
+        "max_alpha": "5943a30e347d5d36181e17522a11157899ec80fba78a61612093ceb80eac7031",
+        "output": "b2a4daaf2a0249f351bf263c1fb82c4a7ff2345cf915124b763bccbbe40437cc",
+        "polar": "da0505812a661d8b3cf2e9975b0b8d354b81a280be74c39510d97656920dd020",
+        "source_scalar": "1f8f9ff452b733531e31bf2c8da5e3a5d519225a621a7ade6d98fd9d4723fa86"
+      },
+      "thickness": 3.0
+    },
+    {
+      "exact": true,
+      "geometry": [
+        32,
+        18,
+        272
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "mode": "rotation",
+      "noise_variation": 25.0,
+      "offset": 1.0,
+      "returncode": 0,
+      "seed": 2,
+      "sha256": {
+        "accum": "af2078c2537c1872af2a09842657674cda785da7b0ca566f5f9b680d034fd7ab",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "1d30d002393d047e8707f8c28f847e82a03e6a87c338f1eb5707a6e4fc01ad5b",
+        "max_alpha": "f9fc8c6ab0407d0bf5ad57eefbd7a361f5542b15e6646eccc31e95dcaa010f3e",
+        "output": "d4a5117a80629a26fa59f79e6c9923c5e7377bbbab901293083e1549ce406b1e",
+        "polar": "da0505812a661d8b3cf2e9975b0b8d354b81a280be74c39510d97656920dd020",
+        "source_scalar": "3acdbefa4bf15509a389a4a609203e8a5b58a74edc56d78b19d3fbe3ff2ee470"
+      },
+      "thickness": 10.0
+    },
+    {
+      "exact": true,
+      "geometry": [
+        32,
+        18,
+        272
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "mode": "rotation",
+      "noise_variation": 100.0,
+      "offset": 1.0,
+      "returncode": 0,
+      "seed": 1,
+      "sha256": {
+        "accum": "627b533efc79bb0f854d31aa06f4990ce1e9aaae065eff7e3b3ffd1cd7bb33f2",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "54179fb792f847726a4fe11683b34f988b4c5b8818702c9d8d8b57743aebec0f",
+        "max_alpha": "6e827b098131aa6d596c227fa3819e940cc355399ebe86dc5127efc9d46534f4",
+        "output": "8a29474f8e91e1a40c4a911fa4c4e05f73cb08abdbba75ee66b1d0d621f24ec9",
+        "polar": "da0505812a661d8b3cf2e9975b0b8d354b81a280be74c39510d97656920dd020",
+        "source_scalar": "961db9f5f91e8ac72ed4a6705c03657fdd1f5adbf81ec1c38f34e967256a96d1"
+      },
+      "thickness": 3.0
+    },
+    {
+      "exact": true,
+      "geometry": [
+        32,
+        18,
+        272
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "mode": "rotation",
+      "noise_variation": 100.0,
+      "offset": 0.0,
+      "returncode": 0,
+      "seed": 2,
+      "sha256": {
+        "accum": "e9afde64128618bac4eddd5c960f55bdec86005568c3891b88df3b0b5fa6e7a8",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "b73efcba9b69fa599222613cf0d654652b1c17a03ca719d2f882087a01d7a1c4",
+        "max_alpha": "5943a30e347d5d36181e17522a11157899ec80fba78a61612093ceb80eac7031",
+        "output": "af6d9b9559e68c43d30d6d22040241bc14b582cc23ca05900d946189b06d8653",
+        "polar": "da0505812a661d8b3cf2e9975b0b8d354b81a280be74c39510d97656920dd020",
+        "source_scalar": "5a7af74663e307793b0ab123dc1d0cda5f935e98792f1191d2e09bcf29ffa5c6"
+      },
+      "thickness": 10.0
+    }
+  ],
+  "exact_cases": 16,
+  "kind": "olmradialblur_noise_type1_pf16_pairwise_actual_aex_20260811",
+  "observed_rule": "The generated plane receives info.noise_offset. Rotation prepass does not reject a zero source scalar; scatter retains its zero-scalar skip. Rotation source_scalar contains known one-ULP differences only in inactive, unreferenced allocation-boundary cells and is excluded from semantic exactness.",
+  "scope": "PF16 centered Zoom/Rotation 9x7 and 32x18; Type1 pairwise NV25/100, seed1/2, offset0/1, thickness3/10; Outer4 neutral remaining tuple.",
+  "status": "exact"
+}

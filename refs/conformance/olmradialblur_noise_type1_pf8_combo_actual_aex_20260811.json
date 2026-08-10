@@ -1,0 +1,442 @@
+{
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "boundary": "Only the 16 enumerated pairwise cells are claimed; other combinations, geometry, depth and AE-host behavior remain outside this evidence.",
+  "cases": [
+    {
+      "exact": true,
+      "hashes": {
+        "output": "d4ea4e02c9a18b87c9ece560a8d44bd16ad9cb8c886566db0a4f7c2b6a1e2f7a",
+        "post_blur": "060370065564b7f67492ac86a17260d732c10bed50e1dadfffa0cf11bc922a29",
+        "pre_blur": "6930c5266f720297dda2d31e88c20f9ac05bf6103cdba82c4becc0190d444055"
+      },
+      "height": 7,
+      "inactive_accum_boundary_only": false,
+      "inactive_cells": [],
+      "mode": "zoom",
+      "noise_offset": 0.0,
+      "noise_variation": 25.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "seed": 1,
+      "thickness": 3.0,
+      "width": 9
+    },
+    {
+      "exact": true,
+      "hashes": {
+        "output": "d4ea4e02c9a18b87c9ece560a8d44bd16ad9cb8c886566db0a4f7c2b6a1e2f7a",
+        "post_blur": "c15ce22ce2f89fa56259507708ac43c6c8bd52d14933614b5ba1e10935b89bd9",
+        "pre_blur": "6930c5266f720297dda2d31e88c20f9ac05bf6103cdba82c4becc0190d444055"
+      },
+      "height": 7,
+      "inactive_accum_boundary_only": false,
+      "inactive_cells": [],
+      "mode": "zoom",
+      "noise_offset": 1.0,
+      "noise_variation": 25.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "seed": 2,
+      "thickness": 10.0,
+      "width": 9
+    },
+    {
+      "exact": true,
+      "hashes": {
+        "output": "06d7927f156fd9a0a699102697907d37c920b12abe7cc6f90811d77be5a400b2",
+        "post_blur": "9b211790406990b467639bc212a0abfc8c311d5272efda1d82cc8e36bd67a10f",
+        "pre_blur": "6930c5266f720297dda2d31e88c20f9ac05bf6103cdba82c4becc0190d444055"
+      },
+      "height": 7,
+      "inactive_accum_boundary_only": false,
+      "inactive_cells": [],
+      "mode": "zoom",
+      "noise_offset": 1.0,
+      "noise_variation": 100.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "seed": 1,
+      "thickness": 3.0,
+      "width": 9
+    },
+    {
+      "exact": true,
+      "hashes": {
+        "output": "1ce2a39268e0f6718218d8a8ec9974fb14d73c81b99ea9ccfb08cd6945cdd88b",
+        "post_blur": "3803e09e85b080e5b13770307abefe70192ca83c3170e7e0e99ecc68c4312cd4",
+        "pre_blur": "6930c5266f720297dda2d31e88c20f9ac05bf6103cdba82c4becc0190d444055"
+      },
+      "height": 7,
+      "inactive_accum_boundary_only": false,
+      "inactive_cells": [],
+      "mode": "zoom",
+      "noise_offset": 0.0,
+      "noise_variation": 100.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "seed": 2,
+      "thickness": 10.0,
+      "width": 9
+    },
+    {
+      "exact": true,
+      "hashes": {
+        "output": "b1100709f913216fd8527354c14ae878b4725a61b39480189c54272db1ef9411",
+        "post_blur": "a89b7c012ab3dbe83588db5568a24122674ac9f4a7c10ad63d7e0e6fadd45cb7",
+        "pre_blur": "502c5f90cee33cc441279c145e85f02b2bf95d140372be199e4b495516155093"
+      },
+      "height": 18,
+      "inactive_accum_boundary_only": false,
+      "inactive_cells": [],
+      "mode": "zoom",
+      "noise_offset": 0.0,
+      "noise_variation": 25.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "seed": 1,
+      "thickness": 3.0,
+      "width": 32
+    },
+    {
+      "exact": true,
+      "hashes": {
+        "output": "104a6347a242ec2ffaf352231cc27a7e372e9f3080500bbff4274733e549da23",
+        "post_blur": "6a8cfc125f60fb5408a577a29dc35e7771fab5b74940ada99636b82a19c9619b",
+        "pre_blur": "502c5f90cee33cc441279c145e85f02b2bf95d140372be199e4b495516155093"
+      },
+      "height": 18,
+      "inactive_accum_boundary_only": false,
+      "inactive_cells": [],
+      "mode": "zoom",
+      "noise_offset": 1.0,
+      "noise_variation": 25.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "seed": 2,
+      "thickness": 10.0,
+      "width": 32
+    },
+    {
+      "exact": true,
+      "hashes": {
+        "output": "ffa5af2273743058f47556052925b2dd6833a202668d7fc2291b8d8ac5605e6a",
+        "post_blur": "2a66bdd5d58b2dea799fbd185cd9f4cf0f26167b4abd52a9bd9543c9dff1f200",
+        "pre_blur": "502c5f90cee33cc441279c145e85f02b2bf95d140372be199e4b495516155093"
+      },
+      "height": 18,
+      "inactive_accum_boundary_only": false,
+      "inactive_cells": [],
+      "mode": "zoom",
+      "noise_offset": 1.0,
+      "noise_variation": 100.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "seed": 1,
+      "thickness": 3.0,
+      "width": 32
+    },
+    {
+      "exact": true,
+      "hashes": {
+        "output": "3fa2de8a6d53558058f03ede2c2ae9604689815b27b9f65232df77539e5192d8",
+        "post_blur": "f33220e4dd4b7bcd7f62b31769d4a87e28c299afc343a3bd3e16341a15e2ee52",
+        "pre_blur": "502c5f90cee33cc441279c145e85f02b2bf95d140372be199e4b495516155093"
+      },
+      "height": 18,
+      "inactive_accum_boundary_only": false,
+      "inactive_cells": [],
+      "mode": "zoom",
+      "noise_offset": 0.0,
+      "noise_variation": 100.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "seed": 2,
+      "thickness": 10.0,
+      "width": 32
+    },
+    {
+      "exact": true,
+      "hashes": {
+        "accum": "ea9620d4b3c59540644205ca92faa6beef6707a450b518a144f710b8878eb710",
+        "coordinates": "431b88b00cf7458c7ad2778f75439c8bb49d2b106f2b23bc6632ffaf90e91572",
+        "final_rgba": "bd63da27897ebe18f1644ea149154051130e043e547434a39ae8212a8b5e7222",
+        "max_alpha": "a5643805939512bff65658094f0f5e2cd7dcba96344431b8a2b2b58c9d4744d3",
+        "output": "8225242645054bc016103a56325719d346c31236680e81dbf1ffa6745c5368fc",
+        "polar": "716f94e45400b1e81763d9b8d0c91810424e84f66b88d31fc71c48f09afc1733",
+        "source_scalar": "f36bad9eb8ecbe9ebf67c6a287a84268de3f065761e21d64d79c0272b079f046"
+      },
+      "height": 7,
+      "inactive_accum_boundary_only": false,
+      "inactive_cells": [],
+      "mode": "rotation",
+      "noise_offset": 0.0,
+      "noise_variation": 25.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "seed": 1,
+      "thickness": 3.0,
+      "width": 9
+    },
+    {
+      "exact": true,
+      "hashes": {
+        "accum": "554329aa2a2a06c6300d14f5d8f28eef98dfdbc5c0ccd8532910d8117620715f",
+        "coordinates": "431b88b00cf7458c7ad2778f75439c8bb49d2b106f2b23bc6632ffaf90e91572",
+        "final_rgba": "bd07d12bab1dac468603f75c8053368ca20ea7422b268f21b3cecb4d84e11fc2",
+        "max_alpha": "a5643805939512bff65658094f0f5e2cd7dcba96344431b8a2b2b58c9d4744d3",
+        "output": "8225242645054bc016103a56325719d346c31236680e81dbf1ffa6745c5368fc",
+        "polar": "716f94e45400b1e81763d9b8d0c91810424e84f66b88d31fc71c48f09afc1733",
+        "source_scalar": "8af885af7ea831e3134efd5bdcc163e359a0ba047546e4a94dca3a1e2d29cf1d"
+      },
+      "height": 7,
+      "inactive_accum_boundary_only": false,
+      "inactive_cells": [],
+      "mode": "rotation",
+      "noise_offset": 1.0,
+      "noise_variation": 25.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "seed": 2,
+      "thickness": 10.0,
+      "width": 9
+    },
+    {
+      "exact": true,
+      "hashes": {
+        "accum": "14a88443cc4b1f6cc1d569b7e77f00ccf59c8ba9af0e46d05af98ba7625e38b5",
+        "coordinates": "431b88b00cf7458c7ad2778f75439c8bb49d2b106f2b23bc6632ffaf90e91572",
+        "final_rgba": "619ea40f21c709ce5aa115206ee3e56cba89d32aacca9c1caa303e5f9b2b2801",
+        "max_alpha": "edf7d749b6bb9734e528648f63357c276e343ee1624159e8dcff885915cfbb7b",
+        "output": "9d3f6ee46c82842f1e8c17894833e275bb4749e23b1e3112a9331b7c9ae7adc2",
+        "polar": "716f94e45400b1e81763d9b8d0c91810424e84f66b88d31fc71c48f09afc1733",
+        "source_scalar": "8034cdb6dad1d01c5096fd1f4de5faf5b4a46bc8b552b57e4d511c2682932d75"
+      },
+      "height": 7,
+      "inactive_accum_boundary_only": false,
+      "inactive_cells": [],
+      "mode": "rotation",
+      "noise_offset": 1.0,
+      "noise_variation": 100.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "seed": 1,
+      "thickness": 3.0,
+      "width": 9
+    },
+    {
+      "exact": true,
+      "hashes": {
+        "accum": "ee19b033a2b00a18ad92b5cc7053f13cbe674e00bb770534343cdd7de0e7f78e",
+        "coordinates": "431b88b00cf7458c7ad2778f75439c8bb49d2b106f2b23bc6632ffaf90e91572",
+        "final_rgba": "4a0a9a8768da6e9a7b643c508d2b8fa829ef3e8ecba47b94d6f4341169894363",
+        "max_alpha": "a5643805939512bff65658094f0f5e2cd7dcba96344431b8a2b2b58c9d4744d3",
+        "output": "18ad8b4a1ea9d95a66f36f0a7d1fa6836d8430ff04ed03cac77699fe02cacc24",
+        "polar": "716f94e45400b1e81763d9b8d0c91810424e84f66b88d31fc71c48f09afc1733",
+        "source_scalar": "5852d40a6307db8cedf9520e9de45e83abc25b2c938ba8083ff904babcb9e225"
+      },
+      "height": 7,
+      "inactive_accum_boundary_only": false,
+      "inactive_cells": [],
+      "mode": "rotation",
+      "noise_offset": 0.0,
+      "noise_variation": 100.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "seed": 2,
+      "thickness": 10.0,
+      "width": 9
+    },
+    {
+      "exact": true,
+      "hashes": {
+        "accum": "3adc22673336a10b4b06d5879996dfec742aa0b5fd28b530e52c8d038a3fe617",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "d6f19a807353a33a2d386b27d22692f4f97044ad3444953f80215af259247da5",
+        "max_alpha": "a82c7543b52f9bb5ec65d45c1d48e6e5eaebb07eada042409bc89dd8e725c62b",
+        "output": "dfe1eeb4d470d4ca46a7766fdcdc3bbfc894f6fd637a31b54c7e4cea219699da",
+        "polar": "560eecc57c1a764bec7a5ee032f1b02c77d54ede89dde49979d4cfa1740f7ed4",
+        "source_scalar": "1f8f9ff452b733531e31bf2c8da5e3a5d519225a621a7ade6d98fd9d4723fa86"
+      },
+      "height": 18,
+      "inactive_accum_boundary_only": false,
+      "inactive_cells": [],
+      "mode": "rotation",
+      "noise_offset": 0.0,
+      "noise_variation": 25.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "seed": 1,
+      "thickness": 3.0,
+      "width": 32
+    },
+    {
+      "exact": true,
+      "hashes": {
+        "accum": "a8b4c01916c1acbd66d3d7b1a0a14ecfe73c571e5a249561c85e25be5b0a8095",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "b5746cd5f672ab8ab6783438b522273f71516cc87c61a586544abf8b51756c0b",
+        "max_alpha": "60c4e86280cf4911ccdc19a7aa7e33d1a40e4743b108ad9ddf4e295a13cc1459",
+        "output": "7f6774801505403d4f97dc88d373a8e34b663b3b4ac9d63fb8ae2e46d8c0602d",
+        "polar": "560eecc57c1a764bec7a5ee032f1b02c77d54ede89dde49979d4cfa1740f7ed4",
+        "source_scalar": "3acdbefa4bf15509a389a4a609203e8a5b58a74edc56d78b19d3fbe3ff2ee470"
+      },
+      "height": 18,
+      "inactive_accum_boundary_only": false,
+      "inactive_cells": [],
+      "mode": "rotation",
+      "noise_offset": 1.0,
+      "noise_variation": 25.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "seed": 2,
+      "thickness": 10.0,
+      "width": 32
+    },
+    {
+      "exact": true,
+      "hashes": {
+        "accum": "f6847b656cc342493b2f3d74dec6ee58b01ad739affed0ab2ecc9cc92b7980d7",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "0be65c34cb5ad55e3b65cdd80626e6e18c6c8bb8512092c9f312e656d15647db",
+        "max_alpha": "7e010dbd1e58de29d937920113f7119bf228bd90355e9946c113a9870aa41339",
+        "output": "5125ad77f130e589753becce37229d393211f39020a6fc8077067235ff970b13",
+        "polar": "560eecc57c1a764bec7a5ee032f1b02c77d54ede89dde49979d4cfa1740f7ed4",
+        "source_scalar": "961db9f5f91e8ac72ed4a6705c03657fdd1f5adbf81ec1c38f34e967256a96d1"
+      },
+      "height": 18,
+      "inactive_accum_boundary_only": false,
+      "inactive_cells": [],
+      "mode": "rotation",
+      "noise_offset": 1.0,
+      "noise_variation": 100.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "seed": 1,
+      "thickness": 3.0,
+      "width": 32
+    },
+    {
+      "exact": true,
+      "hashes": {
+        "accum": "a1e685d8fbab46d4386535b875a94f1177e7b03f9c659aaae9e05b83c6224788",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "f6755e406fe3313a82aecfe8635b422a92263d7404f4dceedf99f3070fe14ebc",
+        "max_alpha": "a82c7543b52f9bb5ec65d45c1d48e6e5eaebb07eada042409bc89dd8e725c62b",
+        "output": "6c11a2eebe0528970b7bf5c5d7d89d47ee95ba49affc4f362ef92ee241bb3f3d",
+        "polar": "560eecc57c1a764bec7a5ee032f1b02c77d54ede89dde49979d4cfa1740f7ed4",
+        "source_scalar": "5a7af74663e307793b0ab123dc1d0cda5f935e98792f1191d2e09bcf29ffa5c6"
+      },
+      "height": 18,
+      "inactive_accum_boundary_only": false,
+      "inactive_cells": [],
+      "mode": "rotation",
+      "noise_offset": 0.0,
+      "noise_variation": 100.0,
+      "output_visible_exact": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": false
+      },
+      "seed": 2,
+      "thickness": 10.0,
+      "width": 32
+    }
+  ],
+  "kind": "olmradialblur_noise_type1_pf8_combo_actual_aex_20260811",
+  "observed_rule": "Type 1 smooth noise uses Noise Offset in plane generation. Rotation source-scalar allocations retain harmless one-ULP float-order differences only in inactive, unreferenced cells; every consumed plane, final RGBA, coordinate plane and visible output is exact.",
+  "scope": "PF8 centered neutral; Zoom/Rotation; 9x7/32x18; pairwise NV25/100, seed1/2, offset0/1, thickness3/10",
+  "status": "exact_with_inactive_rotation_source_scalar_boundary"
+}
