@@ -14,7 +14,7 @@
       "v2_actual_classifier_worker_production": "proven PF16/PF32"
     },
     "depths": {
-      "PF8": "covered by prior host/adapter ledger slices; not newly exercised in 20260805 emulation fixtures",
+      "PF8": "v1/v2 natural classifier through typed worker to production proven exact on independent padded 3x2 fixtures (20260810); other geometry/parameter interactions unclaimed",
       "PF16": "proven",
       "PF32": "proven"
     },
@@ -52,7 +52,7 @@
     }
   },
   "largest_closed_gap_this_round": "Extra Smooth=100 public upper endpoint",
-  "next_largest_natural_gap": "Consolidated current-fixture PF8 coverage, other intermediate Gamma Values, or other key color endpoints",
+  "next_largest_natural_gap": "Other PF8 geometry/parameter interactions, other intermediate Gamma Values, or other key color endpoints",
   "constraints": [
     "Do not generalize palette count above 5",
     "No AE-host claim from emulation or adapter-only command tests"

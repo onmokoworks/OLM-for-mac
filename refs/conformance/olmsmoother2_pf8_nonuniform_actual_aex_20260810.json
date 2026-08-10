@@ -1,0 +1,43 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "No other geometry or parameter combination",
+    "No PF16/PF32 claim from this fixture",
+    "No AE-host execution claim"
+  ],
+  "fixtures": [
+    {
+      "class_nonzero_bytes": 10,
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1503,
+      "equal": true,
+      "geometry": [
+        3,
+        2
+      ],
+      "padding_per_row": 5,
+      "padding_preserved": true,
+      "raw_hex": "ff000000ffef1d10ff00ff00a5a5a5a5a5ff0000ffffffffffff838a7da5a5a5a5a5",
+      "typed_worker_instructions": 3849,
+      "version": "v1"
+    },
+    {
+      "class_nonzero_bytes": 10,
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+      "classifier_instructions": 1504,
+      "equal": true,
+      "geometry": [
+        3,
+        2
+      ],
+      "padding_per_row": 5,
+      "padding_preserved": true,
+      "raw_hex": "ff000000ff48f2f8ffff00ffa5a5a5a5a5ffffff00ff404040ffbdb9c1a5a5a5a5a5",
+      "typed_worker_instructions": 4278,
+      "version": "v2"
+    }
+  ],
+  "production_source_sha256": "d8a7a489bb3bc875e998926bdde971ac66f5544c41ff6bc583819bf0daf0a784",
+  "scope": "PF8 v1/v2, key disabled, gamma UI none, smoothness 100, range 1, extra smooth 0, padded 3x2 nonuniform fixtures",
+  "verdict": "PASS_PF8_NATURAL_AEX_CLASSIFIER_C280_TYPED_WORKER_TO_PRODUCTION_EXACT"
+}

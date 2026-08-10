@@ -37,7 +37,7 @@ def actual(depth, pixels, pad):
     cfg=l.bump_alloc(0x80,align=16);l.write_bytes(cfg,b'\0'*0x80);l.write_bytes(cfg,struct.pack('<i',1));l.write_bytes(cfg+0x1c,struct.pack('<i',1));l.write_bytes(cfg+0x20,struct.pack('<ii',100,0))
     sv=SmallStatic(l); cr=l.call_function(FUN_ADA0,int_args=[sd,cd,rect,cfg],max_instructions=5_000_000)
     plane=b''.join(l.read_bytes(cb+y*cs,W*4) for y in range(H));req(0xa5 not in plane,'class canary');req(any(plane),'classifier plane stayed zero')
-    psz=8 if depth=='PF16' else 16; os=W*psz+pad;ob=l.bump_alloc(os*H,align=16);l.write_bytes(ob,b'\xa5'*(os*H));od=desc(l,ob,os)
+    psz={'PF8':4,'PF16':8,'PF32':16}[depth]; os=W*psz+pad;ob=l.bump_alloc(os*H,align=16);l.write_bytes(ob,b'\xa5'*(os*H));od=desc(l,ob,os)
     ctx=l.bump_alloc(0x20,align=16);l.write_bytes(ctx,b'\0'*0x20);dy=Dynamic(l,typed.WORKERS[depth])
     ptrs=[l.bump_alloc(4,align=4) for _ in range(4)]
     for p,v in zip(ptrs,[W,0,H,0]):l.write_bytes(p,struct.pack('<i',v))
