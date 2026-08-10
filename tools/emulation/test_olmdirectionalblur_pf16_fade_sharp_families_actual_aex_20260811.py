@@ -26,7 +26,7 @@ def main()->int:
   lib=t/'lib.dylib'; build=subprocess.run(['clang++','-std=c++17','-O2','-fno-fast-math','-ffp-contract=off','-shared','-fPIC','core/dblur_frontonly.cpp','core/dblur_rotate.cpp','core/dblur_rowdriver.cpp','core/dblur_field.cpp','-o',str(lib)],cwd=ROOT,capture_output=True,text=True)
   if build.returncode: raise RuntimeError(build.stderr)
   fn=ctypes.CDLL(str(lib)).olm_dblur_full_argb16
-  fn.argtypes=[ctypes.POINTER(ctypes.c_uint16),ctypes.POINTER(ctypes.c_uint16),ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_float,ctypes.c_int,ctypes.c_int,ctypes.c_float,ctypes.c_float,ctypes.c_float,ctypes.c_float,ctypes.c_int,ctypes.c_uint32,ctypes.c_int,ctypes.c_float]
+  fn.argtypes=[ctypes.POINTER(ctypes.c_uint16),ctypes.POINTER(ctypes.c_uint16),ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_float,ctypes.c_int,ctypes.c_int,ctypes.c_float,ctypes.c_float,ctypes.c_float,ctypes.c_float,ctypes.c_float,ctypes.c_int,ctypes.c_uint32,ctypes.c_int,ctypes.c_float]
   Words=ctypes.c_uint16*(ACTIVE//2); source=Words.from_buffer_copy(packed); rows=[]
   for i,(family,front,ffade,fsharp,back,bfade,bsharp) in enumerate(CASES):
    meta=t/f'c{i}.json'; out=t/f'c{i}.argb64'
@@ -34,7 +34,7 @@ def main()->int:
    run=subprocess.run(cmd,cwd=ROOT,capture_output=True,text=True)
    if run.returncode: raise RuntimeError(f'{family}: {run.stderr}')
    m=json.loads(meta.read_text()); actual=out.read_bytes(); dst=Words()
-   rc=fn(source,dst,W,H,front,ffade,ctypes.c_float(fsharp),back,bfade,ctypes.c_float(bsharp),ctypes.c_float(1),ctypes.c_float(45),ctypes.c_float(0),1,1,0,ctypes.c_float(10))
+   rc=fn(source,dst,W,H,front,ffade,ctypes.c_float(fsharp),back,bfade,ctypes.c_float(bsharp),ctypes.c_float(0),ctypes.c_float(1),ctypes.c_float(45),ctypes.c_float(0),1,1,0,ctypes.c_float(10))
    callbacks=[x['callback'] for x in m['execution']['iterate_calls']]; production=bytes(dst)
    if rc or m['status']!='ok' or m['callback_model_check']['status']!='pass' or callbacks!=['0x1800068e0','0x180006a90'] or len(actual)!=ACTIVE or production!=actual:
     mismatch=sum(a!=b for a,b in zip(actual,production)); raise RuntimeError(f'{family} case {i} differs ({mismatch} bytes), rc={rc}, status={m["status"]}, model={m["callback_model_check"]["status"]}, callbacks={callbacks}, len={len(actual)}')

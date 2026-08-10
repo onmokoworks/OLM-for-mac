@@ -36,7 +36,8 @@ extern "C" int olm_dblur_full_argb16(
     const std::uint16_t* input_argb, std::uint16_t* output_argb,
     int width, int height, int front_strength, int front_alpha_fade,
     float front_sharp_tail_percent, int back_strength, int back_alpha_fade,
-    float back_sharp_tail_percent, float brightness_gain, float angle_degrees,
+    float back_sharp_tail_percent, float size_variation_percent,
+    float brightness_gain, float angle_degrees,
     float noise_variation_percent, int noise_type, std::uint32_t seed,
     int noise_offset_ui, float thickness_ui);
 extern "C" int olm_dblur_minimal_argb32(const float* input_argb,

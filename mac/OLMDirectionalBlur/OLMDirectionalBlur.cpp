@@ -633,13 +633,34 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			    (info.back_sharp_tail == 0.0 || info.back_sharp_tail == 50.0 ||
 			     info.back_sharp_tail == 100.0)) ||
 			   (info.back_alpha_fade == 50 && info.back_sharp_tail == 50.0))));
+		const bool pf16_size_variation_exact =
+			input && output && input->width == 16 && input->height == 16 &&
+			output->width == 16 && output->height == 16 &&
+			info.size_variation >= 0.0 && info.size_variation <= 100.0 &&
+			info.front_strength == 8 && info.back_strength == 0 &&
+			info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0 &&
+			info.back_alpha_fade == 0 && info.back_sharp_tail == 0.0 &&
+			info.noise_variation == 0.0 && info.angle_deg == 45.0 &&
+			info.brightness_gain == 1.0;
+		const bool pf16_size_fade_cross_exact =
+			input && output && input->width == 16 && input->height == 16 &&
+			output->width == 16 && output->height == 16 &&
+			info.size_variation == 50.0 && info.front_alpha_fade == 50 &&
+			info.front_strength == 8 && info.back_strength == 0 &&
+			info.front_sharp_tail == 0.0 && info.back_alpha_fade == 0 &&
+			info.back_sharp_tail == 0.0 && info.noise_variation == 0.0 &&
+			info.angle_deg == 45.0 && info.brightness_gain == 1.0;
+		const bool pf16_full_exact = pf16_fade_sharp_family_exact ||
+			pf16_size_variation_exact || pf16_size_fade_cross_exact;
 		const bool minimal_exact = input && output && input->data && output->data &&
 			input->width == output->width && input->height == output->height &&
 			(info.angle_deg == 0.0 || info.angle_deg == 45.0) &&
 			(info.brightness_gain == 1.0 || info.brightness_gain == 0.5) &&
-			info.size_variation == 0.0 &&
-			(front_only_exact || back_family_exact || pf16_fade_sharp_family_exact) &&
-			(info.front_alpha_fade == 0 || pf16_fade_sharp_family_exact) &&
+			(info.size_variation == 0.0 || pf16_size_variation_exact ||
+			 pf16_size_fade_cross_exact) &&
+			(front_only_exact || back_family_exact || pf16_full_exact) &&
+			(info.front_alpha_fade == 0 || pf16_fade_sharp_family_exact ||
+			 pf16_size_fade_cross_exact) &&
 			(info.front_sharp_tail == 0.0 || pf16_fade_sharp_family_exact) &&
 			(info.back_alpha_fade == 0 || pf16_fade_sharp_family_exact) &&
 			(info.back_sharp_tail == 0.0 || pf16_fade_sharp_family_exact) &&
@@ -659,12 +680,13 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 					reinterpret_cast<const std::uint8_t *>(input->data) + y * input->rowbytes,
 					static_cast<std::size_t>(input->width) * sizeof(PF_Pixel16));
 			}
-			const int result = pf16_fade_sharp_family_exact
+			const int result = pf16_full_exact
 				? olm_dblur_full_argb16(
 					source.data(), destination.data(), input->width, input->height,
 					static_cast<int>(info.front_strength), static_cast<int>(info.front_alpha_fade),
 					static_cast<float>(info.front_sharp_tail), static_cast<int>(info.back_strength),
 					static_cast<int>(info.back_alpha_fade), static_cast<float>(info.back_sharp_tail),
+					static_cast<float>(info.size_variation),
 					static_cast<float>(info.brightness_gain), static_cast<float>(info.angle_deg),
 					static_cast<float>(info.noise_variation), static_cast<int>(info.noise_type),
 					static_cast<std::uint32_t>(info.seed), info.noise_offset,
