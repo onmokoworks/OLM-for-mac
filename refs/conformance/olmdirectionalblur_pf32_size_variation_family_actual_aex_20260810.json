@@ -1,0 +1,65 @@
+{
+  "basis": "0 and 100 are public endpoints, 25 exercises a non-half interior value, and 50 preserves the previous exact gate. All execute the actual AEX typed callbacks and production worker with raw-byte equality.",
+  "depth": "PF32",
+  "family": "Size Variation public slider 0..100%",
+  "fixed_route": {
+    "angle": 45,
+    "back_strength": 0,
+    "brightness_gain": 1,
+    "fade_tail_noise": 0,
+    "front_strength": 8,
+    "geometry": "16x16 padded ARGB128",
+    "render_scale": [
+      1,
+      1
+    ]
+  },
+  "not_proven": [
+    "PF16 Size Variation",
+    "Size Variation combined with noise, fade, tail, back blur, other angle/strength, or downsample",
+    "native After Effects render/export",
+    "values outside the public 0..100 slider range"
+  ],
+  "plugin": "OLMDirectionalBlur",
+  "production_source": "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp",
+  "representatives": [
+    {
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "raw_sha256": "a0f5e1deee28cce8362fcf078c62ef0bfb8ec23ed296f88089015de35bab6d25",
+      "size_variation_percent": 0.0
+    },
+    {
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "raw_sha256": "a0f5e1deee28cce8362fcf078c62ef0bfb8ec23ed296f88089015de35bab6d25",
+      "size_variation_percent": 25.0
+    },
+    {
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "raw_sha256": "a0f5e1deee28cce8362fcf078c62ef0bfb8ec23ed296f88089015de35bab6d25",
+      "size_variation_percent": 50.0
+    },
+    {
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "raw_sha256": "a0f5e1deee28cce8362fcf078c62ef0bfb8ec23ed296f88089015de35bab6d25",
+      "size_variation_percent": 100.0
+    }
+  ],
+  "schema_version": 1,
+  "status": "exact_representative_family"
+}

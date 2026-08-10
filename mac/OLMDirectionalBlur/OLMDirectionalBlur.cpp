@@ -674,7 +674,8 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			  ((info.front_strength == 1 || info.front_strength == 2) ||
 			   (info.front_strength == 0 && info.back_strength == 1) ||
 			   (info.front_strength == 8 && info.back_strength == 0))) ||
-			 (info.size_variation == 50.0 && info.front_strength == 8 &&
+			 (info.size_variation >= 0.0 && info.size_variation <= 100.0 &&
+			  info.front_strength == 8 &&
 			  info.back_strength == 0)) &&
 			info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0 &&
 			(info.back_strength == 0 || info.back_strength == 1) && info.back_alpha_fade == 0 &&
