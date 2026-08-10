@@ -3,13 +3,13 @@
   "aexcompat_worker": {
     "path": "/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue1135-typed-iterate-suites/guest/target/release/aex-guest-worker",
     "sha256": "16c329a481aef88c00fd6016e79996eecaabf7a588cff084e866b6bd15d411fc",
-    "typed_iterate_suite_fix_commit": "0ee27894"
+    "typed_iterate_suite_fix_commit": "0ee278943751b968ea2b0d5a0e0f483b70c0090d"
   },
   "cases": [
     {
-      "actual_exported_raw_sha256": "22c974af076f1d180f6f37bb3c06dc802b1c71a9e9f557141fcfb0153b8d840d",
-      "bytes": 60,
-      "case": "off_off_off",
+      "actual_exported_raw_sha256": "7b04243e0a32e9edac455957670f97eb721e891ca4731aa4fb3acf7d5ba24db3",
+      "bytes": 308,
+      "case": "keep_0_premult_0_replace_0",
       "color_keep": false,
       "depth": "PF8",
       "owner_status": "exact",
@@ -97,7 +97,7 @@
       ],
       "pixel_format": "argb8",
       "premultiplied": false,
-      "production_complete_buffer_sha256": "22c974af076f1d180f6f37bb3c06dc802b1c71a9e9f557141fcfb0153b8d840d",
+      "production_complete_buffer_sha256": "7b04243e0a32e9edac455957670f97eb721e891ca4731aa4fb3acf7d5ba24db3",
       "render_mode": "smart-cpu",
       "replace": false,
       "smart_pre_render": {
@@ -120,9 +120,9 @@
       ]
     },
     {
-      "actual_exported_raw_sha256": "7c99f54bbd53a82bd7994efe74d2698a7b76dcf804dfcfefc1303ec3c9160b94",
-      "bytes": 120,
-      "case": "off_off_off",
+      "actual_exported_raw_sha256": "70f0b1e3f0dd3ba5dc448b5123f49ebdfa57665827cd54373b9c833496ecd85d",
+      "bytes": 616,
+      "case": "keep_0_premult_0_replace_0",
       "color_keep": false,
       "depth": "PF16",
       "owner_status": "exact",
@@ -210,7 +210,7 @@
       ],
       "pixel_format": "argb16",
       "premultiplied": false,
-      "production_complete_buffer_sha256": "7c99f54bbd53a82bd7994efe74d2698a7b76dcf804dfcfefc1303ec3c9160b94",
+      "production_complete_buffer_sha256": "70f0b1e3f0dd3ba5dc448b5123f49ebdfa57665827cd54373b9c833496ecd85d",
       "render_mode": "smart-cpu",
       "replace": false,
       "smart_pre_render": {
@@ -233,9 +233,9 @@
       ]
     },
     {
-      "actual_exported_raw_sha256": "b4df5ff33cefcec00de77b34c7ee028f7889dcee1d0369353712f976949a5b08",
-      "bytes": 240,
-      "case": "off_off_off",
+      "actual_exported_raw_sha256": "a6e127182427c71801d6ed2d0b8159bf42f7e37ea7a22bbe2fdab27cbb027e67",
+      "bytes": 1232,
+      "case": "keep_0_premult_0_replace_0",
       "color_keep": false,
       "depth": "PF32",
       "owner_status": "exact",
@@ -323,7 +323,7 @@
       ],
       "pixel_format": "argb32f",
       "premultiplied": false,
-      "production_complete_buffer_sha256": "b4df5ff33cefcec00de77b34c7ee028f7889dcee1d0369353712f976949a5b08",
+      "production_complete_buffer_sha256": "a6e127182427c71801d6ed2d0b8159bf42f7e37ea7a22bbe2fdab27cbb027e67",
       "render_mode": "smart-cpu",
       "replace": false,
       "smart_pre_render": {
@@ -346,9 +346,2043 @@
       ]
     },
     {
-      "actual_exported_raw_sha256": "47d42fbd89668eceef67a6c80412a85f865ba4a67dff2e1554c6980bb60ec4ae",
-      "bytes": 60,
-      "case": "on_on_on",
+      "actual_exported_raw_sha256": "7b04243e0a32e9edac455957670f97eb721e891ca4731aa4fb3acf7d5ba24db3",
+      "bytes": 308,
+      "case": "keep_0_premult_0_replace_1",
+      "color_keep": false,
+      "depth": "PF8",
+      "owner_status": "exact",
+      "parameter_values": [
+        {
+          "name": "Color Keep",
+          "slot": 1,
+          "value": 0.0
+        },
+        {
+          "name": "Premultiplied Color",
+          "slot": 4,
+          "value": 0.0
+        },
+        {
+          "name": "Number of Colors",
+          "slot": 22,
+          "value": 2.0
+        },
+        {
+          "name": "Enable Replace",
+          "slot": 23,
+          "value": 1.0
+        },
+        {
+          "name": "Use Color 1",
+          "slot": 24,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 1",
+          "slot": 25,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "name": "Color 1",
+          "slot": 26
+        },
+        {
+          "color": [
+            255,
+            230,
+            38,
+            26
+          ],
+          "name": "Replace Color 1",
+          "slot": 27
+        },
+        {
+          "name": "Use Color 2",
+          "slot": 32,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 2",
+          "slot": 33,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            255,
+            0
+          ],
+          "name": "Color 2",
+          "slot": 34
+        },
+        {
+          "color": [
+            255,
+            26,
+            89,
+            242
+          ],
+          "name": "Replace Color 2",
+          "slot": 35
+        }
+      ],
+      "pixel_format": "argb8",
+      "premultiplied": false,
+      "production_complete_buffer_sha256": "7b04243e0a32e9edac455957670f97eb721e891ca4731aa4fb3acf7d5ba24db3",
+      "render_mode": "smart-cpu",
+      "replace": true,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF Iterate8 Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "70f0b1e3f0dd3ba5dc448b5123f49ebdfa57665827cd54373b9c833496ecd85d",
+      "bytes": 616,
+      "case": "keep_0_premult_0_replace_1",
+      "color_keep": false,
+      "depth": "PF16",
+      "owner_status": "exact",
+      "parameter_values": [
+        {
+          "name": "Color Keep",
+          "slot": 1,
+          "value": 0.0
+        },
+        {
+          "name": "Premultiplied Color",
+          "slot": 4,
+          "value": 0.0
+        },
+        {
+          "name": "Number of Colors",
+          "slot": 22,
+          "value": 2.0
+        },
+        {
+          "name": "Enable Replace",
+          "slot": 23,
+          "value": 1.0
+        },
+        {
+          "name": "Use Color 1",
+          "slot": 24,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 1",
+          "slot": 25,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "name": "Color 1",
+          "slot": 26
+        },
+        {
+          "color": [
+            255,
+            230,
+            38,
+            26
+          ],
+          "name": "Replace Color 1",
+          "slot": 27
+        },
+        {
+          "name": "Use Color 2",
+          "slot": 32,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 2",
+          "slot": 33,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            255,
+            0
+          ],
+          "name": "Color 2",
+          "slot": 34
+        },
+        {
+          "color": [
+            255,
+            26,
+            89,
+            242
+          ],
+          "name": "Replace Color 2",
+          "slot": 35
+        }
+      ],
+      "pixel_format": "argb16",
+      "premultiplied": false,
+      "production_complete_buffer_sha256": "70f0b1e3f0dd3ba5dc448b5123f49ebdfa57665827cd54373b9c833496ecd85d",
+      "render_mode": "smart-cpu",
+      "replace": true,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF iterate16 Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "a6e127182427c71801d6ed2d0b8159bf42f7e37ea7a22bbe2fdab27cbb027e67",
+      "bytes": 1232,
+      "case": "keep_0_premult_0_replace_1",
+      "color_keep": false,
+      "depth": "PF32",
+      "owner_status": "exact",
+      "parameter_values": [
+        {
+          "name": "Color Keep",
+          "slot": 1,
+          "value": 0.0
+        },
+        {
+          "name": "Premultiplied Color",
+          "slot": 4,
+          "value": 0.0
+        },
+        {
+          "name": "Number of Colors",
+          "slot": 22,
+          "value": 2.0
+        },
+        {
+          "name": "Enable Replace",
+          "slot": 23,
+          "value": 1.0
+        },
+        {
+          "name": "Use Color 1",
+          "slot": 24,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 1",
+          "slot": 25,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "name": "Color 1",
+          "slot": 26
+        },
+        {
+          "color": [
+            255,
+            230,
+            38,
+            26
+          ],
+          "name": "Replace Color 1",
+          "slot": 27
+        },
+        {
+          "name": "Use Color 2",
+          "slot": 32,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 2",
+          "slot": 33,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            255,
+            0
+          ],
+          "name": "Color 2",
+          "slot": 34
+        },
+        {
+          "color": [
+            255,
+            26,
+            89,
+            242
+          ],
+          "name": "Replace Color 2",
+          "slot": 35
+        }
+      ],
+      "pixel_format": "argb32f",
+      "premultiplied": false,
+      "production_complete_buffer_sha256": "a6e127182427c71801d6ed2d0b8159bf42f7e37ea7a22bbe2fdab27cbb027e67",
+      "render_mode": "smart-cpu",
+      "replace": true,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF iterateFloat Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "2c3080fc14ecc1946e4b79baf974329e29e4143bbcac0f84d6450416f5f9f771",
+      "bytes": 308,
+      "case": "keep_0_premult_1_replace_0",
+      "color_keep": false,
+      "depth": "PF8",
+      "owner_status": "exact",
+      "parameter_values": [
+        {
+          "name": "Color Keep",
+          "slot": 1,
+          "value": 0.0
+        },
+        {
+          "name": "Premultiplied Color",
+          "slot": 4,
+          "value": 1.0
+        },
+        {
+          "name": "Number of Colors",
+          "slot": 22,
+          "value": 2.0
+        },
+        {
+          "name": "Enable Replace",
+          "slot": 23,
+          "value": 0.0
+        },
+        {
+          "name": "Use Color 1",
+          "slot": 24,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 1",
+          "slot": 25,
+          "value": 0.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "name": "Color 1",
+          "slot": 26
+        },
+        {
+          "color": [
+            255,
+            230,
+            38,
+            26
+          ],
+          "name": "Replace Color 1",
+          "slot": 27
+        },
+        {
+          "name": "Use Color 2",
+          "slot": 32,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 2",
+          "slot": 33,
+          "value": 0.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            255,
+            0
+          ],
+          "name": "Color 2",
+          "slot": 34
+        },
+        {
+          "color": [
+            255,
+            26,
+            89,
+            242
+          ],
+          "name": "Replace Color 2",
+          "slot": 35
+        }
+      ],
+      "pixel_format": "argb8",
+      "premultiplied": true,
+      "production_complete_buffer_sha256": "2c3080fc14ecc1946e4b79baf974329e29e4143bbcac0f84d6450416f5f9f771",
+      "render_mode": "smart-cpu",
+      "replace": false,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF Iterate8 Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "9c4f13bfa0ba7372bb2000038398b995647f1df857ca8f8b96a21800fe423b0c",
+      "bytes": 616,
+      "case": "keep_0_premult_1_replace_0",
+      "color_keep": false,
+      "depth": "PF16",
+      "owner_status": "exact",
+      "parameter_values": [
+        {
+          "name": "Color Keep",
+          "slot": 1,
+          "value": 0.0
+        },
+        {
+          "name": "Premultiplied Color",
+          "slot": 4,
+          "value": 1.0
+        },
+        {
+          "name": "Number of Colors",
+          "slot": 22,
+          "value": 2.0
+        },
+        {
+          "name": "Enable Replace",
+          "slot": 23,
+          "value": 0.0
+        },
+        {
+          "name": "Use Color 1",
+          "slot": 24,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 1",
+          "slot": 25,
+          "value": 0.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "name": "Color 1",
+          "slot": 26
+        },
+        {
+          "color": [
+            255,
+            230,
+            38,
+            26
+          ],
+          "name": "Replace Color 1",
+          "slot": 27
+        },
+        {
+          "name": "Use Color 2",
+          "slot": 32,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 2",
+          "slot": 33,
+          "value": 0.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            255,
+            0
+          ],
+          "name": "Color 2",
+          "slot": 34
+        },
+        {
+          "color": [
+            255,
+            26,
+            89,
+            242
+          ],
+          "name": "Replace Color 2",
+          "slot": 35
+        }
+      ],
+      "pixel_format": "argb16",
+      "premultiplied": true,
+      "production_complete_buffer_sha256": "9c4f13bfa0ba7372bb2000038398b995647f1df857ca8f8b96a21800fe423b0c",
+      "render_mode": "smart-cpu",
+      "replace": false,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF iterate16 Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "9f5e214100f39109a2c83c69852174a373b5594b4377392306a6560da6525a3b",
+      "bytes": 1232,
+      "case": "keep_0_premult_1_replace_0",
+      "color_keep": false,
+      "depth": "PF32",
+      "owner_status": "exact",
+      "parameter_values": [
+        {
+          "name": "Color Keep",
+          "slot": 1,
+          "value": 0.0
+        },
+        {
+          "name": "Premultiplied Color",
+          "slot": 4,
+          "value": 1.0
+        },
+        {
+          "name": "Number of Colors",
+          "slot": 22,
+          "value": 2.0
+        },
+        {
+          "name": "Enable Replace",
+          "slot": 23,
+          "value": 0.0
+        },
+        {
+          "name": "Use Color 1",
+          "slot": 24,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 1",
+          "slot": 25,
+          "value": 0.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "name": "Color 1",
+          "slot": 26
+        },
+        {
+          "color": [
+            255,
+            230,
+            38,
+            26
+          ],
+          "name": "Replace Color 1",
+          "slot": 27
+        },
+        {
+          "name": "Use Color 2",
+          "slot": 32,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 2",
+          "slot": 33,
+          "value": 0.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            255,
+            0
+          ],
+          "name": "Color 2",
+          "slot": 34
+        },
+        {
+          "color": [
+            255,
+            26,
+            89,
+            242
+          ],
+          "name": "Replace Color 2",
+          "slot": 35
+        }
+      ],
+      "pixel_format": "argb32f",
+      "premultiplied": true,
+      "production_complete_buffer_sha256": "9f5e214100f39109a2c83c69852174a373b5594b4377392306a6560da6525a3b",
+      "render_mode": "smart-cpu",
+      "replace": false,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF iterateFloat Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "2c3080fc14ecc1946e4b79baf974329e29e4143bbcac0f84d6450416f5f9f771",
+      "bytes": 308,
+      "case": "keep_0_premult_1_replace_1",
+      "color_keep": false,
+      "depth": "PF8",
+      "owner_status": "exact",
+      "parameter_values": [
+        {
+          "name": "Color Keep",
+          "slot": 1,
+          "value": 0.0
+        },
+        {
+          "name": "Premultiplied Color",
+          "slot": 4,
+          "value": 1.0
+        },
+        {
+          "name": "Number of Colors",
+          "slot": 22,
+          "value": 2.0
+        },
+        {
+          "name": "Enable Replace",
+          "slot": 23,
+          "value": 1.0
+        },
+        {
+          "name": "Use Color 1",
+          "slot": 24,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 1",
+          "slot": 25,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "name": "Color 1",
+          "slot": 26
+        },
+        {
+          "color": [
+            255,
+            230,
+            38,
+            26
+          ],
+          "name": "Replace Color 1",
+          "slot": 27
+        },
+        {
+          "name": "Use Color 2",
+          "slot": 32,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 2",
+          "slot": 33,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            255,
+            0
+          ],
+          "name": "Color 2",
+          "slot": 34
+        },
+        {
+          "color": [
+            255,
+            26,
+            89,
+            242
+          ],
+          "name": "Replace Color 2",
+          "slot": 35
+        }
+      ],
+      "pixel_format": "argb8",
+      "premultiplied": true,
+      "production_complete_buffer_sha256": "2c3080fc14ecc1946e4b79baf974329e29e4143bbcac0f84d6450416f5f9f771",
+      "render_mode": "smart-cpu",
+      "replace": true,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF Iterate8 Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "9c4f13bfa0ba7372bb2000038398b995647f1df857ca8f8b96a21800fe423b0c",
+      "bytes": 616,
+      "case": "keep_0_premult_1_replace_1",
+      "color_keep": false,
+      "depth": "PF16",
+      "owner_status": "exact",
+      "parameter_values": [
+        {
+          "name": "Color Keep",
+          "slot": 1,
+          "value": 0.0
+        },
+        {
+          "name": "Premultiplied Color",
+          "slot": 4,
+          "value": 1.0
+        },
+        {
+          "name": "Number of Colors",
+          "slot": 22,
+          "value": 2.0
+        },
+        {
+          "name": "Enable Replace",
+          "slot": 23,
+          "value": 1.0
+        },
+        {
+          "name": "Use Color 1",
+          "slot": 24,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 1",
+          "slot": 25,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "name": "Color 1",
+          "slot": 26
+        },
+        {
+          "color": [
+            255,
+            230,
+            38,
+            26
+          ],
+          "name": "Replace Color 1",
+          "slot": 27
+        },
+        {
+          "name": "Use Color 2",
+          "slot": 32,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 2",
+          "slot": 33,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            255,
+            0
+          ],
+          "name": "Color 2",
+          "slot": 34
+        },
+        {
+          "color": [
+            255,
+            26,
+            89,
+            242
+          ],
+          "name": "Replace Color 2",
+          "slot": 35
+        }
+      ],
+      "pixel_format": "argb16",
+      "premultiplied": true,
+      "production_complete_buffer_sha256": "9c4f13bfa0ba7372bb2000038398b995647f1df857ca8f8b96a21800fe423b0c",
+      "render_mode": "smart-cpu",
+      "replace": true,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF iterate16 Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "9f5e214100f39109a2c83c69852174a373b5594b4377392306a6560da6525a3b",
+      "bytes": 1232,
+      "case": "keep_0_premult_1_replace_1",
+      "color_keep": false,
+      "depth": "PF32",
+      "owner_status": "exact",
+      "parameter_values": [
+        {
+          "name": "Color Keep",
+          "slot": 1,
+          "value": 0.0
+        },
+        {
+          "name": "Premultiplied Color",
+          "slot": 4,
+          "value": 1.0
+        },
+        {
+          "name": "Number of Colors",
+          "slot": 22,
+          "value": 2.0
+        },
+        {
+          "name": "Enable Replace",
+          "slot": 23,
+          "value": 1.0
+        },
+        {
+          "name": "Use Color 1",
+          "slot": 24,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 1",
+          "slot": 25,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "name": "Color 1",
+          "slot": 26
+        },
+        {
+          "color": [
+            255,
+            230,
+            38,
+            26
+          ],
+          "name": "Replace Color 1",
+          "slot": 27
+        },
+        {
+          "name": "Use Color 2",
+          "slot": 32,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 2",
+          "slot": 33,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            255,
+            0
+          ],
+          "name": "Color 2",
+          "slot": 34
+        },
+        {
+          "color": [
+            255,
+            26,
+            89,
+            242
+          ],
+          "name": "Replace Color 2",
+          "slot": 35
+        }
+      ],
+      "pixel_format": "argb32f",
+      "premultiplied": true,
+      "production_complete_buffer_sha256": "9f5e214100f39109a2c83c69852174a373b5594b4377392306a6560da6525a3b",
+      "render_mode": "smart-cpu",
+      "replace": true,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF iterateFloat Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "d6a8b375e921b16809540d3a17bd9a82bc65d87b34b535319faffbafb7a41a66",
+      "bytes": 308,
+      "case": "keep_1_premult_0_replace_0",
+      "color_keep": true,
+      "depth": "PF8",
+      "owner_status": "exact",
+      "parameter_values": [
+        {
+          "name": "Color Keep",
+          "slot": 1,
+          "value": 1.0
+        },
+        {
+          "name": "Premultiplied Color",
+          "slot": 4,
+          "value": 0.0
+        },
+        {
+          "name": "Number of Colors",
+          "slot": 22,
+          "value": 2.0
+        },
+        {
+          "name": "Enable Replace",
+          "slot": 23,
+          "value": 0.0
+        },
+        {
+          "name": "Use Color 1",
+          "slot": 24,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 1",
+          "slot": 25,
+          "value": 0.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "name": "Color 1",
+          "slot": 26
+        },
+        {
+          "color": [
+            255,
+            230,
+            38,
+            26
+          ],
+          "name": "Replace Color 1",
+          "slot": 27
+        },
+        {
+          "name": "Use Color 2",
+          "slot": 32,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 2",
+          "slot": 33,
+          "value": 0.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            255,
+            0
+          ],
+          "name": "Color 2",
+          "slot": 34
+        },
+        {
+          "color": [
+            255,
+            26,
+            89,
+            242
+          ],
+          "name": "Replace Color 2",
+          "slot": 35
+        }
+      ],
+      "pixel_format": "argb8",
+      "premultiplied": false,
+      "production_complete_buffer_sha256": "d6a8b375e921b16809540d3a17bd9a82bc65d87b34b535319faffbafb7a41a66",
+      "render_mode": "smart-cpu",
+      "replace": false,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF Iterate8 Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "ed4c0b8f2725c87720e6e0544d99784bbda319de67e2380ca39f3ac7dce54e00",
+      "bytes": 616,
+      "case": "keep_1_premult_0_replace_0",
+      "color_keep": true,
+      "depth": "PF16",
+      "owner_status": "exact",
+      "parameter_values": [
+        {
+          "name": "Color Keep",
+          "slot": 1,
+          "value": 1.0
+        },
+        {
+          "name": "Premultiplied Color",
+          "slot": 4,
+          "value": 0.0
+        },
+        {
+          "name": "Number of Colors",
+          "slot": 22,
+          "value": 2.0
+        },
+        {
+          "name": "Enable Replace",
+          "slot": 23,
+          "value": 0.0
+        },
+        {
+          "name": "Use Color 1",
+          "slot": 24,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 1",
+          "slot": 25,
+          "value": 0.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "name": "Color 1",
+          "slot": 26
+        },
+        {
+          "color": [
+            255,
+            230,
+            38,
+            26
+          ],
+          "name": "Replace Color 1",
+          "slot": 27
+        },
+        {
+          "name": "Use Color 2",
+          "slot": 32,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 2",
+          "slot": 33,
+          "value": 0.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            255,
+            0
+          ],
+          "name": "Color 2",
+          "slot": 34
+        },
+        {
+          "color": [
+            255,
+            26,
+            89,
+            242
+          ],
+          "name": "Replace Color 2",
+          "slot": 35
+        }
+      ],
+      "pixel_format": "argb16",
+      "premultiplied": false,
+      "production_complete_buffer_sha256": "ed4c0b8f2725c87720e6e0544d99784bbda319de67e2380ca39f3ac7dce54e00",
+      "render_mode": "smart-cpu",
+      "replace": false,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF iterate16 Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "1479106d41094294f9ff03073e902dd8dc2809271538df8cc1648ac322161271",
+      "bytes": 1232,
+      "case": "keep_1_premult_0_replace_0",
+      "color_keep": true,
+      "depth": "PF32",
+      "owner_status": "exact",
+      "parameter_values": [
+        {
+          "name": "Color Keep",
+          "slot": 1,
+          "value": 1.0
+        },
+        {
+          "name": "Premultiplied Color",
+          "slot": 4,
+          "value": 0.0
+        },
+        {
+          "name": "Number of Colors",
+          "slot": 22,
+          "value": 2.0
+        },
+        {
+          "name": "Enable Replace",
+          "slot": 23,
+          "value": 0.0
+        },
+        {
+          "name": "Use Color 1",
+          "slot": 24,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 1",
+          "slot": 25,
+          "value": 0.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "name": "Color 1",
+          "slot": 26
+        },
+        {
+          "color": [
+            255,
+            230,
+            38,
+            26
+          ],
+          "name": "Replace Color 1",
+          "slot": 27
+        },
+        {
+          "name": "Use Color 2",
+          "slot": 32,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 2",
+          "slot": 33,
+          "value": 0.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            255,
+            0
+          ],
+          "name": "Color 2",
+          "slot": 34
+        },
+        {
+          "color": [
+            255,
+            26,
+            89,
+            242
+          ],
+          "name": "Replace Color 2",
+          "slot": 35
+        }
+      ],
+      "pixel_format": "argb32f",
+      "premultiplied": false,
+      "production_complete_buffer_sha256": "1479106d41094294f9ff03073e902dd8dc2809271538df8cc1648ac322161271",
+      "render_mode": "smart-cpu",
+      "replace": false,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF iterateFloat Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "a78b875624cf1261dcad5feccbbbe688b06003dc1c0b3a0d1db981ba2c2d1d49",
+      "bytes": 308,
+      "case": "keep_1_premult_0_replace_1",
+      "color_keep": true,
+      "depth": "PF8",
+      "owner_status": "exact",
+      "parameter_values": [
+        {
+          "name": "Color Keep",
+          "slot": 1,
+          "value": 1.0
+        },
+        {
+          "name": "Premultiplied Color",
+          "slot": 4,
+          "value": 0.0
+        },
+        {
+          "name": "Number of Colors",
+          "slot": 22,
+          "value": 2.0
+        },
+        {
+          "name": "Enable Replace",
+          "slot": 23,
+          "value": 1.0
+        },
+        {
+          "name": "Use Color 1",
+          "slot": 24,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 1",
+          "slot": 25,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "name": "Color 1",
+          "slot": 26
+        },
+        {
+          "color": [
+            255,
+            230,
+            38,
+            26
+          ],
+          "name": "Replace Color 1",
+          "slot": 27
+        },
+        {
+          "name": "Use Color 2",
+          "slot": 32,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 2",
+          "slot": 33,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            255,
+            0
+          ],
+          "name": "Color 2",
+          "slot": 34
+        },
+        {
+          "color": [
+            255,
+            26,
+            89,
+            242
+          ],
+          "name": "Replace Color 2",
+          "slot": 35
+        }
+      ],
+      "pixel_format": "argb8",
+      "premultiplied": false,
+      "production_complete_buffer_sha256": "a78b875624cf1261dcad5feccbbbe688b06003dc1c0b3a0d1db981ba2c2d1d49",
+      "render_mode": "smart-cpu",
+      "replace": true,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF Iterate8 Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "b40fed4f5d753e5f1d5b53a1d0a534293bb68a77170e083487865653e0c0a008",
+      "bytes": 616,
+      "case": "keep_1_premult_0_replace_1",
+      "color_keep": true,
+      "depth": "PF16",
+      "owner_status": "exact",
+      "parameter_values": [
+        {
+          "name": "Color Keep",
+          "slot": 1,
+          "value": 1.0
+        },
+        {
+          "name": "Premultiplied Color",
+          "slot": 4,
+          "value": 0.0
+        },
+        {
+          "name": "Number of Colors",
+          "slot": 22,
+          "value": 2.0
+        },
+        {
+          "name": "Enable Replace",
+          "slot": 23,
+          "value": 1.0
+        },
+        {
+          "name": "Use Color 1",
+          "slot": 24,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 1",
+          "slot": 25,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "name": "Color 1",
+          "slot": 26
+        },
+        {
+          "color": [
+            255,
+            230,
+            38,
+            26
+          ],
+          "name": "Replace Color 1",
+          "slot": 27
+        },
+        {
+          "name": "Use Color 2",
+          "slot": 32,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 2",
+          "slot": 33,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            255,
+            0
+          ],
+          "name": "Color 2",
+          "slot": 34
+        },
+        {
+          "color": [
+            255,
+            26,
+            89,
+            242
+          ],
+          "name": "Replace Color 2",
+          "slot": 35
+        }
+      ],
+      "pixel_format": "argb16",
+      "premultiplied": false,
+      "production_complete_buffer_sha256": "b40fed4f5d753e5f1d5b53a1d0a534293bb68a77170e083487865653e0c0a008",
+      "render_mode": "smart-cpu",
+      "replace": true,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF iterate16 Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "615ae72d6efe0a6bf4d95b1aab7edf188542c1f3033619405724e9116e992ea4",
+      "bytes": 1232,
+      "case": "keep_1_premult_0_replace_1",
+      "color_keep": true,
+      "depth": "PF32",
+      "owner_status": "exact",
+      "parameter_values": [
+        {
+          "name": "Color Keep",
+          "slot": 1,
+          "value": 1.0
+        },
+        {
+          "name": "Premultiplied Color",
+          "slot": 4,
+          "value": 0.0
+        },
+        {
+          "name": "Number of Colors",
+          "slot": 22,
+          "value": 2.0
+        },
+        {
+          "name": "Enable Replace",
+          "slot": 23,
+          "value": 1.0
+        },
+        {
+          "name": "Use Color 1",
+          "slot": 24,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 1",
+          "slot": 25,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "name": "Color 1",
+          "slot": 26
+        },
+        {
+          "color": [
+            255,
+            230,
+            38,
+            26
+          ],
+          "name": "Replace Color 1",
+          "slot": 27
+        },
+        {
+          "name": "Use Color 2",
+          "slot": 32,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 2",
+          "slot": 33,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            255,
+            0
+          ],
+          "name": "Color 2",
+          "slot": 34
+        },
+        {
+          "color": [
+            255,
+            26,
+            89,
+            242
+          ],
+          "name": "Replace Color 2",
+          "slot": 35
+        }
+      ],
+      "pixel_format": "argb32f",
+      "premultiplied": false,
+      "production_complete_buffer_sha256": "615ae72d6efe0a6bf4d95b1aab7edf188542c1f3033619405724e9116e992ea4",
+      "render_mode": "smart-cpu",
+      "replace": true,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF iterateFloat Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "1995fc9d27022fc3aab53f1bd3e5c806f1ceff68c2aa98f4d3c40642654e19ad",
+      "bytes": 308,
+      "case": "keep_1_premult_1_replace_0",
+      "color_keep": true,
+      "depth": "PF8",
+      "owner_status": "exact",
+      "parameter_values": [
+        {
+          "name": "Color Keep",
+          "slot": 1,
+          "value": 1.0
+        },
+        {
+          "name": "Premultiplied Color",
+          "slot": 4,
+          "value": 1.0
+        },
+        {
+          "name": "Number of Colors",
+          "slot": 22,
+          "value": 2.0
+        },
+        {
+          "name": "Enable Replace",
+          "slot": 23,
+          "value": 0.0
+        },
+        {
+          "name": "Use Color 1",
+          "slot": 24,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 1",
+          "slot": 25,
+          "value": 0.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "name": "Color 1",
+          "slot": 26
+        },
+        {
+          "color": [
+            255,
+            230,
+            38,
+            26
+          ],
+          "name": "Replace Color 1",
+          "slot": 27
+        },
+        {
+          "name": "Use Color 2",
+          "slot": 32,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 2",
+          "slot": 33,
+          "value": 0.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            255,
+            0
+          ],
+          "name": "Color 2",
+          "slot": 34
+        },
+        {
+          "color": [
+            255,
+            26,
+            89,
+            242
+          ],
+          "name": "Replace Color 2",
+          "slot": 35
+        }
+      ],
+      "pixel_format": "argb8",
+      "premultiplied": true,
+      "production_complete_buffer_sha256": "1995fc9d27022fc3aab53f1bd3e5c806f1ceff68c2aa98f4d3c40642654e19ad",
+      "render_mode": "smart-cpu",
+      "replace": false,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF Iterate8 Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "8e8c7c4d5e5b5830823d11b2061933ef42b982c48964e7acca8f4cd58464c1b3",
+      "bytes": 616,
+      "case": "keep_1_premult_1_replace_0",
+      "color_keep": true,
+      "depth": "PF16",
+      "owner_status": "exact",
+      "parameter_values": [
+        {
+          "name": "Color Keep",
+          "slot": 1,
+          "value": 1.0
+        },
+        {
+          "name": "Premultiplied Color",
+          "slot": 4,
+          "value": 1.0
+        },
+        {
+          "name": "Number of Colors",
+          "slot": 22,
+          "value": 2.0
+        },
+        {
+          "name": "Enable Replace",
+          "slot": 23,
+          "value": 0.0
+        },
+        {
+          "name": "Use Color 1",
+          "slot": 24,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 1",
+          "slot": 25,
+          "value": 0.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "name": "Color 1",
+          "slot": 26
+        },
+        {
+          "color": [
+            255,
+            230,
+            38,
+            26
+          ],
+          "name": "Replace Color 1",
+          "slot": 27
+        },
+        {
+          "name": "Use Color 2",
+          "slot": 32,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 2",
+          "slot": 33,
+          "value": 0.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            255,
+            0
+          ],
+          "name": "Color 2",
+          "slot": 34
+        },
+        {
+          "color": [
+            255,
+            26,
+            89,
+            242
+          ],
+          "name": "Replace Color 2",
+          "slot": 35
+        }
+      ],
+      "pixel_format": "argb16",
+      "premultiplied": true,
+      "production_complete_buffer_sha256": "8e8c7c4d5e5b5830823d11b2061933ef42b982c48964e7acca8f4cd58464c1b3",
+      "render_mode": "smart-cpu",
+      "replace": false,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF iterate16 Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "dee67fc22014a756f91f599488c531f0c47876ba7499bd64aad4c9d8ced6ee1e",
+      "bytes": 1232,
+      "case": "keep_1_premult_1_replace_0",
+      "color_keep": true,
+      "depth": "PF32",
+      "owner_status": "exact",
+      "parameter_values": [
+        {
+          "name": "Color Keep",
+          "slot": 1,
+          "value": 1.0
+        },
+        {
+          "name": "Premultiplied Color",
+          "slot": 4,
+          "value": 1.0
+        },
+        {
+          "name": "Number of Colors",
+          "slot": 22,
+          "value": 2.0
+        },
+        {
+          "name": "Enable Replace",
+          "slot": 23,
+          "value": 0.0
+        },
+        {
+          "name": "Use Color 1",
+          "slot": 24,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 1",
+          "slot": 25,
+          "value": 0.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            0,
+            0
+          ],
+          "name": "Color 1",
+          "slot": 26
+        },
+        {
+          "color": [
+            255,
+            230,
+            38,
+            26
+          ],
+          "name": "Replace Color 1",
+          "slot": 27
+        },
+        {
+          "name": "Use Color 2",
+          "slot": 32,
+          "value": 1.0
+        },
+        {
+          "name": "Use Replace Color 2",
+          "slot": 33,
+          "value": 0.0
+        },
+        {
+          "color": [
+            255,
+            0,
+            255,
+            0
+          ],
+          "name": "Color 2",
+          "slot": 34
+        },
+        {
+          "color": [
+            255,
+            26,
+            89,
+            242
+          ],
+          "name": "Replace Color 2",
+          "slot": 35
+        }
+      ],
+      "pixel_format": "argb32f",
+      "premultiplied": true,
+      "production_complete_buffer_sha256": "dee67fc22014a756f91f599488c531f0c47876ba7499bd64aad4c9d8ced6ee1e",
+      "render_mode": "smart-cpu",
+      "replace": false,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF iterateFloat Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "9a71faf8076def0fca9e749774f98105f01414b64a78fd7da3b567872a2c9d64",
+      "bytes": 308,
+      "case": "keep_1_premult_1_replace_1",
       "color_keep": true,
       "depth": "PF8",
       "owner_status": "exact",
@@ -436,7 +2470,7 @@
       ],
       "pixel_format": "argb8",
       "premultiplied": true,
-      "production_complete_buffer_sha256": "47d42fbd89668eceef67a6c80412a85f865ba4a67dff2e1554c6980bb60ec4ae",
+      "production_complete_buffer_sha256": "9a71faf8076def0fca9e749774f98105f01414b64a78fd7da3b567872a2c9d64",
       "render_mode": "smart-cpu",
       "replace": true,
       "smart_pre_render": {
@@ -459,9 +2493,9 @@
       ]
     },
     {
-      "actual_exported_raw_sha256": "86945f485b598c974f7fe6b228e2b0407edf6e39259cf32032e123fb3a948b4b",
-      "bytes": 120,
-      "case": "on_on_on",
+      "actual_exported_raw_sha256": "c4b8bebb5a926b56cd4accb40fcdd086cdb4fefd869aa82d3c0f7b7fe3eb887d",
+      "bytes": 616,
+      "case": "keep_1_premult_1_replace_1",
       "color_keep": true,
       "depth": "PF16",
       "owner_status": "exact",
@@ -549,7 +2583,7 @@
       ],
       "pixel_format": "argb16",
       "premultiplied": true,
-      "production_complete_buffer_sha256": "86945f485b598c974f7fe6b228e2b0407edf6e39259cf32032e123fb3a948b4b",
+      "production_complete_buffer_sha256": "c4b8bebb5a926b56cd4accb40fcdd086cdb4fefd869aa82d3c0f7b7fe3eb887d",
       "render_mode": "smart-cpu",
       "replace": true,
       "smart_pre_render": {
@@ -572,9 +2606,9 @@
       ]
     },
     {
-      "actual_exported_raw_sha256": "7eacc6a7acc785f33c0d43f2489bde16c8ac83b4a8cc9e3e2f5272bb84698b74",
-      "bytes": 240,
-      "case": "on_on_on",
+      "actual_exported_raw_sha256": "3ac4dd72f574b1e760956b1befddc266cac13adac25150dd5921529f5fd23a14",
+      "bytes": 1232,
+      "case": "keep_1_premult_1_replace_1",
       "color_keep": true,
       "depth": "PF32",
       "owner_status": "exact",
@@ -662,7 +2696,7 @@
       ],
       "pixel_format": "argb32f",
       "premultiplied": true,
-      "production_complete_buffer_sha256": "7eacc6a7acc785f33c0d43f2489bde16c8ac83b4a8cc9e3e2f5272bb84698b74",
+      "production_complete_buffer_sha256": "3ac4dd72f574b1e760956b1befddc266cac13adac25150dd5921529f5fd23a14",
       "render_mode": "smart-cpu",
       "replace": true,
       "smart_pre_render": {
@@ -685,19 +2719,137 @@
       ]
     }
   ],
-  "claim_boundary": "The two declared public-toggle representatives are actual exported Smart owner evidence for PF8/PF16/PF32. The PF16/PF32 cells require AEXCompat typed iterate Suite wiring commit 0ee27894. Arbitrary parameter products, native Windows, and After Effects host execution are not claimed.",
+  "claim_boundary": "All 24 declared public-toggle/depth cells are actual exported Smart owner evidence. The PF16/PF32 cells require AEXCompat typed iterate Suite wiring commit 0ee27894. Arbitrary parameter products, native Windows, and After Effects host execution are not claimed.",
+  "declared_record_padding_evidence": "refs/conformance/olmcolorkey_keep_premult_replace_actual_aex_20260811.json",
   "fixture": {
     "dimensions": [
-      5,
-      3
+      11,
+      7
     ],
-    "source_png_sha256": "0acba81b987c279eb227c87537b2cd28b1bac49c19f97c34c6263bcd6e90377e",
+    "padding_bridge": "The paired declared-record full-worker matrix keeps and compares eight padding bytes per row; render-png exported-owner worlds are tightly packed.",
+    "roles": [
+      "opaque accepted keys",
+      "fractional-alpha keys",
+      "alpha-zero hidden RGB",
+      "rejected near-green",
+      "low-alpha non-key",
+      "asymmetric background"
+    ],
+    "source_png_sha256": "99e5c07fd5036653668e2924d64a7accb81f65dc1708e59d81e3a615ce8184b5",
     "source_rgba8": [
       [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
         0,
         0,
         0,
         255
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
       ],
       [
         0,
@@ -706,10 +2858,124 @@
         255
       ],
       [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
         0,
         0,
         0,
         128
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
       ],
       [
         0,
@@ -718,16 +2984,118 @@
         128
       ],
       [
-        0,
-        192,
-        0,
-        255
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
       ],
       [
         255,
         0,
         0,
         0
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
       ],
       [
         0,
@@ -739,43 +3107,91 @@
         64,
         96,
         128,
-        160
+        159
       ],
       [
-        12,
-        220,
-        71,
-        96
+        64,
+        96,
+        128,
+        159
       ],
       [
-        231,
-        31,
-        177,
-        224
-      ],
-      [
-        0,
-        0,
-        0,
-        255
-      ],
-      [
-        90,
-        45,
-        180,
-        64
+        64,
+        96,
+        128,
+        159
       ],
       [
         0,
-        255,
+        191,
         0,
         255
       ],
       [
-        250,
-        120,
-        17,
-        192
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
+      ],
+      [
+        64,
+        96,
+        128,
+        159
       ],
       [
         7,
