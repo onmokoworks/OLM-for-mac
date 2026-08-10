@@ -48,6 +48,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmblur_pf16_nonlegacy_source_aex_adapter_20260805.py"),
             (sys.executable, "tools/emulation/test_olmblur_effectmain_smart_chain_20260805.py"),
             (sys.executable, "tools/emulation/test_olmblur_nondefault_smoothness_effectmain_actual_aex_20260810.py"),
+            (sys.executable, "tools/emulation/test_olmblur_amount_repeat_legacy_matrix_actual_aex_20260810.py"),
         ),
     ),
     Lane(

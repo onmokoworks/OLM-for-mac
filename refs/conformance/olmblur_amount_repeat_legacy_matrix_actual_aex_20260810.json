@@ -1,0 +1,832 @@
+{
+  "actual_aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+  "case_count": 36,
+  "cases": [
+    {
+      "expected_sha256": "68744a057641010bbde9b5d5f4226d0df2d49d1ff063e44bf7ac2ce37263feae",
+      "id": "pf8_amount5_0_repeat1_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "0301eadd30bafadf2f386d8620d778aa9d20f198e4594ead0e30d952ee26750a",
+      "id": "pf8_amount5_0_repeat1_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "f5baedf4594bdb26239158ac31494bd1b3821caa968c6c63d944d5306ad50505",
+      "id": "pf8_amount5_0_repeat2_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "7b783e6a10ea28e7bdf0849d929f6f3ea36c88dd1b04a9839877b5ebddc2c2d2",
+      "id": "pf8_amount5_0_repeat2_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "b8ed927b92978b056ad353c27433bd6764e61b6d436f8542ffc261e52158382d",
+      "id": "pf8_amount5_0_repeat10_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "3573622b2ea41f7db66a9ca186119f6bb20f5e01fa90b31eabc4557e4de5ccec",
+      "id": "pf8_amount5_0_repeat10_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "ccbe9b917238d76e187b21f9054abd1ccbf10235d05e9fd51b268d1139cc8bef",
+      "id": "pf8_amount129_4_repeat1_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "f5ce4e67ddc5b007454d8648402c34031f969a252210ac76824eea2e292ed5a6",
+      "id": "pf8_amount129_4_repeat1_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "1ab78e3ea76355d8287e61088f365dc71c377f644ca66d92a770f3228e77dc43",
+      "id": "pf8_amount129_4_repeat2_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "0412941ec1053e65eb72b9a81be3a48020dfc15a86457aeec5eae9a13877ad96",
+      "id": "pf8_amount129_4_repeat2_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "fd6024cc6d1b79682ed59f00c5ce3d2aea5712f58dcfa20ae18a86e0496e98f8",
+      "id": "pf8_amount129_4_repeat10_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "283d6a26323c832025f43626a6ededb79cb76de1488f0fbd2f08245bcc87f7a5",
+      "id": "pf8_amount129_4_repeat10_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "9b26b1fee5cf05dd39473a8d385c7d80843d8bda8c25541c86a1d1c25ed6ce43",
+      "id": "pf16_amount5_0_repeat1_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "c22524ff901f905cc2d9354a0a6a47ed5aecd1dcc0d46fc79439d5ee069593fc",
+      "id": "pf16_amount5_0_repeat1_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "e317807bb9c28f5f9e87e53ec228cc1cbed6cf706c7b39edbfc0e9ef2cd9c200",
+      "id": "pf16_amount5_0_repeat2_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "55ceb1064942b5768d5d15ca9ec149ad6231767b8fcbba4e87997566d45060d4",
+      "id": "pf16_amount5_0_repeat2_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "527feae6282e432d12e78227028e1d3e81cd46cfb6c78a3a87d909626896a252",
+      "id": "pf16_amount5_0_repeat10_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "b339b1dd82ebee30ba6ee90c53f82e8de3663d4053ec7c57a85f94e0c91eeba5",
+      "id": "pf16_amount5_0_repeat10_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "8e884ac75fd8fa2751c2353789459d51efca961a3f724af27758c5b53821fc99",
+      "id": "pf16_amount129_4_repeat1_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "f0098a6343bb0126242843202e936331cad80a84a7af7e7af1e2d9a1d5718b8d",
+      "id": "pf16_amount129_4_repeat1_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "b453aac399101f45f88bf5aea1b97ed601694e8afa2a053f0740981a07d89916",
+      "id": "pf16_amount129_4_repeat2_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "cac4afa73b72990f39b40f1760a160b3264df869d8c9a33b3ec77571604b83ca",
+      "id": "pf16_amount129_4_repeat2_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "138f27e2715749586e4bd9c070d7ed74c4afe7fc98e79b1d0f34e766a02030a2",
+      "id": "pf16_amount129_4_repeat10_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "bf26eeb36fb5362fc2468faa5eaf0809a3d321a5bc9fd92364e3315f4d9508eb",
+      "id": "pf16_amount129_4_repeat10_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "67434329bbf79181bee87025df1e93fbfd8f5fa2a7598b9431d0124a2d26cd0d",
+      "id": "pf32_amount5_0_repeat1_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "c6d1a9aaee1917b0e08d9915cb16f037f4a4b3e94251481dbe1f84250d5450a5",
+      "id": "pf32_amount5_0_repeat1_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "2b9a3e7fd54bbd842745611117320785cbe7e6a6bd69a1053d60568fea2d8fb3",
+      "id": "pf32_amount5_0_repeat2_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "f0c24443625ad1bd626b3192f483d14946e5f233dcb377288dcabc6df7c52b46",
+      "id": "pf32_amount5_0_repeat2_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "0d306332842357aa7257df47a669aff7903bbb7eacd64b616c154580fe24a315",
+      "id": "pf32_amount5_0_repeat10_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "6b4e3b9294bc55175567821beaf19a738e73f3454ed3452417788ad5f9919582",
+      "id": "pf32_amount5_0_repeat10_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "a441eddae2203be1533c328853eab65ef1d068978d449c61dca39c8b3ba3233a",
+      "id": "pf32_amount129_4_repeat1_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "565a47d116b099e1f3d40d49897b2c75a7dbad4a6a64d828e87f1df4b0f10fad",
+      "id": "pf32_amount129_4_repeat1_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "17f145081e50e988c85f4782779ecd177ef58c001f452843eed8c844d623fe4b",
+      "id": "pf32_amount129_4_repeat2_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "c6aaa55d89f2de4086d7afb53ee1130e38dceaa71f3bef337c62eb1481a80a4c",
+      "id": "pf32_amount129_4_repeat2_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "7099a4ec0b5456f4bbee078dbdd25bdc932921d2fa4f86ec0e056a1290d1ee70",
+      "id": "pf32_amount129_4_repeat10_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "expected_sha256": "b616531c823d8cfed1b0fbe0f1bef808850f5968354f58253cb31e6076af0299",
+      "id": "pf32_amount129_4_repeat10_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    }
+  ],
+  "geometry": [
+    24,
+    24
+  ],
+  "matrix": {
+    "amount": [
+      5.0,
+      129.4
+    ],
+    "bias_direction": 1,
+    "depth": [
+      8,
+      16,
+      32
+    ],
+    "legacy": [
+      0,
+      1
+    ],
+    "repeat": [
+      1,
+      2,
+      10
+    ],
+    "smoothness": 100
+  },
+  "not_proven": [
+    "actual Windows AEX public SmartRender callback chain",
+    "native AE render at these 36 cells",
+    "other geometry/bias/smoothness/downsample"
+  ],
+  "path": "retained actual-AEX typed worker -> production Mac EffectMain SmartPreRender/SmartRender",
+  "schema": "olmblur.amount-repeat-legacy-matrix.production/1",
+  "status": "exact"
+}
