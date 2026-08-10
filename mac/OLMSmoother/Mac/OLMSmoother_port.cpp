@@ -22,9 +22,7 @@
 //   - FUN_180009960 / 180009e30  edge walker                    (literal)
 //
 // Remaining work:
-//   - LAB_1800026e0 / 180002670  1st-pass key-color classifier
-//   - temporary PF_EffectWorld allocation/free for the key-mask first pass
-//   - byte-perfect verification against Win reference renders
+//   - broader byte-perfect verification against Win reference renders
 //   - 32-bpc float behavior currently passes through; Win v1 has no float path
 
 #include "OLMSmoother.h"
@@ -141,6 +139,13 @@ struct RenderState {
 	PF_EffectWorld   *dst_world;     // pointer to output world
 	int32_t           tolerance;     // tolerance value (used by classifier)
 	int32_t           threshold;     // raw tolerance; PF16 helpers apply <<7 internally
+	// The Windows PF16 key callback consumes four full words.  They cannot be
+	// represented by key_rg_packed, which intentionally mirrors the PF8 byte
+	// layout above.
+	uint16_t          key16_a;
+	uint16_t          key16_r;
+	uint16_t          key16_g;
+	uint16_t          key16_b;
 };
 
 // ----------------------------------------------------------------------------
@@ -3566,8 +3571,15 @@ static PF_Err
 ScanlinePixel16_KeyMask(void *refconV, A_long /*x*/, A_long /*y*/,
                         PF_Pixel16 *inP, PF_Pixel16 *outP)
 {
-	(void)refconV;
-	*outP = *inP;
+	RenderState *state = (RenderState*)refconV;
+	if (inP != nullptr && outP != nullptr &&
+	    inP->alpha == state->key16_a && inP->red == state->key16_r &&
+	    inP->green == state->key16_g && inP->blue == state->key16_b) {
+		outP->alpha = 0;
+		outP->red = state->key16_r;
+		outP->green = state->key16_g;
+		outP->blue = state->key16_b;
+	}
 	return PF_Err_NONE;
 }
 
@@ -3618,9 +3630,10 @@ RenderEntryChain(PF_InData       *in_data,
 	state->src_world = pass_input;
 	state->dst_world = output;
 
-	// Windows allocates and pre-copies a temporary PF8 world before invoking
-	// LAB_1800026e0. Keep PF16 on its existing independently bounded path.
-	if (state->use_key && sizeof(PixelT) == sizeof(PF_Pixel8)) {
+	// Windows allocates and pre-copies a temporary integer world before invoking
+	// LAB_1800026e0 (PF8) or LAB_180002670 (PF16). PF32 has no native analogue.
+	if (state->use_key &&
+	    (sizeof(PixelT) == sizeof(PF_Pixel8) || sizeof(PixelT) == sizeof(PF_Pixel16))) {
 		const A_long rows = input->height;
 		const A_long rowbytes = input->rowbytes;
 		if (rows > 0 && rowbytes > 0) {
@@ -3691,18 +3704,21 @@ BuildRenderState(PF_ParamDef *params[], short bitdepth, RenderState *state)
 	state->tolerance_lo = state->tolerance;
 	state->tolerance_hi = state->tolerance;
 
+	uint8_t a = params[SM_KEY_COLOR]->u.cd.value.alpha;
 	uint8_t r = params[SM_KEY_COLOR]->u.cd.value.red;
 	uint8_t g = params[SM_KEY_COLOR]->u.cd.value.green;
 	uint8_t b = params[SM_KEY_COLOR]->u.cd.value.blue;
 
 	if (bitdepth >= 16) {
 		// Win widens the 8-bit color components to 15-bit at 16-bit depth.
-		state->key_a         = 0;  // alpha pad
-		state->key_rg_packed = (uint16_t)((Widen8To16(g) << 8) | Widen8To16(r));
-		state->key_b         = Widen8To16(b);
+		state->key_a         = a;
+		state->key16_a       = Widen8To16(a);
+		state->key16_r       = Widen8To16(r);
+		state->key16_g       = Widen8To16(g);
+		state->key16_b       = Widen8To16(b);
 		state->threshold     = state->tolerance;
 	} else {
-		state->key_a         = 0;
+		state->key_a         = a;
 		state->key_rg_packed = (uint16_t)((g << 8) | r);
 		state->key_b         = (uint16_t)b;
 		state->threshold     = state->tolerance;

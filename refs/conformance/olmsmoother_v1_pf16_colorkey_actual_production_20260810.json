@@ -1,0 +1,167 @@
+{
+  "actual_aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+  "callback_vectors": [
+    {
+      "callback": [
+        0,
+        25957,
+        24030,
+        29555
+      ],
+      "input": [
+        32768,
+        25957,
+        24030,
+        29555
+      ],
+      "xy": [
+        0,
+        0
+      ]
+    },
+    {
+      "callback": [
+        4369,
+        8738,
+        13107,
+        17476
+      ],
+      "input": [
+        32768,
+        25958,
+        24030,
+        29555
+      ],
+      "xy": [
+        1,
+        0
+      ]
+    },
+    {
+      "callback": [
+        4369,
+        8738,
+        13107,
+        17476
+      ],
+      "input": [
+        32767,
+        25957,
+        24030,
+        29555
+      ],
+      "xy": [
+        2,
+        0
+      ]
+    },
+    {
+      "callback": [
+        4369,
+        8738,
+        13107,
+        17476
+      ],
+      "input": [
+        32768,
+        25957,
+        24029,
+        29555
+      ],
+      "xy": [
+        0,
+        1
+      ]
+    },
+    {
+      "callback": [
+        4369,
+        8738,
+        13107,
+        17476
+      ],
+      "input": [
+        32768,
+        291,
+        17767,
+        30874
+      ],
+      "xy": [
+        1,
+        1
+      ]
+    },
+    {
+      "callback": [
+        4369,
+        8738,
+        13107,
+        17476
+      ],
+      "input": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "xy": [
+        2,
+        1
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "aex_mask_then_native_main_raw_uint16_exact": true,
+      "key_off_sha256": "c9b94abfac52d3bce934d3b968d944dc62d31f674de7ed6c9b31edf9ea35e5e4",
+      "key_on_sha256": "92f5abc12f7f97391ba5a221f3ad9ec007ceda864920464d835484b841e9fc54",
+      "padding_preserved": true,
+      "tolerance": 0
+    },
+    {
+      "aex_mask_then_native_main_raw_uint16_exact": true,
+      "key_off_sha256": "1fc231b825a755a8405621a10439ab8cf3b46bc27f0ccd04768bcf5c614ea3f0",
+      "key_on_sha256": "f475663c6228d72f655e307f433b0d0a6a6a4dd5bc4ea52fe82bc6962e88cec8",
+      "padding_preserved": true,
+      "tolerance": 6
+    },
+    {
+      "aex_mask_then_native_main_raw_uint16_exact": true,
+      "key_off_sha256": "b31cb2700f6a4eee88888fdd2a99aa186c70c0c7adea2a2ff516c71339352fa6",
+      "key_on_sha256": "7b9580265916a2167802db55bb4d03169dad4375e3f23feecaa1e8e6c67e6f23",
+      "padding_preserved": true,
+      "tolerance": 127
+    },
+    {
+      "aex_mask_then_native_main_raw_uint16_exact": true,
+      "key_off_sha256": "b6cdb5920f3d74d9cc3135e0567a9accbe179870ad03d55703a56df82a1ce96b",
+      "key_on_sha256": "c3c001ba6a83a1b7c1449c33a0ae69a1e863fe571e5df6e34693fc6ff2879c91",
+      "padding_preserved": true,
+      "tolerance": 255
+    }
+  ],
+  "claims_not_made": [
+    "PF32 Color Key",
+    "AE host iteration order",
+    "other geometry"
+  ],
+  "geometry": {
+    "height": 2,
+    "rowbytes": 32,
+    "width": 3
+  },
+  "key_argb16": [
+    32768,
+    25957,
+    24030,
+    29555
+  ],
+  "key_rgb8": [
+    202,
+    187,
+    230
+  ],
+  "schema_version": 1,
+  "scope": "OLMSmoother v1 native PF16 Color Key pass; padded 3x2 raw uint16",
+  "status": "exact"
+}

@@ -1,0 +1,104 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "No other PF8 gamma value/geometry/smoothing combination",
+    "No key interaction",
+    "No PF16/PF32 claim from this fixture",
+    "No AE-host execution claim"
+  ],
+  "decode_lut_sha256": "11056c2feda87964204a53471e172ae6fb6039a0c3120f6277c7ff115fe88cba",
+  "fixture": {
+    "class_nonzero_bytes": 10,
+    "class_plane_hex": "00000000ff000000ff00000000ff00ffffffff00ffffff00",
+    "classifier_instructions": 1501,
+    "decoded_input_rgba_f32": [
+      [
+        0.051269467920064926,
+        0.2158605456352234,
+        0.5209956169128418,
+        1.0
+      ],
+      [
+        0.5209956169128418,
+        0.051269467920064926,
+        0.2158605456352234,
+        1.0
+      ],
+      [
+        0.2158605456352234,
+        0.5209956169128418,
+        0.051269467920064926,
+        1.0
+      ],
+      [
+        0.014443846419453621,
+        0.7379104495048523,
+        0.11697067320346832,
+        1.0
+      ],
+      [
+        0.7379104495048523,
+        0.11697067320346832,
+        0.014443846419453621,
+        1.0
+      ],
+      [
+        0.11697067320346832,
+        0.014443846419453621,
+        0.7379104495048523,
+        1.0
+      ]
+    ],
+    "equal": true,
+    "geometry": [
+      3,
+      2
+    ],
+    "padding_per_row": 5,
+    "padding_preserved": true,
+    "raw_hex": "ff4080bfffbb477aff80bf40a5a5a5a5a5ff20df60ffdf6020ff6a2ccba5a5a5a5a5",
+    "typed_worker_instructions": 4825
+  },
+  "inverse_lut_sha256": "b7014467dcae06109111302b8c930494950d27b817d1390d6434605795772fbc",
+  "parameter_contract": {
+    "encoded_pf8_rgb_codes": [
+      [
+        64,
+        128,
+        191
+      ],
+      [
+        191,
+        64,
+        128
+      ],
+      [
+        128,
+        191,
+        64
+      ],
+      [
+        32,
+        223,
+        96
+      ],
+      [
+        223,
+        96,
+        32
+      ],
+      [
+        96,
+        32,
+        223
+      ]
+    ],
+    "gamma_value_f32": 2.4000000953674316,
+    "internal_bb10_mode_byte": 1,
+    "ui_name": "All Colors",
+    "ui_popup": 3
+  },
+  "production_source_sha256": "d8a7a489bb3bc875e998926bdde971ac66f5544c41ff6bc583819bf0daf0a784",
+  "scope": "PF8 v2, key off, Gamma Correction=All Colors, gamma2.4, smoothness100/range1/extra0, padded nonuniform 3x2",
+  "verdict": "PASS_PF8_V2_GAMMA_ALL_NATURAL_AEX_TO_PRODUCTION_EXACT"
+}

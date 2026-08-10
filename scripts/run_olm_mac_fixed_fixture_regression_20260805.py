@@ -160,6 +160,7 @@ LANES = (
         (
             (sys.executable, "tools/emulation/test_olmradialblur_ui_setup_actual_aex_20260806.py"),
             (sys.executable, "tools/emulation/test_olmradialblur_ui_selectors_actual_aex_20260810.py"),
+            (sys.executable, "tools/emulation/test_olmradialblur_rotation_pf32_size_variation_opaque_actual_aex_20260810.py"),
             (sys.executable, "tools/emulation/test_olmradialblur_unsupported_variation_fail_closed_20260806.py"),
             (sys.executable, "tools/emulation/test_olmradialblur_case0009_pf32_ae_control_replay_20260806.py"),
             (sys.executable, "tools/emulation/test_olmradialblur_case0010_rotation_mac_production_planes_20260805.py"),
@@ -200,6 +201,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmsmoother_v1_mainkernel8_case0001_all_boundaries_20260805.py"),
             (sys.executable, "tools/emulation/test_olmsmoother_v1_case0001_pf8_fullframe_actual_aex_20260805.py"),
             (sys.executable, "tools/emulation/test_olmsmoother_v1_keymask8_actual_production_20260805.py"),
+            (sys.executable, "tools/emulation/test_olmsmoother_v1_pf16_colorkey_actual_production_20260810.py"),
             (sys.executable, "tools/emulation/test_olmsmoother_v1_retained_case05_pf8_colorkey_fullframe_actual_20260805.py"),
             (sys.executable, "tools/emulation/test_olmsmoother_v1_retained_case01_pf8_owner_and_host_boundary_20260806.py"),
         ),
@@ -209,6 +211,7 @@ LANES = (
         (
             (sys.executable, "tools/emulation/test_olmsmoother2_pf8_nonuniform_actual_aex_20260810.py"),
             (sys.executable, "tools/emulation/test_olmsmoother2_pf8_key_gamma_actual_aex_20260810.py"),
+            (sys.executable, "tools/emulation/test_olmsmoother2_pf8_gamma_all_actual_aex_20260810.py"),
             (sys.executable, "tools/emulation/test_olmsmoother2_nonuniform_geometry_actual_aex_20260805.py"),
             (sys.executable, "tools/emulation/test_olmsmoother2_v2_nonuniform_actual_aex_20260805.py"),
             (sys.executable, "tools/emulation/test_olmsmoother2_v2_key_threshold_actual_aex_20260805.py"),
