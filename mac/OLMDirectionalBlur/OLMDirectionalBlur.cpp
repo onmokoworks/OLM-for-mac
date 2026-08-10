@@ -666,6 +666,11 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
 	if (bitdepth == 32) {
+		const bool front_alpha_fade_exact =
+			info.front_alpha_fade >= 0 && info.front_alpha_fade <= 100 &&
+			info.front_strength == 8 && info.back_strength == 0 &&
+			info.size_variation == 0.0 && info.angle_deg == 45.0 &&
+			info.brightness_gain == 1.0 && info.noise_variation == 0.0;
 		const bool minimal_exact = input && output && input->data && output->data &&
 			input->width == output->width && input->height == output->height &&
 			(info.angle_deg == 0.0 || info.angle_deg == 45.0) &&
@@ -677,7 +682,8 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			 (info.size_variation >= 0.0 && info.size_variation <= 100.0 &&
 			  info.front_strength == 8 &&
 			  info.back_strength == 0)) &&
-			info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0 &&
+			(info.front_alpha_fade == 0 || front_alpha_fade_exact) &&
+			info.front_sharp_tail == 0.0 &&
 			(info.back_strength == 0 || info.back_strength == 1) && info.back_alpha_fade == 0 &&
 			info.back_sharp_tail == 0.0 &&
 			(info.noise_variation == 0.0 ||
@@ -696,18 +702,25 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 				std::memcpy(source.data() + static_cast<std::size_t>(y) * input->width * 4,
 					reinterpret_cast<const std::uint8_t *>(input->data) + y * input->rowbytes,
 					static_cast<std::size_t>(input->width) * sizeof(PF_PixelFloat));
-			const int result = olm_dblur_minimal_argb32(source.data(), destination.data(),
-				input->width, input->height, static_cast<int>(info.front_strength),
-				static_cast<int>(info.back_strength),
-				static_cast<float>(info.size_variation),
-				static_cast<float>(info.angle_deg),
-				static_cast<float>(info.brightness_gain),
-				static_cast<float>(info.noise_variation),
-				static_cast<int>(info.noise_type),
-				static_cast<std::uint32_t>(info.seed), info.noise_offset,
-				static_cast<float>(info.thickness),
-				info.noise_type == 3 ? reinterpret_cast<const float *>(noise_layer->data) : nullptr,
-				info.noise_type == 3 ? static_cast<int>(noise_layer->rowbytes) : 0);
+			const float *layer_data = info.noise_type == 3 && noise_layer
+				? reinterpret_cast<const float *>(noise_layer->data) : nullptr;
+			const int layer_rowbytes = info.noise_type == 3 && noise_layer
+				? static_cast<int>(noise_layer->rowbytes) : 0;
+			const int result = info.front_alpha_fade == 0
+				? olm_dblur_minimal_argb32(source.data(), destination.data(),
+					input->width, input->height, static_cast<int>(info.front_strength),
+					static_cast<int>(info.back_strength), static_cast<float>(info.size_variation),
+					static_cast<float>(info.angle_deg), static_cast<float>(info.brightness_gain),
+					static_cast<float>(info.noise_variation), static_cast<int>(info.noise_type),
+					static_cast<std::uint32_t>(info.seed), info.noise_offset,
+					static_cast<float>(info.thickness), layer_data, layer_rowbytes)
+				: olm_dblur_minimal_fade_argb32(source.data(), destination.data(),
+					input->width, input->height, static_cast<int>(info.front_strength),
+					static_cast<int>(info.back_strength), static_cast<int>(info.front_alpha_fade),
+					static_cast<float>(info.size_variation), static_cast<float>(info.angle_deg),
+					static_cast<float>(info.brightness_gain), static_cast<float>(info.noise_variation),
+					static_cast<int>(info.noise_type), static_cast<std::uint32_t>(info.seed),
+					info.noise_offset, static_cast<float>(info.thickness), layer_data, layer_rowbytes);
 			if (result != 0) return result == -5 ? PF_Err_OUT_OF_MEMORY : PF_Err_INTERNAL_STRUCT_DAMAGED;
 			for (A_long y = 0; y < output->height; ++y)
 				std::memcpy(reinterpret_cast<std::uint8_t *>(output->data) + y * output->rowbytes,

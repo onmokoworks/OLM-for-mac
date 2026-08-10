@@ -202,6 +202,34 @@ int main() {{ std::printf("{{\\"status\\":\\"pass\\",\\"cases\\":["); bool first
             [](std::uint8_t v){return v==OUT_PAD;});
           if(outside_err!=PF_Err_BAD_CALLBACK_PARAM || outside_exact!=0 || !outside_untouched) return 42;
         }
+        if(d==32) for(int front_alpha_fade : {50,100}) {
+          std::vector<std::uint8_t> expected_fade(rb*HEIGHT,OUT_PAD);
+          std::vector<float> src(WIDTH*HEIGHT*4), dst(WIDTH*HEIGHT*4);
+          for(int y=0;y<HEIGHT;++y) std::memcpy(src.data()+y*WIDTH*4,inb.data()+y*rb,WIDTH*ps);
+          if(olm_dblur_minimal_fade_argb32(src.data(),dst.data(),WIDTH,HEIGHT,8,0,
+              front_alpha_fade,0.0f,45.0f,1.0f,0.0f,1,1,0,10.0f,nullptr,0)!=0) return 43;
+          for(int y=0;y<HEIGHT;++y) std::memcpy(expected_fade.data()+y*rb,dst.data()+y*WIDTH*4,WIDTH*ps);
+          std::fill(outb.begin(),outb.end(),OUT_PAD);
+          OLMDirectionalBlurInfo faded{}; faded.angle_deg=45.0; faded.brightness_gain=1.0;
+          faded.front_strength=8; faded.front_alpha_fade=front_alpha_fade; faded.noise_type=1;
+          faded.seed=1; faded.thickness=10.0; faded.render_scale_x=faded.render_scale_y=1.0;
+          int fade_exact=0;
+          PF_Err fade_err=OLMDirectionalBlurTestRenderWorld(&in,&out,&faded,32,&fade_exact);
+          bool fade_visible=true;
+          for(int y=0;y<HEIGHT;++y) fade_visible=fade_visible&&
+            std::memcmp(expected_fade.data()+y*rb,outb.data()+y*rb,WIDTH*ps)==0;
+          if(fade_err!=PF_Err_NONE || fade_exact!=0 || !fade_visible || !pad(outb,rb,OUT_PAD)) return 44;
+        }
+        if(d==32) for(int front_alpha_fade : {-1,101}) {
+          std::fill(outb.begin(),outb.end(),OUT_PAD);
+          OLMDirectionalBlurInfo outside{}; outside.angle_deg=45.0; outside.brightness_gain=1.0;
+          outside.front_strength=8; outside.front_alpha_fade=front_alpha_fade; outside.noise_type=1;
+          outside.seed=1; outside.thickness=10.0; outside.render_scale_x=outside.render_scale_y=1.0;
+          int outside_exact=0;
+          PF_Err outside_err=OLMDirectionalBlurTestRenderWorld(&in,&out,&outside,32,&outside_exact);
+          bool outside_untouched=std::all_of(outb.begin(),outb.end(),[](std::uint8_t v){return v==OUT_PAD;});
+          if(outside_err!=PF_Err_BAD_CALLBACK_PARAM || outside_exact!=0 || !outside_untouched) return 45;
+        }
         for(int unsupported_kind=0; unsupported_kind<(d==16?2:1); ++unsupported_kind) {
           OLMDirectionalBlurInfo unsupported{};
           unsupported.angle_deg=0.0; unsupported.brightness_gain=1.0;
@@ -273,6 +301,7 @@ def main() -> int:
             case["noise_type3_layer"] = "front8/angle45/variation100 valid same-size PF16 Layer production dispatch exact; padding preserved"
         else:
             case["size_variation_family"] = "front8/angle45 Size Variation 25/100 production dispatch exact; -1/101 fail closed; padding preserved"
+            case["front_alpha_fade_family"] = "front8/angle45 Front Alpha Fade 50/100 production dispatch exact; -1/101 fail closed; padding preserved"
     report.update({
         "source": str(SOURCE.relative_to(ROOT)),
         "scope": "Mac-local source-included public EffectMain PF32/PF16 SmartRender output exactly matches the typed core; no interactive AE/Windows claim",

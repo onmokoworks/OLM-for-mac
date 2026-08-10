@@ -1,0 +1,58 @@
+{
+  "basis": "Actual AEX typed callbacks and production worker are raw-byte exact at the public endpoints and midpoint. The same prepass table/count path is used throughout the bounded slider family.",
+  "depth": "PF32",
+  "family": "Front Alpha Fade 0..100",
+  "fixed_route": {
+    "angle": 45,
+    "back_strength": 0,
+    "brightness_gain": 1,
+    "front_strength": 8,
+    "geometry": "16x16 padded ARGB128",
+    "render_scale": [
+      1,
+      1
+    ],
+    "sharp_tail_noise": 0,
+    "size_variation": 0
+  },
+  "not_proven": [
+    "PF16",
+    "Sharp Tail",
+    "Back Alpha Fade",
+    "combinations with Size Variation/noise/back blur/other angle or strength/downsample",
+    "native AE export"
+  ],
+  "plugin": "OLMDirectionalBlur",
+  "production_source": "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp",
+  "representatives": [
+    {
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "front_alpha_fade": 0,
+      "raw_sha256": "a0f5e1deee28cce8362fcf078c62ef0bfb8ec23ed296f88089015de35bab6d25"
+    },
+    {
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "front_alpha_fade": 50,
+      "raw_sha256": "1dd250a464a75452ad043fdb033a09e3e83063addc7d625a67437d5751bbbbe2"
+    },
+    {
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "front_alpha_fade": 100,
+      "raw_sha256": "d9e26bca3694f0a7a20436bac3252c1fe6aacce2991dd3daff9df83fbf1955e8"
+    }
+  ],
+  "schema_version": 1,
+  "status": "exact_representative_family"
+}
