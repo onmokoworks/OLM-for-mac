@@ -1,0 +1,385 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "Does not supersede legacy_case_0012 Mac AE residual",
+    "No arbitrary parameter products",
+    "No other geometry/palette/key color",
+    "No AE-host execution claim"
+  ],
+  "distinctness_contract": {
+    "invert_version_outputs": "PF8/PF16 equivalent on this one-retained-pixel integer fixture; PF32 distinct",
+    "key_polarities_distinct_each_version_all_depths": true,
+    "noninvert_version_outputs_distinct_all_depths": true
+  },
+  "fixture_rgb_u8": [
+    [
+      1,
+      1,
+      1
+    ],
+    [
+      255,
+      0,
+      0
+    ],
+    [
+      65,
+      1,
+      1
+    ],
+    [
+      0,
+      255,
+      0
+    ],
+    [
+      206,
+      55,
+      161
+    ],
+    [
+      86,
+      55,
+      26
+    ],
+    [
+      43,
+      73,
+      217
+    ],
+    [
+      231,
+      16,
+      235
+    ],
+    [
+      116,
+      106,
+      230
+    ],
+    [
+      1,
+      9,
+      43
+    ],
+    [
+      91,
+      38,
+      34
+    ],
+    [
+      99,
+      183,
+      84
+    ],
+    [
+      230,
+      125,
+      149
+    ],
+    [
+      208,
+      155,
+      60
+    ],
+    [
+      168,
+      21,
+      161
+    ],
+    [
+      233,
+      157,
+      226
+    ],
+    [
+      8,
+      57,
+      119
+    ],
+    [
+      159,
+      56,
+      196
+    ],
+    [
+      232,
+      156,
+      109
+    ],
+    [
+      50,
+      140,
+      246
+    ],
+    [
+      229,
+      135,
+      20
+    ],
+    [
+      36,
+      6,
+      46
+    ],
+    [
+      176,
+      107,
+      229
+    ],
+    [
+      168,
+      83,
+      193
+    ],
+    [
+      235,
+      7,
+      162
+    ]
+  ],
+  "fixtures": [
+    {
+      "class_nonzero_bytes": 3,
+      "class_plane_sha256": "53a7efeddf3f91e95c36513373afdeaa402b9694c169a9e4a0a52ad2f4db5eea",
+      "classifier_instructions": 7947,
+      "depth": "PF8",
+      "equal": true,
+      "key_owner_instructions": 425,
+      "key_polarity": "non-invert",
+      "padding_per_row": 5,
+      "padding_preserved": true,
+      "post_key_alpha_one": 24,
+      "post_key_alpha_zero": 1,
+      "raw_hex": "20801213ffff0000ff410101ff00ff00ffce37a1a5a5a5a5a5ff56371aff2b49d9ffe710ebff746ae6ff01092ba5a5a5a5a5ff5b2622ff63b754ffe67d95ffd09b3cffa815a1a5a5a5a5a5ffe99de2ff083977ff9f38c4ffe89c6dff328cf6a5a5a5a5a5ffe58714ff24062effb06be5ffa853c1ffeb07a2a5a5a5a5a5",
+      "raw_sha256": "7a433ef1c6ad92f8ffb518e873ef5ae2f01e25b6dedb5fe465ea34c024a15124",
+      "version": 1,
+      "worker_instructions": 9391
+    },
+    {
+      "class_nonzero_bytes": 3,
+      "class_plane_sha256": "53a7efeddf3f91e95c36513373afdeaa402b9694c169a9e4a0a52ad2f4db5eea",
+      "classifier_instructions": 4671,
+      "depth": "PF8",
+      "equal": true,
+      "key_owner_instructions": 719,
+      "key_polarity": "invert",
+      "padding_per_row": 5,
+      "padding_preserved": true,
+      "post_key_alpha_one": 1,
+      "post_key_alpha_zero": 24,
+      "raw_hex": "df01010100ff0000004101010000ff0000ce37a1a5a5a5a5a50056371a002b49d900e710eb00746ae60001092ba5a5a5a5a5005b26220063b75400e67d9500d09b3c00a815a1a5a5a5a5a500e99de200083977009f38c400e89c6d00328cf6a5a5a5a5a500e587140024062e00b06be500a853c100eb07a2a5a5a5a5a5",
+      "raw_sha256": "ba1c3c097116e6f743d83a0d9badb19c8838a9eaf9762c81ef7f00cd8f1c6364",
+      "version": 1,
+      "worker_instructions": 9407
+    },
+    {
+      "class_nonzero_bytes": 3,
+      "class_plane_sha256": "53a7efeddf3f91e95c36513373afdeaa402b9694c169a9e4a0a52ad2f4db5eea",
+      "classifier_instructions": 7944,
+      "depth": "PF8",
+      "equal": true,
+      "key_owner_instructions": 425,
+      "key_polarity": "non-invert",
+      "padding_per_row": 5,
+      "padding_preserved": true,
+      "post_key_alpha_one": 24,
+      "post_key_alpha_zero": 1,
+      "raw_hex": "20911f30ffff0000ff410101ff00ff00ffce37a1a5a5a5a5a5ff56371aff2b49d9ffe710ebff746ae6ff01092ba5a5a5a5a5ff5b2622ff63b754ffe67d95ffd09b3cffa815a1a5a5a5a5a5ffe99de2ff083977ff9f38c4ffe89c6dff328cf6a5a5a5a5a5ffe58714ff24062effb06be5ffa853c1ffeb07a2a5a5a5a5a5",
+      "raw_sha256": "7c2e20b65a95ed625d0e6b9f00f6d216bd4e37b7127782d63ba755edbe5e42ac",
+      "version": 2,
+      "worker_instructions": 12098
+    },
+    {
+      "class_nonzero_bytes": 3,
+      "class_plane_sha256": "53a7efeddf3f91e95c36513373afdeaa402b9694c169a9e4a0a52ad2f4db5eea",
+      "classifier_instructions": 4671,
+      "depth": "PF8",
+      "equal": true,
+      "key_owner_instructions": 719,
+      "key_polarity": "invert",
+      "padding_per_row": 5,
+      "padding_preserved": true,
+      "post_key_alpha_one": 1,
+      "post_key_alpha_zero": 24,
+      "raw_hex": "df01010100ff0000004101010000ff0000ce37a1a5a5a5a5a50056371a002b49d900e710eb00746ae60001092ba5a5a5a5a5005b26220063b75400e67d9500d09b3c00a815a1a5a5a5a5a500e99de200083977009f38c400e89c6d00328cf6a5a5a5a5a500e587140024062e00b06be500a853c100eb07a2a5a5a5a5a5",
+      "raw_sha256": "ba1c3c097116e6f743d83a0d9badb19c8838a9eaf9762c81ef7f00cd8f1c6364",
+      "version": 2,
+      "worker_instructions": 12114
+    },
+    {
+      "class_nonzero_bytes": 3,
+      "class_plane_sha256": "53a7efeddf3f91e95c36513373afdeaa402b9694c169a9e4a0a52ad2f4db5eea",
+      "classifier_instructions": 7947,
+      "depth": "PF16",
+      "equal": true,
+      "key_owner_instructions": 425,
+      "key_polarity": "non-invert",
+      "padding_per_row": 7,
+      "padding_preserved": true,
+      "post_key_alpha_one": 24,
+      "post_key_alpha_zero": 1,
+      "raw_hex": "00101640f008b60900800080000000000080a120810081000080000000800000008067679c1bd150a5a5a5a5a5a5a500802b2b9c1b0d0d00809615a524ed6c0080f4730808f67500803a3a353573730080810085049615a5a5a5a5a5a5a50080ae2d131311110080b231dc5b2a2a00807373bf3ecb4a00806868ce4d1e1e008054548b0ad150a5a5a5a5a5a5a50080f574cf4e7171008004049d1cbc3b0080d04f1c1c6262008074744e4eb7360080191946467b7ba5a5a5a5a5a5a50080f372c4430a0a008012120303171700805858b635f37200805454aa29e1600080f67584035151a5a5a5a5a5a5a5",
+      "raw_sha256": "306e2c8949d760f040a4e15bda8ec3f0157339a2691362a1dd77d5ef0e88a434",
+      "version": 1,
+      "worker_instructions": 9392
+    },
+    {
+      "class_nonzero_bytes": 3,
+      "class_plane_sha256": "53a7efeddf3f91e95c36513373afdeaa402b9694c169a9e4a0a52ad2f4db5eea",
+      "classifier_instructions": 4671,
+      "depth": "PF16",
+      "equal": true,
+      "key_owner_instructions": 719,
+      "key_polarity": "invert",
+      "padding_per_row": 7,
+      "padding_preserved": true,
+      "post_key_alpha_one": 1,
+      "post_key_alpha_zero": 24,
+      "raw_hex": "007081008100810000000080000000000000a120810081000000000000800000000067679c1bd150a5a5a5a5a5a5a500002b2b9c1b0d0d00009615a524ed6c0000f4730808f67500003a3a353573730000810085049615a5a5a5a5a5a5a50000ae2d131311110000b231dc5b2a2a00007373bf3ecb4a00006868ce4d1e1e000054548b0ad150a5a5a5a5a5a5a50000f574cf4e7171000004049d1cbc3b0000d04f1c1c6262000074744e4eb7360000191946467b7ba5a5a5a5a5a5a50000f372c4430a0a000012120303171700005858b635f37200005454aa29e1600000f67584035151a5a5a5a5a5a5a5",
+      "raw_sha256": "cb6d56e93d3eac0f90d353dc74d7be9022c504790515920b020e5e35dd2c40f9",
+      "version": 1,
+      "worker_instructions": 9408
+    },
+    {
+      "class_nonzero_bytes": 3,
+      "class_plane_sha256": "53a7efeddf3f91e95c36513373afdeaa402b9694c169a9e4a0a52ad2f4db5eea",
+      "classifier_instructions": 7944,
+      "depth": "PF16",
+      "equal": true,
+      "key_owner_instructions": 425,
+      "key_polarity": "non-invert",
+      "padding_per_row": 7,
+      "padding_preserved": true,
+      "post_key_alpha_one": 24,
+      "post_key_alpha_zero": 1,
+      "raw_hex": "0010c9488f0f311800800080000000000080a120810081000080000000800000008067679c1bd150a5a5a5a5a5a5a500802b2b9c1b0d0d00809615a524ed6c0080f4730808f67500803a3a353573730080810085049615a5a5a5a5a5a5a50080ae2d131311110080b231dc5b2a2a00807373bf3ecb4a00806868ce4d1e1e008054548b0ad150a5a5a5a5a5a5a50080f574cf4e7171008004049d1cbc3b0080d04f1c1c6262008074744e4eb7360080191946467b7ba5a5a5a5a5a5a50080f372c4430a0a008012120303171700805858b635f37200805454aa29e1600080f67584035151a5a5a5a5a5a5a5",
+      "raw_sha256": "e569d1bc9483da5f7eef943e076bcf6caffb7ec35f83a36b6bcaf0f2a2216617",
+      "version": 2,
+      "worker_instructions": 12099
+    },
+    {
+      "class_nonzero_bytes": 3,
+      "class_plane_sha256": "53a7efeddf3f91e95c36513373afdeaa402b9694c169a9e4a0a52ad2f4db5eea",
+      "classifier_instructions": 4671,
+      "depth": "PF16",
+      "equal": true,
+      "key_owner_instructions": 719,
+      "key_polarity": "invert",
+      "padding_per_row": 7,
+      "padding_preserved": true,
+      "post_key_alpha_one": 1,
+      "post_key_alpha_zero": 24,
+      "raw_hex": "007081008100810000000080000000000000a120810081000000000000800000000067679c1bd150a5a5a5a5a5a5a500002b2b9c1b0d0d00009615a524ed6c0000f4730808f67500003a3a353573730000810085049615a5a5a5a5a5a5a50000ae2d131311110000b231dc5b2a2a00007373bf3ecb4a00006868ce4d1e1e000054548b0ad150a5a5a5a5a5a5a50000f574cf4e7171000004049d1cbc3b0000d04f1c1c6262000074744e4eb7360000191946467b7ba5a5a5a5a5a5a50000f372c4430a0a000012120303171700005858b635f37200005454aa29e1600000f67584035151a5a5a5a5a5a5a5",
+      "raw_sha256": "cb6d56e93d3eac0f90d353dc74d7be9022c504790515920b020e5e35dd2c40f9",
+      "version": 2,
+      "worker_instructions": 12115
+    },
+    {
+      "class_nonzero_bytes": 3,
+      "class_plane_sha256": "53a7efeddf3f91e95c36513373afdeaa402b9694c169a9e4a0a52ad2f4db5eea",
+      "classifier_instructions": 7947,
+      "depth": "PF32",
+      "equal": true,
+      "key_owner_instructions": 425,
+      "key_polarity": "non-invert",
+      "padding_per_row": 13,
+      "padding_preserved": true,
+      "post_key_alpha_one": 24,
+      "post_key_alpha_zero": 1,
+      "raw_hex": "0000003ea62c003fdcff8e3d62649b3d0000803f0000803f00000000000000000000803f8382823e8180803b8180803b0000803f000000000000803f000000000000803fcfce4e3fdddc5c3ea2a1213fa5a5a5a5a5a5a5a5a5a5a5a5a50000803fadacac3edddc5c3ed1d0d03d0000803fadac2c3e9392923edad9593f0000803fe8e7673f8180803deceb6b3f0000803fe9e8e83ed5d4d43ee7e6663f0000803f8180803b9190103dadac2c3ea5a5a5a5a5a5a5a5a5a5a5a5a50000803fb7b6b63e9998183e8988083e0000803fc7c6c63eb8b7373fa9a8a83e0000803fe7e6663ffbfafa3e9695153f0000803fd1d0503f9c9b1b3ff1f0703e0000803fa9a8283fa9a8a83da2a1213fa5a5a5a5a5a5a5a5a5a5a5a5a50000803feae9693f9e9d1d3fe3e2623f0000803f8180003de5e4643eefeeee3e0000803fa09f1f3fe1e0603ec5c4443f0000803fe9e8683f9d9c1c3fdbdada3e0000803fc9c8483e8d8c0c3ff7f6763fa5a5a5a5a5a5a5a5a5a5a5a5a50000803fe6e5653f8887073fa1a0a03d0000803f9190103ec1c0c03cb9b8383e0000803fb1b0303fd7d6d63ee6e5653f0000803fa9a8283fa7a6a63ec2c1413f0000803feceb6b3fe1e0e03ca3a2223fa5a5a5a5a5a5a5a5a5a5a5a5a5",
+      "raw_sha256": "61546d9e5c86cde1560379e648485bcbd352fd65b2b6394fbd26ffe28654009f",
+      "version": 1,
+      "worker_instructions": 9140
+    },
+    {
+      "class_nonzero_bytes": 3,
+      "class_plane_sha256": "53a7efeddf3f91e95c36513373afdeaa402b9694c169a9e4a0a52ad2f4db5eea",
+      "classifier_instructions": 4671,
+      "depth": "PF32",
+      "equal": true,
+      "key_owner_instructions": 719,
+      "key_polarity": "invert",
+      "padding_per_row": 13,
+      "padding_preserved": true,
+      "post_key_alpha_one": 1,
+      "post_key_alpha_zero": 24,
+      "raw_hex": "0000603f7f80803b7f80803b7f80803b000000000000803f0000000000000000000000008382823e8180803b8180803b00000000000000000000803f0000000000000000cfce4e3fdddc5c3ea2a1213fa5a5a5a5a5a5a5a5a5a5a5a5a500000000adacac3edddc5c3ed1d0d03d00000000adac2c3e9392923edad9593f00000000e8e7673f8180803deceb6b3f00000000e9e8e83ed5d4d43ee7e6663f000000008180803b9190103dadac2c3ea5a5a5a5a5a5a5a5a5a5a5a5a500000000b7b6b63e9998183e8988083e00000000c7c6c63eb8b7373fa9a8a83e00000000e7e6663ffbfafa3e9695153f00000000d1d0503f9c9b1b3ff1f0703e00000000a9a8283fa9a8a83da2a1213fa5a5a5a5a5a5a5a5a5a5a5a5a500000000eae9693f9e9d1d3fe3e2623f000000008180003de5e4643eefeeee3e00000000a09f1f3fe1e0603ec5c4443f00000000e9e8683f9d9c1c3fdbdada3e00000000c9c8483e8d8c0c3ff7f6763fa5a5a5a5a5a5a5a5a5a5a5a5a500000000e6e5653f8887073fa1a0a03d000000009190103ec1c0c03cb9b8383e00000000b1b0303fd7d6d63ee6e5653f00000000a9a8283fa7a6a63ec2c1413f00000000eceb6b3fe1e0e03ca3a2223fa5a5a5a5a5a5a5a5a5a5a5a5a5",
+      "raw_sha256": "4cad25b63a317a9e67e693db02fb2e71be7a1557449b276ad42dd15350938d92",
+      "version": 1,
+      "worker_instructions": 9156
+    },
+    {
+      "class_nonzero_bytes": 3,
+      "class_plane_sha256": "53a7efeddf3f91e95c36513373afdeaa402b9694c169a9e4a0a52ad2f4db5eea",
+      "classifier_instructions": 7944,
+      "depth": "PF32",
+      "equal": true,
+      "key_owner_instructions": 425,
+      "key_polarity": "non-invert",
+      "padding_per_row": 13,
+      "padding_preserved": true,
+      "post_key_alpha_one": 24,
+      "post_key_alpha_zero": 1,
+      "raw_hex": "0000003e9191113f61e4f83d0f84413e0000803f0000803f00000000000000000000803f8282823e8080803b8080803b0000803f000000000000803f000000000000803fcfce4e3fdedc5c3ea3a1213fa5a5a5a5a5a5a5a5a5a5a5a5a50000803facacac3ededc5c3ea1d0d03d0000803fa5ac2c3e9392923edad9593f0000803fe8e7673f1480803deceb6b3f0000803fe9e8e83ed6d4d43ee7e6663f0000803f8080803b9190103da5ac2c3ea5a5a5a5a5a5a5a5a5a5a5a5a50000803fb7b6b63e9298183e8788083e0000803fc6c6c63eb8b7373fa8a8a83e0000803fe7e6663ffbfafa3e9695153f0000803fd1d0503f9c9b1b3ff0f0703e0000803fa9a8283fa4a8a83da3a1213fa5a5a5a5a5a5a5a5a5a5a5a5a50000803fe9e9693f9e9d1d3fe4e2623f0000803f8080003de3e4643eefeeee3e0000803f9f9f1f3fdde0603ec5c4443f0000803fe9e8683f9d9c1c3fdbdada3e0000803fc7c8483e8d8c0c3ff7f6763fa5a5a5a5a5a5a5a5a5a5a5a5a50000803fe6e5653f8887073f8ca0a03d0000803f8590103ec1c0c03cb6b8383e0000803fb1b0303fd8d6d63ee6e5653f0000803fa9a8283fa7a6a63ec2c1413f0000803feceb6b3fe0e0e03ca3a2223fa5a5a5a5a5a5a5a5a5a5a5a5a5",
+      "raw_sha256": "b554e6eadfb89f5ee9a6f5a7012ee606c41eeb70c9e07a5079b2329cc2f12ecc",
+      "version": 2,
+      "worker_instructions": 11847
+    },
+    {
+      "class_nonzero_bytes": 3,
+      "class_plane_sha256": "53a7efeddf3f91e95c36513373afdeaa402b9694c169a9e4a0a52ad2f4db5eea",
+      "classifier_instructions": 4671,
+      "depth": "PF32",
+      "equal": true,
+      "key_owner_instructions": 719,
+      "key_polarity": "invert",
+      "padding_per_row": 13,
+      "padding_preserved": true,
+      "post_key_alpha_one": 1,
+      "post_key_alpha_zero": 24,
+      "raw_hex": "0000603f7f80803b7f80803b7f80803b000000000000803f0000000000000000000000008282823e8080803b8080803b00000000000000000000803f0000000000000000cfce4e3fdedc5c3ea3a1213fa5a5a5a5a5a5a5a5a5a5a5a5a500000000acacac3ededc5c3ea1d0d03d00000000a5ac2c3e9392923edad9593f00000000e8e7673f1480803deceb6b3f00000000e9e8e83ed6d4d43ee7e6663f000000008080803b9190103da5ac2c3ea5a5a5a5a5a5a5a5a5a5a5a5a500000000b7b6b63e9298183e8788083e00000000c6c6c63eb8b7373fa8a8a83e00000000e7e6663ffbfafa3e9695153f00000000d1d0503f9c9b1b3ff0f0703e00000000a9a8283fa4a8a83da3a1213fa5a5a5a5a5a5a5a5a5a5a5a5a500000000e9e9693f9e9d1d3fe4e2623f000000008080003de3e4643eefeeee3e000000009f9f1f3fdde0603ec5c4443f00000000e9e8683f9d9c1c3fdbdada3e00000000c7c8483e8d8c0c3ff7f6763fa5a5a5a5a5a5a5a5a5a5a5a5a500000000e6e5653f8887073f8ca0a03d000000008590103ec1c0c03cb6b8383e00000000b1b0303fd8d6d63ee6e5653f00000000a9a8283fa7a6a63ec2c1413f00000000eceb6b3fe0e0e03ca3a2223fa5a5a5a5a5a5a5a5a5a5a5a5a5",
+      "raw_sha256": "5115b902b3186dd25c424456c65b6cc171b33fa89df82e7c103502a737c0c717",
+      "version": 2,
+      "worker_instructions": 11863
+    }
+  ],
+  "legacy_residual_relation": "This synthetic actual-AEX core fixture closes only its declared cross-product. It does not supersede the July legacy_case_0012 Mac-AE host residual, whose different practical geometry/descriptor and host boundary remain independently scoped.",
+  "parameter_contract": {
+    "extra_smooth": 100,
+    "gamma_mode": "Gamma Colors",
+    "gamma_value": 2.4,
+    "key_polarities": [
+      "non-invert",
+      "invert"
+    ],
+    "key_rgb": [
+      0.003921568859368563,
+      0.003921568859368563,
+      0.003921568859368563
+    ],
+    "ordered_gamma_palette": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.003921568859368563,
+        0.003921568859368563,
+        0.003921568859368563,
+        1.0
+      ]
+    ],
+    "smooth_range": 100,
+    "smoothness": 100,
+    "versions": [
+      1,
+      2
+    ]
+  },
+  "production_source_sha256": "d8a7a489bb3bc875e998926bdde971ac66f5544c41ff6bc583819bf0daf0a784",
+  "scope": "PF8/PF16/PF32 padded5x5; Version1/2 x non-invert/invert key x Gamma Colors [red,key] gamma2.4 x Smoothness/Range/Extra100",
+  "verdict": "PASS_VERSION1_2_KEY_POLARITY_GAMMA_COLORS_SMOOTHING_ALL_DEPTHS_EXACT"
+}
