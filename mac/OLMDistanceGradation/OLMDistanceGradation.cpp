@@ -317,7 +317,7 @@ static void meijster_edt(const u_char *mask, float *dst, long w, long h)
 }
 
 // ============================================================================
-// Gaussian blur (separable, matches cv::GaussianBlur with BORDER_REFLECT_101 +
+// Gaussian blur (separable, matches the legacy cvSmooth replicated border +
 // sigma derived via cv::getGaussianKernel default:  sigma = 0.3*((ksize-1)*0.5 - 1) + 0.8
 // ============================================================================
 static void make_gauss_kernel(std::vector<float> &k, int ksize)
@@ -325,6 +325,13 @@ static void make_gauss_kernel(std::vector<float> &k, int ksize)
 	// Odd kernel size required
 	if ((ksize & 1) == 0) ++ksize;
 	if (ksize < 1) ksize = 1;
+	// OpenCV uses an exact binomial kernel for the 3-tap, sigma=0 case.
+	// Keeping these values literal avoids the measurable difference from the
+	// generic sigma heuristic at the PF16 staging boundary.
+	if (ksize == 3) {
+		k = {0.25f, 0.5f, 0.25f};
+		return;
+	}
 	double sigma = 0.3 * ((ksize - 1) * 0.5 - 1.0) + 0.8;
 	double two_s2 = 2.0 * sigma * sigma;
 	k.resize(ksize);
@@ -365,7 +372,9 @@ static void gauss_blur_separable(float *mat, long w, long h, int ksize)
 		for (long x = 0; x < w; ++x) {
 			float acc = 0;
 			for (int i = -half; i <= half; ++i) {
-				long xi = reflect101(x + i, w);
+				long xi = x + i;
+				if (xi < 0) xi = 0;
+				if (xi >= w) xi = w - 1;
 				acc += row[xi] * k[i + half];
 			}
 			out[x] = acc;
@@ -376,7 +385,9 @@ static void gauss_blur_separable(float *mat, long w, long h, int ksize)
 		for (long y = 0; y < h; ++y) {
 			float acc = 0;
 			for (int i = -half; i <= half; ++i) {
-				long yi = reflect101(y + i, h);
+				long yi = y + i;
+				if (yi < 0) yi = 0;
+				if (yi >= h) yi = h - 1;
 				acc += tmp[(size_t)yi * w + x] * k[i + half];
 			}
 			mat[(size_t)y * w + x] = acc;
@@ -703,20 +714,16 @@ static void build_distance_field(
 		df.pre_blur_x = df.x;
 	}
 
-	// Blur: blur_size is full-res pixels.
-	//   BLUR_MODE_NO_SCALE (2): use size as-is at full-res even when downsampled
-	//   BLUR_MODE_SCALE    (3): scale to current-res pixels
-	// Constant interpolation uses cvSmooth CV_BLUR: a normalized box filter
-	// over the binary field. Other interpolation modes use Gaussian blur.
+	// Blur: the Windows owner always converts the full-resolution Blur Size to
+	// current-resolution pixels. Blur Mode selects the cvSmooth primitive:
+	// mode 2 uses normalized box blur and mode 3 uses Gaussian blur. This is
+	// independent of the interpolation mode used before the blur stage.
 	if (p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0) {
-		long bs = p.blur_size;
-		if (p.blur_mode == BLUR_MODE_SCALE) {
-			bs = (long)((float)p.blur_size * ds + 0.5f);
-		}
+		long bs = (long)((float)p.blur_size * ds + 0.5f);
 		if (bs < 1) bs = 1;
 		int ksize = (int)(2 * bs + 1);
 		if (ksize > 1) {
-			if (constant_blur) box_blur_separable(df.x.data(), w, h, ksize);
+			if (p.blur_mode == BLUR_MODE_NO_SCALE) box_blur_separable(df.x.data(), w, h, ksize);
 			else gauss_blur_separable(df.x.data(), w, h, ksize);
 		}
 	}
@@ -840,6 +847,11 @@ static inline void compose_pixel(
 		     p.pixel_size == sizeof(PF_PixelFloat)) &&
 		    p.in_out == IN_OUT_INSIDE && d_alpha <= 0.0f) {
 			out_r = out_g = out_b = 0.0f;
+			if (p.pixel_size == sizeof(PF_Pixel16) && p.render_mode == RENDER_MODE_RGB &&
+			    p.interp_mode != INTERP_CONSTANT && p.blur_mode != BLUR_MODE_NONE &&
+			    p.blur_size > 0) {
+				out_g = X;
+			}
 		}
 		// The actual PF16 Outside/Layer/background callback applies the same
 		// ownership clearing on the opposite side of the mask.  This branch is
@@ -851,6 +863,13 @@ static inline void compose_pixel(
 		}
 	} else {
 		out_a = d_alpha * X;        // no bg: alpha = d_alpha * X
+		if (p.pixel_size == sizeof(PF_Pixel16) && p.in_out == IN_OUT_INSIDE &&
+		    p.render_mode == RENDER_MODE_RGB && d_alpha <= 0.0f) {
+			out_r = out_b = 0.0f;
+			out_g = (p.interp_mode != INTERP_CONSTANT &&
+			         p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0) ? X : 0.0f;
+			return;
+		}
 		if ((p.pixel_size == sizeof(PF_Pixel16) || p.pixel_size == sizeof(PF_Pixel8)) &&
 		    p.in_out == IN_OUT_OUTSIDE && p.render_mode == RENDER_MODE_RGB &&
 		    d_alpha <= 0.0f) {

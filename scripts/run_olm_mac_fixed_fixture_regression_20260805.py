@@ -133,6 +133,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmdistancegradation_classic_pf32_both_power_layer_nobg_20260805.py"),
             (sys.executable, "tools/emulation/test_olmdistancegradation_classic_pf32_inside_constant_blur_nobg_20260805.py"),
             (sys.executable, "tools/emulation/test_olmdistancegradation_classic_pf16_background_combos_20260810.py"),
+            (sys.executable, "tools/emulation/test_olmdistancegradation_classic_pf16_blur_background_family_20260810.py"),
         ),
     ),
     Lane(
