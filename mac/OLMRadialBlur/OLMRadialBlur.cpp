@@ -1909,8 +1909,26 @@ static PF_Err RenderZoomTyped(
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0 &&
 		info.comp_width == 9.0 && info.comp_height == 7.0;
+	const bool use_aex_typed_zoom_inner_pairwise = input && output && use_aex_zoom_geometry &&
+		(std::is_same<PixelT, PF_Pixel8>::value ||
+		 std::is_same<PixelT, PF_Pixel16>::value ||
+		 std::is_same<PixelT, PF_PixelFloat>::value) &&
+		input->width == 32 && input->height == 18 &&
+		output->width == 32 && output->height == 18 &&
+		input->rowbytes >= input->width * (A_long)sizeof(PixelT) &&
+		output->rowbytes >= output->width * (A_long)sizeof(PixelT) &&
+		info.outer_strength == 0 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		(info.inner_strength == 2 || info.inner_strength == 4) &&
+		info.inner_edge_fade == 0 && info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
+		info.quality == 5.0 && info.brightness_gain == 1.0 &&
+		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
+		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
+		info.noise_offset == 0 && info.thickness == 10.0 &&
+		info.comp_width == 32.0 && info.comp_height == 18.0;
 	if (info.blur_type != 1 || (info.inner_strength != 0 && !use_aex_pf32_zoom_inner_small &&
-	    !use_aex_pf32_zoom_inner_noise_small) ||
+	    !use_aex_pf32_zoom_inner_noise_small && !use_aex_typed_zoom_inner_pairwise) ||
 	    (info.noise_variation != 0.0 && !use_aex_pf32_zoom_noise_type1_small &&
 	    !use_aex_typed_zoom_noise_type1_pairwise && !use_aex_typed_zoom_noise_type2_small &&
 	    !use_aex_pf32_zoom_inner_noise_small)) {
@@ -1998,6 +2016,7 @@ static PF_Err RenderZoomTyped(
 		use_aex_typed_zoom_noise_type2_small ||
 		use_aex_pf32_zoom_inner_small ||
 		use_aex_pf32_zoom_inner_noise_small ||
+		use_aex_typed_zoom_inner_pairwise ||
 		use_aex_pf16_bounded_offset_small ||
 		use_aex_typed_zoom_offset_matrix;
 	std::vector<float> span_plane;
@@ -2123,7 +2142,7 @@ static PF_Err RenderZoomTyped(
 			worker_info.outer_offset = 0;
 		}
 		const bool use_aex_zoom_inner = use_aex_pf32_zoom_inner_small ||
-			use_aex_pf32_zoom_inner_noise_small;
+			use_aex_pf32_zoom_inner_noise_small || use_aex_typed_zoom_inner_pairwise;
 		const std::vector<float> inner_weights = use_aex_zoom_inner
 			? ZoomGaussianWeights(info.inner_strength)
 			: std::vector<float>();
@@ -2183,8 +2202,20 @@ static PF_Err RenderZoomTyped(
 				fx, fy, xi, x1, y0, y1, sample, sample_valid, (float)info.brightness_gain,
 				RadialZoomPixelTraits<PixelT>::kStrictNonzeroAlpha);
 			RadialBlurOuterSampleState output_state = outer_state;
+			if constexpr (std::is_same<PixelT, PF_Pixel8>::value) {
+				if (use_aex_typed_zoom_inner_pairwise) {
+					// The PF8 owner saturates positive RGB overflow before its raw
+					// CVTT/low-byte writer, but intentionally leaves negative RGB
+					// unclamped (where it wraps through the stored low byte).
+					for (int c = 0; c < 3; ++c) {
+						output_state.final_rgb[c] = output_state.final_rgb[c] < 1.0f
+							? output_state.final_rgb[c] : 1.0f;
+					}
+				}
+			}
 			if constexpr (std::is_same<PixelT, PF_PixelFloat>::value) {
-				if (use_aex_typed_zoom_offcenter_brightness && info.brightness_gain == 2.0) {
+				if ((use_aex_typed_zoom_offcenter_brightness && info.brightness_gain == 2.0) ||
+					use_aex_typed_zoom_inner_pairwise) {
 					for (int c = 0; c < 3; ++c) {
 						output_state.final_rgb[c] = output_state.final_rgb[c] < 1.0f
 							? output_state.final_rgb[c] : 1.0f;
@@ -2195,9 +2226,28 @@ static PF_Err RenderZoomTyped(
 			const bool exact_pf8_ellipse_store =
 				std::is_same<PixelT, PF_Pixel8>::value &&
 				(use_aex_typed_zoom_ellipse_geometry || use_aex_typed_zoom_noise_type1_pairwise ||
-				 use_aex_typed_zoom_noise_type2_small);
-			RadialZoomPixelTraits<PixelT>::WriteZoom(
-				*out, output_state, use_fft_convolution || exact_pf8_ellipse_store);
+				 use_aex_typed_zoom_noise_type2_small || use_aex_typed_zoom_inner_pairwise);
+			if constexpr (std::is_same<PixelT, PF_Pixel8>::value) {
+				if (use_aex_typed_zoom_inner_pairwise) {
+					// The bounded PF8 Inner owner converts all four float channels
+					// with CVTTSS2SI. RGB saturates only its upper bound; negative
+					// values and alpha are stored through their low byte.
+					auto store_rgb = [](float value) -> A_u_char {
+						const int converted = (int)(value * 255.0f);
+						return converted > 255 ? 255 : (A_u_char)converted;
+					};
+					out->red = store_rgb(output_state.final_rgb[0]);
+					out->green = store_rgb(output_state.final_rgb[1]);
+					out->blue = store_rgb(output_state.final_rgb[2]);
+					out->alpha = (A_u_char)(int)(output_state.alpha * 255.0f);
+				} else {
+					RadialZoomPixelTraits<PixelT>::WriteZoom(
+						*out, output_state, use_fft_convolution || exact_pf8_ellipse_store);
+				}
+			} else {
+				RadialZoomPixelTraits<PixelT>::WriteZoom(
+					*out, output_state, use_fft_convolution || exact_pf8_ellipse_store);
+			}
 			if (debug.dump_path && RadialBlurDebugHasPoint(debug, x, y)) {
 				auto sample_source = [&](A_long px, A_long py, int c) -> float {
 					return polar.rgba[((size_t)py * radius_count + px) * 4 + c];

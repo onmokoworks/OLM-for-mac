@@ -1,0 +1,102 @@
+{
+  "admitted_exact_cells": 6,
+  "admitted_total_cells": 6,
+  "boundary": "Other geometry/strength/offset/fade/noise intersections are unproved.",
+  "cases": [
+    {
+      "actual_sha256": {
+        "output": "f6465829566c997fe81af6962b4fb6b47903dc0c0aba383b9119ab89eee6d530",
+        "post_blur": "1f215d5f0db0756ef826fa046bd6c58ca438e4ca5b66c0df7ab4cf2817d1ec56",
+        "pre_blur": "502c5f90cee33cc441279c145e85f02b2bf95d140372be199e4b495516155093"
+      },
+      "depth": 8,
+      "exact": true,
+      "inner_strength": 2,
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      }
+    },
+    {
+      "actual_sha256": {
+        "output": "ac723ae7810e8393ade42bdde6eb7d3e8c641c02e8b13cf9545fcd8dad6c1ef6",
+        "post_blur": "8f657400c64e92d02c2006abdda6fc427165501cbbd0c9f649701857c6fb364c",
+        "pre_blur": "502c5f90cee33cc441279c145e85f02b2bf95d140372be199e4b495516155093"
+      },
+      "depth": 8,
+      "exact": true,
+      "inner_strength": 4,
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      }
+    },
+    {
+      "actual_sha256": {
+        "output": "532dbd4dcb56053a3479974f0b2fd3900d84d8bc4a0fbb9fb52c8520b80f3b81",
+        "post_blur": "ded59b8c0d5483a657829aed6140817d325d48ca9858e3adf209f423037c18be",
+        "pre_blur": "525ce83c5615d08156b147eb2a14935e6d458233e77c159ee10790522002778d"
+      },
+      "depth": 16,
+      "exact": true,
+      "inner_strength": 2,
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      }
+    },
+    {
+      "actual_sha256": {
+        "output": "fe75edb6712d2bc86c4a6a00e4600df7d9deeae53c49a6d11d8ba39861591b92",
+        "post_blur": "7eacb782774c76b41c12e3f5d3f99f83820e209736710b5d929b47427a9d1d44",
+        "pre_blur": "525ce83c5615d08156b147eb2a14935e6d458233e77c159ee10790522002778d"
+      },
+      "depth": 16,
+      "exact": true,
+      "inner_strength": 4,
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      }
+    },
+    {
+      "actual_sha256": {
+        "output": "b6aa03cb46c8ce8d60ec97c58c59734c0add1bbdb0efabf859cd35195a3023db",
+        "post_blur": "673a2672d01f86c222d08a283db657d32dc26a061b10a7fe9eda2fa0d8499cef",
+        "pre_blur": "5fd11ebfc3f1ffea7b01e98cb50f7095ab699db25080cd4f1af361f534a156f7"
+      },
+      "depth": 32,
+      "exact": true,
+      "inner_strength": 2,
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      }
+    },
+    {
+      "actual_sha256": {
+        "output": "41d67f20dc9a06c0a3e818c7ee24e5ca8340baa6bddd65026453160bcbca30f9",
+        "post_blur": "834c03489daa3a42a6342539a897954fba57949951a3bc59ae787108ee5361f6",
+        "pre_blur": "5fd11ebfc3f1ffea7b01e98cb50f7095ab699db25080cd4f1af361f534a156f7"
+      },
+      "depth": 32,
+      "exact": true,
+      "inner_strength": 4,
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      }
+    }
+  ],
+  "kind": "olmradialblur_zoom_inner24_actual_aex_20260811",
+  "production_contract": "PF8/PF16/PF32 all exercise an exact copy of the current shared source.",
+  "scope": "Centered 32x18 Zoom, Outer0, Inner Strength2/4, neutral remaining tuple; actual AEX pre/post polar and padded typed output.",
+  "shared_source_sha256": "97c1d1b8eaee31dba6bdae4c3335c470bba5c5416952fb22a2786d45b209050d",
+  "status": "bounded_exact"
+}
