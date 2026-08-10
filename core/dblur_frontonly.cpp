@@ -431,7 +431,10 @@ static int render_minimal_argb16(const std::uint16_t* input_argb,
             ((static_cast<double>(angle_degrees) + 90.0) / 180.0) * kPi);
         olm_dblur_rotate_rgba_f32(a.data(), b.data(), work_width, work_height, angle);
         a = b;
-        std::fill(b.begin(), b.end(), 0.0f);
+        const int workers = std::min(work_height, 32);
+        const int processed_rows = (work_height / workers) * workers;
+        std::fill(b.begin(), b.begin() +
+            static_cast<std::size_t>(processed_rows) * work_width * 4, 0.0f);
         float component_divisor = 1.0f;
         if (size_variation_percent != 0.0f || front_sharp_tail_percent != 0.0f ||
             back_sharp_tail_percent != 0.0f) {
@@ -461,7 +464,7 @@ static int render_minimal_argb16(const std::uint16_t* input_argb,
             olm_dblur_rotate_scalar_f32(field_source.data(), field_rotated.data(),
                                         work_width, work_height, angle);
             olm_dblur_rowdriver_field_f32(
-                0, work_height, a.data(), b.data(), work_width,
+                0, processed_rows, a.data(), b.data(), work_width,
                 noise_variation_percent / 100.0f, size_variation_percent / 100.0f, component_divisor,
                 front_sharp_tail_percent / 100.0f, back_sharp_tail_percent / 100.0f,
                 front_strength > 0 ? front_weights.data() : &empty,
@@ -474,7 +477,7 @@ static int render_minimal_argb16(const std::uint16_t* input_argb,
             std::vector<float> noise; int nw = 0, nh = 0;
             if (!olm::dblur::generate_noise_plane(work_width, work_height, thickness_ui,
                     static_cast<float>(noise_offset_ui) / 36.0f, seed, &noise, &nw, &nh)) return -1;
-            olm_dblur_rowdriver_noise_f32(0, work_height, a.data(), b.data(), work_width,
+            olm_dblur_rowdriver_noise_f32(0, processed_rows, a.data(), b.data(), work_width,
                 noise_variation_percent / 100.0f, size_variation_percent / 100.0f, component_divisor,
                 front_sharp_tail_percent / 100.0f, back_sharp_tail_percent / 100.0f,
                 front_strength > 0 ? front_weights.data() : &empty,
@@ -485,7 +488,7 @@ static int render_minimal_argb16(const std::uint16_t* input_argb,
                 noise.data(), nw, thickness_ui, noise_type == 1 ? 1 : 0);
         } else {
             olm_dblur_rowdriver_f32(
-                0, work_height, a.data(), b.data(), work_width, 1, 1.0f,
+                0, processed_rows, a.data(), b.data(), work_width, 1, 1.0f,
                 size_variation_percent / 100.0f, component_divisor,
                 front_sharp_tail_percent / 100.0f, back_sharp_tail_percent / 100.0f,
                 front_strength > 0 ? front_weights.data() : &empty,
