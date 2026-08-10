@@ -1,0 +1,820 @@
+{
+  "actual_aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "aexcompat_worker": {
+    "modified_by_this_task": false,
+    "path": "/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker",
+    "sha256": "2f8c706f2fa3b1dec81090e9e497161fbd6c96be7db86be79857c355db798c91"
+  },
+  "cases": [
+    {
+      "actual_exported_raw_bytes": 100,
+      "actual_exported_raw_sha256": "6972d551364f93ed918e398f76bf070942d9f316cecff47681b75b0756106525",
+      "depth": "PF8",
+      "exact": true,
+      "key_polarity": "non-invert",
+      "parameter_values": [
+        {
+          "name": "Enable Color Key",
+          "slot": 1,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            1,
+            1,
+            1
+          ],
+          "name": "Color Key",
+          "slot": 2
+        },
+        {
+          "name": "Invert Color Key",
+          "slot": 3,
+          "value": 0.0
+        },
+        {
+          "name": "Smoothness",
+          "slot": 4,
+          "value": 100.0
+        },
+        {
+          "name": "Extra Smooth",
+          "slot": 5,
+          "value": 100.0
+        },
+        {
+          "name": "Smooth Range",
+          "slot": 6,
+          "value": 100.0
+        },
+        {
+          "name": "Smoother Version",
+          "slot": 7,
+          "value": 1.0
+        },
+        {
+          "name": "Gamma Correction",
+          "slot": 8,
+          "value": 2.0
+        },
+        {
+          "name": "Gamma Value",
+          "slot": 9,
+          "value": 2.4
+        },
+        {
+          "name": "Number of Gamma Colors",
+          "slot": 10,
+          "value": 2.0
+        },
+        {
+          "color": [
+            255,
+            255,
+            0,
+            0
+          ],
+          "name": "Gamma Color",
+          "slot": 11
+        },
+        {
+          "color": [
+            255,
+            1,
+            1,
+            1
+          ],
+          "name": "Gamma Color",
+          "slot": 12
+        }
+      ],
+      "pixel_format": "argb8",
+      "production_tight_raw_sha256": "6972d551364f93ed918e398f76bf070942d9f316cecff47681b75b0756106525",
+      "render_mode": "smart-cpu",
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "AEGP Memory Suite v1",
+        "PF World Suite v2",
+        "PF ColorParamSuite v1"
+      ],
+      "unsupported_suite_calls": [],
+      "version": 1
+    },
+    {
+      "actual_exported_raw_bytes": 100,
+      "actual_exported_raw_sha256": "b80c849feb70a3af06c158cdc23e91e386d0a4ae9181cdb2e9ea384c11e6b065",
+      "depth": "PF8",
+      "exact": true,
+      "key_polarity": "invert",
+      "parameter_values": [
+        {
+          "name": "Enable Color Key",
+          "slot": 1,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            1,
+            1,
+            1
+          ],
+          "name": "Color Key",
+          "slot": 2
+        },
+        {
+          "name": "Invert Color Key",
+          "slot": 3,
+          "value": 1.0
+        },
+        {
+          "name": "Smoothness",
+          "slot": 4,
+          "value": 100.0
+        },
+        {
+          "name": "Extra Smooth",
+          "slot": 5,
+          "value": 100.0
+        },
+        {
+          "name": "Smooth Range",
+          "slot": 6,
+          "value": 100.0
+        },
+        {
+          "name": "Smoother Version",
+          "slot": 7,
+          "value": 2.0
+        },
+        {
+          "name": "Gamma Correction",
+          "slot": 8,
+          "value": 2.0
+        },
+        {
+          "name": "Gamma Value",
+          "slot": 9,
+          "value": 2.4
+        },
+        {
+          "name": "Number of Gamma Colors",
+          "slot": 10,
+          "value": 2.0
+        },
+        {
+          "color": [
+            255,
+            255,
+            0,
+            0
+          ],
+          "name": "Gamma Color",
+          "slot": 11
+        },
+        {
+          "color": [
+            255,
+            1,
+            1,
+            1
+          ],
+          "name": "Gamma Color",
+          "slot": 12
+        }
+      ],
+      "pixel_format": "argb8",
+      "production_tight_raw_sha256": "b80c849feb70a3af06c158cdc23e91e386d0a4ae9181cdb2e9ea384c11e6b065",
+      "render_mode": "smart-cpu",
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "AEGP Memory Suite v1",
+        "PF World Suite v2",
+        "PF ColorParamSuite v1"
+      ],
+      "unsupported_suite_calls": [],
+      "version": 2
+    },
+    {
+      "actual_exported_raw_bytes": 200,
+      "actual_exported_raw_sha256": "f0dce225d1771075c5de2e4488a356ee8db9f2a942c39ac6d1d7f2fc5dffb014",
+      "depth": "PF16",
+      "exact": true,
+      "key_polarity": "non-invert",
+      "parameter_values": [
+        {
+          "name": "Enable Color Key",
+          "slot": 1,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            1,
+            1,
+            1
+          ],
+          "name": "Color Key",
+          "slot": 2
+        },
+        {
+          "name": "Invert Color Key",
+          "slot": 3,
+          "value": 0.0
+        },
+        {
+          "name": "Smoothness",
+          "slot": 4,
+          "value": 100.0
+        },
+        {
+          "name": "Extra Smooth",
+          "slot": 5,
+          "value": 100.0
+        },
+        {
+          "name": "Smooth Range",
+          "slot": 6,
+          "value": 100.0
+        },
+        {
+          "name": "Smoother Version",
+          "slot": 7,
+          "value": 1.0
+        },
+        {
+          "name": "Gamma Correction",
+          "slot": 8,
+          "value": 2.0
+        },
+        {
+          "name": "Gamma Value",
+          "slot": 9,
+          "value": 2.4
+        },
+        {
+          "name": "Number of Gamma Colors",
+          "slot": 10,
+          "value": 2.0
+        },
+        {
+          "color": [
+            255,
+            255,
+            0,
+            0
+          ],
+          "name": "Gamma Color",
+          "slot": 11
+        },
+        {
+          "color": [
+            255,
+            1,
+            1,
+            1
+          ],
+          "name": "Gamma Color",
+          "slot": 12
+        }
+      ],
+      "pixel_format": "argb16",
+      "production_tight_raw_sha256": "f0dce225d1771075c5de2e4488a356ee8db9f2a942c39ac6d1d7f2fc5dffb014",
+      "render_mode": "smart-cpu",
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "AEGP Memory Suite v1",
+        "PF World Suite v2",
+        "PF ColorParamSuite v1"
+      ],
+      "unsupported_suite_calls": [],
+      "version": 1
+    },
+    {
+      "actual_exported_raw_bytes": 200,
+      "actual_exported_raw_sha256": "a95db2b0c404c5ab942dd15f6af9a6e349ed0ec71efad663d1471ea3a3ac9d0c",
+      "depth": "PF16",
+      "exact": true,
+      "key_polarity": "invert",
+      "parameter_values": [
+        {
+          "name": "Enable Color Key",
+          "slot": 1,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            1,
+            1,
+            1
+          ],
+          "name": "Color Key",
+          "slot": 2
+        },
+        {
+          "name": "Invert Color Key",
+          "slot": 3,
+          "value": 1.0
+        },
+        {
+          "name": "Smoothness",
+          "slot": 4,
+          "value": 100.0
+        },
+        {
+          "name": "Extra Smooth",
+          "slot": 5,
+          "value": 100.0
+        },
+        {
+          "name": "Smooth Range",
+          "slot": 6,
+          "value": 100.0
+        },
+        {
+          "name": "Smoother Version",
+          "slot": 7,
+          "value": 2.0
+        },
+        {
+          "name": "Gamma Correction",
+          "slot": 8,
+          "value": 2.0
+        },
+        {
+          "name": "Gamma Value",
+          "slot": 9,
+          "value": 2.4
+        },
+        {
+          "name": "Number of Gamma Colors",
+          "slot": 10,
+          "value": 2.0
+        },
+        {
+          "color": [
+            255,
+            255,
+            0,
+            0
+          ],
+          "name": "Gamma Color",
+          "slot": 11
+        },
+        {
+          "color": [
+            255,
+            1,
+            1,
+            1
+          ],
+          "name": "Gamma Color",
+          "slot": 12
+        }
+      ],
+      "pixel_format": "argb16",
+      "production_tight_raw_sha256": "a95db2b0c404c5ab942dd15f6af9a6e349ed0ec71efad663d1471ea3a3ac9d0c",
+      "render_mode": "smart-cpu",
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "AEGP Memory Suite v1",
+        "PF World Suite v2",
+        "PF ColorParamSuite v1"
+      ],
+      "unsupported_suite_calls": [],
+      "version": 2
+    },
+    {
+      "actual_exported_raw_bytes": 400,
+      "actual_exported_raw_sha256": "6264122590976f9b89ee99cc96d2802fef3c69663330b3bf18dc71deeb804524",
+      "depth": "PF32",
+      "exact": true,
+      "key_polarity": "non-invert",
+      "parameter_values": [
+        {
+          "name": "Enable Color Key",
+          "slot": 1,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            1,
+            1,
+            1
+          ],
+          "name": "Color Key",
+          "slot": 2
+        },
+        {
+          "name": "Invert Color Key",
+          "slot": 3,
+          "value": 0.0
+        },
+        {
+          "name": "Smoothness",
+          "slot": 4,
+          "value": 100.0
+        },
+        {
+          "name": "Extra Smooth",
+          "slot": 5,
+          "value": 100.0
+        },
+        {
+          "name": "Smooth Range",
+          "slot": 6,
+          "value": 100.0
+        },
+        {
+          "name": "Smoother Version",
+          "slot": 7,
+          "value": 1.0
+        },
+        {
+          "name": "Gamma Correction",
+          "slot": 8,
+          "value": 2.0
+        },
+        {
+          "name": "Gamma Value",
+          "slot": 9,
+          "value": 2.4
+        },
+        {
+          "name": "Number of Gamma Colors",
+          "slot": 10,
+          "value": 2.0
+        },
+        {
+          "color": [
+            255,
+            255,
+            0,
+            0
+          ],
+          "name": "Gamma Color",
+          "slot": 11
+        },
+        {
+          "color": [
+            255,
+            1,
+            1,
+            1
+          ],
+          "name": "Gamma Color",
+          "slot": 12
+        }
+      ],
+      "pixel_format": "argb32f",
+      "production_tight_raw_sha256": "6264122590976f9b89ee99cc96d2802fef3c69663330b3bf18dc71deeb804524",
+      "render_mode": "smart-cpu",
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "AEGP Memory Suite v1",
+        "PF World Suite v2",
+        "PF ColorParamSuite v1"
+      ],
+      "unsupported_suite_calls": [],
+      "version": 1
+    },
+    {
+      "actual_exported_raw_bytes": 400,
+      "actual_exported_raw_sha256": "925a8c1286daa58c1a577c899d0826d08aa112f8b23a5ea97a54078af701e51a",
+      "depth": "PF32",
+      "exact": true,
+      "key_polarity": "invert",
+      "parameter_values": [
+        {
+          "name": "Enable Color Key",
+          "slot": 1,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            1,
+            1,
+            1
+          ],
+          "name": "Color Key",
+          "slot": 2
+        },
+        {
+          "name": "Invert Color Key",
+          "slot": 3,
+          "value": 1.0
+        },
+        {
+          "name": "Smoothness",
+          "slot": 4,
+          "value": 100.0
+        },
+        {
+          "name": "Extra Smooth",
+          "slot": 5,
+          "value": 100.0
+        },
+        {
+          "name": "Smooth Range",
+          "slot": 6,
+          "value": 100.0
+        },
+        {
+          "name": "Smoother Version",
+          "slot": 7,
+          "value": 2.0
+        },
+        {
+          "name": "Gamma Correction",
+          "slot": 8,
+          "value": 2.0
+        },
+        {
+          "name": "Gamma Value",
+          "slot": 9,
+          "value": 2.4
+        },
+        {
+          "name": "Number of Gamma Colors",
+          "slot": 10,
+          "value": 2.0
+        },
+        {
+          "color": [
+            255,
+            255,
+            0,
+            0
+          ],
+          "name": "Gamma Color",
+          "slot": 11
+        },
+        {
+          "color": [
+            255,
+            1,
+            1,
+            1
+          ],
+          "name": "Gamma Color",
+          "slot": 12
+        }
+      ],
+      "pixel_format": "argb32f",
+      "production_tight_raw_sha256": "925a8c1286daa58c1a577c899d0826d08aa112f8b23a5ea97a54078af701e51a",
+      "render_mode": "smart-cpu",
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "AEGP Memory Suite v1",
+        "PF World Suite v2",
+        "PF ColorParamSuite v1"
+      ],
+      "unsupported_suite_calls": [],
+      "version": 2
+    }
+  ],
+  "claims_not_made": [
+    "No arbitrary parameter products or geometry",
+    "No native Windows execution in this task",
+    "No After Effects host/color-management execution",
+    "The July legacy_case_0012 Mac-AE residual is not superseded by this 5x5 owner fixture"
+  ],
+  "fixture": {
+    "height": 5,
+    "rgb_u8": [
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        255,
+        0,
+        0
+      ],
+      [
+        65,
+        1,
+        1
+      ],
+      [
+        0,
+        255,
+        0
+      ],
+      [
+        206,
+        55,
+        161
+      ],
+      [
+        86,
+        55,
+        26
+      ],
+      [
+        43,
+        73,
+        217
+      ],
+      [
+        231,
+        16,
+        235
+      ],
+      [
+        116,
+        106,
+        230
+      ],
+      [
+        1,
+        9,
+        43
+      ],
+      [
+        91,
+        38,
+        34
+      ],
+      [
+        99,
+        183,
+        84
+      ],
+      [
+        230,
+        125,
+        149
+      ],
+      [
+        208,
+        155,
+        60
+      ],
+      [
+        168,
+        21,
+        161
+      ],
+      [
+        233,
+        157,
+        226
+      ],
+      [
+        8,
+        57,
+        119
+      ],
+      [
+        159,
+        56,
+        196
+      ],
+      [
+        232,
+        156,
+        109
+      ],
+      [
+        50,
+        140,
+        246
+      ],
+      [
+        229,
+        135,
+        20
+      ],
+      [
+        36,
+        6,
+        46
+      ],
+      [
+        176,
+        107,
+        229
+      ],
+      [
+        168,
+        83,
+        193
+      ],
+      [
+        235,
+        7,
+        162
+      ]
+    ],
+    "row_padding": "actual exported owner tight; production padding stripped only for equality comparison",
+    "source_rgba8_sha256": "2f850400b2ba1a5397874aae20a7a41d07834cd7e8aa0b6afa323c690f0f0b19",
+    "width": 5
+  },
+  "host_callback_abi_reached": [
+    "PF Handle Suite v2 global_data owner",
+    "PF_InData checkout_param/checkin_param materialization",
+    "SmartPreRender checkout_layer",
+    "SmartRender checkout_layer_pixels and checkout_output",
+    "PF World Suite v2 ARGB8/ARGB16/ARGB32F primary worlds",
+    "PF ColorParamSuite v1 colors",
+    "VCOMP static/dynamic/fork single-thread scheduling"
+  ],
+  "owner_contract": {
+    "asm_sha256": "48d01096d8394c6dd57d924d87415b21edcebe133ac5380cf0a098687406f0f3",
+    "command_dispatch": {
+      "PF_Cmd_RENDER_11": "0x180005c30 (xor eax,eax; ret)",
+      "PF_Cmd_SMART_PRE_RENDER_23": "vtable +0x10 = 0x180005620",
+      "PF_Cmd_SMART_RENDER_24": "vtable +0x20 = 0x180001f10"
+    },
+    "exported_entry": "0x180009e60",
+    "smart_render_materialization": "PF_InData checkout_param/checkin_param callbacks feed FUN_180004e10 before bitdepth 8/16/32 dispatch"
+  },
+  "production_source_sha256": "d8a7a489bb3bc875e998926bdde971ac66f5544c41ff6bc583819bf0daf0a784",
+  "schema": "olmsmoother2.exported-owner-compound/1",
+  "scope": "actual unchanged Windows AEX exported SmartPreRender/SmartRender complete tight buffers versus production RenderBits; 5x5 RGBA8 source promoted by host to PF8/PF16/PF32; Version1 non-invert and Version2 invert representatives; Gamma Colors [red,key] 2.4; Smoothness/Range/Extra100",
+  "verdict": "PASS_ACTUAL_EXPORTED_SMART_OWNER_VERSION_KEY_GAMMA_SMOOTHING_ALL_DEPTHS_EXACT"
+}
