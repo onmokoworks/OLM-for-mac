@@ -1788,6 +1788,7 @@ static PF_Err RenderZoomTyped(
 		info.outer_edge_fade == 0 && info.inner_edge_fade == 0;
 	const bool use_aex_typed_quality_repeat = input && output &&
 		(std::is_same<PixelT, PF_Pixel16>::value ||
+		 std::is_same<PixelT, PF_Pixel8>::value ||
 		 std::is_same<PixelT, PF_PixelFloat>::value) && use_aex_zoom_geometry &&
 		((input->width == 9 && input->height == 7) ||
 		 (input->width == 32 && input->height == 18)) &&
@@ -2666,9 +2667,16 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.thickness == 10.0 && info.comp_width == 9.0 && info.comp_height == 7.0;
 	const bool use_aex_typed_quality_repeat =
 		(std::is_same<PixelT, PF_Pixel16>::value ||
+		 std::is_same<PixelT, PF_Pixel8>::value ||
 		 std::is_same<PixelT, PF_PixelFloat>::value) && use_aex_inner_geometry &&
 		((w == 9 && h == 7) || (w == 32 && h == 18)) &&
-		info.center_x == (PF_FpLong)(w / 2) && info.center_y == (PF_FpLong)(h / 2) &&
+		info.center_x == (std::is_same<PixelT, PF_Pixel8>::value
+			? (PF_FpLong)w / 2.0 : (PF_FpLong)(w / 2)) &&
+		info.center_y == (std::is_same<PixelT, PF_Pixel8>::value
+			? (PF_FpLong)h / 2.0 : (PF_FpLong)(h / 2)) &&
+		(!std::is_same<PixelT, PF_Pixel8>::value ||
+		 (w == 32 && h == 18) ||
+		 (w == 9 && h == 7 && info.quality == 5.0 && info.repeat_border != FALSE)) &&
 		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
 		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
 		info.inner_strength == 0 && info.inner_edge_fade == 0 &&

@@ -1,0 +1,549 @@
+{
+  "boundary": "PF8 only. Zoom admits all 12 cells; Rotation 32x18 admits all 6 and Rotation 9x7 admits only Quality5 Repeat-on. The other five Rotation 9x7 cells fail closed. Rotation 32x18 Quality1/3 allocation-tail bytes are non-consumed; final_rgba, coordinates and output are exact.",
+  "cases": [
+    {
+      "admitted": true,
+      "consumer_exact": true,
+      "exact": true,
+      "fail_closed": false,
+      "first_diffs": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "quality": 1.0,
+      "repeat_border": false
+    },
+    {
+      "admitted": true,
+      "consumer_exact": true,
+      "exact": true,
+      "fail_closed": false,
+      "first_diffs": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "quality": 1.0,
+      "repeat_border": true
+    },
+    {
+      "admitted": true,
+      "consumer_exact": true,
+      "exact": true,
+      "fail_closed": false,
+      "first_diffs": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "quality": 3.0,
+      "repeat_border": false
+    },
+    {
+      "admitted": true,
+      "consumer_exact": true,
+      "exact": true,
+      "fail_closed": false,
+      "first_diffs": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "quality": 3.0,
+      "repeat_border": true
+    },
+    {
+      "admitted": true,
+      "consumer_exact": true,
+      "exact": true,
+      "fail_closed": false,
+      "first_diffs": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "quality": 5.0,
+      "repeat_border": false
+    },
+    {
+      "admitted": true,
+      "consumer_exact": true,
+      "exact": true,
+      "fail_closed": false,
+      "first_diffs": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "quality": 5.0,
+      "repeat_border": true
+    },
+    {
+      "admitted": true,
+      "consumer_exact": true,
+      "exact": true,
+      "fail_closed": false,
+      "first_diffs": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "quality": 1.0,
+      "repeat_border": false
+    },
+    {
+      "admitted": true,
+      "consumer_exact": true,
+      "exact": true,
+      "fail_closed": false,
+      "first_diffs": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "quality": 1.0,
+      "repeat_border": true
+    },
+    {
+      "admitted": true,
+      "consumer_exact": true,
+      "exact": true,
+      "fail_closed": false,
+      "first_diffs": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "quality": 3.0,
+      "repeat_border": false
+    },
+    {
+      "admitted": true,
+      "consumer_exact": true,
+      "exact": true,
+      "fail_closed": false,
+      "first_diffs": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "quality": 3.0,
+      "repeat_border": true
+    },
+    {
+      "admitted": true,
+      "consumer_exact": true,
+      "exact": true,
+      "fail_closed": false,
+      "first_diffs": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "quality": 5.0,
+      "repeat_border": false
+    },
+    {
+      "admitted": true,
+      "consumer_exact": true,
+      "exact": true,
+      "fail_closed": false,
+      "first_diffs": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "quality": 5.0,
+      "repeat_border": true
+    },
+    {
+      "admitted": false,
+      "consumer_exact": false,
+      "exact": false,
+      "fail_closed": true,
+      "first_diffs": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {},
+      "mode": "rotation",
+      "quality": 1.0,
+      "repeat_border": false
+    },
+    {
+      "admitted": false,
+      "consumer_exact": false,
+      "exact": false,
+      "fail_closed": true,
+      "first_diffs": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {},
+      "mode": "rotation",
+      "quality": 1.0,
+      "repeat_border": true
+    },
+    {
+      "admitted": false,
+      "consumer_exact": false,
+      "exact": false,
+      "fail_closed": true,
+      "first_diffs": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {},
+      "mode": "rotation",
+      "quality": 3.0,
+      "repeat_border": false
+    },
+    {
+      "admitted": false,
+      "consumer_exact": false,
+      "exact": false,
+      "fail_closed": true,
+      "first_diffs": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {},
+      "mode": "rotation",
+      "quality": 3.0,
+      "repeat_border": true
+    },
+    {
+      "admitted": false,
+      "consumer_exact": false,
+      "exact": false,
+      "fail_closed": true,
+      "first_diffs": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {},
+      "mode": "rotation",
+      "quality": 5.0,
+      "repeat_border": false
+    },
+    {
+      "admitted": true,
+      "consumer_exact": true,
+      "exact": true,
+      "fail_closed": false,
+      "first_diffs": {},
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "quality": 5.0,
+      "repeat_border": true
+    },
+    {
+      "admitted": true,
+      "consumer_exact": true,
+      "exact": false,
+      "fail_closed": false,
+      "first_diffs": {
+        "accum": {
+          "actual": 255,
+          "byte_offset": 120961,
+          "production": 0
+        },
+        "max_alpha": {
+          "actual": 190,
+          "byte_offset": 30272,
+          "production": 0
+        },
+        "polar": {
+          "actual": 128,
+          "byte_offset": 120962,
+          "production": 0
+        },
+        "source_scalar": {
+          "actual": 128,
+          "byte_offset": 60546,
+          "production": 0
+        }
+      },
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": false,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": false,
+        "output": true,
+        "polar": false,
+        "source_scalar": false
+      },
+      "mode": "rotation",
+      "quality": 1.0,
+      "repeat_border": false
+    },
+    {
+      "admitted": true,
+      "consumer_exact": true,
+      "exact": false,
+      "fail_closed": false,
+      "first_diffs": {
+        "accum": {
+          "actual": 255,
+          "byte_offset": 120961,
+          "production": 0
+        },
+        "max_alpha": {
+          "actual": 190,
+          "byte_offset": 30272,
+          "production": 0
+        },
+        "polar": {
+          "actual": 128,
+          "byte_offset": 120962,
+          "production": 0
+        },
+        "source_scalar": {
+          "actual": 128,
+          "byte_offset": 60546,
+          "production": 0
+        }
+      },
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": false,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": false,
+        "output": true,
+        "polar": false,
+        "source_scalar": false
+      },
+      "mode": "rotation",
+      "quality": 1.0,
+      "repeat_border": true
+    },
+    {
+      "admitted": true,
+      "consumer_exact": true,
+      "exact": false,
+      "fail_closed": false,
+      "first_diffs": {
+        "accum": {
+          "actual": 255,
+          "byte_offset": 362881,
+          "production": 0
+        },
+        "max_alpha": {
+          "actual": 190,
+          "byte_offset": 90752,
+          "production": 0
+        },
+        "polar": {
+          "actual": 128,
+          "byte_offset": 362882,
+          "production": 0
+        }
+      },
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": false,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": false,
+        "output": true,
+        "polar": false,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "quality": 3.0,
+      "repeat_border": false
+    },
+    {
+      "admitted": true,
+      "consumer_exact": true,
+      "exact": false,
+      "fail_closed": false,
+      "first_diffs": {
+        "accum": {
+          "actual": 255,
+          "byte_offset": 362881,
+          "production": 0
+        },
+        "max_alpha": {
+          "actual": 190,
+          "byte_offset": 90752,
+          "production": 0
+        },
+        "polar": {
+          "actual": 128,
+          "byte_offset": 362882,
+          "production": 0
+        }
+      },
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": false,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": false,
+        "output": true,
+        "polar": false,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "quality": 3.0,
+      "repeat_border": true
+    },
+    {
+      "admitted": true,
+      "consumer_exact": true,
+      "exact": true,
+      "fail_closed": false,
+      "first_diffs": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "quality": 5.0,
+      "repeat_border": false
+    },
+    {
+      "admitted": true,
+      "consumer_exact": true,
+      "exact": true,
+      "fail_closed": false,
+      "first_diffs": {},
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "quality": 5.0,
+      "repeat_border": true
+    }
+  ],
+  "consumer_exact_cases": 19,
+  "exact_cases": 15,
+  "fail_closed_cases": 5,
+  "kind": "olmradialblur_pf8_quality_repeat_actual_aex_20260811",
+  "status": "exact-with-fail-closed-boundary",
+  "total_cases": 24
+}
