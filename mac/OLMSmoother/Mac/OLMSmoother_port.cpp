@@ -601,14 +601,33 @@ AlphaBlend16(const uint16_t *param_1, float param_2,
 	float fVar1 = DAT_18000d26c;
 	float fVar6 = (float)*param_3;
 	float fVar7 = (float)*param_1;
-	float fVar3 = fVar7 * param_2 + fVar6 * param_4;
+	// The Windows worker emits distinct MULSS/MULSS/ADDSS operations.  Keep
+	// those binary32 rounding points on Apple Silicon instead of allowing an
+	// FMA contraction across the alpha sum.
+	volatile float alpha_first = fVar7 * param_2;
+	volatile float alpha_second = fVar6 * param_4;
+	volatile float alpha_sum = alpha_first + alpha_second;
+	float fVar3 = alpha_sum;
 	float fVar5 = fVar3;
 	if (DAT_18000d26c < fVar3) fVar5 = DAT_18000d26c;
 	if (fVar3 < 0.0f) fVar5 = 0.0f;
 
-	float fVar4 = ((float)param_1[1] * param_2 * fVar7 + (float)param_3[1] * param_4 * fVar6) / fVar5;
-	float fVar2 = ((float)param_1[2] * param_2 * fVar7 + (float)param_3[2] * param_4 * fVar6) / fVar5;
-	fVar6        = ((float)param_1[3] * param_2 * fVar7 + (float)param_3[3] * param_4 * fVar6) / fVar5;
+	auto weighted_channel = [](uint16_t first, float first_weight, float first_alpha,
+	                           uint16_t second, float second_weight, float second_alpha,
+	                           float divisor) -> float {
+		volatile float first_product = (float)first * first_weight;
+		first_product = first_product * first_alpha;
+		volatile float second_product = (float)second * second_weight;
+		second_product = second_product * second_alpha;
+		volatile float sum = first_product + second_product;
+		return sum / divisor;
+	};
+	float fVar4 = weighted_channel(param_1[1], param_2, fVar7,
+	                               param_3[1], param_4, fVar6, fVar5);
+	float fVar2 = weighted_channel(param_1[2], param_2, fVar7,
+	                               param_3[2], param_4, fVar6, fVar5);
+	fVar6 = weighted_channel(param_1[3], param_2, fVar7,
+	                         param_3[3], param_4, fVar6, fVar5);
 
 	fVar3 = fVar6;
 	if (DAT_18000d26c < fVar6) fVar3 = DAT_18000d26c;
