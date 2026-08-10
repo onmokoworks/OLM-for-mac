@@ -6,10 +6,10 @@
     "stable_consecutive_collections": 2,
     "universal_exact": true
   },
-  "accepted_at": "2026-08-10T12:25:26.133280+00:00",
+  "accepted_at": "2026-08-10T13:05:05.905523+00:00",
   "claim_boundary": "Exact installed executable identity, arm64+x86_64 architectures, valid strict code signature, and byte identity with the named local build product. No AE load, UI, or render claim.",
   "configuration": "Debug",
-  "installed_after": "2026-08-10T12:25:26.133280+00:00",
+  "installed_after": "2026-08-10T13:05:05.905523+00:00",
   "plugins": [
     {
       "architectures": [
@@ -50,10 +50,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMColorKey.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMColorKey",
-      "sha256": "45515bf85f97f3db23ffae827fcdc4e9ad92207f35af77ac8fa21ed909df59bd",
+      "sha256": "98d755b1bf86f0a71857049e4af3f4b161f05347f405aa379bf115bc3e1a8ab6",
       "source_bundle": "mac/OLMColorKey/Mac/build/Debug/OLMColorKey.plugin",
       "source_installed_exact": true,
-      "source_sha256": "45515bf85f97f3db23ffae827fcdc4e9ad92207f35af77ac8fa21ed909df59bd",
+      "source_sha256": "98d755b1bf86f0a71857049e4af3f4b161f05347f405aa379bf115bc3e1a8ab6",
       "universal_exact": true
     },
     {
@@ -65,10 +65,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMDirectionalBlur",
-      "sha256": "8541fd0332390396e200f701ef3da0080aff481d4b600422bd9f8be3c3fe6064",
+      "sha256": "dc6c01ae1cd02f00262689260831e3b97b40ba2e1802e8003957e386b9932289",
       "source_bundle": "mac/OLMDirectionalBlur/Mac/build/Debug/OLMDirectionalBlur.plugin",
       "source_installed_exact": true,
-      "source_sha256": "8541fd0332390396e200f701ef3da0080aff481d4b600422bd9f8be3c3fe6064",
+      "source_sha256": "dc6c01ae1cd02f00262689260831e3b97b40ba2e1802e8003957e386b9932289",
       "universal_exact": true
     },
     {
@@ -95,10 +95,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMKiraKira",
-      "sha256": "f39e354084e1ab8e7fdf071cb0a08e6fce3a89d2c880248d571adb7026532aba",
+      "sha256": "aef9433ab31fc53d2c307f907e76e9a4831ccf4377693453fd01316110847c8e",
       "source_bundle": "mac/OLMKiraKira/Mac/build/Debug/OLMKiraKira.plugin",
       "source_installed_exact": true,
-      "source_sha256": "f39e354084e1ab8e7fdf071cb0a08e6fce3a89d2c880248d571adb7026532aba",
+      "source_sha256": "aef9433ab31fc53d2c307f907e76e9a4831ccf4377693453fd01316110847c8e",
       "universal_exact": true
     },
     {
@@ -110,10 +110,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMRadialBlur",
-      "sha256": "2b9dc637196b582d70e43fbac3537aca28aad55e75e778eb2cdad6cdd57fc01a",
+      "sha256": "0535f92f43bf62b947927387a711e140f674330f42d029df09fe60fb1f9023b7",
       "source_bundle": "mac/OLMRadialBlur/Mac/build/Debug/OLMRadialBlur.plugin",
       "source_installed_exact": true,
-      "source_sha256": "2b9dc637196b582d70e43fbac3537aca28aad55e75e778eb2cdad6cdd57fc01a",
+      "source_sha256": "0535f92f43bf62b947927387a711e140f674330f42d029df09fe60fb1f9023b7",
       "universal_exact": true
     },
     {
@@ -155,10 +155,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMToonDilate",
-      "sha256": "06518f523efb26d30f19ae1f98a08ccdd4f1c577845e30b97d405ca09dc010d4",
+      "sha256": "309715d940268f2fc451aead2cff505044bfaa630dab82de2cd084c8cfe17044",
       "source_bundle": "mac/OLMToonDilate/Mac/build/Debug/OLMToonDilate.plugin",
       "source_installed_exact": true,
-      "source_sha256": "06518f523efb26d30f19ae1f98a08ccdd4f1c577845e30b97d405ca09dc010d4",
+      "source_sha256": "309715d940268f2fc451aead2cff505044bfaa630dab82de2cd084c8cfe17044",
       "universal_exact": true
     }
   ],
