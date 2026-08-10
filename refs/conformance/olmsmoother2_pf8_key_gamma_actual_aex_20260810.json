@@ -1,0 +1,80 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "claims_not_made": [
+    "No other PF8 key color/palette/geometry",
+    "No PF16/PF32 claim from this fixture",
+    "No AE-host execution claim"
+  ],
+  "decode_lut_sha256": "11056c2feda87964204a53471e172ae6fb6039a0c3120f6277c7ff115fe88cba",
+  "fixtures": [
+    {
+      "class_nonzero_bytes": 9,
+      "class_plane_hex": "00000000ff000000ff00000000ff00ffffff0000ffffff00",
+      "classifier_instructions": 1461,
+      "equal": true,
+      "invert_key": false,
+      "key_owner_instructions": 167,
+      "mode": "noninvert",
+      "padding_per_row": 5,
+      "padding_preserved": true,
+      "post_key_alpha": [
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        1.0
+      ],
+      "raw_hex": "00010101d9e30300ff000101a5a5a5a5a5e601f80000010101f25eaf3aa5a5a5a5a5",
+      "typed_worker_instructions": 6476
+    },
+    {
+      "class_nonzero_bytes": 5,
+      "class_plane_hex": "00000000ff0000000000000000ff0000ffff0000ff000000",
+      "classifier_instructions": 1312,
+      "equal": true,
+      "invert_key": true,
+      "key_owner_instructions": 225,
+      "mode": "invert",
+      "padding_per_row": 5,
+      "padding_preserved": true,
+      "post_key_alpha": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "raw_hex": "e60101011a01010100000101a5a5a5a5a51a010101c60101010060bf40a5a5a5a5a5",
+      "typed_worker_instructions": 6803
+    }
+  ],
+  "interaction_contract": {
+    "key_rgb": [
+      0.003921568859368563,
+      0.003921568859368563,
+      0.003921568859368563
+    ],
+    "operation_order": "actual key owner mutates alpha before decode/classifier; Gamma Colors membership remains RGB-only",
+    "ordered_palette_rgba": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.003921568859368563,
+        0.003921568859368563,
+        0.003921568859368563,
+        1.0
+      ]
+    ],
+    "pf8_code0_vs_key_code1": "outside strict key-match threshold in both non-invert and invert paths"
+  },
+  "inverse_lut_sha256": "b7014467dcae06109111302b8c930494950d27b817d1390d6434605795772fbc",
+  "production_source_sha256": "d8a7a489bb3bc875e998926bdde971ac66f5544c41ff6bc583819bf0daf0a784",
+  "scope": "PF8 v2 non-invert and invert key followed by Gamma Colors ordered [red,key], gamma2.4, padded3x2, captured LUTs",
+  "verdict": "PASS_PF8_V2_KEY_AND_INVERT_PLUS_GAMMA_COLORS_TO_PRODUCTION_EXACT"
+}
