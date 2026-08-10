@@ -552,13 +552,14 @@ extern "C" int olm_dblur_full_argb16(
     float back_sharp_tail_percent, float size_variation_percent,
     float brightness_gain, float angle_degrees,
     float noise_variation_percent, int noise_type, std::uint32_t seed,
-    int noise_offset_ui, float thickness_ui) {
+    int noise_offset_ui, float thickness_ui, const std::uint16_t* layer_argb,
+    int layer_rowbytes) {
     return render_minimal_argb16(
         input_argb, output_argb, width, height, front_strength, back_strength,
         front_alpha_fade, front_sharp_tail_percent, back_alpha_fade,
         back_sharp_tail_percent, size_variation_percent, brightness_gain, angle_degrees,
         noise_variation_percent, noise_type, seed, noise_offset_ui,
-        thickness_ui, nullptr, 0);
+        thickness_ui, layer_argb, layer_rowbytes);
 }
 
 static int render_minimal_argb32(const float* input_argb,

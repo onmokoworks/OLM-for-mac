@@ -37,14 +37,14 @@ def pf16_rows(temp:Path)->list[dict]:
  lib=temp/'lib16.dylib'; build=subprocess.run(['clang++','-std=c++17','-O2','-fno-fast-math','-ffp-contract=off','-shared','-fPIC','core/dblur_frontonly.cpp','core/dblur_rotate.cpp','core/dblur_rowdriver.cpp','core/dblur_field.cpp','-o',str(lib)],cwd=ROOT,capture_output=True,text=True)
  if build.returncode: raise RuntimeError(build.stderr)
  fn=ctypes.CDLL(str(lib)).olm_dblur_full_argb16
- fn.argtypes=[ctypes.POINTER(ctypes.c_uint16),ctypes.POINTER(ctypes.c_uint16),ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_float,ctypes.c_int,ctypes.c_int,ctypes.c_float,ctypes.c_float,ctypes.c_float,ctypes.c_float,ctypes.c_float,ctypes.c_int,ctypes.c_uint32,ctypes.c_int,ctypes.c_float]
+ fn.argtypes=[ctypes.POINTER(ctypes.c_uint16),ctypes.POINTER(ctypes.c_uint16),ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_int,ctypes.c_float,ctypes.c_int,ctypes.c_int,ctypes.c_float,ctypes.c_float,ctypes.c_float,ctypes.c_float,ctypes.c_float,ctypes.c_int,ctypes.c_uint32,ctypes.c_int,ctypes.c_float,ctypes.POINTER(ctypes.c_uint16),ctypes.c_int]
  Words=ctypes.c_uint16*(active//2); source=Words.from_buffer_copy(packed); rows=[]
  for i,(size,fade,sharp) in enumerate(CASES):
   meta=temp/f'pf16_{i}.json'; out=temp/f'pf16_{i}.argb64'
   cmd=[sys.executable,str(FIXTURE),'--source',str(srcpath),'--output',str(meta),'--host-output-raw',str(out),'--bitdepth','16','--angle','45','--brightness-gain','1','--downsample-num','1','--downsample-den','1','--front-strength','0','--size-variation',str(int(size)),'--front-alpha-fade','0','--front-sharp-tail','0','--back-strength','8','--back-alpha-fade',str(fade),'--back-sharp-tail',str(int(sharp)),'--noise-variation','0','--noise-type','1','--seed','1','--noise-offset','0','--thickness','10','--world-area','0','0','16','16','--row-padding','16','--no-detour-rotate','--max-instructions','20000000']
   run=subprocess.run(cmd,cwd=ROOT,capture_output=True,text=True)
   if run.returncode: raise RuntimeError(run.stderr)
-  m=json.loads(meta.read_text()); actual=out.read_bytes(); dst=Words(); rc=fn(source,dst,W,H,0,0,ctypes.c_float(0),8,fade,ctypes.c_float(sharp),ctypes.c_float(size),ctypes.c_float(1),ctypes.c_float(45),ctypes.c_float(0),1,1,0,ctypes.c_float(10)); production=bytes(dst)
+  m=json.loads(meta.read_text()); actual=out.read_bytes(); dst=Words(); rc=fn(source,dst,W,H,0,0,ctypes.c_float(0),8,fade,ctypes.c_float(sharp),ctypes.c_float(size),ctypes.c_float(1),ctypes.c_float(45),ctypes.c_float(0),1,1,0,ctypes.c_float(10),None,0); production=bytes(dst)
   callbacks=[x['callback'] for x in m['execution']['iterate_calls']]; mismatch=sum(a!=b for a,b in zip(actual,production))
   if rc or len(actual)!=active or mismatch or callbacks!=['0x1800068e0','0x180006a90']: raise RuntimeError(f'PF16 size={size:g} fade={fade} sharp={sharp:g} mismatch={mismatch}')
   rows.append({'depth':'PF16','size_variation_percent':size,'back_alpha_fade':fade,'back_sharp_tail':sharp,'byte_count':len(actual),'raw_sha256':hashlib.sha256(actual).hexdigest(),'callbacks':callbacks})

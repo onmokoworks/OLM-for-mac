@@ -1,0 +1,339 @@
+{
+  "admission": "Only the 2x2x2 matrix per depth and fixed route is admitted. Type3 requires non-null same-size world and sufficient rowbytes.",
+  "branches": {
+    "Type2": "generated block-noise plane; Noise Layer checkout is not consumed",
+    "Type3": "checked-out same-size Layer world; active rowbytes may be padded and local origin is 0,0"
+  },
+  "depths": [
+    "PF16",
+    "PF32"
+  ],
+  "fixed_route": {
+    "angle": 45,
+    "back_strength": 0,
+    "brightness_gain": 1,
+    "fade_sharp": 0,
+    "front_strength": 8,
+    "geometry": "16x16 padded",
+    "offset": 0,
+    "render_scale": [
+      1,
+      1
+    ],
+    "seed": 1,
+    "thickness": 3
+  },
+  "matrix": {
+    "noise_type": [
+      2,
+      3
+    ],
+    "noise_variation": [
+      25,
+      100
+    ],
+    "size_variation": [
+      0,
+      50
+    ]
+  },
+  "not_proven": [
+    "other NV/Size values",
+    "other world dimensions/origin semantics",
+    "fade/sharp/back combinations",
+    "native AE export"
+  ],
+  "plugin": "OLMDirectionalBlur",
+  "representatives": [
+    {
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "noise_layer_contract": null,
+      "noise_type": 2,
+      "noise_variation_percent": 25.0,
+      "raw_sha256": "79f943d8b4a9b5c1ca1d35e17252ea0746dbfbde6e9251de7b6d5ec670c82e2d",
+      "size_variation_percent": 0.0
+    },
+    {
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "noise_layer_contract": null,
+      "noise_type": 2,
+      "noise_variation_percent": 25.0,
+      "raw_sha256": "79f943d8b4a9b5c1ca1d35e17252ea0746dbfbde6e9251de7b6d5ec670c82e2d",
+      "size_variation_percent": 50.0
+    },
+    {
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "noise_layer_contract": null,
+      "noise_type": 2,
+      "noise_variation_percent": 100.0,
+      "raw_sha256": "0b91171a30163a15afcb1a47cf149536e2951671ae9d45f4bdc1e3ecc44a2582",
+      "size_variation_percent": 0.0
+    },
+    {
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "noise_layer_contract": null,
+      "noise_type": 2,
+      "noise_variation_percent": 100.0,
+      "raw_sha256": "0b91171a30163a15afcb1a47cf149536e2951671ae9d45f4bdc1e3ecc44a2582",
+      "size_variation_percent": 50.0
+    },
+    {
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "noise_layer_contract": {
+        "dimensions": [
+          16,
+          16
+        ],
+        "origin": [
+          0,
+          0
+        ],
+        "rowbytes": 144
+      },
+      "noise_type": 3,
+      "noise_variation_percent": 25.0,
+      "raw_sha256": "b4899c1a7f959dd4cd7e6214b62263d507cc3a140cde01a0321667021f271428",
+      "size_variation_percent": 0.0
+    },
+    {
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "noise_layer_contract": {
+        "dimensions": [
+          16,
+          16
+        ],
+        "origin": [
+          0,
+          0
+        ],
+        "rowbytes": 144
+      },
+      "noise_type": 3,
+      "noise_variation_percent": 25.0,
+      "raw_sha256": "b4899c1a7f959dd4cd7e6214b62263d507cc3a140cde01a0321667021f271428",
+      "size_variation_percent": 50.0
+    },
+    {
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "noise_layer_contract": {
+        "dimensions": [
+          16,
+          16
+        ],
+        "origin": [
+          0,
+          0
+        ],
+        "rowbytes": 144
+      },
+      "noise_type": 3,
+      "noise_variation_percent": 100.0,
+      "raw_sha256": "d536acfe42daac18c06ab91b6a78eebec15b68c9cc42540a1592575868391f8a",
+      "size_variation_percent": 0.0
+    },
+    {
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "noise_layer_contract": {
+        "dimensions": [
+          16,
+          16
+        ],
+        "origin": [
+          0,
+          0
+        ],
+        "rowbytes": 144
+      },
+      "noise_type": 3,
+      "noise_variation_percent": 100.0,
+      "raw_sha256": "d536acfe42daac18c06ab91b6a78eebec15b68c9cc42540a1592575868391f8a",
+      "size_variation_percent": 50.0
+    },
+    {
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "depth": "PF32",
+      "noise_layer_contract": null,
+      "noise_type": 2,
+      "noise_variation_percent": 25.0,
+      "raw_sha256": "a0f5e1deee28cce8362fcf078c62ef0bfb8ec23ed296f88089015de35bab6d25",
+      "size_variation_percent": 0.0
+    },
+    {
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "depth": "PF32",
+      "noise_layer_contract": null,
+      "noise_type": 2,
+      "noise_variation_percent": 25.0,
+      "raw_sha256": "a0f5e1deee28cce8362fcf078c62ef0bfb8ec23ed296f88089015de35bab6d25",
+      "size_variation_percent": 50.0
+    },
+    {
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "depth": "PF32",
+      "noise_layer_contract": null,
+      "noise_type": 2,
+      "noise_variation_percent": 100.0,
+      "raw_sha256": "ed3ac62ee2da22b7a2f68c4de7449db155a14ddcbe6e25e0f75eae05f04fd928",
+      "size_variation_percent": 0.0
+    },
+    {
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "depth": "PF32",
+      "noise_layer_contract": null,
+      "noise_type": 2,
+      "noise_variation_percent": 100.0,
+      "raw_sha256": "ed3ac62ee2da22b7a2f68c4de7449db155a14ddcbe6e25e0f75eae05f04fd928",
+      "size_variation_percent": 50.0
+    },
+    {
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "depth": "PF32",
+      "noise_layer_contract": {
+        "dimensions": [
+          16,
+          16
+        ],
+        "origin": [
+          0,
+          0
+        ],
+        "rowbytes": 288
+      },
+      "noise_type": 3,
+      "noise_variation_percent": 25.0,
+      "raw_sha256": "a0f5e1deee28cce8362fcf078c62ef0bfb8ec23ed296f88089015de35bab6d25",
+      "size_variation_percent": 0.0
+    },
+    {
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "depth": "PF32",
+      "noise_layer_contract": {
+        "dimensions": [
+          16,
+          16
+        ],
+        "origin": [
+          0,
+          0
+        ],
+        "rowbytes": 288
+      },
+      "noise_type": 3,
+      "noise_variation_percent": 25.0,
+      "raw_sha256": "a0f5e1deee28cce8362fcf078c62ef0bfb8ec23ed296f88089015de35bab6d25",
+      "size_variation_percent": 50.0
+    },
+    {
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "depth": "PF32",
+      "noise_layer_contract": {
+        "dimensions": [
+          16,
+          16
+        ],
+        "origin": [
+          0,
+          0
+        ],
+        "rowbytes": 288
+      },
+      "noise_type": 3,
+      "noise_variation_percent": 100.0,
+      "raw_sha256": "f773f5cef5898a59f5a1bc68ff6cba5532b206c628b609d02749a7faa106d640",
+      "size_variation_percent": 0.0
+    },
+    {
+      "byte_count": 4096,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "depth": "PF32",
+      "noise_layer_contract": {
+        "dimensions": [
+          16,
+          16
+        ],
+        "origin": [
+          0,
+          0
+        ],
+        "rowbytes": 288
+      },
+      "noise_type": 3,
+      "noise_variation_percent": 100.0,
+      "raw_sha256": "f773f5cef5898a59f5a1bc68ff6cba5532b206c628b609d02749a7faa106d640",
+      "size_variation_percent": 50.0
+    }
+  ],
+  "schema_version": 1,
+  "status": "exact_bounded_matrix"
+}
