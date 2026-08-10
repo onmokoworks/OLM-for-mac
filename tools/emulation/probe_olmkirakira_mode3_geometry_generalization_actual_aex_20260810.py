@@ -14,14 +14,17 @@ ROOT = Path(__file__).resolve().parents[2]
 BASE_PATH = ROOT / "tools/emulation/probe_olmkirakira_mode3_default50_canonical_actual_aex_20260810.py"
 AEX = ROOT / "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex"
 REPORT = ROOT / "refs/conformance/olmkirakira_mode3_geometry_generalization_actual_aex_20260810.json"
-CASES = (
-    (36, 22, 0, 3), (36, 22, 0, 5), (36, 22, 0, 7), (36, 22, 0, 9), (36, 22, 0, 50),
-    (39, 39, 45, 3), (39, 39, 45, 5), (39, 39, 45, 7), (39, 39, 45, 9), (39, 39, 45, 50),
+GEOMETRY_ANGLES = (
+    (36, 22, 0), (39, 39, 45), (39, 30, 17),
+    (68, 40, 0), (74, 74, 45), (75, 57, 17),
+)
+GENERAL_LENGTHS = (3, 5, 7, 9, 11, 25, 50, 100, 200, 300)
+CASES = tuple((width, height, angle, length)
+              for width, height, angle in GEOMETRY_ANGLES
+              for length in GENERAL_LENGTHS) + (
     (39, 39, -45, 3), (39, 39, -45, 50),
-    (39, 30, 17, 3), (39, 30, 17, 5), (39, 30, 17, 7), (39, 30, 17, 9), (39, 30, 17, 50),
-    (68, 40, 0, 3), (68, 40, 0, 5), (68, 40, 0, 7), (68, 40, 0, 9), (68, 40, 0, 50),
-    (74, 74, 45, 3), (74, 74, 45, 5), (74, 74, 45, 7), (74, 74, 45, 9), (74, 74, 45, 50),
-    (75, 57, 17, 3), (75, 57, 17, 5), (75, 57, 17, 7), (75, 57, 17, 9), (75, 57, 17, 50),
+    (36, 22, 0, 1), (36, 22, 0, 2),
+    (36, 22, 0, 301), (36, 22, 0, 1000),
 )
 
 

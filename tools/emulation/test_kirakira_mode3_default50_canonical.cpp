@@ -32,7 +32,9 @@ int main(int argc, char **argv)
         source, width, height, width, height, cx, cy, angle);
     std::vector<float> gaussian(forward.size(), 0.0f);
     olm::kirakira::HorizontalGaussian filter;
-    if (!filter.prepare_actual_aex_nonfused(length) ||
+    const bool prepared = length == 1 ? filter.prepare_actual_aex_small5_nonfused() :
+        filter.prepare_actual_aex_nonfused(length);
+    if (!prepared ||
         !filter.apply(forward.data(), width, gaussian.data(), width, width, height)) return 4;
     const auto final = olm::kirakira::warp_get_rotation_matrix_2d(
         gaussian, width, height, width, height, cx, cy, -angle);

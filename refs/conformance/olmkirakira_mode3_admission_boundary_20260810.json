@@ -18,7 +18,9 @@
   "geometry_general_contract": {
     "minimum_width": 9,
     "minimum_height": 7,
-    "lengths": [3, 5, 7, 9, 50],
+    "minimum_length": 1,
+    "ui_slider_maximum_length": 300,
+    "hard_maximum_length": 1000,
     "result": "raw_float32_exact_across_representative_geometry_and_dispatch_classes",
     "evidence": "refs/conformance/olmkirakira_mode3_geometry_generalization_actual_aex_20260810.json",
     "focused_regression": "tools/emulation/test_olmkirakira_mode3_geometry_generalization_actual_aex_20260810.py"
@@ -38,7 +40,7 @@
   ],
   "not_proven": [
     "leaf dimensions below 9x7 except independently listed exact tuples",
-    "geometry-general behavior for lengths outside 3/5/7/9/50",
+    "length zero (public zero-ray skip) and lengths above the hard maximum 1000",
     "full native-AE Mode 3 rendering at practical resolution",
     "geometry independence of the recovered Gaussian row primitive"
   ]

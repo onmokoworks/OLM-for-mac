@@ -7,12 +7,11 @@
 
 namespace olm::kirakira {
 
-// The witnessed public length family is geometry-general above the bounded
-// minimum leaf size. Smaller leaves remain admitted only at complete fixtures.
+// The full public hard range is geometry-general above the bounded minimum
+// leaf size. Smaller leaves remain admitted only at complete fixtures.
 inline bool mode3_gaussian_admitted(int width, int height, int length)
 {
-    if (width >= 9 && height >= 7 &&
-        (length == 3 || length == 5 || length == 7 || length == 9 || length == 50))
+    if (width >= 9 && height >= 7 && length >= 1 && length <= 1000)
         return true;
     return (width == 11 && height == 6 && length == 3) ||
            (width == 13 && height == 5 && length == 7) ||
@@ -77,6 +76,13 @@ public:
         return true;
     }
 
+    bool prepare_actual_aex_small5_nonfused()
+    {
+        if (!prepare(1)) return false;
+        actual_aex_small5_profile_ = true;
+        return true;
+    }
+
     bool apply(const float* src, std::ptrdiff_t src_stride,
                float* dst, std::ptrdiff_t dst_stride,
                int width, int height) const
@@ -90,7 +96,8 @@ public:
             const int vector_width = width - width % 4;
             for (int x = 0; x < width; ++x) {
                 float total;
-                if (!actual_aex_profile_ && radius_ == 2 && x < vector_width) {
+                if ((!actual_aex_profile_ || actual_aex_small5_profile_) &&
+                    radius_ == 2 && x < vector_width) {
                     // OpenCV 4.5.5 dispatches a five-tap symmetric kernel to
                     // SymmRowSmallVec_32f, whose nested v_muladd order differs
                     // from the generic row filter.
@@ -99,8 +106,13 @@ public:
                     const float pair2 = source_row[reflect101(x - 2, width)] +
                                         source_row[reflect101(x + 2, width)];
                     total = pair1 * kernel_[1];
-                    total = std::fma(source_row[x], kernel_[2], total);
-                    total = std::fma(pair2, kernel_[4], total);
+                    if (actual_aex_small5_profile_) {
+                        total = multiply_add_nonfused(source_row[x], kernel_[2], total);
+                        total = multiply_add_nonfused(pair2, kernel_[4], total);
+                    } else {
+                        total = std::fma(source_row[x], kernel_[2], total);
+                        total = std::fma(pair2, kernel_[4], total);
+                    }
                     destination_row[x] = total;
                     continue;
                 }
@@ -144,6 +156,7 @@ private:
     int length_ = 0;
     int radius_ = 0;
     bool actual_aex_profile_ = false;
+    bool actual_aex_small5_profile_ = false;
     std::vector<float> kernel_;
 };
 

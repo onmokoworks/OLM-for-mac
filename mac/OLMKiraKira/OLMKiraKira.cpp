@@ -250,7 +250,7 @@ static std::vector<float> DirectionBoxBlur(
 	A_long dy,
 	A_long passes)
 {
-	if (length <= 1) return input;
+	if (length <= 0) return input;
 	std::vector<float> src = input;
 	std::vector<float> dst(src.size());
 	const A_long left = length / 2;
@@ -332,15 +332,18 @@ static std::vector<float> RotatedAxisBoxBlur(
 	}
 	temp_a = WarpGetRotDirect(temp_a, rw, rh, rw, rh, temp_cx, temp_cy, angle_deg);
 	std::vector<float> temp_b((size_t)rw * rh);
-	// Mode 3 Length 3/5/7/9/50 is geometry-general above the bounded minimum
-	// leaf; smaller exceptions remain fixture-only. Unsupported tuples fail closed
+	// Mode 3's hard public Length range 1..1000 is geometry-general above the
+	// bounded minimum leaf; smaller exceptions remain fixture-only. Unsupported tuples fail closed
 	// instead of silently substituting the Mode-2 box approximation.
 	const bool mode3_admitted =
 		olm::kirakira::mode3_gaussian_admitted(rw, rh, length);
 	if (blur_mode == 3 && !mode3_admitted) return input;
 	if (blur_mode == 3) {
 		olm::kirakira::HorizontalGaussian gaussian;
-		if (!gaussian.prepare_actual_aex_nonfused(length) ||
+		const bool prepared = length == 1
+			? gaussian.prepare_actual_aex_small5_nonfused()
+			: gaussian.prepare_actual_aex_nonfused(length);
+		if (!prepared ||
 			!gaussian.apply(temp_a.data(), rw, temp_b.data(), rw, rw, rh)) {
 			return input;
 		}
