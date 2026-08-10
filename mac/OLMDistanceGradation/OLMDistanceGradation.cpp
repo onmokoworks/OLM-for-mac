@@ -364,6 +364,26 @@ static void gauss_blur_separable(float *mat, long w, long h, int ksize)
 	int half = (int)k.size() / 2;
 
 	std::vector<float> tmp((size_t)w * h);
+	if (ksize == 3) {
+		for (long y = 0; y < h; ++y) {
+			const float *row = mat + (size_t)y * w;
+			for (long x = 0; x < w; ++x) {
+				long xl = x > 0 ? x - 1 : 0;
+				long xr = x + 1 < w ? x + 1 : w - 1;
+				tmp[(size_t)y * w + x] = (row[xl] + row[xr]) * 0.25f + row[x] * 0.5f;
+			}
+		}
+		for (long y = 0; y < h; ++y) {
+			long yt = y > 0 ? y - 1 : 0;
+			long yb = y + 1 < h ? y + 1 : h - 1;
+			for (long x = 0; x < w; ++x) {
+				mat[(size_t)y * w + x] =
+					(tmp[(size_t)yt * w + x] + tmp[(size_t)yb * w + x]) * 0.25f +
+					tmp[(size_t)y * w + x] * 0.5f;
+			}
+		}
+		return;
+	}
 
 	// Horizontal
 	for (long y = 0; y < h; ++y) {
@@ -406,7 +426,7 @@ static void box_blur_separable(float *mat, long w, long h, int ksize)
 	std::vector<float> src(mat, mat + (size_t)w * h);
 	for (long y = 0; y < h; ++y) {
 		for (long x = 0; x < w; ++x) {
-			float sum = 0.0f;
+			double sum = 0.0;
 			for (int j = -half; j <= half; ++j) {
 				long yi = y + j;
 				if (yi < 0) yi = 0;
@@ -418,7 +438,7 @@ static void box_blur_separable(float *mat, long w, long h, int ksize)
 					sum += src[(size_t)yi * w + xi];
 				}
 			}
-			mat[(size_t)y * w + x] = sum / area;
+			mat[(size_t)y * w + x] = (float)(sum / (double)area);
 		}
 	}
 }
@@ -711,8 +731,8 @@ static void build_distance_field(
 	                      p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0);
 	if (constant_blur) {
 		for (long i = 0; i < w * h; ++i) df.x[i] = (df.x[i] >= 1.0f) ? 1.0f : 0.0f;
-		df.pre_blur_x = df.x;
 	}
+	if (p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0) df.pre_blur_x = df.x;
 
 	// Blur: the Windows owner always converts the full-resolution Blur Size to
 	// current-resolution pixels. Blur Mode selects the cvSmooth primitive:
@@ -805,7 +825,7 @@ static inline void compose_pixel(
 	}
 	if (p.pixel_size == sizeof(PF_PixelFloat) &&
 	    p.in_out == IN_OUT_INSIDE && p.render_mode == RENDER_MODE_RGB && !p.use_bg &&
-	    p.interp_mode == INTERP_CONSTANT && p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0) {
+	    p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0) {
 		out_a = out_r = out_g = X;
 		out_b = field_aux;
 		return;
@@ -828,8 +848,16 @@ static inline void compose_pixel(
 	// owner output, ground this branch without importing integer staging rules.
 	if (p.pixel_size == sizeof(PF_PixelFloat) &&
 	    p.in_out == IN_OUT_INSIDE && p.render_mode == RENDER_MODE_RGB && p.use_bg) {
+		if (p.interp_mode != INTERP_CONSTANT &&
+		    p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0) {
+			out_a = out_r = out_g = X;
+			out_b = field_aux;
+			return;
+		}
 		float scalar = d_alpha * X;
 		out_a = out_r = out_g = out_b = scalar;
+		if (p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0)
+			out_b = field_aux;
 		return;
 	}
 
