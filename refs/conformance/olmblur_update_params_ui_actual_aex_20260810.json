@@ -1,0 +1,114 @@
+{
+  "actual_aex": {
+    "calls": [
+      [
+        "get_effect",
+        0,
+        305419896
+      ],
+      [
+        "get_stream",
+        0,
+        1073741824,
+        2
+      ],
+      [
+        "get_flags",
+        1073741840
+      ],
+      [
+        "set_flag",
+        1073741840,
+        2,
+        0,
+        1
+      ],
+      [
+        "dispose_stream",
+        1073741840
+      ],
+      [
+        "dispose_effect",
+        1073741824
+      ]
+    ],
+    "return_code": 0,
+    "suite_acquisitions": [
+      [
+        "AEGP PF Interface Suite",
+        1
+      ],
+      [
+        "AEGP Stream Suite",
+        7
+      ],
+      [
+        "AEGP Dynamic Stream Suite",
+        3
+      ],
+      [
+        "AEGP Effect Suite",
+        3
+      ]
+    ],
+    "suite_releases": [
+      [
+        "AEGP Stream Suite",
+        7
+      ],
+      [
+        "AEGP Dynamic Stream Suite",
+        3
+      ],
+      [
+        "AEGP PF Interface Suite",
+        1
+      ],
+      [
+        "AEGP Effect Suite",
+        3
+      ]
+    ]
+  },
+  "actual_aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+  "actual_exported_entry": "0x18000a970",
+  "command": {
+    "name": "PF_Cmd_UPDATE_PARAMS_UI",
+    "value": 14
+  },
+  "hidden_flag": {
+    "name": "AEGP_DynStreamFlag_HIDDEN",
+    "value": 2
+  },
+  "not_proven": [
+    "native AE visual rendering of the Effect Controls panel",
+    "behavior of any other command",
+    "render pixel equivalence"
+  ],
+  "parameter": {
+    "index": 2,
+    "name": "Blur Smoothness"
+  },
+  "plugin": "OLMBlur",
+  "production_dispatcher": {
+    "output": "calls=6 param=2 flag=2 undoable=0 set=1",
+    "return_code": 0
+  },
+  "production_source_contract": {
+    "missing": [],
+    "required_fragments": [
+      "case PF_Cmd_UPDATE_PARAMS_UI:",
+      "AEGP_GetNewEffectForEffect(",
+      "AEGP_GetNewEffectStreamByIndex(",
+      "0, effectH, OLMBLUR_BLUR_SMOOTHNESS, &streamH",
+      "AEGP_GetDynamicStreamFlags(",
+      "AEGP_SetDynamicStreamFlag(",
+      "streamH, AEGP_DynStreamFlag_HIDDEN, FALSE, TRUE",
+      "AEGP_DisposeStream(streamH)",
+      "AEGP_DisposeEffect(effectH)"
+    ]
+  },
+  "schema": "olmblur.update-params-ui-actual-aex/1",
+  "scope": "public UPDATE_PARAMS_UI command and its AEGP call sequence",
+  "status": "exact"
+}

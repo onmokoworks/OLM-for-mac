@@ -80,6 +80,40 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	return err;
 }
 
+static PF_Err
+UpdateParamsUI(PF_InData *in_data)
+{
+	PF_Err err = PF_Err_NONE;
+	AEGP_EffectRefH effectH = NULL;
+	AEGP_StreamRefH streamH = NULL;
+	AEGP_SuiteHandler suites(in_data->pica_basicP);
+
+	ERR(suites.PFInterfaceSuite1()->AEGP_GetNewEffectForEffect(
+		0, in_data->effect_ref, &effectH));
+	if (!err && effectH) {
+		ERR(suites.StreamSuite2()->AEGP_GetNewEffectStreamByIndex(
+			0, effectH, OLMBLUR_BLUR_SMOOTHNESS, &streamH));
+	}
+	if (!err && streamH) {
+		AEGP_DynStreamFlags ignored_flags = 0;
+		ERR(suites.DynamicStreamSuite3()->AEGP_GetDynamicStreamFlags(
+			streamH, &ignored_flags));
+		if (!err) {
+			ERR(suites.DynamicStreamSuite3()->AEGP_SetDynamicStreamFlag(
+				streamH, AEGP_DynStreamFlag_HIDDEN, FALSE, TRUE));
+		}
+	}
+	if (streamH) {
+		PF_Err dispose_err = suites.StreamSuite2()->AEGP_DisposeStream(streamH);
+		if (!err) err = dispose_err;
+	}
+	if (effectH) {
+		PF_Err dispose_err = suites.EffectSuite3()->AEGP_DisposeEffect(effectH);
+		if (!err) err = dispose_err;
+	}
+	return err;
+}
+
 struct BlurParams {
 	float blur_amount;
 	float blur_smoothness;
@@ -1445,6 +1479,8 @@ EffectMain(PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data,
 			err = GlobalSetup(in_data, out_data, params, output); break;
 		case PF_Cmd_PARAMS_SETUP:
 			err = ParamsSetup(in_data, out_data, params, output); break;
+		case PF_Cmd_UPDATE_PARAMS_UI:
+			err = UpdateParamsUI(in_data); break;
 		case PF_Cmd_RENDER:
 			err = Render(in_data, out_data, params, output); break;
 		case PF_Cmd_SMART_PRE_RENDER:
