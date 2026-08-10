@@ -36,9 +36,14 @@ flag arguments, and cleanup are executed from the AEX itself.
 The production bundle also builds successfully as a signed Universal Mach-O
 (`arm64` and `x86_64`).
 
+On 2026-08-10, After Effects 26.3.0.87 on Apple Silicon loaded the installed
+bundle and applied it to a solid without an error dialog. With `Noise Type =
+Smooth`, `Seed`, `Offset`, and `Thickness` were visible and `Noise Layer` was
+hidden. Selecting the third popup item, `Layer`, immediately hid those three
+controls and exposed `Noise Layer`, confirming the native host redraw.
+
 ## Boundary
 
-This closes the executable callback contract and production build boundary. It
-does not by itself prove AE's visible redraw, host error behavior when an
-individual suite call fails, or invocation without a valid effect context. A
-native Mac AE UI check remains the final visible-host confirmation.
+This closes the executable callback contract, production build, and native Mac
+AE visible-redraw boundary. Host error behavior when an individual suite call
+fails and invocation without a valid effect context remain outside this claim.

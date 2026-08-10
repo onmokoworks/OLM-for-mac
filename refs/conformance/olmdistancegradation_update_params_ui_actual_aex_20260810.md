@@ -7,4 +7,11 @@
 
 The exported Windows command-14 entry and Mac production `EffectMain` emit the same six `PF_UpdateParamUI` calls, in order `[10, 4, 3, 7, 8, 12]`, with each copied parameter's `ui_flags` replaced by exactly `0` or `PF_PUI_DISABLED (0x20)`. The JSON report records all cases.
 
-Boundaries: native AE redraw timing, callback-error injection, and values outside popup ranges are not claimed.
+After Effects 26.3.0.87 on Apple Silicon loaded and applied the installed
+Universal bundle on 2026-08-10 without an error dialog. Its default state
+visibly matched the contract: `Outside Threshold`, `Power`, `BG Color`, and
+`Blur Size` were disabled while their controlling modes were inactive.
+
+Boundaries: the default native-AE redraw is confirmed. Exhaustive interactive
+redraw timing for all 144 transitions, callback-error injection, and values
+outside popup ranges are not claimed.
