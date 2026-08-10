@@ -1,0 +1,249 @@
+{
+  "admission": {
+    "size_x_back_fade": {
+      "fade": [
+        50,
+        100
+      ],
+      "size": [
+        25,
+        50,
+        100
+      ]
+    },
+    "size_x_back_sharp": {
+      "sharp": [
+        50,
+        100
+      ],
+      "size": [
+        50
+      ]
+    }
+  },
+  "coefficient_order": "Nonzero Size builds the shared component map/divisor; Back Fade prepass and Back Sharp coefficient then enter the float rowdriver with Size/100.",
+  "depths": [
+    "PF8",
+    "PF16"
+  ],
+  "fixed_route": {
+    "angle": 45,
+    "back_strength": 8,
+    "brightness_gain": 1,
+    "front_coefficients": 0,
+    "front_strength": 0,
+    "geometry": "16x16 padded",
+    "noise": 0,
+    "render_scale": [
+      1,
+      1
+    ]
+  },
+  "not_proven": [
+    "other values/geometry",
+    "front8+back8",
+    "noise or front coefficient combinations",
+    "native AE export"
+  ],
+  "plugin": "OLMDirectionalBlur",
+  "representatives": [
+    {
+      "back_alpha_fade": 50,
+      "back_sharp_tail": 0.0,
+      "byte_count": 1024,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "depth": "PF8",
+      "raw_sha256": "977c63306e3475ef8a7b9545fd9aaafa20ebea3d4d700f1c6f6e39c82d40fe04",
+      "size_variation_percent": 25.0
+    },
+    {
+      "back_alpha_fade": 100,
+      "back_sharp_tail": 0.0,
+      "byte_count": 1024,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "depth": "PF8",
+      "raw_sha256": "1307438bc65ba50babd5c579cd13797b613998be85dadf32dac8fe5d738774bc",
+      "size_variation_percent": 25.0
+    },
+    {
+      "back_alpha_fade": 50,
+      "back_sharp_tail": 0.0,
+      "byte_count": 1024,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "depth": "PF8",
+      "raw_sha256": "977c63306e3475ef8a7b9545fd9aaafa20ebea3d4d700f1c6f6e39c82d40fe04",
+      "size_variation_percent": 50.0
+    },
+    {
+      "back_alpha_fade": 100,
+      "back_sharp_tail": 0.0,
+      "byte_count": 1024,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "depth": "PF8",
+      "raw_sha256": "1307438bc65ba50babd5c579cd13797b613998be85dadf32dac8fe5d738774bc",
+      "size_variation_percent": 50.0
+    },
+    {
+      "back_alpha_fade": 50,
+      "back_sharp_tail": 0.0,
+      "byte_count": 1024,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "depth": "PF8",
+      "raw_sha256": "977c63306e3475ef8a7b9545fd9aaafa20ebea3d4d700f1c6f6e39c82d40fe04",
+      "size_variation_percent": 100.0
+    },
+    {
+      "back_alpha_fade": 100,
+      "back_sharp_tail": 0.0,
+      "byte_count": 1024,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "depth": "PF8",
+      "raw_sha256": "1307438bc65ba50babd5c579cd13797b613998be85dadf32dac8fe5d738774bc",
+      "size_variation_percent": 100.0
+    },
+    {
+      "back_alpha_fade": 0,
+      "back_sharp_tail": 50.0,
+      "byte_count": 1024,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "depth": "PF8",
+      "raw_sha256": "ad8a2f2481f61c29e229e594de01cef8c302f67c8e0894102e525e4b767b0075",
+      "size_variation_percent": 50.0
+    },
+    {
+      "back_alpha_fade": 0,
+      "back_sharp_tail": 100.0,
+      "byte_count": 1024,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "depth": "PF8",
+      "raw_sha256": "915d15757d334c6a5b0b3fd9d4d3de4fd92a6731fbdbfdec29c2205f66f996fc",
+      "size_variation_percent": 50.0
+    },
+    {
+      "back_alpha_fade": 50,
+      "back_sharp_tail": 0.0,
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "raw_sha256": "a9c501fb589f392dcf38ebceb8c4c40b83c6975d97018f02313ec9d8f233735d",
+      "size_variation_percent": 25.0
+    },
+    {
+      "back_alpha_fade": 100,
+      "back_sharp_tail": 0.0,
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "raw_sha256": "b471f0db55bbf71fb643d0f72154412f38843fd5705933427ab45ecd29eac94b",
+      "size_variation_percent": 25.0
+    },
+    {
+      "back_alpha_fade": 50,
+      "back_sharp_tail": 0.0,
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "raw_sha256": "a9c501fb589f392dcf38ebceb8c4c40b83c6975d97018f02313ec9d8f233735d",
+      "size_variation_percent": 50.0
+    },
+    {
+      "back_alpha_fade": 100,
+      "back_sharp_tail": 0.0,
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "raw_sha256": "b471f0db55bbf71fb643d0f72154412f38843fd5705933427ab45ecd29eac94b",
+      "size_variation_percent": 50.0
+    },
+    {
+      "back_alpha_fade": 50,
+      "back_sharp_tail": 0.0,
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "raw_sha256": "a9c501fb589f392dcf38ebceb8c4c40b83c6975d97018f02313ec9d8f233735d",
+      "size_variation_percent": 100.0
+    },
+    {
+      "back_alpha_fade": 100,
+      "back_sharp_tail": 0.0,
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "raw_sha256": "b471f0db55bbf71fb643d0f72154412f38843fd5705933427ab45ecd29eac94b",
+      "size_variation_percent": 100.0
+    },
+    {
+      "back_alpha_fade": 0,
+      "back_sharp_tail": 50.0,
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "raw_sha256": "37f51122d04392d87c8694d3adee05e71a74355b90a2cc7497ccdcf754684e17",
+      "size_variation_percent": 50.0
+    },
+    {
+      "back_alpha_fade": 0,
+      "back_sharp_tail": 100.0,
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "raw_sha256": "09b33bff23e607cc66f6a53f8ade88b785c6bb3d40e13bbc6373222390b78e4a",
+      "size_variation_percent": 50.0
+    }
+  ],
+  "schema_version": 1,
+  "status": "exact_bounded_crosses",
+  "writers": {
+    "PF16": "float*32768 then integer truncation",
+    "PF8": "float*255 then integer truncation"
+  }
+}

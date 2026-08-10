@@ -406,6 +406,8 @@ static bool CanUseExact8(const PF_EffectWorld *input,
 {
 	const bool size_front_combo = info.size_variation != 0.0 &&
 		(info.front_alpha_fade != 0 || info.front_sharp_tail != 0.0);
+	const bool size_back_combo = info.size_variation != 0.0 &&
+		(info.back_alpha_fade != 0 || info.back_sharp_tail != 0.0);
 	const bool size_front_combo_exact = input && output &&
 		input->width == 16 && input->height == 16 &&
 		output->width == 16 && output->height == 16 &&
@@ -419,6 +421,19 @@ static bool CanUseExact8(const PF_EffectWorld *input,
 		  info.front_sharp_tail == 0.0) ||
 		 (info.size_variation == 50.0 && info.front_alpha_fade == 0 &&
 		  (info.front_sharp_tail == 50.0 || info.front_sharp_tail == 100.0)));
+	const bool size_back_combo_exact = input && output &&
+		input->width == 16 && input->height == 16 &&
+		output->width == 16 && output->height == 16 &&
+		info.front_strength == 0 && info.back_strength == 8 &&
+		info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0 &&
+		info.noise_variation == 0.0 && info.angle_deg == 45.0 &&
+		info.brightness_gain == 1.0 &&
+		(((info.size_variation == 25.0 || info.size_variation == 50.0 ||
+		   info.size_variation == 100.0) &&
+		  (info.back_alpha_fade == 50 || info.back_alpha_fade == 100) &&
+		  info.back_sharp_tail == 0.0) ||
+		 (info.size_variation == 50.0 && info.back_alpha_fade == 0 &&
+		  (info.back_sharp_tail == 50.0 || info.back_sharp_tail == 100.0)));
 	const bool legacy_size_sharp_exact = input && output &&
 		input->width == 960 && input->height == 540 &&
 		output->width == 960 && output->height == 540 &&
@@ -434,6 +449,7 @@ static bool CanUseExact8(const PF_EffectWorld *input,
 	       info.back_strength >= 0 && info.back_alpha_fade >= 0 &&
 	       info.size_variation >= 0.0 && info.size_variation <= 100.0 &&
 	       (!size_front_combo || size_front_combo_exact || legacy_size_sharp_exact) &&
+	       (!size_back_combo || size_back_combo_exact) &&
 	       info.noise_variation >= 0.0 &&
 	       (info.noise_variation == 0.0 ||
 	        ((info.noise_type == 1 || info.noise_type == 2) && info.thickness > 0.0) ||
@@ -686,22 +702,38 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			info.back_strength == 0 && info.back_alpha_fade == 0 &&
 			info.back_sharp_tail == 0.0 && info.noise_variation == 0.0 &&
 			info.angle_deg == 45.0 && info.brightness_gain == 1.0;
+		const bool pf16_size_back_cross_exact =
+			input && output && input->width == 16 && input->height == 16 &&
+			output->width == 16 && output->height == 16 &&
+			info.front_strength == 0 && info.back_strength == 8 &&
+			info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0 &&
+			info.noise_variation == 0.0 && info.angle_deg == 45.0 &&
+			info.brightness_gain == 1.0 &&
+			(((info.size_variation == 25.0 || info.size_variation == 50.0 ||
+			   info.size_variation == 100.0) &&
+			  (info.back_alpha_fade == 50 || info.back_alpha_fade == 100) &&
+			  info.back_sharp_tail == 0.0) ||
+			 (info.size_variation == 50.0 && info.back_alpha_fade == 0 &&
+			  (info.back_sharp_tail == 50.0 || info.back_sharp_tail == 100.0)));
 		const bool pf16_full_exact = pf16_fade_sharp_family_exact ||
 			pf16_size_variation_exact || pf16_size_fade_cross_exact ||
-			pf16_size_sharp_cross_exact;
+			pf16_size_sharp_cross_exact || pf16_size_back_cross_exact;
 		const bool minimal_exact = input && output && input->data && output->data &&
 			input->width == output->width && input->height == output->height &&
 			(info.angle_deg == 0.0 || info.angle_deg == 45.0) &&
 			(info.brightness_gain == 1.0 || info.brightness_gain == 0.5) &&
 			(info.size_variation == 0.0 || pf16_size_variation_exact ||
-			 pf16_size_fade_cross_exact || pf16_size_sharp_cross_exact) &&
+			 pf16_size_fade_cross_exact || pf16_size_sharp_cross_exact ||
+			 pf16_size_back_cross_exact) &&
 			(front_only_exact || back_family_exact || pf16_full_exact) &&
 			(info.front_alpha_fade == 0 || pf16_fade_sharp_family_exact ||
 			 pf16_size_fade_cross_exact) &&
 			(info.front_sharp_tail == 0.0 || pf16_fade_sharp_family_exact ||
 			 pf16_size_sharp_cross_exact) &&
-			(info.back_alpha_fade == 0 || pf16_fade_sharp_family_exact) &&
-			(info.back_sharp_tail == 0.0 || pf16_fade_sharp_family_exact) &&
+			(info.back_alpha_fade == 0 || pf16_fade_sharp_family_exact ||
+			 pf16_size_back_cross_exact) &&
+			(info.back_sharp_tail == 0.0 || pf16_fade_sharp_family_exact ||
+			 pf16_size_back_cross_exact) &&
 			(info.noise_variation == 0.0 ||
 			 (info.noise_variation == 100.0 &&
 			  (info.noise_type == 1 || info.noise_type == 2 ||

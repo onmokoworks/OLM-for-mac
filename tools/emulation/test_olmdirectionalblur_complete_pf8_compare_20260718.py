@@ -53,6 +53,8 @@ def capture_actual(
     back_strength: int = 0,
     front_alpha_fade: int = 0,
     front_sharp_tail: float = 0.0,
+    back_alpha_fade: int = 0,
+    back_sharp_tail: float = 0.0,
     size_variation: float = 0.0,
     noise_variation: float = 0.0,
     noise_type: int = 1,
@@ -100,7 +102,9 @@ def capture_actual(
                         "--front-strength", str(front_strength), "--size-variation", str(int(size_variation)),
                         "--front-alpha-fade", str(front_alpha_fade),
                         "--front-sharp-tail", str(int(front_sharp_tail)), "--back-strength", str(back_strength),
-                        "--back-alpha-fade", "0", "--noise-variation", str(int(noise_variation)),
+                        "--back-alpha-fade", str(back_alpha_fade),
+                        "--back-sharp-tail", str(int(back_sharp_tail)),
+                        "--noise-variation", str(int(noise_variation)),
                         "--noise-type", str(noise_type), "--seed", str(seed),
                         "--noise-offset", str(noise_offset), "--thickness", str(int(thickness)),
                         "--world-area", "0", "0", "16", "16", "--row-padding", "12",
@@ -134,6 +138,8 @@ def capture_actual(
         "back_strength": back_strength,
         "front_alpha_fade": front_alpha_fade,
         "front_sharp_tail": front_sharp_tail,
+        "back_alpha_fade": back_alpha_fade,
+        "back_sharp_tail": back_sharp_tail,
         "size_variation": size_variation,
         "noise_variation": noise_variation,
         "noise_type": noise_type,
@@ -157,6 +163,8 @@ def capture_mac(
     back_strength: int = 0,
     front_alpha_fade: int = 0,
     front_sharp_tail: float = 0.0,
+    back_alpha_fade: int = 0,
+    back_sharp_tail: float = 0.0,
     size_variation: float = 0.0,
     noise_variation: float = 0.0,
     noise_type: int = 1,
@@ -206,7 +214,7 @@ int main() {{
   noise.width=NW; noise.height=NH; noise.extent_hint={{{noise_layer_origin[0]},{noise_layer_origin[1]},{noise_layer_origin[0]}+NW,{noise_layer_origin[1]}+NH}}; out.data=(PF_PixelPtr)out_bytes.data(); out.rowbytes=RB;
   out.width=W; out.height=H; out.extent_hint={{0,0,W,H}};
   OLMDirectionalBlurInfo info{{}}; info.angle_deg={angle_degrees!r}; info.brightness_gain={brightness_gain!r};
-  info.front_strength={front_strength}; info.front_alpha_fade={front_alpha_fade}; info.front_sharp_tail={front_sharp_tail!r}; info.back_strength={back_strength}; info.size_variation={size_variation!r}; info.noise_variation={noise_variation!r}; info.noise_type={noise_type}; info.seed={seed}; info.noise_offset={noise_offset}; info.thickness={thickness!r}; info.render_scale_x=1; info.render_scale_y=1;
+  info.front_strength={front_strength}; info.front_alpha_fade={front_alpha_fade}; info.front_sharp_tail={front_sharp_tail!r}; info.back_strength={back_strength}; info.back_alpha_fade={back_alpha_fade}; info.back_sharp_tail={back_sharp_tail!r}; info.size_variation={size_variation!r}; info.noise_variation={noise_variation!r}; info.noise_type={noise_type}; info.seed={seed}; info.noise_offset={noise_offset}; info.thickness={thickness!r}; info.render_scale_x=1; info.render_scale_y=1;
   int exact=0; if ({render_call}!=PF_Err_NONE || !exact) return 2;
   std::printf("HEX="); for (int y=0; y<H; ++y) for (int x=0; x<W*4; ++x) std::printf("%02x", out_bytes[y*RB+x]);
   std::printf("\\nEXACT=%d\\n", exact); return 0;
