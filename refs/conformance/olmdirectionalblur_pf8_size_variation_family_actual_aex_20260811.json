@@ -1,32 +1,51 @@
 {
-  "basis": "0 and 100 are public endpoints, 25 is a non-half interior exponent, and 50 is the midpoint. All are actual-AEX/production raw exact through the same continuous exponent path.",
-  "component_rule": "Nonzero Size builds connected-component records; alpha weight is pow(clamp(sample alpha), Size/100), normalized by the component-area divisor in the shared float rowdriver.",
+  "component_rule": "Nonzero Size builds connected-component records before Fade prepass and Sharp coefficients are passed together to the shared float rowdriver; alpha weight uses pow(clamp(sample alpha), Size/100) and the component-area divisor.",
   "cross_admission": {
-    "front_alpha_fade": 50,
-    "size_variation": 50
+    "size_x_front_fade": {
+      "fade": [
+        50,
+        100
+      ],
+      "size": [
+        25,
+        50,
+        100
+      ]
+    },
+    "size_x_front_sharp": {
+      "sharp": [
+        50,
+        100
+      ],
+      "size": [
+        50
+      ]
+    }
   },
   "depth": "PF8",
   "fail_closed": [
     "Size below 0 or above 100",
+    "other Size x Front Fade/Sharp tuples",
     "unproved geometry/tuple and other parameter combinations"
   ],
-  "family": "Size Variation 0..100 plus bounded Front Fade cross",
+  "family": "Size Variation plus bounded Front Fade/Sharp crosses",
   "fixed_route": {
     "angle": 45,
     "back_strength": 0,
     "brightness_gain": 1,
     "front_strength": 8,
     "geometry": "16x16 padded ARGB32",
+    "noise": 0,
     "render_scale": [
       1,
       1
-    ],
-    "sharp_noise": 0
+    ]
   },
+  "legacy_preserved": "960x540 Size92 x FrontSharp45, angle0, scale0.5 remains independently hash-proven.",
   "not_proven": [
     "PF8 other geometry",
-    "other Fade combinations",
-    "Sharp/Noise/Back combinations",
+    "other Fade/Sharp combinations",
+    "Noise/Back combinations",
     "native AE export"
   ],
   "plugin": "OLMDirectionalBlur",
@@ -38,6 +57,7 @@
         "0x180006b30"
       ],
       "front_alpha_fade": 0,
+      "front_sharp_tail": 0.0,
       "production_exact": 1,
       "raw_sha256": "5f5a832d55b9ca4f0cad76c00bd6ae2f26063535f719f146073105d6577decf8",
       "size_variation_percent": 0.0
@@ -49,6 +69,7 @@
         "0x180006b30"
       ],
       "front_alpha_fade": 0,
+      "front_sharp_tail": 0.0,
       "production_exact": 1,
       "raw_sha256": "5f5a832d55b9ca4f0cad76c00bd6ae2f26063535f719f146073105d6577decf8",
       "size_variation_percent": 25.0
@@ -60,6 +81,7 @@
         "0x180006b30"
       ],
       "front_alpha_fade": 0,
+      "front_sharp_tail": 0.0,
       "production_exact": 1,
       "raw_sha256": "5f5a832d55b9ca4f0cad76c00bd6ae2f26063535f719f146073105d6577decf8",
       "size_variation_percent": 50.0
@@ -71,6 +93,7 @@
         "0x180006b30"
       ],
       "front_alpha_fade": 0,
+      "front_sharp_tail": 0.0,
       "production_exact": 1,
       "raw_sha256": "5f5a832d55b9ca4f0cad76c00bd6ae2f26063535f719f146073105d6577decf8",
       "size_variation_percent": 100.0
@@ -82,8 +105,93 @@
         "0x180006b30"
       ],
       "front_alpha_fade": 50,
+      "front_sharp_tail": 0.0,
       "production_exact": 1,
       "raw_sha256": "fafbc02cce7fd3825e5f5658607ca7f4c36f9ec3d3b041b0cc06beb6d7183db4",
+      "size_variation_percent": 25.0
+    },
+    {
+      "byte_count": 1024,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "front_alpha_fade": 100,
+      "front_sharp_tail": 0.0,
+      "production_exact": 1,
+      "raw_sha256": "764291919bc737c2b069642d261be1fa8a7bccf0a8c84a0453a5aba10e7f4a53",
+      "size_variation_percent": 25.0
+    },
+    {
+      "byte_count": 1024,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "front_alpha_fade": 50,
+      "front_sharp_tail": 0.0,
+      "production_exact": 1,
+      "raw_sha256": "fafbc02cce7fd3825e5f5658607ca7f4c36f9ec3d3b041b0cc06beb6d7183db4",
+      "size_variation_percent": 50.0
+    },
+    {
+      "byte_count": 1024,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "front_alpha_fade": 100,
+      "front_sharp_tail": 0.0,
+      "production_exact": 1,
+      "raw_sha256": "764291919bc737c2b069642d261be1fa8a7bccf0a8c84a0453a5aba10e7f4a53",
+      "size_variation_percent": 50.0
+    },
+    {
+      "byte_count": 1024,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "front_alpha_fade": 50,
+      "front_sharp_tail": 0.0,
+      "production_exact": 1,
+      "raw_sha256": "fafbc02cce7fd3825e5f5658607ca7f4c36f9ec3d3b041b0cc06beb6d7183db4",
+      "size_variation_percent": 100.0
+    },
+    {
+      "byte_count": 1024,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "front_alpha_fade": 100,
+      "front_sharp_tail": 0.0,
+      "production_exact": 1,
+      "raw_sha256": "764291919bc737c2b069642d261be1fa8a7bccf0a8c84a0453a5aba10e7f4a53",
+      "size_variation_percent": 100.0
+    },
+    {
+      "byte_count": 1024,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "front_alpha_fade": 0,
+      "front_sharp_tail": 50.0,
+      "production_exact": 1,
+      "raw_sha256": "562273ccffc98fbf22983219650c098239e3d8651720cc395788729f54441cb1",
+      "size_variation_percent": 50.0
+    },
+    {
+      "byte_count": 1024,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "front_alpha_fade": 0,
+      "front_sharp_tail": 100.0,
+      "production_exact": 1,
+      "raw_sha256": "5421a06179b976501263c8ab69b27a3005c5808109bbe4d8d53b0272e9181a57",
       "size_variation_percent": 50.0
     }
   ],

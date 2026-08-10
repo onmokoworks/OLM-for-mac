@@ -1,5 +1,5 @@
-# OLMDirectionalBlur PF16 Size Variation — 2026-08-11
+# OLMDirectionalBlur PF16 Size × Fade/Sharp — 2026-08-11
 
-Actual Windows AEX and the production ARGB64 worker are raw-byte exact for Size Variation 0/25/50/100 and Size 50 × Front Alpha Fade 50 on the pinned 16×16 route. The continuous public Size range uses one component-map exponent path; admission remains fixed-route bounded, and the Fade cross is tuple-enumerated.
+Actual Windows AEX and production are raw-byte exact for Size 25/50/100 × Front Fade 50/100 and Size 50 × Front Sharp 50/100, plus Size 0/25/50/100 alone. Component map/divisor precedes Fade prepass and Sharp coefficient application in the rowdriver. ARGB64 output uses ×32768 integer truncation. Only listed crosses are admitted.
 
 Reproduction: `python3 tools/emulation/test_olmdirectionalblur_pf16_size_variation_family_actual_aex_20260811.py`

@@ -1,28 +1,46 @@
 {
-  "basis": "Endpoints, a non-half interior value, and midpoint are exact through the same component-map/rowdriver coefficient path; the public 0..100 Size range is admitted only on this fixed route.",
+  "coefficient_order": "Component map/divisor is built for nonzero Size, then Fade prepass and Sharp coefficient are passed with Size/100 to the float rowdriver; ARGB64 output multiplies by 32768 and truncates.",
   "cross_admission": {
-    "front_alpha_fade": 50,
-    "size_variation": 50
+    "size_x_front_fade": {
+      "fade": [
+        50,
+        100
+      ],
+      "size": [
+        25,
+        50,
+        100
+      ]
+    },
+    "size_x_front_sharp": {
+      "sharp": [
+        50,
+        100
+      ],
+      "size": [
+        50
+      ]
+    }
   },
   "depth": "PF16",
-  "family": "Size Variation 0..100 plus bounded Front Fade cross",
+  "family": "Size Variation plus bounded Front Fade/Sharp crosses",
   "fixed_route": {
     "angle": 45,
     "back_strength": 0,
     "brightness_gain": 1,
     "front_strength": 8,
     "geometry": "16x16 padded ARGB64",
+    "noise": 0,
     "render_scale": [
       1,
       1
-    ],
-    "sharp_noise": 0
+    ]
   },
   "not_proven": [
     "other PF16 geometry/tuple",
     "Size outside 0..100",
-    "other Fade combinations",
-    "Sharp/Noise/Back combinations",
+    "other Fade/Sharp combinations",
+    "Noise/Back combinations",
     "native AE export"
   ],
   "plugin": "OLMDirectionalBlur",
@@ -34,6 +52,7 @@
         "0x180006a90"
       ],
       "front_alpha_fade": 0,
+      "front_sharp_tail": 0.0,
       "raw_sha256": "3b71a8e7c929b102d74142d778218db8ade316bdc2da60e9e204db5c9be7393c",
       "size_variation_percent": 0.0
     },
@@ -44,6 +63,7 @@
         "0x180006a90"
       ],
       "front_alpha_fade": 0,
+      "front_sharp_tail": 0.0,
       "raw_sha256": "3b71a8e7c929b102d74142d778218db8ade316bdc2da60e9e204db5c9be7393c",
       "size_variation_percent": 25.0
     },
@@ -54,6 +74,7 @@
         "0x180006a90"
       ],
       "front_alpha_fade": 0,
+      "front_sharp_tail": 0.0,
       "raw_sha256": "3b71a8e7c929b102d74142d778218db8ade316bdc2da60e9e204db5c9be7393c",
       "size_variation_percent": 50.0
     },
@@ -64,6 +85,7 @@
         "0x180006a90"
       ],
       "front_alpha_fade": 0,
+      "front_sharp_tail": 0.0,
       "raw_sha256": "3b71a8e7c929b102d74142d778218db8ade316bdc2da60e9e204db5c9be7393c",
       "size_variation_percent": 100.0
     },
@@ -74,7 +96,85 @@
         "0x180006a90"
       ],
       "front_alpha_fade": 50,
+      "front_sharp_tail": 0.0,
       "raw_sha256": "6564f5274f52559b0cf868678a2146ceb9c3a6fd2fe6a8c23a8dc86093620133",
+      "size_variation_percent": 25.0
+    },
+    {
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "front_alpha_fade": 100,
+      "front_sharp_tail": 0.0,
+      "raw_sha256": "66e9edf80741b59a1a8c8e8bbdcc18f4a192e48f4307daebbf6043c4365fd663",
+      "size_variation_percent": 25.0
+    },
+    {
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "front_alpha_fade": 50,
+      "front_sharp_tail": 0.0,
+      "raw_sha256": "6564f5274f52559b0cf868678a2146ceb9c3a6fd2fe6a8c23a8dc86093620133",
+      "size_variation_percent": 50.0
+    },
+    {
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "front_alpha_fade": 100,
+      "front_sharp_tail": 0.0,
+      "raw_sha256": "66e9edf80741b59a1a8c8e8bbdcc18f4a192e48f4307daebbf6043c4365fd663",
+      "size_variation_percent": 50.0
+    },
+    {
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "front_alpha_fade": 50,
+      "front_sharp_tail": 0.0,
+      "raw_sha256": "6564f5274f52559b0cf868678a2146ceb9c3a6fd2fe6a8c23a8dc86093620133",
+      "size_variation_percent": 100.0
+    },
+    {
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "front_alpha_fade": 100,
+      "front_sharp_tail": 0.0,
+      "raw_sha256": "66e9edf80741b59a1a8c8e8bbdcc18f4a192e48f4307daebbf6043c4365fd663",
+      "size_variation_percent": 100.0
+    },
+    {
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "front_alpha_fade": 0,
+      "front_sharp_tail": 50.0,
+      "raw_sha256": "d497d67db6efa1d240994d6638a69e7ee975080790d6c6ac7b8a874198f90554",
+      "size_variation_percent": 50.0
+    },
+    {
+      "byte_count": 2048,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "front_alpha_fade": 0,
+      "front_sharp_tail": 100.0,
+      "raw_sha256": "fcc162f781ab744dff5fec576979a268c5d760050057035ad7f59d3562299d74",
       "size_variation_percent": 50.0
     }
   ],
