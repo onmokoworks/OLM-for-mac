@@ -1,0 +1,31 @@
+{
+  "schema": "olmkirakira.mode4-admission-boundary/1",
+  "status": "explicit_complete_actual_aex_fixture_boundary",
+  "plugin": "OLMKiraKira",
+  "mode": 4,
+  "actual_aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+  "admitted_rotated_leaf_tuples": [
+    {
+      "width": 9,
+      "height": 7,
+      "radius_or_length": 5,
+      "angle_degrees": 5.0,
+      "stages": ["forward_warp", "scalar_recurrence", "inverse_warp"],
+      "raw_float32_words_per_stage": 63,
+      "result": "exact"
+    }
+  ],
+  "downstream_evidence": {
+    "centered_crop_and_typed_writers": "refs/conformance/olmkirakira_mode4_crop_typed_installed_20260805.json",
+    "zero_directional_length_full_caller": "refs/conformance/olmkirakira_mode4_fullcaller_hostless_exact_20260807.json"
+  },
+  "unsupported_tuple_behavior": "return the unblurred input ray; no recurrence or alternate blur substitution",
+  "production_predicate": "olm::kirakira::mode4_rotated_scalar_admitted(rw, rh, length, angle_deg)",
+  "focused_regression": "tools/emulation/test_olmkirakira_mode4_production_boundary_20260805.py",
+  "not_proven": [
+    "arbitrary rotated geometry",
+    "a radius or length other than 5",
+    "a different angle at the complete helper-chain boundary",
+    "practical-resolution directional Mode 4 in native AE"
+  ]
+}

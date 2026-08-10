@@ -7,6 +7,14 @@
 
 namespace olm::kirakira {
 
+// Complete actual-AEX coverage currently exists only for this rotated scalar
+// leaf. Do not infer arbitrary geometry or radius from the recurrence formula.
+inline bool mode4_rotated_scalar_admitted(
+	int width, int height, int radius, double angle_degrees)
+{
+	return width == 9 && height == 7 && radius == 5 && angle_degrees == 5.0;
+}
+
 // Recovered FUN_181150790 Mode4 scalar (CV_32FC1) row recurrence.
 // The explicit temporaries preserve the AEX's separate float multiply/add
 // rounding instead of allowing a fused multiply-add contraction.

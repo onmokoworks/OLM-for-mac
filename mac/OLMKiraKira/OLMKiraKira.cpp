@@ -319,6 +319,12 @@ static std::vector<float> RotatedAxisBoxBlur(
 	const double temp_cy = (double)rh * 0.5;
 	std::vector<float> temp_a = CopyCenteredRoi(input, width, height, rw, rh);
 	if (blur_mode == 4) {
+		// The only complete actual-AEX forward-warp/recurrence/inverse-warp
+		// fixture is 9x7 radius 5. Unsupported tuples are identity rather than
+		// a guessed recurrence or another blur mode.
+		if (!olm::kirakira::mode4_rotated_scalar_admitted(
+				rw, rh, length, angle_deg))
+			return input;
 		std::vector<float> mode4 = olm::kirakira::mode4_rotated_scalar_chain(
 			temp_a, rw, rh, temp_cx, temp_cy, angle_deg, length);
 		if (mode4.empty()) return input;
