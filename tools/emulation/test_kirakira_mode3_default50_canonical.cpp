@@ -15,10 +15,11 @@ static void emit(const char *stage, const std::vector<float> &values)
 
 int main(int argc, char **argv)
 {
-    if (argc != 4) return 2;
+    if (argc != 4 && argc != 5) return 2;
     const int width = std::atoi(argv[1]);
     const int height = std::atoi(argv[2]);
     const double angle = std::strtod(argv[3], nullptr);
+    const int length = argc == 5 ? std::atoi(argv[4]) : 50;
     std::vector<float> source(static_cast<std::size_t>(width) * height);
     for (float &value : source) {
         unsigned word = 0;
@@ -31,7 +32,7 @@ int main(int argc, char **argv)
         source, width, height, width, height, cx, cy, angle);
     std::vector<float> gaussian(forward.size(), 0.0f);
     olm::kirakira::HorizontalGaussian filter;
-    if (!filter.prepare_actual_aex_nonfused(50) ||
+    if (!filter.prepare_actual_aex_nonfused(length) ||
         !filter.apply(forward.data(), width, gaussian.data(), width, width, height)) return 4;
     const auto final = olm::kirakira::warp_get_rotation_matrix_2d(
         gaussian, width, height, width, height, cx, cy, -angle);

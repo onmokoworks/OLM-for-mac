@@ -30,7 +30,8 @@ def normalized_words(values: list[str]) -> list[str]:
 
 def main() -> int:
     core = CORE.read_text(encoding="utf-8")
-    assert "length == 3 || length == 5 || length == 7 || length == 9" in core
+    assert "length == 3 || length == 50" in core
+    assert "length == 5 || length == 7 || length == 9" in core
 
     with tempfile.TemporaryDirectory(prefix="olmkirakira_mode3_9x7_family_") as td:
         executable = Path(td) / "kirakira_gaussian"

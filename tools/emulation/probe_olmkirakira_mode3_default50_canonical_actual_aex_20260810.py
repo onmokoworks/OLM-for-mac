@@ -55,7 +55,7 @@ def raw_wrapper_words(base: Any, loader: Any, wrapper: int) -> dict[str, Any]:
     return raw_mat_words(base, loader, int(value["mat"]["header"], 16))
 
 
-def run_case(output: Any, width: int, height: int, angle: int) -> dict[str, Any]:
+def run_case(output: Any, width: int, height: int, angle: int, length: int = 50) -> dict[str, Any]:
     base = output.BASE
     base.mat_header = output.body_compatible_mat_header
     observed: dict[str, Any] = {"warp_sources": []}
@@ -75,7 +75,7 @@ def run_case(output: Any, width: int, height: int, angle: int) -> dict[str, Any]
                 return super().call_function(address, *args, **kwargs)
             helper_args = list(kwargs["int_args"])
             helper_args[5] = angle
-            helper_args[6] = 50
+            helper_args[6] = length
             helper_args[7] = 3
             kwargs["int_args"] = helper_args
             result = super().call_function(address, *args, **kwargs)
@@ -87,7 +87,7 @@ def run_case(output: Any, width: int, height: int, angle: int) -> dict[str, Any]
     base.AexLoader = Loader
     args = type("Args", (), {
         "aex_path": AEX, "width": width, "height": height,
-        "length": 50, "sigma": 0.0, "max_instructions": 80_000_000,
+        "length": length, "sigma": 0.0, "max_instructions": 80_000_000,
     })()
     report = base.run(args)
     returned = output.CONTINUATION["return_hits"][-1] if output.CONTINUATION["return_hits"] else None
@@ -96,7 +96,7 @@ def run_case(output: Any, width: int, height: int, angle: int) -> dict[str, Any]
     gaussian = returned["output_array_after"]
     gaussian_words = gaussian["mat"]["words_u32"]
     return {
-        "width": width, "height": height, "length": 50, "angle_degrees": angle,
+        "width": width, "height": height, "length": length, "angle_degrees": angle,
         "source": observed["warp_sources"][0],
         "forward": observed["forward"],
         "gaussian": {"rows": height, "cols": width, "step_bytes": width * 4,

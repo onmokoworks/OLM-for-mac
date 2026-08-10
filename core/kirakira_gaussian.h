@@ -7,22 +7,22 @@
 
 namespace olm::kirakira {
 
-// Admission is intentionally a set of complete actual-AEX leaf fixtures, not
-// a claim that the recovered row primitive generalizes to arbitrary geometry.
+// Length 3 and the UI-default Length 50 are geometry-general above the bounded
+// minimum leaf size. Other lengths remain admitted only at complete fixtures.
 inline bool mode3_gaussian_admitted(int width, int height, int length)
 {
+    if (width >= 9 && height >= 7 && (length == 3 || length == 50))
+        return true;
     return (width == 11 && height == 6 && length == 3) ||
            (width == 9  && height == 7 &&
-            (length == 3 || length == 5 || length == 7 || length == 9 ||
-             length == 50)) ||
-           (width == 9  && height == 9 && length == 50) ||
+            (length == 5 || length == 7 || length == 9)) ||
            (width == 13 && height == 5 && length == 7) ||
            (width == 15 && height == 6 && length == 9);
 }
 
 // Recovered CV_32FC1 Gaussian primitive
 // (Size(0, 1), length * 0.5, borderType=BORDER_DEFAULT). Production use is
-// deliberately bounded to cases backed by an exact actual-AEX fixture.
+// deliberately bounded to the exact geometry-general/fixture contracts above.
 // Workspace ownership makes repeated calls reusable.
 class HorizontalGaussian {
 public:

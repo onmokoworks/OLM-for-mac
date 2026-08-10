@@ -332,10 +332,9 @@ static std::vector<float> RotatedAxisBoxBlur(
 	}
 	temp_a = WarpGetRotDirect(temp_a, rw, rh, rw, rh, temp_cx, temp_cy, angle_deg);
 	std::vector<float> temp_b((size_t)rw * rh);
-	// Mode 3 is admitted only at complete actual-AEX leaf fixtures.  The row
-	// primitive is numerically exact there, but geometry independence has not
-	// been proved.  Unsupported Mode-3 tuples fail closed instead of silently
-	// substituting the Mode-2 box approximation.
+	// Mode 3 Length 3/50 is geometry-general above the bounded minimum leaf;
+	// other lengths remain exact-fixture-only. Unsupported tuples fail closed
+	// instead of silently substituting the Mode-2 box approximation.
 	const bool mode3_admitted =
 		olm::kirakira::mode3_gaussian_admitted(rw, rh, length);
 	if (blur_mode == 3 && !mode3_admitted) return input;
