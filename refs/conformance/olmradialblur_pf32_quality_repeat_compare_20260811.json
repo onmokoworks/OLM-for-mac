@@ -1,0 +1,1459 @@
+{
+  "admitted_rules": {
+    "angular_count": "Quality * 360",
+    "output_comparison": "visible PF32 pixels only; host row padding is not effect output",
+    "quality3_forward_step": "f32(1 / f32(f32(Q * 180) / float(pi)))",
+    "rotation_fixed_outer_span": "ceil(effective_length * Quality / 5)",
+    "rotation_quality3_inverse_scale": "f32(f32(Q * 180) / float(pi))",
+    "rotation_repeat_off_source_scalar": "eligible ? 1.0f : 0.0f",
+    "zoom_repeat_off_span": "1.0f"
+  },
+  "boundary": "Bounded shared-production admission only; other depths, geometries, controls and AE-host behavior remain unproved.",
+  "cases": [
+    {
+      "actual_sha256": {
+        "output": "18ea68587bd92828211083786fba10cd1312075f18075c61c40405a6e1649c86",
+        "post_blur": "f8a9e358e51917d98e2f4efa34af19fb77052cde75f566f42a84eab5e98511e4",
+        "pre_blur": "e7df51416717df51c2d992c1e9cd39400967519992eaf0ccec27aa50644e2423"
+      },
+      "captured": true,
+      "depth": 32,
+      "differences": {
+        "output": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "post_blur": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "pre_blur": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        }
+      },
+      "exact": true,
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "production_sha256": {
+        "output": "18ea68587bd92828211083786fba10cd1312075f18075c61c40405a6e1649c86",
+        "post_blur": "f8a9e358e51917d98e2f4efa34af19fb77052cde75f566f42a84eab5e98511e4",
+        "pre_blur": "e7df51416717df51c2d992c1e9cd39400967519992eaf0ccec27aa50644e2423"
+      },
+      "quality": 1.0,
+      "repeat_border": false
+    },
+    {
+      "actual_sha256": {
+        "output": "610612df288af8ef528f13aa4444bba829ecf3900a0177264a5cad0b5097efe1",
+        "post_blur": "7f9c883b96f0951adb0a3826a84a9a03954877439a41232c71d1408beac546f9",
+        "pre_blur": "68e8917d0932f5bafedd4bacaec99e91223705979cb62e31c90d254f32f7f7de"
+      },
+      "captured": true,
+      "depth": 32,
+      "differences": {
+        "output": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "post_blur": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "pre_blur": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        }
+      },
+      "exact": true,
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "production_sha256": {
+        "output": "610612df288af8ef528f13aa4444bba829ecf3900a0177264a5cad0b5097efe1",
+        "post_blur": "7f9c883b96f0951adb0a3826a84a9a03954877439a41232c71d1408beac546f9",
+        "pre_blur": "68e8917d0932f5bafedd4bacaec99e91223705979cb62e31c90d254f32f7f7de"
+      },
+      "quality": 1.0,
+      "repeat_border": true
+    },
+    {
+      "actual_sha256": {
+        "output": "48295a534978c8b7f97151d34ba898392e7b148cf0dce0a698af0b7c6b5d91f1",
+        "post_blur": "ce4d18162f8f1547825ae70795c1334ddedc6eb3379b0555483848b05ec9836b",
+        "pre_blur": "110a1fc856fba17714f2ffdf87dc2ea042163c3f562d9e0c877f574a7111d5ac"
+      },
+      "captured": true,
+      "depth": 32,
+      "differences": {
+        "output": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "post_blur": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "pre_blur": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        }
+      },
+      "exact": true,
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "production_sha256": {
+        "output": "48295a534978c8b7f97151d34ba898392e7b148cf0dce0a698af0b7c6b5d91f1",
+        "post_blur": "ce4d18162f8f1547825ae70795c1334ddedc6eb3379b0555483848b05ec9836b",
+        "pre_blur": "110a1fc856fba17714f2ffdf87dc2ea042163c3f562d9e0c877f574a7111d5ac"
+      },
+      "quality": 3.0,
+      "repeat_border": false
+    },
+    {
+      "actual_sha256": {
+        "output": "4457e182a5046cefb90f12d303734bd884cb63a62ec001b0445a00235161b114",
+        "post_blur": "b301b57bd60f1d6dc556e9c94982cb2df60928084d7c740a6e091c0105cb4c8a",
+        "pre_blur": "522438680aae5e89cf328941b9d2f7dd4ad6dae269d73e7326d9ed76e0cf7f96"
+      },
+      "captured": true,
+      "depth": 32,
+      "differences": {
+        "output": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "post_blur": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "pre_blur": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        }
+      },
+      "exact": true,
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "production_sha256": {
+        "output": "4457e182a5046cefb90f12d303734bd884cb63a62ec001b0445a00235161b114",
+        "post_blur": "b301b57bd60f1d6dc556e9c94982cb2df60928084d7c740a6e091c0105cb4c8a",
+        "pre_blur": "522438680aae5e89cf328941b9d2f7dd4ad6dae269d73e7326d9ed76e0cf7f96"
+      },
+      "quality": 3.0,
+      "repeat_border": true
+    },
+    {
+      "actual_sha256": {
+        "output": "01dfd4938909289d5dc9dc98389545af91352850fc43ed0214bb67e44cebf5ae",
+        "post_blur": "1c3fd98470d72694c9a7cd7a4f675abea156bb6e8f450f8ab6722397273ed960",
+        "pre_blur": "d35198bdfce195db264aa7745e4fea62ab0c7e606985af127f5fc0804c653c49"
+      },
+      "captured": true,
+      "depth": 32,
+      "differences": {
+        "output": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "post_blur": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "pre_blur": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        }
+      },
+      "exact": true,
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "production_sha256": {
+        "output": "01dfd4938909289d5dc9dc98389545af91352850fc43ed0214bb67e44cebf5ae",
+        "post_blur": "1c3fd98470d72694c9a7cd7a4f675abea156bb6e8f450f8ab6722397273ed960",
+        "pre_blur": "d35198bdfce195db264aa7745e4fea62ab0c7e606985af127f5fc0804c653c49"
+      },
+      "quality": 5.0,
+      "repeat_border": false
+    },
+    {
+      "actual_sha256": {
+        "output": "17889d6d9d5f0f74c39c72a847eeefe51638e3fc6b4c4403cc300e46ccb55d01",
+        "post_blur": "a946ef09d52d4c498de2e532f8654405461e73c7524d3af99883afb0c2e3b65a",
+        "pre_blur": "65468046f663d30ac544be430c965ee2c305193561e09d4bf9753747e4cb24ff"
+      },
+      "captured": true,
+      "depth": 32,
+      "differences": {
+        "output": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "post_blur": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "pre_blur": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        }
+      },
+      "exact": true,
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "production_sha256": {
+        "output": "17889d6d9d5f0f74c39c72a847eeefe51638e3fc6b4c4403cc300e46ccb55d01",
+        "post_blur": "a946ef09d52d4c498de2e532f8654405461e73c7524d3af99883afb0c2e3b65a",
+        "pre_blur": "65468046f663d30ac544be430c965ee2c305193561e09d4bf9753747e4cb24ff"
+      },
+      "quality": 5.0,
+      "repeat_border": true
+    },
+    {
+      "actual_sha256": {
+        "output": "e4beea17d6d8f009c3ec6dc0ddd679928e214db87e69c8dd03fa6f619dceaa5e",
+        "post_blur": "db804ce87e854e26133d922ea483d12db8f13eb6a02b1436588bc6a9ebab0d9f",
+        "pre_blur": "7915e0ef38d6da05edd44b0faf913dca2bbb84aa15db1906fd46253ed9da297b"
+      },
+      "captured": true,
+      "depth": 32,
+      "differences": {
+        "output": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "post_blur": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "pre_blur": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        }
+      },
+      "exact": true,
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "production_sha256": {
+        "output": "e4beea17d6d8f009c3ec6dc0ddd679928e214db87e69c8dd03fa6f619dceaa5e",
+        "post_blur": "db804ce87e854e26133d922ea483d12db8f13eb6a02b1436588bc6a9ebab0d9f",
+        "pre_blur": "7915e0ef38d6da05edd44b0faf913dca2bbb84aa15db1906fd46253ed9da297b"
+      },
+      "quality": 1.0,
+      "repeat_border": false
+    },
+    {
+      "actual_sha256": {
+        "output": "687f078a0d1827c236784f82972ab39ea3de34b75c7da5b4c0fb4ec87e1e52e2",
+        "post_blur": "73692c26ad773c37407d67ec666d54108d5b53e21e4d78f5139ea600398f049b",
+        "pre_blur": "8ea990fc763f03aba2f4fb33521318c9f0737127f9810443b49e18d759e4fb2a"
+      },
+      "captured": true,
+      "depth": 32,
+      "differences": {
+        "output": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "post_blur": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "pre_blur": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        }
+      },
+      "exact": true,
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "production_sha256": {
+        "output": "687f078a0d1827c236784f82972ab39ea3de34b75c7da5b4c0fb4ec87e1e52e2",
+        "post_blur": "73692c26ad773c37407d67ec666d54108d5b53e21e4d78f5139ea600398f049b",
+        "pre_blur": "8ea990fc763f03aba2f4fb33521318c9f0737127f9810443b49e18d759e4fb2a"
+      },
+      "quality": 1.0,
+      "repeat_border": true
+    },
+    {
+      "actual_sha256": {
+        "output": "4ee40a5f3e3bf9a8401fc56eaa8b4ec9a4026ef7e02ffa056f14a37f19b855c5",
+        "post_blur": "f45092ddef0cee42bb8109dba537eb0a17b99f4ca3d4c0d79f4ea2168c89bf55",
+        "pre_blur": "08381c21dc4b5f6bf4e8d5dc74fd6aa598c7504ed722e2c6e56470079653aaa4"
+      },
+      "captured": true,
+      "depth": 32,
+      "differences": {
+        "output": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "post_blur": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "pre_blur": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        }
+      },
+      "exact": true,
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "production_sha256": {
+        "output": "4ee40a5f3e3bf9a8401fc56eaa8b4ec9a4026ef7e02ffa056f14a37f19b855c5",
+        "post_blur": "f45092ddef0cee42bb8109dba537eb0a17b99f4ca3d4c0d79f4ea2168c89bf55",
+        "pre_blur": "08381c21dc4b5f6bf4e8d5dc74fd6aa598c7504ed722e2c6e56470079653aaa4"
+      },
+      "quality": 3.0,
+      "repeat_border": false
+    },
+    {
+      "actual_sha256": {
+        "output": "b0ce74bf481e43414edcd98e0b47f5a7860d288fe71225414adc2bb59bd22080",
+        "post_blur": "a38ab0b3dd7a12ff9e53c4519442de5cbd63056944aa0561f5f82c1479cfb2f0",
+        "pre_blur": "6b7d7516968661338426b0668a537f1c7d5b0dc2ca02fdc9729dc03fc5bb925d"
+      },
+      "captured": true,
+      "depth": 32,
+      "differences": {
+        "output": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "post_blur": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "pre_blur": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        }
+      },
+      "exact": true,
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "production_sha256": {
+        "output": "b0ce74bf481e43414edcd98e0b47f5a7860d288fe71225414adc2bb59bd22080",
+        "post_blur": "a38ab0b3dd7a12ff9e53c4519442de5cbd63056944aa0561f5f82c1479cfb2f0",
+        "pre_blur": "6b7d7516968661338426b0668a537f1c7d5b0dc2ca02fdc9729dc03fc5bb925d"
+      },
+      "quality": 3.0,
+      "repeat_border": true
+    },
+    {
+      "actual_sha256": {
+        "output": "1c6bfcea22b6d8c5e86a9f3c78c9e2acd67ebaba94156467789d5816eda7ead8",
+        "post_blur": "1220a48eecd41221ad0c0fddca9f76ce9edea9f64ddbbbb11b0f82b28daca3ab",
+        "pre_blur": "fa1a98ec99bf90c5510dfebd42443f20e44a5595a038c912838188a25b5f7504"
+      },
+      "captured": true,
+      "depth": 32,
+      "differences": {
+        "output": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "post_blur": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "pre_blur": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        }
+      },
+      "exact": true,
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "production_sha256": {
+        "output": "1c6bfcea22b6d8c5e86a9f3c78c9e2acd67ebaba94156467789d5816eda7ead8",
+        "post_blur": "1220a48eecd41221ad0c0fddca9f76ce9edea9f64ddbbbb11b0f82b28daca3ab",
+        "pre_blur": "fa1a98ec99bf90c5510dfebd42443f20e44a5595a038c912838188a25b5f7504"
+      },
+      "quality": 5.0,
+      "repeat_border": false
+    },
+    {
+      "actual_sha256": {
+        "output": "73787441422c98da508e0616621b305b77e1eb1874ce7f4cfbdfa9a2a10171cf",
+        "post_blur": "1c1766f221b40b61a378ee75f765b88d4629569e3b28ad5487084fa2097be532",
+        "pre_blur": "5fd11ebfc3f1ffea7b01e98cb50f7095ab699db25080cd4f1af361f534a156f7"
+      },
+      "captured": true,
+      "depth": 32,
+      "differences": {
+        "output": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "post_blur": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "pre_blur": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        }
+      },
+      "exact": true,
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "mode": "zoom",
+      "production_sha256": {
+        "output": "73787441422c98da508e0616621b305b77e1eb1874ce7f4cfbdfa9a2a10171cf",
+        "post_blur": "1c1766f221b40b61a378ee75f765b88d4629569e3b28ad5487084fa2097be532",
+        "pre_blur": "5fd11ebfc3f1ffea7b01e98cb50f7095ab699db25080cd4f1af361f534a156f7"
+      },
+      "quality": 5.0,
+      "repeat_border": true
+    },
+    {
+      "actual_sha256": {
+        "accum": "45c0d96ec436a63bcbf6a226ac3a8239fcafdbc9efb82e63b8ace178ca53d55a",
+        "coordinates": "101d951ae65a0d882a76a1090fe5bb071ff4ba8a29f463147f9b32f03da50edd",
+        "final_rgba": "a16c3e255803f9cec4cc4a5f39c01a1fc0651a66772a2ab7c6de5f3177d00707",
+        "max_alpha": "fcf963da282910c0dfcef0932d8061e0b74a0f3aaf2b52c86814e32bf4c82400",
+        "output": "aaeccd886042c8819ecdbc6d3828a642075fc85216cb5d33a100ed15bbb79c5c",
+        "polar": "a7c476606a8b43542cad5808139a9baca9004a757e851dce8b8fdbe617549a08",
+        "source_scalar": "cc79bdc88de40df7ff9cf6dd660a4403088fd44577376a2064e2ce4262543d6d"
+      },
+      "captured": true,
+      "depth": 32,
+      "differences": {
+        "accum": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "coordinates": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "final_rgba": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "max_alpha": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "output": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "polar": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "source_scalar": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        }
+      },
+      "exact": true,
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "production_sha256": {
+        "accum": "45c0d96ec436a63bcbf6a226ac3a8239fcafdbc9efb82e63b8ace178ca53d55a",
+        "coordinates": "101d951ae65a0d882a76a1090fe5bb071ff4ba8a29f463147f9b32f03da50edd",
+        "final_rgba": "a16c3e255803f9cec4cc4a5f39c01a1fc0651a66772a2ab7c6de5f3177d00707",
+        "max_alpha": "fcf963da282910c0dfcef0932d8061e0b74a0f3aaf2b52c86814e32bf4c82400",
+        "output": "aaeccd886042c8819ecdbc6d3828a642075fc85216cb5d33a100ed15bbb79c5c",
+        "polar": "a7c476606a8b43542cad5808139a9baca9004a757e851dce8b8fdbe617549a08",
+        "source_scalar": "cc79bdc88de40df7ff9cf6dd660a4403088fd44577376a2064e2ce4262543d6d"
+      },
+      "quality": 1.0,
+      "repeat_border": false
+    },
+    {
+      "actual_sha256": {
+        "accum": "fa8e3a8578d9b318988419a408d097758872245614d87025864ddaabf1d7b249",
+        "coordinates": "101d951ae65a0d882a76a1090fe5bb071ff4ba8a29f463147f9b32f03da50edd",
+        "final_rgba": "d4efb3ccc0270f960b53c16500b8d52ada2526eb40a425a4b138d495b48d7128",
+        "max_alpha": "2d19ead8e26ef732667df1c5c31cb1d6a171a92a2d59d504be45aaba40fe06d8",
+        "output": "f7903d361d818dd8569338e662a1ab3338e78846d235eb824460edf51985584f",
+        "polar": "f198492d8a94c77db92e154bfac12e49b5e5fc4fe511478259c1eba57c0dc2c6",
+        "source_scalar": "63d0159452f42d51ec46592309b6fdeb89ef60ff1d86a6e8391988b71ba6d88e"
+      },
+      "captured": true,
+      "depth": 32,
+      "differences": {
+        "accum": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "coordinates": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "final_rgba": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "max_alpha": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "output": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "polar": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "source_scalar": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        }
+      },
+      "exact": true,
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "production_sha256": {
+        "accum": "fa8e3a8578d9b318988419a408d097758872245614d87025864ddaabf1d7b249",
+        "coordinates": "101d951ae65a0d882a76a1090fe5bb071ff4ba8a29f463147f9b32f03da50edd",
+        "final_rgba": "d4efb3ccc0270f960b53c16500b8d52ada2526eb40a425a4b138d495b48d7128",
+        "max_alpha": "2d19ead8e26ef732667df1c5c31cb1d6a171a92a2d59d504be45aaba40fe06d8",
+        "output": "f7903d361d818dd8569338e662a1ab3338e78846d235eb824460edf51985584f",
+        "polar": "f198492d8a94c77db92e154bfac12e49b5e5fc4fe511478259c1eba57c0dc2c6",
+        "source_scalar": "63d0159452f42d51ec46592309b6fdeb89ef60ff1d86a6e8391988b71ba6d88e"
+      },
+      "quality": 1.0,
+      "repeat_border": true
+    },
+    {
+      "actual_sha256": {
+        "accum": "f261c2921e6969e976ffc7da73b48e0203036805a90a051fa45007ac3d04d71c",
+        "coordinates": "b93ed06ba4d444cbca92f013dbfcc676573e1b6d055e512ec199a2f697c5a269",
+        "final_rgba": "a00805a154e274acbc64e096e6e712754fbcd37eeb2005fdf2871005072966f9",
+        "max_alpha": "49756c685c53511abbcca6ff7029e1558142f8401e3996529340164de9770681",
+        "output": "d15e53c56482dfe4326b20122cf566dc77dde7139c3b316a27e164b78e402d47",
+        "polar": "604d41e0b61ca2bc953488702fcdc1e1bd317ccbb7c295258ebb4d77789433e9",
+        "source_scalar": "e1bf4cfa899afd5cd15f8c6912556b95fb05bd5cb609d2bb2dd43d52dfa45d27"
+      },
+      "captured": true,
+      "depth": 32,
+      "differences": {
+        "accum": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "coordinates": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "final_rgba": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "max_alpha": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "output": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "polar": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "source_scalar": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        }
+      },
+      "exact": true,
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "production_sha256": {
+        "accum": "f261c2921e6969e976ffc7da73b48e0203036805a90a051fa45007ac3d04d71c",
+        "coordinates": "b93ed06ba4d444cbca92f013dbfcc676573e1b6d055e512ec199a2f697c5a269",
+        "final_rgba": "a00805a154e274acbc64e096e6e712754fbcd37eeb2005fdf2871005072966f9",
+        "max_alpha": "49756c685c53511abbcca6ff7029e1558142f8401e3996529340164de9770681",
+        "output": "d15e53c56482dfe4326b20122cf566dc77dde7139c3b316a27e164b78e402d47",
+        "polar": "604d41e0b61ca2bc953488702fcdc1e1bd317ccbb7c295258ebb4d77789433e9",
+        "source_scalar": "e1bf4cfa899afd5cd15f8c6912556b95fb05bd5cb609d2bb2dd43d52dfa45d27"
+      },
+      "quality": 3.0,
+      "repeat_border": false
+    },
+    {
+      "actual_sha256": {
+        "accum": "ed7b3f548de1a92c7bd0275e3845360d02d91ecc5561e76b7a41d8fc2e5ea2b8",
+        "coordinates": "b93ed06ba4d444cbca92f013dbfcc676573e1b6d055e512ec199a2f697c5a269",
+        "final_rgba": "8edcde2b43cb7fb9ed2f0000096ff710eb0ba5b3cfbdcf426a166a8d047fed2f",
+        "max_alpha": "a06b4847b2351de9f748cf13efaeaa57480bc66d74b9d9f2eaa6ab5c247fb0be",
+        "output": "bdb243013b4c895abbd6ae8953a8f94323849dfa2e802cedb808f9c4373cc30e",
+        "polar": "61b0bfb057dfb9405fdca98c271dde9a3f2fa2698e2b67a42bd8e10dc36dcf54",
+        "source_scalar": "62402c230bb7b51820c8749055daae4c4be6e366fd14e36e85a4c75d8c0e62c1"
+      },
+      "captured": true,
+      "depth": 32,
+      "differences": {
+        "accum": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "coordinates": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "final_rgba": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "max_alpha": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "output": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "polar": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "source_scalar": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        }
+      },
+      "exact": true,
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "production_sha256": {
+        "accum": "ed7b3f548de1a92c7bd0275e3845360d02d91ecc5561e76b7a41d8fc2e5ea2b8",
+        "coordinates": "b93ed06ba4d444cbca92f013dbfcc676573e1b6d055e512ec199a2f697c5a269",
+        "final_rgba": "8edcde2b43cb7fb9ed2f0000096ff710eb0ba5b3cfbdcf426a166a8d047fed2f",
+        "max_alpha": "a06b4847b2351de9f748cf13efaeaa57480bc66d74b9d9f2eaa6ab5c247fb0be",
+        "output": "bdb243013b4c895abbd6ae8953a8f94323849dfa2e802cedb808f9c4373cc30e",
+        "polar": "61b0bfb057dfb9405fdca98c271dde9a3f2fa2698e2b67a42bd8e10dc36dcf54",
+        "source_scalar": "62402c230bb7b51820c8749055daae4c4be6e366fd14e36e85a4c75d8c0e62c1"
+      },
+      "quality": 3.0,
+      "repeat_border": true
+    },
+    {
+      "actual_sha256": {
+        "accum": "8c3fdfdb5d3aa975cdaaa07a40d57bb38265ac8e9591aa04a7d59ac9724dbed7",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "42fc147c7ffc5e7fc01f6e35994dfb493d520a141e52d4996e0b7b40d1a3d169",
+        "max_alpha": "2800a86d9b9c0a61f1335878e6c9b2a7c3945d845728d5bcd9090cca8b0cbed7",
+        "output": "1bbaae6b752d17cf23ab41c10d2ca67bdc2a2130b635702549a4c68d28e65b4f",
+        "polar": "4b889d9f1026d701040c57df630372458a917ed9766b46ec9db1daf24e968d84",
+        "source_scalar": "342710c0e5a08101b51585717814fbc16f9a9ef86276268be854f99a6b78a27d"
+      },
+      "captured": true,
+      "depth": 32,
+      "differences": {
+        "accum": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "coordinates": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "final_rgba": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "max_alpha": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "output": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "polar": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "source_scalar": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        }
+      },
+      "exact": true,
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "production_sha256": {
+        "accum": "8c3fdfdb5d3aa975cdaaa07a40d57bb38265ac8e9591aa04a7d59ac9724dbed7",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "42fc147c7ffc5e7fc01f6e35994dfb493d520a141e52d4996e0b7b40d1a3d169",
+        "max_alpha": "2800a86d9b9c0a61f1335878e6c9b2a7c3945d845728d5bcd9090cca8b0cbed7",
+        "output": "1bbaae6b752d17cf23ab41c10d2ca67bdc2a2130b635702549a4c68d28e65b4f",
+        "polar": "4b889d9f1026d701040c57df630372458a917ed9766b46ec9db1daf24e968d84",
+        "source_scalar": "342710c0e5a08101b51585717814fbc16f9a9ef86276268be854f99a6b78a27d"
+      },
+      "quality": 5.0,
+      "repeat_border": false
+    },
+    {
+      "actual_sha256": {
+        "accum": "13b28b32ce8db24cde6bd5f93acab3113a192137b77be5f99da09555859d7135",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "d7e30cdd2e7b7906fa2dac18107c7fedacde052635ee7d660d9665975a38b765",
+        "max_alpha": "fcc2f0e5a233ad87b4acd4e52dd129e487eda8b7ffdac999cea2e9e9bfedd8e4",
+        "output": "827cf5702e1d8f3f202f84f56bfef3b3f5474ec0f2af47f444622d294ab9f435",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+      },
+      "captured": true,
+      "depth": 32,
+      "differences": {
+        "accum": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "coordinates": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "final_rgba": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "max_alpha": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "output": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "polar": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "source_scalar": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        }
+      },
+      "exact": true,
+      "geometry": [
+        9,
+        7
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "production_sha256": {
+        "accum": "13b28b32ce8db24cde6bd5f93acab3113a192137b77be5f99da09555859d7135",
+        "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "final_rgba": "d7e30cdd2e7b7906fa2dac18107c7fedacde052635ee7d660d9665975a38b765",
+        "max_alpha": "fcc2f0e5a233ad87b4acd4e52dd129e487eda8b7ffdac999cea2e9e9bfedd8e4",
+        "output": "827cf5702e1d8f3f202f84f56bfef3b3f5474ec0f2af47f444622d294ab9f435",
+        "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
+      },
+      "quality": 5.0,
+      "repeat_border": true
+    },
+    {
+      "actual_sha256": {
+        "accum": "62bd3a45d87f3c5524c3ef54040f76a2018a2e2db15be097be5116ce6830719a",
+        "coordinates": "ee1c1aa79aad5873fe41be27a633f1fe39ffa899b979fc1560820b13f6c61b53",
+        "final_rgba": "0f2000132eff96c007d439e3fbe8284ccbd3ed7fac71142aefb8f59c9927b3a5",
+        "max_alpha": "2a21cf46f04bbe98fedcd84dad5f442db51eef697f5cbfd57b2bfb0e5f8af150",
+        "output": "62b4309e94f719ea1a1f0e416dcf0e8f38f91c53a99fc945baec67c42dae183f",
+        "polar": "3d2b906d07edc694aec0590f37ae544a944aa0cc53cb37b3c427116172eaca02",
+        "source_scalar": "78606841ae432c99abbbc0ad8799609e400f55e73bf5710c8aadbfc2bc9ed299"
+      },
+      "captured": true,
+      "depth": 32,
+      "differences": {
+        "accum": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "coordinates": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "final_rgba": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "max_alpha": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "output": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "polar": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "source_scalar": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        }
+      },
+      "exact": true,
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "production_sha256": {
+        "accum": "62bd3a45d87f3c5524c3ef54040f76a2018a2e2db15be097be5116ce6830719a",
+        "coordinates": "ee1c1aa79aad5873fe41be27a633f1fe39ffa899b979fc1560820b13f6c61b53",
+        "final_rgba": "0f2000132eff96c007d439e3fbe8284ccbd3ed7fac71142aefb8f59c9927b3a5",
+        "max_alpha": "2a21cf46f04bbe98fedcd84dad5f442db51eef697f5cbfd57b2bfb0e5f8af150",
+        "output": "62b4309e94f719ea1a1f0e416dcf0e8f38f91c53a99fc945baec67c42dae183f",
+        "polar": "3d2b906d07edc694aec0590f37ae544a944aa0cc53cb37b3c427116172eaca02",
+        "source_scalar": "78606841ae432c99abbbc0ad8799609e400f55e73bf5710c8aadbfc2bc9ed299"
+      },
+      "quality": 1.0,
+      "repeat_border": false
+    },
+    {
+      "actual_sha256": {
+        "accum": "9e684971b3f7bada8748ed90ba4789c1ed747cbed8429fe703bdfe734b48be48",
+        "coordinates": "ee1c1aa79aad5873fe41be27a633f1fe39ffa899b979fc1560820b13f6c61b53",
+        "final_rgba": "db4045166134aa75010d848132a3e47bf4b5a9c61f831bb784b80b62e9ef919d",
+        "max_alpha": "14b76aac872238deedf16cf7ad8d1e7f3bce25c4f5f0d516c27bf0152eb98839",
+        "output": "f26f764cfab54236d2d8b876b2828e20a984c9e4b48d5dd71e90e62be0b5b307",
+        "polar": "64ea39956f34423be6a5af4a14169f5b25a292973cd8834aae238251bb0264e2",
+        "source_scalar": "dc4371b9bc8afb99dca31e243748ad1b11a163c951ac4b9ec2c731d6faf364d5"
+      },
+      "captured": true,
+      "depth": 32,
+      "differences": {
+        "accum": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "coordinates": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "final_rgba": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "max_alpha": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "output": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "polar": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "source_scalar": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        }
+      },
+      "exact": true,
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "production_sha256": {
+        "accum": "9e684971b3f7bada8748ed90ba4789c1ed747cbed8429fe703bdfe734b48be48",
+        "coordinates": "ee1c1aa79aad5873fe41be27a633f1fe39ffa899b979fc1560820b13f6c61b53",
+        "final_rgba": "db4045166134aa75010d848132a3e47bf4b5a9c61f831bb784b80b62e9ef919d",
+        "max_alpha": "14b76aac872238deedf16cf7ad8d1e7f3bce25c4f5f0d516c27bf0152eb98839",
+        "output": "f26f764cfab54236d2d8b876b2828e20a984c9e4b48d5dd71e90e62be0b5b307",
+        "polar": "64ea39956f34423be6a5af4a14169f5b25a292973cd8834aae238251bb0264e2",
+        "source_scalar": "dc4371b9bc8afb99dca31e243748ad1b11a163c951ac4b9ec2c731d6faf364d5"
+      },
+      "quality": 1.0,
+      "repeat_border": true
+    },
+    {
+      "actual_sha256": {
+        "accum": "95f8c3aebee1c7c91399205abdaf7ed6819ce7eba8f44758b11928ac37707a88",
+        "coordinates": "7886f209cc3b42c213365e9c548697efc1a390816a45937478beeb314186fc56",
+        "final_rgba": "e015f245b4eb3c93a77ebf59aef3f6493b6e3dd595065f4f36dfa616b122b815",
+        "max_alpha": "ff68b0dd34ff373194956d091cd820588b2f69783e96adf926067e9bec4a028a",
+        "output": "ca1000cb172a6742f9fb6d1c838c4887c9c34ae9d3b1ba3ff20462e962f72efa",
+        "polar": "153cf607c14505a280974929f01eac5b2173d667207f42f99116b808af935a07",
+        "source_scalar": "2ac4f760fb69b9aa117308c9b1245446798028019b526f3045baeeea0aeefa9e"
+      },
+      "captured": true,
+      "depth": 32,
+      "differences": {
+        "accum": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "coordinates": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "final_rgba": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "max_alpha": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "output": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "polar": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "source_scalar": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        }
+      },
+      "exact": true,
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "production_sha256": {
+        "accum": "95f8c3aebee1c7c91399205abdaf7ed6819ce7eba8f44758b11928ac37707a88",
+        "coordinates": "7886f209cc3b42c213365e9c548697efc1a390816a45937478beeb314186fc56",
+        "final_rgba": "e015f245b4eb3c93a77ebf59aef3f6493b6e3dd595065f4f36dfa616b122b815",
+        "max_alpha": "ff68b0dd34ff373194956d091cd820588b2f69783e96adf926067e9bec4a028a",
+        "output": "ca1000cb172a6742f9fb6d1c838c4887c9c34ae9d3b1ba3ff20462e962f72efa",
+        "polar": "153cf607c14505a280974929f01eac5b2173d667207f42f99116b808af935a07",
+        "source_scalar": "2ac4f760fb69b9aa117308c9b1245446798028019b526f3045baeeea0aeefa9e"
+      },
+      "quality": 3.0,
+      "repeat_border": false
+    },
+    {
+      "actual_sha256": {
+        "accum": "ae082715614f2eb44f5b96a0ac7a3504b9b6e3796acb1ffc06eb182fb5dafc92",
+        "coordinates": "7886f209cc3b42c213365e9c548697efc1a390816a45937478beeb314186fc56",
+        "final_rgba": "c55bf08c0e4ec253e7c2c40ee4aa603a79a8878193222a4dab4c2f2202b103bc",
+        "max_alpha": "4861e132c656f7a9bcee62f1bf5765f76f7df8819d83679268dbfeb475db25bc",
+        "output": "2b00f93086799dee3575c9f6642f6af36789a01593ea806abd45ee0f86c235b7",
+        "polar": "42ab493c49e056542852ad1d5db604add90432109727607b701036f6f655dcde",
+        "source_scalar": "32541390934a510e25b3f13ae744854fe756542aa8e4e32b99cef0e16975683d"
+      },
+      "captured": true,
+      "depth": 32,
+      "differences": {
+        "accum": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "coordinates": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "final_rgba": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "max_alpha": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "output": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "polar": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "source_scalar": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        }
+      },
+      "exact": true,
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "production_sha256": {
+        "accum": "ae082715614f2eb44f5b96a0ac7a3504b9b6e3796acb1ffc06eb182fb5dafc92",
+        "coordinates": "7886f209cc3b42c213365e9c548697efc1a390816a45937478beeb314186fc56",
+        "final_rgba": "c55bf08c0e4ec253e7c2c40ee4aa603a79a8878193222a4dab4c2f2202b103bc",
+        "max_alpha": "4861e132c656f7a9bcee62f1bf5765f76f7df8819d83679268dbfeb475db25bc",
+        "output": "2b00f93086799dee3575c9f6642f6af36789a01593ea806abd45ee0f86c235b7",
+        "polar": "42ab493c49e056542852ad1d5db604add90432109727607b701036f6f655dcde",
+        "source_scalar": "32541390934a510e25b3f13ae744854fe756542aa8e4e32b99cef0e16975683d"
+      },
+      "quality": 3.0,
+      "repeat_border": true
+    },
+    {
+      "actual_sha256": {
+        "accum": "c4672346cf999b689e552d7958d471b5926745fb571998dad6a1b8de82059620",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "e4924c41481631bbd2f29f4f5fd0ac9d8fd60093d38b7398bcad8f9281af013a",
+        "max_alpha": "528f741b920e9039fe5496c5ed83621cfddc37c4e64f6fffed9646d6271f2e08",
+        "output": "457dd1caf6dc6036b35e5f2a528df5c722b70e1f609984ffc83dd47777929bd8",
+        "polar": "e73936fd4fdad616a0093a64239f61981bc0d3c84e4ef06e3d8b3fc4875a246f",
+        "source_scalar": "171ac0bfd302468b9e7692a473899aa612d108ca976bed9e43f76187ccb98599"
+      },
+      "captured": true,
+      "depth": 32,
+      "differences": {
+        "accum": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "coordinates": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "final_rgba": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "max_alpha": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "output": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "polar": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "source_scalar": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        }
+      },
+      "exact": true,
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "production_sha256": {
+        "accum": "c4672346cf999b689e552d7958d471b5926745fb571998dad6a1b8de82059620",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "e4924c41481631bbd2f29f4f5fd0ac9d8fd60093d38b7398bcad8f9281af013a",
+        "max_alpha": "528f741b920e9039fe5496c5ed83621cfddc37c4e64f6fffed9646d6271f2e08",
+        "output": "457dd1caf6dc6036b35e5f2a528df5c722b70e1f609984ffc83dd47777929bd8",
+        "polar": "e73936fd4fdad616a0093a64239f61981bc0d3c84e4ef06e3d8b3fc4875a246f",
+        "source_scalar": "171ac0bfd302468b9e7692a473899aa612d108ca976bed9e43f76187ccb98599"
+      },
+      "quality": 5.0,
+      "repeat_border": false
+    },
+    {
+      "actual_sha256": {
+        "accum": "5f2808240747555909d27f53daa110a46d7f77459e175185e43bdf97f03878e8",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "e462b3473c95272edf436e8a75121a7197c68ed1025497c28db49b8f2f9b0c1a",
+        "max_alpha": "39f86a18e7fa04ba0218b5d546b9918c0c90528f9eae17db57ad52c40b05cd91",
+        "output": "0cff2b16fa89a443cb9428265993fd7b1515e595b2eb27df0970a4ffe8f0d805",
+        "polar": "da0505812a661d8b3cf2e9975b0b8d354b81a280be74c39510d97656920dd020",
+        "source_scalar": "e468ec1e7afb7b7ef8f52282c441d260ec7f29a643b3ab86884f1d83dabb62b0"
+      },
+      "captured": true,
+      "depth": 32,
+      "differences": {
+        "accum": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "coordinates": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "final_rgba": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "max_alpha": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "output": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "polar": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        },
+        "source_scalar": {
+          "different_bytes": 0,
+          "first_byte": null,
+          "first_indices": []
+        }
+      },
+      "exact": true,
+      "geometry": [
+        32,
+        18
+      ],
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "mode": "rotation",
+      "production_sha256": {
+        "accum": "5f2808240747555909d27f53daa110a46d7f77459e175185e43bdf97f03878e8",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "e462b3473c95272edf436e8a75121a7197c68ed1025497c28db49b8f2f9b0c1a",
+        "max_alpha": "39f86a18e7fa04ba0218b5d546b9918c0c90528f9eae17db57ad52c40b05cd91",
+        "output": "0cff2b16fa89a443cb9428265993fd7b1515e595b2eb27df0970a4ffe8f0d805",
+        "polar": "da0505812a661d8b3cf2e9975b0b8d354b81a280be74c39510d97656920dd020",
+        "source_scalar": "e468ec1e7afb7b7ef8f52282c441d260ec7f29a643b3ab86884f1d83dabb62b0"
+      },
+      "quality": 5.0,
+      "repeat_border": true
+    }
+  ],
+  "exact_cases": 24,
+  "kind": "olmradialblur_pf32_quality_repeat_compare_20260811",
+  "scope": "PF32 Zoom/Rotation owner vs temporary typed admission; 9x7/32x18, Quality{1,3,5}, Repeat Border{off,on}, centered neutral tuple.",
+  "status": "exact",
+  "total_cases": 24
+}

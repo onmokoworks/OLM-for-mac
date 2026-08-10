@@ -25,6 +25,7 @@ FIXTURE_INNER_STRENGTH = 0
 FIXTURE_OUTER_EDGE_FADE = 0
 FIXTURE_INNER_EDGE_FADE = 0
 FIXTURE_CENTER_X, FIXTURE_CENTER_Y = 4.0, 3.0
+FIXTURE_QUALITY = 5.0
 FIXTURE_RATIO, FIXTURE_ANGLE_DEG = 1.0, 0.0
 FIXTURE_SIZE_VARIATION = 0.0
 FIXTURE_NOISE_VARIATION = 0.0
@@ -82,7 +83,7 @@ def build_world(loader: AexLoader, payload: bytes) -> tuple[int, int]:
 
 def actual_aex() -> dict[str, bytes]:
     params = m4.load_case0010_params()
-    params.update({"Center": (FIXTURE_CENTER_X, FIXTURE_CENTER_Y), "Quality": 5.0,
+    params.update({"Center": (FIXTURE_CENTER_X, FIXTURE_CENTER_Y), "Quality": FIXTURE_QUALITY,
                    "Outer Strength": FIXTURE_OUTER_STRENGTH,
                    "Outer Offset Mode": FIXTURE_OUTER_OFFSET_MODE,
                    "Outer Offset": FIXTURE_OUTER_OFFSET,
@@ -112,7 +113,8 @@ def actual_aex() -> dict[str, bytes]:
         max_ptr = m4.u64(ld, work + 0xF252 * 4)
         min_radius = struct.unpack("<i", ld.read_bytes(work + 0x0C, 4))[0]
         max_radius = struct.unpack("<i", ld.read_bytes(work + 0x10, 4))[0]
-        cells = (max_radius - min_radius + 1) * 1800
+        angular_count = int(round(float(params["Quality"]) * 360.0))
+        cells = (max_radius - min_radius + 1) * angular_count
         if cells <= 0 or max_ptr <= accum_ptr:
             raise RuntimeError(f"invalid Rotation geometry/allocation: r={min_radius}..{max_radius}, {hex(accum_ptr)}..{hex(max_ptr)}")
         captured["cells"] = cells
@@ -188,9 +190,13 @@ def actual_aex() -> dict[str, bytes]:
             angle_index = struct.unpack("<f", struct.pack("<f", angle * angle_scale))[0]
             coordinates += struct.pack("<2f", angle_index, radius)
     planes["coordinates"] = bytes(coordinates)
-    if int(captured["cells"]) % 1800:
-        raise RuntimeError(f"Rotation cells do not divide the quality-5 angular extent: {captured['cells']}")
-    planes["geometry"] = struct.pack("<II", 1800, int(captured["cells"]) // 1800)
+    angular_count = int(round(float(params["Quality"]) * 360.0))
+    if int(captured["cells"]) % angular_count:
+        raise RuntimeError(
+            f"Rotation cells do not divide the quality angular extent {angular_count}: "
+            f"{captured['cells']}")
+    planes["geometry"] = struct.pack(
+        "<II", angular_count, int(captured["cells"]) // angular_count)
     return planes
 
 
