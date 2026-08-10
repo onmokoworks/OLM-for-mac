@@ -409,6 +409,7 @@ static bool CanUseExact8(const PF_EffectWorld *input,
 	       (info.front_strength > 0 || info.back_strength > 0) &&
 	       info.front_strength >= 0 && info.front_alpha_fade >= 0 &&
 	       info.back_strength >= 0 && info.back_alpha_fade >= 0 &&
+	       info.size_variation >= 0.0 && info.size_variation <= 100.0 &&
 	       info.noise_variation >= 0.0 &&
 	       (info.noise_variation == 0.0 ||
 	        ((info.noise_type == 1 || info.noise_type == 2) && info.thickness > 0.0) ||

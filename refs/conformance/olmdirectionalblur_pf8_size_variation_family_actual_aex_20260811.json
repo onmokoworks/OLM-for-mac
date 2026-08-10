@@ -1,0 +1,93 @@
+{
+  "basis": "0 and 100 are public endpoints, 25 is a non-half interior exponent, and 50 is the midpoint. All are actual-AEX/production raw exact through the same continuous exponent path.",
+  "component_rule": "Nonzero Size builds connected-component records; alpha weight is pow(clamp(sample alpha), Size/100), normalized by the component-area divisor in the shared float rowdriver.",
+  "cross_admission": {
+    "front_alpha_fade": 50,
+    "size_variation": 50
+  },
+  "depth": "PF8",
+  "fail_closed": [
+    "Size below 0 or above 100",
+    "unproved geometry/tuple and other parameter combinations"
+  ],
+  "family": "Size Variation 0..100 plus bounded Front Fade cross",
+  "fixed_route": {
+    "angle": 45,
+    "back_strength": 0,
+    "brightness_gain": 1,
+    "front_strength": 8,
+    "geometry": "16x16 padded ARGB32",
+    "render_scale": [
+      1,
+      1
+    ],
+    "sharp_noise": 0
+  },
+  "not_proven": [
+    "PF8 other geometry",
+    "other Fade combinations",
+    "Sharp/Noise/Back combinations",
+    "native AE export"
+  ],
+  "plugin": "OLMDirectionalBlur",
+  "representatives": [
+    {
+      "byte_count": 1024,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "front_alpha_fade": 0,
+      "production_exact": 1,
+      "raw_sha256": "5f5a832d55b9ca4f0cad76c00bd6ae2f26063535f719f146073105d6577decf8",
+      "size_variation_percent": 0.0
+    },
+    {
+      "byte_count": 1024,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "front_alpha_fade": 0,
+      "production_exact": 1,
+      "raw_sha256": "5f5a832d55b9ca4f0cad76c00bd6ae2f26063535f719f146073105d6577decf8",
+      "size_variation_percent": 25.0
+    },
+    {
+      "byte_count": 1024,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "front_alpha_fade": 0,
+      "production_exact": 1,
+      "raw_sha256": "5f5a832d55b9ca4f0cad76c00bd6ae2f26063535f719f146073105d6577decf8",
+      "size_variation_percent": 50.0
+    },
+    {
+      "byte_count": 1024,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "front_alpha_fade": 0,
+      "production_exact": 1,
+      "raw_sha256": "5f5a832d55b9ca4f0cad76c00bd6ae2f26063535f719f146073105d6577decf8",
+      "size_variation_percent": 100.0
+    },
+    {
+      "byte_count": 1024,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "front_alpha_fade": 50,
+      "production_exact": 1,
+      "raw_sha256": "fafbc02cce7fd3825e5f5658607ca7f4c36f9ec3d3b041b0cc06beb6d7183db4",
+      "size_variation_percent": 50.0
+    }
+  ],
+  "schema_version": 1,
+  "status": "exact_representative_family",
+  "writer_rule": "Production writes straight RGBA worker bytes into PF ARGB channels; RGB and alpha use float*255 followed by C++ integer truncation, not round-to-nearest."
+}
