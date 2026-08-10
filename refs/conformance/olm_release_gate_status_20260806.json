@@ -2,10 +2,10 @@
   "claim_boundary": "Release integration only: ten-lane fixed fixtures, installed Universal identities, and one current-Mac-AE load/render witness per plugin. This manifest does not promote unlisted geometries, parameters, bit depths, or AE exactness. Seven Windows AE release-boundary observations are accepted; cross-host exactness remains a per-plugin claim.",
   "fixed_fixture_regression": {
     "boundary": "Only commands enumerated by the ten fixed-fixture lanes; slow RadialBlur full replay is excluded.",
-    "output_sha256": "7a697524b42cb5331d4998d650d3d65d92f34b39e9123c200b2c2fee17b7fe3e",
+    "output_sha256": "3f4cb7381ee21f6ba11ca982a3183e8e63b471d3a19bb1c27e754853ddf209aa",
     "returncode": 0,
     "state": "proven",
-    "summary": "PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=498.60s",
+    "summary": "PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=510.90s",
     "tail": [
       "      |                                                      ^",
       "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here",
@@ -29,7 +29,7 @@
       "1 warning generated."
     ]
   },
-  "generated_at": "2026-08-10T12:53:32.833350+00:00",
+  "generated_at": "2026-08-10T13:14:45.328440+00:00",
   "mac_ae_representative": {
     "counts": {
       "invalid": 0,
@@ -239,7 +239,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMColorKey",
-        "sha256": "45515bf85f97f3db23ffae827fcdc4e9ad92207f35af77ac8fa21ed909df59bd",
+        "sha256": "98d755b1bf86f0a71857049e4af3f4b161f05347f405aa379bf115bc3e1a8ab6",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -250,7 +250,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMDirectionalBlur",
-        "sha256": "8541fd0332390396e200f701ef3da0080aff481d4b600422bd9f8be3c3fe6064",
+        "sha256": "dc6c01ae1cd02f00262689260831e3b97b40ba2e1802e8003957e386b9932289",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -272,7 +272,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMKiraKira",
-        "sha256": "f39e354084e1ab8e7fdf071cb0a08e6fce3a89d2c880248d571adb7026532aba",
+        "sha256": "aef9433ab31fc53d2c307f907e76e9a4831ccf4377693453fd01316110847c8e",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -283,7 +283,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMRadialBlur",
-        "sha256": "2b9dc637196b582d70e43fbac3537aca28aad55e75e778eb2cdad6cdd57fc01a",
+        "sha256": "0535f92f43bf62b947927387a711e140f674330f42d029df09fe60fb1f9023b7",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -316,13 +316,13 @@
         ],
         "codesign_exact": true,
         "name": "OLMToonDilate",
-        "sha256": "06518f523efb26d30f19ae1f98a08ccdd4f1c577845e30b97d405ca09dc010d4",
+        "sha256": "309715d940268f2fc451aead2cff505044bfaa630dab82de2cd084c8cfe17044",
         "sha256_exact": true,
         "universal_exact": true
       }
     ],
-    "preflight_status": "ready_for_hash_bound_host_runners",
-    "returncode": 0,
+    "preflight_status": "ae_not_running",
+    "returncode": 2,
     "state": "proven"
   },
   "windows_ae_release_boundary": {
