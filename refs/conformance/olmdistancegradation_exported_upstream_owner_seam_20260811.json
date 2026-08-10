@@ -6,7 +6,6 @@
     "sha256": "72faa93594b83e1f7609429ec60cc878fa2a3a3161a2390947f79a40f48b4539"
   },
   "claims_not_made": [
-    "No PF8 Linear exported owner equality",
     "No PF16 exported owner equality",
     "No PF32 SmartRender route or equality",
     "No native After Effects execution",
@@ -94,9 +93,9 @@
       "blur_mode": 2,
       "bytes_compared": 748,
       "depth": "PF8",
-      "exact": false,
+      "exact": true,
       "interpolation": "linear",
-      "production_whole_chain_active_sha256": "692bf7ceb69b8bd9c4bafae116d566e3504059df04a159115bbc8e3b9a2a3a87",
+      "production_whole_chain_active_sha256": "963c9a6221ae9d8e4af25de26213a4406873939b48e961e5a9cd0f33c9f022cb",
       "use_background": false
     },
     {
@@ -104,9 +103,9 @@
       "blur_mode": 2,
       "bytes_compared": 748,
       "depth": "PF8",
-      "exact": false,
+      "exact": true,
       "interpolation": "linear",
-      "production_whole_chain_active_sha256": "efc1c61fc7d87f31b672fe188c3f2c8b0565b7ef00adb37146c8344cb2ccedf5",
+      "production_whole_chain_active_sha256": "04b7361841d35e74d1ba8967953be3a3614a59cee34e446e3f6a9f9ce4342f86",
       "use_background": true
     },
     {
@@ -114,9 +113,9 @@
       "blur_mode": 3,
       "bytes_compared": 748,
       "depth": "PF8",
-      "exact": false,
+      "exact": true,
       "interpolation": "linear",
-      "production_whole_chain_active_sha256": "6bdced935df747318900e0ec96d25d0287c1f798dde07816f199cdcdf5c9ce27",
+      "production_whole_chain_active_sha256": "6702e5cffbb8847cb220e1d7fafc3840125ff70990fc8e33e2d3e59ce66c69d1",
       "use_background": false
     },
     {
@@ -124,9 +123,9 @@
       "blur_mode": 3,
       "bytes_compared": 748,
       "depth": "PF8",
-      "exact": false,
+      "exact": true,
       "interpolation": "linear",
-      "production_whole_chain_active_sha256": "33c9213d6d0b52309be37302ca156ecfe2370a5c4590a05db492e6aed8ea3faf",
+      "production_whole_chain_active_sha256": "a99a1a239b7caa186d703d462f6f17d546006013b2fd2cc717bf16bb17d0dd88",
       "use_background": true
     }
   ],
@@ -134,6 +133,13 @@
     "height": 11,
     "input_png_sha256": "683259bea613463bb22679f36a78e6d7b4c26dabdbc90e4da480cf76e9eb626a",
     "width": 17
+  },
+  "linear_residual_localization": {
+    "field_and_blur": "green lane/output alpha equals the existing fieldgen+blur staged matrix",
+    "first_difference": "compose auxiliary red lane was zero in production/manual staging but equals blurred X in the actual owner",
+    "fix": "stage blurred X as PF8 Linear+blur field_aux and preserve it in zero-ownership RGB compose",
+    "four_complete_buffers_exact_after_fix": true,
+    "parameter_materialization": "exact in worker report: RGB, inside threshold 4, interpolation 2, power 1, requested background and blur values"
   },
   "load_library_w_trace": {
     "external_pe_mapping": false,
@@ -160,8 +166,8 @@
   "owner_facts": {
     "PF16": "exported Smart owner throws before output; classic/helper numerical 8 cells remain exact separately",
     "PF32": "actual AEX has no SmartRender PF32 branch; classic whole owner FUN_181172a10 numerical 8 cells remain exact separately",
-    "PF8": "actual exported SmartPreRender/SmartRender completes all 8 cells; Constant 4 are exact while Linear 4 expose a stable owner-versus-manual-chain residual"
+    "PF8": "actual exported SmartPreRender/SmartRender completes all 8 cells and matches production whole-chain active bytes"
   },
   "schema": "olmdistancegradation.exported-upstream-owner-seam/2",
-  "status": "PF8_EXPORTED_SMART_OWNER_CONSTANT_4_EXACT_LINEAR_4_RESIDUAL_PF16_PF32_EXCEPTION_BOUNDARY"
+  "status": "PASS_PF8_EXPORTED_SMART_OWNER_8_CELL_EXACT_PF16_PF32_EXCEPTION_BOUNDARY"
 }

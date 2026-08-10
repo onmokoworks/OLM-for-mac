@@ -85,7 +85,9 @@ def main():
                     "blur_instructions": instructions,
                 }
                 field_world = world8(loader, b"".join(
-                    bytes((0, int(staged[y, x]), 0, 0)) for y in range(H) for x in range(W)
+                    bytes((0, int(staged[y, x]),
+                           int(staged[y, x]) if interp_name == "linear" else 0, 0))
+                    for y in range(H) for x in range(W)
                 ))
                 put(OFF_FIELD_WORLD_PTR, "<Q", field_world)
                 put(OFF_INTERP_MODE, "<i", interp_mode)

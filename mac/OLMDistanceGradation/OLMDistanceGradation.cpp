@@ -757,7 +757,7 @@ static void build_distance_field(
 	if (constant_blur) {
 		for (long i = 0; i < w * h; ++i) df.x[i] = (df.x[i] >= 1.0f) ? 1.0f : 0.0f;
 	}
-	if (p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0) df.pre_blur_x = df.x;
+	if (constant_blur) df.pre_blur_x = df.x;
 
 	// Blur: the Windows owner always converts the full-resolution Blur Size to
 	// current-resolution pixels. Blur Mode selects the cvSmooth primitive:
@@ -912,6 +912,7 @@ static inline void compose_pixel(
 			    p.render_mode == RENDER_MODE_RGB &&
 			    p.interp_mode != INTERP_CONSTANT && p.blur_mode != BLUR_MODE_NONE &&
 			    p.blur_size > 0) {
+				if (p.pixel_size == sizeof(PF_Pixel8)) out_r = field_aux;
 				out_g = X;
 			}
 		}
@@ -930,6 +931,7 @@ static inline void compose_pixel(
 			out_r = out_g = out_b = 0.0f;
 			if (p.interp_mode != INTERP_CONSTANT && p.blur_mode != BLUR_MODE_NONE &&
 			    p.blur_size > 0) {
+				out_r = field_aux;
 				out_g = X;
 			}
 			return;
@@ -1229,7 +1231,10 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 		const P *src = (const P *)((char *)input->data  + (size_t)y * input->rowbytes);
 		P *dst       = (P *)      ((char *)output->data + (size_t)y * output->rowbytes);
 		const float *xrow = df.x.data()       + (size_t)y * w;
-		const float *arow = (df.pre_blur_x.empty() ? df.d_alpha.data() : df.pre_blur_x.data()) + (size_t)y * w;
+		const bool blurred = p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0;
+		const float *aux = !df.pre_blur_x.empty() ? df.pre_blur_x.data()
+		                 : (blurred ? df.x.data() : df.d_alpha.data());
+		const float *arow = aux + (size_t)y * w;
 		shade_scanline<P>(src, dst, xrow, arow, p, w, h, y, input);
 	}
 

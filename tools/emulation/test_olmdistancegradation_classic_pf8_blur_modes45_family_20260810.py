@@ -154,7 +154,9 @@ def main():
                 blurred, instructions = actual_blur(preblur, blur_mode)
                 staged = np.rint(np.clip(blurred, 0, 1) * 255).astype(np.uint8)
                 field_world = world8(loader, b"".join(
-                    bytes((0, int(staged[y, x]), 0, 0)) for y in range(H) for x in range(W)
+                    bytes((0, int(staged[y, x]),
+                           int(staged[y, x]) if interp_name == "linear" else 0, 0))
+                    for y in range(H) for x in range(W)
                 ))
                 put(OFF_FIELD_WORLD_PTR, "<Q", field_world)
                 put(OFF_INTERP_MODE, "<i", interp_mode)
