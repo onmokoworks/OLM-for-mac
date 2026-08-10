@@ -3464,6 +3464,93 @@ static PF_Err ValidateNoiseLayerWorld(const PF_EffectWorld *noise_world, short b
 	return PF_Err_NONE;
 }
 
+template <typename PixelT>
+static PF_Err ComposeType3LayerSpanAEX(
+	const PF_EffectWorld *input_world,
+	const PF_EffectWorld *noise_world,
+	float noise_variation_normalized,
+	const float *source_size_factor,
+	float *source_span,
+	size_t cell_count)
+{
+	// This helper consumes the AEX context value (0.0f..1.0f), not the public
+	// 0..100 slider value.  A future RenderWorld admission must pass
+	// (float)info.noise_variation * 0.01f, as the admitted Type1/2 paths do.
+	if (!input_world || !noise_world || !noise_world->data || !source_size_factor ||
+		!source_span || input_world->width <= 0 || input_world->height <= 0 ||
+		noise_world->width <= 0 || noise_world->height <= 0 ||
+		noise_world->rowbytes < noise_world->width * (A_long)sizeof(PixelT) ||
+		cell_count != (size_t)input_world->width * input_world->height) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+
+	// FUN_18000b630 embeds these exact binary64 constants.  They are adjacent
+	// to, but intentionally not replaced with, decimal source approximations.
+	static constexpr double kBlue = 0x1.d2f1a9fbe76c9p-4;
+	static constexpr double kRed = 0x1.322d0e5604189p-2;
+	static constexpr double kGreen = 0x1.2c8b439581062p-1;
+	const float one_minus_noise = RadialF32Sub(1.0f, noise_variation_normalized);
+	for (A_long y = 0; y < input_world->height; ++y) {
+		for (A_long x = 0; x < input_world->width; ++x) {
+			const size_t cell = (size_t)y * input_world->width + x;
+			const A_long layer_x = input_world->extent_hint.left - noise_world->extent_hint.left + x;
+			const A_long layer_y = input_world->extent_hint.top - noise_world->extent_hint.top + y;
+			float luminance = 0.0f;
+			if (layer_x >= 0 && layer_x < noise_world->width &&
+				layer_y >= 0 && layer_y < noise_world->height) {
+				const A_u_char *row = reinterpret_cast<const A_u_char *>(noise_world->data) +
+					(size_t)layer_y * noise_world->rowbytes;
+				const PixelT &pixel = reinterpret_cast<const PixelT *>(row)[layer_x];
+				const float alpha = RadialZoomPixelTraits<PixelT>::Read(pixel, 3);
+				const float red = RadialF32Mul(
+					RadialZoomPixelTraits<PixelT>::Read(pixel, 0), alpha);
+				const float green = RadialF32Mul(
+					RadialZoomPixelTraits<PixelT>::Read(pixel, 1), alpha);
+				const float blue = RadialF32Mul(
+					RadialZoomPixelTraits<PixelT>::Read(pixel, 2), alpha);
+				// Match MULSD(red), MULSD(green), ADDSD, MULSD(blue), ADDSD,
+				// CVTPD2PS.  Keeping each operand visibly double prevents contraction.
+				const double red_term = (double)red * kRed;
+				const double green_term = (double)green * kGreen;
+				const double blue_term = (double)blue * kBlue;
+				luminance = (float)((red_term + green_term) + blue_term);
+			}
+			float mixed = RadialF32Mul(noise_variation_normalized, luminance);
+			mixed = RadialF32Add(mixed, one_minus_noise);
+			source_span[cell] = RadialF32Mul(mixed, source_size_factor[cell]);
+		}
+	}
+	return PF_Err_NONE;
+}
+
+#if defined(OLM_RADIALBLUR_TEST_SEAM)
+extern "C" PF_Err OLMRadialBlurTestComposeType3LayerSpan(
+	const PF_EffectWorld *input_world,
+	const PF_EffectWorld *noise_world,
+	short bitdepth,
+	float noise_variation_normalized,
+	A_long seed,
+	float noise_offset,
+	float thickness,
+	const float *source_size_factor,
+	float *source_span,
+	size_t cell_count)
+{
+	// These public controls are read by the owner but bypassed by the Type-3
+	// branch.  Keep them on the seam so invariance remains executable evidence.
+	(void)seed;
+	(void)noise_offset;
+	(void)thickness;
+	if (bitdepth == 8) return ComposeType3LayerSpanAEX<PF_Pixel8>(
+		input_world, noise_world, noise_variation_normalized, source_size_factor, source_span, cell_count);
+	if (bitdepth == 16) return ComposeType3LayerSpanAEX<PF_Pixel16>(
+		input_world, noise_world, noise_variation_normalized, source_size_factor, source_span, cell_count);
+	if (bitdepth == 32) return ComposeType3LayerSpanAEX<PF_PixelFloat>(
+		input_world, noise_world, noise_variation_normalized, source_size_factor, source_span, cell_count);
+	return PF_Err_BAD_CALLBACK_PARAM;
+}
+#endif
+
 static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 	PF_EffectWorld *noise_world, const OLMRadialBlurInfo &info, short bitdepth)
 {
