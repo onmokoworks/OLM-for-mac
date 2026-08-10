@@ -1,0 +1,1642 @@
+{
+  "actual_aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+  "binary_contract": "all six typed AEX workers consume the single context+0x11c/+0x120 scale rational; retained x=1/1 worker outputs are the y-invariant oracle",
+  "case_count": 72,
+  "cases": [
+    {
+      "id": "pf8_amount5_0_repeat1_legacy0_dy1_2",
+      "oracle_reuse": "pf8_amount5_0_repeat1_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_amount5_0_repeat1_legacy0_dy1_1",
+      "oracle_reuse": "pf8_amount5_0_repeat1_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_amount5_0_repeat1_legacy0_dy2_1",
+      "oracle_reuse": "pf8_amount5_0_repeat1_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_amount5_0_repeat1_legacy1_dy1_2",
+      "oracle_reuse": "pf8_amount5_0_repeat1_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_amount5_0_repeat1_legacy1_dy1_1",
+      "oracle_reuse": "pf8_amount5_0_repeat1_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_amount5_0_repeat1_legacy1_dy2_1",
+      "oracle_reuse": "pf8_amount5_0_repeat1_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_amount5_0_repeat2_legacy0_dy1_2",
+      "oracle_reuse": "pf8_amount5_0_repeat2_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_amount5_0_repeat2_legacy0_dy1_1",
+      "oracle_reuse": "pf8_amount5_0_repeat2_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_amount5_0_repeat2_legacy0_dy2_1",
+      "oracle_reuse": "pf8_amount5_0_repeat2_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_amount5_0_repeat2_legacy1_dy1_2",
+      "oracle_reuse": "pf8_amount5_0_repeat2_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_amount5_0_repeat2_legacy1_dy1_1",
+      "oracle_reuse": "pf8_amount5_0_repeat2_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_amount5_0_repeat2_legacy1_dy2_1",
+      "oracle_reuse": "pf8_amount5_0_repeat2_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_amount129_4_repeat1_legacy0_dy1_2",
+      "oracle_reuse": "pf8_amount129_4_repeat1_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_amount129_4_repeat1_legacy0_dy1_1",
+      "oracle_reuse": "pf8_amount129_4_repeat1_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_amount129_4_repeat1_legacy0_dy2_1",
+      "oracle_reuse": "pf8_amount129_4_repeat1_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_amount129_4_repeat1_legacy1_dy1_2",
+      "oracle_reuse": "pf8_amount129_4_repeat1_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_amount129_4_repeat1_legacy1_dy1_1",
+      "oracle_reuse": "pf8_amount129_4_repeat1_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_amount129_4_repeat1_legacy1_dy2_1",
+      "oracle_reuse": "pf8_amount129_4_repeat1_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_amount129_4_repeat2_legacy0_dy1_2",
+      "oracle_reuse": "pf8_amount129_4_repeat2_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_amount129_4_repeat2_legacy0_dy1_1",
+      "oracle_reuse": "pf8_amount129_4_repeat2_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_amount129_4_repeat2_legacy0_dy2_1",
+      "oracle_reuse": "pf8_amount129_4_repeat2_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_amount129_4_repeat2_legacy1_dy1_2",
+      "oracle_reuse": "pf8_amount129_4_repeat2_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_amount129_4_repeat2_legacy1_dy1_1",
+      "oracle_reuse": "pf8_amount129_4_repeat2_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf8_amount129_4_repeat2_legacy1_dy2_1",
+      "oracle_reuse": "pf8_amount129_4_repeat2_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_amount5_0_repeat1_legacy0_dy1_2",
+      "oracle_reuse": "pf16_amount5_0_repeat1_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_amount5_0_repeat1_legacy0_dy1_1",
+      "oracle_reuse": "pf16_amount5_0_repeat1_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_amount5_0_repeat1_legacy0_dy2_1",
+      "oracle_reuse": "pf16_amount5_0_repeat1_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_amount5_0_repeat1_legacy1_dy1_2",
+      "oracle_reuse": "pf16_amount5_0_repeat1_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_amount5_0_repeat1_legacy1_dy1_1",
+      "oracle_reuse": "pf16_amount5_0_repeat1_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_amount5_0_repeat1_legacy1_dy2_1",
+      "oracle_reuse": "pf16_amount5_0_repeat1_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_amount5_0_repeat2_legacy0_dy1_2",
+      "oracle_reuse": "pf16_amount5_0_repeat2_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_amount5_0_repeat2_legacy0_dy1_1",
+      "oracle_reuse": "pf16_amount5_0_repeat2_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_amount5_0_repeat2_legacy0_dy2_1",
+      "oracle_reuse": "pf16_amount5_0_repeat2_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_amount5_0_repeat2_legacy1_dy1_2",
+      "oracle_reuse": "pf16_amount5_0_repeat2_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_amount5_0_repeat2_legacy1_dy1_1",
+      "oracle_reuse": "pf16_amount5_0_repeat2_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_amount5_0_repeat2_legacy1_dy2_1",
+      "oracle_reuse": "pf16_amount5_0_repeat2_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_amount129_4_repeat1_legacy0_dy1_2",
+      "oracle_reuse": "pf16_amount129_4_repeat1_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_amount129_4_repeat1_legacy0_dy1_1",
+      "oracle_reuse": "pf16_amount129_4_repeat1_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_amount129_4_repeat1_legacy0_dy2_1",
+      "oracle_reuse": "pf16_amount129_4_repeat1_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_amount129_4_repeat1_legacy1_dy1_2",
+      "oracle_reuse": "pf16_amount129_4_repeat1_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_amount129_4_repeat1_legacy1_dy1_1",
+      "oracle_reuse": "pf16_amount129_4_repeat1_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_amount129_4_repeat1_legacy1_dy2_1",
+      "oracle_reuse": "pf16_amount129_4_repeat1_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_amount129_4_repeat2_legacy0_dy1_2",
+      "oracle_reuse": "pf16_amount129_4_repeat2_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_amount129_4_repeat2_legacy0_dy1_1",
+      "oracle_reuse": "pf16_amount129_4_repeat2_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_amount129_4_repeat2_legacy0_dy2_1",
+      "oracle_reuse": "pf16_amount129_4_repeat2_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_amount129_4_repeat2_legacy1_dy1_2",
+      "oracle_reuse": "pf16_amount129_4_repeat2_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_amount129_4_repeat2_legacy1_dy1_1",
+      "oracle_reuse": "pf16_amount129_4_repeat2_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf16_amount129_4_repeat2_legacy1_dy2_1",
+      "oracle_reuse": "pf16_amount129_4_repeat2_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_amount5_0_repeat1_legacy0_dy1_2",
+      "oracle_reuse": "pf32_amount5_0_repeat1_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_amount5_0_repeat1_legacy0_dy1_1",
+      "oracle_reuse": "pf32_amount5_0_repeat1_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_amount5_0_repeat1_legacy0_dy2_1",
+      "oracle_reuse": "pf32_amount5_0_repeat1_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_amount5_0_repeat1_legacy1_dy1_2",
+      "oracle_reuse": "pf32_amount5_0_repeat1_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_amount5_0_repeat1_legacy1_dy1_1",
+      "oracle_reuse": "pf32_amount5_0_repeat1_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_amount5_0_repeat1_legacy1_dy2_1",
+      "oracle_reuse": "pf32_amount5_0_repeat1_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_amount5_0_repeat2_legacy0_dy1_2",
+      "oracle_reuse": "pf32_amount5_0_repeat2_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_amount5_0_repeat2_legacy0_dy1_1",
+      "oracle_reuse": "pf32_amount5_0_repeat2_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_amount5_0_repeat2_legacy0_dy2_1",
+      "oracle_reuse": "pf32_amount5_0_repeat2_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_amount5_0_repeat2_legacy1_dy1_2",
+      "oracle_reuse": "pf32_amount5_0_repeat2_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_amount5_0_repeat2_legacy1_dy1_1",
+      "oracle_reuse": "pf32_amount5_0_repeat2_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_amount5_0_repeat2_legacy1_dy2_1",
+      "oracle_reuse": "pf32_amount5_0_repeat2_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 5,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_amount129_4_repeat1_legacy0_dy1_2",
+      "oracle_reuse": "pf32_amount129_4_repeat1_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_amount129_4_repeat1_legacy0_dy1_1",
+      "oracle_reuse": "pf32_amount129_4_repeat1_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_amount129_4_repeat1_legacy0_dy2_1",
+      "oracle_reuse": "pf32_amount129_4_repeat1_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_amount129_4_repeat1_legacy1_dy1_2",
+      "oracle_reuse": "pf32_amount129_4_repeat1_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_amount129_4_repeat1_legacy1_dy1_1",
+      "oracle_reuse": "pf32_amount129_4_repeat1_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_amount129_4_repeat1_legacy1_dy2_1",
+      "oracle_reuse": "pf32_amount129_4_repeat1_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_amount129_4_repeat2_legacy0_dy1_2",
+      "oracle_reuse": "pf32_amount129_4_repeat2_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_amount129_4_repeat2_legacy0_dy1_1",
+      "oracle_reuse": "pf32_amount129_4_repeat2_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_amount129_4_repeat2_legacy0_dy2_1",
+      "oracle_reuse": "pf32_amount129_4_repeat2_legacy0",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_amount129_4_repeat2_legacy1_dy1_2",
+      "oracle_reuse": "pf32_amount129_4_repeat2_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_amount129_4_repeat2_legacy1_dy1_1",
+      "oracle_reuse": "pf32_amount129_4_repeat2_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    },
+    {
+      "id": "pf32_amount129_4_repeat2_legacy1_dy2_1",
+      "oracle_reuse": "pf32_amount129_4_repeat2_legacy1",
+      "production": {
+        "callbacks_ok": true,
+        "checkout_count": 5,
+        "checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mismatched_bytes": 0,
+        "padding_mismatches": 0,
+        "pre_err": 0,
+        "render_err": 0,
+        "seen_amount": 129.4,
+        "seen_smoothness": 100,
+        "seen_smoothness_fixed": 6553600
+      }
+    }
+  ],
+  "decision": "downsample_y does not affect Amount, geometry, or kernel in this fixed-world OLMBlur family",
+  "geometry": [
+    24,
+    24
+  ],
+  "matrix": {
+    "amount": [
+      5,
+      129.4
+    ],
+    "depth": [
+      8,
+      16,
+      32
+    ],
+    "downsample_x": [
+      1,
+      1
+    ],
+    "downsample_y": [
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ]
+    ],
+    "legacy": [
+      0,
+      1
+    ],
+    "repeat": [
+      1,
+      2
+    ]
+  },
+  "not_proven": [
+    "native AE preview world sizing",
+    "world dimensions changed by host",
+    "non-square pixel aspect",
+    "other geometry/bias/smoothness"
+  ],
+  "production_contract": "BlurRender consumes downsample_x only; public SmartPreRender/SmartRender output remains exact for all y ratios",
+  "schema": "olmblur.downsample-y-anisotropy.production/1",
+  "status": "exact_no_effect"
+}

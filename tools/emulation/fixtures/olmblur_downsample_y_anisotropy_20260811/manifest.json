@@ -1,0 +1,1745 @@
+{
+  "actual_aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+  "cases": [
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf8_amount5_0_repeat1_legacy0.bin",
+      "expected_sha256": "68744a057641010bbde9b5d5f4226d0df2d49d1ff063e44bf7ac2ce37263feae",
+      "id": "pf8_amount5_0_repeat1_legacy0_dy1_2",
+      "instructions": 192109,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount5_0_repeat1_legacy0",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf8_amount5_0_repeat1_legacy0.bin",
+      "expected_sha256": "68744a057641010bbde9b5d5f4226d0df2d49d1ff063e44bf7ac2ce37263feae",
+      "id": "pf8_amount5_0_repeat1_legacy0_dy1_1",
+      "instructions": 192109,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount5_0_repeat1_legacy0",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf8_amount5_0_repeat1_legacy0.bin",
+      "expected_sha256": "68744a057641010bbde9b5d5f4226d0df2d49d1ff063e44bf7ac2ce37263feae",
+      "id": "pf8_amount5_0_repeat1_legacy0_dy2_1",
+      "instructions": 192109,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount5_0_repeat1_legacy0",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf8_amount5_0_repeat1_legacy1.bin",
+      "expected_sha256": "0301eadd30bafadf2f386d8620d778aa9d20f198e4594ead0e30d952ee26750a",
+      "id": "pf8_amount5_0_repeat1_legacy1_dy1_2",
+      "instructions": 315645,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount5_0_repeat1_legacy1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf8_amount5_0_repeat1_legacy1.bin",
+      "expected_sha256": "0301eadd30bafadf2f386d8620d778aa9d20f198e4594ead0e30d952ee26750a",
+      "id": "pf8_amount5_0_repeat1_legacy1_dy1_1",
+      "instructions": 315645,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount5_0_repeat1_legacy1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf8_amount5_0_repeat1_legacy1.bin",
+      "expected_sha256": "0301eadd30bafadf2f386d8620d778aa9d20f198e4594ead0e30d952ee26750a",
+      "id": "pf8_amount5_0_repeat1_legacy1_dy2_1",
+      "instructions": 315645,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount5_0_repeat1_legacy1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf8_amount5_0_repeat2_legacy0.bin",
+      "expected_sha256": "f5baedf4594bdb26239158ac31494bd1b3821caa968c6c63d944d5306ad50505",
+      "id": "pf8_amount5_0_repeat2_legacy0_dy1_2",
+      "instructions": 327523,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount5_0_repeat2_legacy0",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf8_amount5_0_repeat2_legacy0.bin",
+      "expected_sha256": "f5baedf4594bdb26239158ac31494bd1b3821caa968c6c63d944d5306ad50505",
+      "id": "pf8_amount5_0_repeat2_legacy0_dy1_1",
+      "instructions": 327523,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount5_0_repeat2_legacy0",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf8_amount5_0_repeat2_legacy0.bin",
+      "expected_sha256": "f5baedf4594bdb26239158ac31494bd1b3821caa968c6c63d944d5306ad50505",
+      "id": "pf8_amount5_0_repeat2_legacy0_dy2_1",
+      "instructions": 327523,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount5_0_repeat2_legacy0",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf8_amount5_0_repeat2_legacy1.bin",
+      "expected_sha256": "7b783e6a10ea28e7bdf0849d929f6f3ea36c88dd1b04a9839877b5ebddc2c2d2",
+      "id": "pf8_amount5_0_repeat2_legacy1_dy1_2",
+      "instructions": 586022,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount5_0_repeat2_legacy1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf8_amount5_0_repeat2_legacy1.bin",
+      "expected_sha256": "7b783e6a10ea28e7bdf0849d929f6f3ea36c88dd1b04a9839877b5ebddc2c2d2",
+      "id": "pf8_amount5_0_repeat2_legacy1_dy1_1",
+      "instructions": 586022,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount5_0_repeat2_legacy1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf8_amount5_0_repeat2_legacy1.bin",
+      "expected_sha256": "7b783e6a10ea28e7bdf0849d929f6f3ea36c88dd1b04a9839877b5ebddc2c2d2",
+      "id": "pf8_amount5_0_repeat2_legacy1_dy2_1",
+      "instructions": 586022,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount5_0_repeat2_legacy1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf8_amount129_4_repeat1_legacy0.bin",
+      "expected_sha256": "ccbe9b917238d76e187b21f9054abd1ccbf10235d05e9fd51b268d1139cc8bef",
+      "id": "pf8_amount129_4_repeat1_legacy0_dy1_2",
+      "instructions": 190880,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount129_4_repeat1_legacy0",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf8_amount129_4_repeat1_legacy0.bin",
+      "expected_sha256": "ccbe9b917238d76e187b21f9054abd1ccbf10235d05e9fd51b268d1139cc8bef",
+      "id": "pf8_amount129_4_repeat1_legacy0_dy1_1",
+      "instructions": 190880,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount129_4_repeat1_legacy0",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf8_amount129_4_repeat1_legacy0.bin",
+      "expected_sha256": "ccbe9b917238d76e187b21f9054abd1ccbf10235d05e9fd51b268d1139cc8bef",
+      "id": "pf8_amount129_4_repeat1_legacy0_dy2_1",
+      "instructions": 190880,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount129_4_repeat1_legacy0",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf8_amount129_4_repeat1_legacy1.bin",
+      "expected_sha256": "f5ce4e67ddc5b007454d8648402c34031f969a252210ac76824eea2e292ed5a6",
+      "id": "pf8_amount129_4_repeat1_legacy1_dy1_2",
+      "instructions": 700003,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount129_4_repeat1_legacy1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf8_amount129_4_repeat1_legacy1.bin",
+      "expected_sha256": "f5ce4e67ddc5b007454d8648402c34031f969a252210ac76824eea2e292ed5a6",
+      "id": "pf8_amount129_4_repeat1_legacy1_dy1_1",
+      "instructions": 700003,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount129_4_repeat1_legacy1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf8_amount129_4_repeat1_legacy1.bin",
+      "expected_sha256": "f5ce4e67ddc5b007454d8648402c34031f969a252210ac76824eea2e292ed5a6",
+      "id": "pf8_amount129_4_repeat1_legacy1_dy2_1",
+      "instructions": 700003,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount129_4_repeat1_legacy1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf8_amount129_4_repeat2_legacy0.bin",
+      "expected_sha256": "1ab78e3ea76355d8287e61088f365dc71c377f644ca66d92a770f3228e77dc43",
+      "id": "pf8_amount129_4_repeat2_legacy0_dy1_2",
+      "instructions": 326294,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount129_4_repeat2_legacy0",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf8_amount129_4_repeat2_legacy0.bin",
+      "expected_sha256": "1ab78e3ea76355d8287e61088f365dc71c377f644ca66d92a770f3228e77dc43",
+      "id": "pf8_amount129_4_repeat2_legacy0_dy1_1",
+      "instructions": 326294,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount129_4_repeat2_legacy0",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf8_amount129_4_repeat2_legacy0.bin",
+      "expected_sha256": "1ab78e3ea76355d8287e61088f365dc71c377f644ca66d92a770f3228e77dc43",
+      "id": "pf8_amount129_4_repeat2_legacy0_dy2_1",
+      "instructions": 326294,
+      "legacy": 0,
+      "oracle_reuse": "pf8_amount129_4_repeat2_legacy0",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf8_amount129_4_repeat2_legacy1.bin",
+      "expected_sha256": "0412941ec1053e65eb72b9a81be3a48020dfc15a86457aeec5eae9a13877ad96",
+      "id": "pf8_amount129_4_repeat2_legacy1_dy1_2",
+      "instructions": 1354914,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount129_4_repeat2_legacy1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf8_amount129_4_repeat2_legacy1.bin",
+      "expected_sha256": "0412941ec1053e65eb72b9a81be3a48020dfc15a86457aeec5eae9a13877ad96",
+      "id": "pf8_amount129_4_repeat2_legacy1_dy1_1",
+      "instructions": 1354914,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount129_4_repeat2_legacy1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 8,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf8_amount129_4_repeat2_legacy1.bin",
+      "expected_sha256": "0412941ec1053e65eb72b9a81be3a48020dfc15a86457aeec5eae9a13877ad96",
+      "id": "pf8_amount129_4_repeat2_legacy1_dy2_1",
+      "instructions": 1354914,
+      "legacy": 1,
+      "oracle_reuse": "pf8_amount129_4_repeat2_legacy1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb8.bin",
+      "source_sha256": "572932cfa1c2c26b9bb6a6feaa4b9f3966ef0855e013ce3a86b139434a737adf"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf16_amount5_0_repeat1_legacy0.bin",
+      "expected_sha256": "9b26b1fee5cf05dd39473a8d385c7d80843d8bda8c25541c86a1d1c25ed6ce43",
+      "id": "pf16_amount5_0_repeat1_legacy0_dy1_2",
+      "instructions": 187912,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount5_0_repeat1_legacy0",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf16_amount5_0_repeat1_legacy0.bin",
+      "expected_sha256": "9b26b1fee5cf05dd39473a8d385c7d80843d8bda8c25541c86a1d1c25ed6ce43",
+      "id": "pf16_amount5_0_repeat1_legacy0_dy1_1",
+      "instructions": 187912,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount5_0_repeat1_legacy0",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf16_amount5_0_repeat1_legacy0.bin",
+      "expected_sha256": "9b26b1fee5cf05dd39473a8d385c7d80843d8bda8c25541c86a1d1c25ed6ce43",
+      "id": "pf16_amount5_0_repeat1_legacy0_dy2_1",
+      "instructions": 187912,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount5_0_repeat1_legacy0",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf16_amount5_0_repeat1_legacy1.bin",
+      "expected_sha256": "c22524ff901f905cc2d9354a0a6a47ed5aecd1dcc0d46fc79439d5ee069593fc",
+      "id": "pf16_amount5_0_repeat1_legacy1_dy1_2",
+      "instructions": 306437,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount5_0_repeat1_legacy1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf16_amount5_0_repeat1_legacy1.bin",
+      "expected_sha256": "c22524ff901f905cc2d9354a0a6a47ed5aecd1dcc0d46fc79439d5ee069593fc",
+      "id": "pf16_amount5_0_repeat1_legacy1_dy1_1",
+      "instructions": 306437,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount5_0_repeat1_legacy1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf16_amount5_0_repeat1_legacy1.bin",
+      "expected_sha256": "c22524ff901f905cc2d9354a0a6a47ed5aecd1dcc0d46fc79439d5ee069593fc",
+      "id": "pf16_amount5_0_repeat1_legacy1_dy2_1",
+      "instructions": 306437,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount5_0_repeat1_legacy1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf16_amount5_0_repeat2_legacy0.bin",
+      "expected_sha256": "e317807bb9c28f5f9e87e53ec228cc1cbed6cf706c7b39edbfc0e9ef2cd9c200",
+      "id": "pf16_amount5_0_repeat2_legacy0_dy1_2",
+      "instructions": 316055,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount5_0_repeat2_legacy0",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf16_amount5_0_repeat2_legacy0.bin",
+      "expected_sha256": "e317807bb9c28f5f9e87e53ec228cc1cbed6cf706c7b39edbfc0e9ef2cd9c200",
+      "id": "pf16_amount5_0_repeat2_legacy0_dy1_1",
+      "instructions": 316055,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount5_0_repeat2_legacy0",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf16_amount5_0_repeat2_legacy0.bin",
+      "expected_sha256": "e317807bb9c28f5f9e87e53ec228cc1cbed6cf706c7b39edbfc0e9ef2cd9c200",
+      "id": "pf16_amount5_0_repeat2_legacy0_dy2_1",
+      "instructions": 316055,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount5_0_repeat2_legacy0",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf16_amount5_0_repeat2_legacy1.bin",
+      "expected_sha256": "55ceb1064942b5768d5d15ca9ec149ad6231767b8fcbba4e87997566d45060d4",
+      "id": "pf16_amount5_0_repeat2_legacy1_dy1_2",
+      "instructions": 566910,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount5_0_repeat2_legacy1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf16_amount5_0_repeat2_legacy1.bin",
+      "expected_sha256": "55ceb1064942b5768d5d15ca9ec149ad6231767b8fcbba4e87997566d45060d4",
+      "id": "pf16_amount5_0_repeat2_legacy1_dy1_1",
+      "instructions": 566910,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount5_0_repeat2_legacy1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf16_amount5_0_repeat2_legacy1.bin",
+      "expected_sha256": "55ceb1064942b5768d5d15ca9ec149ad6231767b8fcbba4e87997566d45060d4",
+      "id": "pf16_amount5_0_repeat2_legacy1_dy2_1",
+      "instructions": 566910,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount5_0_repeat2_legacy1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf16_amount129_4_repeat1_legacy0.bin",
+      "expected_sha256": "8e884ac75fd8fa2751c2353789459d51efca961a3f724af27758c5b53821fc99",
+      "id": "pf16_amount129_4_repeat1_legacy0_dy1_2",
+      "instructions": 211500,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount129_4_repeat1_legacy0",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf16_amount129_4_repeat1_legacy0.bin",
+      "expected_sha256": "8e884ac75fd8fa2751c2353789459d51efca961a3f724af27758c5b53821fc99",
+      "id": "pf16_amount129_4_repeat1_legacy0_dy1_1",
+      "instructions": 211500,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount129_4_repeat1_legacy0",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf16_amount129_4_repeat1_legacy0.bin",
+      "expected_sha256": "8e884ac75fd8fa2751c2353789459d51efca961a3f724af27758c5b53821fc99",
+      "id": "pf16_amount129_4_repeat1_legacy0_dy2_1",
+      "instructions": 211500,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount129_4_repeat1_legacy0",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf16_amount129_4_repeat1_legacy1.bin",
+      "expected_sha256": "f0098a6343bb0126242843202e936331cad80a84a7af7e7af1e2d9a1d5718b8d",
+      "id": "pf16_amount129_4_repeat1_legacy1_dy1_2",
+      "instructions": 868266,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount129_4_repeat1_legacy1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf16_amount129_4_repeat1_legacy1.bin",
+      "expected_sha256": "f0098a6343bb0126242843202e936331cad80a84a7af7e7af1e2d9a1d5718b8d",
+      "id": "pf16_amount129_4_repeat1_legacy1_dy1_1",
+      "instructions": 868266,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount129_4_repeat1_legacy1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf16_amount129_4_repeat1_legacy1.bin",
+      "expected_sha256": "f0098a6343bb0126242843202e936331cad80a84a7af7e7af1e2d9a1d5718b8d",
+      "id": "pf16_amount129_4_repeat1_legacy1_dy2_1",
+      "instructions": 868266,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount129_4_repeat1_legacy1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf16_amount129_4_repeat2_legacy0.bin",
+      "expected_sha256": "b453aac399101f45f88bf5aea1b97ed601694e8afa2a053f0740981a07d89916",
+      "id": "pf16_amount129_4_repeat2_legacy0_dy1_2",
+      "instructions": 339643,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount129_4_repeat2_legacy0",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf16_amount129_4_repeat2_legacy0.bin",
+      "expected_sha256": "b453aac399101f45f88bf5aea1b97ed601694e8afa2a053f0740981a07d89916",
+      "id": "pf16_amount129_4_repeat2_legacy0_dy1_1",
+      "instructions": 339643,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount129_4_repeat2_legacy0",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf16_amount129_4_repeat2_legacy0.bin",
+      "expected_sha256": "b453aac399101f45f88bf5aea1b97ed601694e8afa2a053f0740981a07d89916",
+      "id": "pf16_amount129_4_repeat2_legacy0_dy2_1",
+      "instructions": 339643,
+      "legacy": 0,
+      "oracle_reuse": "pf16_amount129_4_repeat2_legacy0",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf16_amount129_4_repeat2_legacy1.bin",
+      "expected_sha256": "cac4afa73b72990f39b40f1760a160b3264df869d8c9a33b3ec77571604b83ca",
+      "id": "pf16_amount129_4_repeat2_legacy1_dy1_2",
+      "instructions": 1690877,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount129_4_repeat2_legacy1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf16_amount129_4_repeat2_legacy1.bin",
+      "expected_sha256": "cac4afa73b72990f39b40f1760a160b3264df869d8c9a33b3ec77571604b83ca",
+      "id": "pf16_amount129_4_repeat2_legacy1_dy1_1",
+      "instructions": 1690877,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount129_4_repeat2_legacy1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 16,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf16_amount129_4_repeat2_legacy1.bin",
+      "expected_sha256": "cac4afa73b72990f39b40f1760a160b3264df869d8c9a33b3ec77571604b83ca",
+      "id": "pf16_amount129_4_repeat2_legacy1_dy2_1",
+      "instructions": 1690877,
+      "legacy": 1,
+      "oracle_reuse": "pf16_amount129_4_repeat2_legacy1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb16.bin",
+      "source_sha256": "bb4130a96cab14e0e5a6c186f81803ffc744608ac4dfd8d10ea9e97aaae7ce88"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf32_amount5_0_repeat1_legacy0.bin",
+      "expected_sha256": "67434329bbf79181bee87025df1e93fbfd8f5fa2a7598b9431d0124a2d26cd0d",
+      "id": "pf32_amount5_0_repeat1_legacy0_dy1_2",
+      "instructions": 181279,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount5_0_repeat1_legacy0",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf32_amount5_0_repeat1_legacy0.bin",
+      "expected_sha256": "67434329bbf79181bee87025df1e93fbfd8f5fa2a7598b9431d0124a2d26cd0d",
+      "id": "pf32_amount5_0_repeat1_legacy0_dy1_1",
+      "instructions": 181279,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount5_0_repeat1_legacy0",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf32_amount5_0_repeat1_legacy0.bin",
+      "expected_sha256": "67434329bbf79181bee87025df1e93fbfd8f5fa2a7598b9431d0124a2d26cd0d",
+      "id": "pf32_amount5_0_repeat1_legacy0_dy2_1",
+      "instructions": 181279,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount5_0_repeat1_legacy0",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf32_amount5_0_repeat1_legacy1.bin",
+      "expected_sha256": "c6d1a9aaee1917b0e08d9915cb16f037f4a4b3e94251481dbe1f84250d5450a5",
+      "id": "pf32_amount5_0_repeat1_legacy1_dy1_2",
+      "instructions": 302851,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount5_0_repeat1_legacy1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf32_amount5_0_repeat1_legacy1.bin",
+      "expected_sha256": "c6d1a9aaee1917b0e08d9915cb16f037f4a4b3e94251481dbe1f84250d5450a5",
+      "id": "pf32_amount5_0_repeat1_legacy1_dy1_1",
+      "instructions": 302851,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount5_0_repeat1_legacy1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf32_amount5_0_repeat1_legacy1.bin",
+      "expected_sha256": "c6d1a9aaee1917b0e08d9915cb16f037f4a4b3e94251481dbe1f84250d5450a5",
+      "id": "pf32_amount5_0_repeat1_legacy1_dy2_1",
+      "instructions": 302851,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount5_0_repeat1_legacy1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf32_amount5_0_repeat2_legacy0.bin",
+      "expected_sha256": "2b9a3e7fd54bbd842745611117320785cbe7e6a6bd69a1053d60568fea2d8fb3",
+      "id": "pf32_amount5_0_repeat2_legacy0_dy1_2",
+      "instructions": 315886,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount5_0_repeat2_legacy0",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf32_amount5_0_repeat2_legacy0.bin",
+      "expected_sha256": "2b9a3e7fd54bbd842745611117320785cbe7e6a6bd69a1053d60568fea2d8fb3",
+      "id": "pf32_amount5_0_repeat2_legacy0_dy1_1",
+      "instructions": 315886,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount5_0_repeat2_legacy0",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf32_amount5_0_repeat2_legacy0.bin",
+      "expected_sha256": "2b9a3e7fd54bbd842745611117320785cbe7e6a6bd69a1053d60568fea2d8fb3",
+      "id": "pf32_amount5_0_repeat2_legacy0_dy2_1",
+      "instructions": 315886,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount5_0_repeat2_legacy0",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf32_amount5_0_repeat2_legacy1.bin",
+      "expected_sha256": "f0c24443625ad1bd626b3192f483d14946e5f233dcb377288dcabc6df7c52b46",
+      "id": "pf32_amount5_0_repeat2_legacy1_dy1_2",
+      "instructions": 570516,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount5_0_repeat2_legacy1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf32_amount5_0_repeat2_legacy1.bin",
+      "expected_sha256": "f0c24443625ad1bd626b3192f483d14946e5f233dcb377288dcabc6df7c52b46",
+      "id": "pf32_amount5_0_repeat2_legacy1_dy1_1",
+      "instructions": 570516,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount5_0_repeat2_legacy1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 5.0,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf32_amount5_0_repeat2_legacy1.bin",
+      "expected_sha256": "f0c24443625ad1bd626b3192f483d14946e5f233dcb377288dcabc6df7c52b46",
+      "id": "pf32_amount5_0_repeat2_legacy1_dy2_1",
+      "instructions": 570516,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount5_0_repeat2_legacy1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf32_amount129_4_repeat1_legacy0.bin",
+      "expected_sha256": "a441eddae2203be1533c328853eab65ef1d068978d449c61dca39c8b3ba3233a",
+      "id": "pf32_amount129_4_repeat1_legacy0_dy1_2",
+      "instructions": 180068,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount129_4_repeat1_legacy0",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf32_amount129_4_repeat1_legacy0.bin",
+      "expected_sha256": "a441eddae2203be1533c328853eab65ef1d068978d449c61dca39c8b3ba3233a",
+      "id": "pf32_amount129_4_repeat1_legacy0_dy1_1",
+      "instructions": 180068,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount129_4_repeat1_legacy0",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf32_amount129_4_repeat1_legacy0.bin",
+      "expected_sha256": "a441eddae2203be1533c328853eab65ef1d068978d449c61dca39c8b3ba3233a",
+      "id": "pf32_amount129_4_repeat1_legacy0_dy2_1",
+      "instructions": 180068,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount129_4_repeat1_legacy0",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf32_amount129_4_repeat1_legacy1.bin",
+      "expected_sha256": "565a47d116b099e1f3d40d49897b2c75a7dbad4a6a64d828e87f1df4b0f10fad",
+      "id": "pf32_amount129_4_repeat1_legacy1_dy1_2",
+      "instructions": 674796,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount129_4_repeat1_legacy1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf32_amount129_4_repeat1_legacy1.bin",
+      "expected_sha256": "565a47d116b099e1f3d40d49897b2c75a7dbad4a6a64d828e87f1df4b0f10fad",
+      "id": "pf32_amount129_4_repeat1_legacy1_dy1_1",
+      "instructions": 674796,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount129_4_repeat1_legacy1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf32_amount129_4_repeat1_legacy1.bin",
+      "expected_sha256": "565a47d116b099e1f3d40d49897b2c75a7dbad4a6a64d828e87f1df4b0f10fad",
+      "id": "pf32_amount129_4_repeat1_legacy1_dy2_1",
+      "instructions": 674796,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount129_4_repeat1_legacy1",
+      "repeat": 1,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf32_amount129_4_repeat2_legacy0.bin",
+      "expected_sha256": "17f145081e50e988c85f4782779ecd177ef58c001f452843eed8c844d623fe4b",
+      "id": "pf32_amount129_4_repeat2_legacy0_dy1_2",
+      "instructions": 314675,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount129_4_repeat2_legacy0",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf32_amount129_4_repeat2_legacy0.bin",
+      "expected_sha256": "17f145081e50e988c85f4782779ecd177ef58c001f452843eed8c844d623fe4b",
+      "id": "pf32_amount129_4_repeat2_legacy0_dy1_1",
+      "instructions": 314675,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount129_4_repeat2_legacy0",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf32_amount129_4_repeat2_legacy0.bin",
+      "expected_sha256": "17f145081e50e988c85f4782779ecd177ef58c001f452843eed8c844d623fe4b",
+      "id": "pf32_amount129_4_repeat2_legacy0_dy2_1",
+      "instructions": 314675,
+      "legacy": 0,
+      "oracle_reuse": "pf32_amount129_4_repeat2_legacy0",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        2
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf32_amount129_4_repeat2_legacy1.bin",
+      "expected_sha256": "c6aaa55d89f2de4086d7afb53ee1130e38dceaa71f3bef337c62eb1481a80a4c",
+      "id": "pf32_amount129_4_repeat2_legacy1_dy1_2",
+      "instructions": 1314647,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount129_4_repeat2_legacy1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        1,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf32_amount129_4_repeat2_legacy1.bin",
+      "expected_sha256": "c6aaa55d89f2de4086d7afb53ee1130e38dceaa71f3bef337c62eb1481a80a4c",
+      "id": "pf32_amount129_4_repeat2_legacy1_dy1_1",
+      "instructions": 1314647,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount129_4_repeat2_legacy1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    },
+    {
+      "amount": 129.4,
+      "bias_direction": 1,
+      "callback_count": 48,
+      "depth": 32,
+      "downsample_x": [
+        1,
+        1
+      ],
+      "downsample_y": [
+        2,
+        1
+      ],
+      "expected": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/expected_pf32_amount129_4_repeat2_legacy1.bin",
+      "expected_sha256": "c6aaa55d89f2de4086d7afb53ee1130e38dceaa71f3bef337c62eb1481a80a4c",
+      "id": "pf32_amount129_4_repeat2_legacy1_dy2_1",
+      "instructions": 1314647,
+      "legacy": 1,
+      "oracle_reuse": "pf32_amount129_4_repeat2_legacy1",
+      "repeat": 2,
+      "smoothness": 100.0,
+      "source": "tools/emulation/fixtures/olmblur_amount_repeat_legacy_matrix_20260810/source_argb32.bin",
+      "source_sha256": "9322e0b08c8623a892b4e75005c863a639bf604fe5882f4a6f12f46da18ce8ae"
+    }
+  ],
+  "geometry": [
+    24,
+    24
+  ],
+  "oracle": "hash-pinned actual-AEX complete buffers at x scale 1/1; reused across y ratios",
+  "plugin": "OLMBlur",
+  "schema": "olmblur.downsample-y-anisotropy.actual-aex/1",
+  "worker_scale_contract": {
+    "denominator_offset": "context+0x120",
+    "meaning": "single horizontal render-scale rational; no second/y rational is consumed by the six typed workers",
+    "numerator_offset": "context+0x11c"
+  }
+}

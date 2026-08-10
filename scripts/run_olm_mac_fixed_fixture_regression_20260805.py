@@ -50,6 +50,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmblur_nondefault_smoothness_effectmain_actual_aex_20260810.py"),
             (sys.executable, "tools/emulation/test_olmblur_amount_repeat_legacy_matrix_actual_aex_20260810.py"),
             (sys.executable, "tools/emulation/test_olmblur_downsample_amount_matrix_actual_aex_20260811.py"),
+            (sys.executable, "tools/emulation/test_olmblur_downsample_y_anisotropy_actual_aex_20260811.py"),
         ),
     ),
     Lane(
