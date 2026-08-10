@@ -998,6 +998,7 @@ struct OLMCKPixelTraits<PF_Pixel16> {
 
 template <>
 struct OLMCKPixelTraits<PF_PixelFloat> {
+	static float max_chan() { return 1.0f; }
 	static float native_key_epsilon() { return 1.0e-6f; }
 	static bool is_16bpc() { return false; }
 	static bool is_32bpc() { return true; }
@@ -1067,10 +1068,19 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				OLMCKPixelTraits<PixelT>::g(*inP),
 				OLMCKPixelTraits<PixelT>::b(*inP)
 			};
+			auto classifier_component = [&](float value) {
+				if (!info.premultiplied) return value;
+				float premultiplied = value * alpha;
+				if (!OLMCKPixelTraits<PixelT>::is_32bpc()) {
+					const float maximum = OLMCKPixelTraits<PixelT>::max_chan();
+					premultiplied = std::floor(premultiplied * maximum + 0.5f) / maximum;
+				}
+				return premultiplied;
+			};
 			float cmp[3] = {
-				info.premultiplied ? rgb[0] * alpha : rgb[0],
-				info.premultiplied ? rgb[1] * alpha : rgb[1],
-				info.premultiplied ? rgb[2] * alpha : rgb[2]
+				classifier_component(rgb[0]),
+				classifier_component(rgb[1]),
+				classifier_component(rgb[2])
 			};
 			if (info.color_space == 3 || info.color_space == 4) {
 				float lab[3];
