@@ -205,6 +205,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmsmoother_v1_case0001_pf8_fullframe_actual_aex_20260805.py"),
             (sys.executable, "tools/emulation/test_olmsmoother_v1_keymask8_actual_production_20260805.py"),
             (sys.executable, "tools/emulation/test_olmsmoother_v1_pf16_colorkey_actual_production_20260810.py"),
+            (sys.executable, "tools/emulation/test_olmsmoother_v1_pf16_colorkey_effectmain_actual_production_20260810.py"),
             (sys.executable, "tools/emulation/test_olmsmoother_v1_retained_case05_pf8_colorkey_fullframe_actual_20260805.py"),
             (sys.executable, "tools/emulation/test_olmsmoother_v1_retained_case01_pf8_owner_and_host_boundary_20260806.py"),
         ),

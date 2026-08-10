@@ -1,0 +1,319 @@
+{
+  "actual_aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+  "cases": [
+    {
+      "name": "exact_key",
+      "padding_exact": true,
+      "raw_sha256": "5fd1515fd9600eee94cefa17d756b04cbdbb37eb765b3832b1d3021088d39df4",
+      "trace": [
+        {
+          "event": "dispatcher"
+        },
+        {
+          "event": "pf16_entry"
+        },
+        {
+          "dst": "0x40000540",
+          "event": "copy",
+          "src": "0x400005f8"
+        },
+        {
+          "data": "0x40000ef0",
+          "event": "new_world",
+          "world": "0x40000f80"
+        },
+        {
+          "dst": "0xf0fe4c0",
+          "event": "copy",
+          "src": "0x400005f8"
+        },
+        {
+          "event": "acquire_iterate16"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "release_suite"
+        },
+        {
+          "dst": "0x40000540",
+          "event": "copy",
+          "src": "0xf0fe4c0"
+        },
+        {
+          "event": "acquire_iterate16"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "release_suite"
+        },
+        {
+          "event": "dispose_world"
+        }
+      ],
+      "trace_counts": {
+        "copy": 3,
+        "dispatcher": 1,
+        "dispose_world": 1,
+        "main": 15,
+        "mask": 15,
+        "new_world": 1,
+        "pf16_entry": 1
+      }
+    },
+    {
+      "name": "near_key_red_plus_one",
+      "padding_exact": true,
+      "raw_sha256": "5f5c9072225c071c1b7c26b6bff503f0eea9ad49acd0be46777fea5a963d81a3",
+      "trace": [
+        {
+          "event": "dispatcher"
+        },
+        {
+          "event": "pf16_entry"
+        },
+        {
+          "dst": "0x40000540",
+          "event": "copy",
+          "src": "0x400005f8"
+        },
+        {
+          "data": "0x40000ef0",
+          "event": "new_world",
+          "world": "0x40000f80"
+        },
+        {
+          "dst": "0xf0fe4c0",
+          "event": "copy",
+          "src": "0x400005f8"
+        },
+        {
+          "event": "acquire_iterate16"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "mask"
+        },
+        {
+          "event": "release_suite"
+        },
+        {
+          "dst": "0x40000540",
+          "event": "copy",
+          "src": "0xf0fe4c0"
+        },
+        {
+          "event": "acquire_iterate16"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "main"
+        },
+        {
+          "event": "release_suite"
+        },
+        {
+          "event": "dispose_world"
+        }
+      ],
+      "trace_counts": {
+        "copy": 3,
+        "dispatcher": 1,
+        "dispose_world": 1,
+        "main": 15,
+        "mask": 15,
+        "new_world": 1,
+        "pf16_entry": 1
+      }
+    }
+  ],
+  "claims_not_made": [
+    "AE export Gamma boundary",
+    "PF32",
+    "non-uniform main-kernel arithmetic",
+    "other geometry or iteration order"
+  ],
+  "fixture": {
+    "height": 3,
+    "key_rgb8": [
+      202,
+      187,
+      230
+    ],
+    "rowbytes": 48,
+    "tolerance": 6,
+    "width": 5
+  },
+  "schema_version": 1,
+  "scope": "OLMSmoother v1 actual exported PF_Cmd_RENDER full PF16 Color Key session vs production EffectMain",
+  "status": "exact"
+}

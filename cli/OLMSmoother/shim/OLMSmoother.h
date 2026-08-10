@@ -62,7 +62,7 @@ struct PF_EffectWorld {
 };
 typedef PF_EffectWorld PF_LayerDef;
 
-#define PF_WORLD_IS_DEEP(W) (0)
+#define PF_WORLD_IS_DEEP(W) ((W) != nullptr && (W)->bitdepth == 16)
 
 // --- params ----------------------------------------------------------------
 enum {
