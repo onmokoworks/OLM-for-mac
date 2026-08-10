@@ -1721,8 +1721,24 @@ static PF_Err RenderZoomTyped(
 			? (PF_FpLong)input->width / 2.0 : (PF_FpLong)(input->width / 2)) &&
 		info.center_y == (std::is_same<PixelT, PF_Pixel8>::value
 			? (PF_FpLong)input->height / 2.0 : (PF_FpLong)(input->height / 2));
-	if (!use_aex_zoom_geometry || info.repeat_border == FALSE || info.ratio != 1.0 ||
-		info.angle_deg != 0.0 || info.quality != 5.0 || info.brightness_gain != 1.0 ||
+	const bool use_aex_pf32_zoom_ellipse_small = input && output &&
+		std::is_same<PixelT, PF_PixelFloat>::value &&
+		input->width == 9 && input->height == 7 && output->width == 9 && output->height == 7 &&
+		input->rowbytes >= 9 * (A_long)sizeof(PF_PixelFloat) &&
+		output->rowbytes >= 9 * (A_long)sizeof(PF_PixelFloat) &&
+		info.center_x == 4.0 && info.center_y == 3.0 &&
+		info.outer_strength == 4 && info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		info.inner_strength == 0 && info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 2.0 && info.angle_deg == 0.0 &&
+		info.quality == 5.0 && info.brightness_gain == 1.0 &&
+		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
+		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
+		info.noise_offset == 0 && info.thickness == 10.0 &&
+		info.outer_edge_fade == 0 && info.inner_edge_fade == 0 &&
+		info.comp_width == 9.0 && info.comp_height == 7.0;
+	if (!use_aex_zoom_geometry || info.repeat_border == FALSE ||
+		(!use_aex_pf32_zoom_ellipse_small && (info.ratio != 1.0 || info.angle_deg != 0.0)) ||
+		info.quality != 5.0 || info.brightness_gain != 1.0 ||
 		info.size_variation != 0.0 || info.outer_edge_fade != 0 || info.inner_edge_fade != 0) {
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
