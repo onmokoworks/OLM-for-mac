@@ -190,7 +190,7 @@ notarizationは未実施であり、ダウンロード先のGatekeeperに拒否�
 | OLMRadialBlur | Zoom／Rotation／Inner；PF8／PF16／PF32 guard付き | PF8 centered neutral Inner Strength 1〜64に加え、Dual Strength×Size×Noiseは3深度24／24 consumed／output exact。Rotation Type 1 source scalarの診断ULP差は残る。未列挙tuple／geometry／Type 3へは一般化しない |
 | OLMSmoother2 | v1／v2 classifier、key／invert、Gamma None／All／Colors、range／extra、palette；PF8／PF16／PF32限定 | Gamma／key／smoothing 54／54とpalette交差18／18がraw exact。旧PF8 seamはLUT契約と非縮約scalar積和で解消したが、任意直積やAE hostへは一般化しない |
 | OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur；PF8／PF16／PF32限定 | Mode 1、Mode 2 ramp/Merge 2、Mode 3 Gaussian Length 50のpublic ownerはRotation 0で3深度raw exact。nondefault Rotation、任意source／gradient、全直積は未証明 |
-| OLMSmoother v1 | no-key／Color Key、smoothing range；native PF8／PF16 | PF16 practical 64×36のkey off/on・Range 6/127は4／4 exact。AEXにnative PF32 callbackはなく、32bpc projectはAE host conversionであり未証明 |
+| OLMSmoother v1 | no-key／Color Key、smoothing range；native PF8／PF16 | PF16 practical 64×36のkey off/on・Range 6/127は4／4 exact。AEXにnative PF32 callbackはなく、32bpc projectではAEがclassic integer pluginの前後をhost-convertするためnative PF32としては未証明 |
 
 残課題として、OLMDistanceGradation PF32 Mode 5はIPP field数値境界で64セル中
 58 exact／6 fail-close、
