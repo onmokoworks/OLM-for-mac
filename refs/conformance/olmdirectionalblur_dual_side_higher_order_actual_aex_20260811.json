@@ -1,0 +1,256 @@
+{
+  "admission": "Only these 12 simultaneous Front+Back fixed-route cells are newly admitted.",
+  "depths": [
+    "PF8",
+    "PF16",
+    "PF32"
+  ],
+  "fail_closed": [
+    "unlisted simultaneous-side tuple",
+    "other geometry",
+    "Noise Type 3"
+  ],
+  "fixed_route": {
+    "angle": 45,
+    "back_strength": 8,
+    "brightness_gain": 1,
+    "front_strength": 8,
+    "geometry": "16x16 padded",
+    "offset": 0,
+    "render_scale": [
+      1,
+      1
+    ],
+    "seed": 1,
+    "thickness": 3
+  },
+  "matrix": {
+    "tuples": [
+      {
+        "back_fade": 100,
+        "back_sharp": 100,
+        "front_fade": 50,
+        "front_sharp": 50,
+        "noise_type": 1,
+        "noise_variation": 25,
+        "size_variation": 0
+      },
+      {
+        "back_fade": 50,
+        "back_sharp": 50,
+        "front_fade": 50,
+        "front_sharp": 100,
+        "noise_type": 2,
+        "noise_variation": 100,
+        "size_variation": 50
+      },
+      {
+        "back_fade": 50,
+        "back_sharp": 100,
+        "front_fade": 100,
+        "front_sharp": 50,
+        "noise_type": 2,
+        "noise_variation": 100,
+        "size_variation": 0
+      },
+      {
+        "back_fade": 100,
+        "back_sharp": 50,
+        "front_fade": 100,
+        "front_sharp": 100,
+        "noise_type": 1,
+        "noise_variation": 25,
+        "size_variation": 50
+      }
+    ]
+  },
+  "not_proven": [
+    "other values or combinations",
+    "native AE export"
+  ],
+  "plugin": "OLMDirectionalBlur",
+  "representatives": [
+    {
+      "back_alpha_fade": 100,
+      "back_sharp_tail": 100,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "depth": "PF8",
+      "front_alpha_fade": 50,
+      "front_sharp_tail": 50,
+      "noise_type": 1,
+      "noise_variation_percent": 25,
+      "raw_sha256": "deef9e61dafa4f588e0f817b911d6961d56eeb1fad6f7bcc27e112eb31c78101",
+      "size_variation_percent": 0
+    },
+    {
+      "back_alpha_fade": 50,
+      "back_sharp_tail": 50,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "depth": "PF8",
+      "front_alpha_fade": 50,
+      "front_sharp_tail": 100,
+      "noise_type": 2,
+      "noise_variation_percent": 100,
+      "raw_sha256": "66e7dc0df5094cccbbf36bdbb84b8087ed3af7b5f95cfa2378b5b671700ff30f",
+      "size_variation_percent": 50
+    },
+    {
+      "back_alpha_fade": 50,
+      "back_sharp_tail": 100,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "depth": "PF8",
+      "front_alpha_fade": 100,
+      "front_sharp_tail": 50,
+      "noise_type": 2,
+      "noise_variation_percent": 100,
+      "raw_sha256": "e638c3fb82ffe7c4a2edaf5b0622e536fa97f8eb098caecf2ee04f9205e89dec",
+      "size_variation_percent": 0
+    },
+    {
+      "back_alpha_fade": 100,
+      "back_sharp_tail": 50,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "depth": "PF8",
+      "front_alpha_fade": 100,
+      "front_sharp_tail": 100,
+      "noise_type": 1,
+      "noise_variation_percent": 25,
+      "raw_sha256": "763101568eac7915b9ba459973cdffbf65858823dbbeda11f23162d7d25a330a",
+      "size_variation_percent": 50
+    },
+    {
+      "back_alpha_fade": 100,
+      "back_sharp_tail": 100,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "front_alpha_fade": 50,
+      "front_sharp_tail": 50,
+      "noise_type": 1,
+      "noise_variation_percent": 25,
+      "raw_sha256": "58b8de39b920d1f131a1698f4c0fa72774b3fbda78f429b3fc4637caf700969b",
+      "size_variation_percent": 0
+    },
+    {
+      "back_alpha_fade": 50,
+      "back_sharp_tail": 50,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "front_alpha_fade": 50,
+      "front_sharp_tail": 100,
+      "noise_type": 2,
+      "noise_variation_percent": 100,
+      "raw_sha256": "e8a1193c9164959ac369f3bb9191f95692b0f4c713974177cc4c6a178b0e07d1",
+      "size_variation_percent": 50
+    },
+    {
+      "back_alpha_fade": 50,
+      "back_sharp_tail": 100,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "front_alpha_fade": 100,
+      "front_sharp_tail": 50,
+      "noise_type": 2,
+      "noise_variation_percent": 100,
+      "raw_sha256": "54b01bf2cc58da3626e6b99b8152c6710de9f0ad09baaa15de8d363ae82427d5",
+      "size_variation_percent": 0
+    },
+    {
+      "back_alpha_fade": 100,
+      "back_sharp_tail": 50,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "front_alpha_fade": 100,
+      "front_sharp_tail": 100,
+      "noise_type": 1,
+      "noise_variation_percent": 25,
+      "raw_sha256": "11529fa632c5309284d252ccb0d31d7bbd7997148e638597c20ec42786bb9004",
+      "size_variation_percent": 50
+    },
+    {
+      "back_alpha_fade": 100,
+      "back_sharp_tail": 100,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "depth": "PF32",
+      "front_alpha_fade": 50,
+      "front_sharp_tail": 50,
+      "noise_type": 1,
+      "noise_variation_percent": 25,
+      "raw_sha256": "524d3650e7913fc00e068d6d719361331dcdc632024a6a398096558ff8c1bd41",
+      "size_variation_percent": 0
+    },
+    {
+      "back_alpha_fade": 50,
+      "back_sharp_tail": 50,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "depth": "PF32",
+      "front_alpha_fade": 50,
+      "front_sharp_tail": 100,
+      "noise_type": 2,
+      "noise_variation_percent": 100,
+      "raw_sha256": "72d10479d41b59974e9a2043bfa867445f826a910230f529f093d1b5e95eb453",
+      "size_variation_percent": 50
+    },
+    {
+      "back_alpha_fade": 50,
+      "back_sharp_tail": 100,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "depth": "PF32",
+      "front_alpha_fade": 100,
+      "front_sharp_tail": 50,
+      "noise_type": 2,
+      "noise_variation_percent": 100,
+      "raw_sha256": "291fcfb277751796888cb172b40a58627afd7c5fbfe360baa875b4a3afbbbc0e",
+      "size_variation_percent": 0
+    },
+    {
+      "back_alpha_fade": 100,
+      "back_sharp_tail": 50,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "depth": "PF32",
+      "front_alpha_fade": 100,
+      "front_sharp_tail": 100,
+      "noise_type": 1,
+      "noise_variation_percent": 25,
+      "raw_sha256": "77408639868944e498548b9ae24bdf1c38b12bf1128c63bbd96ed382f3ea257e",
+      "size_variation_percent": 50
+    }
+  ],
+  "schema_version": 1,
+  "status": "exact_bounded_dual_side_higher_order"
+}
