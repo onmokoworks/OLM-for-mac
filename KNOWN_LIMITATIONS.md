@@ -70,6 +70,10 @@
   exactです。PF32 Rotationの4 tupleだけforward-angle、PF8／PF16はreverse-angleで、
   SV25 diagnostic source scalarには既知1 ULP差があります。prepass以降はexactですが、
   未列挙tuple／geometry／Type 3へは一般化しません。
+  Type 3のPF32 fixtureはprimary／secondary world I/Oとrepeat決定性まで確認済みですが、
+  Classic outputは全ゼロ、Smartは`render_error: -40`で、9×7 packed value
+  pointerのslot／world mappingにはcrash境界があります。full-render Exact gateは未成立で、
+  productionの全深度fail-closeを維持します。
   Windows独自のcustom preview描画と操作も未証明です。
 - OLMSmoother2：key、invert、Gamma、range、paletteの主要分岐はbounded exactです。
   Gamma／key／smoothing交差は54／54 exactです。旧PF8 Gamma All 2.4 seamは
@@ -84,8 +88,9 @@
   outputまでexactですが、hostlessの1 source caseであり、Windows AE pixelや
   geometry-generalへは昇格しません。追加4 source／12 typed outputはmax ULP 0ですが、
   Highlight gradientは2／15 wordsに1 ULP seamがありconstant source限定です。
-  Mode 1 public ownerはRotation 0の記録済み5×3 fixtureで3深度raw exactです。
-  nondefault RotationはANGLE edit未対応でfail-closeし、Mode 2／3 public ownerは未完です。
+  Mode 1／2／3 public ownerのRotation 1°は3深度9／9 raw exactです。AEXCompatの
+  raw fixed解釈修正を含む限定証拠で、Mode 2 PF32 Rotation 22°には残差があり、
+  任意rotationへは一般化しません。
 - OLMSmoother v1：元AEXのnative depthはPF8/PF16です。32bpcプロジェクトではAEが
   classic integer pluginの前後を変換するため、native PF32互換とは表現しません。
 

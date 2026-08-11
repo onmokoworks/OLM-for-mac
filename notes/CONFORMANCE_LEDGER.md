@@ -1,5 +1,16 @@
 # OLM Conformance Ledger
 
+- 2026-08-12 Kira rotation and Radial Type 3 fixture boundary:
+  AEXCompat ANGLE checkpoint 28d53546 fixes raw-fixed interpretation, and
+  Kira Mode 1/2/3 at the declared 1-degree setting is 9/9 raw exact across
+  PF8/PF16/PF32. Mode 2 PF32 at 22 degrees retains a separate residual.
+  For Radial Type 3, witness alignment 0b613cf9 plus AEXCompat #1162
+  integration 40c3348c and error preservation 642b3c7b prove primary/noise
+  world I/O and repeat determinism. They do not prove output: Classic is
+  all-zero, Smart stops before publication with render_error -40, and 9x7
+  packed value-pointer slot/world mapping reaches a crash boundary.
+  Production Type 3 therefore remains fail-closed at all depths.
+
 - 2026-08-12 OLMColorKey 64x36 geometry closure: the declared four
   Direction 0/4 covering tuples across PF8/PF16/PF32 are now 12/12 raw exact.
   The former PF32 Direction 0/Distance 3/Amount 4 residual was the Type-3
