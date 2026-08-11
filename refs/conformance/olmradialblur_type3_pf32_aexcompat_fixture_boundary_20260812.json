@@ -1,0 +1,85 @@
+{
+  "schema": "olm.actual-aex.fixture-boundary",
+  "schema_version": 1,
+  "effect": "OLM RadialBlur",
+  "date": "2026-08-12",
+  "aex": {
+    "sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb"
+  },
+  "aexcompat": {
+    "repository": "/tmp/aexcompat-integrate-1162",
+    "branch": "codex/integrate-1162-world-io",
+    "commit": "40c3348c",
+    "fixture_root_ephemeral": "/tmp/olm-type3-v2.lxSqpd"
+  },
+  "request": {
+    "pixel_format": "argb32f",
+    "geometry": [9, 7],
+    "center": [4, 3],
+    "outer_strength": 4,
+    "noise_variation": 25,
+    "noise_type": 3,
+    "repeat_border": true,
+    "thickness": 3,
+    "cases": [
+      "pf32_zoom_nv25_pattern",
+      "pf32_zoom_nv25_inverse",
+      "pf32_rotation_nv25_pattern",
+      "pf32_rotation_nv25_inverse"
+    ],
+    "repeats_per_case": 2
+  },
+  "assets": {
+    "primary_png_sha256": "f54d55abfa7945bf25003168324775834faff3aa5736b00ffaac5db761750bba",
+    "pattern_png_sha256": "e8b95674fa940dcde22f69edf326f647ae693d7550bfdc512afc94ab58f805f5",
+    "inverse_png_sha256": "f4f460c409e3dbc2d7c6c75fe4520e113651e4ef759a6c817ace972966a3d9bd"
+  },
+  "classic": {
+    "completed_renders": 8,
+    "repeat_deterministic": true,
+    "primary_world": {
+      "all_rows_sha256": "93f0128360c35f82c7f60baca63e5c1bea511797a5b8527e68be80de0b4bce1e",
+      "status": "exact_across_repeats_and_cases"
+    },
+    "secondary_layer_world": {
+      "pattern_sha256": "749516253b406901b132d217a0c8e25b013a8ad460053e52435572166a420117",
+      "inverse_sha256": "a47c5e734fa7eca98f0daac3f1511a4468a7d6f9ed98f304fb7d4ee7677f67e8",
+      "status": "distinct_and_repeat_exact"
+    },
+    "output_world": {
+      "all_rows_sha256": "a9e080790cc3b9e7a988324b4ec1cc1432a8f43cf897c78318943a0670f171f6",
+      "all_words_zero": true,
+      "status": "not_an_arithmetic_witness"
+    },
+    "final_exr": {
+      "all_rows_sha256": "6d24e1c25c621776fbbfab1a041e0ffe5f3474bcc518a8f7618651df55e94e23",
+      "status": "encodes_zero_output_world"
+    },
+    "noise_type1_control_output_all_words_zero": true
+  },
+  "smart": {
+    "attempted_renders": 8,
+    "completed_renders": 0,
+    "response": {
+      "frame_index": 0,
+      "render_error": -40,
+      "status": "error",
+      "type": "frame_done",
+      "v": 1
+    },
+    "noise_type1_control_same_failure": true
+  },
+  "decision": {
+    "world_io_checkpoint_gate": "pass",
+    "repeat_determinism_gate": "pass",
+    "actual_aex_output_gate": "fail",
+    "production_admission": false,
+    "production_behavior": "retain Type 3 fail-closed",
+    "reason": "The hosted paths did not produce a nonzero actual-AEX output plane that can be compared to production. Classic also yielded zero for a Noise Type 1 control, and Smart failed before publishing output, so neither result is Type 3 arithmetic evidence."
+  },
+  "boundaries": [
+    "The checkpoints prove PF32 primary and secondary-layer world transport and repeat determinism on this fixture.",
+    "They do not prove full-render arithmetic or native Windows AE layer binding.",
+    "The macOS harness at this commit only headless-dispatches --render-fixture; parameter setup was obtained from the Unicorn guest worker directly."
+  ]
+}
