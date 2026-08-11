@@ -1,0 +1,15 @@
+{
+  "kind": "olmkirakira_mode2_rotation22_pf32_seam",
+  "date": "2026-08-12",
+  "status": "fail_closed_pf32_seam",
+  "fixture": {"dimensions": [5,3], "blur_mode": 2, "horizontal_length": 7, "ramp": true, "merge_mode": 2, "brightness_gain": 0.73, "rotation_degrees": 22, "windows_raw_fixed": 22, "semi_transparent": true},
+  "public_owner": {"depth_exact": {"PF8": true, "PF16": true, "PF32": false}, "guards_lifecycle": true},
+  "checkpoints": {
+    "ray": {"stage": "FUN_181150790 return before aggregate", "actual_hex": "8c5d9e3e0ca8853ec370563e118a223eb692e53dfa74b03ec86caf3ee4ecb23e661ca93ee2078c3e9dee313ec5147b3e95d5a73ec0b1b93ead7fc03e", "production_hex": "8c5d9e3e0ca8853ec370563e118a223eb692e53dfa74b03ec86caf3ee4ecb23e661ca93ee2078c3e9dee313ec5147b3e95d5a73ec0b1b93ead7fc03e", "words": 15, "max_ulp": 0},
+    "glow": {"stage": "PF32 writer owner+0x190 at entry", "difference_count": 3, "differences": [{"word":13,"actual":"0x3dc60f78","production":"0x3dc60f79","ulp":1},{"word":20,"actual":"0x3f7fffff","production":"0x3f800000","ulp":1},{"word":45,"actual":"0x3e18f9de","production":"0x3e18f9dd","ulp":1}]},
+    "writer": {"stage": "FUN_18114e460 output at return", "difference_count": 1, "differences": [{"word":14,"pixel":3,"channel":"blue","actual":"0x3d7788c9","production":"0x3d7788ca","ulp":1}]}
+  },
+  "first_difference": {"stage": "ramp_aggregate_glow", "reason": "The directional warp/three-pass box/inverse-warp ray is exact. Three one-ULP differences first appear while sampling the enabled default Ramp and building Merge2 glow; composition/writer leaves one PF32 word different."},
+  "rejected_changes": ["fixture-specific expected-word correction", "angle- or pixel-specific nudge", "production arithmetic change without a recovered float/double/FMA/reciprocal/add-order rule"],
+  "boundary": "PF8/PF16 of the same public tuple and Rotation1 all-depth controls remain exact. PF32 Rotation22 is deliberately not admitted until the actual ramp helper arithmetic rule is recovered."
+}

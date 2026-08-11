@@ -1,0 +1,398 @@
+{
+  "kind": "olmkirakira_mode2_rotation22_exported_effectmain_all_depths",
+  "date": "2026-08-12",
+  "status": "fail_closed_mismatch",
+  "fixture": {
+    "dimensions": [
+      5,
+      3
+    ],
+    "padding": 12,
+    "blur_mode": 2,
+    "merge_mode": 2,
+    "active_ray": "Horizontal",
+    "length": 7,
+    "horizontal_use_ramp": true,
+    "diagonal2_length": 0,
+    "highlight_radius": 0,
+    "highlight_use_ramp": false,
+    "brightness_gain": 0.73,
+    "glow_rotation": 22.0,
+    "windows_rotation_raw_fixed": 22,
+    "channel": 1,
+    "semi_transparent": true
+  },
+  "rows": [
+    {
+      "depth": "PF8",
+      "pixel_format": "argb8",
+      "bytes": 60,
+      "actual_exported_raw_sha256": "189bb206a4ed6bf15e184de6f63fa2b4b72d21419b86e65ee6685d3b50f9f1c8",
+      "mac_effectmain_raw_sha256": "189bb206a4ed6bf15e184de6f63fa2b4b72d21419b86e65ee6685d3b50f9f1c8",
+      "exact": true,
+      "actual_exported_rgba8": [
+        [
+          57,
+          10,
+          0,
+          121
+        ],
+        [
+          53,
+          10,
+          2,
+          123
+        ],
+        [
+          49,
+          12,
+          4,
+          124
+        ],
+        [
+          46,
+          15,
+          7,
+          126
+        ],
+        [
+          46,
+          20,
+          11,
+          128
+        ],
+        [
+          99,
+          39,
+          16,
+          183
+        ],
+        [
+          109,
+          46,
+          21,
+          193
+        ],
+        [
+          123,
+          56,
+          27,
+          206
+        ],
+        [
+          133,
+          64,
+          33,
+          213
+        ],
+        [
+          137,
+          71,
+          40,
+          213
+        ],
+        [
+          134,
+          78,
+          47,
+          206
+        ],
+        [
+          165,
+          94,
+          55,
+          230
+        ],
+        [
+          199,
+          113,
+          64,
+          255
+        ],
+        [
+          225,
+          131,
+          73,
+          255
+        ],
+        [
+          249,
+          147,
+          83,
+          255
+        ]
+      ],
+      "mac_effectmain_active_hex": "79390a007b350a027c310c047e2e0f07802e140bb7632710c16d2e15ce7b381bd5854021d5894728ce864e2fe6a55e37ffc77140ffe18349fff99353",
+      "guards_intact": true,
+      "input_unchanged": true,
+      "mac_padding_preserved": true,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1"
+      ],
+      "unsupported_suite_calls": [],
+      "render_error": 0
+    },
+    {
+      "depth": "PF16",
+      "pixel_format": "argb16",
+      "bytes": 120,
+      "actual_exported_raw_sha256": "78700c7c4e5f680fcc9fc4b8fbd86d6e8ba364b252b6755cb47178c1b9014625",
+      "mac_effectmain_raw_sha256": "78700c7c4e5f680fcc9fc4b8fbd86d6e8ba364b252b6755cb47178c1b9014625",
+      "exact": true,
+      "actual_exported_rgba8": [
+        [
+          58,
+          11,
+          0,
+          122
+        ],
+        [
+          53,
+          11,
+          2,
+          124
+        ],
+        [
+          49,
+          12,
+          5,
+          125
+        ],
+        [
+          47,
+          15,
+          8,
+          127
+        ],
+        [
+          46,
+          20,
+          12,
+          129
+        ],
+        [
+          99,
+          39,
+          16,
+          183
+        ],
+        [
+          110,
+          47,
+          21,
+          194
+        ],
+        [
+          123,
+          56,
+          27,
+          206
+        ],
+        [
+          133,
+          65,
+          33,
+          213
+        ],
+        [
+          137,
+          72,
+          40,
+          214
+        ],
+        [
+          135,
+          78,
+          48,
+          206
+        ],
+        [
+          165,
+          95,
+          56,
+          231
+        ],
+        [
+          199,
+          114,
+          65,
+          255
+        ],
+        [
+          226,
+          131,
+          74,
+          255
+        ],
+        [
+          250,
+          148,
+          84,
+          255
+        ]
+      ],
+      "mac_effectmain_active_hex": "063de61c720500000a3e9b1a81050801bc3ea51838065e02853f6c17bc070204af403a17110af305f05bc531a513330844610b379217bf0a6e67cc3d531c990d286bc4428a20c110606bdf440624371493679c436427f917c673ff527c2f0a1c008013640b39682000805871c241142500803e7d214a0d2a",
+      "guards_intact": true,
+      "input_unchanged": true,
+      "mac_padding_preserved": true,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1"
+      ],
+      "unsupported_suite_calls": [],
+      "render_error": 0
+    },
+    {
+      "depth": "PF32",
+      "pixel_format": "argb32f",
+      "bytes": 240,
+      "actual_exported_raw_sha256": "8c86b78f9a81cf7988ef7c76c2108e221b8cfc65fd129ac166e0b5e73651014f",
+      "mac_effectmain_raw_sha256": "5d8b4fcc928e28ed02d507d89b0f9a89f73ccf7db4ff76f8b96919f129e8769a",
+      "exact": false,
+      "actual_exported_rgba8": [
+        [
+          58,
+          11,
+          0,
+          122
+        ],
+        [
+          53,
+          11,
+          2,
+          124
+        ],
+        [
+          49,
+          12,
+          5,
+          125
+        ],
+        [
+          47,
+          15,
+          8,
+          127
+        ],
+        [
+          46,
+          20,
+          12,
+          129
+        ],
+        [
+          99,
+          39,
+          16,
+          183
+        ],
+        [
+          110,
+          47,
+          21,
+          194
+        ],
+        [
+          123,
+          56,
+          27,
+          206
+        ],
+        [
+          133,
+          65,
+          33,
+          213
+        ],
+        [
+          137,
+          72,
+          40,
+          214
+        ],
+        [
+          135,
+          78,
+          48,
+          206
+        ],
+        [
+          165,
+          95,
+          56,
+          231
+        ],
+        [
+          199,
+          114,
+          65,
+          255
+        ],
+        [
+          226,
+          131,
+          74,
+          255
+        ],
+        [
+          250,
+          148,
+          84,
+          255
+        ]
+      ],
+      "mac_effectmain_active_hex": "d61bf43ea936673e484a2e3d000000004e28f83ecbda543e0d1d303d0c48043cfef1fa3ebd2b453e5c12473dc6ae973c7016fe3e90643b3eca88773d2050003d405f013f01d7393edd1ca13d3a7c3e3d9adf373f8c16c73e752a1d3ed92d833d388a423f4d2fdc3ee9943c3e44f7ab3d57dc4e3f4430f73e2b98623e5c9ad93d5352563f1189053f102a823e920b063e1ec0563f68be093f4218903eccb6213eac274f3f193a073ffa949d3edfce3f3e3d8c673f65ff253fb0f2bd3ec853603e0000803fb027483fcf2ee43ec4a2813e0000803f7eb1623fc683033f1052943e0000803fd97e7a3f1f44143fc837a83e",
+      "guards_intact": true,
+      "input_unchanged": true,
+      "mac_padding_preserved": true,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1"
+      ],
+      "unsupported_suite_calls": [],
+      "render_error": 0
+    }
+  ],
+  "connected_evidence": {},
+  "boundary": "Actual exported SmartPreRender/SmartRender versus Mac public EffectMain(PF_Cmd_RENDER). Mode2 applies Brightness Gain to ray amount before ramp sampling and raw-alpha accumulation, then uses the recovered Merge2 composition and typed writer. Nondefault ANGLE uses the Windows owner's observed raw-fixed-as-degree convention."
+}
