@@ -43,6 +43,9 @@ actual-AEX比較を追加しました。これは全パラメーター直積へ�
   raw exactです。Type 3、他geometry、未列挙tupleはfail-closeします。
   同じdual-side familyを32×18 geometryでも3深度12／12、rowdriver 32 callsで
   raw exact確認しました。他geometryや未列挙tupleは引き続きfail-closeです。
+  64×36 geometryでもworker 12／12、public EffectMain 12／12がexactです。
+  rotated width 76、32 calls×2 rows、tail preseedを含みます。対応範囲は
+  16×16／32×18／64×36と記録済み4 tupleに限定し、Type 3／他geometryはfail-closeします。
 - OLMBlur：exported EffectMainからSmartPreRender／SmartRenderへ至るactive chainを
   PF8／PF16／PF32の6／6ケースで確認し、出力とrow paddingがexactです。
   これは全深度の記録済みSmart chain証拠であり、classic entrypointの同等性主張ではありません。
@@ -200,7 +203,7 @@ notarizationは未実施であり、ダウンロード先のGatekeeperに拒否�
 | OLMColorKey | core、Edge Thin、Edge Blur、replace／color-space；PF8／PF16／PF32限定 | 半透明32×18 matrixは51／51、64×36 transferは12／12 exact。PF32 Type 3 planeのfloat→double sin→float順を含む限定証拠で、未列挙値／geometryへは一般化しない |
 | OLMToonDilate | copy／dilate、fractional radius、frontier／tie／corner／eligibility；PF8／PF16／PF32 | padded／partial／empty worldとradius -1〜4を確認。実効radiusは`ceil(radius × downsample_x.num / den)`。legacy `PF_Cmd_RENDER`は実AEX同様3深度でno-op、描画はSmartRender経路。現行PF32 radius 13 AE代表はhost smoke |
 | OLMDistanceGradation | Inside／Outside／Both、RGB／Layer、Constant／Linear／Sphere／Power、invert／background／blur；PF8／PF16／PF32限定 | typed blur matrixは58 exact／6 fail-close。Mode 5 Linearはpre-plane 187／187 exact・cvSmooth差0だがopaque出力33 wordsが残る。期待補正なしで拒否を維持し、任意geometryや全直積へ一般化しない |
-| OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3；PF8／PF16／PF32限定 | PF16 Type 3 Layerは16×16の限定tuple。Front＋Back同時familyは16×16と32×18の記録済み各12行がraw exact。32×18ではrowdriver 32 callsを確認。他geometry、未列挙tupleへは一般化しない |
+| OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3；PF8／PF16／PF32限定 | dual-side 4 tupleは16×16／32×18／64×36でexact。64×36はworker/public各12／12、rotated width 76・32 calls×2 rows・tail preseedを確認。Type 3／他geometryへは一般化しない |
 | OLMRadialBlur | Zoom／Rotation／Inner；PF8／PF16／PF32 guard付き | PF8 centered neutral Inner Strength 1〜64などbounded複合経路はexact。Type 3 world I/O／repeatはpassしたが、generic resolver修正後もpacked 9×7 output gate未成立。新witnessまで調査停止、production fail-closeを維持 |
 | OLMSmoother2 | v1／v2 classifier、key／invert、Gamma None／All／Colors、range／extra、palette；PF8／PF16／PF32限定 | Gamma／key／smoothing 54／54とpalette交差18／18がraw exact。旧PF8 seamはLUT契約と非縮約scalar積和で解消したが、任意直積やAE hostへは一般化しない |
 | OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur；PF8／PF16／PF32限定 | Mode 1／2／3のRotation 1°は3深度9／9 exact。raw fixed解釈を修正した限定証拠で、Mode 2 PF32 Rotation 22°、任意rotation／source／gradient、全直積は未証明 |

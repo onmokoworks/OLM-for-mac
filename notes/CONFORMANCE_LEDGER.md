@@ -1,5 +1,12 @@
 # OLM Conformance Ledger
 
+- 2026-08-12 OLMDirectionalBlur 64x36 dual-side closure: worker and public
+  EffectMain matrices are each 12/12 raw exact across PF8/PF16/PF32 and the
+  four declared tuples. The fixture exercises rotated width 76, 32 calls on
+  each of two rows, and tail preseed. Production admission remains bounded
+  to 16x16, 32x18, and 64x36 with those tuples. Type 3, other geometry, and
+  unlisted tuples remain fail-closed.
+
 - 2026-08-12 Radial Type 3 investigation stop: reusable OLM runner 886c9e3a
   consumes the #1162 fixture contract, and AEXCompat 3ea396a1 replaces the
   fixture-specific behavior with a generic typed disk resolver. The resolver

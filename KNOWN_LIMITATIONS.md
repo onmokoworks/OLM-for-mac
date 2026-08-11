@@ -49,7 +49,9 @@
   Noise Type 1／2、Size Variationを含む高次covering 24行もraw exactです。
   Front＋Back同時の記録済み12行もraw exactです。Type 3、他geometry、未列挙tuple、
   Layer欠落／寸法不一致はfail-closeする場合があります。32×18の対応familyも
-  3深度12／12 exactですが、これを任意geometryへ一般化しません。
+  3深度12／12 exactです。64×36もworker／public各12／12 exactで、rotated width 76、
+  32 calls×2 rows、tail preseedを確認しています。対応geometryは16×16／32×18／64×36、
+  記録済み4 tupleに限定し、Type 3／他geometryへ一般化しません。
 - OLMRadialBlur：centered neutral InnerはPF8/PF16/PF32で複数geometryを実AEXと
   bit完全一致確認済みです。直接観測済みの最大geometryはPF8/PF16が640×360、PF32が
   64×36です。off-center、非unit ratio、angle、quality、repeat、offset、
