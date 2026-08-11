@@ -33,6 +33,11 @@ COMPOSE = {
 }
 
 
+def flatten_mat_rows(rows: list[list[float]]) -> list[float]:
+    """Preserve full row-major Mat contents for non-single-row fixtures."""
+    return [value for row in rows for value in row]
+
+
 def load_base():
     spec = importlib.util.spec_from_file_location("kira_fullcaller_base", BASE_PATH)
     if spec is None or spec.loader is None:
@@ -86,7 +91,7 @@ def main() -> int:
             source = base.read_mat(self, source_mat)
             if not source or not source.get("values_f32"):
                 raise RuntimeError("source Mat unavailable")
-            values = source["values_f32"][0]
+            values = flatten_mat_rows(source["values_f32"])
             pixels = self.host_alloc(len(values) * 16, align=64)
             rgba = []
             for value in values:
