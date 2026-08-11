@@ -13,12 +13,12 @@ REPORT = ROOT / "refs/conformance/olmkirakira_mode1_exported_effectmain_all_dept
 
 
 class Mode1ExportedEffectMainAllDepthsTests(unittest.TestCase):
-    def test_three_depths_fail_closed_on_measured_mismatch(self) -> None:
+    def test_three_depths_are_exact(self) -> None:
         subprocess.run(["python3", str(PROBE)], cwd=ROOT, check=True, capture_output=True, text=True)
         report = json.loads(REPORT.read_text(encoding="utf-8"))
-        self.assertEqual(report["status"], "fail_closed_mismatch")
+        self.assertEqual(report["status"], "exact")
         self.assertEqual({row["depth"] for row in report["rows"]}, {"PF8", "PF16", "PF32"})
-        self.assertTrue(all(not row["exact"] and row["guards_intact"] and
+        self.assertTrue(all(row["exact"] and row["guards_intact"] and
                             row["input_unchanged"] and row["mac_padding_preserved"]
                             for row in report["rows"]))
 

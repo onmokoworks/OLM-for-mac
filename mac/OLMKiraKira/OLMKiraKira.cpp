@@ -361,12 +361,12 @@ static void AddColoredUnion(
 	std::vector<FloatRGBA> &glow,
 	const std::vector<float> &amount,
 	const PF_PixelFloat &color,
-	double scale)
+	float scale)
 {
 	const size_t pixels = glow.size();
 	for (size_t i = 0; i < pixels; ++i) {
 		if (amount[i] <= kFd90RayEpsilon) continue;
-		float alpha = Clamp01((float)(amount[i] * scale) * color.alpha);
+		float alpha = Clamp01((amount[i] * scale) * color.alpha);
 		glow[i].r += alpha * color.red;
 		glow[i].g += alpha * color.green;
 		glow[i].b += alpha * color.blue;
@@ -552,16 +552,12 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			seed, work_width, work_height, highlight_radius * 2 + 1, highlight_passes);
 	}
 
-	const double gain_scale = 0.62;
-	double scale = info.brightness_gain * gain_scale;
-	// The corrected PF32 AE boundary isolates the fifth/highlight-only Mode-4
-	// lane.  After undoing Windows AE's measured component transfer, the AEX
-	// glow alpha is the three-pass 11x11 box result times Brightness Gain
-	// directly; the historical 0.62 scaffold underweights it by exactly 0.62.
-	// Keep the older factor on every other bounded lane.
-	const double highlight_scale = info.blur_mode == 4
-		? info.brightness_gain
-		: scale;
+	// FUN_18114f4a0 loads Brightness Gain directly from state+0x608 into the
+	// trailing argument of both aggregation vtable calls. Natural exported
+	// Mode-1 capture confirms ray * Brightness Gain before composition; the
+	// historical 0.62 PNG-fit scaffold is not part of the AEX owner path.
+	float scale = (float)info.brightness_gain;
+	const float highlight_scale = (float)info.brightness_gain;
 	if (info.strength_multiplier <= 1.0e-6) {
 		scale = 127.0 / 255.0;
 	}
@@ -588,9 +584,19 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		AddColoredUnion(glow, highlight, info.highlight_color, highlight_scale);
 		for (FloatRGBA &g : glow) {
 			if (g.a > 1.0e-6f) {
-				g.r /= g.a;
-				g.g /= g.a;
-				g.b /= g.a;
+				// FUN_18114fd90 computes one float reciprocal and multiplies
+				// all RGB lanes. Keep that rounding boundary instead of using
+				// three independently rounded divisions.
+				if (bitdepth == 32) {
+					const float inverse_alpha = 1.0f / g.a;
+					g.r *= inverse_alpha;
+					g.g *= inverse_alpha;
+					g.b *= inverse_alpha;
+				} else {
+					g.r /= g.a;
+					g.g /= g.a;
+					g.b /= g.a;
+				}
 			}
 		}
 	}

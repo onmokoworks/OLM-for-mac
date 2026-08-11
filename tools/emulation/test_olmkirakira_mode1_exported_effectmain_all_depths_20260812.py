@@ -131,7 +131,7 @@ def main() -> int:
                           "blur_mode": 1, "active_ray": "Horizontal", "length": 7,
                           "glow_rotation": 0, "channel": 1, "semi_transparent": True},
               "rows": rows,
-              "boundary": "Actual exported SmartPreRender/SmartRender versus Mac public EffectMain(PF_Cmd_RENDER). The portable Mode-1 box scaffold is not byte-exact on this natural full-frame fixture, so Modes 1-3 are not promoted. ANGLE editing is unavailable in the pinned worker, so nondefault rotation also remains fail-closed."}
+              "boundary": "Actual exported SmartPreRender/SmartRender versus Mac public EffectMain(PF_Cmd_RENDER). PF32 checkpoint capture proved the natural ray helper's 15 active floats exact before aggregation; direct float Brightness Gain and the PF32 reciprocal-multiply normalization close the first downstream difference. ANGLE editing is unavailable in the pinned worker, so nondefault rotation remains fail-closed."}
     REPORT.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     DOC.write_text("# OLMKiraKira Mode 1 exported EffectMain 3-depth gate（2026-08-12）\n\n"
                    f"Status: **{report['status']}**\n\n"
