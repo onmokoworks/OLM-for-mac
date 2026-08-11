@@ -25,13 +25,13 @@ template<> PF_Pixel8 cvt(RGBA q){return {q.a,q.r,q.g,q.b};}
 template<> PF_Pixel16 cvt(RGBA q){auto c=[](int v){return (unsigned short)std::lround(v*32768.0/255.0);};return {c(q.a),c(q.r),c(q.g),c(q.b)};}
 template<> PF_PixelFloat cvt(RGBA q){return {q.a/255.f,q.r/255.f,q.g/255.f,q.b/255.f};}
 
-template<class P> static int run(int w,int h,const std::string &pat,int ver,int s,int range,int extra,const char *depth,const std::string &feature) {
+template<class P> static int run(int w,int h,const std::string &pat,int ver,int s,int range,int extra,const char *depth,const std::string &feature,double gamma_value) {
     size_t pad=std::is_same<P,PF_Pixel8>::value?5:(std::is_same<P,PF_Pixel16>::value?7:13),rb=w*sizeof(P)+pad;
     std::vector<unsigned char> in(rb*h,0x3c),out(rb*h,0xa5);std::vector<RGBA> rgba(w*h);
     for(int y=0;y<h;y++)for(int x=0;x<w;x++){rgba[y*w+x]=pixel(pat,x,y,w,h);if(feature!="none"&&x==0&&y==0)rgba[0]={1,1,1,255};if(feature!="none"&&x==1&&y==0)rgba[1]={255,0,0,255};P p=cvt<P>(rgba[y*w+x]);memcpy(in.data()+y*rb+x*sizeof(P),&p,sizeof(P));}
     PF_EffectWorld iw{},ow{};iw.data=in.data();iw.width=w;iw.height=h;iw.rowbytes=rb;iw.extent_hint={0,0,w,h};ow.data=out.data();ow.width=w;ow.height=h;ow.rowbytes=rb;ow.extent_hint={0,0,w,h};
     PF_ParamDef d[SM_NUM_PARAMS]{};PF_ParamDef*q[SM_NUM_PARAMS]{};for(int n=0;n<SM_NUM_PARAMS;n++)q[n]=d+n;
-    d[SM_SMOOTHNESS].u.sd.value=s;d[SM_EXTRA_SMOOTH].u.sd.value=extra;d[SM_SMOOTH_RANGE].u.sd.value=range;d[SM_VERSION].u.pd.value=ver;d[SM_GAMMA_MODE].u.pd.value=feature=="gamma_all"?GAMMA_ALL_COLORS:(feature=="none"?GAMMA_NONE:GAMMA_COLORS_ONLY);d[SM_GAMMA_VALUE].u.fs_d.value=2.4;
+    d[SM_SMOOTHNESS].u.sd.value=s;d[SM_EXTRA_SMOOTH].u.sd.value=extra;d[SM_SMOOTH_RANGE].u.sd.value=range;d[SM_VERSION].u.pd.value=ver;d[SM_GAMMA_MODE].u.pd.value=feature=="gamma_all"?GAMMA_ALL_COLORS:(feature=="none"?GAMMA_NONE:GAMMA_COLORS_ONLY);d[SM_GAMMA_VALUE].u.fs_d.value=gamma_value;
     if(feature=="colors_noninvert"||feature=="colors_invert"){d[SM_ENABLE_KEY].u.bd.value=1;d[SM_INVERT_KEY].u.bd.value=feature=="colors_invert";d[SM_KEY_COLOR].u.cd.value={255,1,1,1};d[SM_NUM_GAMMA_COLORS].u.sd.value=2;d[SM_GAMMA_COLOR_0].u.cd.value={255,255,0,0};d[SM_GAMMA_COLOR_1].u.cd.value={255,1,1,1};}
     const char *probe=getenv("SM2_PROBE_JSON");if(probe){const char*px=getenv("SM2_PROBE_X"),*py=getenv("SM2_PROBE_Y");OLMSmoother2SetWriterFrameProbe(px?atoi(px):w/2,py?atoi(py):h/2,probe);}
     OLMSmoother2ResetIndexHistogram(true);PF_InData id{};if(RenderBits<P>(&id,q,&iw,&ow))return 2;
@@ -40,4 +40,4 @@ template<class P> static int run(int w,int h,const std::string &pat,int ver,int 
     for(int y=0;y<h;y++)for(size_t k=w*sizeof(P);k<rb;k++)if(out[y*rb+k]!=0xa5)return 3;
     return 0;
 }
-int main(int argc,char**argv){if(argc<9||argc>10)return 64;int w=atoi(argv[1]),h=atoi(argv[2]),ver=atoi(argv[4]),s=atoi(argv[5]),r=atoi(argv[6]),e=atoi(argv[7]);std::string p=argv[3],d=argv[8],f=argc==10?argv[9]:"none";if(d=="PF8")return run<PF_Pixel8>(w,h,p,ver,s,r,e,"PF8",f);if(d=="PF16")return run<PF_Pixel16>(w,h,p,ver,s,r,e,"PF16",f);if(d=="PF32")return run<PF_PixelFloat>(w,h,p,ver,s,r,e,"PF32",f);return 65;}
+int main(int argc,char**argv){if(argc<9||argc>11)return 64;int w=atoi(argv[1]),h=atoi(argv[2]),ver=atoi(argv[4]),s=atoi(argv[5]),r=atoi(argv[6]),e=atoi(argv[7]);std::string p=argv[3],d=argv[8],f=argc>=10?argv[9]:"none";double g=argc==11?strtod(argv[10],nullptr):2.4;if(d=="PF8")return run<PF_Pixel8>(w,h,p,ver,s,r,e,"PF8",f,g);if(d=="PF16")return run<PF_Pixel16>(w,h,p,ver,s,r,e,"PF16",f,g);if(d=="PF32")return run<PF_PixelFloat>(w,h,p,ver,s,r,e,"PF32",f,g);return 65;}
