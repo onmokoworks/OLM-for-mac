@@ -2011,7 +2011,9 @@ static PF_Err RenderZoomTyped(
 		output->rowbytes >= output->width * (A_long)sizeof(PixelT) &&
 		info.outer_strength == 4 &&
 		(info.outer_edge_fade == 50 || info.outer_edge_fade == 100) &&
-		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		((info.outer_offset_mode == 1 && info.outer_offset == 0) ||
+		 ((info.outer_offset_mode == 2 || info.outer_offset_mode == 3) &&
+		  info.outer_offset == 4)) &&
 		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
 		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
 		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
@@ -2999,7 +3001,31 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0 &&
 		info.comp_width == 32.0 && info.comp_height == 18.0 &&
 		MatchesRadialSizeComponentFixture<PixelT>(input, false);
+	const bool use_aex_typed_rotation_edge_offset_noise_components_32x18 = input && output &&
+		use_aex_inner_geometry && input->width == 32 && input->height == 18 &&
+		input->rowbytes >= input->width * (A_long)sizeof(PixelT) &&
+		output->rowbytes >= output->width * (A_long)sizeof(PixelT) &&
+		(((info.outer_strength == 4 &&
+		   (info.outer_edge_fade == 50 || info.outer_edge_fade == 100) &&
+		   (info.outer_offset_mode == 2 || info.outer_offset_mode == 3) &&
+		   info.outer_offset == 4 && info.inner_strength == 0 &&
+		   info.inner_edge_fade == 0 && info.inner_offset_mode == 1 && info.inner_offset == 0) ||
+		  (info.outer_strength == 0 && info.outer_edge_fade == 0 &&
+		   info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		   info.inner_strength == 4 &&
+		   (info.inner_edge_fade == 50 || info.inner_edge_fade == 100) &&
+		   (info.inner_offset_mode == 2 || info.inner_offset_mode == 3) &&
+		   info.inner_offset == 4))) &&
+		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
+		info.quality == 5.0 && info.brightness_gain == 1.0 &&
+		info.size_variation == 0.0 &&
+		(info.noise_variation == 25.0 || info.noise_variation == 100.0) &&
+		(info.noise_type == 1 || info.noise_type == 2) && info.noise_layer == 0 &&
+		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0 &&
+		info.comp_width == 32.0 && info.comp_height == 18.0 &&
+		MatchesRadialSizeComponentFixture<PixelT>(input, false);
 	if (info.blur_type != 2 || (info.inner_strength != 0 &&
+	    !use_aex_typed_rotation_edge_offset_noise_components_32x18 &&
 	    !use_aex_typed_rotation_offset_noise_components_32x18 &&
 	    !use_aex_typed_rotation_edge_offset_32x18 &&
 	    !use_aex_typed_rotation_dual_strength_32x18 &&
@@ -3007,11 +3033,13 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	    !use_aex_pf32_inner_edge_fade_small && !use_aex_pf32_edge_fade_cross_small &&
 	    !use_aex_typed_edge_fade_32x18 && !use_aex_typed_rotation_edge_noise_32x18) ||
 	    ((info.outer_edge_fade != 0 || info.inner_edge_fade != 0) &&
+	     !use_aex_typed_rotation_edge_offset_noise_components_32x18 &&
 	     !use_aex_typed_rotation_edge_offset_32x18 &&
 	     !use_aex_pf32_outer_edge_fade_small && !use_aex_pf32_inner_edge_fade_small &&
 	     !use_aex_pf32_edge_fade_cross_small && !use_aex_typed_edge_fade_32x18 &&
 	     !use_aex_typed_rotation_edge_noise_32x18) ||
 	    (info.noise_variation != 0.0 && !use_aex_pf32_noise_type1_small &&
+	     !use_aex_typed_rotation_edge_offset_noise_components_32x18 &&
 	     !use_aex_typed_rotation_offset_noise_components_32x18 &&
 	     !use_aex_typed_noise_type1_pairwise && !use_aex_typed_noise_type2_small &&
 	     !use_aex_pf32_strength5_noise_type1_small &&
@@ -3222,7 +3250,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0;
-	const bool use_aex_exact = use_aex_typed_rotation_offset_noise_components_32x18 || use_aex_typed_rotation_edge_offset_32x18 || use_aex_typed_rotation_dual_strength_32x18 || use_aex_typed_rotation_size_variation_32x18 || use_aex_typed_rotation_size_noise_components_32x18 || use_aex_typed_rotation_inner_offset_pairwise || use_aex_typed_rotation_offcenter_brightness || use_aex_typed_quality_repeat || use_aex_case0010 || use_aex_pf16_small || use_aex_pf16_inner_power2_small ||
+	const bool use_aex_exact = use_aex_typed_rotation_edge_offset_noise_components_32x18 || use_aex_typed_rotation_offset_noise_components_32x18 || use_aex_typed_rotation_edge_offset_32x18 || use_aex_typed_rotation_dual_strength_32x18 || use_aex_typed_rotation_size_variation_32x18 || use_aex_typed_rotation_size_noise_components_32x18 || use_aex_typed_rotation_inner_offset_pairwise || use_aex_typed_rotation_offcenter_brightness || use_aex_typed_quality_repeat || use_aex_case0010 || use_aex_pf16_small || use_aex_pf16_inner_power2_small ||
 		use_aex_typed_edge_fade_32x18 ||
 		use_aex_typed_rotation_edge_noise_32x18 ||
 		use_aex_typed_rotation_offset_mode3 ||
@@ -3295,7 +3323,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		 use_aex_typed_rotation_size_noise_components_32x18) && source_components_1_4_9) {
 		rotation_scalar_source_with_guard = component_size_factor;
 	}
-	if (use_aex_pf32_noise_type1_small || use_aex_typed_noise_type1_pairwise ||
+	if (use_aex_typed_rotation_edge_offset_noise_components_32x18 || use_aex_pf32_noise_type1_small || use_aex_typed_noise_type1_pairwise ||
 		use_aex_typed_noise_type2_small || use_aex_pf32_strength5_noise_type1_small ||
 		use_aex_typed_rotation_offset_noise_components_32x18 ||
 		use_aex_typed_rotation_edge_noise_32x18 ||
@@ -3316,10 +3344,11 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		const float nv = (float)info.noise_variation * 0.01f;
 		for (A_long y = 0; y < h; ++y) {
 			for (A_long x = 0; x < w; ++x) {
-				const float noise = use_aex_typed_rotation_offset_noise_components_32x18
+				const float noise = (use_aex_typed_rotation_edge_offset_noise_components_32x18 || use_aex_typed_rotation_offset_noise_components_32x18)
 					? olm::dblur::sample_radial_noise_plane(noise_view, x, y, info.noise_type == 1)
 					: (use_aex_typed_noise_type2_small ||
 					(use_aex_typed_rotation_edge_noise_32x18 && info.noise_type == 2) ||
+					(use_aex_typed_rotation_edge_offset_noise_components_32x18 && info.noise_type == 2) ||
 					(use_aex_typed_rotation_size_noise_components_32x18 && info.noise_type == 2))
 					? SampleRadialBlockNoisePlaneAEX(noise_plane.data(), noise_width, (float)info.thickness, x, y)
 					: SampleRadialNoisePlaneAEX(noise_plane.data(), noise_width, (float)info.thickness, x, y);
@@ -3485,7 +3514,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			// value, then scales half the radial extent by 1/(ri+1).  Mode 3
 			// selects that dynamic span directly; it does not apply the
 			// fixed-strength path's additional UI-to-worker decrement.
-			const bool use_mode2_dynamic = (use_aex_typed_rotation_offset_noise_components_32x18 ||
+			const bool use_mode2_dynamic = (use_aex_typed_rotation_edge_offset_noise_components_32x18 ||
+				use_aex_typed_rotation_offset_noise_components_32x18 ||
 				use_aex_typed_rotation_offset_mode3 ||
 				use_aex_typed_rotation_edge_offset_32x18) &&
 				info.outer_offset_mode == 2;
@@ -3501,7 +3531,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 					: RotationEffectiveLength(info.outer_strength, info.outer_offset_mode, 0)));
 			// Inner offset uses the same owner-to-worker conversion as the outer
 			// offset: the UI value is zero-based once, then scaled by radius.
-			const bool use_dynamic_inner_offset = use_aex_typed_rotation_offset_noise_components_32x18 ||
+			const bool use_dynamic_inner_offset = use_aex_typed_rotation_edge_offset_noise_components_32x18 ||
+				use_aex_typed_rotation_offset_noise_components_32x18 ||
 				use_aex_typed_rotation_inner_offset_pairwise ||
 				use_aex_typed_rotation_edge_offset_32x18;
 			const A_long inner_span = use_dynamic_inner_offset &&
