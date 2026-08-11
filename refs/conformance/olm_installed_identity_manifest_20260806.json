@@ -6,10 +6,10 @@
     "stable_consecutive_collections": 2,
     "universal_exact": true
   },
-  "accepted_at": "2026-08-11T12:47:07.813466+00:00",
+  "accepted_at": "2026-08-11T13:23:45.149579+00:00",
   "claim_boundary": "Exact installed executable identity, arm64+x86_64 architectures, valid strict code signature, and byte identity with the named local build product. No AE load, UI, or render claim.",
   "configuration": "Debug",
-  "installed_after": "2026-08-11T12:47:07.813466+00:00",
+  "installed_after": "2026-08-11T13:23:45.149579+00:00",
   "plugins": [
     {
       "architectures": [
@@ -50,10 +50,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMColorKey.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMColorKey",
-      "sha256": "e9031a9d7d75a3a32f1d862d883d713f3bccccc2cfdb3572157b4441aece9377",
+      "sha256": "cbe84bffb10d505f95ea97f26e5efaa1d2cc5e2249cde66befc490fea9d77503",
       "source_bundle": "mac/OLMColorKey/Mac/build/Debug/OLMColorKey.plugin",
       "source_installed_exact": true,
-      "source_sha256": "e9031a9d7d75a3a32f1d862d883d713f3bccccc2cfdb3572157b4441aece9377",
+      "source_sha256": "cbe84bffb10d505f95ea97f26e5efaa1d2cc5e2249cde66befc490fea9d77503",
       "universal_exact": true
     },
     {
@@ -110,10 +110,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMRadialBlur",
-      "sha256": "6ad1a138d04335363678886ce6e682118071d882c20b4992c8eeb71450a09d25",
+      "sha256": "82c7917d7b8f66be35ff154f46081893230e770f89d60869279a960136e0fa68",
       "source_bundle": "mac/OLMRadialBlur/Mac/build/Debug/OLMRadialBlur.plugin",
       "source_installed_exact": true,
-      "source_sha256": "6ad1a138d04335363678886ce6e682118071d882c20b4992c8eeb71450a09d25",
+      "source_sha256": "82c7917d7b8f66be35ff154f46081893230e770f89d60869279a960136e0fa68",
       "universal_exact": true
     },
     {
