@@ -1,0 +1,3418 @@
+{
+  "boundary": "Only the enumerated fixed-fixture tuples are admitted. Gain1 remains covered by the base Size x Noise matrix. Rotation Type1 retains the pre-existing non-consumed source-scalar tail ULP boundary from the gain1 matrix; actual-AEX upstream bytes are nevertheless gain-invariant and all consumed downstream planes/output are exact. Other gains, masks, geometry, values, Type3, seed/offset/thickness and AE-host output are unproven.",
+  "cases": [
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "b1b01977395ff57732fcabe6eecfd93f280b7650ac5255a66d2a22fcb3527be1",
+        "output": "0bfc565a68bca7f8aec95a7217c03243cb8618f72f68d6e74093751df1393d7c",
+        "post_blur": "848dff07cef03547c1fded40e9d8d79c6b662a7e88c18b3f7771b31c9f1fe180",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "af043aac85cfa6412a48f2d6206f88dfd476968fc53348d96aa241ab6c268e3f"
+      },
+      "brightness_gain": 0.5,
+      "depth": 8,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "667a275852b0baacf7baf4b982b4654beb0b008c12292127988236fa2a485940",
+        "output": "2b8eec93a8d4110f22dd0a26069bdf5c303406e67f77132a12a081be8e8e07e1",
+        "post_blur": "eb54e6a7a594722c4f12fcf1a7ae6f9f412759224c6999edf4c3f82eed60f77b",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "8af0adcb8c7372324020c38d7e122a38e2f207608af03b8e73abae20b5c382ce"
+      },
+      "brightness_gain": 0.5,
+      "depth": 8,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "f7914c9c045e5817f7eda68955e64807a60d1583ecc872519cde3ea2444f7f96",
+        "output": "4cee75f0a8d4c28474b9a749a56d90bb10922ad38c1d6792780f3cd1c1891d12",
+        "post_blur": "64d67580803be4e7856739a6113604d95c195e0823435e5492d1566247e82fbc",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "7bcb96f82316fd25c20790db2aaed2fe987db33f4ed73663f7d6b1a7f0a69450"
+      },
+      "brightness_gain": 0.5,
+      "depth": 8,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "5f9ad6e8094c2761f566761d0754710edcc1f4d106c92fb01b6790e46cfa5e81",
+        "output": "eb21a67fa96b38ae3cb0793dfdd7c99283622875c2670ea8d603262584be296f",
+        "post_blur": "1010dfe779e5bf967615308ab9b6e9681c700d40358837e0edc32b5580b04c36",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "f1c2c11f47ef90d3950ce1f6d9ca2d5e5e65dcc36f4c7310793c18cf3a619eab"
+      },
+      "brightness_gain": 0.5,
+      "depth": 8,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "736f92cb0c1bcc4690348a288581058d014f3398c4a14cdab6bc65148708cc42",
+        "output": "77f654e4042075aa7afbbecacaa92cfaff880ee00998b57a5d7a9f926e6df846",
+        "post_blur": "186416e290e9a698209a748a7550a90daa3ab36c3f63b5fcd2b2dcbc41eb39cd",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "fa1610ce83be33bdae598ac5abd50205c6565ed8e0aa5bab535df1c818ecc62b"
+      },
+      "brightness_gain": 0.5,
+      "depth": 8,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "fef13aa7bec773b93f79f74464d3c2825134b03f4e9d6f96ca24c8fd427683a4",
+        "output": "b8e09b0e78216c82d8a3879ca706f67c5af441e265f9aa5bdb554249ae99b685",
+        "post_blur": "60f213313f38f4edcc85bc2d79d35e791f3d3cc391de0aa8b64fb15b88e27b81",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "14f174c0a124fb851998f8ab47d8951f0f1ed73170a80f1b932b19c4e237f0b7"
+      },
+      "brightness_gain": 0.5,
+      "depth": 8,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "e80e019f7cf1d56b03cacf535f8b66e28f9c2ce66d470224b75f8d6fe9fae0a0",
+        "output": "b7d601d7b0edafb5971236bd7af22ea728257f724c768fb0ed6e235ca4f7262a",
+        "post_blur": "f3e5c797d92b48903d169c5c29ca64eb395a66d32ba00a292c337a3f72c81e14",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "5238b1cb73115522848143ec770bb1d913116104f9be9652bd99efe85f44ebae"
+      },
+      "brightness_gain": 0.5,
+      "depth": 8,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "e80e019f7cf1d56b03cacf535f8b66e28f9c2ce66d470224b75f8d6fe9fae0a0",
+        "output": "b7d601d7b0edafb5971236bd7af22ea728257f724c768fb0ed6e235ca4f7262a",
+        "post_blur": "f3e5c797d92b48903d169c5c29ca64eb395a66d32ba00a292c337a3f72c81e14",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "f66574abd393e22b455fce5b0b19bcbb7fffd214f15ff32dfa3895ceee392bde"
+      },
+      "brightness_gain": 0.5,
+      "depth": 8,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "b1b01977395ff57732fcabe6eecfd93f280b7650ac5255a66d2a22fcb3527be1",
+        "output": "87fe6c5358881b11513abaa991bc3e7b163c783aad150340ce82c2d2f2137da7",
+        "post_blur": "848dff07cef03547c1fded40e9d8d79c6b662a7e88c18b3f7771b31c9f1fe180",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "af043aac85cfa6412a48f2d6206f88dfd476968fc53348d96aa241ab6c268e3f"
+      },
+      "brightness_gain": 2.0,
+      "depth": 8,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "667a275852b0baacf7baf4b982b4654beb0b008c12292127988236fa2a485940",
+        "output": "d2575515bbe3b64eec90df477f7753f0b7fc5a226a959b9feebcca6fda739ef0",
+        "post_blur": "eb54e6a7a594722c4f12fcf1a7ae6f9f412759224c6999edf4c3f82eed60f77b",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "8af0adcb8c7372324020c38d7e122a38e2f207608af03b8e73abae20b5c382ce"
+      },
+      "brightness_gain": 2.0,
+      "depth": 8,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "f7914c9c045e5817f7eda68955e64807a60d1583ecc872519cde3ea2444f7f96",
+        "output": "7ae9bd51bcc2e125ada010d0b2642a266614b01659993675c0aba003aae33614",
+        "post_blur": "64d67580803be4e7856739a6113604d95c195e0823435e5492d1566247e82fbc",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "7bcb96f82316fd25c20790db2aaed2fe987db33f4ed73663f7d6b1a7f0a69450"
+      },
+      "brightness_gain": 2.0,
+      "depth": 8,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "5f9ad6e8094c2761f566761d0754710edcc1f4d106c92fb01b6790e46cfa5e81",
+        "output": "4a89d234aaeb4375e1e51ed2606ec727e3769b1eeb164724b59c4fb711d9020e",
+        "post_blur": "1010dfe779e5bf967615308ab9b6e9681c700d40358837e0edc32b5580b04c36",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "f1c2c11f47ef90d3950ce1f6d9ca2d5e5e65dcc36f4c7310793c18cf3a619eab"
+      },
+      "brightness_gain": 2.0,
+      "depth": 8,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "736f92cb0c1bcc4690348a288581058d014f3398c4a14cdab6bc65148708cc42",
+        "output": "276901bf81825b23af83bc17dc64f5ed2caf2f3b82454f7b5befee3f71cba944",
+        "post_blur": "186416e290e9a698209a748a7550a90daa3ab36c3f63b5fcd2b2dcbc41eb39cd",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "fa1610ce83be33bdae598ac5abd50205c6565ed8e0aa5bab535df1c818ecc62b"
+      },
+      "brightness_gain": 2.0,
+      "depth": 8,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "fef13aa7bec773b93f79f74464d3c2825134b03f4e9d6f96ca24c8fd427683a4",
+        "output": "ec1ddf4528741dce43970dcdea6af1aede36ea1ffa5f19a0a4b4649051925549",
+        "post_blur": "60f213313f38f4edcc85bc2d79d35e791f3d3cc391de0aa8b64fb15b88e27b81",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "14f174c0a124fb851998f8ab47d8951f0f1ed73170a80f1b932b19c4e237f0b7"
+      },
+      "brightness_gain": 2.0,
+      "depth": 8,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "e80e019f7cf1d56b03cacf535f8b66e28f9c2ce66d470224b75f8d6fe9fae0a0",
+        "output": "1125075f3089d87d221dc0ad3985df7fb3648eb0c0abb3ec1a2f85f3f732efbd",
+        "post_blur": "f3e5c797d92b48903d169c5c29ca64eb395a66d32ba00a292c337a3f72c81e14",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "5238b1cb73115522848143ec770bb1d913116104f9be9652bd99efe85f44ebae"
+      },
+      "brightness_gain": 2.0,
+      "depth": 8,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "e80e019f7cf1d56b03cacf535f8b66e28f9c2ce66d470224b75f8d6fe9fae0a0",
+        "output": "1125075f3089d87d221dc0ad3985df7fb3648eb0c0abb3ec1a2f85f3f732efbd",
+        "post_blur": "f3e5c797d92b48903d169c5c29ca64eb395a66d32ba00a292c337a3f72c81e14",
+        "pre_blur": "ac09bc8c97da76ea1d9321f2bcfc50d540f037b13bf0df1dc4be9b9f5abc230c",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "f66574abd393e22b455fce5b0b19bcbb7fffd214f15ff32dfa3895ceee392bde"
+      },
+      "brightness_gain": 2.0,
+      "depth": 8,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "904e3f220b879ca865384d0679d9e6180b09aa9c69ae02ee10b186b1b33a4a21",
+        "output": "caf30014b8e09d183d4440600745de96098f11c387b13d76a91183f168ba7289",
+        "post_blur": "c9d3fe0e7b52d32291a31882491047dfe7389b2966492bc5c635dc65d8ecd907",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "af043aac85cfa6412a48f2d6206f88dfd476968fc53348d96aa241ab6c268e3f"
+      },
+      "brightness_gain": 0.5,
+      "depth": 16,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "4d62f3dcd38648892793a6eeef429582b4b67fcf8959962c5a81d3a084512720",
+        "output": "d5bc78c5ae9842528fc83e5887314c96bacb86b485b99bb8940c2f1cdfb7d380",
+        "post_blur": "8e20e67dcc98150b77de38412e6d3cafccf46e643956f505fae4a6d844274268",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "8af0adcb8c7372324020c38d7e122a38e2f207608af03b8e73abae20b5c382ce"
+      },
+      "brightness_gain": 0.5,
+      "depth": 16,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "1c164244a43ab2149021f313495be96d74288a4a7319a51123616430b03f2d77",
+        "output": "34a807efa79ea5df18a34a42796867f1ccbe300ab300ce339192018fcc3861e2",
+        "post_blur": "d0ebf08e6c923ac38ae6e55afd494fcde24c534fa56e16fbaf8ca4e9449a5936",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "7bcb96f82316fd25c20790db2aaed2fe987db33f4ed73663f7d6b1a7f0a69450"
+      },
+      "brightness_gain": 0.5,
+      "depth": 16,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "a906a93dfb8eab7fd6a2a392b37098c2e44f4c274bfcf0c7ef87f8f98fb22e8c",
+        "output": "29062628ef461d8c9d814bd6789cb2e9654108e693022e9ae2a81934f9258e4c",
+        "post_blur": "769d29b293c1ab7cf6a05c225f0c84548d1fe761444d776484153e0bc602c517",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "f1c2c11f47ef90d3950ce1f6d9ca2d5e5e65dcc36f4c7310793c18cf3a619eab"
+      },
+      "brightness_gain": 0.5,
+      "depth": 16,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "f43e58528ba1af78244c47f03c9a5b40f11807ab6252ed5d64239f41ea4c006b",
+        "output": "b5aa39c79787cfa109b4a324faa22b0105000b1f4f471f0aaf9be5c69cc44a89",
+        "post_blur": "5e5ac3f20ac763ce84dba5f1f3535de60b0fe49defe8f404abc46182a7e41a47",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "fa1610ce83be33bdae598ac5abd50205c6565ed8e0aa5bab535df1c818ecc62b"
+      },
+      "brightness_gain": 0.5,
+      "depth": 16,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "6fcf1f480163d17fbcff38a63df6a1c57b65e57c7f687801d5f163086342c88d",
+        "output": "710b552937437fd5e848fed0b976f1ceb4162c59390103e564b2651dd0199770",
+        "post_blur": "e32efc1a21ff6b80365ff2c7ac96d2773d630839b8d428212f84378564e6efaf",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "14f174c0a124fb851998f8ab47d8951f0f1ed73170a80f1b932b19c4e237f0b7"
+      },
+      "brightness_gain": 0.5,
+      "depth": 16,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "870e31208ff098b2e328c8c53db565a7b84bbf2e71c195a3fabb49e70b2044cf",
+        "output": "c409eb209dc0e534cb8a28cfb8df4a9128150fb089a38f29752c055f123eccf5",
+        "post_blur": "21caf0c1f836bf4fae9baec3f78a9061ac9926b08d558198a5ec20f1e1117a9c",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "5238b1cb73115522848143ec770bb1d913116104f9be9652bd99efe85f44ebae"
+      },
+      "brightness_gain": 0.5,
+      "depth": 16,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "870e31208ff098b2e328c8c53db565a7b84bbf2e71c195a3fabb49e70b2044cf",
+        "output": "c409eb209dc0e534cb8a28cfb8df4a9128150fb089a38f29752c055f123eccf5",
+        "post_blur": "21caf0c1f836bf4fae9baec3f78a9061ac9926b08d558198a5ec20f1e1117a9c",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "f66574abd393e22b455fce5b0b19bcbb7fffd214f15ff32dfa3895ceee392bde"
+      },
+      "brightness_gain": 0.5,
+      "depth": 16,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "904e3f220b879ca865384d0679d9e6180b09aa9c69ae02ee10b186b1b33a4a21",
+        "output": "d6293be333637e07a74587d01d6ba6fefeafddfa899ce8a6dad22c0a58bc5122",
+        "post_blur": "c9d3fe0e7b52d32291a31882491047dfe7389b2966492bc5c635dc65d8ecd907",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "af043aac85cfa6412a48f2d6206f88dfd476968fc53348d96aa241ab6c268e3f"
+      },
+      "brightness_gain": 2.0,
+      "depth": 16,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "4d62f3dcd38648892793a6eeef429582b4b67fcf8959962c5a81d3a084512720",
+        "output": "fe78476fe4c6e8dbd57b376368980c6217d8e9c323ef7de7c6c35eca881affde",
+        "post_blur": "8e20e67dcc98150b77de38412e6d3cafccf46e643956f505fae4a6d844274268",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "8af0adcb8c7372324020c38d7e122a38e2f207608af03b8e73abae20b5c382ce"
+      },
+      "brightness_gain": 2.0,
+      "depth": 16,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "1c164244a43ab2149021f313495be96d74288a4a7319a51123616430b03f2d77",
+        "output": "bac548f26aafa3356f7bfa5849cc7ece6eab2ae096d1e095dbfaae35999a5d0f",
+        "post_blur": "d0ebf08e6c923ac38ae6e55afd494fcde24c534fa56e16fbaf8ca4e9449a5936",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "7bcb96f82316fd25c20790db2aaed2fe987db33f4ed73663f7d6b1a7f0a69450"
+      },
+      "brightness_gain": 2.0,
+      "depth": 16,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "a906a93dfb8eab7fd6a2a392b37098c2e44f4c274bfcf0c7ef87f8f98fb22e8c",
+        "output": "5fe4d8ba176474f83f2c07dcfbec04766f75ac8036a94c3926921b5a692246dc",
+        "post_blur": "769d29b293c1ab7cf6a05c225f0c84548d1fe761444d776484153e0bc602c517",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "f1c2c11f47ef90d3950ce1f6d9ca2d5e5e65dcc36f4c7310793c18cf3a619eab"
+      },
+      "brightness_gain": 2.0,
+      "depth": 16,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "f43e58528ba1af78244c47f03c9a5b40f11807ab6252ed5d64239f41ea4c006b",
+        "output": "ec5ef23e085aeb62cef433a91d67c0cd897b4a25d4bbd3d81590ab1988264d12",
+        "post_blur": "5e5ac3f20ac763ce84dba5f1f3535de60b0fe49defe8f404abc46182a7e41a47",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "fa1610ce83be33bdae598ac5abd50205c6565ed8e0aa5bab535df1c818ecc62b"
+      },
+      "brightness_gain": 2.0,
+      "depth": 16,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "6fcf1f480163d17fbcff38a63df6a1c57b65e57c7f687801d5f163086342c88d",
+        "output": "53c474bba7fc2a251e3f3d7612a3b26e4ba0cdc1e311eab1ddffc8926348b175",
+        "post_blur": "e32efc1a21ff6b80365ff2c7ac96d2773d630839b8d428212f84378564e6efaf",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "14f174c0a124fb851998f8ab47d8951f0f1ed73170a80f1b932b19c4e237f0b7"
+      },
+      "brightness_gain": 2.0,
+      "depth": 16,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "870e31208ff098b2e328c8c53db565a7b84bbf2e71c195a3fabb49e70b2044cf",
+        "output": "2b5a9eaf7e6050bfccca6a0240cb0609bdf93ec30ffcf1abd4cb8fdc14ded490",
+        "post_blur": "21caf0c1f836bf4fae9baec3f78a9061ac9926b08d558198a5ec20f1e1117a9c",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "5238b1cb73115522848143ec770bb1d913116104f9be9652bd99efe85f44ebae"
+      },
+      "brightness_gain": 2.0,
+      "depth": 16,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "870e31208ff098b2e328c8c53db565a7b84bbf2e71c195a3fabb49e70b2044cf",
+        "output": "2b5a9eaf7e6050bfccca6a0240cb0609bdf93ec30ffcf1abd4cb8fdc14ded490",
+        "post_blur": "21caf0c1f836bf4fae9baec3f78a9061ac9926b08d558198a5ec20f1e1117a9c",
+        "pre_blur": "bf62c925528df6965c0c0285861e63bf5ddeb610d9f5d1b09649c0e9c1b6356c",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "f66574abd393e22b455fce5b0b19bcbb7fffd214f15ff32dfa3895ceee392bde"
+      },
+      "brightness_gain": 2.0,
+      "depth": 16,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "c948d56fb472cdd799caf96eb86f45890eafff6b578c769f5982f68b6e7ecca3",
+        "output": "9d33451e43238083b4cb1fb8c9bc2bd1fe430e3dacb012f9a2352d55c63ba982",
+        "post_blur": "6395182e2a7f7bfaa56b6b85c61e439f657ef27b263d48387a6fe47c54338651",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "af043aac85cfa6412a48f2d6206f88dfd476968fc53348d96aa241ab6c268e3f"
+      },
+      "brightness_gain": 0.5,
+      "depth": 32,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "64719ccdd3aec3bc7e0366c1c0b189b660414354f32cb472fbc6ca5998e685d8",
+        "output": "344950c6d11c077e8e3bb1433db5a9b517b652d79d99ead1c36560b73aee2542",
+        "post_blur": "24a7480cdee77521fc867908befe10989f74a40621a3596948db56ca4bca49cd",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "8af0adcb8c7372324020c38d7e122a38e2f207608af03b8e73abae20b5c382ce"
+      },
+      "brightness_gain": 0.5,
+      "depth": 32,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "c07ac36326cbc34328914929349211856c9039f7d65592d3b2bd975309a1cccd",
+        "output": "44fe912ae99e0f6b483ca12b6f3f4cf604d9efdd9c8d5b3e0628d17547c468a9",
+        "post_blur": "38a2548dc0798ff3692daf29477305ad1ab27d064d4b9962df1a55aaa70f0438",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "7bcb96f82316fd25c20790db2aaed2fe987db33f4ed73663f7d6b1a7f0a69450"
+      },
+      "brightness_gain": 0.5,
+      "depth": 32,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "b05f2c90f5f91a3df3219603fb0ffa7a1d4526af7415fac15b1f53ead5cdc565",
+        "output": "0fbd0f427064e980b250aba1fa543cbba2d1738e71d997d6d7f46d31a9d56b44",
+        "post_blur": "8ad140f5daa9bf94193fde62f4abd3bd5df8c0b1aa84f0794b22e3760d79d6c4",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "f1c2c11f47ef90d3950ce1f6d9ca2d5e5e65dcc36f4c7310793c18cf3a619eab"
+      },
+      "brightness_gain": 0.5,
+      "depth": 32,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "24fff22e683ea46fe47fee68b2bd0d443e4c121254efd07e5ad4eb3f38454964",
+        "output": "5e89d91b9b3213aeb4a5919486cdf99a2d74033a464d4f7fdd9dc7bc5a685132",
+        "post_blur": "1d6034452a309d7b1732e8d3f0cd26bfb26141d117b6de6983a0170041cc10ec",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "fa1610ce83be33bdae598ac5abd50205c6565ed8e0aa5bab535df1c818ecc62b"
+      },
+      "brightness_gain": 0.5,
+      "depth": 32,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "78f2c7f5410c39186066b1040a3501aa37ec0a62d1135ae00db2e0bc109fe2f6",
+        "output": "3ca25e735e9c5c18e2a3789ffba84f42e3cb958d5325b986bcf664f0c9466587",
+        "post_blur": "c0b42528662fd88cf6cb265187ce7101503710bda841ddb5467465f820f0b2e2",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "14f174c0a124fb851998f8ab47d8951f0f1ed73170a80f1b932b19c4e237f0b7"
+      },
+      "brightness_gain": 0.5,
+      "depth": 32,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "26f8e1711669833c665096fe31a70da3f656af8063c7345ca4e790d6d4f111ae",
+        "output": "a4bd4e9119ade378545b1f999a2c92286707175e93fa09227a5d64feccf9c599",
+        "post_blur": "12423803491f0d814fc7c548b7eb2881cf2653e1d5fec39ffc2435bee0e3ed1b",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "5238b1cb73115522848143ec770bb1d913116104f9be9652bd99efe85f44ebae"
+      },
+      "brightness_gain": 0.5,
+      "depth": 32,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "26f8e1711669833c665096fe31a70da3f656af8063c7345ca4e790d6d4f111ae",
+        "output": "a4bd4e9119ade378545b1f999a2c92286707175e93fa09227a5d64feccf9c599",
+        "post_blur": "12423803491f0d814fc7c548b7eb2881cf2653e1d5fec39ffc2435bee0e3ed1b",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "f66574abd393e22b455fce5b0b19bcbb7fffd214f15ff32dfa3895ceee392bde"
+      },
+      "brightness_gain": 0.5,
+      "depth": 32,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "c948d56fb472cdd799caf96eb86f45890eafff6b578c769f5982f68b6e7ecca3",
+        "output": "cb10e5d76d68ceef2d54786de9d3fe97326400e0258f5fa0685b2dae8fdb6d92",
+        "post_blur": "6395182e2a7f7bfaa56b6b85c61e439f657ef27b263d48387a6fe47c54338651",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "af043aac85cfa6412a48f2d6206f88dfd476968fc53348d96aa241ab6c268e3f"
+      },
+      "brightness_gain": 2.0,
+      "depth": 32,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "64719ccdd3aec3bc7e0366c1c0b189b660414354f32cb472fbc6ca5998e685d8",
+        "output": "118c6390beffe52b3aef6a190992522b44b8dbd60251caa0a094df52a020e72f",
+        "post_blur": "24a7480cdee77521fc867908befe10989f74a40621a3596948db56ca4bca49cd",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "8af0adcb8c7372324020c38d7e122a38e2f207608af03b8e73abae20b5c382ce"
+      },
+      "brightness_gain": 2.0,
+      "depth": 32,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "c07ac36326cbc34328914929349211856c9039f7d65592d3b2bd975309a1cccd",
+        "output": "be8d3b1b3fa640b1d79405b6207b43f46aa93d69be2288bfb670dff638221955",
+        "post_blur": "38a2548dc0798ff3692daf29477305ad1ab27d064d4b9962df1a55aaa70f0438",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "7bcb96f82316fd25c20790db2aaed2fe987db33f4ed73663f7d6b1a7f0a69450"
+      },
+      "brightness_gain": 2.0,
+      "depth": 32,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "b05f2c90f5f91a3df3219603fb0ffa7a1d4526af7415fac15b1f53ead5cdc565",
+        "output": "c4ae70f497f4d9048a76a877c4eef4c3e00b0bb67eaf53a21497727ff34ca4d9",
+        "post_blur": "8ad140f5daa9bf94193fde62f4abd3bd5df8c0b1aa84f0794b22e3760d79d6c4",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb",
+        "source_size_factor": "8ae100974c5de9d36403f2833434755c3f24ce3ae4e99124eac19a94cfa9aa73",
+        "source_span": "f1c2c11f47ef90d3950ce1f6d9ca2d5e5e65dcc36f4c7310793c18cf3a619eab"
+      },
+      "brightness_gain": 2.0,
+      "depth": 32,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "24fff22e683ea46fe47fee68b2bd0d443e4c121254efd07e5ad4eb3f38454964",
+        "output": "efc7f518fe077c7a592cf9301503533242e3dd610ca908b22fb6a9cbf699fdb2",
+        "post_blur": "1d6034452a309d7b1732e8d3f0cd26bfb26141d117b6de6983a0170041cc10ec",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "fa1610ce83be33bdae598ac5abd50205c6565ed8e0aa5bab535df1c818ecc62b"
+      },
+      "brightness_gain": 2.0,
+      "depth": 32,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "78f2c7f5410c39186066b1040a3501aa37ec0a62d1135ae00db2e0bc109fe2f6",
+        "output": "ef2388936526dce820cfcc897260ad4f9e9009d285c8225f68336ed0d3f7ff2f",
+        "post_blur": "c0b42528662fd88cf6cb265187ce7101503710bda841ddb5467465f820f0b2e2",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "14f174c0a124fb851998f8ab47d8951f0f1ed73170a80f1b932b19c4e237f0b7"
+      },
+      "brightness_gain": 2.0,
+      "depth": 32,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "26f8e1711669833c665096fe31a70da3f656af8063c7345ca4e790d6d4f111ae",
+        "output": "69892234df419894d8560c64577efe59462a0a7eece17211d1a7778206c79fb6",
+        "post_blur": "12423803491f0d814fc7c548b7eb2881cf2653e1d5fec39ffc2435bee0e3ed1b",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "5238b1cb73115522848143ec770bb1d913116104f9be9652bd99efe85f44ebae"
+      },
+      "brightness_gain": 2.0,
+      "depth": 32,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "final_rgba": "26f8e1711669833c665096fe31a70da3f656af8063c7345ca4e790d6d4f111ae",
+        "output": "69892234df419894d8560c64577efe59462a0a7eece17211d1a7778206c79fb6",
+        "post_blur": "12423803491f0d814fc7c548b7eb2881cf2653e1d5fec39ffc2435bee0e3ed1b",
+        "pre_blur": "7b4de33cf06977749092444a007e1247b32d9ada25a801c3551f6649fd48e4fb",
+        "source_size_factor": "8da2ebf38ae190ff89cb711cbc075506d4350af3c3ed1f13ebb98b979fded719",
+        "source_span": "f66574abd393e22b455fce5b0b19bcbb7fffd214f15ff32dfa3895ceee392bde"
+      },
+      "brightness_gain": 2.0,
+      "depth": 32,
+      "exact": true,
+      "mode": "zoom",
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "output": true,
+        "post_blur": true,
+        "pre_blur": true
+      },
+      "production_source_scalar_exact": null,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "post_blur": true,
+        "pre_blur": true,
+        "source_size_factor": true,
+        "source_span": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "5db3079fe3bcda1fe65ab6906618299e9f74efe84372151bedace95315e72367",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "1f7b385d51dfa91ed44321e14ab8ac0d3704afaf55e54903266ed78f9f8e2e7f",
+        "max_alpha": "5e4f2ee1d6becab18a5ebbddf2d94f23ec3dd7abba13f2b62461cd6d6cbd35df",
+        "output": "ee8be6bb8fa20f4f0a9be00a1c83d0cde05da0aa052ac554ee40405b5ea334be",
+        "polar": "bfe5cc0158b7cf0f51ba050f2220c8fb2ae718f64ab0bc268a76b90abbf5a524",
+        "size_factor": "f2249fb145b7ecfaf24f9349009fc13ee261861a2ce140ebac6e9f7b62e44f8d",
+        "source_scalar": "dc2afa682623125ef5696ab8e91cdc2693178c4520c8a510c6b33a6f67b78473"
+      },
+      "brightness_gain": 0.5,
+      "depth": 8,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": false,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "1a0da6b4696f469e67751667825cc64a86c6ad55bf566bc08fffc16b984627c4",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "b9bc2a5fa506e0b9c28059209f1f039e393d5049937159acbfb395ee46b4166a",
+        "max_alpha": "da726af5edae3ce1a84ecf1b10db5c8dae082ad3d9654add8f1c5d6cb48a68f7",
+        "output": "af7bf773e4e7292e3feb1b5e8b9f01510d9151812bc177d380b88b42d732ffcb",
+        "polar": "bfe5cc0158b7cf0f51ba050f2220c8fb2ae718f64ab0bc268a76b90abbf5a524",
+        "size_factor": "f2249fb145b7ecfaf24f9349009fc13ee261861a2ce140ebac6e9f7b62e44f8d",
+        "source_scalar": "357c06e462fcabd0a1e53de2c2918d75b0a84c0d5be77e52ae42e4841609d723"
+      },
+      "brightness_gain": 0.5,
+      "depth": 8,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "83ee230fa7bc0f2747645de79782f3f94afd3e3f2de6878e4e16994874c76116",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "5c49f6284bd4a0cbc0aeec6dd94752e92156fe45003cefb0adb4d6d12cb0c303",
+        "max_alpha": "ff52e20efd830cb1e29e55cbb6eca634205ae0550f6546790f7826c4e1bf8a0a",
+        "output": "6f4f7ec9dfbe10de25981dba3b0c9cf5a8f0cfe6e0b4fb0e607cbeecc484e749",
+        "polar": "bfe5cc0158b7cf0f51ba050f2220c8fb2ae718f64ab0bc268a76b90abbf5a524",
+        "size_factor": "8cfd6f687a49bd2099150067068078a1a3bfdfefc0af2d82f374bb91ea26bfe9",
+        "source_scalar": "eb98d47b4844a35ca306a7df959f638665486ebce13bad9a700b1c7278d05482"
+      },
+      "brightness_gain": 0.5,
+      "depth": 8,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": false,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "a5b48b837a88ca42be637633f85f88d98f0a85b095c678af530dc403db85af3c",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "00f1befb88c0d5c07ca29ee29448007e0a08c7887c57cc4912bd4ab51cea9e3d",
+        "max_alpha": "cf499151f933d7b0bcd0726a61f29a71ea1056ed7a9313432a119204ca72b853",
+        "output": "166acfb329e02a7764bc492e9df50779de5911e3436a477b124ff093661479d4",
+        "polar": "bfe5cc0158b7cf0f51ba050f2220c8fb2ae718f64ab0bc268a76b90abbf5a524",
+        "size_factor": "8cfd6f687a49bd2099150067068078a1a3bfdfefc0af2d82f374bb91ea26bfe9",
+        "source_scalar": "8729eb710ef347619820983e18e570a3dec1c2299052221faca22a8703c66201"
+      },
+      "brightness_gain": 0.5,
+      "depth": 8,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "3f702f0d12e3d5b13bec7a1c1ebdeea2984e31587598290ed3d145677754f4ed",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "bddfa91df3e9f150400f5d3cd8a3ace96112154ffb66d81352e07d1454a89166",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "fd15fc6fcd7435a4e4a0441930261feb4b42217f933aef7b7750937013d5051d",
+        "polar": "bfe5cc0158b7cf0f51ba050f2220c8fb2ae718f64ab0bc268a76b90abbf5a524",
+        "size_factor": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+        "source_scalar": "1c4fc5f21ebf454e2fd4f6a17960194249f1590d92de5491cdd955e55ca521ca"
+      },
+      "brightness_gain": 0.5,
+      "depth": 8,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "dbf2607b12e7b8804c9a459dfd95a01f4ae3a8617c56d6fce7160eca2150b5b3",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "bddfa91df3e9f150400f5d3cd8a3ace96112154ffb66d81352e07d1454a89166",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "fd15fc6fcd7435a4e4a0441930261feb4b42217f933aef7b7750937013d5051d",
+        "polar": "bfe5cc0158b7cf0f51ba050f2220c8fb2ae718f64ab0bc268a76b90abbf5a524",
+        "size_factor": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+        "source_scalar": "2ba970320368b15f044f9001ef3edc9800ce8066781442301e889f86337b4b63"
+      },
+      "brightness_gain": 0.5,
+      "depth": 8,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "4c08eaf385958dcb8674da9f1af2082f199e0ef494e1b956d50a81ca0a8a15aa",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "62cf965256791a183eb6961454aef1d876553836070ec1dec8e15d5f7b784920",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "62db6eecb40c7316900ec61c6879dc2712b901ba4db9e926bf51d99641be062c",
+        "polar": "bfe5cc0158b7cf0f51ba050f2220c8fb2ae718f64ab0bc268a76b90abbf5a524",
+        "size_factor": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+        "source_scalar": "a90ad95d26ec1609e2b801214cbf4f92be9574b0a8a6b56f7366979624bd409a"
+      },
+      "brightness_gain": 0.5,
+      "depth": 8,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": false,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "4c08eaf385958dcb8674da9f1af2082f199e0ef494e1b956d50a81ca0a8a15aa",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "62cf965256791a183eb6961454aef1d876553836070ec1dec8e15d5f7b784920",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "62db6eecb40c7316900ec61c6879dc2712b901ba4db9e926bf51d99641be062c",
+        "polar": "bfe5cc0158b7cf0f51ba050f2220c8fb2ae718f64ab0bc268a76b90abbf5a524",
+        "size_factor": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+        "source_scalar": "c87b5be0d88b45ae93bb7d7ac1fc22f3c7439122df357998835405efc8a90679"
+      },
+      "brightness_gain": 0.5,
+      "depth": 8,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "5db3079fe3bcda1fe65ab6906618299e9f74efe84372151bedace95315e72367",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "1f7b385d51dfa91ed44321e14ab8ac0d3704afaf55e54903266ed78f9f8e2e7f",
+        "max_alpha": "5e4f2ee1d6becab18a5ebbddf2d94f23ec3dd7abba13f2b62461cd6d6cbd35df",
+        "output": "b651dd0962c4df14ac3d51344ff7435929b6093647c03cb80b4288c8ea452dac",
+        "polar": "bfe5cc0158b7cf0f51ba050f2220c8fb2ae718f64ab0bc268a76b90abbf5a524",
+        "size_factor": "f2249fb145b7ecfaf24f9349009fc13ee261861a2ce140ebac6e9f7b62e44f8d",
+        "source_scalar": "dc2afa682623125ef5696ab8e91cdc2693178c4520c8a510c6b33a6f67b78473"
+      },
+      "brightness_gain": 2.0,
+      "depth": 8,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": false,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "1a0da6b4696f469e67751667825cc64a86c6ad55bf566bc08fffc16b984627c4",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "b9bc2a5fa506e0b9c28059209f1f039e393d5049937159acbfb395ee46b4166a",
+        "max_alpha": "da726af5edae3ce1a84ecf1b10db5c8dae082ad3d9654add8f1c5d6cb48a68f7",
+        "output": "b651dd0962c4df14ac3d51344ff7435929b6093647c03cb80b4288c8ea452dac",
+        "polar": "bfe5cc0158b7cf0f51ba050f2220c8fb2ae718f64ab0bc268a76b90abbf5a524",
+        "size_factor": "f2249fb145b7ecfaf24f9349009fc13ee261861a2ce140ebac6e9f7b62e44f8d",
+        "source_scalar": "357c06e462fcabd0a1e53de2c2918d75b0a84c0d5be77e52ae42e4841609d723"
+      },
+      "brightness_gain": 2.0,
+      "depth": 8,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "83ee230fa7bc0f2747645de79782f3f94afd3e3f2de6878e4e16994874c76116",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "5c49f6284bd4a0cbc0aeec6dd94752e92156fe45003cefb0adb4d6d12cb0c303",
+        "max_alpha": "ff52e20efd830cb1e29e55cbb6eca634205ae0550f6546790f7826c4e1bf8a0a",
+        "output": "3a833e5954ea1a99535bc6a66b6a76d4e571a45971bd6d6df5a32e91c65d04d1",
+        "polar": "bfe5cc0158b7cf0f51ba050f2220c8fb2ae718f64ab0bc268a76b90abbf5a524",
+        "size_factor": "8cfd6f687a49bd2099150067068078a1a3bfdfefc0af2d82f374bb91ea26bfe9",
+        "source_scalar": "eb98d47b4844a35ca306a7df959f638665486ebce13bad9a700b1c7278d05482"
+      },
+      "brightness_gain": 2.0,
+      "depth": 8,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": false,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "a5b48b837a88ca42be637633f85f88d98f0a85b095c678af530dc403db85af3c",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "00f1befb88c0d5c07ca29ee29448007e0a08c7887c57cc4912bd4ab51cea9e3d",
+        "max_alpha": "cf499151f933d7b0bcd0726a61f29a71ea1056ed7a9313432a119204ca72b853",
+        "output": "ad578a1b54984c715036b02e6db339ff815e4680e2449d31d2a69a10573a5ada",
+        "polar": "bfe5cc0158b7cf0f51ba050f2220c8fb2ae718f64ab0bc268a76b90abbf5a524",
+        "size_factor": "8cfd6f687a49bd2099150067068078a1a3bfdfefc0af2d82f374bb91ea26bfe9",
+        "source_scalar": "8729eb710ef347619820983e18e570a3dec1c2299052221faca22a8703c66201"
+      },
+      "brightness_gain": 2.0,
+      "depth": 8,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "3f702f0d12e3d5b13bec7a1c1ebdeea2984e31587598290ed3d145677754f4ed",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "bddfa91df3e9f150400f5d3cd8a3ace96112154ffb66d81352e07d1454a89166",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "40c7bb1d3054bde18bd4f4a413ee0c103c507b852a42fbf61a3a3d2e3b54f373",
+        "polar": "bfe5cc0158b7cf0f51ba050f2220c8fb2ae718f64ab0bc268a76b90abbf5a524",
+        "size_factor": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+        "source_scalar": "1c4fc5f21ebf454e2fd4f6a17960194249f1590d92de5491cdd955e55ca521ca"
+      },
+      "brightness_gain": 2.0,
+      "depth": 8,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "dbf2607b12e7b8804c9a459dfd95a01f4ae3a8617c56d6fce7160eca2150b5b3",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "bddfa91df3e9f150400f5d3cd8a3ace96112154ffb66d81352e07d1454a89166",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "40c7bb1d3054bde18bd4f4a413ee0c103c507b852a42fbf61a3a3d2e3b54f373",
+        "polar": "bfe5cc0158b7cf0f51ba050f2220c8fb2ae718f64ab0bc268a76b90abbf5a524",
+        "size_factor": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+        "source_scalar": "2ba970320368b15f044f9001ef3edc9800ce8066781442301e889f86337b4b63"
+      },
+      "brightness_gain": 2.0,
+      "depth": 8,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "4c08eaf385958dcb8674da9f1af2082f199e0ef494e1b956d50a81ca0a8a15aa",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "62cf965256791a183eb6961454aef1d876553836070ec1dec8e15d5f7b784920",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "ac3954465aba475ed8e1c0d8ee062ce9cf98e5583b60818e1bdedb945b2f4102",
+        "polar": "bfe5cc0158b7cf0f51ba050f2220c8fb2ae718f64ab0bc268a76b90abbf5a524",
+        "size_factor": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+        "source_scalar": "a90ad95d26ec1609e2b801214cbf4f92be9574b0a8a6b56f7366979624bd409a"
+      },
+      "brightness_gain": 2.0,
+      "depth": 8,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": false,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "4c08eaf385958dcb8674da9f1af2082f199e0ef494e1b956d50a81ca0a8a15aa",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "62cf965256791a183eb6961454aef1d876553836070ec1dec8e15d5f7b784920",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "ac3954465aba475ed8e1c0d8ee062ce9cf98e5583b60818e1bdedb945b2f4102",
+        "polar": "bfe5cc0158b7cf0f51ba050f2220c8fb2ae718f64ab0bc268a76b90abbf5a524",
+        "size_factor": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+        "source_scalar": "c87b5be0d88b45ae93bb7d7ac1fc22f3c7439122df357998835405efc8a90679"
+      },
+      "brightness_gain": 2.0,
+      "depth": 8,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "a24e03e8817e9c1b425118686b9b3d17c77e6ad629c2a5f192767bc8bebc42bb",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "a740f5541518fd2246ab3d871c16574f92e6f17fae6d0a4415b5135f07df203f",
+        "max_alpha": "5e4f2ee1d6becab18a5ebbddf2d94f23ec3dd7abba13f2b62461cd6d6cbd35df",
+        "output": "b3fc71f8e7c04ac8e9d9da415b1cadee76cb53c4f8f1f61e886c3484862f2741",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "f2249fb145b7ecfaf24f9349009fc13ee261861a2ce140ebac6e9f7b62e44f8d",
+        "source_scalar": "dc2afa682623125ef5696ab8e91cdc2693178c4520c8a510c6b33a6f67b78473"
+      },
+      "brightness_gain": 0.5,
+      "depth": 16,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": false,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "95dff9473626264700aac27d27e458489d75a5dc312e840f39bd6c250df0df06",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "a3da7cc197c6166c56f351257b65e09097158b18f9d4d76b7beb5f2ec83914eb",
+        "max_alpha": "da726af5edae3ce1a84ecf1b10db5c8dae082ad3d9654add8f1c5d6cb48a68f7",
+        "output": "f1da1813b53c11125b66138074e4547a057a7ac2a734d7953e703d2a89adf405",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "f2249fb145b7ecfaf24f9349009fc13ee261861a2ce140ebac6e9f7b62e44f8d",
+        "source_scalar": "357c06e462fcabd0a1e53de2c2918d75b0a84c0d5be77e52ae42e4841609d723"
+      },
+      "brightness_gain": 0.5,
+      "depth": 16,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "22de8bfe9c027898d0bcfbfa713d32468142ac9a847ce93e94e0de4e3b8cdf76",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "fafedac123b8a4e299097f0f190232b122692a260747bac716e4fd3d2f4ddd15",
+        "max_alpha": "ff52e20efd830cb1e29e55cbb6eca634205ae0550f6546790f7826c4e1bf8a0a",
+        "output": "fc7303cd604614cc12df112eae9cd5f79159e05f33e48115e3d52aa15dbd013c",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "8cfd6f687a49bd2099150067068078a1a3bfdfefc0af2d82f374bb91ea26bfe9",
+        "source_scalar": "eb98d47b4844a35ca306a7df959f638665486ebce13bad9a700b1c7278d05482"
+      },
+      "brightness_gain": 0.5,
+      "depth": 16,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": false,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "dc325f78456104cf71df473d2c9a6d5938f36300e8632339a5b1c7fcad31994d",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "4d332bb2ab371eb505b27231d108b4610a65959c1bc65629a2ab51035fee6693",
+        "max_alpha": "cf499151f933d7b0bcd0726a61f29a71ea1056ed7a9313432a119204ca72b853",
+        "output": "0cf913f37f634b5f2dc6d7612fcae93abab08cf7379bf2cc5dca739178394210",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "8cfd6f687a49bd2099150067068078a1a3bfdfefc0af2d82f374bb91ea26bfe9",
+        "source_scalar": "8729eb710ef347619820983e18e570a3dec1c2299052221faca22a8703c66201"
+      },
+      "brightness_gain": 0.5,
+      "depth": 16,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "86a6d72792b487bbe9f901ceff8f58adb19f3190afbef92651708613c99b7b3a",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "8f6d2e687f2761a55cd9fd3a0da519f691e2bb7e74fddeadd19a7a6430ae2237",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "4e0822bb0a389092f54319f9f9d1017b82257836e0dfd6c05f489265ae317801",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+        "source_scalar": "1c4fc5f21ebf454e2fd4f6a17960194249f1590d92de5491cdd955e55ca521ca"
+      },
+      "brightness_gain": 0.5,
+      "depth": 16,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "4f500e9ef5ab37ef93afb7597821760d117a5b0d489b69a07bf2e3d4514fca83",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "8f6d2e687f2761a55cd9fd3a0da519f691e2bb7e74fddeadd19a7a6430ae2237",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "4e0822bb0a389092f54319f9f9d1017b82257836e0dfd6c05f489265ae317801",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+        "source_scalar": "2ba970320368b15f044f9001ef3edc9800ce8066781442301e889f86337b4b63"
+      },
+      "brightness_gain": 0.5,
+      "depth": 16,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "9d83eb0ef01aa6a7200a5b1d060246d3a8af9edb81098b81535ed1c86664cef7",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "5da56fc79be4c420d7dbf26887ca005aa2cc58fe3a5652213327c33dcabf4b60",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "f29b45fc807c7504c0254d4981d208ce2ddec7bc0321075f0443a8661551d581",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+        "source_scalar": "a90ad95d26ec1609e2b801214cbf4f92be9574b0a8a6b56f7366979624bd409a"
+      },
+      "brightness_gain": 0.5,
+      "depth": 16,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": false,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "9d83eb0ef01aa6a7200a5b1d060246d3a8af9edb81098b81535ed1c86664cef7",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "5da56fc79be4c420d7dbf26887ca005aa2cc58fe3a5652213327c33dcabf4b60",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "f29b45fc807c7504c0254d4981d208ce2ddec7bc0321075f0443a8661551d581",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+        "source_scalar": "c87b5be0d88b45ae93bb7d7ac1fc22f3c7439122df357998835405efc8a90679"
+      },
+      "brightness_gain": 0.5,
+      "depth": 16,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "a24e03e8817e9c1b425118686b9b3d17c77e6ad629c2a5f192767bc8bebc42bb",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "a740f5541518fd2246ab3d871c16574f92e6f17fae6d0a4415b5135f07df203f",
+        "max_alpha": "5e4f2ee1d6becab18a5ebbddf2d94f23ec3dd7abba13f2b62461cd6d6cbd35df",
+        "output": "f5cc8ba0e095cd6361ca172748a194dfb3dd51881d767ed09b7975c50b240ea9",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "f2249fb145b7ecfaf24f9349009fc13ee261861a2ce140ebac6e9f7b62e44f8d",
+        "source_scalar": "dc2afa682623125ef5696ab8e91cdc2693178c4520c8a510c6b33a6f67b78473"
+      },
+      "brightness_gain": 2.0,
+      "depth": 16,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": false,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "95dff9473626264700aac27d27e458489d75a5dc312e840f39bd6c250df0df06",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "a3da7cc197c6166c56f351257b65e09097158b18f9d4d76b7beb5f2ec83914eb",
+        "max_alpha": "da726af5edae3ce1a84ecf1b10db5c8dae082ad3d9654add8f1c5d6cb48a68f7",
+        "output": "2e50220ef27ec9d34c7cfc9165226ea6b16518f1ddf1175c574a0aaefe0421bb",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "f2249fb145b7ecfaf24f9349009fc13ee261861a2ce140ebac6e9f7b62e44f8d",
+        "source_scalar": "357c06e462fcabd0a1e53de2c2918d75b0a84c0d5be77e52ae42e4841609d723"
+      },
+      "brightness_gain": 2.0,
+      "depth": 16,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "22de8bfe9c027898d0bcfbfa713d32468142ac9a847ce93e94e0de4e3b8cdf76",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "fafedac123b8a4e299097f0f190232b122692a260747bac716e4fd3d2f4ddd15",
+        "max_alpha": "ff52e20efd830cb1e29e55cbb6eca634205ae0550f6546790f7826c4e1bf8a0a",
+        "output": "a60e0e4621fcd285a5a53aea4fb818f0a30fd8a168b0a5d5c1e4045e84c11755",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "8cfd6f687a49bd2099150067068078a1a3bfdfefc0af2d82f374bb91ea26bfe9",
+        "source_scalar": "eb98d47b4844a35ca306a7df959f638665486ebce13bad9a700b1c7278d05482"
+      },
+      "brightness_gain": 2.0,
+      "depth": 16,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": false,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "dc325f78456104cf71df473d2c9a6d5938f36300e8632339a5b1c7fcad31994d",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "4d332bb2ab371eb505b27231d108b4610a65959c1bc65629a2ab51035fee6693",
+        "max_alpha": "cf499151f933d7b0bcd0726a61f29a71ea1056ed7a9313432a119204ca72b853",
+        "output": "b52dd75c47a0d48044a06a7a272a2a22b433708fe66727bf60720e3dd01d723c",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "8cfd6f687a49bd2099150067068078a1a3bfdfefc0af2d82f374bb91ea26bfe9",
+        "source_scalar": "8729eb710ef347619820983e18e570a3dec1c2299052221faca22a8703c66201"
+      },
+      "brightness_gain": 2.0,
+      "depth": 16,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "86a6d72792b487bbe9f901ceff8f58adb19f3190afbef92651708613c99b7b3a",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "8f6d2e687f2761a55cd9fd3a0da519f691e2bb7e74fddeadd19a7a6430ae2237",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "f0ae1ff7ed0b1cc4d1c61e370cb5675f4bd4f1f973e4d9fd5ee128101d28ca83",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+        "source_scalar": "1c4fc5f21ebf454e2fd4f6a17960194249f1590d92de5491cdd955e55ca521ca"
+      },
+      "brightness_gain": 2.0,
+      "depth": 16,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "4f500e9ef5ab37ef93afb7597821760d117a5b0d489b69a07bf2e3d4514fca83",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "8f6d2e687f2761a55cd9fd3a0da519f691e2bb7e74fddeadd19a7a6430ae2237",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "f0ae1ff7ed0b1cc4d1c61e370cb5675f4bd4f1f973e4d9fd5ee128101d28ca83",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+        "source_scalar": "2ba970320368b15f044f9001ef3edc9800ce8066781442301e889f86337b4b63"
+      },
+      "brightness_gain": 2.0,
+      "depth": 16,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "9d83eb0ef01aa6a7200a5b1d060246d3a8af9edb81098b81535ed1c86664cef7",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "5da56fc79be4c420d7dbf26887ca005aa2cc58fe3a5652213327c33dcabf4b60",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "0cac8078983ddcd6d5f9f2c4216a0b66ff415067eb93d50d282842976485ee41",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+        "source_scalar": "a90ad95d26ec1609e2b801214cbf4f92be9574b0a8a6b56f7366979624bd409a"
+      },
+      "brightness_gain": 2.0,
+      "depth": 16,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": false,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "9d83eb0ef01aa6a7200a5b1d060246d3a8af9edb81098b81535ed1c86664cef7",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "5da56fc79be4c420d7dbf26887ca005aa2cc58fe3a5652213327c33dcabf4b60",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "0cac8078983ddcd6d5f9f2c4216a0b66ff415067eb93d50d282842976485ee41",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+        "source_scalar": "c87b5be0d88b45ae93bb7d7ac1fc22f3c7439122df357998835405efc8a90679"
+      },
+      "brightness_gain": 2.0,
+      "depth": 16,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "a24e03e8817e9c1b425118686b9b3d17c77e6ad629c2a5f192767bc8bebc42bb",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "a740f5541518fd2246ab3d871c16574f92e6f17fae6d0a4415b5135f07df203f",
+        "max_alpha": "5e4f2ee1d6becab18a5ebbddf2d94f23ec3dd7abba13f2b62461cd6d6cbd35df",
+        "output": "1bf1002952b663e2731c5d82e5fcc003e9074c597e4eef30ef24e0a87966743f",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "f2249fb145b7ecfaf24f9349009fc13ee261861a2ce140ebac6e9f7b62e44f8d",
+        "source_scalar": "dc2afa682623125ef5696ab8e91cdc2693178c4520c8a510c6b33a6f67b78473"
+      },
+      "brightness_gain": 0.5,
+      "depth": 32,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": false,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "95dff9473626264700aac27d27e458489d75a5dc312e840f39bd6c250df0df06",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "a3da7cc197c6166c56f351257b65e09097158b18f9d4d76b7beb5f2ec83914eb",
+        "max_alpha": "da726af5edae3ce1a84ecf1b10db5c8dae082ad3d9654add8f1c5d6cb48a68f7",
+        "output": "1b45d8602a457d95ee060aa7cd4db3903af366bafee1d1464ec92ddba02750b7",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "f2249fb145b7ecfaf24f9349009fc13ee261861a2ce140ebac6e9f7b62e44f8d",
+        "source_scalar": "357c06e462fcabd0a1e53de2c2918d75b0a84c0d5be77e52ae42e4841609d723"
+      },
+      "brightness_gain": 0.5,
+      "depth": 32,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "22de8bfe9c027898d0bcfbfa713d32468142ac9a847ce93e94e0de4e3b8cdf76",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "fafedac123b8a4e299097f0f190232b122692a260747bac716e4fd3d2f4ddd15",
+        "max_alpha": "ff52e20efd830cb1e29e55cbb6eca634205ae0550f6546790f7826c4e1bf8a0a",
+        "output": "3444c3bf38a30695c534ca8c18ddead9f4e85d0f685ebb0e3e76c0f1423a52e2",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "8cfd6f687a49bd2099150067068078a1a3bfdfefc0af2d82f374bb91ea26bfe9",
+        "source_scalar": "eb98d47b4844a35ca306a7df959f638665486ebce13bad9a700b1c7278d05482"
+      },
+      "brightness_gain": 0.5,
+      "depth": 32,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": false,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "dc325f78456104cf71df473d2c9a6d5938f36300e8632339a5b1c7fcad31994d",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "4d332bb2ab371eb505b27231d108b4610a65959c1bc65629a2ab51035fee6693",
+        "max_alpha": "cf499151f933d7b0bcd0726a61f29a71ea1056ed7a9313432a119204ca72b853",
+        "output": "9533c19bfef3e197d85f5a6b8a97c983ddec6cc6e21dc6dbf2f38a9017a9de83",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "8cfd6f687a49bd2099150067068078a1a3bfdfefc0af2d82f374bb91ea26bfe9",
+        "source_scalar": "8729eb710ef347619820983e18e570a3dec1c2299052221faca22a8703c66201"
+      },
+      "brightness_gain": 0.5,
+      "depth": 32,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "86a6d72792b487bbe9f901ceff8f58adb19f3190afbef92651708613c99b7b3a",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "8f6d2e687f2761a55cd9fd3a0da519f691e2bb7e74fddeadd19a7a6430ae2237",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "ea93d060db497d395a73aee5e1327f9e690440249fa7792c6832f08e1c2a5640",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+        "source_scalar": "1c4fc5f21ebf454e2fd4f6a17960194249f1590d92de5491cdd955e55ca521ca"
+      },
+      "brightness_gain": 0.5,
+      "depth": 32,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "4f500e9ef5ab37ef93afb7597821760d117a5b0d489b69a07bf2e3d4514fca83",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "8f6d2e687f2761a55cd9fd3a0da519f691e2bb7e74fddeadd19a7a6430ae2237",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "ea93d060db497d395a73aee5e1327f9e690440249fa7792c6832f08e1c2a5640",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+        "source_scalar": "2ba970320368b15f044f9001ef3edc9800ce8066781442301e889f86337b4b63"
+      },
+      "brightness_gain": 0.5,
+      "depth": 32,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "9d83eb0ef01aa6a7200a5b1d060246d3a8af9edb81098b81535ed1c86664cef7",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "5da56fc79be4c420d7dbf26887ca005aa2cc58fe3a5652213327c33dcabf4b60",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "f94560cfa53a3e0b39777ec813fad3b0fb8eda2088a089b45ba4a6fc27fdb886",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+        "source_scalar": "a90ad95d26ec1609e2b801214cbf4f92be9574b0a8a6b56f7366979624bd409a"
+      },
+      "brightness_gain": 0.5,
+      "depth": 32,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": false,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "9d83eb0ef01aa6a7200a5b1d060246d3a8af9edb81098b81535ed1c86664cef7",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "5da56fc79be4c420d7dbf26887ca005aa2cc58fe3a5652213327c33dcabf4b60",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "f94560cfa53a3e0b39777ec813fad3b0fb8eda2088a089b45ba4a6fc27fdb886",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+        "source_scalar": "c87b5be0d88b45ae93bb7d7ac1fc22f3c7439122df357998835405efc8a90679"
+      },
+      "brightness_gain": 0.5,
+      "depth": 32,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "a24e03e8817e9c1b425118686b9b3d17c77e6ad629c2a5f192767bc8bebc42bb",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "a740f5541518fd2246ab3d871c16574f92e6f17fae6d0a4415b5135f07df203f",
+        "max_alpha": "5e4f2ee1d6becab18a5ebbddf2d94f23ec3dd7abba13f2b62461cd6d6cbd35df",
+        "output": "5e0e7386c41a5babb573d59fc23ebe9d888d3c5343bdfca526b6e5ba4472d8fd",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "f2249fb145b7ecfaf24f9349009fc13ee261861a2ce140ebac6e9f7b62e44f8d",
+        "source_scalar": "dc2afa682623125ef5696ab8e91cdc2693178c4520c8a510c6b33a6f67b78473"
+      },
+      "brightness_gain": 2.0,
+      "depth": 32,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": false,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "95dff9473626264700aac27d27e458489d75a5dc312e840f39bd6c250df0df06",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "a3da7cc197c6166c56f351257b65e09097158b18f9d4d76b7beb5f2ec83914eb",
+        "max_alpha": "da726af5edae3ce1a84ecf1b10db5c8dae082ad3d9654add8f1c5d6cb48a68f7",
+        "output": "e34e043375653dc031112576d49af8595e8ac4d4dd38d1e0b624c8156333d0e2",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "f2249fb145b7ecfaf24f9349009fc13ee261861a2ce140ebac6e9f7b62e44f8d",
+        "source_scalar": "357c06e462fcabd0a1e53de2c2918d75b0a84c0d5be77e52ae42e4841609d723"
+      },
+      "brightness_gain": 2.0,
+      "depth": 32,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "22de8bfe9c027898d0bcfbfa713d32468142ac9a847ce93e94e0de4e3b8cdf76",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "fafedac123b8a4e299097f0f190232b122692a260747bac716e4fd3d2f4ddd15",
+        "max_alpha": "ff52e20efd830cb1e29e55cbb6eca634205ae0550f6546790f7826c4e1bf8a0a",
+        "output": "b60c54fbdc1beea1503a21798bfdbd70f8ad2c14665602ef1a7620dc636169da",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "8cfd6f687a49bd2099150067068078a1a3bfdfefc0af2d82f374bb91ea26bfe9",
+        "source_scalar": "eb98d47b4844a35ca306a7df959f638665486ebce13bad9a700b1c7278d05482"
+      },
+      "brightness_gain": 2.0,
+      "depth": 32,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": false,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "dc325f78456104cf71df473d2c9a6d5938f36300e8632339a5b1c7fcad31994d",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "4d332bb2ab371eb505b27231d108b4610a65959c1bc65629a2ab51035fee6693",
+        "max_alpha": "cf499151f933d7b0bcd0726a61f29a71ea1056ed7a9313432a119204ca72b853",
+        "output": "3d85e069a879f2b9ac2b28c48e0f72d3a5b1e0a2ccc4e27be3afd2bd9e5b3809",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "8cfd6f687a49bd2099150067068078a1a3bfdfefc0af2d82f374bb91ea26bfe9",
+        "source_scalar": "8729eb710ef347619820983e18e570a3dec1c2299052221faca22a8703c66201"
+      },
+      "brightness_gain": 2.0,
+      "depth": 32,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 25.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "86a6d72792b487bbe9f901ceff8f58adb19f3190afbef92651708613c99b7b3a",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "8f6d2e687f2761a55cd9fd3a0da519f691e2bb7e74fddeadd19a7a6430ae2237",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "52bebd6cd4ae640c19280c71e6cc6a02a22fc53a2e9931f7ca43c0d405260a49",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+        "source_scalar": "1c4fc5f21ebf454e2fd4f6a17960194249f1590d92de5491cdd955e55ca521ca"
+      },
+      "brightness_gain": 2.0,
+      "depth": 32,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 1,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "4f500e9ef5ab37ef93afb7597821760d117a5b0d489b69a07bf2e3d4514fca83",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "8f6d2e687f2761a55cd9fd3a0da519f691e2bb7e74fddeadd19a7a6430ae2237",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "52bebd6cd4ae640c19280c71e6cc6a02a22fc53a2e9931f7ca43c0d405260a49",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+        "source_scalar": "2ba970320368b15f044f9001ef3edc9800ce8066781442301e889f86337b4b63"
+      },
+      "brightness_gain": 2.0,
+      "depth": 32,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 2,
+      "noise_variation": 25.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "9d83eb0ef01aa6a7200a5b1d060246d3a8af9edb81098b81535ed1c86664cef7",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "5da56fc79be4c420d7dbf26887ca005aa2cc58fe3a5652213327c33dcabf4b60",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "42777389caa52955dd270e9e28fc526e5d2bc7eee05d176b0d46bbaf41b7c20e",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+        "source_scalar": "a90ad95d26ec1609e2b801214cbf4f92be9574b0a8a6b56f7366979624bd409a"
+      },
+      "brightness_gain": 2.0,
+      "depth": 32,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 1,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": false,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    },
+    {
+      "actual_output_equals_f32_gain_upper_clamp_pack": true,
+      "actual_sha256": {
+        "accum": "9d83eb0ef01aa6a7200a5b1d060246d3a8af9edb81098b81535ed1c86664cef7",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "5da56fc79be4c420d7dbf26887ca005aa2cc58fe3a5652213327c33dcabf4b60",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "42777389caa52955dd270e9e28fc526e5d2bc7eee05d176b0d46bbaf41b7c20e",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "size_factor": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+        "source_scalar": "c87b5be0d88b45ae93bb7d7ac1fc22f3c7439122df357998835405efc8a90679"
+      },
+      "brightness_gain": 2.0,
+      "depth": 32,
+      "exact": true,
+      "mode": "rotation",
+      "noise_type": 2,
+      "noise_variation": 100.0,
+      "normalized_rgba_gain_invariant": true,
+      "padding_gain_invariant": true,
+      "production_matches_actual": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true
+      },
+      "production_source_scalar_exact": true,
+      "size_variation": 100.0,
+      "upstream_gain_invariant": {
+        "accum": true,
+        "coordinates": true,
+        "max_alpha": true,
+        "polar": true,
+        "size_factor": true,
+        "source_scalar": true
+      }
+    }
+  ],
+  "kind": "olmradialblur_brightness_size_noise_components_actual_aex_20260811",
+  "ordering": "Size factor and procedural noise compose source span upstream. Brightness is applied only after inverse-sample RGB normalization as f32(normalized*gain), then RGB-only min(1); alpha is unchanged.",
+  "phase": "full",
+  "scope": "Centered Zoom/Rotation 32x18 component fixtures; PF8/PF16/PF32; Brightness .5/2; SV25/100 x NV25/100 x procedural Type1/2; seed1 offset0 thickness10; Outer4 neutral tuple.",
+  "status": "96/96 exact"
+}

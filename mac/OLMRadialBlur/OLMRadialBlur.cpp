@@ -2017,6 +2017,8 @@ static PF_Err RenderZoomTyped(
 		info.noise_variation == 0.0 && info.noise_type == 1 && info.noise_layer == 0 &&
 		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0 &&
 		(source_alpha_strictly_positive || source_components_1_4_9);
+	const bool brightness_size_noise_matrix =
+		info.brightness_gain == 0.5 || info.brightness_gain == 2.0;
 	const bool use_aex_typed_zoom_size_noise_components_32x18 = input && output &&
 		use_aex_zoom_geometry && input->width == 32 && input->height == 18 &&
 		input->rowbytes >= input->width * (A_long)sizeof(PixelT) &&
@@ -2026,7 +2028,8 @@ static PF_Err RenderZoomTyped(
 		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
 		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
 		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
-		info.quality == 5.0 && info.brightness_gain == 1.0 &&
+		info.quality == 5.0 &&
+		(info.brightness_gain == 1.0 || brightness_size_noise_matrix) &&
 		(info.size_variation == 25.0 || info.size_variation == 100.0) &&
 		(info.noise_variation == 25.0 || info.noise_variation == 100.0) &&
 		(info.noise_type == 1 || info.noise_type == 2) && info.noise_layer == 0 &&
@@ -2468,6 +2471,7 @@ static PF_Err RenderZoomTyped(
 			}
 			if constexpr (std::is_same<PixelT, PF_PixelFloat>::value) {
 				if ((use_aex_typed_zoom_offcenter_brightness && info.brightness_gain == 2.0) ||
+					(use_aex_typed_zoom_size_noise_components_32x18 && info.brightness_gain == 2.0) ||
 					use_aex_typed_zoom_inner_pairwise || use_aex_typed_zoom_inner_offset_pairwise ||
 					use_aex_typed_zoom_edge_fade_32x18) {
 					for (int c = 0; c < 3; ++c) {
@@ -2910,6 +2914,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.noise_variation == 0.0 && info.noise_type == 1 && info.noise_layer == 0 &&
 		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0 &&
 		(source_alpha_strictly_positive || source_components_1_4_9);
+	const bool brightness_size_noise_matrix =
+		info.brightness_gain == 0.5 || info.brightness_gain == 2.0;
 	const bool use_aex_typed_rotation_size_noise_components_32x18 = input && output &&
 		use_aex_inner_geometry && input->width == 32 && input->height == 18 &&
 		input->rowbytes >= input->width * (A_long)sizeof(PixelT) &&
@@ -2919,7 +2925,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
 		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
 		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
-		info.quality == 5.0 && info.brightness_gain == 1.0 &&
+		info.quality == 5.0 &&
+		(info.brightness_gain == 1.0 || brightness_size_noise_matrix) &&
 		(info.size_variation == 25.0 || info.size_variation == 100.0) &&
 		(info.noise_variation == 25.0 || info.noise_variation == 100.0) &&
 		(info.noise_type == 1 || info.noise_type == 2) && info.noise_layer == 0 &&

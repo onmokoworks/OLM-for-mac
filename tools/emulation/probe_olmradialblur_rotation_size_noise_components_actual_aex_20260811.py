@@ -25,8 +25,8 @@ CELLS = [(d, sv, nv, nt) for d in (8, 16, 32) for sv in SVS for nv in NVS for nt
 REPORT = ROOT / "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
 
 
-def configure(depth: int, sv: float, nv: float, noise_type: int):
-    target, frame = comp.configure(depth, sv)
+def configure(depth: int, sv: float, nv: float, noise_type: int, gain: float = 1.0):
+    target, frame = comp.configure(depth, sv, gain)
     fixture = target.base if depth == 32 else target
     fixture.FIXTURE_NOISE_VARIATION = nv
     fixture.FIXTURE_NOISE_TYPE = noise_type
@@ -49,7 +49,8 @@ def isolated(cell):
 
 
 def production(cell, expected):
-    depth, sv, nv, noise_type = cell
+    depth, sv, nv, noise_type = cell[:4]
+    gain = cell[4] if len(cell) > 4 else 1.0
     original = Path.write_text
 
     def write_text(path, data, *args, **kwargs):
@@ -62,6 +63,12 @@ def production(cell, expected):
                 f"i.noise_variation={nv};i.noise_type={noise_type};i.seed=1;i.noise_offset=0;i.thickness=10;",
                 1,
             )
+            brightness = next((marker for marker in
+                               ("i.brightness_gain=1;", "i.brightness_gain=1.0;")
+                               if marker in data), None)
+            if brightness is None:
+                raise RuntimeError("brightness info marker absent")
+            data = data.replace(brightness, f"i.brightness_gain={gain};", 1)
         return original(path, data, *args, **kwargs)
 
     Path.write_text = write_text

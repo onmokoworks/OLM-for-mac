@@ -97,10 +97,10 @@ def component_frame_for(depth: int, mode: str, w: int, h: int, rb: int):
 ORIGINAL_FRAME_FOR = base.frame_for
 
 
-def configure(depth: int, size: float):
+def configure(depth: int, size: float, gain: float = 1.0):
     base.frame_for = component_frame_for
     try:
-        target, frame, rb, _cx, _cy = base.configure(("zoom", depth, 32, 18, 0.0, 0.0, 1.0))
+        target, frame, rb, _cx, _cy = base.configure(("zoom", depth, 32, 18, 0.0, 0.0, gain))
     finally:
         base.frame_for = ORIGINAL_FRAME_FOR
     module = target.fixture.m4

@@ -28,18 +28,19 @@ CELLS = [(d, sv, nv, nt) for d in (8, 16, 32) for sv in (25., 100.)
 def sha(raw): return hashlib.sha256(raw).hexdigest()
 
 
-def configure(depth, sv, nv, nt):
+def configure(depth, sv, nv, nt, gain=1.0):
     base.frame_for = components.component_frame_for
     try:
-        target, frame, rb, _, _ = base.configure(("zoom", depth, 32, 18, 0., 0., 1.))
+        target, frame, rb, _, _ = base.configure(("zoom", depth, 32, 18, 0., 0., gain))
     finally:
         base.frame_for = components.ORIGINAL_FRAME_FOR
     return target, frame, rb
 
 
 def actual(cell):
-    depth, sv, nv, nt = cell
-    target, frame, rb = configure(*cell)
+    depth, sv, nv, nt = cell[:4]
+    gain = cell[4] if len(cell) > 4 else 1.0
+    target, frame, rb = configure(depth, sv, nv, nt, gain)
     fx = target.fixture
     params = fx.m4.load_case0010_params()
     params.update({
@@ -47,7 +48,7 @@ def actual(cell):
         "Ratio": 1., "Angle": 0, "Outer Strength": 4, "Outer Offset Mode": 1,
         "Outer Offset": 0, "Inner Strength": 0, "Noise Variation": nv,
         "Noise Type": nt, "Seed": 1, "Noise Offset": 0., "Thickness": 10.,
-        "Size Variation": sv, "Brightness Gain": 1.,
+        "Size Variation": sv, "Brightness Gain": gain,
     })
     loader = fx.AexLoader(str(fx.m4.AEX_PATH), fast=True)
     loader.register_libm_impls(max_threads=1)
@@ -100,7 +101,8 @@ def isolated(cell):
 
 
 def production(cell, expected):
-    depth, sv, nv, noise_type = cell
+    depth, sv, nv, noise_type = cell[:4]
+    gain = cell[4] if len(cell) > 4 else 1.0
     original = Path.write_text
 
     def write_text(path, data, *args, **kwargs):
@@ -114,6 +116,12 @@ def production(cell, expected):
                 "i.seed=1;i.noise_offset=0;i.thickness=10;",
                 1,
             )
+            brightness = next((marker for marker in
+                               ("i.brightness_gain=1;", "i.brightness_gain=1.0;")
+                               if marker in data), None)
+            if brightness is None:
+                raise RuntimeError("brightness info marker absent")
+            data = data.replace(brightness, f"i.brightness_gain={gain};", 1)
         return original(path, data, *args, **kwargs)
 
     Path.write_text = write_text

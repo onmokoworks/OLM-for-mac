@@ -56,8 +56,8 @@ def component_frame(depth: int, rb: int) -> bytes:
     return bytes(raw)
 
 
-def configure(depth: int, value: float):
-    target, _, rb, _, _ = base.configure(("rotation", depth, 32, 18, 0.0, 0.0, 1.0))
+def configure(depth: int, value: float, gain: float = 1.0):
+    target, _, rb, _, _ = base.configure(("rotation", depth, 32, 18, 0.0, 0.0, gain))
     fixture = target.base if depth == 32 else target
     frame = component_frame(depth, rb)
     fixture.source_frame = lambda seed=False: frame
