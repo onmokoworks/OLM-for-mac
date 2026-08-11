@@ -14,9 +14,18 @@ ACTUAL = ROOT / "tools/emulation/probe_olmtoondilate_actual_aex_sequence_smartpr
 ADAPTER = ROOT / "tools/emulation/test_olmtoondilate_mac_smartrender_adapter_20260717.py"
 DYNAMIC = ROOT / "tools/emulation/test_olmtoondilate_installed_dynamic_all_depths_20260806.py"
 SOURCE = ROOT / "mac/OLMToonDilate/OLMToonDilate.cpp"
+SOURCE_REPO_PATH = SOURCE.relative_to(ROOT).as_posix()
 REPORT = ROOT / "refs/conformance/olmtoondilate_installed_completion_route_20260805.json"
 MARKDOWN = REPORT.with_suffix(".md")
-EXPECTED_SOURCE_SHA = "57608ffc8cc009a55e678e0bee015adcdee91f14c7493aeda32975d0ac5a0d87"
+# These commits establish the two production behaviors that changed after the
+# original completion-route snapshot.  Source identity is fixed to the checked
+# out HEAD below, rather than to a stale content hash: an uncommitted source
+# edit must still fail closed, while a reviewed successor commit is accepted
+# only when the behavioral adapter and installed dynamic gates also pass.
+REQUIRED_SOURCE_COMMITS = {
+    "legacy_render_noop": "55e7a4c85aa3e784b5d7e689ce22591d4e0b1e56",
+    "high_radius_downsample_ratio": "47ee394d63ca5e06ab41963c4fea5f1f052d581f",
+}
 
 
 def sha(path: Path) -> str:
@@ -30,12 +39,41 @@ def run_json(path: Path) -> dict:
     return json.loads(run.stdout)
 
 
+def git(*args: str, check: bool = True) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        ["git", *args], cwd=ROOT, capture_output=True, text=True, check=check
+    )
+
+
+def source_head_identity() -> dict:
+    head = git("rev-parse", "HEAD").stdout.strip()
+    head_bytes = subprocess.run(
+        ["git", "show", f"HEAD:{SOURCE_REPO_PATH}"],
+        cwd=ROOT,
+        capture_output=True,
+        check=True,
+    ).stdout
+    required_ancestors = {
+        name: git("merge-base", "--is-ancestor", commit, "HEAD", check=False).returncode == 0
+        for name, commit in REQUIRED_SOURCE_COMMITS.items()
+    }
+    return {
+        "head_commit": head,
+        "head_blob": git("rev-parse", f"HEAD:{SOURCE_REPO_PATH}").stdout.strip(),
+        "head_source_sha256": hashlib.sha256(head_bytes).hexdigest(),
+        "worktree_source_sha256": sha(SOURCE),
+        "worktree_matches_head": SOURCE.read_bytes() == head_bytes,
+        "required_ancestor_commits": required_ancestors,
+    }
+
+
 def main() -> int:
     binary, identity = verified_binary("OLMToonDilate")
     installed = binary.parents[2]
     actual = run_json(ACTUAL)
     adapter = run_json(ADAPTER)
     dynamic = run_json(DYNAMIC)
+    source_identity = source_head_identity()
     archs = subprocess.run(["lipo", "-archs", str(binary)], capture_output=True, text=True, check=True).stdout.split()
     sign = subprocess.run(["codesign", "--verify", "--deep", "--strict", str(installed)], capture_output=True)
     selected = [
@@ -49,7 +87,9 @@ def main() -> int:
     gates = {
         "actual_entry_chain_exact": actual.get("status") == "PASS_SEQUENCE_AND_SMARTPRE_ENTRY" and all(actual.get("gates", {}).get(k) for k in selected),
         "production_adapter_exact": adapter.get("status") == "ok",
-        "production_source_identity": sha(SOURCE) == EXPECTED_SOURCE_SHA,
+        "production_source_identity": source_identity["worktree_matches_head"] and all(
+            source_identity["required_ancestor_commits"].values()
+        ),
         "installed_binary_identity": sha(binary) == identity["sha256"],
         "installed_universal": set(archs) == {"arm64", "x86_64"},
         "installed_codesign_valid": sign.returncode == 0,
@@ -73,6 +113,7 @@ def main() -> int:
         "actual_aex_sha256": actual["aex_sha256"],
         "actual_report_sha256": sha(ROOT / "refs/conformance/olmtoondilate_actual_aex_sequence_smartpre_20260805.json"),
         "production_source_sha256": sha(SOURCE),
+        "production_source_identity": source_identity,
         "installed": {"path": str(installed), "binary_sha256": sha(binary), "architectures": archs, "codesign": "valid" if sign.returncode == 0 else "invalid"},
         "gates": gates,
         "restart_required_from_install_record": False,
