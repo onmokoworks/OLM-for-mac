@@ -6,10 +6,10 @@
     "stable_consecutive_collections": 2,
     "universal_exact": true
   },
-  "accepted_at": "2026-08-11T16:12:51.325229+00:00",
+  "accepted_at": "2026-08-11T16:50:56.400887+00:00",
   "claim_boundary": "Exact installed executable identity, arm64+x86_64 architectures, valid strict code signature, and byte identity with the named local build product. No AE load, UI, or render claim.",
   "configuration": "Debug",
-  "installed_after": "2026-08-11T16:12:51.325229+00:00",
+  "installed_after": "2026-08-11T16:50:56.400887+00:00",
   "plugins": [
     {
       "architectures": [
