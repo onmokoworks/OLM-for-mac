@@ -6,10 +6,10 @@
     "stable_consecutive_collections": 2,
     "universal_exact": true
   },
-  "accepted_at": "2026-08-11T15:52:45.872703+00:00",
+  "accepted_at": "2026-08-11T16:12:51.325229+00:00",
   "claim_boundary": "Exact installed executable identity, arm64+x86_64 architectures, valid strict code signature, and byte identity with the named local build product. No AE load, UI, or render claim.",
   "configuration": "Debug",
-  "installed_after": "2026-08-11T15:52:45.872703+00:00",
+  "installed_after": "2026-08-11T16:12:51.325229+00:00",
   "plugins": [
     {
       "architectures": [
@@ -50,10 +50,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMColorKey.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMColorKey",
-      "sha256": "8311ee26ac1557b0a261cb08ebefccfc7552690d356d94fb584f0b2629994d6c",
+      "sha256": "7d329f614561705a7e74f38b91baa99bc7c47eb4b4d78542b6b25cd4229bf92c",
       "source_bundle": "mac/OLMColorKey/Mac/build/Debug/OLMColorKey.plugin",
       "source_installed_exact": true,
-      "source_sha256": "8311ee26ac1557b0a261cb08ebefccfc7552690d356d94fb584f0b2629994d6c",
+      "source_sha256": "7d329f614561705a7e74f38b91baa99bc7c47eb4b4d78542b6b25cd4229bf92c",
       "universal_exact": true
     },
     {
