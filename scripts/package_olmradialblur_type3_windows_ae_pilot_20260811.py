@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """Create the deterministic eight-process OLMRadialBlur Type-3 AE pilot ZIP."""
 from __future__ import annotations
-import hashlib, json, shutil, sys, tempfile, zipfile
+import hashlib, importlib.util, json, shutil, sys, tempfile, zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from olmradialblur_type3_pf32_pilot_contract_20260811 import (  # noqa: E402
-    AEX_SHA256, contract, png_rgba)
+    AEX_SHA256, contract)
+
+WITNESS_GENERATOR = ROOT / "tools/emulation/prepare_olmradialblur_type3_windows_witness_20260811.py"
 
 OUTPUT = ROOT / "refs/reference_requests/olmradialblur_type3_windows_ae_pilot_20260811.zip"
 ZIP_TIME = (2026, 8, 11, 0, 0, 0)
@@ -23,13 +25,21 @@ def write_zip(stage: Path, output: Path) -> None:
 def build(output: Path = OUTPUT) -> Path:
     aex=ROOT / "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex"
     if hashlib.sha256(aex.read_bytes()).hexdigest()!=AEX_SHA256: raise ValueError("pinned AEX hash drift")
-    fixtures={"primary_rgba":png_rgba("primary"),"pattern":png_rgba("pattern"),"inverse":png_rgba("inverse")}
     with tempfile.TemporaryDirectory(prefix="olmrb_type3_") as td:
-        stage=Path(td)/"package"; stage.mkdir()
-        for name,raw in fixtures.items():
-            p=stage/f"inputs/{name}.png";p.parent.mkdir(exist_ok=True);p.write_bytes(raw)
+        scratch=Path(td);stage=scratch/"package"; stage.mkdir()
+        spec=importlib.util.spec_from_file_location("type3_witness_v2",WITNESS_GENERATOR)
+        if not spec or not spec.loader: raise ValueError("cannot load witness v2 generator")
+        witness_module=importlib.util.module_from_spec(spec);spec.loader.exec_module(witness_module)
+        witness_root=scratch/"witness";witness_module.prepare(witness_root)
+        witness=json.loads((witness_root/"request.json").read_text())
+        fixtures={path:(witness_root/path).read_bytes() for path in
+                  [witness["primary_source"]["path"],
+                   *[asset["path"] for asset in witness["layers"].values()]]}
+        for member,raw in fixtures.items():
+            p=stage/member;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(raw)
         p=stage/"aex/OLMRadialBlur.aex";p.parent.mkdir();shutil.copy2(aex,p)
-        (stage/"BATCH_CONTRACT.json").write_text(json.dumps(contract(fixtures),indent=2)+"\n")
+        (stage/"WITNESS_REQUEST.json").write_text(json.dumps(witness,indent=2)+"\n")
+        (stage/"BATCH_CONTRACT.json").write_text(json.dumps(contract(witness,fixtures),indent=2)+"\n")
         for source,target in (
             (ROOT/"scripts/ae_render_olmradialblur_type3_windows_ae_pilot_20260811.jsx",stage/"scripts/ae_render.jsx"),
             (ROOT/"scripts/run_olmradialblur_type3_windows_ae_pilot_20260811.ps1",stage/"RUN_WINDOWS.ps1"),
