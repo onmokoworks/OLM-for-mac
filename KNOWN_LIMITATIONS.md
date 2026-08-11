@@ -73,7 +73,8 @@
   Type 3のPF32 fixtureはprimary／secondary world I/Oとrepeat決定性まで確認済みですが、
   Classic outputは全ゼロ、Smartは`render_error: -40`で、9×7 packed value
   pointerのslot／world mappingにはcrash境界があります。full-render Exact gateは未成立で、
-  productionの全深度fail-closeを維持します。
+  generic typed disk resolver修正後も改善していません。新しいoutput witnessまたはmapping
+  根拠が得られるまで追加調査を止め、productionの全深度fail-closeを維持します。
   Windows独自のcustom preview描画と操作も未証明です。
 - OLMSmoother2：key、invert、Gamma、range、paletteの主要分岐はbounded exactです。
   Gamma／key／smoothing交差は54／54 exactです。旧PF8 Gamma All 2.4 seamは

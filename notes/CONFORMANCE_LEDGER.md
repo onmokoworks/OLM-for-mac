@@ -1,5 +1,15 @@
 # OLM Conformance Ledger
 
+- 2026-08-12 Radial Type 3 investigation stop: reusable OLM runner 886c9e3a
+  consumes the #1162 fixture contract, and AEXCompat 3ea396a1 replaces the
+  fixture-specific behavior with a generic typed disk resolver. The resolver
+  correction does not improve the packed 9x7 output boundary. Primary/noise
+  world I/O and repeat determinism remain proven, while Classic all-zero,
+  Smart error -40, and packed value-pointer slot/world mapping remain outside
+  an output exact gate. Production stays fail-closed at all depths. Stop
+  further local expansion until a new full-output witness or mapping fact is
+  available.
+
 - 2026-08-12 Kira rotation and Radial Type 3 fixture boundary:
   AEXCompat ANGLE checkpoint 28d53546 fixes raw-fixed interpretation, and
   Kira Mode 1/2/3 at the declared 1-degree setting is 9/9 raw exact across

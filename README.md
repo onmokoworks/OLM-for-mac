@@ -78,6 +78,7 @@ geometry、入力、値、分岐境界だけが証明対象です。範囲外は
 OLMDistanceGradation PF32 Mode 5の未解決6セル（matrix 58／64 exact）、OLMSmoother v1の32bpc
 AE host conversion境界、RadialBlur Layer Noise Type 3のfull-render outputです。
 AEXCompat #1162のmacOS declarative fixture runnerでworld I/Oは確認できましたが、
+generic typed disk resolverの修正後もpacked 9×7 output境界は改善していないため、
 productionは引き続きfail-closeします。
 
 ## インストールとビルド
