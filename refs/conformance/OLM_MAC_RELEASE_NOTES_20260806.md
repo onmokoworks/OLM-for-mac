@@ -20,6 +20,9 @@ actual-AEX比較を追加しました。これは全パラメーター直積へ�
 - OLMSmoother2：v1／v2、PF8／PF16／PF32、複数geometryと入力patternを含む
   core 96行とfeature 18行の計114行をactual AEXとexact確認しました。
   この過程で、特定の幅での水平／対角scan境界を修正しています。
+  Gamma 1.0／2.4、Gamma All／Colors、key極性、3 smoothing tupleを交差した
+  9×7 fixtureは54行中53行raw exactです。唯一のPF8 Gamma All 2.4、
+  Smoothness／Range／Extra Smooth=(50,50,50)は5 byte差が残りfail-closeします。
 - OLMKiraKira：Mode 4の方向レイを、回転後geometry 9×7以上、Length 1〜1000へ
   一般化しました。17ケース、51中間stageの比較はすべてmax ULP 0です。
   さらに5代表ケース×PF8／PF16／PF32で、非default色、半透明／HDR、Merge 1／2、
@@ -34,6 +37,8 @@ actual-AEX比較を追加しました。これは全パラメーター直積へ�
   fail-closeします。
 - OLMColorKey：半透明入力のEdge Blur Amount 2、Direction 1／2／3、
   Distance Type 1／2／3を、PF8／PF16／PF32の計27行でbyte exact確認しました。
+  さらにDirection 0／4、Amount 1／4、Distance Type 2のendpoint 12行も
+  temporary planeからrow paddingを含む出力までexactです。
 - OLMRadialBlur：Size Variation 25／100とEdge Fade 50／100の記録済み複合経路を、
   PF8／PF16／PF32の計36行でexact確認しました。
 - OLMRadialBlur：Dual Strength×Noiseの48ケースでは、Zoomは全内部stage exact、
@@ -63,6 +68,9 @@ Size／Noise／Edge／Offset／Brightness組合せへの完全互換は主張し
 OLMRadialBlur Noise Type 3のLayer入力と、未記録の複合tupleは引き続き
 証拠境界です。OLMKiraKiraの極小geometry、OLMDirectionalBlurとOLMColorKeyの
 未列挙値・未列挙複合tupleも同様であり、上記結果を全設定へ一般化しません。
+OLMKiraKira Mode 4の自然生成5×3 full-frame probeは、harnessのrow-major flattenを
+修正して既存4×1回帰を維持しましたが、同一実行のseed、direction／rotation、
+aggregate入口ray witnessが不足するためfail-closeのままです。
 
 ## リリース候補の状態
 
@@ -94,13 +102,13 @@ notarizationは未実施であり、ダウンロード先のGatekeeperに拒否�
 | --- | --- | --- |
 | OLMBlur | Legacy／NonLegacy、repeat、bias；PF8／PF16／PF32 | 複数のpadded typed fixtureでdimension-generic workerを確認。現行PF32 host smokeはロード／レンダー証拠であり、Windows exact出力の新規主張ではない |
 | ColorKeep | enabled／disabled、tolerance、1〜100色；PF8／PF16／PF32 | Windows/Macのkeep mask、alpha、保持／棄却関係は3深度exact。raw EXRはeffect-off時点の全RGBにhost色変換差があるためcross-host exactへ昇格しない |
-| OLMColorKey | core、Edge Thin、Edge Blur、replace／color-space；PF8／PF16／PF32限定 | Edge Blurは記録済み4×3 familyと32×18 multi-keyに加え、半透明入力のAmount 2、Direction 1／2／3、Distance Type 1／2／3を3深度27行でbyte exact。未列挙amount／direction／distance／geometryの直積へは一般化しない |
+| OLMColorKey | core、Edge Thin、Edge Blur、replace／color-space；PF8／PF16／PF32限定 | 半透明32×18 two-key fixtureは既存27行にDirection 0／4・Amount 1／4 endpoint 12行を加えてexact。未列挙amount／direction／distance／geometryの直積へは一般化しない |
 | OLMToonDilate | copy／dilate、fractional radius、frontier／tie／corner／eligibility；PF8／PF16／PF32 | padded／partial／empty worldとradius -1〜4を確認。実効radiusは`ceil(radius × downsample_x.num / den)`。legacy `PF_Cmd_RENDER`は実AEX同様3深度でno-op、描画はSmartRender経路。現行PF32 radius 13 AE代表はhost smoke |
 | OLMDistanceGradation | Inside／Outside／Both、RGB／Layer、Constant／Linear／Sphere／Power、invert／background／blur；PF8／PF16／PF32限定 | typed blur matrixは58行exact／6行fail-close。PF32 Blur 5 Constant×BG off/onは固定17×11でraw exactだが、Linear／Sphere／Powerは1〜2 ULP残差のため拒否する。証明済みaxisとfamilyを任意geometryや全直積へ一般化しない |
 | OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3；PF8／PF16／PF32限定 | PF16 Type 3 Layerは16×16の限定tuple。Fade／Sharp単独交差24行と、Noise Type 1／2・Sizeを含む高次covering 24行が3深度raw exact。Type 3、他geometry、未列挙Size、front＋back同時へは一般化しない |
 | OLMRadialBlur | Zoom／Rotation／Inner；PF8／PF16／PF32 guard付き | PF8 centered neutral Inner Strength 1〜64と32×18の記録済み複合分岐を確認。Size×Edge×Noiseは3深度24ケースのconsumed planes／output exactだが、Rotation SV25のdiagnostic source scalarに既知1 ULP差がある。Inner、Noise Type 3 Layer、未記載geometry／tupleへは一般化しない |
-| OLMSmoother2 | v1／v2 classifier、key／invert、Gamma None／All／Colors、range／extra、palette；PF8／PF16／PF32限定 | 1×1から32×18までの複数geometryと入力patternを含む114行のclassifier matrixがexact。公開機能間の全直積や、記録されていないswitch family全体の証明ではない |
-| OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur；PF8／PF16／PF32限定 | Mode 3 Gaussianは記録済みfixtureだけを許可。Mode 4方向レイと5代表compose交差はraw exact／max ULP 0。Length 1、非default色、半透明／HDR、Merge 1／2、ramp off／1／2を含むが、極小geometryや全直積は未証明 |
+| OLMSmoother2 | v1／v2 classifier、key／invert、Gamma None／All／Colors、range／extra、palette；PF8／PF16／PF32限定 | geometry classifier 114行に加え、Gamma／key／smoothing交差は53/54 raw exact。PF8 Gamma All 2.4のmixed (50,50,50)だけ5 byte差でfail-closeし、任意直積へは一般化しない |
+| OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur；PF8／PF16／PF32限定 | Mode 4 helper／composeの記録済み経路はraw exact。自然生成5×3 full-frameは同一実行のseed・direction／rotation・aggregate入口ray witness不足のためfail-close。極小geometryや全直積は未証明 |
 | OLMSmoother v1 | no-key／Color Key、smoothing range；native PF8／PF16 | PF8 canonical 960×540と保持済みkey pathはexact。PF16 Color Keyはexported `PF_Cmd_RENDER`からtemporary world、mask／main passまで5×3 padded fixtureでraw exact。AEXにnative PF32 callbackはなく、32bpc projectではAEがclassic integer pluginの前後をhost-convertする |
 
 ## AE host境界

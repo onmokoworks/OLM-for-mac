@@ -1,5 +1,18 @@
 # OLM Conformance Ledger
 
+- 2026-08-12 bounded interaction update: OLMColorKey's semitransparent
+  internal Direction 0/4, Amount 1/4 endpoints are 12/12 raw exact on the
+  declared 32x18 two-key fixture. OLMKiraKira Mode 4's corrected multiline
+  harness reaches the natural 5x3 aggregate boundary, but production remains
+  fail-closed pending same-run seed, direction/rotation, and aggregate-entry
+  ray witnesses. OLMSmoother2's Gamma/key/smoothing 9x7 cross-product is
+  53/54 raw exact; PF8 Gamma All 2.4 at mixed (50,50,50) retains a five-byte
+  seam and fails closed. These records do not promote arbitrary geometry,
+  parameter products, or AE-host exactness. Evidence:
+  refs/conformance/olmcolorkey_semtransparent_edge_blur_matrix_20260812.md,
+  refs/conformance/olmkirakira_mode4_natural_fullframe_boundary_20260811.md,
+  and refs/conformance/olmsmoother2_gamma_key_smoothing_crossproduct_actual_aex_20260812.md.
+
 - 2026-07-28 `OLMColorKey declared 32bpc all-nine AE exact closeout` (latest
   override): cases `0001..0009` are Windows/Mac AE `26.3x87` exact at all 18
   required raw FLOAT32 gates. Each no-effect and effect-on comparison covers

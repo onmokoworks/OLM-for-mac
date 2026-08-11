@@ -24,6 +24,7 @@
 
 - OLMColorKey：Edge Blurのexact証拠には、記録済みの小型geometry、multi-key、および
   半透明入力のAmount 2／Direction 1〜3／Distance Type 1〜3が含まれます。
+  半透明endpointのDirection 0／4、Amount 1／4、Distance Type 2も12行exactです。
   任意geometry、amount、方向、distance typeの全直積は未証明です。
 - OLMDistanceGradation：主要な各モード・補間・背景・反転・blurは個別に検証していますが、
   全コントロールの直積は未証明です。PF16 Blur 2〜5とPF32 Blur 2〜4の記録済みtyped
@@ -50,12 +51,14 @@
   既知1 ULP差があります。Inner、未列挙tuple／geometry、Type 3はfail-closeします。
   Windows独自のcustom preview描画と操作も未証明です。
 - OLMSmoother2：key、invert、Gamma、range、paletteの主要分岐はbounded exactです。
-  全パラメーター直積は未証明です。
+  Gamma／key／smoothing交差は54行中53行exactですが、PF8 Gamma All 2.4の
+  mixed (50,50,50)は5 byte差が残るためfail-closeします。全パラメーター直積は未証明です。
 - OLMKiraKira：Mode 1〜4の主要経路を実装しています。Mode 4の方向レイは、9×7以上の
   回転後geometryとLength 1〜1000を、実AEXの17ケース・51中間stageで一般化しています。
   5代表compose交差では非default色、半透明／HDR、Merge 1／2、ramp off／1／2を含めて
   raw exactですが、小型shape、ray／色／ramp／Merge Modeの全直積とDrawbot custom UIは
-  未証明です。
+  未証明です。自然生成5×3 full-frameはharness修正後も同一実行witnessが不足し、
+  geometry-generalへ昇格せずfail-closeします。
 - OLMSmoother v1：元AEXのnative depthはPF8/PF16です。32bpcプロジェクトではAEが
   classic integer pluginの前後を変換するため、native PF32互換とは表現しません。
 
