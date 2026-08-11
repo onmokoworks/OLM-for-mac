@@ -1,0 +1,5 @@
+# OLMKiraKira mode4_multiray_ramp_merge2_rotation1 exported EffectMain 3-depth gate（2026-08-12）
+
+Status: **fail_closed_mismatch**
+
+5×3半透明source、Horizontal Length 5、Rotation 1.0でactual AEX exported Smart ownerとMac public EffectMain(PF_Cmd_RENDER)を比較する。PF8/PF16/PF32のactive bytes、input不変、Mac row paddingを検証する。

@@ -22,6 +22,10 @@ BLUR_MODE = int(os.environ.get("OLM_KIRA_BLUR_MODE", "1"))
 MERGE_MODE = int(os.environ.get("OLM_KIRA_MERGE_MODE", "1"))
 HORIZONTAL_LENGTH = int(os.environ.get("OLM_KIRA_HORIZONTAL_LENGTH", "7"))
 HORIZONTAL_USE_RAMP = int(os.environ.get("OLM_KIRA_HORIZONTAL_USE_RAMP", "0"))
+DIAGONAL2_LENGTH = int(os.environ.get("OLM_KIRA_DIAGONAL2_LENGTH", "0"))
+HIGHLIGHT_RADIUS = int(os.environ.get("OLM_KIRA_HIGHLIGHT_RADIUS", "0"))
+HIGHLIGHT_USE_RAMP = int(os.environ.get("OLM_KIRA_HIGHLIGHT_USE_RAMP", "0"))
+BRIGHTNESS_GAIN = float(os.environ.get("OLM_KIRA_BRIGHTNESS_GAIN", "0.1"))
 GLOW_ROTATION = float(os.environ.get("OLM_KIRA_GLOW_ROTATION", "0"))
 GLOW_ROTATION_RAW_FIXED = os.environ.get("OLM_KIRA_GLOW_ROTATION_RAW_FIXED")
 REPORT = ROOT / os.environ.get(
@@ -29,7 +33,7 @@ REPORT = ROOT / os.environ.get(
     "refs/conformance/olmkirakira_mode1_exported_effectmain_all_depths_20260812.json",
 )
 DOC = REPORT.with_suffix(".md")
-DEFAULT_WORKER = Path("/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue1135-typed-iterate-suites/guest/target/release/aex-guest-worker")
+DEFAULT_WORKER = Path("/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker")
 DEPTHS = {"PF8": ("argb8", 4), "PF16": ("argb16", 8), "PF32": ("argb32f", 16)}
 WIDTH, HEIGHT, PADDING = 5, 3, 12
 RGBA = tuple((i * 15, i * 11, i * 7, 64 + i * 11) for i in range(WIDTH * HEIGHT))
@@ -82,10 +86,18 @@ def production() -> bytes:
             .replace("__RGBA__", rgba)
             .replace("OLMKIRAKIRA_GLOW_ROTATION].u.fs_d.value=0", f"OLMKIRAKIRA_GLOW_ROTATION].u.fs_d.value={GLOW_ROTATION!r}")
             .replace("u.sd.value=7;defs[OLMKIRAKIRA_DIAGONAL_LENGTH]", f"u.sd.value={HORIZONTAL_LENGTH};defs[OLMKIRAKIRA_DIAGONAL_LENGTH]")
+            .replace("OLMKIRAKIRA_DIAGONAL2_LENGTH].u.sd.value=0", f"OLMKIRAKIRA_DIAGONAL2_LENGTH].u.sd.value={DIAGONAL2_LENGTH}")
+            .replace("OLMKIRAKIRA_HIGHLIGHT_RADIUS].u.sd.value=0", f"OLMKIRAKIRA_HIGHLIGHT_RADIUS].u.sd.value={HIGHLIGHT_RADIUS}")
+            .replace("OLMKIRAKIRA_BRIGHTNESS_GAIN].u.fs_d.value=.1", f"OLMKIRAKIRA_BRIGHTNESS_GAIN].u.fs_d.value={BRIGHTNESS_GAIN!r}")
             .replace("OLMKIRAKIRA_BLUR_MODE].u.pd.value=1", f"OLMKIRAKIRA_BLUR_MODE].u.pd.value={BLUR_MODE}")
             .replace("OLMKIRAKIRA_MERGE_MODE].u.pd.value=1", f"OLMKIRAKIRA_MERGE_MODE].u.pd.value={MERGE_MODE}")
             .replace("defs[OLMKIRAKIRA_SOURCE_OPACITY].u.sd.value=100;", "defs[OLMKIRAKIRA_SOURCE_OPACITY].u.sd.value=100;"
                      f"defs[OLMKIRAKIRA_HORIZONTAL_USE_RAMP].u.bd.value={HORIZONTAL_USE_RAMP};"))
+    code = code.replace(
+        "defs[OLMKIRAKIRA_HORIZONTAL_USE_RAMP].u.bd.value=" + str(HORIZONTAL_USE_RAMP) + ";",
+        "defs[OLMKIRAKIRA_HORIZONTAL_USE_RAMP].u.bd.value=" + str(HORIZONTAL_USE_RAMP) + ";"
+        "defs[OLMKIRAKIRA_HIGHLIGHT_USE_RAMP].u.bd.value=" + str(HIGHLIGHT_USE_RAMP) + ";",
+    )
     with tempfile.TemporaryDirectory(prefix="kira_mode1_effectmain_") as raw:
         directory = Path(raw)
         source = directory / "probe.cpp"
@@ -119,8 +131,8 @@ def main() -> int:
             expected = expected_all[offset:offset + size]; offset += size
             output_png = directory / f"{depth}.png"
             params = [f"Blur Mode={BLUR_MODE}", "Vertical Length=0", f"Horizontal Length={HORIZONTAL_LENGTH}",
-                      "Diagonal Length=0", "Diagonal 2 length=0", "Highlight Radius=0",
-                      f"Merge mode={MERGE_MODE}", "Channel=1", "Brightness Gain=0.1"]
+                      "Diagonal Length=0", f"Diagonal 2 length={DIAGONAL2_LENGTH}", f"Highlight Radius={HIGHLIGHT_RADIUS}",
+                      f"Merge mode={MERGE_MODE}", "Channel=1", f"Brightness Gain={BRIGHTNESS_GAIN}"]
             params.append(
                 f"Glow Rotation=fixed:{GLOW_ROTATION_RAW_FIXED}"
                 if GLOW_ROTATION_RAW_FIXED is not None else
@@ -128,6 +140,8 @@ def main() -> int:
             )
             if HORIZONTAL_USE_RAMP:
                 params.append("Use Ramp@19=1")
+            if HIGHLIGHT_USE_RAMP:
+                params.append("Use Ramp@37=1")
             result = subprocess.run([str(worker), "render-png", str(AEX), str(input_png),
                                      str(output_png), "--pixel-format", pixel_format, *params],
                                     cwd=ROOT, capture_output=True, text=True)
@@ -170,19 +184,27 @@ def main() -> int:
                           "blur_mode": BLUR_MODE, "merge_mode": MERGE_MODE,
                           "active_ray": "Horizontal", "length": HORIZONTAL_LENGTH,
                           "horizontal_use_ramp": bool(HORIZONTAL_USE_RAMP),
+                          "diagonal2_length": DIAGONAL2_LENGTH,
+                          "highlight_radius": HIGHLIGHT_RADIUS,
+                          "highlight_use_ramp": bool(HIGHLIGHT_USE_RAMP),
+                          "brightness_gain": BRIGHTNESS_GAIN,
                           "glow_rotation": GLOW_ROTATION,
                           "windows_rotation_raw_fixed": (int(GLOW_ROTATION_RAW_FIXED)
                                                          if GLOW_ROTATION_RAW_FIXED is not None else None),
                           "channel": 1, "semi_transparent": True},
               "rows": rows,
-              "boundary": f"Actual exported SmartPreRender/SmartRender versus Mac public EffectMain(PF_Cmd_RENDER). {boundary_detail} ANGLE editing is unavailable in the pinned worker, so nondefault rotation remains fail-closed."}
+              "connected_evidence": {
+                  "mode4_natural_families": "olmkirakira_mode4_natural_families_exact_20260811.json",
+                  "mode4_compose_matrix": "olmkirakira_mode4_compose_matrix_actual_aex_20260811.json",
+              } if BLUR_MODE == 4 else {},
+              "boundary": f"Actual exported SmartPreRender/SmartRender versus Mac public EffectMain(PF_Cmd_RENDER). {boundary_detail} Nondefault ANGLE uses the Windows owner's observed raw-fixed-as-degree convention."}
     REPORT.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     DOC.write_text(f"# OLMKiraKira {CASE} exported EffectMain 3-depth gate（2026-08-12）\n\n"
                    f"Status: **{report['status']}**\n\n"
-                   f"5×3半透明source、Horizontal Length {HORIZONTAL_LENGTH}、Rotation 0でactual AEX exported Smart ownerとMac public EffectMain(PF_Cmd_RENDER)を比較する。PF8/PF16/PF32のactive bytes、input不変、Mac row paddingを検証する。ANGLE型編集は現AEXCompat workerで未対応のためnondefault rotationはfail-close。\n",
+                   f"5×3半透明source、Horizontal Length {HORIZONTAL_LENGTH}、Rotation {GLOW_ROTATION}でactual AEX exported Smart ownerとMac public EffectMain(PF_Cmd_RENDER)を比較する。PF8/PF16/PF32のactive bytes、input不変、Mac row paddingを検証する。\n",
                    encoding="utf-8")
     print(json.dumps({"status": report["status"], "rows": rows}))
-    return 0 if measured else 1
+    return 0 if passed else 1
 
 
 if __name__ == "__main__":
