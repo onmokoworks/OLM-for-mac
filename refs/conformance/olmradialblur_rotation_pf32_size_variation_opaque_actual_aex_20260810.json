@@ -1,4 +1,15 @@
 {
+  "actual_required_plane_contract": [
+    "geometry",
+    "polar",
+    "source_scalar",
+    "prepass_alpha",
+    "accum",
+    "max_alpha",
+    "final_rgba",
+    "coordinates",
+    "output"
+  ],
   "admitted_rule": "For this strictly-positive-alpha tuple, witnessed Size Variation values 1/25/100 are semantically masked: actual-AEX and production captured internal planes plus padded output equal Size Variation 0 byte-for-byte.",
   "aex": {
     "path": "aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
@@ -7,11 +18,20 @@
   "baseline_zero_variation_hashes": {
     "accum": "13b28b32ce8db24cde6bd5f93acab3113a192137b77be5f99da09555859d7135",
     "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+    "edge_spans": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
     "final_rgba": "d7e30cdd2e7b7906fa2dac18107c7fedacde052635ee7d660d9665975a38b765",
     "geometry": "f094fef3fd4069e896df760d7d610f18066ee614c3b993cb8377ec33b8236e32",
+    "inner_edge_table": "076a27c79e5ace2a3d47f9dd2e83e4ff6ea8872b3c2218f66c92b89b55f36560",
     "max_alpha": "fcc2f0e5a233ad87b4acd4e52dd129e487eda8b7ffdac999cea2e9e9bfedd8e4",
+    "outer_edge_table": "076a27c79e5ace2a3d47f9dd2e83e4ff6ea8872b3c2218f66c92b89b55f36560",
     "output": "beb7ce8ac537a172873092d1439121019f2dbedee2d3cff04e4f6e3bf5d8ea94",
     "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+    "polar_guard_after": "9628e545ed3ac074e5a6cbf542a642b62482fbfca9b4cb3ea4743a1874256e37",
+    "polar_guard_before": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+    "prepass_accum": "b9ad15ac07f2951fb0008d91153225ca28de61182b82b508d6c13178c2a6da8e",
+    "prepass_alpha": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+    "prepass_max_alpha": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+    "size_factor": "32463b33ca384eab338e956e9ba6fce744090e1757599609d52374434a814b13",
     "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
   },
   "boundary": "No claim for any zero-alpha pixel, Noise Variation, PF8/PF16, other geometry, or other parameter tuple.",
@@ -20,21 +40,39 @@
       "hashes": {
         "accum": "13b28b32ce8db24cde6bd5f93acab3113a192137b77be5f99da09555859d7135",
         "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "edge_spans": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
         "final_rgba": "d7e30cdd2e7b7906fa2dac18107c7fedacde052635ee7d660d9665975a38b765",
         "geometry": "f094fef3fd4069e896df760d7d610f18066ee614c3b993cb8377ec33b8236e32",
+        "inner_edge_table": "076a27c79e5ace2a3d47f9dd2e83e4ff6ea8872b3c2218f66c92b89b55f36560",
         "max_alpha": "fcc2f0e5a233ad87b4acd4e52dd129e487eda8b7ffdac999cea2e9e9bfedd8e4",
+        "outer_edge_table": "076a27c79e5ace2a3d47f9dd2e83e4ff6ea8872b3c2218f66c92b89b55f36560",
         "output": "beb7ce8ac537a172873092d1439121019f2dbedee2d3cff04e4f6e3bf5d8ea94",
         "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "polar_guard_after": "9628e545ed3ac074e5a6cbf542a642b62482fbfca9b4cb3ea4743a1874256e37",
+        "polar_guard_before": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+        "prepass_accum": "b9ad15ac07f2951fb0008d91153225ca28de61182b82b508d6c13178c2a6da8e",
+        "prepass_alpha": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+        "prepass_max_alpha": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+        "size_factor": "32463b33ca384eab338e956e9ba6fce744090e1757599609d52374434a814b13",
         "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
       },
       "matches_zero_variation": {
         "accum": true,
         "coordinates": true,
+        "edge_spans": true,
         "final_rgba": true,
         "geometry": true,
+        "inner_edge_table": true,
         "max_alpha": true,
+        "outer_edge_table": true,
         "output": true,
         "polar": true,
+        "polar_guard_after": true,
+        "polar_guard_before": true,
+        "prepass_accum": true,
+        "prepass_alpha": true,
+        "prepass_max_alpha": true,
+        "size_factor": true,
         "source_scalar": true
       },
       "production_matches_actual": {
@@ -44,6 +82,7 @@
         "max_alpha": true,
         "output": true,
         "polar": true,
+        "prepass_alpha": true,
         "source_scalar": true
       },
       "size_variation": 1.0
@@ -52,21 +91,39 @@
       "hashes": {
         "accum": "13b28b32ce8db24cde6bd5f93acab3113a192137b77be5f99da09555859d7135",
         "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "edge_spans": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
         "final_rgba": "d7e30cdd2e7b7906fa2dac18107c7fedacde052635ee7d660d9665975a38b765",
         "geometry": "f094fef3fd4069e896df760d7d610f18066ee614c3b993cb8377ec33b8236e32",
+        "inner_edge_table": "076a27c79e5ace2a3d47f9dd2e83e4ff6ea8872b3c2218f66c92b89b55f36560",
         "max_alpha": "fcc2f0e5a233ad87b4acd4e52dd129e487eda8b7ffdac999cea2e9e9bfedd8e4",
+        "outer_edge_table": "076a27c79e5ace2a3d47f9dd2e83e4ff6ea8872b3c2218f66c92b89b55f36560",
         "output": "beb7ce8ac537a172873092d1439121019f2dbedee2d3cff04e4f6e3bf5d8ea94",
         "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "polar_guard_after": "9628e545ed3ac074e5a6cbf542a642b62482fbfca9b4cb3ea4743a1874256e37",
+        "polar_guard_before": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+        "prepass_accum": "b9ad15ac07f2951fb0008d91153225ca28de61182b82b508d6c13178c2a6da8e",
+        "prepass_alpha": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+        "prepass_max_alpha": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+        "size_factor": "32463b33ca384eab338e956e9ba6fce744090e1757599609d52374434a814b13",
         "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
       },
       "matches_zero_variation": {
         "accum": true,
         "coordinates": true,
+        "edge_spans": true,
         "final_rgba": true,
         "geometry": true,
+        "inner_edge_table": true,
         "max_alpha": true,
+        "outer_edge_table": true,
         "output": true,
         "polar": true,
+        "polar_guard_after": true,
+        "polar_guard_before": true,
+        "prepass_accum": true,
+        "prepass_alpha": true,
+        "prepass_max_alpha": true,
+        "size_factor": true,
         "source_scalar": true
       },
       "production_matches_actual": {
@@ -76,6 +133,7 @@
         "max_alpha": true,
         "output": true,
         "polar": true,
+        "prepass_alpha": true,
         "source_scalar": true
       },
       "size_variation": 25.0
@@ -84,21 +142,39 @@
       "hashes": {
         "accum": "13b28b32ce8db24cde6bd5f93acab3113a192137b77be5f99da09555859d7135",
         "coordinates": "e9c455c90aa39569783043925d1b890ae7cd67728a09a729b665d8b67976d07b",
+        "edge_spans": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
         "final_rgba": "d7e30cdd2e7b7906fa2dac18107c7fedacde052635ee7d660d9665975a38b765",
         "geometry": "f094fef3fd4069e896df760d7d610f18066ee614c3b993cb8377ec33b8236e32",
+        "inner_edge_table": "076a27c79e5ace2a3d47f9dd2e83e4ff6ea8872b3c2218f66c92b89b55f36560",
         "max_alpha": "fcc2f0e5a233ad87b4acd4e52dd129e487eda8b7ffdac999cea2e9e9bfedd8e4",
+        "outer_edge_table": "076a27c79e5ace2a3d47f9dd2e83e4ff6ea8872b3c2218f66c92b89b55f36560",
         "output": "beb7ce8ac537a172873092d1439121019f2dbedee2d3cff04e4f6e3bf5d8ea94",
         "polar": "aa822e3d1353b5eeff97581c7bf20bf4c73e8def305a9f2e4cb00f140aaa9ce3",
+        "polar_guard_after": "9628e545ed3ac074e5a6cbf542a642b62482fbfca9b4cb3ea4743a1874256e37",
+        "polar_guard_before": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b",
+        "prepass_accum": "b9ad15ac07f2951fb0008d91153225ca28de61182b82b508d6c13178c2a6da8e",
+        "prepass_alpha": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+        "prepass_max_alpha": "4408f98deb7c33c7bd738f47da8ca5032c8638aa7ec8abebea179d9eb8be759c",
+        "size_factor": "32463b33ca384eab338e956e9ba6fce744090e1757599609d52374434a814b13",
         "source_scalar": "7b4468c91d59a9b63747818dfcd672e87646e3c9b05bc3d7ce8d4efc160826bc"
       },
       "matches_zero_variation": {
         "accum": true,
         "coordinates": true,
+        "edge_spans": true,
         "final_rgba": true,
         "geometry": true,
+        "inner_edge_table": true,
         "max_alpha": true,
+        "outer_edge_table": true,
         "output": true,
         "polar": true,
+        "polar_guard_after": true,
+        "polar_guard_before": true,
+        "prepass_accum": true,
+        "prepass_alpha": true,
+        "prepass_max_alpha": true,
+        "size_factor": true,
         "source_scalar": true
       },
       "production_matches_actual": {
@@ -108,6 +184,7 @@
         "max_alpha": true,
         "output": true,
         "polar": true,
+        "prepass_alpha": true,
         "source_scalar": true
       },
       "size_variation": 100.0
@@ -117,6 +194,16 @@
     "one_zero_alpha_pixel_rejected": true
   },
   "kind": "olmradialblur_rotation_pf32_size_variation_opaque_actual_aex_20260810",
+  "production_compared_plane_contract": [
+    "polar",
+    "source_scalar",
+    "prepass_alpha",
+    "accum",
+    "max_alpha",
+    "final_rgba",
+    "coordinates",
+    "output"
+  ],
   "scope": "Pinned actual-AEX PF32 Rotation 9x7 rowbytes160, all source alpha strictly positive (0.5 or 1.0), Size Variation 1/25/100; all other parameters use the existing neutral outer-only tuple.",
   "source_alpha": {
     "contains_zero": false,

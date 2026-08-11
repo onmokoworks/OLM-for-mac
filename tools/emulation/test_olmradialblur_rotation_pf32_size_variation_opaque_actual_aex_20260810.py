@@ -18,10 +18,27 @@ import test_olmradialblur_rotation_pf32_small_actual_aex_20260805 as base  # noq
 REPORT = ROOT / "refs/conformance/olmradialblur_rotation_pf32_size_variation_opaque_actual_aex_20260810.json"
 DOC = REPORT.with_suffix(".md")
 VALUES = (1.0, 25.0, 100.0)
+COMPARED_PLANES = ("polar", "source_scalar", "prepass_alpha", "accum", "max_alpha",
+                   "final_rgba", "coordinates", "output")
+ACTUAL_REQUIRED = ("geometry", *COMPARED_PLANES)
 
 
 def sha(raw: bytes) -> str:
     return hashlib.sha256(raw).hexdigest()
+
+
+def actual_with_prepass() -> dict[str, bytes]:
+    """Capture the B150 prepass plane from the actual AEX, not production only."""
+    old_capture = base.base.CAPTURE_EDGE_INTERNALS
+    base.base.CAPTURE_EDGE_INTERNALS = True
+    try:
+        actual = base.actual_aex()
+    finally:
+        base.base.CAPTURE_EDGE_INTERNALS = old_capture
+    missing = [name for name in ACTUAL_REQUIRED if name not in actual]
+    if missing:
+        raise RuntimeError(f"actual AEX required-plane capture incomplete: {missing}")
+    return actual
 
 
 def actual_at(value: float) -> dict[str, bytes]:
@@ -32,13 +49,13 @@ def actual_at(value: float) -> dict[str, bytes]:
         return result
     m4.load_case0010_params = params
     try:
-        return base.actual_aex()
+        return actual_with_prepass()
     finally:
         m4.load_case0010_params = original
 
 
 def main() -> int:
-    baseline = base.actual_aex()
+    baseline = actual_with_prepass()
     baseline_hashes = {name: sha(raw) for name, raw in baseline.items()}
     cases = []
     for value in VALUES:
@@ -51,7 +68,11 @@ def main() -> int:
             production = base.mac_production(actual)
         finally:
             base.SIZE_VARIATION = old_size
-        production_matches = {name: production[name] == actual[name] for name in production}
+        production_missing = [name for name in COMPARED_PLANES if name not in production]
+        if production_missing:
+            raise RuntimeError(f"production required-plane capture incomplete: {production_missing}")
+        production_matches = {name: production[name] == actual[name]
+                              for name in COMPARED_PLANES}
         assert all(production_matches.values()), (value, production_matches)
         cases.append({"size_variation": value, "matches_zero_variation": matches,
                       "production_matches_actual": production_matches,
@@ -84,6 +105,8 @@ def main() -> int:
         "cases": cases,
         "fail_closed_gate": {"one_zero_alpha_pixel_rejected": rejected_zero_alpha},
         "admitted_rule": "For this strictly-positive-alpha tuple, witnessed Size Variation values 1/25/100 are semantically masked: actual-AEX and production captured internal planes plus padded output equal Size Variation 0 byte-for-byte.",
+        "actual_required_plane_contract": list(ACTUAL_REQUIRED),
+        "production_compared_plane_contract": list(COMPARED_PLANES),
         "boundary": "No claim for any zero-alpha pixel, Noise Variation, PF8/PF16, other geometry, or other parameter tuple.",
     }
     REPORT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
