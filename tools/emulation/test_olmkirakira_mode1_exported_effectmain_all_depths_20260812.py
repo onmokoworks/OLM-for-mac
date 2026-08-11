@@ -21,6 +21,7 @@ CASE = os.environ.get("OLM_KIRA_EXPORTED_CASE", "mode1")
 BLUR_MODE = int(os.environ.get("OLM_KIRA_BLUR_MODE", "1"))
 MERGE_MODE = int(os.environ.get("OLM_KIRA_MERGE_MODE", "1"))
 HORIZONTAL_LENGTH = int(os.environ.get("OLM_KIRA_HORIZONTAL_LENGTH", "7"))
+HORIZONTAL_USE_RAMP = int(os.environ.get("OLM_KIRA_HORIZONTAL_USE_RAMP", "0"))
 REPORT = ROOT / os.environ.get(
     "OLM_KIRA_EXPORTED_REPORT",
     "refs/conformance/olmkirakira_mode1_exported_effectmain_all_depths_20260812.json",
@@ -79,7 +80,9 @@ def production() -> bytes:
             .replace("__RGBA__", rgba)
             .replace("u.sd.value=7;defs[OLMKIRAKIRA_DIAGONAL_LENGTH]", f"u.sd.value={HORIZONTAL_LENGTH};defs[OLMKIRAKIRA_DIAGONAL_LENGTH]")
             .replace("OLMKIRAKIRA_BLUR_MODE].u.pd.value=1", f"OLMKIRAKIRA_BLUR_MODE].u.pd.value={BLUR_MODE}")
-            .replace("OLMKIRAKIRA_MERGE_MODE].u.pd.value=1", f"OLMKIRAKIRA_MERGE_MODE].u.pd.value={MERGE_MODE}"))
+            .replace("OLMKIRAKIRA_MERGE_MODE].u.pd.value=1", f"OLMKIRAKIRA_MERGE_MODE].u.pd.value={MERGE_MODE}")
+            .replace("defs[OLMKIRAKIRA_SOURCE_OPACITY].u.sd.value=100;", "defs[OLMKIRAKIRA_SOURCE_OPACITY].u.sd.value=100;"
+                     f"defs[OLMKIRAKIRA_HORIZONTAL_USE_RAMP].u.bd.value={HORIZONTAL_USE_RAMP};"))
     with tempfile.TemporaryDirectory(prefix="kira_mode1_effectmain_") as raw:
         directory = Path(raw)
         source = directory / "probe.cpp"
@@ -115,6 +118,8 @@ def main() -> int:
             params = [f"Blur Mode={BLUR_MODE}", "Vertical Length=0", f"Horizontal Length={HORIZONTAL_LENGTH}",
                       "Diagonal Length=0", "Diagonal 2 length=0", "Highlight Radius=0",
                       f"Merge mode={MERGE_MODE}", "Channel=1", "Brightness Gain=0.1"]
+            if HORIZONTAL_USE_RAMP:
+                params.append("Use Ramp@19=1")
             result = subprocess.run([str(worker), "render-png", str(AEX), str(input_png),
                                      str(output_png), "--pixel-format", pixel_format, *params],
                                     cwd=ROOT, capture_output=True, text=True)
@@ -132,7 +137,10 @@ def main() -> int:
                          "guards_intact": actual["guards_intact"],
                          "input_unchanged": True, "mac_padding_preserved": True,
                          "smart_pre_render": actual["gpu"]["pre_render"],
-                         "smart_render": actual["gpu"]["render"]})
+                         "smart_render": actual["gpu"]["render"],
+                         "suite_requests": actual["suite_requests"],
+                         "unsupported_suite_calls": actual["unsupported_suite_calls"],
+                         "render_error": actual["render_error"]})
     measured = (offset == len(expected_all) and len(rows) == 3 and
                 all(row["guards_intact"] and row["mac_padding_preserved"] for row in rows))
     passed = measured and all(row["exact"] for row in rows)
@@ -140,15 +148,20 @@ def main() -> int:
         "PF32 checkpoint capture proved the natural ray helper's 15 active floats exact before "
         "aggregation; direct float Brightness Gain and PF32 reciprocal-multiply normalization close "
         "the first downstream difference."
-        if BLUR_MODE == 1 else
+        if BLUR_MODE == 1 else (
+        "Mode2 applies Brightness Gain to ray amount before ramp sampling and raw-alpha "
+        "accumulation, then uses the recovered Merge2 composition and typed writer."
+        if BLUR_MODE == 2 else
         "The Gaussian Length 50 tuple is admitted by the existing 9x7 Mode3 family evidence and is "
         "compared here through the complete exported owner and typed writer."
+        )
     )
     report = {"kind": f"olmkirakira_{CASE}_exported_effectmain_all_depths", "date": "2026-08-12",
               "status": "exact" if passed else "fail_closed_mismatch",
               "fixture": {"dimensions": [WIDTH, HEIGHT], "padding": PADDING,
                           "blur_mode": BLUR_MODE, "merge_mode": MERGE_MODE,
                           "active_ray": "Horizontal", "length": HORIZONTAL_LENGTH,
+                          "horizontal_use_ramp": bool(HORIZONTAL_USE_RAMP),
                           "glow_rotation": 0, "channel": 1, "semi_transparent": True},
               "rows": rows,
               "boundary": f"Actual exported SmartPreRender/SmartRender versus Mac public EffectMain(PF_Cmd_RENDER). {boundary_detail} ANGLE editing is unavailable in the pinned worker, so nondefault rotation remains fail-closed."}

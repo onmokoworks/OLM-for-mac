@@ -313,18 +313,20 @@ inline void add_colored_merge2(
     const float* amount,
     std::size_t pixels,
     const Merge2Color& fixed_color,
-    const Merge2RampView* ramp = nullptr)
+    const Merge2RampView* ramp = nullptr,
+    float scale = 1.0f)
 {
     if (!glow || !amount)
         return;
     for (std::size_t i = 0; i < pixels; ++i) {
-        if (amount[i] <= 0.001f)
+        const float scaled_amount = amount[i] * scale;
+        if (scaled_amount <= 0.001f)
             continue;
-        const Merge2Color color = ramp ? sample_merge2_ramp(*ramp, amount[i]) : fixed_color;
+        const Merge2Color color = ramp ? sample_merge2_ramp(*ramp, scaled_amount) : fixed_color;
         glow[i].r += color.red;
         glow[i].g += color.green;
         glow[i].b += color.blue;
-        glow[i].a += amount[i];
+        glow[i].a += scaled_amount;
     }
 }
 

@@ -12,6 +12,7 @@
     "merge_mode": 1,
     "active_ray": "Horizontal",
     "length": 7,
+    "horizontal_use_ramp": false,
     "glow_rotation": 0,
     "channel": 1,
     "semi_transparent": true
@@ -366,5 +367,5 @@
       }
     }
   ],
-  "boundary": "Actual exported SmartPreRender/SmartRender versus Mac public EffectMain(PF_Cmd_RENDER). PF32 checkpoint capture proved the natural ray helper's 15 active floats exact before aggregation; direct float Brightness Gain and the PF32 reciprocal-multiply normalization close the first downstream difference. ANGLE editing is unavailable in the pinned worker, so nondefault rotation remains fail-closed."
+  "boundary": "Actual exported SmartPreRender/SmartRender versus Mac public EffectMain(PF_Cmd_RENDER). PF32 checkpoint capture proved the natural ray helper's 15 active floats exact before aggregation; direct float Brightness Gain and PF32 reciprocal-multiply normalization close the first downstream difference. ANGLE editing is unavailable in the pinned worker, so nondefault rotation remains fail-closed."
 }

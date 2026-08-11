@@ -12,6 +12,7 @@
     "merge_mode": 1,
     "active_ray": "Horizontal",
     "length": 50,
+    "horizontal_use_ramp": false,
     "glow_rotation": 0,
     "channel": 1,
     "semi_transparent": true

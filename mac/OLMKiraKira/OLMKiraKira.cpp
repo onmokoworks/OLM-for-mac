@@ -382,7 +382,8 @@ static void AddColoredMerge2(
 	const std::vector<float> &amount,
 	const PF_PixelFloat &color,
 	PF_Boolean use_ramp,
-	const OLMKiraKiraRampData &ramp_data)
+	const OLMKiraKiraRampData &ramp_data,
+	float scale)
 {
 	const olm::kirakira::Merge2Color fixed = {color.red, color.green, color.blue};
 	const olm::kirakira::Merge2RampView ramp = {
@@ -390,7 +391,7 @@ static void AddColoredMerge2(
 		std::min<size_t>(ramp_data.count, 16)
 	};
 	olm::kirakira::add_colored_merge2(
-		glow.data(), amount.data(), glow.size(), fixed, use_ramp ? &ramp : nullptr);
+		glow.data(), amount.data(), glow.size(), fixed, use_ramp ? &ramp : nullptr, scale);
 }
 
 static FloatRGBA ComposeMerge2Pixel(
@@ -563,13 +564,13 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	}
 	std::vector<FloatRGBA> glow((size_t)work_width * work_height);
 	if (info.merge_mode == 2) {
-		AddColoredMerge2(glow, vertical, info.vertical_color, info.vertical_use_ramp, info.vertical_ramp);
-		AddColoredMerge2(glow, horizontal, info.horizontal_color, info.horizontal_use_ramp, info.horizontal_ramp);
-		AddColoredMerge2(glow, diagonal, info.diagonal_color, info.diagonal_use_ramp, info.diagonal_ramp);
+		AddColoredMerge2(glow, vertical, info.vertical_color, info.vertical_use_ramp, info.vertical_ramp, scale);
+		AddColoredMerge2(glow, horizontal, info.horizontal_color, info.horizontal_use_ramp, info.horizontal_ramp, scale);
+		AddColoredMerge2(glow, diagonal, info.diagonal_color, info.diagonal_use_ramp, info.diagonal_ramp, scale);
 		// FUN_18114f4a0 owns four directional slots followed by Highlight.
 		// Preserve that addition order because float32 sums are not associative.
-		AddColoredMerge2(glow, diagonal2, info.diagonal2_color, info.diagonal2_use_ramp, info.diagonal2_ramp);
-		AddColoredMerge2(glow, highlight, info.highlight_color, info.highlight_use_ramp, info.highlight_ramp);
+		AddColoredMerge2(glow, diagonal2, info.diagonal2_color, info.diagonal2_use_ramp, info.diagonal2_ramp, scale);
+		AddColoredMerge2(glow, highlight, info.highlight_color, info.highlight_use_ramp, info.highlight_ramp, highlight_scale);
 		for (FloatRGBA &g : glow) {
 			g.r = Clamp01(g.r);
 			g.g = Clamp01(g.g);

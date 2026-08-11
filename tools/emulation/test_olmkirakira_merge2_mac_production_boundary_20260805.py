@@ -43,8 +43,12 @@ def main() -> int:
         < source.index("AddColoredMerge2(glow, diagonal,")
         < source.index("AddColoredMerge2(glow, diagonal2")
         < source.index("AddColoredMerge2(glow, highlight"),
-        "strict_skip_boundary": "if (amount[i] <= 0.001f)" in core,
-        "raw_ray_alpha": "glow[i].a += amount[i];" in core,
+        "gain_before_skip_and_ramp": (
+            "const float scaled_amount = amount[i] * scale;" in core
+            and "if (scaled_amount <= 0.001f)" in core
+            and "sample_merge2_ramp(*ramp, scaled_amount)" in core
+        ),
+        "scaled_ray_alpha": "glow[i].a += scaled_amount;" in core,
         "post_five_layer_clamp": all(f"g.{c} = Clamp01(g.{c});" in source for c in "rgba"),
         "outer_mode2_helper": "out = ComposeMerge2Pixel(" in source,
         "unscaled_alpha_zero_test": "raw_alpha_sum = glow.a + source.a;" in core,
