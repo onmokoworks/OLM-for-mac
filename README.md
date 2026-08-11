@@ -65,7 +65,7 @@ fail-closeです。個別セルの成功を任意入力やWindows／Mac AE pixel
 | OLMToonDilate | copy／dilate、radius、frontier／tie／corner、installed covering | PF8／PF16／PF32 |
 | OLMDistanceGradation | Inside／Outside／Both、補間、invert、background、記録済みblur／bilateral matrix | PF8／PF16／PF32（限定範囲） |
 | OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3、16×16／32×18／64×36複合経路 | PF8／PF16／PF32（限定範囲） |
-| OLMRadialBlur | Zoom／Rotation／Inner、記録済みtransform／Size×Edge×Noise複合経路 | PF8／PF16／PF32（bounded guard付き） |
+| OLMRadialBlur | Zoom／Rotation／Inner、記録済みStrength×Size×Noise×Offset複合経路 | PF8／PF16／PF32（bounded guard付き） |
 | OLMSmoother2 | v1／v2 classifier、key／invert、Gamma、range、palette交差 | PF8／PF16／PF32（限定範囲） |
 | OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur、記録済みnatural Mode 4 | PF8／PF16／PF32（限定範囲） |
 | OLMSmoother v1 | no-key／Color Key、smoothing range | native PF8／PF16。32bpcはAE host conversion |

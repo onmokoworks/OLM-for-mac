@@ -1,5 +1,12 @@
 # OLM Conformance Ledger
 
+- 2026-08-12 OLMRadialBlur Rotation four-family closure: Dual Strength x
+  Size x Noise x selected-side Mode 2/3 Offset is 24/24 consumed-path and
+  typed-output exact across PF8/PF16/PF32 on the fixed 32x18 component
+  fixture. Size/noise span and simultaneous Outer/Inner internal planes are
+  included. Admission remains bounded to the declared tuples and geometry;
+  unlisted combinations and Type 3 stay fail-closed.
+
 - 2026-08-12 Kira latest bounded seams: Mode 4 public Highlight solo is 3/3
   all-depth exact. Horizontal/Diagonal2 solo are PF8/PF16 exact and PF32
   fail-closed; Diagonal2 multiray is fail-closed at every depth. At Rotation

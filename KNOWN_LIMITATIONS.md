@@ -72,6 +72,9 @@
   exactです。PF32 Rotationの4 tupleだけforward-angle、PF8／PF16はreverse-angleで、
   SV25 diagnostic source scalarには既知1 ULP差があります。prepass以降はexactですが、
   未列挙tuple／geometry／Type 3へは一般化しません。
+  Rotation Dual Strength×Size×Noise×Offsetは固定32×18の3深度24ケースで、
+  Size×Noise span、Outer／Inner寄与、選択側Mode 2／3 Offsetの内部面と出力がexactです。
+  未列挙tuple／geometryはfail-closeし、この証拠でType 3をadmitしません。
   Type 3のPF32 fixtureはprimary／secondary world I/Oとrepeat決定性まで確認済みですが、
   Classic outputは全ゼロ、Smartは`render_error: -40`で、9×7 packed value
   pointerのslot／world mappingにはcrash境界があります。full-render Exact gateは未成立で、
