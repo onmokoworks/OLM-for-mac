@@ -38,12 +38,16 @@
   64×36です。off-center、非unit ratio、angle、quality、repeat、offset、
   edge fade、noise、variationを含む全組合せは未証明です。Size Variation×Edge Fadeは
   記録済み32×18 fixtureの3深度36行でexactですが、任意geometryや未列挙値へは一般化
-  しません。Windows独自のcustom preview描画と操作も未証明です。
+  しません。Dual Strength×Noiseの記録済み48ケースは最終出力exactですが、
+  Rotation Noise Type 1のsampled source scalarには1〜4 ULP差が残るため、全内部stage
+  exactとは表現しません。Windows独自のcustom preview描画と操作も未証明です。
 - OLMSmoother2：key、invert、Gamma、range、paletteの主要分岐はbounded exactです。
   全パラメーター直積は未証明です。
 - OLMKiraKira：Mode 1〜4の主要経路を実装しています。Mode 4の方向レイは、9×7以上の
   回転後geometryとLength 1〜1000を、実AEXの17ケース・51中間stageで一般化しています。
-  小型shape、ray／色／ramp／Merge Modeの全直積とDrawbot custom UIは未証明です。
+  5代表compose交差では非default色、半透明／HDR、Merge 1／2、ramp off／1／2を含めて
+  raw exactですが、小型shape、ray／色／ramp／Merge Modeの全直積とDrawbot custom UIは
+  未証明です。
 - OLMSmoother v1：元AEXのnative depthはPF8/PF16です。32bpcプロジェクトではAEが
   classic integer pluginの前後を変換するため、native PF32互換とは表現しません。
 
