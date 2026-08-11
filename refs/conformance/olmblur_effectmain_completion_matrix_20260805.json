@@ -6,9 +6,9 @@
     {"command": "PF_Cmd_ABOUT", "production_implemented": true, "actual_aex_bounded_invocation": false, "status": "source_only"},
     {"command": "PF_Cmd_GLOBAL_SETUP", "production_implemented": true, "actual_aex_bounded_invocation": true, "status": "actual_public_export_to_production_exact"},
     {"command": "PF_Cmd_PARAMS_SETUP", "production_implemented": true, "actual_aex_bounded_invocation": false, "status": "static_parameter_schema_only"},
-    {"command": "PF_Cmd_RENDER", "production_implemented": true, "actual_aex_bounded_invocation": false, "status": "entrypoint_gap"},
-    {"command": "PF_Cmd_SMART_PRE_RENDER", "production_implemented": true, "production_ae_free_synthetic_invocation": true, "actual_aex_bounded_invocation": false, "status": "production_effectmain_synthetic_exact"},
-    {"command": "PF_Cmd_SMART_RENDER", "production_implemented": true, "production_ae_free_synthetic_invocation": true, "actual_aex_bounded_invocation": false, "status": "production_effectmain_to_blur_render_synthetic_exact"}
+    {"command": "PF_Cmd_RENDER", "production_implemented": true, "actual_aex_bounded_invocation": false, "status": "entrypoint_gap_not_selected_by_the_bounded_smart_matrix"},
+    {"command": "PF_Cmd_SMART_PRE_RENDER", "production_implemented": true, "production_ae_free_synthetic_invocation": true, "actual_aex_bounded_invocation": true, "status": "actual_export_checkout_chain_exact_six_rows"},
+    {"command": "PF_Cmd_SMART_RENDER", "production_implemented": true, "production_ae_free_synthetic_invocation": true, "actual_aex_bounded_invocation": true, "status": "actual_export_worker_writer_chain_exact_six_rows"}
   ],
   "render_cells": [
     {"bit_depth": 8, "legacy": 0, "actual_worker_exact": true, "production_blur_render_dispatch_exact": true, "evidence": "tools/emulation/test_olmblur_pf8_nonlegacy_source_aex_adapter_20260805.py", "status": "closed_to_production_render_dispatch"},
@@ -91,10 +91,19 @@
     "result": "actual 2025 AEX public export and current production EffectMain return zero and write the same 12-byte payload",
     "boundary": "bounded hostless command invocation; not native AE registration or host interpretation of capability bits"
   },
-  "evidence_boundary": "Worker rows execute actual AEX workers through bounded host-suite shims. Production dispatch rows compile and call Mac BlurRender directly with typed PF worlds and retained actual-AEX outputs. They do not invoke the exported EffectMain symbol or AE parameter checkout, so public-command cells remain explicitly separate.",
+  "actual_exported_render_chain_closed": {
+    "regression": "tools/emulation/test_olmblur_exported_effectmain_chain_actual_aex_20260811.py",
+    "evidence": "refs/conformance/olmblur_exported_effectmain_chain_actual_aex_20260811.json",
+    "actual_exported_entry": "0x18000a970",
+    "commands": [23, 24],
+    "matrix": "PF8/PF16/PF32 x Legacy off/on; 24x24 padded; Amount 5; Smoothness 100; Repeat 1; Bias Direction 1",
+    "result": "6/6 complete active typed buffers equal the retained actual-worker oracle; parameter checkout/checkin order and pre/pixel/output callbacks verified; copied source padding preserved",
+    "boundary": "actual Windows AEX under AEXCompat/Unicorn synthetic suites; not native AE; classic PF_Cmd_RENDER was not selected by these smart rows"
+  },
+  "evidence_boundary": "Worker rows execute actual AEX workers through bounded host-suite shims. The six-row exported-render proof additionally invokes actual entryPointFunc SMART_PRE_RENDER and SMART_RENDER with parameter and world callbacks through the selected typed worker/writer. Production dispatch rows remain separate Mac-source evidence. Native AE behavior remains outside these hostless claims.",
   "typed_blur_render_remaining_gaps": [],
   "largest_remaining_gaps": [
-    "A bounded actual-AEX exported EffectMain command invocation with parameter checkout and SMART_RENDER callbacks.",
+    "Classic PF_Cmd_RENDER actual-export coverage if an in-scope AE host is shown to select it instead of Smart Render.",
     "No typed Mac BlurRender adapter cell remains: PF8/PF16/PF32 Legacy and NonLegacy are all closed against retained actual-AEX fixtures.",
     "ABOUT, PARAMS_SETUP, and RENDER lack standalone actual-AEX command fixtures."
   ],

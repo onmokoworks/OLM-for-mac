@@ -1,0 +1,289 @@
+{
+  "actual_aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+  "case_count": 6,
+  "cases": [
+    {
+      "active_sha256": "68744a057641010bbde9b5d5f4226d0df2d49d1ff063e44bf7ac2ce37263feae",
+      "callback_events": [
+        "pre_checkout_layer",
+        "checkout_layer_pixels",
+        "checkout_output",
+        "checkin_param_1",
+        "checkin_param_2",
+        "checkin_param_3",
+        "checkin_param_4",
+        "checkin_param_5",
+        "copy_world"
+      ],
+      "commands": [
+        23,
+        24
+      ],
+      "depth": 8,
+      "handle_suite_events": 48,
+      "id": "pf8_amount5_0_repeat1_legacy0",
+      "instructions": {
+        "smart_pre_render": 433,
+        "smart_render": 193371
+      },
+      "legacy": 0,
+      "mismatched_bytes": 0,
+      "oracle_sha256": "68744a057641010bbde9b5d5f4226d0df2d49d1ff063e44bf7ac2ce37263feae",
+      "padding_mismatches": 0,
+      "parameter_checkout_order": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "return_codes": [
+        0,
+        0
+      ]
+    },
+    {
+      "active_sha256": "0301eadd30bafadf2f386d8620d778aa9d20f198e4594ead0e30d952ee26750a",
+      "callback_events": [
+        "pre_checkout_layer",
+        "checkout_layer_pixels",
+        "checkout_output",
+        "checkin_param_1",
+        "checkin_param_2",
+        "checkin_param_3",
+        "checkin_param_4",
+        "checkin_param_5",
+        "copy_world"
+      ],
+      "commands": [
+        23,
+        24
+      ],
+      "depth": 8,
+      "handle_suite_events": 48,
+      "id": "pf8_amount5_0_repeat1_legacy1",
+      "instructions": {
+        "smart_pre_render": 433,
+        "smart_render": 316907
+      },
+      "legacy": 1,
+      "mismatched_bytes": 0,
+      "oracle_sha256": "0301eadd30bafadf2f386d8620d778aa9d20f198e4594ead0e30d952ee26750a",
+      "padding_mismatches": 0,
+      "parameter_checkout_order": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "return_codes": [
+        0,
+        0
+      ]
+    },
+    {
+      "active_sha256": "9b26b1fee5cf05dd39473a8d385c7d80843d8bda8c25541c86a1d1c25ed6ce43",
+      "callback_events": [
+        "pre_checkout_layer",
+        "checkout_layer_pixels",
+        "checkout_output",
+        "checkin_param_1",
+        "checkin_param_2",
+        "checkin_param_3",
+        "checkin_param_4",
+        "checkin_param_5",
+        "copy_world"
+      ],
+      "commands": [
+        23,
+        24
+      ],
+      "depth": 16,
+      "handle_suite_events": 48,
+      "id": "pf16_amount5_0_repeat1_legacy0",
+      "instructions": {
+        "smart_pre_render": 433,
+        "smart_render": 189176
+      },
+      "legacy": 0,
+      "mismatched_bytes": 0,
+      "oracle_sha256": "9b26b1fee5cf05dd39473a8d385c7d80843d8bda8c25541c86a1d1c25ed6ce43",
+      "padding_mismatches": 0,
+      "parameter_checkout_order": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "return_codes": [
+        0,
+        0
+      ]
+    },
+    {
+      "active_sha256": "c22524ff901f905cc2d9354a0a6a47ed5aecd1dcc0d46fc79439d5ee069593fc",
+      "callback_events": [
+        "pre_checkout_layer",
+        "checkout_layer_pixels",
+        "checkout_output",
+        "checkin_param_1",
+        "checkin_param_2",
+        "checkin_param_3",
+        "checkin_param_4",
+        "checkin_param_5",
+        "copy_world"
+      ],
+      "commands": [
+        23,
+        24
+      ],
+      "depth": 16,
+      "handle_suite_events": 48,
+      "id": "pf16_amount5_0_repeat1_legacy1",
+      "instructions": {
+        "smart_pre_render": 433,
+        "smart_render": 307701
+      },
+      "legacy": 1,
+      "mismatched_bytes": 0,
+      "oracle_sha256": "c22524ff901f905cc2d9354a0a6a47ed5aecd1dcc0d46fc79439d5ee069593fc",
+      "padding_mismatches": 0,
+      "parameter_checkout_order": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "return_codes": [
+        0,
+        0
+      ]
+    },
+    {
+      "active_sha256": "67434329bbf79181bee87025df1e93fbfd8f5fa2a7598b9431d0124a2d26cd0d",
+      "callback_events": [
+        "pre_checkout_layer",
+        "checkout_layer_pixels",
+        "checkout_output",
+        "checkin_param_1",
+        "checkin_param_2",
+        "checkin_param_3",
+        "checkin_param_4",
+        "checkin_param_5",
+        "copy_world"
+      ],
+      "commands": [
+        23,
+        24
+      ],
+      "depth": 32,
+      "handle_suite_events": 48,
+      "id": "pf32_amount5_0_repeat1_legacy0",
+      "instructions": {
+        "smart_pre_render": 433,
+        "smart_render": 182544
+      },
+      "legacy": 0,
+      "mismatched_bytes": 0,
+      "oracle_sha256": "67434329bbf79181bee87025df1e93fbfd8f5fa2a7598b9431d0124a2d26cd0d",
+      "padding_mismatches": 0,
+      "parameter_checkout_order": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "return_codes": [
+        0,
+        0
+      ]
+    },
+    {
+      "active_sha256": "c6d1a9aaee1917b0e08d9915cb16f037f4a4b3e94251481dbe1f84250d5450a5",
+      "callback_events": [
+        "pre_checkout_layer",
+        "checkout_layer_pixels",
+        "checkout_output",
+        "checkin_param_1",
+        "checkin_param_2",
+        "checkin_param_3",
+        "checkin_param_4",
+        "checkin_param_5",
+        "copy_world"
+      ],
+      "commands": [
+        23,
+        24
+      ],
+      "depth": 32,
+      "handle_suite_events": 48,
+      "id": "pf32_amount5_0_repeat1_legacy1",
+      "instructions": {
+        "smart_pre_render": 433,
+        "smart_render": 304116
+      },
+      "legacy": 1,
+      "mismatched_bytes": 0,
+      "oracle_sha256": "c6d1a9aaee1917b0e08d9915cb16f037f4a4b3e94251481dbe1f84250d5450a5",
+      "padding_mismatches": 0,
+      "parameter_checkout_order": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "return_codes": [
+        0,
+        0
+      ]
+    }
+  ],
+  "evidence_boundary": "Actual Windows 2025 AEX export under AEXCompat/Unicorn with bounded synthetic suites. Complete active typed buffers equal retained actual-worker oracles and row padding is untouched. This is not native AE execution.",
+  "exported_entry": "0x18000a970",
+  "geometry": [
+    24,
+    24
+  ],
+  "matrix": {
+    "depth": [
+      8,
+      16,
+      32
+    ],
+    "legacy": [
+      0,
+      1
+    ]
+  },
+  "parameters": {
+    "amount": 5,
+    "bias_direction": 1,
+    "repeat": 1,
+    "smoothness": 100
+  },
+  "path": [
+    "exported EffectMain(PF_Cmd_SMART_PRE_RENDER)",
+    "checkout_layer",
+    "exported EffectMain(PF_Cmd_SMART_RENDER)",
+    "checkout_layer_pixels",
+    "checkout_output",
+    "checkout_param 1..5",
+    "typed worker",
+    "typed writer"
+  ],
+  "plugin": "OLMBlur",
+  "production_changed": false,
+  "raw_exact": 6,
+  "row_padding_bytes": {
+    "8": 17,
+    "16": 23,
+    "32": 32
+  },
+  "schema": "olmblur.exported-effectmain-chain.actual-aex/1",
+  "status": "exact"
+}
