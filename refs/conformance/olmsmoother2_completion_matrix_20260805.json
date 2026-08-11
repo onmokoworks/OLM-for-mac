@@ -55,7 +55,7 @@
       "count_6": "direct-owner-only; prohibited from public contract"
     }
   },
-  "largest_closed_gap_this_round": "54/54 Gamma endpoint x key polarity x smoothing tuple x depth cases raw exact",
+  "largest_closed_gap_this_round": "18/18 palette ownership x Gamma/key/smoothing covering cases raw exact, with the 54/54 default-palette matrix retained as control",
   "next_largest_natural_gap": "Other intermediate Gamma Values or other key color endpoints",
   "constraints": [
     "Do not generalize palette count above 5",

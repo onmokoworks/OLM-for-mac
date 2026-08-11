@@ -62,7 +62,7 @@ def histogram(plane,w,h):
    idx=((0 if bsw else 2)+er0+(((0 if bse else 1)+uv*2)*4))*16+(4 if B==0 else 0)+(1 if G==0 else 0)+(2 if R==0 else 0)+(8 if A==0 else 0)
    hist[idx]+=1
  return dict(sorted(hist.items()))
-def actual(depth,ver,pixels,pad,w,h,s,r,e,feature='none',gamma_value=2.4,writer_witnesses=None):
+def actual(depth,ver,pixels,pad,w,h,s,r,e,feature='none',gamma_value=2.4,writer_witnesses=None,gamma_palette=None,key_mode=None):
  l=typed.AexLoader(str(typed.AEX_PATH),verbose=False,fast=False);l.register_libm_impls(max_threads=1)
  if writer_witnesses is not None:
   def capture_writer(current,address,size):
@@ -75,10 +75,11 @@ def actual(depth,ver,pixels,pad,w,h,s,r,e,feature='none',gamma_value=2.4,writer_
  for y in range(h):l.write_bytes(sb+y*ss,b''.join(struct.pack('<4f',*pixels[y*w+x]) for x in range(w))+b'\x3c'*16)
  sd=v2.desc(l,sb,ss,w,h);ptr=[l.bump_alloc(4,align=4) for _ in range(4)]
  for p,n in zip(ptr,[w,0,h,0]):l.write_bytes(p,struct.pack('<i',n))
- if feature in ('colors_noninvert','colors_invert'):
+ effective_key_mode=key_mode or (feature if feature in ('colors_noninvert','colors_invert') else 'key_off')
+ if effective_key_mode in ('colors_noninvert','colors_invert'):
   keysv=v1.SmallStatic(l,h)
   key=f32(1/255)
-  if feature=='colors_noninvert':
+  if effective_key_mode=='colors_noninvert':
    kp=l.bump_alloc(16,align=16);l.write_bytes(kp,struct.pack('<4f',1.,key,key,key));l.call_function(0x180002a70,int_args=[*ptr,sd,kp],max_instructions=10_000_000)
   else:
    cp=l.bump_alloc(16,align=16);l.write_bytes(cp,struct.pack('<4f',key,key,key,1.));kc=l.bump_alloc(0x80,align=16);l.write_bytes(kc,b'\0'*0x80);l.write_bytes(kc+0x60,struct.pack('<Q',1));l.write_bytes(kc+0x68,struct.pack('<Q',cp));l.call_function(0x180002930,int_args=[*ptr,sd,kc],max_instructions=10_000_000)
@@ -87,8 +88,8 @@ def actual(depth,ver,pixels,pad,w,h,s,r,e,feature='none',gamma_value=2.4,writer_
  for y in range(h):l.write_bytes(sb+y*ss,b''.join(struct.pack('<4f',*linear[y*w+x]) for x in range(w))+b'\x3c'*16)
  cs=4*w+4;cb=l.bump_alloc(cs*h,align=16);l.write_bytes(cb,b'\xa5'*(cs*h));sd=v2.desc(l,sb,ss,w,h);cd=v2.desc(l,cb,cs,w,h);rect=l.bump_alloc(16,align=16);l.write_bytes(rect,struct.pack('<4i',0,0,w,h));cfg=l.bump_alloc(0x80,align=16);l.write_bytes(cfg,b'\0'*0x80);l.write_bytes(cfg,struct.pack('<i',1 if ver==1 else 0));l.write_bytes(cfg+0x1c,struct.pack('<i',r));l.write_bytes(cfg+0x20,struct.pack('<ii',s,e))
  if feature=='gamma_all':l.write_bytes(cfg+0x28,struct.pack('<f',f32(gamma_value)));l.write_bytes(cfg+0x2c,struct.pack('<i',5));l.write_bytes(cfg+0x40,b'\x01')
- if feature in ('colors_noninvert','colors_invert'):
-  key=f32(1/255);pal=[(1.,0.,0.,1.),(key,key,key,1.)];colors=l.bump_alloc(32,align=16);l.write_bytes(colors,b''.join(struct.pack('<4f',*q) for q in pal));l.write_bytes(cfg+0x28,struct.pack('<f',f32(gamma_value)));l.write_bytes(cfg+0x30,struct.pack('<Q',2));l.write_bytes(cfg+0x38,struct.pack('<Q',colors));l.write_bytes(cfg+0x40,b'\x03')
+ if feature in ('gamma_colors','colors_noninvert','colors_invert'):
+  key=f32(1/255);pal=gamma_palette or [(1.,0.,0.,1.),(key,key,key,1.)];colors=l.bump_alloc(16*len(pal),align=16);l.write_bytes(colors,b''.join(struct.pack('<4f',*q) for q in pal));l.write_bytes(cfg+0x28,struct.pack('<f',f32(gamma_value)));l.write_bytes(cfg+0x30,struct.pack('<Q',len(pal)));l.write_bytes(cfg+0x38,struct.pack('<Q',colors));l.write_bytes(cfg+0x40,b'\x03')
  sv=v1.SmallStatic(l,h);cr=l.call_function(v1.FUN_ADA0,int_args=[sd,cd,rect,cfg],max_instructions=20_000_000);plane=b''.join(l.read_bytes(cb+y*cs,w*4) for y in range(h));req(all(x in (0,255) for x in plane),'invalid class plane')
  psz,pad0=DEPTHS[depth];req(pad==pad0,'pad drift');os=w*psz+pad;ob=l.bump_alloc(os*h,align=16);l.write_bytes(ob,b'\xa5'*(os*h));od=v2.desc(l,ob,os,w,h);ctx=l.bump_alloc(0x20,align=16);l.write_bytes(ctx,b'\0'*0x20)
  if ver==2:

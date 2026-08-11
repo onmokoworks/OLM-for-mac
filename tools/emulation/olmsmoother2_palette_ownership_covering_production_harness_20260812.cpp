@@ -1,0 +1,14 @@
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <vector>
+#include "../../mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp"
+struct RGBA{unsigned char r,g,b,a;};
+static RGBA pixel(int x,int y,int w,int h){if(x==0&&y==0)return{1,1,1,255};if(x==1&&y==0)return{255,0,0,255};return x*h<y*w?RGBA{245,40,32,255}:RGBA{18,80,224,255};}
+template<class P>static P cvt(RGBA q);template<>PF_Pixel8 cvt(RGBA q){return{q.a,q.r,q.g,q.b};}template<>PF_Pixel16 cvt(RGBA q){auto c=[](int v){return(unsigned short)std::lround(v*32768.0/255.0);};return{c(q.a),c(q.r),c(q.g),c(q.b)};}template<>PF_PixelFloat cvt(RGBA q){return{q.a/255.f,q.r/255.f,q.g/255.f,q.b/255.f};}
+struct Tuple{int count,kind,key,s,r,e;double gamma;};
+static const Tuple T[6]={{1,0,0,100,2,0,1.0},{1,0,1,50,50,50,2.4},{1,0,2,50,50,50,1.0},{5,0,0,50,50,50,2.4},{5,1,1,100,2,0,1.0},{5,2,2,100,2,0,2.4}};
+static void color(PF_ParamDef&d,RGBA q){d.u.cd.value={q.a,q.r,q.g,q.b};}
+template<class P>static int run(int ti){constexpr int W=9,H=7;const Tuple&t=T[ti];size_t pad=std::is_same<P,PF_Pixel8>::value?5:(std::is_same<P,PF_Pixel16>::value?7:13),rb=W*sizeof(P)+pad;std::vector<unsigned char>in(rb*H,0x3c),out(rb*H,0xa5);for(int y=0;y<H;y++)for(int x=0;x<W;x++){P p=cvt<P>(pixel(x,y,W,H));memcpy(in.data()+y*rb+x*sizeof(P),&p,sizeof(P));}PF_EffectWorld iw{},ow{};iw.data=in.data();iw.width=W;iw.height=H;iw.rowbytes=rb;iw.extent_hint={0,0,W,H};ow.data=out.data();ow.width=W;ow.height=H;ow.rowbytes=rb;ow.extent_hint={0,0,W,H};PF_ParamDef d[SM_NUM_PARAMS]{};PF_ParamDef*q[SM_NUM_PARAMS]{};for(int n=0;n<SM_NUM_PARAMS;n++)q[n]=d+n;d[SM_SMOOTHNESS].u.sd.value=t.s;d[SM_SMOOTH_RANGE].u.sd.value=t.r;d[SM_EXTRA_SMOOTH].u.sd.value=t.e;d[SM_VERSION].u.pd.value=2;d[SM_GAMMA_MODE].u.pd.value=GAMMA_COLORS_ONLY;d[SM_GAMMA_VALUE].u.fs_d.value=t.gamma;d[SM_NUM_GAMMA_COLORS].u.sd.value=t.count;d[SM_ENABLE_KEY].u.bd.value=t.key!=0;d[SM_INVERT_KEY].u.bd.value=t.key==2;color(d[SM_KEY_COLOR],{1,1,1,255});RGBA normal[5]={{255,0,0,255},{1,1,1,255},{0,0,255,255},{0,255,0,255},{255,255,0,255}},reordered[5]={{255,255,0,255},{0,255,0,255},{1,1,1,255},{255,0,0,255},{0,0,255,255}},duplicate[5]={{255,0,0,255},{1,1,1,255},{255,0,0,255},{1,1,1,255},{0,0,255,255}};RGBA*pal=t.kind==1?reordered:(t.kind==2?duplicate:normal);for(int n=0;n<t.count;n++)color(d[SM_GAMMA_COLOR_0+n],pal[n]);PF_InData id{};if(RenderBits<P>(&id,q,&iw,&ow))return 2;printf("RAW ");for(auto b:out)printf("%02x",b);puts("");for(int y=0;y<H;y++)for(size_t k=W*sizeof(P);k<rb;k++)if(out[y*rb+k]!=0xa5)return 3;return 0;}
+int main(int argc,char**argv){if(argc!=3)return 64;int t=atoi(argv[1]);if(t<0||t>=6)return 65;if(!strcmp(argv[2],"PF8"))return run<PF_Pixel8>(t);if(!strcmp(argv[2],"PF16"))return run<PF_Pixel16>(t);if(!strcmp(argv[2],"PF32"))return run<PF_PixelFloat>(t);return 66;}

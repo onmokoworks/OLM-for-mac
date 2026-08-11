@@ -1,0 +1,852 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "case_count": 18,
+  "cases": [
+    {
+      "class_plane_sha256": "d9e81f369cf8620230fb1496d26c3e4989fc46c3eab88b9fe561eb68b30ab532",
+      "classifier_instructions": 21989,
+      "depth": "PF8",
+      "exact": true,
+      "extra_smooth": 0,
+      "gamma_value": 1.0,
+      "key_mode": "key_off",
+      "padding_per_row": 5,
+      "palette_count": 1,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_sha256": "c3bf7cefb02abdf377f3a2d1bcd006a77479740465607aaa5f72196994b6531c",
+      "smooth_range": 2,
+      "smoothness": 100,
+      "tuple": "count1_gamma1_keyoff_default",
+      "worker_instructions": 42848
+    },
+    {
+      "class_plane_sha256": "d9e81f369cf8620230fb1496d26c3e4989fc46c3eab88b9fe561eb68b30ab532",
+      "classifier_instructions": 21989,
+      "depth": "PF16",
+      "exact": true,
+      "extra_smooth": 0,
+      "gamma_value": 1.0,
+      "key_mode": "key_off",
+      "padding_per_row": 7,
+      "palette_count": 1,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_sha256": "238518fc997a7293e54427232b492dd67a7542ca1b81c769fc2cfa46eb7c2b64",
+      "smooth_range": 2,
+      "smoothness": 100,
+      "tuple": "count1_gamma1_keyoff_default",
+      "worker_instructions": 42849
+    },
+    {
+      "class_plane_sha256": "d9e81f369cf8620230fb1496d26c3e4989fc46c3eab88b9fe561eb68b30ab532",
+      "classifier_instructions": 21989,
+      "depth": "PF32",
+      "exact": true,
+      "extra_smooth": 0,
+      "gamma_value": 1.0,
+      "key_mode": "key_off",
+      "padding_per_row": 13,
+      "palette_count": 1,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_sha256": "214524f08d0ac222ac2b2f3f3c69401e1d44f14156e4e8abde90e03dc9ba4823",
+      "smooth_range": 2,
+      "smoothness": 100,
+      "tuple": "count1_gamma1_keyoff_default",
+      "worker_instructions": 42219
+    },
+    {
+      "class_plane_sha256": "008ff25dac4573ca6174ac05d4d81ef9177400eb00dce39b636ed0941761adb3",
+      "classifier_instructions": 21989,
+      "depth": "PF8",
+      "exact": true,
+      "extra_smooth": 50,
+      "gamma_value": 2.4,
+      "key_mode": "colors_noninvert",
+      "padding_per_row": 5,
+      "palette_count": 1,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_sha256": "b862722bde60d87b4572a9743796cb6f545e36a15190a0cf4e51c5b21815012f",
+      "smooth_range": 50,
+      "smoothness": 50,
+      "tuple": "count1_gamma24_noninvert_mixed",
+      "worker_instructions": 43692
+    },
+    {
+      "class_plane_sha256": "008ff25dac4573ca6174ac05d4d81ef9177400eb00dce39b636ed0941761adb3",
+      "classifier_instructions": 21989,
+      "depth": "PF16",
+      "exact": true,
+      "extra_smooth": 50,
+      "gamma_value": 2.4,
+      "key_mode": "colors_noninvert",
+      "padding_per_row": 7,
+      "palette_count": 1,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_sha256": "3a8a0e15ee86583e0e01947c19c2a44f771862e5c5430b0a45d4719fea95de89",
+      "smooth_range": 50,
+      "smoothness": 50,
+      "tuple": "count1_gamma24_noninvert_mixed",
+      "worker_instructions": 43693
+    },
+    {
+      "class_plane_sha256": "008ff25dac4573ca6174ac05d4d81ef9177400eb00dce39b636ed0941761adb3",
+      "classifier_instructions": 21989,
+      "depth": "PF32",
+      "exact": true,
+      "extra_smooth": 50,
+      "gamma_value": 2.4,
+      "key_mode": "colors_noninvert",
+      "padding_per_row": 13,
+      "palette_count": 1,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_sha256": "3fb0c67ccd0c3b24965e1c23ff6f5242e6fceb83699ad1f62266626aae6ce880",
+      "smooth_range": 50,
+      "smoothness": 50,
+      "tuple": "count1_gamma24_noninvert_mixed",
+      "worker_instructions": 43063
+    },
+    {
+      "class_plane_sha256": "2167c6a5b488feba7aa3c5eba8690fc7a4c35411b704e1daff2d220f9bb8b8e7",
+      "classifier_instructions": 11954,
+      "depth": "PF8",
+      "exact": true,
+      "extra_smooth": 50,
+      "gamma_value": 1.0,
+      "key_mode": "colors_invert",
+      "padding_per_row": 5,
+      "palette_count": 1,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_sha256": "48151d22d7a49c45b8c7753337b580456d16280eb8ec2a841adc6c2247f1480c",
+      "smooth_range": 50,
+      "smoothness": 50,
+      "tuple": "count1_gamma1_invert_mixed",
+      "worker_instructions": 29732
+    },
+    {
+      "class_plane_sha256": "2167c6a5b488feba7aa3c5eba8690fc7a4c35411b704e1daff2d220f9bb8b8e7",
+      "classifier_instructions": 11954,
+      "depth": "PF16",
+      "exact": true,
+      "extra_smooth": 50,
+      "gamma_value": 1.0,
+      "key_mode": "colors_invert",
+      "padding_per_row": 7,
+      "palette_count": 1,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_sha256": "82f26a19f05523474e736d4be3c1f82d8cb7b955ca398d9c48cfa4050a88884c",
+      "smooth_range": 50,
+      "smoothness": 50,
+      "tuple": "count1_gamma1_invert_mixed",
+      "worker_instructions": 29733
+    },
+    {
+      "class_plane_sha256": "2167c6a5b488feba7aa3c5eba8690fc7a4c35411b704e1daff2d220f9bb8b8e7",
+      "classifier_instructions": 11954,
+      "depth": "PF32",
+      "exact": true,
+      "extra_smooth": 50,
+      "gamma_value": 1.0,
+      "key_mode": "colors_invert",
+      "padding_per_row": 13,
+      "palette_count": 1,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_sha256": "b25db66d0ecbc9199bd04a3ce2e38ceb10a5061f1ac525e1852a6961621a3b7d",
+      "smooth_range": 50,
+      "smoothness": 50,
+      "tuple": "count1_gamma1_invert_mixed",
+      "worker_instructions": 29103
+    },
+    {
+      "class_plane_sha256": "008ff25dac4573ca6174ac05d4d81ef9177400eb00dce39b636ed0941761adb3",
+      "classifier_instructions": 21989,
+      "depth": "PF8",
+      "exact": true,
+      "extra_smooth": 50,
+      "gamma_value": 2.4,
+      "key_mode": "key_off",
+      "padding_per_row": 5,
+      "palette_count": 5,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.003921568859368563,
+          0.003921568859368563,
+          0.003921568859368563,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_sha256": "1a4b0957d2b3f9e689ba13908f7e0c208ba24f7026d2156b3f75d89815f85877",
+      "smooth_range": 50,
+      "smoothness": 50,
+      "tuple": "count5_normal_gamma24_keyoff_mixed",
+      "worker_instructions": 44658
+    },
+    {
+      "class_plane_sha256": "008ff25dac4573ca6174ac05d4d81ef9177400eb00dce39b636ed0941761adb3",
+      "classifier_instructions": 21989,
+      "depth": "PF16",
+      "exact": true,
+      "extra_smooth": 50,
+      "gamma_value": 2.4,
+      "key_mode": "key_off",
+      "padding_per_row": 7,
+      "palette_count": 5,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.003921568859368563,
+          0.003921568859368563,
+          0.003921568859368563,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_sha256": "341481736a60bd159aee0f10a53e522fa121dafc010de8aba56d59af0766b257",
+      "smooth_range": 50,
+      "smoothness": 50,
+      "tuple": "count5_normal_gamma24_keyoff_mixed",
+      "worker_instructions": 44659
+    },
+    {
+      "class_plane_sha256": "008ff25dac4573ca6174ac05d4d81ef9177400eb00dce39b636ed0941761adb3",
+      "classifier_instructions": 21989,
+      "depth": "PF32",
+      "exact": true,
+      "extra_smooth": 50,
+      "gamma_value": 2.4,
+      "key_mode": "key_off",
+      "padding_per_row": 13,
+      "palette_count": 5,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.003921568859368563,
+          0.003921568859368563,
+          0.003921568859368563,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_sha256": "fb50572892e2d5088d8bc0cb13864b46ad8fddcd6c2500fe15b27295d0be2d4c",
+      "smooth_range": 50,
+      "smoothness": 50,
+      "tuple": "count5_normal_gamma24_keyoff_mixed",
+      "worker_instructions": 44029
+    },
+    {
+      "class_plane_sha256": "d9e81f369cf8620230fb1496d26c3e4989fc46c3eab88b9fe561eb68b30ab532",
+      "classifier_instructions": 21989,
+      "depth": "PF8",
+      "exact": true,
+      "extra_smooth": 0,
+      "gamma_value": 1.0,
+      "key_mode": "colors_noninvert",
+      "padding_per_row": 5,
+      "palette_count": 5,
+      "palette_rgba": [
+        [
+          1.0,
+          1.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.003921568859368563,
+          0.003921568859368563,
+          0.003921568859368563,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "raw_sha256": "02540f3683c8d2ee540576e78d61b599de3df8340c23416a2ee2505f1a17e069",
+      "smooth_range": 2,
+      "smoothness": 100,
+      "tuple": "count5_reordered_gamma1_noninvert_default",
+      "worker_instructions": 44208
+    },
+    {
+      "class_plane_sha256": "d9e81f369cf8620230fb1496d26c3e4989fc46c3eab88b9fe561eb68b30ab532",
+      "classifier_instructions": 21989,
+      "depth": "PF16",
+      "exact": true,
+      "extra_smooth": 0,
+      "gamma_value": 1.0,
+      "key_mode": "colors_noninvert",
+      "padding_per_row": 7,
+      "palette_count": 5,
+      "palette_rgba": [
+        [
+          1.0,
+          1.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.003921568859368563,
+          0.003921568859368563,
+          0.003921568859368563,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "raw_sha256": "c891a0400558df37ec56efa1f8e310cc3eb363a46207282f66536fe1d0385381",
+      "smooth_range": 2,
+      "smoothness": 100,
+      "tuple": "count5_reordered_gamma1_noninvert_default",
+      "worker_instructions": 44209
+    },
+    {
+      "class_plane_sha256": "d9e81f369cf8620230fb1496d26c3e4989fc46c3eab88b9fe561eb68b30ab532",
+      "classifier_instructions": 21989,
+      "depth": "PF32",
+      "exact": true,
+      "extra_smooth": 0,
+      "gamma_value": 1.0,
+      "key_mode": "colors_noninvert",
+      "padding_per_row": 13,
+      "palette_count": 5,
+      "palette_rgba": [
+        [
+          1.0,
+          1.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.003921568859368563,
+          0.003921568859368563,
+          0.003921568859368563,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "raw_sha256": "2198e145104704ea79086b5e1bce3a8b9af43ff0691799c922eba81e7dfa7482",
+      "smooth_range": 2,
+      "smoothness": 100,
+      "tuple": "count5_reordered_gamma1_noninvert_default",
+      "worker_instructions": 43579
+    },
+    {
+      "class_plane_sha256": "2167c6a5b488feba7aa3c5eba8690fc7a4c35411b704e1daff2d220f9bb8b8e7",
+      "classifier_instructions": 11954,
+      "depth": "PF8",
+      "exact": true,
+      "extra_smooth": 0,
+      "gamma_value": 2.4,
+      "key_mode": "colors_invert",
+      "padding_per_row": 5,
+      "palette_count": 5,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.003921568859368563,
+          0.003921568859368563,
+          0.003921568859368563,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.003921568859368563,
+          0.003921568859368563,
+          0.003921568859368563,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "raw_sha256": "f4f37bf7145fd793831a6c8c118f5eb77a3868a5f9775602e0f586f7f82f747f",
+      "smooth_range": 2,
+      "smoothness": 100,
+      "tuple": "count5_duplicate_gamma24_invert_default",
+      "worker_instructions": 29346
+    },
+    {
+      "class_plane_sha256": "2167c6a5b488feba7aa3c5eba8690fc7a4c35411b704e1daff2d220f9bb8b8e7",
+      "classifier_instructions": 11954,
+      "depth": "PF16",
+      "exact": true,
+      "extra_smooth": 0,
+      "gamma_value": 2.4,
+      "key_mode": "colors_invert",
+      "padding_per_row": 7,
+      "palette_count": 5,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.003921568859368563,
+          0.003921568859368563,
+          0.003921568859368563,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.003921568859368563,
+          0.003921568859368563,
+          0.003921568859368563,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "raw_sha256": "15e5912deafc641ece7204700a93b2c8129a95ed1fc206c56c25a11103afbe9f",
+      "smooth_range": 2,
+      "smoothness": 100,
+      "tuple": "count5_duplicate_gamma24_invert_default",
+      "worker_instructions": 29347
+    },
+    {
+      "class_plane_sha256": "2167c6a5b488feba7aa3c5eba8690fc7a4c35411b704e1daff2d220f9bb8b8e7",
+      "classifier_instructions": 11954,
+      "depth": "PF32",
+      "exact": true,
+      "extra_smooth": 0,
+      "gamma_value": 2.4,
+      "key_mode": "colors_invert",
+      "padding_per_row": 13,
+      "palette_count": 5,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.003921568859368563,
+          0.003921568859368563,
+          0.003921568859368563,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.003921568859368563,
+          0.003921568859368563,
+          0.003921568859368563,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "raw_sha256": "0daf22d42abeea4a991b552d44bbb025e869794d5f81aa64b7c019aaa8008f59",
+      "smooth_range": 2,
+      "smoothness": 100,
+      "tuple": "count5_duplicate_gamma24_invert_default",
+      "worker_instructions": 28717
+    }
+  ],
+  "claims_not_made": [
+    "No arbitrary palette colors/order/count combinations",
+    "No arbitrary cross-product generalization",
+    "No AE-host execution claim"
+  ],
+  "controls": "olmsmoother2_gamma_key_smoothing_crossproduct_actual_aex_20260812 (54/54 default two-entry palette)",
+  "production_source_sha256": "c0a2588aa6749c3f861f2e7246c4db97fa9d6c3b2b8783889a5c22b36f77dc77",
+  "schema": "olmsmoother2.palette-ownership-covering/1",
+  "scope": "six covering tuples x PF8/PF16/PF32 on padded 9x7 diagonal fixture",
+  "tuples": [
+    {
+      "gamma_value": 1.0,
+      "key_mode": "key_off",
+      "name": "count1_gamma1_keyoff_default",
+      "palette_count": 1,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "smoothing": [
+        100,
+        2,
+        0
+      ]
+    },
+    {
+      "gamma_value": 2.4,
+      "key_mode": "colors_noninvert",
+      "name": "count1_gamma24_noninvert_mixed",
+      "palette_count": 1,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "smoothing": [
+        50,
+        50,
+        50
+      ]
+    },
+    {
+      "gamma_value": 1.0,
+      "key_mode": "colors_invert",
+      "name": "count1_gamma1_invert_mixed",
+      "palette_count": 1,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "smoothing": [
+        50,
+        50,
+        50
+      ]
+    },
+    {
+      "gamma_value": 2.4,
+      "key_mode": "key_off",
+      "name": "count5_normal_gamma24_keyoff_mixed",
+      "palette_count": 5,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.003921568859368563,
+          0.003921568859368563,
+          0.003921568859368563,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "smoothing": [
+        50,
+        50,
+        50
+      ]
+    },
+    {
+      "gamma_value": 1.0,
+      "key_mode": "colors_noninvert",
+      "name": "count5_reordered_gamma1_noninvert_default",
+      "palette_count": 5,
+      "palette_rgba": [
+        [
+          1.0,
+          1.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.003921568859368563,
+          0.003921568859368563,
+          0.003921568859368563,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "smoothing": [
+        100,
+        2,
+        0
+      ]
+    },
+    {
+      "gamma_value": 2.4,
+      "key_mode": "colors_invert",
+      "name": "count5_duplicate_gamma24_invert_default",
+      "palette_count": 5,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.003921568859368563,
+          0.003921568859368563,
+          0.003921568859368563,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.003921568859368563,
+          0.003921568859368563,
+          0.003921568859368563,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "smoothing": [
+        100,
+        2,
+        0
+      ]
+    }
+  ],
+  "verdict": "PASS_18_PALETTE_OWNERSHIP_GAMMA_KEY_SMOOTHING_ALL_DEPTHS_EXACT"
+}
