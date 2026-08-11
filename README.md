@@ -61,7 +61,7 @@ fail-closeです。個別セルの成功を任意入力やWindows／Mac AE pixel
 | --- | --- | --- |
 | OLMBlur | Legacy／NonLegacy、repeat、bias、記録済みSmart chain | PF8／PF16／PF32 |
 | ColorKeep | 有効／無効、tolerance、1〜100色、installed public covering | PF8／PF16／PF32 |
-| OLMColorKey | core、Edge Thin、Edge Blur、replace／color space、記録済みgeometry transfer | PF8／PF16／PF32（限定範囲） |
+| OLMColorKey | core、Edge Thin、Edge Blur、replace／color space、記録済み32×18／64×36 | PF8／PF16／PF32（限定範囲） |
 | OLMToonDilate | copy／dilate、radius、frontier／tie／corner、installed covering | PF8／PF16／PF32 |
 | OLMDistanceGradation | Inside／Outside／Both、補間、invert、background、記録済みblur／bilateral matrix | PF8／PF16／PF32（限定範囲） |
 | OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3、記録済みfront＋back複合経路 | PF8／PF16／PF32（限定範囲） |

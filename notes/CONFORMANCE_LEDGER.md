@@ -1,5 +1,13 @@
 # OLM Conformance Ledger
 
+- 2026-08-12 OLMColorKey 64x36 geometry closure: the declared four
+  Direction 0/4 covering tuples across PF8/PF16/PF32 are now 12/12 raw exact.
+  The former PF32 Direction 0/Distance 3/Amount 4 residual was the Type-3
+  direction-plane instruction order: float distance multiplication, double
+  sin, cast to float after adding one, then float half-scale. This is bounded
+  to the declared semitransparent 64x36 fixture; unlisted tuples, geometry,
+  native Windows, and AE-host execution remain unclaimed.
+
 - 2026-08-12 latest public-owner and geometry update: OLMKiraKira Mode 1,
   Mode 2 ramp/Merge 2, and Mode 3 Gaussian Length 50 are raw exact through
   their declared Rotation-0 public PF8/PF16/PF32 owners. AEXCompat arbitrary

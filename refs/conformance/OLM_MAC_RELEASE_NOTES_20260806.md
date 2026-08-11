@@ -147,8 +147,10 @@ OLMKiraKira Mode 4 PF32内部経路、OLMSmoother v1 PF16内部経路のbounded�
 - OLMSmoother v1：PF16の64×36 practical geometryでColor Key off／on、
   Do Smooth Range 6／127の4／4 raw worldがexactです。PF32 native arithmeticと
   AE 32bpc host conversionはこの主張に含めません。
-- OLMColorKey：64×36 geometry transferは12セル中11セルexactです。
-  PF32 Direction 0／Distance Type 3／Amount 4には残差がありfail-closeします。
+- OLMColorKey：64×36 geometry transferは12／12 exactです。旧PF32 Direction 0／
+  Distance Type 3／Amount 4残差は、Type 3 direction planeをfloat distance multiply→
+  double sin→+1後にfloat cast→float half-scaleの順で構築して閉じました。
+  これは記録済み4 tupleの限定証拠で、未列挙geometry／tupleへは一般化しません。
 - OLMRadialBlur：Dual Strength×Size×Noiseは固定32×18、Zoom／Rotation・3深度の
   24／24でconsumed paths／typed output exactです。Rotation Noise Type 1の
   source scalarに残る診断ULP差は、prepass以降／outputのExactとは分けて扱います。
@@ -183,7 +185,7 @@ notarizationは未実施であり、ダウンロード先のGatekeeperに拒否�
 | --- | --- | --- |
 | OLMBlur | Legacy／NonLegacy、repeat、bias；PF8／PF16／PF32 | exported EffectMain→Smart chainは3深度6／6 active、出力／padding exact。記録済みSmart経路の証拠であり、classic entrypointや任意tupleへは一般化しない |
 | ColorKeep | enabled／disabled、tolerance、1〜100色；PF8／PF16／PF32 | Windows/Macのkeep mask、alpha、保持／棄却関係は3深度exact。raw EXRはeffect-off時点の全RGBにhost色変換差があるためcross-host exactへ昇格しない |
-| OLMColorKey | core、Edge Thin、Edge Blur、replace／color-space；PF8／PF16／PF32限定 | 半透明32×18 matrixは51／51 exact。64×36 transferは11／12 exactで、PF32 Direction 0／Distance 3／Amount 4に残差。未列挙値／geometryへは一般化しない |
+| OLMColorKey | core、Edge Thin、Edge Blur、replace／color-space；PF8／PF16／PF32限定 | 半透明32×18 matrixは51／51、64×36 transferは12／12 exact。PF32 Type 3 planeのfloat→double sin→float順を含む限定証拠で、未列挙値／geometryへは一般化しない |
 | OLMToonDilate | copy／dilate、fractional radius、frontier／tie／corner／eligibility；PF8／PF16／PF32 | padded／partial／empty worldとradius -1〜4を確認。実効radiusは`ceil(radius × downsample_x.num / den)`。legacy `PF_Cmd_RENDER`は実AEX同様3深度でno-op、描画はSmartRender経路。現行PF32 radius 13 AE代表はhost smoke |
 | OLMDistanceGradation | Inside／Outside／Both、RGB／Layer、Constant／Linear／Sphere／Power、invert／background／blur；PF8／PF16／PF32限定 | typed blur matrixは58 exact／6 fail-close。Mode 5 Linearはpre-plane 187／187 exact・cvSmooth差0だがopaque出力33 wordsが残る。期待補正なしで拒否を維持し、任意geometryや全直積へ一般化しない |
 | OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3；PF8／PF16／PF32限定 | PF16 Type 3 Layerは16×16の限定tuple。Front＋Back同時familyは16×16と32×18の記録済み各12行がraw exact。32×18ではrowdriver 32 callsを確認。他geometry、未列挙tupleへは一般化しない |

@@ -32,7 +32,9 @@
   半透明endpointのDirection 0／4、Amount 1／4、Distance Type 2も12行exactです。
   Direction 0／4、Distance Type 1／3のcoveringを含むmatrixは51／51 exactですが、
   PF32 Amount 4は記録済みshell限定です。任意geometry、amount、方向、distance typeの
-  全直積は未証明です。
+  全直積は未証明です。64×36の記録済み4 tupleは12／12 exactで、PF32 Type 3の
+  float distance multiply→double sin→float plane構築順を含みますが、任意geometryへは
+  一般化しません。
 - OLMDistanceGradation：主要な各モード・補間・背景・反転・blurは個別に検証していますが、
   全コントロールの直積は未証明です。PF16 Blur 2〜5とPF32 Blur 2〜4の記録済みtyped
   matrixはexactです。PF32 Blur 5のConstant×Background off／onは固定17×11の厳格
