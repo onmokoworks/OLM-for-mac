@@ -28,6 +28,11 @@ actual-AEX比較を追加しました。これは全パラメーター直積へ�
   Distance Type 1／2／3を、PF8／PF16／PF32の計27行でbyte exact確認しました。
 - OLMRadialBlur：Size Variation 25／100とEdge Fade 50／100の記録済み複合経路を、
   PF8／PF16／PF32の計36行でexact確認しました。
+- OLMDistanceGradation：Constant／Linear／Sphere／Power、Background on／offの
+  typed blur matrixで、PF16はBlur 2／3／4／5の32行、PF32はBlur 2／3／4の24行を
+  byte exact確認しました。PF32 Blur 5はactual AEXの8行を取得済みですが、
+  OpenCV 4.5.5 SIMD bilateral経路に一部1 ULPの差が残るためExactへ昇格せず、
+  productionではBAD_CALLBACK_PARAMでfail-closeします。
 
 上記の数値は記録済みfixtureの行数です。任意のgeometryや未列挙の
 Size／Noise／Edge／Offset／Brightness組合せへの完全互換は主張しません。
@@ -67,7 +72,7 @@ notarizationは未実施であり、ダウンロード先のGatekeeperに拒否�
 | ColorKeep | enabled／disabled、tolerance、1〜100色；PF8／PF16／PF32 | Windows/Macのkeep mask、alpha、保持／棄却関係は3深度exact。raw EXRはeffect-off時点の全RGBにhost色変換差があるためcross-host exactへ昇格しない |
 | OLMColorKey | core、Edge Thin、Edge Blur、replace／color-space；PF8／PF16／PF32限定 | Edge Blurは記録済み4×3 familyと32×18 multi-keyに加え、半透明入力のAmount 2、Direction 1／2／3、Distance Type 1／2／3を3深度27行でbyte exact。未列挙amount／direction／distance／geometryの直積へは一般化しない |
 | OLMToonDilate | copy／dilate、fractional radius、frontier／tie／corner／eligibility；PF8／PF16／PF32 | padded／partial／empty worldとradius -1〜4を確認。実効radiusは`ceil(radius × downsample_x.num / den)`。legacy `PF_Cmd_RENDER`は実AEX同様3深度でno-op、描画はSmartRender経路。現行PF32 radius 13 AE代表はhost smoke |
-| OLMDistanceGradation | Inside／Outside／Both、RGB／Layer、Constant／Linear／Sphere／Power、invert／background／blur；PF8／PF16／PF32限定 | 証明済みaxisとfamilyは全コントロール直積ではない。元AEXにownerがないPF32 SmartRender要求はhost checkout前にfail-closeする |
+| OLMDistanceGradation | Inside／Outside／Both、RGB／Layer、Constant／Linear／Sphere／Power、invert／background／blur；PF8／PF16／PF32限定 | typed blur matrixはPF16のBlur 2〜5を32行、PF32のBlur 2〜4を24行exact。PF32 Blur 5は一部1 ULP差のためfail-closeし、Exactとしない。証明済みaxisとfamilyは全コントロール直積ではない |
 | OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3；PF8／PF16／PF32限定 | PF16 Type 3 Layerは16×16の限定tuple。Front／Back Fade 50／100×Sharp Tail 50／100は3深度24行でraw exact。未列挙値やNoise／Sizeとの複合tupleへは一般化しない |
 | OLMRadialBlur | Zoom／Rotation／Inner；PF8／PF16／PF32 guard付き | PF8 centered neutral Inner Strength 1〜64を含む複数geometryに加え、32×18の記録済みfixtureでSize／Noise／Brightness／Edge／Offsetの複合分岐をexact確認。Size×Edgeは3深度36行exact。Noise Type 3 Layer、未記載geometry／Noise Type／複合tupleへは一般化しない |
 | OLMSmoother2 | v1／v2 classifier、key／invert、Gamma None／All／Colors、range／extra、palette；PF8／PF16／PF32限定 | 1×1から32×18までの複数geometryと入力patternを含む114行のclassifier matrixがexact。公開機能間の全直積や、記録されていないswitch family全体の証明ではない |
