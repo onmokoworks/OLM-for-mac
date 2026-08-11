@@ -1,0 +1,423 @@
+{
+  "actual_aex_oracle": "actual AEX natural owner/classifier/typed worker for identical normalized typed inputs",
+  "actual_aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "case_count": 6,
+  "cases": [
+    {
+      "alpha_native_codes": [
+        0,
+        1,
+        64,
+        128,
+        192,
+        255
+      ],
+      "callbacks": {
+        "parameter_checkin": 15,
+        "parameter_checkout": 15,
+        "smart_checkout_layer_pixels": 1,
+        "smart_checkout_output": 1,
+        "smart_pre_checkout_layer": 1
+      },
+      "class_plane_sha256": "7acc5d384d518f305da4857618fb5fc041ca0b663c02c8fd8e06a796bd1ec877",
+      "classic_same_params_raw_equal": true,
+      "classifier_instructions": 69801,
+      "depth": "PF8",
+      "exact": true,
+      "gamma_mode": "none",
+      "gamma_value": 1.0,
+      "id": "pf8_v1_none_keyoff_default_straight",
+      "input_representation": "straight",
+      "input_unchanged": true,
+      "key_mode": "key_off",
+      "max_result_rect": [
+        -1,
+        -2,
+        18,
+        13
+      ],
+      "padding_preserved": true,
+      "palette_count": 1,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_sha256": "1cdbe6ee0b640c9df286b9df260f2079b6eaba646a184bec8ce6c6a47fb48260",
+      "result_rect": [
+        1,
+        2,
+        16,
+        10
+      ],
+      "smoothing": [
+        100,
+        2,
+        0
+      ],
+      "version": 1,
+      "worker_instructions": 232252
+    },
+    {
+      "alpha_native_codes": [
+        0,
+        1,
+        64,
+        128,
+        192,
+        255
+      ],
+      "callbacks": {
+        "parameter_checkin": 15,
+        "parameter_checkout": 15,
+        "smart_checkout_layer_pixels": 1,
+        "smart_checkout_output": 1,
+        "smart_pre_checkout_layer": 1
+      },
+      "class_plane_sha256": "af89f16e7525cc1d906e6d66c94d4c67a0e3b73c0e9a4ba8aeea2eb6d43d9fd6",
+      "classic_same_params_raw_equal": true,
+      "classifier_instructions": 38850,
+      "depth": "PF8",
+      "exact": true,
+      "gamma_mode": "gamma_colors",
+      "gamma_value": 2.4,
+      "id": "pf8_v2_colors_count5_duplicate_invert_mixed_premul",
+      "input_representation": "premul",
+      "input_unchanged": true,
+      "key_mode": "colors_invert",
+      "max_result_rect": [
+        -1,
+        -2,
+        18,
+        13
+      ],
+      "padding_preserved": true,
+      "palette_count": 5,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.003921568859368563,
+          0.003921568859368563,
+          0.003921568859368563,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.003921568859368563,
+          0.003921568859368563,
+          0.003921568859368563,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "raw_sha256": "8b8d682422278efb9bd782eef406630b74a41b097a30bb195e161ab56cc6e0e0",
+      "result_rect": [
+        1,
+        2,
+        16,
+        10
+      ],
+      "smoothing": [
+        50,
+        50,
+        50
+      ],
+      "version": 2,
+      "worker_instructions": 81644
+    },
+    {
+      "alpha_native_codes": [
+        0,
+        1,
+        64,
+        128,
+        192,
+        255
+      ],
+      "callbacks": {
+        "parameter_checkin": 15,
+        "parameter_checkout": 15,
+        "smart_checkout_layer_pixels": 1,
+        "smart_checkout_output": 1,
+        "smart_pre_checkout_layer": 1
+      },
+      "class_plane_sha256": "4dbe4d19ba3798baefde56275cbf0ed7514ccb8015d538579b56505e8033eb39",
+      "classic_same_params_raw_equal": true,
+      "classifier_instructions": 69780,
+      "depth": "PF16",
+      "exact": true,
+      "gamma_mode": "gamma_all",
+      "gamma_value": 2.4,
+      "id": "pf16_v2_all_keyoff_mixed_straight",
+      "input_representation": "straight",
+      "input_unchanged": true,
+      "key_mode": "key_off",
+      "max_result_rect": [
+        -1,
+        -2,
+        18,
+        13
+      ],
+      "padding_preserved": true,
+      "palette_count": 1,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_sha256": "507c453282d7ea96c215b447f968a855aa5014e2c4cee3f81ee01e298b9d4d2b",
+      "result_rect": [
+        1,
+        2,
+        16,
+        10
+      ],
+      "smoothing": [
+        50,
+        50,
+        50
+      ],
+      "version": 2,
+      "worker_instructions": 325912
+    },
+    {
+      "alpha_native_codes": [
+        0,
+        1,
+        64,
+        128,
+        192,
+        255
+      ],
+      "callbacks": {
+        "parameter_checkin": 15,
+        "parameter_checkout": 15,
+        "smart_checkout_layer_pixels": 1,
+        "smart_checkout_output": 1,
+        "smart_pre_checkout_layer": 1
+      },
+      "class_plane_sha256": "a1af728aebac0f2f27b6554ec2af2aa1ff3c11e5bfe505eaebf298c4d9b83472",
+      "classic_same_params_raw_equal": true,
+      "classifier_instructions": 69521,
+      "depth": "PF16",
+      "exact": true,
+      "gamma_mode": "gamma_colors",
+      "gamma_value": 1.0,
+      "id": "pf16_v2_colors_count5_reordered_noninvert_default_premul",
+      "input_representation": "premul",
+      "input_unchanged": true,
+      "key_mode": "colors_noninvert",
+      "max_result_rect": [
+        -1,
+        -2,
+        18,
+        13
+      ],
+      "padding_preserved": true,
+      "palette_count": 5,
+      "palette_rgba": [
+        [
+          1.0,
+          1.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.003921568859368563,
+          0.003921568859368563,
+          0.003921568859368563,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "raw_sha256": "675108cc8fbe4682f57da1444fa4f5ba653877991facfe5b86e2589cf5d1eeca",
+      "result_rect": [
+        1,
+        2,
+        16,
+        10
+      ],
+      "smoothing": [
+        100,
+        2,
+        0
+      ],
+      "version": 2,
+      "worker_instructions": 497200
+    },
+    {
+      "alpha_native_codes": [
+        0,
+        1,
+        64,
+        128,
+        192,
+        255
+      ],
+      "callbacks": {
+        "parameter_checkin": 15,
+        "parameter_checkout": 15,
+        "smart_checkout_layer_pixels": 1,
+        "smart_checkout_output": 1,
+        "smart_pre_checkout_layer": 1
+      },
+      "class_plane_sha256": "620734831c846c255abe729b63e9b438454c87e164380196d771d181bab4f69d",
+      "classic_same_params_raw_equal": null,
+      "classifier_instructions": 69810,
+      "depth": "PF32",
+      "exact": true,
+      "gamma_mode": "none",
+      "gamma_value": 1.0,
+      "id": "pf32_v1_none_keyoff_mixed_premul",
+      "input_representation": "premul",
+      "input_unchanged": true,
+      "key_mode": "key_off",
+      "max_result_rect": [
+        -1,
+        -2,
+        18,
+        13
+      ],
+      "padding_preserved": true,
+      "palette_count": 1,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_sha256": "81362f87ebaae6a0d6b706e696e38e7169a0ca656b610177b07e1368bb13dde8",
+      "result_rect": [
+        1,
+        2,
+        16,
+        10
+      ],
+      "smoothing": [
+        50,
+        50,
+        50
+      ],
+      "version": 1,
+      "worker_instructions": 217805
+    },
+    {
+      "alpha_native_codes": [
+        0,
+        1,
+        64,
+        128,
+        192,
+        255
+      ],
+      "callbacks": {
+        "parameter_checkin": 15,
+        "parameter_checkout": 15,
+        "smart_checkout_layer_pixels": 1,
+        "smart_checkout_output": 1,
+        "smart_pre_checkout_layer": 1
+      },
+      "class_plane_sha256": "7acc5d384d518f305da4857618fb5fc041ca0b663c02c8fd8e06a796bd1ec877",
+      "classic_same_params_raw_equal": null,
+      "classifier_instructions": 69780,
+      "depth": "PF32",
+      "exact": true,
+      "gamma_mode": "gamma_colors",
+      "gamma_value": 2.4,
+      "id": "pf32_v2_colors_count1_noninvert_default_straight",
+      "input_representation": "straight",
+      "input_unchanged": true,
+      "key_mode": "colors_noninvert",
+      "max_result_rect": [
+        -1,
+        -2,
+        18,
+        13
+      ],
+      "padding_preserved": true,
+      "palette_count": 1,
+      "palette_rgba": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "raw_sha256": "1ce0107a24990d2e441c4498fe78f95f617cee0f979b4a1bdc4fb75e04c5f3f6",
+      "result_rect": [
+        1,
+        2,
+        16,
+        10
+      ],
+      "smoothing": [
+        100,
+        2,
+        0
+      ],
+      "version": 2,
+      "worker_instructions": 525018
+    }
+  ],
+  "claims_not_made": [
+    "No AE process execution",
+    "No actual-AEX exported owner claim from this fixture",
+    "No PF32 classic Render claim",
+    "No arbitrary parameters/geometry/input-representation generalization"
+  ],
+  "classic_boundary": {
+    "PF16": "same-params raw exact in both cases",
+    "PF32": "fail-closed/not applicable: classic Render dispatch has no PF32 branch; PF32 numerical public path is SmartRender",
+    "PF8": "same-params raw exact in both cases"
+  },
+  "production_source_sha256": "c0a2588aa6749c3f861f2e7246c4db97fa9d6c3b2b8783889a5c22b36f77dc77",
+  "schema": "olmsmoother2.public-effectmain-all-depths/1",
+  "scope": "PF8/PF16/PF32 two cases each; padded 17x11 semi-transparent practical fixture; SmartPreRender then SmartRender public EffectMain",
+  "smart_pre_render_ownership": {
+    "free_callback": "not applicable: OLMSmoother2 SmartPreRender allocates no pre-render data",
+    "pre_render_data": "none",
+    "result_rect_union_verified": true
+  },
+  "verdict": "PASS_6_PUBLIC_EFFECTMAIN_SMARTPRE_SMARTRENDER_ALL_DEPTHS_ACTUAL_AEX_CORE_EXACT"
+}
