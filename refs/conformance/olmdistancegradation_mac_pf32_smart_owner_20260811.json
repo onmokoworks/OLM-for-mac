@@ -5,7 +5,7 @@
     "partial-world/origin translation",
     "arbitrary Smart parameter and geometry products"
   ],
-  "production_source_sha256": "a3fe695085821c35b9e210c84ae48167fd87d11e4d1366ff4825e61b71abe465",
+  "production_source_sha256": "4cd721f04ad593df24cd57fa79d271f94459f528bd5c4cbb9d7cb710659f12eb",
   "proved": [
     "SmartRender admits bitdepth 32",
     "checkout_layer_pixels and checkout_output worlds",

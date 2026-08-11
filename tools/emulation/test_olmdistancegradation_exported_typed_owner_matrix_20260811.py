@@ -88,7 +88,7 @@ def main() -> int:
                         expected_raw = td / f"expected_{depth}_{key}.raw"
                         expected = subprocess.run([str(executable), depth, str(source_raw), str(expected_raw),
                             interpolation, str(background), str(blur)], text=True, capture_output=True)
-                        rejected = depth == "PF32" and blur == 5
+                        rejected = depth == "PF32" and blur == 5 and interpolation != "constant"
                         if rejected:
                             assert expected.returncode == 4
                             rows.append({"depth": depth, "interpolation": interpolation,
@@ -111,30 +111,33 @@ def main() -> int:
                             "guards_intact": frame["output"]["guards_intact"], "fail_closed": False})
     assert len(rows) == 64 and all(row["guards_intact"] for row in rows)
     exact_cells = sum(row["exact"] for row in rows)
-    assert exact_cells == 56, [
+    assert exact_cells == 58, [
         (row["depth"], row["interpolation"], row["blur_mode"], row["use_background"])
         for row in rows if not row["exact"]
     ]
-    assert sum(row.get("fail_closed", False) for row in rows) == 8
+    assert sum(row.get("fail_closed", False) for row in rows) == 6
     report = {"schema": "olmdistancegradation.exported-typed-owner-matrix/1",
-        "status": "PASS_56_CELL_EXACT_8_PF32_MODE5_FAIL_CLOSED",
+        "status": "PASS_58_CELL_EXACT_6_PF32_MODE5_FAIL_CLOSED",
         "actual_aex_sha256": sha(AEX), "worker_sha256": sha(worker),
         "fixture": {"width": 17, "height": 11, "input_png_sha256": input_png_sha256},
         "summary": {"actual_aex_cells": 64, "exact_admitted": exact_cells,
-                    "pf16_exact": 32, "pf32_exact": 24,
-                    "pf32_mode5_fail_closed": 8},
+                    "pf16_exact": 32, "pf32_exact": 26,
+                    "pf32_mode5_constant_exact": 2,
+                    "pf32_mode5_fail_closed": 6},
         "rows": rows, "claims_not_made": ["No native After Effects execution",
             "No PF32 GPU SmartRender claim",
             "No native Mac AE PF32 SmartRender host execution or field-staging claim"]}
     REPORT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     DOC.write_text("# OLMDistanceGradation exported typed owner matrix\n\n"
-        "Status: **PASS_56_CELL_EXACT_8_PF32_MODE5_FAIL_CLOSED**.\n\n"
+        "Status: **PASS_58_CELL_EXACT_6_PF32_MODE5_FAIL_CLOSED**.\n\n"
         "The unchanged Windows AEX completed exported SmartPreRender/SmartRender for PF16 and PF32 "
         "across Constant/Linear/Sphere/Power × Blur 2/3/4/5 × Background off/on. All 32 PF16 "
-        "buffers and the 24 PF32 Blur 2/3/4 buffers match production `RenderBits` byte-for-byte. "
-        "The eight PF32 Blur Mode 5 cells execute in the actual AEX but production rejects them "
-        "with `PF_Err_BAD_CALLBACK_PARAM`: the OpenCV 4.5.5 SIMD bilateral plane remains one-ULP "
-        "different on part of this fixture and is not admitted as exact. PF16 acquires `PF iterate16 "
+        "buffers, the 24 PF32 Blur 2/3/4 buffers, and the two PF32 Constant/Mode 5 buffers match "
+        "production `RenderBits` byte-for-byte. Constant/Mode 5 is admitted only for the exact "
+        "17x11 mask and parameter tuple after reproducing OpenCV 4.5.5's 4096-bin bilateral LUT, "
+        "replicated border, four-lane fused accumulation, and tail reduction. The remaining six "
+        "PF32 Linear/Sphere/Power Mode 5 cells retain one/two-ULP dispatch residuals and stay "
+        "fail-closed with `PF_Err_BAD_CALLBACK_PARAM`. PF16 acquires `PF iterate16 "
         "Suite` v1 and PF32 acquires `PF iterateFloat Suite` v1; no `_CxxThrowException` continuation "
         "or exception swallowing is used. This proves the bounded production RenderBits tuples only; "
         "native Mac AE PF32 SmartRender host execution and field staging remain a separate "

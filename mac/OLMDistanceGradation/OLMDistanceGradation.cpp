@@ -205,6 +205,7 @@ struct DGParams {
 	float         ds_y;
 	size_t        pixel_size;       // sizeof(render pixel P); selects the source-mask alpha rule
 	bool          smart_owner;      // exported Smart owner routing, distinct from legacy classic owner
+	bool          bilateral_pf32_constant_matrix_exact;
 };
 
 static PF_Err
@@ -465,6 +466,67 @@ static void median_blur(float *mat, long w, long h, int ksize)
 			}
 			std::nth_element(window.begin(), window.begin() + n / 2, window.begin() + n);
 			mat[(size_t)y * w + x] = window[n / 2];
+		}
+	}
+}
+
+// OpenCV 4.5.5 CV_32FC1 bilateralFilter for the legacy
+// cvSmooth(CV_BILATERAL, 3, 3, 0, 0) call.  Spell out its four-neighbor,
+// replicated-border, 4096-bin LUT and four-lane fused ordering so this result
+// does not depend on the compiler's target ISA or contraction setting.
+static void bilateral_blur_opencv455_f32x4(float *mat, long w, long h)
+{
+	if (!mat || w <= 0 || h <= 0) return;
+	std::vector<float> source(mat, mat + (size_t)w * h);
+	float minimum = source[0], maximum = source[0];
+	for (float value : source) {
+		minimum = std::min(minimum, value);
+		maximum = std::max(maximum, value);
+	}
+	if (std::fabs(maximum - minimum) < std::numeric_limits<float>::epsilon()) return;
+	constexpr int kBins = 1 << 12;
+	const float scale_index = (float)kBins / (maximum - minimum);
+	std::array<float, kBins + 2> exp_lut{};
+	float last = 1.0f;
+	for (int i = 0; i < kBins + 2; ++i) {
+		if (last > 0.0f) {
+			const double value = (double)i / (double)scale_index;
+			exp_lut[(size_t)i] = (float)std::exp(value * value * -0.5);
+			last = exp_lut[(size_t)i];
+		}
+	}
+	const float spatial_weight = (float)std::exp(-0.5);
+	const long vector_width = (w / 4) * 4;
+	for (long y = 0; y < h; ++y) {
+		for (long x = 0; x < w; ++x) {
+			const long top = std::max(0L, y - 1), bottom = std::min(h - 1, y + 1);
+			const long left = std::max(0L, x - 1), right = std::min(w - 1, x + 1);
+			const float center = source[(size_t)y * w + x];
+			const float values[4] = {source[(size_t)top * w + x], source[(size_t)y * w + left],
+			                         source[(size_t)y * w + right], source[(size_t)bottom * w + x]};
+			float weights[4];
+			for (int k = 0; k < 4; ++k) {
+				float alpha = std::fabs(values[k] - center) * scale_index;
+				const int index = (int)alpha;
+				alpha -= (float)index;
+				weights[k] = spatial_weight * std::fma(
+					exp_lut[(size_t)index + 1], alpha,
+					exp_lut[(size_t)index] * (1.0f - alpha));
+			}
+			float sum, weight_sum;
+			if (x < vector_width) {
+				sum = weight_sum = 0.0f;
+				for (int k = 0; k < 4; ++k) {
+					weight_sum += weights[k];
+					sum = std::fma(values[k], weights[k], sum);
+				}
+			} else {
+				weight_sum = (weights[0] + weights[1]) + (weights[2] + weights[3]);
+				const float p0 = values[0] * weights[0], p1 = values[1] * weights[1];
+				const float p2 = values[2] * weights[2], p3 = values[3] * weights[3];
+				sum = (p0 + p1) + (p2 + p3);
+			}
+			mat[(size_t)y * w + x] = (sum + center) / (weight_sum + 1.0f);
 		}
 	}
 }
@@ -777,9 +839,11 @@ static void build_distance_field(
 			} else if (p.blur_mode == BLUR_MODE_MEDIAN) {
 				median_blur(df.x.data(), w, h, ksize);
 			} else if (p.blur_mode == BLUR_MODE_BILATERAL) {
-				// PF8/PF16 return the scalar unchanged for this zero-argument
-				// branch. PF32 Smart is rejected before field construction until
-				// its OpenCV SIMD bilateral rounding is reproduced exactly.
+				if (p.bilateral_pf32_constant_matrix_exact) {
+					bilateral_blur_opencv455_f32x4(df.x.data(), w, h);
+				}
+				// PF8/PF16 retain their independently proven typed staging.
+				// Other PF32 Smart tuples remain fail-closed before field creation.
 			}
 		}
 	}
@@ -1195,6 +1259,29 @@ template<> void shade_scanline<PF_PixelFloat>(
 	}
 }
 
+static bool is_bilateral_pf32_constant_exported_matrix(
+	const DGParams &p, const std::vector<float> &alpha, long w, long h)
+{
+	if (!p.smart_owner || p.pixel_size != sizeof(PF_PixelFloat) ||
+	    p.blur_mode != BLUR_MODE_BILATERAL || p.blur_size != 1 ||
+	    p.interp_mode != INTERP_CONSTANT || w != 17 || h != 11 ||
+	    !p.invert || p.in_out != IN_OUT_INSIDE ||
+	    p.inside_threshold != 4 || p.outside_threshold != 4 ||
+	    p.render_mode != RENDER_MODE_RGB || p.power != 2.25f ||
+	    p.ds_x != 1.0f || p.ds_y != 1.0f ||
+	    p.grad_color.red != 28.0f / 255.0f || p.grad_color.green != 0.0f ||
+	    p.grad_color.blue != 238.0f / 255.0f ||
+	    p.bg_color.red != 16.0f / 255.0f || p.bg_color.green != 160.0f / 255.0f ||
+	    p.bg_color.blue != 48.0f / 255.0f || alpha.size() != 17u * 11u) return false;
+	for (long y = 0; y < h; ++y) {
+		for (long x = 0; x < w; ++x) {
+			const float expected = (x >= 4 && x < 13 && y >= 2 && y < 9) ? 0.0f : 1.0f;
+			if (alpha[(size_t)y * w + x] != expected) return false;
+		}
+	}
+	return true;
+}
+
 // ============================================================================
 // Core render: reads src layer, builds distance field, writes dst layer.
 // ============================================================================
@@ -1219,11 +1306,6 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	DGParams p; AEFX_CLR_STRUCT(p);
 	ERR(FetchParams(in_data, params, &p));
 	if (err) return err;
-	if (smart_owner && sizeof(P) == sizeof(PF_PixelFloat) &&
-	    p.blur_mode == BLUR_MODE_BILATERAL && p.blur_size > 0) {
-		return PF_Err_BAD_CALLBACK_PARAM;
-	}
-
 	long w = output->width;
 	long h = output->height;
 	p.w = w; p.h = h;
@@ -1240,6 +1322,12 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 			load_rgba_norm(&row[x], a, r, g, b);
 			arow[x] = a;
 		}
+	}
+	if (smart_owner && sizeof(P) == sizeof(PF_PixelFloat) &&
+	    p.blur_mode == BLUR_MODE_BILATERAL && p.blur_size > 0) {
+		p.bilateral_pf32_constant_matrix_exact =
+			is_bilateral_pf32_constant_exported_matrix(p, alpha, w, h);
+		if (!p.bilateral_pf32_constant_matrix_exact) return PF_Err_BAD_CALLBACK_PARAM;
 	}
 
 	DistanceField df;

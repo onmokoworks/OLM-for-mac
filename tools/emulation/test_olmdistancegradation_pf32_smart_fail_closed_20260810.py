@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Production regression for the actual-AEX-absent PF32 Smart path."""
+"""Production regression for an unadmitted PF32 Smart Mode 5 tuple."""
 from pathlib import Path
 import subprocess
 import tempfile
@@ -18,5 +18,5 @@ with tempfile.TemporaryDirectory(prefix="olmdg_pf32_smart_guard_") as raw:
     assert build.returncode == 0, build.stderr
     run = subprocess.run([str(executable)], cwd=ROOT, capture_output=True, text=True)
     assert run.returncode == 0, run.stderr
-    assert run.stdout.strip() == "PASS PF32 Smart fail-closed before host checkout"
+    assert run.stdout.strip() == "PASS PF32 Smart unadmitted Mode5 tuple fail-closed"
 print("PASS_OLMDISTANCEGRADATION_PF32_SMART_FAIL_CLOSED_20260810")

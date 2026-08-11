@@ -508,23 +508,27 @@
     {
       "actual_exported_raw_sha256": "a47997492c742fcd23e8100ef9dacbb9c638ebf0e530ef8c883a52c43b156c3f",
       "blur_mode": 5,
+      "bytes_compared": 2992,
       "depth": "PF32",
-      "exact": false,
-      "fail_closed": true,
+      "different_bytes": 0,
+      "exact": true,
+      "fail_closed": false,
       "guards_intact": true,
       "interpolation": "constant",
-      "production_status": "fail_closed_bad_callback_param",
+      "production_renderbits_sha256": "a47997492c742fcd23e8100ef9dacbb9c638ebf0e530ef8c883a52c43b156c3f",
       "use_background": false
     },
     {
       "actual_exported_raw_sha256": "3e8896c9ca75e05c3b262d88324f96e46039be02600dab0c97ec367b46003918",
       "blur_mode": 5,
+      "bytes_compared": 2992,
       "depth": "PF32",
-      "exact": false,
-      "fail_closed": true,
+      "different_bytes": 0,
+      "exact": true,
+      "fail_closed": false,
       "guards_intact": true,
       "interpolation": "constant",
-      "production_status": "fail_closed_bad_callback_param",
+      "production_renderbits_sha256": "3e8896c9ca75e05c3b262d88324f96e46039be02600dab0c97ec367b46003918",
       "use_background": true
     },
     {
@@ -829,13 +833,14 @@
     }
   ],
   "schema": "olmdistancegradation.exported-typed-owner-matrix/1",
-  "status": "PASS_56_CELL_EXACT_8_PF32_MODE5_FAIL_CLOSED",
+  "status": "PASS_58_CELL_EXACT_6_PF32_MODE5_FAIL_CLOSED",
   "summary": {
     "actual_aex_cells": 64,
-    "exact_admitted": 56,
+    "exact_admitted": 58,
     "pf16_exact": 32,
-    "pf32_exact": 24,
-    "pf32_mode5_fail_closed": 8
+    "pf32_exact": 26,
+    "pf32_mode5_constant_exact": 2,
+    "pf32_mode5_fail_closed": 6
   },
   "worker_sha256": "eaa6be471ae2bb7c4557046c868f31ee7ca15621abb0c9277d5c2601523d57b3"
 }
