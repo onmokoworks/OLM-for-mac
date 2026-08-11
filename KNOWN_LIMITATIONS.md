@@ -22,17 +22,20 @@
 
 ## プラグイン別
 
-- OLMColorKey：Edge Blurのexact証拠は記録済みの小型geometry、single-key、方向、
-  amountの組合せに限定されます。
+- OLMColorKey：Edge Blurのexact証拠には、記録済みの小型geometry、multi-key、および
+  半透明入力のAmount 2／Direction 1〜3／Distance Type 1〜3が含まれます。
+  任意geometry、amount、方向、distance typeの全直積は未証明です。
 - OLMDistanceGradation：主要な各モード・補間・背景・反転・blurは個別に検証していますが、
   全コントロールの直積は未証明です。PF32 SmartRenderは元AEXのnative機能ではありません。
 - OLMDirectionalBlur：Noise Type 3 LayerのPF16/PF32は、記録済みtupleを中心とする
-  bounded対応です。Layer欠落、寸法不一致、未証明tupleはfail-closeする場合があります。
+  bounded対応です。Front／Back Fade 50／100×Sharp Tail 50／100は3深度でexactですが、
+  Layer欠落、寸法不一致、未列挙値や他機能との複合tupleはfail-closeする場合があります。
 - OLMRadialBlur：centered neutral InnerはPF8/PF16/PF32で複数geometryを実AEXと
   bit完全一致確認済みです。直接観測済みの最大geometryはPF8/PF16が640×360、PF32が
   64×36です。off-center、非unit ratio、angle、quality、repeat、offset、
-  edge fade、noise、variationを含む全組合せは未証明です。Windows独自のcustom preview
-  描画と操作も未証明です。
+  edge fade、noise、variationを含む全組合せは未証明です。Size Variation×Edge Fadeは
+  記録済み32×18 fixtureの3深度36行でexactですが、任意geometryや未列挙値へは一般化
+  しません。Windows独自のcustom preview描画と操作も未証明です。
 - OLMSmoother2：key、invert、Gamma、range、paletteの主要分岐はbounded exactです。
   全パラメーター直積は未証明です。
 - OLMKiraKira：Mode 1〜4の主要経路を実装しています。Mode 4の方向レイは、9×7以上の

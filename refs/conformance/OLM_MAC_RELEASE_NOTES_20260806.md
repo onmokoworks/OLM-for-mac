@@ -20,11 +20,20 @@ actual-AEX比較を追加しました。これは全パラメーター直積へ�
 - OLMSmoother2：v1／v2、PF8／PF16／PF32、複数geometryと入力patternを含む
   core 96行とfeature 18行の計114行をactual AEXとexact確認しました。
   この過程で、特定の幅での水平／対角scan境界を修正しています。
+- OLMKiraKira：Mode 4の方向レイを、回転後geometry 9×7以上、Length 1〜1000へ
+  一般化しました。17ケース、51中間stageの比較はすべてmax ULP 0です。
+- OLMDirectionalBlur：Front／Back Fade 50／100とSharp Tail 50／100の組合せを、
+  PF8／PF16／PF32の計24行でraw exact確認しました。
+- OLMColorKey：半透明入力のEdge Blur Amount 2、Direction 1／2／3、
+  Distance Type 1／2／3を、PF8／PF16／PF32の計27行でbyte exact確認しました。
+- OLMRadialBlur：Size Variation 25／100とEdge Fade 50／100の記録済み複合経路を、
+  PF8／PF16／PF32の計36行でexact確認しました。
 
 上記の数値は記録済みfixtureの行数です。任意のgeometryや未列挙の
 Size／Noise／Edge／Offset／Brightness組合せへの完全互換は主張しません。
 OLMRadialBlur Noise Type 3のLayer入力と、未記録の複合tupleは引き続き
-証拠境界です。
+証拠境界です。OLMKiraKiraの極小geometry、OLMDirectionalBlurとOLMColorKeyの
+未列挙値・未列挙複合tupleも同様であり、上記結果を全設定へ一般化しません。
 
 ## リリース候補の状態
 
@@ -56,13 +65,13 @@ notarizationは未実施であり、ダウンロード先のGatekeeperに拒否�
 | --- | --- | --- |
 | OLMBlur | Legacy／NonLegacy、repeat、bias；PF8／PF16／PF32 | 複数のpadded typed fixtureでdimension-generic workerを確認。現行PF32 host smokeはロード／レンダー証拠であり、Windows exact出力の新規主張ではない |
 | ColorKeep | enabled／disabled、tolerance、1〜100色；PF8／PF16／PF32 | Windows/Macのkeep mask、alpha、保持／棄却関係は3深度exact。raw EXRはeffect-off時点の全RGBにhost色変換差があるためcross-host exactへ昇格しない |
-| OLMColorKey | core、Edge Thin、Edge Blur、replace／color-space；PF8／PF16／PF32限定 | Edge Blurは記録済み4×3 familyに加え、32×18・black＋green multi-keyでDirection 2 amount 4、Direction 1 amount 1／4を3深度exact確認。straight入力はRGBを保持してalphaだけkey処理する |
+| OLMColorKey | core、Edge Thin、Edge Blur、replace／color-space；PF8／PF16／PF32限定 | Edge Blurは記録済み4×3 familyと32×18 multi-keyに加え、半透明入力のAmount 2、Direction 1／2／3、Distance Type 1／2／3を3深度27行でbyte exact。未列挙amount／direction／distance／geometryの直積へは一般化しない |
 | OLMToonDilate | copy／dilate、fractional radius、frontier／tie／corner／eligibility；PF8／PF16／PF32 | padded／partial／empty worldとradius -1〜4を確認。実効radiusは`ceil(radius × downsample_x.num / den)`。legacy `PF_Cmd_RENDER`は実AEX同様3深度でno-op、描画はSmartRender経路。現行PF32 radius 13 AE代表はhost smoke |
 | OLMDistanceGradation | Inside／Outside／Both、RGB／Layer、Constant／Linear／Sphere／Power、invert／background／blur；PF8／PF16／PF32限定 | 証明済みaxisとfamilyは全コントロール直積ではない。元AEXにownerがないPF32 SmartRender要求はhost checkout前にfail-closeする |
-| OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3；PF8／PF16／PF32限定 | PF16 Type 3 Layerは16×16の限定tuple。PF32は同geometry・angle 45・front 8・back 0のSize Variation 0〜100とFront Alpha Fade 0／50／100をactual AEX exact確認。Back Fade、Sharp Tail、複合tupleはfail-close |
-| OLMRadialBlur | Zoom／Rotation／Inner；PF8／PF16／PF32 guard付き | PF8 centered neutral Inner Strength 1〜64を含む複数geometryに加え、32×18の記録済みfixtureでSize／Noise／Brightness／Edge／Offsetの上記複合分岐をexact確認。Noise Type 3 Layer、未記載geometry／Noise Type／複合tupleへは一般化しない |
+| OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3；PF8／PF16／PF32限定 | PF16 Type 3 Layerは16×16の限定tuple。Front／Back Fade 50／100×Sharp Tail 50／100は3深度24行でraw exact。未列挙値やNoise／Sizeとの複合tupleへは一般化しない |
+| OLMRadialBlur | Zoom／Rotation／Inner；PF8／PF16／PF32 guard付き | PF8 centered neutral Inner Strength 1〜64を含む複数geometryに加え、32×18の記録済みfixtureでSize／Noise／Brightness／Edge／Offsetの複合分岐をexact確認。Size×Edgeは3深度36行exact。Noise Type 3 Layer、未記載geometry／Noise Type／複合tupleへは一般化しない |
 | OLMSmoother2 | v1／v2 classifier、key／invert、Gamma None／All／Colors、range／extra、palette；PF8／PF16／PF32限定 | 1×1から32×18までの複数geometryと入力patternを含む114行のclassifier matrixがexact。公開機能間の全直積や、記録されていないswitch family全体の証明ではない |
-| OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur；PF8／PF16／PF32限定 | Mode 3 Gaussianは完全actual-AEX fixtureの11×6/3、9×7/5、13×5/7、15×6/9だけを許可し、未証明tupleをMode 2近似へ代用しない。Mode 4の記録済みfull callerはPF8／PF16／PF32 writerまで全段bit exact |
+| OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur；PF8／PF16／PF32限定 | Mode 3 Gaussianは記録済みfixtureだけを許可。Mode 4方向レイは回転後9×7以上、Length 1〜1000を17ケース／51 stage、max ULP 0で確認。極小geometryやray／色／ramp／Merge Modeの全直積は未証明 |
 | OLMSmoother v1 | no-key／Color Key、smoothing range；native PF8／PF16 | PF8 canonical 960×540と保持済みkey pathはexact。PF16 Color Keyはexported `PF_Cmd_RENDER`からtemporary world、mask／main passまで5×3 padded fixtureでraw exact。AEXにnative PF32 callbackはなく、32bpc projectではAEがclassic integer pluginの前後をhost-convertする |
 
 ## AE host境界
