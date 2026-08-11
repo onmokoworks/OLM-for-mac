@@ -1217,7 +1217,11 @@ static void scan_109d0(int out[2], const GridDesc *g, const int in[2]) {
 	if (y1 < g->h) {
 		int lim_h = g->h - y1;
 		int lim_w = g->w - x;        // (int)param_2[1] - uVar9
-		int steps = (lim_h <= lim_w - 1) ? lim_h : (lim_w - 1);
+		// Win first selects min(height-y-1, width-x), then iterates
+		// `selected - 1` times.  Subtracting one before the min as well
+		// shortens long down-right runs by one cell (notably checker/diagonal
+		// geometry at the top edge).
+		int steps = (lim_h <= lim_w - 1) ? lim_h : lim_w;
 		if (steps != 1) {
 			if (cp_b(g, x + 1, y1, 0) != 0) {
 				int cx = x, cy = y1;
@@ -1252,7 +1256,9 @@ static void scan_10ad0(int out[2], const GridDesc *g, const int in[2]) {
 	int x = in[0], y = in[1];
 	int lim_w = g->w - x;            // (int)param_2[1] - uVar8
 	int lim_h = g->h - y;            // h - uVar11
-	int steps = (lim_h <= lim_w - 1) ? lim_h : (lim_w - 1);
+	// Same selected-limit shape as FUN_1800109d0: choose height when it is
+	// <= width-1, otherwise retain width, and subtract one only in the loop.
+	int steps = (lim_h <= lim_w - 1) ? lim_h : lim_w;
 	if (steps != 1) {
 		if (cp_b(g, x + 1, y, 0) != 0) {
 			int cx = x, cy = y;
