@@ -1,0 +1,126 @@
+{
+  "kind": "olm_ae_host_validation_result",
+  "package_configuration": "Debug",
+  "ae_version": "26.3x87",
+  "macos_version": "15.7.2",
+  "machine": "arm64",
+  "project_gpu_accel_type": {
+    "current_name": "1816",
+    "raw": 1816
+  },
+  "clean_ae_launch_after_install": true,
+  "install_path": "~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/",
+  "notes": "Automated minimal load/apply/render validation using a 64x64 solid and CompItem.saveFrameToPng. This is a host smoke, not full pixel-reference validation.",
+  "plugins": [
+    {
+      "name": "ColorKeep",
+      "loaded": true,
+      "applied": true,
+      "render_succeeded": true,
+      "effect_menu_name": "Color Keep",
+      "error": "",
+      "returned_artifacts": [
+        "minimal_render_png/ColorKeep.png"
+      ]
+    },
+    {
+      "name": "OLMBlur",
+      "loaded": true,
+      "applied": true,
+      "render_succeeded": true,
+      "effect_menu_name": "OLM Blur",
+      "error": "",
+      "returned_artifacts": [
+        "minimal_render_png/OLMBlur.png"
+      ]
+    },
+    {
+      "name": "OLMColorKey",
+      "loaded": true,
+      "applied": true,
+      "render_succeeded": true,
+      "effect_menu_name": "OLM Color Key",
+      "error": "",
+      "returned_artifacts": [
+        "minimal_render_png/OLMColorKey.png"
+      ]
+    },
+    {
+      "name": "OLMDirectionalBlur",
+      "loaded": true,
+      "applied": true,
+      "render_succeeded": true,
+      "effect_menu_name": "OLM DirectionalBlur",
+      "error": "",
+      "returned_artifacts": [
+        "minimal_render_png/OLMDirectionalBlur.png"
+      ]
+    },
+    {
+      "name": "OLMRadialBlur",
+      "loaded": true,
+      "applied": true,
+      "render_succeeded": true,
+      "effect_menu_name": "OLM RadialBlur",
+      "error": "",
+      "returned_artifacts": [
+        "minimal_render_png/OLMRadialBlur.png"
+      ]
+    },
+    {
+      "name": "OLMKiraKira",
+      "loaded": true,
+      "applied": true,
+      "render_succeeded": true,
+      "effect_menu_name": "OLM Kira Kira",
+      "error": "",
+      "returned_artifacts": [
+        "minimal_render_png/OLMKiraKira.png"
+      ]
+    },
+    {
+      "name": "OLMToonDilate",
+      "loaded": true,
+      "applied": true,
+      "render_succeeded": true,
+      "effect_menu_name": "OLM Toon Dilate",
+      "error": "",
+      "returned_artifacts": [
+        "minimal_render_png/OLMToonDilate.png"
+      ]
+    },
+    {
+      "name": "OLMDistanceGradation",
+      "loaded": true,
+      "applied": true,
+      "render_succeeded": true,
+      "effect_menu_name": "Distance Gradation",
+      "error": "",
+      "returned_artifacts": [
+        "minimal_render_png/OLMDistanceGradation.png"
+      ]
+    },
+    {
+      "name": "OLMSmoother",
+      "loaded": true,
+      "applied": true,
+      "render_succeeded": true,
+      "effect_menu_name": "OLM Smoother",
+      "error": "",
+      "returned_artifacts": [
+        "minimal_render_png/OLMSmoother.png"
+      ]
+    },
+    {
+      "name": "OLMSmoother2",
+      "loaded": true,
+      "applied": true,
+      "render_succeeded": true,
+      "effect_menu_name": "OLM Smoother v2",
+      "error": "",
+      "returned_artifacts": [
+        "minimal_render_png/OLMSmoother2.png"
+      ]
+    }
+  ]
+}
