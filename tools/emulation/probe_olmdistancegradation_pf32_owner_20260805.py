@@ -13,8 +13,9 @@ from test_dg_fieldgen_p1b import setup_tls,build_host_suites
 AEX=ROOT/'plugins_2025/DistanceGradation.aex';OWNER=0x181172a10
 def main():
  source_mode=os.environ.get('OLM_DG_PF32_SOURCE','zero');blur_family=source_mode=='blur_family';assert source_mode in ('zero','controlled','outside_sphere','outside_sphere_invert','both_linear_layer','both_power_layer','inside_constant_blur','blur_family');outside=source_mode.startswith('outside_sphere');both_layer=source_mode in ('both_linear_layer','both_power_layer');constant_blur=source_mode=='inside_constant_blur';padded=outside or both_layer or constant_blur or blur_family
+ alpha_fixture=os.environ.get('OLM_DG_PF32_ALPHA_FIXTURE','line_gap');assert alpha_fixture in ('line_gap','exported_matrix')
  family_interp=int(os.environ.get('OLM_DG_PF32_INTERP','1'));family_bg=int(os.environ.get('OLM_DG_PF32_BG','0'));family_blur=int(os.environ.get('OLM_DG_PF32_BLUR','2'))
- if blur_family:assert family_interp in (1,2) and family_bg in (0,1) and family_blur in (2,3)
+ if blur_family:assert family_interp in (1,2,3,4) and family_bg in (0,1) and family_blur in (2,3,4,5)
  ld=AexLoader(str(AEX),verbose=False,fast=True);ld.register_libm_impls(max_threads=1);setup_tls(ld);ld.enable_crt_initializer_imports()
  entry=ld.load_base+ld.pe.OPTIONAL_HEADER.AddressOfEntryPoint
  try: ld.call_function(entry,int_args=[ld.load_base,1,0],max_instructions=5_000_000)
@@ -33,7 +34,8 @@ def main():
  if source_mode in ('controlled','outside_sphere','outside_sphere_invert','both_linear_layer','both_power_layer','inside_constant_blur','blur_family'):
   for y in range(11):
    for x in range(17):
-    alpha=0.0 if (y==5 and 6<=x<=10) else 1.0
+    transparent=(4<=x<13 and 2<=y<9) if alpha_fixture=='exported_matrix' else (y==5 and 6<=x<=10)
+    alpha=0.0 if transparent else 1.0
     rgb=(0.25*alpha,0.5*alpha,0.75*alpha) if source_mode=='controlled' else (((x*0.03125)%1.0)*alpha,((y*0.0625)%1.0)*alpha,(((x+y)*0.025)%1.0)*alpha)
     struct.pack_into('<4f',source_raw,y*input_rowbytes+x*16,alpha,*rgb)
  ld.write_bytes(source_data,bytes(source_raw));ld.write_bytes(input_world+0x18,struct.pack('<Q',source_data));ld.write_bytes(input_world+0x20,struct.pack('<iii',input_rowbytes,17,11))
@@ -91,9 +93,9 @@ def main():
   flags,dims,rows,cols=struct.unpack_from('<4i',raw,0);data=struct.unpack_from('<Q',raw,0x10)[0];step_ptr=struct.unpack_from('<Q',raw,0x48)[0]
   snap={'ptr':hex(ptr),'header':raw.hex(),'flags':flags,'dims':dims,'rows':rows,'cols':cols,'data':hex(data),'step_ptr':hex(step_ptr)}
   if flags==0x90:
-   arr=np.ascontiguousarray(cvb.read_ipl(loader,ptr));flat=arr.reshape(-1,arr.shape[2] if arr.ndim==3 else 1);snap.update({'kind':'IplImage','shape':list(arr.shape),'dtype':str(arr.dtype),'active_sha256':hashlib.sha256(arr.tobytes()).hexdigest(),'pixels':{str(i):flat[i].tobytes().hex() for i in (0,90,91,93,96) if i<len(flat)}});return snap
+   arr=np.ascontiguousarray(cvb.read_ipl(loader,ptr));active=arr.tobytes();flat=arr.reshape(-1,arr.shape[2] if arr.ndim==3 else 1);snap.update({'kind':'IplImage','shape':list(arr.shape),'dtype':str(arr.dtype),'active_sha256':hashlib.sha256(active).hexdigest(),'active_hex':active.hex(),'pixels':{str(i):flat[i].tobytes().hex() for i in (0,90,91,93,96) if i<len(flat)}});return snap
   if 0<rows<=64 and 0<cols<=64 and data:
-   depth=flags&7;channels=1+((flags>>3)&0x1ff);scalar={0:1,2:2,5:4,6:8}.get(depth,1);elem=scalar*channels;step=struct.unpack('<Q',loader.read_bytes(step_ptr,8))[0] if step_ptr else cols*elem;active=b''.join(loader.read_bytes(data+y*step,cols*elem) for y in range(rows));snap.update({'depth':depth,'channels':channels,'elem_size':elem,'step':step,'active_sha256':hashlib.sha256(active).hexdigest(),'pixels':{str(i):loader.read_bytes(data+(i//cols)*step+(i%cols)*elem,elem).hex() for i in (0,90,91,93,96) if i<rows*cols}})
+   depth=flags&7;channels=1+((flags>>3)&0x1ff);scalar={0:1,2:2,5:4,6:8}.get(depth,1);elem=scalar*channels;step=struct.unpack('<Q',loader.read_bytes(step_ptr,8))[0] if step_ptr else cols*elem;active=b''.join(loader.read_bytes(data+y*step,cols*elem) for y in range(rows));snap.update({'depth':depth,'channels':channels,'elem_size':elem,'step':step,'active_sha256':hashlib.sha256(active).hexdigest(),'active_hex':active.hex(),'pixels':{str(i):loader.read_bytes(data+(i//cols)*step+(i%cols)*elem,elem).hex() for i in (0,90,91,93,96) if i<rows*cols}})
   return snap
  def matrix_hook(label):
   def hook(loader,address,size):
@@ -107,10 +109,10 @@ def main():
   rsp=loader.uc.reg_read(UC_X86_REG_RSP);ret=struct.unpack('<Q',loader.read_bytes(rsp,8))[0];events.append({'shim':'FUN_181187e20','rcx_contract':'ignored probe-local TLS container','return':hex(tls_value)});loader.uc.reg_write(UC_X86_REG_RAX,tls_value);loader.uc.reg_write(UC_X86_REG_RSP,rsp+8);loader.uc.reg_write(UC_X86_REG_RIP,ret)
  ld.add_code_hook(0x181187e20,tls_container_shim)
  ld.add_code_hook(0x181187f50,tls_container_shim)
- # Gaussian cvSmooth asks OpenCV's default MatAllocator for temporary storage.
- # The standalone owner probe has no process-global allocator singleton, so
- # provide only that host ABI; the AEX Gaussian implementation still runs.
- if blur_family and family_blur==3:
+ # OpenCV smoothing modes that allocate temporary storage ask for the default
+ # MatAllocator. The standalone owner probe has no process-global allocator
+ # singleton, so provide only that host ABI; the AEX implementation still runs.
+ if blur_family and family_blur in (3,4,5):
   allocator_box={}
   def mat_deallocate(loader,args):return 0
   def mat_allocate(loader,args):
