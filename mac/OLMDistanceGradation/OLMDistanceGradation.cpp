@@ -777,7 +777,9 @@ static void build_distance_field(
 			} else if (p.blur_mode == BLUR_MODE_MEDIAN) {
 				median_blur(df.x.data(), w, h, ksize);
 			} else if (p.blur_mode == BLUR_MODE_BILATERAL) {
-				// Intentional no-op; see the zero-sigma actual-AEX fixture.
+				// PF8/PF16 return the scalar unchanged for this zero-argument
+				// branch. PF32 Smart is rejected before field construction until
+				// its OpenCV SIMD bilateral rounding is reproduced exactly.
 			}
 		}
 	}
@@ -837,9 +839,12 @@ static inline void compose_pixel(
 
 	// Interpolation transforms on X
 	if (p.interp_mode == INTERP_SPHERE) {
-		float t = 1.0f - X;
-		float s = 1.0f - t * t;
-		X = (s < 0) ? 0.0f : sqrtf(s);
+		// The typed callback promotes the float subtraction to double, calls
+		// pow(..., 2.0), subtracts in double, then uses double sqrt before the
+		// final float conversion. A float-only rewrite differs by one ULP.
+		double t = (double)(1.0f - X);
+		double s = 1.0 - std::pow(t, 2.0);
+		X = (s < 0.0) ? 0.0f : (float)std::sqrt(s);
 	} else if (p.interp_mode == INTERP_POWER) {
 		X = powf(X, p.power);
 	}
@@ -914,8 +919,8 @@ static inline void compose_pixel(
 			    p.interp_mode != INTERP_CONSTANT && p.blur_mode != BLUR_MODE_NONE &&
 			    p.blur_size > 0) {
 				out_r = p.pixel_size == sizeof(PF_Pixel8) ? field_aux
-				      : (p.smart_owner ? X : 0.0f);
-				out_g = X;
+				      : (p.smart_owner ? field_aux : 0.0f);
+				out_g = p.smart_owner ? field_aux : X;
 			}
 		}
 		// The actual PF16 Outside/Layer/background callback applies the same
@@ -945,8 +950,11 @@ static inline void compose_pixel(
 			out_r = out_g = out_b = 0.0f;
 			if (p.interp_mode != INTERP_CONSTANT &&
 			    p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0) {
-				out_g = X;
-				if (p.smart_owner) out_r = X;
+				// The typed owner leaks the pre-interpolation blurred scalar on
+				// transparent Inside pixels. Sphere/Power still transform X on
+				// owned pixels, but these auxiliary lanes consume field_aux.
+				out_g = p.smart_owner ? field_aux : X;
+				if (p.smart_owner) out_r = field_aux;
 			}
 			return;
 		}
@@ -1211,6 +1219,10 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	DGParams p; AEFX_CLR_STRUCT(p);
 	ERR(FetchParams(in_data, params, &p));
 	if (err) return err;
+	if (smart_owner && sizeof(P) == sizeof(PF_PixelFloat) &&
+	    p.blur_mode == BLUR_MODE_BILATERAL && p.blur_size > 0) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
 
 	long w = output->width;
 	long h = output->height;

@@ -35,8 +35,10 @@ static int render(const std::vector<std::uint8_t> &source, const char *output_pa
 	storage[DG_USE_BG_COLOR].u.bd.value = background;
 	storage[DG_GRAD_COLOR].u.cd.value = {255, 28, 0, 238};
 	storage[DG_BG_COLOR].u.cd.value = {255, 16, 160, 48};
-	storage[DG_INTERP_MODE].u.pd.value = interp == "constant" ? INTERP_CONSTANT : INTERP_LINEAR;
-	storage[DG_POWER].u.fs_d.value = 1;
+	storage[DG_INTERP_MODE].u.pd.value = interp == "constant" ? INTERP_CONSTANT
+		: interp == "linear" ? INTERP_LINEAR
+		: interp == "sphere" ? INTERP_SPHERE : INTERP_POWER;
+	storage[DG_POWER].u.fs_d.value = 2.25;
 	storage[DG_BLUR_MODE].u.pd.value = blur;
 	storage[DG_BLUR_SIZE].u.sd.value = 1;
 	PF_InData in_data{};
@@ -54,7 +56,8 @@ int main(int argc, char **argv) {
 	const std::string depth(argv[1]), interp(argv[4]);
 	const bool background = std::atoi(argv[5]) != 0;
 	const int blur = std::atoi(argv[6]);
-	if (blur < 2 || blur > 3) return 3;
+	if (interp != "constant" && interp != "linear" && interp != "sphere" && interp != "power") return 3;
+	if (blur < 2 || blur > 5) return 3;
 	if (depth == "PF16") return render<PF_Pixel16>(source, argv[3], interp, background, blur);
 	if (depth == "PF32") return render<PF_PixelFloat>(source, argv[3], interp, background, blur);
 	return 3;
