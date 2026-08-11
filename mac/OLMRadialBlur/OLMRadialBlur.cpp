@@ -1439,7 +1439,8 @@ static FloatImage BuildZoomAEXOuterOnlyPolar(
 	const std::vector<float> *outer_fade_weights = nullptr,
 	A_long outer_fade_span = 0,
 	const std::vector<float> *inner_fade_weights = nullptr,
-	A_long inner_fade_span = 0)
+	A_long inner_fade_span = 0,
+	bool preserve_noise_zero_seed = false)
 {
 	const A_long radius_count = polar.width;
 	const A_long angular_count = polar.height;
@@ -1474,7 +1475,8 @@ static FloatImage BuildZoomAEXOuterOnlyPolar(
 					const float factor = (outer_fade_span > 0 || inner_fade_span > 0)
 						? 1.0f : span_plane[cell];
 					float source_scalar = source_scalar_plane[cell];
-					if (factor == 0.0f || ((outer_fade_span > 0 || inner_fade_span > 0) &&
+					if ((factor == 0.0f && !preserve_noise_zero_seed) ||
+						((outer_fade_span > 0 || inner_fade_span > 0) &&
 						(polar.rgba[rgba + 3] == 0.0f || source_scalar == 0.0f))) {
 						source_scalar = 0.0f;
 					} else if (outer_fade_span > 0 || inner_fade_span > 0) {
@@ -2406,7 +2408,8 @@ static PF_Err RenderZoomTyped(
 			span_plane, source_scalar_plane, worker_info.outer_strength,
 			use_aex_zoom_inner ? &inner_weights : nullptr,
 			use_aex_zoom_inner ? info.inner_strength : 0,
-			outer_fade_span > 0 ? &outer_fade_weights : nullptr, outer_fade_span);
+			outer_fade_span > 0 ? &outer_fade_weights : nullptr, outer_fade_span,
+			nullptr, 0, info.noise_variation != 0.0 && info.size_variation == 0.0);
 	} else {
 		blurred = BuildZoomBlurredPolar(polar, info, debug, &use_fft_convolution);
 	}
