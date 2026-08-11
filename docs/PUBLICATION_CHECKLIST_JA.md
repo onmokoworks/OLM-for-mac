@@ -26,7 +26,8 @@
 
 - `refs/reference_requests/olm_crosshost_linear_input_20260806.zip`にWindows `.aex`を含む
 - `refs/reference_requests/olm_windows_ae_release_boundary_minimal_20260806.zip`にWindows `.aex`を含む
-- リポジトリにLICENSEがない。ソース公開時の利用条件を所有者が決める必要がある
+- Apache-2.0のLICENSEは存在する。公開候補ではOLM Digitalの原著作物・名称・商標と、
+  このリポジトリで配布するコードの利用条件を混同しない帰属表示を維持する
 - 過去のcommitにも対象ファイルが存在するため、最新commitから削除するだけでは不十分
 
 ## 公開表現

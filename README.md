@@ -3,6 +3,12 @@
 Windows版OLM ToolsのAfter Effectsプラグイン（AEX）を、macOS／Apple Silicon向けの
 Universalプラグインとして互換移植するプロジェクトです。
 
+本プロジェクトはOLM DigitalのオリジナルOLMプラグインを基にした非公式の互換移植で、
+OLM Digitalによる提携・承認を示すものではありません。オリジナルのプラグイン、
+製品名、商標および原著作物に関する権利は、それぞれの権利者に帰属します。
+リポジトリの[LICENSE](LICENSE)は収録コードの利用条件であり、本家の名称、商標、
+バイナリ、素材などに別途の権利を付与するものではありません。
+
 見た目が近いだけの再実装ではありません。対象として明記したAfter Effects、
 Softwareレンダー、bit-depth、入力、geometry、パラメーターについて、Windows AEX／
 Windows AEとピクセルおよび必要な内部値が完全一致することを合格条件にしています。
@@ -22,7 +28,7 @@ Windows版の全入力・全geometry・全パラメーター直積との完全�
 
 ## 現在の状態
 
-2026-08-10時点のMacリリース候補（Public Beta）は、次の統合ゲートを通過しています。
+2026-08-11時点のMacリリース候補（Public Beta）は、次の統合ゲートを通過しています。
 
 - 全10プラグインの固定fixture回帰：PASS
 - 現行Mac AEでのロード／代表レンダー：10/10
@@ -51,8 +57,8 @@ Windows AEで取得する7行として固定した同一条件校正は、受領
 | OLMToonDilate | copy／dilate、radius、frontier／tie／corner | PF8／PF16／PF32 |
 | OLMDistanceGradation | Inside／Outside／Both、補間、invert、background、blur | PF8／PF16／PF32（限定範囲） |
 | OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3 | PF8／PF16／PF32（限定範囲） |
-| OLMRadialBlur | Zoom／Rotation／Inner | PF8／PF16／PF32（guard付き） |
-| OLMSmoother2 | key／invert、Gamma、range、palette | PF8／PF16／PF32（限定範囲） |
+| OLMRadialBlur | Zoom／Rotation／Inner、size／noise／edge／offset／brightnessの記録済み複合経路 | PF8／PF16／PF32（guard付き） |
+| OLMSmoother2 | v1／v2 classifier、key／invert、Gamma、range、palette | PF8／PF16／PF32（限定範囲） |
 | OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur | PF8／PF16／PF32（限定範囲） |
 | OLMSmoother v1 | no-key／Color Key、smoothing range | native PF8／PF16。32bpcはAE host conversion |
 
@@ -177,3 +183,9 @@ declared host, depths, fixtures, geometries and parameter boundaries. Seven
 same-contract Windows AE calibration rows are accepted. This is a bounded
 compatibility claim, not a guarantee over every input, geometry, parameter
 combination, custom UI path, or host color pipeline.
+
+This is an unofficial compatibility port based on the original OLM plug-ins
+from OLM Digital; it does not imply endorsement or affiliation. Rights in the
+original plug-ins, product names, trademarks, and original works remain with
+their respective owners. The repository license covers the code distributed
+here and does not grant additional rights to upstream assets.

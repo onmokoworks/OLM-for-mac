@@ -1,4 +1,30 @@
-# OLM for Mac Public Beta リリースノート — 2026-08-10
+# OLM for Mac Public Beta リリースノート — 2026-08-11
+
+> 本プロジェクトはOLM DigitalのオリジナルOLMプラグインを基にした非公式の
+> 互換移植であり、OLM Digitalによる提携・承認を示すものではありません。
+> オリジナルのプラグイン、製品名、商標および原著作物に関する権利は、
+> それぞれの権利者に帰属します。リポジトリのLICENSEは収録コードの利用条件であり、
+> 本家資産に別途の権利を付与するものではありません。
+
+## 2026-08-11 追加検証
+
+2026-08-10の統合ゲート通過後も、完了判定に寄与する複合分岐の
+actual-AEX比較を追加しました。これは全パラメーター直積への一般化ではありません。
+
+- OLMRadialBlur：32×18の記録済みcomponent fixtureで、PF8／PF16／PF32の
+  Size Variation×Noise Variation（48行）、Brightness×Size×Noise（96行）、
+  Edge Fade×Noise（72行）をexact確認しました。さらにRotationの
+  Offset×Noise（48行）、ZoomのEdge×Offset×Noise（48行）、Rotationの
+  Edge×Offset×Noise（96行）を閉じました。Noise Variation 0では
+  Zoomのself seedを保持するactual-AEXの振る舞いも回帰に反映しています。
+- OLMSmoother2：v1／v2、PF8／PF16／PF32、複数geometryと入力patternを含む
+  core 96行とfeature 18行の計114行をactual AEXとexact確認しました。
+  この過程で、特定の幅での水平／対角scan境界を修正しています。
+
+上記の数値は記録済みfixtureの行数です。任意のgeometryや未列挙の
+Size／Noise／Edge／Offset／Brightness組合せへの完全互換は主張しません。
+OLMRadialBlur Noise Type 3のLayer入力と、未記録の複合tupleは引き続き
+証拠境界です。
 
 ## リリース候補の状態
 
@@ -34,8 +60,8 @@ notarizationは未実施であり、ダウンロード先のGatekeeperに拒否�
 | OLMToonDilate | copy／dilate、fractional radius、frontier／tie／corner／eligibility；PF8／PF16／PF32 | padded／partial／empty worldとradius -1〜4を確認。実効radiusは`ceil(radius × downsample_x.num / den)`。legacy `PF_Cmd_RENDER`は実AEX同様3深度でno-op、描画はSmartRender経路。現行PF32 radius 13 AE代表はhost smoke |
 | OLMDistanceGradation | Inside／Outside／Both、RGB／Layer、Constant／Linear／Sphere／Power、invert／background／blur；PF8／PF16／PF32限定 | 証明済みaxisとfamilyは全コントロール直積ではない。元AEXにownerがないPF32 SmartRender要求はhost checkout前にfail-closeする |
 | OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3；PF8／PF16／PF32限定 | PF16 Type 3 Layerは16×16の限定tuple。PF32は同geometry・angle 45・front 8・back 0のSize Variation 0〜100とFront Alpha Fade 0／50／100をactual AEX exact確認。Back Fade、Sharp Tail、複合tupleはfail-close |
-| OLMRadialBlur | Zoom／Rotation／Inner；PF8／PF16／PF32 guard付き | PF8 centered neutral Inner Strength 1〜64は9×7、64×36、640×360で証明。PF32 Rotation 9×7ではSize Variation 1／25／100に加え、限定tupleのNoise Type 1・Variation 0／25／100も最終出力bit exact。未記載geometry／Noise Type／複合tupleへは一般化しない |
-| OLMSmoother2 | v1／v2 classifier、key／invert、Gamma None／All／Colors、range／extra、palette；PF8／PF16／PF32限定 | PF8ではv1／v2非均一base、key／Gamma経路をraw exact確認。5×5の3深度fixtureでpublic Range 100とExtra Smooth 100がそれぞれ独立して出力へ作用し、actual AEXとexact。PF32 case07はprocess-attested AE exactとは呼ばない |
+| OLMRadialBlur | Zoom／Rotation／Inner；PF8／PF16／PF32 guard付き | PF8 centered neutral Inner Strength 1〜64を含む複数geometryに加え、32×18の記録済みfixtureでSize／Noise／Brightness／Edge／Offsetの上記複合分岐をexact確認。Noise Type 3 Layer、未記載geometry／Noise Type／複合tupleへは一般化しない |
+| OLMSmoother2 | v1／v2 classifier、key／invert、Gamma None／All／Colors、range／extra、palette；PF8／PF16／PF32限定 | 1×1から32×18までの複数geometryと入力patternを含む114行のclassifier matrixがexact。公開機能間の全直積や、記録されていないswitch family全体の証明ではない |
 | OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur；PF8／PF16／PF32限定 | Mode 3 Gaussianは完全actual-AEX fixtureの11×6/3、9×7/5、13×5/7、15×6/9だけを許可し、未証明tupleをMode 2近似へ代用しない。Mode 4の記録済みfull callerはPF8／PF16／PF32 writerまで全段bit exact |
 | OLMSmoother v1 | no-key／Color Key、smoothing range；native PF8／PF16 | PF8 canonical 960×540と保持済みkey pathはexact。PF16 Color Keyはexported `PF_Cmd_RENDER`からtemporary world、mask／main passまで5×3 padded fixtureでraw exact。AEXにnative PF32 callbackはなく、32bpc projectではAEがclassic integer pluginの前後をhost-convertする |
 
