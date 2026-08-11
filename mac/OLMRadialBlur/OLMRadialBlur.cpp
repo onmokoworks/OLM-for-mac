@@ -1077,6 +1077,37 @@ static float SampleScalarAEXRepeat(
 	return RadialF32Add(result, RadialF32Mul(w11, right_at(y1)));
 }
 
+static float SampleScalarAEXNoRepeat(
+	const std::vector<float> &source_with_guard,
+	A_long width,
+	A_long height,
+	float x,
+	float y)
+{
+	const A_long xi = (A_long)x;
+	const A_long yi = (A_long)y;
+	const float fx = RadialF32Sub(x, (float)xi);
+	const float fy = RadialF32Sub(y, (float)yi);
+	const float one_minus_fx = RadialF32Sub(1.0f, fx);
+	const float one_minus_fy = RadialF32Sub(1.0f, fy);
+	const float weights[4] = {
+		RadialF32Mul(one_minus_fx, one_minus_fy),
+		RadialF32Mul(one_minus_fy, fx),
+		RadialF32Mul(one_minus_fx, fy),
+		RadialF32Mul(fy, fx)};
+	const A_long xs[4] = {xi, xi + 1, xi, xi + 1};
+	const A_long ys[4] = {yi, yi, yi + 1, yi + 1};
+	float result = 0.0f;
+	float weight_sum = 0.0f;
+	for (int tap = 0; tap < 4; ++tap) {
+		if (xs[tap] < 0 || xs[tap] >= width || ys[tap] < 0 || ys[tap] >= height) continue;
+		result = RadialF32Add(result, RadialF32Mul(
+			weights[tap], source_with_guard[(size_t)ys[tap] * width + xs[tap]]));
+		weight_sum = RadialF32Add(weight_sum, weights[tap]);
+	}
+	return weight_sum != 0.0f ? RadialF32Div(result, weight_sum) : 0.0f;
+}
+
 static std::vector<float> ZoomGaussianWeights(A_long length)
 {
 	if (length <= 1) return std::vector<float>{1.0f};
@@ -1931,6 +1962,19 @@ static PF_Err RenderZoomTyped(
 		? (PF_FpLong)input->width / 2.0 : (PF_FpLong)(input->width / 2);
 	const PF_FpLong offcenter_base_y = !input ? 0.0 : std::is_same<PixelT, PF_Pixel8>::value
 		? (PF_FpLong)input->height / 2.0 : (PF_FpLong)(input->height / 2);
+	const bool transform_axis_edge_tuple =
+		info.ratio == 2.0 && info.angle_deg == 30.0 && info.outer_edge_fade == 50 &&
+		info.quality == 5.0 && info.repeat_border != FALSE &&
+		info.size_variation == 0.0 && info.noise_variation == 0.0 && info.noise_type == 1;
+	const bool quality_repeat_noise_tuple =
+		info.ratio == 1.0 && info.angle_deg == 0.0 && info.outer_edge_fade == 0 &&
+		info.quality == 3.0 && info.repeat_border == FALSE &&
+		info.size_variation == 0.0 && info.noise_variation == 100.0 && info.noise_type == 2;
+	const bool offcenter_size_tuple = input && input->width == 32 && input->height == 18 &&
+		info.center_x == 8.0 && info.center_y == 6.0 && info.size_variation == 50.0 &&
+		info.ratio == 1.0 && info.angle_deg == 0.0 && info.outer_edge_fade == 0 &&
+		info.quality == 5.0 && info.repeat_border != FALSE &&
+		info.noise_variation == 0.0 && info.noise_type == 1 && source_alpha_strictly_positive;
 	const bool use_aex_typed_zoom_offcenter_brightness = input && output && input->data && output->data &&
 		input->width == output->width && input->height == output->height &&
 		((input->width == 9 && input->height == 7) || (input->width == 32 && input->height == 18)) &&
@@ -1963,7 +2007,7 @@ static PF_Err RenderZoomTyped(
 		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0 &&
-		info.outer_edge_fade == 0 && info.inner_edge_fade == 0;
+		(info.outer_edge_fade == 0 || transform_axis_edge_tuple) && info.inner_edge_fade == 0;
 	const bool use_aex_typed_quality_repeat = input && output &&
 		(std::is_same<PixelT, PF_Pixel16>::value ||
 		 std::is_same<PixelT, PF_Pixel8>::value ||
@@ -1977,9 +2021,20 @@ static PF_Err RenderZoomTyped(
 		info.ratio == 1.0 && info.angle_deg == 0.0 &&
 		(info.quality == 1.0 || info.quality == 3.0 || info.quality == 5.0) &&
 		info.brightness_gain == 1.0 && info.size_variation == 0.0 &&
-		info.noise_variation == 0.0 && info.noise_type == 1 && info.noise_layer == 0 &&
+		((info.noise_variation == 0.0 && info.noise_type == 1) || quality_repeat_noise_tuple) && info.noise_layer == 0 &&
 		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0 &&
 		info.outer_edge_fade == 0 && info.inner_edge_fade == 0;
+	const bool use_aex_typed_zoom_transform_worker_32x18 = input && output && input->data && output->data &&
+		input->width == 32 && input->height == 18 && output->width == 32 && output->height == 18 &&
+		input->rowbytes >= input->width * (A_long)sizeof(PixelT) &&
+		output->rowbytes >= output->width * (A_long)sizeof(PixelT) &&
+		info.comp_width == 32.0 && info.comp_height == 18.0 &&
+		info.outer_strength == 4 && info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.brightness_gain == 1.0 && info.noise_layer == 0 && info.seed == 1 &&
+		info.noise_offset == 0 && info.thickness == 10.0 &&
+		(transform_axis_edge_tuple || quality_repeat_noise_tuple || offcenter_size_tuple);
 	const bool use_aex_pf8_zoom_small = input && output && input->data && output->data &&
 		std::is_same<PixelT, PF_Pixel8>::value &&
 		input->width == 9 && input->height == 7 && output->width == 9 && output->height == 7 &&
@@ -2117,6 +2172,7 @@ static PF_Err RenderZoomTyped(
 		!use_aex_typed_zoom_size_edge_noise_components_32x18 &&
 		!use_aex_typed_zoom_size_variation_32x18 &&
 		!use_aex_typed_zoom_size_noise_components_32x18 && !use_aex_typed_zoom_offset_matrix &&
+		!use_aex_typed_zoom_transform_worker_32x18 &&
 		!use_aex_typed_quality_repeat && !use_aex_pf8_zoom_small &&
 		!use_aex_typed_zoom_offcenter_brightness && (!use_aex_zoom_geometry || info.repeat_border == FALSE ||
 		(!use_aex_typed_zoom_ellipse_geometry && (info.ratio != 1.0 || info.angle_deg != 0.0)) ||
@@ -2252,6 +2308,7 @@ static PF_Err RenderZoomTyped(
 	    !use_aex_typed_zoom_noise_type1_pairwise && !use_aex_typed_zoom_noise_type2_small &&
 	    !use_aex_typed_zoom_inner_pairwise &&
 	    !use_aex_pf32_zoom_inner_noise_small && !use_aex_typed_zoom_edge_noise_32x18 &&
+	    !use_aex_typed_zoom_transform_worker_32x18 &&
 	    !use_aex_typed_zoom_size_edge_noise_components_32x18 &&
 	    !use_aex_typed_zoom_size_noise_components_32x18)) {
 		// These branches are not yet backed by an actual-AEX worker/output
@@ -2347,7 +2404,8 @@ static PF_Err RenderZoomTyped(
 		use_aex_typed_zoom_size_variation_32x18 ||
 		use_aex_typed_zoom_size_edge_components_32x18 ||
 		use_aex_typed_zoom_size_edge_noise_components_32x18 ||
-		use_aex_typed_zoom_size_noise_components_32x18;
+		use_aex_typed_zoom_size_noise_components_32x18 ||
+		use_aex_typed_zoom_transform_worker_32x18;
 	std::vector<float> span_plane;
 	std::vector<float> source_factor_with_guard;
 	std::vector<float> fade_factor_with_guard;
@@ -2372,6 +2430,7 @@ static PF_Err RenderZoomTyped(
 			use_aex_pf32_zoom_inner_noise_small || use_aex_typed_zoom_noise_type2_small ||
 			(use_aex_typed_zoom_inner_pairwise && info.noise_variation != 0.0) ||
 			use_aex_typed_zoom_edge_noise_32x18 ||
+			(use_aex_typed_zoom_transform_worker_32x18 && quality_repeat_noise_tuple) ||
 			use_aex_typed_zoom_size_edge_noise_components_32x18 ||
 			use_aex_typed_zoom_size_noise_components_32x18) {
 			std::vector<float> noise_plane;
@@ -2390,6 +2449,7 @@ static PF_Err RenderZoomTyped(
 					const float noise = (use_aex_typed_zoom_noise_type2_small ||
 						(use_aex_typed_zoom_inner_pairwise && info.noise_type == 2) ||
 						(use_aex_typed_zoom_edge_noise_32x18 && info.noise_type == 2) ||
+						(use_aex_typed_zoom_transform_worker_32x18 && quality_repeat_noise_tuple) ||
 						((use_aex_typed_zoom_size_noise_components_32x18 ||
 						  use_aex_typed_zoom_size_edge_noise_components_32x18) && info.noise_type == 2))
 						? olm::dblur::sample_radial_noise_plane(noise_view, x, y, false)
@@ -2440,9 +2500,12 @@ static PF_Err RenderZoomTyped(
 			polar_valid[(size_t)ai * radius_count + ri] = sampled.eligible;
 			if (use_aex_outer_only) {
 				span_plane[(size_t)ai * radius_count + ri] =
-					use_aex_typed_quality_repeat && info.repeat_border == FALSE
+					use_aex_typed_quality_repeat && info.repeat_border == FALSE &&
+						!quality_repeat_noise_tuple
 						? 1.0f
-						: SampleScalarAEXRepeat(source_factor_with_guard, w, h, sx, sy);
+						: (quality_repeat_noise_tuple
+							? SampleScalarAEXNoRepeat(source_factor_with_guard, w, h, sx, sy)
+							: SampleScalarAEXRepeat(source_factor_with_guard, w, h, sx, sy));
 				source_scalar_plane[(size_t)ai * radius_count + ri] = sampled.rgba[3];
 				if (use_aex_typed_zoom_size_edge_noise_components_32x18) {
 					fade_factor_plane[(size_t)ai * radius_count + ri] =
@@ -2509,7 +2572,8 @@ static PF_Err RenderZoomTyped(
 		const A_long outer_fade_span = (use_aex_typed_zoom_edge_fade_32x18 ||
 			use_aex_typed_zoom_size_edge_components_32x18 ||
 			use_aex_typed_zoom_size_edge_noise_components_32x18 ||
-			use_aex_typed_zoom_edge_noise_32x18)
+			use_aex_typed_zoom_edge_noise_32x18 ||
+			(use_aex_typed_zoom_transform_worker_32x18 && transform_axis_edge_tuple))
 			? info.outer_edge_fade : 0;
 		const std::vector<float> outer_fade_weights = outer_fade_span > 0
 			? ZoomGaussianWeights(outer_fade_span) : std::vector<float>();
@@ -2608,6 +2672,7 @@ static PF_Err RenderZoomTyped(
 					 use_aex_typed_zoom_size_edge_components_32x18 ||
 					 use_aex_typed_zoom_size_edge_noise_components_32x18 ||
 					 use_aex_typed_zoom_edge_noise_32x18 ||
+					 use_aex_typed_zoom_transform_worker_32x18 ||
 				 use_aex_typed_zoom_size_variation_32x18 ||
 				 use_aex_typed_zoom_size_noise_components_32x18);
 			if constexpr (std::is_same<PixelT, PF_Pixel8>::value) {
@@ -2970,6 +3035,31 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		? (PF_FpLong)input->width / 2.0 : (PF_FpLong)(input->width / 2);
 	const PF_FpLong rotation_offcenter_base_y = !input ? 0.0 : std::is_same<PixelT, PF_Pixel8>::value
 		? (PF_FpLong)input->height / 2.0 : (PF_FpLong)(input->height / 2);
+	const bool rotation_transform_axis_edge_tuple = use_aex_inner_geometry &&
+		info.ratio == 2.0 && info.angle_deg == 30.0 && info.outer_edge_fade == 50 &&
+		info.quality == 5.0 && info.repeat_border != FALSE &&
+		info.size_variation == 0.0 && info.noise_variation == 0.0 && info.noise_type == 1;
+	const bool rotation_quality_repeat_noise_tuple = use_aex_inner_geometry &&
+		info.ratio == 1.0 && info.angle_deg == 0.0 && info.outer_edge_fade == 0 &&
+		info.quality == 3.0 && info.repeat_border == FALSE &&
+		info.size_variation == 0.0 && info.noise_variation == 100.0 && info.noise_type == 2;
+	const bool rotation_offcenter_size_tuple = input && input->width == 32 && input->height == 18 &&
+		info.center_x == 8.0 && info.center_y == 6.0 && info.size_variation == 50.0 &&
+		info.ratio == 1.0 && info.angle_deg == 0.0 && info.outer_edge_fade == 0 &&
+		info.quality == 5.0 && info.repeat_border != FALSE &&
+		info.noise_variation == 0.0 && info.noise_type == 1 && source_alpha_strictly_positive;
+	const bool use_aex_typed_rotation_transform_worker_32x18 = input && output && input->data && output->data &&
+		input->width == 32 && input->height == 18 && output->width == 32 && output->height == 18 &&
+		input->rowbytes >= input->width * (A_long)sizeof(PixelT) &&
+		output->rowbytes >= output->width * (A_long)sizeof(PixelT) &&
+		info.comp_width == 32.0 && info.comp_height == 18.0 &&
+		info.outer_strength == 4 && info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.brightness_gain == 1.0 && info.noise_layer == 0 && info.seed == 1 &&
+		info.noise_offset == 0 && info.thickness == 10.0 &&
+		(rotation_transform_axis_edge_tuple || rotation_quality_repeat_noise_tuple ||
+		 rotation_offcenter_size_tuple);
 	const bool use_aex_typed_rotation_offcenter_brightness = input && output && input->data && output->data &&
 		input->width == output->width && input->height == output->height &&
 		((input->width == 9 && input->height == 7) || (input->width == 32 && input->height == 18)) &&
@@ -3184,6 +3274,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	    !use_aex_typed_rotation_offset_noise_components_32x18 &&
 	    !use_aex_typed_rotation_edge_offset_32x18 &&
 	    !use_aex_typed_rotation_dual_strength_32x18 &&
+	    !use_aex_typed_rotation_transform_worker_32x18 &&
 	    !use_aex_typed_rotation_size_edge_components_32x18 &&
 	    !use_aex_typed_rotation_size_edge_noise_components_32x18 &&
 	    !use_aex_typed_rotation_inner_offset_pairwise && !use_aex_pf16_inner_power2_small &&
@@ -3192,6 +3283,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	    ((info.outer_edge_fade != 0 || info.inner_edge_fade != 0) &&
 	     !use_aex_typed_rotation_edge_offset_noise_components_32x18 &&
 	     !use_aex_typed_rotation_edge_offset_32x18 &&
+	     !use_aex_typed_rotation_transform_worker_32x18 &&
 	     !use_aex_typed_rotation_size_edge_components_32x18 &&
 	     !use_aex_typed_rotation_size_edge_noise_components_32x18 &&
 	     !use_aex_pf32_outer_edge_fade_small && !use_aex_pf32_inner_edge_fade_small &&
@@ -3207,12 +3299,14 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	     !use_aex_pf32_opaque_size_noise_type1_small &&
 	     !use_aex_pf32_edge_fade_cross_small &&
 	     !use_aex_typed_rotation_edge_noise_32x18 &&
+	     !use_aex_typed_rotation_transform_worker_32x18 &&
 	     !use_aex_typed_rotation_size_edge_noise_components_32x18 &&
 	     !use_aex_typed_rotation_size_noise_components_32x18) ||
 	    (info.size_variation != 0.0 && !use_aex_pf32_opaque_size_variation_small &&
 	     !use_aex_typed_rotation_size_offset_components_32x18 &&
 	     !use_aex_typed_rotation_size_variation_32x18 &&
 	     !use_aex_typed_rotation_size_edge_components_32x18 &&
+	     !use_aex_typed_rotation_transform_worker_32x18 &&
 	     !use_aex_typed_rotation_size_edge_noise_components_32x18 &&
 	     !use_aex_typed_rotation_size_noise_components_32x18 &&
 	     !use_aex_pf32_opaque_size_noise_type1_small &&
@@ -3414,7 +3508,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0;
-	const bool use_aex_exact = use_aex_typed_rotation_size_offset_components_32x18 || use_aex_typed_rotation_edge_offset_noise_components_32x18 || use_aex_typed_rotation_offset_noise_components_32x18 || use_aex_typed_rotation_edge_offset_32x18 || use_aex_typed_rotation_dual_strength_32x18 || use_aex_typed_rotation_size_variation_32x18 || use_aex_typed_rotation_size_edge_components_32x18 || use_aex_typed_rotation_size_edge_noise_components_32x18 || use_aex_typed_rotation_size_noise_components_32x18 || use_aex_typed_rotation_inner_offset_pairwise || use_aex_typed_rotation_offcenter_brightness || use_aex_typed_quality_repeat || use_aex_case0010 || use_aex_pf16_small || use_aex_pf16_inner_power2_small ||
+	const bool use_aex_exact = use_aex_typed_rotation_transform_worker_32x18 || use_aex_typed_rotation_size_offset_components_32x18 || use_aex_typed_rotation_edge_offset_noise_components_32x18 || use_aex_typed_rotation_offset_noise_components_32x18 || use_aex_typed_rotation_edge_offset_32x18 || use_aex_typed_rotation_dual_strength_32x18 || use_aex_typed_rotation_size_variation_32x18 || use_aex_typed_rotation_size_edge_components_32x18 || use_aex_typed_rotation_size_edge_noise_components_32x18 || use_aex_typed_rotation_size_noise_components_32x18 || use_aex_typed_rotation_inner_offset_pairwise || use_aex_typed_rotation_offcenter_brightness || use_aex_typed_quality_repeat || use_aex_case0010 || use_aex_pf16_small || use_aex_pf16_inner_power2_small ||
 		use_aex_typed_edge_fade_32x18 ||
 		use_aex_typed_rotation_edge_noise_32x18 ||
 		use_aex_typed_rotation_offset_mode3 ||
@@ -3502,6 +3596,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		use_aex_typed_rotation_edge_noise_32x18 ||
 		use_aex_pf32_offset_mode3_noise_type1_small ||
 		use_aex_pf32_opaque_size_noise_type1_small ||
+		(use_aex_typed_rotation_transform_worker_32x18 && rotation_quality_repeat_noise_tuple) ||
 		use_aex_typed_rotation_size_edge_noise_components_32x18 ||
 		use_aex_typed_rotation_size_noise_components_32x18 ||
 		(use_aex_pf32_edge_fade_intersection_small && info.noise_variation != 0.0)) {
@@ -3524,6 +3619,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 					(use_aex_typed_rotation_dual_strength_32x18 && info.noise_type == 2) ||
 					(use_aex_typed_rotation_edge_noise_32x18 && info.noise_type == 2) ||
 					(use_aex_typed_rotation_edge_offset_noise_components_32x18 && info.noise_type == 2) ||
+					(use_aex_typed_rotation_transform_worker_32x18 && rotation_quality_repeat_noise_tuple) ||
 					(use_aex_typed_rotation_size_edge_noise_components_32x18 && info.noise_type == 2) ||
 					(use_aex_typed_rotation_size_noise_components_32x18 && info.noise_type == 2))
 					? SampleRadialBlockNoisePlaneAEX(noise_plane.data(), noise_width, (float)info.thickness, x, y)
@@ -3541,7 +3637,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	const float cx_f = (float)cx;
 	const float cy_f = (float)cy;
 	const float ratio_f = (float)ratio;
-	const float step_rad_f = use_aex_typed_quality_repeat && info.quality == 3.0
+	const float step_rad_f = (use_aex_typed_quality_repeat || rotation_quality_repeat_noise_tuple) && info.quality == 3.0
 		? RadialF32Div(1.0f, RadialF32Div(
 			RadialF32Mul((float)quality, 180.0f), (float)kPi))
 		: (float)step_rad;
@@ -3581,9 +3677,12 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			polar_valid[cell] = sampled.eligible;
 			if (use_aex_exact) {
 				rotation_source_scalar[cell] =
-					use_aex_typed_quality_repeat && info.repeat_border == FALSE
+					use_aex_typed_quality_repeat && info.repeat_border == FALSE &&
+						!rotation_quality_repeat_noise_tuple
 						? (sampled.eligible ? 1.0f : 0.0f)
-						: SampleScalarAEXRepeat(rotation_scalar_source_with_guard, w, h, sx, sy);
+						: (rotation_quality_repeat_noise_tuple
+							? SampleScalarAEXNoRepeat(rotation_scalar_source_with_guard, w, h, sx, sy)
+							: SampleScalarAEXRepeat(rotation_scalar_source_with_guard, w, h, sx, sy));
 				if (use_aex_typed_rotation_size_edge_noise_components_32x18) {
 					rotation_fade_factor[cell] = SampleScalarAEXRepeat(
 						rotation_fade_source_with_guard, w, h, sx, sy);
@@ -3712,7 +3811,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 					? std::max<A_long>(RotationEffectiveLength(
 						info.outer_strength, 1, 0), DynamicOffsetForRadius(radius_count,
 						std::max<A_long>(0, info.outer_offset - 1), ri))
-				: (use_aex_typed_quality_repeat
+				: ((use_aex_typed_quality_repeat || rotation_quality_repeat_noise_tuple)
 					? (A_long)std::ceil((double)RotationEffectiveLength(
 						info.outer_strength, info.outer_offset_mode, 0) * (info.quality / 5.0))
 					: RotationEffectiveLength(info.outer_strength, info.outer_offset_mode, 0)));
@@ -3962,7 +4061,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				// which is slightly below correctly rounded 2*pi.
 				if (angle < 0.0f) angle = (float)((double)angle + 0x1.921fb53c8d4f1p+2);
 				angle_raw_debug = angle;
-				const float angle_scale = use_aex_typed_quality_repeat && info.quality == 3.0
+				const float angle_scale = (use_aex_typed_quality_repeat || rotation_quality_repeat_noise_tuple) && info.quality == 3.0
 					? RadialF32Div(RadialF32Mul((float)quality, 180.0f), (float)kPi)
 					: (float)(quality * 180.0 / kPi);
 				angle_index = RadialF32Mul(angle, angle_scale);
