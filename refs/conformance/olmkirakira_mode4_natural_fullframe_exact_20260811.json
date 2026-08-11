@@ -208,6 +208,7 @@
     "same_run_direction": {
       "slot": 1,
       "angle_degrees": 0,
+      "glow_rotation": 0,
       "length": 5,
       "blur_mode": 4,
       "seed_mat_address": "0xf0fe9e0"

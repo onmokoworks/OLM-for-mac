@@ -19,7 +19,8 @@ class Mode4NaturalFullFrameExactTests(unittest.TestCase):
         self.assertEqual(report["status"], "exact")
         self.assertEqual(len(report["actual_aex"]["same_run_seed_f32"]), 15)
         self.assertEqual(report["actual_aex"]["same_run_direction"], {
-            "slot": 1, "angle_degrees": 0, "length": 5, "blur_mode": 4,
+            "slot": 1, "angle_degrees": 0, "glow_rotation": 0,
+            "length": 5, "blur_mode": 4,
             "seed_mat_address": report["actual_aex"]["same_run_direction"]["seed_mat_address"],
         })
         self.assertEqual(len(report["actual_aex"]["selected_ray_u32"]), 15)

@@ -69,6 +69,23 @@ def portable_mode4_ray(seed: list[float], width: int, height: int,
     return [f"0x{word:x}" for word in cropped]
 
 
+def portable_highlight_ray(seed: list[float], width: int, height: int,
+                           radius: int) -> list[str]:
+    with tempfile.TemporaryDirectory(prefix="kira_natural_highlight_") as temporary:
+        executable = Path(temporary) / "highlight"
+        subprocess.run([
+            "c++", "-std=c++20", "-O2",
+            str(ROOT / "tools/emulation/test_kirakira_highlight_canonical.cpp"),
+            "-o", str(executable),
+        ], check=True)
+        words = "\n".join(
+            f"{struct.unpack('<I', struct.pack('<f', value))[0]:08x}" for value in seed) + "\n"
+        output = subprocess.check_output(
+            [str(executable), str(width), str(height), str(radius)],
+            input=words, text=True)
+    return [f"0x{int(line, 16):x}" for line in output.splitlines()]
+
+
 def load_base():
     spec = importlib.util.spec_from_file_location("kira_fullcaller_base", BASE_PATH)
     if spec is None or spec.loader is None:
@@ -79,7 +96,8 @@ def load_base():
     return module
 
 
-def main(natural: bool = False) -> int:
+def main(natural: bool = False, natural_slot: int = 1,
+         natural_length: int = 5, natural_rotation: int = 0) -> int:
     base = load_base()
     observed: dict[str, object] = {"fullcaller_entries": 0, "vtable_calls": []}
     width, height = (5, 3) if natural else (4, 1)
@@ -123,11 +141,28 @@ def main(natural: bool = False) -> int:
                     observed["same_run_direction"] = {
                         "slot": loader.uc.reg_read(UC_X86_REG_R12),
                         "angle_degrees": struct.unpack("<i", loader.read_bytes(rsp + 0x28, 4))[0],
+                        "glow_rotation": natural_rotation,
                         "length": struct.unpack("<i", loader.read_bytes(rsp + 0x30, 4))[0],
                         "blur_mode": struct.unpack("<i", loader.read_bytes(rsp + 0x38, 4))[0],
                         "seed_mat_address": hex(rbp),
                     }
                 self.add_code_hook(0x18114F929, capture_direction)
+
+                def capture_highlight(loader, _address, _size):
+                    if natural_slot != 4:
+                        return
+                    raw_length = loader.uc.reg_read(UC_X86_REG_RDX) & 0xffffffff
+                    if raw_length & 0x80000000:
+                        raw_length -= 0x100000000
+                    observed["same_run_direction"] = {
+                        "slot": 4,
+                        "angle_degrees": None,
+                        "glow_rotation": natural_rotation,
+                        "length": raw_length,
+                        "blur_mode": 4,
+                        "seed_mat_address": hex(loader.uc.reg_read(UC_X86_REG_RBP)),
+                    }
+                self.add_code_hook(0x18114F964, capture_highlight)
             def capture_null_call(uc, _access, address, _size, _value, _user):
                 if address == 0:
                     rsp = uc.reg_read(UC_X86_REG_RSP)
@@ -145,6 +180,11 @@ def main(natural: bool = False) -> int:
             if not source or not source.get("values_f32"):
                 raise RuntimeError("source Mat unavailable")
             values = flatten_mat_rows(source["values_f32"])
+            if natural and natural_slot == 4:
+                # A constant natural source isolates Highlight's full-caller
+                # ownership without conflating OpenCV's non-associative box
+                # accumulation seam with the same-run binding gate.
+                values = [0.25] * len(values)
             pixels = self.host_alloc(len(values) * 16, align=64)
             rgba = []
             for value in values:
@@ -196,8 +236,13 @@ def main(natural: bool = False) -> int:
             angles = self.host_alloc(20, align=16)
             # Suppress directional rays and retain a radius-5 Highlight in
             # either recovered pointer order while the ABI is being bounded.
-            direction_angles = (0, 0, 0, 0, 0)
-            direction_lengths = (0, 5, 0, 0, 0) if natural else (0, 0, 0, 0, 5)
+            direction_angles = [0, 0, 0, 0, 0]
+            direction_lengths = [0, 0, 0, 0, 5]
+            if natural:
+                direction_lengths = [0, 0, 0, 0, 0]
+                direction_lengths[natural_slot] = natural_length
+                if natural_slot < 4:
+                    direction_angles[natural_slot] = (90, 0, 45, -45)[natural_slot] + natural_rotation
             self.write_bytes(lengths, struct.pack("<5i", *direction_angles))
             self.write_bytes(angles, struct.pack("<5i", *direction_lengths))
             colors = self.host_alloc(80, align=16)
@@ -215,12 +260,14 @@ def main(natural: bool = False) -> int:
                 int_args=[obj, host_context, pixels, scratch, lengths, angles, colors, ramps, flags, 4, source["cols"], source["rows"], one, zero, 1, one],
                 max_instructions=20_000_000,
             )
-            actual_ray = observed["aggregate_entry"]["ray_words"][1 if natural else 4]
+            actual_ray = observed["aggregate_entry"]["ray_words"][natural_slot if natural else 4]
             if natural:
                 direction = observed["same_run_direction"]
-                portable_ray = portable_mode4_ray(
-                    observed["same_run_seed"], width, height,
-                    int(direction["length"]), float(direction["angle_degrees"]))
+                portable_ray = (portable_highlight_ray(
+                    observed["same_run_seed"], width, height, int(direction["length"]))
+                    if natural_slot == 4 else portable_mode4_ray(
+                        observed["same_run_seed"], width, height,
+                        int(direction["length"]), float(direction["angle_degrees"])))
             else:
                 with tempfile.TemporaryDirectory(prefix="kira_fullcaller_core_") as temporary:
                     executable = Path(temporary) / "highlight"
@@ -230,9 +277,9 @@ def main(natural: bool = False) -> int:
                         "-o", str(executable),
                     ], check=True)
                     portable_ray = [f"0x{int(line, 16):x}" for line in subprocess.check_output([str(executable)], text=True).splitlines()]
+            observed["portable_ray"] = portable_ray
             if portable_ray != actual_ray:
                 raise AssertionError({"actual_ray": actual_ray, "portable_ray": portable_ray})
-            observed["portable_ray"] = portable_ray
 
             owner = self.host_alloc(0x200, align=16)
             self.write_bytes(owner, b"\0" * 0x200)
@@ -299,6 +346,8 @@ def main(natural: bool = False) -> int:
         base.AexLoader = original
     if "aggregate_entry" not in observed:
         raise RuntimeError({"execution": execution, "observed": observed})
+    if execution.get("error") is not None:
+        raise RuntimeError({"execution_error": execution["error"], "observed": observed})
     suite_calls = observed.get("suite_calls", [])
     acquire_count = sum(item["kind"] == "acquire" for item in suite_calls)
     release_count = sum(item["kind"] == "release" for item in suite_calls)
@@ -336,17 +385,20 @@ def main(natural: bool = False) -> int:
         },
         "fixture": {
             "dimensions": [width, height],
-            "source_rgba": [[index / 17.0] * 3 + [1.0] for index in range(pixel_count)],
+            "source_rgba": ([[0.25, 0.25, 0.25, 1.0] for _ in range(pixel_count)]
+                            if natural and natural_slot == 4 else
+                            [[index / 17.0] * 3 + [1.0] for index in range(pixel_count)]),
             "blur_mode": 4,
-            "directional_lengths": [0, 5, 0, 0] if natural else [0, 0, 0, 0],
-            "highlight_radius": 0 if natural else 5,
+            "directional_lengths": ([natural_length if index == natural_slot else 0 for index in range(4)]
+                                    if natural else [0, 0, 0, 0]),
+            "highlight_radius": natural_length if natural and natural_slot == 4 else (0 if natural else 5),
             "highlight_color_argb": [1.0, 1.0, 0.25, 0.0625],
             "merge_mode": 1,
             "brightness_gain": 1.0,
         },
         "actual_aex": {
             **({
-                "selected_ray_u32": observed["aggregate_entry"]["ray_words"][1],
+                "selected_ray_u32": observed["aggregate_entry"]["ray_words"][natural_slot],
                 "portable_ray_u32": observed["portable_ray"],
                 "same_run_seed_f32": observed["same_run_seed"],
                 "same_run_direction": direction,
@@ -361,7 +413,8 @@ def main(natural: bool = False) -> int:
         },
         "comparison": {
             **observed["exact"],
-            **({"ray_portable_owner": "core/kirakira_mode4.h"} if natural else {
+            **({"ray_portable_owner": ("core/kirakira_highlight.h" if natural_slot == 4
+                                       else "core/kirakira_mode4.h")} if natural else {
                 "highlight_portable_owner": "core/kirakira_highlight.h (called by mac/OLMKiraKira/OLMKiraKira.cpp)",
             }),
             "compose_portable_owner": "tools/emulation/olmkirakira_outer_compose_oracle_20260728.py",

@@ -1,0 +1,1090 @@
+{
+  "kind": "olmkirakira_mode4_natural_families_exact",
+  "date": "2026-08-11",
+  "status": "exact",
+  "exact": {
+    "cases": 5,
+    "ray_words": 75,
+    "typed_rows": 15,
+    "remaining_family_typed_rows": 12,
+    "typed_bytes": 2100,
+    "max_ulp": 0
+  },
+  "cases": [
+    {
+      "name": "horizontal_control",
+      "status": "exact",
+      "fixture": {
+        "dimensions": [
+          5,
+          3
+        ],
+        "source_rgba": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.058823529411764705,
+            0.058823529411764705,
+            0.058823529411764705,
+            1.0
+          ],
+          [
+            0.11764705882352941,
+            0.11764705882352941,
+            0.11764705882352941,
+            1.0
+          ],
+          [
+            0.17647058823529413,
+            0.17647058823529413,
+            0.17647058823529413,
+            1.0
+          ],
+          [
+            0.23529411764705882,
+            0.23529411764705882,
+            0.23529411764705882,
+            1.0
+          ],
+          [
+            0.29411764705882354,
+            0.29411764705882354,
+            0.29411764705882354,
+            1.0
+          ],
+          [
+            0.35294117647058826,
+            0.35294117647058826,
+            0.35294117647058826,
+            1.0
+          ],
+          [
+            0.4117647058823529,
+            0.4117647058823529,
+            0.4117647058823529,
+            1.0
+          ],
+          [
+            0.47058823529411764,
+            0.47058823529411764,
+            0.47058823529411764,
+            1.0
+          ],
+          [
+            0.5294117647058824,
+            0.5294117647058824,
+            0.5294117647058824,
+            1.0
+          ],
+          [
+            0.5882352941176471,
+            0.5882352941176471,
+            0.5882352941176471,
+            1.0
+          ],
+          [
+            0.6470588235294118,
+            0.6470588235294118,
+            0.6470588235294118,
+            1.0
+          ],
+          [
+            0.7058823529411765,
+            0.7058823529411765,
+            0.7058823529411765,
+            1.0
+          ],
+          [
+            0.7647058823529411,
+            0.7647058823529411,
+            0.7647058823529411,
+            1.0
+          ],
+          [
+            0.8235294117647058,
+            0.8235294117647058,
+            0.8235294117647058,
+            1.0
+          ]
+        ],
+        "blur_mode": 4,
+        "directional_lengths": [
+          0,
+          5,
+          0,
+          0
+        ],
+        "highlight_radius": 0,
+        "highlight_color_argb": [
+          1.0,
+          1.0,
+          0.25,
+          0.0625
+        ],
+        "merge_mode": 1,
+        "brightness_gain": 1.0
+      },
+      "same_run_seed_f32": [
+        0.0,
+        0.05882352963089943,
+        0.11764705926179886,
+        0.1764705926179886,
+        0.23529411852359772,
+        0.29411765933036804,
+        0.3529411852359772,
+        0.4117647111415863,
+        0.47058823704719543,
+        0.529411792755127,
+        0.5882353186607361,
+        0.6470588445663452,
+        0.7058823704719543,
+        0.7647058963775635,
+        0.8235294222831726
+      ],
+      "same_run_direction": {
+        "slot": 1,
+        "angle_degrees": 0,
+        "glow_rotation": 0,
+        "length": 5,
+        "blur_mode": 4,
+        "seed_mat_address": "0xf0fe9e0"
+      },
+      "selected_ray_u32": [
+        "0x3d6c6ad6",
+        "0x3d738b40",
+        "0x3d75672f",
+        "0x3d64abc9",
+        "0x3d33678e",
+        "0x3e3d0c76",
+        "0x3e507404",
+        "0x3e56ba4a",
+        "0x3e4cbc26",
+        "0x3e2ecba4",
+        "0x3e9f7f1b",
+        "0x3eb2029c",
+        "0x3eb80d64",
+        "0x3eb026ac",
+        "0x3e985eb2"
+      ],
+      "portable_ray_u32": [
+        "0x3d6c6ad6",
+        "0x3d738b40",
+        "0x3d75672f",
+        "0x3d64abc9",
+        "0x3d33678e",
+        "0x3e3d0c76",
+        "0x3e507404",
+        "0x3e56ba4a",
+        "0x3e4cbc26",
+        "0x3e2ecba4",
+        "0x3e9f7f1b",
+        "0x3eb2029c",
+        "0x3eb80d64",
+        "0x3eb026ac",
+        "0x3e985eb2"
+      ],
+      "typed_outputs": {
+        "PF8": {
+          "entry": "0x18114e110",
+          "pixel_size": 4,
+          "actual_hex": "ff0d0300ff1c110fff2a1f1dff382d2bff443c3aff674941ff75554dff836159ff8e6e66ff987c75ffae8176ffbc8a7effc79588ffd2a195ffdcb0a5",
+          "portable_hex": "ff0d0300ff1c110fff2a1f1dff382d2bff443c3aff674941ff75554dff836159ff8e6e66ff987c75ffae8176ffbc8a7effc79588ffd2a195ffdcb0a5",
+          "exact_bytes": 60,
+          "quantization": "clamp; scale; truncate toward zero"
+        },
+        "PF16": {
+          "entry": "0x18114ddc0",
+          "pixel_size": 8,
+          "actual_hex": "0080fc06bf016f0000804a0ee7088e07008071150410a80e0080291c1517d11500803922321e301d0080ba33c424062100802f3bf22ae3260080c1411d31f42c008086478737883300808c4c8c3e0c3b0080d05702414f3b00807a5eb645853f00804e64ec4a9344008097690451df4a0080976e93581253",
+          "portable_hex": "0080fc06bf016f0000804a0ee7088e07008071150410a80e0080291c1517d11500803922321e301d0080ba33c424062100802f3bf22ae3260080c1411d31f42c008086478737883300808c4c8c3e0c3b0080d05702414f3b00807a5eb645853f00804e64ec4a9344008097690451df4a0080976e93581253",
+          "exact_bytes": 120,
+          "quantization": "clamp; scale; truncate toward zero"
+        },
+        "PF32": {
+          "entry": "0x18114e460",
+          "pixel_size": 16,
+          "actual_hex": "0000803f23845f3d23845f3c23845f3b0000803fbda5e43daa718e3d4bc9713d0000803f2f8b2b3ead21003e9a8eea3d0000803fbd4b613ee8af383ef3882e3e0000803f63e6883eb692713e3184693e0000803face9ce3e6511933e541b843e0000803f6cbdec3e99caab3ee48d9b3e0000803ffb83033f6a77c43e47d3b33e0000803f870d0f3f641fde3e7a20ce3e0000803f5c18193f1533fa3ead33ec3e0000803f45a02f3f7e05023f993ded3e0000803fddf43c3f896c0b3fe714fe3e0000803f8b9d483f9ed8153f6327093f0000803fff2e533f3309223fbfbf153f0000803f3e2f5d3f7a26313f4924263f",
+          "portable_hex": "0000803f23845f3d23845f3c23845f3b0000803fbda5e43daa718e3d4bc9713d0000803f2f8b2b3ead21003e9a8eea3d0000803fbd4b613ee8af383ef3882e3e0000803f63e6883eb692713e3184693e0000803face9ce3e6511933e541b843e0000803f6cbdec3e99caab3ee48d9b3e0000803ffb83033f6a77c43e47d3b33e0000803f870d0f3f641fde3e7a20ce3e0000803f5c18193f1533fa3ead33ec3e0000803f45a02f3f7e05023f993ded3e0000803fddf43c3f896c0b3fe714fe3e0000803f8b9d483f9ed8153f6327093f0000803fff2e533f3309223fbfbf153f0000803f3e2f5d3f7a26313f4924263f",
+          "exact_bytes": 240,
+          "quantization": "clamp; preserve IEEE-754 binary32 words"
+        }
+      },
+      "comparison": {
+        "ray_plane_words": 15,
+        "aggregation_words": 60,
+        "final_pf8_bytes": 60,
+        "final_pf16_bytes": 120,
+        "final_pf32_bytes": 240,
+        "max_ulp": 0,
+        "ray_portable_owner": "core/kirakira_mode4.h",
+        "compose_portable_owner": "tools/emulation/olmkirakira_outer_compose_oracle_20260728.py",
+        "mac_typed_writer_owner": "mac/OLMKiraKira/OLMKiraKira.cpp PixelTraits::WriteAexTruncate, selected unconditionally after RenderTyped compose"
+      }
+    },
+    {
+      "name": "vertical_rot17_len7",
+      "status": "exact",
+      "fixture": {
+        "dimensions": [
+          5,
+          3
+        ],
+        "source_rgba": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.058823529411764705,
+            0.058823529411764705,
+            0.058823529411764705,
+            1.0
+          ],
+          [
+            0.11764705882352941,
+            0.11764705882352941,
+            0.11764705882352941,
+            1.0
+          ],
+          [
+            0.17647058823529413,
+            0.17647058823529413,
+            0.17647058823529413,
+            1.0
+          ],
+          [
+            0.23529411764705882,
+            0.23529411764705882,
+            0.23529411764705882,
+            1.0
+          ],
+          [
+            0.29411764705882354,
+            0.29411764705882354,
+            0.29411764705882354,
+            1.0
+          ],
+          [
+            0.35294117647058826,
+            0.35294117647058826,
+            0.35294117647058826,
+            1.0
+          ],
+          [
+            0.4117647058823529,
+            0.4117647058823529,
+            0.4117647058823529,
+            1.0
+          ],
+          [
+            0.47058823529411764,
+            0.47058823529411764,
+            0.47058823529411764,
+            1.0
+          ],
+          [
+            0.5294117647058824,
+            0.5294117647058824,
+            0.5294117647058824,
+            1.0
+          ],
+          [
+            0.5882352941176471,
+            0.5882352941176471,
+            0.5882352941176471,
+            1.0
+          ],
+          [
+            0.6470588235294118,
+            0.6470588235294118,
+            0.6470588235294118,
+            1.0
+          ],
+          [
+            0.7058823529411765,
+            0.7058823529411765,
+            0.7058823529411765,
+            1.0
+          ],
+          [
+            0.7647058823529411,
+            0.7647058823529411,
+            0.7647058823529411,
+            1.0
+          ],
+          [
+            0.8235294117647058,
+            0.8235294117647058,
+            0.8235294117647058,
+            1.0
+          ]
+        ],
+        "blur_mode": 4,
+        "directional_lengths": [
+          7,
+          0,
+          0,
+          0
+        ],
+        "highlight_radius": 0,
+        "highlight_color_argb": [
+          1.0,
+          1.0,
+          0.25,
+          0.0625
+        ],
+        "merge_mode": 1,
+        "brightness_gain": 1.0
+      },
+      "same_run_seed_f32": [
+        0.0,
+        0.05882352963089943,
+        0.11764705926179886,
+        0.1764705926179886,
+        0.23529411852359772,
+        0.29411765933036804,
+        0.3529411852359772,
+        0.4117647111415863,
+        0.47058823704719543,
+        0.529411792755127,
+        0.5882353186607361,
+        0.6470588445663452,
+        0.7058823704719543,
+        0.7647058963775635,
+        0.8235294222831726
+      ],
+      "same_run_direction": {
+        "slot": 0,
+        "angle_degrees": 107,
+        "glow_rotation": 17,
+        "length": 7,
+        "blur_mode": 4,
+        "seed_mat_address": "0xf0fe9e0"
+      },
+      "selected_ray_u32": [
+        "0x3d3a2fde",
+        "0x3db07f53",
+        "0x3ddc2701",
+        "0x3dfac27d",
+        "0x3dff5aee",
+        "0x3d49a07c",
+        "0x3d9e9763",
+        "0x3dc17357",
+        "0x3ddd0a87",
+        "0x3dce81ea",
+        "0x3d63c499",
+        "0x3d9dc4ab",
+        "0x3da35ad8",
+        "0x3db90f59",
+        "0x3da46bdb"
+      ],
+      "portable_ray_u32": [
+        "0x3d3a2fde",
+        "0x3db07f53",
+        "0x3ddc2701",
+        "0x3dfac27d",
+        "0x3dff5aee",
+        "0x3d49a07c",
+        "0x3d9e9763",
+        "0x3dc17357",
+        "0x3ddd0a87",
+        "0x3dce81ea",
+        "0x3d63c499",
+        "0x3d9dc4ab",
+        "0x3da35ad8",
+        "0x3db90f59",
+        "0x3da46bdb"
+      ],
+      "typed_outputs": {
+        "PF8": {
+          "entry": "0x18114e110",
+          "pixel_size": 4,
+          "actual_hex": "ff0b0200ff22120fff33211cff432f29ff513c37ff534a48ff655854ff756561ff85726dff91807cff9b918effab9d9affb9aba7ffc7b8b4ffd5c7c3",
+          "portable_hex": "ff0b0200ff22120fff33211cff432f29ff513c37ff534a48ff655854ff756561ff85726dff91807cff9b918effab9d9affb9aba7ffc7b8b4ffd5c7c3",
+          "exact_bytes": 60,
+          "quantization": "clamp; scale; truncate toward zero"
+        },
+        "PF16": {
+          "entry": "0x18114ddc0",
+          "pixel_size": 8,
+          "actual_hex": "008090056401590000801611780991070080051ab4105f0e008016229d17ff140080f828531eaa1b0080e22961254124008021333a2c812a0080343beb32d8300080d6427c392537008048497d404a3e0080124e0349bf4700800e56304f784d0080225d0a564454008060646c5c6e5a0080176bf4632c62",
+          "portable_hex": "008090056401590000801611780991070080051ab4105f0e008016229d17ff140080f828531eaa1b0080e22961254124008021333a2c812a0080343beb32d8300080d6427c392537008048497d404a3e0080124e0349bf4700800e56304f784d0080225d0a564454008060646c5c6e5a0080176bf4632c62",
+          "exact_bytes": 120,
+          "quantization": "clamp; scale; truncate toward zero"
+        },
+        "PF32": {
+          "entry": "0x18114e460",
+          "pixel_size": 16,
+          "actual_hex": "0000803f7817323d7817323c7817323b0000803ff0b3083e1989973dd122723d0000803f5a2b503e1ba0053e95fae53d0000803f2559883e5aeb3c3e9df9273e0000803f5de0a33e519c723e37535d3e0000803f4f8ba73e4b87953e4a06913e0000803f3c84cc3ef7eab03ea604aa3e0000803f1ed1ec3ee5accb3ed763c33e0000803f60ac053f5bf0e53e4396dc3e0000803f7190123f3dfa003f6029f93e0000803f20241c3fe406123f967f0f3f0000803f0d1c2c3f70601e3f89f11a3f0000803f96443a3faf152c3ff589283f0000803faec1483f51d8383ffadd343f0000803f502e563f78e9473f4258443f",
+          "portable_hex": "0000803f7817323d7817323c7817323b0000803ff0b3083e1989973dd122723d0000803f5a2b503e1ba0053e95fae53d0000803f2559883e5aeb3c3e9df9273e0000803f5de0a33e519c723e37535d3e0000803f4f8ba73e4b87953e4a06913e0000803f3c84cc3ef7eab03ea604aa3e0000803f1ed1ec3ee5accb3ed763c33e0000803f60ac053f5bf0e53e4396dc3e0000803f7190123f3dfa003f6029f93e0000803f20241c3fe406123f967f0f3f0000803f0d1c2c3f70601e3f89f11a3f0000803f96443a3faf152c3ff589283f0000803faec1483f51d8383ffadd343f0000803f502e563f78e9473f4258443f",
+          "exact_bytes": 240,
+          "quantization": "clamp; preserve IEEE-754 binary32 words"
+        }
+      },
+      "comparison": {
+        "ray_plane_words": 15,
+        "aggregation_words": 60,
+        "final_pf8_bytes": 60,
+        "final_pf16_bytes": 120,
+        "final_pf32_bytes": 240,
+        "max_ulp": 0,
+        "ray_portable_owner": "core/kirakira_mode4.h",
+        "compose_portable_owner": "tools/emulation/olmkirakira_outer_compose_oracle_20260728.py",
+        "mac_typed_writer_owner": "mac/OLMKiraKira/OLMKiraKira.cpp PixelTraits::WriteAexTruncate, selected unconditionally after RenderTyped compose"
+      }
+    },
+    {
+      "name": "diagonal_rot13_len11",
+      "status": "exact",
+      "fixture": {
+        "dimensions": [
+          5,
+          3
+        ],
+        "source_rgba": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.058823529411764705,
+            0.058823529411764705,
+            0.058823529411764705,
+            1.0
+          ],
+          [
+            0.11764705882352941,
+            0.11764705882352941,
+            0.11764705882352941,
+            1.0
+          ],
+          [
+            0.17647058823529413,
+            0.17647058823529413,
+            0.17647058823529413,
+            1.0
+          ],
+          [
+            0.23529411764705882,
+            0.23529411764705882,
+            0.23529411764705882,
+            1.0
+          ],
+          [
+            0.29411764705882354,
+            0.29411764705882354,
+            0.29411764705882354,
+            1.0
+          ],
+          [
+            0.35294117647058826,
+            0.35294117647058826,
+            0.35294117647058826,
+            1.0
+          ],
+          [
+            0.4117647058823529,
+            0.4117647058823529,
+            0.4117647058823529,
+            1.0
+          ],
+          [
+            0.47058823529411764,
+            0.47058823529411764,
+            0.47058823529411764,
+            1.0
+          ],
+          [
+            0.5294117647058824,
+            0.5294117647058824,
+            0.5294117647058824,
+            1.0
+          ],
+          [
+            0.5882352941176471,
+            0.5882352941176471,
+            0.5882352941176471,
+            1.0
+          ],
+          [
+            0.6470588235294118,
+            0.6470588235294118,
+            0.6470588235294118,
+            1.0
+          ],
+          [
+            0.7058823529411765,
+            0.7058823529411765,
+            0.7058823529411765,
+            1.0
+          ],
+          [
+            0.7647058823529411,
+            0.7647058823529411,
+            0.7647058823529411,
+            1.0
+          ],
+          [
+            0.8235294117647058,
+            0.8235294117647058,
+            0.8235294117647058,
+            1.0
+          ]
+        ],
+        "blur_mode": 4,
+        "directional_lengths": [
+          0,
+          0,
+          11,
+          0
+        ],
+        "highlight_radius": 0,
+        "highlight_color_argb": [
+          1.0,
+          1.0,
+          0.25,
+          0.0625
+        ],
+        "merge_mode": 1,
+        "brightness_gain": 1.0
+      },
+      "same_run_seed_f32": [
+        0.0,
+        0.05882352963089943,
+        0.11764705926179886,
+        0.1764705926179886,
+        0.23529411852359772,
+        0.29411765933036804,
+        0.3529411852359772,
+        0.4117647111415863,
+        0.47058823704719543,
+        0.529411792755127,
+        0.5882353186607361,
+        0.6470588445663452,
+        0.7058823704719543,
+        0.7647058963775635,
+        0.8235294222831726
+      ],
+      "same_run_direction": {
+        "slot": 2,
+        "angle_degrees": 58,
+        "glow_rotation": 13,
+        "length": 11,
+        "blur_mode": 4,
+        "seed_mat_address": "0xf0fe9e0"
+      },
+      "selected_ray_u32": [
+        "0x3da6f7de",
+        "0x3db22711",
+        "0x3dcfc6f9",
+        "0x3daab6d1",
+        "0x3d0a9b68",
+        "0x3d63a179",
+        "0x3d89f5ac",
+        "0x3d9bc3f0",
+        "0x3da3d490",
+        "0x3d62b6b9",
+        "0x3ce2f668",
+        "0x3d3d24b4",
+        "0x3d73296f",
+        "0x3d8f656b",
+        "0x3d95cdf8"
+      ],
+      "portable_ray_u32": [
+        "0x3da6f7de",
+        "0x3db22711",
+        "0x3dcfc6f9",
+        "0x3daab6d1",
+        "0x3d0a9b68",
+        "0x3d63a179",
+        "0x3d89f5ac",
+        "0x3d9bc3f0",
+        "0x3da3d490",
+        "0x3d62b6b9",
+        "0x3ce2f668",
+        "0x3d3d24b4",
+        "0x3d73296f",
+        "0x3d8f656b",
+        "0x3d95cdf8"
+      ],
+      "typed_outputs": {
+        "PF8": {
+          "entry": "0x18114e110",
+          "pixel_size": 4,
+          "actual_hex": "ff130401ff22120fff32211cff3d2e2aff423c3aff544a47ff645855ff736662ff817370ff8d8380ff989392ffa8a09effb8adaaffc6bab7ffd5c8c4",
+          "portable_hex": "ff130401ff22120fff32211cff3d2e2aff423c3aff544a47ff645855ff736662ff817370ff8d8380ff989392ffa8a09effb8adaaffc6bab7ffd5c8c4",
+          "exact_bytes": 60,
+          "quantization": "clamp; scale; truncate toward zero"
+        },
+        "PF16": {
+          "entry": "0x18114ddc0",
+          "pixel_size": 8,
+          "actual_hex": "0080a60969029a0000802b117c099107008076199e10680e0080b21e4f177715008052212d1e641d0080672a5925162400806732582cd42a0080073a3e338b3100804141243a5d380080ec46e341a1400080b74c204a7a490080d1549450854f0080765c1557bc550080da63925d005c0080f36a6864c562",
+          "portable_hex": "0080a60969029a0000802b117c099107008076199e10680e0080b21e4f177715008052212d1e641d0080672a5925162400806732582cd42a0080073a3e338b3100804141243a5d380080ec46e341a1400080b74c204a7a490080d1549450854f0080765c1557bc550080da63925d005c0080f36a6864c562",
+          "exact_bytes": 120,
+          "quantization": "clamp; scale; truncate toward zero"
+        },
+        "PF32": {
+          "entry": "0x18114e460",
+          "pixel_size": 16,
+          "actual_hex": "0000803fc2619a3dc2619a3cc2619a3b0000803fd55c093eb7cd973d7525723d0000803f97b14b3e3df4043ecd89e63d0000803f6197753ece7f3a3ee9b92b3e0000803f4049853e216f713e49266b3e0000803fa99da93e2666953e4558903e0000803f4b9dc93e2961b13e2052ab3e0000803f731ce83e2ef8cc3e1d2fc63e0000803f5e82023f5c93e83e0377e13e0000803f06d90d3f25c7033fad42013f0000803f136e193f0341143fbef5123f0000803f9aa2293f1229213faf0a1f3f0000803fe0ec383f742a2e3fd8792b3f0000803fcdb4473f7e243b3f6b00383f0000803f1de7553fded0483f4e8b453f",
+          "portable_hex": "0000803fc2619a3dc2619a3cc2619a3b0000803fd55c093eb7cd973d7525723d0000803f97b14b3e3df4043ecd89e63d0000803f6197753ece7f3a3ee9b92b3e0000803f4049853e216f713e49266b3e0000803fa99da93e2666953e4558903e0000803f4b9dc93e2961b13e2052ab3e0000803f731ce83e2ef8cc3e1d2fc63e0000803f5e82023f5c93e83e0377e13e0000803f06d90d3f25c7033fad42013f0000803f136e193f0341143fbef5123f0000803f9aa2293f1229213faf0a1f3f0000803fe0ec383f742a2e3fd8792b3f0000803fcdb4473f7e243b3f6b00383f0000803f1de7553fded0483f4e8b453f",
+          "exact_bytes": 240,
+          "quantization": "clamp; preserve IEEE-754 binary32 words"
+        }
+      },
+      "comparison": {
+        "ray_plane_words": 15,
+        "aggregation_words": 60,
+        "final_pf8_bytes": 60,
+        "final_pf16_bytes": 120,
+        "final_pf32_bytes": 240,
+        "max_ulp": 0,
+        "ray_portable_owner": "core/kirakira_mode4.h",
+        "compose_portable_owner": "tools/emulation/olmkirakira_outer_compose_oracle_20260728.py",
+        "mac_typed_writer_owner": "mac/OLMKiraKira/OLMKiraKira.cpp PixelTraits::WriteAexTruncate, selected unconditionally after RenderTyped compose"
+      }
+    },
+    {
+      "name": "diagonal2_rotm11_len9",
+      "status": "exact",
+      "fixture": {
+        "dimensions": [
+          5,
+          3
+        ],
+        "source_rgba": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.058823529411764705,
+            0.058823529411764705,
+            0.058823529411764705,
+            1.0
+          ],
+          [
+            0.11764705882352941,
+            0.11764705882352941,
+            0.11764705882352941,
+            1.0
+          ],
+          [
+            0.17647058823529413,
+            0.17647058823529413,
+            0.17647058823529413,
+            1.0
+          ],
+          [
+            0.23529411764705882,
+            0.23529411764705882,
+            0.23529411764705882,
+            1.0
+          ],
+          [
+            0.29411764705882354,
+            0.29411764705882354,
+            0.29411764705882354,
+            1.0
+          ],
+          [
+            0.35294117647058826,
+            0.35294117647058826,
+            0.35294117647058826,
+            1.0
+          ],
+          [
+            0.4117647058823529,
+            0.4117647058823529,
+            0.4117647058823529,
+            1.0
+          ],
+          [
+            0.47058823529411764,
+            0.47058823529411764,
+            0.47058823529411764,
+            1.0
+          ],
+          [
+            0.5294117647058824,
+            0.5294117647058824,
+            0.5294117647058824,
+            1.0
+          ],
+          [
+            0.5882352941176471,
+            0.5882352941176471,
+            0.5882352941176471,
+            1.0
+          ],
+          [
+            0.6470588235294118,
+            0.6470588235294118,
+            0.6470588235294118,
+            1.0
+          ],
+          [
+            0.7058823529411765,
+            0.7058823529411765,
+            0.7058823529411765,
+            1.0
+          ],
+          [
+            0.7647058823529411,
+            0.7647058823529411,
+            0.7647058823529411,
+            1.0
+          ],
+          [
+            0.8235294117647058,
+            0.8235294117647058,
+            0.8235294117647058,
+            1.0
+          ]
+        ],
+        "blur_mode": 4,
+        "directional_lengths": [
+          0,
+          0,
+          0,
+          9
+        ],
+        "highlight_radius": 0,
+        "highlight_color_argb": [
+          1.0,
+          1.0,
+          0.25,
+          0.0625
+        ],
+        "merge_mode": 1,
+        "brightness_gain": 1.0
+      },
+      "same_run_seed_f32": [
+        0.0,
+        0.05882352963089943,
+        0.11764705926179886,
+        0.1764705926179886,
+        0.23529411852359772,
+        0.29411765933036804,
+        0.3529411852359772,
+        0.4117647111415863,
+        0.47058823704719543,
+        0.529411792755127,
+        0.5882353186607361,
+        0.6470588445663452,
+        0.7058823704719543,
+        0.7647058963775635,
+        0.8235294222831726
+      ],
+      "same_run_direction": {
+        "slot": 3,
+        "angle_degrees": -56,
+        "glow_rotation": -11,
+        "length": 9,
+        "blur_mode": 4,
+        "seed_mat_address": "0xf0fe9e0"
+      },
+      "selected_ray_u32": [
+        "0x3c8a1f67",
+        "0x3d6f6208",
+        "0x3dc86a53",
+        "0x3de19e85",
+        "0x3df4debe",
+        "0x3cf5b00b",
+        "0x3da74350",
+        "0x3dbc6194",
+        "0x3dce0307",
+        "0x3dbdb59c",
+        "0x3d74c727",
+        "0x3da6d283",
+        "0x3db9a4ca",
+        "0x3db7a2bd",
+        "0x3d24131f"
+      ],
+      "portable_ray_u32": [
+        "0x3c8a1f67",
+        "0x3d6f6208",
+        "0x3dc86a53",
+        "0x3de19e85",
+        "0x3df4debe",
+        "0x3cf5b00b",
+        "0x3da74350",
+        "0x3dbc6194",
+        "0x3dce0307",
+        "0x3dbdb59c",
+        "0x3d74c727",
+        "0x3da6d283",
+        "0x3db9a4ca",
+        "0x3db7a2bd",
+        "0x3d24131f"
+      ],
+      "typed_outputs": {
+        "PF8": {
+          "entry": "0x18114e110",
+          "pixel_size": 4,
+          "actual_hex": "ff040100ff1c110fff32211cff412e2aff503c37ff504a49ff665854ff756561ff84726eff91807cff9b918effab9d99ffbaaaa6ffc7b8b4ffd3ccca",
+          "portable_hex": "ff040100ff1c110fff32211cff412e2aff503c37ff504a49ff665854ff756561ff84726eff91807cff9b918effab9d99ffbaaaa6ffc7b8b4ffd3ccca",
+          "exact_bytes": 60,
+          "quantization": "clamp; scale; truncate toward zero"
+        },
+        "PF16": {
+          "entry": "0x18114ddc0",
+          "pixel_size": 8,
+          "actual_hex": "00801f028700210000802e0ee1088e070080201991106d0e00800c218517231500809228511ec11b008047287b25c82400806e332e2c5e2a00800c3bf632f03000806d42a73976370080df48bb40b23e0080444eda487f4700803956fe4e304d00807b5d8055825300805c64765c7c5a0080486a9566a865",
+          "portable_hex": "00801f028700210000802e0ee1088e070080201991106d0e00800c218517231500809228511ec11b008047287b25c82400806e332e2c5e2a00800c3bf632f03000806d42a73976370080df48bb40b23e0080444eda487f4700803956fe4e304d00807b5d8055825300805c64765c7c5a0080486a9566a865",
+          "exact_bytes": 120,
+          "quantization": "clamp; scale; truncate toward zero"
+        },
+        "PF32": {
+          "entry": "0x18114e460",
+          "pixel_size": 16,
+          "actual_hex": "0000803f1ad5873c1ad5873b1ad5873a0000803fb8e6e23dde168e3dcec5713d0000803f0102493e1a8d043ec0dfe63d0000803fc831843e772d3c3ef01f293e0000803fd448a23ea58c723e650b5e3e0000803f9f1ca13e36ee953e9d22933e0000803f5db8cd3ef1b9b03e567aa93e0000803f6e31ec3ecfd8cb3ea8c2c33e0000803f91db043f5c9ee63e2bd8dd3e0000803f23be113f1c77013fb3cafa3e0000803f4e881c3f9cb4113fafff0e3f0000803fd8732c3fadfd1d3f22601a3f0000803fb9f63a3f94012b3f4b04273f0000803fa9b8483f10ec383feaf8343f0000803f4190543f2f2b4d3fec514b3f",
+          "portable_hex": "0000803f1ad5873c1ad5873b1ad5873a0000803fb8e6e23dde168e3dcec5713d0000803f0102493e1a8d043ec0dfe63d0000803fc831843e772d3c3ef01f293e0000803fd448a23ea58c723e650b5e3e0000803f9f1ca13e36ee953e9d22933e0000803f5db8cd3ef1b9b03e567aa93e0000803f6e31ec3ecfd8cb3ea8c2c33e0000803f91db043f5c9ee63e2bd8dd3e0000803f23be113f1c77013fb3cafa3e0000803f4e881c3f9cb4113fafff0e3f0000803fd8732c3fadfd1d3f22601a3f0000803fb9f63a3f94012b3f4b04273f0000803fa9b8483f10ec383feaf8343f0000803f4190543f2f2b4d3fec514b3f",
+          "exact_bytes": 240,
+          "quantization": "clamp; preserve IEEE-754 binary32 words"
+        }
+      },
+      "comparison": {
+        "ray_plane_words": 15,
+        "aggregation_words": 60,
+        "final_pf8_bytes": 60,
+        "final_pf16_bytes": 120,
+        "final_pf32_bytes": 240,
+        "max_ulp": 0,
+        "ray_portable_owner": "core/kirakira_mode4.h",
+        "compose_portable_owner": "tools/emulation/olmkirakira_outer_compose_oracle_20260728.py",
+        "mac_typed_writer_owner": "mac/OLMKiraKira/OLMKiraKira.cpp PixelTraits::WriteAexTruncate, selected unconditionally after RenderTyped compose"
+      }
+    },
+    {
+      "name": "highlight_constant_radius3",
+      "status": "exact",
+      "fixture": {
+        "dimensions": [
+          5,
+          3
+        ],
+        "source_rgba": [
+          [
+            0.25,
+            0.25,
+            0.25,
+            1.0
+          ],
+          [
+            0.25,
+            0.25,
+            0.25,
+            1.0
+          ],
+          [
+            0.25,
+            0.25,
+            0.25,
+            1.0
+          ],
+          [
+            0.25,
+            0.25,
+            0.25,
+            1.0
+          ],
+          [
+            0.25,
+            0.25,
+            0.25,
+            1.0
+          ],
+          [
+            0.25,
+            0.25,
+            0.25,
+            1.0
+          ],
+          [
+            0.25,
+            0.25,
+            0.25,
+            1.0
+          ],
+          [
+            0.25,
+            0.25,
+            0.25,
+            1.0
+          ],
+          [
+            0.25,
+            0.25,
+            0.25,
+            1.0
+          ],
+          [
+            0.25,
+            0.25,
+            0.25,
+            1.0
+          ],
+          [
+            0.25,
+            0.25,
+            0.25,
+            1.0
+          ],
+          [
+            0.25,
+            0.25,
+            0.25,
+            1.0
+          ],
+          [
+            0.25,
+            0.25,
+            0.25,
+            1.0
+          ],
+          [
+            0.25,
+            0.25,
+            0.25,
+            1.0
+          ],
+          [
+            0.25,
+            0.25,
+            0.25,
+            1.0
+          ]
+        ],
+        "blur_mode": 4,
+        "directional_lengths": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "highlight_radius": 3,
+        "highlight_color_argb": [
+          1.0,
+          1.0,
+          0.25,
+          0.0625
+        ],
+        "merge_mode": 1,
+        "brightness_gain": 1.0
+      },
+      "same_run_seed_f32": [
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ],
+      "same_run_direction": {
+        "slot": 4,
+        "angle_degrees": null,
+        "glow_rotation": 23,
+        "length": 3,
+        "blur_mode": 4,
+        "seed_mat_address": "0xf0fe9e0"
+      },
+      "selected_ray_u32": [
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000"
+      ],
+      "portable_ray_u32": [
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000",
+        "0x3e800000"
+      ],
+      "typed_outputs": {
+        "PF8": {
+          "entry": "0x18114e110",
+          "pixel_size": 4,
+          "actual_hex": "ff663f36ff663f36ff663f36ff663f36ff663f36ff663f36ff663f36ff663f36ff663f36ff663f36ff663f36ff663f36ff663f36ff663f36ff663f36",
+          "portable_hex": "ff663f36ff663f36ff663f36ff663f36ff663f36ff663f36ff663f36ff663f36ff663f36ff663f36ff663f36ff663f36ff663f36ff663f36ff663f36",
+          "exact_bytes": 60,
+          "quantization": "clamp; scale; truncate toward zero"
+        },
+        "PF16": {
+          "entry": "0x18114ddc0",
+          "pixel_size": 8,
+          "actual_hex": "008033330020331b008033330020331b008033330020331b008033330020331b008033330020331b008033330020331b008033330020331b008033330020331b008033330020331b008033330020331b008033330020331b008033330020331b008033330020331b008033330020331b008033330020331b",
+          "portable_hex": "008033330020331b008033330020331b008033330020331b008033330020331b008033330020331b008033330020331b008033330020331b008033330020331b008033330020331b008033330020331b008033330020331b008033330020331b008033330020331b008033330020331b008033330020331b",
+          "exact_bytes": 120,
+          "quantization": "clamp; scale; truncate toward zero"
+        },
+        "PF32": {
+          "entry": "0x18114e460",
+          "pixel_size": 16,
+          "actual_hex": "0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e",
+          "portable_hex": "0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e0000803fcdcccc3e0000803e9a99593e",
+          "exact_bytes": 240,
+          "quantization": "clamp; preserve IEEE-754 binary32 words"
+        }
+      },
+      "comparison": {
+        "ray_plane_words": 15,
+        "aggregation_words": 60,
+        "final_pf8_bytes": 60,
+        "final_pf16_bytes": 120,
+        "final_pf32_bytes": 240,
+        "max_ulp": 0,
+        "ray_portable_owner": "core/kirakira_highlight.h",
+        "compose_portable_owner": "tools/emulation/olmkirakira_outer_compose_oracle_20260728.py",
+        "mac_typed_writer_owner": "mac/OLMKiraKira/OLMKiraKira.cpp PixelTraits::WriteAexTruncate, selected unconditionally after RenderTyped compose"
+      }
+    }
+  ],
+  "connected_evidence": {
+    "directional_helper_matrix": "olmkirakira_mode4_canonical_angles_actual_aex_20260810.json (17 cases)",
+    "compose_matrix": "olmkirakira_mode4_compose_matrix_actual_aex_20260811.json (5 cases)"
+  },
+  "boundary": "Five bounded 5x3 same-run source cases; no all-parameter Cartesian product or live Windows AE generality is claimed."
+}
