@@ -6,10 +6,10 @@
     "stable_consecutive_collections": 2,
     "universal_exact": true
   },
-  "accepted_at": "2026-08-10T13:05:05.905523+00:00",
+  "accepted_at": "2026-08-11T10:06:37.838587+00:00",
   "claim_boundary": "Exact installed executable identity, arm64+x86_64 architectures, valid strict code signature, and byte identity with the named local build product. No AE load, UI, or render claim.",
   "configuration": "Debug",
-  "installed_after": "2026-08-10T13:05:05.905523+00:00",
+  "installed_after": "2026-08-11T10:06:37.838587+00:00",
   "plugins": [
     {
       "architectures": [
@@ -20,10 +20,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMBlur.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMBlur",
-      "sha256": "13a33d1de04e576353d1364d5046c987cacc87fb7a094d81036b71f66ceddc55",
+      "sha256": "272b764a0d5ebbc4f7167eebdfd36a645be9d5a96ff23ebf64a92b464d575d22",
       "source_bundle": "mac/OLMBlur/Mac/build/Debug/OLMBlur.plugin",
       "source_installed_exact": true,
-      "source_sha256": "13a33d1de04e576353d1364d5046c987cacc87fb7a094d81036b71f66ceddc55",
+      "source_sha256": "272b764a0d5ebbc4f7167eebdfd36a645be9d5a96ff23ebf64a92b464d575d22",
       "universal_exact": true
     },
     {
@@ -50,10 +50,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMColorKey.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMColorKey",
-      "sha256": "98d755b1bf86f0a71857049e4af3f4b161f05347f405aa379bf115bc3e1a8ab6",
+      "sha256": "dd6fc0af00cbf3403b97f5c7afd064b1a6014a296562901373fc58b3f41ac42d",
       "source_bundle": "mac/OLMColorKey/Mac/build/Debug/OLMColorKey.plugin",
       "source_installed_exact": true,
-      "source_sha256": "98d755b1bf86f0a71857049e4af3f4b161f05347f405aa379bf115bc3e1a8ab6",
+      "source_sha256": "dd6fc0af00cbf3403b97f5c7afd064b1a6014a296562901373fc58b3f41ac42d",
       "universal_exact": true
     },
     {
@@ -65,10 +65,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMDirectionalBlur",
-      "sha256": "dc6c01ae1cd02f00262689260831e3b97b40ba2e1802e8003957e386b9932289",
+      "sha256": "85d51dab68eda53bc89c6c83a3b03e1a3f89cd2a7de53789ece85ef80e57ebb9",
       "source_bundle": "mac/OLMDirectionalBlur/Mac/build/Debug/OLMDirectionalBlur.plugin",
       "source_installed_exact": true,
-      "source_sha256": "dc6c01ae1cd02f00262689260831e3b97b40ba2e1802e8003957e386b9932289",
+      "source_sha256": "85d51dab68eda53bc89c6c83a3b03e1a3f89cd2a7de53789ece85ef80e57ebb9",
       "universal_exact": true
     },
     {
@@ -80,10 +80,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDistanceGradation.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMDistanceGradation",
-      "sha256": "28b067ba5ea93dce261553400a07b4851a327b0f7aea1520b74873c94f35b8bf",
+      "sha256": "e81c7caef23a6578e381d85235fe299b231aa5568c41d696ea7d99a79bffafd5",
       "source_bundle": "mac/OLMDistanceGradation/Mac/build/Debug/OLMDistanceGradation.plugin",
       "source_installed_exact": true,
-      "source_sha256": "28b067ba5ea93dce261553400a07b4851a327b0f7aea1520b74873c94f35b8bf",
+      "source_sha256": "e81c7caef23a6578e381d85235fe299b231aa5568c41d696ea7d99a79bffafd5",
       "universal_exact": true
     },
     {
@@ -95,10 +95,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMKiraKira",
-      "sha256": "aef9433ab31fc53d2c307f907e76e9a4831ccf4377693453fd01316110847c8e",
+      "sha256": "0c3083c8bbe23f5c1639b23cbcc33ed1120cd1452888ea688a64ff91a78da616",
       "source_bundle": "mac/OLMKiraKira/Mac/build/Debug/OLMKiraKira.plugin",
       "source_installed_exact": true,
-      "source_sha256": "aef9433ab31fc53d2c307f907e76e9a4831ccf4377693453fd01316110847c8e",
+      "source_sha256": "0c3083c8bbe23f5c1639b23cbcc33ed1120cd1452888ea688a64ff91a78da616",
       "universal_exact": true
     },
     {
@@ -110,10 +110,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMRadialBlur",
-      "sha256": "0535f92f43bf62b947927387a711e140f674330f42d029df09fe60fb1f9023b7",
+      "sha256": "275b2a1390ddbb8e860e44b4bea5d2908c51fb92d8f18e4139d3b0d7de4a92c7",
       "source_bundle": "mac/OLMRadialBlur/Mac/build/Debug/OLMRadialBlur.plugin",
       "source_installed_exact": true,
-      "source_sha256": "0535f92f43bf62b947927387a711e140f674330f42d029df09fe60fb1f9023b7",
+      "source_sha256": "275b2a1390ddbb8e860e44b4bea5d2908c51fb92d8f18e4139d3b0d7de4a92c7",
       "universal_exact": true
     },
     {
@@ -125,10 +125,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMSmoother",
-      "sha256": "27866b533c207e54b38c74a872f4c1a61f876f25b200943203cddfb445029255",
+      "sha256": "abcaac482105202574bfbf465f3d9282a781435a42987677511722dd5008f8d0",
       "source_bundle": "mac/OLMSmoother/Mac/build/Debug/OLMSmoother.plugin",
       "source_installed_exact": true,
-      "source_sha256": "27866b533c207e54b38c74a872f4c1a61f876f25b200943203cddfb445029255",
+      "source_sha256": "abcaac482105202574bfbf465f3d9282a781435a42987677511722dd5008f8d0",
       "universal_exact": true
     },
     {
@@ -140,10 +140,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother2.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMSmoother2",
-      "sha256": "801c9188181d89778121da5be625b79ebbba81368551e92957669037c1a50095",
+      "sha256": "834274b1624b44523ebb73a798ada3fa6df156cdee71ead56516a33b17268663",
       "source_bundle": "mac/OLMSmoother2/Mac/build/Debug/OLMSmoother2.plugin",
       "source_installed_exact": true,
-      "source_sha256": "801c9188181d89778121da5be625b79ebbba81368551e92957669037c1a50095",
+      "source_sha256": "834274b1624b44523ebb73a798ada3fa6df156cdee71ead56516a33b17268663",
       "universal_exact": true
     },
     {
@@ -155,10 +155,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMToonDilate",
-      "sha256": "309715d940268f2fc451aead2cff505044bfaa630dab82de2cd084c8cfe17044",
+      "sha256": "bf84a1f76fe584fee76386ae14edda0ee976d2336a0f50cea23e55ac3647f073",
       "source_bundle": "mac/OLMToonDilate/Mac/build/Debug/OLMToonDilate.plugin",
       "source_installed_exact": true,
-      "source_sha256": "309715d940268f2fc451aead2cff505044bfaa630dab82de2cd084c8cfe17044",
+      "source_sha256": "bf84a1f76fe584fee76386ae14edda0ee976d2336a0f50cea23e55ac3647f073",
       "universal_exact": true
     }
   ],
