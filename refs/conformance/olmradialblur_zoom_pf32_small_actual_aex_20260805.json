@@ -1,4 +1,13 @@
 {
+  "actual_diagnostics_excluded_from_fixture_artifacts": [
+    "transform_setup"
+  ],
+  "actual_required_plane_contract": [
+    "geometry",
+    "pre_blur",
+    "post_blur",
+    "output"
+  ],
   "aex": {
     "identity_exact": true,
     "owner": "0x180007d30",
@@ -72,9 +81,9 @@
       "arm64"
     ],
     "binary": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin/Contents/MacOS/OLMRadialBlur",
-    "expected_current_sha256": "2e079e3c168666c2f3509f8d4c90ab107301880bce43f538cf4e16bcb8047732",
     "identity_exact": true,
-    "sha256": "2e079e3c168666c2f3509f8d4c90ab107301880bce43f538cf4e16bcb8047732",
+    "identity_manifest": "refs/conformance/olm_installed_identity_manifest_20260806.json",
+    "sha256": "275b2a1390ddbb8e860e44b4bea5d2908c51fb92d8f18e4139d3b0d7de4a92c7",
     "source_to_installed_connection": "same current OLMRadialBlur.cpp built, signed, and installed in the preceding PF8 boundary; no production source change in this PF32 pass"
   },
   "kind": "olmradialblur_zoom_pf32_small_actual_aex_20260805",
@@ -84,6 +93,11 @@
     "pre_blur": true
   },
   "padding_exact": true,
+  "production_compared_plane_contract": [
+    "pre_blur",
+    "post_blur",
+    "output"
+  ],
   "production_dispatch": "final compared output is emitted by OLMRadialBlurTestRenderWorld(bitdepth=32), not a direct RenderZoomTyped call",
   "scope": "independent PF32 Zoom outer-only Strength4/mode1/offset0, padded 9x7; no PF8/PF16 source or quantization reuse and no AE-host claim",
   "status": "exact",

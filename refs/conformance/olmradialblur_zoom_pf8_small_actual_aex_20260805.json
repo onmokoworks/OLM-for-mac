@@ -1,4 +1,13 @@
 {
+  "actual_diagnostics_excluded_from_fixture_artifacts": [
+    "transform_setup"
+  ],
+  "actual_required_plane_contract": [
+    "geometry",
+    "pre_blur",
+    "post_blur",
+    "output"
+  ],
   "aex": {
     "identity_exact": true,
     "owner": "0x180007520",
@@ -65,6 +74,11 @@
     "pre_blur": true
   },
   "padding_exact": true,
+  "production_compared_plane_contract": [
+    "pre_blur",
+    "post_blur",
+    "output"
+  ],
   "scope": "independent PF8 Zoom outer-only Strength4/mode1/offset0, padded 9x7; no PF16/PF32 source or quantization reuse and no AE-host claim",
   "status": "exact",
   "typed_contract": {

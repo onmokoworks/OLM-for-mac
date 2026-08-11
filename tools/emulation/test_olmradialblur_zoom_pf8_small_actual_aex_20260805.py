@@ -28,6 +28,8 @@ ZOOM_RETURN = 0x180007B12
 KIND = "olmradialblur_zoom_pf8_small_actual_aex_20260805"
 SCOPE = "independent PF8 Zoom outer-only Strength4/mode1/offset0, padded 9x7; no PF16/PF32 source or quantization reuse and no AE-host claim"
 TYPED_CONTRACT = {"source": "independent PF_Pixel8 ARGB bytes", "writer": "PF8 floor/clamp path", "radius_neighbor": "PF8 clamped", "deep_quantization_reused": False}
+COMPARED_PLANES = ("pre_blur", "post_blur", "output")
+ACTUAL_REQUIRED = ("geometry", *COMPARED_PLANES)
 
 
 def sha(raw: bytes) -> str:
@@ -85,6 +87,12 @@ def main():
     configure()
     actual = zoom.actual_aex()
     mac = zoom.mac_production(actual)
+    actual_missing = [name for name in ACTUAL_REQUIRED if name not in actual]
+    production_missing = [name for name in COMPARED_PLANES if name not in mac]
+    if actual_missing or production_missing:
+        raise RuntimeError(
+            f"typed Zoom small fixture schema incomplete: actual={actual_missing}, "
+            f"production={production_missing}")
     FIXTURE.mkdir(parents=True, exist_ok=True)
     artifacts, matches, differences = {}, {}, {}
     source_raw = source_frame()
@@ -92,8 +100,9 @@ def main():
     source_path = FIXTURE / f"{SOURCE_KEY}.bin.zlib"
     source_path.write_bytes(source_encoded)
     artifacts[SOURCE_KEY] = {"raw_sha256": sha(source_raw), "zlib_sha256": sha(source_encoded), "bytes": len(source_raw), "path": str(source_path.relative_to(ROOT))}
-    geometry = actual.pop("geometry")
-    for name, raw in actual.items():
+    geometry = actual["geometry"]
+    for name in COMPARED_PLANES:
+        raw = actual[name]
         encoded = zlib.compress(raw, 9)
         path = FIXTURE / f"{name}.bin.zlib"
         path.write_bytes(encoded)
@@ -116,6 +125,9 @@ def main():
         "typed_contract": TYPED_CONTRACT,
         "matches": matches, "differences": differences, "padding_exact": padding_exact,
         "fixture_hashes_exact": fixture_hashes_exact, "artifacts": artifacts,
+        "actual_required_plane_contract": list(ACTUAL_REQUIRED),
+        "production_compared_plane_contract": list(COMPARED_PLANES),
+        "actual_diagnostics_excluded_from_fixture_artifacts": sorted(set(actual) - set(ACTUAL_REQUIRED)),
     }
     REPORT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     print(json.dumps(report, indent=2, sort_keys=True))

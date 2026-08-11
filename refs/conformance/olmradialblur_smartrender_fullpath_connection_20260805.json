@@ -17,6 +17,7 @@
     "input_checked_in": true,
     "installed_identity_exact": true,
     "installed_universal": true,
+    "noise_checked_in_when_checked_out": true,
     "pf32_actual_to_renderworld_exact": true,
     "pf32_pre_post_output_exact": true,
     "pre_render_dimensions_consumed": true,
@@ -27,8 +28,9 @@
       "x86_64",
       "arm64"
     ],
+    "identity_manifest": "refs/conformance/olm_installed_identity_manifest_20260806.json",
     "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin/Contents/MacOS/OLMRadialBlur",
-    "sha256": "2e079e3c168666c2f3509f8d4c90ab107301880bce43f538cf4e16bcb8047732"
+    "sha256": "275b2a1390ddbb8e860e44b4bea5d2908c51fb92d8f18e4139d3b0d7de4a92c7"
   },
   "kind": "olmradialblur_smartrender_fullpath_connection_20260805",
   "status": "connected"
