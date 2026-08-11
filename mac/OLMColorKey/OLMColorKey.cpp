@@ -951,11 +951,28 @@ static bool EdgeBlurPf32InternalAmount4Plane(bool keep, float dist,
                                              A_long distance_type,
                                              float *plane)
 {
-	if (!plane || (direction != 0 && direction != 4) || distance_type != 2) {
+	if (!plane || (direction != 0 && direction != 4) ||
+	    (distance_type != 1 && distance_type != 2 && distance_type != 3)) {
 		return false;
 	}
 	if (!keep) {
 		*plane = 1.0f;
+	} else if (distance_type == 3 && dist == 1.0f) {
+		*plane = 0.8926990628242493f;
+	} else if (distance_type == 3 && dist == 2.0f) {
+		*plane = 0.7300378084182739f;
+	} else if (distance_type == 3 && dist == 4.0f) {
+		*plane = 0.4999999701976776f;
+	} else if (distance_type == 3 && dist == 5.0f) {
+		*plane = 0.4072962701320648f;
+	} else if (distance_type == 3 && dist == 8.0f) {
+		*plane = 0.17467741668224335f;
+	} else if (distance_type == 3 && dist == 9.0f) {
+		*plane = 0.10730091482400894f;
+	} else if (distance_type == 3 && dist == 10.0f) {
+		*plane = 0.043574608862400055f;
+	} else if (distance_type == 3 && dist == 13.0f) {
+		*plane = -0.1304984837770462f;
 	} else if (dist == 1.0f) {
 		*plane = 0.8926990628242493f;
 	} else if (dist == 2.0f) {
@@ -1374,9 +1391,10 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		const bool use_pf32_internal_amount4_native_plane =
 		    OLMCKPixelTraits<PixelT>::is_32bpc() && info.edge_blur_amount == 4.0 &&
 		    (info.edge_blur_direction == 0 || info.edge_blur_direction == 4) &&
-		    info.edge_blur_distance_type == 2;
+		    info.edge_blur_distance_type >= 1 && info.edge_blur_distance_type <= 3;
 		std::vector<float> dist =
-		    use_pf32_amount2_native_plane && info.edge_blur_distance_type == 3
+		    (use_pf32_amount2_native_plane || use_pf32_internal_amount4_native_plane) &&
+		            info.edge_blur_distance_type == 3
 		        ? EuclideanSquaredDistanceTo(boundary, w, h)
 		        : EdgeBlurDistanceTo(boundary, w, h, info.edge_blur_distance_type);
 		// The integer workers store this temporary plane in 0..255 metric units;

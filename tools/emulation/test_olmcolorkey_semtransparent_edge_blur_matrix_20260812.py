@@ -34,7 +34,18 @@ INTERNAL_ENDPOINT_CONFIGS = tuple(
     for direction in (0, 4)
     for amount in (1.0, 4.0)
 )
-CONFIGS = PUBLIC_CONFIGS + INTERNAL_ENDPOINT_CONFIGS
+INTERNAL_DISTANCE_COVERING_CONFIGS = (
+    {"name": "direction0_amount1_distance1", "amount": 1.0,
+     "direction": 0, "distance_type": 1},
+    {"name": "direction0_amount4_distance3", "amount": 4.0,
+     "direction": 0, "distance_type": 3},
+    {"name": "direction4_amount1_distance3", "amount": 1.0,
+     "direction": 4, "distance_type": 3},
+    {"name": "direction4_amount4_distance1", "amount": 4.0,
+     "direction": 4, "distance_type": 1},
+)
+CONFIGS = (PUBLIC_CONFIGS + INTERNAL_ENDPOINT_CONFIGS +
+           INTERNAL_DISTANCE_COVERING_CONFIGS)
 
 
 def keyed_kind(x: int, y: int) -> int:
@@ -118,10 +129,10 @@ def diagnostic_distances(distance_type: int) -> list[float]:
 CUSTOM_MAIN = r'''
 int main(){g_color_suite=g_color_suite_instance;g_ansi_suite=g_ansi_suite_instance;
 constexpr int W=32,H=18,P=8;
-constexpr int directions[]={1,1,1,2,2,2,3,3,3,0,0,4,4};
-constexpr int distances[]={1,2,3,1,2,3,1,2,3,2,2,2,2};
-constexpr double amounts[]={2,2,2,2,2,2,2,2,2,1,4,1,4};
-for(int config=0;config<13;config++)for(int depth: {8,16,32}){
+constexpr int directions[]={1,1,1,2,2,2,3,3,3,0,0,4,4,0,0,4,4};
+constexpr int distances[]={1,2,3,1,2,3,1,2,3,2,2,2,2,1,3,3,1};
+constexpr double amounts[]={2,2,2,2,2,2,2,2,2,1,4,1,4,1,4,1,4};
+for(int config=0;config<17;config++)for(int depth: {8,16,32}){
  int ps=depth==8?4:depth==16?8:16,rb=W*ps+P;
  std::vector<std::uint8_t>inb(rb*H,0xA5),outb(rb*H,0xCC);
  auto keyed=[](int x,int y){
@@ -271,11 +282,16 @@ def main() -> int:
                     "internal_endpoint_matrix": {"amounts": [1.0, 4.0],
                                                  "directions": [0, 4],
                                                  "distance_types": [2]},
+                    "internal_distance_covering": [
+                        {"direction": 0, "amount": 1.0, "distance_type": 1},
+                        {"direction": 0, "amount": 4.0, "distance_type": 3},
+                        {"direction": 4, "amount": 1.0, "distance_type": 3},
+                        {"direction": 4, "amount": 4.0, "distance_type": 1}],
                     "row_padding_bytes": PADDING},
         "actual_aex_sha256": actual_probe.AEX_SHA256,
         "comparison": "actual AEX full worker versus production RenderWorld; full typed ARGB output and row padding",
         "cases": rows,
-        "claim_boundary": "Exact only for the declared semitransparent 32x18 two-key fixture: the retained Amount-2 public Direction 1/2/3 x Distance Type 1/2/3 matrix plus Amount 1/4 endpoints at internal Directions 0/4 and Distance Type 2, all at PF8/PF16/PF32. Native actual-AEX temporary planes and final raw output are captured. No AE-host, arbitrary-input, other combination, or geometry claim.",
+        "claim_boundary": "Exact only for the declared semitransparent 32x18 two-key fixture: the retained Amount-2 public Direction 1/2/3 x Distance Type 1/2/3 matrix; Amount 1/4 endpoints at internal Directions 0/4 and Distance Type 2; and the four declared covering tuples for internal Directions 0/4 at Distance Types 1/3, all at PF8/PF16/PF32. Native actual-AEX temporary planes and final raw output are captured. No AE-host, arbitrary-input, unlisted combination, or geometry claim.",
     }
     args.json.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     if args.json.resolve() == REPORT.resolve():
@@ -284,9 +300,10 @@ def main() -> int:
             f"Status: **{report['status']}**\n\n"
             "A 32x18 two-key multi-island fixture varies alpha on matched and "
             "unmatched pixels. The actual Windows AEX worker and the Mac "
-            "production RenderWorld path match for all 39 PF8/PF16/PF32 cells: "
+            "production RenderWorld path match for all 51 PF8/PF16/PF32 cells: "
             "the retained 27-cell public Amount-2 matrix plus the 12-cell "
-            "Direction 0/4, Amount 1/4 endpoint matrix at Distance Type 2. "
+            "Direction 0/4, Amount 1/4 endpoint matrix at Distance Type 2, "
+            "plus 12 covering cells at Distance Types 1/3. "
             "Comparison includes every typed ARGB byte and row-padding byte.\n\n"
             f"Boundary: {report['claim_boundary']}\n",
             encoding="utf-8",
