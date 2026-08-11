@@ -94,8 +94,12 @@ def main() -> int:
         "installed_universal": set(archs) == {"arm64", "x86_64"},
         "installed_codesign_valid": sign.returncode == 0,
         "single_active_bundle": len(list(installed.parent.glob("OLMToonDilate.plugin"))) == 1,
-        "installed_dynamic_entry_exact": dynamic.get("status") == "PASS_INSTALLED_DYNAMIC_ALL_DEPTHS" and all(
-            dynamic.get("gates", {}).get(key) for key in ("dlopen_effectmain", "PF8_exact", "PF16_exact", "PF32_bitwise_exact")
+        "installed_dynamic_entry_exact": dynamic.get("status") == "PASS_INSTALLED_DYNAMIC_COVERING_MATRIX" and all(
+            dynamic.get("gates", {}).get(key) for key in (
+                "dlopen_effectmain", "all_12_raw_exact", "padding_and_guards_exact",
+                "callback_lifecycle_exact", "world_headers_unchanged",
+                "preserve_rgb_of_zero_alpha_requested",
+            )
         ),
     }
     status = "PASS_INSTALLED_COMPLETION_ROUTE" if all(gates.values()) else "BLOCKED_FAIL_CLOSED"
@@ -108,7 +112,7 @@ def main() -> int:
             "source-included production EffectMain SmartPreRender/SmartRender exact adapter",
             "current production source SHA identity",
             "current installed signed Universal bundle SHA identity",
-            "installed arm64 EffectMain dynamic PF8/PF16/PF32 SmartPreRender/SmartRender execution",
+            "installed arm64 EffectMain dynamic PF8/PF16/PF32 four-family SmartPreRender/SmartRender covering matrix",
         ],
         "actual_aex_sha256": actual["aex_sha256"],
         "actual_report_sha256": sha(ROOT / "refs/conformance/olmtoondilate_actual_aex_sequence_smartpre_20260805.json"),

@@ -7,14 +7,25 @@
     "source-included production EffectMain SmartPreRender/SmartRender exact adapter",
     "current production source SHA identity",
     "current installed signed Universal bundle SHA identity",
-    "installed arm64 EffectMain dynamic PF8/PF16/PF32 SmartPreRender/SmartRender execution"
+    "installed arm64 EffectMain dynamic PF8/PF16/PF32 four-family SmartPreRender/SmartRender covering matrix"
   ],
   "actual_aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
-  "actual_report_sha256": "e6263696fb164df6fab582a3a1b8cc7ef321f93bf555f683a927ba84e83b0995",
-  "production_source_sha256": "57608ffc8cc009a55e678e0bee015adcdee91f14c7493aeda32975d0ac5a0d87",
+  "actual_report_sha256": "7713103e879a1da5eb2d0758c917229f353bd1fd2f08533516e4c8fdb1194e1e",
+  "production_source_sha256": "dda35f064d8de900c911fa18474552d1c117488a7846417d536d438c6de03f24",
+  "production_source_identity": {
+    "head_commit": "0985abfa43f003e8e8508b949c7e4b141b885ca3",
+    "head_blob": "57129ddbb849562936e2b1b8202c53d88261aa40",
+    "head_source_sha256": "dda35f064d8de900c911fa18474552d1c117488a7846417d536d438c6de03f24",
+    "worktree_source_sha256": "dda35f064d8de900c911fa18474552d1c117488a7846417d536d438c6de03f24",
+    "worktree_matches_head": true,
+    "required_ancestor_commits": {
+      "legacy_render_noop": true,
+      "high_radius_downsample_ratio": true
+    }
+  },
   "installed": {
     "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin",
-    "binary_sha256": "06518f523efb26d30f19ae1f98a08ccdd4f1c577845e30b97d405ca09dc010d4",
+    "binary_sha256": "bf84a1f76fe584fee76386ae14edda0ee976d2336a0f50cea23e55ac3647f073",
     "architectures": [
       "x86_64",
       "arm64"
@@ -33,30 +44,136 @@
   },
   "restart_required_from_install_record": false,
   "installed_dynamic_entry": {
+    "actual_aex_boundary": {
+      "aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+      "path": "refs/conformance/olmtoondilate_actual_aex_sequence_smartpre_20260805.json",
+      "sha256": "7713103e879a1da5eb2d0758c917229f353bd1fd2f08533516e4c8fdb1194e1e",
+      "support": [
+        {
+          "path": "refs/conformance/olmtoondilate_nonpositive_radius_all_depths_20260805.json",
+          "sha256": "db3ff858e53101827b4e6369aaa733350b44c14ce4f3130b97f506ed90366d0c",
+          "status": "PASS_NONPOSITIVE_RADIUS_ALL_DEPTHS"
+        },
+        {
+          "path": "refs/conformance/olmtoondilate_alpha0_rgb_eligibility_all_depths_20260805.json",
+          "sha256": "d3b19edeb54e88614d8cdf21f92c132dcde559f49f9f158ad0575714a3119faa",
+          "status": "PASS_ALPHA0_RGB_ELIGIBILITY_ALL_DEPTHS"
+        },
+        {
+          "path": "refs/conformance/olmtoondilate_corner_seed_all_depths_20260805.json",
+          "sha256": "ffeebcbba526aa566bcde6a6971a7421c1a4e4a52676bd5a0e3d262ce3a507e8",
+          "status": "PASS_CORNER_SEED_ALL_DEPTHS"
+        },
+        {
+          "path": "refs/conformance/olmtoondilate_pf8_radius3_boundary_tie_20260805.json",
+          "sha256": "57793cd79ca3a0a455e7525028065b9926ed7fe30d41ea473a08f342929a2577",
+          "status": "PASS_PF8_RADIUS3_BOUNDARY_TIE"
+        },
+        {
+          "path": "refs/conformance/olmtoondilate_pf16_radius3_boundary_tie_20260805.json",
+          "sha256": "cd11246d954af6c6506405e5734682b44b1a696a82b27d07e7e4ce4e284aa0a3",
+          "status": "PASS_PF16_RADIUS3_BOUNDARY_TIE"
+        },
+        {
+          "path": "refs/conformance/olmtoondilate_pf32_radius3_boundary_tie_20260805.json",
+          "sha256": "dac69bba980a44b1c814d62a6d99543a21866a76c8e32b0dbbd82a91089e3184",
+          "status": "PASS_PF32_RADIUS3_BOUNDARY_TIE"
+        }
+      ]
+    },
     "architecture": "arm64",
-    "binary_sha256": "06518f523efb26d30f19ae1f98a08ccdd4f1c577845e30b97d405ca09dc010d4",
-    "claim_boundary": "Installed arm64 EffectMain under focused AE-free callbacks. No real AE host loading or rendering claim.",
+    "binary_sha256": "bf84a1f76fe584fee76386ae14edda0ee976d2336a0f50cea23e55ac3647f073",
+    "cases": [
+      {
+        "compared_words": 140,
+        "id": "PF8_copy",
+        "raw_exact": true
+      },
+      {
+        "compared_words": 252,
+        "id": "PF8_fractional",
+        "raw_exact": true
+      },
+      {
+        "compared_words": 84,
+        "id": "PF8_tie_semialpha",
+        "raw_exact": true
+      },
+      {
+        "compared_words": 34884,
+        "id": "PF8_high_downsample",
+        "raw_exact": true
+      },
+      {
+        "compared_words": 140,
+        "id": "PF16_copy",
+        "raw_exact": true
+      },
+      {
+        "compared_words": 252,
+        "id": "PF16_fractional",
+        "raw_exact": true
+      },
+      {
+        "compared_words": 84,
+        "id": "PF16_tie_semialpha",
+        "raw_exact": true
+      },
+      {
+        "compared_words": 34884,
+        "id": "PF16_high_downsample",
+        "raw_exact": true
+      },
+      {
+        "compared_words": 140,
+        "id": "PF32_copy",
+        "raw_exact": true
+      },
+      {
+        "compared_words": 252,
+        "id": "PF32_fractional",
+        "raw_exact": true
+      },
+      {
+        "compared_words": 84,
+        "id": "PF32_tie_semialpha",
+        "raw_exact": true
+      },
+      {
+        "compared_words": 34884,
+        "id": "PF32_high_downsample",
+        "raw_exact": true
+      }
+    ],
+    "claim_boundary": "Current installed arm64 EffectMain under focused AE-free callbacks, connected to the checked-in actual-AEX covering evidence. No broader real-AE-host claim.",
     "commands": [
       "PF_Cmd_SMART_PRE_RENDER",
       "PF_Cmd_SMART_RENDER"
     ],
-    "fixture": {
-      "dimensions": [
-        3,
-        2
-      ],
-      "nonzero_extents": true,
-      "padding": 8,
-      "radius": 1
-    },
     "gates": {
-      "PF16_exact": true,
-      "PF32_bitwise_exact": true,
-      "PF8_exact": true,
-      "dlopen_effectmain": true
+      "all_12_raw_exact": true,
+      "callback_lifecycle_exact": true,
+      "dlopen_effectmain": true,
+      "padding_and_guards_exact": true,
+      "preserve_rgb_of_zero_alpha_requested": true,
+      "world_headers_unchanged": true
     },
     "installed_binary": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate",
-    "status": "PASS_INSTALLED_DYNAMIC_ALL_DEPTHS"
+    "matrix": {
+      "case_count": 12,
+      "depths": [
+        8,
+        16,
+        32
+      ],
+      "families": [
+        "radius0_copy",
+        "radius2.01_corner_frontier",
+        "radius3_tie_semialpha_nonseed",
+        "radius100_513x17_downsample2/1"
+      ]
+    },
+    "status": "PASS_INSTALLED_DYNAMIC_COVERING_MATRIX"
   },
   "claim_boundary": "AE-free completion route including dynamic execution of the installed arm64 EffectMain under focused host callbacks. Real AE execution remains unclaimed."
 }

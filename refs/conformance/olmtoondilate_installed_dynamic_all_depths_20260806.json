@@ -1,26 +1,132 @@
 {
-  "status": "PASS_INSTALLED_DYNAMIC_ALL_DEPTHS",
+  "status": "PASS_INSTALLED_DYNAMIC_COVERING_MATRIX",
   "installed_binary": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate",
-  "binary_sha256": "7d2c24d8ad0f7436ee7035e0d926a2abaac1a74bc9305a4223f76230c1fc5537",
+  "binary_sha256": "bf84a1f76fe584fee76386ae14edda0ee976d2336a0f50cea23e55ac3647f073",
   "architecture": "arm64",
   "commands": [
     "PF_Cmd_SMART_PRE_RENDER",
     "PF_Cmd_SMART_RENDER"
   ],
-  "fixture": {
-    "dimensions": [
-      3,
-      2
-    ],
-    "radius": 1,
-    "padding": 8,
-    "nonzero_extents": true
+  "actual_aex_boundary": {
+    "path": "refs/conformance/olmtoondilate_actual_aex_sequence_smartpre_20260805.json",
+    "sha256": "7713103e879a1da5eb2d0758c917229f353bd1fd2f08533516e4c8fdb1194e1e",
+    "aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+    "support": [
+      {
+        "path": "refs/conformance/olmtoondilate_nonpositive_radius_all_depths_20260805.json",
+        "sha256": "db3ff858e53101827b4e6369aaa733350b44c14ce4f3130b97f506ed90366d0c",
+        "status": "PASS_NONPOSITIVE_RADIUS_ALL_DEPTHS"
+      },
+      {
+        "path": "refs/conformance/olmtoondilate_alpha0_rgb_eligibility_all_depths_20260805.json",
+        "sha256": "d3b19edeb54e88614d8cdf21f92c132dcde559f49f9f158ad0575714a3119faa",
+        "status": "PASS_ALPHA0_RGB_ELIGIBILITY_ALL_DEPTHS"
+      },
+      {
+        "path": "refs/conformance/olmtoondilate_corner_seed_all_depths_20260805.json",
+        "sha256": "ffeebcbba526aa566bcde6a6971a7421c1a4e4a52676bd5a0e3d262ce3a507e8",
+        "status": "PASS_CORNER_SEED_ALL_DEPTHS"
+      },
+      {
+        "path": "refs/conformance/olmtoondilate_pf8_radius3_boundary_tie_20260805.json",
+        "sha256": "57793cd79ca3a0a455e7525028065b9926ed7fe30d41ea473a08f342929a2577",
+        "status": "PASS_PF8_RADIUS3_BOUNDARY_TIE"
+      },
+      {
+        "path": "refs/conformance/olmtoondilate_pf16_radius3_boundary_tie_20260805.json",
+        "sha256": "cd11246d954af6c6506405e5734682b44b1a696a82b27d07e7e4ce4e284aa0a3",
+        "status": "PASS_PF16_RADIUS3_BOUNDARY_TIE"
+      },
+      {
+        "path": "refs/conformance/olmtoondilate_pf32_radius3_boundary_tie_20260805.json",
+        "sha256": "dac69bba980a44b1c814d62a6d99543a21866a76c8e32b0dbbd82a91089e3184",
+        "status": "PASS_PF32_RADIUS3_BOUNDARY_TIE"
+      }
+    ]
   },
+  "matrix": {
+    "depths": [
+      8,
+      16,
+      32
+    ],
+    "families": [
+      "radius0_copy",
+      "radius2.01_corner_frontier",
+      "radius3_tie_semialpha_nonseed",
+      "radius100_513x17_downsample2/1"
+    ],
+    "case_count": 12
+  },
+  "cases": [
+    {
+      "id": "PF8_copy",
+      "raw_exact": true,
+      "compared_words": 140
+    },
+    {
+      "id": "PF8_fractional",
+      "raw_exact": true,
+      "compared_words": 252
+    },
+    {
+      "id": "PF8_tie_semialpha",
+      "raw_exact": true,
+      "compared_words": 84
+    },
+    {
+      "id": "PF8_high_downsample",
+      "raw_exact": true,
+      "compared_words": 34884
+    },
+    {
+      "id": "PF16_copy",
+      "raw_exact": true,
+      "compared_words": 140
+    },
+    {
+      "id": "PF16_fractional",
+      "raw_exact": true,
+      "compared_words": 252
+    },
+    {
+      "id": "PF16_tie_semialpha",
+      "raw_exact": true,
+      "compared_words": 84
+    },
+    {
+      "id": "PF16_high_downsample",
+      "raw_exact": true,
+      "compared_words": 34884
+    },
+    {
+      "id": "PF32_copy",
+      "raw_exact": true,
+      "compared_words": 140
+    },
+    {
+      "id": "PF32_fractional",
+      "raw_exact": true,
+      "compared_words": 252
+    },
+    {
+      "id": "PF32_tie_semialpha",
+      "raw_exact": true,
+      "compared_words": 84
+    },
+    {
+      "id": "PF32_high_downsample",
+      "raw_exact": true,
+      "compared_words": 34884
+    }
+  ],
   "gates": {
     "dlopen_effectmain": true,
-    "PF8_exact": true,
-    "PF16_exact": true,
-    "PF32_bitwise_exact": true
+    "all_12_raw_exact": true,
+    "padding_and_guards_exact": true,
+    "callback_lifecycle_exact": true,
+    "world_headers_unchanged": true,
+    "preserve_rgb_of_zero_alpha_requested": true
   },
-  "claim_boundary": "Installed arm64 EffectMain under focused AE-free callbacks. No real AE host loading or rendering claim."
+  "claim_boundary": "Current installed arm64 EffectMain under focused AE-free callbacks, connected to the checked-in actual-AEX covering evidence. No broader real-AE-host claim."
 }
