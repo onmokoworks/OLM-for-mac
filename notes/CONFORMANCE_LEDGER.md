@@ -1,5 +1,17 @@
 # OLM Conformance Ledger
 
+- 2026-08-11 latest bounded closure update: OLMDirectionalBlur's simultaneous
+  Front+Back matrix is 12/12 raw exact on four fixed 16x16 tuples across
+  PF8/PF16/PF32; Type 3, other geometry, and unlisted tuples stay fail-closed.
+  OLMKiraKira's natural 5x3 Mode 4 same-run vtable seed, selected ray,
+  aggregate entry, and PF8/PF16/PF32 typed outputs are raw exact with no
+  production change; this is one hostless source case, not Windows AE pixel
+  exactness. OLMSmoother2's Gamma/key/smoothing matrix is now 54/54 raw exact:
+  the former PF8 five-byte seam was the current-AEX 10,000-entry LUT contract
+  plus Windows scalar MULSS then ADDSS versus arm64 FMADD contraction, not an
+  expected-byte correction. None of these records promotes arbitrary
+  parameter products or AE-host exactness.
+
 - 2026-08-11 ten-plugin Mac AE host smoke: After Effects 26.3x87 on
   macOS 15.7.2 arm64, Software renderer raw 1816, loaded, applied, and
   rendered all ten plug-ins successfully to one 64x64 PNG each.

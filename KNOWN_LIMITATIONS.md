@@ -38,8 +38,8 @@
 - OLMDirectionalBlur：Noise Type 3 LayerのPF16/PF32は、記録済みtupleを中心とする
   bounded対応です。Front／Back Fade 50／100×Sharp Tail 50／100は3深度でexactですが、
   Noise Type 1／2、Size Variationを含む高次covering 24行もraw exactです。
-  Type 3、他geometry、未列挙Size、front＋back同時、Layer欠落／寸法不一致は
-  fail-closeする場合があります。
+  Front＋Back同時の記録済み12行もraw exactです。Type 3、他geometry、未列挙tuple、
+  Layer欠落／寸法不一致はfail-closeする場合があります。
 - OLMRadialBlur：centered neutral InnerはPF8/PF16/PF32で複数geometryを実AEXと
   bit完全一致確認済みです。直接観測済みの最大geometryはPF8/PF16が640×360、PF32が
   64×36です。off-center、非unit ratio、angle、quality、repeat、offset、
@@ -54,14 +54,16 @@
   既知1 ULP差があります。Inner、未列挙tuple／geometry、Type 3はfail-closeします。
   Windows独自のcustom preview描画と操作も未証明です。
 - OLMSmoother2：key、invert、Gamma、range、paletteの主要分岐はbounded exactです。
-  Gamma／key／smoothing交差は54行中53行exactですが、PF8 Gamma All 2.4の
-  mixed (50,50,50)は5 byte差が残るためfail-closeします。全パラメーター直積は未証明です。
+  Gamma／key／smoothing交差は54／54 exactです。旧PF8 Gamma All 2.4 seamは
+  current-AEX LUT契約と非縮約scalar積和で閉じましたが、全パラメーター直積と
+  AE host実行は未証明です。
 - OLMKiraKira：Mode 1〜4の主要経路を実装しています。Mode 4の方向レイは、9×7以上の
   回転後geometryとLength 1〜1000を、実AEXの17ケース・51中間stageで一般化しています。
   5代表compose交差では非default色、半透明／HDR、Merge 1／2、ramp off／1／2を含めて
   raw exactですが、小型shape、ray／色／ramp／Merge Modeの全直積とDrawbot custom UIは
-  未証明です。自然生成5×3 full-frameはharness修正後も同一実行witnessが不足し、
-  geometry-generalへ昇格せずfail-closeします。
+  未証明です。自然生成5×3 full-frameは同一実行のseed／ray／aggregateからtyped
+  outputまでexactですが、hostlessの1 source caseであり、Windows AE pixelや
+  geometry-generalへは昇格しません。
 - OLMSmoother v1：元AEXのnative depthはPF8/PF16です。32bpcプロジェクトではAEが
   classic integer pluginの前後を変換するため、native PF32互換とは表現しません。
 
