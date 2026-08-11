@@ -6,10 +6,10 @@
     "stable_consecutive_collections": 2,
     "universal_exact": true
   },
-  "accepted_at": "2026-08-11T10:52:07.031065+00:00",
+  "accepted_at": "2026-08-11T11:20:44.906011+00:00",
   "claim_boundary": "Exact installed executable identity, arm64+x86_64 architectures, valid strict code signature, and byte identity with the named local build product. No AE load, UI, or render claim.",
   "configuration": "Debug",
-  "installed_after": "2026-08-11T10:52:07.031065+00:00",
+  "installed_after": "2026-08-11T11:20:44.906011+00:00",
   "plugins": [
     {
       "architectures": [
@@ -80,10 +80,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDistanceGradation.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMDistanceGradation",
-      "sha256": "e81c7caef23a6578e381d85235fe299b231aa5568c41d696ea7d99a79bffafd5",
+      "sha256": "3a37fead24386c1db12d484bcf9dda2a9c0d4d45d7df113196f172a06daed76d",
       "source_bundle": "mac/OLMDistanceGradation/Mac/build/Debug/OLMDistanceGradation.plugin",
       "source_installed_exact": true,
-      "source_sha256": "e81c7caef23a6578e381d85235fe299b231aa5568c41d696ea7d99a79bffafd5",
+      "source_sha256": "3a37fead24386c1db12d484bcf9dda2a9c0d4d45d7df113196f172a06daed76d",
       "universal_exact": true
     },
     {
@@ -110,10 +110,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMRadialBlur",
-      "sha256": "dba2d2fc492150fdb71baedac2536c990858a63a312298a6689e375c6607928f",
+      "sha256": "4de17d1e3e5b455fbe0c3d2e407d778f2a7bf5c69a597e5272444c58a03524ed",
       "source_bundle": "mac/OLMRadialBlur/Mac/build/Debug/OLMRadialBlur.plugin",
       "source_installed_exact": true,
-      "source_sha256": "dba2d2fc492150fdb71baedac2536c990858a63a312298a6689e375c6607928f",
+      "source_sha256": "4de17d1e3e5b455fbe0c3d2e407d778f2a7bf5c69a597e5272444c58a03524ed",
       "universal_exact": true
     },
     {
