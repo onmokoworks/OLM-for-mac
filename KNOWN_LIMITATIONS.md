@@ -57,6 +57,10 @@
   exactとは表現しません。Size×Edge×Noiseの記録済み24ケースもconsumed planes／
   outputはexactですが、Rotation Size Variation 25のdiagnostic source scalarに
   既知1 ULP差があります。Inner、未列挙tuple／geometry、Type 3はfail-closeします。
+  ratio 2／angle 30°＋Edge、Quality 3／Repeat off＋Noise Type 2、off-center＋Sizeの
+  3 tupleはZoom／Rotation・3深度の18／18でexactです。これはRepeat-off有効tap正規化、
+  Rotation noise gate、Quality 3 outer span 3／5を閉じるbounded証拠であり、
+  任意transform／worker直積へは一般化しません。
   Windows独自のcustom preview描画と操作も未証明です。
 - OLMSmoother2：key、invert、Gamma、range、paletteの主要分岐はbounded exactです。
   Gamma／key／smoothing交差は54／54 exactです。旧PF8 Gamma All 2.4 seamは

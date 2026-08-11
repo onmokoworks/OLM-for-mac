@@ -1,5 +1,16 @@
 # OLM Conformance Ledger
 
+- 2026-08-11 OLMRadialBlur non-neutral transform/worker closure and install:
+  three declared tuples cross Zoom/Rotation and PF8/PF16/PF32 for 18/18
+  actual-AEX exact cases: ratio 2/angle 30 plus Edge 50; Quality 3,
+  Repeat off plus Noise 100 Type 2; and off-center (8,6) plus Size 50.
+  The bounded production paths use valid-tap normalization for Repeat off,
+  the Rotation noise gate, and Quality 3 outer spans 3/5. Commit 9200aede
+  accepts the latest ColorKey and Radial installed Universal identities,
+  strict signatures, and source-build byte identity after this closure. Unlisted
+  tuples, geometry, and Type 3 remain fail-closed; installation does not
+  promote them or establish Windows AE pixel exactness.
+
 - 2026-08-11 ColorKey/Distance/AEXCompat evidence update: OLMColorKey adds
   12/12 exact internal-direction covering cells, bringing the retained
   semitransparent matrix to 51/51; PF32 Amount 4 remains bounded to the
