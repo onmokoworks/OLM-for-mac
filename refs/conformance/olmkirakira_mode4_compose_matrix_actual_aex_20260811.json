@@ -1,0 +1,336 @@
+{
+  "schema": "olmkirakira.mode4-compose-matrix-actual-aex/1",
+  "status": "exact",
+  "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+  "source_evidence": {
+    "directional": "Mode4 actual AEX FUN_181150790, 9x7 radius5 angle0 final plane",
+    "length1_directional": "Mode4 actual AEX FUN_181150790, 39x30 radius1 angle17 first four live final values",
+    "highlight": "Mode4 actual AEX FUN_18114f4a0 fifth ray, 4x1 radius5 three-pass isotropic box"
+  },
+  "matrix_rationale": "Five branch representatives cover default/non-default color, directional+highlight interaction, semitransparent/HDR source, Merge 1/2, ramp off/one/two, and PF8/PF16/PF32 without a redundant full Cartesian product.",
+  "cases": [
+    {
+      "name": "merge1_length1_directional",
+      "merge_mode": 1,
+      "highlight": false,
+      "directional_slot": 0,
+      "flags": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "scale_f32_bits": "0x3f800000",
+      "ramp_helper_hits": 0,
+      "aggregate_instructions": 599,
+      "ray_u32": [
+        "0x3da64451",
+        "0x3e787855",
+        "0x3e9d23bb",
+        "0x3eabb5d2"
+      ],
+      "highlight_u32": [
+        "0x00000000",
+        "0x00000000",
+        "0x00000000",
+        "0x00000000"
+      ],
+      "glow_u32": [
+        "0x3f800000",
+        "0x3f800000",
+        "0x3f800000",
+        "0x3da64451",
+        "0x3f800000",
+        "0x3f800000",
+        "0x3f800000",
+        "0x3e787855",
+        "0x3f800000",
+        "0x3f800000",
+        "0x3f800000",
+        "0x3e9d23bb",
+        "0x3f800000",
+        "0x3f800000",
+        "0x3f800000",
+        "0x3eabb5d2"
+      ],
+      "typed_outputs": {
+        "PF8": {
+          "exact_bytes": 16,
+          "actual_hex": "ff2a4259ff5a6f83ff76899dff8c9fb2",
+          "portable_hex": "ff2a4259ff5a6f83ff76899dff8c9fb2"
+        },
+        "PF16": {
+          "exact_bytes": 32,
+          "actual_hex": "008073154a21202d0080982de53732420080713b3c45074f00807c461250a859",
+          "portable_hex": "008073154a21202d0080982de53732420080713b3c45074f00807c461250a859"
+        },
+        "PF32": {
+          "exact_bytes": 64,
+          "actual_hex": "0000803f189a2b3e0b28853e0983b43e0000803f8461b63e5395df3e9264043f0000803f1ac4ed3e9e780a3f2f0f1e3f0000803fd1f90c3f8325203f3651333f",
+          "portable_hex": "0000803f189a2b3e0b28853e0983b43e0000803f8461b63e5395df3e9264043f0000803f1ac4ed3e9e780a3f2f0f1e3f0000803fd1f90c3f8325203f3651333f"
+        }
+      }
+    },
+    {
+      "name": "merge1_colored_d2_highlight_semihdr",
+      "merge_mode": 1,
+      "highlight": true,
+      "directional_slot": 3,
+      "flags": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "scale_f32_bits": "0x3f3ae148",
+      "ramp_helper_hits": 0,
+      "aggregate_instructions": 739,
+      "ray_u32": [
+        "0x3e09bd8c",
+        "0x3e1b3fd1",
+        "0x3e2e9634",
+        "0x3e410d09"
+      ],
+      "highlight_u32": [
+        "0x3db4d777",
+        "0x3db4c04b",
+        "0x3db4a91f",
+        "0x3db491f3"
+      ],
+      "glow_u32": [
+        "0x3eba2391",
+        "0x3f1a4b85",
+        "0x3f34af71",
+        "0x3e201382",
+        "0x3ec03de7",
+        "0x3f191270",
+        "0x3f319eb3",
+        "0x3e2c0121",
+        "0x3ec610b6",
+        "0x3f17e78f",
+        "0x3f2eb1b3",
+        "0x3e392eae",
+        "0x3ecae6c6",
+        "0x3f16ef16",
+        "0x3f2c434e",
+        "0x3e45c3c5"
+      ],
+      "typed_outputs": {
+        "PF8": {
+          "exact_bytes": 16,
+          "actual_hex": "5cff1b6a8c3cff753b5880ffc965839c",
+          "portable_hex": "5cff1b6a8c3cff753b5880ffc965839c"
+        },
+        "PF16": {
+          "exact_bytes": 32,
+          "actual_hex": "4f2e0080a00da935af463e1e0080fa3ac11d472c4b400080e7641e33e9415a4e",
+          "portable_hex": "4f2e0080a00da935af463e1e0080fa3ac11d472c4b400080e7641e33e9415a4e"
+        },
+        "PF32": {
+          "exact_bytes": 64,
+          "actual_hex": "ee3db93e0000803f1a0ada3d24a5d63e675e0d3f3ff7713e0000803fc2eaeb3e500d6e3e011fb13e3596003f0000803fe0cf493fd57bcc3e11d2033f86b51c3f",
+          "portable_hex": "ee3db93e0000803f1a0ada3d24a5d63e675e0d3f3ff7713e0000803fc2eaeb3e500d6e3e011fb13e3596003f0000803fe0cf493fd57bcc3e11d2033f86b51c3f"
+        }
+      }
+    },
+    {
+      "name": "merge2_fixed_directional_highlight_semihdr",
+      "merge_mode": 2,
+      "highlight": true,
+      "directional_slot": 0,
+      "flags": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "scale_f32_bits": "0x3f800000",
+      "ramp_helper_hits": 0,
+      "aggregate_instructions": 686,
+      "ray_u32": [
+        "0x3e09bd8c",
+        "0x3e1b3fd1",
+        "0x3e2e9634",
+        "0x3e410d09"
+      ],
+      "highlight_u32": [
+        "0x3db4d777",
+        "0x3db4c04b",
+        "0x3db4a91f",
+        "0x3db491f3"
+      ],
+      "glow_u32": [
+        "0x3f800000",
+        "0x3f59999a",
+        "0x3f800000",
+        "0x3e642948",
+        "0x3f800000",
+        "0x3f59999a",
+        "0x3f800000",
+        "0x3e759ff6",
+        "0x3f800000",
+        "0x3f59999a",
+        "0x3f800000",
+        "0x3e847562",
+        "0x3f800000",
+        "0x3f59999a",
+        "0x3f800000",
+        "0x3e8dab01"
+      ],
+      "typed_outputs": {
+        "PF8": {
+          "exact_bytes": 16,
+          "actual_hex": "67811a3a993fe1564835316ad7727c94",
+          "portable_hex": "67811a3a993fe1564835316ad7727c94"
+        },
+        "PF16": {
+          "exact_bytes": 32,
+          "actual_hex": "19342d41360d341df14c17200e714d2b8824b91abf185a352d6cb839843e8a4a",
+          "portable_hex": "19342d41360d341df14c17200e714d2b8824b91abf185a352d6cb839843e8a4a"
+        },
+        "PF32": {
+          "exact_bytes": 64,
+          "actual_hex": "0d64d03ece5b023f936dd33da6a3693e5de2193f185d803e441c623f0137ad3ec422923e32c8553e28f9453ea169d53eef5b583f49e3e63e7b13fa3e1315153f",
+          "portable_hex": "0d64d03ece5b023f936dd33da6a3693e5de2193f185d803e441c623f0137ad3ec422923e32c8553e28f9453ea169d53eef5b583f49e3e63e7b13fa3e1315153f"
+        }
+      }
+    },
+    {
+      "name": "merge2_directional_ramp_fixed_highlight",
+      "merge_mode": 2,
+      "highlight": true,
+      "directional_slot": 0,
+      "flags": [
+        true,
+        false,
+        false,
+        false,
+        false
+      ],
+      "scale_f32_bits": "0x3f800000",
+      "ramp_helper_hits": 4,
+      "aggregate_instructions": 1274,
+      "ray_u32": [
+        "0x3e09bd8c",
+        "0x3e1b3fd1",
+        "0x3e2e9634",
+        "0x3e410d09"
+      ],
+      "highlight_u32": [
+        "0x3db4d777",
+        "0x3db4c04b",
+        "0x3db4a91f",
+        "0x3db491f3"
+      ],
+      "glow_u32": [
+        "0x3eb6d648",
+        "0x3f800000",
+        "0x3f800000",
+        "0x3e642948",
+        "0x3ec1279e",
+        "0x3f800000",
+        "0x3f800000",
+        "0x3e759ff6",
+        "0x3ecc8cd0",
+        "0x3f800000",
+        "0x3f800000",
+        "0x3e847562",
+        "0x3ed76e44",
+        "0x3f800000",
+        "0x3f800000",
+        "0x3e8dab01"
+      ],
+      "typed_outputs": {
+        "PF8": {
+          "exact_bytes": 16,
+          "actual_hex": "e81d4156ea33576cec496e83ee5f859a",
+          "portable_hex": "e81d4156ea33576cec496e83ee5f859a"
+        },
+        "PF16": {
+          "exact_bytes": 32,
+          "actual_hex": "a774ab0eaf202e2b8c75bd19132c92368976e9248f370e427b77183000437f4d",
+          "portable_hex": "a774ab0eaf202e2b8c75bd19132c92368976e9248f370e427b77183000437f4d"
+        },
+        "PF32": {
+          "exact_bytes": 64,
+          "actual_hex": "784e693f50bfea3db6bd823e9eb9ac3eb7186b3f8eed4d3e1b4eb03e024ada3ef1126d3f10a6933e773ede3e2f1d043f41f66e3f2460c03e7f00063f73fe1a3f",
+          "portable_hex": "784e693f50bfea3db6bd823e9eb9ac3eb7186b3f8eed4d3e1b4eb03e024ada3ef1126d3f10a6933e773ede3e2f1d043f41f66e3f2460c03e7f00063f73fe1a3f"
+        }
+      }
+    },
+    {
+      "name": "merge2_directional_and_highlight_ramps",
+      "merge_mode": 2,
+      "highlight": true,
+      "directional_slot": 0,
+      "flags": [
+        true,
+        false,
+        false,
+        false,
+        true
+      ],
+      "scale_f32_bits": "0x3f800000",
+      "ramp_helper_hits": 8,
+      "aggregate_instructions": 1858,
+      "ray_u32": [
+        "0x3e09bd8c",
+        "0x3e1b3fd1",
+        "0x3e2e9634",
+        "0x3e410d09"
+      ],
+      "highlight_u32": [
+        "0x3db4d777",
+        "0x3db4c04b",
+        "0x3db4a91f",
+        "0x3db491f3"
+      ],
+      "glow_u32": [
+        "0x3edbd624",
+        "0x3f1a573e",
+        "0x3ee91f42",
+        "0x3e642948",
+        "0x3ee62f33",
+        "0x3f15cb1e",
+        "0x3ef04ab9",
+        "0x3e759ff6",
+        "0x3ef19c1e",
+        "0x3f10c5c7",
+        "0x3ef83672",
+        "0x3e847562",
+        "0x3efc854c",
+        "0x3f0bfa54",
+        "0x3effc65a",
+        "0x3e8dab01"
+      ],
+      "typed_outputs": {
+        "PF8": {
+          "exact_bytes": 16,
+          "actual_hex": "59461e237526843350232a3f9b445156",
+          "portable_hex": "59461e237526843350232a3f9b445156"
+        },
+        "PF16": {
+          "exact_bytes": 32,
+          "actual_hex": "182d7323890ff5111e3b7c134542c6193728c1119115ae1f0a4e8422ad28442b",
+          "portable_hex": "182d7323890ff5111e3b7c134542c6193728c1119115ae1f0a4e8422ad28442b"
+        },
+        "PF32": {
+          "exact_bytes": 64,
+          "actual_hex": "7762b43ee5ce8d3ea697f83d02ab0f3ef879ec3eb2e41b3e898b043f38354e3ee1dfa03efb0f0e3e528c2c3eac757d3efe141c3fd7118a3edeb5a23ebd11ad3e",
+          "portable_hex": "7762b43ee5ce8d3ea697f83d02ab0f3ef879ec3eb2e41b3e898b043f38354e3ee1dfa03efb0f0e3e528c2c3eac757d3efe141c3fd7118a3edeb5a23ebd11ad3e"
+        }
+      }
+    }
+  ],
+  "exact": {
+    "cases": 5,
+    "aggregate_bytes": 320,
+    "typed_bytes": 560,
+    "max_ulp": 0
+  },
+  "boundary": "Hostless Mac Unicorn execution of the checked-in Windows AEX. The two actual Mode4 ray planes are crossed at the recovered aggregate/compose boundary; this is not a live Windows/AE claim.",
+  "verification": "python3 tools/emulation/probe_olmkirakira_mode4_compose_matrix_actual_aex_20260811.py"
+}

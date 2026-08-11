@@ -308,7 +308,9 @@ static std::vector<float> RotatedAxisBoxBlur(
 	A_long passes,
 	A_long blur_mode)
 {
-	if (length <= 1) return input;
+	// Mode 3 and Mode 4 both have recovered, non-identity Length=1 owners.
+	// The box-filter modes remain identity at one through DirectionBoxBlur.
+	if (length <= 0) return input;
 	const double pi = 3.14159265358979323846;
 	const double rad = angle_deg * pi / 180.0;
 	const double ac = std::abs(std::cos(rad));
@@ -568,8 +570,10 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		AddColoredMerge2(glow, vertical, info.vertical_color, info.vertical_use_ramp, info.vertical_ramp);
 		AddColoredMerge2(glow, horizontal, info.horizontal_color, info.horizontal_use_ramp, info.horizontal_ramp);
 		AddColoredMerge2(glow, diagonal, info.diagonal_color, info.diagonal_use_ramp, info.diagonal_ramp);
-		AddColoredMerge2(glow, highlight, info.highlight_color, info.highlight_use_ramp, info.highlight_ramp);
+		// FUN_18114f4a0 owns four directional slots followed by Highlight.
+		// Preserve that addition order because float32 sums are not associative.
 		AddColoredMerge2(glow, diagonal2, info.diagonal2_color, info.diagonal2_use_ramp, info.diagonal2_ramp);
+		AddColoredMerge2(glow, highlight, info.highlight_color, info.highlight_use_ramp, info.highlight_ramp);
 		for (FloatRGBA &g : glow) {
 			g.r = Clamp01(g.r);
 			g.g = Clamp01(g.g);
@@ -580,8 +584,8 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		AddColoredUnion(glow, vertical, info.vertical_color, scale);
 		AddColoredUnion(glow, horizontal, info.horizontal_color, scale);
 		AddColoredUnion(glow, diagonal, info.diagonal_color, scale);
-		AddColoredUnion(glow, highlight, info.highlight_color, highlight_scale);
 		AddColoredUnion(glow, diagonal2, info.diagonal2_color, scale);
+		AddColoredUnion(glow, highlight, info.highlight_color, highlight_scale);
 		for (FloatRGBA &g : glow) {
 			if (g.a > 1.0e-6f) {
 				g.r /= g.a;
