@@ -62,8 +62,15 @@ def histogram(plane,w,h):
    idx=((0 if bsw else 2)+er0+(((0 if bse else 1)+uv*2)*4))*16+(4 if B==0 else 0)+(1 if G==0 else 0)+(2 if R==0 else 0)+(8 if A==0 else 0)
    hist[idx]+=1
  return dict(sorted(hist.items()))
-def actual(depth,ver,pixels,pad,w,h,s,r,e,feature='none',gamma_value=2.4):
+def actual(depth,ver,pixels,pad,w,h,s,r,e,feature='none',gamma_value=2.4,writer_witnesses=None):
  l=typed.AexLoader(str(typed.AEX_PATH),verbose=False,fast=False);l.register_libm_impls(max_threads=1)
+ if writer_witnesses is not None:
+  def capture_writer(current,address,size):
+   rsp=current.uc.reg_read(typed.UC_X86_REG_RSP)
+   x,y=struct.unpack('<ii',current.read_bytes(rsp+0x34,8))
+   rgba=struct.unpack('<4f',current.read_bytes(rsp+0x48,16))
+   writer_witnesses.append({'x':x,'y':y,'cce0_rgba':rgba,'cce0_rgba_u32':struct.unpack('<4I',current.read_bytes(rsp+0x48,16))})
+  l.add_code_hook(0x180003510,capture_writer)
  ss=16*w+16;sb=l.bump_alloc(ss*h,align=16)
  for y in range(h):l.write_bytes(sb+y*ss,b''.join(struct.pack('<4f',*pixels[y*w+x]) for x in range(w))+b'\x3c'*16)
  sd=v2.desc(l,sb,ss,w,h);ptr=[l.bump_alloc(4,align=4) for _ in range(4)]

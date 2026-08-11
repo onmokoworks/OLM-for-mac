@@ -4147,11 +4147,11 @@ static void win_FUN_18000cce0_orchestrate(FPix &out_pixel,
 
 	// Stage 4: composite.
 	FPix accum;
-	if (p.pf16_runtime || p.pf32_runtime) {
-		composite_separate_scalar(accum, working, poly);
-	} else {
-		composite(accum, working, poly);
-	}
+	// Windows FUN_18000ab00 uses scalar MULSS followed by ADDSS at every
+	// depth.  Keep the operations separated for PF8 too: arm64 contracts the
+	// plain expression into FMADD, which moves the Gamma-All 2.4 / 50-50-50
+	// diagonal witness across five byte-quantization thresholds.
+	composite_separate_scalar(accum, working, poly);
 	if (g_olmsmoother2_writer_frame_probe.json_path &&
 	    x == g_olmsmoother2_writer_frame_probe.x && y == g_olmsmoother2_writer_frame_probe.y) {
 		g_olmsmoother2_writer_frame_probe.after_ab00 = accum;
@@ -4342,9 +4342,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	// ring vs the Win reference.)
 	if (p.version != SMOOTHER_V1) {
 		win_FUN_180002ba0_gamma_encode(
-		    scratch.data(), w, h, p,
-		    std::is_same<P, PF_PixelFloat>::value ||
-		    std::is_same<P, PF_Pixel16>::value);
+		    scratch.data(), w, h, p, true);
 	}
 
 	// Build an FPlane alias for the per-pixel orchestrator.
@@ -4519,22 +4517,15 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 			float r = px.r, g = px.g, b = px.b, a = px.a;
 
 			if (apply_inverse_gamma) {
-				if (std::is_same<P, PF_PixelFloat>::value ||
-				    std::is_same<P, PF_Pixel16>::value) {
-					// Windows AE supplies a 10,000-entry inverse LUT at
-					// gamma_ctx+0x18. FUN_180004c30 interpolates it in double.
-					r = win_srgb_lut_interpolate(
-					    _tmp_smoother2_inverse_lut_10000_bin, r);
-					g = win_srgb_lut_interpolate(
-					    _tmp_smoother2_inverse_lut_10000_bin, g);
-					b = win_srgb_lut_interpolate(
-					    _tmp_smoother2_inverse_lut_10000_bin, b);
-				} else {
-					// Preserve the already-exact 8bpc path.
-					r = (float)win_FUN_180004d70_literal((double)r);
-					g = (float)win_FUN_180004d70_literal((double)g);
-					b = (float)win_FUN_180004d70_literal((double)b);
-				}
+				// The natural current-AEX owner supplies the captured 10,000-entry
+				// LUT to every typed worker, including PF8. FUN_180004c30 performs
+				// this interpolation in double before the depth-specific store.
+				r = win_srgb_lut_interpolate(
+				    _tmp_smoother2_inverse_lut_10000_bin, r);
+				g = win_srgb_lut_interpolate(
+				    _tmp_smoother2_inverse_lut_10000_bin, g);
+				b = win_srgb_lut_interpolate(
+				    _tmp_smoother2_inverse_lut_10000_bin, b);
 			}
 
 			// Win: if param_8[0x19] != 0 AND a != 1.0 -> RGB *= a  (re-premul)

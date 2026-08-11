@@ -211,13 +211,13 @@
       "class_plane_sha256": "008ff25dac4573ca6174ac05d4d81ef9177400eb00dce39b636ed0941761adb3",
       "classifier_instructions": 21989,
       "depth": "PF8",
-      "exact": false,
+      "exact": true,
       "extra_smooth": 50,
       "feature": "gamma_all",
       "gamma_value": 2.4,
       "padding_per_row": 5,
-      "production_raw_sha256": "9637cd5509f4157eff3703a7223ab75a1a9e8100a5a54e66f8ecec4b0be57899",
-      "raw_mismatch_bytes": 5,
+      "production_raw_sha256": "c538ded8a0ed9524bc1a3a31eb7aff38306bc88c13403a0e3950022d1de4c247",
+      "raw_mismatch_bytes": 0,
       "smooth_range": 50,
       "smoothing_tuple": "mixed",
       "smoothness": 50,
@@ -924,19 +924,131 @@
   "claims_not_made": [
     "No arbitrary parameter-product generalization",
     "No other key colors or Gamma palettes",
-    "No AE-host execution claim",
-    "No exact claim for PF8 Gamma All 2.4 mixed smoothing"
+    "No AE-host execution claim"
   ],
-  "exact_case_count": 53,
-  "fail_closed_boundary": {
-    "decision": "unsupported until the five-byte typed writer seam is explained by a new actual-AEX witness",
+  "closed_pf8_seam": {
+    "actual_instruction_anchors": [
+      "0x18000350b cce0 return",
+      "0x1800035ad MULSS",
+      "0x1800035b9 ADDSS",
+      "0x180004cae MULSD",
+      "0x180004cb6 MULSD",
+      "0x180004cba ADDSD"
+    ],
+    "actual_post_cce0_writer_witnesses": [
+      {
+        "cce0_rgba": [
+          0.7976360321044922,
+          0.023652395233511925,
+          0.025186864659190178,
+          0.9999999403953552
+        ],
+        "cce0_rgba_u32": [
+          1061958112,
+          1019331243,
+          1020155055,
+          1065353215
+        ],
+        "x": 2,
+        "y": 2
+      },
+      {
+        "cce0_rgba": [
+          0.7976360321044922,
+          0.023652395233511925,
+          0.025186864659190178,
+          0.9999999403953552
+        ],
+        "cce0_rgba_u32": [
+          1061958112,
+          1019331243,
+          1020155055,
+          1065353215
+        ],
+        "x": 3,
+        "y": 3
+      },
+      {
+        "cce0_rgba": [
+          0.5934937596321106,
+          0.028988223522901535,
+          0.05780544877052307,
+          1.0
+        ],
+        "cce0_rgba_u32": [
+          1058533173,
+          1022195894,
+          1030538600,
+          1065353216
+        ],
+        "x": 5,
+        "y": 4
+      },
+      {
+        "cce0_rgba": [
+          0.7976360321044922,
+          0.023652395233511925,
+          0.025186864659190178,
+          0.9999999403953552
+        ],
+        "cce0_rgba_u32": [
+          1061958112,
+          1019331243,
+          1020155055,
+          1065353215
+        ],
+        "x": 6,
+        "y": 5
+      },
+      {
+        "cce0_rgba": [
+          0.7976360321044922,
+          0.023652395233511925,
+          0.025186864659190178,
+          0.9999999403953552
+        ],
+        "cce0_rgba_u32": [
+          1061958112,
+          1019331243,
+          1020155055,
+          1065353215
+        ],
+        "x": 7,
+        "y": 6
+      }
+    ],
     "depth": "PF8",
     "feature": "gamma_all",
+    "first_divergence": "PF8 frame decode input to c0d0, followed by arm64 FMADD contraction in ab00",
+    "former_mismatch_pixels": [
+      [
+        2,
+        2
+      ],
+      [
+        3,
+        3
+      ],
+      [
+        5,
+        4
+      ],
+      [
+        6,
+        5
+      ],
+      [
+        7,
+        6
+      ]
+    ],
     "gamma_value": 2.4,
-    "raw_mismatch_bytes": 5,
+    "previous_raw_mismatch_bytes": 5,
+    "resolution": "use the current-AEX 10000-entry LUT at PF8 frame decode and inverse output, and preserve Windows MULSS then ADDSS scalar accumulation",
     "smoothing_tuple": "mixed"
   },
-  "fail_closed_case_count": 1,
+  "exact_case_count": 54,
+  "fail_closed_case_count": 0,
   "features": [
     "gamma_all",
     "colors_noninvert",
@@ -951,8 +1063,8 @@
     7
   ],
   "pattern": "diagonal",
-  "production_source_sha256": "9d3db4a8bd81ab23ba68371d1d3f86b631a03860104298e3dcb0967f64dc0c1e",
-  "schema": "olmsmoother2.gamma-key-smoothing-crossproduct/1",
+  "production_source_sha256": "c0a2588aa6749c3f861f2e7246c4db97fa9d6c3b2b8783889a5c22b36f77dc77",
+  "schema": "olmsmoother2.gamma-key-smoothing-crossproduct/2",
   "scope": "v2 padded 9x7 diagonal fixture; Gamma All plus Gamma Colors with non-invert/invert key; public Gamma endpoints and three smoothing boundary tuples; PF8/PF16/PF32",
   "smoothing_tuples": {
     "lower": [
@@ -971,5 +1083,5 @@
       100
     ]
   },
-  "verdict": "PASS_53_EXACT_ONE_PF8_GAMMA_ALL_MIXED_FAIL_CLOSED"
+  "verdict": "PASS_54_GAMMA_ENDPOINT_KEY_POLARITY_SMOOTHING_ALL_DEPTHS_ACTUAL_AEX_TO_PRODUCTION_EXACT"
 }
