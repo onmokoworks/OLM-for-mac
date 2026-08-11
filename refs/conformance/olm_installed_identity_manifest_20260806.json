@@ -6,10 +6,10 @@
     "stable_consecutive_collections": 2,
     "universal_exact": true
   },
-  "accepted_at": "2026-08-11T15:21:57.162699+00:00",
+  "accepted_at": "2026-08-11T15:52:45.872703+00:00",
   "claim_boundary": "Exact installed executable identity, arm64+x86_64 architectures, valid strict code signature, and byte identity with the named local build product. No AE load, UI, or render claim.",
   "configuration": "Debug",
-  "installed_after": "2026-08-11T15:21:57.162699+00:00",
+  "installed_after": "2026-08-11T15:52:45.872703+00:00",
   "plugins": [
     {
       "architectures": [
@@ -50,10 +50,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMColorKey.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMColorKey",
-      "sha256": "b3197031a3fa72a490b4f5220ec8289fe1fd6b2bc8044167800569d3c8ea9265",
+      "sha256": "8311ee26ac1557b0a261cb08ebefccfc7552690d356d94fb584f0b2629994d6c",
       "source_bundle": "mac/OLMColorKey/Mac/build/Debug/OLMColorKey.plugin",
       "source_installed_exact": true,
-      "source_sha256": "b3197031a3fa72a490b4f5220ec8289fe1fd6b2bc8044167800569d3c8ea9265",
+      "source_sha256": "8311ee26ac1557b0a261cb08ebefccfc7552690d356d94fb584f0b2629994d6c",
       "universal_exact": true
     },
     {
@@ -95,10 +95,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMKiraKira",
-      "sha256": "0c008e436d9174822178e7b13365a65d80a44ba8f09acae360a7c09900e4f12e",
+      "sha256": "4b14115ffd4bc064a7370aa50df6c3ff5a314860ee66426aa41f165de310674f",
       "source_bundle": "mac/OLMKiraKira/Mac/build/Debug/OLMKiraKira.plugin",
       "source_installed_exact": true,
-      "source_sha256": "0c008e436d9174822178e7b13365a65d80a44ba8f09acae360a7c09900e4f12e",
+      "source_sha256": "4b14115ffd4bc064a7370aa50df6c3ff5a314860ee66426aa41f165de310674f",
       "universal_exact": true
     },
     {
@@ -110,10 +110,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMRadialBlur",
-      "sha256": "849f1134d8f57c11a0f091b0c95f53981f257ec45763dd993f6295238709c548",
+      "sha256": "1ea2620b67829215391281edb0f3e98ab1384920d903f8052a53137f7d2314fe",
       "source_bundle": "mac/OLMRadialBlur/Mac/build/Debug/OLMRadialBlur.plugin",
       "source_installed_exact": true,
-      "source_sha256": "849f1134d8f57c11a0f091b0c95f53981f257ec45763dd993f6295238709c548",
+      "source_sha256": "1ea2620b67829215391281edb0f3e98ab1384920d903f8052a53137f7d2314fe",
       "universal_exact": true
     },
     {
