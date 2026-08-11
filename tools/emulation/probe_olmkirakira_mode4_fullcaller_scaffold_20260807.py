@@ -97,7 +97,8 @@ def load_base():
 
 
 def main(natural: bool = False, natural_slot: int = 1,
-         natural_length: int = 5, natural_rotation: int = 0) -> int:
+         natural_length: int = 5, natural_rotation: int = 0,
+         highlight_gradient: bool = False, allow_ray_mismatch: bool = False) -> int:
     base = load_base()
     observed: dict[str, object] = {"fullcaller_entries": 0, "vtable_calls": []}
     width, height = (5, 3) if natural else (4, 1)
@@ -180,7 +181,7 @@ def main(natural: bool = False, natural_slot: int = 1,
             if not source or not source.get("values_f32"):
                 raise RuntimeError("source Mat unavailable")
             values = flatten_mat_rows(source["values_f32"])
-            if natural and natural_slot == 4:
+            if natural and natural_slot == 4 and not highlight_gradient:
                 # A constant natural source isolates Highlight's full-caller
                 # ownership without conflating OpenCV's non-associative box
                 # accumulation seam with the same-run binding gate.
@@ -278,7 +279,14 @@ def main(natural: bool = False, natural_slot: int = 1,
                     ], check=True)
                     portable_ray = [f"0x{int(line, 16):x}" for line in subprocess.check_output([str(executable)], text=True).splitlines()]
             observed["portable_ray"] = portable_ray
-            if portable_ray != actual_ray:
+            ray_differences = [
+                {"word": index, "actual": actual, "portable": portable,
+                 "ulp": abs(int(actual, 16) - int(portable, 16))}
+                for index, (actual, portable) in enumerate(zip(actual_ray, portable_ray))
+                if actual != portable
+            ]
+            observed["ray_differences"] = ray_differences
+            if ray_differences and not allow_ray_mismatch:
                 raise AssertionError({"actual_ray": actual_ray, "portable_ray": portable_ray})
 
             owner = self.host_alloc(0x200, align=16)
@@ -327,7 +335,7 @@ def main(natural: bool = False, natural_slot: int = 1,
                 "final_pf8_bytes": len(values) * 4,
                 "final_pf16_bytes": len(values) * 8,
                 "final_pf32_bytes": len(values) * 16,
-                "max_ulp": 0,
+                "max_ulp": max((item["ulp"] for item in ray_differences), default=0),
             }
             observed["output_buffers"] = {
                 "scratch_u32": [hex(value) for value in struct.unpack(f"<{len(values) * 4}I", self.read_bytes(scratch, len(values) * 16))],
@@ -386,7 +394,7 @@ def main(natural: bool = False, natural_slot: int = 1,
         "fixture": {
             "dimensions": [width, height],
             "source_rgba": ([[0.25, 0.25, 0.25, 1.0] for _ in range(pixel_count)]
-                            if natural and natural_slot == 4 else
+                            if natural and natural_slot == 4 and not highlight_gradient else
                             [[index / 17.0] * 3 + [1.0] for index in range(pixel_count)]),
             "blur_mode": 4,
             "directional_lengths": ([natural_length if index == natural_slot else 0 for index in range(4)]
@@ -402,6 +410,7 @@ def main(natural: bool = False, natural_slot: int = 1,
                 "portable_ray_u32": observed["portable_ray"],
                 "same_run_seed_f32": observed["same_run_seed"],
                 "same_run_direction": direction,
+                "ray_differences": observed["ray_differences"],
             } if natural else {
                 "highlight_plane_u32": observed["aggregate_entry"]["ray_words"][4],
             }),
