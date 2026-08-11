@@ -154,7 +154,7 @@ def fixture(depth):
     return bytes(payload), rowbytes
 
 
-def actual(depth, payload, rowbytes, use_key, tolerance, code):
+def actual(depth, payload, rowbytes, use_key, tolerance, code, diagnostics=False):
     loader = AexLoader(str(AEX), verbose=False, fast=True)
     trace = []
     guest = 0x83000000
@@ -235,9 +235,19 @@ def actual(depth, payload, rowbytes, use_key, tolerance, code):
     main_entry = 0x1800095B0 if depth == 8 else 0x180009470
     loader.add_code_hook(mask_entry, lambda *_: trace.append("mask"))
     loader.add_code_hook(main_entry, lambda *_: trace.append("main"))
+    # These are the natural classifier and interpolation-executor entries used
+    # below the PF16 main callback.  Keep them available to larger geometry
+    # fixtures without changing the compact historical report schema.
+    if diagnostics and depth == 16:
+        loader.add_code_hook(0x180006A90, lambda *_: trace.append("classifier"))
+        loader.add_code_hook(0x180005F60, lambda *_: trace.append("executor"))
     result = loader.call_function(ENTRY, [11, indata, outdata, parameter_array, output, 0], max_instructions=100_000_000)
     assert result["rax"] == 0
-    return loader.read_bytes(output_data, rowbytes * H), trace
+    rendered = loader.read_bytes(output_data, rowbytes * H)
+    if diagnostics:
+        source_data = u64(loader, input_world + 0x18)
+        return rendered, trace, loader.read_bytes(source_data, rowbytes * H)
+    return rendered, trace
 
 
 def build_production():

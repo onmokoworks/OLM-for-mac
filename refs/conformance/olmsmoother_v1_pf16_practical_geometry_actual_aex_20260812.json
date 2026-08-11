@@ -1,0 +1,252 @@
+{
+  "actual_aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+  "claims_not_made": [
+    "native PF32 arithmetic",
+    "AE 32bpc host conversion",
+    "arbitrary geometry or parameter combinations",
+    "AE host/export color management"
+  ],
+  "fixture": {
+    "alpha_codes": [
+      0,
+      1,
+      17,
+      32,
+      63,
+      64,
+      95,
+      127,
+      128,
+      159,
+      191,
+      223,
+      254,
+      255
+    ],
+    "dimensions": [
+      64,
+      36
+    ],
+    "key_islands": "four corners and center",
+    "key_rgb8": [
+      202,
+      187,
+      230
+    ],
+    "padding_bytes_per_row": 32,
+    "rgb": "independent affine colored channels clamped to alpha (premultiplied-valid)"
+  },
+  "invariants": {
+    "actual_and_production_inputs_unchanged": true,
+    "actual_and_production_raw_exact": true,
+    "all_cells_nonvacuous": true,
+    "classifier_mask_main_writer_observed": true,
+    "output_padding_preserved": true,
+    "writer_boundary": "iterate-suite per-pixel destination writer following the main callback"
+  },
+  "practical_cases": [
+    {
+      "active_sha256": "ffdba9f74bbd0ab992ce2d8d71a66763e50b6bb7f53661c3d59948ab1970d765",
+      "actual_input_unchanged": true,
+      "actual_production_raw_exact": true,
+      "changed_active_bytes_from_input": 13348,
+      "dimensions": [
+        64,
+        36
+      ],
+      "input_sha256": "ee8cf51898b34ffdba72b76da8128975f8e3dc6cd5a36493a841e6e075d536c2",
+      "output_padding_exact": true,
+      "production_input_unchanged": true,
+      "raw_sha256": "c8224dc525ced8574eabefa1956904f288f3dfbafb5ff9f0bb12782b92bc0ce0",
+      "rowbytes": 544,
+      "tolerance": 6,
+      "trace_counts": {
+        "classifier": 9216,
+        "executor": 0,
+        "main": 2304,
+        "mask": 0,
+        "writer": 2304
+      },
+      "use_key": 0
+    },
+    {
+      "active_sha256": "3342aadaa3a4d1ed9981ae059ed8a327736ab3b019e4d0088ef9655a60d61fcf",
+      "actual_input_unchanged": true,
+      "actual_production_raw_exact": true,
+      "changed_active_bytes_from_input": 1772,
+      "dimensions": [
+        64,
+        36
+      ],
+      "input_sha256": "ee8cf51898b34ffdba72b76da8128975f8e3dc6cd5a36493a841e6e075d536c2",
+      "output_padding_exact": true,
+      "production_input_unchanged": true,
+      "raw_sha256": "a62950924b3beedf959ae65f0ad66b00f0ec0db26a5931c6d4bf8173e89286ab",
+      "rowbytes": 544,
+      "tolerance": 127,
+      "trace_counts": {
+        "classifier": 9216,
+        "executor": 140,
+        "main": 2304,
+        "mask": 0,
+        "writer": 2304
+      },
+      "use_key": 0
+    },
+    {
+      "active_sha256": "f14a3bc45cf084ba35d63a374bd99c869b962815da9c2b3147f5346f17955585",
+      "actual_input_unchanged": true,
+      "actual_production_raw_exact": true,
+      "changed_active_bytes_from_input": 13360,
+      "dimensions": [
+        64,
+        36
+      ],
+      "input_sha256": "ee8cf51898b34ffdba72b76da8128975f8e3dc6cd5a36493a841e6e075d536c2",
+      "output_padding_exact": true,
+      "production_input_unchanged": true,
+      "raw_sha256": "14f70cd8d51a3ae795317cf543b9228912acfbfd1beba906dc575060bfd45cb5",
+      "rowbytes": 544,
+      "tolerance": 6,
+      "trace_counts": {
+        "classifier": 9216,
+        "executor": 0,
+        "main": 2304,
+        "mask": 2304,
+        "writer": 2304
+      },
+      "use_key": 1
+    },
+    {
+      "active_sha256": "e8d854a53288a62a0eff2e209590364e3022c87c96512a60a761499a66615e53",
+      "actual_input_unchanged": true,
+      "actual_production_raw_exact": true,
+      "changed_active_bytes_from_input": 1791,
+      "dimensions": [
+        64,
+        36
+      ],
+      "input_sha256": "ee8cf51898b34ffdba72b76da8128975f8e3dc6cd5a36493a841e6e075d536c2",
+      "output_padding_exact": true,
+      "production_input_unchanged": true,
+      "raw_sha256": "b2b518dec0d5d35201d316339a45517b2101ba10e9654b01b3bcf1fc300f7ef8",
+      "rowbytes": 544,
+      "tolerance": 127,
+      "trace_counts": {
+        "classifier": 9216,
+        "executor": 139,
+        "main": 2304,
+        "mask": 2304,
+        "writer": 2304
+      },
+      "use_key": 1
+    }
+  ],
+  "production_entry": "public EffectMain(PF_Cmd_RENDER)",
+  "schema_version": 1,
+  "scope": "PF16 padded 64x36 colored fractional-alpha; Color Key off/on x Do Smooth Range 6/127; actual exported Windows AEX versus production public EffectMain",
+  "small_controls": [
+    {
+      "active_sha256": "651f87c8fddcc0003e08acd077bd3d05b82b17704a23b52e41c3ed0533bad6be",
+      "actual_input_unchanged": true,
+      "actual_production_raw_exact": true,
+      "changed_active_bytes_from_input": 211,
+      "dimensions": [
+        7,
+        5
+      ],
+      "input_sha256": "75b78f84b8f225c740c7edc192d0ee6b1f961ca2147783f09fbe817417a146df",
+      "output_padding_exact": true,
+      "production_input_unchanged": true,
+      "raw_sha256": "79b716a8479d07ce055fc94dff48a0d987a190622624ca9c964f0a40172496aa",
+      "rowbytes": 64,
+      "tolerance": 6,
+      "trace_counts": {
+        "classifier": 140,
+        "executor": 0,
+        "main": 35,
+        "mask": 0,
+        "writer": 35
+      },
+      "use_key": 0
+    },
+    {
+      "active_sha256": "9bf84de22bd6986b007b569b4029345dd02e732be0fd474e1fd4660df732e48e",
+      "actual_input_unchanged": true,
+      "actual_production_raw_exact": true,
+      "changed_active_bytes_from_input": 15,
+      "dimensions": [
+        7,
+        5
+      ],
+      "input_sha256": "75b78f84b8f225c740c7edc192d0ee6b1f961ca2147783f09fbe817417a146df",
+      "output_padding_exact": true,
+      "production_input_unchanged": true,
+      "raw_sha256": "da860c4d4ea0a948823c31c77d3c71e96076919c2abb426c61a0af0a2c963931",
+      "rowbytes": 64,
+      "tolerance": 127,
+      "trace_counts": {
+        "classifier": 140,
+        "executor": 0,
+        "main": 35,
+        "mask": 0,
+        "writer": 35
+      },
+      "use_key": 0
+    },
+    {
+      "active_sha256": "1afcd0077944d8f2d1571d5f9d389854311075599e6b0b4c8c0b56fc22f63ffc",
+      "actual_input_unchanged": true,
+      "actual_production_raw_exact": true,
+      "changed_active_bytes_from_input": 242,
+      "dimensions": [
+        7,
+        5
+      ],
+      "input_sha256": "75b78f84b8f225c740c7edc192d0ee6b1f961ca2147783f09fbe817417a146df",
+      "output_padding_exact": true,
+      "production_input_unchanged": true,
+      "raw_sha256": "2d17e9fbcd3d63c9f217cdb76bfa4429058038d1de2d6eff4a18ac462b51d6ce",
+      "rowbytes": 64,
+      "tolerance": 6,
+      "trace_counts": {
+        "classifier": 140,
+        "executor": 0,
+        "main": 35,
+        "mask": 35,
+        "writer": 35
+      },
+      "use_key": 1
+    },
+    {
+      "active_sha256": "08459bd4baaf2489687c6c6a73108165c1c021d8ea9d8357703100f2c5e90a86",
+      "actual_input_unchanged": true,
+      "actual_production_raw_exact": true,
+      "changed_active_bytes_from_input": 46,
+      "dimensions": [
+        7,
+        5
+      ],
+      "input_sha256": "75b78f84b8f225c740c7edc192d0ee6b1f961ca2147783f09fbe817417a146df",
+      "output_padding_exact": true,
+      "production_input_unchanged": true,
+      "raw_sha256": "993cf536901f47631e7ebcb1cff8bb6c60feeed0e9c00bdedc7772bd8f7255fa",
+      "rowbytes": 64,
+      "tolerance": 127,
+      "trace_counts": {
+        "classifier": 140,
+        "executor": 0,
+        "main": 35,
+        "mask": 35,
+        "writer": 35
+      },
+      "use_key": 1
+    }
+  ],
+  "status": "exact",
+  "summary": {
+    "exact_practical_cells": 4,
+    "exact_small_control_cells": 4
+  },
+  "verdict": "PASS_V1_PF16_PRACTICAL_GEOMETRY_4_CELLS_EXACT"
+}

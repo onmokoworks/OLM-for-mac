@@ -258,6 +258,7 @@ LANES = (
             (sys.executable, "tools/emulation/test_olmsmoother_v1_colorcompare16_colored_actual_aex_20260811.py"),
             (sys.executable, "tools/emulation/test_olmsmoother_v1_classifier16_colored_actual_aex_20260811.py"),
             (sys.executable, "tools/emulation/test_olmsmoother_v1_colored_fractional_alpha_actual_aex_20260811.py"),
+            (sys.executable, "tools/emulation/test_olmsmoother_v1_pf16_practical_geometry_actual_aex_20260812.py"),
             (sys.executable, "tools/emulation/test_olmsmoother_v1_retained_case05_pf8_colorkey_fullframe_actual_20260805.py"),
             (sys.executable, "tools/emulation/test_olmsmoother_v1_retained_case01_pf8_owner_and_host_boundary_20260806.py"),
         ),
