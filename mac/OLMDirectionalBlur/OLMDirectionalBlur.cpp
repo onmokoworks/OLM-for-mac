@@ -722,7 +722,9 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			     info.front_alpha_fade == 100) && info.front_sharp_tail == 0.0) ||
 			   (info.front_alpha_fade == 0 &&
 			    (info.front_sharp_tail == 0.0 || info.front_sharp_tail == 50.0 ||
-			     info.front_sharp_tail == 100.0)))) ||
+			     info.front_sharp_tail == 100.0)) ||
+			   ((info.front_alpha_fade == 50 || info.front_alpha_fade == 100) &&
+			    (info.front_sharp_tail == 50.0 || info.front_sharp_tail == 100.0)))) ||
 			 (info.front_strength == 0 && info.back_strength == 8 &&
 			  info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0 &&
 			  (((info.back_alpha_fade == 0 || info.back_alpha_fade == 50 ||
@@ -730,7 +732,13 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			   (info.back_alpha_fade == 0 &&
 			    (info.back_sharp_tail == 0.0 || info.back_sharp_tail == 50.0 ||
 			     info.back_sharp_tail == 100.0)) ||
-			   (info.back_alpha_fade == 50 && info.back_sharp_tail == 50.0))));
+			   ((info.back_alpha_fade == 50 || info.back_alpha_fade == 100) &&
+			    (info.back_sharp_tail == 50.0 || info.back_sharp_tail == 100.0)))));
+		const bool fade_sharp_cross_exact = pf16_fade_sharp_family_exact &&
+			((info.front_alpha_fade == 50 || info.front_alpha_fade == 100) &&
+			 (info.front_sharp_tail == 50.0 || info.front_sharp_tail == 100.0) ||
+			 (info.back_alpha_fade == 50 || info.back_alpha_fade == 100) &&
+			 (info.back_sharp_tail == 50.0 || info.back_sharp_tail == 100.0));
 		const bool pf16_size_variation_exact =
 			input && output && input->width == 16 && input->height == 16 &&
 			output->width == 16 && output->height == 16 &&
@@ -793,7 +801,7 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			 (noise_layer && noise_layer->data && noise_layer->width == input->width &&
 			  noise_layer->height == input->height &&
 			  noise_layer->rowbytes >= input->width * static_cast<A_long>(sizeof(PF_Pixel16))));
-		const bool pf16_full_exact = pf16_fade_sharp_family_exact ||
+		const bool pf16_full_exact = pf16_fade_sharp_family_exact || fade_sharp_cross_exact ||
 			pf16_size_variation_exact || pf16_size_fade_cross_exact ||
 			pf16_size_sharp_cross_exact || pf16_size_back_cross_exact ||
 			pf16_noise_size_exact || noise_public_pairwise_exact;
@@ -911,19 +919,26 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			output->width == 16 && output->height == 16 &&
 			info.size_variation == 0.0 && info.noise_variation == 0.0 &&
 			info.angle_deg == 45.0 && info.brightness_gain == 1.0 &&
-			info.front_alpha_fade == 0 &&
 			((info.front_strength == 8 && info.back_strength == 0 &&
 			  (info.front_sharp_tail == 0.0 || info.front_sharp_tail == 50.0 ||
-			   info.front_sharp_tail == 100.0) && info.back_alpha_fade == 0 &&
+			   info.front_sharp_tail == 100.0) &&
+			  (info.front_alpha_fade == 0 || info.front_alpha_fade == 50 ||
+			   info.front_alpha_fade == 100) && info.back_alpha_fade == 0 &&
 			  info.back_sharp_tail == 0.0) ||
 			 (info.front_strength == 0 && info.back_strength == 8 &&
-			  info.front_sharp_tail == 0.0 &&
+			  info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0 &&
 			  (((info.back_alpha_fade == 0 || info.back_alpha_fade == 50 ||
 			     info.back_alpha_fade == 100) && info.back_sharp_tail == 0.0) ||
 			   (info.back_alpha_fade == 0 &&
 			    (info.back_sharp_tail == 0.0 || info.back_sharp_tail == 50.0 ||
 			     info.back_sharp_tail == 100.0)) ||
-			   (info.back_alpha_fade == 50 && info.back_sharp_tail == 50.0))));
+			   ((info.back_alpha_fade == 50 || info.back_alpha_fade == 100) &&
+			    (info.back_sharp_tail == 50.0 || info.back_sharp_tail == 100.0)))));
+		const bool fade_sharp_cross_exact = sharp_back_family_exact &&
+			((info.front_alpha_fade == 50 || info.front_alpha_fade == 100) &&
+			 (info.front_sharp_tail == 50.0 || info.front_sharp_tail == 100.0) ||
+			 (info.back_alpha_fade == 50 || info.back_alpha_fade == 100) &&
+			 (info.back_sharp_tail == 50.0 || info.back_sharp_tail == 100.0));
 		const bool pf32_noise_size_exact =
 			input && output && input->width == 16 && input->height == 16 &&
 			output->width == 16 && output->height == 16 &&
@@ -984,7 +999,7 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			(info.front_alpha_fade == 0 || front_alpha_fade_exact ||
 			 front_fade_size_combination_exact || fade_noise_type1_combination_exact ||
 			 pf32_size_coeff_cross_exact || noise_public_pairwise_exact) &&
-			(info.front_sharp_tail == 0.0 || sharp_back_family_exact ||
+			 (info.front_sharp_tail == 0.0 || sharp_back_family_exact || fade_sharp_cross_exact ||
 			 pf32_size_coeff_cross_exact || noise_public_pairwise_exact) &&
 			((info.back_strength == 0 || info.back_strength == 1) || sharp_back_family_exact ||
 			 pf32_size_coeff_cross_exact) &&

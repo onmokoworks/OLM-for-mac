@@ -1,0 +1,276 @@
+{
+  "admission": "Only these 24 fixed-route cells are newly admitted; neighboring values and higher-order intersections remain fail-closed.",
+  "depths": [
+    "PF8",
+    "PF16",
+    "PF32"
+  ],
+  "fixed_route": {
+    "angle": 45,
+    "brightness_gain": 1,
+    "geometry": "16x16 padded",
+    "noise_variation": 0,
+    "render_scale": [
+      1,
+      1
+    ],
+    "size_variation": 0
+  },
+  "matrix": {
+    "alpha_fade": [
+      50,
+      100
+    ],
+    "sharp_tail": [
+      50,
+      100
+    ],
+    "side": [
+      "front",
+      "back"
+    ]
+  },
+  "not_proven": [
+    "other values or geometry",
+    "front and back simultaneously nonzero",
+    "size/noise intersections",
+    "native AE export"
+  ],
+  "plugin": "OLMDirectionalBlur",
+  "representatives": [
+    {
+      "alpha_fade": 50,
+      "depth": "PF8",
+      "raw_sha256": "e9fe2b03498a56a94f0306b1424410dd7aa60f87d75db67df6222c7b4a95bd3d",
+      "sharp_tail": 50,
+      "side": "front"
+    },
+    {
+      "alpha_fade": 50,
+      "depth": "PF8",
+      "raw_sha256": "46c83dba3286a2493c6182a2274384532f83718f12ad0107743cc8a5f383a032",
+      "sharp_tail": 100,
+      "side": "front"
+    },
+    {
+      "alpha_fade": 100,
+      "depth": "PF8",
+      "raw_sha256": "2fbf677a6e9e030ab11109152ceee0a4d7f011fcf57bb016fccf20642576834f",
+      "sharp_tail": 50,
+      "side": "front"
+    },
+    {
+      "alpha_fade": 100,
+      "depth": "PF8",
+      "raw_sha256": "5c4aa6346751fb34d9843eb7048741a873984115fa10bb08365aa0ad12f34855",
+      "sharp_tail": 100,
+      "side": "front"
+    },
+    {
+      "alpha_fade": 50,
+      "depth": "PF8",
+      "raw_sha256": "3039ac6a518205fce2e0b7936e597499f2594cf00ae1f8b41d191079016c3b05",
+      "sharp_tail": 50,
+      "side": "back"
+    },
+    {
+      "alpha_fade": 50,
+      "depth": "PF8",
+      "raw_sha256": "32f77b828b4b8e57fc12d1fc9d1b3caae507d610c115b5d3d6b7a56cbf4e2a4c",
+      "sharp_tail": 100,
+      "side": "back"
+    },
+    {
+      "alpha_fade": 100,
+      "depth": "PF8",
+      "raw_sha256": "3d1281169f04f93503c78c1e6e771f3d1d09b50d7427d6c4240add7239212b45",
+      "sharp_tail": 50,
+      "side": "back"
+    },
+    {
+      "alpha_fade": 100,
+      "depth": "PF8",
+      "raw_sha256": "0c2a0e57b92c42a2f43accd7914ff69363c979cc5c817971f49ad14a2461d073",
+      "sharp_tail": 100,
+      "side": "back"
+    },
+    {
+      "alpha_fade": 50,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "raw_sha256": "6e475fd911f229b43a032fa2c07654aff61f3c66ed84f54ee3997ba648b34ec7",
+      "sharp_tail": 50,
+      "side": "front"
+    },
+    {
+      "alpha_fade": 50,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "raw_sha256": "1a508a103030e8e8c4291c2ea363d85f27099ee9391802238d19f82d0115310c",
+      "sharp_tail": 100,
+      "side": "front"
+    },
+    {
+      "alpha_fade": 100,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "raw_sha256": "aa7fe8ad6d20d59062300e86763e189b86166b1dd820321468b0f746fcd88e2e",
+      "sharp_tail": 50,
+      "side": "front"
+    },
+    {
+      "alpha_fade": 100,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "raw_sha256": "9ed60aab4892f7bf6ac7454601242cf7130de1a178f056ca1152f496b9ecf3e5",
+      "sharp_tail": 100,
+      "side": "front"
+    },
+    {
+      "alpha_fade": 50,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "raw_sha256": "12d452e97a91864b9a03fea3d6d7e0fd625a6f29026e5d155d0d1a1423e56d70",
+      "sharp_tail": 50,
+      "side": "back"
+    },
+    {
+      "alpha_fade": 50,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "raw_sha256": "cd7eb4e44ded46bfa8c367ca18c892ef10452c47f8a897e78a64059678845707",
+      "sharp_tail": 100,
+      "side": "back"
+    },
+    {
+      "alpha_fade": 100,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "raw_sha256": "24809bd83aca1ba5a0c73b391d7f3a2369ad0d7b83198922698f94b2addb9fea",
+      "sharp_tail": 50,
+      "side": "back"
+    },
+    {
+      "alpha_fade": 100,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "raw_sha256": "3e2792a7feaf0f83d8f08550d2b18dfdee1198da545c428390596ffdc8b978ca",
+      "sharp_tail": 100,
+      "side": "back"
+    },
+    {
+      "alpha_fade": 50,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "depth": "PF32",
+      "raw_sha256": "d91f1959a1eebd569a996a444a5580ad19350357a31887c6fcc985631049dfbd",
+      "sharp_tail": 50,
+      "side": "front"
+    },
+    {
+      "alpha_fade": 50,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "depth": "PF32",
+      "raw_sha256": "d22b254b24918e45e653b0f6838365d47b64322b37a889adccc4833acb84b7da",
+      "sharp_tail": 100,
+      "side": "front"
+    },
+    {
+      "alpha_fade": 100,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "depth": "PF32",
+      "raw_sha256": "d9e26bca3694f0a7a20436bac3252c1fe6aacce2991dd3daff9df83fbf1955e8",
+      "sharp_tail": 50,
+      "side": "front"
+    },
+    {
+      "alpha_fade": 100,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "depth": "PF32",
+      "raw_sha256": "9625793042f60cdb3a7edb9d062b177a22e315622f34c088d668212ea56df9f5",
+      "sharp_tail": 100,
+      "side": "front"
+    },
+    {
+      "alpha_fade": 50,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "depth": "PF32",
+      "raw_sha256": "fa2f3424e0e2fd4cb350a4388afcaf4a8187cbf9576a0720874104371f166cdc",
+      "sharp_tail": 50,
+      "side": "back"
+    },
+    {
+      "alpha_fade": 50,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "depth": "PF32",
+      "raw_sha256": "b2032a12a13e7fdfa139ea388547aad54f3f9f0beaf83d5a31e8d4a73b5c3dc2",
+      "sharp_tail": 100,
+      "side": "back"
+    },
+    {
+      "alpha_fade": 100,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "depth": "PF32",
+      "raw_sha256": "5996a52cc4ae2119616eb4b7eb439270074e52b010f48bd06bc420d37757a624",
+      "sharp_tail": 50,
+      "side": "back"
+    },
+    {
+      "alpha_fade": 100,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "depth": "PF32",
+      "raw_sha256": "39815212fbbdfe86e342472a15b49a73149f54fd0ce5ac9bafec3b9b55783185",
+      "sharp_tail": 100,
+      "side": "back"
+    }
+  ],
+  "schema_version": 1,
+  "status": "exact_bounded_crosses"
+}
