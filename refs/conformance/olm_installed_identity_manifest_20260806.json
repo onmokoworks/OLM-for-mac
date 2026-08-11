@@ -6,10 +6,10 @@
     "stable_consecutive_collections": 2,
     "universal_exact": true
   },
-  "accepted_at": "2026-08-11T16:50:56.400887+00:00",
+  "accepted_at": "2026-08-11T17:26:43.590999+00:00",
   "claim_boundary": "Exact installed executable identity, arm64+x86_64 architectures, valid strict code signature, and byte identity with the named local build product. No AE load, UI, or render claim.",
   "configuration": "Debug",
-  "installed_after": "2026-08-11T16:50:56.400887+00:00",
+  "installed_after": "2026-08-11T17:26:43.590999+00:00",
   "plugins": [
     {
       "architectures": [
@@ -65,10 +65,10 @@
       "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin",
       "installed_bundle_count": 1,
       "plugin": "OLMDirectionalBlur",
-      "sha256": "6f2d1b3e9ffb826665e52d42629fd210ad9cf5cd6b9a70a4f035777e2d55cbaf",
+      "sha256": "f9c914b6fd30b4715d3c469859f2271b0bcdbadd72a15724438cffbf61b09940",
       "source_bundle": "mac/OLMDirectionalBlur/Mac/build/Debug/OLMDirectionalBlur.plugin",
       "source_installed_exact": true,
-      "source_sha256": "6f2d1b3e9ffb826665e52d42629fd210ad9cf5cd6b9a70a4f035777e2d55cbaf",
+      "source_sha256": "f9c914b6fd30b4715d3c469859f2271b0bcdbadd72a15724438cffbf61b09940",
       "universal_exact": true
     },
     {
