@@ -41,8 +41,8 @@ def main() -> int:
         "five_layer_order": source.index("AddColoredMerge2(glow, vertical")
         < source.index("AddColoredMerge2(glow, horizontal")
         < source.index("AddColoredMerge2(glow, diagonal,")
-        < source.index("AddColoredMerge2(glow, highlight")
-        < source.index("AddColoredMerge2(glow, diagonal2"),
+        < source.index("AddColoredMerge2(glow, diagonal2")
+        < source.index("AddColoredMerge2(glow, highlight"),
         "strict_skip_boundary": "if (amount[i] <= 0.001f)" in core,
         "raw_ray_alpha": "glow[i].a += amount[i];" in core,
         "post_five_layer_clamp": all(f"g.{c} = Clamp01(g.{c});" in source for c in "rgba"),
