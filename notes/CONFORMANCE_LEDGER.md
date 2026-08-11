@@ -1,5 +1,16 @@
 # OLM Conformance Ledger
 
+- 2026-08-11 four bounded family closures: OLMSmoother2 palette
+  count/reorder/duplicate crossed with key polarity and all depths is 18/18
+  raw exact. OLMKiraKira closes four additional natural Mode 4 sources and
+  12 typed outputs at max ULP 0; Highlight gradient retains a 2/15-word,
+  one-ULP seam and remains constant-source-only. OLMDirectionalBlur's
+  simultaneous Front+Back family is also 12/12 raw exact at fixed 32x18,
+  with 32 rowdriver calls; other geometry, Type 3, and unlisted tuples stay
+  fail-closed. OLMBlur's exported EffectMain Smart chain is active and
+  output/padding exact for 6/6 all-depth cases; this does not promote classic
+  entrypoint or arbitrary-parameter equality.
+
 - 2026-08-11 OLMRadialBlur non-neutral transform/worker closure and install:
   three declared tuples cross Zoom/Rotation and PF8/PF16/PF32 for 18/18
   actual-AEX exact cases: ratio 2/angle 30 plus Edge 50; Quality 3,
@@ -394,6 +405,22 @@
   geometry differential for the two controls, not Mac AE parameter binding,
   full-frame output, modes 2/3, or AE exactness. Evidence:
   `refs/conformance/olmdirectionalblur_angle0_diagonal_actual_aex_port_differential_20260718.md`.
+
+- 2026-08-05 `OLMDirectionalBlur 8bpc front-only readiness correction`
+  (latest override): no correctness status is promoted. The readiness audit
+  previously consumed the superseded blocked checkpoint
+  `olmdirectionalblur_iterate8_continuation_transform_20260717.json` even
+  though the independently reviewed continuation artifact had already reached
+  a live downstream AEX write, rotate-back, and the real `0x180006b30` output
+  callback with no missing checkpoint. The audit now consumes
+  `olmdirectionalblur_natural_continuation_20260718.json` and reports bounded
+  front-only readiness, local full-frame readiness, and narrow Mac AE
+  validation readiness as true. This permits the existing one-case Mac AE
+  validation package to run; it does not make the lane `AE exact`, does not
+  cover modes 2/3 or 16/32bpc, and does not authorize PNG-driven tuning.
+  Evidence:
+  `refs/conformance/olmdirectionalblur_fullframe_readiness_20260718.md` and
+  `refs/conformance/olmdirectionalblur_natural_continuation_review_20260718.md`.
 
 - 2026-07-18 `OLMSmoother2 observed PF8 writer-frame replay` (latest
   override): no correctness status is promoted. Replaying the retained

@@ -54,14 +54,14 @@ Windowsとのpixel exactや主要パラメーター一致を追加で証明す�
 
 | プラグイン | 主な対象 | native depth／扱い |
 | --- | --- | --- |
-| OLMBlur | Legacy／NonLegacy、repeat、bias | PF8／PF16／PF32 |
+| OLMBlur | Legacy／NonLegacy、repeat、bias、記録済みSmart chain | PF8／PF16／PF32 |
 | ColorKeep | 有効／無効、tolerance、1〜100色 | PF8／PF16／PF32 |
 | OLMColorKey | core、Edge Thin、Edge Blur、replace／color space、記録済み半透明51-cell matrix | PF8／PF16／PF32（限定範囲） |
 | OLMToonDilate | copy／dilate、radius、frontier／tie／corner | PF8／PF16／PF32 |
 | OLMDistanceGradation | Inside／Outside／Both、補間、invert、background、記録済みblur／bilateral matrix | PF8／PF16／PF32（限定範囲） |
 | OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3、記録済みfront＋back複合経路 | PF8／PF16／PF32（限定範囲） |
 | OLMRadialBlur | Zoom／Rotation／Inner、記録済みtransform／worker複合経路 | PF8／PF16／PF32（bounded guard付き） |
-| OLMSmoother2 | v1／v2 classifier、key／invert、Gamma、range、palette、記録済み交差 | PF8／PF16／PF32（限定範囲） |
+| OLMSmoother2 | v1／v2 classifier、key／invert、Gamma、range、palette交差 | PF8／PF16／PF32（限定範囲） |
 | OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur、記録済みnatural Mode 4 | PF8／PF16／PF32（限定範囲） |
 | OLMSmoother v1 | no-key／Color Key、smoothing range | native PF8／PF16。32bpcはAE host conversion |
 
