@@ -94,6 +94,11 @@
   Mode 1／2／3 public ownerのRotation 1°は3深度9／9 raw exactです。AEXCompatの
   raw fixed解釈修正を含む限定証拠で、Mode 2 PF32 Rotation 22°には残差があり、
   任意rotationへは一般化しません。
+  Mode 4 Highlight soloは3深度exactですが、Horizontal／Diagonal2 soloのPF32と
+  Diagonal2 multiray全深度はfail-closeです。Rotation 22°はray exact後のRamp
+  aggregate 3 words／writer 1 word、Highlight gradientはbox ray 2 wordsに
+  1 ULP seamがあります。以後のstageまたはconstant sourceはexactでも、これらを
+  全体Exactとは表現せず、期待word補正も行いません。
 - OLMSmoother v1：元AEXのnative depthはPF8/PF16です。32bpcプロジェクトではAEが
   classic integer pluginの前後を変換するため、native PF32互換とは表現しません。
 

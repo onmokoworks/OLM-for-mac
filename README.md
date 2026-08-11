@@ -74,7 +74,8 @@ fail-closeです。個別セルの成功を任意入力やWindows／Mac AE pixel
 geometry、入力、値、分岐境界だけが証明対象です。範囲外はリリースノートに明記し、
 実装側でも可能な箇所はfail-closeにしています。
 
-現在の主な残課題は、OLMKiraKira Mode 2 PF32のRotation 22°残差、
+現在の主な残課題は、OLMKiraKira Mode 4 PF32 solo／multirayとRotation 22°／
+Highlight gradientの局在済みULP seam、
 OLMDistanceGradation PF32 Mode 5の未解決6セル（matrix 58／64 exact）、OLMSmoother v1の32bpc
 AE host conversion境界、RadialBlur Layer Noise Type 3のfull-render outputです。
 AEXCompat #1162のmacOS declarative fixture runnerでworld I/Oは確認できましたが、

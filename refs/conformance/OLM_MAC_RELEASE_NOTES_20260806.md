@@ -149,6 +149,14 @@ OLMKiraKira Mode 4 PF32内部経路、OLMSmoother v1 PF16内部経路のbounded�
   AEXCompat `28d53546`で編集可能になり、Windows raw fixed 1（実処理1°）の
   Mode 1／2／3×3深度、計9／9がexactです。raw fixed値の解釈バグを修正した
   限定境界で、Mode 2 PF32 Rotation 22°には別の残差が残ります。
+  Rotation 22°ではray自体はexactですが、Ramp aggregate 3 wordsに1 ULP、
+  writer 1 wordに残差があります。期待word補正は行いません。
+- OLMKiraKira Mode 4 public owner：Highlight soloは3深度3／3 exactです。
+  Horizontal／Diagonal2 soloはPF8／PF16 exact、PF32 fail-close、Diagonal2 multirayは
+  全深度fail-closeです。未列挙ray構成へは一般化しません。
+- OLMKiraKira Highlight gradient：box rayの2 wordsに1 ULP seamがありますが、
+  その後のaggregate／typed outputはexactです。constant sourceはexactです。
+  Mac-only主要seamは局在済みですが未Exactで、期待補正は採用しません。
 - OLMSmoother v1：PF16の64×36 practical geometryでColor Key off／on、
   Do Smooth Range 6／127の4／4 raw worldがexactです。PF32 native arithmeticと
   AE 32bpc host conversionはこの主張に含めません。
@@ -206,7 +214,7 @@ notarizationは未実施であり、ダウンロード先のGatekeeperに拒否�
 | OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3；PF8／PF16／PF32限定 | PF16 Type 3 Layerは16×16の限定tuple。dual-side 4 tupleは16×16／32×18／64×36でexact。64×36はworker/public各12／12、rotated width 76・32 calls×2 rows・tail preseedを確認。他geometryへは一般化しない |
 | OLMRadialBlur | Zoom／Rotation／Inner；PF8／PF16／PF32 guard付き | PF8 centered neutral Inner Strength 1〜64などbounded複合経路はexact。Type 3 world I/O／repeatはpassしたが、generic resolver修正後もpacked 9×7 output gate未成立。新witnessまで調査停止、production fail-closeを維持 |
 | OLMSmoother2 | v1／v2 classifier、key／invert、Gamma None／All／Colors、range／extra、palette；PF8／PF16／PF32限定 | Gamma／key／smoothing 54／54とpalette交差18／18がraw exact。旧PF8 seamはLUT契約と非縮約scalar積和で解消したが、任意直積やAE hostへは一般化しない |
-| OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur；PF8／PF16／PF32限定 | Mode 1／2／3のRotation 1°は3深度9／9 exact。raw fixed解釈を修正した限定証拠で、Mode 2 PF32 Rotation 22°、任意rotation／source／gradient、全直積は未証明 |
+| OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur；PF8／PF16／PF32限定 | Mode 4 Highlight soloは3／3 exact。H／D2 solo PF8／16 exact・PF32 fail-close、D2 multiray全深度fail-close。Rotation22とgradientの1 ULP seamは局在済みだが未Exact、補正なし |
 | OLMSmoother v1 | no-key／Color Key、smoothing range；native PF8／PF16 | PF16 practical 64×36のkey off/on・Range 6/127は4／4 exact。AEXにnative PF32 callbackはなく、32bpc projectではAEがclassic integer pluginの前後をhost-convertするためnative PF32としては未証明 |
 
 残課題として、OLMDistanceGradation PF32 Mode 5はIPP field数値境界で64セル中

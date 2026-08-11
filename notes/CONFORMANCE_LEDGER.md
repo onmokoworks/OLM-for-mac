@@ -1,5 +1,14 @@
 # OLM Conformance Ledger
 
+- 2026-08-12 Kira latest bounded seams: Mode 4 public Highlight solo is 3/3
+  all-depth exact. Horizontal/Diagonal2 solo are PF8/PF16 exact and PF32
+  fail-closed; Diagonal2 multiray is fail-closed at every depth. At Rotation
+  22 degrees, the ray is exact but Ramp aggregate has three one-ULP words and
+  the writer one residual word. Highlight gradient has two one-ULP box-ray
+  words, with subsequent stages exact; constant source is exact. These major
+  Mac-only seams are localized, not closed. No expected-word correction is
+  admitted and no unlisted ray/rotation/gradient combination is promoted.
+
 - 2026-08-12 OLMDirectionalBlur 64x36 dual-side closure: worker and public
   EffectMain matrices are each 12/12 raw exact across PF8/PF16/PF32 and the
   four declared tuples. The fixture exercises rotated width 76, 32 calls on
