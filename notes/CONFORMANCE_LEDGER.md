@@ -1,5 +1,17 @@
 # OLM Conformance Ledger
 
+- 2026-08-12 Kira Mode 1 and Distance IPP boundary update:
+  OLMKiraKira Mode 1 exported/public owner is raw exact for PF8/PF16/PF32 on
+  the declared 5x3 semitransparent source, Horizontal Length 7, Rotation 0,
+  including input immutability and padding. Nondefault Rotation remains
+  fail-closed because AEXCompat ANGLE editing is unavailable; Mode 2/3 public
+  owners remain open. OLMDistanceGradation PF32 Mode 5 residuals are now
+  pinned to the OpenCV 4.5.5 IPP bilateral-produced field before final
+  compose, distinct from the classic owner's 187-word identity wrapper.
+  The matrix stays 58/64 exact with six fail-closed and no expected-word
+  correction. The related AEXCompat checkpoint is separate-repository commit
+  6561b11b. Neither result promotes Windows AE pixels or unlisted cases.
+
 - 2026-08-12 public/installed boundary update: ColorKeep installed public
   covering is 6-cell raw exact; OLMSmoother2 public EffectMain Smart chain is
   6/6 all-depth core exact (PF32 classic remains absent/fail-closed);

@@ -74,8 +74,8 @@ fail-closeです。個別セルの成功を任意入力やWindows／Mac AE pixel
 geometry、入力、値、分岐境界だけが証明対象です。範囲外はリリースノートに明記し、
 実装側でも可能な箇所はfail-closeにしています。
 
-現在の主な残課題は、OLMKiraKira Mode 1のbox primitive、OLMDistanceGradation
-PF32 Mode 5の未解決6セル（matrix 58／64 exact）、OLMSmoother v1の32bpc
+現在の主な残課題は、OLMKiraKira Mode 1のnondefault RotationとMode 2／3 public owner、
+OLMDistanceGradation PF32 Mode 5の未解決6セル（matrix 58／64 exact）、OLMSmoother v1の32bpc
 AE host conversion境界、Layer Noise Type 3の汎用world対応です。Type 3の効率的な
 検証にはAEXCompat issue #1162のmacOS declarative fixture runnerが関係します。
 

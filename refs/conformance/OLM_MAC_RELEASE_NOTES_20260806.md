@@ -140,10 +140,19 @@ OLMKiraKira Mode 4 PF32内部経路、OLMSmoother v1 PF16内部経路のbounded�
 - OLMRadialBlur：Outer 4＋Inner 2／4とSize 25／100をZoom／Rotation・3深度で
   交差した24／24が内部planeからtyped outputまでexactです。
 - OLMKiraKira：Mode 1 public 3-depth経路は5×3半透明source、Horizontal Length 7、
-  Rotation 0でもraw不一致でfail-closeです。次の局所課題はbox primitiveです。
+  Rotation 0でPF8／PF16／PF32のactive bytes、input不変、row paddingまでraw exactです。
+  nondefault RotationはAEXCompatのANGLE edit未対応のためfail-closeし、Mode 2／3の
+  public ownerは未完です。
 
 これらは記録済みfixtureのpublic-entry／installed境界であり、Windows AE pixel exactや
 未列挙入力・geometry・パラメーター直積へは昇格しません。
+
+OLMDistanceGradation PF32 Mode 5の未解決6セルでは、残差の初出がfinal composeではなく
+OpenCV 4.5.5のIPP bilateral producer fieldであることを確定しました。classic ownerの
+187-word identity wrapperとは別に、exported PF32はIPP invoker／backendを通り、
+opaque/no-background composeはそのfield redをそのままalphaへ使います。matrixは
+58／64 exactのまま、期待word補正なしで残り6セルをfail-closeします。
+AEXCompat側の関連checkpointは別repoの`6561b11b`です。
 
 現在のhost証拠は、原則として次の条件を前提とします。
 
@@ -174,7 +183,8 @@ notarizationは未実施であり、ダウンロード先のGatekeeperに拒否�
 | OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur；PF8／PF16／PF32限定 | natural Mode 4の追加4 source／12 typed outputはraw exact・max ULP 0。Highlight gradientは2／15 wordsに1 ULP seamがありconstant source限定。Windows AE pixel、任意source／gradient、全直積は未証明 |
 | OLMSmoother v1 | no-key／Color Key、smoothing range；native PF8／PF16 | PF8 canonical 960×540と保持済みkey pathはexact。PF16 Color Keyはexported `PF_Cmd_RENDER`からtemporary world、mask／main passまで5×3 padded fixtureでraw exact。AEXにnative PF32 callbackはなく、32bpc projectではAEがclassic integer pluginの前後をhost-convertする |
 
-残課題として、OLMDistanceGradation PF32 Mode 5は64セル中58 exact／6 fail-close、
+残課題として、OLMDistanceGradation PF32 Mode 5はIPP field数値境界で64セル中
+58 exact／6 fail-close、
 OLMSmoother v1 PF32はnative laneではなくAE host conversion、Layer Noise Type 3の
 汎用検証は未完です。Type 3のmacOS側fixture実行基盤はAEXCompat #1162の対象です。
 

@@ -39,8 +39,8 @@
   predicateでraw exactです。Linear／Sphere／Power×Backgroundの6行は37 wordに
   1〜2 ULP差が残るためBAD_CALLBACK_PARAMでfail-closeし、期待word補正も行いません。
   Linearのpre-planeは187／187 exact、cvSmooth entry／return差は0ですが、
-  opaque出力33 wordsのreduction／compose残差があるため、58 exact／6 fail-closeを
-  維持します。
+  exported PF32の残差はOpenCV 4.5.5 IPP bilateral producer fieldで既に発生します。
+  opaque出力33 wordsの数値機序が未解明なため、58 exact／6 fail-closeを維持します。
   元AEXにownerがないPF32 SmartRender要求も互換性主張の対象外です。
 - OLMDirectionalBlur：Noise Type 3 LayerのPF16/PF32は、記録済みtupleを中心とする
   bounded対応です。Front／Back Fade 50／100×Sharp Tail 50／100は3深度でexactですが、
@@ -82,6 +82,8 @@
   outputまでexactですが、hostlessの1 source caseであり、Windows AE pixelや
   geometry-generalへは昇格しません。追加4 source／12 typed outputはmax ULP 0ですが、
   Highlight gradientは2／15 wordsに1 ULP seamがありconstant source限定です。
+  Mode 1 public ownerはRotation 0の記録済み5×3 fixtureで3深度raw exactです。
+  nondefault RotationはANGLE edit未対応でfail-closeし、Mode 2／3 public ownerは未完です。
 - OLMSmoother v1：元AEXのnative depthはPF8/PF16です。32bpcプロジェクトではAEが
   classic integer pluginの前後を変換するため、native PF32互換とは表現しません。
 
