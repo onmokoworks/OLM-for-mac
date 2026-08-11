@@ -111,6 +111,22 @@ def main() -> int:
                              "input_complete_buffer_unchanged": True,
                              "input_padding_preserved": True,
                              "output_padding_preserved": True},
+        "pf32_checkpoint_capture": {
+            "target_tuple": {"direction": 0, "distance_type": 3, "amount": 4.0},
+            "call_chain_rvas": ["0x8840", "0x56f0"],
+            "plane_watch": {"function_rva": "0x56f0", "argument": "r9",
+                            "bytes": 4096, "when": "entry+return"},
+            "first_row_plane_f32": [0.19715005159378052, 0.4078264832496643,
+                                    0.4999999701976776, 0.4078264832496643,
+                                    0.19715005159378052, 0.02380261942744255,
+                                    0.0],
+            "instruction_order": ["MULSS distance, ratio", "CVTPS2PD",
+                                  "SUBSD pi_over_2, product", "double sin",
+                                  "ADDSD 1.0", "CVTSD2SS", "MULSS 0.5"],
+            "localized_first_difference": ("direction-plane construction before final "
+                                           "alpha application; complementing a separately "
+                                           "rounded float weight changes irrational shells"),
+        },
         "control": "refs/conformance/olmcolorkey_exported_owner_edge_blur_covering_20260812.json",
         "cases": rows, "production_source_sha256": sha(base.SOURCE),
         "claim_boundary": ("Exact only for the declared padded 64x36 semitransparent multi-island "
@@ -125,6 +141,10 @@ def main() -> int:
                    f"match {sum(r['status'] == 'exact' for r in rows)}/12 declared cells. "
                    "Production verifies callback counts, 33 parameter checkout/checkins, "
                    "input immutability, and eight-byte input/output padding.\n\n"
+                   "PF32 checkpoint capture localizes the former Type-3 residual to the "
+                   "direction-plane construction order in `0x8840 -> 0x56f0`: float "
+                   "distance multiplication, double `sin`, cast after `+1`, then float "
+                   "half-scale. Production now follows that general instruction order.\n\n"
                    f"Boundary: {report['claim_boundary']}\n")
     print(json.dumps({"status": report["status"], "cases": len(rows),
                       "exact": sum(r["status"] == "exact" for r in rows),

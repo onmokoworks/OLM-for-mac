@@ -1509,10 +1509,16 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 					else if (info.edge_blur_amount == 4.0 && curve_dist == 3.0f)
 						weight = 0.8535534143447876f;
 					else {
-						const float pi = 3.14159265358979323846f;
-						weight = (std::sin(curve_dist *
-						                   (pi / (float)info.edge_blur_amount) -
-						                   pi * 0.5f) + 1.0f) * 0.5f;
+						// FUN_1800053a0 multiplies distance by a FLOAT32 pi/amount
+						// ratio, promotes that product to double for sin(), casts the
+						// post-add result back to float, then performs the final 0.5f
+						// multiply.  Keeping those conversion points is observable on
+						// non-integral Euclidean shells.
+						const float ratio = 3.1415927410125732f /
+						    (float)info.edge_blur_amount;
+						const double phase = (double)(curve_dist * ratio) -
+						    1.57079632679485;
+						weight = (float)(std::sin(phase) + 1.0) * 0.5f;
 					}
 				}
 				// The native PF32 temporary direction plane stores the predecessor of
@@ -1556,21 +1562,22 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						else if (native_dist == 1.0f) plane = 0.8535533547401428f;
 						else if (native_dist == 2.0f) plane = 0.4999999701976776f;
 						else if (native_dist == 3.0f) plane = 0.1464466005563736f;
-					} else if ((edge_blur_direction == 0 || edge_blur_direction == 4) &&
-					           info.edge_blur_amount == 4.0) {
-						float curve_dist = native_dist;
-						if (!keep) plane = 1.0f;
-						else if (curve_dist >= 4.0f) plane = 0.0f;
-						else if (curve_dist == 1.0f) plane = 0.8535533547401428f;
-						else if (curve_dist == 2.0f) plane = 0.4999999701976776f;
-						else if (curve_dist == 3.0f) plane = 0.1464466005563736f;
-						else if (info.edge_blur_distance_type == 3 &&
-						         curve_dist == std::sqrt(8.0f))
-							plane = 0.19715005159378052f;
-						else {
-							const float pi = 3.14159265358979323846f;
-							plane = (std::sin(pi * 0.5f - curve_dist * (pi / 4.0f)) +
-							         1.0f) * 0.5f;
+					} else if (public_owner_geometry_transfer_lane &&
+					           (edge_blur_direction == 0 || edge_blur_direction == 4)) {
+						if (!keep) {
+							plane = 1.0f;
+						} else if (native_dist >= (float)info.edge_blur_amount) {
+							plane = 0.0f;
+						} else {
+							// Checkpoint capture at FUN_1800056f0 shows the native
+							// direction plane is evaluated independently from its
+							// complementary output weight: FLOAT32 distance*pi/amount,
+							// promoted to double for sin(), cast after +1, then *0.5f.
+							const float ratio = 3.1415927410125732f /
+							    (float)info.edge_blur_amount;
+							const double phase = 1.57079632679485 -
+							    (double)(native_dist * ratio);
+							plane = (float)(std::sin(phase) + 1.0) * 0.5f;
 						}
 					}
 					outP->alpha = inP->alpha - inP->alpha * plane;

@@ -163,7 +163,7 @@
       "depth": "PF32",
       "direction": 0,
       "distance_type": 3,
-      "production_effectmain_raw_sha256": "eb75f80de6b781c8a4c6d4f20f879b3d09bb10142546eb2cfa9ce9ecb9628064",
+      "production_effectmain_raw_sha256": "520f358772ce77b407c574a71ebd76f69b9685e1bb9cf93724ea94c201f992aa",
       "smart_pre_render": {
         "attempted": true,
         "completed": true,
@@ -176,7 +176,7 @@
         "error": 0,
         "selector": "SMART_RENDER"
       },
-      "status": "mismatch",
+      "status": "exact",
       "suite_requests": [
         "PF Handle Suite v2",
         "AEGP Utility Suite v13",
@@ -406,6 +406,42 @@
     "row_padding_bytes": 8,
     "source_png_sha256": "a204b1ea4ec6d9b3077ad05e2ea31acdf358af88389b431c12b6a980fc0c3c1f"
   },
+  "pf32_checkpoint_capture": {
+    "call_chain_rvas": [
+      "0x8840",
+      "0x56f0"
+    ],
+    "first_row_plane_f32": [
+      0.19715005159378052,
+      0.4078264832496643,
+      0.4999999701976776,
+      0.4078264832496643,
+      0.19715005159378052,
+      0.02380261942744255,
+      0.0
+    ],
+    "instruction_order": [
+      "MULSS distance, ratio",
+      "CVTPS2PD",
+      "SUBSD pi_over_2, product",
+      "double sin",
+      "ADDSD 1.0",
+      "CVTSD2SS",
+      "MULSS 0.5"
+    ],
+    "localized_first_difference": "direction-plane construction before final alpha application; complementing a separately rounded float weight changes irrational shells",
+    "plane_watch": {
+      "argument": "r9",
+      "bytes": 4096,
+      "function_rva": "0x56f0",
+      "when": "entry+return"
+    },
+    "target_tuple": {
+      "amount": 4.0,
+      "direction": 0,
+      "distance_type": 3
+    }
+  },
   "production_gates": {
     "checkin_layer_pixels": 1,
     "checkout_layer": 1,
@@ -417,7 +453,7 @@
     "parameter_checkins": 33,
     "parameter_checkouts": 33
   },
-  "production_source_sha256": "45de63f91fdc4d61ae3f7fa831ef2017adf7eb0362def82df5272dbab2043081",
+  "production_source_sha256": "65009ccccb664a1ee7800c255af67d4c60d46c53e553668a6e36ae0f953c69cb",
   "schema": "olmcolorkey.exported-owner-edge-geometry-transfer/1",
-  "status": "mismatch"
+  "status": "exact"
 }
