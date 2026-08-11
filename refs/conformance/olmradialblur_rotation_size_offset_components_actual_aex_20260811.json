@@ -1,0 +1,698 @@
+{
+  "boundary": "Only these 24 fixed-fixture cells are admitted. Type3, other masks, geometries, values, edge/noise/layer intersections, strengths, modes, and AE-host behavior remain fail-closed.",
+  "cases": [
+    {
+      "actual_sha256": {
+        "accum": "4af22053031644853c3b72338477f0d891940aab1f37396bb1e2b70b7438f958",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "41f1959934e74b1591642fffd9c5d4d4120c1e10d435836ebbf63a00b6f628d2",
+        "max_alpha": "b69feb2a12ab11da52051231a1ef48912267e3405202571e3339bde8f5cc9e40",
+        "output": "2b801d784c91a0f1be36b1b548238177b2535f3c6373c446b4d006b57dc21318",
+        "polar": "bfe5cc0158b7cf0f51ba050f2220c8fb2ae718f64ab0bc268a76b90abbf5a524",
+        "source_scalar": "8caf05c1dea3a084baf1b5c82b9fda59b22730104d1dd12baf8072b455715f70"
+      },
+      "actual_size_factor_sha256": "6183c43ae34b0df44f1c8666a4d4795d8837fd355830853b935465958dccc11f",
+      "depth": 8,
+      "exact": true,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 2,
+      "side": "outer",
+      "size_variation": 25.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "b78b9fbfaa6c041339c55add5bb27aced10d26122f52ad10847805acfbe375d4",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "0db2e7e220e03ef732fa031e83bfbf59d6a820607e4900da0512202eef3c7e9e",
+        "max_alpha": "d97ca59696c060c38c99767dfb3ed9e8ae91df839a8d8027a6b2056ce1638563",
+        "output": "469f4660f5357e2b0f4c5a8c4f9a64bf5a053e751abdde9218f6596c7d0091c3",
+        "polar": "bfe5cc0158b7cf0f51ba050f2220c8fb2ae718f64ab0bc268a76b90abbf5a524",
+        "source_scalar": "8caf05c1dea3a084baf1b5c82b9fda59b22730104d1dd12baf8072b455715f70"
+      },
+      "actual_size_factor_sha256": "6183c43ae34b0df44f1c8666a4d4795d8837fd355830853b935465958dccc11f",
+      "depth": 8,
+      "exact": true,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 3,
+      "side": "outer",
+      "size_variation": 25.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "1147f7e09df9bc2bdc061fc6022edd4e176ab8677fd71f5ec471d0a43f78762b",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "2a628a80d0c7e17df6c30cc96390d24537c40307377acb809e9f3f21002d2d8e",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "fd88e61ff2ef3f3d7d477a3c184b9c59c01a2e86409c3ba86a230806aae66af9",
+        "polar": "bfe5cc0158b7cf0f51ba050f2220c8fb2ae718f64ab0bc268a76b90abbf5a524",
+        "source_scalar": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3"
+      },
+      "actual_size_factor_sha256": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+      "depth": 8,
+      "exact": true,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 2,
+      "side": "outer",
+      "size_variation": 100.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "639322547ea6e1bc2f642a3f3122c5f7d1180f509e96970f42f08c7dbf09041d",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "300db119af9656fcb62a73fd20606495e9bcb3b862905ca59073b3076ce69be9",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "9075e11ac8fb069adb7c561f8ea16bafd7ece72d55d4c6a778c4f852de5d0576",
+        "polar": "bfe5cc0158b7cf0f51ba050f2220c8fb2ae718f64ab0bc268a76b90abbf5a524",
+        "source_scalar": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3"
+      },
+      "actual_size_factor_sha256": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+      "depth": 8,
+      "exact": true,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 3,
+      "side": "outer",
+      "size_variation": 100.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "e7b104d86db92a742ee71833f7dce2b12db5da1ff3a51113f9152c8d95f4285d",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "0226b249b724a0e4461e40657a3fcf7e956294d47856671dc6aec13261676d4b",
+        "max_alpha": "276ad88fdfad114104aa0f530cca0dc3f47dc41b536e6c648ebb61c4f18a12b0",
+        "output": "36eca17087ae0f37a7d707568ca52f050b7f7e9d5f5bcd23f11b3b926bab8913",
+        "polar": "bfe5cc0158b7cf0f51ba050f2220c8fb2ae718f64ab0bc268a76b90abbf5a524",
+        "source_scalar": "8caf05c1dea3a084baf1b5c82b9fda59b22730104d1dd12baf8072b455715f70"
+      },
+      "actual_size_factor_sha256": "6183c43ae34b0df44f1c8666a4d4795d8837fd355830853b935465958dccc11f",
+      "depth": 8,
+      "exact": true,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 2,
+      "side": "inner",
+      "size_variation": 25.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "bfd612738729ceddf7a7536cccbc98f7e3deded8b614ae3e63c192df6c9fcdef",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "72b27a6de029323a22342ac329ed5b5385658fa9e000dece9c68efeecc95064b",
+        "max_alpha": "540cba60b4d1d170a0f86fce3f66f7a44007942766b45badc3b3a4a8e0a23d7c",
+        "output": "bf10c0627fad2c51ccc87a764abd6e414b2f322790ed382e00a35d59d5db593b",
+        "polar": "bfe5cc0158b7cf0f51ba050f2220c8fb2ae718f64ab0bc268a76b90abbf5a524",
+        "source_scalar": "8caf05c1dea3a084baf1b5c82b9fda59b22730104d1dd12baf8072b455715f70"
+      },
+      "actual_size_factor_sha256": "6183c43ae34b0df44f1c8666a4d4795d8837fd355830853b935465958dccc11f",
+      "depth": 8,
+      "exact": true,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 3,
+      "side": "inner",
+      "size_variation": 25.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "336e1fdf2fcba4f0b2d9a45b4c34f83445c87d4f97580635b7b79901801875f6",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "36bc27b45de628bec6ad0b8697dc3588496cc98c2b898f71c1fd277dd0cecf1b",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "0a57cc79d5d5e30c635f748d85fed7cedd77501bac2d05a0651983bf7260516a",
+        "polar": "bfe5cc0158b7cf0f51ba050f2220c8fb2ae718f64ab0bc268a76b90abbf5a524",
+        "source_scalar": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3"
+      },
+      "actual_size_factor_sha256": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+      "depth": 8,
+      "exact": true,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 2,
+      "side": "inner",
+      "size_variation": 100.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "c888448e7010cf40fe1fb85f2c3a4fb044a889dd2ef80144ee78a551c95d1726",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "bb24da549414fbcfb174fb91391881be758f23edcffaa949baf6ad251a82a627",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "53d283406868d1881943c374a8c24c117b3489e2d0df0dd47a58ecf82cf2885b",
+        "polar": "bfe5cc0158b7cf0f51ba050f2220c8fb2ae718f64ab0bc268a76b90abbf5a524",
+        "source_scalar": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3"
+      },
+      "actual_size_factor_sha256": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+      "depth": 8,
+      "exact": true,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 3,
+      "side": "inner",
+      "size_variation": 100.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "b9a5b1362b0d1b83bec78ba04b714b29ed65affb4fdc1794078c51885b022940",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "ed300997144d24a405e070312c8a49adc0ab97dc72321248297673c7f8f5d07e",
+        "max_alpha": "b69feb2a12ab11da52051231a1ef48912267e3405202571e3339bde8f5cc9e40",
+        "output": "4f3326a30077a8e57ef54d3f75478c2549b76b842b91bf827bfcebe65a112d67",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "source_scalar": "8caf05c1dea3a084baf1b5c82b9fda59b22730104d1dd12baf8072b455715f70"
+      },
+      "actual_size_factor_sha256": "6183c43ae34b0df44f1c8666a4d4795d8837fd355830853b935465958dccc11f",
+      "actual_source_span_sha256": "2bb292a20d0d38a0c76073e91ffb6d41e56cee79fcbdfb6bd59f8b5660b15dad",
+      "depth": 16,
+      "exact": true,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 2,
+      "side": "outer",
+      "size_variation": 25.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "2b7af93777e008e7dec0732fc2a62c576051e26bd3e9ac1db5058f8e16573e7b",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "f0201dee7f9b2dffc1c023ebe4e0b251120491eb3d37c1a5025e089c148fb610",
+        "max_alpha": "d97ca59696c060c38c99767dfb3ed9e8ae91df839a8d8027a6b2056ce1638563",
+        "output": "65ea664417147bfe77f582525bab659ed31ad5582eb15a59944265de03457022",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "source_scalar": "8caf05c1dea3a084baf1b5c82b9fda59b22730104d1dd12baf8072b455715f70"
+      },
+      "actual_size_factor_sha256": "6183c43ae34b0df44f1c8666a4d4795d8837fd355830853b935465958dccc11f",
+      "actual_source_span_sha256": "2bb292a20d0d38a0c76073e91ffb6d41e56cee79fcbdfb6bd59f8b5660b15dad",
+      "depth": 16,
+      "exact": true,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 3,
+      "side": "outer",
+      "size_variation": 25.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "ebaffbac3c14c2be2413fe1a2375a4492819161939636b23de59e539692778ee",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "73f2c15d8230716538d6d590025f709efb249d29a518ff72ac627919f23ae656",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "5d39221f8fcb2e6cfc78e849c72ce89fa309261a8d7989009a5a18ba4a5ed1ae",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "source_scalar": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3"
+      },
+      "actual_size_factor_sha256": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+      "actual_source_span_sha256": "713edddc860d556e13ddc17c9a9515a066b46117c59cdabb7d8322163bf0f87d",
+      "depth": 16,
+      "exact": true,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 2,
+      "side": "outer",
+      "size_variation": 100.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "73a325e311376863174c526812ad7da043ea5f6b48c18facd7dda045df67c7d1",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "73ae813797bb829674c67def5a42992af99fb3c5bfc403b673764320ce1aa672",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "2b2e4a462cdacba8ce98cd87ea6f905df705850e123e586609633c0dbd0d12dd",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "source_scalar": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3"
+      },
+      "actual_size_factor_sha256": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+      "actual_source_span_sha256": "713edddc860d556e13ddc17c9a9515a066b46117c59cdabb7d8322163bf0f87d",
+      "depth": 16,
+      "exact": true,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 3,
+      "side": "outer",
+      "size_variation": 100.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "3e2af91da54d85ad5540d384c0c23bcf02f9de36e66c2086c35a0eaef537db4e",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "33c2ff052155ce5db62c6e8dc88f4b7b8cb125ad7ed8780362b07a9f3267c9ef",
+        "max_alpha": "276ad88fdfad114104aa0f530cca0dc3f47dc41b536e6c648ebb61c4f18a12b0",
+        "output": "c288b64f088c742d9b5533111623ac9a6bca9bdf13814d0e334c0234e42e1fb0",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "source_scalar": "8caf05c1dea3a084baf1b5c82b9fda59b22730104d1dd12baf8072b455715f70"
+      },
+      "actual_size_factor_sha256": "6183c43ae34b0df44f1c8666a4d4795d8837fd355830853b935465958dccc11f",
+      "actual_source_span_sha256": "2bb292a20d0d38a0c76073e91ffb6d41e56cee79fcbdfb6bd59f8b5660b15dad",
+      "depth": 16,
+      "exact": true,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 2,
+      "side": "inner",
+      "size_variation": 25.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "6d8167f7b20bacb54cb8b649bcf6468dbb8a668f60d8376597acdf8edc5abbf1",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "48f536caf56b156f0731a0a8929a4f3561b6c2bd9cbd0f35dbc82ec79678b4f3",
+        "max_alpha": "540cba60b4d1d170a0f86fce3f66f7a44007942766b45badc3b3a4a8e0a23d7c",
+        "output": "18f0553a5a829822013b08276930d37679c49a77c23913a4c2861aee0fb8527d",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "source_scalar": "8caf05c1dea3a084baf1b5c82b9fda59b22730104d1dd12baf8072b455715f70"
+      },
+      "actual_size_factor_sha256": "6183c43ae34b0df44f1c8666a4d4795d8837fd355830853b935465958dccc11f",
+      "actual_source_span_sha256": "2bb292a20d0d38a0c76073e91ffb6d41e56cee79fcbdfb6bd59f8b5660b15dad",
+      "depth": 16,
+      "exact": true,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 3,
+      "side": "inner",
+      "size_variation": 25.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "b5c67e36f237b4ec40555c3b02dc6ad43e7d20d136e0f6bf30ac9020740881af",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "52c2d7045dc8f4f56dcf93c7676affa1c4ff4340cb5a76973fe7453ab385e191",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "c53730e9c50de8b85f0e27a4b6aa7b182eb1513d17352ae3d155c6b63c77ab73",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "source_scalar": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3"
+      },
+      "actual_size_factor_sha256": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+      "actual_source_span_sha256": "713edddc860d556e13ddc17c9a9515a066b46117c59cdabb7d8322163bf0f87d",
+      "depth": 16,
+      "exact": true,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 2,
+      "side": "inner",
+      "size_variation": 100.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "ac6e72b0866bed6c2c0499d5c4e69c1bdf4bcc186b2216dcff3ef0255691ca2a",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "ea5ae7ca2655fbacdcec70d8c92240adcf3fff9b1c1ea2daca9bc0c1c29c4aec",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "a5e86a94a32624491e85a39695fcf3a39095cf7bb80fe074b74a09b5195ef0c5",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "source_scalar": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3"
+      },
+      "actual_size_factor_sha256": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+      "actual_source_span_sha256": "713edddc860d556e13ddc17c9a9515a066b46117c59cdabb7d8322163bf0f87d",
+      "depth": 16,
+      "exact": true,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 3,
+      "side": "inner",
+      "size_variation": 100.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "b9a5b1362b0d1b83bec78ba04b714b29ed65affb4fdc1794078c51885b022940",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "ed300997144d24a405e070312c8a49adc0ab97dc72321248297673c7f8f5d07e",
+        "max_alpha": "b69feb2a12ab11da52051231a1ef48912267e3405202571e3339bde8f5cc9e40",
+        "output": "6e63b5ba106f2dc5605101a3d5f9e7b913499c73112c2fe62bbff251de3306ab",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "source_scalar": "8caf05c1dea3a084baf1b5c82b9fda59b22730104d1dd12baf8072b455715f70"
+      },
+      "actual_size_factor_sha256": "6183c43ae34b0df44f1c8666a4d4795d8837fd355830853b935465958dccc11f",
+      "actual_source_span_sha256": "2bb292a20d0d38a0c76073e91ffb6d41e56cee79fcbdfb6bd59f8b5660b15dad",
+      "depth": 32,
+      "exact": true,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 2,
+      "side": "outer",
+      "size_variation": 25.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "2b7af93777e008e7dec0732fc2a62c576051e26bd3e9ac1db5058f8e16573e7b",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "f0201dee7f9b2dffc1c023ebe4e0b251120491eb3d37c1a5025e089c148fb610",
+        "max_alpha": "d97ca59696c060c38c99767dfb3ed9e8ae91df839a8d8027a6b2056ce1638563",
+        "output": "387e76f8e611195a888e1f27b6460f9ec2a09a82ad0680ddb77ea80c16a91318",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "source_scalar": "8caf05c1dea3a084baf1b5c82b9fda59b22730104d1dd12baf8072b455715f70"
+      },
+      "actual_size_factor_sha256": "6183c43ae34b0df44f1c8666a4d4795d8837fd355830853b935465958dccc11f",
+      "actual_source_span_sha256": "2bb292a20d0d38a0c76073e91ffb6d41e56cee79fcbdfb6bd59f8b5660b15dad",
+      "depth": 32,
+      "exact": true,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 3,
+      "side": "outer",
+      "size_variation": 25.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "ebaffbac3c14c2be2413fe1a2375a4492819161939636b23de59e539692778ee",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "73f2c15d8230716538d6d590025f709efb249d29a518ff72ac627919f23ae656",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "8ed45d52432fbda3e9555b8a5adc3400f90604f8ee976e249068ddee10d5d3f9",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "source_scalar": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3"
+      },
+      "actual_size_factor_sha256": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+      "actual_source_span_sha256": "713edddc860d556e13ddc17c9a9515a066b46117c59cdabb7d8322163bf0f87d",
+      "depth": 32,
+      "exact": true,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 2,
+      "side": "outer",
+      "size_variation": 100.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "73a325e311376863174c526812ad7da043ea5f6b48c18facd7dda045df67c7d1",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "73ae813797bb829674c67def5a42992af99fb3c5bfc403b673764320ce1aa672",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "7388705bd0cb7798f682ae292186bca4067f2138413cbb1c5face3bd090b5971",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "source_scalar": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3"
+      },
+      "actual_size_factor_sha256": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+      "actual_source_span_sha256": "713edddc860d556e13ddc17c9a9515a066b46117c59cdabb7d8322163bf0f87d",
+      "depth": 32,
+      "exact": true,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 3,
+      "side": "outer",
+      "size_variation": 100.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "3e2af91da54d85ad5540d384c0c23bcf02f9de36e66c2086c35a0eaef537db4e",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "33c2ff052155ce5db62c6e8dc88f4b7b8cb125ad7ed8780362b07a9f3267c9ef",
+        "max_alpha": "276ad88fdfad114104aa0f530cca0dc3f47dc41b536e6c648ebb61c4f18a12b0",
+        "output": "95d665e1e597a656b11cd89346110dd045ed4ab20970bdbf9b75c90b96787b96",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "source_scalar": "8caf05c1dea3a084baf1b5c82b9fda59b22730104d1dd12baf8072b455715f70"
+      },
+      "actual_size_factor_sha256": "6183c43ae34b0df44f1c8666a4d4795d8837fd355830853b935465958dccc11f",
+      "actual_source_span_sha256": "2bb292a20d0d38a0c76073e91ffb6d41e56cee79fcbdfb6bd59f8b5660b15dad",
+      "depth": 32,
+      "exact": true,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 2,
+      "side": "inner",
+      "size_variation": 25.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "6d8167f7b20bacb54cb8b649bcf6468dbb8a668f60d8376597acdf8edc5abbf1",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "48f536caf56b156f0731a0a8929a4f3561b6c2bd9cbd0f35dbc82ec79678b4f3",
+        "max_alpha": "540cba60b4d1d170a0f86fce3f66f7a44007942766b45badc3b3a4a8e0a23d7c",
+        "output": "f20d84e50e0ea92991236c8781a3042b70bc881b2f2fc8ef87c8c69537b82665",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "source_scalar": "8caf05c1dea3a084baf1b5c82b9fda59b22730104d1dd12baf8072b455715f70"
+      },
+      "actual_size_factor_sha256": "6183c43ae34b0df44f1c8666a4d4795d8837fd355830853b935465958dccc11f",
+      "actual_source_span_sha256": "2bb292a20d0d38a0c76073e91ffb6d41e56cee79fcbdfb6bd59f8b5660b15dad",
+      "depth": 32,
+      "exact": true,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 3,
+      "side": "inner",
+      "size_variation": 25.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "b5c67e36f237b4ec40555c3b02dc6ad43e7d20d136e0f6bf30ac9020740881af",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "52c2d7045dc8f4f56dcf93c7676affa1c4ff4340cb5a76973fe7453ab385e191",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "fd29003ead3b39ee40a8a52d6ded2ae0e332300e3b8ff227375d764c9d6caeac",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "source_scalar": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3"
+      },
+      "actual_size_factor_sha256": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+      "actual_source_span_sha256": "713edddc860d556e13ddc17c9a9515a066b46117c59cdabb7d8322163bf0f87d",
+      "depth": 32,
+      "exact": true,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 2,
+      "side": "inner",
+      "size_variation": 100.0
+    },
+    {
+      "actual_sha256": {
+        "accum": "ac6e72b0866bed6c2c0499d5c4e69c1bdf4bcc186b2216dcff3ef0255691ca2a",
+        "coordinates": "fd4676c7bcd2bab2679aac1520b2ca3da35c3b35c5545b96f87c1eaf72921ed8",
+        "final_rgba": "ea5ae7ca2655fbacdcec70d8c92240adcf3fff9b1c1ea2daca9bc0c1c29c4aec",
+        "max_alpha": "d7926a3c2578af033d8a1780e48929a816050358a4ddc0a10d7dc65d1b7c0b57",
+        "output": "85fb0603f292ede1c695498bf469b636c6c3fdae922be4ffec497faa68f849a9",
+        "polar": "1a02389937f7afd9533981142f3d68953d6802d74d3a7b5bc9ec83c2c952a363",
+        "source_scalar": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3"
+      },
+      "actual_size_factor_sha256": "ce83dbc076af10f2302a86a9d39f5c8f8b39ec028674589eb5a7021eba14bed3",
+      "actual_source_span_sha256": "713edddc860d556e13ddc17c9a9515a066b46117c59cdabb7d8322163bf0f87d",
+      "depth": 32,
+      "exact": true,
+      "first_diffs": {},
+      "matches": {
+        "accum": true,
+        "coordinates": true,
+        "final_rgba": true,
+        "max_alpha": true,
+        "output": true,
+        "polar": true,
+        "source_scalar": true
+      },
+      "offset": 4,
+      "offset_mode": 3,
+      "side": "inner",
+      "size_variation": 100.0
+    }
+  ],
+  "coefficient_order": "The owner component size-factor is sampled into polar space and multiplies the per-radius Mode2/3 offset span before integer truncation and scatter.",
+  "kind": "olmradialblur_rotation_size_offset_components_actual_aex_20260811",
+  "pf32_inner_direction": "Rotation Inner remains reverse scatter; no PF32 Inner exception is inferred for this matrix.",
+  "scope": "Rotation centered 32x18 disconnected 1/4/9-component fixture; PF8/PF16/PF32; Size Variation 25/100 x Offset Mode2/UI4 or Mode3/UI4; Outer4/Inner4; neutral remaining tuple.",
+  "status": "24/24 exact"
+}
