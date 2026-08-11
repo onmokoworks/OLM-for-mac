@@ -1,0 +1,2104 @@
+{
+  "admission": "Only the existing four dual-side tuples at 64x36 are newly admitted.",
+  "control_geometry": [
+    32,
+    18
+  ],
+  "depths": [
+    "PF8",
+    "PF16",
+    "PF32"
+  ],
+  "fail_closed": [
+    "other dual-side tuple",
+    "geometry other than 16x16, 32x18, or 64x36",
+    "Noise Type 3"
+  ],
+  "fixed_route": {
+    "angle": 45,
+    "back_strength": 8,
+    "brightness_gain": 1,
+    "front_strength": 8,
+    "offset": 0,
+    "seed": 1,
+    "thickness": 3
+  },
+  "geometry": [
+    64,
+    36
+  ],
+  "plugin": "OLMDirectionalBlur",
+  "representatives": [
+    {
+      "byte_count": 9216,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "depth": "PF8",
+      "raw_sha256": "1697b835063aa0fb975a1785e9a374a2c4658ff6f9d79952f167b993144b2926",
+      "rotate_entry_count": 1,
+      "rowdriver_call_count": 32,
+      "rowdriver_first_call": {
+        "back_edge_plus_0x44": 1.0,
+        "counts": {
+          "prepass_back": 100,
+          "prepass_front": 50,
+          "scatter_back": 8,
+          "scatter_front": 8
+        },
+        "divisor_plus_0x38": 2392.0,
+        "exponent_plus_0x30": 0.0,
+        "front_edge_plus_0x40": 0.5,
+        "mode_branch": "interpolated",
+        "mode_plus_0x20": 3,
+        "opacity_plus_0x2c": 0.25,
+        "width": 76
+      },
+      "rowdriver_ranges": [
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          10,
+          12
+        ],
+        [
+          12,
+          14
+        ],
+        [
+          14,
+          16
+        ],
+        [
+          16,
+          18
+        ],
+        [
+          18,
+          20
+        ],
+        [
+          20,
+          22
+        ],
+        [
+          22,
+          24
+        ],
+        [
+          24,
+          26
+        ],
+        [
+          26,
+          28
+        ],
+        [
+          28,
+          30
+        ],
+        [
+          30,
+          32
+        ],
+        [
+          32,
+          34
+        ],
+        [
+          34,
+          36
+        ],
+        [
+          36,
+          38
+        ],
+        [
+          38,
+          40
+        ],
+        [
+          40,
+          42
+        ],
+        [
+          42,
+          44
+        ],
+        [
+          44,
+          46
+        ],
+        [
+          46,
+          48
+        ],
+        [
+          48,
+          50
+        ],
+        [
+          50,
+          52
+        ],
+        [
+          52,
+          54
+        ],
+        [
+          54,
+          56
+        ],
+        [
+          56,
+          58
+        ],
+        [
+          58,
+          60
+        ],
+        [
+          60,
+          62
+        ],
+        [
+          62,
+          64
+        ]
+      ],
+      "tuple_index": 0
+    },
+    {
+      "byte_count": 9216,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "depth": "PF8",
+      "raw_sha256": "2f5c9ef8f69ccab111d2d230a542293fd8dd7377a5fd83be50940f5d053cc31a",
+      "rotate_entry_count": 1,
+      "rowdriver_call_count": 32,
+      "rowdriver_first_call": {
+        "back_edge_plus_0x44": 0.5,
+        "counts": {
+          "prepass_back": 50,
+          "prepass_front": 50,
+          "scatter_back": 8,
+          "scatter_front": 8
+        },
+        "divisor_plus_0x38": 2392.0,
+        "exponent_plus_0x30": 0.5,
+        "front_edge_plus_0x40": 1.0,
+        "mode_branch": "interpolated",
+        "mode_plus_0x20": 3,
+        "opacity_plus_0x2c": 1.0,
+        "width": 76
+      },
+      "rowdriver_ranges": [
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          10,
+          12
+        ],
+        [
+          12,
+          14
+        ],
+        [
+          14,
+          16
+        ],
+        [
+          16,
+          18
+        ],
+        [
+          18,
+          20
+        ],
+        [
+          20,
+          22
+        ],
+        [
+          22,
+          24
+        ],
+        [
+          24,
+          26
+        ],
+        [
+          26,
+          28
+        ],
+        [
+          28,
+          30
+        ],
+        [
+          30,
+          32
+        ],
+        [
+          32,
+          34
+        ],
+        [
+          34,
+          36
+        ],
+        [
+          36,
+          38
+        ],
+        [
+          38,
+          40
+        ],
+        [
+          40,
+          42
+        ],
+        [
+          42,
+          44
+        ],
+        [
+          44,
+          46
+        ],
+        [
+          46,
+          48
+        ],
+        [
+          48,
+          50
+        ],
+        [
+          50,
+          52
+        ],
+        [
+          52,
+          54
+        ],
+        [
+          54,
+          56
+        ],
+        [
+          56,
+          58
+        ],
+        [
+          58,
+          60
+        ],
+        [
+          60,
+          62
+        ],
+        [
+          62,
+          64
+        ]
+      ],
+      "tuple_index": 1
+    },
+    {
+      "byte_count": 9216,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "depth": "PF8",
+      "raw_sha256": "312a602e939e68cae1b8d966af9ec33e0a8c3646c1c326664abbcb73456bce0e",
+      "rotate_entry_count": 1,
+      "rowdriver_call_count": 32,
+      "rowdriver_first_call": {
+        "back_edge_plus_0x44": 1.0,
+        "counts": {
+          "prepass_back": 50,
+          "prepass_front": 100,
+          "scatter_back": 8,
+          "scatter_front": 8
+        },
+        "divisor_plus_0x38": 2392.0,
+        "exponent_plus_0x30": 0.0,
+        "front_edge_plus_0x40": 0.5,
+        "mode_branch": "interpolated",
+        "mode_plus_0x20": 3,
+        "opacity_plus_0x2c": 1.0,
+        "width": 76
+      },
+      "rowdriver_ranges": [
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          10,
+          12
+        ],
+        [
+          12,
+          14
+        ],
+        [
+          14,
+          16
+        ],
+        [
+          16,
+          18
+        ],
+        [
+          18,
+          20
+        ],
+        [
+          20,
+          22
+        ],
+        [
+          22,
+          24
+        ],
+        [
+          24,
+          26
+        ],
+        [
+          26,
+          28
+        ],
+        [
+          28,
+          30
+        ],
+        [
+          30,
+          32
+        ],
+        [
+          32,
+          34
+        ],
+        [
+          34,
+          36
+        ],
+        [
+          36,
+          38
+        ],
+        [
+          38,
+          40
+        ],
+        [
+          40,
+          42
+        ],
+        [
+          42,
+          44
+        ],
+        [
+          44,
+          46
+        ],
+        [
+          46,
+          48
+        ],
+        [
+          48,
+          50
+        ],
+        [
+          50,
+          52
+        ],
+        [
+          52,
+          54
+        ],
+        [
+          54,
+          56
+        ],
+        [
+          56,
+          58
+        ],
+        [
+          58,
+          60
+        ],
+        [
+          60,
+          62
+        ],
+        [
+          62,
+          64
+        ]
+      ],
+      "tuple_index": 2
+    },
+    {
+      "byte_count": 9216,
+      "callbacks": [
+        "0x180006980",
+        "0x180006b30"
+      ],
+      "depth": "PF8",
+      "raw_sha256": "39e05b0f1b5bfbc8923cc11f7c43caa2eab6ca5de8c07111601a2e2d3418bfe7",
+      "rotate_entry_count": 1,
+      "rowdriver_call_count": 32,
+      "rowdriver_first_call": {
+        "back_edge_plus_0x44": 0.5,
+        "counts": {
+          "prepass_back": 100,
+          "prepass_front": 100,
+          "scatter_back": 8,
+          "scatter_front": 8
+        },
+        "divisor_plus_0x38": 2392.0,
+        "exponent_plus_0x30": 0.5,
+        "front_edge_plus_0x40": 1.0,
+        "mode_branch": "interpolated",
+        "mode_plus_0x20": 3,
+        "opacity_plus_0x2c": 0.25,
+        "width": 76
+      },
+      "rowdriver_ranges": [
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          10,
+          12
+        ],
+        [
+          12,
+          14
+        ],
+        [
+          14,
+          16
+        ],
+        [
+          16,
+          18
+        ],
+        [
+          18,
+          20
+        ],
+        [
+          20,
+          22
+        ],
+        [
+          22,
+          24
+        ],
+        [
+          24,
+          26
+        ],
+        [
+          26,
+          28
+        ],
+        [
+          28,
+          30
+        ],
+        [
+          30,
+          32
+        ],
+        [
+          32,
+          34
+        ],
+        [
+          34,
+          36
+        ],
+        [
+          36,
+          38
+        ],
+        [
+          38,
+          40
+        ],
+        [
+          40,
+          42
+        ],
+        [
+          42,
+          44
+        ],
+        [
+          44,
+          46
+        ],
+        [
+          46,
+          48
+        ],
+        [
+          48,
+          50
+        ],
+        [
+          50,
+          52
+        ],
+        [
+          52,
+          54
+        ],
+        [
+          54,
+          56
+        ],
+        [
+          56,
+          58
+        ],
+        [
+          58,
+          60
+        ],
+        [
+          60,
+          62
+        ],
+        [
+          62,
+          64
+        ]
+      ],
+      "tuple_index": 3
+    },
+    {
+      "byte_count": 18432,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "raw_sha256": "07680c1cc599ce0549be8ab1e09028e3088d48801501439032bd67f4b92b5384",
+      "rotate_entry_count": 0,
+      "rowdriver_call_count": 32,
+      "rowdriver_first_call": {
+        "back_edge_plus_0x44": 1.0,
+        "counts": {
+          "prepass_back": 100,
+          "prepass_front": 50,
+          "scatter_back": 8,
+          "scatter_front": 8
+        },
+        "divisor_plus_0x38": 2392.0,
+        "exponent_plus_0x30": 0.0,
+        "front_edge_plus_0x40": 0.5,
+        "mode_branch": "interpolated",
+        "mode_plus_0x20": 3,
+        "opacity_plus_0x2c": 0.25,
+        "width": 76
+      },
+      "rowdriver_ranges": [
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          10,
+          12
+        ],
+        [
+          12,
+          14
+        ],
+        [
+          14,
+          16
+        ],
+        [
+          16,
+          18
+        ],
+        [
+          18,
+          20
+        ],
+        [
+          20,
+          22
+        ],
+        [
+          22,
+          24
+        ],
+        [
+          24,
+          26
+        ],
+        [
+          26,
+          28
+        ],
+        [
+          28,
+          30
+        ],
+        [
+          30,
+          32
+        ],
+        [
+          32,
+          34
+        ],
+        [
+          34,
+          36
+        ],
+        [
+          36,
+          38
+        ],
+        [
+          38,
+          40
+        ],
+        [
+          40,
+          42
+        ],
+        [
+          42,
+          44
+        ],
+        [
+          44,
+          46
+        ],
+        [
+          46,
+          48
+        ],
+        [
+          48,
+          50
+        ],
+        [
+          50,
+          52
+        ],
+        [
+          52,
+          54
+        ],
+        [
+          54,
+          56
+        ],
+        [
+          56,
+          58
+        ],
+        [
+          58,
+          60
+        ],
+        [
+          60,
+          62
+        ],
+        [
+          62,
+          64
+        ]
+      ],
+      "tuple_index": 0
+    },
+    {
+      "byte_count": 18432,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "raw_sha256": "c1055119e09eb2394aa8f1347b481efd51890996ff1a9ed4073ab97857a9fb1e",
+      "rotate_entry_count": 0,
+      "rowdriver_call_count": 32,
+      "rowdriver_first_call": {
+        "back_edge_plus_0x44": 0.5,
+        "counts": {
+          "prepass_back": 50,
+          "prepass_front": 50,
+          "scatter_back": 8,
+          "scatter_front": 8
+        },
+        "divisor_plus_0x38": 2392.0,
+        "exponent_plus_0x30": 0.5,
+        "front_edge_plus_0x40": 1.0,
+        "mode_branch": "interpolated",
+        "mode_plus_0x20": 3,
+        "opacity_plus_0x2c": 1.0,
+        "width": 76
+      },
+      "rowdriver_ranges": [
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          10,
+          12
+        ],
+        [
+          12,
+          14
+        ],
+        [
+          14,
+          16
+        ],
+        [
+          16,
+          18
+        ],
+        [
+          18,
+          20
+        ],
+        [
+          20,
+          22
+        ],
+        [
+          22,
+          24
+        ],
+        [
+          24,
+          26
+        ],
+        [
+          26,
+          28
+        ],
+        [
+          28,
+          30
+        ],
+        [
+          30,
+          32
+        ],
+        [
+          32,
+          34
+        ],
+        [
+          34,
+          36
+        ],
+        [
+          36,
+          38
+        ],
+        [
+          38,
+          40
+        ],
+        [
+          40,
+          42
+        ],
+        [
+          42,
+          44
+        ],
+        [
+          44,
+          46
+        ],
+        [
+          46,
+          48
+        ],
+        [
+          48,
+          50
+        ],
+        [
+          50,
+          52
+        ],
+        [
+          52,
+          54
+        ],
+        [
+          54,
+          56
+        ],
+        [
+          56,
+          58
+        ],
+        [
+          58,
+          60
+        ],
+        [
+          60,
+          62
+        ],
+        [
+          62,
+          64
+        ]
+      ],
+      "tuple_index": 1
+    },
+    {
+      "byte_count": 18432,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "raw_sha256": "f3270d90c3c5ca650eb13c3925f14fae52e38142bf9a7efaf545a060fad7d09d",
+      "rotate_entry_count": 0,
+      "rowdriver_call_count": 32,
+      "rowdriver_first_call": {
+        "back_edge_plus_0x44": 1.0,
+        "counts": {
+          "prepass_back": 50,
+          "prepass_front": 100,
+          "scatter_back": 8,
+          "scatter_front": 8
+        },
+        "divisor_plus_0x38": 2392.0,
+        "exponent_plus_0x30": 0.0,
+        "front_edge_plus_0x40": 0.5,
+        "mode_branch": "interpolated",
+        "mode_plus_0x20": 3,
+        "opacity_plus_0x2c": 1.0,
+        "width": 76
+      },
+      "rowdriver_ranges": [
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          10,
+          12
+        ],
+        [
+          12,
+          14
+        ],
+        [
+          14,
+          16
+        ],
+        [
+          16,
+          18
+        ],
+        [
+          18,
+          20
+        ],
+        [
+          20,
+          22
+        ],
+        [
+          22,
+          24
+        ],
+        [
+          24,
+          26
+        ],
+        [
+          26,
+          28
+        ],
+        [
+          28,
+          30
+        ],
+        [
+          30,
+          32
+        ],
+        [
+          32,
+          34
+        ],
+        [
+          34,
+          36
+        ],
+        [
+          36,
+          38
+        ],
+        [
+          38,
+          40
+        ],
+        [
+          40,
+          42
+        ],
+        [
+          42,
+          44
+        ],
+        [
+          44,
+          46
+        ],
+        [
+          46,
+          48
+        ],
+        [
+          48,
+          50
+        ],
+        [
+          50,
+          52
+        ],
+        [
+          52,
+          54
+        ],
+        [
+          54,
+          56
+        ],
+        [
+          56,
+          58
+        ],
+        [
+          58,
+          60
+        ],
+        [
+          60,
+          62
+        ],
+        [
+          62,
+          64
+        ]
+      ],
+      "tuple_index": 2
+    },
+    {
+      "byte_count": 18432,
+      "callbacks": [
+        "0x1800068e0",
+        "0x180006a90"
+      ],
+      "depth": "PF16",
+      "raw_sha256": "a846cc730fcd40ba6fe1b29bfd5769e0ebbad72fdc6a941a8f537652cb531460",
+      "rotate_entry_count": 0,
+      "rowdriver_call_count": 32,
+      "rowdriver_first_call": {
+        "back_edge_plus_0x44": 0.5,
+        "counts": {
+          "prepass_back": 100,
+          "prepass_front": 100,
+          "scatter_back": 8,
+          "scatter_front": 8
+        },
+        "divisor_plus_0x38": 2392.0,
+        "exponent_plus_0x30": 0.5,
+        "front_edge_plus_0x40": 1.0,
+        "mode_branch": "interpolated",
+        "mode_plus_0x20": 3,
+        "opacity_plus_0x2c": 0.25,
+        "width": 76
+      },
+      "rowdriver_ranges": [
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          10,
+          12
+        ],
+        [
+          12,
+          14
+        ],
+        [
+          14,
+          16
+        ],
+        [
+          16,
+          18
+        ],
+        [
+          18,
+          20
+        ],
+        [
+          20,
+          22
+        ],
+        [
+          22,
+          24
+        ],
+        [
+          24,
+          26
+        ],
+        [
+          26,
+          28
+        ],
+        [
+          28,
+          30
+        ],
+        [
+          30,
+          32
+        ],
+        [
+          32,
+          34
+        ],
+        [
+          34,
+          36
+        ],
+        [
+          36,
+          38
+        ],
+        [
+          38,
+          40
+        ],
+        [
+          40,
+          42
+        ],
+        [
+          42,
+          44
+        ],
+        [
+          44,
+          46
+        ],
+        [
+          46,
+          48
+        ],
+        [
+          48,
+          50
+        ],
+        [
+          50,
+          52
+        ],
+        [
+          52,
+          54
+        ],
+        [
+          54,
+          56
+        ],
+        [
+          56,
+          58
+        ],
+        [
+          58,
+          60
+        ],
+        [
+          60,
+          62
+        ],
+        [
+          62,
+          64
+        ]
+      ],
+      "tuple_index": 3
+    },
+    {
+      "byte_count": 36864,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "depth": "PF32",
+      "raw_sha256": "27ed24ed8bf54b48af831e6ec5a44dd195c89b2fdd0acea5dee123b37d5adc20",
+      "rotate_entry_count": 0,
+      "rowdriver_call_count": 32,
+      "rowdriver_first_call": {
+        "back_edge_plus_0x44": 1.0,
+        "counts": {
+          "prepass_back": 100,
+          "prepass_front": 50,
+          "scatter_back": 8,
+          "scatter_front": 8
+        },
+        "divisor_plus_0x38": 2392.0,
+        "exponent_plus_0x30": 0.0,
+        "front_edge_plus_0x40": 0.5,
+        "mode_branch": "interpolated",
+        "mode_plus_0x20": 3,
+        "opacity_plus_0x2c": 0.25,
+        "width": 76
+      },
+      "rowdriver_ranges": [
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          10,
+          12
+        ],
+        [
+          12,
+          14
+        ],
+        [
+          14,
+          16
+        ],
+        [
+          16,
+          18
+        ],
+        [
+          18,
+          20
+        ],
+        [
+          20,
+          22
+        ],
+        [
+          22,
+          24
+        ],
+        [
+          24,
+          26
+        ],
+        [
+          26,
+          28
+        ],
+        [
+          28,
+          30
+        ],
+        [
+          30,
+          32
+        ],
+        [
+          32,
+          34
+        ],
+        [
+          34,
+          36
+        ],
+        [
+          36,
+          38
+        ],
+        [
+          38,
+          40
+        ],
+        [
+          40,
+          42
+        ],
+        [
+          42,
+          44
+        ],
+        [
+          44,
+          46
+        ],
+        [
+          46,
+          48
+        ],
+        [
+          48,
+          50
+        ],
+        [
+          50,
+          52
+        ],
+        [
+          52,
+          54
+        ],
+        [
+          54,
+          56
+        ],
+        [
+          56,
+          58
+        ],
+        [
+          58,
+          60
+        ],
+        [
+          60,
+          62
+        ],
+        [
+          62,
+          64
+        ]
+      ],
+      "tuple_index": 0
+    },
+    {
+      "byte_count": 36864,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "depth": "PF32",
+      "raw_sha256": "0b74caf1aef39ab242ca09b10d65bdc77a3646f31511a72f29c3e5e6d70635c2",
+      "rotate_entry_count": 0,
+      "rowdriver_call_count": 32,
+      "rowdriver_first_call": {
+        "back_edge_plus_0x44": 0.5,
+        "counts": {
+          "prepass_back": 50,
+          "prepass_front": 50,
+          "scatter_back": 8,
+          "scatter_front": 8
+        },
+        "divisor_plus_0x38": 2392.0,
+        "exponent_plus_0x30": 0.5,
+        "front_edge_plus_0x40": 1.0,
+        "mode_branch": "interpolated",
+        "mode_plus_0x20": 3,
+        "opacity_plus_0x2c": 1.0,
+        "width": 76
+      },
+      "rowdriver_ranges": [
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          10,
+          12
+        ],
+        [
+          12,
+          14
+        ],
+        [
+          14,
+          16
+        ],
+        [
+          16,
+          18
+        ],
+        [
+          18,
+          20
+        ],
+        [
+          20,
+          22
+        ],
+        [
+          22,
+          24
+        ],
+        [
+          24,
+          26
+        ],
+        [
+          26,
+          28
+        ],
+        [
+          28,
+          30
+        ],
+        [
+          30,
+          32
+        ],
+        [
+          32,
+          34
+        ],
+        [
+          34,
+          36
+        ],
+        [
+          36,
+          38
+        ],
+        [
+          38,
+          40
+        ],
+        [
+          40,
+          42
+        ],
+        [
+          42,
+          44
+        ],
+        [
+          44,
+          46
+        ],
+        [
+          46,
+          48
+        ],
+        [
+          48,
+          50
+        ],
+        [
+          50,
+          52
+        ],
+        [
+          52,
+          54
+        ],
+        [
+          54,
+          56
+        ],
+        [
+          56,
+          58
+        ],
+        [
+          58,
+          60
+        ],
+        [
+          60,
+          62
+        ],
+        [
+          62,
+          64
+        ]
+      ],
+      "tuple_index": 1
+    },
+    {
+      "byte_count": 36864,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "depth": "PF32",
+      "raw_sha256": "ea11382502f61da8a5a1408dd294b15dd5af0fda81f18b9823c2d2a453f0b792",
+      "rotate_entry_count": 0,
+      "rowdriver_call_count": 32,
+      "rowdriver_first_call": {
+        "back_edge_plus_0x44": 1.0,
+        "counts": {
+          "prepass_back": 50,
+          "prepass_front": 100,
+          "scatter_back": 8,
+          "scatter_front": 8
+        },
+        "divisor_plus_0x38": 2392.0,
+        "exponent_plus_0x30": 0.0,
+        "front_edge_plus_0x40": 0.5,
+        "mode_branch": "interpolated",
+        "mode_plus_0x20": 3,
+        "opacity_plus_0x2c": 1.0,
+        "width": 76
+      },
+      "rowdriver_ranges": [
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          10,
+          12
+        ],
+        [
+          12,
+          14
+        ],
+        [
+          14,
+          16
+        ],
+        [
+          16,
+          18
+        ],
+        [
+          18,
+          20
+        ],
+        [
+          20,
+          22
+        ],
+        [
+          22,
+          24
+        ],
+        [
+          24,
+          26
+        ],
+        [
+          26,
+          28
+        ],
+        [
+          28,
+          30
+        ],
+        [
+          30,
+          32
+        ],
+        [
+          32,
+          34
+        ],
+        [
+          34,
+          36
+        ],
+        [
+          36,
+          38
+        ],
+        [
+          38,
+          40
+        ],
+        [
+          40,
+          42
+        ],
+        [
+          42,
+          44
+        ],
+        [
+          44,
+          46
+        ],
+        [
+          46,
+          48
+        ],
+        [
+          48,
+          50
+        ],
+        [
+          50,
+          52
+        ],
+        [
+          52,
+          54
+        ],
+        [
+          54,
+          56
+        ],
+        [
+          56,
+          58
+        ],
+        [
+          58,
+          60
+        ],
+        [
+          60,
+          62
+        ],
+        [
+          62,
+          64
+        ]
+      ],
+      "tuple_index": 2
+    },
+    {
+      "byte_count": 36864,
+      "callbacks": [
+        "0x180006a20",
+        "0x180006bd0"
+      ],
+      "depth": "PF32",
+      "raw_sha256": "faa5ad5686a58a4f390a354e14c72ac4255212b1be05ddf174345e8d11d42782",
+      "rotate_entry_count": 0,
+      "rowdriver_call_count": 32,
+      "rowdriver_first_call": {
+        "back_edge_plus_0x44": 0.5,
+        "counts": {
+          "prepass_back": 100,
+          "prepass_front": 100,
+          "scatter_back": 8,
+          "scatter_front": 8
+        },
+        "divisor_plus_0x38": 2392.0,
+        "exponent_plus_0x30": 0.5,
+        "front_edge_plus_0x40": 1.0,
+        "mode_branch": "interpolated",
+        "mode_plus_0x20": 3,
+        "opacity_plus_0x2c": 0.25,
+        "width": 76
+      },
+      "rowdriver_ranges": [
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          10,
+          12
+        ],
+        [
+          12,
+          14
+        ],
+        [
+          14,
+          16
+        ],
+        [
+          16,
+          18
+        ],
+        [
+          18,
+          20
+        ],
+        [
+          20,
+          22
+        ],
+        [
+          22,
+          24
+        ],
+        [
+          24,
+          26
+        ],
+        [
+          26,
+          28
+        ],
+        [
+          28,
+          30
+        ],
+        [
+          30,
+          32
+        ],
+        [
+          32,
+          34
+        ],
+        [
+          34,
+          36
+        ],
+        [
+          36,
+          38
+        ],
+        [
+          38,
+          40
+        ],
+        [
+          40,
+          42
+        ],
+        [
+          42,
+          44
+        ],
+        [
+          44,
+          46
+        ],
+        [
+          46,
+          48
+        ],
+        [
+          48,
+          50
+        ],
+        [
+          50,
+          52
+        ],
+        [
+          52,
+          54
+        ],
+        [
+          54,
+          56
+        ],
+        [
+          56,
+          58
+        ],
+        [
+          58,
+          60
+        ],
+        [
+          60,
+          62
+        ],
+        [
+          62,
+          64
+        ]
+      ],
+      "tuple_index": 3
+    }
+  ],
+  "rotated_work_partition": {
+    "contract": "actual owner 32 two-row partitions cover rows 0..63; rotated rows 64..75 remain preseeded before rotate-back",
+    "row_ranges": [
+      [
+        0,
+        2
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        4,
+        6
+      ],
+      [
+        6,
+        8
+      ],
+      [
+        8,
+        10
+      ],
+      [
+        10,
+        12
+      ],
+      [
+        12,
+        14
+      ],
+      [
+        14,
+        16
+      ],
+      [
+        16,
+        18
+      ],
+      [
+        18,
+        20
+      ],
+      [
+        20,
+        22
+      ],
+      [
+        22,
+        24
+      ],
+      [
+        24,
+        26
+      ],
+      [
+        26,
+        28
+      ],
+      [
+        28,
+        30
+      ],
+      [
+        30,
+        32
+      ],
+      [
+        32,
+        34
+      ],
+      [
+        34,
+        36
+      ],
+      [
+        36,
+        38
+      ],
+      [
+        38,
+        40
+      ],
+      [
+        40,
+        42
+      ],
+      [
+        42,
+        44
+      ],
+      [
+        44,
+        46
+      ],
+      [
+        46,
+        48
+      ],
+      [
+        48,
+        50
+      ],
+      [
+        50,
+        52
+      ],
+      [
+        52,
+        54
+      ],
+      [
+        54,
+        56
+      ],
+      [
+        56,
+        58
+      ],
+      [
+        58,
+        60
+      ],
+      [
+        60,
+        62
+      ],
+      [
+        62,
+        64
+      ]
+    ],
+    "work_width": 76,
+    "worker_calls": 32
+  },
+  "schema_version": 1,
+  "status": "exact_bounded_geometry_promotion",
+  "tuples": [
+    {
+      "back_fade": 100,
+      "back_sharp": 100,
+      "front_fade": 50,
+      "front_sharp": 50,
+      "noise_type": 1,
+      "noise_variation": 25,
+      "size_variation": 0
+    },
+    {
+      "back_fade": 50,
+      "back_sharp": 50,
+      "front_fade": 50,
+      "front_sharp": 100,
+      "noise_type": 2,
+      "noise_variation": 100,
+      "size_variation": 50
+    },
+    {
+      "back_fade": 50,
+      "back_sharp": 100,
+      "front_fade": 100,
+      "front_sharp": 50,
+      "noise_type": 2,
+      "noise_variation": 100,
+      "size_variation": 0
+    },
+    {
+      "back_fade": 100,
+      "back_sharp": 50,
+      "front_fade": 100,
+      "front_sharp": 100,
+      "noise_type": 1,
+      "noise_variation": 25,
+      "size_variation": 50
+    }
+  ]
+}

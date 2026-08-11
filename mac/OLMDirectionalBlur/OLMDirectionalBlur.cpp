@@ -430,7 +430,8 @@ static bool DualSideHigherOrderTuple(const OLMDirectionalBlurInfo &info,
 	                                 A_long width,
 	                                 A_long height)
 {
-	if (!((width == 16 && height == 16) || (width == 32 && height == 18)) ||
+	if (!((width == 16 && height == 16) || (width == 32 && height == 18) ||
+		  (width == 64 && height == 36)) ||
 		info.angle_deg != 45.0 ||
 		info.brightness_gain != 1.0 || info.front_strength != 8 ||
 		info.back_strength != 8 || info.seed != 1 || info.noise_offset != 0 ||
