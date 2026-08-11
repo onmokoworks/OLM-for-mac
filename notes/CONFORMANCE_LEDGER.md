@@ -1,5 +1,14 @@
 # OLM Conformance Ledger
 
+- 2026-08-11 ten-plugin Mac AE host smoke: After Effects 26.3x87 on
+  macOS 15.7.2 arm64, Software renderer raw 1816, loaded, applied, and
+  rendered all ten plug-ins successfully to one 64x64 PNG each.
+  OLMDirectionalBlur, which had left an earlier smoke at 9/10, succeeds in
+  this run. This is load/apply/render host evidence only; it does not promote
+  Windows pixel equality, major-parameter parity, or PNG conformance.
+  Evidence: handoff/ae_host_validation_20260811/
+  AE_VALIDATION_RESULT_minimal_load_apply_20260811.json.
+
 - 2026-08-12 bounded interaction update: OLMColorKey's semitransparent
   internal Direction 0/4, Amount 1/4 endpoints are 12/12 raw exact on the
   declared 32x18 two-key fixture. OLMKiraKira Mode 4's corrected multiline

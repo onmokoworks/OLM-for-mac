@@ -32,14 +32,17 @@ Windows版の全入力・全geometry・全パラメーター直積との完全�
 
 - 全10プラグインの固定fixture回帰：PASS
 - 現行Mac AEでのロード／代表レンダー：10/10
+- 最新の最小host smoke：10/10 loaded／applied／render succeeded（64×64 PNG）
 - インストール済みUniversal bundle、SHA-256、署名：10/10
-- 対象ホスト：After Effects `26.3x87`、Softwareレンダー
+- 対象ホスト：After Effects `26.3x87`、macOS 15.7.2 arm64、Softwareレンダー
 - 最終Mac統合ゲート：`release_gate_pass`
 
 Windows AEで取得する7行として固定した同一条件校正は、受領・検証済みです。
 ただしWindows／MacのAE hostが
 素材import、premultiply、色管理、書き出しで異なる場合があるため、最終EXR全体の
 包括的なcross-host一致は主張しません。
+最新の10-plugin smokeはロード、適用、64×64 PNG保存のhost動作確認です。
+Windowsとのpixel exactや主要パラメーター一致を追加で証明するものではありません。
 
 詳しい対応範囲と制限は、次の文書を正とします。
 

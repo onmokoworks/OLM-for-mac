@@ -8,6 +8,9 @@
 
 - 主な検証環境はAfter Effects 26.3x87、CPU Software、working space None、linear
   blending offです。
+- macOS 15.7.2 arm64の最新最小host smokeでは全10プラグインのロード、適用、
+  64×64 PNGレンダーが成功しています。この結果はhost smokeであり、Windowsとの
+  pixel exactや主要パラメーター設定の一致を証明するものではありません。
 - AEの素材import、premultiply／unpremultiply、色管理、codec、EXR出力はWindowsと
   macOSで異なる場合があります。同じプラグイン演算でも最終ファイルが一致しないことが
   あります。

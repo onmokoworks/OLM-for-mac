@@ -78,6 +78,13 @@ Mac統合候補は、全10プラグインの固定fixture回帰、インスト�
 bundleのarchitecture／署名／identity検査、および現行Mac AEでの代表ロード・
 レンダーを通過しています。
 
+最新の最小host smokeはAfter Effects 26.3x87、macOS 15.7.2 arm64、
+Software renderer（raw 1816）で実行し、全10プラグインがloaded／applied／
+render_succeededでした。各プラグインについて64×64 PNGを1枚保存し、以前の
+9/10 smokeで未達だったOLMDirectionalBlurも今回は成功しています。これはhostの
+ロード・適用・レンダー成立を示すsmokeであり、Windows pixel exact、主要パラメーター
+一致、または保存PNGのconformanceを一般化する証拠ではありません。
+
 同一契約によるWindows AE 7行は取得・受領検証済みです。ColorKeep 3深度、
 OLMKiraKira Mode 4 PF32内部経路、OLMSmoother v1 PF16内部経路のbounded比較も
 完了しています。host入出力変換を含むraw EXRの包括一致へは昇格しません。
