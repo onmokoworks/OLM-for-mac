@@ -131,6 +131,8 @@ def actual_aex() -> dict[str, bytes]:
                 if "prepass_alpha" not in captured:
                     captured["prepass_alpha"] = ret_ld.read_bytes(
                         m4.u64(ret_ld, work + 0x12 * 4), cells * 4)
+                    captured["prepass_accum"] = ret_ld.read_bytes(accum_ptr, cells * 16)
+                    captured["prepass_max_alpha"] = ret_ld.read_bytes(max_ptr, cells * 4)
             ld.add_code_hook(return_address, pre_scatter_return)
     def rotation_return(ld, _address, _size):
         work = int(captured["work"]); cells = int(captured["cells"])
@@ -174,6 +176,8 @@ def actual_aex() -> dict[str, bytes]:
             planes[name] = captured[name]
     if "prepass_alpha" in captured:
         planes["prepass_alpha"] = captured["prepass_alpha"]
+        planes["prepass_accum"] = captured["prepass_accum"]
+        planes["prepass_max_alpha"] = captured["prepass_max_alpha"]
         planes["polar_guard_before"] = captured["polar_guard_before"]
         planes["polar_guard_after"] = captured["polar_guard_after"]
         planes["edge_spans"] = captured["edge_spans"]
