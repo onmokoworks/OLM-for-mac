@@ -22,6 +22,8 @@ BLUR_MODE = int(os.environ.get("OLM_KIRA_BLUR_MODE", "1"))
 MERGE_MODE = int(os.environ.get("OLM_KIRA_MERGE_MODE", "1"))
 HORIZONTAL_LENGTH = int(os.environ.get("OLM_KIRA_HORIZONTAL_LENGTH", "7"))
 HORIZONTAL_USE_RAMP = int(os.environ.get("OLM_KIRA_HORIZONTAL_USE_RAMP", "0"))
+GLOW_ROTATION = float(os.environ.get("OLM_KIRA_GLOW_ROTATION", "0"))
+GLOW_ROTATION_RAW_FIXED = os.environ.get("OLM_KIRA_GLOW_ROTATION_RAW_FIXED")
 REPORT = ROOT / os.environ.get(
     "OLM_KIRA_EXPORTED_REPORT",
     "refs/conformance/olmkirakira_mode1_exported_effectmain_all_depths_20260812.json",
@@ -78,6 +80,7 @@ def production() -> bytes:
     rgba = ",".join("{" + ",".join(map(str, pixel)) + "}" for pixel in RGBA)
     code = (CPP.replace("__SOURCE__", str(SOURCE)).replace("__STRINGS__", str(STRINGS))
             .replace("__RGBA__", rgba)
+            .replace("OLMKIRAKIRA_GLOW_ROTATION].u.fs_d.value=0", f"OLMKIRAKIRA_GLOW_ROTATION].u.fs_d.value={GLOW_ROTATION!r}")
             .replace("u.sd.value=7;defs[OLMKIRAKIRA_DIAGONAL_LENGTH]", f"u.sd.value={HORIZONTAL_LENGTH};defs[OLMKIRAKIRA_DIAGONAL_LENGTH]")
             .replace("OLMKIRAKIRA_BLUR_MODE].u.pd.value=1", f"OLMKIRAKIRA_BLUR_MODE].u.pd.value={BLUR_MODE}")
             .replace("OLMKIRAKIRA_MERGE_MODE].u.pd.value=1", f"OLMKIRAKIRA_MERGE_MODE].u.pd.value={MERGE_MODE}")
@@ -118,6 +121,11 @@ def main() -> int:
             params = [f"Blur Mode={BLUR_MODE}", "Vertical Length=0", f"Horizontal Length={HORIZONTAL_LENGTH}",
                       "Diagonal Length=0", "Diagonal 2 length=0", "Highlight Radius=0",
                       f"Merge mode={MERGE_MODE}", "Channel=1", "Brightness Gain=0.1"]
+            params.append(
+                f"Glow Rotation=fixed:{GLOW_ROTATION_RAW_FIXED}"
+                if GLOW_ROTATION_RAW_FIXED is not None else
+                f"Glow Rotation={GLOW_ROTATION}"
+            )
             if HORIZONTAL_USE_RAMP:
                 params.append("Use Ramp@19=1")
             result = subprocess.run([str(worker), "render-png", str(AEX), str(input_png),
@@ -162,7 +170,10 @@ def main() -> int:
                           "blur_mode": BLUR_MODE, "merge_mode": MERGE_MODE,
                           "active_ray": "Horizontal", "length": HORIZONTAL_LENGTH,
                           "horizontal_use_ramp": bool(HORIZONTAL_USE_RAMP),
-                          "glow_rotation": 0, "channel": 1, "semi_transparent": True},
+                          "glow_rotation": GLOW_ROTATION,
+                          "windows_rotation_raw_fixed": (int(GLOW_ROTATION_RAW_FIXED)
+                                                         if GLOW_ROTATION_RAW_FIXED is not None else None),
+                          "channel": 1, "semi_transparent": True},
               "rows": rows,
               "boundary": f"Actual exported SmartPreRender/SmartRender versus Mac public EffectMain(PF_Cmd_RENDER). {boundary_detail} ANGLE editing is unavailable in the pinned worker, so nondefault rotation remains fail-closed."}
     REPORT.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")

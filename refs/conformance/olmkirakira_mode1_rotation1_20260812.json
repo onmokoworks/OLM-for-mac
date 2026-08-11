@@ -1,5 +1,5 @@
 {
-  "kind": "olmkirakira_mode1_exported_effectmain_all_depths",
+  "kind": "olmkirakira_mode1_rotation1_exported_effectmain_all_depths",
   "date": "2026-08-12",
   "status": "exact",
   "fixture": {
@@ -13,8 +13,8 @@
     "active_ray": "Horizontal",
     "length": 7,
     "horizontal_use_ramp": false,
-    "glow_rotation": 0.0,
-    "windows_rotation_raw_fixed": null,
+    "glow_rotation": 1.0,
+    "windows_rotation_raw_fixed": 1,
     "channel": 1,
     "semi_transparent": true
   },
@@ -23,8 +23,8 @@
       "depth": "PF8",
       "pixel_format": "argb8",
       "bytes": 60,
-      "actual_exported_raw_sha256": "ff4de3ff2622faf02c62afe42a7c850586fea7f0fa7a3777f329b1d82b88ed5b",
-      "mac_effectmain_raw_sha256": "ff4de3ff2622faf02c62afe42a7c850586fea7f0fa7a3777f329b1d82b88ed5b",
+      "actual_exported_raw_sha256": "9c20573663b0cda83708eeb206ac7a6dddd6705629eeee0f7a9d357959881ef6",
+      "mac_effectmain_raw_sha256": "9c20573663b0cda83708eeb206ac7a6dddd6705629eeee0f7a9d357959881ef6",
       "exact": true,
       "actual_exported_rgba8": [
         [
@@ -40,9 +40,9 @@
           81
         ],
         [
-          45,
+          44,
           37,
-          30,
+          29,
           92
         ],
         [
@@ -52,13 +52,13 @@
           103
         ],
         [
-          69,
+          68,
           53,
           38,
           113
         ],
         [
-          85,
+          86,
           67,
           48,
           126
@@ -70,7 +70,7 @@
           140
         ],
         [
-          115,
+          114,
           88,
           62,
           151
@@ -88,7 +88,7 @@
           171
         ],
         [
-          156,
+          155,
           118,
           80,
           184
@@ -97,28 +97,28 @@
           171,
           130,
           89,
-          199
+          198
         ],
         [
-          185,
+          184,
           140,
           95,
-          210
+          209
         ],
         [
           198,
           150,
           101,
-          221
+          220
         ],
         [
           212,
-          159,
+          158,
           105,
           229
         ]
       ],
-      "mac_effectmain_active_hex": "4411111151211d195c2d251e67392e22714535267e5543308c654f399773583ea2806244ab8c6a48b89c7650c7ab8259d2b98c5fddc69665e5d49f69",
+      "mac_effectmain_active_hex": "4411111151211d195c2c251d67392e22714435267e5643308c654f399772583ea2806244ab8c6a48b89b7650c6ab8259d1b88c5fdcc69665e5d49e69",
       "guards_intact": true,
       "input_unchanged": true,
       "mac_padding_preserved": true,
@@ -146,8 +146,8 @@
       "depth": "PF16",
       "pixel_format": "argb16",
       "bytes": 120,
-      "actual_exported_raw_sha256": "ee37cf06360d144b85b8d7a32ce9b0612af1f354a0a988c9e1e952e58b9ce41d",
-      "mac_effectmain_raw_sha256": "ee37cf06360d144b85b8d7a32ce9b0612af1f354a0a988c9e1e952e58b9ce41d",
+      "actual_exported_raw_sha256": "80792b3f984e959150aacfecbc4bc01ab2ee51f047c41f5676df5fb9073479f2",
+      "mac_effectmain_raw_sha256": "80792b3f984e959150aacfecbc4bc01ab2ee51f047c41f5676df5fb9073479f2",
       "exact": true,
       "actual_exported_rgba8": [
         [
@@ -158,32 +158,32 @@
         ],
         [
           33,
-          29,
+          30,
           26,
           81
         ],
         [
           45,
-          38,
+          37,
           30,
           92
         ],
         [
-          58,
+          57,
           46,
           35,
           103
         ],
         [
           69,
-          54,
+          53,
           38,
           113
         ],
         [
           86,
           67,
-          48,
+          49,
           127
         ],
         [
@@ -212,15 +212,15 @@
         ],
         [
           156,
-          119,
+          118,
           81,
-          185
+          184
         ],
         [
           171,
           130,
-          90,
-          199
+          89,
+          198
         ],
         [
           185,
@@ -238,10 +238,10 @@
           212,
           159,
           106,
-          230
+          229
         ]
       ],
-      "mac_effectmain_active_hex": "6f22950895089508bb28a610cb0ef00c402e9616d712170fc633de1c33178911d538a322fa1a51139e3f2b2bbe2151184f462133f327c51cd54bb9399b2c7d1f5a517240613151220556b54685355524cd5c654e803b9a28e46300567841f02c6969dc5c5f46e22fef6eca63574be43234738b6ad84f2535",
+      "mac_effectmain_active_hex": "7a22be08be08be08bf28b310d80efd0c3b2e8a16ca120a0fbd33cd1c22177711bf387d22d11a2513a53f332bc7215b185b462e330228d61cd24bb739982c791f57516f405e314d22f855ac467a3547249c5c4b4e5b3b6c289a63e1554a41b22c5669d65c5546d42fdc6ec5634e4bd7321873856acc4f1335",
       "guards_intact": true,
       "input_unchanged": true,
       "mac_padding_preserved": true,
@@ -269,8 +269,8 @@
       "depth": "PF32",
       "pixel_format": "argb32f",
       "bytes": 240,
-      "actual_exported_raw_sha256": "0d50d86e40f9dd25daef5683e78bc3c066501477ccc36c8c4c7eab0c274b2cb6",
-      "mac_effectmain_raw_sha256": "0d50d86e40f9dd25daef5683e78bc3c066501477ccc36c8c4c7eab0c274b2cb6",
+      "actual_exported_raw_sha256": "4a221600eb32528a6b186712f1dc9a3d5f97b2f61add1ae8662e8c52e2dd58bb",
+      "mac_effectmain_raw_sha256": "4a221600eb32528a6b186712f1dc9a3d5f97b2f61add1ae8662e8c52e2dd58bb",
       "exact": true,
       "actual_exported_rgba8": [
         [
@@ -281,32 +281,32 @@
         ],
         [
           33,
-          29,
+          30,
           26,
           81
         ],
         [
           45,
-          38,
+          37,
           30,
           92
         ],
         [
-          58,
+          57,
           46,
           35,
           103
         ],
         [
           69,
-          54,
+          53,
           38,
           113
         ],
         [
           86,
           67,
-          48,
+          49,
           127
         ],
         [
@@ -335,15 +335,15 @@
         ],
         [
           156,
-          119,
+          118,
           81,
           185
         ],
         [
           171,
           130,
-          90,
-          199
+          89,
+          198
         ],
         [
           185,
@@ -361,10 +361,10 @@
           212,
           159,
           106,
-          230
+          229
         ]
       ],
-      "mac_effectmain_active_hex": "f1bc893e5654893d5654893d5654893d11eca23e4432053e02b3ec3d7d01cf3d2702b93eb5b4343edbb8163e037af13d3d18cf3e06ee663e899c393e0d4b0c3e6058e33ee08c8a3e09d1573e50881a3ed37afe3ed2aaac3eb0f6863e1e85423ee99e0c3fd086cc3e9fcd9f3ede28663ef4a9173fe6e6e63e2a6eb23ed9ea7b3effb4223f84e4003fe886c53ec944893e210b2c3f146a0d3fcb13d63e7053913e5b9c393f71cb1c3f1d01ee3e5a6ba23ec8c7473fe9002c3f49f0023f53bfb33ed3d2523fbab9393ff4bf0c3f598cbf3ededd5d3f9d94473f03af163fd092cb3e126a663f0817553fd7b01f3f4d95d43e",
+      "mac_effectmain_active_hex": "02ec893e5ee08b3d5ee08b3d5ee08b3d49fea23ed895053e7b7ded3d47cfcf3d68edb83e1b56343ee456163e5aaff03d28f6ce3e6b6b663e7812393e85b90b3e6bfde23e3cf7893e338d563eeb2b193e1094fe3e78ccac3e121c873e5dd7423e2cb70c3fd4bbcc3e5a0aa03ebfb1663ea4a3173f36dbe63e4a60b23eb9ca7b3eafae223f96df003fb67ac53e3f36893e8bf12b3f05590d3f75e7d53ede1c913ef839393fbf961c3f926fed3eaab1a13e2734473fa9c22b3f9a93023f18c9b23e31ad523f2cad393f5dab0c3f1b53bf3e3cb85d3f098b473f229d163f765ecb3e7d32663fab0c553f95991f3ffe4cd43e",
       "guards_intact": true,
       "input_unchanged": true,
       "mac_padding_preserved": true,

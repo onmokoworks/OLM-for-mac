@@ -1,5 +1,5 @@
 {
-  "kind": "olmkirakira_mode2_ramp_merge2_exported_effectmain_all_depths",
+  "kind": "olmkirakira_mode2_ramp_merge2_rotation1_exported_effectmain_all_depths",
   "date": "2026-08-12",
   "status": "exact",
   "fixture": {
@@ -13,8 +13,8 @@
     "active_ray": "Horizontal",
     "length": 7,
     "horizontal_use_ramp": true,
-    "glow_rotation": 0.0,
-    "windows_rotation_raw_fixed": null,
+    "glow_rotation": 1.0,
+    "windows_rotation_raw_fixed": 1,
     "channel": 1,
     "semi_transparent": true
   },
@@ -23,8 +23,8 @@
       "depth": "PF8",
       "pixel_format": "argb8",
       "bytes": 60,
-      "actual_exported_raw_sha256": "9193537a74075244aa1a7c38f506dbc546864940942315f7358fbab5d2145d26",
-      "mac_effectmain_raw_sha256": "9193537a74075244aa1a7c38f506dbc546864940942315f7358fbab5d2145d26",
+      "actual_exported_raw_sha256": "0328f5deed53fdab62d0ce08db1f2666fe13b8cbd85c743f85dc0d048c127ace",
+      "mac_effectmain_raw_sha256": "0328f5deed53fdab62d0ce08db1f2666fe13b8cbd85c743f85dc0d048c127ace",
       "exact": true,
       "actual_exported_rgba8": [
         [
@@ -52,7 +52,7 @@
           102
         ],
         [
-          31,
+          30,
           18,
           11,
           113
@@ -85,10 +85,10 @@
           95,
           63,
           40,
-          172
+          171
         ],
         [
-          114,
+          113,
           75,
           47,
           185
@@ -97,7 +97,7 @@
           131,
           88,
           55,
-          197
+          196
         ],
         [
           150,
@@ -112,13 +112,13 @@
           219
         ],
         [
-          192,
+          191,
           132,
           83,
           230
         ]
       ],
-      "mac_effectmain_active_hex": "45050000500903025b0f070466160c07711f120b7f2b19108a36211595422a1ba0503421ac5f3f28b9724b2fc5835837d0966540dbaa7449e6c08453",
+      "mac_effectmain_active_hex": "45050000500903025b0f070466160c07711e120b7f2b19108a36211595422a1ba0503421ab5f3f28b9714b2fc4835837d0966540dbaa7449e6bf8453",
       "guards_intact": true,
       "input_unchanged": true,
       "mac_padding_preserved": true,
@@ -146,8 +146,8 @@
       "depth": "PF16",
       "pixel_format": "argb16",
       "bytes": 120,
-      "actual_exported_raw_sha256": "7df16d7172e645dacc52711a6c3fbf49faeb2eaba00ef463a9c00584d4fbe0ad",
-      "mac_effectmain_raw_sha256": "7df16d7172e645dacc52711a6c3fbf49faeb2eaba00ef463a9c00584d4fbe0ad",
+      "actual_exported_raw_sha256": "d7cad5ac7c353627bef978b85205fefb749bff6fa2e1b6a9429d772f7edd73fd",
+      "mac_effectmain_raw_sha256": "d7cad5ac7c353627bef978b85205fefb749bff6fa2e1b6a9429d772f7edd73fd",
       "exact": true,
       "actual_exported_rgba8": [
         [
@@ -163,7 +163,7 @@
           80
         ],
         [
-          16,
+          15,
           8,
           5,
           91
@@ -172,13 +172,13 @@
           23,
           13,
           8,
-          103
+          102
         ],
         [
           31,
           19,
           12,
-          114
+          113
         ],
         [
           44,
@@ -212,12 +212,12 @@
         ],
         [
           114,
-          76,
+          75,
           48,
-          186
+          185
         ],
         [
-          132,
+          131,
           88,
           56,
           197
@@ -241,7 +241,7 @@
           230
         ]
       ],
-      "mac_effectmain_active_hex": "b12291020b0000004a28db04ab010801df2dc807c5035e0276335d0b5a0602040739920f6709f3050640dc15010d3308a045671b0311bf0a364b94218015990dcc506728761ac1105c56db2fe61f37145a5d6339e925f917f76230424e2c0a1c8c689c4b2c336820236eb055853a1425b073606056420d2a",
+      "mac_effectmain_active_hex": "bb229b020b0000005328e404ab010801da2dc307c5035e027033570b59060204eb38770f6609f3050e40e415010d3308a945701b0411bf0a334b91218015990dca506628761ac1104e56cd2fe51f37141d5d2639e425f917b862f141492c0a1c7c688c4b2b336820116e9e55843a14259073406054420d2a",
       "guards_intact": true,
       "input_unchanged": true,
       "mac_padding_preserved": true,
@@ -269,8 +269,8 @@
       "depth": "PF32",
       "pixel_format": "argb32f",
       "bytes": 240,
-      "actual_exported_raw_sha256": "f3d831eab1bc4d57e787733aeffd0863a1840cbf0bf7e79dd1f2d4eec60c1763",
-      "mac_effectmain_raw_sha256": "f3d831eab1bc4d57e787733aeffd0863a1840cbf0bf7e79dd1f2d4eec60c1763",
+      "actual_exported_raw_sha256": "024e207a669266ad0e8382d80adef67f6b55fdfc17e208b060bf2340a79b9eb6",
+      "mac_effectmain_raw_sha256": "024e207a669266ad0e8382d80adef67f6b55fdfc17e208b060bf2340a79b9eb6",
       "exact": true,
       "actual_exported_rgba8": [
         [
@@ -286,7 +286,7 @@
           80
         ],
         [
-          16,
+          15,
           8,
           5,
           91
@@ -295,13 +295,13 @@
           23,
           13,
           8,
-          103
+          102
         ],
         [
           31,
           19,
           12,
-          114
+          113
         ],
         [
           44,
@@ -335,12 +335,12 @@
         ],
         [
           114,
-          76,
+          75,
           48,
           186
         ],
         [
-          132,
+          131,
           88,
           56,
           197
@@ -364,7 +364,7 @@
           230
         ]
       ],
-      "mac_effectmain_active_hex": "e3c58a3e1f56a43c0218b039000000008027a13ebc641b3dc7b1553c0c48043c867fb73e2e1b793dff69f13cc6ae973c8cd7cd3e8fcdb53d6c3c4b3d2050003d621fe43e8831f93df97e963d3a7c3e3d100c003ff0de2e3e0e0fd03dd92d833dfe400b3fb5395b3ef61c083e44f7ab3d016d163f9851863e1d002c3e5c9ad93d0499213f849fa13efbb2533e920b063ed0b82c3f346ebf3eaa327f3eccb6213e30b53a3f398fe53e36a6973edfce3f3e3cee453f6461043f7c3ab13ec853603e3f1a513fba3a173f91b4cc3ec4a2813e42465c3fa8602b3f8116ea3e1052943eef61673fd8c2403fd0ae043fc837a83e",
+      "mac_effectmain_active_hex": "8cec8a3eacc0a63c5d4fb53900000000174ca13e72891c3d62da553c0c48043c506bb73e7c79783da05ef13cc6ae973c55c1cd3eb374b53d07364b3d2050003d1eb0e33e7674f73ded6e963d3a7c3e3d861c003fc7202f3e7316d03dd92d833dde530b3f36855b3e4921083e44f7ab3d7867163f8546863ed6fe2b3e5c9ad93d0e96213f9899a13e49b2533e920b063e6d9c2c3f6d35bf3efa2b7f3eccb6213e703b3a3fba9be43e7f93973edfce3f3e5370453f7be3033fd926b13ec853603e39f9503fb419173f49afcc3ec4a2813eb2225c3f183d2b3fc210ea3e1052943ef121673fda82403fa4a9043fc837a83e",
       "guards_intact": true,
       "input_unchanged": true,
       "mac_padding_preserved": true,
