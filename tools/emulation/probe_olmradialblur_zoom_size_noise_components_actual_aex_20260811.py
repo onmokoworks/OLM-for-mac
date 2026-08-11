@@ -40,13 +40,14 @@ def configure(depth, sv, nv, nt, gain=1.0):
 def actual(cell):
     depth, sv, nv, nt = cell[:4]
     gain = cell[4] if len(cell) > 4 else 1.0
+    inner = cell[5] if len(cell) > 5 else 0
     target, frame, rb = configure(depth, sv, nv, nt, gain)
     fx = target.fixture
     params = fx.m4.load_case0010_params()
     params.update({
         "Blur Type": 1, "Center": (target.CENTER_X, target.CENTER_Y), "Quality": 5.,
         "Ratio": 1., "Angle": 0, "Outer Strength": 4, "Outer Offset Mode": 1,
-        "Outer Offset": 0, "Inner Strength": 0, "Noise Variation": nv,
+        "Outer Offset": 0, "Inner Strength": inner, "Noise Variation": nv,
         "Noise Type": nt, "Seed": 1, "Noise Offset": 0., "Thickness": 10.,
         "Size Variation": sv, "Brightness Gain": gain,
     })

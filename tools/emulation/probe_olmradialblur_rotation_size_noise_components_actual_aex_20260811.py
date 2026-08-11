@@ -25,7 +25,8 @@ CELLS = [(d, sv, nv, nt) for d in (8, 16, 32) for sv in SVS for nv in NVS for nt
 REPORT = ROOT / "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
 
 
-def configure(depth: int, sv: float, nv: float, noise_type: int, gain: float = 1.0):
+def configure(depth: int, sv: float, nv: float, noise_type: int, gain: float = 1.0,
+              inner: int = 0):
     target, frame = comp.configure(depth, sv, gain)
     fixture = target.base if depth == 32 else target
     fixture.FIXTURE_NOISE_VARIATION = nv
@@ -33,7 +34,12 @@ def configure(depth: int, sv: float, nv: float, noise_type: int, gain: float = 1
     fixture.FIXTURE_SEED = 1
     fixture.FIXTURE_NOISE_OFFSET = 0.0
     fixture.FIXTURE_THICKNESS = 10.0
+    fixture.FIXTURE_OUTER_STRENGTH = 4
+    fixture.FIXTURE_INNER_STRENGTH = inner
     fixture.CAPTURE_NOISE_INTERNALS = True
+    if depth == 32:
+        target.OUTER_STRENGTH = 4
+        target.INNER_STRENGTH = inner
     return target, frame
 
 

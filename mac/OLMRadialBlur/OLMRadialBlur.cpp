@@ -2123,8 +2123,12 @@ static PF_Err RenderZoomTyped(
 		info.inner_edge_fade == 0 && info.inner_offset_mode == 1 && info.inner_offset == 0 &&
 		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
 		info.quality == 5.0 && info.brightness_gain == 1.0 &&
-		(info.size_variation == 25.0 || info.size_variation == 100.0) &&
-		info.noise_variation == 0.0 && info.noise_type == 1 && info.noise_layer == 0 &&
+		((info.size_variation == 25.0 &&
+		  ((info.noise_variation == 0.0 && info.noise_type == 1) ||
+		   (info.noise_variation == 25.0 && info.noise_type == 1))) ||
+		 (info.size_variation == 100.0 &&
+		  ((info.noise_variation == 0.0 && info.noise_type == 1) ||
+		   (info.noise_variation == 100.0 && info.noise_type == 2)))) && info.noise_layer == 0 &&
 		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0 &&
 		info.comp_width == 32.0 && info.comp_height == 18.0 && source_components_1_4_9;
 	const bool use_aex_typed_zoom_size_edge_components_32x18 = input && output &&
@@ -2346,6 +2350,7 @@ static PF_Err RenderZoomTyped(
 	    !use_aex_typed_zoom_inner_offset_pairwise &&
 	    !use_aex_typed_zoom_inner_size_edge_noise_components_32x18) ||
 	    (info.noise_variation != 0.0 && !use_aex_pf32_zoom_noise_type1_small &&
+	    !use_aex_typed_zoom_dual_size_components_32x18 &&
 	    !use_aex_typed_zoom_noise_type1_pairwise && !use_aex_typed_zoom_noise_type2_small &&
 	    !use_aex_typed_zoom_inner_pairwise &&
 	    !use_aex_pf32_zoom_inner_noise_small && !use_aex_typed_zoom_edge_noise_32x18 &&
@@ -2472,6 +2477,7 @@ static PF_Err RenderZoomTyped(
 		if (use_aex_pf32_zoom_noise_type1_small || use_aex_typed_zoom_noise_type1_pairwise ||
 			use_aex_pf32_zoom_inner_noise_small || use_aex_typed_zoom_noise_type2_small ||
 			(use_aex_typed_zoom_inner_pairwise && info.noise_variation != 0.0) ||
+			(use_aex_typed_zoom_dual_size_components_32x18 && info.noise_variation != 0.0) ||
 			use_aex_typed_zoom_edge_noise_32x18 ||
 			(use_aex_typed_zoom_transform_worker_32x18 && quality_repeat_noise_tuple) ||
 			use_aex_typed_zoom_any_size_edge_noise_components_32x18 ||
@@ -2491,6 +2497,7 @@ static PF_Err RenderZoomTyped(
 				for (A_long x = 0; x < w; ++x) {
 					const float noise = (use_aex_typed_zoom_noise_type2_small ||
 						(use_aex_typed_zoom_inner_pairwise && info.noise_type == 2) ||
+						(use_aex_typed_zoom_dual_size_components_32x18 && info.noise_type == 2) ||
 						(use_aex_typed_zoom_edge_noise_32x18 && info.noise_type == 2) ||
 						(use_aex_typed_zoom_transform_worker_32x18 && quality_repeat_noise_tuple) ||
 						((use_aex_typed_zoom_size_noise_components_32x18 ||
@@ -2501,7 +2508,8 @@ static PF_Err RenderZoomTyped(
 					const float mixed =
 						RadialF32Add(RadialF32Mul(nv, noise), RadialF32Sub(1.0f, nv));
 					source_factor_with_guard[source_cell] =
-						(use_aex_typed_zoom_size_noise_components_32x18 ||
+						((use_aex_typed_zoom_dual_size_components_32x18 && info.noise_variation != 0.0) ||
+						 use_aex_typed_zoom_size_noise_components_32x18 ||
 						 use_aex_typed_zoom_any_size_edge_noise_components_32x18)
 						? RadialF32Mul(mixed, source_factor_with_guard[source_cell]) : mixed;
 				}
@@ -3187,8 +3195,13 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		((info.size_variation == 0.0 &&
 		  (info.noise_variation == 0.0 || info.noise_variation == 25.0 || info.noise_variation == 100.0) &&
 		  (info.noise_type == 1 || (info.noise_variation != 0.0 && info.noise_type == 2))) ||
-		 ((info.size_variation == 25.0 || info.size_variation == 100.0) &&
-		  info.noise_variation == 0.0 && info.noise_type == 1 && source_components_1_4_9)) &&
+		 (((info.size_variation == 25.0 &&
+		    ((info.noise_variation == 0.0 && info.noise_type == 1) ||
+		     (info.noise_variation == 25.0 && info.noise_type == 1))) ||
+		   (info.size_variation == 100.0 &&
+		    ((info.noise_variation == 0.0 && info.noise_type == 1) ||
+		     (info.noise_variation == 100.0 && info.noise_type == 2)))) &&
+		  source_components_1_4_9)) &&
 		info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0;
 	const bool use_aex_typed_rotation_size_variation_32x18 = input && output &&
@@ -3711,7 +3724,9 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				const float mixed =
 					RadialF32Add(RadialF32Mul(nv, noise), RadialF32Sub(1.0f, nv));
 				rotation_scalar_source_with_guard[source_cell] =
-					(use_aex_typed_rotation_size_noise_components_32x18 ||
+					((use_aex_typed_rotation_dual_strength_32x18 && info.size_variation != 0.0 &&
+					  info.noise_variation != 0.0) ||
+					 use_aex_typed_rotation_size_noise_components_32x18 ||
 					 use_aex_typed_rotation_any_size_edge_noise_components_32x18)
 					? RadialF32Mul(mixed, rotation_scalar_source_with_guard[source_cell]) : mixed;
 			}
