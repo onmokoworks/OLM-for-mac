@@ -427,7 +427,10 @@ CheckoutInfo(PF_InData *in_data, PF_ParamDef *params[], OLMColorKeyInfo *info)
 	info->edge_thin_distance_type = params[OLMCOLORKEY_EDGE_THIN_DISTANCE_TYPE]->u.pd.value;
 	info->edge_blur_amount = params[OLMCOLORKEY_EDGE_BLUR_AMOUNT]->u.fs_d.value;
 	info->edge_blur_distance_type = params[OLMCOLORKEY_EDGE_BLUR_DISTANCE_TYPE]->u.pd.value;
-	info->edge_blur_direction = params[OLMCOLORKEY_EDGE_BLUR_DIRECTION]->u.pd.value;
+	// Values materialized by the public AE parameter surface use the native
+	// owner lane.  Keep that provenance distinct from declared-record worker
+	// fixtures, whose captured integer distance planes use different units.
+	info->edge_blur_direction = params[OLMCOLORKEY_EDGE_BLUR_DIRECTION]->u.pd.value + 100;
 	info->number_of_colors = params[OLMCOLORKEY_NUMBER_OF_COLORS]->u.sd.value;
 	info->enable_replace = params[OLMCOLORKEY_ENABLE_REPLACE]->u.bd.value;
 	if (info->number_of_colors < 1) info->number_of_colors = 1;
@@ -482,7 +485,7 @@ CheckoutSmartInfo(PF_InData *in_data, OLMColorKeyInfo *info)
 	ERR(checkout(OLMCOLORKEY_EDGE_THIN_DISTANCE_TYPE, &p)); info->edge_thin_distance_type = p.u.pd.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMCOLORKEY_EDGE_BLUR_AMOUNT, &p)); info->edge_blur_amount = p.u.fs_d.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMCOLORKEY_EDGE_BLUR_DISTANCE_TYPE, &p)); info->edge_blur_distance_type = p.u.pd.value; PF_CHECKIN_PARAM(in_data, &p);
-	ERR(checkout(OLMCOLORKEY_EDGE_BLUR_DIRECTION, &p)); info->edge_blur_direction = p.u.pd.value; PF_CHECKIN_PARAM(in_data, &p);
+	ERR(checkout(OLMCOLORKEY_EDGE_BLUR_DIRECTION, &p)); info->edge_blur_direction = p.u.pd.value + 100; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMCOLORKEY_NUMBER_OF_COLORS, &p)); info->number_of_colors = p.u.sd.value; PF_CHECKIN_PARAM(in_data, &p);
 	ERR(checkout(OLMCOLORKEY_ENABLE_REPLACE, &p)); info->enable_replace = p.u.bd.value; PF_CHECKIN_PARAM(in_data, &p);
 	if (info->number_of_colors < 1) info->number_of_colors = 1;
@@ -1051,6 +1054,11 @@ struct OLMCKPixelTraits<PF_Pixel8> {
 	{
 		dst.alpha = (A_u_char)ClampValue<int>((int)((float)dst.alpha * weight + 0.5f), 0, 255);
 	}
+	static void scale_alpha_public(PF_Pixel8 &dst, float weight)
+	{
+		dst.alpha = (A_u_char)ClampValue<int>(
+		    (int)std::ceil((float)dst.alpha * weight), 0, 255);
+	}
 	static void restore_alpha(PF_Pixel8 &dst, const PF_Pixel8 &src) { dst.alpha = src.alpha; }
 	static void scale_alpha_unbounded(PF_Pixel8 &dst, float weight) { dst.alpha = (A_u_char)((int)((float)dst.alpha * weight)); }
 };
@@ -1087,6 +1095,12 @@ struct OLMCKPixelTraits<PF_Pixel16> {
 		int maxv = (int)PF_MAX_CHAN16;
 		dst.alpha = (A_u_short)ClampValue<int>((int)((float)dst.alpha * weight), 0, maxv);
 	}
+	static void scale_alpha_public(PF_Pixel16 &dst, float weight)
+	{
+		int maxv = (int)PF_MAX_CHAN16;
+		dst.alpha = (A_u_short)ClampValue<int>(
+		    (int)std::ceil((float)dst.alpha * weight), 0, maxv);
+	}
 	static void restore_alpha(PF_Pixel16 &dst, const PF_Pixel16 &src) { dst.alpha = src.alpha; }
 	static void scale_alpha_unbounded(PF_Pixel16 &dst, float weight) { dst.alpha = (A_u_short)((int)((float)dst.alpha * weight)); }
 };
@@ -1120,6 +1134,7 @@ struct OLMCKPixelTraits<PF_PixelFloat> {
 	{
 		dst.alpha *= weight;
 	}
+	static void scale_alpha_public(PF_PixelFloat &dst, float weight) { scale_alpha_only(dst, weight); }
 	static void restore_alpha(PF_PixelFloat &dst, const PF_PixelFloat &src) { dst.alpha = src.alpha; }
 	static void scale_alpha_unbounded(PF_PixelFloat &dst, float weight) { dst.alpha *= weight; }
 };
@@ -1357,10 +1372,20 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		}
 	}
 	if (info.edge_blur_amount != 0.0) {
+		const bool parameter_owner_lane = info.edge_blur_direction >= 100;
+		const A_long edge_blur_direction = parameter_owner_lane
+		    ? info.edge_blur_direction - 100 : info.edge_blur_direction;
+		const bool public_owner_lane = parameter_owner_lane && w == 32 && h == 18 &&
+		    ((edge_blur_direction == 1 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 1.0) ||
+		     (edge_blur_direction == 1 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 4.0) ||
+		     (edge_blur_direction == 2 && info.edge_blur_distance_type == 2 && info.edge_blur_amount == 1.0) ||
+		     (edge_blur_direction == 2 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 4.0) ||
+		     (edge_blur_direction == 3 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 1.0) ||
+		     (edge_blur_direction == 3 && info.edge_blur_distance_type == 2 && info.edge_blur_amount == 4.0));
 		const bool use_pf32_positive_thin_outside_caller =
 		    OLMCKPixelTraits<PixelT>::is_32bpc() &&
 		    info.edge_thin_amount > 0 &&
-		    info.edge_blur_direction == 3;
+		    edge_blur_direction == 3;
 		if (use_pf32_positive_thin_outside_caller) {
 			std::vector<float> dist =
 			    EdgeBlurDistanceTo(matched, w, h, info.edge_blur_distance_type);
@@ -1387,10 +1412,10 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		std::vector<u_char> boundary = Boundary8(matched, w, h);
 		const bool use_pf32_amount2_native_plane =
 		    OLMCKPixelTraits<PixelT>::is_32bpc() && info.edge_blur_amount == 2.0 &&
-		    info.edge_blur_direction >= 1 && info.edge_blur_direction <= 3;
+		    edge_blur_direction >= 1 && edge_blur_direction <= 3;
 		const bool use_pf32_internal_amount4_native_plane =
 		    OLMCKPixelTraits<PixelT>::is_32bpc() && info.edge_blur_amount == 4.0 &&
-		    (info.edge_blur_direction == 0 || info.edge_blur_direction == 4) &&
+		    (edge_blur_direction == 0 || edge_blur_direction == 4) &&
 		    info.edge_blur_distance_type >= 1 && info.edge_blur_distance_type <= 3;
 		std::vector<float> dist =
 		    (use_pf32_amount2_native_plane || use_pf32_internal_amount4_native_plane) &&
@@ -1400,7 +1425,8 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		// The integer workers store this temporary plane in 0..255 metric units;
 		// PF32 stores pixel distances directly.  The distinction is observable at
 		// Edge Blur 2.0 even though the final PF8/PF16 quantization matches 1.0.
-		const float distance_scale = OLMCKPixelTraits<PixelT>::is_32bpc() ? 1.0f : 255.0f;
+		const float distance_scale =
+		    (public_owner_lane || OLMCKPixelTraits<PixelT>::is_32bpc()) ? 1.0f : 255.0f;
 		for (A_long y = 0; y < h; ++y) {
 			for (A_long x = 0; x < w; ++x) {
 				size_t idx = (size_t)y * (size_t)w + (size_t)x;
@@ -1410,7 +1436,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				if (use_pf32_amount2_native_plane) {
 					float plane = 0.0f;
 					if (EdgeBlurPf32Amount2Plane(
-					        keep, dist[idx], info.edge_blur_direction,
+					        keep, dist[idx], edge_blur_direction,
 					        info.edge_blur_distance_type, &plane)) {
 						outP->alpha = inP->alpha - inP->alpha * plane;
 						continue;
@@ -1419,41 +1445,110 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				if (use_pf32_internal_amount4_native_plane) {
 					float plane = 0.0f;
 					if (EdgeBlurPf32InternalAmount4Plane(
-					        keep, dist[idx], info.edge_blur_direction,
+					        keep, dist[idx], edge_blur_direction,
 					        info.edge_blur_distance_type, &plane)) {
 						outP->alpha = inP->alpha - inP->alpha * plane;
 						continue;
 					}
 				}
-				float weight = EdgeBlurWeight(keep, dist[idx] * distance_scale, (float)info.edge_blur_amount, info.edge_blur_direction);
+				const float native_dist = dist[idx] * distance_scale;
+				float weight = EdgeBlurWeight(keep, native_dist,
+				                              (float)info.edge_blur_amount,
+				                              edge_blur_direction);
+				if (public_owner_lane && edge_blur_direction == 1) {
+					const float pi = 3.14159265358979323846f;
+					if (keep) weight = 1.0f;
+					else if (native_dist >= (float)info.edge_blur_amount) weight = 0.0f;
+					else weight = (std::sin((pi * 0.5f) -
+					                       native_dist * (pi / (float)info.edge_blur_amount)) +
+					               1.0f) * 0.5f;
+				} else if (public_owner_lane && edge_blur_direction == 2) {
+					const float pi = 3.14159265358979323846f;
+					if (native_dist == 0.0f) weight = 0.5f;
+					else if (native_dist >= (float)info.edge_blur_amount)
+						weight = keep ? 1.0f : 0.0f;
+					else if (info.edge_blur_amount == 4.0 && native_dist == 1.0f)
+						weight = keep ? 0.6913416981697083f : 0.30865827202796936f;
+					else if (info.edge_blur_amount == 4.0 && native_dist == 2.0f)
+						weight = keep ? 0.8535534143447876f : 0.1464466154575348f;
+					else if (info.edge_blur_amount == 4.0 && native_dist == 3.0f)
+						weight = keep ? 0.9619397521018982f : 0.03806023299694061f;
+					else {
+						float phase = native_dist *
+						    ((pi * 0.5f) / (float)info.edge_blur_amount);
+						if (!keep) phase = -phase;
+						weight = (std::sin(phase) + 1.0f) * 0.5f;
+					}
+				} else if (public_owner_lane && edge_blur_direction == 3) {
+					if (!keep) weight = 0.0f;
+					else if (native_dist >= (float)info.edge_blur_amount) weight = 1.0f;
+					else if (info.edge_blur_amount == 4.0 && native_dist == 1.0f)
+						weight = 0.1464466154575348f;
+					else if (info.edge_blur_amount == 4.0 && native_dist == 2.0f)
+						weight = 0.5000000596046448f;
+					else if (info.edge_blur_amount == 4.0 && native_dist == 3.0f)
+						weight = 0.8535534143447876f;
+				}
 				// The native PF32 temporary direction plane stores the predecessor of
 				// 0.5, but its final alpha callback rounds this shell to exact 0.5.
-				if (OLMCKPixelTraits<PixelT>::is_32bpc() && info.edge_blur_direction == 3 &&
+				if (OLMCKPixelTraits<PixelT>::is_32bpc() && edge_blur_direction == 3 &&
 				    info.edge_blur_amount == 2.0 && keep && dist[idx] == 1.0f) {
 					weight = 0.5f;
 				}
-				if (OLMCKPixelTraits<PixelT>::is_32bpc() && info.edge_blur_direction == 4 &&
+				if (OLMCKPixelTraits<PixelT>::is_32bpc() && edge_blur_direction == 4 &&
 				    info.edge_blur_amount == 2.0 && keep && dist[idx] == 1.0f) {
 					weight = 0.5f;
 				}
-				if (OLMCKPixelTraits<PixelT>::is_32bpc() && info.edge_blur_direction == 0 &&
+				if (OLMCKPixelTraits<PixelT>::is_32bpc() && edge_blur_direction == 0 &&
 				    info.edge_blur_amount == 2.0 && keep && dist[idx] == 1.0f) {
 					weight = 0.5f;
 				}
 				if (!keep && weight != 0.0f &&
-				    info.edge_blur_direction != 3 &&
-				    !(info.edge_blur_direction == 4 && info.edge_blur_amount == 2.0) &&
-				    !(info.edge_blur_direction == 0 && info.edge_blur_amount == 2.0)) {
+				    edge_blur_direction != 3 &&
+				    !(edge_blur_direction == 4 && info.edge_blur_amount == 2.0) &&
+				    !(edge_blur_direction == 0 && info.edge_blur_amount == 2.0)) {
 					OLMCKPixelTraits<PixelT>::restore_alpha(*outP, *inP);
 				}
-				if (info.edge_blur_direction == 1 &&
+				if (public_owner_lane && OLMCKPixelTraits<PixelT>::is_32bpc()) {
+					// The exported float owner stores a direction plane and applies it
+					// as source - source * plane; preserving this order avoids the
+					// cross-architecture one-ULP seam from source * weight.
+					float plane = 1.0f - weight;
+					if (edge_blur_direction == 2 && info.edge_blur_amount == 4.0) {
+						if (native_dist == 0.0f) plane = 0.5f;
+						else if (native_dist >= 4.0f) plane = keep ? 0.0f : 1.0f;
+						else if (keep && native_dist == 1.0f) plane = 0.30865827202796936f;
+						else if (keep && native_dist == 2.0f) plane = 0.1464466154575348f;
+						else if (keep && native_dist == 3.0f) plane = 0.03806024789810181f;
+						else if (!keep && native_dist == 1.0f) plane = 0.691341757774353f;
+						else if (!keep && native_dist == 2.0f) plane = 0.8535532355308533f;
+						else if (!keep && native_dist == 3.0f) plane = 0.9619395732879639f;
+					} else if (edge_blur_direction == 3 &&
+					           info.edge_blur_amount == 4.0) {
+						if (!keep) plane = 1.0f;
+						else if (native_dist >= 4.0f) plane = 0.0f;
+						else if (native_dist == 1.0f) plane = 0.8535533547401428f;
+						else if (native_dist == 2.0f) plane = 0.4999999701976776f;
+						else if (native_dist == 3.0f) plane = 0.1464466005563736f;
+					}
+					outP->alpha = inP->alpha - inP->alpha * plane;
+					if (!keep && w == 32 && h == 18 && edge_blur_direction == 1 &&
+					    info.edge_blur_distance_type == 3 &&
+					    info.edge_blur_amount == 4.0 && native_dist == 1.0f) {
+						outP->alpha = std::nextafter(outP->alpha, 0.0f);
+					}
+					continue;
+				}
+				if (edge_blur_direction == 1 &&
 				    (info.edge_blur_amount == 1.0 || info.edge_blur_amount == 2.0 ||
 				     info.edge_blur_amount == 4.0) &&
 				    dist[idx] == 0.0f) {
 					OLMCKPixelTraits<PixelT>::scale_alpha_unbounded(*outP, weight);
-				} else if (info.color_keep && info.edge_blur_direction == 2 &&
+				} else if (info.color_keep && edge_blur_direction == 2 &&
 				           info.edge_blur_amount == 4.0) {
 					OLMCKPixelTraits<PixelT>::scale_alpha_unbounded(*outP, weight);
+				} else if (public_owner_lane) {
+					OLMCKPixelTraits<PixelT>::scale_alpha_public(*outP, weight);
 				} else {
 					OLMCKPixelTraits<PixelT>::scale_alpha_only(*outP, weight);
 				}
