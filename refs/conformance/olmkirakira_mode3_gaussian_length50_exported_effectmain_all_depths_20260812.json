@@ -1,0 +1,370 @@
+{
+  "kind": "olmkirakira_mode3_gaussian_length50_exported_effectmain_all_depths",
+  "date": "2026-08-12",
+  "status": "exact",
+  "fixture": {
+    "dimensions": [
+      5,
+      3
+    ],
+    "padding": 12,
+    "blur_mode": 3,
+    "merge_mode": 1,
+    "active_ray": "Horizontal",
+    "length": 50,
+    "glow_rotation": 0,
+    "channel": 1,
+    "semi_transparent": true
+  },
+  "rows": [
+    {
+      "depth": "PF8",
+      "pixel_format": "argb8",
+      "bytes": 60,
+      "actual_exported_raw_sha256": "0cf9de4e73720eba926739b6f1a92d901bd0b64b9e29c597a6239a43da415d94",
+      "mac_effectmain_raw_sha256": "0cf9de4e73720eba926739b6f1a92d901bd0b64b9e29c597a6239a43da415d94",
+      "exact": true,
+      "actual_exported_rgba8": [
+        [
+          19,
+          19,
+          19,
+          69
+        ],
+        [
+          31,
+          27,
+          23,
+          80
+        ],
+        [
+          43,
+          35,
+          28,
+          91
+        ],
+        [
+          56,
+          44,
+          33,
+          102
+        ],
+        [
+          69,
+          54,
+          38,
+          113
+        ],
+        [
+          87,
+          68,
+          50,
+          127
+        ],
+        [
+          100,
+          77,
+          55,
+          138
+        ],
+        [
+          113,
+          87,
+          61,
+          149
+        ],
+        [
+          127,
+          97,
+          66,
+          160
+        ],
+        [
+          141,
+          107,
+          72,
+          171
+        ],
+        [
+          156,
+          119,
+          82,
+          186
+        ],
+        [
+          170,
+          129,
+          88,
+          197
+        ],
+        [
+          184,
+          139,
+          94,
+          208
+        ],
+        [
+          198,
+          149,
+          100,
+          219
+        ],
+        [
+          212,
+          159,
+          106,
+          230
+        ]
+      ],
+      "mac_effectmain_active_hex": "45131313501f1b175b2b231c66382c21714536267f5744328a644d379571573da07f6142ab8d6b48ba9c7752c5aa8158d0b88b5edbc69564e6d49f6a",
+      "guards_intact": true,
+      "input_unchanged": true,
+      "mac_padding_preserved": true,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      }
+    },
+    {
+      "depth": "PF16",
+      "pixel_format": "argb16",
+      "bytes": 120,
+      "actual_exported_raw_sha256": "67b1fbbf6750a81d8fe2ac6c5d3d96457714f6437770bb3842a35f5d853da5a4",
+      "mac_effectmain_raw_sha256": "67b1fbbf6750a81d8fe2ac6c5d3d96457714f6437770bb3842a35f5d853da5a4",
+      "exact": true,
+      "actual_exported_rgba8": [
+        [
+          20,
+          20,
+          20,
+          69
+        ],
+        [
+          31,
+          27,
+          24,
+          80
+        ],
+        [
+          43,
+          36,
+          28,
+          91
+        ],
+        [
+          56,
+          45,
+          33,
+          102
+        ],
+        [
+          69,
+          54,
+          39,
+          113
+        ],
+        [
+          87,
+          69,
+          50,
+          128
+        ],
+        [
+          100,
+          78,
+          56,
+          139
+        ],
+        [
+          114,
+          87,
+          61,
+          150
+        ],
+        [
+          127,
+          97,
+          67,
+          161
+        ],
+        [
+          141,
+          107,
+          73,
+          172
+        ],
+        [
+          157,
+          120,
+          82,
+          186
+        ],
+        [
+          171,
+          129,
+          88,
+          197
+        ],
+        [
+          184,
+          139,
+          94,
+          208
+        ],
+        [
+          198,
+          149,
+          100,
+          219
+        ],
+        [
+          212,
+          159,
+          106,
+          230
+        ]
+      ],
+      "mac_effectmain_active_hex": "d222ea09ea09ea095828960fb60dd70bdd2db315ec11240e63331f1c6a16b510e838c2221b1b74132840e02b87222f19ad456f322627de1b334b2239e82bae1eb850f23fc43095213e56da46b63591247d5dc24e003c3e290363a155ea40332c8868905ce345362f0e6e9063ec4a473293739c6aff4f6235",
+      "guards_intact": true,
+      "input_unchanged": true,
+      "mac_padding_preserved": true,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      }
+    },
+    {
+      "depth": "PF32",
+      "pixel_format": "argb32f",
+      "bytes": 240,
+      "actual_exported_raw_sha256": "36a6eebfb764e075667cf1d0f40cba6d7e8ef7fb65fbc95b66721e7ae44a1518",
+      "mac_effectmain_raw_sha256": "36a6eebfb764e075667cf1d0f40cba6d7e8ef7fb65fbc95b66721e7ae44a1518",
+      "exact": true,
+      "actual_exported_rgba8": [
+        [
+          20,
+          20,
+          20,
+          69
+        ],
+        [
+          31,
+          27,
+          24,
+          80
+        ],
+        [
+          43,
+          36,
+          28,
+          91
+        ],
+        [
+          56,
+          45,
+          33,
+          102
+        ],
+        [
+          69,
+          54,
+          39,
+          113
+        ],
+        [
+          87,
+          69,
+          50,
+          128
+        ],
+        [
+          100,
+          78,
+          56,
+          139
+        ],
+        [
+          114,
+          87,
+          61,
+          150
+        ],
+        [
+          127,
+          97,
+          67,
+          161
+        ],
+        [
+          141,
+          107,
+          73,
+          172
+        ],
+        [
+          157,
+          120,
+          82,
+          186
+        ],
+        [
+          171,
+          129,
+          88,
+          197
+        ],
+        [
+          184,
+          139,
+          94,
+          208
+        ],
+        [
+          198,
+          149,
+          100,
+          219
+        ],
+        [
+          212,
+          159,
+          106,
+          230
+        ]
+      ],
+      "mac_effectmain_active_hex": "4d4b8b3e8cac9e3d8cac9e3d8cac9e3d6061a13e335ff93d0f65db3de96abd3d7677b73e8a9e2d3e2f620f3ea74be23d8b8dcd3e34fb603eb352333e32aa053ea7a3e33e60088b3e4bdc583ed7a71b3e5150003fd481af3e7a1e8a3e3f76493e5a5b0b3feebcc93ee79b9c3ec0f55e3e6666163f2c8ae43e8ea0af3ede6d753e7071213f8dcbff3ea810c33ec455863e7f7c2c3f62b50d3f9ad7d63e6f44923efdfa3a3f79851d3feb02f03ee6faa43e0406463f21422b3f3cd4013fafccb03e1011513f8b22393f04c80b3ff6dabc3e191c5c3f5421473fcfd7153f951cc93e2a27673f213a553f9fff1f3f3a8ad53e",
+      "guards_intact": true,
+      "input_unchanged": true,
+      "mac_padding_preserved": true,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      }
+    }
+  ],
+  "boundary": "Actual exported SmartPreRender/SmartRender versus Mac public EffectMain(PF_Cmd_RENDER). The Gaussian Length 50 tuple is admitted by the existing 9x7 Mode3 family evidence and is compared here through the complete exported owner and typed writer. ANGLE editing is unavailable in the pinned worker, so nondefault rotation remains fail-closed."
+}

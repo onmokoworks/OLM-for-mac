@@ -9,6 +9,7 @@
     ],
     "padding": 12,
     "blur_mode": 1,
+    "merge_mode": 1,
     "active_ray": "Horizontal",
     "length": 7,
     "glow_rotation": 0,

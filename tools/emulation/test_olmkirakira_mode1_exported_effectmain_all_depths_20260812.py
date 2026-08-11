@@ -17,7 +17,14 @@ ROOT = Path(__file__).resolve().parents[2]
 AEX = ROOT / "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex"
 SOURCE = ROOT / "mac/OLMKiraKira/OLMKiraKira.cpp"
 STRINGS = ROOT / "mac/OLMKiraKira/OLMKiraKira_Strings.cpp"
-REPORT = ROOT / "refs/conformance/olmkirakira_mode1_exported_effectmain_all_depths_20260812.json"
+CASE = os.environ.get("OLM_KIRA_EXPORTED_CASE", "mode1")
+BLUR_MODE = int(os.environ.get("OLM_KIRA_BLUR_MODE", "1"))
+MERGE_MODE = int(os.environ.get("OLM_KIRA_MERGE_MODE", "1"))
+HORIZONTAL_LENGTH = int(os.environ.get("OLM_KIRA_HORIZONTAL_LENGTH", "7"))
+REPORT = ROOT / os.environ.get(
+    "OLM_KIRA_EXPORTED_REPORT",
+    "refs/conformance/olmkirakira_mode1_exported_effectmain_all_depths_20260812.json",
+)
 DOC = REPORT.with_suffix(".md")
 DEFAULT_WORKER = Path("/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue1135-typed-iterate-suites/guest/target/release/aex-guest-worker")
 DEPTHS = {"PF8": ("argb8", 4), "PF16": ("argb16", 8), "PF32": ("argb32f", 16)}
@@ -68,7 +75,11 @@ def sha(data: bytes) -> str:
 
 def production() -> bytes:
     rgba = ",".join("{" + ",".join(map(str, pixel)) + "}" for pixel in RGBA)
-    code = CPP.replace("__SOURCE__", str(SOURCE)).replace("__STRINGS__", str(STRINGS)).replace("__RGBA__", rgba)
+    code = (CPP.replace("__SOURCE__", str(SOURCE)).replace("__STRINGS__", str(STRINGS))
+            .replace("__RGBA__", rgba)
+            .replace("u.sd.value=7;defs[OLMKIRAKIRA_DIAGONAL_LENGTH]", f"u.sd.value={HORIZONTAL_LENGTH};defs[OLMKIRAKIRA_DIAGONAL_LENGTH]")
+            .replace("OLMKIRAKIRA_BLUR_MODE].u.pd.value=1", f"OLMKIRAKIRA_BLUR_MODE].u.pd.value={BLUR_MODE}")
+            .replace("OLMKIRAKIRA_MERGE_MODE].u.pd.value=1", f"OLMKIRAKIRA_MERGE_MODE].u.pd.value={MERGE_MODE}"))
     with tempfile.TemporaryDirectory(prefix="kira_mode1_effectmain_") as raw:
         directory = Path(raw)
         source = directory / "probe.cpp"
@@ -101,9 +112,9 @@ def main() -> int:
             size = WIDTH * HEIGHT * pixel_bytes
             expected = expected_all[offset:offset + size]; offset += size
             output_png = directory / f"{depth}.png"
-            params = ["Blur Mode=1", "Vertical Length=0", "Horizontal Length=7",
+            params = [f"Blur Mode={BLUR_MODE}", "Vertical Length=0", f"Horizontal Length={HORIZONTAL_LENGTH}",
                       "Diagonal Length=0", "Diagonal 2 length=0", "Highlight Radius=0",
-                      "Merge mode=1", "Channel=1", "Brightness Gain=0.1"]
+                      f"Merge mode={MERGE_MODE}", "Channel=1", "Brightness Gain=0.1"]
             result = subprocess.run([str(worker), "render-png", str(AEX), str(input_png),
                                      str(output_png), "--pixel-format", pixel_format, *params],
                                     cwd=ROOT, capture_output=True, text=True)
@@ -125,17 +136,26 @@ def main() -> int:
     measured = (offset == len(expected_all) and len(rows) == 3 and
                 all(row["guards_intact"] and row["mac_padding_preserved"] for row in rows))
     passed = measured and all(row["exact"] for row in rows)
-    report = {"kind": "olmkirakira_mode1_exported_effectmain_all_depths", "date": "2026-08-12",
+    boundary_detail = (
+        "PF32 checkpoint capture proved the natural ray helper's 15 active floats exact before "
+        "aggregation; direct float Brightness Gain and PF32 reciprocal-multiply normalization close "
+        "the first downstream difference."
+        if BLUR_MODE == 1 else
+        "The Gaussian Length 50 tuple is admitted by the existing 9x7 Mode3 family evidence and is "
+        "compared here through the complete exported owner and typed writer."
+    )
+    report = {"kind": f"olmkirakira_{CASE}_exported_effectmain_all_depths", "date": "2026-08-12",
               "status": "exact" if passed else "fail_closed_mismatch",
               "fixture": {"dimensions": [WIDTH, HEIGHT], "padding": PADDING,
-                          "blur_mode": 1, "active_ray": "Horizontal", "length": 7,
+                          "blur_mode": BLUR_MODE, "merge_mode": MERGE_MODE,
+                          "active_ray": "Horizontal", "length": HORIZONTAL_LENGTH,
                           "glow_rotation": 0, "channel": 1, "semi_transparent": True},
               "rows": rows,
-              "boundary": "Actual exported SmartPreRender/SmartRender versus Mac public EffectMain(PF_Cmd_RENDER). PF32 checkpoint capture proved the natural ray helper's 15 active floats exact before aggregation; direct float Brightness Gain and the PF32 reciprocal-multiply normalization close the first downstream difference. ANGLE editing is unavailable in the pinned worker, so nondefault rotation remains fail-closed."}
+              "boundary": f"Actual exported SmartPreRender/SmartRender versus Mac public EffectMain(PF_Cmd_RENDER). {boundary_detail} ANGLE editing is unavailable in the pinned worker, so nondefault rotation remains fail-closed."}
     REPORT.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
-    DOC.write_text("# OLMKiraKira Mode 1 exported EffectMain 3-depth gate（2026-08-12）\n\n"
+    DOC.write_text(f"# OLMKiraKira {CASE} exported EffectMain 3-depth gate（2026-08-12）\n\n"
                    f"Status: **{report['status']}**\n\n"
-                   "5×3半透明source、Horizontal Length 7、Rotation 0でactual AEX exported Smart ownerとMac public EffectMain(PF_Cmd_RENDER)を比較する。PF8/PF16/PF32のactive bytes、input不変、Mac row paddingを検証する。ANGLE型編集は現AEXCompat workerで未対応のためnondefault rotationはfail-close。\n",
+                   f"5×3半透明source、Horizontal Length {HORIZONTAL_LENGTH}、Rotation 0でactual AEX exported Smart ownerとMac public EffectMain(PF_Cmd_RENDER)を比較する。PF8/PF16/PF32のactive bytes、input不変、Mac row paddingを検証する。ANGLE型編集は現AEXCompat workerで未対応のためnondefault rotationはfail-close。\n",
                    encoding="utf-8")
     print(json.dumps({"status": report["status"], "rows": rows}))
     return 0 if measured else 1

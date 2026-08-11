@@ -1,4 +1,4 @@
-# OLMKiraKira Mode 1 exported EffectMain 3-depth gate（2026-08-12）
+# OLMKiraKira mode1 exported EffectMain 3-depth gate（2026-08-12）
 
 Status: **exact**
 
