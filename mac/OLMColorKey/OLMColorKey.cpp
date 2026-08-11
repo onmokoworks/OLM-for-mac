@@ -628,7 +628,7 @@ static std::vector<float> Edt1D(const std::vector<float> &f, A_long n)
 	return d;
 }
 
-static std::vector<float> EuclideanDistanceTo(const std::vector<u_char> &mask, A_long w, A_long h)
+static std::vector<float> EuclideanSquaredDistanceTo(const std::vector<u_char> &mask, A_long w, A_long h)
 {
 	const float inf = 1.0e9f;
 	std::vector<float> tmp((size_t)w * (size_t)h);
@@ -642,8 +642,15 @@ static std::vector<float> EuclideanDistanceTo(const std::vector<u_char> &mask, A
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) f[(size_t)x] = tmp[(size_t)y * (size_t)w + (size_t)x];
 		std::vector<float> row = Edt1D(f, w);
-		for (A_long x = 0; x < w; ++x) out[(size_t)y * (size_t)w + (size_t)x] = std::sqrt(row[(size_t)x]);
+		for (A_long x = 0; x < w; ++x) out[(size_t)y * (size_t)w + (size_t)x] = row[(size_t)x];
 	}
+	return out;
+}
+
+static std::vector<float> EuclideanDistanceTo(const std::vector<u_char> &mask, A_long w, A_long h)
+{
+	std::vector<float> out = EuclideanSquaredDistanceTo(mask, w, h);
+	for (float &value : out) value = std::sqrt(value);
 	return out;
 }
 
@@ -890,6 +897,41 @@ static float EdgeBlurWeight(bool inside, float dist, float amount, A_long direct
 		return (std::sin((pi * 0.5f) - (dist * (pi / amount))) + 1.0f) * 0.5f;
 	}
 	return inside ? 1.0f : 0.0f;
+}
+
+static bool EdgeBlurPf32Amount2Plane(bool keep, float dist, A_long direction,
+                                    A_long distance_type, float *plane)
+{
+	if (!plane) return false;
+	if (direction == 1) {
+		if (keep) {
+			*plane = 0.0f;
+			return true;
+		}
+		if (dist == 0.0f) *plane = -0.2853981554508209f;
+		else if (dist == 1.0f) *plane = 0.5f;
+		else return false;
+		return true;
+	}
+	if (direction == 2) {
+		if (dist == 0.0f) *plane = 0.5f;
+		else if (dist == 1.0f) *plane = keep ? 0.10730090737342834f : 0.892699122428894f;
+		else if (distance_type == 3 && keep && dist == 2.0f) *plane = -0.055360376834869385f;
+		else if (keep) *plane = 0.0f;
+		else return false;
+		return true;
+	}
+	if (direction == 3) {
+		if (!keep) {
+			*plane = 1.0f;
+			return true;
+		}
+		if (dist == 1.0f) *plane = 0.4999999701976776f;
+		else if (distance_type == 3 && dist == 2.0f) *plane = 0.17467741668224335f;
+		else *plane = 0.0f;
+		return true;
+	}
+	return false;
 }
 
 static bool EdgeBlurPf32Case9CapturedWeight(float dist, float amount, float *weight)
@@ -1290,7 +1332,13 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		// FUN_1800066F0 propagates distance.  Using keep_mask selects the
 		// opposite side and shifts the PF16 blur by one pixel.
 		std::vector<u_char> boundary = Boundary8(matched, w, h);
-		std::vector<float> dist = EdgeBlurDistanceTo(boundary, w, h, info.edge_blur_distance_type);
+		const bool use_pf32_amount2_native_plane =
+		    OLMCKPixelTraits<PixelT>::is_32bpc() && info.edge_blur_amount == 2.0 &&
+		    info.edge_blur_direction >= 1 && info.edge_blur_direction <= 3;
+		std::vector<float> dist =
+		    use_pf32_amount2_native_plane && info.edge_blur_distance_type == 3
+		        ? EuclideanSquaredDistanceTo(boundary, w, h)
+		        : EdgeBlurDistanceTo(boundary, w, h, info.edge_blur_distance_type);
 		// The integer workers store this temporary plane in 0..255 metric units;
 		// PF32 stores pixel distances directly.  The distinction is observable at
 		// Edge Blur 2.0 even though the final PF8/PF16 quantization matches 1.0.
@@ -1299,6 +1347,17 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			for (A_long x = 0; x < w; ++x) {
 				size_t idx = (size_t)y * (size_t)w + (size_t)x;
 				bool keep = keep_mask[idx] != 0;
+				const PixelT *inP = PixelAtConst<PixelT>(input, x, y);
+				PixelT *outP = PixelAt<PixelT>(output, x, y);
+				if (use_pf32_amount2_native_plane) {
+					float plane = 0.0f;
+					if (EdgeBlurPf32Amount2Plane(
+					        keep, dist[idx], info.edge_blur_direction,
+					        info.edge_blur_distance_type, &plane)) {
+						outP->alpha = inP->alpha - inP->alpha * plane;
+						continue;
+					}
+				}
 				float weight = EdgeBlurWeight(keep, dist[idx] * distance_scale, (float)info.edge_blur_amount, info.edge_blur_direction);
 				// The native PF32 temporary direction plane stores the predecessor of
 				// 0.5, but its final alpha callback rounds this shell to exact 0.5.
@@ -1314,8 +1373,6 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				    info.edge_blur_amount == 2.0 && keep && dist[idx] == 1.0f) {
 					weight = 0.5f;
 				}
-				const PixelT *inP = PixelAtConst<PixelT>(input, x, y);
-				PixelT *outP = PixelAt<PixelT>(output, x, y);
 				if (!keep && weight != 0.0f &&
 				    info.edge_blur_direction != 3 &&
 				    !(info.edge_blur_direction == 4 && info.edge_blur_amount == 2.0) &&
