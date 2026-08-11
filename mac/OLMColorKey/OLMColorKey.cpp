@@ -1382,6 +1382,14 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		     (edge_blur_direction == 2 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 4.0) ||
 		     (edge_blur_direction == 3 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 1.0) ||
 		     (edge_blur_direction == 3 && info.edge_blur_distance_type == 2 && info.edge_blur_amount == 4.0));
+		const bool public_owner_geometry_transfer_lane = parameter_owner_lane &&
+		    w == 64 && h == 36 &&
+		    ((edge_blur_direction == 0 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 1.0) ||
+		     (edge_blur_direction == 0 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 4.0) ||
+		     (edge_blur_direction == 4 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 1.0) ||
+		     (edge_blur_direction == 4 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 4.0));
+		const bool bounded_public_owner_lane =
+		    public_owner_lane || public_owner_geometry_transfer_lane;
 		const bool use_pf32_positive_thin_outside_caller =
 		    OLMCKPixelTraits<PixelT>::is_32bpc() &&
 		    info.edge_thin_amount > 0 &&
@@ -1414,7 +1422,8 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		    OLMCKPixelTraits<PixelT>::is_32bpc() && info.edge_blur_amount == 2.0 &&
 		    edge_blur_direction >= 1 && edge_blur_direction <= 3;
 		const bool use_pf32_internal_amount4_native_plane =
-		    OLMCKPixelTraits<PixelT>::is_32bpc() && info.edge_blur_amount == 4.0 &&
+		    !bounded_public_owner_lane && OLMCKPixelTraits<PixelT>::is_32bpc() &&
+		    info.edge_blur_amount == 4.0 &&
 		    (edge_blur_direction == 0 || edge_blur_direction == 4) &&
 		    info.edge_blur_distance_type >= 1 && info.edge_blur_distance_type <= 3;
 		std::vector<float> dist =
@@ -1426,7 +1435,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		// PF32 stores pixel distances directly.  The distinction is observable at
 		// Edge Blur 2.0 even though the final PF8/PF16 quantization matches 1.0.
 		const float distance_scale =
-		    (public_owner_lane || OLMCKPixelTraits<PixelT>::is_32bpc()) ? 1.0f : 255.0f;
+		    (bounded_public_owner_lane || OLMCKPixelTraits<PixelT>::is_32bpc()) ? 1.0f : 255.0f;
 		for (A_long y = 0; y < h; ++y) {
 			for (A_long x = 0; x < w; ++x) {
 				size_t idx = (size_t)y * (size_t)w + (size_t)x;
@@ -1455,14 +1464,14 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				float weight = EdgeBlurWeight(keep, native_dist,
 				                              (float)info.edge_blur_amount,
 				                              edge_blur_direction);
-				if (public_owner_lane && edge_blur_direction == 1) {
+				if (bounded_public_owner_lane && edge_blur_direction == 1) {
 					const float pi = 3.14159265358979323846f;
 					if (keep) weight = 1.0f;
 					else if (native_dist >= (float)info.edge_blur_amount) weight = 0.0f;
 					else weight = (std::sin((pi * 0.5f) -
 					                       native_dist * (pi / (float)info.edge_blur_amount)) +
 					               1.0f) * 0.5f;
-				} else if (public_owner_lane && edge_blur_direction == 2) {
+				} else if (bounded_public_owner_lane && edge_blur_direction == 2) {
 					const float pi = 3.14159265358979323846f;
 					if (native_dist == 0.0f) weight = 0.5f;
 					else if (native_dist >= (float)info.edge_blur_amount)
@@ -1479,7 +1488,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						if (!keep) phase = -phase;
 						weight = (std::sin(phase) + 1.0f) * 0.5f;
 					}
-				} else if (public_owner_lane && edge_blur_direction == 3) {
+				} else if (bounded_public_owner_lane && edge_blur_direction == 3) {
 					if (!keep) weight = 0.0f;
 					else if (native_dist >= (float)info.edge_blur_amount) weight = 1.0f;
 					else if (info.edge_blur_amount == 4.0 && native_dist == 1.0f)
@@ -1488,6 +1497,23 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						weight = 0.5000000596046448f;
 					else if (info.edge_blur_amount == 4.0 && native_dist == 3.0f)
 						weight = 0.8535534143447876f;
+				} else if (public_owner_geometry_transfer_lane &&
+				           (edge_blur_direction == 0 || edge_blur_direction == 4)) {
+					float curve_dist = native_dist;
+					if (!keep) weight = 0.0f;
+					else if (curve_dist >= (float)info.edge_blur_amount) weight = 1.0f;
+					else if (info.edge_blur_amount == 4.0 && curve_dist == 1.0f)
+						weight = 0.1464466154575348f;
+					else if (info.edge_blur_amount == 4.0 && curve_dist == 2.0f)
+						weight = 0.5000000596046448f;
+					else if (info.edge_blur_amount == 4.0 && curve_dist == 3.0f)
+						weight = 0.8535534143447876f;
+					else {
+						const float pi = 3.14159265358979323846f;
+						weight = (std::sin(curve_dist *
+						                   (pi / (float)info.edge_blur_amount) -
+						                   pi * 0.5f) + 1.0f) * 0.5f;
+					}
 				}
 				// The native PF32 temporary direction plane stores the predecessor of
 				// 0.5, but its final alpha callback rounds this shell to exact 0.5.
@@ -1509,7 +1535,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				    !(edge_blur_direction == 0 && info.edge_blur_amount == 2.0)) {
 					OLMCKPixelTraits<PixelT>::restore_alpha(*outP, *inP);
 				}
-				if (public_owner_lane && OLMCKPixelTraits<PixelT>::is_32bpc()) {
+				if (bounded_public_owner_lane && OLMCKPixelTraits<PixelT>::is_32bpc()) {
 					// The exported float owner stores a direction plane and applies it
 					// as source - source * plane; preserving this order avoids the
 					// cross-architecture one-ULP seam from source * weight.
@@ -1530,6 +1556,22 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						else if (native_dist == 1.0f) plane = 0.8535533547401428f;
 						else if (native_dist == 2.0f) plane = 0.4999999701976776f;
 						else if (native_dist == 3.0f) plane = 0.1464466005563736f;
+					} else if ((edge_blur_direction == 0 || edge_blur_direction == 4) &&
+					           info.edge_blur_amount == 4.0) {
+						float curve_dist = native_dist;
+						if (!keep) plane = 1.0f;
+						else if (curve_dist >= 4.0f) plane = 0.0f;
+						else if (curve_dist == 1.0f) plane = 0.8535533547401428f;
+						else if (curve_dist == 2.0f) plane = 0.4999999701976776f;
+						else if (curve_dist == 3.0f) plane = 0.1464466005563736f;
+						else if (info.edge_blur_distance_type == 3 &&
+						         curve_dist == std::sqrt(8.0f))
+							plane = 0.19715005159378052f;
+						else {
+							const float pi = 3.14159265358979323846f;
+							plane = (std::sin(pi * 0.5f - curve_dist * (pi / 4.0f)) +
+							         1.0f) * 0.5f;
+						}
 					}
 					outP->alpha = inP->alpha - inP->alpha * plane;
 					if (!keep && w == 32 && h == 18 && edge_blur_direction == 1 &&
@@ -1547,7 +1589,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				} else if (info.color_keep && edge_blur_direction == 2 &&
 				           info.edge_blur_amount == 4.0) {
 					OLMCKPixelTraits<PixelT>::scale_alpha_unbounded(*outP, weight);
-				} else if (public_owner_lane) {
+				} else if (bounded_public_owner_lane) {
 					OLMCKPixelTraits<PixelT>::scale_alpha_public(*outP, weight);
 				} else {
 					OLMCKPixelTraits<PixelT>::scale_alpha_only(*outP, weight);

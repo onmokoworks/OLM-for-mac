@@ -1,0 +1,423 @@
+{
+  "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+  "aexcompat_worker": {
+    "path": "/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue1135-typed-iterate-suites/guest/target/release/aex-guest-worker",
+    "sha256": "16c329a481aef88c00fd6016e79996eecaabf7a588cff084e866b6bd15d411fc"
+  },
+  "cases": [
+    {
+      "actual_exported_raw_sha256": "a37e634e3123a3da8bebc0837dcf7957686b4fa9a6125a09082ea477ac3efea0",
+      "amount": 1.0,
+      "bytes": 9216,
+      "case": "direction0_distance1_amount1",
+      "depth": "PF8",
+      "direction": 0,
+      "distance_type": 1,
+      "production_effectmain_raw_sha256": "a37e634e3123a3da8bebc0837dcf7957686b4fa9a6125a09082ea477ac3efea0",
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "status": "exact",
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF World Suite v2",
+        "PF Iterate8 Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "2602994aae8b1e1e044f91930c9eea536d580b6ad512c2b54717abd4945b2103",
+      "amount": 1.0,
+      "bytes": 18432,
+      "case": "direction0_distance1_amount1",
+      "depth": "PF16",
+      "direction": 0,
+      "distance_type": 1,
+      "production_effectmain_raw_sha256": "2602994aae8b1e1e044f91930c9eea536d580b6ad512c2b54717abd4945b2103",
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "status": "exact",
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF World Suite v2",
+        "PF iterate16 Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "f3f1ebc9475753e2c22c9baf017e08959cff3b1f57eb4e0d74573a7a7e509b35",
+      "amount": 1.0,
+      "bytes": 36864,
+      "case": "direction0_distance1_amount1",
+      "depth": "PF32",
+      "direction": 0,
+      "distance_type": 1,
+      "production_effectmain_raw_sha256": "f3f1ebc9475753e2c22c9baf017e08959cff3b1f57eb4e0d74573a7a7e509b35",
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "status": "exact",
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF World Suite v2",
+        "PF iterateFloat Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "8f7ee5a49d5ba93c3f44fba077e1b3be7dc262b4f6aab0858f940daac30300ef",
+      "amount": 4.0,
+      "bytes": 9216,
+      "case": "direction0_distance3_amount4",
+      "depth": "PF8",
+      "direction": 0,
+      "distance_type": 3,
+      "production_effectmain_raw_sha256": "8f7ee5a49d5ba93c3f44fba077e1b3be7dc262b4f6aab0858f940daac30300ef",
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "status": "exact",
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF World Suite v2",
+        "PF Iterate8 Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "35f84cf51c1cf4576a3cb8465419795dea7faf2050b2a38cb6b1254da256cdf7",
+      "amount": 4.0,
+      "bytes": 18432,
+      "case": "direction0_distance3_amount4",
+      "depth": "PF16",
+      "direction": 0,
+      "distance_type": 3,
+      "production_effectmain_raw_sha256": "35f84cf51c1cf4576a3cb8465419795dea7faf2050b2a38cb6b1254da256cdf7",
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "status": "exact",
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF World Suite v2",
+        "PF iterate16 Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "520f358772ce77b407c574a71ebd76f69b9685e1bb9cf93724ea94c201f992aa",
+      "amount": 4.0,
+      "bytes": 36864,
+      "case": "direction0_distance3_amount4",
+      "depth": "PF32",
+      "direction": 0,
+      "distance_type": 3,
+      "production_effectmain_raw_sha256": "eb75f80de6b781c8a4c6d4f20f879b3d09bb10142546eb2cfa9ce9ecb9628064",
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "status": "mismatch",
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF World Suite v2",
+        "PF iterateFloat Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "a37e634e3123a3da8bebc0837dcf7957686b4fa9a6125a09082ea477ac3efea0",
+      "amount": 1.0,
+      "bytes": 9216,
+      "case": "direction4_distance3_amount1",
+      "depth": "PF8",
+      "direction": 4,
+      "distance_type": 3,
+      "production_effectmain_raw_sha256": "a37e634e3123a3da8bebc0837dcf7957686b4fa9a6125a09082ea477ac3efea0",
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "status": "exact",
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF World Suite v2",
+        "PF Iterate8 Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "2602994aae8b1e1e044f91930c9eea536d580b6ad512c2b54717abd4945b2103",
+      "amount": 1.0,
+      "bytes": 18432,
+      "case": "direction4_distance3_amount1",
+      "depth": "PF16",
+      "direction": 4,
+      "distance_type": 3,
+      "production_effectmain_raw_sha256": "2602994aae8b1e1e044f91930c9eea536d580b6ad512c2b54717abd4945b2103",
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "status": "exact",
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF World Suite v2",
+        "PF iterate16 Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "f3f1ebc9475753e2c22c9baf017e08959cff3b1f57eb4e0d74573a7a7e509b35",
+      "amount": 1.0,
+      "bytes": 36864,
+      "case": "direction4_distance3_amount1",
+      "depth": "PF32",
+      "direction": 4,
+      "distance_type": 3,
+      "production_effectmain_raw_sha256": "f3f1ebc9475753e2c22c9baf017e08959cff3b1f57eb4e0d74573a7a7e509b35",
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "status": "exact",
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF World Suite v2",
+        "PF iterateFloat Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "3122f0b3353919f00cdfa6ccdb22d46845093d951370488f711dac759c86037d",
+      "amount": 4.0,
+      "bytes": 9216,
+      "case": "direction4_distance1_amount4",
+      "depth": "PF8",
+      "direction": 4,
+      "distance_type": 1,
+      "production_effectmain_raw_sha256": "3122f0b3353919f00cdfa6ccdb22d46845093d951370488f711dac759c86037d",
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "status": "exact",
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF World Suite v2",
+        "PF Iterate8 Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "7dd7381988ad60989a689894957d4e1f9d56908ce90174dac3b1d5784a36f035",
+      "amount": 4.0,
+      "bytes": 18432,
+      "case": "direction4_distance1_amount4",
+      "depth": "PF16",
+      "direction": 4,
+      "distance_type": 1,
+      "production_effectmain_raw_sha256": "7dd7381988ad60989a689894957d4e1f9d56908ce90174dac3b1d5784a36f035",
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "status": "exact",
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF World Suite v2",
+        "PF iterate16 Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "44075b247e458dc708f10d70da55c74580aea5622b87057e08355d7343f67d98",
+      "amount": 4.0,
+      "bytes": 36864,
+      "case": "direction4_distance1_amount4",
+      "depth": "PF32",
+      "direction": 4,
+      "distance_type": 1,
+      "production_effectmain_raw_sha256": "44075b247e458dc708f10d70da55c74580aea5622b87057e08355d7343f67d98",
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "status": "exact",
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF World Suite v2",
+        "PF iterateFloat Suite v1"
+      ]
+    }
+  ],
+  "claim_boundary": "Exact only for the declared padded 64x36 semitransparent multi-island fixture, four Direction 0/4 covering tuples, and PF8/PF16/PF32. The 32x18 public-owner matrix remains the control. Unlisted values, arbitrary geometry, native Windows, and AE-host execution are unclaimed.",
+  "control": "refs/conformance/olmcolorkey_exported_owner_edge_blur_covering_20260812.json",
+  "covering_tuples": [
+    {
+      "amount": 1.0,
+      "direction": 0,
+      "distance_type": 1
+    },
+    {
+      "amount": 4.0,
+      "direction": 0,
+      "distance_type": 3
+    },
+    {
+      "amount": 1.0,
+      "direction": 4,
+      "distance_type": 3
+    },
+    {
+      "amount": 4.0,
+      "direction": 4,
+      "distance_type": 1
+    }
+  ],
+  "fixture": {
+    "alpha8_range": [
+      48,
+      239
+    ],
+    "dimensions": [
+      64,
+      36
+    ],
+    "keys": [
+      "black",
+      "green"
+    ],
+    "row_padding_bytes": 8,
+    "source_png_sha256": "a204b1ea4ec6d9b3077ad05e2ea31acdf358af88389b431c12b6a980fc0c3c1f"
+  },
+  "production_gates": {
+    "checkin_layer_pixels": 1,
+    "checkout_layer": 1,
+    "checkout_layer_pixels": 1,
+    "checkout_output": 1,
+    "input_complete_buffer_unchanged": true,
+    "input_padding_preserved": true,
+    "output_padding_preserved": true,
+    "parameter_checkins": 33,
+    "parameter_checkouts": 33
+  },
+  "production_source_sha256": "45de63f91fdc4d61ae3f7fa831ef2017adf7eb0362def82df5272dbab2043081",
+  "schema": "olmcolorkey.exported-owner-edge-geometry-transfer/1",
+  "status": "mismatch"
+}
