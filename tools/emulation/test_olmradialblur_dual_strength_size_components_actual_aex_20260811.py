@@ -147,8 +147,11 @@ def main() -> int:
         witness = actuals[(mode, 8, 2, 25.0)]
         controls[f"{mode}_inner3"] = rejected((mode, 8, 3, 25.0), witness)
         controls[f"{mode}_size50"] = rejected((mode, 8, 2, 50.0), witness)
-        controls[f"{mode}_size25_noise25"] = rejected(
-            (mode, 8, 2, 25.0), witness, noise_variation=25.0)
+        # Size25 + Noise25 Type1 is now proven by the bounded dual-size-noise
+        # closure. Keep this older matrix's negative control on an off-diagonal
+        # tuple that remains deliberately unadmitted.
+        controls[f"{mode}_size25_noise100_off_diagonal"] = rejected(
+            (mode, 8, 2, 25.0), witness, noise_variation=100.0)
     exact = exact and all(controls.values())
     REPORT.write_text(json.dumps({
         "kind": "olmradialblur_dual_strength_size_components_actual_aex_20260811",
@@ -158,7 +161,7 @@ def main() -> int:
         "pf32_inner_direction": "Rotation Inner remains reverse scatter; no PF32 exception is inferred for this matrix.",
         "cases": rows,
         "fail_closed_controls": controls,
-        "boundary": "Only these 24 fixed-fixture cells are admitted. Other strengths, size values, masks, geometry, fades, offsets, Noise/Type3/layer intersections, and AE-host behavior remain fail-closed.",
+        "boundary": "Only these 24 size-only fixed-fixture cells are claimed here. Other strengths, size values, masks, geometry, fades, offsets, unproven Size x Noise tuples (including the off-diagonal Size25 + Noise100 Type1 control), Type3/layer intersections, and AE-host behavior remain fail-closed.",
     }, indent=2, sort_keys=True) + "\n")
     DOC.write_text("# OLM RadialBlur Dual Strength × Size Variation — 2026-08-11\n\n"
                    f"Status: **{'24/24 exact' if exact else 'mismatch'}**\n\n"

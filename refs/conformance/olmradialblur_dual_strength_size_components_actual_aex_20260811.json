@@ -1,5 +1,5 @@
 {
-  "boundary": "Only these 24 fixed-fixture cells are admitted. Other strengths, size values, masks, geometry, fades, offsets, Noise/Type3/layer intersections, and AE-host behavior remain fail-closed.",
+  "boundary": "Only these 24 size-only fixed-fixture cells are claimed here. Other strengths, size values, masks, geometry, fades, offsets, unproven Size x Noise tuples (including the off-diagonal Size25 + Noise100 Type1 control), Type3/layer intersections, and AE-host behavior remain fail-closed.",
   "cases": [
     {
       "actual_sha256": {
@@ -585,10 +585,10 @@
   "coefficient_order": "The same owner component size-factor scales both outer and inner strength spans before their contributions overlap in the accumulator/max-alpha path.",
   "fail_closed_controls": {
     "rotation_inner3": true,
-    "rotation_size25_noise25": true,
+    "rotation_size25_noise100_off_diagonal": true,
     "rotation_size50": true,
     "zoom_inner3": true,
-    "zoom_size25_noise25": true,
+    "zoom_size25_noise100_off_diagonal": true,
     "zoom_size50": true
   },
   "kind": "olmradialblur_dual_strength_size_components_actual_aex_20260811",
