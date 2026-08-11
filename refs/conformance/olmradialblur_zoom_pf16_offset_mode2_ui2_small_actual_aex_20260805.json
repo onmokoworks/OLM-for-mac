@@ -1,4 +1,13 @@
 {
+  "actual_diagnostics_excluded_from_fixture_artifacts": [
+    "transform_setup"
+  ],
+  "actual_required_plane_contract": [
+    "geometry",
+    "pre_blur",
+    "post_blur",
+    "output"
+  ],
   "aex": {
     "identity_exact": true,
     "owner": "0x180006d10",
@@ -106,6 +115,11 @@
     "outer_strength": 4
   },
   "production_change_required": false,
+  "production_compared_plane_contract": [
+    "pre_blur",
+    "post_blur",
+    "output"
+  ],
   "scope": "independent PF16 Zoom outer offset mode 2/UI 2, Strength 4, padded 9x7; structural max(strength, offset) worker boundary, no Rotation fixture reuse or AE-host claim",
   "status": "exact",
   "structural_boundary": {

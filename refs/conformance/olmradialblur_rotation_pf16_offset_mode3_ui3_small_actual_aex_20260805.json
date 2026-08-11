@@ -1,4 +1,17 @@
 {
+  "actual_diagnostics_excluded_from_fixture_artifacts": [
+    "size_factor"
+  ],
+  "actual_required_plane_contract": [
+    "geometry",
+    "polar",
+    "source_scalar",
+    "accum",
+    "max_alpha",
+    "final_rgba",
+    "coordinates",
+    "output"
+  ],
   "aex": {
     "identity_exact": true,
     "owner": "0x180006d10",
@@ -185,6 +198,15 @@
     "weight_table_rule": "actual 30000-entry float32 exponent generation sampled independently by PF16 owner",
     "worker_offset_zero_based": 2
   },
+  "production_compared_plane_contract": [
+    "polar",
+    "source_scalar",
+    "accum",
+    "max_alpha",
+    "final_rgba",
+    "coordinates",
+    "output"
+  ],
   "scope": "independent PF16 Rotation mode 3/UI offset 3, padded 9x7; no PF32 quantization reuse, other offset/depth/geometry, or AE-host claim",
   "status": "exact",
   "typed_pf16_contract": {

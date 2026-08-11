@@ -48,6 +48,9 @@ EXPECTED = {
     "final_rgba": ("d7e30cdd2e7b7906fa2dac18107c7fedacde052635ee7d660d9665975a38b765", "694dff990a1b4d058d4fbfb019ea5a6291198d99c8eafdaca8d586726159a757"),
     "output": ("2f6d2242202f22b82cc91d73923974d5432187af5b6b4a9b9bbee7989105f055", "e823eefc25e52a0f0b2a70e433ad6b57d2eeb21761f21fd8241d2211fc9b967a"),
 }
+COMPARED_PLANES = ("polar", "source_scalar", "accum", "max_alpha", "final_rgba",
+                   "coordinates", "output")
+ACTUAL_REQUIRED = ("geometry", *COMPARED_PLANES)
 
 
 def sha(raw: bytes) -> str: return hashlib.sha256(raw).hexdigest()
@@ -234,12 +237,17 @@ std::ofstream(argv[2],std::ios::binary).write((char*)ob.data(),ob.size());std::o
 
 def main() -> int:
     actual=actual_aex(); mac=mac_production(actual); FIXTURE.mkdir(parents=True,exist_ok=True)
+    actual_missing=[name for name in ACTUAL_REQUIRED if name not in actual]
+    production_missing=[name for name in COMPARED_PLANES if name not in mac]
+    if actual_missing or production_missing:
+        raise RuntimeError(
+            f"PF16 small fixture schema incomplete: actual={actual_missing}, production={production_missing}")
     matches={}; artifacts={}; differences={}
     source_raw=source_frame(); source_encoded=zlib.compress(source_raw,9)
     source_path=FIXTURE/"source_pf16.bin.zlib"; source_path.write_bytes(source_encoded)
     artifacts["source_pf16"]={"raw_sha256":sha(source_raw),"zlib_sha256":sha(source_encoded),"bytes":len(source_raw),"path":str(source_path.relative_to(ROOT))}
-    for name,raw in actual.items():
-        if name == "geometry": continue
+    for name in COMPARED_PLANES:
+        raw=actual[name]
         encoded=zlib.compress(raw,9); path=FIXTURE/f"{name}.bin.zlib"; path.write_bytes(encoded)
         matches[name]=mac[name]==raw
         left=np.frombuffer(raw,dtype=np.uint8);right=np.frombuffer(mac[name],dtype=np.uint8);diff=np.flatnonzero(left!=right)
@@ -250,6 +258,6 @@ def main() -> int:
     aex_hash=sha(m4.AEX_PATH.read_bytes()); aex_identity_exact=aex_hash==AEX_SHA256
     padding_exact=all(mac["output"][y*ROWBYTES+VISIBLE:(y+1)*ROWBYTES]==bytes([0xa0+y])*(ROWBYTES-VISIBLE) for y in range(H))
     exact=all(matches.values()) and padding_exact and fixture_hashes_exact and aex_identity_exact
-    report={"kind":"olmradialblur_rotation_pf16_small_actual_aex_20260805","status":"exact" if exact else "mismatch","scope":"independent natural PF16 Rotation 9x7, padded rowbytes 80, no PF8 fixture/quantization and no AE-host claim","aex":{"path":str(m4.AEX_PATH.relative_to(ROOT)),"sha256":aex_hash,"owner":"0x180006d10","pf16_writer":"0x180017440","identity_exact":aex_identity_exact},"geometry":{"width":W,"height":H,"rowbytes":ROWBYTES,"visible_bytes":VISIBLE,"padding_bytes":ROWBYTES-VISIBLE,"angular_count":struct.unpack('<II',actual['geometry'])[0],"radius_count":struct.unpack('<II',actual['geometry'])[1]},"typed_source":"PF_Pixel16 ARGB, independently normalized by 1/32768; no PF8 fixture or quantization reuse","matches":matches,"differences":differences,"padding_exact":padding_exact,"fixture_hashes_exact":fixture_hashes_exact,"artifacts":artifacts}
+    report={"kind":"olmradialblur_rotation_pf16_small_actual_aex_20260805","status":"exact" if exact else "mismatch","scope":"independent natural PF16 Rotation 9x7, padded rowbytes 80, no PF8 fixture/quantization and no AE-host claim","aex":{"path":str(m4.AEX_PATH.relative_to(ROOT)),"sha256":aex_hash,"owner":"0x180006d10","pf16_writer":"0x180017440","identity_exact":aex_identity_exact},"geometry":{"width":W,"height":H,"rowbytes":ROWBYTES,"visible_bytes":VISIBLE,"padding_bytes":ROWBYTES-VISIBLE,"angular_count":struct.unpack('<II',actual['geometry'])[0],"radius_count":struct.unpack('<II',actual['geometry'])[1]},"typed_source":"PF_Pixel16 ARGB, independently normalized by 1/32768; no PF8 fixture or quantization reuse","matches":matches,"differences":differences,"padding_exact":padding_exact,"fixture_hashes_exact":fixture_hashes_exact,"artifacts":artifacts,"actual_required_plane_contract":list(ACTUAL_REQUIRED),"production_compared_plane_contract":list(COMPARED_PLANES),"actual_diagnostics_excluded_from_fixture_artifacts":sorted(set(actual)-set(ACTUAL_REQUIRED))}
     REPORT.write_text(json.dumps(report,indent=2,sort_keys=True)+"\n");print(json.dumps(report,indent=2,sort_keys=True));return 0 if report["status"]=="exact" else 1
 if __name__=="__main__":raise SystemExit(main())

@@ -1,4 +1,17 @@
 {
+  "actual_diagnostics_excluded_from_fixture_artifacts": [
+    "size_factor"
+  ],
+  "actual_required_plane_contract": [
+    "geometry",
+    "polar",
+    "source_scalar",
+    "accum",
+    "max_alpha",
+    "final_rgba",
+    "coordinates",
+    "output"
+  ],
   "aex": {
     "identity_exact": true,
     "owner": "0x180006d10",
@@ -158,6 +171,15 @@
     "outer_offset_mode": 1,
     "outer_strength": 5
   },
+  "production_compared_plane_contract": [
+    "polar",
+    "source_scalar",
+    "accum",
+    "max_alpha",
+    "final_rgba",
+    "coordinates",
+    "output"
+  ],
   "scope": "independent PF16 Rotation Outer Strength 5, mode 1/offset 0, padded 9x7; distinct from Strength 4 baseline and PF32 Strength 5; no other depth or AE-host claim",
   "status": "exact",
   "typed_pf16_contract": {

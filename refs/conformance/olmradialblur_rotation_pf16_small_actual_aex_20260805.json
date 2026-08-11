@@ -1,4 +1,17 @@
 {
+  "actual_diagnostics_excluded_from_fixture_artifacts": [
+    "size_factor"
+  ],
+  "actual_required_plane_contract": [
+    "geometry",
+    "polar",
+    "source_scalar",
+    "accum",
+    "max_alpha",
+    "final_rgba",
+    "coordinates",
+    "output"
+  ],
   "aex": {
     "identity_exact": true,
     "owner": "0x180006d10",
@@ -149,6 +162,15 @@
     "source_scalar": true
   },
   "padding_exact": true,
+  "production_compared_plane_contract": [
+    "polar",
+    "source_scalar",
+    "accum",
+    "max_alpha",
+    "final_rgba",
+    "coordinates",
+    "output"
+  ],
   "scope": "independent natural PF16 Rotation 9x7, padded rowbytes 80, no PF8 fixture/quantization and no AE-host claim",
   "status": "exact",
   "typed_source": "PF_Pixel16 ARGB, independently normalized by 1/32768; no PF8 fixture or quantization reuse"

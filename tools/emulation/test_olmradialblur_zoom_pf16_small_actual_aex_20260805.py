@@ -15,6 +15,8 @@ fixture.EXPECTED = {
     "post_blur": ("d85a97a70daaab76fb339bcb21b31125e88b87c076bbe5005b1216e8374140ab", "85503846b2a43c3abc21102cec5108ee9c30b11e4efeeeb96295d4099959a25c"),
     "output": ("0b0bff1ccc6023d1583775165dde69dd2d0b0f97e7af946062f737ab6fc893aa", "7ac84c2629e7a7ae4dc1865583906f829903b0bbf0ad51b2a3cb819f408ab096"),
 }
+fixture.COMPARED_PLANES = ("pre_blur", "post_blur", "output")
+fixture.ACTUAL_REQUIRED = ("geometry", *fixture.COMPARED_PLANES)
 
 ZOOM_ENTRY = 0x1800056F0
 ZOOM_COLLAPSE = 0x180005C9F
