@@ -1,0 +1,113 @@
+{
+  "active_and_padding_exact": true,
+  "actual_aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+  "cells": [
+    {
+      "cases": [
+        "retained_semitransparent",
+        "rejected_semitransparent",
+        "retained_alpha0_hidden_rgb",
+        "last_enabled",
+        "last_enabled_near_miss",
+        "first_disabled"
+      ],
+      "depth": "PF8",
+      "enabled_count": 5,
+      "oracle_sha256": "267ffb987e244e065e2778be7fabf3ad8fe4fe1d9bacf87c169cf301ea1305b9",
+      "path": "PF_Cmd_RENDER"
+    },
+    {
+      "cases": [
+        "retained_semitransparent",
+        "rejected_semitransparent",
+        "retained_alpha0_hidden_rgb",
+        "last_enabled",
+        "last_enabled_near_miss",
+        "first_disabled"
+      ],
+      "depth": "PF16",
+      "enabled_count": 5,
+      "oracle_sha256": "bb65ce432586150d395eea734ba6f366e576429f8420588bf04ac314b6668bbd",
+      "path": "PF_Cmd_RENDER"
+    },
+    {
+      "cases": [
+        "retained_semitransparent",
+        "rejected_semitransparent",
+        "retained_alpha0_hidden_rgb",
+        "last_enabled",
+        "last_enabled_near_miss",
+        "first_disabled"
+      ],
+      "depth": "PF32",
+      "enabled_count": 5,
+      "oracle_sha256": "47025329c2d856b224b13c4b3f522c0a123035cba50d4e14effaf46c347c243d",
+      "path": "PF_Cmd_SMART_PRE_RENDER->PF_Cmd_SMART_RENDER"
+    },
+    {
+      "cases": [
+        "retained_semitransparent",
+        "rejected_semitransparent",
+        "retained_alpha0_hidden_rgb",
+        "last_enabled",
+        "last_enabled_near_miss",
+        "penultimate_enabled"
+      ],
+      "depth": "PF8",
+      "enabled_count": 100,
+      "oracle_sha256": "4ecd487b73c230649cbdf3a3eab0fea9200eda6af8a83dc421f8df11fd1698eb",
+      "path": "PF_Cmd_RENDER"
+    },
+    {
+      "cases": [
+        "retained_semitransparent",
+        "rejected_semitransparent",
+        "retained_alpha0_hidden_rgb",
+        "last_enabled",
+        "last_enabled_near_miss",
+        "penultimate_enabled"
+      ],
+      "depth": "PF16",
+      "enabled_count": 100,
+      "oracle_sha256": "57478c7d6021f25007864541e3abb59425431895853542d35434210a98a7f2c8",
+      "path": "PF_Cmd_RENDER"
+    },
+    {
+      "cases": [
+        "retained_semitransparent",
+        "rejected_semitransparent",
+        "retained_alpha0_hidden_rgb",
+        "last_enabled",
+        "last_enabled_near_miss",
+        "penultimate_enabled"
+      ],
+      "depth": "PF32",
+      "enabled_count": 100,
+      "oracle_sha256": "2b78dbbaee3be4704396cb4fb0a86e61c9d94d268be86b6ede572f2b331562dc",
+      "path": "PF_Cmd_SMART_PRE_RENDER->PF_Cmd_SMART_RENDER"
+    }
+  ],
+  "claim_boundary": "Current installed arm64 public EffectMain under focused AE-free callbacks, PF8/PF16 legacy and PF32 Smart, counts 5/100, fixed 11x7 fixture only.",
+  "combined_output_sha256": "9488f1dfd08a10079d293b54147bf95d2e9973bad63a655170a240440a8d602a",
+  "fixture": {
+    "contracts": [
+      "retained/rejected semitransparent",
+      "retained alpha-zero hidden RGB",
+      "last enabled key",
+      "first disabled key at count 5"
+    ],
+    "height": 7,
+    "padding_per_row": 12,
+    "width": 11
+  },
+  "identity_manifest": "refs/conformance/olm_installed_identity_manifest_20260806.json",
+  "installed_binary": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/ColorKeep.plugin/Contents/MacOS/ColorKeep",
+  "installed_binary_sha256": "4974d9f00c5b6a8eaf8ff1fb1cffb1a97d2f36a34af5ae01c759128351d83a2b",
+  "not_proven": [
+    "native After Effects suite behavior",
+    "other parameter combinations or geometries",
+    "cross-host AE export raw equality"
+  ],
+  "raw_exact": true,
+  "status": "installed_public_six_cell_raw_exact"
+}
