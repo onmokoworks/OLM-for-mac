@@ -44,6 +44,11 @@ Windows AEで取得する7行として固定した同一条件校正は、受領
 最新の10-plugin smokeはロード、適用、64×64 PNG保存のhost動作確認です。
 Windowsとのpixel exactや主要パラメーター一致を追加で証明するものではありません。
 
+直近のpublic-entry／installed-binary検証では、ColorKeep 6セル、OLMSmoother2 6セル、
+OLMToonDilate 12セル、OLMDirectionalBlur 6セル、OLMColorKey 18セルを記録済み条件で
+raw exact確認しています。一方、OLMKiraKira Mode 1のpublic 3-depth経路はraw不一致で
+fail-closeです。個別セルの成功を任意入力やWindows／Mac AE pixel一致へ一般化しません。
+
 詳しい対応範囲と制限は、次の文書を正とします。
 
 - [日本語リリースノート](refs/conformance/OLM_MAC_RELEASE_NOTES_20260806.md)
@@ -55,9 +60,9 @@ Windowsとのpixel exactや主要パラメーター一致を追加で証明す�
 | プラグイン | 主な対象 | native depth／扱い |
 | --- | --- | --- |
 | OLMBlur | Legacy／NonLegacy、repeat、bias、記録済みSmart chain | PF8／PF16／PF32 |
-| ColorKeep | 有効／無効、tolerance、1〜100色 | PF8／PF16／PF32 |
+| ColorKeep | 有効／無効、tolerance、1〜100色、installed public covering | PF8／PF16／PF32 |
 | OLMColorKey | core、Edge Thin、Edge Blur、replace／color space、記録済み半透明51-cell matrix | PF8／PF16／PF32（限定範囲） |
-| OLMToonDilate | copy／dilate、radius、frontier／tie／corner | PF8／PF16／PF32 |
+| OLMToonDilate | copy／dilate、radius、frontier／tie／corner、installed covering | PF8／PF16／PF32 |
 | OLMDistanceGradation | Inside／Outside／Both、補間、invert、background、記録済みblur／bilateral matrix | PF8／PF16／PF32（限定範囲） |
 | OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3、記録済みfront＋back複合経路 | PF8／PF16／PF32（限定範囲） |
 | OLMRadialBlur | Zoom／Rotation／Inner、記録済みtransform／Size×Edge×Noise複合経路 | PF8／PF16／PF32（bounded guard付き） |
@@ -68,6 +73,11 @@ Windowsとのpixel exactや主要パラメーター一致を追加で証明す�
 この表は「全パラメーターの直積が完全一致」という意味ではありません。記録済みの
 geometry、入力、値、分岐境界だけが証明対象です。範囲外はリリースノートに明記し、
 実装側でも可能な箇所はfail-closeにしています。
+
+現在の主な残課題は、OLMKiraKira Mode 1のbox primitive、OLMDistanceGradation
+PF32 Mode 5の未解決6セル（matrix 58／64 exact）、OLMSmoother v1の32bpc
+AE host conversion境界、Layer Noise Type 3の汎用world対応です。Type 3の効率的な
+検証にはAEXCompat issue #1162のmacOS declarative fixture runnerが関係します。
 
 ## インストールとビルド
 

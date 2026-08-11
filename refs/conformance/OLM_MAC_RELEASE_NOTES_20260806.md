@@ -124,6 +124,27 @@ render_succeededでした。各プラグインについて64×64 PNGを1枚保�
 OLMKiraKira Mode 4 PF32内部経路、OLMSmoother v1 PF16内部経路のbounded比較も
 完了しています。host入出力変換を含むraw EXRの包括一致へは昇格しません。
 
+## 2026-08-12 public entry／installed boundary
+
+- ColorKeep：installed public covering 6セルがraw exactです。
+- OLMSmoother2：public EffectMain SmartPreRender→SmartRenderの6セルが3深度で
+  actual-AEX coreとexactです。PF8／PF16の同条件classic Renderもraw-identicalですが、
+  PF32 classicには分岐がなくfail-closeします。
+- OLMToonDilate：installed EffectMain Smart chainの4 semantic family×3深度、
+  12／12がraw exactです。これはAE-free installed-binary境界です。
+- OLMDirectionalBlur：32×18 dual-side Type 2と16×16 padded Type 3 Layerの
+  public Smart chainが3深度6／6 exactです。21個の非input parameterとworld lifecycleを
+  確認し、Type 3 Layer欠落時は出力を変更せずfail-closeします。別sourceへ一般化しません。
+- OLMColorKey：exported Smart ownerとproduction EffectMainのpublic Edge Blur
+  covering 6 tuple×3深度、18／18がraw exactです。
+- OLMRadialBlur：Outer 4＋Inner 2／4とSize 25／100をZoom／Rotation・3深度で
+  交差した24／24が内部planeからtyped outputまでexactです。
+- OLMKiraKira：Mode 1 public 3-depth経路は5×3半透明source、Horizontal Length 7、
+  Rotation 0でもraw不一致でfail-closeです。次の局所課題はbox primitiveです。
+
+これらは記録済みfixtureのpublic-entry／installed境界であり、Windows AE pixel exactや
+未列挙入力・geometry・パラメーター直積へは昇格しません。
+
 現在のhost証拠は、原則として次の条件を前提とします。
 
 - After Effects `26.3x87`
@@ -152,6 +173,10 @@ notarizationは未実施であり、ダウンロード先のGatekeeperに拒否�
 | OLMSmoother2 | v1／v2 classifier、key／invert、Gamma None／All／Colors、range／extra、palette；PF8／PF16／PF32限定 | Gamma／key／smoothing 54／54とpalette交差18／18がraw exact。旧PF8 seamはLUT契約と非縮約scalar積和で解消したが、任意直積やAE hostへは一般化しない |
 | OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur；PF8／PF16／PF32限定 | natural Mode 4の追加4 source／12 typed outputはraw exact・max ULP 0。Highlight gradientは2／15 wordsに1 ULP seamがありconstant source限定。Windows AE pixel、任意source／gradient、全直積は未証明 |
 | OLMSmoother v1 | no-key／Color Key、smoothing range；native PF8／PF16 | PF8 canonical 960×540と保持済みkey pathはexact。PF16 Color Keyはexported `PF_Cmd_RENDER`からtemporary world、mask／main passまで5×3 padded fixtureでraw exact。AEXにnative PF32 callbackはなく、32bpc projectではAEがclassic integer pluginの前後をhost-convertする |
+
+残課題として、OLMDistanceGradation PF32 Mode 5は64セル中58 exact／6 fail-close、
+OLMSmoother v1 PF32はnative laneではなくAE host conversion、Layer Noise Type 3の
+汎用検証は未完です。Type 3のmacOS側fixture実行基盤はAEXCompat #1162の対象です。
 
 ## AE host境界
 

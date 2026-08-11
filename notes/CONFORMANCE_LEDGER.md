@@ -1,5 +1,20 @@
 # OLM Conformance Ledger
 
+- 2026-08-12 public/installed boundary update: ColorKeep installed public
+  covering is 6-cell raw exact; OLMSmoother2 public EffectMain Smart chain is
+  6/6 all-depth core exact (PF32 classic remains absent/fail-closed);
+  installed OLMToonDilate Smart covering is 12/12; OLMDirectionalBlur public
+  Smart feature matrix is 6/6 on the declared Type 2/Type 3 source crops;
+  OLMColorKey exported-owner Edge Blur covering is 18/18; and OLMRadialBlur
+  Dual Strength x Size is 24/24 internal/output exact. OLMKiraKira Mode 1
+  public all-depth output remains raw-mismatched and fail-closed, with the box
+  primitive as the next local boundary. No result promotes Windows AE pixels
+  or unlisted inputs/geometry/parameter products. Remaining release-facing
+  boundaries include DistanceGradation PF32 Mode 5 at 58/64 exact, Smoother v1
+  PF32 host conversion rather than native execution, and general Layer Noise
+  Type 3 coverage dependent on the macOS declarative runner tracked by
+  AEXCompat #1162.
+
 - 2026-08-11 OLMRadialBlur Inner Size/Edge/Noise closure: Inner Strength 4
   crosses Zoom/Rotation, PF8/PF16/PF32, and four declared tuples for 24 cases.
   Consumed planes and typed outputs are exact. The four PF32 Rotation tuples
