@@ -1,5 +1,18 @@
 # OLM Conformance Ledger
 
+- 2026-08-12 latest public-owner and geometry update: OLMKiraKira Mode 1,
+  Mode 2 ramp/Merge 2, and Mode 3 Gaussian Length 50 are raw exact through
+  their declared Rotation-0 public PF8/PF16/PF32 owners. AEXCompat arbitrary
+  handle checkpoint 94210e51 enabled the ramp owner; nondefault Rotation
+  remains fail-closed because ANGLE editing is unavailable. OLMSmoother v1
+  PF16 practical 64x36 is 4/4 exact, while PF32 remains AE host conversion,
+  not native arithmetic. OLMColorKey geometry transfer is 11/12 at 64x36;
+  PF32 Direction 0/Distance 3/Amount 4 retains the residual. OLMRadialBlur
+  Dual Strength x Size x Noise is 24/24 consumed/output exact on fixed 32x18;
+  Rotation Type 1 source-scalar diagnostic ULP differences remain separated
+  from exact prepass/output. None of these records promotes unlisted
+  geometry, parameters, Windows AE pixels, or Type 3.
+
 - 2026-08-12 Kira Mode 1 and Distance IPP boundary update:
   OLMKiraKira Mode 1 exported/public owner is raw exact for PF8/PF16/PF32 on
   the declared 5x3 semitransparent source, Horizontal Length 7, Rotation 0,

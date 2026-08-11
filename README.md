@@ -61,7 +61,7 @@ fail-closeです。個別セルの成功を任意入力やWindows／Mac AE pixel
 | --- | --- | --- |
 | OLMBlur | Legacy／NonLegacy、repeat、bias、記録済みSmart chain | PF8／PF16／PF32 |
 | ColorKeep | 有効／無効、tolerance、1〜100色、installed public covering | PF8／PF16／PF32 |
-| OLMColorKey | core、Edge Thin、Edge Blur、replace／color space、記録済み半透明51-cell matrix | PF8／PF16／PF32（限定範囲） |
+| OLMColorKey | core、Edge Thin、Edge Blur、replace／color space、記録済みgeometry transfer | PF8／PF16／PF32（限定範囲） |
 | OLMToonDilate | copy／dilate、radius、frontier／tie／corner、installed covering | PF8／PF16／PF32 |
 | OLMDistanceGradation | Inside／Outside／Both、補間、invert、background、記録済みblur／bilateral matrix | PF8／PF16／PF32（限定範囲） |
 | OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3、記録済みfront＋back複合経路 | PF8／PF16／PF32（限定範囲） |
@@ -74,7 +74,7 @@ fail-closeです。個別セルの成功を任意入力やWindows／Mac AE pixel
 geometry、入力、値、分岐境界だけが証明対象です。範囲外はリリースノートに明記し、
 実装側でも可能な箇所はfail-closeにしています。
 
-現在の主な残課題は、OLMKiraKira Mode 1のnondefault RotationとMode 2／3 public owner、
+現在の主な残課題は、OLMKiraKiraのnondefault Rotation、
 OLMDistanceGradation PF32 Mode 5の未解決6セル（matrix 58／64 exact）、OLMSmoother v1の32bpc
 AE host conversion境界、Layer Noise Type 3の汎用world対応です。Type 3の効率的な
 検証にはAEXCompat issue #1162のmacOS declarative fixture runnerが関係します。
