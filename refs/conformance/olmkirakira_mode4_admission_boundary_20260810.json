@@ -1,6 +1,6 @@
 {
   "schema": "olmkirakira.mode4-admission-boundary/1",
-  "status": "explicit_complete_actual_aex_fixture_boundary",
+  "status": "geometry_general_actual_aex_boundary",
   "plugin": "OLMKiraKira",
   "mode": 4,
   "actual_aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
@@ -55,15 +55,23 @@
     "centered_crop_and_typed_writers": "refs/conformance/olmkirakira_mode4_crop_typed_installed_20260805.json",
     "zero_directional_length_full_caller": "refs/conformance/olmkirakira_mode4_fullcaller_hostless_exact_20260807.json"
   },
-  "unsupported_tuple_behavior": "return the unblurred input ray; no recurrence or alternate blur substitution",
+  "geometry_generalization": {
+    "predicate": "width >= 9 && height >= 7 && radius >= 1 && radius <= 1000",
+    "complete_actual_aex_cases": 17,
+    "complete_actual_aex_stages": 51,
+    "width_height_pairs": [[9, 7], [9, 9], [36, 22], [39, 30], [39, 39], [68, 40], [74, 74]],
+    "radii": [1, 5, 50, 300, 301, 1000],
+    "angles_degrees": [-45, 0, 17, 45, 90],
+    "result": "bit exact at every forward-warp, recurrence, and inverse-warp stage",
+    "evidence": "refs/conformance/olmkirakira_mode4_canonical_angles_actual_aex_20260810.json"
+  },
+  "unsupported_tuple_behavior": "sub-minimum geometry or radius outside the public 1..1000 range returns the unblurred input ray",
   "production_predicate": "olm::kirakira::mode4_rotated_scalar_admitted(rw, rh, length, angle_deg)",
   "focused_regression": "tools/emulation/test_olmkirakira_mode4_production_boundary_20260805.py",
   "canonical_angle_regression": "tools/emulation/test_olmkirakira_mode4_canonical_angles_actual_aex_20260810.py",
   "canonical_angle_evidence": "refs/conformance/olmkirakira_mode4_canonical_angles_actual_aex_20260810.json",
   "not_proven": [
-    "arbitrary rotated geometry",
-    "a radius or length other than 5",
-    "angles outside 0/5/45/-45/90 at the corresponding complete helper-chain boundaries",
+    "rotated leaves smaller than 9x7 except separately recorded fixtures",
     "practical-resolution directional Mode 4 in native AE"
   ]
 }

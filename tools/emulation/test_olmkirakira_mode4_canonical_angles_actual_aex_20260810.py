@@ -15,7 +15,8 @@ REPORT = ROOT / "refs/conformance/olmkirakira_mode4_canonical_angles_actual_aex_
 CPP = ROOT / "tools/emulation/test_kirakira_mode4_canonical.cpp"
 PRODUCTION = ROOT / "mac/OLMKiraKira/OLMKiraKira.cpp"
 EXPECTED_AEX_SHA = "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
-EXPECTED = ((9, 7, 0), (9, 9, 45), (9, 9, -45), (9, 9, 90))
+EXPECTED_PREFIX = ((9, 7, 5, 0), (9, 9, 5, 45),
+                   (9, 9, 5, -45), (9, 9, 5, 90))
 
 
 def extent(major: int, minor: int, angle: float) -> int:
@@ -28,7 +29,15 @@ def main() -> int:
     report = json.loads(REPORT.read_text(encoding="utf-8"))
     assert report["status"] == "captured"
     assert report["aex_sha256"] == EXPECTED_AEX_SHA
-    assert [(c["width"], c["height"], c["angle_degrees"]) for c in report["cases"]] == list(EXPECTED)
+    tuples = [(c["width"], c["height"], c["radius"], c["angle_degrees"])
+              for c in report["cases"]]
+    assert tuples[:4] == list(EXPECTED_PREFIX)
+    assert len(tuples) == 17
+    assert {(c["width"], c["height"]) for c in report["cases"]} == {
+        (9, 7), (9, 9), (36, 22), (39, 30), (39, 39), (68, 40), (74, 74),
+    }
+    assert {c["radius"] for c in report["cases"]} == {1, 5, 50, 300, 301, 1000}
+    assert {c["angle_degrees"] for c in report["cases"]} == {-45, 0, 17, 45, 90}
     source = PRODUCTION.read_text(encoding="utf-8")
     for expression in ("90.0 + glow_rotation", "glow_rotation",
                        "45.0 + glow_rotation", "-45.0 + glow_rotation"):
@@ -60,8 +69,8 @@ def main() -> int:
                 assert len(actual[stage]) == len(expected) == case["width"] * case["height"]
                 assert actual[stage] == expected
             digests.add(tuple(actual["final"]))
-    assert len(digests) == 4
-    print("PASS_OLMKIRAKIRA_MODE4_CANONICAL_ANGLES_ACTUAL_AEX_20260810 cases=4 stages=12 max_ulp=0")
+    assert len(digests) == 17
+    print("PASS_OLMKIRAKIRA_MODE4_CANONICAL_ANGLES_ACTUAL_AEX_20260810 cases=17 stages=51 max_ulp=0")
     return 0
 
 

@@ -319,9 +319,10 @@ static std::vector<float> RotatedAxisBoxBlur(
 	const double temp_cy = (double)rh * 0.5;
 	std::vector<float> temp_a = CopyCenteredRoi(input, width, height, rw, rh);
 	if (blur_mode == 4) {
-		// Complete actual-AEX forward-warp/recurrence/inverse-warp fixtures
-		// cover radius 5 at the bounded canonical-angle leaves plus the original
-		// 9x7/5-degree leaf. Unsupported tuples remain identity.
+		// Complete actual-AEX forward-warp/recurrence/inverse-warp fixtures span
+		// public radius endpoints, default/non-power-of-two lengths, canonical
+		// and rotated angles, and practical leaves. Sub-minimum leaves remain
+		// fail-closed.
 		if (!olm::kirakira::mode4_rotated_scalar_admitted(
 				rw, rh, length, angle_deg))
 			return input;

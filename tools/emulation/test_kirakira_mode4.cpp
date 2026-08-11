@@ -15,13 +15,17 @@ int main()
 	if (!olm::kirakira::mode4_rotated_scalar_admitted(9, 9, 5, 45.0)) return 19;
 	if (!olm::kirakira::mode4_rotated_scalar_admitted(9, 9, 5, -45.0)) return 20;
 	if (!olm::kirakira::mode4_rotated_scalar_admitted(9, 9, 5, 90.0)) return 21;
-	if (olm::kirakira::mode4_rotated_scalar_admitted(9, 7, 4, 5.0)) return 11;
-	if (olm::kirakira::mode4_rotated_scalar_admitted(9, 7, 6, 5.0)) return 12;
+	if (!olm::kirakira::mode4_rotated_scalar_admitted(9, 7, 4, 5.0)) return 11;
+	if (!olm::kirakira::mode4_rotated_scalar_admitted(9, 7, 6, 5.0)) return 12;
 	if (olm::kirakira::mode4_rotated_scalar_admitted(7, 9, 5, 5.0)) return 13;
-	if (olm::kirakira::mode4_rotated_scalar_admitted(1920, 1080, 5, 5.0)) return 14;
+	if (!olm::kirakira::mode4_rotated_scalar_admitted(1920, 1080, 5, 5.0)) return 14;
 	if (olm::kirakira::mode4_rotated_scalar_admitted(0, 7, 5, 5.0)) return 15;
-	if (olm::kirakira::mode4_rotated_scalar_admitted(9, 7, 5, 45.0)) return 16;
-	if (olm::kirakira::mode4_rotated_scalar_admitted(9, 7, 5, -5.0)) return 17;
+	if (!olm::kirakira::mode4_rotated_scalar_admitted(9, 7, 5, 45.0)) return 16;
+	if (!olm::kirakira::mode4_rotated_scalar_admitted(9, 7, 5, -5.0)) return 17;
+	if (olm::kirakira::mode4_rotated_scalar_admitted(9, 7, 0, 0.0)) return 22;
+	if (olm::kirakira::mode4_rotated_scalar_admitted(9, 7, 1001, 0.0)) return 23;
+	if (olm::kirakira::mode4_rotated_scalar_admitted(8, 7, 5, 0.0)) return 24;
+	if (olm::kirakira::mode4_rotated_scalar_admitted(9, 6, 5, 0.0)) return 25;
 	constexpr std::array<std::uint32_t, width * height> source_bits = {
 		0x3c3c3c3c,0x3d634b4c,0x3dd9a5a6,0x3e2e9697,0x3e7ba5a6,0x3eb0f0f1,0x3ee8787a,0x3ef71697,0x3e6e1e1e,
 		0x3eb0f0f1,0x3ee78789,0x3f0b4b4b,0x3f270f10,0x3f42d2d3,0x3f4e9697,0x3f561e1d,0x3f2e21e2,0x3e045a5b,

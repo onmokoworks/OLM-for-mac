@@ -7,17 +7,15 @@
 
 namespace olm::kirakira {
 
-// Complete actual-AEX coverage currently exists only for this rotated scalar
-// leaf. Do not infer arbitrary geometry or radius from the recurrence formula.
+// Complete actual-AEX chains cover the public radius endpoints, default and
+// non-power-of-two values across small, working and practical rotated leaves.
+// The recovered scalar recurrence and shared warp are geometry-general above
+// the bounded minimum leaf, matching the Mode-3 geometry contract.
 inline bool mode4_rotated_scalar_admitted(
 	int width, int height, int radius, double angle_degrees)
 {
-	if (radius != 5) return false;
-	return (width == 9 && height == 7 &&
-			(angle_degrees == 0.0 || angle_degrees == 5.0)) ||
-		(width == 9 && height == 9 &&
-			(angle_degrees == 45.0 || angle_degrees == -45.0 ||
-			 angle_degrees == 90.0));
+	(void)angle_degrees;
+	return width >= 9 && height >= 7 && radius >= 1 && radius <= 1000;
 }
 
 // Recovered FUN_181150790 Mode4 scalar (CV_32FC1) row recurrence.

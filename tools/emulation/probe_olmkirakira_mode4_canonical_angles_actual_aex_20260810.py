@@ -21,7 +21,14 @@ BASE_PATH = HERE / "probe_olmkirakira_mode3_actual_aex.py"
 AEX = ROOT / "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex"
 WARP = 0x181297AC0
 FORWARD_AFTER = 0x181150946
-CASES = ((9, 7, 0), (9, 9, 45), (9, 9, -45), (9, 9, 90))
+CASES = (
+    (9, 7, 5, 0), (9, 9, 5, 45), (9, 9, 5, -45), (9, 9, 5, 90),
+    (36, 22, 1, 0), (36, 22, 50, 0), (36, 22, 1000, 0),
+    (39, 30, 1, 17), (39, 30, 50, 17), (39, 30, 301, 17),
+    (39, 39, 1, 45), (39, 39, 50, 45), (39, 39, 1000, 45),
+    (68, 40, 1, 0), (68, 40, 50, 0), (68, 40, 300, 0),
+    (74, 74, 50, 45),
+)
 
 
 def load_base():
@@ -61,7 +68,7 @@ def raw_mat_words(base: Any, loader: Any, header: int) -> dict[str, Any]:
     return {"rows": rows, "cols": cols, "step_bytes": step, "words_u32": words}
 
 
-def run_case(base: Any, width: int, height: int, angle: int) -> dict[str, Any]:
+def run_case(base: Any, width: int, height: int, radius: int, angle: int) -> dict[str, Any]:
     observed: dict[str, Any] = {"warp_entries": []}
 
     class Loader(base.AexLoader):
@@ -86,7 +93,7 @@ def run_case(base: Any, width: int, height: int, angle: int) -> dict[str, Any]:
                 return super().call_function(address, *args, **kwargs)
             helper_args = list(kwargs["int_args"])
             helper_args[5] = angle
-            helper_args[6] = 5
+            helper_args[6] = radius
             helper_args[7] = 4
             kwargs["int_args"] = helper_args
             result = super().call_function(address, *args, **kwargs)
@@ -97,7 +104,7 @@ def run_case(base: Any, width: int, height: int, angle: int) -> dict[str, Any]:
     base.AexLoader = Loader
     args = type("Args", (), {
         "aex_path": AEX, "width": width, "height": height,
-        "length": 5, "sigma": 0.0, "max_instructions": 30_000_000,
+        "length": radius, "sigma": 0.0, "max_instructions": 30_000_000,
     })()
     try:
         execution = base.run(args)
@@ -107,7 +114,7 @@ def run_case(base: Any, width: int, height: int, angle: int) -> dict[str, Any]:
         raise RuntimeError({"execution": execution, "observed": observed})
     first, second = observed["warp_entries"]
     return {
-        "width": width, "height": height, "radius": 5, "angle_degrees": angle,
+        "width": width, "height": height, "radius": radius, "angle_degrees": angle,
         "execution_status": execution["status"],
         "source": first["source"],
         "forward": observed["forward"],
@@ -123,7 +130,8 @@ def main() -> int:
                         default=ROOT / "refs/conformance/olmkirakira_mode4_canonical_angles_actual_aex_20260810.json")
     args = parser.parse_args()
     base = load_base()
-    cases = [run_case(base, width, height, angle) for width, height, angle in CASES]
+    cases = [run_case(base, width, height, radius, angle)
+             for width, height, radius, angle in CASES]
     report = {
         "schema": "olmkirakira.mode4-canonical-angles-actual-aex/1",
         "status": "captured",

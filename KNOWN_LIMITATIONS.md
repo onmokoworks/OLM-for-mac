@@ -35,9 +35,9 @@
   描画と操作も未証明です。
 - OLMSmoother2：key、invert、Gamma、range、paletteの主要分岐はbounded exactです。
   全パラメーター直積は未証明です。
-- OLMKiraKira：Mode 1〜4の主要経路を実装しています。Mode 4の記録済みtupleは
-  PF8/PF16/PF32のfull callerまでexactですが、任意shape、length、ray、色、方向、
-  ramp／Merge Modeの全組合せとDrawbot custom UIは未証明です。
+- OLMKiraKira：Mode 1〜4の主要経路を実装しています。Mode 4の方向レイは、9×7以上の
+  回転後geometryとLength 1〜1000を、実AEXの17ケース・51中間stageで一般化しています。
+  小型shape、ray／色／ramp／Merge Modeの全直積とDrawbot custom UIは未証明です。
 - OLMSmoother v1：元AEXのnative depthはPF8/PF16です。32bpcプロジェクトではAEが
   classic integer pluginの前後を変換するため、native PF32互換とは表現しません。
 
