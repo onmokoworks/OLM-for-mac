@@ -2199,8 +2199,10 @@ static PF_Err RenderZoomTyped(
 		info.inner_edge_fade == 0 && info.inner_offset_mode == 1 && info.inner_offset == 0 &&
 		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
 		info.quality == 5.0 && info.brightness_gain == 1.0 &&
-		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
-		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
+		info.size_variation == 0.0 &&
+		(info.noise_variation == 0.0 || info.noise_variation == 25.0 || info.noise_variation == 100.0) &&
+		(info.noise_type == 1 || (info.noise_variation != 0.0 && info.noise_type == 2)) &&
+		info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0 &&
 		info.comp_width == 32.0 && info.comp_height == 18.0;
 	const bool use_aex_typed_zoom_inner_offset_pairwise = input && output && use_aex_zoom_geometry &&
@@ -2223,6 +2225,7 @@ static PF_Err RenderZoomTyped(
 	    !use_aex_typed_zoom_inner_offset_pairwise) ||
 	    (info.noise_variation != 0.0 && !use_aex_pf32_zoom_noise_type1_small &&
 	    !use_aex_typed_zoom_noise_type1_pairwise && !use_aex_typed_zoom_noise_type2_small &&
+	    !use_aex_typed_zoom_inner_pairwise &&
 	    !use_aex_pf32_zoom_inner_noise_small && !use_aex_typed_zoom_edge_noise_32x18 &&
 	    !use_aex_typed_zoom_size_noise_components_32x18)) {
 		// These branches are not yet backed by an actual-AEX worker/output
@@ -2333,6 +2336,7 @@ static PF_Err RenderZoomTyped(
 		}
 		if (use_aex_pf32_zoom_noise_type1_small || use_aex_typed_zoom_noise_type1_pairwise ||
 			use_aex_pf32_zoom_inner_noise_small || use_aex_typed_zoom_noise_type2_small ||
+			(use_aex_typed_zoom_inner_pairwise && info.noise_variation != 0.0) ||
 			use_aex_typed_zoom_edge_noise_32x18 ||
 			use_aex_typed_zoom_size_noise_components_32x18) {
 			std::vector<float> noise_plane;
@@ -2349,6 +2353,7 @@ static PF_Err RenderZoomTyped(
 			for (A_long y = 0; y < h; ++y) {
 				for (A_long x = 0; x < w; ++x) {
 					const float noise = (use_aex_typed_zoom_noise_type2_small ||
+						(use_aex_typed_zoom_inner_pairwise && info.noise_type == 2) ||
 						(use_aex_typed_zoom_edge_noise_32x18 && info.noise_type == 2) ||
 						(use_aex_typed_zoom_size_noise_components_32x18 && info.noise_type == 2))
 						? olm::dblur::sample_radial_noise_plane(noise_view, x, y, false)
@@ -2987,8 +2992,10 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.inner_edge_fade == 0 && info.inner_offset_mode == 1 && info.inner_offset == 0 &&
 		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
 		info.quality == 5.0 && info.brightness_gain == 1.0 &&
-		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
-		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
+		info.size_variation == 0.0 &&
+		(info.noise_variation == 0.0 || info.noise_variation == 25.0 || info.noise_variation == 100.0) &&
+		(info.noise_type == 1 || (info.noise_variation != 0.0 && info.noise_type == 2)) &&
+		info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0;
 	const bool use_aex_typed_rotation_size_variation_32x18 = input && output &&
 		use_aex_inner_geometry && input->width == 32 && input->height == 18 &&
@@ -3101,6 +3108,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	     !use_aex_pf32_edge_fade_cross_small && !use_aex_typed_edge_fade_32x18 &&
 	     !use_aex_typed_rotation_edge_noise_32x18) ||
 	    (info.noise_variation != 0.0 && !use_aex_pf32_noise_type1_small &&
+	     !use_aex_typed_rotation_dual_strength_32x18 &&
 	     !use_aex_typed_rotation_edge_offset_noise_components_32x18 &&
 	     !use_aex_typed_rotation_offset_noise_components_32x18 &&
 	     !use_aex_typed_noise_type1_pairwise && !use_aex_typed_noise_type2_small &&
@@ -3389,6 +3397,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	}
 	if (use_aex_typed_rotation_edge_offset_noise_components_32x18 || use_aex_pf32_noise_type1_small || use_aex_typed_noise_type1_pairwise ||
 		use_aex_typed_noise_type2_small || use_aex_pf32_strength5_noise_type1_small ||
+		(use_aex_typed_rotation_dual_strength_32x18 && info.noise_variation != 0.0) ||
 		use_aex_typed_rotation_offset_noise_components_32x18 ||
 		use_aex_typed_rotation_edge_noise_32x18 ||
 		use_aex_pf32_offset_mode3_noise_type1_small ||
@@ -3411,6 +3420,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				const float noise = (use_aex_typed_rotation_edge_offset_noise_components_32x18 || use_aex_typed_rotation_offset_noise_components_32x18)
 					? olm::dblur::sample_radial_noise_plane(noise_view, x, y, info.noise_type == 1)
 					: (use_aex_typed_noise_type2_small ||
+					(use_aex_typed_rotation_dual_strength_32x18 && info.noise_type == 2) ||
 					(use_aex_typed_rotation_edge_noise_32x18 && info.noise_type == 2) ||
 					(use_aex_typed_rotation_edge_offset_noise_components_32x18 && info.noise_type == 2) ||
 					(use_aex_typed_rotation_size_noise_components_32x18 && info.noise_type == 2))
