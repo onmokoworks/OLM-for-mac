@@ -56,7 +56,7 @@ Windowsとのpixel exactや主要パラメーター一致を追加で証明す�
 | --- | --- | --- |
 | OLMBlur | Legacy／NonLegacy、repeat、bias | PF8／PF16／PF32 |
 | ColorKeep | 有効／無効、tolerance、1〜100色 | PF8／PF16／PF32 |
-| OLMColorKey | core、Edge Thin、Edge Blur、replace／color space、記録済み半透明endpoint | PF8／PF16／PF32（限定範囲） |
+| OLMColorKey | core、Edge Thin、Edge Blur、replace／color space、記録済み半透明51-cell matrix | PF8／PF16／PF32（限定範囲） |
 | OLMToonDilate | copy／dilate、radius、frontier／tie／corner | PF8／PF16／PF32 |
 | OLMDistanceGradation | Inside／Outside／Both、補間、invert、background、記録済みblur／bilateral matrix | PF8／PF16／PF32（限定範囲） |
 | OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3、記録済みfront＋back複合経路 | PF8／PF16／PF32（限定範囲） |
@@ -169,6 +169,7 @@ python3 scripts/verify_windows_ae_release_boundary_minimal_20260806.py \
 - 見た目合わせ、許容差、off-by-1を完成扱いしない
 - Windows実機はAE固有境界の最小観測だけに使う
 - 通常開発はMacのfixture、AEXCompat、Unicorn、Mac AEで完結させる
+- AEXCompatの解析基盤更新は別リポジトリ・別commitとして管理し、OLMのExact証拠とは分ける
 - 既に閉じた分岐の近接値を無制限に追加しない
 - 主要モード、bit-depth、分岐境界、実用geometryへ完成作業を集中する
 

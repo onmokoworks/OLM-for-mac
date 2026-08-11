@@ -1,5 +1,18 @@
 # OLM Conformance Ledger
 
+- 2026-08-11 ColorKey/Distance/AEXCompat evidence update: OLMColorKey adds
+  12/12 exact internal-direction covering cells, bringing the retained
+  semitransparent matrix to 51/51; PF32 Amount 4 remains bounded to the
+  declared shell and unlisted tuples/geometry remain unclaimed.
+  OLMDistanceGradation PF32 Mode 5 Linear has a 187/187 exact pre-plane and
+  zero changed words across cvSmooth entry/return, but 33 opaque final words
+  remain different. The matrix therefore stays 58 exact/6 fail-closed with
+  no expected-word correction or production change. AEXCompat commit
+  37bdeae9 on codex/issue851-smart-primary-checkout adds a generic pointee
+  dereference watch in the separate repository; focused tests and build pass,
+  while three existing-suite failures remain. That tooling change is not
+  itself OLM conformance evidence.
+
 - 2026-08-11 latest bounded closure update: OLMDirectionalBlur's simultaneous
   Front+Back matrix is 12/12 raw exact on four fixed 16x16 tuples across
   PF8/PF16/PF32; Type 3, other geometry, and unlisted tuples stay fail-closed.

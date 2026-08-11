@@ -40,6 +40,9 @@ actual-AEX比較を追加しました。これは全パラメーター直積へ�
   Distance Type 1／2／3を、PF8／PF16／PF32の計27行でbyte exact確認しました。
   さらにDirection 0／4、Amount 1／4、Distance Type 2のendpoint 12行も
   temporary planeからrow paddingを含む出力までexactです。
+  Direction 0／4、Distance Type 1／3のcovering 12行も追加でexactとなり、
+  retained controlを含むmatrixは51／51です。PF32 Amount 4は記録済みshellに限定し、
+  未列挙tuple／geometryへは一般化しません。
 - OLMRadialBlur：Size Variation 25／100とEdge Fade 50／100の記録済み複合経路を、
   PF8／PF16／PF32の計36行でexact確認しました。
 - OLMRadialBlur：Dual Strength×Noiseの48ケースでは、Zoomは全内部stage exact、
@@ -63,6 +66,15 @@ actual-AEX比較を追加しました。これは全パラメーター直積へ�
   Linear／Sphere／Power×Backgroundの残り6行は37 wordに1〜2 ULPの残差があり、
   機序未解明のためBAD_CALLBACK_PARAMでfail-closeします。期待word補正は採用していません。
   この結果、typed matrix全体は58行exact、6行fail-closeです。
+  Linear Mode 5の追加観測では、距離pre-plane 187／187 wordsがexactで、
+  cvSmooth wrapperのentry／return間の変化は0／187でした。残差はopaque出力33 wordsに
+  絞られましたが、x86 OpenCV reduction／compose機序は未解明です。58 exact／6
+  fail-closeを維持し、期待word補正もproduction変更も行っていません。
+
+AEXCompat側では汎用pointee-memory dereference watchを別リポジトリの
+`37bdeae9`（`codex/issue851-smart-primary-checkout`）へ記録しました。
+新規focused testsとbuildはpassしていますが、既存suiteには3 failが残ります。
+この基盤更新自体をOLMのExact証拠とは数えません。
 
 上記の数値は記録済みfixtureの行数です。任意のgeometryや未列挙の
 Size／Noise／Edge／Offset／Brightness組合せへの完全互換は主張しません。
@@ -111,9 +123,9 @@ notarizationは未実施であり、ダウンロード先のGatekeeperに拒否�
 | --- | --- | --- |
 | OLMBlur | Legacy／NonLegacy、repeat、bias；PF8／PF16／PF32 | 複数のpadded typed fixtureでdimension-generic workerを確認。現行PF32 host smokeはロード／レンダー証拠であり、Windows exact出力の新規主張ではない |
 | ColorKeep | enabled／disabled、tolerance、1〜100色；PF8／PF16／PF32 | Windows/Macのkeep mask、alpha、保持／棄却関係は3深度exact。raw EXRはeffect-off時点の全RGBにhost色変換差があるためcross-host exactへ昇格しない |
-| OLMColorKey | core、Edge Thin、Edge Blur、replace／color-space；PF8／PF16／PF32限定 | 半透明32×18 two-key fixtureは既存27行にDirection 0／4・Amount 1／4 endpoint 12行を加えてexact。未列挙amount／direction／distance／geometryの直積へは一般化しない |
+| OLMColorKey | core、Edge Thin、Edge Blur、replace／color-space；PF8／PF16／PF32限定 | 半透明32×18 two-key fixtureは追加covering 12行を含む51／51 exact。PF32 Amount 4は記録済みshell限定で、未列挙amount／direction／distance／geometryへは一般化しない |
 | OLMToonDilate | copy／dilate、fractional radius、frontier／tie／corner／eligibility；PF8／PF16／PF32 | padded／partial／empty worldとradius -1〜4を確認。実効radiusは`ceil(radius × downsample_x.num / den)`。legacy `PF_Cmd_RENDER`は実AEX同様3深度でno-op、描画はSmartRender経路。現行PF32 radius 13 AE代表はhost smoke |
-| OLMDistanceGradation | Inside／Outside／Both、RGB／Layer、Constant／Linear／Sphere／Power、invert／background／blur；PF8／PF16／PF32限定 | typed blur matrixは58行exact／6行fail-close。PF32 Blur 5 Constant×BG off/onは固定17×11でraw exactだが、Linear／Sphere／Powerは1〜2 ULP残差のため拒否する。証明済みaxisとfamilyを任意geometryや全直積へ一般化しない |
+| OLMDistanceGradation | Inside／Outside／Both、RGB／Layer、Constant／Linear／Sphere／Power、invert／background／blur；PF8／PF16／PF32限定 | typed blur matrixは58 exact／6 fail-close。Mode 5 Linearはpre-plane 187／187 exact・cvSmooth差0だがopaque出力33 wordsが残る。期待補正なしで拒否を維持し、任意geometryや全直積へ一般化しない |
 | OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3；PF8／PF16／PF32限定 | PF16 Type 3 Layerは16×16の限定tuple。高次covering 24行に加え、Front＋Back同時4 tuple×3深度の12行がraw exact。Type 3、他geometry、未列挙tupleへは一般化しない |
 | OLMRadialBlur | Zoom／Rotation／Inner；PF8／PF16／PF32 guard付き | PF8 centered neutral Inner Strength 1〜64と32×18の記録済み複合分岐を確認。Size×Edge×Noiseは3深度24ケースのconsumed planes／output exactだが、Rotation SV25のdiagnostic source scalarに既知1 ULP差がある。Inner、Noise Type 3 Layer、未記載geometry／tupleへは一般化しない |
 | OLMSmoother2 | v1／v2 classifier、key／invert、Gamma None／All／Colors、range／extra、palette；PF8／PF16／PF32限定 | geometry classifier 114行に加え、Gamma／key／smoothing交差は54/54 raw exact。旧PF8 seamはLUT契約と非縮約scalar積和で解消したが、任意直積やAE hostへは一般化しない |
