@@ -33,7 +33,9 @@
   元AEXにownerがないPF32 SmartRender要求も互換性主張の対象外です。
 - OLMDirectionalBlur：Noise Type 3 LayerのPF16/PF32は、記録済みtupleを中心とする
   bounded対応です。Front／Back Fade 50／100×Sharp Tail 50／100は3深度でexactですが、
-  Layer欠落、寸法不一致、未列挙値や他機能との複合tupleはfail-closeする場合があります。
+  Noise Type 1／2、Size Variationを含む高次covering 24行もraw exactです。
+  Type 3、他geometry、未列挙Size、front＋back同時、Layer欠落／寸法不一致は
+  fail-closeする場合があります。
 - OLMRadialBlur：centered neutral InnerはPF8/PF16/PF32で複数geometryを実AEXと
   bit完全一致確認済みです。直接観測済みの最大geometryはPF8/PF16が640×360、PF32が
   64×36です。off-center、非unit ratio、angle、quality、repeat、offset、
@@ -43,7 +45,10 @@
   全stage exactですが、未列挙値、geometry、Type 3はfail-closeします。
   Dual Strength×Noiseの記録済み48ケースは最終出力exactですが、
   Rotation Noise Type 1のsampled source scalarには1〜4 ULP差が残るため、全内部stage
-  exactとは表現しません。Windows独自のcustom preview描画と操作も未証明です。
+  exactとは表現しません。Size×Edge×Noiseの記録済み24ケースもconsumed planes／
+  outputはexactですが、Rotation Size Variation 25のdiagnostic source scalarに
+  既知1 ULP差があります。Inner、未列挙tuple／geometry、Type 3はfail-closeします。
+  Windows独自のcustom preview描画と操作も未証明です。
 - OLMSmoother2：key、invert、Gamma、range、paletteの主要分岐はbounded exactです。
   全パラメーター直積は未証明です。
 - OLMKiraKira：Mode 1〜4の主要経路を実装しています。Mode 4の方向レイは、9×7以上の
