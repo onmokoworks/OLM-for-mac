@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Pin the last retained-case01 PF8 owner call and AE PNG boundary."""
+"""Pin the retained-case01 PF8 owner fact without overclaiming its PNG boundary."""
 
 import hashlib
 import json
@@ -23,6 +23,9 @@ SOURCE = REFERENCE / "olm_final_random10_olm_smoother_20260629__software__fr24__
 EXPECTED = REFERENCE / "olm_final_random10_olm_smoother_20260629__software__fr24__final_random10_olm_smoother_01.png"
 PARAMS = REFERENCE / "reference_manifest.json"
 OUT = ROOT / "refs/conformance/olmsmoother_v1_retained_case01_pf8_owner_and_host_boundary_20260806.json"
+PRODUCTION_SOURCE = ROOT / "mac/OLMSmoother/Mac/OLMSmoother_port.cpp"
+EXPECTED_SOURCE_SHA256 = "5276e925f0e7f6de61532a6f9adc3c33a9c8e7330deb0b96eb83f16a30273776"
+EXPECTED_WINDOWS_PNG_SHA256 = "afbf8c8b2a96e3b496179b0b0407a391a46f6efb6e04fa0b524fbb355a745470"
 
 
 def sha256(path: Path) -> str:
@@ -48,6 +51,11 @@ def world(loader: AexLoader, pixels: int, width: int, height: int) -> int:
 
 def main() -> None:
     assert sha256(AEX) == AEX_SHA256
+    assert sha256(SOURCE) == EXPECTED_SOURCE_SHA256
+    assert sha256(EXPECTED) == EXPECTED_WINDOWS_PNG_SHA256
+    manifest = json.loads(PARAMS.read_text())
+    case = next(item for item in manifest["cases"]
+                if item["id"] == "final_random10_olm_smoother_01")
     source_image = Image.open(SOURCE).convert("RGBA")
     expected_image = Image.open(EXPECTED).convert("RGBA")
     width, height = source_image.size
@@ -122,34 +130,72 @@ def main() -> None:
                                  "actual_aex_argb": actual.hex(),
                                  "production_argb": production.hex()})
 
+        owner_exact = all(item["actual_aex_argb"] == item["production_argb"]
+                          for item in owner_pixels)
+        modeled = [item for item in boundary
+                   if item["premultiply_round_unpremultiply_truncate_rgba"] ==
+                   item["windows_ae_png_rgba"]]
+        unexplained = [item for item in boundary if item not in modeled]
+        alpha_pairs = {}
+        for item in boundary:
+            key = "%d->%d" % (item["production_rgba"][3],
+                               item["windows_ae_png_rgba"][3])
+            alpha_pairs[key] = alpha_pairs.get(key, 0) + 1
+        # This fixture records AE/project metadata and decoded PNGs, but not the
+        # loaded AEX identity or the import/export alpha and color-management
+        # interpretation.  It therefore cannot prove an AE-host conversion.
+        fixture_identity_complete = False
+        host_boundary_exact = False
         report = {
-            "schema_version": 1,
-            "status": "exact" if (
-                all(item["actual_aex_argb"] == item["production_argb"]
-                    for item in owner_pixels)
-                and len(boundary) == 98
-                and all(item["premultiply_round_unpremultiply_truncate_rgba"] ==
-                        item["windows_ae_png_rgba"] for item in boundary)) else "fail",
-            "scope": "OLMSmoother v1 retained case01 PF8 final owner call and separately modeled Windows AE PNG alpha boundary",
+            "schema_version": 2,
+            "status": "owner_exact_host_boundary_unresolved" if owner_exact else "fail",
+            "scope": "OLMSmoother v1 retained case01 PF8 isolated owner call and separately unresolved Windows AE PNG boundary",
             "actual_aex_sha256": AEX_SHA256,
-            "input_sha256": sha256(SOURCE),
-            "windows_ae_png_sha256": sha256(EXPECTED),
+            "input_sha256": EXPECTED_SOURCE_SHA256,
+            "windows_ae_png_sha256": EXPECTED_WINDOWS_PNG_SHA256,
             "production_png_sha256": sha256(production_path),
+            "production_source_sha256": sha256(PRODUCTION_SOURCE),
             "owner_call": {"center": [center_x, center_y], "direction": direction,
                            "subhandler_words": words, "raw_pixels": owner_pixels},
             "windows_ae_png_boundary": {
                 "mismatched_pixels": len(boundary),
-                "all_explained_by_premultiply_round_unpremultiply_truncate": all(
-                    item["premultiply_round_unpremultiply_truncate_rgba"] ==
-                    item["windows_ae_png_rgba"] for item in boundary),
+                "premultiply_model_explained_pixels": len(modeled),
+                "premultiply_model_unexplained_pixels": len(unexplained),
+                "all_explained_by_premultiply_round_unpremultiply_truncate": not unexplained,
                 "alpha_values": sorted({item["production_rgba"][3] for item in boundary}),
-                "claim": "host-boundary model only; not plugin arithmetic",
+                "alpha_pair_counts": alpha_pairs,
+                "unexplained_pixels": unexplained,
+                "exact_claim": host_boundary_exact,
+                "classification": "unresolved_retained_windows_ae_png_boundary",
+                "claim": "observation only; neither plugin arithmetic nor a host conversion model is inferred",
             },
-            "claim_boundary": "The four formerly unexplained raw owner pixels are actual-AEX exact. The remaining 98 file pixels are classified only as a Windows AE PNG premultiply/unpremultiply boundary.",
+            "retained_fixture_audit": {
+                "ae_version": manifest.get("ae_version"),
+                "renderer": case["render_set_id"],
+                "project_gpu_accel_type": case["project_gpu_accel_type"],
+                "input_png_mode": source_image.mode,
+                "output_png_mode": expected_image.mode,
+                "input_png_metadata": source_image.info,
+                "output_png_metadata": expected_image.info,
+                "loaded_aex_sha256_recorded_at_capture": False,
+                "input_alpha_interpretation_recorded": False,
+                "output_premultiply_conversion_recorded": False,
+                "project_working_space_recorded": False,
+                "fixture_identity_complete": fixture_identity_complete,
+            },
+            "claim_boundary": "The four isolated owner pixels are actual-AEX exact. The retained Windows AE PNG comparison is unresolved because capture-time binary identity and import/export alpha/color-management conditions are absent; it is not an exactness gate.",
         }
     OUT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     print(json.dumps(report, indent=2, sort_keys=True))
-    assert report["status"] == "exact"
+    # Fail closed: owner drift fails; missing host provenance must remain an
+    # explicit non-exact classification and may never silently become exact.
+    assert owner_exact
+    assert report["status"] == "owner_exact_host_boundary_unresolved"
+    assert not report["windows_ae_png_boundary"]["exact_claim"]
+    assert not report["retained_fixture_audit"]["fixture_identity_complete"]
+    assert len(boundary) == 101
+    assert len(modeled) == 98
+    assert len(unexplained) == 3
 
 
 if __name__ == "__main__":

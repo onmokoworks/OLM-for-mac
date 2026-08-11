@@ -1,6 +1,6 @@
 {
   "actual_aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
-  "claim_boundary": "The four formerly unexplained raw owner pixels are actual-AEX exact. The remaining 98 file pixels are classified only as a Windows AE PNG premultiply/unpremultiply boundary.",
+  "claim_boundary": "The four isolated owner pixels are actual-AEX exact. The retained Windows AE PNG comparison is unresolved because capture-time binary identity and import/export alpha/color-management conditions are absent; it is not an exactness gate.",
   "input_sha256": "5276e925f0e7f6de61532a6f9adc3c33a9c8e7330deb0b96eb83f16a30273776",
   "owner_call": {
     "center": [
@@ -54,17 +54,118 @@
       543
     ]
   },
-  "production_png_sha256": "22894e32d2f703f617eacec4b7dd6aa084bbe9012def15a8ab0a8205f7679a44",
-  "schema_version": 1,
-  "scope": "OLMSmoother v1 retained case01 PF8 final owner call and separately modeled Windows AE PNG alpha boundary",
-  "status": "exact",
+  "production_png_sha256": "41b011eb8191b1785081069f3c1a95b9151e0361846aeed0cbf60d41ed777aa9",
+  "production_source_sha256": "e538a7398c271a82d689babeaa350def3c09f927cafa555df94cff23ee1d624e",
+  "retained_fixture_audit": {
+    "ae_version": "26.2x49",
+    "fixture_identity_complete": false,
+    "input_alpha_interpretation_recorded": false,
+    "input_png_metadata": {},
+    "input_png_mode": "RGBA",
+    "loaded_aex_sha256_recorded_at_capture": false,
+    "output_png_metadata": {},
+    "output_png_mode": "RGBA",
+    "output_premultiply_conversion_recorded": false,
+    "project_gpu_accel_type": {
+      "current_name": "SOFTWARE",
+      "raw": 1816
+    },
+    "project_working_space_recorded": false,
+    "renderer": "software"
+  },
+  "schema_version": 2,
+  "scope": "OLMSmoother v1 retained case01 PF8 isolated owner call and separately unresolved Windows AE PNG boundary",
+  "status": "owner_exact_host_boundary_unresolved",
   "windows_ae_png_boundary": {
-    "all_explained_by_premultiply_round_unpremultiply_truncate": true,
+    "all_explained_by_premultiply_round_unpremultiply_truncate": false,
+    "alpha_pair_counts": {
+      "254->254": 98,
+      "255->255": 3
+    },
     "alpha_values": [
-      254
+      254,
+      255
     ],
-    "claim": "host-boundary model only; not plugin arithmetic",
-    "mismatched_pixels": 98
+    "claim": "observation only; neither plugin arithmetic nor a host conversion model is inferred",
+    "classification": "unresolved_retained_windows_ae_png_boundary",
+    "exact_claim": false,
+    "mismatched_pixels": 101,
+    "premultiply_model_explained_pixels": 98,
+    "premultiply_model_unexplained_pixels": 3,
+    "unexplained_pixels": [
+      {
+        "premultiply_round_unpremultiply_truncate_rgba": [
+          243,
+          61,
+          119,
+          255
+        ],
+        "production_rgba": [
+          243,
+          61,
+          119,
+          255
+        ],
+        "windows_ae_png_rgba": [
+          242,
+          74,
+          125,
+          255
+        ],
+        "xy": [
+          1631,
+          205
+        ]
+      },
+      {
+        "premultiply_round_unpremultiply_truncate_rgba": [
+          242,
+          114,
+          146,
+          255
+        ],
+        "production_rgba": [
+          242,
+          114,
+          146,
+          255
+        ],
+        "windows_ae_png_rgba": [
+          242,
+          96,
+          137,
+          255
+        ],
+        "xy": [
+          1632,
+          205
+        ]
+      },
+      {
+        "premultiply_round_unpremultiply_truncate_rgba": [
+          242,
+          114,
+          146,
+          255
+        ],
+        "production_rgba": [
+          242,
+          114,
+          146,
+          255
+        ],
+        "windows_ae_png_rgba": [
+          242,
+          111,
+          144,
+          255
+        ],
+        "xy": [
+          1633,
+          205
+        ]
+      }
+    ]
   },
   "windows_ae_png_sha256": "afbf8c8b2a96e3b496179b0b0407a391a46f6efb6e04fa0b524fbb355a745470"
 }
