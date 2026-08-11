@@ -27,9 +27,10 @@
   任意geometry、amount、方向、distance typeの全直積は未証明です。
 - OLMDistanceGradation：主要な各モード・補間・背景・反転・blurは個別に検証していますが、
   全コントロールの直積は未証明です。PF16 Blur 2〜5とPF32 Blur 2〜4の記録済みtyped
-  matrixはexactです。PF32 Blur 5はactual AEXで観測済みですが、一部1 ULP差が残るため
-  BAD_CALLBACK_PARAMでfail-closeし、Exactとは表現しません。元AEXにownerがないPF32
-  SmartRender要求も互換性主張の対象外です。
+  matrixはexactです。PF32 Blur 5のConstant×Background off／onは固定17×11の厳格
+  predicateでraw exactです。Linear／Sphere／Power×Backgroundの6行は37 wordに
+  1〜2 ULP差が残るためBAD_CALLBACK_PARAMでfail-closeし、期待word補正も行いません。
+  元AEXにownerがないPF32 SmartRender要求も互換性主張の対象外です。
 - OLMDirectionalBlur：Noise Type 3 LayerのPF16/PF32は、記録済みtupleを中心とする
   bounded対応です。Front／Back Fade 50／100×Sharp Tail 50／100は3深度でexactですが、
   Layer欠落、寸法不一致、未列挙値や他機能との複合tupleはfail-closeする場合があります。
