@@ -6,6 +6,7 @@ from __future__ import annotations
 import importlib.util
 import hashlib
 import json
+import math
 import subprocess
 import struct
 import sys
@@ -13,7 +14,7 @@ import tempfile
 from pathlib import Path
 
 from unicorn import UC_HOOK_MEM_INVALID
-from unicorn.x86_const import UC_X86_REG_RBP, UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_R8, UC_X86_REG_R9, UC_X86_REG_RSP
+from unicorn.x86_const import UC_X86_REG_R12, UC_X86_REG_RBP, UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_R8, UC_X86_REG_R9, UC_X86_REG_RSP
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -22,6 +23,8 @@ BASE_PATH = HERE / "probe_olmkirakira_mode3_actual_aex.py"
 AEX = ROOT / "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex"
 OUT_JSON = ROOT / "refs/conformance/olmkirakira_mode4_fullcaller_hostless_exact_20260807.json"
 OUT_MD = ROOT / "refs/conformance/olmkirakira_mode4_fullcaller_hostless_exact_20260807.md"
+NATURAL_JSON = ROOT / "refs/conformance/olmkirakira_mode4_natural_fullframe_exact_20260811.json"
+NATURAL_MD = ROOT / "refs/conformance/olmkirakira_mode4_natural_fullframe_exact_20260811.md"
 FULL_CALLER = 0x18114F4A0
 BRIGHTNESS_CTOR = 0x18114EC20
 AGGREGATE = 0x18114FD90
@@ -38,6 +41,34 @@ def flatten_mat_rows(rows: list[list[float]]) -> list[float]:
     return [value for row in rows for value in row]
 
 
+def portable_mode4_ray(seed: list[float], width: int, height: int,
+                       radius: int, angle: float) -> list[str]:
+    rad = angle * math.pi / 180.0
+    rw = max(width + 4, int(width * abs(math.cos(rad)) + height * abs(math.sin(rad)) + 4.0))
+    rh = max(height + 4, int(height * abs(math.cos(rad)) + width * abs(math.sin(rad)) + 4.0))
+    padded = [0.0] * (rw * rh)
+    x0 = int(float(rw) * 0.5) - width // 2
+    y0 = int(float(rh) * 0.5) - height // 2
+    for y in range(height):
+        for x in range(width):
+            padded[(y + y0) * rw + x + x0] = seed[y * width + x]
+    with tempfile.TemporaryDirectory(prefix="kira_natural_ray_") as temporary:
+        executable = Path(temporary) / "mode4"
+        subprocess.run([
+            "c++", "-std=c++20", "-O2",
+            str(ROOT / "tools/emulation/test_kirakira_mode4_canonical.cpp"),
+            "-o", str(executable),
+        ], check=True)
+        words = "\n".join(
+            f"{struct.unpack('<I', struct.pack('<f', value))[0]:08x}" for value in padded) + "\n"
+        output = subprocess.check_output(
+            [str(executable), str(rw), str(rh), str(radius), str(angle)],
+            input=words, text=True)
+    final = [int(line.split()[2], 16) for line in output.splitlines() if line.startswith("final ")]
+    cropped = [final[(y + y0) * rw + x + x0] for y in range(height) for x in range(width)]
+    return [f"0x{word:x}" for word in cropped]
+
+
 def load_base():
     spec = importlib.util.spec_from_file_location("kira_fullcaller_base", BASE_PATH)
     if spec is None or spec.loader is None:
@@ -48,9 +79,11 @@ def load_base():
     return module
 
 
-def main() -> int:
+def main(natural: bool = False) -> int:
     base = load_base()
     observed: dict[str, object] = {"fullcaller_entries": 0, "vtable_calls": []}
+    width, height = (5, 3) if natural else (4, 1)
+    pixel_count = width * height
 
     class FullCallerLoader(base.AexLoader):
         def __init__(self, *args, **kwargs):
@@ -63,7 +96,7 @@ def main() -> int:
                 ray_ptrs = struct.unpack("<5Q", loader.read_bytes(regs[1], 40))
                 observed["aggregate_entry"] = {
                     "args": [hex(value) for value in regs + stack],
-                    "ray_words": [[hex(value) for value in struct.unpack("<4I", loader.read_bytes(ptr, 16))] for ptr in ray_ptrs],
+                    "ray_words": [[hex(value) for value in struct.unpack(f"<{pixel_count}I", loader.read_bytes(ptr, pixel_count * 4))] for ptr in ray_ptrs],
                 }
             self.add_code_hook(AGGREGATE, capture_aggregate)
             self.add_code_hook(AGGREGATE_MERGE2, lambda _loader, _address, _size: observed.__setitem__("merge2_entries", int(observed.get("merge2_entries", 0)) + 1))
@@ -75,6 +108,26 @@ def main() -> int:
                 })
             for site in (0x18114FBCF, 0x18114FC2D, 0x18114FC8A):
                 self.add_code_hook(site, capture_tail)
+            if natural:
+                def capture_seed(loader, _address, _size):
+                    rbp = loader.uc.reg_read(UC_X86_REG_RBP)
+                    mat = base.read_mat(loader, rbp)
+                    if not mat or not mat.get("values_f32"):
+                        raise RuntimeError("same-run seed Mat unavailable")
+                    observed["same_run_seed"] = flatten_mat_rows(mat["values_f32"])
+                self.add_code_hook(0x18114F589, capture_seed)
+
+                def capture_direction(loader, _address, _size):
+                    rbp = loader.uc.reg_read(UC_X86_REG_RBP)
+                    rsp = loader.uc.reg_read(UC_X86_REG_RSP)
+                    observed["same_run_direction"] = {
+                        "slot": loader.uc.reg_read(UC_X86_REG_R12),
+                        "angle_degrees": struct.unpack("<i", loader.read_bytes(rsp + 0x28, 4))[0],
+                        "length": struct.unpack("<i", loader.read_bytes(rsp + 0x30, 4))[0],
+                        "blur_mode": struct.unpack("<i", loader.read_bytes(rsp + 0x38, 4))[0],
+                        "seed_mat_address": hex(rbp),
+                    }
+                self.add_code_hook(0x18114F929, capture_direction)
             def capture_null_call(uc, _access, address, _size, _value, _user):
                 if address == 0:
                     rsp = uc.reg_read(UC_X86_REG_RSP)
@@ -143,9 +196,10 @@ def main() -> int:
             angles = self.host_alloc(20, align=16)
             # Suppress directional rays and retain a radius-5 Highlight in
             # either recovered pointer order while the ABI is being bounded.
-            active = (0, 0, 0, 0, 5)
-            self.write_bytes(lengths, struct.pack("<5i", *active))
-            self.write_bytes(angles, struct.pack("<5i", *active))
+            direction_angles = (0, 0, 0, 0, 0)
+            direction_lengths = (0, 5, 0, 0, 0) if natural else (0, 0, 0, 0, 5)
+            self.write_bytes(lengths, struct.pack("<5i", *direction_angles))
+            self.write_bytes(angles, struct.pack("<5i", *direction_lengths))
             colors = self.host_alloc(80, align=16)
             self.write_bytes(colors, struct.pack("<20f", *([1.0, 1.0, 0.25, 0.0625] * 5)))
             flags = self.host_alloc(5)
@@ -161,17 +215,24 @@ def main() -> int:
                 int_args=[obj, host_context, pixels, scratch, lengths, angles, colors, ramps, flags, 4, source["cols"], source["rows"], one, zero, 1, one],
                 max_instructions=20_000_000,
             )
-            actual_ray = observed["aggregate_entry"]["ray_words"][4]
-            with tempfile.TemporaryDirectory(prefix="kira_fullcaller_core_") as temporary:
-                executable = Path(temporary) / "highlight"
-                subprocess.run([
-                    "c++", "-std=c++20", "-O2",
-                    str(ROOT / "tools/emulation/test_kirakira_highlight_fullcaller.cpp"),
-                    "-o", str(executable),
-                ], check=True)
-                portable_ray = [f"0x{int(line, 16):x}" for line in subprocess.check_output([str(executable)], text=True).splitlines()]
+            actual_ray = observed["aggregate_entry"]["ray_words"][1 if natural else 4]
+            if natural:
+                direction = observed["same_run_direction"]
+                portable_ray = portable_mode4_ray(
+                    observed["same_run_seed"], width, height,
+                    int(direction["length"]), float(direction["angle_degrees"]))
+            else:
+                with tempfile.TemporaryDirectory(prefix="kira_fullcaller_core_") as temporary:
+                    executable = Path(temporary) / "highlight"
+                    subprocess.run([
+                        "c++", "-std=c++20", "-O2",
+                        str(ROOT / "tools/emulation/test_kirakira_highlight_fullcaller.cpp"),
+                        "-o", str(executable),
+                    ], check=True)
+                    portable_ray = [f"0x{int(line, 16):x}" for line in subprocess.check_output([str(executable)], text=True).splitlines()]
             if portable_ray != actual_ray:
                 raise AssertionError({"actual_ray": actual_ray, "portable_ray": portable_ray})
+            observed["portable_ray"] = portable_ray
 
             owner = self.host_alloc(0x200, align=16)
             self.write_bytes(owner, b"\0" * 0x200)
@@ -214,7 +275,7 @@ def main() -> int:
                     "quantization": "clamp; scale; truncate toward zero" if depth != "PF32" else "clamp; preserve IEEE-754 binary32 words",
                 }
             observed["exact"] = {
-                "highlight_plane_words": len(values),
+                "ray_plane_words" if natural else "highlight_plane_words": len(values),
                 "aggregation_words": len(values) * 4,
                 "final_pf8_bytes": len(values) * 4,
                 "final_pf16_bytes": len(values) * 8,
@@ -231,30 +292,35 @@ def main() -> int:
 
     original = base.AexLoader
     base.AexLoader = FullCallerLoader
-    args = type("Args", (), {"aex_path": AEX, "width": 4, "height": 1, "length": 5, "sigma": 0.0, "max_instructions": 20_000_000})()
+    args = type("Args", (), {"aex_path": AEX, "width": width, "height": height, "length": 5, "sigma": 0.0, "max_instructions": 20_000_000})()
     try:
         execution = base.run(args)
     finally:
         base.AexLoader = original
+    if "aggregate_entry" not in observed:
+        raise RuntimeError({"execution": execution, "observed": observed})
     suite_calls = observed.get("suite_calls", [])
+    acquire_count = sum(item["kind"] == "acquire" for item in suite_calls)
+    release_count = sum(item["kind"] == "release" for item in suite_calls)
+    expected_exact = {
+        "ray_plane_words" if natural else "highlight_plane_words": pixel_count,
+        "aggregation_words": pixel_count * 4,
+        "final_pf8_bytes": pixel_count * 4,
+        "final_pf16_bytes": pixel_count * 8,
+        "final_pf32_bytes": pixel_count * 16,
+        "max_ulp": 0,
+    }
     passed = (
         execution.get("status") == "completed_without_target_hit"
         and execution.get("error") is None
-        and observed.get("exact") == {
-            "highlight_plane_words": 4,
-            "aggregation_words": 16,
-            "final_pf8_bytes": 16,
-            "final_pf16_bytes": 32,
-            "final_pf32_bytes": 64,
-            "max_ulp": 0,
-        }
-        and len(suite_calls) == 24
-        and sum(item["kind"] == "acquire" for item in suite_calls) == 12
-        and sum(item["kind"] == "release" for item in suite_calls) == 12
+        and observed.get("exact") == expected_exact
+        and acquire_count == release_count
+        and (natural or len(suite_calls) == 24)
     )
+    direction = observed.get("same_run_direction") if natural else None
     report = {
-        "kind": "olmkirakira_mode4_fullcaller_hostless_exact",
-        "date": "2026-08-07",
+        "kind": "olmkirakira_mode4_natural_fullframe_exact" if natural else "olmkirakira_mode4_fullcaller_hostless_exact",
+        "date": "2026-08-11" if natural else "2026-08-07",
         "status": "exact" if passed else "blocked",
         "aex": {
             "path": "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex",
@@ -269,29 +335,42 @@ def main() -> int:
             "vtable_slots": observed["vtable_calls"],
         },
         "fixture": {
-            "dimensions": [4, 1],
-            "source_rgba": [[index / 17.0] * 3 + [1.0] for index in range(4)],
+            "dimensions": [width, height],
+            "source_rgba": [[index / 17.0] * 3 + [1.0] for index in range(pixel_count)],
             "blur_mode": 4,
-            "directional_lengths": [0, 0, 0, 0],
-            "highlight_radius": 5,
+            "directional_lengths": [0, 5, 0, 0] if natural else [0, 0, 0, 0],
+            "highlight_radius": 0 if natural else 5,
             "highlight_color_argb": [1.0, 1.0, 0.25, 0.0625],
             "merge_mode": 1,
             "brightness_gain": 1.0,
         },
         "actual_aex": {
-            "highlight_plane_u32": observed["aggregate_entry"]["ray_words"][4],
+            **({
+                "selected_ray_u32": observed["aggregate_entry"]["ray_words"][1],
+                "portable_ray_u32": observed["portable_ray"],
+                "same_run_seed_f32": observed["same_run_seed"],
+                "same_run_direction": direction,
+            } if natural else {
+                "highlight_plane_u32": observed["aggregate_entry"]["ray_words"][4],
+            }),
             "aggregation_u32": observed["output_buffers"]["scratch_u32"],
             "typed_outputs": observed["output_buffers"]["typed_outputs"],
-            "suite_acquire_count": 12,
-            "suite_release_count": 12,
+            "suite_acquire_count": acquire_count,
+            "suite_release_count": release_count,
             "fault": None,
         },
         "comparison": {
             **observed["exact"],
-            "highlight_portable_owner": "core/kirakira_highlight.h (called by mac/OLMKiraKira/OLMKiraKira.cpp)",
+            **({"ray_portable_owner": "core/kirakira_mode4.h"} if natural else {
+                "highlight_portable_owner": "core/kirakira_highlight.h (called by mac/OLMKiraKira/OLMKiraKira.cpp)",
+            }),
             "compose_portable_owner": "tools/emulation/olmkirakira_outer_compose_oracle_20260728.py",
             "mac_typed_writer_owner": "mac/OLMKiraKira/OLMKiraKira.cpp PixelTraits::WriteAexTruncate, selected unconditionally after RenderTyped compose",
         },
+        **({"connected_evidence": {
+            "directional_helper_matrix": "refs/conformance/olmkirakira_mode4_canonical_angles_actual_aex_20260810.json (17 exact cases)",
+            "aggregate_compose_matrix": "refs/conformance/olmkirakira_mode4_compose_matrix_actual_aex_20260811.json (5 exact cases)",
+        }} if natural else {}),
         "scaffold": {
             "SPBasic": ["AcquireSuite", "ReleaseSuite"],
             "PF Handle Suite v2": ["NewHandle", "LockHandle", "UnlockHandle", "DisposeHandle"],
@@ -300,10 +379,17 @@ def main() -> int:
         },
         "boundary": "This is a hostless Mac Unicorn execution of the checked-in Windows AEX with typed PF8/PF16/PF32 output worlds, not a live Windows/AE render claim. The same canonical internal float chain is byte exact through each final typed writer.",
         "boundary_ja": "チェックイン済みWindows AEXをMac上のUnicornで実行したhostless境界であり、Windows/AE実機レンダーの一致主張ではない。共通の内部float経路からPF8/PF16/PF32 typed worldへ書く最終境界までをbyte exactとする。",
-        "verification": "python3 tools/emulation/probe_olmkirakira_mode4_fullcaller_scaffold_20260807.py",
+        "verification": "python3 tools/emulation/probe_olmkirakira_mode4_natural_fullframe_exact_20260811.py" if natural else "python3 tools/emulation/probe_olmkirakira_mode4_fullcaller_scaffold_20260807.py",
     }
-    OUT_JSON.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
-    OUT_MD.write_text(
+    output_json = NATURAL_JSON if natural else OUT_JSON
+    output_md = NATURAL_MD if natural else OUT_MD
+    output_json.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    output_md.write_text(
+        ("# OLMKiraKira Mode4 natural full-frame exact gate（2026-08-11）\n\n"
+         f"Status: **{report['status']}**\n\n"
+         "actual AEX full callerの同一実行で、vtable seed 15 words、Horizontal slot 1 / Length 5 / Rotation 0°、aggregate入口ray 15 wordsを結んだ。portable Mode4 chainとray全15 wordsがraw exactで、同じaggregateからPF8/PF16/PF32 typed outputまでbyte exact。\n\n"
+         "これは5×3の1 source caseに限るhostless境界であり、live Windows AEや任意sourceの一般一致主張ではない。\n\n"
+         f"Verification: `{report['verification']}`\n") if natural else
         "# OLMKiraKira Mode4 full caller hostless exact gate（2026-08-07）\n\n"
         f"Status: **{report['status']}**\n\n"
         "actual AEX `FUN_18114f4a0` を16引数で直接実行し、4×1 canonical PF32 fixtureの"
@@ -320,7 +406,7 @@ def main() -> int:
         "Verification: `python3 tools/emulation/probe_olmkirakira_mode4_fullcaller_scaffold_20260807.py`\n",
         encoding="utf-8",
     )
-    print(json.dumps({"status": report["status"], "exact": report["comparison"], "json": str(OUT_JSON), "md": str(OUT_MD)}))
+    print(json.dumps({"status": report["status"], "exact": report["comparison"], "json": str(output_json), "md": str(output_md)}))
     return 0 if passed else 1
 
 

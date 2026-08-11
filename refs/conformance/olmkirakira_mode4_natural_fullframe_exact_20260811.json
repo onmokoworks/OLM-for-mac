@@ -1,0 +1,339 @@
+{
+  "kind": "olmkirakira_mode4_natural_fullframe_exact",
+  "date": "2026-08-11",
+  "status": "exact",
+  "aex": {
+    "path": "aex/OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex",
+    "sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+  },
+  "entry": {
+    "function": "FUN_18114f4a0",
+    "va": "0x18114f4a0",
+    "entries": 1
+  },
+  "abi": {
+    "argument_slots": 16,
+    "slot_15": "Merge mode integer (1)",
+    "slot_16": "raw FLOAT32 brightness-gain word (0x3f800000)",
+    "brightness_vtable": "0x181488a38",
+    "vtable_slots": [
+      {
+        "slot": "0x0",
+        "target": "0x18114ec60"
+      },
+      {
+        "slot": "0x8",
+        "target": "0x18114fd90"
+      },
+      {
+        "slot": "0x10",
+        "target": "0x18114ffd0"
+      },
+      {
+        "slot": "0x18",
+        "target": "0x18114eda0"
+      },
+      {
+        "slot": "0x20",
+        "target": "0x18114ed90"
+      }
+    ]
+  },
+  "fixture": {
+    "dimensions": [
+      5,
+      3
+    ],
+    "source_rgba": [
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      [
+        0.058823529411764705,
+        0.058823529411764705,
+        0.058823529411764705,
+        1.0
+      ],
+      [
+        0.11764705882352941,
+        0.11764705882352941,
+        0.11764705882352941,
+        1.0
+      ],
+      [
+        0.17647058823529413,
+        0.17647058823529413,
+        0.17647058823529413,
+        1.0
+      ],
+      [
+        0.23529411764705882,
+        0.23529411764705882,
+        0.23529411764705882,
+        1.0
+      ],
+      [
+        0.29411764705882354,
+        0.29411764705882354,
+        0.29411764705882354,
+        1.0
+      ],
+      [
+        0.35294117647058826,
+        0.35294117647058826,
+        0.35294117647058826,
+        1.0
+      ],
+      [
+        0.4117647058823529,
+        0.4117647058823529,
+        0.4117647058823529,
+        1.0
+      ],
+      [
+        0.47058823529411764,
+        0.47058823529411764,
+        0.47058823529411764,
+        1.0
+      ],
+      [
+        0.5294117647058824,
+        0.5294117647058824,
+        0.5294117647058824,
+        1.0
+      ],
+      [
+        0.5882352941176471,
+        0.5882352941176471,
+        0.5882352941176471,
+        1.0
+      ],
+      [
+        0.6470588235294118,
+        0.6470588235294118,
+        0.6470588235294118,
+        1.0
+      ],
+      [
+        0.7058823529411765,
+        0.7058823529411765,
+        0.7058823529411765,
+        1.0
+      ],
+      [
+        0.7647058823529411,
+        0.7647058823529411,
+        0.7647058823529411,
+        1.0
+      ],
+      [
+        0.8235294117647058,
+        0.8235294117647058,
+        0.8235294117647058,
+        1.0
+      ]
+    ],
+    "blur_mode": 4,
+    "directional_lengths": [
+      0,
+      5,
+      0,
+      0
+    ],
+    "highlight_radius": 0,
+    "highlight_color_argb": [
+      1.0,
+      1.0,
+      0.25,
+      0.0625
+    ],
+    "merge_mode": 1,
+    "brightness_gain": 1.0
+  },
+  "actual_aex": {
+    "selected_ray_u32": [
+      "0x3d6c6ad6",
+      "0x3d738b40",
+      "0x3d75672f",
+      "0x3d64abc9",
+      "0x3d33678e",
+      "0x3e3d0c76",
+      "0x3e507404",
+      "0x3e56ba4a",
+      "0x3e4cbc26",
+      "0x3e2ecba4",
+      "0x3e9f7f1b",
+      "0x3eb2029c",
+      "0x3eb80d64",
+      "0x3eb026ac",
+      "0x3e985eb2"
+    ],
+    "portable_ray_u32": [
+      "0x3d6c6ad6",
+      "0x3d738b40",
+      "0x3d75672f",
+      "0x3d64abc9",
+      "0x3d33678e",
+      "0x3e3d0c76",
+      "0x3e507404",
+      "0x3e56ba4a",
+      "0x3e4cbc26",
+      "0x3e2ecba4",
+      "0x3e9f7f1b",
+      "0x3eb2029c",
+      "0x3eb80d64",
+      "0x3eb026ac",
+      "0x3e985eb2"
+    ],
+    "same_run_seed_f32": [
+      0.0,
+      0.05882352963089943,
+      0.11764705926179886,
+      0.1764705926179886,
+      0.23529411852359772,
+      0.29411765933036804,
+      0.3529411852359772,
+      0.4117647111415863,
+      0.47058823704719543,
+      0.529411792755127,
+      0.5882353186607361,
+      0.6470588445663452,
+      0.7058823704719543,
+      0.7647058963775635,
+      0.8235294222831726
+    ],
+    "same_run_direction": {
+      "slot": 1,
+      "angle_degrees": 0,
+      "length": 5,
+      "blur_mode": 4,
+      "seed_mat_address": "0xf0fe9e0"
+    },
+    "aggregation_u32": [
+      "0x3f7fffff",
+      "0x3e7fffff",
+      "0x3d7fffff",
+      "0x3d6c6ad6",
+      "0x3f7fffff",
+      "0x3e7fffff",
+      "0x3d7fffff",
+      "0x3d738b40",
+      "0x3f800000",
+      "0x3e800000",
+      "0x3d800000",
+      "0x3d75672f",
+      "0x3f7fffff",
+      "0x3e7fffff",
+      "0x3d7fffff",
+      "0x3d64abc9",
+      "0x3f800000",
+      "0x3e800000",
+      "0x3d800000",
+      "0x3d33678e",
+      "0x3f800000",
+      "0x3e800000",
+      "0x3d800000",
+      "0x3e3d0c76",
+      "0x3f800000",
+      "0x3e800000",
+      "0x3d800000",
+      "0x3e507404",
+      "0x3f800000",
+      "0x3e800000",
+      "0x3d800000",
+      "0x3e56ba4a",
+      "0x3f7fffff",
+      "0x3e7fffff",
+      "0x3d7fffff",
+      "0x3e4cbc26",
+      "0x3f800000",
+      "0x3e800000",
+      "0x3d800000",
+      "0x3e2ecba4",
+      "0x3f800000",
+      "0x3e800000",
+      "0x3d800000",
+      "0x3e9f7f1b",
+      "0x3f800000",
+      "0x3e800000",
+      "0x3d800000",
+      "0x3eb2029c",
+      "0x3f800000",
+      "0x3e800000",
+      "0x3d800000",
+      "0x3eb80d64",
+      "0x3f800000",
+      "0x3e800000",
+      "0x3d800000",
+      "0x3eb026ac",
+      "0x3f800000",
+      "0x3e800000",
+      "0x3d800000",
+      "0x3e985eb2"
+    ],
+    "typed_outputs": {
+      "PF8": {
+        "entry": "0x18114e110",
+        "pixel_size": 4,
+        "actual_hex": "ff0d0300ff1c110fff2a1f1dff382d2bff443c3aff674941ff75554dff836159ff8e6e66ff987c75ffae8176ffbc8a7effc79588ffd2a195ffdcb0a5",
+        "portable_hex": "ff0d0300ff1c110fff2a1f1dff382d2bff443c3aff674941ff75554dff836159ff8e6e66ff987c75ffae8176ffbc8a7effc79588ffd2a195ffdcb0a5",
+        "exact_bytes": 60,
+        "quantization": "clamp; scale; truncate toward zero"
+      },
+      "PF16": {
+        "entry": "0x18114ddc0",
+        "pixel_size": 8,
+        "actual_hex": "0080fc06bf016f0000804a0ee7088e07008071150410a80e0080291c1517d11500803922321e301d0080ba33c424062100802f3bf22ae3260080c1411d31f42c008086478737883300808c4c8c3e0c3b0080d05702414f3b00807a5eb645853f00804e64ec4a9344008097690451df4a0080976e93581253",
+        "portable_hex": "0080fc06bf016f0000804a0ee7088e07008071150410a80e0080291c1517d11500803922321e301d0080ba33c424062100802f3bf22ae3260080c1411d31f42c008086478737883300808c4c8c3e0c3b0080d05702414f3b00807a5eb645853f00804e64ec4a9344008097690451df4a0080976e93581253",
+        "exact_bytes": 120,
+        "quantization": "clamp; scale; truncate toward zero"
+      },
+      "PF32": {
+        "entry": "0x18114e460",
+        "pixel_size": 16,
+        "actual_hex": "0000803f23845f3d23845f3c23845f3b0000803fbda5e43daa718e3d4bc9713d0000803f2f8b2b3ead21003e9a8eea3d0000803fbd4b613ee8af383ef3882e3e0000803f63e6883eb692713e3184693e0000803face9ce3e6511933e541b843e0000803f6cbdec3e99caab3ee48d9b3e0000803ffb83033f6a77c43e47d3b33e0000803f870d0f3f641fde3e7a20ce3e0000803f5c18193f1533fa3ead33ec3e0000803f45a02f3f7e05023f993ded3e0000803fddf43c3f896c0b3fe714fe3e0000803f8b9d483f9ed8153f6327093f0000803fff2e533f3309223fbfbf153f0000803f3e2f5d3f7a26313f4924263f",
+        "portable_hex": "0000803f23845f3d23845f3c23845f3b0000803fbda5e43daa718e3d4bc9713d0000803f2f8b2b3ead21003e9a8eea3d0000803fbd4b613ee8af383ef3882e3e0000803f63e6883eb692713e3184693e0000803face9ce3e6511933e541b843e0000803f6cbdec3e99caab3ee48d9b3e0000803ffb83033f6a77c43e47d3b33e0000803f870d0f3f641fde3e7a20ce3e0000803f5c18193f1533fa3ead33ec3e0000803f45a02f3f7e05023f993ded3e0000803fddf43c3f896c0b3fe714fe3e0000803f8b9d483f9ed8153f6327093f0000803fff2e533f3309223fbfbf153f0000803f3e2f5d3f7a26313f4924263f",
+        "exact_bytes": 240,
+        "quantization": "clamp; preserve IEEE-754 binary32 words"
+      }
+    },
+    "suite_acquire_count": 16,
+    "suite_release_count": 16,
+    "fault": null
+  },
+  "comparison": {
+    "ray_plane_words": 15,
+    "aggregation_words": 60,
+    "final_pf8_bytes": 60,
+    "final_pf16_bytes": 120,
+    "final_pf32_bytes": 240,
+    "max_ulp": 0,
+    "ray_portable_owner": "core/kirakira_mode4.h",
+    "compose_portable_owner": "tools/emulation/olmkirakira_outer_compose_oracle_20260728.py",
+    "mac_typed_writer_owner": "mac/OLMKiraKira/OLMKiraKira.cpp PixelTraits::WriteAexTruncate, selected unconditionally after RenderTyped compose"
+  },
+  "connected_evidence": {
+    "directional_helper_matrix": "refs/conformance/olmkirakira_mode4_canonical_angles_actual_aex_20260810.json (17 exact cases)",
+    "aggregate_compose_matrix": "refs/conformance/olmkirakira_mode4_compose_matrix_actual_aex_20260811.json (5 exact cases)"
+  },
+  "scaffold": {
+    "SPBasic": [
+      "AcquireSuite",
+      "ReleaseSuite"
+    ],
+    "PF Handle Suite v2": [
+      "NewHandle",
+      "LockHandle",
+      "UnlockHandle",
+      "DisposeHandle"
+    ],
+    "first_unscaffolded_stop": "indirect NULL call returning to 0x181231f4d while acquiring PF Handle Suite v2",
+    "resolution": "attach host context to argument slot 2 and provide the six callbacks above"
+  },
+  "boundary": "This is a hostless Mac Unicorn execution of the checked-in Windows AEX with typed PF8/PF16/PF32 output worlds, not a live Windows/AE render claim. The same canonical internal float chain is byte exact through each final typed writer.",
+  "boundary_ja": "\u30c1\u30a7\u30c3\u30af\u30a4\u30f3\u6e08\u307fWindows AEX\u3092Mac\u4e0a\u306eUnicorn\u3067\u5b9f\u884c\u3057\u305fhostless\u5883\u754c\u3067\u3042\u308a\u3001Windows/AE\u5b9f\u6a5f\u30ec\u30f3\u30c0\u30fc\u306e\u4e00\u81f4\u4e3b\u5f35\u3067\u306f\u306a\u3044\u3002\u5171\u901a\u306e\u5185\u90e8float\u7d4c\u8def\u304b\u3089PF8/PF16/PF32 typed world\u3078\u66f8\u304f\u6700\u7d42\u5883\u754c\u307e\u3067\u3092byte exact\u3068\u3059\u308b\u3002",
+  "verification": "python3 tools/emulation/probe_olmkirakira_mode4_natural_fullframe_exact_20260811.py"
+}

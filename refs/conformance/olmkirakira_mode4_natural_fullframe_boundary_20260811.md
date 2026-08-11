@@ -1,6 +1,13 @@
 # OLMKiraKira Mode 4 natural full-frame boundary（2026-08-11）
 
-Status: **fail-closed pending same-run source binding**
+Status: **resolved exact by same-run source binding**
+
+この境界は `olmkirakira_mode4_natural_fullframe_exact_20260811.{json,md}` で
+閉じた。vtable seed全15 words、Horizontal slot 1 / Length 5 / Rotation 0°、
+aggregate入口ray全15 wordsをactual AEXの同一full-caller実行から採取し、
+portable Mode 4 ray、aggregate、PF8/PF16/PF32 writerまでraw exactだった。
+
+以下は解決前に最小化した経緯として残す。
 
 actual AEX `FUN_18114f4a0` の 5×3 multi-row fixture は、Mode 4 directional
 rayを自然生成し、5層aggregate入口まで到達した。既存probeにはMatの先頭行だけを
