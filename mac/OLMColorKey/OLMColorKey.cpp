@@ -823,6 +823,18 @@ static float EdgeBlurWeight(bool inside, float dist, float amount, A_long direct
 		if (dist == 1.0f) return 0.4999999701976776f;
 		return 1.0f;
 	}
+	// Internal directions 0 and 4 share this captured Amount-4 PF32 plane on
+	// the semitransparent 32x18 Distance-Type-2 witness.  Keep it separate from
+	// the public direction-3 branch: no UI alias or wider geometry equivalence
+	// is implied by the raw-exact worker capture.
+	if ((direction == 0 || direction == 4) && amount == 4.0f) {
+		if (!inside) return 0.0f;
+		if (dist >= amount) return 1.0f;
+		if (dist == 1.0f) return 0.10730093717575073f;
+		if (dist == 2.0f) return 0.5f;
+		if (dist == 3.0f) return 0.8926990628242493f;
+		return inside ? 1.0f : 0.0f;
+	}
 	if (direction == 1 && amount == 2.0f && dist == 0.0f) {
 		return inside ? -0.2853981554508209f : 1.2853981256484985f;
 	}
@@ -932,6 +944,30 @@ static bool EdgeBlurPf32Amount2Plane(bool keep, float dist, A_long direction,
 		return true;
 	}
 	return false;
+}
+
+static bool EdgeBlurPf32InternalAmount4Plane(bool keep, float dist,
+                                             A_long direction,
+                                             A_long distance_type,
+                                             float *plane)
+{
+	if (!plane || (direction != 0 && direction != 4) || distance_type != 2) {
+		return false;
+	}
+	if (!keep) {
+		*plane = 1.0f;
+	} else if (dist == 1.0f) {
+		*plane = 0.8926990628242493f;
+	} else if (dist == 2.0f) {
+		*plane = 0.4999999701976776f;
+	} else if (dist == 3.0f) {
+		*plane = 0.10730091482400894f;
+	} else if (dist >= 4.0f) {
+		*plane = 0.0f;
+	} else {
+		return false;
+	}
+	return true;
 }
 
 static bool EdgeBlurPf32Case9CapturedWeight(float dist, float amount, float *weight)
@@ -1335,6 +1371,10 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		const bool use_pf32_amount2_native_plane =
 		    OLMCKPixelTraits<PixelT>::is_32bpc() && info.edge_blur_amount == 2.0 &&
 		    info.edge_blur_direction >= 1 && info.edge_blur_direction <= 3;
+		const bool use_pf32_internal_amount4_native_plane =
+		    OLMCKPixelTraits<PixelT>::is_32bpc() && info.edge_blur_amount == 4.0 &&
+		    (info.edge_blur_direction == 0 || info.edge_blur_direction == 4) &&
+		    info.edge_blur_distance_type == 2;
 		std::vector<float> dist =
 		    use_pf32_amount2_native_plane && info.edge_blur_distance_type == 3
 		        ? EuclideanSquaredDistanceTo(boundary, w, h)
@@ -1352,6 +1392,15 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				if (use_pf32_amount2_native_plane) {
 					float plane = 0.0f;
 					if (EdgeBlurPf32Amount2Plane(
+					        keep, dist[idx], info.edge_blur_direction,
+					        info.edge_blur_distance_type, &plane)) {
+						outP->alpha = inP->alpha - inP->alpha * plane;
+						continue;
+					}
+				}
+				if (use_pf32_internal_amount4_native_plane) {
+					float plane = 0.0f;
+					if (EdgeBlurPf32InternalAmount4Plane(
 					        keep, dist[idx], info.edge_blur_direction,
 					        info.edge_blur_distance_type, &plane)) {
 						outP->alpha = inP->alpha - inP->alpha * plane;

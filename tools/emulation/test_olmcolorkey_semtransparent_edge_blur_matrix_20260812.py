@@ -22,12 +22,19 @@ WIDTH, HEIGHT, PADDING = 32, 18, 8
 FORMATS = {"PF8": 4, "PF16": 8, "PF32": 16}
 REPORT = ROOT / "refs/conformance/olmcolorkey_semtransparent_edge_blur_matrix_20260812.json"
 MD = REPORT.with_suffix(".md")
-CONFIGS = tuple(
+PUBLIC_CONFIGS = tuple(
     {"name": f"direction{direction}_distance{distance}",
      "amount": 2.0, "direction": direction, "distance_type": distance}
     for direction in (1, 2, 3)
     for distance in (1, 2, 3)
 )
+INTERNAL_ENDPOINT_CONFIGS = tuple(
+    {"name": f"direction{direction}_amount{amount:g}",
+     "amount": amount, "direction": direction, "distance_type": 2}
+    for direction in (0, 4)
+    for amount in (1.0, 4.0)
+)
+CONFIGS = PUBLIC_CONFIGS + INTERNAL_ENDPOINT_CONFIGS
 
 
 def keyed_kind(x: int, y: int) -> int:
@@ -111,9 +118,10 @@ def diagnostic_distances(distance_type: int) -> list[float]:
 CUSTOM_MAIN = r'''
 int main(){g_color_suite=g_color_suite_instance;g_ansi_suite=g_ansi_suite_instance;
 constexpr int W=32,H=18,P=8;
-constexpr int directions[]={1,1,1,2,2,2,3,3,3};
-constexpr int distances[]={1,2,3,1,2,3,1,2,3};
-for(int config=0;config<9;config++)for(int depth: {8,16,32}){
+constexpr int directions[]={1,1,1,2,2,2,3,3,3,0,0,4,4};
+constexpr int distances[]={1,2,3,1,2,3,1,2,3,2,2,2,2};
+constexpr double amounts[]={2,2,2,2,2,2,2,2,2,1,4,1,4};
+for(int config=0;config<13;config++)for(int depth: {8,16,32}){
  int ps=depth==8?4:depth==16?8:16,rb=W*ps+P;
  std::vector<std::uint8_t>inb(rb*H,0xA5),outb(rb*H,0xCC);
  auto keyed=[](int x,int y){
@@ -136,7 +144,7 @@ for(int config=0;config<9;config++)for(int depth: {8,16,32}){
  OLMColorKeyInfo info{};info.number_of_colors=2;info.use_color[0]=true;info.use_color[1]=true;
  info.colors8[0]={255,0,0,0};info.colors[0]={1,0,0,0};
  info.colors8[1]={255,0,255,0};info.colors[1]={1,0,1,0};
- info.edge_blur_amount=2.0;info.edge_blur_distance_type=distances[config];
+ info.edge_blur_amount=amounts[config];info.edge_blur_distance_type=distances[config];
  info.edge_blur_direction=directions[config];
  if(RenderWorld(&in,&out,info,(short)depth))return depth;
  std::fwrite(outb.data(),1,outb.size(),stdout);
@@ -258,12 +266,16 @@ def main() -> int:
         "fixture": {"dimensions": [WIDTH, HEIGHT], "matched_pixels": 23,
                     "alpha8_range": [48, 239], "keys": ["black", "green"],
                     "shape": "four corners, 3x3 center, five-pixel line, five isolated green pixels",
-                    "amount": 2.0, "directions": [1, 2, 3],
-                    "distance_types": [1, 2, 3], "row_padding_bytes": PADDING},
+                    "public_matrix": {"amounts": [2.0], "directions": [1, 2, 3],
+                                      "distance_types": [1, 2, 3]},
+                    "internal_endpoint_matrix": {"amounts": [1.0, 4.0],
+                                                 "directions": [0, 4],
+                                                 "distance_types": [2]},
+                    "row_padding_bytes": PADDING},
         "actual_aex_sha256": actual_probe.AEX_SHA256,
         "comparison": "actual AEX full worker versus production RenderWorld; full typed ARGB output and row padding",
         "cases": rows,
-        "claim_boundary": "Exact only for the declared semitransparent 32x18 two-key fixture, Amount 2, public Directions 1/2/3, Distance Types 1/2/3, and PF8/PF16/PF32. Native actual-AEX temporary planes and final raw output are captured. No AE-host or arbitrary-input claim.",
+        "claim_boundary": "Exact only for the declared semitransparent 32x18 two-key fixture: the retained Amount-2 public Direction 1/2/3 x Distance Type 1/2/3 matrix plus Amount 1/4 endpoints at internal Directions 0/4 and Distance Type 2, all at PF8/PF16/PF32. Native actual-AEX temporary planes and final raw output are captured. No AE-host, arbitrary-input, other combination, or geometry claim.",
     }
     args.json.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     if args.json.resolve() == REPORT.resolve():
@@ -272,8 +284,9 @@ def main() -> int:
             f"Status: **{report['status']}**\n\n"
             "A 32x18 two-key multi-island fixture varies alpha on matched and "
             "unmatched pixels. The actual Windows AEX worker and the Mac "
-            "production RenderWorld path match for all 27 PF8/PF16/PF32, "
-            "Direction 1/2/3, and Distance Type 1/2/3 cells at Amount 2. "
+            "production RenderWorld path match for all 39 PF8/PF16/PF32 cells: "
+            "the retained 27-cell public Amount-2 matrix plus the 12-cell "
+            "Direction 0/4, Amount 1/4 endpoint matrix at Distance Type 2. "
             "Comparison includes every typed ARGB byte and row-padding byte.\n\n"
             f"Boundary: {report['claim_boundary']}\n",
             encoding="utf-8",
