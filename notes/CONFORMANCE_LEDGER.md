@@ -1,5 +1,13 @@
 # OLM Conformance Ledger
 
+- 2026-08-11 OLMRadialBlur Inner Size/Edge/Noise closure: Inner Strength 4
+  crosses Zoom/Rotation, PF8/PF16/PF32, and four declared tuples for 24 cases.
+  Consumed planes and typed outputs are exact. The four PF32 Rotation tuples
+  use the bounded forward-angle rule while PF8/PF16 use reverse-angle.
+  Size Variation 25 retains a diagnostic source-scalar one-ULP seam only;
+  prepass onward and output are exact. Unlisted tuples, geometry, and Type 3
+  remain fail-closed and are not generalized from this fixture.
+
 - 2026-08-11 four bounded family closures: OLMSmoother2 palette
   count/reorder/duplicate crossed with key polarity and all depths is 18/18
   raw exact. OLMKiraKira closes four additional natural Mode 4 sources and
