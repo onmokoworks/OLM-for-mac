@@ -57,7 +57,7 @@ Windows AEで取得する7行として固定した同一条件校正は、受領
 | OLMToonDilate | copy／dilate、radius、frontier／tie／corner | PF8／PF16／PF32 |
 | OLMDistanceGradation | Inside／Outside／Both、補間、invert、background、記録済みblur matrix | PF8／PF16／PF32（限定範囲） |
 | OLMDirectionalBlur | 基本方向ブラー、Noise Type 1／2／3、記録済みfade／sharp複合経路 | PF8／PF16／PF32（限定範囲） |
-| OLMRadialBlur | Zoom／Rotation／Inner、size／noise／edge／offset／brightnessの記録済み複合経路 | PF8／PF16／PF32（guard付き） |
+| OLMRadialBlur | Zoom／Rotation／Inner、size／noise／edge／offset／brightnessの記録済み複合経路 | PF8／PF16／PF32（bounded guard付き） |
 | OLMSmoother2 | v1／v2 classifier、key／invert、Gamma、range、palette | PF8／PF16／PF32（限定範囲） |
 | OLMKiraKira | Mode 1／2／3／4、ramp、compose、warp／blur、記録済みMode 4交差 | PF8／PF16／PF32（限定範囲） |
 | OLMSmoother v1 | no-key／Color Key、smoothing range | native PF8／PF16。32bpcはAE host conversion |

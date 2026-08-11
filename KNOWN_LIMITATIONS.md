@@ -38,7 +38,9 @@
   64×36です。off-center、非unit ratio、angle、quality、repeat、offset、
   edge fade、noise、variationを含む全組合せは未証明です。Size Variation×Edge Fadeは
   記録済み32×18 fixtureの3深度36行でexactですが、任意geometryや未列挙値へは一般化
-  しません。Dual Strength×Noiseの記録済み48ケースは最終出力exactですが、
+  しません。Rotation Size Variation×Offset Mode 2／3は同fixtureの3深度24ケースで
+  全stage exactですが、未列挙値、geometry、Type 3はfail-closeします。
+  Dual Strength×Noiseの記録済み48ケースは最終出力exactですが、
   Rotation Noise Type 1のsampled source scalarには1〜4 ULP差が残るため、全内部stage
   exactとは表現しません。Windows独自のcustom preview描画と操作も未証明です。
 - OLMSmoother2：key、invert、Gamma、range、paletteの主要分岐はbounded exactです。
