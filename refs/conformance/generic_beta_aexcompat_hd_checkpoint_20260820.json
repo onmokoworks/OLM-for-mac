@@ -1,0 +1,109 @@
+{
+  "aex_sha256": {
+    "ColorKeep": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+    "OLMColorKey": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+    "OLMToonDilate": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
+  },
+  "completed_cases": [
+    {
+      "elapsed_seconds": 2.458,
+      "exit_code": 0,
+      "id": "ColorKeep_hd_random_count_1",
+      "input": "hd_random",
+      "input_sha256": "7d5834234a90a39e30b21914e9859c6d0c2620baa7f4e334bc83d525604bb58a",
+      "output_file": "ColorKeep_hd_random_count_1.png",
+      "output_sha256": "f617efdc89b7a25b7c99b21927ef7ade55dd14891f9154fcc0815e1053cac561",
+      "parameters": "count_1",
+      "plugin": "ColorKeep",
+      "render_error": 0,
+      "status": "ok",
+      "stderr_file": "ColorKeep_hd_random_count_1.stderr.txt"
+    },
+    {
+      "elapsed_seconds": 2.621,
+      "exit_code": 0,
+      "id": "ColorKeep_hd_random_count_3",
+      "input": "hd_random",
+      "input_sha256": "7d5834234a90a39e30b21914e9859c6d0c2620baa7f4e334bc83d525604bb58a",
+      "output_file": "ColorKeep_hd_random_count_3.png",
+      "output_sha256": "20f13b4c2903da19d1e52036bf38f79834ac7696d72088e10c425fa65407b6e6",
+      "parameters": "count_3",
+      "plugin": "ColorKeep",
+      "render_error": 0,
+      "status": "ok",
+      "stderr_file": "ColorKeep_hd_random_count_3.stderr.txt"
+    },
+    {
+      "elapsed_seconds": 35.426,
+      "exit_code": 0,
+      "id": "OLMColorKey_hd_random_two_keys",
+      "input": "hd_random",
+      "input_sha256": "7d5834234a90a39e30b21914e9859c6d0c2620baa7f4e334bc83d525604bb58a",
+      "output_file": "OLMColorKey_hd_random_two_keys.png",
+      "output_sha256": "e8cec1ac4192b8251a16b5d474b629bd7c5807b92e306b378b4d2232df214f88",
+      "parameters": "two_keys",
+      "plugin": "OLMColorKey",
+      "render_error": 0,
+      "status": "ok",
+      "stderr_file": "OLMColorKey_hd_random_two_keys.stderr.txt"
+    },
+    {
+      "elapsed_seconds": 58.077,
+      "exit_code": 0,
+      "id": "OLMColorKey_hd_random_edge_blur",
+      "input": "hd_random",
+      "input_sha256": "7d5834234a90a39e30b21914e9859c6d0c2620baa7f4e334bc83d525604bb58a",
+      "output_file": "OLMColorKey_hd_random_edge_blur.png",
+      "output_sha256": "fb0f0a7bc0412de93b0057a50d5ca9eed35567f540d2021f31a86930e102abdf",
+      "parameters": "edge_blur",
+      "plugin": "OLMColorKey",
+      "render_error": 0,
+      "status": "ok",
+      "stderr_file": "OLMColorKey_hd_random_edge_blur.stderr.txt"
+    },
+    {
+      "elapsed_seconds": 281.765,
+      "exit_code": 0,
+      "id": "OLMToonDilate_hd_random_radius_0",
+      "input": "hd_random",
+      "input_sha256": "7d5834234a90a39e30b21914e9859c6d0c2620baa7f4e334bc83d525604bb58a",
+      "output_file": "OLMToonDilate_hd_random_radius_0.png",
+      "output_sha256": "e439e7ffabcb3314067aeedeebc84fecac9ade185ffa2d39b90d43ca1c8cd226",
+      "parameters": "radius_0",
+      "plugin": "OLMToonDilate",
+      "render_error": 0,
+      "status": "ok",
+      "stderr_file": "OLMToonDilate_hd_random_radius_0.stderr.txt"
+    }
+  ],
+  "evidence_boundary": "Five hostless AEXCompat outputs are hash-fixed. Output PNGs remain isolated in /tmp; this is not native Windows or After Effects evidence.",
+  "execution": {
+    "aexcompat_source_commit": "0ee278943751b968ea2b0d5a0e0f483b70c0090d",
+    "case_timeout_seconds": 300,
+    "host": "macOS hostless AEXCompat/Unicorn; After Effects not launched",
+    "process_residue_after_runs": false,
+    "runner_sha256": "9e1e9938394c71cfd1c556bf93e4773513b3483550c436b9244c34248dcc75a0",
+    "worker_sha256": "bbc432ab42f383775d0d84df43b40ee724d2250029737559d73d70b0d6d05c4c"
+  },
+  "input": {
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "id": "hd_random",
+    "sha256": "7d5834234a90a39e30b21914e9859c6d0c2620baa7f4e334bc83d525604bb58a"
+  },
+  "pending_cases": [
+    {
+      "id": "OLMToonDilate_hd_random_radius_2_01",
+      "reason": "not executed: deferred by the campaign time budget after radius_0 required 281.765s under the chosen 300s per-case cap; this case's runtime is unknown"
+    },
+    {
+      "id": "OLMToonDilate_hd_random_radius_5",
+      "reason": "not executed: deferred by the campaign time budget after radius_0 required 281.765s under the chosen 300s per-case cap; this case's runtime is unknown"
+    }
+  ],
+  "request_id": "generic_beta_windows_oracle_20260820",
+  "schema": "generic-beta-aexcompat-hd-checkpoint/1",
+  "status": "PARTIAL_COMPLETE_5_OF_7"
+}

@@ -116,6 +116,14 @@ class GenericBetaWindowsOracleHandoffTests(unittest.TestCase):
         self.assertTrue(all("hd_random" not in row["id"] for row in selected))
         self.assertTrue(all("hd_random" in case_id for case_id in pending))
 
+    def test_runner_selects_explicit_case(self) -> None:
+        runner = load(ROOT / "scripts/run_generic_beta_oracle_bundle.py", "generic_beta_runner_case_test")
+        manifest = json.loads((self.packager.OUT / "campaign-manifest.json").read_text())
+        case_id = "ColorKeep_hd_random_count_1"
+        selected, pending = runner.select_cases(manifest, None, {case_id})
+        self.assertEqual([row["id"] for row in selected], [case_id])
+        self.assertEqual(len(pending), 20)
+
 
 if __name__ == "__main__":
     unittest.main()
