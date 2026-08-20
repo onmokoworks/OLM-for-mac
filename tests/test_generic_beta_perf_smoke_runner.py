@@ -21,6 +21,32 @@ def load_module():
     return module
 
 
+def directional_case_results(geometry: str) -> list[dict[str, object]]:
+    width, height = (1920, 1080) if geometry == "hd" else (3840, 2160)
+    return [
+        {
+            "side": side,
+            "depth": depth,
+            "geometry": geometry,
+            "width": width,
+            "height": height,
+            "angle": 37.25,
+            "brightness_gain": 0.75,
+            "front_strength": 2 if side == "front" else 0,
+            "back_strength": 2 if side == "back" else 0,
+            "input_padding_bytes": 5 if depth == 8 else 1,
+            "output_padding_bytes": 17 if depth == 8 else 3,
+            "input_span_unchanged": True,
+            "output_active_changed": True,
+            "output_padding_unchanged": True,
+            "independent_strides": True,
+            "opposite_side_output_differs": True,
+        }
+        for side in ("front", "back")
+        for depth in (8, 16, 32)
+    ]
+
+
 def test_catalog_has_all_ten_lanes_and_both_geometries() -> None:
     module = load_module()
     assert len(module.LANES) == 10
@@ -132,6 +158,14 @@ def test_current_canonical_twenty_cells_can_be_bound_without_overclaiming() -> N
     assert all(row["dependency_binding_sha256"] ==
                provenance["dependency_bindings"][row["lane"]]["binding_sha256"]
                for row in bound["results"])
+    directional = [row for row in bound["results"]
+                   if row["lane"] == "OLMDirectionalBlur"]
+    assert len(directional) == 2
+    for row in directional:
+        assert len(row["case_results"]) == 6
+        assert {(case["side"], case["depth"]) for case in row["case_results"]} == {
+            (side, depth) for side in ("front", "back") for depth in (8, 16, 32)
+        }
 
 
 def test_current_canonical_schema2_report_verifies_against_current_files() -> None:
@@ -409,12 +443,44 @@ def test_directionalblur_perf_rows_select_exact_geometry() -> None:
         command = module.COMMANDS[("OLMDirectionalBlur", geometry)]
         assert command[1] == "tools/emulation/test_dblur_generic_deep_geometry_beta_20260820.py"
         assert command[command.index("--geometry") + 1] == geometry
+        assert module.CASE_DEPTH_COUNTS[("OLMDirectionalBlur", geometry)] == {
+            8: 2, 16: 2, 32: 2,
+        }
     predicate = module.SUPPORT_PREDICATES["OLMDirectionalBlur"]
     assert "pf8_pf16_pf32" in predicate
+    assert "neutral_single_side" in predicate
+    assert "exactly_one(front_strength,back_strength)" in predicate
+    assert "1 <= active_strength <= 4000" in predicate
     assert "3221225472" in predicate
     assert "width*height <= 8847360" in predicate
     assert "edge_clamped_operation_units <= 350000000" in predicate
     assert "per_render_plugin_owned_live_bytes" in predicate
+    assert module._parameters("OLMDirectionalBlur", "hd").startswith(
+        "neutral_single_side_front_back_angle37.25_gain0.75_strength2_"
+    )
+
+
+def test_directionalblur_semantic_validator_requires_exact_single_side_matrix() -> None:
+    module = load_module()
+    valid = directional_case_results("hd")
+    module._validate_case_results({"case_results": valid}, "OLMDirectionalBlur", "hd")
+
+    def must_reject(mutator) -> None:
+        candidate = json.loads(json.dumps(valid))
+        mutator(candidate)
+        try:
+            module._validate_case_results(
+                {"case_results": candidate}, "OLMDirectionalBlur", "hd"
+            )
+        except module.EvidenceBindingError:
+            return
+        raise AssertionError("invalid Directional single-side case matrix was accepted")
+
+    must_reject(lambda cases: cases[3].update(back_strength=0))
+    must_reject(lambda cases: cases[1].update(back_strength=2))
+    must_reject(lambda cases: cases[5].update(side="front"))
+    must_reject(lambda cases: cases.__setitem__(3, dict(cases[0])))
+    must_reject(lambda cases: cases[4].pop("back_strength"))
 
 
 def test_measure_fails_closed_when_peak_rss_is_unavailable() -> None:

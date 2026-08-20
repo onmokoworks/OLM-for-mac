@@ -279,9 +279,10 @@ SUPPORT_PREDICATES = {
         "pixels*ceil(amount)*repeat <= 3600000000"
     ),
     "OLMDirectionalBlur": (
-        "full_frame && pf8_pf16_pf32 && neutral_front_only && "
+        "full_frame && pf8_pf16_pf32 && neutral_single_side && "
+        "exactly_one(front_strength,back_strength) && "
         "-32768 <= angle <= 32767.9999847412109375 && 0 <= gain <= 10 && "
-        "1 <= strength <= 4000 && 0 < pf8_scale_x_y <= 1 && "
+        "1 <= active_strength <= 4000 && 0 < pf8_scale_x_y <= 1 && "
         "scale_1_for_pf16_pf32 && pf16_sdr_0_32768 && pf32_finite_sdr_0_1 && "
         "max(width,height) <= 4096 && width*height <= 8847360 && "
         "per_render_plugin_owned_live_bytes_with_64MiB_reserve <= 3221225472 && "
@@ -319,7 +320,7 @@ CASE_DEPTH_COUNTS: dict[tuple[str, str], dict[int, int]] = {
 } | {
     (lane, geometry): {8: count, 16: count, 32: count}
     for lane, count in (
-        ("OLMDirectionalBlur", 1), ("OLMKiraKira", 4),
+        ("OLMDirectionalBlur", 2), ("OLMKiraKira", 4),
         ("OLMRadialBlur", 2), ("OLMToonDilate", 1),
     )
     for geometry in GEOMETRIES
@@ -969,7 +970,7 @@ def _parameters(lane: str, geometry: str) -> str:
             "bilateral_all_depths_independent_strides"
         ),
         "OLMDirectionalBlur": (
-            "front_only_angle37.25_gain0.75_strength2_"
+            "neutral_single_side_front_back_angle37.25_gain0.75_strength2_"
             "pf8_pf16_pf32_odd_independent_strides"
         ),
         "OLMKiraKira": (
@@ -1076,6 +1077,7 @@ def _validate_case_results(
         for safety_key in (
             "input_span_unchanged", "output_active_changed",
             "output_padding_unchanged", "independent_strides",
+            "opposite_side_output_differs",
         ):
             if safety_key in case and case[safety_key] is not True:
                 raise EvidenceBindingError(
@@ -1091,9 +1093,12 @@ def _validate_case_results(
             observed_identities.append((case.get("case"), depth, case.get("legacy")))
         elif lane == "OLMDirectionalBlur":
             observed_identities.append((
-                depth, case.get("angle"), case.get("brightness_gain"),
-                case.get("front_strength"), case.get("input_padding_bytes"),
+                case.get("side"), depth, case.get("angle"),
+                case.get("brightness_gain"), case.get("front_strength"),
+                case.get("back_strength"), case.get("input_padding_bytes"),
                 case.get("output_padding_bytes"),
+                case.get("independent_strides"),
+                case.get("opposite_side_output_differs"),
             ))
         elif lane == "OLMKiraKira":
             observed_identities.append((case.get("mode"), depth))
@@ -1123,9 +1128,13 @@ def _validate_case_results(
             expected_identities.add(("hd_high", 8, 0))
     elif lane == "OLMDirectionalBlur":
         expected_identities = {
-            (8, 37.25, 0.75, 2, 5, 17),
-            (16, 37.25, 0.75, 2, 1, 3),
-            (32, 37.25, 0.75, 2, 1, 3),
+            (side, depth, 37.25, 0.75,
+             2 if side == "front" else 0,
+             2 if side == "back" else 0,
+             5 if depth == 8 else 1,
+             17 if depth == 8 else 3,
+             True, True)
+            for side in ("front", "back") for depth in (8, 16, 32)
         }
     elif lane == "OLMKiraKira":
         expected_identities = {
