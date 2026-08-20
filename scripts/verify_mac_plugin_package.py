@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import subprocess
 import sys
@@ -64,6 +65,52 @@ def load_json(path: Path) -> dict:
     if not isinstance(data, dict):
         raise ValueError(f"{path} top-level JSON must be an object")
     return data
+
+
+def binary_sha256(path: Path) -> str:
+    """Return the digest of the bytes that will actually be loaded by AE."""
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def command_output(*args: str) -> str:
+    return subprocess.run(args, check=True, text=True, capture_output=True).stdout.strip()
+
+
+def binary_architectures(path: Path) -> set[str]:
+    return set(command_output("lipo", "-archs", str(path)).split())
+
+
+def binary_minimum_macos(path: Path, arch: str) -> str:
+    output = command_output("xcrun", "vtool", "-show-build", "-arch", arch, str(path))
+    for line in output.splitlines():
+        fields = line.split()
+        if fields and fields[0] == "minos" and len(fields) == 2:
+            return fields[1]
+    raise ValueError(f"{path}: no minimum macOS for {arch}")
+
+
+def binary_sdk_version(path: Path, arch: str) -> str:
+    output = command_output("xcrun", "vtool", "-show-build", "-arch", arch, str(path))
+    for line in output.splitlines():
+        fields = line.split()
+        if fields and fields[0] == "sdk" and len(fields) == 2:
+            return fields[1]
+    raise ValueError(f"{path}: no SDK version for {arch}")
+
+
+def signing_kind(bundle: Path) -> str:
+    detail = subprocess.run(
+        ["codesign", "-d", "--verbose=4", str(bundle)],
+        check=True,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+    ).stdout
+    if "Signature=adhoc" in detail.splitlines():
+        return "adhoc"
+    if any(line.startswith("Authority=Developer ID Application:") for line in detail.splitlines()):
+        return "developer-id-application"
+    return "unknown"
 
 
 def single_package_root(root: Path) -> Path:
@@ -139,16 +186,32 @@ def main() -> int:
 
         if manifest.get("kind") != "olm_mac_plugin_package":
             return fail("manifest.kind must be 'olm_mac_plugin_package'")
-        for key in ("configuration", "source_root", "packaged_at"):
+        for key in ("configuration", "source_root", "packaged_at", "git_commit", "xcode_version", "sdk_version"):
             if not isinstance(manifest.get(key), str) or not manifest[key]:
                 return fail(f"manifest.{key} must be a non-empty string")
+        if manifest["configuration"] not in {"Debug", "Release"}:
+            return fail("manifest.configuration must be Debug or Release")
+        if root.name != f"OLM_Mac_Plugins_{manifest['configuration']}":
+            return fail("package root does not match manifest.configuration")
 
-        for rel_key in ("install_notes", "validation_checklist", "validation_result_template"):
+        if not isinstance(manifest.get("git_dirty"), bool):
+            return fail("manifest.git_dirty must be a boolean")
+        if len(manifest["git_commit"]) != 40 or any(c not in "0123456789abcdef" for c in manifest["git_commit"].lower()):
+            return fail("manifest.git_commit must be a 40-char hexadecimal commit")
+
+        for rel_key in ("install_notes", "validation_checklist", "validation_result_template", "beta_support"):
             rel = manifest.get(rel_key)
             if not isinstance(rel, str) or not rel:
                 return fail(f"manifest.{rel_key} must be a non-empty string")
             if not (root / rel).exists():
                 return fail(f"manifest.{rel_key} missing file: {rel}")
+        beta_support_sha = manifest.get("beta_support_sha256")
+        actual_beta_support_sha = binary_sha256(root / manifest["beta_support"])
+        if beta_support_sha != actual_beta_support_sha:
+            return fail(
+                "manifest.beta_support_sha256 mismatch: "
+                f"manifest={beta_support_sha} actual={actual_beta_support_sha}"
+            )
 
         pixel_requests = manifest.get("ae_pixel_validation_requests")
         if not isinstance(pixel_requests, list) or not pixel_requests:
@@ -205,9 +268,50 @@ def main() -> int:
             sha = entry.get("binary_sha256")
             if not isinstance(sha, str) or len(sha) != 64:
                 return fail(f"{name}.binary_sha256 must be a 64-char hex string")
+            actual_sha = binary_sha256(binary_path)
+            if sha.lower() != actual_sha:
+                return fail(
+                    f"{name}.binary_sha256 mismatch: manifest={sha} actual={actual_sha}"
+                )
             arch = entry.get("architectures")
             if arch != ["arm64", "x86_64"]:
                 return fail(f"{name}.architectures must be ['arm64', 'x86_64']")
+            try:
+                actual_arch = binary_architectures(binary_path)
+            except (OSError, subprocess.CalledProcessError) as exc:
+                return fail(f"{name}: could not inspect architectures: {exc}")
+            if actual_arch != set(arch):
+                return fail(f"{name}.architectures mismatch: manifest={arch} actual={sorted(actual_arch)}")
+            minimum_macos = entry.get("minimum_macos")
+            if not isinstance(minimum_macos, dict) or set(minimum_macos) != set(arch):
+                return fail(f"{name}.minimum_macos must describe arm64 and x86_64")
+            try:
+                actual_minos = {item: binary_minimum_macos(binary_path, item) for item in arch}
+                actual_sdks = {binary_sdk_version(binary_path, item) for item in arch}
+            except (OSError, ValueError, subprocess.CalledProcessError) as exc:
+                return fail(f"{name}: could not inspect minimum macOS: {exc}")
+            if minimum_macos != actual_minos:
+                return fail(f"{name}.minimum_macos mismatch: manifest={minimum_macos} actual={actual_minos}")
+            if actual_sdks != {manifest["sdk_version"]}:
+                return fail(
+                    f"{name} SDK mismatch: manifest={manifest['sdk_version']} "
+                    f"actual={sorted(actual_sdks)}"
+                )
+            bundle_signing_kind = entry.get("signing_kind")
+            try:
+                subprocess.run(
+                    ["codesign", "--verify", "--deep", "--strict", str(bundle_path)],
+                    check=True,
+                    capture_output=True,
+                )
+                actual_signing_kind = signing_kind(bundle_path)
+            except (OSError, subprocess.CalledProcessError) as exc:
+                return fail(f"{name}: codesign verification failed: {exc}")
+            if bundle_signing_kind != actual_signing_kind or actual_signing_kind == "unknown":
+                return fail(
+                    f"{name}.signing_kind mismatch: manifest={bundle_signing_kind} "
+                    f"actual={actual_signing_kind}"
+                )
 
         template = root / manifest["validation_result_template"]
         if verify_validation_template(repo, template) != 0:

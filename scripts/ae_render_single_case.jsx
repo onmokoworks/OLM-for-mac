@@ -469,7 +469,8 @@
                 );
                 throw setError;
             }
-                appendText(logPath, "set.ok index=" + p + " match=" + (leaf.match_name || prop.name) + "\n");
+                appendText(logPath, "set.ok index=" + p + " match=" + (leaf.match_name || prop.name) +
+                    " actual=" + valueToLog(coerceValue(prop.value)) + "\n");
             }
         }
 

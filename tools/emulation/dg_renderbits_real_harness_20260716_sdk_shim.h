@@ -10,6 +10,8 @@ typedef void *PF_ProgPtr;
 typedef A_long PF_Err;
 enum { PF_Err_NONE = 0 };
 enum { PF_Err_BAD_CALLBACK_PARAM = -1 };
+enum { PF_Err_OUT_OF_MEMORY = 4 };
+enum { PF_Err_INTERNAL_STRUCT_DAMAGED = 512 };
 enum { PF_Stage_BETA = 0 };
 typedef A_long PF_Cmd;
 enum { PF_Cmd_ABOUT = 0, PF_Cmd_GLOBAL_SETUP, PF_Cmd_PARAMS_SETUP,
@@ -27,6 +29,7 @@ struct PF_EffectWorld {
     A_long width, height, rowbytes;
     short bitdepth;
     PF_LRect extent_hint;
+    A_long origin_x, origin_y;
 };
 typedef PF_EffectWorld PF_LayerDef;
 
@@ -50,22 +53,28 @@ struct PF_ParamDef {
 struct PF_InData {
     PF_ProgPtr effect_ref;
     A_long current_time, time_step, time_scale;
+    A_long output_origin_x, output_origin_y;
     struct { A_long num, den; } downsample_x, downsample_y;
     void *pica_basicP;
+    A_long pre_effect_source_origin_x, pre_effect_source_origin_y;
+    A_long width, height;
 };
 struct PF_OutData { char return_msg[256]; A_u_long my_version, out_flags, out_flags2; A_long num_params; };
-struct PF_RenderRequest { A_long _dummy; };
-struct PF_CheckoutResult { PF_LRect result_rect, max_result_rect; };
+struct PF_RenderRequest { A_long _dummy; PF_LRect rect; A_long preserve_rgb_of_zero_alpha; };
+struct PF_CheckoutResult { PF_LRect result_rect, max_result_rect; A_long ref_width, ref_height; };
 struct PF_PreRenderInput { PF_RenderRequest output_request; short bitdepth; };
-struct PF_PreRenderOutput { PF_LRect result_rect, max_result_rect; };
+typedef void (*PF_DeletePreRenderDataFunc)(void *);
+enum { PF_RenderOutputFlag_RETURNS_EXTRA_PIXELS = 1 };
+struct PF_PreRenderOutput { PF_LRect result_rect, max_result_rect; short flags; void *pre_render_data; PF_DeletePreRenderDataFunc delete_pre_render_data_func; };
 struct PF_PreRenderCallbacks {
     PF_Err (*checkout_layer)(PF_ProgPtr, A_long, A_long, PF_RenderRequest *, A_long, A_long, A_long, PF_CheckoutResult *);
 };
 struct PF_PreRenderExtra { PF_PreRenderInput *input; PF_PreRenderOutput *output; PF_PreRenderCallbacks *cb; };
-struct PF_SmartRenderInput { short bitdepth; };
+struct PF_SmartRenderInput { short bitdepth; void *pre_render_data; };
 struct PF_SmartRenderCallbacks {
-    PF_Err (*checkout_layer_pixels)(PF_ProgPtr, A_long, PF_EffectWorld **);
-    PF_Err (*checkout_output)(PF_ProgPtr, PF_EffectWorld **);
+	PF_Err (*checkout_layer_pixels)(PF_ProgPtr, A_long, PF_EffectWorld **);
+	PF_Err (*checkin_layer_pixels)(PF_ProgPtr, A_long);
+	PF_Err (*checkout_output)(PF_ProgPtr, PF_EffectWorld **);
 };
 struct PF_SmartRenderExtra { PF_SmartRenderInput *input; PF_SmartRenderCallbacks *cb; };
 
@@ -93,6 +102,8 @@ struct PF_ParamUtilsSuite3 {
     PF_Err PF_UpdateParamUI(PF_ProgPtr, A_long, const PF_ParamDef *) { return PF_Err_NONE; }
 };
 static PF_Err dg_harness_color(PF_ProgPtr, PF_ParamDef *def, PF_PixelFloat *out) {
+	extern bool dg_harness_fail_color;
+	if (dg_harness_fail_color) return PF_Err_BAD_CALLBACK_PARAM;
     out->alpha = def->u.cd.value.alpha / 255.0f;
     out->red = def->u.cd.value.red / 255.0f;
     out->green = def->u.cd.value.green / 255.0f;
@@ -100,6 +111,7 @@ static PF_Err dg_harness_color(PF_ProgPtr, PF_ParamDef *def, PF_PixelFloat *out)
     return PF_Err_NONE;
 }
 static PF_ColorParamSuite1 dg_harness_color_suite = { &dg_harness_color };
+bool dg_harness_fail_color = false;
 static PF_ANSICallbacksSuite1 dg_harness_ansi_suite = { &std::sprintf };
 static PF_ParamUtilsSuite3 dg_harness_param_utils_suite;
 struct AEGP_SuiteHandler {
@@ -115,11 +127,15 @@ struct AEGP_SuiteHandler {
 #define AEFX_CLR_STRUCT(S) std::memset(&(S), 0, sizeof(S))
 #define ERR(X) do { if (err == PF_Err_NONE) err = (X); } while (0)
 static PF_Err (*dg_harness_checkout_param)(A_long, PF_ParamDef *) = nullptr;
+static void (*dg_harness_checkin_param)(PF_ParamDef *) = nullptr;
 static PF_Err dg_harness_checkout(A_long index, PF_ParamDef *param) {
-    return dg_harness_checkout_param ? dg_harness_checkout_param(index, param) : PF_Err_NONE;
+	return dg_harness_checkout_param ? dg_harness_checkout_param(index, param) : PF_Err_NONE;
+}
+static void dg_harness_checkin(PF_ParamDef *param) {
+	if (dg_harness_checkin_param) dg_harness_checkin_param(param);
 }
 #define PF_CHECKOUT_PARAM(IN, INDEX, TIME, STEP, SCALE, PARAM) dg_harness_checkout((INDEX), (PARAM))
-#define PF_CHECKIN_PARAM(...) ((void)0)
+#define PF_CHECKIN_PARAM(IN, PARAM) dg_harness_checkin((PARAM))
 #define PF_ADD_CHECKBOX(...) ((void)0)
 #define PF_ADD_COLOR(...) ((void)0)
 #define PF_ADD_SLIDER(...) ((void)0)

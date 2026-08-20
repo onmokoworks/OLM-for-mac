@@ -85,6 +85,7 @@ pixel_validation_dir="$stage/AE_PIXEL_VALIDATION"
 # Public-facing documentation travels with the binaries. Keep this package
 # self-contained and free of checkout-machine absolute paths.
 cp "$ROOT/docs/INSTALL_JA.md" "$stage/INSTALL_JA.md"
+cp "$ROOT/docs/BETA_SUPPORT.md" "$stage/BETA_SUPPORT.md"
 cp "$ROOT/KNOWN_LIMITATIONS.md" "$stage/KNOWN_LIMITATIONS.md"
 cp "$ROOT/refs/conformance/OLM_MAC_RELEASE_NOTES_20260806.md" "$stage/RELEASE_NOTES_JA.md"
 mkdir -p "$stage/refs/conformance"
@@ -242,10 +243,25 @@ for entry in "${pixel_validation_presets[@]}"; do
     --output "$pixel_validation_dir/$zip_name"
 done
 
+beta_support_sha256="$(shasum -a 256 "$stage/BETA_SUPPORT.md" | awk '{print $1}')"
+git_commit="$(git -C "$ROOT" rev-parse HEAD)"
+if [[ -n "$(git -C "$ROOT" status --porcelain)" ]]; then
+  git_dirty=true
+else
+  git_dirty=false
+fi
+xcode_version_output="$(xcodebuild -version)"
+xcode_version="${xcode_version_output%%$'\n'*}"
+sdk_version="$(xcrun --sdk macosx --show-sdk-version)"
+
 {
   echo "{"
   echo "  \"kind\": \"olm_mac_plugin_package\","
   echo "  \"configuration\": \"$CONFIGURATION\","
+  echo "  \"git_commit\": \"$git_commit\","
+  echo "  \"git_dirty\": $git_dirty,"
+  echo "  \"xcode_version\": \"$xcode_version\","
+  echo "  \"sdk_version\": \"$sdk_version\","
   # Do not publish the packager machine's absolute checkout path.
   echo "  \"source_root\": \"OLM-for-mac repository\","
   echo "  \"packaged_at\": \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\","
@@ -253,6 +269,8 @@ done
   echo "  \"validation_checklist\": \"AE_VALIDATION_CHECKLIST.txt\","
   echo "  \"validation_result_template\": \"AE_VALIDATION_RESULT.template.json\","
   echo "  \"install_guide_ja\": \"INSTALL_JA.md\","
+  echo "  \"beta_support\": \"BETA_SUPPORT.md\","
+  echo "  \"beta_support_sha256\": \"$beta_support_sha256\","
   echo "  \"known_limitations\": \"KNOWN_LIMITATIONS.md\","
   echo "  \"release_notes_ja\": \"RELEASE_NOTES_JA.md\","
   echo "  \"pixel_reference_profile\": \"$PIXEL_REFERENCE_PROFILE\","
@@ -286,16 +304,23 @@ for idx in "${!plugins[@]}"; do
     echo "[MISS] $plugin binary: $binary" >&2
     exit 1
   fi
-  file_out="$(file "$binary")"
-  if ! grep -q 'arm64' <<<"$file_out"; then
-    echo "[FAIL] $plugin binary is missing arm64 slice" >&2
+  archs="$(lipo -archs "$binary")"
+  if [[ " $archs " != *" arm64 "* || " $archs " != *" x86_64 "* || "$(wc -w <<<"$archs" | tr -d ' ')" != 2 ]]; then
+    echo "[FAIL] $plugin binary architectures are not exactly arm64+x86_64: $archs" >&2
     exit 1
   fi
-  if ! grep -q 'x86_64' <<<"$file_out"; then
-    echo "[FAIL] $plugin binary is missing x86_64 slice" >&2
+  minos_arm64="$(xcrun vtool -show-build -arch arm64 "$binary" | awk '/minos/ && !found {print $2; found=1}')"
+  minos_x86_64="$(xcrun vtool -show-build -arch x86_64 "$binary" | awk '/minos/ && !found {print $2; found=1}')"
+  signing_detail="$(codesign -d --verbose=4 "$bundle" 2>&1)"
+  if grep -q '^Signature=adhoc$' <<<"$signing_detail"; then
+    signing_kind="adhoc"
+  elif grep -q '^Authority=Developer ID Application:' <<<"$signing_detail"; then
+    signing_kind="developer-id-application"
+  else
+    echo "[FAIL] $plugin has an unsupported signing identity" >&2
     exit 1
   fi
-  codesign --verify "$bundle"
+  codesign --verify --deep --strict "$bundle"
 
   ditto "$bundle" "$stage/$plugin.plugin"
   sha256="$(shasum -a 256 "$binary" | awk '{print $1}')"
@@ -308,7 +333,9 @@ for idx in "${!plugins[@]}"; do
     echo "      \"name\": \"$plugin\","
     echo "      \"bundle\": \"$plugin.plugin\","
     echo "      \"binary_sha256\": \"$sha256\","
-    echo "      \"architectures\": [\"arm64\", \"x86_64\"]"
+    echo "      \"architectures\": [\"arm64\", \"x86_64\"],"
+    echo "      \"minimum_macos\": {\"arm64\": \"$minos_arm64\", \"x86_64\": \"$minos_x86_64\"},"
+    echo "      \"signing_kind\": \"$signing_kind\""
     echo "    }$comma"
   } >>"$manifest"
 done

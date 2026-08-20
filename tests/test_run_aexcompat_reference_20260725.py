@@ -630,6 +630,41 @@ raise SystemExit(main())
             row["artifacts"]["output_png"],
         )
 
+    def test_cli_oracle_only_does_not_require_expected_frame(self) -> None:
+        request_root = self._request_root()
+        self._write_png(request_root / "input" / "probe.png", size=(7, 5), color=(32, 64, 96, 255))
+        self._write_reference_manifest(
+            request_root,
+            [{
+                "id": "case_oracle",
+                "before_effects_frame": "probe.png",
+                "effects": [{"params": [
+                    {"name": "Blur Amount", "property_index": 1, "value": 1},
+                    {"name": "Legacy", "property_index": 2, "value": False},
+                ]}],
+            }],
+        )
+        fake_aex = self.tmp / "OLMBlur.aex"
+        fake_aex.write_bytes(b"fake-aex\n")
+        worker = self._write_fake_worker(self.tmp / "fake-worker.py")
+        output_dir = self.tmp / "oracle-output"
+
+        proc = subprocess.run([
+            sys.executable, str(SCRIPT_PATH), "--request", str(request_root),
+            "--aex", str(fake_aex), "--worker", str(worker),
+            "--output-dir", str(output_dir), "--oracle-only", "--timeout", "30",
+        ], text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+        self.assertEqual(proc.returncode, 0, msg=proc.stderr)
+        self.assertIn("[ORACLE] case_oracle", proc.stdout)
+        summary = json.loads((output_dir / "AEXCOMPAT_REFERENCE_RESULT.json").read_text())
+        self.assertTrue(summary["oracle_only"])
+        self.assertEqual(summary["counts"]["oracle_outputs"], 1)
+        row = summary["cases"][0]
+        self.assertIsNone(row["comparison"]["exact"])
+        self.assertIsNone(row["artifacts"]["reference_sha256"])
+        self.assertTrue((output_dir / row["artifacts"]["output_png"]).is_file())
+
     def test_source_normalization_fails_closed_when_before_frame_disagrees(self) -> None:
         root = self._request_root()
         source = root / "source.png"

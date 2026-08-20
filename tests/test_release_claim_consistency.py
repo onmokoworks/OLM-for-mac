@@ -48,8 +48,9 @@ def main() -> int:
     )
 
     assert "PF16/PF32 Inner remain 9x7 guarded" not in matrix
-    assert "PF16 at 9x7, 64x36 and 640x360" in matrix
-    assert "PF32 at 9x7 and 64x36" in matrix
+    assert "Fixed 32x18 Rotation Type 1" in matrix
+    assert "fixed 9x7/NV25 Type 3" in matrix
+    assert "PF8/PF16/PF32 15 each" in matrix
     assert "PF8/PF16が640×360、PF32が" in limitations
     assert "64×36" in limitations
     assert kira_ui["status"] == "exact"

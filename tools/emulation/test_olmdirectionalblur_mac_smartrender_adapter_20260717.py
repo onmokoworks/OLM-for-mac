@@ -56,6 +56,7 @@ struct PF_ANSICallbacksSuite1 {{ int (*sprintf)(char *, const char *, ...); }}; 
 template <typename T> struct AEFX_SuiteScoper {{ T suite; AEFX_SuiteScoper(PF_InData*,const char*,A_long,PF_OutData*) {{}} T *operator->() {{ return &suite; }} }};
 static int g_render_entry_calls = 0;
 static PF_Err checkout_param(PF_InData*,A_long index,A_long,A_long,A_long,PF_ParamDef *p) {{ std::memset(p,0,sizeof(*p)); if(index==2)p->u.fs_d.value=1.0; else if(index==16)p->u.pd.value=1; else if(index==18)p->u.sd.value=1; else if(index==20)p->u.fs_d.value=10.0; return PF_Err_NONE; }}
+static PF_Err checkin_param() {{ return PF_Err_NONE; }}
 static inline const char *GetStringPtr(int) {{ return ""; }} static PF_Err register_effect(...) {{ return PF_Err_NONE; }}
 #define OLMDIRECTIONALBLUR_H
 #define _H_AEFX_SUITE_HELPER_TEMPLATE
@@ -76,7 +77,7 @@ static inline const char *GetStringPtr(int) {{ return ""; }} static PF_Err regis
 #define AEFX_CLR_STRUCT(x) std::memset(&(x),0,sizeof(x))
 #define ERR(x) do {{ if (err == PF_Err_NONE) err=(x); }} while (0)
 #define PF_CHECKOUT_PARAM(in,index,t,step,scale,out) checkout_param((in),(index),(t),(step),(scale),(out))
-#define PF_CHECKIN_PARAM(...) ((void)0)
+#define PF_CHECKIN_PARAM(...) checkin_param()
 #define PF_REGISTER_EFFECT_EXT2(...) register_effect()
 #define PF_ADD_FLOAT_SLIDERX(...) ((void)0)
 #define PF_ADD_FIXED(...) ((void)0)

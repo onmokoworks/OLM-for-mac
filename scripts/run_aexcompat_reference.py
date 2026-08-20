@@ -40,6 +40,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--timeout", type=int, default=1200)
     parser.add_argument("--trace", action="store_true", help="Emit execution dossiers; intended for small probe images.")
     parser.add_argument(
+        "--oracle-only",
+        action="store_true",
+        help="Render and preserve AEX outputs without requiring expected reference frames.",
+    )
+    parser.add_argument(
         "--allow-large-trace",
         action="store_true",
         help="Permit tracing inputs larger than 128x128; dossier size can grow dramatically.",
@@ -392,13 +397,19 @@ def run_case(
     trace: bool,
     allow_large_trace: bool,
     timeout: int,
+    oracle_only: bool = False,
 ) -> dict[str, Any]:
     case_id = case["id"]
     before_path = resolve_case_image(
         manifest_root, "input", case["before_effects_frame"]
     )
-    expected_path = resolve_case_image(manifest_root, "expected", case["frame"])
-    if not before_path.is_file() or not expected_path.is_file():
+    expected_path = None
+    if not oracle_only:
+        frame = case.get("frame")
+        if not isinstance(frame, str):
+            raise ValueError(f"{case_id}: comparison mode requires frame")
+        expected_path = resolve_case_image(manifest_root, "expected", frame)
+    if not before_path.is_file() or (expected_path is not None and not expected_path.is_file()):
         raise FileNotFoundError(f"{case_id}: missing input or expected image")
     source_input = source_input_for_case(manifest_root, manifest, case)
     if source_input is None:
@@ -411,7 +422,8 @@ def run_case(
         host_io_mode = "straight_source_ae_png_premultiply_round"
     require_8bit_png(input_path)
     require_8bit_png(before_path)
-    require_8bit_png(expected_path)
+    if expected_path is not None:
+        require_8bit_png(expected_path)
     with Image.open(input_path) as image:
         dimensions = image.size
     if trace and not allow_large_trace and (dimensions[0] > 128 or dimensions[1] > 128):
@@ -460,7 +472,11 @@ def run_case(
         )
     if source_input is not None:
         write_ae_png_premultiplied(raw_output_png, output_png)
-    comparison = pixel_diff(output_png, expected_path)
+    comparison = (
+        {"mode": "oracle_only", "exact": None, "actual_size": list(dimensions)}
+        if expected_path is None
+        else pixel_diff(output_png, expected_path)
+    )
     truncation = [
         {"selector": trace_row.get("selector"), "truncation": trace_row.get("truncation")}
         for trace_row in report.get("execution_traces", [])
@@ -498,7 +514,7 @@ def run_case(
         "artifacts": {
             "input_sha256": sha256(input_path),
             "before_effects_sha256": sha256(before_path),
-            "reference_sha256": sha256(expected_path),
+            "reference_sha256": sha256(expected_path) if expected_path is not None else None,
             "output_sha256": sha256(output_png),
             "raw_output_sha256": sha256(raw_output_png),
             "worker_report": report_json.name,
@@ -565,6 +581,7 @@ def main() -> int:
                         trace=args.trace,
                         allow_large_trace=args.allow_large_trace,
                         timeout=args.timeout,
+                        oracle_only=args.oracle_only,
                     )
                 except (OSError, ValueError, RuntimeError, subprocess.TimeoutExpired, json.JSONDecodeError) as error:
                     result = {
@@ -588,9 +605,11 @@ def main() -> int:
         "worker_sha256": sha256(worker),
         "setup": setup_report,
         "trace": args.trace,
+        "oracle_only": args.oracle_only,
         "counts": {
             "total": len(results),
             "pixel_exact": sum(row["comparison"].get("exact") is True for row in results),
+            "oracle_outputs": sum(row["comparison"].get("mode") == "oracle_only" for row in results),
             "render_success": sum(row.get("render_error") == 0 for row in results),
             "truncated": sum(bool(row.get("trace_truncation")) for row in results),
             "errors": sum(row.get("status") == "error" for row in results),
@@ -604,11 +623,14 @@ def main() -> int:
         if row.get("status") == "error":
             print(f"[ERROR] {row['case_id']} {row['error']}")
             continue
-        print(
-            f"[{'EXACT' if comparison.get('exact') else 'DIFF'}] {row['case_id']} "
-            f"max={comparison.get('max_diff', 'n/a')} "
-            f"pixels={comparison.get('nonzero_pixels', 'n/a')}"
-        )
+        if comparison.get("mode") == "oracle_only":
+            print(f"[ORACLE] {row['case_id']} output={row['artifacts']['output_png']} sha256={row['artifacts']['output_sha256']}")
+        else:
+            print(
+                f"[{'EXACT' if comparison.get('exact') else 'DIFF'}] {row['case_id']} "
+                f"max={comparison.get('max_diff', 'n/a')} "
+                f"pixels={comparison.get('nonzero_pixels', 'n/a')}"
+            )
     print(
         f"[SUMMARY] exact={summary['counts']['pixel_exact']}/{summary['counts']['total']} "
         f"render_success={summary['counts']['render_success']}/{summary['counts']['total']} "
@@ -617,6 +639,8 @@ def main() -> int:
     print(f"[INFO] result: {summary_path}")
     if summary["counts"]["errors"]:
         return 1
+    if args.oracle_only:
+        return 0 if summary["counts"]["oracle_outputs"] == summary["counts"]["total"] else 1
     return 0 if summary["counts"]["pixel_exact"] == summary["counts"]["total"] else 2
 
 

@@ -1,0 +1,101 @@
+import importlib.util
+import json
+import subprocess
+import sys
+import tempfile
+import unittest
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+SPEC = importlib.util.spec_from_file_location("campaign", ROOT / "scripts/run_ae_generalization_smoke.py")
+assert SPEC and SPEC.loader
+campaign = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(campaign)
+
+
+class AEGeneralizationSmokeTests(unittest.TestCase):
+    def test_prepares_generic_request_accepted_by_single_case_schema(self) -> None:
+        state = {"key": "toon", "binary": "OLMToonDilate",
+                 "effect_match_name": "ADBE OLMToonDilate", "effect_name": "OLM Toon Dilate",
+                 "execution_route": "Smart", "supported_tuple": "default", "params": ()}
+        with tempfile.TemporaryDirectory() as raw:
+            request, case_id = campaign.prepare_request(Path(raw), state, 16, 31, 17, "odd")
+            self.assertTrue((request / "input" / f"{case_id}_before_effects.png").is_file())
+            manifest = __import__("json").loads((request / "request_manifest.json").read_text())
+            reference = __import__("json").loads((request / "reference_manifest.json").read_text())
+            self.assertEqual(manifest["cases"][0]["id"], case_id)
+            self.assertEqual(reference["project"]["bits_per_channel"], 16)
+            self.assertEqual(reference["comp"]["width"], 31)
+
+    def test_plugin_probe_is_read_only_and_complete(self) -> None:
+        state = campaign.plugin_state("colorkey")
+        self.assertIn("installed_sha256", state)
+        self.assertEqual([row["config"] for row in state["local_candidates"]], ["Debug", "Release"])
+
+    def test_all_ten_pipl_match_names_and_declared_depths_are_encoded(self) -> None:
+        self.assertEqual(len(campaign.PLUGINS), 10)
+        self.assertEqual(campaign.PLUGINS["toon"]["match"], "ADBE OLMToonDilate")
+        self.assertEqual(campaign.PLUGINS["blur"]["match"], "OLM OLM Blur")
+        self.assertEqual(campaign.PLUGINS["directional"]["depths"], (8,))
+        self.assertEqual(campaign.PLUGINS["smoother"]["depths"], (8, 16))
+
+    def run_preflight(self, profile: str, plugins: tuple[str, ...] = ()) -> dict:
+        with tempfile.TemporaryDirectory() as raw:
+            plugin_args = [item for plugin in plugins for item in ("--plugin", plugin)]
+            completed = subprocess.run(
+                [sys.executable, str(ROOT / "scripts/run_ae_generalization_smoke.py"),
+                 "--profile", profile, "--output-dir", raw, *plugin_args],
+                check=True, text=True, capture_output=True,
+            )
+            self.assertNotIn("AE single case status", completed.stdout)
+            return json.loads((Path(raw) / "campaign_result.json").read_text())
+
+    def test_quick_profile_is_one_first_declared_depth_hd_case_per_plugin(self) -> None:
+        report = self.run_preflight("quick")
+        self.assertEqual(report["profile"], "quick")
+        self.assertEqual(len(report["matrix"]), 10)
+        self.assertEqual({row["plugin"] for row in report["matrix"]},
+                         {spec["binary"] for spec in campaign.PLUGINS.values()})
+        self.assertTrue(all((row["width"], row["height"], row["status"]) ==
+                            (1920, 1080, "planned") for row in report["matrix"]))
+        first_depth = {spec["binary"]: spec["depths"][0] for spec in campaign.PLUGINS.values()}
+        self.assertTrue(all(row["depth"] == first_depth[row["plugin"]]
+                            for row in report["matrix"]))
+
+    def test_full_profile_retains_declared_54_case_matrix(self) -> None:
+        report = self.run_preflight("full")
+        self.assertEqual(report["profile"], "full")
+        self.assertEqual(len(report["matrix"]), 54)
+        expected = {
+            (spec["binary"], depth, width, height)
+            for spec in campaign.PLUGINS.values()
+            for depth in spec["depths"]
+            for width, height, _ in campaign.SIZES
+        }
+        actual = {(row["plugin"], row["depth"], row["width"], row["height"])
+                  for row in report["matrix"]}
+        self.assertEqual(actual, expected)
+        self.assertTrue(report["unsupported_routes"])
+
+    def test_two_plugin_retry_filter_and_parameter_evidence(self) -> None:
+        report = self.run_preflight("quick", ("kirakira", "smoother2"))
+        self.assertEqual(report["selected_plugin_keys"], ["kirakira", "smoother2"])
+        self.assertEqual([row["plugin"] for row in report["matrix"]],
+                         ["OLMKiraKira", "OLMSmoother2"])
+        by_plugin = {row["plugin"]: row for row in report["matrix"]}
+        kira = {row["match_name"]: row["value"]
+                for row in by_plugin["OLMKiraKira"]["parameter_overrides"]}
+        self.assertEqual(kira["OLM OLM Kira Kira-0003"], 0)
+        self.assertEqual(kira["OLM OLM Kira Kira-0006"], 3)
+        smoother = {row["match_name"]: row["value"]
+                    for row in by_plugin["OLMSmoother2"]["parameter_overrides"]}
+        self.assertEqual(smoother["OLM Smoother v2-0006"], 2)
+        self.assertEqual(smoother["OLM Smoother v2-0007"], 1)
+        self.assertEqual(smoother["OLM Smoother v2-0008"], 2.4)
+        jsx = (ROOT / "scripts/ae_render_single_case.jsx").read_text()
+        self.assertIn('" actual=" + valueToLog(coerceValue(prop.value))', jsx)
+
+
+if __name__ == "__main__":
+    unittest.main()
