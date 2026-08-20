@@ -49,6 +49,7 @@ MANIFEST = [
     ("OLMKiraKira", "tests/test_olmkirakira_generic_beta_lane_20260820.py", "mac/OLMKiraKira/OLMKiraKira.cpp"),
     ("OLMKiraKira", "tests/test_olmkirakira_generic_beta_sanitizers_20260820.py", "mac/OLMKiraKira/OLMKiraKira.cpp"),
     ("OLMKiraKira", "tests/test_olmkirakira_native_smoke_tuple_20260820.py", "mac/OLMKiraKira/OLMKiraKira.cpp"),
+    ("OLMKiraKira", "tests/test_olmkirakira_mode3_ui_length_beta_20260821.py", "mac/OLMKiraKira/OLMKiraKira.cpp"),
     ("OLMRadialBlur", "tests/test_olmradialblur_generic_baseline_20260820.py", "mac/OLMRadialBlur/OLMRadialBlur.cpp"),
     ("OLMRadialBlur", "tests/test_olmradialblur_generic_baseline_sanitizers_20260820.py", "mac/OLMRadialBlur/OLMRadialBlur.cpp"),
     ("OLMRadialBlur", "tests/test_olmradialblur_generic_type3_sanitizers_20260820.py", "mac/OLMRadialBlur/OLMRadialBlur.cpp"),
@@ -111,6 +112,22 @@ DIRECTIONAL_BACKONLY_DEPENDENCIES = (
     "core/olm_sha256_rows.h",
     "refs/conformance/dblur_mode1_backonly_portable_20260805.json",
 )
+KIRAKIRA_MODE3_UI_DEPENDENCIES = (
+    "mac/OLMKiraKira/OLMKiraKira.cpp",
+    "mac/OLMKiraKira/OLMKiraKira.h",
+    "mac/OLMKiraKira/OLMKiraKira_Strings.cpp",
+    "mac/OLMKiraKira/OLMKiraKira_Strings.h",
+    "core/kirakira_gaussian.h",
+    "core/kirakira_highlight.h",
+    "core/kirakira_mode4.h",
+    "core/kirakira_warp.h",
+    "core/kirakira_merge2.h",
+    "tests/olmkirakira_generic_beta_sanitizer_harness.cpp",
+    "tools/emulation/olmkirakira_public_smart_bounded_closure_harness_20260812.cpp",
+    "tools/emulation/test_olmkirakira_mode3_geometry_generalization_actual_aex_20260810.py",
+    "tools/emulation/test_kirakira_mode3_default50_canonical.cpp",
+    "refs/conformance/olmkirakira_mode3_geometry_generalization_actual_aex_20260810.json",
+)
 DEPENDENCY_PATHS: dict[str, tuple[str, ...]] = {
     "tests/test_ae_generalization_smoke.py": (
         "scripts/run_ae_generalization_smoke.py",
@@ -136,6 +153,9 @@ DEPENDENCY_PATHS: dict[str, tuple[str, ...]] = {
         "Util/AEGP_SuiteHandler.cpp",
         "Util/MissingSuiteError.cpp",
     ),
+    "tests/test_olmkirakira_mode3_ui_length_beta_20260821.py": (
+        *KIRAKIRA_MODE3_UI_DEPENDENCIES,
+    ),
     "tests/test_generic_beta_perf_smoke_runner.py": (
         "tools/perf/run_generic_beta_smoke.py",
         "reports/generic_beta_perf_smoke.json",
@@ -155,6 +175,8 @@ DEPENDENCY_PATHS: dict[str, tuple[str, ...]] = {
         "tools/emulation/test_dblur_generic_backonly_beta_20260821.py",
         "tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py",
         *DIRECTIONAL_BACKONLY_DEPENDENCIES,
+        "tests/test_olmkirakira_mode3_ui_length_beta_20260821.py",
+        *KIRAKIRA_MODE3_UI_DEPENDENCIES,
         "mac/ColorKeep/ColorKeep.cpp",
         "mac/OLMBlur/OLMBlur.cpp",
         "mac/OLMColorKey/OLMColorKey.cpp",

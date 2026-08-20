@@ -95,6 +95,11 @@ class GenericBetaGateTests(unittest.TestCase):
             "tests/test_run_olm_generic_beta_gate.py",
             "scripts/run_olm_generic_beta_gate.py",
         ), rows)
+        self.assertIn((
+            "OLMKiraKira",
+            "tests/test_olmkirakira_mode3_ui_length_beta_20260821.py",
+            "mac/OLMKiraKira/OLMKiraKira.cpp",
+        ), rows)
         directional_required = {
             "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp",
             "mac/OLMDirectionalBlur/OLMDirectionalBlur.h",
@@ -117,6 +122,30 @@ class GenericBetaGateTests(unittest.TestCase):
         self.assertTrue(
             directional_required.issubset(GATE.DIRECTIONAL_BACKONLY_DEPENDENCIES)
         )
+        kirakira_required = {
+            "mac/OLMKiraKira/OLMKiraKira.cpp",
+            "mac/OLMKiraKira/OLMKiraKira.h",
+            "mac/OLMKiraKira/OLMKiraKira_Strings.cpp",
+            "mac/OLMKiraKira/OLMKiraKira_Strings.h",
+            "core/kirakira_gaussian.h",
+            "core/kirakira_highlight.h",
+            "core/kirakira_mode4.h",
+            "core/kirakira_warp.h",
+            "core/kirakira_merge2.h",
+            "tests/olmkirakira_generic_beta_sanitizer_harness.cpp",
+            "tools/emulation/olmkirakira_public_smart_bounded_closure_harness_20260812.cpp",
+            "tools/emulation/test_olmkirakira_mode3_geometry_generalization_actual_aex_20260810.py",
+            "tools/emulation/test_kirakira_mode3_default50_canonical.cpp",
+            "refs/conformance/olmkirakira_mode3_geometry_generalization_actual_aex_20260810.json",
+        }
+        self.assertTrue(
+            kirakira_required.issubset(GATE.KIRAKIRA_MODE3_UI_DEPENDENCIES)
+        )
+        external_sdk_prefixes = ("Headers/", "Util/", "Resources/")
+        self.assertFalse(any(
+            dependency.startswith(external_sdk_prefixes)
+            for dependency in GATE.KIRAKIRA_MODE3_UI_DEPENDENCIES
+        ))
         required = {
             "tests/test_ae_batch_png_integrity.py": {
                 "scripts/run_ae_validation_batch.py",
@@ -137,6 +166,11 @@ class GenericBetaGateTests(unittest.TestCase):
                 "tools/emulation/test_dblur_generic_backonly_beta_20260821.py",
                 "tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py",
                 *GATE.DIRECTIONAL_BACKONLY_DEPENDENCIES,
+                "tests/test_olmkirakira_mode3_ui_length_beta_20260821.py",
+                *GATE.KIRAKIRA_MODE3_UI_DEPENDENCIES,
+            },
+            "tests/test_olmkirakira_mode3_ui_length_beta_20260821.py": {
+                *GATE.KIRAKIRA_MODE3_UI_DEPENDENCIES,
             },
             "tools/emulation/test_dblur_generic_backonly_beta_20260821.py": {
                 *GATE.DIRECTIONAL_BACKONLY_DEPENDENCIES,
