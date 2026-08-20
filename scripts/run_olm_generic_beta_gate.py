@@ -39,6 +39,8 @@ MANIFEST = [
     ("OLMColorKey-ROI", "tests/test_olmcolorkey_generic_roi_tile.py", "mac/OLMColorKey/OLMColorKey.cpp"),
     ("OLMDirectionalBlur", "tools/emulation/test_dblur_generic_pf8_geometry_beta_20260820.py", "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp"),
     ("OLMDirectionalBlur", "tools/emulation/test_dblur_generic_deep_geometry_beta_20260820.py", "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp"),
+    ("OLMDirectionalBlur", "tools/emulation/test_dblur_generic_backonly_beta_20260821.py", "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp"),
+    ("OLMDirectionalBlur", "tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py", "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp"),
     ("OLMDirectionalBlur", "tools/emulation/test_dblur_generic_admission_budget_20260821.py", "core/dblur_generic_budget.h"),
     ("OLMDirectionalBlur", "tools/emulation/test_olmdirectionalblur_smart_cleanup_atomic_20260813.py", "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp"),
     ("OLMDirectionalBlur-ROI-policy", "tools/emulation/test_dblur_generic_roi_policy_20260820.py", "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp"),
@@ -90,6 +92,25 @@ PERFORMANCE_DRIVERS = (
     "tests/test_olmsmoother2_default_beta_lane_20260820.py",
     "tools/perf/run_olmtoondilate_generic_production_perf.py",
 )
+DIRECTIONAL_BACKONLY_DEPENDENCIES = (
+    "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp",
+    "mac/OLMDirectionalBlur/OLMDirectionalBlur.h",
+    "mac/OLMDirectionalBlur/OLMDirectionalBlur_Strings.h",
+    "core/dblur_frontonly.cpp",
+    "core/dblur_frontonly.h",
+    "core/dblur_generic_budget.h",
+    "core/dblur_rotate.cpp",
+    "core/dblur_rotate.h",
+    "core/dblur_rowdriver.cpp",
+    "core/dblur_rowdriver.h",
+    "core/dblur_field.cpp",
+    "core/dblur_field.h",
+    "core/dblur_gaussian.h",
+    "core/dblur_noise.h",
+    "core/olm_checked_allocation.h",
+    "core/olm_sha256_rows.h",
+    "refs/conformance/dblur_mode1_backonly_portable_20260805.json",
+)
 DEPENDENCY_PATHS: dict[str, tuple[str, ...]] = {
     "tests/test_ae_generalization_smoke.py": (
         "scripts/run_ae_generalization_smoke.py",
@@ -105,6 +126,15 @@ DEPENDENCY_PATHS: dict[str, tuple[str, ...]] = {
         "scripts/run_ae_validation_batch.py",
         "scripts/ae_pixel_validation_render.jsx",
         "scripts/run_ae_single_case.py",
+    ),
+    "tools/emulation/test_dblur_generic_backonly_beta_20260821.py": (
+        *DIRECTIONAL_BACKONLY_DEPENDENCIES,
+    ),
+    "tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py": (
+        *DIRECTIONAL_BACKONLY_DEPENDENCIES,
+        "mac/OLMDirectionalBlur/OLMDirectionalBlur_Strings.cpp",
+        "Util/AEGP_SuiteHandler.cpp",
+        "Util/MissingSuiteError.cpp",
     ),
     "tests/test_generic_beta_perf_smoke_runner.py": (
         "tools/perf/run_generic_beta_smoke.py",
@@ -122,6 +152,9 @@ DEPENDENCY_PATHS: dict[str, tuple[str, ...]] = {
         "refs/conformance/olm_all10_generic_beta_quick_ae_smoke_raw_20260820.json",
         "reports/generic_beta_perf_smoke.json",
         "core/dblur_generic_budget.h",
+        "tools/emulation/test_dblur_generic_backonly_beta_20260821.py",
+        "tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py",
+        *DIRECTIONAL_BACKONLY_DEPENDENCIES,
         "mac/ColorKeep/ColorKeep.cpp",
         "mac/OLMBlur/OLMBlur.cpp",
         "mac/OLMColorKey/OLMColorKey.cpp",
