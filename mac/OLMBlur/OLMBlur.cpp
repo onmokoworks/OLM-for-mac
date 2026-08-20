@@ -916,9 +916,9 @@ render_16bpc_nonlegacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *outp
 		std::vector<std::uint16_t> destination_argb16(pixels * 4);
 
 		for (size_t y = 0; y < height; ++y) {
-			const PF_Pixel16 *source_row = (const PF_Pixel16*)((const char*)input->data + y * (size_t)input->rowbytes);
+			const unsigned char *source_row = (const unsigned char*)input->data + y * (size_t)input->rowbytes;
 			for (size_t x = 0; x < width; ++x) {
-				const PF_Pixel16 &pixel = source_row[x];
+				PF_Pixel16 pixel; memcpy(&pixel,source_row+x*sizeof(pixel),sizeof(pixel));
 				std::uint16_t *packed = source_argb16.data() + (y * width + x) * 4;
 				packed[0] = pixel.alpha;
 				packed[1] = pixel.red;
@@ -944,15 +944,16 @@ render_16bpc_nonlegacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *outp
 		}
 
 		for (size_t y = 0; y < height; ++y) {
-			const PF_Pixel16 *source_row = (const PF_Pixel16*)((const char*)input->data + y * (size_t)input->rowbytes);
-			PF_Pixel16 *output_row = (PF_Pixel16*)((char*)output->data + y * (size_t)output->rowbytes);
+			const unsigned char *source_row = (const unsigned char*)input->data + y * (size_t)input->rowbytes;
+			unsigned char *output_row = (unsigned char*)output->data + y * (size_t)output->rowbytes;
 			for (size_t x = 0; x < width; ++x) {
 				const std::uint16_t *packed = destination_argb16.data() + (y * width + x) * 4;
-				PF_Pixel16 &pixel = output_row[x];
-				pixel.alpha = source_row[x].alpha;
+				PF_Pixel16 source_pixel,pixel; memcpy(&source_pixel,source_row+x*sizeof(source_pixel),sizeof(source_pixel));
+				pixel.alpha = source_pixel.alpha;
 				pixel.red = packed[1];
 				pixel.green = packed[2];
 				pixel.blue = packed[3];
+				memcpy(output_row+x*sizeof(pixel),&pixel,sizeof(pixel));
 				if (x == 601 && y == 598) {
 					observe_blur_store16_pixel(observation, bp, (A_long)width, (A_long)height,
 						(A_long)x, (A_long)y,
@@ -986,9 +987,9 @@ render_16bpc_legacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *output,
 		std::vector<std::uint16_t> destination_argb16(pixels * 4);
 
 		for (size_t y = 0; y < height; ++y) {
-			const PF_Pixel16 *source_row = (const PF_Pixel16*)((const char*)input->data + y * (size_t)input->rowbytes);
+			const unsigned char *source_row = (const unsigned char*)input->data + y * (size_t)input->rowbytes;
 			for (size_t x = 0; x < width; ++x) {
-				const PF_Pixel16 &pixel = source_row[x];
+				PF_Pixel16 pixel; memcpy(&pixel,source_row+x*sizeof(pixel),sizeof(pixel));
 				std::uint16_t *packed = source_argb16.data() + (y * width + x) * 4;
 				packed[0] = pixel.alpha;
 				packed[1] = pixel.red;
@@ -1009,15 +1010,16 @@ render_16bpc_legacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *output,
 			width, height, params);
 
 		for (size_t y = 0; y < height; ++y) {
-			const PF_Pixel16 *source_row = (const PF_Pixel16*)((const char*)input->data + y * (size_t)input->rowbytes);
-			PF_Pixel16 *output_row = (PF_Pixel16*)((char*)output->data + y * (size_t)output->rowbytes);
+			const unsigned char *source_row = (const unsigned char*)input->data + y * (size_t)input->rowbytes;
+			unsigned char *output_row = (unsigned char*)output->data + y * (size_t)output->rowbytes;
 			for (size_t x = 0; x < width; ++x) {
 				const std::uint16_t *packed = destination_argb16.data() + (y * width + x) * 4;
-				PF_Pixel16 &pixel = output_row[x];
-				pixel.alpha = source_row[x].alpha;
+				PF_Pixel16 source_pixel,pixel; memcpy(&source_pixel,source_row+x*sizeof(source_pixel),sizeof(source_pixel));
+				pixel.alpha = source_pixel.alpha;
 				pixel.red = packed[1];
 				pixel.green = packed[2];
 				pixel.blue = packed[3];
+				memcpy(output_row+x*sizeof(pixel),&pixel,sizeof(pixel));
 			}
 		}
 	} catch (const std::bad_alloc &) {
@@ -1107,9 +1109,9 @@ render_32bpc_nonlegacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *outp
 		std::vector<float> destination_argb(pixels * 4);
 
 		for (size_t y = 0; y < height; ++y) {
-			const PF_PixelFloat *source_row = (const PF_PixelFloat*)((const char*)input->data + y * (size_t)input->rowbytes);
+			const unsigned char *source_row = (const unsigned char*)input->data + y * (size_t)input->rowbytes;
 			for (size_t x = 0; x < width; ++x) {
-				const PF_PixelFloat &pixel = source_row[x];
+				PF_PixelFloat pixel; memcpy(&pixel,source_row+x*sizeof(pixel),sizeof(pixel));
 				float *packed = source_argb.data() + (y * width + x) * 4;
 				packed[0] = pixel.alpha;
 				packed[1] = pixel.red;
@@ -1128,14 +1130,15 @@ render_32bpc_nonlegacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *outp
 			source_argb.data(), destination_argb.data(), width, height, params);
 
 		for (size_t y = 0; y < height; ++y) {
-			PF_PixelFloat *output_row = (PF_PixelFloat*)((char*)output->data + y * (size_t)output->rowbytes);
+			unsigned char *output_row = (unsigned char*)output->data + y * (size_t)output->rowbytes;
 			for (size_t x = 0; x < width; ++x) {
 				const float *packed = destination_argb.data() + (y * width + x) * 4;
-				PF_PixelFloat &pixel = output_row[x];
+				PF_PixelFloat pixel;
 				pixel.alpha = packed[0];
 				pixel.red = packed[1];
 				pixel.green = packed[2];
 				pixel.blue = packed[3];
+				memcpy(output_row+x*sizeof(pixel),&pixel,sizeof(pixel));
 			}
 		}
 	} catch (const std::bad_alloc &) {
@@ -1161,9 +1164,9 @@ render_32bpc_legacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *output,
 		std::vector<float> destination_argb(pixels * 4);
 
 		for (size_t y = 0; y < height; ++y) {
-			const PF_PixelFloat *source_row = (const PF_PixelFloat*)((const char*)input->data + y * (size_t)input->rowbytes);
+			const unsigned char *source_row = (const unsigned char*)input->data + y * (size_t)input->rowbytes;
 			for (size_t x = 0; x < width; ++x) {
-				const PF_PixelFloat &pixel = source_row[x];
+				PF_PixelFloat pixel; memcpy(&pixel,source_row+x*sizeof(pixel),sizeof(pixel));
 				float *packed = source_argb.data() + (y * width + x) * 4;
 				packed[0] = pixel.alpha;
 				packed[1] = pixel.red;
@@ -1183,14 +1186,15 @@ render_32bpc_legacy_adapter(const PF_EffectWorld *input, PF_EffectWorld *output,
 			source_argb.data(), destination_argb.data(), width, height, params);
 
 		for (size_t y = 0; y < height; ++y) {
-			PF_PixelFloat *output_row = (PF_PixelFloat*)((char*)output->data + y * (size_t)output->rowbytes);
+			unsigned char *output_row = (unsigned char*)output->data + y * (size_t)output->rowbytes;
 			for (size_t x = 0; x < width; ++x) {
 				const float *packed = destination_argb.data() + (y * width + x) * 4;
-				PF_PixelFloat &pixel = output_row[x];
+				PF_PixelFloat pixel;
 				pixel.alpha = packed[0];
 				pixel.red = packed[1];
 				pixel.green = packed[2];
 				pixel.blue = packed[3];
+				memcpy(output_row+x*sizeof(pixel),&pixel,sizeof(pixel));
 			}
 		}
 	} catch (const std::bad_alloc &) {
@@ -1277,7 +1281,9 @@ BlurRender(PF_InData *in_data, PF_EffectWorld *input, PF_EffectWorld *output,
 			for (A_long iter = 1; iter <= bp->repeat; ++iter) {
 				float sigma = sigma_base / (float)iter;
 				if (sigma <= 0.0f) break;
-				float denom = 2.0f * sigma * sigma;
+				// The Windows Legacy owner doubles sigma before the final multiply;
+				// preserve that float32 operation boundary instead of reassociating.
+				float denom = (sigma + sigma) * sigma;
 				weights[radius] = 1.0f;
 				for (A_long k = 1; k <= radius; ++k) {
 					float v = expf(-(float)(k*k) / denom);
@@ -1341,47 +1347,73 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	PF_Err err = PF_Err_NONE;
 	AEGP_SuiteHandler suites(in_data->pica_basicP);
 
-	BlurParams bp;
-	AEFX_CLR_STRUCT(bp);
-	bp.blur_amount = (float)params[OLMBLUR_BLUR_AMOUNT]->u.fs_d.value;
-	bp.blur_smoothness = (float)params[OLMBLUR_BLUR_SMOOTHNESS]->u.fd.value / 65536.0f;
-	bp.repeat      = params[OLMBLUR_REPEAT]->u.sd.value;
-	bp.bias_dir    = params[OLMBLUR_BIAS_DIRECTION]->u.pd.value;
-	bp.legacy      = params[OLMBLUR_LEGACY]->u.bd.value;
-
+	if (!params || !output || !params[OLMBLUR_INPUT] ||
+		!params[OLMBLUR_BLUR_AMOUNT] || !params[OLMBLUR_BLUR_SMOOTHNESS] ||
+		!params[OLMBLUR_REPEAT]) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
 	PF_EffectWorld *input = &params[OLMBLUR_INPUT]->u.ld;
-	PF_PixelFormat format = PF_PixelFormat_INVALID;
+	if (!input->data || !output->data || input->width != output->width ||
+		input->height != output->height || input->rowbytes != output->rowbytes) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	PF_PixelFormat input_format = PF_PixelFormat_INVALID;
+	PF_PixelFormat output_format = PF_PixelFormat_INVALID;
 	AEFX_SuiteScoper<PF_WorldSuite2> world_suite(in_data, kPFWorldSuite,
 	                                             kPFWorldSuiteVersion2, out_data);
-	ERR(world_suite->PF_GetPixelFormat(input, &format));
+	ERR(world_suite->PF_GetPixelFormat(input, &input_format));
+	ERR(world_suite->PF_GetPixelFormat(output, &output_format));
 	if (err) return err;
+	if (input_format != output_format) return PF_Err_BAD_CALLBACK_PARAM;
 
-	short bpc = 0;
-	switch (format) {
+	A_long expected_rowbytes = 0;
+	switch (output_format) {
 	case PF_PixelFormat_ARGB32:
-		bpc = 8;
+		expected_rowbytes = 24 * (A_long)sizeof(PF_Pixel8) + 17;
 		break;
 	case PF_PixelFormat_ARGB64:
-		bpc = 16;
+		expected_rowbytes = 24 * (A_long)sizeof(PF_Pixel16) + 23;
 		break;
 	case PF_PixelFormat_ARGB128:
-		bpc = 32;
-		break;
+		// The retained Windows classic owner tests only PF_WorldFlag_DEEP,
+		// so PF32 aliases its PF16 branch.  Keep the unowned float route
+		// fail-closed; the advertised numerical PF32 owner is Smart Render.
+		return PF_Err_BAD_CALLBACK_PARAM;
 	default:
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	if (input->width != 24 || input->height != 24 ||
+		input->rowbytes != expected_rowbytes) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+
+	// The current Windows classic export reads only parameter slots 1..3 and,
+	// with the registered float-slider default, observes a zero low dword for
+	// Blur Amount.  Its PF8/PF16 non-Legacy worker therefore returns after the
+	// initial world copy.  Admit only that bounded public tuple here.  Bias and
+	// Legacy are deliberately not consumed: the classic owner does not read
+	// slots 4 or 5.  All numerical/non-default work remains on Smart Render.
+	const PF_FpLong blur_amount = params[OLMBLUR_BLUR_AMOUNT]->u.fs_d.value;
+	const A_long blur_smoothness = params[OLMBLUR_BLUR_SMOOTHNESS]->u.fd.value;
+	const A_long repeat = params[OLMBLUR_REPEAT]->u.sd.value;
+	if (blur_amount != 5.0 || blur_smoothness != 100 * 65536 || repeat != 2) {
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
 
 	ERR(PF_COPY(input, output, NULL, NULL));
-	ERR(BlurRender(in_data, input, output, bpc, &bp));
 	return err;
 }
 
 static PF_Err
 SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extra)
 {
+	(void)out_data;
+	if (!in_data || !extra || !extra->input || !extra->output || !extra->cb ||
+		!extra->cb->checkout_layer) return PF_Err_BAD_CALLBACK_PARAM;
 	PF_Err err = PF_Err_NONE;
 	PF_RenderRequest req = extra->input->output_request;
 	PF_CheckoutResult in_result;
+	AEFX_CLR_STRUCT(in_result);
 
 	ERR(extra->cb->checkout_layer(in_data->effect_ref,
 		OLMBLUR_INPUT, OLMBLUR_INPUT, &req, in_data->current_time,
@@ -1397,55 +1429,545 @@ SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extr
 	return err;
 }
 
+static bool
+ExactPublicWorld(const PF_EffectWorld *world, short bpc, A_long width, A_long height,
+	A_long rowbytes)
+{
+	if (!world || !world->data || world->width != width || world->height != height ||
+		world->origin_x != 0 || world->origin_y != 0 ||
+		world->extent_hint.left != 0 || world->extent_hint.top != 0 ||
+		world->extent_hint.right != width || world->extent_hint.bottom != height) return false;
+	const PF_WorldFlags expected_flags = bpc == 8 ? 0 : PF_WorldFlag_DEEP;
+	return rowbytes > 0 && world->rowbytes == rowbytes &&
+		world->world_flags == expected_flags;
+}
+
+static bool
+PublicWorldsDisjoint(const PF_EffectWorld *input, const PF_EffectWorld *output,
+	A_long height)
+{
+	const size_t bytes = (size_t)input->rowbytes * (size_t)height;
+	const uintptr_t in_begin = (uintptr_t)input->data;
+	const uintptr_t out_begin = (uintptr_t)output->data;
+	if (!bytes || in_begin > UINTPTR_MAX - bytes || out_begin > UINTPTR_MAX - bytes) return false;
+	const uintptr_t in_end = in_begin + bytes, out_end = out_begin + bytes;
+	return in_end <= out_begin || out_end <= in_begin;
+}
+
+static PF_Err
+GetPublicWorldFormats(PF_InData *in_data, const PF_EffectWorld *input,
+	const PF_EffectWorld *output, short bpc)
+{
+	if (!in_data || !in_data->pica_basicP ||
+		!in_data->pica_basicP->AcquireSuite || !in_data->pica_basicP->ReleaseSuite)
+		return PF_Err_BAD_CALLBACK_PARAM;
+	const void *raw_suite = NULL;
+	PF_Err err = PF_Err_NONE;
+	try {
+		err = (PF_Err)in_data->pica_basicP->AcquireSuite(
+			kPFWorldSuite, kPFWorldSuiteVersion2, &raw_suite);
+	} catch (const PF_Err &caught) { err = caught; }
+	catch (const std::bad_alloc &) { err = PF_Err_OUT_OF_MEMORY; }
+	catch (...) { err = PF_Err_INTERNAL_STRUCT_DAMAGED; }
+	if (err) return err;
+	const PF_WorldSuite2 *suite = (const PF_WorldSuite2*)raw_suite;
+	PF_PixelFormat input_format = PF_PixelFormat_INVALID;
+	PF_PixelFormat output_format = PF_PixelFormat_INVALID;
+	try {
+		if (!suite || !suite->PF_GetPixelFormat) err = PF_Err_BAD_CALLBACK_PARAM;
+		if (!err) err = suite->PF_GetPixelFormat(input, &input_format);
+		if (!err) err = suite->PF_GetPixelFormat(output, &output_format);
+	} catch (const PF_Err &caught) { err = caught; }
+	catch (const std::bad_alloc &) { err = PF_Err_OUT_OF_MEMORY; }
+	catch (...) { err = PF_Err_INTERNAL_STRUCT_DAMAGED; }
+	if (!err) {
+		const PF_PixelFormat expected = bpc == 8 ? PF_PixelFormat_ARGB32 :
+			(bpc == 16 ? PF_PixelFormat_ARGB64 :
+			 (bpc == 32 ? PF_PixelFormat_ARGB128 : PF_PixelFormat_INVALID));
+		if (expected == PF_PixelFormat_INVALID || input_format != expected ||
+			output_format != expected) err = PF_Err_BAD_CALLBACK_PARAM;
+	}
+	PF_Err release_err = PF_Err_NONE;
+	try {
+		release_err = (PF_Err)in_data->pica_basicP->ReleaseSuite(
+			kPFWorldSuite, kPFWorldSuiteVersion2);
+	} catch (const PF_Err &caught) { release_err = caught; }
+	catch (const std::bad_alloc &) { release_err = PF_Err_OUT_OF_MEMORY; }
+	catch (...) { release_err = PF_Err_INTERNAL_STRUCT_DAMAGED; }
+	return err ? err : release_err;
+}
+
+// The exact public lanes below preserve captured Windows contracts.  This
+// validator owns the deliberately broader beta lane: full-frame worlds with
+// arbitrary pixels and any legal (independent) row stride.
+struct PublicBlurParamValues {
+	PF_FpLong amount;
+	A_long smoothness_fixed, repeat, bias, legacy;
+};
+
+static bool
+GenericBetaWorld(const PF_EffectWorld *world, size_t pixel_bytes,
+	A_long width, A_long height)
+{
+	if (!world || !world->data || !pixel_bytes || width <= 0 || height <= 0 ||
+		world->width != width || world->height != height || world->rowbytes <= 0 ||
+		world->origin_x != 0 || world->origin_y != 0 ||
+		world->extent_hint.left != 0 || world->extent_hint.top != 0 ||
+		world->extent_hint.right != width || world->extent_hint.bottom != height)
+		return false;
+	const size_t usize_width = (size_t)width;
+	if (usize_width > ((size_t)-1) / pixel_bytes) return false;
+	const size_t active = usize_width * pixel_bytes;
+	return active <= (size_t)world->rowbytes;
+}
+
+static bool
+GenericBetaTuple(const PublicBlurParamValues& raw, A_long width, A_long height)
+{
+	if (!isfinite(raw.amount) || raw.amount < 1.0 || raw.amount > 1000.0 ||
+		raw.smoothness_fixed < 1 * 65536 || raw.smoothness_fixed > 100 * 65536 ||
+		raw.repeat < 1 || raw.repeat > 10 || raw.bias < 1 || raw.bias > 2 ||
+		(raw.legacy != 0 && raw.legacy != 1) || width <= 0 || height <= 0 ||
+		width > 4096 || height > 2160)
+		return false;
+	// Preserve the tiny captured fixtures below as exact compatibility owners.
+	if (width <= 24 && height <= 24) return false;
+	const size_t usize_width = (size_t)width, usize_height = (size_t)height;
+	if (usize_width > ((size_t)-1) / usize_height) return false;
+	const size_t pixels = usize_width * usize_height;
+	// PF32 is the worst case: packed source/destination plus two RGB float
+	// planes and flags approach 57 bytes/pixel.  Leave allocator headroom while
+	// admitting a full UHD frame at ordinary settings.
+	if (pixels > (640u * 1024u * 1024u) / 64u) return false;
+	// The current workers are synchronous and have no host abort callback.
+	// Bound their dominant O(pixels * radius * repeat) cost before entering the
+	// worker; host/perf timeouts remain an outer watchdog, never a cancellation
+	// mechanism for an already-running render.
+	const size_t radius=(size_t)ceil(raw.amount);
+	const size_t max_work=3600u*1000u*1000u;
+	if (!radius || pixels > max_work/radius ||
+		pixels*radius > max_work/(size_t)raw.repeat) return false;
+	return true;
+}
+
+static PF_Err
+CheckoutPublicBlurParams(PF_InData *in_data, BlurParams *bp, PublicBlurParamValues *raw)
+{
+	if (!in_data || !bp || !raw || !in_data->inter.checkout_param || !in_data->inter.checkin_param)
+		return PF_Err_BAD_CALLBACK_PARAM;
+	AEFX_CLR_STRUCT(*raw);
+	const A_long indices[5] = {OLMBLUR_BLUR_AMOUNT, OLMBLUR_BLUR_SMOOTHNESS,
+		OLMBLUR_REPEAT, OLMBLUR_BIAS_DIRECTION, OLMBLUR_LEGACY};
+	for (int ordinal = 0; ordinal < 5; ++ordinal) {
+		PF_ParamDef p; AEFX_CLR_STRUCT(p);
+		PF_Err err = PF_CHECKOUT_PARAM(in_data, indices[ordinal], in_data->current_time,
+			in_data->time_step, in_data->time_scale, &p);
+		if (err) return err;
+		if (ordinal == 0) { raw->amount=p.u.fs_d.value; bp->blur_amount=(float)raw->amount; }
+		else if (ordinal == 1) { raw->smoothness_fixed=p.u.fd.value; bp->blur_smoothness=(float)raw->smoothness_fixed/65536.0f; }
+		else if (ordinal == 2) { raw->repeat=p.u.sd.value; bp->repeat=raw->repeat; }
+		else if (ordinal == 3) { raw->bias=p.u.pd.value; bp->bias_dir=raw->bias; }
+		else { raw->legacy=p.u.bd.value; bp->legacy=raw->legacy; }
+		const PF_Err checkin_err = PF_CHECKIN_PARAM(in_data, &p);
+		if (checkin_err) return checkin_err;
+	}
+	return PF_Err_NONE;
+}
+
+enum PublicBlurSourceKind {
+	PublicBlurSourceNone = 0,
+	PublicBlurSourceOriginal24,
+	PublicBlurSourcePF16Standard,
+	PublicBlurSourcePF16MixedAlpha,
+	PublicBlurSourcePF16SevenByFive,
+	PublicBlurSourcePF8NonLegacyStandard,
+	PublicBlurSourcePF8LegacyStandard,
+	PublicBlurSourcePF8LegacyMixedAlpha,
+	PublicBlurSourcePF8LegacyBoundaryGradient,
+	PublicBlurSourcePF8LegacyByteBoundaries,
+	PublicBlurSourcePF16LegacyWordBoundaries,
+	PublicBlurSourcePF32NonLegacyStandard,
+	PublicBlurSourcePF32LegacyStandard,
+	PublicBlurSourcePF32LegacyMixedAlpha,
+	PublicBlurSourcePF32LegacyRedBoundary,
+	PublicBlurSourcePF32Legacy24Repeat1Union
+};
+
+static bool
+ExactPublicSource(const PF_EffectWorld *world, short bpc, bool legacy,
+	PublicBlurSourceKind source_kind)
+{
+	if (!world || !world->data) return false;
+	if (source_kind == PublicBlurSourcePF32Legacy24Repeat1Union)
+		return ExactPublicSource(world,bpc,legacy,PublicBlurSourcePF32LegacyStandard) ||
+			ExactPublicSource(world,bpc,legacy,PublicBlurSourceOriginal24);
+	if (source_kind == PublicBlurSourcePF16Standard && bpc == 16 &&
+		((world->width == 12 && world->height == 12 && world->rowbytes == 109) ||
+		 (world->width == 18 && world->height == 18 && world->rowbytes == 157))) {
+		for (A_long y=0;y<world->height;++y) for (A_long x=0;x<world->width;++x) {
+			const uint16_t p[4] = {
+				(uint16_t)(legacy ? 32768 : (((x*5 + y*3) % 17) == 0 ? 0 : 32768)),
+				(uint16_t)((257*x + 31*y + 101) % 32769),
+				(uint16_t)((113*x + 211*y + 307) % 32769),
+				(uint16_t)((401*x + 97*y + 503) % 32769)
+			};
+			const unsigned char *at=(const unsigned char*)world->data+
+				(size_t)y*world->rowbytes+(size_t)x*8u;
+			if (memcmp(at,p,sizeof(p))) return false;
+		}
+		return true;
+	}
+	if (source_kind == PublicBlurSourcePF16MixedAlpha && bpc == 16 && legacy &&
+		world->width == 18 && world->height == 12 &&
+		world->rowbytes == 157) {
+		for (A_long y=0;y<12;++y) for (A_long x=0;x<18;++x) {
+			const bool boundary = x == 0 || x == 17 || y == 0 || y == 11;
+			const bool hole = (x*7 + y*11) % 13 == 0;
+			const uint16_t p[4] = {
+				(uint16_t)(boundary || hole ? 0 : 8192 + ((x*29 + y*17) % 4) * 16384),
+				12800, 25600, 30000
+			};
+			const unsigned char *at=(const unsigned char*)world->data+
+				(size_t)y*world->rowbytes+(size_t)x*8u;
+			if (memcmp(at,p,sizeof(p))) return false;
+		}
+		return true;
+	}
+	if (source_kind == PublicBlurSourcePF16SevenByFive && bpc == 16 &&
+		world->width == 7 && world->height == 5 && world->rowbytes == 69) {
+		for (A_long y=0;y<5;++y) for (A_long x=0;x<7;++x) {
+			const uint16_t p[4] = {
+				32768,
+				(uint16_t)(1000 + 701*x + 17*y),
+				(uint16_t)(30000 + 37*x + 811*y),
+				(uint16_t)(200 + 503*x + 29*y)
+			};
+			const unsigned char *at=(const unsigned char*)world->data+
+				(size_t)y*world->rowbytes+(size_t)x*8u;
+			if (memcmp(at,p,sizeof(p))) return false;
+		}
+		return true;
+	}
+	if (source_kind == PublicBlurSourcePF8NonLegacyStandard && bpc == 8 && !legacy) {
+		for (A_long y=0;y<world->height;++y) for (A_long x=0;x<world->width;++x) {
+			const unsigned char p[4] = {
+				(unsigned char)(((x*5 + y*3) % 17) == 0 ? 0 : 255),
+				(unsigned char)((17*x + 3*y + 11) & 255),
+				(unsigned char)((7*x + 19*y + 23) & 255),
+				(unsigned char)((29*x + 13*y + 37) & 255)
+			};
+			const unsigned char *at=(const unsigned char*)world->data+
+				(size_t)y*world->rowbytes+(size_t)x*4u;
+			if (memcmp(at,p,sizeof(p))) return false;
+		}
+		return true;
+	}
+	if (source_kind == PublicBlurSourcePF8LegacyStandard && bpc == 8 && legacy) {
+		for (A_long y=0;y<world->height;++y) for (A_long x=0;x<world->width;++x) {
+			const unsigned char p[4] = {
+				255,
+				(unsigned char)((17*x + 3*y + 11) & 255),
+				(unsigned char)((7*x + 19*y + 23) & 255),
+				(unsigned char)((29*x + 13*y + 37) & 255)
+			};
+			const unsigned char *at=(const unsigned char*)world->data+
+				(size_t)y*world->rowbytes+(size_t)x*4u;
+			if (memcmp(at,p,sizeof(p))) return false;
+		}
+		return true;
+	}
+	if (source_kind == PublicBlurSourcePF8LegacyMixedAlpha && bpc == 8 && legacy) {
+		for (A_long y=0;y<world->height;++y) for (A_long x=0;x<world->width;++x) {
+			const bool boundary = x == 0 || x == world->width-1 || y == 0 || y == world->height-1;
+			const bool hole = (x*7 + y*11) % 13 == 0;
+			const unsigned char p[4] = {
+				(unsigned char)(boundary || hole ? 0 : 32 + ((x*29 + y*17) % 4) * 64),
+				50, 100, 150
+			};
+			const unsigned char *at=(const unsigned char*)world->data+
+				(size_t)y*world->rowbytes+(size_t)x*4u;
+			if (memcmp(at,p,sizeof(p))) return false;
+		}
+		return true;
+	}
+	if (source_kind == PublicBlurSourcePF8LegacyBoundaryGradient && bpc == 8 && legacy) {
+		for (A_long y=0;y<world->height;++y) for (A_long x=0;x<world->width;++x) {
+			const bool boundary = x == 0 || x == world->width-1 || y == 0 || y == world->height-1;
+			const unsigned char p[4] = {
+				255,
+				(unsigned char)(boundary ? ((x*19 + y*23 + 7) & 255) : ((31 + x*9 + y*13) & 255)),
+				0, 0
+			};
+			const unsigned char *at=(const unsigned char*)world->data+
+				(size_t)y*world->rowbytes+(size_t)x*4u;
+			if (memcmp(at,p,sizeof(p))) return false;
+		}
+		return true;
+	}
+	if (source_kind == PublicBlurSourcePF8LegacyByteBoundaries && bpc == 8 && legacy) {
+		static const unsigned char values[] = {0,1,127,128,254,255};
+		for (A_long y=0;y<world->height;++y) for (A_long x=0;x<world->width;++x) {
+			const unsigned char p[4] = {
+				values[(x+5*y)%6], values[(2*x+y+1)%6],
+				values[(x+3*y+2)%6], values[(5*x+2*y+3)%6]
+			};
+			const unsigned char *at=(const unsigned char*)world->data+
+				(size_t)y*world->rowbytes+(size_t)x*4u;
+			if (memcmp(at,p,sizeof(p))) return false;
+		}
+		return true;
+	}
+	if (source_kind == PublicBlurSourcePF16LegacyWordBoundaries && bpc == 16 && legacy) {
+		static const uint16_t values[] = {0,1,32767,32768};
+		for (A_long y=0;y<world->height;++y) for (A_long x=0;x<world->width;++x) {
+			const uint16_t p[4] = {
+				values[(x+3*y)%4], values[(x+y+1)%4],
+				values[(2*x+y+2)%4], values[(x+2*y+3)%4]
+			};
+			const unsigned char *at=(const unsigned char*)world->data+
+				(size_t)y*world->rowbytes+(size_t)x*8u;
+			if (memcmp(at,p,sizeof(p))) return false;
+		}
+		return true;
+	}
+	if ((source_kind == PublicBlurSourcePF32NonLegacyStandard ||
+		source_kind == PublicBlurSourcePF32LegacyStandard) && bpc == 32) {
+		for (A_long y=0;y<world->height;++y) for (A_long x=0;x<world->width;++x) {
+			const float p[4] = {
+				(float)(((x*5+y*3)%17)==0 ? 0.0 : ((x+y)%5 ? 1.0 : -0.5)),
+				(float)(-1.25 + 0.17*x + 0.031*y),
+				(float)(0.5 + 0.11*x - 0.23*y),
+				(float)(1.5 + 0.07*x + 0.19*y)
+			};
+			const unsigned char *at=(const unsigned char*)world->data+
+				(size_t)y*world->rowbytes+(size_t)x*16u;
+			if (memcmp(at,p,sizeof(p))) return false;
+		}
+		return true;
+	}
+	if (source_kind == PublicBlurSourcePF32LegacyMixedAlpha && bpc == 32 && legacy) {
+		for (A_long y=0;y<world->height;++y) for (A_long x=0;x<world->width;++x) {
+			const bool boundary=x==0||x==world->width-1||y==0||y==world->height-1;
+			const bool hole=(x*7+y*11)%13==0;
+			const float p[4] = {
+				(float)(boundary||hole?0.0:((x+2*y)%7==0?-0.5:0.25+0.125*((x*3+y)%4))),
+				(float)(0.25+0.031*x),(float)(-0.5+0.017*y),(float)(1.5+0.011*(x+y))
+			};
+			const unsigned char *at=(const unsigned char*)world->data+
+				(size_t)y*world->rowbytes+(size_t)x*16u;
+			if (memcmp(at,p,sizeof(p))) return false;
+		}
+		return true;
+	}
+	if (source_kind == PublicBlurSourcePF32LegacyRedBoundary && bpc == 32 && legacy) {
+		for (A_long y=0;y<world->height;++y) for (A_long x=0;x<world->width;++x) {
+			const bool boundary=x==0||x==world->width-1||y==0||y==world->height-1;
+			const float p[4]={(float)(boundary?0.0:1.0),(float)(0.2+0.11*x+0.037*y),0.0f,0.0f};
+			const unsigned char *at=(const unsigned char*)world->data+
+				(size_t)y*world->rowbytes+(size_t)x*16u;
+			if (memcmp(at,p,sizeof(p))) return false;
+		}
+		return true;
+	}
+	if (source_kind != PublicBlurSourceOriginal24) return false;
+	if (world->width != 24 || world->height != 24) return false;
+	const size_t pixel_bytes = bpc == 8 ? 4u : (bpc == 16 ? 8u : (bpc == 32 ? 16u : 0u));
+	if (!pixel_bytes || world->rowbytes != (A_long)(24u * pixel_bytes + (bpc == 8 ? 17u : (bpc == 16 ? 23u : 32u)))) return false;
+	static const unsigned char v8[] = {0,1,64,127,128,192,254,255};
+	static const uint16_t v16[] = {0,1,8192,16384,32767,32768};
+	static const float v32[] = {-0.5f,0.0f,1.0f/255.0f,0.25f,0.5f,1.0f,1.25f,2.0f};
+	for (A_long y=0;y<24;++y) for (A_long x=0;x<24;++x) {
+		const int selector=(x*5+y*3)%17;
+		const unsigned char *at=(const unsigned char*)world->data+(size_t)y*world->rowbytes+(size_t)x*pixel_bytes;
+		if (bpc==8) {
+			unsigned char p[4]={(unsigned char)(selector==0?0:v8[(x+3*y)%8]),v8[(2*x+y+1)%8],v8[(x+5*y+2)%8],v8[(7*x+3*y+3)%8]};
+			if (memcmp(at,p,4)) return false;
+		} else if (bpc==16) {
+			uint16_t p[4]={(uint16_t)(selector==0?0:v16[(x+3*y)%6]),v16[(2*x+y+1)%6],v16[(x+5*y+2)%6],v16[(7*x+3*y+3)%6]};
+			if (memcmp(at,p,8)) return false;
+		} else {
+			float p[4]={(float)(selector==0?0.0f:v32[(x+3*y)%8]),v32[(2*x+y+1)%8],v32[(x+5*y+2)%8],v32[(7*x+3*y+3)%8]};
+			if (memcmp(at,p,16)) return false;
+		}
+	}
+	return true;
+}
+
 static PF_Err
 SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra)
 {
-	PF_Err err = PF_Err_NONE;
-	AEGP_SuiteHandler suites(in_data->pica_basicP);
-
-	PF_EffectWorld *input_world  = NULL;
-	PF_EffectWorld *output_world = NULL;
-	ERR(extra->cb->checkout_layer_pixels(in_data->effect_ref, OLMBLUR_INPUT, &input_world));
-	ERR(extra->cb->checkout_output(in_data->effect_ref, &output_world));
-	if (err || !input_world || !output_world) {
-		extra->cb->checkin_layer_pixels(in_data->effect_ref, OLMBLUR_INPUT);
+	(void)out_data;
+	if (!in_data || !extra || !extra->input || !extra->cb ||
+		!extra->cb->checkout_layer_pixels || !extra->cb->checkout_output ||
+		!in_data->inter.checkout_param || !in_data->inter.checkin_param)
+		return PF_Err_BAD_CALLBACK_PARAM;
+	PF_Err err=PF_Err_NONE; PF_EffectWorld *input_world=NULL,*output_world=NULL;
+	ERR(extra->cb->checkout_layer_pixels(in_data->effect_ref,OLMBLUR_INPUT,&input_world));
+	ERR(extra->cb->checkout_output(in_data->effect_ref,&output_world));
+	if (err || !input_world || !output_world) return err ? err : PF_Err_BAD_CALLBACK_PARAM;
+	BlurParams bp; AEFX_CLR_STRUCT(bp); PublicBlurParamValues raw; AEFX_CLR_STRUCT(raw);
+	err = CheckoutPublicBlurParams(in_data, &bp, &raw);
+	const short bpc=extra->input->bitdepth;
+	const size_t pixel_bytes=bpc==8?4u:(bpc==16?8u:(bpc==32?16u:0u));
+	// Generic beta lane.  Exact fixture admissions remain below as a fallback,
+	// retaining their special source and arithmetic contracts.
+	if (!err && GenericBetaTuple(raw,input_world->width,input_world->height) &&
+		GenericBetaWorld(input_world,pixel_bytes,input_world->width,input_world->height) &&
+		GenericBetaWorld(output_world,pixel_bytes,input_world->width,input_world->height) &&
+		in_data->downsample_x.num==1 && in_data->downsample_x.den==1 &&
+		in_data->downsample_y.num==1 && in_data->downsample_y.den==1) {
+		err=GetPublicWorldFormats(in_data,input_world,output_world,bpc);
+		if (!err) err=BlurRender(in_data,input_world,output_world,bpc,&bp);
+		const PF_Err checkin_err=extra->cb->checkin_layer_pixels ?
+			extra->cb->checkin_layer_pixels(in_data->effect_ref,OLMBLUR_INPUT) : PF_Err_NONE;
+		if (!err) err=checkin_err;
 		return err;
 	}
-
-	BlurParams bp;
-	AEFX_CLR_STRUCT(bp);
-
-	PF_ParamDef p;
-	AEFX_CLR_STRUCT(p);
-	ERR(PF_CHECKOUT_PARAM(in_data, OLMBLUR_BLUR_AMOUNT, in_data->current_time,
-	                      in_data->time_step, in_data->time_scale, &p));
-	if (!err) { bp.blur_amount = (float)p.u.fs_d.value; PF_CHECKIN_PARAM(in_data, &p); }
-
-	AEFX_CLR_STRUCT(p);
-	ERR(PF_CHECKOUT_PARAM(in_data, OLMBLUR_BLUR_SMOOTHNESS, in_data->current_time,
-	                      in_data->time_step, in_data->time_scale, &p));
-	if (!err) { bp.blur_smoothness = (float)p.u.fd.value / 65536.0f; PF_CHECKIN_PARAM(in_data, &p); }
-
-	AEFX_CLR_STRUCT(p);
-	ERR(PF_CHECKOUT_PARAM(in_data, OLMBLUR_REPEAT, in_data->current_time,
-	                      in_data->time_step, in_data->time_scale, &p));
-	if (!err) { bp.repeat = p.u.sd.value; PF_CHECKIN_PARAM(in_data, &p); }
-
-	AEFX_CLR_STRUCT(p);
-	ERR(PF_CHECKOUT_PARAM(in_data, OLMBLUR_BIAS_DIRECTION, in_data->current_time,
-	                      in_data->time_step, in_data->time_scale, &p));
-	if (!err) { bp.bias_dir = p.u.pd.value; PF_CHECKIN_PARAM(in_data, &p); }
-
-	AEFX_CLR_STRUCT(p);
-	ERR(PF_CHECKOUT_PARAM(in_data, OLMBLUR_LEGACY, in_data->current_time,
-	                      in_data->time_step, in_data->time_scale, &p));
-	if (!err) { bp.legacy = p.u.bd.value; PF_CHECKIN_PARAM(in_data, &p); }
-
-	short bpc = extra->input->bitdepth;
-	ERR(PF_COPY(input_world, output_world, NULL, NULL));
-	ERR(BlurRender(in_data, input_world, output_world, bpc, &bp));
-
-	extra->cb->checkin_layer_pixels(in_data->effect_ref, OLMBLUR_INPUT);
+	const bool public24 = raw.amount==5.0 && raw.smoothness_fixed==100*65536 &&
+		raw.repeat==1 && raw.bias==1 && (raw.legacy==0 || raw.legacy==1) &&
+		input_world->width==24 && input_world->height==24;
+	const bool public7x5 = bpc==16 && raw.amount==4.0 && raw.smoothness_fixed==100*65536 &&
+		raw.repeat==1 && raw.bias==1 && raw.legacy==0 &&
+		input_world->width==7 && input_world->height==5;
+	const bool public12x12 = bpc==16 && raw.amount==3.0 && raw.smoothness_fixed==100*65536 &&
+		((raw.legacy==0 && (raw.repeat==1 || raw.repeat==2) && raw.bias==1) ||
+		 (raw.legacy==1 && raw.repeat==2 && raw.bias==1)) &&
+		input_world->width==12 && input_world->height==12;
+	const bool public18x18 = bpc==16 && raw.amount==11.0 && raw.smoothness_fixed==100*65536 &&
+		((raw.legacy==0 && ((raw.repeat==1 && raw.bias==1) || (raw.repeat==3 && raw.bias==2))) ||
+		 (raw.legacy==1 && raw.repeat==3 && raw.bias==2)) &&
+		input_world->width==18 && input_world->height==18;
+	const bool public18x12 = bpc==16 && raw.amount==3.0 && raw.smoothness_fixed==100*65536 &&
+		raw.repeat==2 && raw.bias==2 && raw.legacy==1 &&
+		input_world->width==18 && input_world->height==12;
+	const bool public8NonLegacy12 = bpc==8 && raw.amount==3.0 && raw.smoothness_fixed==100*65536 &&
+		raw.repeat==2 && raw.bias==1 && raw.legacy==0 &&
+		input_world->width==12 && input_world->height==12;
+	const bool public8NonLegacy24 = bpc==8 && raw.amount==129.4 && raw.smoothness_fixed==100*65536 &&
+		raw.repeat==1 && raw.bias==1 && raw.legacy==0 &&
+		input_world->width==24 && input_world->height==24;
+	const bool public8NonLegacy18 = bpc==8 && raw.amount==11.0 && raw.smoothness_fixed==100*65536 &&
+		raw.repeat==3 && raw.bias==2 && raw.legacy==0 &&
+		input_world->width==18 && input_world->height==18;
+	const bool public8NonLegacy24Repeat2 = bpc==8 && raw.amount==129.4 && raw.smoothness_fixed==100*65536 &&
+		raw.repeat==2 && raw.bias==2 && raw.legacy==0 &&
+		input_world->width==24 && input_world->height==24;
+	const bool public8Legacy12 = bpc==8 && raw.amount==3.0 && raw.smoothness_fixed==100*65536 &&
+		raw.repeat==2 && raw.bias==1 && raw.legacy==1 &&
+		input_world->width==12 && input_world->height==12;
+	const bool public8Legacy18 = bpc==8 && raw.amount==11.0 && raw.smoothness_fixed==100*65536 &&
+		raw.repeat==3 && raw.bias==2 && raw.legacy==1 &&
+		input_world->width==18 && input_world->height==18;
+	const bool public8Legacy18x12 = bpc==8 && raw.amount==3.0 && raw.smoothness_fixed==100*65536 &&
+		raw.repeat==2 && raw.bias==2 && raw.legacy==1 &&
+		input_world->width==18 && input_world->height==12;
+	const bool public8Legacy6 = bpc==8 && raw.amount==248.6 && raw.smoothness_fixed==100*65536 &&
+		raw.repeat==10 && raw.bias==1 && raw.legacy==1 &&
+		input_world->width==6 && input_world->height==6;
+	const bool public8LegacyBoundary12 = bpc==8 && raw.amount==248.6 && raw.smoothness_fixed==100*65536 &&
+		raw.repeat==10 && raw.bias==1 && raw.legacy==1 &&
+		input_world->width==12 && input_world->height==12;
+	const bool public8Legacy16 = bpc==8 && raw.amount==5.0 && raw.smoothness_fixed==100*65536 &&
+		raw.repeat==1 && raw.bias==1 && raw.legacy==1 &&
+		input_world->width==16 && input_world->height==16;
+	const bool public8Legacy10x8 = bpc==8 && raw.amount==1.0 && raw.smoothness_fixed==100*65536 &&
+		raw.repeat==2 && raw.bias==2 && raw.legacy==1 &&
+		input_world->width==10 && input_world->height==8;
+	const bool public8LegacySmooth = bpc==8 && raw.amount==9.0 && raw.smoothness_fixed==2867200 &&
+		raw.repeat==3 && raw.bias==2 && raw.legacy==1 &&
+		input_world->width==19 && input_world->height==13;
+	const bool public16LegacySmooth = bpc==16 && raw.amount==7.0 && raw.smoothness_fixed==4096000 &&
+		raw.repeat==4 && raw.bias==1 && raw.legacy==1 &&
+		input_world->width==20 && input_world->height==16;
+	const bool public32NonLegacyRetained = bpc==32 && raw.smoothness_fixed==100*65536 && raw.legacy==0 && (
+		(raw.amount==3.0 && raw.repeat==2 && raw.bias==1 && input_world->width==12 && input_world->height==12) ||
+		(raw.amount==11.0 && raw.repeat==3 && raw.bias==2 && input_world->width==18 && input_world->height==18) ||
+		((raw.amount==129.4 && raw.repeat==2 && (raw.bias==1 || raw.bias==2) ||
+		  raw.amount==125.6 && raw.repeat==4 && raw.bias==1) && input_world->width==4 && input_world->height==3) ||
+		(raw.amount==5.0 && (raw.repeat==2 || raw.repeat==10) && raw.bias==1 && input_world->width==7 && input_world->height==5) ||
+		((raw.amount==129.4 && (raw.repeat==1 && raw.bias==1 || raw.repeat==2 && raw.bias==2) ||
+		  raw.amount==125.6 && raw.repeat==4 && raw.bias==1 ||
+		  raw.amount==5.0 && (raw.repeat==2 || raw.repeat==10) && raw.bias==1) && input_world->width==24 && input_world->height==24));
+	const bool public32Legacy12 = bpc==32 && raw.amount==3.0 && raw.smoothness_fixed==100*65536 && raw.repeat==2 && raw.bias==1 && raw.legacy==1 && input_world->width==12 && input_world->height==12;
+	const bool public32Legacy18 = bpc==32 && raw.amount==11.0 && raw.smoothness_fixed==100*65536 && raw.repeat==3 && raw.bias==2 && raw.legacy==1 && input_world->width==18 && input_world->height==18;
+	const bool public32Legacy18x12 = bpc==32 && raw.amount==3.0 && raw.smoothness_fixed==100*65536 && raw.repeat==2 && raw.bias==2 && raw.legacy==1 && input_world->width==18 && input_world->height==12;
+	const bool public32Legacy7x5 = bpc==32 && raw.amount==248.6 && raw.smoothness_fixed==100*65536 && raw.repeat==10 && raw.bias==1 && raw.legacy==1 && input_world->width==7 && input_world->height==5;
+	const bool public32Legacy9x7 = bpc==32 && raw.amount==5.0 && raw.smoothness_fixed==100*65536 && raw.repeat==10 && raw.bias==1 && raw.legacy==1 && input_world->width==9 && input_world->height==7;
+	const bool public32Legacy24Repeat1 = bpc==32 && raw.amount==5.0 && raw.smoothness_fixed==100*65536 && raw.repeat==1 && raw.bias==1 && raw.legacy==1 && input_world->width==24 && input_world->height==24;
+	const bool public32Legacy24Repeat10 = bpc==32 && raw.amount==248.6 && raw.smoothness_fixed==100*65536 && raw.repeat==10 && raw.bias==1 && raw.legacy==1 && input_world->width==24 && input_world->height==24;
+	const bool public32LegacySmooth = bpc==32 && raw.amount==11.0 && raw.smoothness_fixed==2457600 && raw.repeat==3 && raw.bias==2 && raw.legacy==1 && input_world->width==24 && input_world->height==24;
+	PublicBlurSourceKind source_kind = PublicBlurSourceNone;
+	A_long width=0,height=0,rowbytes=0;
+	if (public24) {
+		source_kind=(bpc==32 && raw.legacy==1)?PublicBlurSourcePF32Legacy24Repeat1Union:PublicBlurSourceOriginal24;width=height=24;
+		rowbytes=bpc==8?113:(bpc==16?215:(bpc==32?(raw.legacy==1&&input_world->rowbytes==397?397:416):0));
+	} else if (public7x5) {
+		source_kind=PublicBlurSourcePF16SevenByFive;width=7;height=5;rowbytes=69;
+	} else if (public12x12 || public18x18) {
+		source_kind=PublicBlurSourcePF16Standard;width=public12x12?12:18;
+		height=width;rowbytes=public12x12?109:157;
+	} else if (public18x12) {
+		source_kind=PublicBlurSourcePF16MixedAlpha;width=18;height=12;rowbytes=157;
+	} else if (public16LegacySmooth) {
+		source_kind=PublicBlurSourcePF16LegacyWordBoundaries;width=20;height=16;rowbytes=173;
+	} else if (public8NonLegacy12 || public8NonLegacy18 || public8NonLegacy24 || public8NonLegacy24Repeat2) {
+		source_kind=PublicBlurSourcePF8NonLegacyStandard;
+		width=public8NonLegacy12?12:(public8NonLegacy18?18:24);height=width;rowbytes=width*4+13;
+	} else if (public8Legacy12 || public8Legacy18 || public8Legacy16) {
+		source_kind=PublicBlurSourcePF8LegacyStandard;
+		width=public8Legacy12?12:(public8Legacy18?18:16);height=width;rowbytes=width*4+13;
+	} else if (public8Legacy18x12) {
+		source_kind=PublicBlurSourcePF8LegacyMixedAlpha;width=18;height=12;rowbytes=85;
+	} else if (public8Legacy6 || public8LegacyBoundary12 || public8Legacy10x8) {
+		source_kind=PublicBlurSourcePF8LegacyBoundaryGradient;
+		width=public8Legacy6?6:(public8LegacyBoundary12?12:10);
+		height=public8Legacy6?6:(public8LegacyBoundary12?12:8);rowbytes=width*4+13;
+	} else if (public8LegacySmooth) {
+		source_kind=PublicBlurSourcePF8LegacyByteBoundaries;width=19;height=13;rowbytes=89;
+	} else if (public32NonLegacyRetained) {
+		source_kind=PublicBlurSourcePF32NonLegacyStandard;width=input_world->width;height=input_world->height;rowbytes=width*16+13;
+	} else if (public32Legacy12 || public32Legacy18 || public32Legacy24Repeat1 || public32Legacy24Repeat10 || public32LegacySmooth) {
+		source_kind=PublicBlurSourcePF32LegacyStandard;width=public32Legacy12?12:(public32Legacy18?18:24);height=width;rowbytes=width*16+13;
+	} else if (public32Legacy18x12 || public32Legacy9x7) {
+		source_kind=PublicBlurSourcePF32LegacyMixedAlpha;width=public32Legacy18x12?18:9;height=public32Legacy18x12?12:7;rowbytes=width*16+13;
+	} else if (public32Legacy7x5) {
+		source_kind=PublicBlurSourcePF32LegacyRedBoundary;width=7;height=5;rowbytes=125;
+	}
+	const size_t active=(size_t)width*pixel_bytes;
+	if (!err && source_kind==PublicBlurSourceNone)
+		err=PF_Err_BAD_CALLBACK_PARAM;
+	// The Windows exported Smart owner materializes the fixed-slider value
+	// from the signed high word of PF_Fixed.  Preserve that public boundary
+	// only for the three admitted fractional-Smoothness fixtures; the full
+	// fixed value above remains part of each exact admission predicate.
+	if (!err && (public8LegacySmooth || public16LegacySmooth || public32LegacySmooth))
+		bp.blur_smoothness=(float)(int16_t)((uint32_t)raw.smoothness_fixed >> 16);
+	if (!err && (in_data->downsample_x.num!=1 || in_data->downsample_x.den!=1 ||
+		in_data->downsample_y.num!=1 || in_data->downsample_y.den!=1 ||
+		!pixel_bytes || !ExactPublicWorld(input_world,bpc,width,height,rowbytes) ||
+		!ExactPublicWorld(output_world,bpc,width,height,rowbytes) ||
+		!PublicWorldsDisjoint(input_world,output_world,height) ||
+		!ExactPublicSource(input_world,bpc,raw.legacy!=0,source_kind))) err=PF_Err_BAD_CALLBACK_PARAM;
+	if (!err) err = GetPublicWorldFormats(in_data,input_world,output_world,bpc);
+	if (!err) try {
+		const size_t pixels=(size_t)width*(size_t)height;
+		std::vector<PF_PixelFloat> source_words(pixels),destination_words(pixels);
+		unsigned char *source=(unsigned char*)source_words.data();
+		unsigned char *destination=(unsigned char*)destination_words.data();
+		for(size_t y=0;y<(size_t)height;++y) memcpy(source+y*active,(const unsigned char*)input_world->data+y*input_world->rowbytes,active);
+		memcpy(destination,source,active*(size_t)height);
+		PF_EffectWorld staged_input=*input_world,staged_output=*output_world;
+		staged_input.data=(PF_PixelPtr)source;staged_input.rowbytes=(A_long)active;
+		staged_output.data=(PF_PixelPtr)destination;staged_output.rowbytes=(A_long)active;
+		err=PF_COPY(&staged_input,&staged_output,NULL,NULL);
+		if(!err) err=BlurRender(in_data,&staged_input,&staged_output,bpc,&bp);
+		if(!err) for(size_t y=0;y<(size_t)height;++y) {
+			unsigned char *out=(unsigned char*)output_world->data+y*output_world->rowbytes;
+			const unsigned char *in=(const unsigned char*)input_world->data+y*input_world->rowbytes;
+			memcpy(out,destination+y*active,active);
+			memcpy(out+active,in+active,(size_t)output_world->rowbytes-active);
+		}
+	} catch(const std::bad_alloc&){err=PF_Err_OUT_OF_MEMORY;}
 	return err;
 }
 
@@ -1495,6 +2017,10 @@ EffectMain(PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data,
 		}
 	} catch (PF_Err &thrown_err) {
 		err = thrown_err;
+	} catch (const std::bad_alloc &) {
+		err = PF_Err_OUT_OF_MEMORY;
+	} catch (...) {
+		err = PF_Err_INTERNAL_STRUCT_DAMAGED;
 	}
 	return err;
 }

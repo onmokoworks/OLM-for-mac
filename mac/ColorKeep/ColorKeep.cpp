@@ -1,5 +1,9 @@
 #include "ColorKeep.h"
+#include "AEFX_SuiteHandlerTemplate.h"
+#include <stdint.h>
 #include <math.h>
+#include <new>
+#include <vector>
 
 static void UnionLRect(const PF_LRect *src, PF_LRect *dst)
 {
@@ -84,7 +88,8 @@ SetColorsEnabled(PF_InData *in_data, PF_ParamDef *params[])
 }
 
 static PF_Err
-CheckoutInfo(PF_InData *in_data, PF_ParamDef *params[], ColorKeepInfo *info)
+CheckoutInfo(PF_InData *in_data, PF_ParamDef *params[], ColorKeepInfo *info,
+	         A_long colors_to_read)
 {
 	PF_Err err = PF_Err_NONE;
 	AEGP_SuiteHandler suites(in_data->pica_basicP);
@@ -94,7 +99,7 @@ CheckoutInfo(PF_InData *in_data, PF_ParamDef *params[], ColorKeepInfo *info)
 	if (info->count < 0) info->count = 0;
 	if (info->count > COLORKEEP_MAX_COLORS) info->count = COLORKEEP_MAX_COLORS;
 
-	for (A_long i = 0; i < info->count; ++i) {
+	for (A_long i = 0; i < colors_to_read; ++i) {
 		PF_ParamDef *cp = params[COLORKEEP_COLOR_FIRST + i];
 		info->colors8[i] = cp->u.cd.value;
 		PF_PixelFloat fp = {0};
@@ -111,6 +116,84 @@ static const float kColorKeep8Scale = 255.0f;                 // 0x437F0000
 static const float kColorKeep16Bias = 0.0000152587890625f;    // 0x37800000
 static const float kColorKeep16Scale = 32768.0f;              // 0x47000000
 static const float kColorKeepFloatTolerance = 1.0e-4f;        // 0x38D1B717
+
+static bool ColorKeepCountIsAdmitted(A_long count)
+{
+	return count >= 1 && count <= COLORKEEP_MAX_COLORS;
+}
+
+static bool ColorKeepIsOneToOne(const PF_InData *in_data,
+	                            const PF_EffectWorld *output)
+{
+	return in_data && output &&
+		in_data->downsample_x.num == 1 && in_data->downsample_x.den == 1 &&
+		in_data->downsample_y.num == 1 && in_data->downsample_y.den == 1 &&
+		in_data->output_origin_x == output->origin_x &&
+		in_data->output_origin_y == output->origin_y;
+}
+
+static PF_Err ColorKeepValidateWorldPair(const PF_EffectWorld *input,
+	                                      const PF_EffectWorld *output,
+	                                      short bitdepth)
+{
+	if (!input || !output || !input->data || !output->data) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	A_long pixel_bytes = 0;
+	size_t pixel_alignment = 0;
+	switch (bitdepth) {
+	case 8:
+		pixel_bytes = (A_long)sizeof(PF_Pixel8);
+		pixel_alignment = alignof(PF_Pixel8);
+		break;
+	case 16:
+		pixel_bytes = (A_long)sizeof(PF_Pixel16);
+		pixel_alignment = alignof(PF_Pixel16);
+		break;
+	case 32:
+		pixel_bytes = (A_long)sizeof(PF_PixelFloat);
+		pixel_alignment = alignof(PF_PixelFloat);
+		break;
+	default:
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	if (input->width <= 0 || input->height <= 0 ||
+	    output->width <= 0 || output->height <= 0 ||
+	    input->width > INT32_MAX / pixel_bytes) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	const A_long active_rowbytes = input->width * pixel_bytes;
+	if (output->width > INT32_MAX / pixel_bytes ||
+	    input->rowbytes < active_rowbytes ||
+	    output->rowbytes < output->width * pixel_bytes) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	const PF_WorldFlags expected_flags = bitdepth == 8 ? 0 : PF_WorldFlag_DEEP;
+	if (input->world_flags != expected_flags ||
+	    output->world_flags != expected_flags ||
+	    (int64_t)output->origin_x < input->origin_x ||
+	    (int64_t)output->origin_y < input->origin_y ||
+	    (int64_t)output->origin_x + output->width > (int64_t)input->origin_x + input->width ||
+	    (int64_t)output->origin_y + output->height > (int64_t)input->origin_y + input->height) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	const uintptr_t input_begin = reinterpret_cast<uintptr_t>(input->data);
+	const uintptr_t output_begin = reinterpret_cast<uintptr_t>(output->data);
+	if (input_begin % pixel_alignment != 0 || output_begin % pixel_alignment != 0) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	const size_t input_span = (size_t)input->rowbytes * (size_t)input->height;
+	const size_t output_span = (size_t)output->rowbytes * (size_t)output->height;
+	if (input_begin > UINTPTR_MAX - input_span || output_begin > UINTPTR_MAX - output_span) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	const uintptr_t input_end = input_begin + input_span;
+	const uintptr_t output_end = output_begin + output_span;
+	if (input_begin < output_end && output_begin < input_end) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	return PF_Err_NONE;
+}
 
 static inline u_char ColorKeepQuantize8(float value)
 {
@@ -186,29 +269,89 @@ ColorKeepFloatFunc(void *refcon, A_long, A_long, PF_PixelFloat *inP, PF_PixelFlo
 	return PF_Err_NONE;
 }
 
+template <typename PixelT, typename IterateSuiteT, typename PixelFuncT>
+static PF_Err ColorKeepRenderMapped(PF_InData *in_data,
+	                                IterateSuiteT *iterate_suite,
+	                                PF_EffectWorld *input,
+	                                PF_EffectWorld *output,
+	                                ColorKeepInfo *info,
+	                                PixelFuncT pixel_func)
+{
+	const size_t output_span = (size_t)output->rowbytes * (size_t)output->height;
+	std::vector<uint8_t> staging(output_span);
+	memcpy(staging.data(), output->data, output_span);
+	PF_EffectWorld staged_output = *output;
+	staged_output.data = reinterpret_cast<PF_PixelPtr>(staging.data());
+	PF_Err err = PF_Err_NONE;
+	if (input->width == output->width && input->height == output->height &&
+	    input->origin_x == output->origin_x && input->origin_y == output->origin_y) {
+		err = iterate_suite->iterate(in_data, 0, output->height, input, NULL,
+		                            (void *)info, pixel_func, &staged_output);
+	} else {
+		const A_long offset_x = output->origin_x - input->origin_x;
+		const A_long offset_y = output->origin_y - input->origin_y;
+		for (A_long y = 0; y < output->height && !err; ++y) {
+			PixelT *in_row = reinterpret_cast<PixelT *>(
+				reinterpret_cast<uint8_t *>(input->data) +
+				(size_t)(y + offset_y) * (size_t)input->rowbytes);
+			PixelT *out_row = reinterpret_cast<PixelT *>(
+				staging.data() + (size_t)y * (size_t)output->rowbytes);
+			for (A_long x = 0; x < output->width && !err; ++x)
+				err = pixel_func((void *)info, x, y, in_row + x + offset_x, out_row + x);
+		}
+	}
+	if (!err) memcpy(output->data, staging.data(), output_span);
+	return err;
+}
+
 static PF_Err
 Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output)
 {
+	if (!in_data || !out_data || !params || !output ||
+	    !params[COLORKEEP_INPUT] || !params[COLORKEEP_ENABLED_COLOR_NUM] ||
+	    !in_data->pica_basicP || !in_data->pica_basicP->AcquireSuite ||
+	    !in_data->pica_basicP->ReleaseSuite) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
 	PF_Err err = PF_Err_NONE;
 	AEGP_SuiteHandler suites(in_data->pica_basicP);
+	const A_long count = params[COLORKEEP_ENABLED_COLOR_NUM]->u.sd.value;
+	if (!ColorKeepCountIsAdmitted(count)) return PF_Err_BAD_CALLBACK_PARAM;
+	for (A_long i = 0; i < count; ++i) {
+		if (!params[COLORKEEP_COLOR_FIRST + i]) return PF_Err_BAD_CALLBACK_PARAM;
+	}
+
+	PF_EffectWorld *input = &params[COLORKEEP_INPUT]->u.ld;
+	PF_PixelFormat input_format = PF_PixelFormat_INVALID;
+	PF_PixelFormat output_format = PF_PixelFormat_INVALID;
+	AEFX_SuiteScoper<PF_WorldSuite2> world_suite(in_data, kPFWorldSuite,
+	                                             kPFWorldSuiteVersion2);
+	ERR(world_suite->PF_GetPixelFormat(input, &input_format));
+	ERR(world_suite->PF_GetPixelFormat(output, &output_format));
+	if (err) return err;
+	if (input_format != output_format) return PF_Err_BAD_CALLBACK_PARAM;
+
+	short bitdepth = 0;
+	switch (input_format) {
+	case PF_PixelFormat_ARGB32: bitdepth = 8; break;
+	case PF_PixelFormat_ARGB64: bitdepth = 16; break;
+	default: return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	ERR(ColorKeepValidateWorldPair(input, output, bitdepth));
+	if (err) return err;
+	if (!ColorKeepIsOneToOne(in_data, output)) return PF_Err_BAD_CALLBACK_PARAM;
+
 	ColorKeepInfo info;
 	AEFX_CLR_STRUCT(info);
-
-	ERR(CheckoutInfo(in_data, params, &info));
+	ERR(CheckoutInfo(in_data, params, &info, count));
 	if (err) return err;
-
-	A_long linesL = output->height;
-
-	if (PF_WORLD_IS_DEEP(output)) {
-		ERR(suites.Iterate16Suite2()->iterate(
-			in_data, 0, linesL,
-			&params[COLORKEEP_INPUT]->u.ld,
-			NULL, (void*)&info, ColorKeep16Func, output));
+	if (info.count != count) return PF_Err_BAD_CALLBACK_PARAM;
+	if (bitdepth == 16) {
+		ERR(ColorKeepRenderMapped<PF_Pixel16>(in_data, suites.Iterate16Suite2(),
+		                                      input, output, &info, ColorKeep16Func));
 	} else {
-		ERR(suites.Iterate8Suite2()->iterate(
-			in_data, 0, linesL,
-			&params[COLORKEEP_INPUT]->u.ld,
-			NULL, (void*)&info, ColorKeep8Func, output));
+		ERR(ColorKeepRenderMapped<PF_Pixel8>(in_data, suites.Iterate8Suite2(),
+		                                     input, output, &info, ColorKeep8Func));
 	}
 	return err;
 }
@@ -220,13 +363,15 @@ typedef struct {
 static PF_Err
 SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extra)
 {
+	if (!in_data || !extra || !extra->input || !extra->output || !extra->cb ||
+	    !extra->cb->checkout_layer) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
 	PF_Err err = PF_Err_NONE;
-	AEGP_SuiteHandler suites(in_data->pica_basicP);
 
 	PF_RenderRequest req = extra->input->output_request;
 	PF_CheckoutResult in_result;
 
-	req.preserve_rgb_of_zero_alpha = FALSE;
 	ERR(extra->cb->checkout_layer(in_data->effect_ref,
 		COLORKEEP_INPUT, COLORKEEP_INPUT, &req, in_data->current_time,
 		in_data->time_step, in_data->time_scale, &in_result));
@@ -241,69 +386,157 @@ SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extr
 static PF_Err
 SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra)
 {
+	if (!in_data || !extra || !extra->input || !extra->cb ||
+	    !extra->cb->checkout_layer_pixels || !extra->cb->checkout_output ||
+	    !extra->cb->checkin_layer_pixels ||
+	    !in_data->pica_basicP ||
+	    !in_data->pica_basicP->AcquireSuite || !in_data->pica_basicP->ReleaseSuite ||
+	    !in_data->inter.checkout_param || !in_data->inter.checkin_param) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
 	PF_Err err = PF_Err_NONE;
 	AEGP_SuiteHandler suites(in_data->pica_basicP);
 
 	PF_EffectWorld *input_world  = NULL;
 	PF_EffectWorld *output_world = NULL;
 	ERR(extra->cb->checkout_layer_pixels(in_data->effect_ref, COLORKEEP_INPUT, &input_world));
-	ERR(extra->cb->checkout_output(in_data->effect_ref, &output_world));
+	const bool input_checked_out = err == PF_Err_NONE;
+	if (!err) ERR(extra->cb->checkout_output(in_data->effect_ref, &output_world));
+	if (!err) ERR(ColorKeepValidateWorldPair(input_world, output_world,
+	                                         extra->input->bitdepth));
+	if (!err && !ColorKeepIsOneToOne(in_data, output_world))
+		err = PF_Err_BAD_CALLBACK_PARAM;
 	if (err || !input_world || !output_world) {
-		extra->cb->checkin_layer_pixels(in_data->effect_ref, COLORKEEP_INPUT);
+		if (!err) err = PF_Err_BAD_CALLBACK_PARAM;
+		if (input_checked_out && extra->cb->checkin_layer_pixels) {
+			const PF_Err checkin_err = extra->cb->checkin_layer_pixels(
+				in_data->effect_ref, COLORKEEP_INPUT);
+			if (!err) err = checkin_err;
+		}
 		return err;
 	}
+	PF_ParamDef checked_params[COLORKEEP_MAX_COLORS + 1];
+	bool checked_out[COLORKEEP_MAX_COLORS + 1] = {false};
+	std::vector<uint8_t> smart_output_stage;
+	PF_EffectWorld smart_output_world;
+	AEFX_CLR_STRUCT(smart_output_world);
+	size_t smart_output_span = 0;
+	bool smart_rendered = false;
+	for (A_long i = 0; i <= COLORKEEP_MAX_COLORS; ++i) AEFX_CLR_STRUCT(checked_params[i]);
+	try {
+		PF_PixelFormat input_format = PF_PixelFormat_INVALID;
+		PF_PixelFormat output_format = PF_PixelFormat_INVALID;
+		AEFX_SuiteScoper<PF_WorldSuite2> world_suite(in_data, kPFWorldSuite,
+		                                             kPFWorldSuiteVersion2);
+		ERR(world_suite->PF_GetPixelFormat(input_world, &input_format));
+		ERR(world_suite->PF_GetPixelFormat(output_world, &output_format));
+		PF_PixelFormat expected_format = PF_PixelFormat_INVALID;
+		switch (extra->input->bitdepth) {
+		case 8: expected_format = PF_PixelFormat_ARGB32; break;
+		case 16: expected_format = PF_PixelFormat_ARGB64; break;
+		case 32: expected_format = PF_PixelFormat_ARGB128; break;
+		default: break;
+		}
+		if (!err && (input_format != expected_format ||
+		             output_format != expected_format)) {
+			err = PF_Err_BAD_CALLBACK_PARAM;
+		}
 
-	ColorKeepInfo info;
-	AEFX_CLR_STRUCT(info);
-
-	PF_ParamDef   enabledParam;
-	AEFX_CLR_STRUCT(enabledParam);
-	ERR(PF_CHECKOUT_PARAM(in_data, COLORKEEP_ENABLED_COLOR_NUM,
-	                      in_data->current_time, in_data->time_step, in_data->time_scale,
-	                      &enabledParam));
-	info.count = enabledParam.u.sd.value;
-	if (info.count < 0) info.count = 0;
-	if (info.count > COLORKEEP_MAX_COLORS) info.count = COLORKEEP_MAX_COLORS;
-	PF_CHECKIN_PARAM(in_data, &enabledParam);
-
-	PF_ColorParamSuite1 *cps = suites.ColorParamSuite1();
-	// The Windows 2025 SmartRender preparation checks out the complete
-	// 100-color parameter surface regardless of the enabled count. Besides
-	// matching dependency tracking, this makes a missing color checkout fail
-	// before any output iteration starts.
-	for (A_long i = 0; i < COLORKEEP_MAX_COLORS && !err; ++i) {
-		PF_ParamDef cp;
-		AEFX_CLR_STRUCT(cp);
-		ERR(PF_CHECKOUT_PARAM(in_data, COLORKEEP_COLOR_FIRST + i,
+		ColorKeepInfo info;
+		AEFX_CLR_STRUCT(info);
+		PF_Err phase_err = PF_CHECKOUT_PARAM(in_data, COLORKEEP_ENABLED_COLOR_NUM,
 		                      in_data->current_time, in_data->time_step, in_data->time_scale,
-		                      &cp));
+		                      &checked_params[0]);
+		if (!phase_err) checked_out[0] = true;
+		if (!err) err = phase_err;
 		if (!err) {
-			PF_PixelFloat fp = {0};
-			ERR(cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref, &cp, &fp));
-			info.colors8[i] = cp.u.cd.value;
-			info.colors[i] = fp;
-			PF_CHECKIN_PARAM(in_data, &cp);
+			info.count = checked_params[0].u.sd.value;
+			if (!ColorKeepCountIsAdmitted(info.count)) err = PF_Err_BAD_CALLBACK_PARAM;
+		}
+
+		for (A_long i = 0; i < info.count && !err; ++i) {
+			phase_err = PF_CHECKOUT_PARAM(in_data, COLORKEEP_COLOR_FIRST + i,
+			                 in_data->current_time, in_data->time_step, in_data->time_scale,
+			                 &checked_params[i + 1]);
+			if (!phase_err) checked_out[i + 1] = true;
+			if (!err) err = phase_err;
+		}
+		PF_ColorParamSuite1 *cps = NULL;
+		if (!err) cps = suites.ColorParamSuite1();
+		for (A_long i = 0; i < info.count && !err; ++i) {
+			PF_ParamDef &cp = checked_params[i + 1];
+			if (checked_out[i + 1]) {
+				PF_PixelFloat fp = {0};
+				phase_err = cps->PF_GetFloatingPointColorFromColorDef(
+					in_data->effect_ref, &cp, &fp);
+				info.colors8[i] = cp.u.cd.value;
+				info.colors[i] = fp;
+				if (!err) err = phase_err;
+			}
+		}
+		for (A_long i = 0; i <= COLORKEEP_MAX_COLORS; ++i) {
+			if (checked_out[i]) {
+				checked_out[i] = false;
+				phase_err = PF_CHECKIN_PARAM(in_data, &checked_params[i]);
+				if (!err) err = phase_err;
+			}
+		}
+
+			const short bpc = extra->input->bitdepth;
+			if (!err) {
+				smart_output_span = (size_t)output_world->rowbytes * (size_t)output_world->height;
+				smart_output_stage.resize(smart_output_span);
+				memcpy(smart_output_stage.data(), output_world->data, smart_output_span);
+				smart_output_world = *output_world;
+				smart_output_world.data = reinterpret_cast<PF_PixelPtr>(smart_output_stage.data());
+			}
+			if (!err && bpc == 8) {
+				ERR(ColorKeepRenderMapped<PF_Pixel8>(in_data, suites.Iterate8Suite2(),
+				                                     input_world, &smart_output_world, &info, ColorKeep8Func));
+			} else if (!err && bpc == 16) {
+				ERR(ColorKeepRenderMapped<PF_Pixel16>(in_data, suites.Iterate16Suite2(),
+				                                      input_world, &smart_output_world, &info, ColorKeep16Func));
+			} else if (!err && bpc == 32) {
+				ERR(ColorKeepRenderMapped<PF_PixelFloat>(in_data, suites.IterateFloatSuite2(),
+				                                         input_world, &smart_output_world, &info, ColorKeepFloatFunc));
+			} else if (!err) {
+				err = PF_Err_BAD_CALLBACK_PARAM;
+			}
+			smart_rendered = err == PF_Err_NONE;
+	} catch (PF_Err &thrown_err) {
+		if (!err) err = thrown_err;
+	} catch (const std::bad_alloc &) {
+		if (!err) err = PF_Err_OUT_OF_MEMORY;
+	} catch (...) {
+		if (!err) err = PF_Err_INTERNAL_STRUCT_DAMAGED;
+	}
+	for (A_long i = 0; i <= COLORKEEP_MAX_COLORS; ++i) {
+		if (checked_out[i]) {
+			checked_out[i] = false;
+			try {
+				const PF_Err cleanup_err = PF_CHECKIN_PARAM(in_data, &checked_params[i]);
+				if (!err) err = cleanup_err;
+			} catch (PF_Err &cleanup_err) {
+				if (!err) err = cleanup_err;
+			} catch (...) {
+				if (!err) err = PF_Err_INTERNAL_STRUCT_DAMAGED;
+			}
 		}
 	}
 
-	A_long linesL = output_world->height;
-	short bpc = extra->input->bitdepth;
-
-	if (bpc == 8) {
-		ERR(suites.Iterate8Suite2()->iterate(
-			in_data, 0, linesL, input_world, NULL, (void*)&info,
-			ColorKeep8Func, output_world));
-	} else if (bpc == 16) {
-		ERR(suites.Iterate16Suite2()->iterate(
-			in_data, 0, linesL, input_world, NULL, (void*)&info,
-			ColorKeep16Func, output_world));
-	} else if (bpc == 32) {
-		ERR(suites.IterateFloatSuite2()->iterate(
-			in_data, 0, linesL, input_world, NULL, (void*)&info,
-			ColorKeepFloatFunc, output_world));
+	if (input_checked_out && extra->cb->checkin_layer_pixels) {
+		try {
+			const PF_Err checkin_err = extra->cb->checkin_layer_pixels(
+				in_data->effect_ref, COLORKEEP_INPUT);
+			if (!err) err = checkin_err;
+		} catch (PF_Err &cleanup_err) {
+			if (!err) err = cleanup_err;
+		} catch (...) {
+			if (!err) err = PF_Err_INTERNAL_STRUCT_DAMAGED;
+		}
 	}
-
-	extra->cb->checkin_layer_pixels(in_data->effect_ref, COLORKEEP_INPUT);
+	if (!err && smart_rendered)
+		memcpy(output_world->data, smart_output_stage.data(), smart_output_span);
 	return err;
 }
 
@@ -353,6 +586,10 @@ EffectMain(PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data,
 		}
 	} catch (PF_Err &thrown_err) {
 		err = thrown_err;
+	} catch (const std::bad_alloc &) {
+		err = PF_Err_OUT_OF_MEMORY;
+	} catch (...) {
+		err = PF_Err_INTERNAL_STRUCT_DAMAGED;
 	}
 	return err;
 }

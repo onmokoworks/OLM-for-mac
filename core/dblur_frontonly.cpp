@@ -23,11 +23,12 @@ inline std::size_t rgba_index(int width, int x, int y) {
             static_cast<std::size_t>(x)) * 4;
 }
 
-std::vector<float> gaussian_weights(int count) {
+std::vector<float> gaussian_weights(int count, bool expfloat = false) {
     std::vector<float> weights(static_cast<std::size_t>(count), 1.0f);
     for (int index = 0; index < count; ++index) {
         weights[static_cast<std::size_t>(index)] =
-            olm::dblur::gaussian_weight(count, index);
+            expfloat ? olm::dblur::gaussian_weight_expfloat(count, index)
+                     : olm::dblur::gaussian_weight(count, index);
     }
     return weights;
 }
@@ -110,7 +111,8 @@ static int render_rgba8(
     std::uint32_t seed, int noise_offset_ui, float thickness_ui,
     float render_scale, const std::uint8_t* layer_argb, int layer_width,
     int layer_height, int layer_rowbytes, int layer_origin_x,
-    int layer_origin_y, int render_origin_x, int render_origin_y) {
+    int layer_origin_y, int render_origin_x, int render_origin_y,
+    bool expfloat = false, bool process_full_height = false) {
     const bool layer_mode = noise_variation_percent > 0.0f && noise_type == 3;
     if (input_rgba == nullptr || output_rgba == nullptr || width <= 0 ||
         height <= 0 || (front_strength <= 0 && back_strength <= 0) ||
@@ -197,12 +199,12 @@ static int render_rgba8(
             0, static_cast<int>(static_cast<float>(back_strength) * render_scale));
         const int scaled_back_alpha_fade = std::max(
             0, static_cast<int>(static_cast<float>(back_alpha_fade) * render_scale));
-        const std::vector<float> front_weights = gaussian_weights(scaled_front_strength);
-        const std::vector<float> back_weights = gaussian_weights(scaled_back_strength);
+        const std::vector<float> front_weights = gaussian_weights(scaled_front_strength, expfloat);
+        const std::vector<float> back_weights = gaussian_weights(scaled_back_strength, expfloat);
         const std::vector<float> prepass_front_weights =
-            gaussian_weights(std::max(scaled_front_alpha_fade, 1));
+            gaussian_weights(std::max(scaled_front_alpha_fade, 1), expfloat);
         const std::vector<float> prepass_back_weights =
-            gaussian_weights(std::max(scaled_back_alpha_fade, 1));
+            gaussian_weights(std::max(scaled_back_alpha_fade, 1), expfloat);
         const float empty_table = 0.0f;
         std::vector<float> noise_plane;
         std::vector<float> field_source;
@@ -229,9 +231,12 @@ static int render_rgba8(
                 field_source.data(), field_rotated.data(), work_width,
                 work_height, angle);
         }
+        // The portable row driver is invoked synchronously here, not once per
+        // worker.  Truncating to an even worker partition left the final 1..31
+        // rows untouched for most real-world frame geometries.
         const int workers = std::min(work_height, 32);
-        const int rows_per_worker = work_height / workers;
-        const int processed_rows = rows_per_worker * workers;
+        const int processed_rows = process_full_height ? work_height :
+            (work_height / workers) * workers;
         const float* scatter_front =
             scaled_front_strength > 0 ? front_weights.data() : &empty_table;
         const float* scatter_back =
@@ -317,14 +322,14 @@ extern "C" int olm_dblur_noise_mode3_rgba8(
     int back_alpha_fade, float back_sharp_tail_percent,
     float size_variation_percent, float noise_variation_percent, int noise_type,
     std::uint32_t seed, int noise_offset_ui, float thickness_ui,
-    float render_scale) {
+    float render_scale, int use_expfloat, int process_full_height) {
     return render_rgba8(
         input_rgba, output_rgba, width, height, angle_degrees, brightness_gain,
         front_strength, front_alpha_fade, front_sharp_tail_percent,
         back_strength, back_alpha_fade, back_sharp_tail_percent,
         size_variation_percent, noise_variation_percent, noise_type, seed,
         noise_offset_ui, thickness_ui, render_scale, nullptr, 0, 0, 0,
-        0, 0, 0, 0);
+        0, 0, 0, 0, use_expfloat != 0, process_full_height != 0);
 }
 
 extern "C" int olm_dblur_layer_mode2_rgba8(
@@ -400,7 +405,9 @@ static int render_minimal_argb16(const std::uint16_t* input_argb,
                                          int noise_offset_ui,
                                          float thickness_ui,
                                          const std::uint16_t* layer_argb,
-                                         int layer_rowbytes) {
+                                         int layer_rowbytes,
+                                         bool expfloat = false,
+                                         bool process_full_height = false) {
     if (!input_argb || !output_argb || width <= 0 || height <= 0 ||
         (front_strength <= 0 && back_strength <= 0) ||
         front_strength < 0 || back_strength < 0 || front_alpha_fade < 0 ||
@@ -408,7 +415,11 @@ static int render_minimal_argb16(const std::uint16_t* input_argb,
         !std::isfinite(back_sharp_tail_percent) ||
         !std::isfinite(size_variation_percent)) return -1;
     try {
-        const float diagonal = std::sqrt(static_cast<float>(width * width + height * height));
+        const std::int64_t diagonal_squared =
+            static_cast<std::int64_t>(width) * width +
+            static_cast<std::int64_t>(height) * height;
+        if (diagonal_squared > std::numeric_limits<int>::max()) return -2;
+        const float diagonal = std::sqrt(static_cast<float>(diagonal_squared));
         const int half_span = 2 - static_cast<int>(diagonal * -0.5f);
         const int work_width = width + (half_span - width / 2) * 2;
         const int work_height = height + (half_span - height / 2) * 2;
@@ -432,7 +443,8 @@ static int render_minimal_argb16(const std::uint16_t* input_argb,
         olm_dblur_rotate_rgba_f32(a.data(), b.data(), work_width, work_height, angle);
         a = b;
         const int workers = std::min(work_height, 32);
-        const int processed_rows = (work_height / workers) * workers;
+        const int processed_rows = process_full_height ? work_height :
+            (work_height / workers) * workers;
         std::fill(b.begin(), b.begin() +
             static_cast<std::size_t>(processed_rows) * work_width * 4, 0.0f);
         float component_divisor = 1.0f;
@@ -444,12 +456,12 @@ static int render_minimal_argb16(const std::uint16_t* input_argb,
             component_map[pixel * 4 + 0] = 1.0f;
             component_map[pixel * 4 + 3] = 1.0f;
         }
-        const std::vector<float> front_weights = gaussian_weights(front_strength);
-        const std::vector<float> back_weights = gaussian_weights(back_strength);
+        const std::vector<float> front_weights = gaussian_weights(front_strength, expfloat);
+        const std::vector<float> back_weights = gaussian_weights(back_strength, expfloat);
         const std::vector<float> prepass_front_weights =
-            gaussian_weights(std::max(front_alpha_fade, 1));
+            gaussian_weights(std::max(front_alpha_fade, 1), expfloat);
         const std::vector<float> prepass_back_weights =
-            gaussian_weights(std::max(back_alpha_fade, 1));
+            gaussian_weights(std::max(back_alpha_fade, 1), expfloat);
         const float empty = 0.0f;
         const float* prepass_front = front_alpha_fade > 0 ? prepass_front_weights.data() : &empty;
         const float* prepass_back = back_alpha_fade > 0 ? prepass_back_weights.data() : &empty;
@@ -528,12 +540,14 @@ extern "C" int olm_dblur_minimal_argb16(const std::uint16_t* input_argb,
                                          float brightness_gain, float angle_degrees,
                                          float noise_variation_percent, int noise_type,
                                          std::uint32_t seed, int noise_offset_ui,
-                                         float thickness_ui) {
+                                         float thickness_ui,
+                                         int process_full_height) {
     return render_minimal_argb16(
         input_argb, output_argb, width, height, front_strength, back_strength,
         0, 0.0f, 0, 0.0f, 0.0f,
         brightness_gain, angle_degrees, noise_variation_percent, noise_type,
-        seed, noise_offset_ui, thickness_ui, nullptr, 0);
+        seed, noise_offset_ui, thickness_ui, nullptr, 0, false,
+        process_full_height != 0);
 }
 
 extern "C" int olm_dblur_minimal_layer_argb16(
@@ -556,13 +570,13 @@ extern "C" int olm_dblur_full_argb16(
     float brightness_gain, float angle_degrees,
     float noise_variation_percent, int noise_type, std::uint32_t seed,
     int noise_offset_ui, float thickness_ui, const std::uint16_t* layer_argb,
-    int layer_rowbytes) {
+    int layer_rowbytes, int use_expfloat) {
     return render_minimal_argb16(
         input_argb, output_argb, width, height, front_strength, back_strength,
         front_alpha_fade, front_sharp_tail_percent, back_alpha_fade,
         back_sharp_tail_percent, size_variation_percent, brightness_gain, angle_degrees,
         noise_variation_percent, noise_type, seed, noise_offset_ui,
-        thickness_ui, layer_argb, layer_rowbytes);
+        thickness_ui, layer_argb, layer_rowbytes, use_expfloat != 0);
 }
 
 static int render_minimal_argb32(const float* input_argb,
@@ -583,13 +597,19 @@ static int render_minimal_argb32(const float* input_argb,
                                  int noise_offset_ui,
                                  float thickness_ui,
                                  const float* layer_argb,
-                                 int layer_rowbytes) {
+                                 int layer_rowbytes,
+                                 bool expfloat = false,
+                                 bool process_full_height = false) {
     if (!input_argb || !output_argb || width <= 0 || height <= 0 ||
         (front_strength <= 0 && back_strength <= 0) || front_alpha_fade < 0 ||
         back_alpha_fade < 0 || !std::isfinite(front_sharp_tail_percent) ||
         !std::isfinite(back_sharp_tail_percent)) return -1;
     try {
-        const float diagonal = std::sqrt(static_cast<float>(width * width + height * height));
+        const std::int64_t diagonal_squared =
+            static_cast<std::int64_t>(width) * width +
+            static_cast<std::int64_t>(height) * height;
+        if (diagonal_squared > std::numeric_limits<int>::max()) return -2;
+        const float diagonal = std::sqrt(static_cast<float>(diagonal_squared));
         const int half_span = 2 - static_cast<int>(diagonal * -0.5f);
         const int ww = width + (half_span - width / 2) * 2;
         const int wh = height + (half_span - height / 2) * 2;
@@ -605,7 +625,7 @@ static int render_minimal_argb32(const float* input_argb,
             ((static_cast<double>(angle_degrees) + 90.0) / 180.0) * kPi);
         olm_dblur_rotate_rgba_f32(a.data(), b.data(), ww, wh, angle);
 		const int workers = std::min(wh, 32);
-		const int processed_rows = (wh / workers) * workers;
+		const int processed_rows = process_full_height ? wh : (wh / workers) * workers;
 		a = b;
 		std::fill(b.begin(), b.begin() + static_cast<std::size_t>(processed_rows) * ww * 4, 0.0f);
         float component_divisor = 1.0f;
@@ -616,12 +636,12 @@ static int render_minimal_argb32(const float* input_argb,
         } else {
             for (std::size_t p = 0; p < wp; ++p) { map[p * 4] = 1.0f; map[p * 4 + 3] = 1.0f; }
         }
-        const std::vector<float> front_weights = gaussian_weights(front_strength);
-        const std::vector<float> back_weights = gaussian_weights(back_strength);
+        const std::vector<float> front_weights = gaussian_weights(front_strength, expfloat);
+        const std::vector<float> back_weights = gaussian_weights(back_strength, expfloat);
         const std::vector<float> prepass_front_weights =
-            gaussian_weights(std::max(front_alpha_fade, 1));
+            gaussian_weights(std::max(front_alpha_fade, 1), expfloat);
         const std::vector<float> prepass_back_weights =
-            gaussian_weights(std::max(back_alpha_fade, 1));
+            gaussian_weights(std::max(back_alpha_fade, 1), expfloat);
         const float empty = 0.0f;
         const float* prepass_front =
             front_alpha_fade > 0 ? prepass_front_weights.data() : &empty;
@@ -695,12 +715,14 @@ extern "C" int olm_dblur_minimal_argb32(const float* input_argb,
                                          int noise_offset_ui,
                                          float thickness_ui,
                                          const float* layer_argb,
-                                         int layer_rowbytes) {
+                                         int layer_rowbytes,
+                                         int process_full_height) {
     return render_minimal_argb32(
         input_argb, output_argb, width, height, front_strength, back_strength,
         0, 0.0f, 0, 0.0f, size_variation_percent, angle_degrees, brightness_gain,
         noise_variation_percent, noise_type, seed, noise_offset_ui,
-        thickness_ui, layer_argb, layer_rowbytes);
+        thickness_ui, layer_argb, layer_rowbytes, false,
+        process_full_height != 0);
 }
 
 extern "C" int olm_dblur_minimal_fade_argb32(
@@ -724,11 +746,11 @@ extern "C" int olm_dblur_full_argb32(
     float size_variation_percent, float angle_degrees, float brightness_gain,
     float noise_variation_percent, int noise_type, std::uint32_t seed,
     int noise_offset_ui, float thickness_ui, const float* layer_argb,
-    int layer_rowbytes) {
+    int layer_rowbytes, int use_expfloat) {
     return render_minimal_argb32(
         input_argb, output_argb, width, height, front_strength, back_strength,
         front_alpha_fade, front_sharp_tail_percent, back_alpha_fade,
         back_sharp_tail_percent, size_variation_percent, angle_degrees,
         brightness_gain, noise_variation_percent, noise_type, seed,
-        noise_offset_ui, thickness_ui, layer_argb, layer_rowbytes);
+        noise_offset_ui, thickness_ui, layer_argb, layer_rowbytes, use_expfloat != 0);
 }

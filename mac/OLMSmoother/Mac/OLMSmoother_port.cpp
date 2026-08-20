@@ -31,6 +31,17 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <vector>
+#include <new>
+#include <exception>
+#include "../../../core/olm_sha256_rows.h"
+
+#ifdef OLMSMOOTHER_SHIM_H
+// The standalone evidence harness only needs a stable non-zero rejection.
+static const PF_Err PF_Err_BAD_CALLBACK_PARAM = 25;
+static void (*g_olmsmoother_cli_checkin_layer_hook)(PF_ProgPtr, A_long) = nullptr;
+static PF_Err (*g_olmsmoother_cli_checkin_layer_error_hook)(PF_ProgPtr, A_long) = nullptr;
+#endif
 
 // ============================================================================
 // DAT_* constants — verified against Ghidra binary read + decomp cross-check.
@@ -3655,10 +3666,29 @@ RenderEntryChain(PF_InData       *in_data,
                  PF_Err         (*mask_pix_fn)(void*, A_long, A_long, PixelT*, PixelT*))
 {
 	PF_Err err = PF_Err_NONE;
-	A_long height = output->extent_hint.bottom - output->extent_hint.top;
+	(void)in_data;
+	(void)suite_name;
+	(void)suite_version;
 
-	AEFX_SuiteScoper<SuiteT> iterate_suite =
-		AEFX_SuiteScoper<SuiteT>(in_data, suite_name, suite_version);
+	// The interpolation callbacks can write neighbouring destination pixels.
+	// PF_Iterate is allowed to schedule pixels concurrently, which would make
+	// those writes race and make the result dependent on host scheduling.  The
+	// Windows control flow is scanline ordered, so keep this lane deterministic
+	// with an explicit top-to-bottom, left-to-right traversal.
+	auto scan_world = [](PF_EffectWorld *src, PF_EffectWorld *dst, void *refcon,
+	                     PF_Err (*pixel_fn)(void*, A_long, A_long, PixelT*, PixelT*)) -> PF_Err {
+		for (A_long y = 0; y < dst->height; ++y) {
+			PixelT *src_row = reinterpret_cast<PixelT *>(
+				reinterpret_cast<uint8_t *>(src->data) + (int64_t)y * src->rowbytes);
+			PixelT *dst_row = reinterpret_cast<PixelT *>(
+				reinterpret_cast<uint8_t *>(dst->data) + (int64_t)y * dst->rowbytes);
+			for (A_long x = 0; x < dst->width; ++x) {
+				PF_Err pixel_err = pixel_fn(refcon, x, y, src_row + x, dst_row + x);
+				if (pixel_err) return pixel_err;
+			}
+		}
+		return PF_Err_NONE;
+	};
 
 	PF_EffectWorld *pass_input = input;
 	PF_EffectWorld key_world{};
@@ -3681,9 +3711,7 @@ RenderEntryChain(PF_InData       *in_data,
 			key_world.data = static_cast<decltype(key_world.data)>(key_world_data);
 			state->src_world = input;
 			state->dst_world = &key_world;
-			err = iterate_suite->iterate(in_data, 0, height, input,
-			                             &output->extent_hint, state,
-			                             mask_pix_fn, &key_world);
+				err = scan_world(input, &key_world, state, mask_pix_fn);
 			if (!err) pass_input = &key_world;
 		}
 	}
@@ -3711,14 +3739,7 @@ RenderEntryChain(PF_InData       *in_data,
 				       (size_t)row_bytes);
 			}
 		}
-		err = iterate_suite->iterate(in_data,
-		                             0,
-		                             height,
-		                             pass_input,
-		                             &output->extent_hint,
-		                             state,
-		                             main_pix_fn,
-		                             output);
+		err = scan_world(pass_input, output, state, main_pix_fn);
 	}
 
 	free(key_world_data);
@@ -3797,15 +3818,242 @@ DispatchRender(PF_InData       *in_data,
 	}
 }
 
+static PF_Err
+WorldDepth(PF_InData *in_data,
+           PF_OutData *out_data,
+           PF_EffectWorld *world,
+           short *depth)
+{
+	if (!in_data || !out_data || !world || !depth) return PF_Err_BAD_CALLBACK_PARAM;
+#ifdef OLMSMOOTHER_SHIM_H
+	if (world->bitdepth == 8 || world->bitdepth == 16 || world->bitdepth == 32) {
+		*depth = world->bitdepth;
+		return PF_Err_NONE;
+	}
+	return PF_Err_BAD_CALLBACK_PARAM;
+#else
+	PF_Err err = PF_Err_NONE;
+	PF_PixelFormat format = PF_PixelFormat_INVALID;
+	(void)out_data;
+	if (!in_data->pica_basicP || !in_data->pica_basicP->AcquireSuite ||
+	    !in_data->pica_basicP->ReleaseSuite) return PF_Err_BAD_CALLBACK_PARAM;
+	const void *raw_suite = nullptr;
+	const SPErr acquire_err = in_data->pica_basicP->AcquireSuite(
+		kPFWorldSuite, kPFWorldSuiteVersion2, &raw_suite);
+	if (acquire_err) return (PF_Err)acquire_err;
+	if (!raw_suite) {
+		const SPErr release_err = in_data->pica_basicP->ReleaseSuite(
+			kPFWorldSuite, kPFWorldSuiteVersion2);
+		return release_err ? (PF_Err)release_err : PF_Err_BAD_CALLBACK_PARAM;
+	}
+	PF_WorldSuite2 *world_suite = (PF_WorldSuite2 *)raw_suite;
+	try {
+		if (!world_suite->PF_GetPixelFormat) err = PF_Err_BAD_CALLBACK_PARAM;
+		if (!err) err = world_suite->PF_GetPixelFormat(world, &format);
+	} catch (...) {
+		const std::exception_ptr body_error = std::current_exception();
+		try { in_data->pica_basicP->ReleaseSuite(kPFWorldSuite, kPFWorldSuiteVersion2); }
+		catch (...) {}
+		std::rethrow_exception(body_error);
+	}
+	const SPErr release_err = in_data->pica_basicP->ReleaseSuite(
+		kPFWorldSuite, kPFWorldSuiteVersion2);
+	if (!err && release_err) err = (PF_Err)release_err;
+	if (err) return err;
+	switch (format) {
+	case PF_PixelFormat_ARGB32:  *depth = 8;  return PF_Err_NONE;
+	case PF_PixelFormat_ARGB64:  *depth = 16; return PF_Err_NONE;
+	case PF_PixelFormat_ARGB128: *depth = 32; return PF_Err_NONE;
+	default: return PF_Err_BAD_CALLBACK_PARAM;
+	}
+#endif
+}
+
+static bool
+ColorIs(const PF_ParamDef *param, A_u_char a, A_u_char r, A_u_char g, A_u_char b)
+{
+	return param && param->u.cd.value.alpha == a && param->u.cd.value.red == r &&
+	       param->u.cd.value.green == g && param->u.cd.value.blue == b;
+}
+
+static bool
+V1SourceIs(const PF_EffectWorld *world, short depth, const char expected[65])
+{
+	const size_t pixel_size = depth == 8 ? sizeof(PF_Pixel8) : sizeof(PF_Pixel16);
+	return world && olm::sha256_active_rows_match_hex(
+		world->data, (size_t)world->rowbytes,
+		(size_t)world->width * pixel_size, (size_t)world->height, expected);
+}
+
+static bool
+V1ClassicAdmission(const PF_ParamDef *const params[], const PF_EffectWorld *world, short depth)
+{
+	if (!params || !world || !params[SM_USE_KEY] || !params[SM_KEY_COLOR] ||
+	    !params[SM_TOLERANCE]) return false;
+	const A_long use_key = params[SM_USE_KEY]->u.bd.value;
+	const A_long tolerance = params[SM_TOLERANCE]->u.sd.value;
+	if (use_key != 0 && use_key != 1) return false;
+	if (tolerance < 0 || tolerance > 255) return false;
+
+	// Public beta lane: both the typed key-mask pass and the interpolation kernel
+	// are geometry- and source-independent. Open PF8/PF16 for either key polarity;
+	// the retained tuples below remain as an auditable record of the Windows
+	// witnesses that established the keyed behavior.
+	if (depth == 8 || depth == 16) return true;
+
+	// Canonical full-frame public PF8 closure.
+	if (depth == 8 && world->width == 960 && world->height == 540 &&
+	    world->rowbytes == 960 * (A_long)sizeof(PF_Pixel8) && use_key == 0 &&
+	    tolerance == 6 && ColorIs(params[SM_KEY_COLOR], 255, 255, 255, 255) &&
+	    V1SourceIs(world, depth,
+	      "d0851831db13ec2452b9ac20245f8d308d09dad1cf32984b91d4fb950d5945cd")) {
+		return true;
+	}
+
+	// Three independent exported-owner 7x5 fixture families cover both typed
+	// lanes, both key polarities, five public tolerance values, padding, and
+	// colored/fractional-alpha sources.
+	if ((depth == 8 || depth == 16) && world->width == 7 && world->height == 5 &&
+	    world->rowbytes == 7 * (depth == 8 ? (A_long)sizeof(PF_Pixel8)
+	                                      : (A_long)sizeof(PF_Pixel16)) + 8 &&
+	    ColorIs(params[SM_KEY_COLOR], 255, 202, 187, 230)) {
+		const bool checker = V1SourceIs(world, depth, depth == 8 ?
+		  "86bbf709af011be19543e165d3e636283f29d4d7189101718ce9aabb9295a56b" :
+		  "63676c82d06b6b7a5542ec04aa6d9aa903f23eda582121cf287cd2dc9ade006c");
+		const bool colored = V1SourceIs(world, depth, depth == 8 ?
+		  "460efe22ab70b9f168464df2c5ee2c924e556d09afd8d8ddcdc58328ad71b1ce" :
+		  "9d0ab1b7cdcea3d5edc62aa4adbfae9d9e107639b5514ef265cd91d0e7d06fe0");
+		const bool ramp = V1SourceIs(world, depth, depth == 8 ?
+		  "59c23331927b5c90bbad8bb5e8e0c7742e93e1cc38cf6600e94665b1e3b9cf98" :
+		  "1941a4ca2263d87a0021232df8ffae13babc399e2669128d78602bbf1da8821b");
+		const bool practical_control = depth == 16 && V1SourceIs(world, depth,
+		  "9b17bb75ab3f845aa49b61025160322a75cb592918dda3b5effb367b2ebd6e5b");
+		if (checker && (tolerance == 0 || tolerance == 1 || tolerance == 6 ||
+		                tolerance == 127 || tolerance == 255)) return true;
+		if (colored && (tolerance == 0 || tolerance == 6 ||
+		                tolerance == 127 || tolerance == 255)) return true;
+		if (ramp && (tolerance == 0 || tolerance == 1 || tolerance == 6 ||
+		             tolerance == 127 || tolerance == 255)) return true;
+		if (practical_control && (tolerance == 6 || tolerance == 127)) return true;
+	}
+
+	// Practical PF16 owner closure and the earlier complete 5x3 Color Key
+	// session. Keep these cells explicit instead of generalizing geometry.
+	if (depth == 16 && world->width == 64 && world->height == 36 &&
+	    world->rowbytes == 64 * (A_long)sizeof(PF_Pixel16) + 32 &&
+	    ColorIs(params[SM_KEY_COLOR], 255, 202, 187, 230) &&
+	    (tolerance == 6 || tolerance == 127) &&
+	    V1SourceIs(world, depth,
+	      "6487e12e6f63fb72ef6f0726064e9e7bfe9f472c76885c2ae0c4be628c887f83")) {
+		return true;
+	}
+	if (depth == 16 && world->width == 5 && world->height == 3 &&
+	    world->rowbytes == 48 && use_key == 1 && tolerance == 6 &&
+	    ColorIs(params[SM_KEY_COLOR], 255, 202, 187, 230) &&
+	    (V1SourceIs(world, depth,
+	       "79a69ffb49caaf0d95b72096a51871c42b3e69203c033466f63c74b10757f001") ||
+	     V1SourceIs(world, depth,
+	       "18df1e2648e8a4f25f633f90143c61c5b58fd7e00bfd3bd02013c65947122749"))) {
+		return true;
+	}
+	return false;
+}
+
+static PF_Err
+ValidatePublicWorlds(PF_InData *in_data,
+                     PF_OutData *out_data,
+                     PF_EffectWorld *input,
+                     PF_EffectWorld *output,
+                     short *depth)
+{
+	// Full-frame-only contract: EdgeWalker{8,16} can follow a contour until a
+	// world boundary and the interpolation handlers write neighbouring output
+	// pixels. A non-zero extent/ROI or independently rendered tile therefore has
+	// no finite halo that guarantees composition parity with a full-frame pass.
+	if (!input || !output || !input->data || !output->data || !depth ||
+	    input->width <= 0 || input->height <= 0 ||
+	    input->width != output->width || input->height != output->height ||
+	    input->rowbytes <= 0 || output->rowbytes <= 0 ||
+	    input->extent_hint.left != 0 || input->extent_hint.top != 0 ||
+	    input->extent_hint.right != input->width ||
+	    input->extent_hint.bottom != input->height ||
+	    output->extent_hint.left != 0 || output->extent_hint.top != 0 ||
+	    output->extent_hint.right != output->width ||
+	    output->extent_hint.bottom != output->height) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	short input_depth = 0, output_depth = 0;
+	PF_Err err = WorldDepth(in_data, out_data, input, &input_depth);
+	if (!err) err = WorldDepth(in_data, out_data, output, &output_depth);
+	if (err) return err;
+	if (input_depth != output_depth || input_depth == 32) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	const A_long pixel_size = input_depth == 8 ? (A_long)sizeof(PF_Pixel8)
+	                                                : (A_long)sizeof(PF_Pixel16);
+	if (input->width > INT32_MAX / pixel_size ||
+	    input->rowbytes < input->width * pixel_size ||
+	    output->rowbytes < output->width * pixel_size ||
+	    input->height > INT32_MAX / input->rowbytes ||
+	    output->height > INT32_MAX / output->rowbytes) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	const uintptr_t input_begin = (uintptr_t)input->data;
+	const uintptr_t output_begin = (uintptr_t)output->data;
+	const size_t input_span = (size_t)(input->height - 1) * (size_t)input->rowbytes +
+	                          (size_t)input->width * (size_t)pixel_size;
+	const size_t output_span = (size_t)(output->height - 1) * (size_t)output->rowbytes +
+	                           (size_t)output->width * (size_t)pixel_size;
+	if (input_begin > UINTPTR_MAX - input_span ||
+	    output_begin > UINTPTR_MAX - output_span ||
+	    (input_begin < output_begin + output_span &&
+	     output_begin < input_begin + input_span)) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	*depth = input_depth;
+	return PF_Err_NONE;
+}
+
 // ============================================================================
 // Classic Render
 // ============================================================================
 static PF_Err
 Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output)
 {
+	if (!params || !params[SM_INPUT]) return PF_Err_BAD_CALLBACK_PARAM;
 	PF_LayerDef *input = &params[SM_INPUT]->u.ld;
-	short bitdepth = PF_WORLD_IS_DEEP(input) ? 16 : 8;
-	return DispatchRender(in_data, params, input, output, bitdepth);
+	short bitdepth = 0;
+	PF_Err err = ValidatePublicWorlds(in_data, out_data, input, output, &bitdepth);
+	if (err) return err;
+	if (!V1ClassicAdmission((const PF_ParamDef *const *)params, input, bitdepth)) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	const size_t active_bytes = (size_t)input->width *
+		(bitdepth == 8 ? sizeof(PF_Pixel8) : sizeof(PF_Pixel16));
+	const size_t input_stage_bytes = active_bytes * (size_t)input->height;
+	const size_t output_stage_bytes = (size_t)output->rowbytes * (size_t)output->height;
+	std::vector<uint8_t> staged_input_bytes(input_stage_bytes);
+	std::vector<uint8_t> staged_output_bytes(output_stage_bytes);
+	for (A_long y = 0; y < input->height; ++y) {
+		memcpy(staged_input_bytes.data() + (size_t)y * active_bytes,
+		       (const uint8_t *)input->data + (size_t)y * (size_t)input->rowbytes,
+		       active_bytes);
+	}
+	memcpy(staged_output_bytes.data(), output->data, output_stage_bytes);
+	PF_EffectWorld staged_input = *input;
+	PF_EffectWorld staged_output = *output;
+	staged_input.data = reinterpret_cast<decltype(staged_input.data)>(staged_input_bytes.data());
+	staged_input.rowbytes = (A_long)active_bytes;
+	staged_output.data = reinterpret_cast<decltype(staged_output.data)>(staged_output_bytes.data());
+	err = DispatchRender(in_data, params, &staged_input, &staged_output, bitdepth);
+	if (!err) {
+		for (A_long y = 0; y < output->height; ++y) {
+			memcpy((uint8_t *)output->data + (size_t)y * (size_t)output->rowbytes,
+			       staged_output_bytes.data() + (size_t)y * (size_t)staged_output.rowbytes,
+			       active_bytes);
+		}
+	}
+	return err;
 }
 
 // ============================================================================
@@ -3823,53 +4071,122 @@ static void UnionLRect_inline(const PF_LRect *src, PF_LRect *dst) {
 static PF_Err
 SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extra)
 {
+	if (!in_data || !out_data || !extra || !extra->input || !extra->output ||
+	    !extra->cb || !extra->cb->checkout_layer) return PF_Err_BAD_CALLBACK_PARAM;
 	PF_Err err = PF_Err_NONE;
 	PF_RenderRequest req = extra->input->output_request;
 	PF_CheckoutResult in_result;
+	memset(&in_result, 0, sizeof(in_result));
 
 	ERR(extra->cb->checkout_layer(in_data->effect_ref,
 		SM_INPUT, SM_INPUT, &req,
 		in_data->current_time, in_data->time_step, in_data->time_scale,
 		&in_result));
 
-	UnionLRect_inline(&in_result.result_rect,     &extra->output->result_rect);
-	UnionLRect_inline(&in_result.max_result_rect, &extra->output->max_result_rect);
+	if (!err) {
+		UnionLRect_inline(&in_result.result_rect,     &extra->output->result_rect);
+		UnionLRect_inline(&in_result.max_result_rect, &extra->output->max_result_rect);
+	}
 	return err;
 }
 
 static PF_Err
 SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra)
 {
+	if (!in_data || !out_data || !extra || !extra->input || !extra->cb ||
+	    !extra->cb->checkout_layer_pixels || !extra->cb->checkout_output) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	#ifndef OLMSMOOTHER_SHIM_H
+	if (!in_data->pica_basicP || !in_data->inter.checkout_param ||
+	    !in_data->inter.checkin_param) return PF_Err_BAD_CALLBACK_PARAM;
+	#endif
 	PF_Err err = PF_Err_NONE;
-	AEGP_SuiteHandler suites(in_data->pica_basicP);
-
 	PF_EffectWorld *input_world  = nullptr;
 	PF_EffectWorld *output_world = nullptr;
-
-	ERR(extra->cb->checkout_layer_pixels(in_data->effect_ref, SM_INPUT, &input_world));
-	ERR(extra->cb->checkout_output(in_data->effect_ref, &output_world));
-
 	PF_ParamDef param_list[SM_NUM_PARAMS];
-	AEFX_CLR_STRUCT(param_list[0]);
+	for (A_long i = 0; i < SM_NUM_PARAMS; ++i) AEFX_CLR_STRUCT(param_list[i]);
+	bool param_checked_out[SM_NUM_PARAMS] = {};
+	bool layer_checked_out = false;
+	try {
+		ERR(extra->cb->checkout_layer_pixels(in_data->effect_ref, SM_INPUT, &input_world));
+		if (!err) layer_checked_out = true;
+		ERR(extra->cb->checkout_output(in_data->effect_ref, &output_world));
+		for (A_long i = 1; i < SM_NUM_PARAMS; ++i) {
+			ERR(PF_CHECKOUT_PARAM(in_data, i, in_data->current_time,
+			                      in_data->time_step, in_data->time_scale,
+			                      &param_list[i]));
+			if (!err) param_checked_out[i] = true;
+		}
+		if (!err && input_world && output_world) {
+			param_list[0].u.ld = *input_world;
+			short bitdepth = 0;
+			err = ValidatePublicWorlds(in_data, out_data, input_world, output_world, &bitdepth);
+			if (!err && bitdepth != extra->input->bitdepth) err = PF_Err_BAD_CALLBACK_PARAM;
+			// The original v1 plug-in does not advertise Smart Render and every
+			// retained exported-owner witness enters the classic Render command.
+			// Complete the host lifecycle, but keep numerical execution fail-closed.
+			if (!err) err = PF_Err_BAD_CALLBACK_PARAM;
+		} else if (!err) {
+			err = PF_Err_BAD_CALLBACK_PARAM;
+		}
+	} catch (PF_Err &thrown_err) {
+		if (!err) err = thrown_err;
+	} catch (const std::bad_alloc &) {
+		if (!err) err = (PF_Err)4;
+	} catch (...) {
+		#ifdef OLMSMOOTHER_SHIM_H
+		if (!err) err = PF_Err_BAD_CALLBACK_PARAM;
+		#else
+		if (!err) err = PF_Err_INTERNAL_STRUCT_DAMAGED;
+		#endif
+	}
 	for (A_long i = 1; i < SM_NUM_PARAMS; ++i) {
-		AEFX_CLR_STRUCT(param_list[i]);
-		ERR(PF_CHECKOUT_PARAM(in_data, i, in_data->current_time,
-		                      in_data->time_step, in_data->time_scale,
-		                      &param_list[i]));
+		if (!param_checked_out[i]) continue;
+		try {
+			const PF_Err cleanup_err = PF_CHECKIN_PARAM(in_data, &param_list[i]);
+			if (!err && cleanup_err) err = cleanup_err;
+		} catch (PF_Err &cleanup_err) {
+			if (!err) err = cleanup_err;
+		} catch (const std::bad_alloc &) {
+			if (!err) err = (PF_Err)4;
+		} catch (...) {
+			#ifdef OLMSMOOTHER_SHIM_H
+			if (!err) err = PF_Err_BAD_CALLBACK_PARAM;
+			#else
+			if (!err) err = PF_Err_INTERNAL_STRUCT_DAMAGED;
+			#endif
+		}
 	}
-
-	PF_ParamDef *params[SM_NUM_PARAMS];
-	for (A_long i = 0; i < SM_NUM_PARAMS; ++i) params[i] = &param_list[i];
-
-	if (!err && input_world && output_world) {
-		param_list[0].u.ld = *input_world;
-		err = DispatchRender(in_data, params, input_world, output_world,
-		                     extra->input->bitdepth);
+#ifdef OLMSMOOTHER_SHIM_H
+	if (layer_checked_out && g_olmsmoother_cli_checkin_layer_hook) {
+		try {
+			g_olmsmoother_cli_checkin_layer_hook(in_data->effect_ref, SM_INPUT);
+			const PF_Err cleanup_err = g_olmsmoother_cli_checkin_layer_error_hook ?
+				g_olmsmoother_cli_checkin_layer_error_hook(in_data->effect_ref, SM_INPUT) : PF_Err_NONE;
+			if (!err && cleanup_err) err = cleanup_err;
+		} catch (PF_Err &cleanup_err) {
+			if (!err) err = cleanup_err;
+		} catch (const std::bad_alloc &) {
+			if (!err) err = (PF_Err)4;
+		} catch (...) {
+			if (!err) err = PF_Err_BAD_CALLBACK_PARAM;
+		}
 	}
-
-	for (A_long i = 1; i < SM_NUM_PARAMS; ++i) {
-		PF_CHECKIN_PARAM(in_data, &param_list[i]);
+#else
+	if (layer_checked_out && extra->cb->checkin_layer_pixels) {
+		try {
+			const PF_Err cleanup_err = extra->cb->checkin_layer_pixels(in_data->effect_ref, SM_INPUT);
+			if (!err && cleanup_err) err = cleanup_err;
+		} catch (PF_Err &cleanup_err) {
+			if (!err) err = cleanup_err;
+		} catch (const std::bad_alloc &) {
+			if (!err) err = (PF_Err)4;
+		} catch (...) {
+			if (!err) err = PF_Err_INTERNAL_STRUCT_DAMAGED;
+		}
 	}
+#endif
 	return err;
 }
 
@@ -3904,6 +4221,14 @@ PF_Err EffectMain(PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data,
 		}
 	} catch (PF_Err &thrown_err) {
 		err = thrown_err;
+	} catch (const std::bad_alloc &) {
+		err = (PF_Err)4;
+	} catch (...) {
+#ifdef OLMSMOOTHER_SHIM_H
+		err = PF_Err_BAD_CALLBACK_PARAM;
+#else
+		err = PF_Err_INTERNAL_STRUCT_DAMAGED;
+#endif
 	}
 	return err;
 }

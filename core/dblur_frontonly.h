@@ -26,7 +26,8 @@ extern "C" int olm_dblur_minimal_argb16(const std::uint16_t* input_argb,
                                          int noise_type,
                                          std::uint32_t seed,
                                          int noise_offset_ui,
-                                         float thickness_ui);
+                                         float thickness_ui,
+                                         int process_full_height = 0);
 extern "C" int olm_dblur_minimal_layer_argb16(
     const std::uint16_t* input_argb, std::uint16_t* output_argb,
     int width, int height, int front_strength, int back_strength,
@@ -40,7 +41,7 @@ extern "C" int olm_dblur_full_argb16(
     float brightness_gain, float angle_degrees,
     float noise_variation_percent, int noise_type, std::uint32_t seed,
     int noise_offset_ui, float thickness_ui, const std::uint16_t* layer_argb,
-    int layer_rowbytes);
+    int layer_rowbytes, int use_expfloat = 0);
 extern "C" int olm_dblur_minimal_argb32(const float* input_argb,
                                          float* output_argb,
                                          int width, int height,
@@ -55,7 +56,8 @@ extern "C" int olm_dblur_minimal_argb32(const float* input_argb,
                                          int noise_offset_ui,
                                          float thickness_ui,
                                          const float* layer_argb,
-                                         int layer_rowbytes);
+                                         int layer_rowbytes,
+                                         int process_full_height = 0);
 extern "C" int olm_dblur_minimal_fade_argb32(
     const float* input_argb, float* output_argb, int width, int height,
     int front_strength, int back_strength, int front_alpha_fade,
@@ -70,7 +72,7 @@ extern "C" int olm_dblur_full_argb32(
     float size_variation_percent, float angle_degrees, float brightness_gain,
     float noise_variation_percent, int noise_type, std::uint32_t seed,
     int noise_offset_ui, float thickness_ui, const float* layer_argb,
-    int layer_rowbytes);
+    int layer_rowbytes, int use_expfloat = 0);
 
 // Extended mode-1 front-only path. `render_scale` is the AE downsample scale
 // already projected onto the blur direction; size/sharp values are UI
@@ -127,7 +129,7 @@ extern "C" int olm_dblur_noise_mode3_rgba8(
     std::uint32_t seed,
     int noise_offset_ui,
     float thickness_ui,
-    float render_scale);
+    float render_scale, int use_expfloat = 0, int process_full_height = 0);
 
 // Layer-driven noise (UI Noise Type 3), including the exact 8-bpc ARGB
 // premultiplied-luminance field and scalar rotation path.

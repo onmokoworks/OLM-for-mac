@@ -201,6 +201,7 @@
 					../../../Headers/SP,
 					../../../Resources,
 				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				ONLY_ACTIVE_ARCH = YES;
 				REZ_PREPROCESSOR_DEFINITIONS = __MACH__;
 				SDKROOT = macosx;
@@ -217,6 +218,7 @@
 				GENERATE_PKGINFO_FILE = YES;
 				INFOPLIST_FILE = "OLMDirectionalBlur.plugin-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.adobe.AfterEffects.OLMDirectionalBlur;
 				PRODUCT_NAME = OLMDirectionalBlur;
 				SDKROOT = macosx;

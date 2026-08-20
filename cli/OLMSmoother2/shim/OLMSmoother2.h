@@ -18,6 +18,7 @@ typedef double   A_FpLong;
 
 typedef A_long PF_Err;
 enum { PF_Err_NONE = 0 };
+enum { PF_RenderOutputFlag_RETURNS_EXTRA_PIXELS = 1 };
 
 typedef void *PF_ProgPtr;
 
@@ -50,6 +51,8 @@ struct PF_EffectWorld {
 	A_long  rowbytes;
 	short   bitdepth;
 	PF_LRect extent_hint;
+	A_long  origin_x;
+	A_long  origin_y;
 };
 typedef PF_EffectWorld PF_LayerDef;
 
@@ -139,6 +142,10 @@ struct PF_InData {
 	A_long     time_step;
 	A_long     time_scale;
 	void      *pica_basicP;
+	A_long     width;
+	A_long     height;
+	struct { A_long num, den; } downsample_x;
+	struct { A_long num, den; } downsample_y;
 };
 struct PF_OutData {
 	char     return_msg[256];
@@ -158,15 +165,24 @@ enum {
 	PF_Cmd_SMART_RENDER
 };
 
-struct PF_RenderRequest  { A_long _dummy; };
-struct PF_CheckoutResult { PF_LRect result_rect, max_result_rect; };
+struct PF_RenderRequest  { PF_LRect rect; A_long field, channel_mask; char preserve_rgb_of_zero_alpha; };
+struct PF_CheckoutResult {
+	PF_LRect result_rect, max_result_rect;
+	A_long ref_width, ref_height;
+};
 
 struct PF_PreRenderCallbacks {
 	PF_Err (*checkout_layer)(PF_ProgPtr, A_long, A_long, PF_RenderRequest *,
 	                         A_long, A_long, A_long, PF_CheckoutResult *);
 };
 struct PF_PreRenderInput  { PF_RenderRequest output_request; short bitdepth; };
-struct PF_PreRenderOutput { PF_LRect result_rect, max_result_rect; };
+struct PF_PreRenderOutput {
+	PF_LRect result_rect, max_result_rect;
+	char solid, reserved;
+	short flags;
+	void *pre_render_data;
+	void (*delete_pre_render_data_func)(void *);
+};
 struct PF_PreRenderExtra {
 	PF_PreRenderInput     *input;
 	PF_PreRenderOutput    *output;
@@ -177,7 +193,9 @@ struct PF_SmartRenderCallbacks {
 	PF_Err (*checkout_layer_pixels)(PF_ProgPtr, A_long, PF_EffectWorld **);
 	PF_Err (*checkout_output)(PF_ProgPtr, PF_EffectWorld **);
 };
-struct PF_SmartRenderInput { short bitdepth; };
+// Keep bitdepth first for the long-standing aggregate initializers used by the
+// hostless public-guard harness. SmartRender does not consume output_request.
+struct PF_SmartRenderInput { short bitdepth; PF_RenderRequest output_request; void *pre_render_data; };
 struct PF_SmartRenderExtra {
 	PF_SmartRenderInput     *input;
 	PF_SmartRenderCallbacks *cb;
@@ -221,12 +239,18 @@ struct AEGP_SuiteHandler {
 #define PF_ADD_FLOAT_SLIDERX(...) ((void)0)
 typedef PF_Err (*CLI_CheckoutParamHook)(A_long, PF_ParamDef *);
 typedef void (*CLI_CheckinParamHook)(PF_ParamDef *);
+typedef PF_Err (*CLI_CheckinParamErrorHook)(PF_ParamDef *);
 static PF_Err cli_default_checkout_param(A_long, PF_ParamDef *) { return PF_Err_NONE; }
 static void cli_default_checkin_param(PF_ParamDef *) {}
 static CLI_CheckoutParamHook g_cli_checkout_param_hook = &cli_default_checkout_param;
 static CLI_CheckinParamHook g_cli_checkin_param_hook = &cli_default_checkin_param;
+static CLI_CheckinParamErrorHook g_cli_checkin_param_error_hook = nullptr;
+static PF_Err cli_checkin_param_result(PF_ParamDef *param) {
+    g_cli_checkin_param_hook(param);
+    return g_cli_checkin_param_error_hook ? g_cli_checkin_param_error_hook(param) : PF_Err_NONE;
+}
 #define PF_CHECKOUT_PARAM(IN,I,T,TS,SCALE,OUT) g_cli_checkout_param_hook((I),(OUT))
-#define PF_CHECKIN_PARAM(IN,P) g_cli_checkin_param_hook((P))
+#define PF_CHECKIN_PARAM(IN,P) cli_checkin_param_result((P))
 
 enum {
 	StrID_Name = 0,

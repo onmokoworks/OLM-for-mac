@@ -48,13 +48,14 @@ std::uint16_t read_word(const std::uint8_t* bytes) {
 
 std::uint16_t store_word(float value) {
     const float rounded = std::floor(value + 0.5f);
-    if (!(rounded > 0.0f)) {
-        return 0;
-    }
-    if (rounded >= 32768.0f) {
-        return 32768;
-    }
-    return static_cast<std::uint16_t>(rounded);
+    // The retained Windows writer executes CVTTSS2SI and stores AX without
+    // nominal-range saturation.  Preserve that low-word rule, including the
+    // architectural indefinite result for non-representable int32 values.
+    const std::int32_t converted =
+        (rounded >= -2147483648.0f && rounded < 2147483648.0f)
+            ? static_cast<std::int32_t>(rounded)
+            : INT32_MIN;
+    return static_cast<std::uint16_t>(static_cast<std::uint32_t>(converted));
 }
 
 void write_word(std::uint8_t* bytes, std::uint16_t value) {

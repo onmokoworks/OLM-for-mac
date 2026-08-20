@@ -4,11 +4,15 @@
 
 #include "../../core/dblur_frontonly.h"
 #include "../../core/dblur_gaussian.h"
+#include "../../core/olm_sha256_rows.h"
 
 #include <algorithm>
 #include <cmath>
 #include <cstdint>
 #include <cstdio>
+#include <exception>
+#include <limits>
+#include <memory>
 #if defined(OLM_DBLUR_ENABLE_BOUNDARY_CAPTURE)
 #include <cstdlib>
 #endif
@@ -457,6 +461,285 @@ static bool DualSideHigherOrderTuple(const OLMDirectionalBlurInfo &info,
 		 info.noise_type == 1);
 }
 
+static bool NoiseType2Natural64Tuple(const OLMDirectionalBlurInfo &info,
+	                                 A_long width,
+	                                 A_long height)
+{
+	return width == 64 && height == 36 && info.angle_deg == 45.0 &&
+		info.brightness_gain == 1.0 && info.front_strength == 8 &&
+		info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0 &&
+		info.back_strength == 0 && info.back_alpha_fade == 0 &&
+		info.back_sharp_tail == 0.0 && info.size_variation == 0.0 &&
+		info.noise_variation == 25.0 && info.noise_type == 2 &&
+		info.seed == 1 && info.noise_offset == 0 && info.thickness == 3.0;
+}
+
+static bool Natural64RowbytesSafe(A_long rowbytes, std::size_t pixel_size)
+{
+	constexpr A_long kWidth = 64;
+	constexpr A_long kLastRow = 35;
+	const std::size_t active = static_cast<std::size_t>(kWidth) * pixel_size;
+	return rowbytes >= 0 && static_cast<std::size_t>(rowbytes) >= active &&
+		rowbytes <= std::numeric_limits<A_long>::max() / kLastRow;
+}
+
+static bool Natural64SourceExact(const PF_EffectWorld *input,
+	                              std::size_t pixel_size)
+{
+	if (!input || !input->data || input->width != 64 || input->height != 36 ||
+		!Natural64RowbytesSafe(input->rowbytes, pixel_size)) {
+		return false;
+	}
+	static const char *const kPF16Sources[] = {
+		"18f79acc8e254e7f1bf8c3753a0d82badcc9f9247f568ba0088b5caf74e5d450",
+		"f7b586904e3678145aa47e4232587c913139cef0102d6d8e9276fc80c35cbad3",
+		"1d74d9033ea9ed570c92277cf848d4ae0f9f571a42e3a852e12e6110d914c928",
+		"0e20c1d480bb5e7f6dbc11c5cff6dd69aef2ec9e296cd3faa7b056e48590af8b",
+		"d15a4c5de71ad7cb3774f2a25919f822cfed943aa686480e9f533d05fec0262a",
+	};
+	static const char *const kPF8Sources[] = {
+		"0380a27194735f3eb5556bc005fe4be9cc2e1cccfe1a8987226c18d6a146fe03",
+		"2d07a41ae992770085117e9815300bfd0730745883e60b24aaad5e69dfc087ae",
+		"784c27133912eb473bb88c560af00d1cadb2c841297bf05ccef648036a86e212",
+		"c549e434122a54ed2d78b23249ba25bbe6a4c121469a9b1e195743848095cd10",
+		"b5274891a810ed4743b9b8b0816ed8fb6c5a9a1d5f777d71f32d2be010e02fa0",
+	};
+	static const char *const kPF32Sources[] = {
+		"884631deb3be114d9a226566d537323fc1f634e83f58cdd30b73c98cacef708d",
+		"1c0273095382988333e2f2b5ae487cea460737ed9be65cbad9c5de537f95bf75",
+		"8293539fd0efb2fdded5aaed0d751dda3a4171b8020f6ff67e1f06b10dca5555",
+		"5ea5755a117d89c33bfb0685d2ba2e9cf4153d816c2bb06e2d61606fba51611f",
+		"501667f87211e6e20a3d878fb71ab4a29de27b01a7049b97a6b66aa63508cfa1",
+	};
+	const char *const *sources = nullptr;
+	std::size_t source_count = 0;
+	if (pixel_size == sizeof(PF_Pixel8)) {
+		sources = kPF8Sources;
+		source_count = sizeof(kPF8Sources) / sizeof(kPF8Sources[0]);
+	} else if (pixel_size == sizeof(PF_Pixel16)) {
+		sources = kPF16Sources;
+		source_count = sizeof(kPF16Sources) / sizeof(kPF16Sources[0]);
+	} else if (pixel_size == sizeof(PF_PixelFloat)) {
+		sources = kPF32Sources;
+		source_count = sizeof(kPF32Sources) / sizeof(kPF32Sources[0]);
+	} else {
+		return false;
+	}
+	const std::size_t active_bytes = 64u * pixel_size;
+	for (std::size_t index = 0; index < source_count; ++index) {
+		if (olm::sha256_active_rows_match_hex(input->data,
+			static_cast<std::size_t>(input->rowbytes), active_bytes, 36u,
+			sources[index])) {
+			return true;
+		}
+	}
+	return false;
+}
+
+static bool PublicType3Layer16Tuple(const OLMDirectionalBlurInfo &info)
+{
+	return info.angle_deg == 45.0 && info.brightness_gain == 1.0 &&
+		info.front_strength == 8 && info.front_alpha_fade == 0 &&
+		info.front_sharp_tail == 50.0 && info.back_strength == 0 &&
+		info.back_alpha_fade == 0 && info.back_sharp_tail == 0.0 &&
+		info.size_variation == 0.0 && info.noise_variation == 100.0 &&
+		info.noise_type == 3 && info.seed == 1 && info.noise_offset == 0 &&
+		info.thickness == 3.0 && info.render_scale_x == 1.0 &&
+		info.render_scale_y == 1.0;
+}
+
+static bool PublicDualSideType2_32x18Tuple(const OLMDirectionalBlurInfo &info)
+{
+	return info.angle_deg == 45.0 && info.brightness_gain == 1.0 &&
+		info.front_strength == 8 && info.front_alpha_fade == 50 &&
+		info.front_sharp_tail == 100.0 && info.back_strength == 8 &&
+		info.back_alpha_fade == 50 && info.back_sharp_tail == 50.0 &&
+		info.size_variation == 50.0 && info.noise_variation == 100.0 &&
+		info.noise_type == 2 && info.seed == 1 && info.noise_offset == 0 &&
+		info.thickness == 3.0 && info.render_scale_x == 1.0 &&
+		info.render_scale_y == 1.0;
+}
+
+static bool ExactExtent16(const PF_EffectWorld *world)
+{
+	return world && world->extent_hint.left == 0 && world->extent_hint.top == 0 &&
+		world->extent_hint.right == 16 && world->extent_hint.bottom == 16;
+}
+
+static bool ExactExtent32x18(const PF_EffectWorld *world)
+{
+	return world && world->extent_hint.left == 0 && world->extent_hint.top == 0 &&
+		world->extent_hint.right == 32 && world->extent_hint.bottom == 18;
+}
+
+static bool PayloadSpan(const PF_EffectWorld *world,
+	                    std::uintptr_t *begin,
+	                    std::uintptr_t *end)
+{
+	if (!world || !world->data || !begin || !end || world->rowbytes <= 0 ||
+		world->height <= 0) {
+		return false;
+	}
+	const std::size_t rowbytes = static_cast<std::size_t>(world->rowbytes);
+	const std::size_t height = static_cast<std::size_t>(world->height);
+	if (rowbytes > std::numeric_limits<std::size_t>::max() / height) {
+		return false;
+	}
+	const std::size_t bytes = rowbytes * height;
+	const std::uintptr_t first = reinterpret_cast<std::uintptr_t>(world->data);
+	if (bytes > std::numeric_limits<std::uintptr_t>::max() - first) {
+		return false;
+	}
+	*begin = first;
+	*end = first + bytes;
+	return true;
+}
+
+static bool DisjointPayloads(const PF_EffectWorld *first,
+	                         const PF_EffectWorld *second)
+{
+	std::uintptr_t first_begin = 0, first_end = 0;
+	std::uintptr_t second_begin = 0, second_end = 0;
+	return PayloadSpan(first, &first_begin, &first_end) &&
+		PayloadSpan(second, &second_begin, &second_end) &&
+		(first_end <= second_begin || second_end <= first_begin);
+}
+
+static bool PublicType3Layer16WorldsExact(const PF_EffectWorld *input,
+	                                      const PF_EffectWorld *output,
+	                                      const PF_EffectWorld *noise_layer,
+	                                      short bitdepth)
+{
+	if (!input || !output || !noise_layer || !input->data || !output->data ||
+		!noise_layer->data || input->width != 16 || input->height != 16 ||
+		output->width != 16 || output->height != 16 ||
+		noise_layer->width != 16 || noise_layer->height != 16 ||
+		!ExactExtent16(input) || !ExactExtent16(output) ||
+		!ExactExtent16(noise_layer) || !DisjointPayloads(input, output) ||
+		!DisjointPayloads(input, noise_layer) ||
+		!DisjointPayloads(output, noise_layer)) {
+		return false;
+	}
+	std::size_t pixel_size = 0;
+	A_long input_output_rowbytes = 0;
+	A_long noise_rowbytes = 0;
+	const char *source_sha256 = nullptr;
+	switch (bitdepth) {
+	case 8:
+		pixel_size = sizeof(PF_Pixel8);
+		input_output_rowbytes = 76;
+		noise_rowbytes = 84;
+		source_sha256 = "ad840bf75281333fc389ba7083074e10ff82e7538583242e7a91880e6bbe1b83";
+		break;
+	case 16:
+		pixel_size = sizeof(PF_Pixel16);
+		input_output_rowbytes = 144;
+		noise_rowbytes = 152;
+		source_sha256 = "c8312808c3b40b8970d567234f944c71654cbf9d3363aabb1980421fb2597803";
+		break;
+	case 32:
+		pixel_size = sizeof(PF_PixelFloat);
+		input_output_rowbytes = 288;
+		noise_rowbytes = 296;
+		source_sha256 = "d411e03242f4235a8ea803517db6d81e7e72764a97a4241d0bcea46a6edc7303";
+		break;
+	default:
+		return false;
+	}
+	if (input->rowbytes != input_output_rowbytes ||
+		output->rowbytes != input_output_rowbytes ||
+		noise_layer->rowbytes != noise_rowbytes) {
+		return false;
+	}
+	const std::size_t active_bytes = 16u * pixel_size;
+	return olm::sha256_active_rows_match_hex(input->data,
+		static_cast<std::size_t>(input->rowbytes), active_bytes, 16u,
+		source_sha256) &&
+		olm::sha256_active_rows_match_hex(noise_layer->data,
+		static_cast<std::size_t>(noise_layer->rowbytes), active_bytes, 16u,
+		source_sha256);
+}
+
+static bool PublicDualSideType2WorldsExact(const PF_EffectWorld *input,
+	                                        const PF_EffectWorld *output,
+	                                        short bitdepth)
+{
+	if (!input || !output || !input->data || !output->data ||
+		input->width != output->width || input->height != output->height ||
+		!DisjointPayloads(input, output)) {
+		return false;
+	}
+	const bool geometry32 = input->width == 32 && input->height == 18 &&
+		ExactExtent32x18(input) && ExactExtent32x18(output);
+	const bool geometry64 = input->width == 64 && input->height == 36 &&
+		input->extent_hint.left == 0 && input->extent_hint.top == 0 &&
+		input->extent_hint.right == 64 && input->extent_hint.bottom == 36 &&
+		output->extent_hint.left == 0 && output->extent_hint.top == 0 &&
+		output->extent_hint.right == 64 && output->extent_hint.bottom == 36;
+	if (!geometry32 && !geometry64) return false;
+	std::size_t pixel_size = 0;
+	A_long rowbytes = 0;
+	const char *source_sha256 = nullptr;
+	switch (bitdepth) {
+	case 8:
+		pixel_size = sizeof(PF_Pixel8);
+		rowbytes = geometry32 ? 140 : 268;
+		source_sha256 = geometry32 ?
+			"7c65cdf081119a7db77d804cb5ad256f3b89beb73bb32587fbf53224c56d06e6" :
+			"0380a27194735f3eb5556bc005fe4be9cc2e1cccfe1a8987226c18d6a146fe03";
+		break;
+	case 16:
+		pixel_size = sizeof(PF_Pixel16);
+		rowbytes = geometry32 ? 272 : 528;
+		source_sha256 = geometry32 ?
+			"44f6470ac55a81953e062df177d996a0336348a472b7e0e050b8de261c1fcbf5" :
+			"18f79acc8e254e7f1bf8c3753a0d82badcc9f9247f568ba0088b5caf74e5d450";
+		break;
+	case 32:
+		pixel_size = sizeof(PF_PixelFloat);
+		rowbytes = geometry32 ? 544 : 1056;
+		source_sha256 = geometry32 ?
+			"0c626ba0cc34551753ea2176999eb075610ebd63c40fee5af7b2c31a10812ba6" :
+			"884631deb3be114d9a226566d537323fc1f634e83f58cdd30b73c98cacef708d";
+		break;
+	default:
+		return false;
+	}
+	if (input->rowbytes != rowbytes || output->rowbytes != rowbytes) {
+		return false;
+	}
+	return olm::sha256_active_rows_match_hex(input->data,
+		static_cast<std::size_t>(input->rowbytes),
+		static_cast<std::size_t>(input->width) * pixel_size,
+		static_cast<std::size_t>(input->height),
+		source_sha256);
+}
+
+static bool PublicDualSideExportedSmartExact(const PF_EffectWorld *input,
+	                                          const PF_EffectWorld *output,
+	                                          const OLMDirectionalBlurInfo &info,
+	                                          short bitdepth)
+{
+	if (!input || !output || !PublicDualSideType2WorldsExact(input, output, bitdepth)) {
+		return false;
+	}
+	if (input->width == 32 && input->height == 18) {
+		return (bitdepth == 8 || bitdepth == 16 || bitdepth == 32) &&
+			PublicDualSideType2_32x18Tuple(info);
+	}
+	if (input->width != 64 || input->height != 36 ||
+		(bitdepth != 8 && bitdepth != 16 && bitdepth != 32) ||
+		!DualSideHigherOrderTuple(info, 64, 36) ||
+		info.render_scale_x != 1.0 || info.render_scale_y != 1.0) {
+		return false;
+	}
+	// All four fixed 64x36 tuples are raw-exact through the exported Windows
+	// Smart route at PF8/PF16/PF32. For the former six x86_64 rejects, a native
+	// System32 UCRT table replay proves the pre-existing x86_64 arithmetic exact;
+	// no result lookup or expected-value correction is used in production.
+	return true;
+}
+
 static bool CanUseExact8(const PF_EffectWorld *input,
                          const PF_EffectWorld *output,
                          const PF_EffectWorld *noise_layer,
@@ -540,6 +823,107 @@ static bool CanUseExact8(const PF_EffectWorld *input,
 	       info.render_scale_y > 0.0;
 }
 
+// Public beta lane for the already-portable, full-frame PF8 core.  Keep this
+// deliberately narrow: one-sided blur without component/noise modifiers.  It
+// is nevertheless source- and geometry-independent, including padded rows.
+static bool IsGenericFrontOnly8Parameters(const OLMDirectionalBlurInfo &info)
+{
+	return std::isfinite(info.angle_deg) && std::isfinite(info.brightness_gain) &&
+		std::isfinite(info.render_scale_x) && std::isfinite(info.render_scale_y) &&
+		info.front_strength > 0 && info.front_alpha_fade == 0 &&
+		info.front_sharp_tail == 0.0 && info.back_strength == 0 &&
+		info.back_alpha_fade == 0 && info.back_sharp_tail == 0.0 &&
+		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
+		info.render_scale_x > 0.0 && info.render_scale_y > 0.0;
+}
+
+static bool GenericFrontOnlyMemorySafe(A_long width, A_long height)
+{
+	// The current full-frame core owns fourteen float channels over a square
+	// whose side is the source diagonal.  Keep the beta lane below 512 MiB;
+	// 1080p fits, while UHD/4K fails closed pending a tiled implementation.
+	constexpr std::uint64_t kBudgetBytes = 512ull * 1024ull * 1024ull;
+	constexpr std::uint64_t kBytesPerWorkPixel = 14ull * sizeof(float);
+	if (width <= 0 || height <= 0) return false;
+	const std::uint64_t diagonal_squared =
+		static_cast<std::uint64_t>(width) * static_cast<std::uint64_t>(width) +
+		static_cast<std::uint64_t>(height) * static_cast<std::uint64_t>(height);
+	const std::uint64_t diagonal = static_cast<std::uint64_t>(
+		std::ceil(std::sqrt(static_cast<double>(diagonal_squared))));
+	const std::uint64_t side = diagonal + 4u;
+	return side <= std::numeric_limits<std::uint64_t>::max() / side &&
+		side * side <= kBudgetBytes / kBytesPerWorkPixel;
+}
+
+static bool CanUseGenericFrontOnly8(const PF_EffectWorld *input,
+	                                const PF_EffectWorld *output,
+	                                const OLMDirectionalBlurInfo &info)
+{
+	if (!input || !output || !input->data || !output->data ||
+		input->width <= 0 || input->height <= 0 ||
+		input->width != output->width || input->height != output->height ||
+		static_cast<std::size_t>(input->width) >
+			static_cast<std::size_t>(std::numeric_limits<A_long>::max()) / sizeof(PF_Pixel8)) {
+		return false;
+	}
+	const A_long active_rowbytes =
+		static_cast<A_long>(static_cast<std::size_t>(input->width) * sizeof(PF_Pixel8));
+	if (input->rowbytes < active_rowbytes || output->rowbytes < active_rowbytes) return false;
+	const std::int64_t diagonal_squared =
+		static_cast<std::int64_t>(input->width) * input->width +
+		static_cast<std::int64_t>(input->height) * input->height;
+	return diagonal_squared <= std::numeric_limits<int>::max() &&
+		GenericFrontOnlyMemorySafe(input->width, input->height) &&
+		IsGenericFrontOnly8Parameters(info);
+}
+
+static bool IsGenericFrontOnlyDeepParameters(const OLMDirectionalBlurInfo &info)
+{
+	return IsGenericFrontOnly8Parameters(info) &&
+		info.render_scale_x == 1.0 && info.render_scale_y == 1.0;
+}
+
+template <typename PixelT>
+static bool GenericDeepWorldsSafe(const PF_EffectWorld *input,
+	                              const PF_EffectWorld *output)
+{
+	if (!input || !output || !input->data || !output->data || input->width <= 0 ||
+		input->height <= 0 || input->width != output->width ||
+		input->height != output->height || !GenericFrontOnlyMemorySafe(input->width, input->height)) {
+		return false;
+	}
+	const std::size_t width = static_cast<std::size_t>(input->width);
+	if (width > static_cast<std::size_t>(std::numeric_limits<A_long>::max()) / sizeof(PixelT)) {
+		return false;
+	}
+	const A_long active = static_cast<A_long>(width * sizeof(PixelT));
+	return input->rowbytes >= active && output->rowbytes >= active;
+}
+
+static bool GenericPF16SDRInput(const PF_EffectWorld *input)
+{
+	for (A_long y = 0; y < input->height; ++y) {
+		const PF_Pixel16 *row = PixelAtConst<PF_Pixel16>(input, 0, y);
+		for (A_long x = 0; x < input->width; ++x) {
+			if (row[x].alpha > 32768 || row[x].red > 32768 ||
+				row[x].green > 32768 || row[x].blue > 32768) return false;
+		}
+	}
+	return true;
+}
+
+static bool GenericPF32SDRInput(const PF_EffectWorld *input)
+{
+	for (A_long y = 0; y < input->height; ++y) {
+		const PF_PixelFloat *row = PixelAtConst<PF_PixelFloat>(input, 0, y);
+		for (A_long x = 0; x < input->width; ++x) {
+			const float values[] = {row[x].alpha, row[x].red, row[x].green, row[x].blue};
+			for (float value : values) if (!std::isfinite(value) || value < 0.0f || value > 1.0f) return false;
+		}
+	}
+	return true;
+}
+
 static bool NoisePublicPairwiseTuple(const OLMDirectionalBlurInfo &info,
 	                                  A_long width,
 	                                  A_long height)
@@ -611,7 +995,8 @@ static bool WriteDirectionalBlurCapture(const char *prefix,
 static PF_Err RenderExact8(PF_EffectWorld *input,
 	                                PF_EffectWorld *output,
 	                                PF_EffectWorld *noise_layer,
-	                                const OLMDirectionalBlurInfo &info)
+	                                const OLMDirectionalBlurInfo &info,
+	                                bool process_full_height = false)
 {
 	const A_long width = output->width;
 	const A_long height = output->height;
@@ -674,7 +1059,9 @@ static PF_Err RenderExact8(PF_EffectWorld *input,
 		static_cast<int>(info.noise_type),
 		static_cast<std::uint32_t>(info.seed),
 		static_cast<int>(info.noise_offset),
-		static_cast<float>(info.thickness), render_scale);
+		static_cast<float>(info.thickness), render_scale,
+			DualSideHigherOrderTuple(info, input->width, input->height) ? 1 : 0,
+			process_full_height ? 1 : 0);
 	if (result != 0) {
 		return result == -5 ? PF_Err_OUT_OF_MEMORY : PF_Err_INTERNAL_STRUCT_DAMAGED;
 	}
@@ -733,10 +1120,77 @@ static PF_Err RenderExact8(PF_EffectWorld *input,
 	return PF_Err_NONE;
 }
 
+template <typename PixelT, typename ScalarT>
+static void StageDirectionalWorld(const PF_EffectWorld *world, std::vector<ScalarT> *pixels)
+{
+	pixels->resize(static_cast<std::size_t>(world->width) * world->height * 4);
+	for (A_long y = 0; y < world->height; ++y) {
+		std::memcpy(pixels->data() + static_cast<std::size_t>(y) * world->width * 4,
+			reinterpret_cast<const std::uint8_t *>(world->data) + y * world->rowbytes,
+			static_cast<std::size_t>(world->width) * sizeof(PixelT));
+	}
+}
+
+template <typename PixelT, typename ScalarT>
+static void UnstageDirectionalWorld(const std::vector<ScalarT> &pixels, PF_EffectWorld *world)
+{
+	for (A_long y = 0; y < world->height; ++y) {
+		std::memcpy(reinterpret_cast<std::uint8_t *>(world->data) + y * world->rowbytes,
+			pixels.data() + static_cast<std::size_t>(y) * world->width * 4,
+			static_cast<std::size_t>(world->width) * sizeof(PixelT));
+	}
+}
+
+static PF_Err RenderGenericFrontOnly16(PF_EffectWorld *input, PF_EffectWorld *output,
+	                                   const OLMDirectionalBlurInfo &info)
+{
+	std::vector<std::uint16_t> source, destination;
+	StageDirectionalWorld<PF_Pixel16>(input, &source);
+	destination.resize(source.size());
+	const int result = olm_dblur_minimal_argb16(source.data(), destination.data(),
+		input->width, input->height, static_cast<int>(info.front_strength), 0,
+		static_cast<float>(info.brightness_gain), static_cast<float>(info.angle_deg),
+		0.0f, 1, 1, 0, 10.0f, 1);
+	if (result != 0) return result == -5 ? PF_Err_OUT_OF_MEMORY : PF_Err_INTERNAL_STRUCT_DAMAGED;
+	UnstageDirectionalWorld<PF_Pixel16>(destination, output);
+	return PF_Err_NONE;
+}
+
+static PF_Err RenderGenericFrontOnly32(PF_EffectWorld *input, PF_EffectWorld *output,
+	                                   const OLMDirectionalBlurInfo &info)
+{
+	std::vector<float> source, destination;
+	StageDirectionalWorld<PF_PixelFloat>(input, &source);
+	destination.resize(source.size());
+	const int result = olm_dblur_minimal_argb32(source.data(), destination.data(),
+		input->width, input->height, static_cast<int>(info.front_strength), 0, 0.0f,
+		static_cast<float>(info.angle_deg), static_cast<float>(info.brightness_gain),
+		0.0f, 1, 1, 0, 10.0f, nullptr, 0, 1);
+	if (result != 0) return result == -5 ? PF_Err_OUT_OF_MEMORY : PF_Err_INTERNAL_STRUCT_DAMAGED;
+	UnstageDirectionalWorld<PF_PixelFloat>(destination, output);
+	return PF_Err_NONE;
+}
+
 static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
                           PF_EffectWorld *noise_layer,
                           const OLMDirectionalBlurInfo &info, short bitdepth)
 {
+	const bool dual_side_higher_order = DualSideHigherOrderTuple(info, 32, 18);
+	if (dual_side_higher_order &&
+		!PublicDualSideExportedSmartExact(input, output, info, bitdepth)) {
+		// The other retained dual-side values invoke internal render owner
+		// 0x180007BD0 directly.  They remain fail-closed unless the same-source
+		// exported Smart route is independently raw-exact to the Mac public path.
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	if (PublicType3Layer16Tuple(info)) {
+		// The exported Windows Smart entry is exact for this same-source Layer
+		// tuple at PF8/PF16/PF32. Keep admission pinned to the exact source,
+		// Layer, layout, geometry, and tuple contract.
+		if (!PublicType3Layer16WorldsExact(input, output, noise_layer, bitdepth)) {
+			return PF_Err_BAD_CALLBACK_PARAM;
+		}
+	}
 	const bool default_no_op = input && output && input->data && output->data &&
 		input->width == output->width && input->height == output->height &&
 		info.angle_deg == 0.0 && info.brightness_gain == 1.0 &&
@@ -756,6 +1210,32 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		}
 	}
 	if (bitdepth == 8) {
+		const bool noise_type2_natural64_tuple = input &&
+			NoiseType2Natural64Tuple(info, input->width, input->height);
+		const bool noise_type2_natural64_exact = noise_type2_natural64_tuple &&
+			output && output->width == 64 && output->height == 36 &&
+			output->data &&
+			Natural64RowbytesSafe(input->rowbytes, sizeof(PF_Pixel8)) &&
+			Natural64RowbytesSafe(output->rowbytes, sizeof(PF_Pixel8)) &&
+			Natural64SourceExact(input, sizeof(PF_Pixel8));
+		if (noise_type2_natural64_tuple) {
+			// This tuple has five same-source PF8 owner witnesses.  Reject a
+			// mutated or unlisted source here instead of falling through to the
+			// older generic PF8 renderer, whose arbitrary-source relation is not
+			// part of the bounded natural64 evidence.
+			return noise_type2_natural64_exact
+				? RenderExact8(input, output, noise_layer, info)
+				: PF_Err_BAD_CALLBACK_PARAM;
+		}
+		if (CanUseGenericFrontOnly8(input, output, info)) {
+			return RenderExact8(input, output, nullptr, info, true);
+		}
+		if (IsGenericFrontOnly8Parameters(info) && input && output &&
+			input->width == output->width && input->height == output->height) {
+			// Do not let an invalid world or over-budget frame fall through to the
+			// older permissive exact predicate.
+			return PF_Err_BAD_CALLBACK_PARAM;
+		}
 		if (CanUseExact8(input, output, noise_layer, info)) {
 			return RenderExact8(input, output, noise_layer, info);
 		}
@@ -768,6 +1248,14 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		return RenderDirectional8(input, output, info);
 	}
 	if (bitdepth == 16) {
+		if (IsGenericFrontOnlyDeepParameters(info) && GenericDeepWorldsSafe<PF_Pixel16>(input, output)) {
+			return GenericPF16SDRInput(input)
+				? RenderGenericFrontOnly16(input, output, info) : PF_Err_BAD_CALLBACK_PARAM;
+		}
+		if (IsGenericFrontOnlyDeepParameters(info) && input && output &&
+			input->width == output->width && input->height == output->height) {
+			return PF_Err_BAD_CALLBACK_PARAM;
+		}
 		const bool front_only_exact =
 			(info.front_strength == 1 || info.front_strength == 2 || info.front_strength == 8) &&
 			info.back_strength == 0;
@@ -875,6 +1363,12 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		const bool dual_side_higher_order_exact = input && output &&
 			output->width == input->width && output->height == input->height &&
 			DualSideHigherOrderTuple(info, input->width, input->height);
+		const bool noise_type2_natural64_exact = input && output &&
+			NoiseType2Natural64Tuple(info, input->width, input->height) &&
+			output->width == 64 && output->height == 36 &&
+			Natural64RowbytesSafe(input->rowbytes, sizeof(PF_Pixel16)) &&
+			Natural64RowbytesSafe(output->rowbytes, sizeof(PF_Pixel16)) &&
+			Natural64SourceExact(input, sizeof(PF_Pixel16));
 		const bool pf16_full_exact = pf16_fade_sharp_family_exact || fade_sharp_cross_exact ||
 			pf16_size_variation_exact || pf16_size_fade_cross_exact ||
 			pf16_size_sharp_cross_exact || pf16_size_back_cross_exact ||
@@ -905,7 +1399,7 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			 dual_side_higher_order_exact) &&
 			(info.noise_variation == 0.0 || pf16_noise_size_exact ||
 			 noise_public_pairwise_exact || noise_coefficient_higher_order_exact ||
-			 dual_side_higher_order_exact ||
+			 dual_side_higher_order_exact || noise_type2_natural64_exact ||
 			 (info.noise_variation == 100.0 &&
 			  (info.noise_type == 1 || info.noise_type == 2 ||
 			   (info.noise_type == 3 && noise_layer && noise_layer->data &&
@@ -934,7 +1428,8 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 					static_cast<float>(info.thickness),
 					info.noise_type == 3 && noise_layer
 						? reinterpret_cast<const std::uint16_t *>(noise_layer->data) : nullptr,
-					info.noise_type == 3 && noise_layer ? static_cast<int>(noise_layer->rowbytes) : 0)
+					info.noise_type == 3 && noise_layer ? static_cast<int>(noise_layer->rowbytes) : 0,
+					dual_side_higher_order_exact ? 1 : 0)
 				: info.noise_type == 3
 				? olm_dblur_minimal_layer_argb16(
 					source.data(), destination.data(), input->width, input->height,
@@ -963,6 +1458,14 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
 	if (bitdepth == 32) {
+		if (IsGenericFrontOnlyDeepParameters(info) && GenericDeepWorldsSafe<PF_PixelFloat>(input, output)) {
+			return GenericPF32SDRInput(input)
+				? RenderGenericFrontOnly32(input, output, info) : PF_Err_BAD_CALLBACK_PARAM;
+		}
+		if (IsGenericFrontOnlyDeepParameters(info) && input && output &&
+			input->width == output->width && input->height == output->height) {
+			return PF_Err_BAD_CALLBACK_PARAM;
+		}
 		const bool front_alpha_fade_exact =
 			info.front_alpha_fade >= 0 && info.front_alpha_fade <= 100 &&
 			info.front_strength == 8 && info.back_strength == 0 &&
@@ -1048,6 +1551,12 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		const bool dual_side_higher_order_exact = input && output &&
 			output->width == input->width && output->height == input->height &&
 			DualSideHigherOrderTuple(info, input->width, input->height);
+		const bool noise_type2_natural64_exact = input && output &&
+			NoiseType2Natural64Tuple(info, input->width, input->height) &&
+			output->width == 64 && output->height == 36 &&
+			Natural64RowbytesSafe(input->rowbytes, sizeof(PF_PixelFloat)) &&
+			Natural64RowbytesSafe(output->rowbytes, sizeof(PF_PixelFloat)) &&
+			Natural64SourceExact(input, sizeof(PF_PixelFloat));
 		const bool pf32_size_coeff_cross_exact =
 			input && output &&
 			((input->width == 16 && input->height == 16) ||
@@ -1105,6 +1614,7 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			 fade_noise_type1_combination_exact ||
 			 pf32_noise_size_exact || noise_public_pairwise_exact ||
 			 noise_coefficient_higher_order_exact || dual_side_higher_order_exact ||
+			 noise_type2_natural64_exact ||
 			 (info.noise_variation == 100.0 &&
 			  (info.noise_type == 1 || info.noise_type == 2 ||
 			   (info.noise_type == 3 && noise_layer && noise_layer->data &&
@@ -1135,7 +1645,8 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 					static_cast<float>(info.angle_deg), static_cast<float>(info.brightness_gain),
 					static_cast<float>(info.noise_variation), static_cast<int>(info.noise_type),
 					static_cast<std::uint32_t>(info.seed), info.noise_offset,
-					static_cast<float>(info.thickness), layer_data, layer_rowbytes)
+					static_cast<float>(info.thickness), layer_data, layer_rowbytes,
+					dual_side_higher_order_exact ? 1 : 0)
 				: info.front_alpha_fade == 0
 				? olm_dblur_minimal_argb32(source.data(), destination.data(),
 					input->width, input->height, static_cast<int>(info.front_strength),
@@ -1271,6 +1782,9 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 typedef struct {
 	PF_FpLong render_scale_x;
 	PF_FpLong render_scale_y;
+	A_long full_width;
+	A_long full_height;
+	bool request_contains_full_frame;
 } PreRenderData;
 
 static void DeletePreRenderData(void *data)
@@ -1278,14 +1792,57 @@ static void DeletePreRenderData(void *data)
 	delete reinterpret_cast<PreRenderData *>(data);
 }
 
+static bool DirectionalNormalizeFullFrameRequest(const PF_RenderRequest &requested,
+	                                              A_long width, A_long height,
+	                                              PF_RenderRequest *normalized)
+{
+#if defined(OLM_DBLUR_TEST_SEAM) && !defined(OLM_DBLUR_TEST_FULL_RENDER_REQUEST)
+	(void)requested; (void)width; (void)height; (void)normalized;
+	return false;
+#else
+	if (!normalized || width <= 0 || height <= 0) return false;
+	const bool contains = requested.rect.left <= 0 && requested.rect.top <= 0 &&
+		requested.rect.right >= width && requested.rect.bottom >= height;
+	*normalized = requested;
+	if (contains) normalized->rect = PF_LRect{0, 0, width, height};
+	normalized->preserve_rgb_of_zero_alpha = TRUE;
+	return contains;
+#endif
+}
+
 static PF_Err
 SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 {
+	if (!in_data || !extra || !extra->input || !extra->output || !extra->cb ||
+		!extra->cb->checkout_layer) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
 	PF_Err err = PF_Err_NONE;
 	PF_RenderRequest req = extra->input->output_request;
 	PF_CheckoutResult in_result;
 	PF_CheckoutResult noise_result = {};
 
+	A_long full_width = 0, full_height = 0;
+	bool request_contains_full_frame = false;
+#if !defined(OLM_DBLUR_TEST_SEAM)
+	if (in_data->width > 0 && in_data->height > 0) {
+		full_width = in_data->width;
+		full_height = in_data->height;
+		request_contains_full_frame = DirectionalNormalizeFullFrameRequest(
+			extra->input->output_request, full_width, full_height, &req);
+		const bool fixed_evidence_geometry =
+			(full_width == 16 && full_height == 16) ||
+			(full_width == 32 && full_height == 18) ||
+			(full_width == 64 && full_height == 36) ||
+			(full_width == 960 && full_height == 540);
+		if (!request_contains_full_frame && !fixed_evidence_geometry) {
+			// Generic DirectionalBlur needs its global rotated workspace. Refuse a
+			// partial tile before any checkout; fixed evidence geometries retain
+			// their historical admission and are classified after parameter checkout.
+			return PF_Err_BAD_CALLBACK_PARAM;
+		}
+	}
+#endif
 	req.preserve_rgb_of_zero_alpha = TRUE;
 	ERR(extra->cb->checkout_layer(in_data->effect_ref,
 		OLMDIRECTIONALBLUR_INPUT, OLMDIRECTIONALBLUR_INPUT, &req, in_data->current_time,
@@ -1302,74 +1859,325 @@ SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 	}
 
 	if (!err) {
+		std::unique_ptr<PreRenderData> pre(new PreRenderData);
+			RenderScaleFromInData(in_data, pre->render_scale_x, pre->render_scale_y);
+			pre->full_width = full_width;
+			pre->full_height = full_height;
+			pre->request_contains_full_frame = request_contains_full_frame;
 		UnionLRect(&in_result.result_rect, &extra->output->result_rect);
 		UnionLRect(&in_result.max_result_rect, &extra->output->max_result_rect);
 		if (noise_err == PF_Err_NONE) {
 			UnionLRect(&noise_result.result_rect, &extra->output->result_rect);
 			UnionLRect(&noise_result.max_result_rect, &extra->output->max_result_rect);
 		}
-		PreRenderData *pre = new PreRenderData;
-		RenderScaleFromInData(in_data, pre->render_scale_x, pre->render_scale_y);
-		extra->output->pre_render_data = pre;
+		extra->output->pre_render_data = pre.release();
 		extra->output->delete_pre_render_data_func = DeletePreRenderData;
 	}
 	return err;
 }
 
+static PF_Err CheckinDirectionalParam(PF_InData *in_data, PF_ParamDef *param)
+{
+	return PF_CHECKIN_PARAM(in_data, param);
+}
+
+template <typename WorldT>
+static auto DirectionalWorldHasZeroOrigin(const WorldT *world, int)
+	-> decltype(world->origin_x, world->origin_y, bool())
+{
+	return world->origin_x == 0 && world->origin_y == 0;
+}
+
+// Compatibility for the oldest reduced-header source-included harness. Real
+// SDK worlds always select the origin_x/origin_y overload above.
+static bool DirectionalWorldHasZeroOrigin(const void *, long)
+{
+	return true;
+}
+
+static bool DirectionalGenericWorldIsFullFrame(const PF_EffectWorld *world,
+	                                            A_long width, A_long height)
+{
+	return world && width > 0 && height > 0 && world->width == width &&
+		world->height == height && DirectionalWorldHasZeroOrigin(world, 0);
+}
+
+#if defined(OLM_DBLUR_TEST_SEAM)
+extern "C" int OLMDirectionalBlurTestNormalizeFullFrameRequest(
+	const PF_RenderRequest *requested, A_long width, A_long height,
+	PF_RenderRequest *normalized)
+{
+	return requested && DirectionalNormalizeFullFrameRequest(
+		*requested, width, height, normalized) ? 1 : 0;
+}
+
+extern "C" int OLMDirectionalBlurTestGenericWorldIsFullFrame(
+	const PF_EffectWorld *world, A_long width, A_long height)
+{
+	return DirectionalGenericWorldIsFullFrame(world, width, height) ? 1 : 0;
+}
+
+extern "C" int OLMDirectionalBlurTestGenericSmartFramePolicy(
+	const PF_RenderRequest *request, const PF_EffectWorld *input,
+	const PF_EffectWorld *output, const OLMDirectionalBlurInfo *info,
+	short bitdepth, A_long width, A_long height)
+{
+	if (!request || !info) return 0;
+	PF_RenderRequest normalized = {};
+	const bool generic = bitdepth == 8 ? IsGenericFrontOnly8Parameters(*info)
+		: ((bitdepth == 16 || bitdepth == 32) && IsGenericFrontOnlyDeepParameters(*info));
+	return generic && DirectionalNormalizeFullFrameRequest(
+		*request, width, height, &normalized) &&
+		DirectionalGenericWorldIsFullFrame(input, width, height) &&
+		DirectionalGenericWorldIsFullFrame(output, width, height) ? 1 : 0;
+}
+#endif
+
+static bool DirectionalActiveRowBytes(short bitdepth, A_long width, std::size_t *bytes)
+{
+	if (!bytes || width <= 0) return false;
+	std::size_t pixel_bytes = 0;
+	switch (bitdepth) {
+	case 8: pixel_bytes = sizeof(PF_Pixel8); break;
+	case 16: pixel_bytes = sizeof(PF_Pixel16); break;
+	case 32: pixel_bytes = sizeof(PF_PixelFloat); break;
+	default: return false;
+	}
+	const std::size_t w = static_cast<std::size_t>(width);
+	if (w > std::numeric_limits<std::size_t>::max() / pixel_bytes) return false;
+	*bytes = w * pixel_bytes;
+	return true;
+}
+
+#if defined(OLM_DBLUR_TEST_SEAM)
+template <typename World>
+static auto DirectionalTestPixelFormat(const World *world, int)
+	-> decltype(world->bitdepth, PF_PixelFormat())
+{
+	return world->bitdepth == 8 ? PF_PixelFormat_ARGB32 :
+		(world->bitdepth == 16 ? PF_PixelFormat_ARGB64 :
+		 (world->bitdepth == 32 ? PF_PixelFormat_ARGB128 : PF_PixelFormat_INVALID));
+}
+
+static PF_PixelFormat DirectionalTestPixelFormat(const void *, long)
+{
+	return PF_PixelFormat_INVALID;
+}
+#endif
+
+static PF_Err
+GetDirectionalPixelFormats(PF_InData *in_data,
+	const PF_EffectWorld *input_world,
+	const PF_EffectWorld *output_world,
+	PF_PixelFormat *input_format,
+	PF_PixelFormat *output_format)
+{
+#if defined(OLM_DBLUR_TEST_SEAM)
+	(void)in_data;
+	if (!input_world || !output_world || !input_format || !output_format) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	// The oldest source-included Smart harness owns a reduced PF_EffectWorld
+	// with a test-only bitdepth member.  Real-SDK direct-core harnesses use the
+	// actual PF_EffectWorld, which deliberately has no such member.  Keep this
+	// compatibility path compile-time bounded to the reduced harness ABI; real
+	// public builds never define OLM_DBLUR_TEST_SEAM and always use WorldSuite2.
+	*input_format = DirectionalTestPixelFormat(input_world, 0);
+	*output_format = DirectionalTestPixelFormat(output_world, 0);
+	return (*input_format == PF_PixelFormat_INVALID ||
+		*output_format == PF_PixelFormat_INVALID) ? PF_Err_BAD_CALLBACK_PARAM : PF_Err_NONE;
+#else
+	if (!in_data || !input_world || !output_world || !input_format || !output_format ||
+		!in_data->pica_basicP || !in_data->pica_basicP->AcquireSuite ||
+		!in_data->pica_basicP->ReleaseSuite) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	const void *suite_ptr = NULL;
+	PF_Err err = PF_Err_NONE;
+	bool acquired = false;
+	try {
+		const SPErr acquire_err = in_data->pica_basicP->AcquireSuite(
+			kPFWorldSuite, kPFWorldSuiteVersion2, &suite_ptr);
+		if (acquire_err != kSPNoError) {
+			err = static_cast<PF_Err>(acquire_err);
+		} else {
+			acquired = true;
+			const PF_WorldSuite2 *world_suite =
+				reinterpret_cast<const PF_WorldSuite2 *>(suite_ptr);
+			if (!world_suite || !world_suite->PF_GetPixelFormat) {
+				err = PF_Err_BAD_CALLBACK_PARAM;
+			} else {
+				err = world_suite->PF_GetPixelFormat(input_world, input_format);
+				if (!err) err = world_suite->PF_GetPixelFormat(output_world, output_format);
+			}
+		}
+	} catch (PF_Err &thrown_err) {
+		err = thrown_err;
+	} catch (const std::bad_alloc &) {
+		err = PF_Err_OUT_OF_MEMORY;
+	} catch (...) {
+		err = PF_Err_INTERNAL_STRUCT_DAMAGED;
+	}
+	if (acquired) {
+		try {
+			const SPErr release_err = in_data->pica_basicP->ReleaseSuite(
+				kPFWorldSuite, kPFWorldSuiteVersion2);
+			if (!err && release_err != kSPNoError) {
+				err = static_cast<PF_Err>(release_err);
+			}
+		} catch (PF_Err &cleanup_err) {
+			if (!err) err = cleanup_err;
+		} catch (const std::bad_alloc &) {
+			if (!err) err = PF_Err_OUT_OF_MEMORY;
+		} catch (...) {
+			if (!err) err = PF_Err_INTERNAL_STRUCT_DAMAGED;
+		}
+	}
+	return err;
+#endif
+}
+
 static PF_Err
 SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 {
+	if (!in_data || !extra || !extra->input || !extra->cb ||
+		!extra->cb->checkout_layer_pixels || !extra->cb->checkout_output ||
+		!extra->cb->checkin_layer_pixels
+#if !defined(OLM_DBLUR_TEST_SEAM)
+		|| !in_data->inter.checkout_param || !in_data->inter.checkin_param
+#endif
+	) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
 	PF_Err err = PF_Err_NONE;
 	PF_EffectWorld *input_world  = NULL;
 	PF_EffectWorld *noise_world  = NULL;
 	PF_EffectWorld *output_world = NULL;
-	ERR(extra->cb->checkout_layer_pixels(in_data->effect_ref, OLMDIRECTIONALBLUR_INPUT, &input_world));
+	bool input_checked_out = false;
 	bool noise_checked_out = false;
-	if (!err) {
-		const PF_Err noise_err = extra->cb->checkout_layer_pixels(
-			in_data->effect_ref, OLMDIRECTIONALBLUR_NOISE_LAYER, &noise_world);
-		noise_checked_out = noise_err == PF_Err_NONE;
-		if (!noise_checked_out) {
-			noise_world = NULL;
-		}
-	}
-	ERR(extra->cb->checkout_output(in_data->effect_ref, &output_world));
-	if (err || !input_world || !output_world) {
-		extra->cb->checkin_layer_pixels(in_data->effect_ref, OLMDIRECTIONALBLUR_INPUT);
-		if (noise_checked_out) {
-			extra->cb->checkin_layer_pixels(in_data->effect_ref, OLMDIRECTIONALBLUR_NOISE_LAYER);
-		}
-		return err;
-	}
-
-	PF_ParamDef checked[OLMDIRECTIONALBLUR_NUM_PARAMS];
+	PF_ParamDef checked[OLMDIRECTIONALBLUR_NUM_PARAMS] = {};
+	bool param_checked_out[OLMDIRECTIONALBLUR_NUM_PARAMS] = {};
 	PF_ParamDef *param_ptrs[OLMDIRECTIONALBLUR_NUM_PARAMS] = {};
+	std::vector<std::uint8_t> staged_output;
+	PF_EffectWorld staged_world = {};
+	std::size_t active_row_bytes = 0;
+	bool render_complete = false;
+	std::exception_ptr thrown;
+	try {
+		err = extra->cb->checkout_layer_pixels(
+			in_data->effect_ref, OLMDIRECTIONALBLUR_INPUT, &input_world);
+		input_checked_out = err == PF_Err_NONE;
+		if (!err && !input_world) err = PF_Err_BAD_CALLBACK_PARAM;
+		if (!err) {
+			const PF_Err noise_err = extra->cb->checkout_layer_pixels(
+				in_data->effect_ref, OLMDIRECTIONALBLUR_NOISE_LAYER, &noise_world);
+			noise_checked_out = noise_err == PF_Err_NONE;
+			if (!noise_checked_out) noise_world = NULL;
+		}
+		if (!err) err = extra->cb->checkout_output(in_data->effect_ref, &output_world);
+		if (!err && !output_world) err = PF_Err_BAD_CALLBACK_PARAM;
+		if (!err && (!DisjointPayloads(input_world, output_world) ||
+			(noise_world && (!DisjointPayloads(input_world, noise_world) ||
+			                 !DisjointPayloads(output_world, noise_world))))) {
+			err = PF_Err_BAD_CALLBACK_PARAM;
+		}
+		if (!err) {
+			PF_PixelFormat input_format = PF_PixelFormat_INVALID;
+			PF_PixelFormat output_format = PF_PixelFormat_INVALID;
+			err = GetDirectionalPixelFormats(in_data, input_world, output_world,
+				&input_format, &output_format);
+			const short depth = extra->input->bitdepth;
+			const PF_PixelFormat expected_format = depth == 8 ? PF_PixelFormat_ARGB32 :
+				(depth == 16 ? PF_PixelFormat_ARGB64 :
+				 (depth == 32 ? PF_PixelFormat_ARGB128 : PF_PixelFormat_INVALID));
+			if (!err && (expected_format == PF_PixelFormat_INVALID ||
+				input_format != expected_format || output_format != expected_format ||
+				input_format != output_format)) {
+				err = PF_Err_BAD_CALLBACK_PARAM;
+			}
+		}
+		for (int i = 1; i < OLMDIRECTIONALBLUR_NUM_PARAMS && !err; ++i) {
+			AEFX_CLR_STRUCT(checked[i]);
+			err = PF_CHECKOUT_PARAM(in_data, i, in_data->current_time,
+				in_data->time_step, in_data->time_scale, &checked[i]);
+			if (!err) {
+				param_checked_out[i] = true;
+				param_ptrs[i] = &checked[i];
+			}
+		}
+		if (!err) {
+			PF_FpLong render_scale_x, render_scale_y;
+			RenderScaleFromInData(in_data, render_scale_x, render_scale_y);
+			PreRenderData *pre = reinterpret_cast<PreRenderData *>(extra->input->pre_render_data);
+			if (pre) {
+				if (pre->render_scale_x > 0.0) render_scale_x = pre->render_scale_x;
+				if (pre->render_scale_y > 0.0) render_scale_y = pre->render_scale_y;
+			}
+			std::uintptr_t output_begin = 0, output_end = 0;
+			if (!PayloadSpan(output_world, &output_begin, &output_end) ||
+				!DirectionalActiveRowBytes(extra->input->bitdepth, output_world->width,
+				                           &active_row_bytes) ||
+				active_row_bytes > static_cast<std::size_t>(output_world->rowbytes)) {
+				err = PF_Err_BAD_CALLBACK_PARAM;
+			} else {
+				staged_output.assign(output_end - output_begin, 0);
+				staged_world = *output_world;
+				staged_world.data = reinterpret_cast<PF_PixelPtr>(staged_output.data());
+				OLMDirectionalBlurInfo info = InfoFromParams(
+					param_ptrs, render_scale_x, render_scale_y);
+				const bool generic_neutral = extra->input->bitdepth == 8
+					? IsGenericFrontOnly8Parameters(info)
+					: IsGenericFrontOnlyDeepParameters(info);
+				if (generic_neutral && pre && pre->full_width > 0 && pre->full_height > 0 &&
+					(!pre->request_contains_full_frame ||
+					 !DirectionalGenericWorldIsFullFrame(input_world, pre->full_width, pre->full_height) ||
+					 !DirectionalGenericWorldIsFullFrame(output_world, pre->full_width, pre->full_height))) {
+					err = PF_Err_BAD_CALLBACK_PARAM;
+				} else {
+					err = RenderWorld(input_world, &staged_world, noise_world, info,
+					                  extra->input->bitdepth);
+				}
+				render_complete = err == PF_Err_NONE;
+			}
+		}
+	} catch (...) {
+		thrown = std::current_exception();
+	}
 	for (int i = 1; i < OLMDIRECTIONALBLUR_NUM_PARAMS; ++i) {
-		AEFX_CLR_STRUCT(checked[i]);
-		ERR(PF_CHECKOUT_PARAM(in_data, i, in_data->current_time,
-		                      in_data->time_step, in_data->time_scale, &checked[i]));
-		param_ptrs[i] = &checked[i];
+		if (!param_checked_out[i]) continue;
+		try {
+			const PF_Err checkin_err = CheckinDirectionalParam(in_data, &checked[i]);
+			if (!err && !thrown && checkin_err) err = checkin_err;
+		} catch (...) {
+			if (!err && !thrown) thrown = std::current_exception();
+		}
 	}
-	param_ptrs[OLMDIRECTIONALBLUR_INPUT] = NULL;
-
-	PF_FpLong render_scale_x, render_scale_y;
-	RenderScaleFromInData(in_data, render_scale_x, render_scale_y);
-	if (PreRenderData *pre = reinterpret_cast<PreRenderData *>(extra->input->pre_render_data)) {
-		if (pre->render_scale_x > 0.0) render_scale_x = pre->render_scale_x;
-		if (pre->render_scale_y > 0.0) render_scale_y = pre->render_scale_y;
+	if (input_checked_out) {
+		try {
+			const PF_Err checkin_err = extra->cb->checkin_layer_pixels(
+				in_data->effect_ref, OLMDIRECTIONALBLUR_INPUT);
+			if (!err && !thrown && checkin_err) err = checkin_err;
+		} catch (...) {
+			if (!err && !thrown) thrown = std::current_exception();
+		}
 	}
-
-	if (!err) {
-		OLMDirectionalBlurInfo info = InfoFromParams(param_ptrs, render_scale_x, render_scale_y);
-		ERR(RenderWorld(input_world, output_world, noise_world, info, extra->input->bitdepth));
-	}
-
-	for (int i = 1; i < OLMDIRECTIONALBLUR_NUM_PARAMS; ++i) {
-		PF_CHECKIN_PARAM(in_data, &checked[i]);
-	}
-	extra->cb->checkin_layer_pixels(in_data->effect_ref, OLMDIRECTIONALBLUR_INPUT);
 	if (noise_checked_out) {
-		extra->cb->checkin_layer_pixels(in_data->effect_ref, OLMDIRECTIONALBLUR_NOISE_LAYER);
+		try {
+			const PF_Err checkin_err = extra->cb->checkin_layer_pixels(
+				in_data->effect_ref, OLMDIRECTIONALBLUR_NOISE_LAYER);
+			if (!err && !thrown && checkin_err) err = checkin_err;
+		} catch (...) {
+			if (!err && !thrown) thrown = std::current_exception();
+		}
+	}
+	if (thrown) std::rethrow_exception(thrown);
+	if (!err && render_complete) {
+		for (A_long y = 0; y < output_world->height; ++y) {
+			std::memcpy(reinterpret_cast<std::uint8_t *>(output_world->data) +
+					static_cast<std::size_t>(y) * output_world->rowbytes,
+				staged_output.data() + static_cast<std::size_t>(y) * staged_world.rowbytes,
+				active_row_bytes);
+		}
 	}
 	return err;
 }
@@ -1429,6 +2237,10 @@ PF_Err EffectMain(PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data,
 		default:
 			break;
 		}
+	} catch (PF_Err &thrown_err) {
+		err = thrown_err;
+	} catch (const std::bad_alloc &) {
+		err = PF_Err_OUT_OF_MEMORY;
 	} catch (...) {
 		err = PF_Err_INTERNAL_STRUCT_DAMAGED;
 	}

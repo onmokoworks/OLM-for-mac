@@ -4,7 +4,7 @@
 
 namespace olm::dblur {
 
-inline float gaussian_weight(int count, int index)
+inline float gaussian_argument(int count, int index)
 {
     const float ratio = static_cast<float>(count) / 3.0f;
     const float ratio_square = ratio * ratio;
@@ -15,9 +15,17 @@ inline float gaussian_weight(int count, int index)
     const float numerator = static_cast<float>(-(index * index));
     const float argument = numerator / denominator;
 
-    // Windows UCRT expf matches double exp followed by one float rounding for
-    // every captured n=96/240 table entry. Preserve the AEX float argument.
-    return static_cast<float>(std::exp(static_cast<double>(argument)));
+    return argument;
+}
+
+inline float gaussian_weight(int count, int index)
+{
+    return static_cast<float>(std::exp(static_cast<double>(gaussian_argument(count, index))));
+}
+
+inline float gaussian_weight_expfloat(int count, int index)
+{
+    return ::expf(gaussian_argument(count, index));
 }
 
 }  // namespace olm::dblur

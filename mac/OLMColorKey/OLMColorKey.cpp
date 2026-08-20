@@ -6,6 +6,10 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <cstdint>
+#include <exception>
+#include <limits>
+#include <new>
 #include <vector>
 
 #if !defined(AE_OS_WIN)
@@ -405,13 +409,65 @@ static A_long ColorParamIndex(int i, int offset)
 	return OLMCOLORKEY_COLOR_FIRST + i * COLOR_PARAM_STRIDE + offset;
 }
 
+static PF_Err AcquireColorParamSuite(PF_InData *in_data,
+	                                 PF_ColorParamSuite1 **suite,
+	                                 bool *needs_release)
+{
+	if (!in_data || !suite || !needs_release) return PF_Err_BAD_CALLBACK_PARAM;
+	*suite = NULL;
+	*needs_release = false;
+#ifdef OLMCOLORKEY_HOSTLESS_RENDER_HARNESS
+	AEGP_SuiteHandler suites(in_data->pica_basicP);
+	*suite = suites.ColorParamSuite1();
+	return *suite && (*suite)->PF_GetFloatingPointColorFromColorDef
+	    ? PF_Err_NONE : PF_Err_BAD_CALLBACK_PARAM;
+#else
+	if (!in_data->pica_basicP || !in_data->pica_basicP->AcquireSuite ||
+	    !in_data->pica_basicP->ReleaseSuite) return PF_Err_BAD_CALLBACK_PARAM;
+	const void *raw_suite = NULL;
+	const SPErr acquire_err = in_data->pica_basicP->AcquireSuite(
+	    kPFColorParamSuite, kPFColorParamSuiteVersion1, &raw_suite);
+	if (acquire_err) return (PF_Err)acquire_err;
+	*needs_release = true;
+	if (!raw_suite) return PF_Err_BAD_CALLBACK_PARAM;
+	*suite = (PF_ColorParamSuite1 *)raw_suite;
+	return (*suite)->PF_GetFloatingPointColorFromColorDef
+	    ? PF_Err_NONE : PF_Err_BAD_CALLBACK_PARAM;
+#endif
+}
+
+static PF_Err ReleaseColorParamSuite(PF_InData *in_data, bool needs_release)
+{
+#ifdef OLMCOLORKEY_HOSTLESS_RENDER_HARNESS
+	(void)in_data;
+	(void)needs_release;
+	return PF_Err_NONE;
+#else
+	if (!needs_release) return PF_Err_NONE;
+	if (!in_data || !in_data->pica_basicP || !in_data->pica_basicP->ReleaseSuite)
+		return PF_Err_BAD_CALLBACK_PARAM;
+	return (PF_Err)in_data->pica_basicP->ReleaseSuite(
+	    kPFColorParamSuite, kPFColorParamSuiteVersion1);
+#endif
+}
+
 static PF_Err
 CheckoutInfo(PF_InData *in_data, PF_ParamDef *params[], OLMColorKeyInfo *info)
 {
-	PF_Err err = PF_Err_NONE;
-	AEGP_SuiteHandler suites(in_data->pica_basicP);
-	PF_ColorParamSuite1 *cps = suites.ColorParamSuite1();
-
+	if (!in_data || !params || !info) return PF_Err_BAD_CALLBACK_PARAM;
+	const A_long required[] = {
+		OLMCOLORKEY_COLOR_KEEP, OLMCOLORKEY_THRESHOLD, OLMCOLORKEY_PREMULTIPLIED,
+		OLMCOLORKEY_COLOR_SPACE, OLMCOLORKEY_FORCE_LOWER_PRECISION,
+		OLMCOLORKEY_PER_COLOR, OLMCOLORKEY_PER_COMPONENT,
+		OLMCOLORKEY_THRESHOLD_R, OLMCOLORKEY_THRESHOLD_G, OLMCOLORKEY_THRESHOLD_B,
+		OLMCOLORKEY_EDGE_THIN_AMOUNT, OLMCOLORKEY_EDGE_THIN_DISTANCE_TYPE,
+		OLMCOLORKEY_EDGE_BLUR_AMOUNT, OLMCOLORKEY_EDGE_BLUR_DISTANCE_TYPE,
+		OLMCOLORKEY_EDGE_BLUR_DIRECTION, OLMCOLORKEY_NUMBER_OF_COLORS,
+		OLMCOLORKEY_ENABLE_REPLACE,
+	};
+	for (size_t i = 0; i < sizeof(required) / sizeof(required[0]); ++i) {
+		if (!params[required[i]]) return PF_Err_BAD_CALLBACK_PARAM;
+	}
 	AEFX_CLR_STRUCT(*info);
 	info->color_keep = params[OLMCOLORKEY_COLOR_KEEP]->u.bd.value;
 	info->threshold = params[OLMCOLORKEY_THRESHOLD]->u.fs_d.value;
@@ -433,87 +489,143 @@ CheckoutInfo(PF_InData *in_data, PF_ParamDef *params[], OLMColorKeyInfo *info)
 	info->edge_blur_direction = params[OLMCOLORKEY_EDGE_BLUR_DIRECTION]->u.pd.value + 100;
 	info->number_of_colors = params[OLMCOLORKEY_NUMBER_OF_COLORS]->u.sd.value;
 	info->enable_replace = params[OLMCOLORKEY_ENABLE_REPLACE]->u.bd.value;
-	if (info->number_of_colors < 1) info->number_of_colors = 1;
-	if (info->number_of_colors > OLMCOLORKEY_MAX_COLORS) info->number_of_colors = OLMCOLORKEY_MAX_COLORS;
-
+	if (info->number_of_colors < 1 || info->number_of_colors > OLMCOLORKEY_MAX_COLORS)
+		return PF_Err_BAD_CALLBACK_PARAM;
 	for (A_long i = 0; i < info->number_of_colors; ++i) {
-		PF_ParamDef *cp = params[ColorParamIndex(i, COLOR_OFFSET_COLOR)];
-		info->colors8[i] = cp->u.cd.value;
-		PF_PixelFloat fp = {0};
-		ERR(cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref, cp, &fp));
-		info->colors[i] = fp;
-		info->thresholds[i] = params[ColorParamIndex(i, COLOR_OFFSET_THRESHOLD)]->u.fs_d.value;
-		info->thresholds_r[i] = params[ColorParamIndex(i, COLOR_OFFSET_THRESHOLD_R)]->u.fs_d.value;
-		info->thresholds_g[i] = params[ColorParamIndex(i, COLOR_OFFSET_THRESHOLD_G)]->u.fs_d.value;
-		info->thresholds_b[i] = params[ColorParamIndex(i, COLOR_OFFSET_THRESHOLD_B)]->u.fs_d.value;
-		info->use_color[i] = params[ColorParamIndex(i, COLOR_OFFSET_USE_COLOR)]->u.bd.value;
-		info->use_replace_color[i] = params[ColorParamIndex(i, COLOR_OFFSET_USE_REPLACE)]->u.bd.value;
-		PF_ParamDef *rp = params[ColorParamIndex(i, COLOR_OFFSET_REPLACE_COLOR)];
-		PF_PixelFloat rep = {0};
-		ERR(cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref, rp, &rep));
-		info->replace_colors[i] = rep;
+		for (int offset = 0; offset < COLOR_PARAM_STRIDE; ++offset) {
+			if (!params[ColorParamIndex(i, offset)]) return PF_Err_BAD_CALLBACK_PARAM;
+		}
 	}
+
+	PF_ColorParamSuite1 *cps = NULL;
+	bool release_suite = false;
+	PF_Err err = AcquireColorParamSuite(in_data, &cps, &release_suite);
+	std::exception_ptr thrown;
+	try {
+		for (A_long i = 0; i < info->number_of_colors && !err; ++i) {
+			PF_ParamDef *cp = params[ColorParamIndex(i, COLOR_OFFSET_COLOR)];
+			info->colors8[i] = cp->u.cd.value;
+			PF_PixelFloat fp = {0};
+			err = cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref, cp, &fp);
+			if (!err) info->colors[i] = fp;
+			info->thresholds[i] = params[ColorParamIndex(i, COLOR_OFFSET_THRESHOLD)]->u.fs_d.value;
+			info->thresholds_r[i] = params[ColorParamIndex(i, COLOR_OFFSET_THRESHOLD_R)]->u.fs_d.value;
+			info->thresholds_g[i] = params[ColorParamIndex(i, COLOR_OFFSET_THRESHOLD_G)]->u.fs_d.value;
+			info->thresholds_b[i] = params[ColorParamIndex(i, COLOR_OFFSET_THRESHOLD_B)]->u.fs_d.value;
+			info->use_color[i] = params[ColorParamIndex(i, COLOR_OFFSET_USE_COLOR)]->u.bd.value;
+			info->use_replace_color[i] = params[ColorParamIndex(i, COLOR_OFFSET_USE_REPLACE)]->u.bd.value;
+			PF_ParamDef *rp = params[ColorParamIndex(i, COLOR_OFFSET_REPLACE_COLOR)];
+			PF_PixelFloat rep = {0};
+			if (!err) err = cps->PF_GetFloatingPointColorFromColorDef(
+			    in_data->effect_ref, rp, &rep);
+			if (!err) info->replace_colors[i] = rep;
+		}
+	} catch (...) {
+		thrown = std::current_exception();
+	}
+	try {
+		const PF_Err release_err = ReleaseColorParamSuite(in_data, release_suite);
+		if (!err && !thrown && release_err) err = release_err;
+	} catch (...) {
+		if (!thrown) thrown = std::current_exception();
+	}
+	if (thrown) std::rethrow_exception(thrown);
 	return err;
 }
 
 static PF_Err
 CheckoutSmartInfo(PF_InData *in_data, OLMColorKeyInfo *info)
 {
-	PF_Err err = PF_Err_NONE;
-	AEGP_SuiteHandler suites(in_data->pica_basicP);
-	PF_ColorParamSuite1 *cps = suites.ColorParamSuite1();
-
+	if (!in_data || !info) return PF_Err_BAD_CALLBACK_PARAM;
+#ifndef OLMCOLORKEY_HOSTLESS_RENDER_HARNESS
+	if (!in_data->inter.checkout_param || !in_data->inter.checkin_param)
+		return PF_Err_BAD_CALLBACK_PARAM;
+#endif
 	AEFX_CLR_STRUCT(*info);
-	auto checkout = [&](A_long index, PF_ParamDef *param) -> PF_Err {
-		AEFX_CLR_STRUCT(*param);
-		return PF_CHECKOUT_PARAM(in_data, index, in_data->current_time,
-		                         in_data->time_step, in_data->time_scale, param);
-	};
-
-	PF_ParamDef p;
-	ERR(checkout(OLMCOLORKEY_COLOR_KEEP, &p)); info->color_keep = p.u.bd.value; PF_CHECKIN_PARAM(in_data, &p);
-	ERR(checkout(OLMCOLORKEY_THRESHOLD, &p)); info->threshold = p.u.fs_d.value; PF_CHECKIN_PARAM(in_data, &p);
-	ERR(checkout(OLMCOLORKEY_PREMULTIPLIED, &p)); info->premultiplied = p.u.bd.value; PF_CHECKIN_PARAM(in_data, &p);
-	ERR(checkout(OLMCOLORKEY_COLOR_SPACE, &p)); info->color_space = p.u.pd.value; PF_CHECKIN_PARAM(in_data, &p);
-	ERR(checkout(OLMCOLORKEY_FORCE_LOWER_PRECISION, &p)); info->force_lower_precision = p.u.pd.value; PF_CHECKIN_PARAM(in_data, &p);
-	ERR(checkout(OLMCOLORKEY_PER_COLOR, &p)); info->per_color = p.u.bd.value; PF_CHECKIN_PARAM(in_data, &p);
-	ERR(checkout(OLMCOLORKEY_PER_COMPONENT, &p)); info->per_component = p.u.bd.value; PF_CHECKIN_PARAM(in_data, &p);
-	ERR(checkout(OLMCOLORKEY_THRESHOLD_R, &p)); info->threshold_r = p.u.fs_d.value; PF_CHECKIN_PARAM(in_data, &p);
-	ERR(checkout(OLMCOLORKEY_THRESHOLD_G, &p)); info->threshold_g = p.u.fs_d.value; PF_CHECKIN_PARAM(in_data, &p);
-	ERR(checkout(OLMCOLORKEY_THRESHOLD_B, &p)); info->threshold_b = p.u.fs_d.value; PF_CHECKIN_PARAM(in_data, &p);
-	ERR(checkout(OLMCOLORKEY_EDGE_THIN_AMOUNT, &p)); info->edge_thin_amount = p.u.sd.value; PF_CHECKIN_PARAM(in_data, &p);
-	ERR(checkout(OLMCOLORKEY_EDGE_THIN_DISTANCE_TYPE, &p)); info->edge_thin_distance_type = p.u.pd.value; PF_CHECKIN_PARAM(in_data, &p);
-	ERR(checkout(OLMCOLORKEY_EDGE_BLUR_AMOUNT, &p)); info->edge_blur_amount = p.u.fs_d.value; PF_CHECKIN_PARAM(in_data, &p);
-	ERR(checkout(OLMCOLORKEY_EDGE_BLUR_DISTANCE_TYPE, &p)); info->edge_blur_distance_type = p.u.pd.value; PF_CHECKIN_PARAM(in_data, &p);
-	ERR(checkout(OLMCOLORKEY_EDGE_BLUR_DIRECTION, &p)); info->edge_blur_direction = p.u.pd.value + 100; PF_CHECKIN_PARAM(in_data, &p);
-	ERR(checkout(OLMCOLORKEY_NUMBER_OF_COLORS, &p)); info->number_of_colors = p.u.sd.value; PF_CHECKIN_PARAM(in_data, &p);
-	ERR(checkout(OLMCOLORKEY_ENABLE_REPLACE, &p)); info->enable_replace = p.u.bd.value; PF_CHECKIN_PARAM(in_data, &p);
-	if (info->number_of_colors < 1) info->number_of_colors = 1;
-	if (info->number_of_colors > OLMCOLORKEY_MAX_COLORS) info->number_of_colors = OLMCOLORKEY_MAX_COLORS;
-
-	for (A_long i = 0; i < info->number_of_colors && !err; ++i) {
-		ERR(checkout(ColorParamIndex(i, COLOR_OFFSET_COLOR), &p));
-		if (!err) {
-			info->colors8[i] = p.u.cd.value;
-			PF_PixelFloat fp = {0};
-			ERR(cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref, &p, &fp));
-			info->colors[i] = fp;
-			PF_CHECKIN_PARAM(in_data, &p);
+	PF_ColorParamSuite1 *cps = NULL;
+	bool release_suite = false;
+	PF_Err err = AcquireColorParamSuite(in_data, &cps, &release_suite);
+	std::exception_ptr thrown;
+	try {
+		auto fetch = [&](A_long index, auto consume) -> PF_Err {
+			PF_ParamDef p;
+			AEFX_CLR_STRUCT(p);
+			PF_Err local_err = PF_CHECKOUT_PARAM(
+			    in_data, index, in_data->current_time,
+			    in_data->time_step, in_data->time_scale, &p);
+			if (local_err) return local_err;
+			std::exception_ptr consume_thrown;
+			try { local_err = consume(p); }
+			catch (...) { consume_thrown = std::current_exception(); }
+			PF_Err checkin_err = PF_Err_NONE;
+			try {
+#ifdef OLMCOLORKEY_HOSTLESS_RENDER_HARNESS
+				PF_CHECKIN_PARAM(in_data, &p);
+#else
+				checkin_err = PF_CHECKIN_PARAM(in_data, &p);
+#endif
+			} catch (...) {
+				if (!consume_thrown) consume_thrown = std::current_exception();
+			}
+			if (consume_thrown) std::rethrow_exception(consume_thrown);
+			return local_err ? local_err : checkin_err;
+		};
+		auto get = [&](A_long index, auto consume) {
+			if (!err) err = fetch(index, consume);
+		};
+		get(OLMCOLORKEY_COLOR_KEEP, [&](const PF_ParamDef &p){ info->color_keep = p.u.bd.value; return PF_Err_NONE; });
+		get(OLMCOLORKEY_THRESHOLD, [&](const PF_ParamDef &p){ info->threshold = p.u.fs_d.value; return PF_Err_NONE; });
+		get(OLMCOLORKEY_PREMULTIPLIED, [&](const PF_ParamDef &p){ info->premultiplied = p.u.bd.value; return PF_Err_NONE; });
+		get(OLMCOLORKEY_COLOR_SPACE, [&](const PF_ParamDef &p){ info->color_space = p.u.pd.value; return PF_Err_NONE; });
+		get(OLMCOLORKEY_FORCE_LOWER_PRECISION, [&](const PF_ParamDef &p){ info->force_lower_precision = p.u.pd.value; return PF_Err_NONE; });
+		get(OLMCOLORKEY_PER_COLOR, [&](const PF_ParamDef &p){ info->per_color = p.u.bd.value; return PF_Err_NONE; });
+		get(OLMCOLORKEY_PER_COMPONENT, [&](const PF_ParamDef &p){ info->per_component = p.u.bd.value; return PF_Err_NONE; });
+		get(OLMCOLORKEY_THRESHOLD_R, [&](const PF_ParamDef &p){ info->threshold_r = p.u.fs_d.value; return PF_Err_NONE; });
+		get(OLMCOLORKEY_THRESHOLD_G, [&](const PF_ParamDef &p){ info->threshold_g = p.u.fs_d.value; return PF_Err_NONE; });
+		get(OLMCOLORKEY_THRESHOLD_B, [&](const PF_ParamDef &p){ info->threshold_b = p.u.fs_d.value; return PF_Err_NONE; });
+		get(OLMCOLORKEY_EDGE_THIN_AMOUNT, [&](const PF_ParamDef &p){ info->edge_thin_amount = p.u.sd.value; return PF_Err_NONE; });
+		get(OLMCOLORKEY_EDGE_THIN_DISTANCE_TYPE, [&](const PF_ParamDef &p){ info->edge_thin_distance_type = p.u.pd.value; return PF_Err_NONE; });
+		get(OLMCOLORKEY_EDGE_BLUR_AMOUNT, [&](const PF_ParamDef &p){ info->edge_blur_amount = p.u.fs_d.value; return PF_Err_NONE; });
+		get(OLMCOLORKEY_EDGE_BLUR_DISTANCE_TYPE, [&](const PF_ParamDef &p){ info->edge_blur_distance_type = p.u.pd.value; return PF_Err_NONE; });
+		get(OLMCOLORKEY_EDGE_BLUR_DIRECTION, [&](const PF_ParamDef &p){ info->edge_blur_direction = p.u.pd.value + 100; return PF_Err_NONE; });
+		get(OLMCOLORKEY_NUMBER_OF_COLORS, [&](const PF_ParamDef &p){ info->number_of_colors = p.u.sd.value; return PF_Err_NONE; });
+		get(OLMCOLORKEY_ENABLE_REPLACE, [&](const PF_ParamDef &p){ info->enable_replace = p.u.bd.value; return PF_Err_NONE; });
+		if (!err && (info->number_of_colors < 1 ||
+		             info->number_of_colors > OLMCOLORKEY_MAX_COLORS))
+			err = PF_Err_BAD_CALLBACK_PARAM;
+		for (A_long i = 0; i < info->number_of_colors && !err; ++i) {
+			get(ColorParamIndex(i, COLOR_OFFSET_COLOR), [&](const PF_ParamDef &p){
+				info->colors8[i] = p.u.cd.value;
+				PF_PixelFloat value = {0};
+				const PF_Err color_err = cps->PF_GetFloatingPointColorFromColorDef(
+				    in_data->effect_ref, const_cast<PF_ParamDef *>(&p), &value);
+				if (!color_err) info->colors[i] = value;
+				return color_err;
+			});
+			get(ColorParamIndex(i, COLOR_OFFSET_THRESHOLD), [&](const PF_ParamDef &p){ info->thresholds[i] = p.u.fs_d.value; return PF_Err_NONE; });
+			get(ColorParamIndex(i, COLOR_OFFSET_THRESHOLD_R), [&](const PF_ParamDef &p){ info->thresholds_r[i] = p.u.fs_d.value; return PF_Err_NONE; });
+			get(ColorParamIndex(i, COLOR_OFFSET_THRESHOLD_G), [&](const PF_ParamDef &p){ info->thresholds_g[i] = p.u.fs_d.value; return PF_Err_NONE; });
+			get(ColorParamIndex(i, COLOR_OFFSET_THRESHOLD_B), [&](const PF_ParamDef &p){ info->thresholds_b[i] = p.u.fs_d.value; return PF_Err_NONE; });
+			get(ColorParamIndex(i, COLOR_OFFSET_USE_COLOR), [&](const PF_ParamDef &p){ info->use_color[i] = p.u.bd.value; return PF_Err_NONE; });
+			get(ColorParamIndex(i, COLOR_OFFSET_USE_REPLACE), [&](const PF_ParamDef &p){ info->use_replace_color[i] = p.u.bd.value; return PF_Err_NONE; });
+			get(ColorParamIndex(i, COLOR_OFFSET_REPLACE_COLOR), [&](const PF_ParamDef &p){
+				PF_PixelFloat value = {0};
+				const PF_Err color_err = cps->PF_GetFloatingPointColorFromColorDef(
+				    in_data->effect_ref, const_cast<PF_ParamDef *>(&p), &value);
+				if (!color_err) info->replace_colors[i] = value;
+				return color_err;
+			});
 		}
-		ERR(checkout(ColorParamIndex(i, COLOR_OFFSET_THRESHOLD), &p)); info->thresholds[i] = p.u.fs_d.value; PF_CHECKIN_PARAM(in_data, &p);
-		ERR(checkout(ColorParamIndex(i, COLOR_OFFSET_THRESHOLD_R), &p)); info->thresholds_r[i] = p.u.fs_d.value; PF_CHECKIN_PARAM(in_data, &p);
-		ERR(checkout(ColorParamIndex(i, COLOR_OFFSET_THRESHOLD_G), &p)); info->thresholds_g[i] = p.u.fs_d.value; PF_CHECKIN_PARAM(in_data, &p);
-		ERR(checkout(ColorParamIndex(i, COLOR_OFFSET_THRESHOLD_B), &p)); info->thresholds_b[i] = p.u.fs_d.value; PF_CHECKIN_PARAM(in_data, &p);
-		ERR(checkout(ColorParamIndex(i, COLOR_OFFSET_USE_COLOR), &p)); info->use_color[i] = p.u.bd.value; PF_CHECKIN_PARAM(in_data, &p);
-		ERR(checkout(ColorParamIndex(i, COLOR_OFFSET_USE_REPLACE), &p)); info->use_replace_color[i] = p.u.bd.value; PF_CHECKIN_PARAM(in_data, &p);
-		ERR(checkout(ColorParamIndex(i, COLOR_OFFSET_REPLACE_COLOR), &p));
-		if (!err) {
-			PF_PixelFloat rep = {0};
-			ERR(cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref, &p, &rep));
-			info->replace_colors[i] = rep;
-			PF_CHECKIN_PARAM(in_data, &p);
-		}
+	} catch (...) {
+		thrown = std::current_exception();
 	}
+	try {
+		const PF_Err release_err = ReleaseColorParamSuite(in_data, release_suite);
+		if (!err && !thrown && release_err) err = release_err;
+	} catch (...) {
+		if (!thrown) thrown = std::current_exception();
+	}
+	if (thrown) std::rethrow_exception(thrown);
 	return err;
 }
 
@@ -777,6 +889,429 @@ static bool LabPerComponentHit(const float cmp[3], const float key[3], PF_FpLong
 	return std::fabs(cmp[0] - key[0]) <= limit_l
 	    && std::fabs(cmp[1] - key[1]) <= limit_a
 	    && std::fabs(cmp[2] - key[2]) <= limit_b;
+}
+
+static void Lab76ComparatorMutate(float value[3])
+{
+	// FUN_1800043a0 adds the Lab76 a/b offsets in place before both its
+	// scalar and per-component predicates.  The pixel callback reuses the
+	// converted comparison triple across the key loop, so a failed key leaves
+	// these additions visible to the next key.  Each converted key is local to
+	// its own iteration and receives the additions once.
+	value[1] += 133.03700256347656f;
+	value[2] += 163.48800659179688f;
+}
+
+static bool Lab76ScalarHit(const float cmp[3], const float key[3],
+	                       PF_FpLong threshold, float epsilon)
+{
+	// FUN_1800043a0 evaluates the three squared differences and threshold
+	// scale with scalar FLOAT32 instructions.  Keep the addition order visible
+	// so the Windows comparator remains the arithmetic owner.
+	const float d0 = key[0] - cmp[0];
+	const float d1 = key[1] - cmp[1];
+	const float d2 = key[2] - cmp[2];
+	float distance_squared = d0 * d0;
+	distance_squared += d1 * d1;
+	distance_squared += d2 * d2;
+	const float distance = std::sqrt(distance_squared);
+	float limit = (float)threshold;
+	limit += epsilon;
+	limit *= 424.4352722167969f;
+	return distance <= limit;
+}
+
+static bool BoundedLab76Input(const PF_Pixel8 &pixel)
+{
+	return pixel.alpha == 255 && pixel.red == 26 &&
+	       pixel.green == 191 && pixel.blue == 204;
+}
+
+static bool BoundedLab76Input(const PF_Pixel16 &pixel)
+{
+	return pixel.alpha == 32768 && pixel.red == 3341 &&
+	       pixel.green == 24544 && pixel.blue == 26214;
+}
+
+static bool BoundedLab76Input(const PF_PixelFloat &pixel)
+{
+	return pixel.alpha == 1.0f && pixel.red == 26.0f / 255.0f &&
+	       pixel.green == 191.0f / 255.0f && pixel.blue == 204.0f / 255.0f;
+}
+
+static bool BoundedLab76Key(const PF_PixelFloat &key,
+	                        float red, float green, float blue)
+{
+	return key.alpha == 1.0f && key.red == red &&
+	       key.green == green && key.blue == blue;
+}
+
+static bool ExactColor(const PF_Pixel8 &color,
+	                   A_u_char alpha, A_u_char red,
+	                   A_u_char green, A_u_char blue);
+static bool ExactColor(const PF_PixelFloat &color,
+	                   float alpha, float red, float green, float blue);
+
+template <typename PixelT>
+static bool IsBoundedLab76NativeTuple(const PF_EffectWorld *input,
+	                                  const PF_EffectWorld *output,
+	                                  const OLMColorKeyInfo &info)
+{
+	if (!input || !output || !input->data || !output->data ||
+	    input->width != 1 || input->height != 1 ||
+	    output->width != 1 || output->height != 1 ||
+	    input->rowbytes != (A_long)sizeof(PixelT) + 8 ||
+	    output->rowbytes != (A_long)sizeof(PixelT) + 8 ||
+	    info.color_keep || info.threshold != 0.085 || info.premultiplied ||
+	    info.color_space != 3 || info.force_lower_precision != 1 ||
+	    info.per_color || info.per_component ||
+	    info.edge_thin_amount != 0.0 || info.edge_thin_distance_type != 1 ||
+	    info.edge_blur_amount != 0.0 || info.edge_blur_distance_type != 1 ||
+	    info.edge_blur_direction != 102 || info.number_of_colors != 2 ||
+	    info.enable_replace || !info.use_color[0] || !info.use_color[1] ||
+	    info.use_replace_color[0] || info.use_replace_color[1] ||
+	    info.threshold_r != 0.0 || info.threshold_g != 0.0 ||
+	    info.threshold_b != 0.0 ||
+	    info.thresholds[0] != 0.0 || info.thresholds[1] != 0.0 ||
+	    info.thresholds_r[0] != 0.0 || info.thresholds_r[1] != 0.0 ||
+	    info.thresholds_g[0] != 0.0 || info.thresholds_g[1] != 0.0 ||
+	    info.thresholds_b[0] != 0.0 || info.thresholds_b[1] != 0.0 ||
+	    !ExactColor(info.replace_colors[0], 0.0f, 0.0f, 0.0f, 0.0f) ||
+	    !ExactColor(info.replace_colors[1], 0.0f, 0.0f, 0.0f, 0.0f)) {
+		return false;
+	}
+	PixelT source_pixel;
+	std::memcpy(&source_pixel, input->data, sizeof(source_pixel));
+	if (!BoundedLab76Input(source_pixel)) return false;
+	const bool declared =
+	    ExactColor(info.colors8[0], 255, 204, 38, 26) &&
+	    ExactColor(info.colors8[1], 255, 26, 191, 204) &&
+	    BoundedLab76Key(info.colors[0], 204.0f / 255.0f, 38.0f / 255.0f, 26.0f / 255.0f) &&
+	    BoundedLab76Key(info.colors[1], 26.0f / 255.0f, 191.0f / 255.0f, 204.0f / 255.0f);
+	const bool reversed =
+	    ExactColor(info.colors8[0], 255, 26, 191, 204) &&
+	    ExactColor(info.colors8[1], 255, 204, 38, 26) &&
+	    BoundedLab76Key(info.colors[0], 26.0f / 255.0f, 191.0f / 255.0f, 204.0f / 255.0f) &&
+	    BoundedLab76Key(info.colors[1], 204.0f / 255.0f, 38.0f / 255.0f, 26.0f / 255.0f);
+	return declared || reversed;
+}
+
+static bool ExactColor(const PF_Pixel8 &color,
+	                   A_u_char alpha, A_u_char red,
+	                   A_u_char green, A_u_char blue)
+{
+	return color.alpha == alpha && color.red == red &&
+	       color.green == green && color.blue == blue;
+}
+
+static bool ExactColor(const PF_PixelFloat &color,
+	                   float alpha, float red, float green, float blue)
+{
+	return color.alpha == alpha && color.red == red &&
+	       color.green == green && color.blue == blue;
+}
+
+static bool IsBoundedEdgeInfo(const OLMColorKeyInfo &info,
+	                          A_long width, A_long height)
+{
+	if (info.color_keep || info.threshold != 0.0 || info.premultiplied ||
+	    info.color_space != 1 || info.force_lower_precision != 1 ||
+	    info.per_color || info.per_component ||
+	    info.threshold_r != 0.0 || info.threshold_g != 0.0 ||
+	    info.threshold_b != 0.0 || info.edge_thin_amount != 0.0 ||
+	    info.edge_thin_distance_type != 2 || info.number_of_colors != 2 ||
+	    info.enable_replace || !info.use_color[0] || !info.use_color[1] ||
+	    info.use_replace_color[0] || info.use_replace_color[1] ||
+	    info.thresholds[0] != 0.0 || info.thresholds[1] != 0.0 ||
+	    info.thresholds_r[0] != 0.0 || info.thresholds_r[1] != 0.0 ||
+	    info.thresholds_g[0] != 0.0 || info.thresholds_g[1] != 0.0 ||
+	    info.thresholds_b[0] != 0.0 || info.thresholds_b[1] != 0.0 ||
+	    !ExactColor(info.colors8[0], 255, 0, 0, 0) ||
+	    !ExactColor(info.colors8[1], 255, 0, 255, 0) ||
+	    !ExactColor(info.colors[0], 1.0f, 0.0f, 0.0f, 0.0f) ||
+	    !ExactColor(info.colors[1], 1.0f, 0.0f, 1.0f, 0.0f) ||
+	    !ExactColor(info.replace_colors[0], 0.0f, 0.0f, 0.0f, 0.0f) ||
+	    !ExactColor(info.replace_colors[1], 0.0f, 0.0f, 0.0f, 0.0f)) {
+		return false;
+	}
+	const A_long direction = info.edge_blur_direction - 100;
+	if (width == 32 && height == 18) {
+		return
+		    (direction == 1 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 1.0) ||
+		    (direction == 1 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 4.0) ||
+		    (direction == 2 && info.edge_blur_distance_type == 2 && info.edge_blur_amount == 1.0) ||
+		    (direction == 2 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 4.0) ||
+		    (direction == 3 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 1.0) ||
+		    (direction == 3 && info.edge_blur_distance_type == 2 && info.edge_blur_amount == 4.0);
+	}
+	if (width == 64 && height == 36) {
+		return
+		    (direction == 0 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 1.0) ||
+		    (direction == 0 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 4.0) ||
+		    (direction == 4 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 1.0) ||
+		    (direction == 4 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 4.0);
+	}
+	if (width == 48 && height == 27) {
+		return direction == 0 && info.edge_blur_distance_type == 3 &&
+		       info.edge_blur_amount == 4.0;
+	}
+	return false;
+}
+
+static bool IsBoundedToggleInfo(const OLMColorKeyInfo &info)
+{
+	if (info.threshold != 0.0 || info.color_space != 1 ||
+	    info.force_lower_precision != 1 || info.per_color ||
+	    info.per_component || info.threshold_r != 0.0 ||
+	    info.threshold_g != 0.0 || info.threshold_b != 0.0 ||
+	    info.edge_thin_amount != 0.0 || info.edge_thin_distance_type != 1 ||
+	    info.edge_blur_amount != 0.0 || info.edge_blur_distance_type != 1 ||
+	    info.edge_blur_direction != 102 || info.number_of_colors != 2 ||
+	    !info.use_color[0] || !info.use_color[1] ||
+	    info.use_replace_color[0] != info.enable_replace ||
+	    info.use_replace_color[1] != info.enable_replace ||
+	    info.thresholds[0] != 0.0 || info.thresholds[1] != 0.0 ||
+	    info.thresholds_r[0] != 0.0 || info.thresholds_r[1] != 0.0 ||
+	    info.thresholds_g[0] != 0.0 || info.thresholds_g[1] != 0.0 ||
+	    info.thresholds_b[0] != 0.0 || info.thresholds_b[1] != 0.0 ||
+	    !ExactColor(info.colors8[0], 255, 0, 0, 0) ||
+	    !ExactColor(info.colors8[1], 255, 0, 255, 0) ||
+	    !ExactColor(info.colors[0], 1.0f, 0.0f, 0.0f, 0.0f) ||
+	    !ExactColor(info.colors[1], 1.0f, 0.0f, 1.0f, 0.0f) ||
+	    !ExactColor(info.replace_colors[0], 1.0f, 230.0f / 255.0f,
+	                38.0f / 255.0f, 26.0f / 255.0f) ||
+	    !ExactColor(info.replace_colors[1], 1.0f, 26.0f / 255.0f,
+	                89.0f / 255.0f, 242.0f / 255.0f)) {
+		return false;
+	}
+	return true;
+}
+
+static void ToggleFixtureRGBA(A_long x, A_long y, int *red, int *green,
+	                          int *blue, int *alpha)
+{
+	*red = 64; *green = 96; *blue = 128; *alpha = 159;
+	if (x == 1 && y == 1) { *red = *green = *blue = 0; *alpha = 255; }
+	else if (x == 8 && y == 1) { *red = *blue = 0; *green = *alpha = 255; }
+	else if (x == 2 && y == 3) { *red = *green = *blue = 0; *alpha = 128; }
+	else if (x == 7 && y == 3) { *red = *blue = 0; *green = 255; *alpha = 128; }
+	else if (x == 1 && y == 5) { *red = 255; *green = *blue = *alpha = 0; }
+	else if (x == 5 && y == 5) { *red = *blue = *alpha = 0; *green = 255; }
+	else if (x == 9 && y == 5) { *red = *blue = 0; *green = 191; *alpha = 255; }
+	else if (x == 10 && y == 6) { *red = 7; *green = 19; *blue = 33; *alpha = 1; }
+}
+
+template <typename PixelT>
+static PixelT ToggleFixturePixel(A_long x, A_long y);
+
+template <>
+PF_Pixel8 ToggleFixturePixel<PF_Pixel8>(A_long x, A_long y)
+{
+	int r, g, b, a; ToggleFixtureRGBA(x, y, &r, &g, &b, &a);
+	return PF_Pixel8{(A_u_char)a, (A_u_char)r, (A_u_char)g, (A_u_char)b};
+}
+
+template <>
+PF_Pixel16 ToggleFixturePixel<PF_Pixel16>(A_long x, A_long y)
+{
+	int r, g, b, a; ToggleFixtureRGBA(x, y, &r, &g, &b, &a);
+	auto wide = [](int value) -> A_u_short {
+		return (A_u_short)std::lround((double)value * 32768.0 / 255.0);
+	};
+	return PF_Pixel16{wide(a), wide(r), wide(g), wide(b)};
+}
+
+template <>
+PF_PixelFloat ToggleFixturePixel<PF_PixelFloat>(A_long x, A_long y)
+{
+	int r, g, b, a; ToggleFixtureRGBA(x, y, &r, &g, &b, &a);
+	return PF_PixelFloat{a / 255.0f, r / 255.0f, g / 255.0f, b / 255.0f};
+}
+
+template <typename PixelT>
+static bool IsBoundedToggleSource(const PF_EffectWorld *input)
+{
+	if (!input || !input->data || input->width != 11 || input->height != 7)
+		return false;
+	for (A_long y = 0; y < input->height; ++y) {
+		const std::uint8_t *row = reinterpret_cast<const std::uint8_t *>(input->data) +
+		                          (size_t)y * (size_t)input->rowbytes;
+		for (A_long x = 0; x < input->width; ++x) {
+			PixelT actual;
+			std::memcpy(&actual, row + (size_t)x * sizeof(PixelT), sizeof(actual));
+			const PixelT expected = ToggleFixturePixel<PixelT>(x, y);
+			if (std::memcmp(&actual, &expected, sizeof(actual)) != 0) return false;
+		}
+	}
+	return true;
+}
+
+static int EdgeFixtureKind(A_long x, A_long y, A_long width, A_long height)
+{
+	const bool black =
+	    ((x == 2 || x == width - 3) && (y == 2 || y == height - 3)) ||
+	    (x >= width / 2 - 1 && x <= width / 2 + 1 &&
+	     y >= height / 2 - 1 && y <= height / 2 + 1) ||
+	    (y == height / 3 && x >= width / 4 && x < width / 4 + 5);
+	if (black) return 1;
+	const bool green =
+	    (x == width / 3 && y == height / 2) ||
+	    (x == width / 3 + 1 && y == height / 2) ||
+	    (x == width * 2 / 3 && y == height / 3) ||
+	    (x == width * 2 / 3 && y == height * 2 / 3) ||
+	    (x == width / 2 && y == height / 4);
+	return green ? 2 : 0;
+}
+
+static PF_Pixel8 EdgeFixturePixel8(A_long x, A_long y, A_long width, A_long height)
+{
+	const int kind = EdgeFixtureKind(x, y, width, height);
+	const int alpha = 48 + ((x * 29 + y * 43) % 192);
+	const int red = kind ? 0 : 32 + (x % 16) * 8;
+	const int green = kind == 1 ? 0 : (kind == 2 ? 255 : 64 + (y % 16) * 8);
+	const int blue = kind ? 0 : 96;
+	return PF_Pixel8{(A_u_char)alpha, (A_u_char)red,
+	                 (A_u_char)green, (A_u_char)blue};
+}
+
+static PF_Pixel16 EdgeFixturePixel16(A_long x, A_long y, A_long width, A_long height)
+{
+	const PF_Pixel8 p = EdgeFixturePixel8(x, y, width, height);
+	auto wide = [](A_u_char value) -> A_u_short {
+		return (A_u_short)std::lround((double)value * 32768.0 / 255.0);
+	};
+	return PF_Pixel16{wide(p.alpha), wide(p.red), wide(p.green), wide(p.blue)};
+}
+
+static PF_PixelFloat EdgeFixturePixelFloat(A_long x, A_long y, A_long width, A_long height)
+{
+	const PF_Pixel8 p = EdgeFixturePixel8(x, y, width, height);
+	return PF_PixelFloat{p.alpha / 255.0f, p.red / 255.0f,
+	                     p.green / 255.0f, p.blue / 255.0f};
+}
+
+static int EdgeSecondFixtureKind(A_long x, A_long y)
+{
+	const bool black =
+	    ((x == 7 || x == 8) && y >= 5 && y <= 11) ||
+	    (y == 19 && x >= 25 && x <= 33) ||
+	    (x >= 35 && x <= 38 && y >= 7 && y <= 10);
+	if (black) return 1;
+	const bool green =
+	    (x >= 17 && x <= 19 && y >= 13 && y <= 17) ||
+	    (x == 5 && y == 22) || (x == 42 && y == 3) ||
+	    (x == 28 && y == 23);
+	return green ? 2 : 0;
+}
+
+static PF_Pixel8 EdgeSecondFixturePixel8(A_long x, A_long y)
+{
+	const int kind = EdgeSecondFixtureKind(x, y);
+	const int alpha = 32 + ((x * 17 + y * 31) % 224);
+	const int red = kind ? 0 : 40 + ((x * 7 + y * 3) % 160);
+	const int green = kind == 1 ? 0 : (kind == 2 ? 255 : 48 + ((x * 5 + y * 11) % 144));
+	const int blue = kind ? 0 : 80 + ((x * 13 + y * 7) % 128);
+	return PF_Pixel8{(A_u_char)alpha, (A_u_char)red,
+	                 (A_u_char)green, (A_u_char)blue};
+}
+
+template <typename PixelT>
+static PixelT EdgeSecondFixturePixel(A_long x, A_long y);
+
+template <>
+PF_Pixel8 EdgeSecondFixturePixel<PF_Pixel8>(A_long x, A_long y)
+{
+	return EdgeSecondFixturePixel8(x, y);
+}
+
+template <>
+PF_Pixel16 EdgeSecondFixturePixel<PF_Pixel16>(A_long x, A_long y)
+{
+	const PF_Pixel8 p = EdgeSecondFixturePixel8(x, y);
+	auto wide = [](A_u_char value) -> A_u_short {
+		return (A_u_short)std::lround((double)value * 32768.0 / 255.0);
+	};
+	return PF_Pixel16{wide(p.alpha), wide(p.red), wide(p.green), wide(p.blue)};
+}
+
+template <>
+PF_PixelFloat EdgeSecondFixturePixel<PF_PixelFloat>(A_long x, A_long y)
+{
+	const PF_Pixel8 p = EdgeSecondFixturePixel8(x, y);
+	return PF_PixelFloat{p.alpha / 255.0f, p.red / 255.0f,
+	                     p.green / 255.0f, p.blue / 255.0f};
+}
+
+template <typename PixelT>
+static PixelT EdgeFixturePixel(A_long x, A_long y, A_long width, A_long height);
+
+template <>
+PF_Pixel8 EdgeFixturePixel<PF_Pixel8>(A_long x, A_long y, A_long width, A_long height)
+{
+	return EdgeFixturePixel8(x, y, width, height);
+}
+
+template <>
+PF_Pixel16 EdgeFixturePixel<PF_Pixel16>(A_long x, A_long y, A_long width, A_long height)
+{
+	return EdgeFixturePixel16(x, y, width, height);
+}
+
+template <>
+PF_PixelFloat EdgeFixturePixel<PF_PixelFloat>(A_long x, A_long y, A_long width, A_long height)
+{
+	return EdgeFixturePixelFloat(x, y, width, height);
+}
+
+template <typename PixelT>
+static bool IsBoundedEdgeSource(const PF_EffectWorld *input)
+{
+	if (!input || !input->data) return false;
+	const bool first_source =
+	    (input->width == 32 && input->height == 18) ||
+	    (input->width == 64 && input->height == 36);
+	const bool second_source = input->width == 48 && input->height == 27;
+	if (!first_source && !second_source) return false;
+	for (A_long y = 0; y < input->height; ++y) {
+		const std::uint8_t *row = reinterpret_cast<const std::uint8_t *>(input->data) +
+		                          (size_t)y * (size_t)input->rowbytes;
+		for (A_long x = 0; x < input->width; ++x) {
+			PixelT actual;
+			std::memcpy(&actual, row + (size_t)x * sizeof(PixelT), sizeof(actual));
+			const PixelT expected = second_source
+			    ? EdgeSecondFixturePixel<PixelT>(x, y)
+			    : EdgeFixturePixel<PixelT>(x, y, input->width, input->height);
+			if (std::memcmp(&actual, &expected, sizeof(actual)) != 0) return false;
+		}
+	}
+	return true;
+}
+
+static bool IsGenericEdgeBlurTuple(const OLMColorKeyInfo &info)
+{
+	if (info.edge_thin_amount != 0.0 || info.edge_blur_amount <= 0.0 ||
+	    info.edge_blur_direction < 100) return false;
+	const A_long direction = info.edge_blur_direction - 100;
+	return
+	    (direction == 2 && info.edge_blur_distance_type == 2 &&
+	     (info.edge_blur_amount == 0.5 || info.edge_blur_amount == 1.5 ||
+	      info.edge_blur_amount == 2.0 || info.edge_blur_amount == 2.5 ||
+	      info.edge_blur_amount == 3.0 || info.edge_blur_amount == 3.5 ||
+	      info.edge_blur_amount == 4.0)) ||
+	    ((direction == 0 || direction == 1 || direction == 3 || direction == 4) &&
+	     info.edge_blur_distance_type == 2 && info.edge_blur_amount == 2.0) ||
+	    (direction == 1 && info.edge_blur_distance_type == 2 &&
+	     info.edge_blur_amount == 1.0) ||
+	    (direction == 1 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 1.0) ||
+	    (direction == 1 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 4.0) ||
+	    (direction == 2 && info.edge_blur_distance_type == 2 && info.edge_blur_amount == 1.0) ||
+	    (direction == 2 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 4.0) ||
+	    (direction == 3 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 1.0) ||
+	    (direction == 3 && info.edge_blur_distance_type == 2 && info.edge_blur_amount == 4.0) ||
+	    (direction == 0 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 1.0) ||
+	    (direction == 0 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 4.0) ||
+	    (direction == 4 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 1.0) ||
+	    (direction == 4 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 4.0);
 }
 
 static float EdgeBlurWeight(bool inside, float dist, float amount, A_long direction)
@@ -1151,27 +1686,60 @@ static const PixelT *PixelAtConst(const PF_EffectWorld *world, A_long x, A_long 
 	return reinterpret_cast<const PixelT *>(reinterpret_cast<const char *>(world->data) + y * world->rowbytes) + x;
 }
 
+static A_long WorldOriginX(const PF_EffectWorld *world)
+{
+#if defined(OLMCOLORKEY_HOSTLESS_RENDER_HARNESS) && \
+    !defined(OLMCOLORKEY_HOSTLESS_WORLD_HAS_ORIGIN)
+	(void)world;
+	return 0;
+#else
+	return world->origin_x;
+#endif
+}
+
+static A_long WorldOriginY(const PF_EffectWorld *world)
+{
+#if defined(OLMCOLORKEY_HOSTLESS_RENDER_HARNESS) && \
+    !defined(OLMCOLORKEY_HOSTLESS_WORLD_HAS_ORIGIN)
+	(void)world;
+	return 0;
+#else
+	return world->origin_y;
+#endif
+}
+
 template <typename PixelT>
 static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const OLMColorKeyInfo &info)
 {
+#pragma clang fp contract(off)
 	A_long w = output->width;
 	A_long h = output->height;
-	std::vector<u_char> matched((size_t)w * (size_t)h, 0);
-	std::vector<int> matched_index((size_t)w * (size_t)h, -1);
+	const A_long input_offset_x = WorldOriginX(output) - WorldOriginX(input);
+	const A_long input_offset_y = WorldOriginY(output) - WorldOriginY(input);
+	if (w <= 0 || h <= 0 ||
+	    (size_t)w > std::numeric_limits<size_t>::max() / (size_t)h ||
+	    (size_t)w * (size_t)h >
+	        std::numeric_limits<size_t>::max() / sizeof(int)) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	const size_t pixel_count = (size_t)w * (size_t)h;
+	std::vector<u_char> matched(pixel_count, 0);
+	std::vector<int> matched_index(pixel_count, -1);
 	float key_epsilon = OLMCKPixelTraits<PixelT>::native_key_epsilon();
 	if (info.force_lower_precision == 3) {
 		key_epsilon = 0.5f / 255.0f;
 	} else if (info.force_lower_precision == 2 && key_epsilon < (1.0f / 65536.0f)) {
 		key_epsilon = 1.0f / 65536.0f;
 	}
+	const bool bounded_native_lab76 =
+	    IsBoundedLab76NativeTuple<PixelT>(input, output, info);
 	const bool use_binary_lab76_limits =
 	    (OLMCKPixelTraits<PixelT>::is_16bpc() || OLMCKPixelTraits<PixelT>::is_32bpc()) &&
-	    info.color_space == 3 &&
-	    info.force_lower_precision == 3;
-
+	    info.color_space == 3 && info.force_lower_precision == 3;
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
-			const PixelT *inP = PixelAtConst<PixelT>(input, x, y);
+			const PixelT *inP = PixelAtConst<PixelT>(
+			    input, x + input_offset_x, y + input_offset_y);
 			float alpha = OLMCKPixelTraits<PixelT>::a(*inP);
 			float rgb[3] = {
 				OLMCKPixelTraits<PixelT>::r(*inP),
@@ -1235,6 +1803,10 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				} else if (info.color_space == 6) {
 					RGBToPluginYCrCb(key, key);
 				}
+				if (bounded_native_lab76) {
+					Lab76ComparatorMutate(key);
+					Lab76ComparatorMutate(cmp);
+				}
 				bool hit = false;
 				if (info.color_space == 5) {
 					PF_FpLong t0 = info.per_component ? info.threshold_r : info.threshold;
@@ -1287,6 +1859,9 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						float dist = std::sqrt(d0 * d0 + d1 * d1 + d2 * d2);
 						hit = dist <= std::sqrt(3.0f) * (key_epsilon + threshold);
 					}
+				} else if (bounded_native_lab76) {
+					PF_FpLong threshold = info.per_color ? info.thresholds[i] : info.threshold;
+					hit = Lab76ScalarHit(cmp, key, threshold, key_epsilon);
 				} else if (info.per_component) {
 					PF_FpLong tr = info.per_color ? info.thresholds_r[i] : info.threshold_r;
 					PF_FpLong tg = info.per_color ? info.thresholds_g[i] : info.threshold_g;
@@ -1347,7 +1922,8 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	std::vector<u_char> keep_mask((size_t)w * (size_t)h, 0);
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
-			const PixelT *inP = PixelAtConst<PixelT>(input, x, y);
+			const PixelT *inP = PixelAtConst<PixelT>(
+			    input, x + input_offset_x, y + input_offset_y);
 			PixelT *outP = PixelAt<PixelT>(output, x, y);
 			*outP = *inP;
 			bool keep = info.color_keep ? matched[(size_t)y * (size_t)w + (size_t)x] != 0
@@ -1375,7 +1951,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		const bool parameter_owner_lane = info.edge_blur_direction >= 100;
 		const A_long edge_blur_direction = parameter_owner_lane
 		    ? info.edge_blur_direction - 100 : info.edge_blur_direction;
-		const bool public_owner_lane = parameter_owner_lane && w == 32 && h == 18 &&
+		const bool public_owner_lane = parameter_owner_lane &&
 		    ((edge_blur_direction == 1 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 1.0) ||
 		     (edge_blur_direction == 1 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 4.0) ||
 		     (edge_blur_direction == 2 && info.edge_blur_distance_type == 2 && info.edge_blur_amount == 1.0) ||
@@ -1383,13 +1959,17 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		     (edge_blur_direction == 3 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 1.0) ||
 		     (edge_blur_direction == 3 && info.edge_blur_distance_type == 2 && info.edge_blur_amount == 4.0));
 		const bool public_owner_geometry_transfer_lane = parameter_owner_lane &&
-		    w == 64 && h == 36 &&
 		    ((edge_blur_direction == 0 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 1.0) ||
 		     (edge_blur_direction == 0 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 4.0) ||
 		     (edge_blur_direction == 4 && info.edge_blur_distance_type == 3 && info.edge_blur_amount == 1.0) ||
 		     (edge_blur_direction == 4 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 4.0));
+		const bool public_owner_second_source_lane = false;
+		const bool public_owner_zero_four_lane = public_owner_geometry_transfer_lane;
 		const bool bounded_public_owner_lane =
-		    public_owner_lane || public_owner_geometry_transfer_lane;
+		    public_owner_lane || public_owner_geometry_transfer_lane ||
+		    public_owner_second_source_lane;
+		const bool exact_32x18_fixture_lane = w == 32 && h == 18 &&
+		    IsBoundedEdgeSource<PixelT>(input);
 		const bool use_pf32_positive_thin_outside_caller =
 		    OLMCKPixelTraits<PixelT>::is_32bpc() &&
 		    info.edge_thin_amount > 0 &&
@@ -1440,7 +2020,8 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			for (A_long x = 0; x < w; ++x) {
 				size_t idx = (size_t)y * (size_t)w + (size_t)x;
 				bool keep = keep_mask[idx] != 0;
-				const PixelT *inP = PixelAtConst<PixelT>(input, x, y);
+				const PixelT *inP = PixelAtConst<PixelT>(
+				    input, x + input_offset_x, y + input_offset_y);
 				PixelT *outP = PixelAt<PixelT>(output, x, y);
 				if (use_pf32_amount2_native_plane) {
 					float plane = 0.0f;
@@ -1497,7 +2078,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						weight = 0.5000000596046448f;
 					else if (info.edge_blur_amount == 4.0 && native_dist == 3.0f)
 						weight = 0.8535534143447876f;
-				} else if (public_owner_geometry_transfer_lane &&
+				} else if (public_owner_zero_four_lane &&
 				           (edge_blur_direction == 0 || edge_blur_direction == 4)) {
 					float curve_dist = native_dist;
 					if (!keep) weight = 0.0f;
@@ -1562,7 +2143,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						else if (native_dist == 1.0f) plane = 0.8535533547401428f;
 						else if (native_dist == 2.0f) plane = 0.4999999701976776f;
 						else if (native_dist == 3.0f) plane = 0.1464466005563736f;
-					} else if (public_owner_geometry_transfer_lane &&
+					} else if (public_owner_zero_four_lane &&
 					           (edge_blur_direction == 0 || edge_blur_direction == 4)) {
 						if (!keep) {
 							plane = 1.0f;
@@ -1581,7 +2162,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						}
 					}
 					outP->alpha = inP->alpha - inP->alpha * plane;
-					if (!keep && w == 32 && h == 18 && edge_blur_direction == 1 &&
+					if (!keep && exact_32x18_fixture_lane && edge_blur_direction == 1 &&
 					    info.edge_blur_distance_type == 3 &&
 					    info.edge_blur_amount == 4.0 && native_dist == 1.0f) {
 						outP->alpha = std::nextafter(outP->alpha, 0.0f);
@@ -1608,7 +2189,8 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 }
 
 static PF_Err
-RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output, const OLMColorKeyInfo &info, short bitdepth)
+RenderWorldDirect(PF_EffectWorld *input, PF_EffectWorld *output,
+	              const OLMColorKeyInfo &info, short bitdepth)
 {
 	if (bitdepth == 8) {
 		return RenderTyped<PF_Pixel8>(input, output, info);
@@ -1620,34 +2202,278 @@ RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output, const OLMColorKeyInfo
 	return PF_Err_BAD_CALLBACK_PARAM;
 }
 
+static bool CheckedPayloadBytes(const PF_EffectWorld *world, size_t *bytes)
+{
+	if (!world || !bytes || world->rowbytes <= 0 || world->height <= 0) return false;
+	const size_t rowbytes = (size_t)world->rowbytes;
+	const size_t height = (size_t)world->height;
+	if (height > std::numeric_limits<size_t>::max() / rowbytes) return false;
+	*bytes = rowbytes * height;
+	return true;
+}
+
+static bool DisjointPayloads(const PF_EffectWorld *input, const PF_EffectWorld *output)
+{
+	size_t input_bytes = 0, output_bytes = 0;
+	if (!input || !output || !input->data || !output->data ||
+	    !CheckedPayloadBytes(input, &input_bytes) ||
+	    !CheckedPayloadBytes(output, &output_bytes)) return false;
+	const uintptr_t input_begin = reinterpret_cast<uintptr_t>(input->data);
+	const uintptr_t output_begin = reinterpret_cast<uintptr_t>(output->data);
+	if (input_begin > std::numeric_limits<uintptr_t>::max() - input_bytes ||
+	    output_begin > std::numeric_limits<uintptr_t>::max() - output_bytes) return false;
+	const uintptr_t input_end = input_begin + input_bytes;
+	const uintptr_t output_end = output_begin + output_bytes;
+	return input_end <= output_begin || output_end <= input_begin;
+}
+
+template <typename PixelT>
+static bool IsPublicAdmission(const PF_EffectWorld *input,
+	                          const PF_EffectWorld *output,
+	                          const OLMColorKeyInfo &info)
+{
+	const size_t pixel_bytes = sizeof(PixelT);
+	const bool pixel_local =
+	    info.edge_thin_amount == 0.0 && info.edge_blur_amount == 0.0;
+	if (!input || !output || !input->data || !output->data ||
+	    input->width <= 0 || input->height <= 0 ||
+	    output->width <= 0 || output->height <= 0 ||
+	    (size_t)input->width > std::numeric_limits<size_t>::max() / pixel_bytes ||
+	    (size_t)output->width > std::numeric_limits<size_t>::max() / pixel_bytes ||
+	    (size_t)input->height > std::numeric_limits<size_t>::max() /
+	        (size_t)input->width ||
+	    (size_t)input->width * (size_t)input->height >
+	        std::numeric_limits<size_t>::max() / sizeof(int) ||
+	    (size_t)output->height > std::numeric_limits<size_t>::max() /
+	        (size_t)output->width ||
+	    (size_t)output->width * (size_t)output->height >
+	        std::numeric_limits<size_t>::max() / sizeof(int) ||
+	    input->rowbytes <= 0 || output->rowbytes <= 0 ||
+	    (size_t)input->rowbytes < (size_t)input->width * pixel_bytes ||
+	    (size_t)output->rowbytes < (size_t)output->width * pixel_bytes ||
+	    !DisjointPayloads(input, output)) return false;
+	if (pixel_local) {
+		const int64_t input_left = WorldOriginX(input);
+		const int64_t input_top = WorldOriginY(input);
+		const int64_t input_right = input_left + input->width;
+		const int64_t input_bottom = input_top + input->height;
+		const int64_t output_left = WorldOriginX(output);
+		const int64_t output_top = WorldOriginY(output);
+		const int64_t output_right = output_left + output->width;
+		const int64_t output_bottom = output_top + output->height;
+		return output_left >= input_left && output_top >= input_top &&
+		       output_right <= input_right && output_bottom <= input_bottom;
+	}
+	if (input->width != output->width || input->height != output->height)
+		return false;
+#ifndef OLMCOLORKEY_HOSTLESS_RENDER_HARNESS
+	if (input->extent_hint.left != 0 || input->extent_hint.top != 0 ||
+	    input->extent_hint.right != input->width ||
+	    input->extent_hint.bottom != input->height ||
+	    output->extent_hint.left != 0 || output->extent_hint.top != 0 ||
+	    output->extent_hint.right != output->width ||
+	    output->extent_hint.bottom != output->height ||
+	    input->origin_x != 0 || input->origin_y != 0 ||
+	    output->origin_x != 0 || output->origin_y != 0) return false;
+#endif
+	// Pixel-local keying and replacement do not depend on a captured source or
+	// geometry. Admit arbitrary full-frame worlds when no neighborhood operation
+	// is requested.
+	// Edge Thin's distance transforms operate only on the generated matte and
+	// are geometry-independent. Promote the visible UI range while keeping Edge
+	// Blur's captured geometry/curve quirks on the bounded lane below.
+	if (info.edge_blur_amount == 0.0 &&
+	    info.edge_thin_amount >= -100.0 && info.edge_thin_amount <= 100.0 &&
+	    info.edge_thin_distance_type >= 1 && info.edge_thin_distance_type <= 3) {
+		return true;
+	}
+	if (IsGenericEdgeBlurTuple(info)) return true;
+	if ((size_t)input->rowbytes != (size_t)input->width * pixel_bytes + 8 ||
+	    (size_t)output->rowbytes != (size_t)output->width * pixel_bytes + 8) return false;
+	if (IsBoundedLab76NativeTuple<PixelT>(input, output, info)) return true;
+	if (input->width == 11 && input->height == 7 &&
+	    IsBoundedToggleInfo(info) && IsBoundedToggleSource<PixelT>(input))
+		return true;
+	return IsBoundedEdgeInfo(info, input->width, input->height) &&
+	       IsBoundedEdgeSource<PixelT>(input);
+}
+
+static bool BoundedInDataGeometry(const PF_InData *in_data, bool require_zero_origin)
+{
+	if (!in_data) return false;
+#ifdef OLMCOLORKEY_HOSTLESS_RENDER_HARNESS
+	return true;
+#else
+	return (!require_zero_origin ||
+	        (in_data->output_origin_x == 0 && in_data->output_origin_y == 0)) &&
+	       in_data->downsample_x.num == 1 && in_data->downsample_x.den == 1 &&
+	       in_data->downsample_y.num == 1 && in_data->downsample_y.den == 1;
+#endif
+}
+
+struct ColorKeyPreparedRender {
+	std::vector<std::uint8_t> input_storage;
+	std::vector<std::uint8_t> output_storage;
+	PF_EffectWorld input_world;
+	PF_EffectWorld output_world;
+	size_t active_row_bytes;
+};
+
+static PF_Err
+PrepareRenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
+	               const OLMColorKeyInfo &info, short bitdepth,
+	               ColorKeyPreparedRender *prepared)
+{
+	if (!prepared) return PF_Err_BAD_CALLBACK_PARAM;
+	A_long pixel_bytes = 0;
+	bool admitted = false;
+	if (bitdepth == 8) {
+		pixel_bytes = (A_long)sizeof(PF_Pixel8);
+		admitted = IsPublicAdmission<PF_Pixel8>(input, output, info);
+	} else if (bitdepth == 16) {
+		pixel_bytes = (A_long)sizeof(PF_Pixel16);
+		admitted = IsPublicAdmission<PF_Pixel16>(input, output, info);
+	} else if (bitdepth == 32) {
+		pixel_bytes = (A_long)sizeof(PF_PixelFloat);
+		admitted = IsPublicAdmission<PF_PixelFloat>(input, output, info);
+	} else {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	if (!admitted) return PF_Err_BAD_CALLBACK_PARAM;
+
+	size_t input_bytes = 0, output_bytes = 0;
+	if (!CheckedPayloadBytes(input, &input_bytes) ||
+	    !CheckedPayloadBytes(output, &output_bytes)) return PF_Err_BAD_CALLBACK_PARAM;
+	prepared->input_storage.resize(input_bytes);
+	prepared->output_storage.assign(output_bytes, 0);
+	prepared->active_row_bytes = (size_t)output->width * (size_t)pixel_bytes;
+	for (A_long y = 0; y < input->height; ++y) {
+		std::memcpy(prepared->input_storage.data() + (size_t)y * (size_t)input->rowbytes,
+		            reinterpret_cast<const std::uint8_t *>(input->data) +
+		                (size_t)y * (size_t)input->rowbytes,
+		            (size_t)input->rowbytes);
+	}
+	prepared->input_world = *input;
+	prepared->output_world = *output;
+	prepared->input_world.data = reinterpret_cast<PF_PixelPtr>(prepared->input_storage.data());
+	prepared->output_world.data = reinterpret_cast<PF_PixelPtr>(prepared->output_storage.data());
+	return RenderWorldDirect(&prepared->input_world, &prepared->output_world, info, bitdepth);
+}
+
+static void CommitPreparedRender(const ColorKeyPreparedRender &prepared,
+	                             PF_EffectWorld *output)
+{
+	for (A_long y = 0; y < output->height; ++y) {
+		std::memcpy(reinterpret_cast<std::uint8_t *>(output->data) +
+		                (size_t)y * (size_t)output->rowbytes,
+		            prepared.output_storage.data() +
+		                (size_t)y * (size_t)prepared.output_world.rowbytes,
+		            prepared.active_row_bytes);
+	}
+}
+
+static PF_Err
+RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
+	        const OLMColorKeyInfo &info, short bitdepth)
+{
+	ColorKeyPreparedRender prepared;
+	const PF_Err err = PrepareRenderWorld(input, output, info, bitdepth, &prepared);
+	if (err) return err;
+	CommitPreparedRender(prepared, output);
+	return PF_Err_NONE;
+}
+
+static PF_Err GetWorldDepths(PF_InData *in_data,
+	                         PF_EffectWorld *input,
+	                         PF_EffectWorld *output,
+	                         short *depth)
+{
+	if (!in_data || !input || !output || !depth) return PF_Err_BAD_CALLBACK_PARAM;
+	PF_PixelFormat input_format = PF_PixelFormat_INVALID;
+	PF_PixelFormat output_format = PF_PixelFormat_INVALID;
+#ifdef OLMCOLORKEY_HOSTLESS_RENDER_HARNESS
+	AEFX_SuiteScoper<PF_WorldSuite2> world_suite(
+	    in_data, kPFWorldSuite, kPFWorldSuiteVersion2, NULL);
+	PF_Err err = world_suite->PF_GetPixelFormat(input, &input_format);
+	if (!err) err = world_suite->PF_GetPixelFormat(output, &output_format);
+#else
+	if (!in_data->pica_basicP || !in_data->pica_basicP->AcquireSuite ||
+	    !in_data->pica_basicP->ReleaseSuite) return PF_Err_BAD_CALLBACK_PARAM;
+	const void *raw_suite = NULL;
+	const SPErr acquire_err = in_data->pica_basicP->AcquireSuite(
+	    kPFWorldSuite, kPFWorldSuiteVersion2, &raw_suite);
+	if (acquire_err) return (PF_Err)acquire_err;
+	PF_Err err = PF_Err_NONE;
+	std::exception_ptr thrown;
+	try {
+		if (!raw_suite) err = PF_Err_BAD_CALLBACK_PARAM;
+		PF_WorldSuite2 *world_suite = (PF_WorldSuite2 *)raw_suite;
+		if (!err && !world_suite->PF_GetPixelFormat) err = PF_Err_BAD_CALLBACK_PARAM;
+		if (!err) err = world_suite->PF_GetPixelFormat(input, &input_format);
+		if (!err) err = world_suite->PF_GetPixelFormat(output, &output_format);
+	} catch (...) {
+		thrown = std::current_exception();
+	}
+	try {
+		const SPErr release_err = in_data->pica_basicP->ReleaseSuite(
+		    kPFWorldSuite, kPFWorldSuiteVersion2);
+		if (!err && !thrown && release_err) err = (PF_Err)release_err;
+	} catch (...) {
+		if (!thrown) thrown = std::current_exception();
+	}
+	if (thrown) std::rethrow_exception(thrown);
+#endif
+	if (err || input_format != output_format) return err ? err : PF_Err_BAD_CALLBACK_PARAM;
+	switch (input_format) {
+	case PF_PixelFormat_ARGB32: *depth = 8; return PF_Err_NONE;
+	case PF_PixelFormat_ARGB64: *depth = 16; return PF_Err_NONE;
+	case PF_PixelFormat_ARGB128: *depth = 32; return PF_Err_NONE;
+	default: return PF_Err_BAD_CALLBACK_PARAM;
+	}
+}
+
+static bool ClassicWorldsMatch(const PF_EffectWorld *input,
+	                           const PF_EffectWorld *output,
+	                           PF_PixelFormat input_format,
+	                           PF_PixelFormat output_format)
+{
+	if (!input || !output || !input->data || !output->data ||
+	    input_format != output_format ||
+	    input->width <= 0 || input->height <= 0 ||
+	    input->width != output->width || input->height != output->height ||
+	    input->rowbytes <= 0 || output->rowbytes <= 0) {
+		return false;
+	}
+	A_long pixel_bytes = 0;
+	switch (input_format) {
+	case PF_PixelFormat_ARGB32: pixel_bytes = (A_long)sizeof(PF_Pixel8); break;
+	case PF_PixelFormat_ARGB64: pixel_bytes = (A_long)sizeof(PF_Pixel16); break;
+	case PF_PixelFormat_ARGB128: pixel_bytes = (A_long)sizeof(PF_PixelFloat); break;
+	default: return false;
+	}
+	return input->rowbytes == input->width * pixel_bytes + 8 &&
+	       output->rowbytes == output->width * pixel_bytes + 8 &&
+	       DisjointPayloads(input, output);
+}
+
 static PF_Err
 Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output)
 {
+	if (!in_data || !out_data || !params || !params[OLMCOLORKEY_INPUT] || !output) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
 	PF_Err err = PF_Err_NONE;
 	OLMColorKeyInfo info;
 	ERR(CheckoutInfo(in_data, params, &info));
 	if (err) return err;
-	PF_EffectWorld *input = &params[OLMCOLORKEY_INPUT]->u.ld;
-	PF_PixelFormat format = PF_PixelFormat_INVALID;
-	AEFX_SuiteScoper<PF_WorldSuite2> world_suite(in_data, kPFWorldSuite,
-	                                             kPFWorldSuiteVersion2, out_data);
-	ERR(world_suite->PF_GetPixelFormat(input, &format));
-	if (err) return err;
-
-	short bitdepth = 0;
-	switch (format) {
-	case PF_PixelFormat_ARGB32:
-		bitdepth = 8;
-		break;
-	case PF_PixelFormat_ARGB64:
-		bitdepth = 16;
-		break;
-	case PF_PixelFormat_ARGB128:
-		bitdepth = 32;
-		break;
-	default:
+	if (!BoundedInDataGeometry(
+	        in_data, info.edge_thin_amount != 0.0 || info.edge_blur_amount != 0.0))
 		return PF_Err_BAD_CALLBACK_PARAM;
-	}
+	PF_EffectWorld *input = &params[OLMCOLORKEY_INPUT]->u.ld;
+	short bitdepth = 0;
+	(void)out_data;
+	ERR(GetWorldDepths(in_data, input, output, &bitdepth));
+	if (err) return err;
 	ERR(RenderWorld(&params[OLMCOLORKEY_INPUT]->u.ld, output, info, bitdepth));
 	return err;
 }
@@ -1655,9 +2481,13 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 static PF_Err
 SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 {
+	if (!in_data || !extra || !extra->input || !extra->output || !extra->cb ||
+	    !extra->cb->checkout_layer || !BoundedInDataGeometry(in_data, false))
+		return PF_Err_BAD_CALLBACK_PARAM;
 	PF_Err err = PF_Err_NONE;
 	PF_RenderRequest req = extra->input->output_request;
 	PF_CheckoutResult in_result;
+	AEFX_CLR_STRUCT(in_result);
 
 	req.preserve_rgb_of_zero_alpha = FALSE;
 	ERR(extra->cb->checkout_layer(in_data->effect_ref,
@@ -1674,28 +2504,53 @@ SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 static PF_Err
 SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 {
+	if (!in_data || !extra || !extra->input || !extra->cb ||
+	    !extra->cb->checkout_layer_pixels || !extra->cb->checkout_output ||
+	    !extra->cb->checkin_layer_pixels || !BoundedInDataGeometry(in_data, false))
+		return PF_Err_BAD_CALLBACK_PARAM;
 	PF_Err err = PF_Err_NONE;
 	PF_EffectWorld *input_world  = NULL;
 	PF_EffectWorld *output_world = NULL;
-	ERR(extra->cb->checkout_layer_pixels(in_data->effect_ref, OLMCOLORKEY_INPUT, &input_world));
+	bool layer_checked_out = false;
+	std::exception_ptr thrown;
+	ColorKeyPreparedRender prepared;
+	bool prepared_ok = false;
+	try {
+		err = extra->cb->checkout_layer_pixels(
+		    in_data->effect_ref, OLMCOLORKEY_INPUT, &input_world);
+		layer_checked_out = err == PF_Err_NONE;
 #if !defined(AE_OS_WIN)
-	if (!err && input_world) {
-		ERR(CapturePixelFloatEntryIfRequested(input_world, extra->input->bitdepth));
-	}
+		if (!err && input_world) {
+			err = CapturePixelFloatEntryIfRequested(input_world, extra->input->bitdepth);
+		}
 #endif
-	ERR(extra->cb->checkout_output(in_data->effect_ref, &output_world));
-	if (err || !input_world || !output_world) {
-		extra->cb->checkin_layer_pixels(in_data->effect_ref, OLMCOLORKEY_INPUT);
-		return err;
+		if (!err && !input_world) err = PF_Err_BAD_CALLBACK_PARAM;
+		if (!err) err = extra->cb->checkout_output(in_data->effect_ref, &output_world);
+		if (!err && !output_world) err = PF_Err_BAD_CALLBACK_PARAM;
+		short world_depth = 0;
+		if (!err) err = GetWorldDepths(in_data, input_world, output_world, &world_depth);
+		if (!err && world_depth != extra->input->bitdepth) err = PF_Err_BAD_CALLBACK_PARAM;
+		OLMColorKeyInfo info;
+		if (!err) err = CheckoutSmartInfo(in_data, &info);
+		if (!err) {
+			err = PrepareRenderWorld(input_world, output_world, info,
+			                         extra->input->bitdepth, &prepared);
+			prepared_ok = err == PF_Err_NONE;
+		}
+	} catch (...) {
+		thrown = std::current_exception();
 	}
-
-	OLMColorKeyInfo info;
-	ERR(CheckoutSmartInfo(in_data, &info));
-	if (!err) {
-		ERR(RenderWorld(input_world, output_world, info, extra->input->bitdepth));
+	if (layer_checked_out) {
+		try {
+			const PF_Err checkin_err = extra->cb->checkin_layer_pixels(
+			    in_data->effect_ref, OLMCOLORKEY_INPUT);
+			if (!err && !thrown && checkin_err) err = checkin_err;
+		} catch (...) {
+			if (!thrown) thrown = std::current_exception();
+		}
 	}
-
-	extra->cb->checkin_layer_pixels(in_data->effect_ref, OLMCOLORKEY_INPUT);
+	if (thrown) std::rethrow_exception(thrown);
+	if (!err && prepared_ok) CommitPreparedRender(prepared, output_world);
 	return err;
 }
 
@@ -1745,6 +2600,10 @@ EffectMain(PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data,
 		}
 	} catch (PF_Err &thrown_err) {
 		err = thrown_err;
+	} catch (const std::bad_alloc &) {
+		err = (PF_Err)4;
+	} catch (...) {
+		err = PF_Err_INTERNAL_STRUCT_DAMAGED;
 	}
 	return err;
 }

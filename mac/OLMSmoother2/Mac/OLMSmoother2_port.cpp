@@ -14,8 +14,19 @@
 #include <algorithm>
 #include <cstdint>
 #include <cstdio>
+#include <new>
+#include <exception>
+#include "../../../core/olm_sha256_rows.h"
+#ifndef OLMSMOOTHER2_SHIM_H
+#include "AEFX_SuiteHandlerTemplate.h"
+#endif
 #include "OLMSmoother2_decode_lut_10000.h"
 #include "OLMSmoother2_encode_lut_10000.h"
+
+#ifdef OLMSMOOTHER2_SHIM_H
+static const PF_Err PF_Err_BAD_CALLBACK_PARAM = 25;
+static void (*g_olmsmoother2_cli_checkin_layer_hook)(PF_ProgPtr, A_long) = nullptr;
+#endif
 
 // Byte-for-byte runtime captures from the Windows AE 26.3 OLMSmoother2.aex
 // gamma contexts used by the attested 32bpc case_07 run:
@@ -247,7 +258,6 @@ static PF_Err
 FetchParams(PF_InData *in_data, PF_ParamDef *params[], SMParams *p)
 {
 	PF_Err err = PF_Err_NONE;
-	AEGP_SuiteHandler suites(in_data->pica_basicP);
 
 	p->enable_key       = params[SM_ENABLE_KEY]->u.bd.value != 0;
 	p->invert_key       = params[SM_INVERT_KEY]->u.bd.value != 0;
@@ -262,14 +272,71 @@ FetchParams(PF_InData *in_data, PF_ParamDef *params[], SMParams *p)
 	// straight RGB; AE premultiplies later when exporting the PNG.
 	p->keep_premul      = false;
 
-	PF_ColorParamSuite1 *cps = suites.ColorParamSuite1();
-	cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref,
-		params[SM_KEY_COLOR], &p->key_color);
+	PF_ColorParamSuite1 *cps = nullptr;
+#ifdef OLMSMOOTHER2_SHIM_H
+	AEGP_SuiteHandler suites(in_data->pica_basicP);
+	cps = suites.ColorParamSuite1();
+	if (!cps || !cps->PF_GetFloatingPointColorFromColorDef) return PF_Err_BAD_CALLBACK_PARAM;
+	ERR(cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref,
+		params[SM_KEY_COLOR], &p->key_color));
 	for (int i = 0; i < NUM_GAMMA_COLORS; ++i) {
-		cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref,
-			params[SM_GAMMA_COLOR_0 + i], &p->gamma_colors[i]);
+		ERR(cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref,
+			params[SM_GAMMA_COLOR_0 + i], &p->gamma_colors[i]));
 	}
+#else
+	if (!in_data || !in_data->pica_basicP || !in_data->pica_basicP->AcquireSuite ||
+	    !in_data->pica_basicP->ReleaseSuite) return PF_Err_BAD_CALLBACK_PARAM;
+	const void *raw_suite = nullptr;
+	const SPErr acquire_err = in_data->pica_basicP->AcquireSuite(
+		kPFColorParamSuite, kPFColorParamSuiteVersion1, &raw_suite);
+	if (acquire_err) return (PF_Err)acquire_err;
+	if (!raw_suite) {
+		const SPErr release_err = in_data->pica_basicP->ReleaseSuite(
+			kPFColorParamSuite, kPFColorParamSuiteVersion1);
+		return release_err ? (PF_Err)release_err : PF_Err_BAD_CALLBACK_PARAM;
+	}
+	cps = (PF_ColorParamSuite1 *)raw_suite;
+	try {
+		if (!cps->PF_GetFloatingPointColorFromColorDef) err = PF_Err_BAD_CALLBACK_PARAM;
+		if (!err) ERR(cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref,
+			params[SM_KEY_COLOR], &p->key_color));
+		for (int i = 0; i < NUM_GAMMA_COLORS; ++i) {
+			if (!err) ERR(cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref,
+				params[SM_GAMMA_COLOR_0 + i], &p->gamma_colors[i]));
+		}
+	} catch (...) {
+		const std::exception_ptr body_error = std::current_exception();
+		try { in_data->pica_basicP->ReleaseSuite(kPFColorParamSuite, kPFColorParamSuiteVersion1); }
+		catch (...) {}
+		std::rethrow_exception(body_error);
+	}
+	const SPErr release_err = in_data->pica_basicP->ReleaseSuite(
+		kPFColorParamSuite, kPFColorParamSuiteVersion1);
+	if (!err && release_err) err = (PF_Err)release_err;
+#endif
 	return err;
+}
+
+static bool
+DecodedColorMatches(const PF_ParamDef *param, const PF_PixelFloat &actual)
+{
+	if (!param) return false;
+	PF_PixelFloat expected;
+	expected.alpha = param->u.cd.value.alpha / 255.0f;
+	expected.red   = param->u.cd.value.red   / 255.0f;
+	expected.green = param->u.cd.value.green / 255.0f;
+	expected.blue  = param->u.cd.value.blue  / 255.0f;
+	return memcmp(&actual, &expected, sizeof(expected)) == 0;
+}
+
+static bool
+DecodedColorsMatch(const PF_ParamDef *const params[], const SMParams &decoded)
+{
+	if (!params || !DecodedColorMatches(params[SM_KEY_COLOR], decoded.key_color)) return false;
+	for (A_long i = 0; i < NUM_GAMMA_COLORS; ++i) {
+		if (!DecodedColorMatches(params[SM_GAMMA_COLOR_0 + i], decoded.gamma_colors[i])) return false;
+	}
+	return true;
 }
 
 // ============================================================================
@@ -432,7 +499,10 @@ static inline float win_srgb_decode_one(float v) {
 static inline float win_srgb_lut_interpolate(const unsigned char *table_bytes,
                                              float v)
 {
-	if (v <= 0.0f) return 0.0f;
+	// Treat NaN like the saturating low endpoint before converting the scaled
+	// value to an integer LUT index. A direct NaN-to-uint64 conversion is UB and
+	// arbitrary PF32 host worlds are allowed to contain non-finite channel data.
+	if (!(v > 0.0f)) return 0.0f;
 	if (v >= 1.0f) return 1.0f;
 
 	constexpr uint64_t kLutLength = 10000;
@@ -4267,13 +4337,15 @@ static inline float win_FUN_180004c30_lut(float v) {
 template<typename P>
 static PF_Err
 RenderBits(PF_InData *in_data, PF_ParamDef *params[],
-           PF_LayerDef *input, PF_LayerDef *output)
+           PF_LayerDef *input, PF_LayerDef *output,
+           const SMParams *prefetched = nullptr)
 {
 	PF_Err err = PF_Err_NONE;
 	OLMSmoother2ConfigureTracePixelFromEnvironment();
 
 	SMParams p; AEFX_CLR_STRUCT(p);
-	ERR(FetchParams(in_data, params, &p));
+	if (prefetched) p = *prefetched;
+	else ERR(FetchParams(in_data, params, &p));
 	if (err) return err;
 
 	const int32_t w = output->width;
@@ -4680,18 +4752,437 @@ ParamsSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	return err;
 }
 
+static PF_Err
+WorldDepth(PF_InData *in_data,
+           PF_OutData *out_data,
+           PF_EffectWorld *world,
+           short *depth)
+{
+	if (!in_data || !out_data || !world || !depth) return PF_Err_BAD_CALLBACK_PARAM;
+#ifdef OLMSMOOTHER2_SHIM_H
+	if (world->bitdepth == 8 || world->bitdepth == 16 || world->bitdepth == 32) {
+		*depth = world->bitdepth;
+		return PF_Err_NONE;
+	}
+	return PF_Err_BAD_CALLBACK_PARAM;
+#else
+	PF_Err err = PF_Err_NONE;
+	PF_PixelFormat format = PF_PixelFormat_INVALID;
+	(void)out_data;
+	if (!in_data->pica_basicP || !in_data->pica_basicP->AcquireSuite ||
+	    !in_data->pica_basicP->ReleaseSuite) return PF_Err_BAD_CALLBACK_PARAM;
+	const void *raw_suite = nullptr;
+	const SPErr acquire_err = in_data->pica_basicP->AcquireSuite(
+		kPFWorldSuite, kPFWorldSuiteVersion2, &raw_suite);
+	if (acquire_err) return (PF_Err)acquire_err;
+	if (!raw_suite) {
+		const SPErr release_err = in_data->pica_basicP->ReleaseSuite(
+			kPFWorldSuite, kPFWorldSuiteVersion2);
+		return release_err ? (PF_Err)release_err : PF_Err_BAD_CALLBACK_PARAM;
+	}
+	PF_WorldSuite2 *world_suite = (PF_WorldSuite2 *)raw_suite;
+	try {
+		if (!world_suite->PF_GetPixelFormat) err = PF_Err_BAD_CALLBACK_PARAM;
+		if (!err) err = world_suite->PF_GetPixelFormat(world, &format);
+	} catch (...) {
+		const std::exception_ptr body_error = std::current_exception();
+		try { in_data->pica_basicP->ReleaseSuite(kPFWorldSuite, kPFWorldSuiteVersion2); }
+		catch (...) {}
+		std::rethrow_exception(body_error);
+	}
+	const SPErr release_err = in_data->pica_basicP->ReleaseSuite(
+		kPFWorldSuite, kPFWorldSuiteVersion2);
+	if (!err && release_err) err = (PF_Err)release_err;
+	if (err) return err;
+	switch (format) {
+	case PF_PixelFormat_ARGB32:  *depth = 8;  return PF_Err_NONE;
+	case PF_PixelFormat_ARGB64:  *depth = 16; return PF_Err_NONE;
+	case PF_PixelFormat_ARGB128: *depth = 32; return PF_Err_NONE;
+	default: return PF_Err_BAD_CALLBACK_PARAM;
+	}
+#endif
+}
+
+static bool
+ColorIs(const PF_ParamDef *param, A_u_char a, A_u_char r, A_u_char g, A_u_char b)
+{
+	return param && param->u.cd.value.alpha == a && param->u.cd.value.red == r &&
+	       param->u.cd.value.green == g && param->u.cd.value.blue == b;
+}
+
+static bool
+CoreParamsPresent(const PF_ParamDef *const params[])
+{
+	if (!params) return false;
+	for (A_long i = 1; i < SM_NUM_PARAMS; ++i) if (!params[i]) return false;
+	return true;
+}
+
+static bool
+SmoothingIs(const PF_ParamDef *const params[], A_long smoothness,
+            A_long range, A_long extra)
+{
+	return params[SM_SMOOTHNESS]->u.sd.value == smoothness &&
+	       params[SM_SMOOTH_RANGE]->u.sd.value == range &&
+	       params[SM_EXTRA_SMOOTH]->u.sd.value == extra;
+}
+
+static bool
+GammaPaletteRedKey(const PF_ParamDef *const params[], A_u_char kr,
+                   A_u_char kg, A_u_char kb)
+{
+	return params[SM_NUM_GAMMA_COLORS]->u.sd.value == 2 &&
+	       ColorIs(params[SM_GAMMA_COLOR_0], 255, 255, 0, 0) &&
+	       ColorIs(params[SM_GAMMA_COLOR_1], 255, kr, kg, kb);
+}
+
+static bool
+GammaTailZero(const PF_ParamDef *const params[], A_long first)
+{
+	for (A_long i = first; i < NUM_GAMMA_COLORS; ++i) {
+		if (!ColorIs(params[SM_GAMMA_COLOR_0 + i], 0, 0, 0, 0)) return false;
+	}
+	return true;
+}
+
+static bool
+V2SourceIs(const PF_EffectWorld *world, short depth, const char expected[65])
+{
+	const size_t pixel_size = depth == 8 ? sizeof(PF_Pixel8) :
+	                          depth == 16 ? sizeof(PF_Pixel16) : sizeof(PF_PixelFloat);
+	return world && olm::sha256_active_rows_match_hex(
+		world->data, (size_t)world->rowbytes,
+		(size_t)world->width * pixel_size, (size_t)world->height, expected);
+}
+
+static bool
+V2Case07WorldContract(const PF_InData *in_data,
+                      const PF_EffectWorld *input,
+                      const PF_EffectWorld *output,
+                      short depth)
+{
+#ifdef OLMSMOOTHER2_SHIM_H
+	(void)in_data;
+	return input && output && (depth == 8 || depth == 16 || depth == 32) &&
+	       input->width == 1920 && input->height == 1080 &&
+	       input->rowbytes == 1920 * (A_long)(depth == 8 ? sizeof(PF_Pixel8) :
+	                                           depth == 16 ? sizeof(PF_Pixel16) : sizeof(PF_PixelFloat));
+#else
+	const A_long expected_flags = depth == 8 ? 0 : PF_WorldFlag_DEEP;
+	return in_data && input && output && (depth == 8 || depth == 16 || depth == 32) &&
+	       input->width == 1920 && input->height == 1080 &&
+	       input->rowbytes == 1920 * (A_long)(depth == 8 ? sizeof(PF_Pixel8) :
+	                                           depth == 16 ? sizeof(PF_Pixel16) : sizeof(PF_PixelFloat)) &&
+	       output->world_flags == expected_flags && input->world_flags == expected_flags &&
+	       in_data->output_origin_x == 0 && in_data->output_origin_y == 0 &&
+	       in_data->downsample_x.num == 1 && in_data->downsample_x.den == 1 &&
+	       in_data->downsample_y.num == 1 && in_data->downsample_y.den == 1;
+#endif
+}
+
+struct V2LegacyPF8Tuple {
+	A_long enable_key, invert_key;
+	A_long smoothness, range, extra, version, gamma_mode, gamma_count;
+	A_FpLong gamma_value;
+	A_long palette_kind;  // 0=black5, 1=black4+blue, 2=red+black3+blue
+};
+
+static bool
+V2LegacyPF8ParamsIs(const PF_ParamDef *const params[])
+{
+	static const V2LegacyPF8Tuple tuples[] = {
+		{0,0,100,  2,  0,2,GAMMA_NONE,        1,2.40000009536743,0},
+		{1,1,100,  2,  0,2,GAMMA_NONE,        1,2.40000009536743,0},
+		{1,0,  0,  2,  0,2,GAMMA_NONE,        1,2.40000009536743,0},
+		{1,0,100,  2,100,2,GAMMA_NONE,        1,2.40000009536743,0},
+		{1,0,100,100,100,2,GAMMA_NONE,        1,2.40000009536743,0},
+		{1,0,100,  0,100,2,GAMMA_NONE,        1,2.40000009536743,0},
+		{1,0,100, 26, 40,2,GAMMA_NONE,        1,2.40000009536743,0},
+		{1,0, 29, 26, 40,2,GAMMA_NONE,        1,2.40000009536743,0},
+		{1,0,100, 26, 40,1,GAMMA_NONE,        1,2.40000009536743,0},
+		{1,0,100, 22, 40,2,GAMMA_COLORS_ONLY, 3,1.36872434616089,0},
+		{1,0,100, 22, 40,2,GAMMA_COLORS_ONLY, 5,2.16954731941223,1},
+		{1,0,100, 88, 40,2,GAMMA_COLORS_ONLY, 5,2.16954731941223,2},
+	};
+	if (!ColorIs(params[SM_KEY_COLOR], 255, 255, 255, 255)) return false;
+	for (const V2LegacyPF8Tuple &tuple : tuples) {
+		if (params[SM_ENABLE_KEY]->u.bd.value != tuple.enable_key ||
+		    params[SM_INVERT_KEY]->u.bd.value != tuple.invert_key ||
+		    !SmoothingIs(params, tuple.smoothness, tuple.range, tuple.extra) ||
+		    params[SM_VERSION]->u.pd.value != tuple.version ||
+		    params[SM_GAMMA_MODE]->u.pd.value != tuple.gamma_mode ||
+		    params[SM_GAMMA_VALUE]->u.fs_d.value != tuple.gamma_value ||
+		    params[SM_NUM_GAMMA_COLORS]->u.sd.value != tuple.gamma_count) continue;
+		bool colors_match = true;
+		for (A_long index = 0; index < NUM_GAMMA_COLORS; ++index) {
+			const bool red = tuple.palette_kind == 2 && index == 0;
+			const bool blue = tuple.palette_kind != 0 && index == NUM_GAMMA_COLORS - 1;
+			colors_match = colors_match && ColorIs(params[SM_GAMMA_COLOR_0 + index],
+				255, red ? 255 : 0, 0, blue ? 255 : 0);
+		}
+		if (colors_match) return true;
+	}
+	return false;
+}
+
+static bool
+V2SmartAdmission(const PF_ParamDef *const params[], const PF_EffectWorld *world,
+            short depth)
+{
+	if (!CoreParamsPresent(params) || !world) return false;
+	const A_long pixel_size = depth == 8 ? (A_long)sizeof(PF_Pixel8) :
+	                          depth == 16 ? (A_long)sizeof(PF_Pixel16) :
+	                                        (A_long)sizeof(PF_PixelFloat);
+	const A_long pad = depth == 8 ? 5 : depth == 16 ? 7 : 13;
+	const A_long version = params[SM_VERSION]->u.pd.value;
+	const A_long gamma_mode = params[SM_GAMMA_MODE]->u.pd.value;
+	const A_FpLong gamma_value = params[SM_GAMMA_VALUE]->u.fs_d.value;
+	const A_long enable_key = params[SM_ENABLE_KEY]->u.bd.value;
+	const A_long invert_key = params[SM_INVERT_KEY]->u.bd.value;
+	if ((depth != 8 && depth != 16 && depth != 32) ||
+	    (enable_key != 0 && enable_key != 1) ||
+	    (invert_key != 0 && invert_key != 1)) return false;
+
+	// Current-AEX retained PF8 grid. The same exact straight ARGB8 source is
+	// paired to twelve named parameter tuples; the current direct output reaches
+	// each retained Windows PNG only through the separately checked nearest-code
+	// host premultiplication relation. This does not generalize the source or the
+	// tuple union and does not claim a native output-world capture.
+	if (depth == 8 && world->width == 1920 && world->height == 1080 &&
+	    world->rowbytes == 1920 * pixel_size &&
+	    V2LegacyPF8ParamsIs(params) && V2SourceIs(world, depth,
+	      "1c15f67a9d0818a0a0266971720e855acac70a89e2690ccbedf5e142fc1c64f3")) return true;
+
+	// Case 07: retained 1920x1080 PF16/PF32 Smart owner fixture. Each source
+	// identity is the tight active ARGB buffer. PF16 final EXR words are the
+	// exact code/32768 presentation; PF32 has a separately proven unique
+	// finite-fixture premultiplied presentation.
+	if ((depth == 16 || depth == 32) &&
+	    world->width == 1920 && world->height == 1080 &&
+	    world->rowbytes == 1920 * pixel_size && version == SMOOTHER_V2 &&
+	    enable_key == 0 && invert_key == 0 &&
+	    ColorIs(params[SM_KEY_COLOR], 255, 248, 233, 159) &&
+	    SmoothingIs(params, 10, 99, 1) &&
+	    gamma_mode == GAMMA_COLORS_ONLY &&
+	    gamma_value == 1.2699999809265137 &&
+	    params[SM_NUM_GAMMA_COLORS]->u.sd.value == 2 &&
+	    ColorIs(params[SM_GAMMA_COLOR_0], 255, 233, 38, 239) &&
+	    ColorIs(params[SM_GAMMA_COLOR_1], 255, 192, 215, 172) &&
+	    ColorIs(params[SM_GAMMA_COLOR_2], 255, 124, 34, 100) &&
+	    ColorIs(params[SM_GAMMA_COLOR_3], 255, 17, 7, 127) &&
+	    ColorIs(params[SM_GAMMA_COLOR_4], 255, 212, 216, 8) &&
+	    V2SourceIs(world, depth, depth == 16 ?
+	      "c8d5ded0f9da071eb9e14e7bf20300916a3b8b292f081099d25dfc6359bbafa2" :
+	      "133a9447f8d722a7add9a5c7fc63bcf16b7e77c21cab9aa7c48d84df8677685b")) return true;
+
+	// Installed-identity 3x2 public Smart owner chain. PF16 was exercised only
+	// through the synthetic classic production adapter and is not promoted.
+	if (depth == 32 && world->width == 3 && world->height == 2 &&
+	    world->rowbytes == 3 * pixel_size + 12 &&
+	    version == SMOOTHER_V2 && enable_key == 0 && invert_key == 0 &&
+	    ColorIs(params[SM_KEY_COLOR], 0, 0, 0, 0) && gamma_mode == GAMMA_NONE &&
+	    params[SM_NUM_GAMMA_COLORS]->u.sd.value == 0 && GammaTailZero(params, 0) &&
+	    gamma_value == 2.4 && SmoothingIs(params, 100, 1, 0) &&
+	    V2SourceIs(world, depth,
+	      "4e43421598bfe27755f2b920014c8d3446413061900c9f94e16102fcf3089630")) return true;
+
+	if (world->width == 5 && world->height == 5 &&
+	    world->rowbytes == 5 * pixel_size + pad) {
+		// Exported Smart owner: intermediate Gamma 1.8, exact key endpoint,
+		// both versions and both key polarities (12 raw-exact cells).
+		if (enable_key == 1 && ColorIs(params[SM_KEY_COLOR], 255, 202, 187, 230) &&
+		    SmoothingIs(params, 100, 100, 100) &&
+		    (version == SMOOTHER_V1 || version == SMOOTHER_V2) &&
+		    gamma_mode == GAMMA_COLORS_ONLY && gamma_value == 1.8 &&
+		    GammaPaletteRedKey(params, 202, 187, 230) && GammaTailZero(params, 2) &&
+		    V2SourceIs(world, depth, depth == 8 ?
+		      "ca56c65ec9209d52c956f40e51cb8f7c133a001eab1b141b95c04295917cce99" : depth == 16 ?
+		      "66127e3fbe12b1b39f25127550d006f69db7d8aabe9c571f8caf91fc6819dee7" :
+		      "decb2060f0d96ad30146658c2026edae48caf134311b4207d846317c5589467f")) return true;
+
+		// Earlier exported-owner Gamma 2.4 representatives.
+		if (enable_key == 1 && ColorIs(params[SM_KEY_COLOR], 255, 1, 1, 1) &&
+		    SmoothingIs(params, 100, 100, 100) && gamma_mode == GAMMA_COLORS_ONLY &&
+		    gamma_value == 2.4 && GammaPaletteRedKey(params, 1, 1, 1) &&
+		    GammaTailZero(params, 2) &&
+		    ((version == SMOOTHER_V1 && invert_key == 0) ||
+		     (version == SMOOTHER_V2 && invert_key == 1)) &&
+		    V2SourceIs(world, depth, depth == 8 ?
+		      "c36c335071f2479526394e667d0448932638fa50b082ae7f82e749b48bc8e964" : depth == 16 ?
+		      "550b73ca84e8b69fa24b8b61e6ee8580ed743b765a15256174c1448999247418" :
+		      "76c868f51c9ac8da08c67f52e8d837401c5457045a659ee7c484f42f69cb252a")) return true;
+	}
+
+	// Public EffectMain covering fixture: two exact cells per depth.
+	if (world->width == 17 && world->height == 11 &&
+	    world->rowbytes == 17 * pixel_size + pad) {
+		if (depth == 8 && version == SMOOTHER_V1 && enable_key == 0 && invert_key == 0 &&
+		    ColorIs(params[SM_KEY_COLOR], 255, 1, 1, 1) &&
+		    gamma_mode == GAMMA_NONE && gamma_value == 1.0 &&
+		    params[SM_NUM_GAMMA_COLORS]->u.sd.value == 1 &&
+		    ColorIs(params[SM_GAMMA_COLOR_0], 255, 255, 0, 0) && GammaTailZero(params, 1) &&
+		    SmoothingIs(params, 100, 2, 0) && V2SourceIs(world, depth,
+		      "c1f989b1abdcc5e2fe6fe46bfe2fb3e769c2f8288ab09ee5005a9db41c4edd6e")) return true;
+		if (depth == 8 && version == SMOOTHER_V2 && enable_key == 1 && invert_key == 1 &&
+		    ColorIs(params[SM_KEY_COLOR], 255, 1, 1, 1) &&
+		    gamma_mode == GAMMA_COLORS_ONLY && gamma_value == 2.4 &&
+		    SmoothingIs(params, 50, 50, 50) &&
+		    params[SM_NUM_GAMMA_COLORS]->u.sd.value == 5 &&
+		    ColorIs(params[SM_GAMMA_COLOR_0], 255, 255, 0, 0) &&
+		    ColorIs(params[SM_GAMMA_COLOR_1], 255, 1, 1, 1) &&
+		    ColorIs(params[SM_GAMMA_COLOR_2], 255, 255, 0, 0) &&
+		    ColorIs(params[SM_GAMMA_COLOR_3], 255, 1, 1, 1) &&
+		    ColorIs(params[SM_GAMMA_COLOR_4], 255, 0, 0, 255) && V2SourceIs(world, depth,
+		      "22890ba4876617ed2956c87596198c021c26e9e57a67b3816a6c67cf6c8d671e")) return true;
+		if (depth == 16 && version == SMOOTHER_V2 && enable_key == 0 && invert_key == 0 &&
+		    ColorIs(params[SM_KEY_COLOR], 255, 1, 1, 1) &&
+		    gamma_mode == GAMMA_ALL_COLORS && gamma_value == 2.4 &&
+		    params[SM_NUM_GAMMA_COLORS]->u.sd.value == 1 &&
+		    ColorIs(params[SM_GAMMA_COLOR_0], 255, 255, 0, 0) && GammaTailZero(params, 1) &&
+		    SmoothingIs(params, 50, 50, 50) && V2SourceIs(world, depth,
+		      "57431e5864c4c0feecb55a6e1646ae2d0b55417bcdd70d5c03ce814f3c1b12ad")) return true;
+		if (depth == 16 && version == SMOOTHER_V2 && enable_key == 1 && invert_key == 0 &&
+		    ColorIs(params[SM_KEY_COLOR], 255, 1, 1, 1) &&
+		    gamma_mode == GAMMA_COLORS_ONLY && gamma_value == 1.0 &&
+		    SmoothingIs(params, 100, 2, 0) &&
+		    params[SM_NUM_GAMMA_COLORS]->u.sd.value == 5 &&
+		    ColorIs(params[SM_GAMMA_COLOR_0], 255, 255, 255, 0) &&
+		    ColorIs(params[SM_GAMMA_COLOR_1], 255, 0, 255, 0) &&
+		    ColorIs(params[SM_GAMMA_COLOR_2], 255, 1, 1, 1) &&
+		    ColorIs(params[SM_GAMMA_COLOR_3], 255, 255, 0, 0) &&
+		    ColorIs(params[SM_GAMMA_COLOR_4], 255, 0, 0, 255) && V2SourceIs(world, depth,
+		      "bcdc96e0773448fb52f12907dd4bb6c39addaac7f1bed8f31182bc8ce37dd595")) return true;
+		if (depth == 32 && version == SMOOTHER_V1 && enable_key == 0 && invert_key == 0 &&
+		    ColorIs(params[SM_KEY_COLOR], 255, 1, 1, 1) &&
+		    gamma_mode == GAMMA_NONE && gamma_value == 1.0 &&
+		    params[SM_NUM_GAMMA_COLORS]->u.sd.value == 1 &&
+		    ColorIs(params[SM_GAMMA_COLOR_0], 255, 255, 0, 0) && GammaTailZero(params, 1) &&
+		    SmoothingIs(params, 50, 50, 50) && V2SourceIs(world, depth,
+		      "83bab2bff36972c9dbb3d079739a23a18d64179da6d8202e1024af6488fb2a40")) return true;
+		if (depth == 32 && version == SMOOTHER_V2 && enable_key == 1 && invert_key == 0 &&
+		    ColorIs(params[SM_KEY_COLOR], 255, 1, 1, 1) &&
+		    gamma_mode == GAMMA_COLORS_ONLY && gamma_value == 2.4 &&
+		    SmoothingIs(params, 100, 2, 0) &&
+		    params[SM_NUM_GAMMA_COLORS]->u.sd.value == 1 &&
+		    ColorIs(params[SM_GAMMA_COLOR_0], 255, 255, 0, 0) && GammaTailZero(params, 1) &&
+		    V2SourceIs(world, depth,
+		      "d0a57665d75ac51539e2e27e17eae4d16a3916b964ed556bae1bfc553441ad2f")) return true;
+	}
+	return false;
+}
+
+// Public-beta lane for the parameter axes covered by the retained Windows
+// classifier/typed-worker corpus. Gamma Colors/custom-LUT ownership remains a
+// separate fixed-fixture lane.
+//
+// The polygon cardinal chain still contains structurally reconstructed pieces;
+// generic admission therefore does not imply that all 256 classifier indices
+// have independent Windows numerical witnesses.
+static bool
+V2GenericBetaAdmission(const PF_ParamDef *const params[],
+                       const PF_EffectWorld *world, short depth)
+{
+	if (!CoreParamsPresent(params) || !world ||
+	    (depth != 8 && depth != 16 && depth != 32)) return false;
+
+	const A_long pixel_size = depth == 8 ? (A_long)sizeof(PF_Pixel8) :
+	                          depth == 16 ? (A_long)sizeof(PF_Pixel16) :
+	                                        (A_long)sizeof(PF_PixelFloat);
+	// Exclude tiny diagnostic cells from the generalized lane.  They remain
+	// available only through the exact fixture admission above; 16x16 and up
+	// covers ordinary artwork and video frames without claiming every scanner
+	// boundary configuration as proven.
+	if (world->width < 16 || world->height < 16 ||
+	    world->width > 8192 || world->height > 8192 ||
+	    world->rowbytes < world->width * pixel_size) return false;
+
+	const A_long enable_key = params[SM_ENABLE_KEY]->u.bd.value;
+	const A_long invert_key = params[SM_INVERT_KEY]->u.bd.value;
+	const A_long version = params[SM_VERSION]->u.pd.value;
+	const A_long gamma_mode = params[SM_GAMMA_MODE]->u.pd.value;
+	const A_FpLong gamma_value = params[SM_GAMMA_VALUE]->u.fs_d.value;
+	const A_long smoothness = params[SM_SMOOTHNESS]->u.sd.value;
+	const A_long smooth_range = params[SM_SMOOTH_RANGE]->u.sd.value;
+	const A_long extra_smooth = params[SM_EXTRA_SMOOTH]->u.sd.value;
+	const A_long gamma_count = params[SM_NUM_GAMMA_COLORS]->u.sd.value;
+	// AE stores the 2.4 UI endpoint through a float-backed parameter payload,
+	// yielding 2.40000009536743 when promoted to A_FpLong. Comparing against a
+	// double literal 2.4 rejects the untouched native-host default.
+	const A_FpLong gamma_ui_max = (A_FpLong)(float)2.4f;
+	return (enable_key == 0 || enable_key == 1) &&
+	       (invert_key == 0 || invert_key == 1) &&
+	       (version == SMOOTHER_V1 || version == SMOOTHER_V2) &&
+	       (gamma_mode == GAMMA_NONE || gamma_mode == GAMMA_ALL_COLORS) &&
+	       std::isfinite(gamma_value) && gamma_value >= 1.0 && gamma_value <= gamma_ui_max &&
+	       smoothness >= 0 && smoothness <= 100 &&
+	       smooth_range >= 0 && smooth_range <= 100 &&
+	       extra_smooth >= 0 && extra_smooth <= 100 &&
+	       gamma_count >= 0 && gamma_count <= NUM_GAMMA_COLORS;
+}
+
+static PF_Err
+ValidatePublicWorlds(PF_InData *in_data,
+                     PF_OutData *out_data,
+                     PF_EffectWorld *input,
+                     PF_EffectWorld *output,
+                     short *depth)
+{
+	if (!input || !output || !input->data || !output->data || !depth ||
+	    input->width <= 0 || input->height <= 0 ||
+	    input->width != output->width || input->height != output->height ||
+	    input->rowbytes <= 0 || output->rowbytes <= 0 ||
+	    input->origin_x != 0 || input->origin_y != 0 ||
+	    output->origin_x != 0 || output->origin_y != 0) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	short input_depth = 0, output_depth = 0;
+	PF_Err err = WorldDepth(in_data, out_data, input, &input_depth);
+	if (!err) err = WorldDepth(in_data, out_data, output, &output_depth);
+	if (err) return err;
+	if (input_depth != output_depth) return PF_Err_BAD_CALLBACK_PARAM;
+	const A_long pixel_size = input_depth == 8 ? (A_long)sizeof(PF_Pixel8) :
+	                          input_depth == 16 ? (A_long)sizeof(PF_Pixel16) :
+	                          input_depth == 32 ? (A_long)sizeof(PF_PixelFloat) : 0;
+	if (!pixel_size || input->width > INT32_MAX / pixel_size ||
+	    input->rowbytes < input->width * pixel_size ||
+	    output->rowbytes < output->width * pixel_size ||
+	    input->height > INT32_MAX / input->rowbytes ||
+	    output->height > INT32_MAX / output->rowbytes) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	const uintptr_t input_begin = (uintptr_t)input->data;
+	const uintptr_t output_begin = (uintptr_t)output->data;
+	const size_t input_span = (size_t)(input->height - 1) * (size_t)input->rowbytes +
+	                          (size_t)input->width * (size_t)pixel_size;
+	const size_t output_span = (size_t)(output->height - 1) * (size_t)output->rowbytes +
+	                           (size_t)output->width * (size_t)pixel_size;
+	if (input_begin > UINTPTR_MAX - input_span ||
+	    output_begin > UINTPTR_MAX - output_span ||
+	    (input_begin < output_begin + output_span &&
+	     output_begin < input_begin + input_span)) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	*depth = input_depth;
+	return PF_Err_NONE;
+}
+
 // ============================================================================
 // Classic Render
 // ============================================================================
 static PF_Err
 Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output)
 {
+	if (!params || !params[SM_INPUT]) return PF_Err_BAD_CALLBACK_PARAM;
 	PF_LayerDef *input = &params[SM_INPUT]->u.ld;
-	if (PF_WORLD_IS_DEEP(input)) {
-		return RenderBits<PF_Pixel16>(in_data, params, input, output);
-	} else {
-		return RenderBits<PF_Pixel8>(in_data, params, input, output);
-	}
+	short depth = 0;
+	PF_Err err = ValidatePublicWorlds(in_data, out_data, input, output, &depth);
+	if (err) return err;
+	// The actual exported classic command is a no-op; every retained numerical
+	// owner witness is Smart. Validate the caller-owned worlds (including the
+	// output format) and fail closed at every depth instead of publishing the
+	// shared typed core through an unowned entry.
+	(void)depth;
+	return PF_Err_BAD_CALLBACK_PARAM;
 }
 
 // ============================================================================
@@ -4709,58 +5200,188 @@ static void UnionLRect_inline(const PF_LRect *src, PF_LRect *dst) {
 static PF_Err
 SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extra)
 {
+	if (!in_data || !out_data || !extra || !extra->input || !extra->output ||
+	    !extra->cb || !extra->cb->checkout_layer) return PF_Err_BAD_CALLBACK_PARAM;
+	// The classifier is not a finite-radius filter: several cardinal and
+	// diagonal walkers continue along a connected class run until a frame edge.
+	// Consequently a fixed tile halo cannot preserve full-frame results.  Ask AE
+	// for the complete 1:1 source and advertise that complete result instead.
+	// SmartRender's full-world validation then fails closed if the host supplies
+	// only the requested tile despite this checkout.
+	if (in_data->width < 16 || in_data->height < 16 ||
+	    in_data->width > 8192 || in_data->height > 8192 ||
+	    in_data->downsample_x.num <= 0 ||
+	    in_data->downsample_x.num != in_data->downsample_x.den ||
+	    in_data->downsample_y.num <= 0 ||
+	    in_data->downsample_y.num != in_data->downsample_y.den) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
 	PF_Err err = PF_Err_NONE;
 	PF_RenderRequest req = extra->input->output_request;
+	const PF_LRect full_rect = {0, 0, in_data->width, in_data->height};
+	req.rect = full_rect;
+	req.preserve_rgb_of_zero_alpha = TRUE;
 	PF_CheckoutResult in_result;
+	memset(&in_result, 0, sizeof(in_result));
 
 	ERR(extra->cb->checkout_layer(in_data->effect_ref,
 		SM_INPUT, SM_INPUT, &req,
 		in_data->current_time, in_data->time_step, in_data->time_scale,
 		&in_result));
 
-	UnionLRect_inline(&in_result.result_rect, &extra->output->result_rect);
-	UnionLRect_inline(&in_result.max_result_rect, &extra->output->max_result_rect);
+	// result_rect/max_result_rect describe content bounds and may be empty for a
+	// transparent frame. ref dimensions are the checkout's full-frame authority.
+	if (!err && (in_result.ref_width != in_data->width ||
+	             in_result.ref_height != in_data->height)) {
+		err = PF_Err_BAD_CALLBACK_PARAM;
+	}
+	if (!err) {
+		extra->output->result_rect = full_rect;
+		extra->output->max_result_rect = full_rect;
+		extra->output->flags |= PF_RenderOutputFlag_RETURNS_EXTRA_PIXELS;
+	}
 	return err;
 }
 
 static PF_Err
 SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra)
 {
+	if (!in_data || !out_data || !extra || !extra->input || !extra->cb ||
+	    !extra->cb->checkout_layer_pixels || !extra->cb->checkout_output) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+#ifndef OLMSMOOTHER2_SHIM_H
+	if (!in_data->pica_basicP || !in_data->inter.checkout_param ||
+	    !in_data->inter.checkin_param) return PF_Err_BAD_CALLBACK_PARAM;
+#endif
 	PF_Err err = PF_Err_NONE;
-	AEGP_SuiteHandler suites(in_data->pica_basicP);
-
 	PF_EffectWorld *input_world  = nullptr;
 	PF_EffectWorld *output_world = nullptr;
-
-	ERR(extra->cb->checkout_layer_pixels(in_data->effect_ref, SM_INPUT, &input_world));
-	ERR(extra->cb->checkout_output(in_data->effect_ref, &output_world));
-
 	PF_ParamDef param_list[SM_NUM_PARAMS];
-	AEFX_CLR_STRUCT(param_list[0]);
-	for (A_long i = 1; i < SM_NUM_PARAMS; ++i) {
-		AEFX_CLR_STRUCT(param_list[i]);
-		ERR(PF_CHECKOUT_PARAM(in_data, i, in_data->current_time,
-		                      in_data->time_step, in_data->time_scale,
-		                      &param_list[i]));
-	}
-
+	for (A_long i = 0; i < SM_NUM_PARAMS; ++i) AEFX_CLR_STRUCT(param_list[i]);
+	bool param_checked_out[SM_NUM_PARAMS] = {};
 	PF_ParamDef *params[SM_NUM_PARAMS];
 	for (A_long i = 0; i < SM_NUM_PARAMS; ++i) params[i] = &param_list[i];
-
-	if (!err && input_world && output_world) {
-		param_list[0].u.ld = *input_world;
-		short depth = extra->input->bitdepth;
-		if (depth == 8) {
-			err = RenderBits<PF_Pixel8>(in_data, params, input_world, output_world);
-		} else if (depth == 16) {
-			err = RenderBits<PF_Pixel16>(in_data, params, input_world, output_world);
-		} else {
-			err = RenderBits<PF_PixelFloat>(in_data, params, input_world, output_world);
+	bool layer_checked_out = false;
+	bool rendered = false;
+	SMParams decoded_params; AEFX_CLR_STRUCT(decoded_params);
+	bool decoded_params_ready = false;
+	short depth = 0;
+	size_t active_bytes = 0;
+	std::vector<uint8_t> input_stage, output_stage;
+	try {
+		ERR(extra->cb->checkout_layer_pixels(in_data->effect_ref, SM_INPUT, &input_world));
+		if (!err) layer_checked_out = true;
+		ERR(extra->cb->checkout_output(in_data->effect_ref, &output_world));
+		for (A_long i = 1; i < SM_NUM_PARAMS; ++i) {
+			ERR(PF_CHECKOUT_PARAM(in_data, i, in_data->current_time,
+			                      in_data->time_step, in_data->time_scale,
+			                      &param_list[i]));
+			if (!err) param_checked_out[i] = true;
+		}
+		if (!err && input_world && output_world) {
+			param_list[0].u.ld = *input_world;
+			err = ValidatePublicWorlds(in_data, out_data, input_world, output_world, &depth);
+			if (!err && depth != extra->input->bitdepth) err = PF_Err_BAD_CALLBACK_PARAM;
+			const bool generic_beta = !err && V2GenericBetaAdmission(
+				(const PF_ParamDef *const *)params, input_world, depth);
+			if (!err && !generic_beta && input_world->width == 1920 && input_world->height == 1080 &&
+			    !V2Case07WorldContract(in_data, input_world, output_world, depth)) {
+				err = PF_Err_BAD_CALLBACK_PARAM;
+			}
+			if (!err && !generic_beta &&
+			    !V2SmartAdmission((const PF_ParamDef *const *)params, input_world, depth)) {
+				err = PF_Err_BAD_CALLBACK_PARAM;
+			}
+			if (!err) {
+				err = FetchParams(in_data, params, &decoded_params);
+				if (!err && !DecodedColorsMatch((const PF_ParamDef *const *)params, decoded_params)) {
+					err = PF_Err_BAD_CALLBACK_PARAM;
+				}
+				if (!err) decoded_params_ready = true;
+			}
+			if (!err) {
+				const size_t pixel_size = depth == 8 ? sizeof(PF_Pixel8) :
+				                          depth == 16 ? sizeof(PF_Pixel16) : sizeof(PF_PixelFloat);
+				active_bytes = (size_t)input_world->width * pixel_size;
+				const size_t bytes = active_bytes * (size_t)input_world->height;
+				input_stage.resize(bytes);
+				output_stage.resize(bytes);
+				for (A_long y = 0; y < input_world->height; ++y) {
+					memcpy(input_stage.data() + (size_t)y * active_bytes,
+					       (const uint8_t *)input_world->data + (size_t)y * (size_t)input_world->rowbytes,
+					       active_bytes);
+				}
+				PF_EffectWorld staged_input = *input_world;
+				PF_EffectWorld staged_output = *output_world;
+				staged_input.data = reinterpret_cast<decltype(staged_input.data)>(input_stage.data());
+				staged_output.data = reinterpret_cast<decltype(staged_output.data)>(output_stage.data());
+				staged_input.rowbytes = staged_output.rowbytes = (A_long)active_bytes;
+				param_list[0].u.ld = staged_input;
+				if (!decoded_params_ready) err = PF_Err_BAD_CALLBACK_PARAM;
+				else if (depth == 8) err = RenderBits<PF_Pixel8>(in_data, params, &staged_input, &staged_output, &decoded_params);
+				else if (depth == 16) err = RenderBits<PF_Pixel16>(in_data, params, &staged_input, &staged_output, &decoded_params);
+				else err = RenderBits<PF_PixelFloat>(in_data, params, &staged_input, &staged_output, &decoded_params);
+				if (!err) rendered = true;
+			}
+		} else if (!err) {
+			err = PF_Err_BAD_CALLBACK_PARAM;
+		}
+	} catch (PF_Err &thrown_err) {
+		if (!err) err = thrown_err;
+	} catch (const std::bad_alloc &) {
+		if (!err) err = (PF_Err)4;
+	} catch (...) {
+#ifdef OLMSMOOTHER2_SHIM_H
+		if (!err) err = PF_Err_BAD_CALLBACK_PARAM;
+#else
+		if (!err) err = PF_Err_INTERNAL_STRUCT_DAMAGED;
+#endif
+	}
+	for (A_long i = 1; i < SM_NUM_PARAMS; ++i) {
+		if (!param_checked_out[i]) continue;
+		try {
+#ifdef OLMSMOOTHER2_SHIM_H
+			const PF_Err cleanup_err = PF_CHECKIN_PARAM(in_data, &param_list[i]);
+#else
+			const PF_Err cleanup_err = PF_CHECKIN_PARAM(in_data, &param_list[i]);
+#endif
+			if (!err && cleanup_err) err = cleanup_err;
+		} catch (PF_Err &cleanup_err) {
+			if (!err) err = cleanup_err;
+		} catch (const std::bad_alloc &) {
+			if (!err) err = (PF_Err)4;
+		} catch (...) {
+#ifdef OLMSMOOTHER2_SHIM_H
+			if (!err) err = PF_Err_BAD_CALLBACK_PARAM;
+#else
+			if (!err) err = PF_Err_INTERNAL_STRUCT_DAMAGED;
+#endif
 		}
 	}
-
-	for (A_long i = 1; i < SM_NUM_PARAMS; ++i) {
-		PF_CHECKIN_PARAM(in_data, &param_list[i]);
+#ifdef OLMSMOOTHER2_SHIM_H
+	if (layer_checked_out && g_olmsmoother2_cli_checkin_layer_hook) {
+		g_olmsmoother2_cli_checkin_layer_hook(in_data->effect_ref, SM_INPUT);
+	}
+#else
+	if (layer_checked_out && extra->cb->checkin_layer_pixels) {
+		try {
+			const PF_Err cleanup_err = extra->cb->checkin_layer_pixels(in_data->effect_ref, SM_INPUT);
+			if (!err && cleanup_err) err = cleanup_err;
+		} catch (PF_Err &cleanup_err) {
+			if (!err) err = cleanup_err;
+		} catch (const std::bad_alloc &) {
+			if (!err) err = (PF_Err)4;
+		} catch (...) {
+			if (!err) err = PF_Err_INTERNAL_STRUCT_DAMAGED;
+		}
+	}
+#endif
+	if (!err && rendered) {
+		for (A_long y = 0; y < output_world->height; ++y) {
+			memcpy((uint8_t *)output_world->data + (size_t)y * (size_t)output_world->rowbytes,
+			       output_stage.data() + (size_t)y * active_bytes, active_bytes);
+		}
 	}
 	return err;
 }
@@ -4796,6 +5417,14 @@ PF_Err EffectMain(PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data,
 		}
 	} catch (PF_Err &thrown_err) {
 		err = thrown_err;
+	} catch (const std::bad_alloc &) {
+		err = (PF_Err)4;
+	} catch (...) {
+#ifdef OLMSMOOTHER2_SHIM_H
+		err = PF_Err_BAD_CALLBACK_PARAM;
+#else
+		err = PF_Err_INTERNAL_STRUCT_DAMAGED;
+#endif
 	}
 	return err;
 }

@@ -15,6 +15,7 @@
 namespace {
 
 constexpr float kFd90RayEpsilon = 0.001f;
+constexpr float kByteToFloat = 1.0f / 255.0f;
 
 struct Image {
     int width = 0;
@@ -511,10 +512,10 @@ std::vector<float> make_seed(const Image &input, const KiraKiraParams &params, c
         for (int x = 0; x < w; ++x) {
             const size_t idx = static_cast<size_t>(y) * w + x;
             const size_t p = idx * 4;
-            float r = input.rgba[p + 0] / 255.0f;
-            float g = input.rgba[p + 1] / 255.0f;
-            float b = input.rgba[p + 2] / 255.0f;
-            float a = input.rgba[p + 3] / 255.0f;
+            float r = input.rgba[p + 0] * kByteToFloat;
+            float g = input.rgba[p + 1] * kByteToFloat;
+            float b = input.rgba[p + 2] * kByteToFloat;
+            float a = input.rgba[p + 3] * kByteToFloat;
             float v = 0.0f;
             if (options.seed_mode == "max") {
                 v = std::max({r, g, b}) * a;
@@ -1636,7 +1637,10 @@ Image render_kirakira(const Image &input, const KiraKiraParams &params, const Op
     std::vector<float> vertical = make_ray(params.vertical_length, 90.0 + glow_rotation);
     std::vector<float> horizontal = make_ray(params.horizontal_length, glow_rotation);
     std::vector<float> diagonal = make_ray(params.diagonal_length, 45.0 + glow_rotation);
-    std::vector<float> diagonal2 = make_ray(params.diagonal2_length, -45.0 + glow_rotation);
+    // The Windows owner uses the directed +135-degree representative. The
+    // -45-degree axis is geometrically equivalent but not bit-equivalent once
+    // the Mode 4 recurrence and warps are applied.
+    std::vector<float> diagonal2 = make_ray(params.diagonal2_length, 135.0 + glow_rotation);
 
     double scale = params.brightness_gain * options.gain_scale;
     if (params.strength_multiplier <= 1.0e-6) {
@@ -1681,20 +1685,20 @@ Image render_kirakira(const Image &input, const KiraKiraParams &params, const Op
     const int pixels = w * h;
     for (int i = 0; i < pixels; ++i) {
         size_t p = static_cast<size_t>(i) * 4;
-        float src_a = (input.rgba[p + 3] / 255.0f) * static_cast<float>(params.source_opacity);
+        float src_a = (input.rgba[p + 3] * kByteToFloat) * static_cast<float>(params.source_opacity);
         float glow_a = clamp01(glow.data[p + 3] * static_cast<float>(params.glow_opacity));
         float denom = src_a + glow_a;
         float out_r = 0.0f;
         float out_g = 0.0f;
         float out_b = 0.0f;
         if (options.compose_mode == "aex-add-rgb") {
-            out_r = clamp01((input.rgba[p + 0] / 255.0f) * src_a + glow.data[p + 0] * glow_a);
-            out_g = clamp01((input.rgba[p + 1] / 255.0f) * src_a + glow.data[p + 1] * glow_a);
-            out_b = clamp01((input.rgba[p + 2] / 255.0f) * src_a + glow.data[p + 2] * glow_a);
+            out_r = clamp01((input.rgba[p + 0] * kByteToFloat) * src_a + glow.data[p + 0] * glow_a);
+            out_g = clamp01((input.rgba[p + 1] * kByteToFloat) * src_a + glow.data[p + 1] * glow_a);
+            out_b = clamp01((input.rgba[p + 2] * kByteToFloat) * src_a + glow.data[p + 2] * glow_a);
         } else if (options.compose_mode == "aex-screen-rgb") {
-            const float src_r = (input.rgba[p + 0] / 255.0f) * src_a;
-            const float src_g = (input.rgba[p + 1] / 255.0f) * src_a;
-            const float src_b = (input.rgba[p + 2] / 255.0f) * src_a;
+            const float src_r = (input.rgba[p + 0] * kByteToFloat) * src_a;
+            const float src_g = (input.rgba[p + 1] * kByteToFloat) * src_a;
+            const float src_b = (input.rgba[p + 2] * kByteToFloat) * src_a;
             out_r = 1.0f - (1.0f - src_r) * (1.0f - glow.data[p + 0] * glow_a);
             out_g = 1.0f - (1.0f - src_g) * (1.0f - glow.data[p + 1] * glow_a);
             out_b = 1.0f - (1.0f - src_b) * (1.0f - glow.data[p + 2] * glow_a);
@@ -1703,9 +1707,9 @@ Image render_kirakira(const Image &input, const KiraKiraParams &params, const Op
             //   out_rgb = 1 - (1 - src_rgb) * (1 - glow_rgb * glow_a)
             //   out_a   = src_a   (glow does not modify alpha for merge mode 1)
             // strength=0 refs match this to max_diff 0 with a uniform glow.
-            const float src_r = input.rgba[p + 0] / 255.0f;
-            const float src_g = input.rgba[p + 1] / 255.0f;
-            const float src_b = input.rgba[p + 2] / 255.0f;
+            const float src_r = input.rgba[p + 0] * kByteToFloat;
+            const float src_g = input.rgba[p + 1] * kByteToFloat;
+            const float src_b = input.rgba[p + 2] * kByteToFloat;
             out_r = 1.0f - (1.0f - src_r) * (1.0f - clamp01(glow.data[p + 0] * glow_a));
             out_g = 1.0f - (1.0f - src_g) * (1.0f - clamp01(glow.data[p + 1] * glow_a));
             out_b = 1.0f - (1.0f - src_b) * (1.0f - clamp01(glow.data[p + 2] * glow_a));
@@ -1715,9 +1719,9 @@ Image render_kirakira(const Image &input, const KiraKiraParams &params, const Op
             out.rgba[p + 3] = input.rgba[p + 3];
             continue;
         } else if (denom > 1.0e-6f) {
-            out_r = ((input.rgba[p + 0] / 255.0f) * src_a + glow.data[p + 0] * glow_a) / denom;
-            out_g = ((input.rgba[p + 1] / 255.0f) * src_a + glow.data[p + 1] * glow_a) / denom;
-            out_b = ((input.rgba[p + 2] / 255.0f) * src_a + glow.data[p + 2] * glow_a) / denom;
+            out_r = ((input.rgba[p + 0] * kByteToFloat) * src_a + glow.data[p + 0] * glow_a) / denom;
+            out_g = ((input.rgba[p + 1] * kByteToFloat) * src_a + glow.data[p + 1] * glow_a) / denom;
+            out_b = ((input.rgba[p + 2] * kByteToFloat) * src_a + glow.data[p + 2] * glow_a) / denom;
         }
         out.rgba[p + 0] = quantize(out_r);
         out.rgba[p + 1] = quantize(out_g);
