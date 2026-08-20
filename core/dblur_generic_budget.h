@@ -121,8 +121,11 @@ inline bool CheckedAddU64(std::uint64_t left, std::uint64_t right,
 	return true;
 }
 
-// Generic mode has only the backward/front scatter.  For a row of W pixels,
-// Strength N executes exactly
+// Generic mode admits exactly one active side: either front or back.  Their
+// edge-clamped scatter costs are symmetric, so this estimate models one side
+// with effective Strength N.  It must not be reused for simultaneous
+// front+back admission without explicitly adding both scatter costs.  For a
+// row of W pixels, the admitted single side executes exactly
 //   (L - 1) * (2W - L - 2) / 2, L=min(N,W)
 // worst-case scatter-loop iterations after the row-edge clamp.
 inline bool EstimateOperationUnits(const WorkGeometry &work,
