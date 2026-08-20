@@ -22,6 +22,7 @@ def main() -> int:
         production = ROOT / "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp"
         source.write_text(f'''#define OLM_DBLUR_TEST_SEAM 1
 #include "{production}"
+#include <cstring>
 #include <cstdint>
 #include <vector>
 
@@ -47,18 +48,29 @@ static int run(int width, int height, double angle, int strength, double scale,
     const PF_Err err = OLMDirectionalBlurTestRenderWorld(&in, &out, &info, 8, &exact);
     if (!expect_success) return err == PF_Err_BAD_CALLBACK_PARAM ? 0 : 9;
     if (err != PF_Err_NONE || exact != 1) return 10;
-    std::uint64_t active = 0;
+    bool changed = false;
     for (int y = 0; y < height; ++y) {{
-        for (int x = 0; x < width * 4; ++x) active += output[(size_t)y * output_rowbytes + x];
+        for (int x = 0; x < width; ++x) {{
+            const std::uint8_t expected[4] = {{255,
+                static_cast<std::uint8_t>((x * 13 + y * 7) & 255),
+                static_cast<std::uint8_t>((x * 3 + y * 17) & 255),
+                static_cast<std::uint8_t>((x * 19 + y * 5) & 255)}};
+            if (std::memcmp(input.data() + (size_t)y * input_rowbytes + x * 4,
+                            expected, sizeof(expected))) return 11;
+        }}
+        for (int x = width * 4; x < input_rowbytes; ++x)
+            if (input[(size_t)y * input_rowbytes + x] != 0xa5) return 12;
+        for (int x = 0; x < width * 4; ++x)
+            changed |= output[(size_t)y * output_rowbytes + x] != 0xee;
         for (int x = width * 4; x < output_rowbytes; ++x)
-            if (output[(size_t)y * output_rowbytes + x] != 0xee) return 11;
+            if (output[(size_t)y * output_rowbytes + x] != 0xee) return 13;
     }}
-    if (width > 2 && height > 2 && active == 0) return 12;
+    if (!changed) return 14;
     if (check_determinism) {{
         std::vector<std::uint8_t> second((size_t)output_rowbytes * height, 0xee);
         out.data = (PF_PixelPtr)second.data(); exact = 0;
         if (OLMDirectionalBlurTestRenderWorld(&in, &out, &info, 8, &exact) != PF_Err_NONE ||
-            exact != 1 || second != output) return 13;
+            exact != 1 || second != output) return 15;
     }}
     return 0;
 }}
@@ -69,7 +81,7 @@ int main() {{
     if (run(37, 23, 45.0, 8, 1.0, true, true)) return 4;
     if (run(1280, 720, -45.0, 2, 0.5, true, false)) return 5;
     if (run(1920, 1080, 0.0, 2, 1.0, true, false)) return 6;
-    if (run(3840, 2160, 0.0, 2, 1.0, false, false)) return 7;
+    if (run(3840, 2160, 0.0, 2, 1.0, true, false)) return 7;
     return 0;
 }}
 ''', encoding="utf-8")
@@ -89,7 +101,7 @@ int main() {{
                             "-fno-omit-frame-pointer"]
         subprocess.run(command, cwd=ROOT, check=True)
         subprocess.run([str(binary)], cwd=ROOT, check=True, timeout=120)
-    print("ok: PF8 generic 1D/odd/HD, independent strides, boundaries, determinism, 4K rejection")
+    print("ok: PF8 generic 1D/odd/HD/4K, independent strides, boundaries, determinism")
     return 0
 
 

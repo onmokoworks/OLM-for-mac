@@ -3,6 +3,7 @@
 #include <AEFX_SuiteHandlerTemplate.h>
 
 #include "../../core/dblur_frontonly.h"
+#include "../../core/dblur_generic_budget.h"
 #include "../../core/dblur_gaussian.h"
 #include "../../core/olm_sha256_rows.h"
 
@@ -10,6 +11,7 @@
 #include <cmath>
 #include <cstdint>
 #include <cstdio>
+#include <cstring>
 #include <exception>
 #include <limits>
 #include <memory>
@@ -232,13 +234,15 @@ UpdateParamsUI(PF_InData *in_data)
 template <typename PixelT>
 static PixelT *PixelAt(PF_EffectWorld *world, A_long x, A_long y)
 {
-	return reinterpret_cast<PixelT *>(reinterpret_cast<char *>(world->data) + y * world->rowbytes) + x;
+	return reinterpret_cast<PixelT *>(reinterpret_cast<std::uint8_t *>(world->data) +
+		static_cast<std::size_t>(y) * static_cast<std::size_t>(world->rowbytes)) + x;
 }
 
 template <typename PixelT>
 static const PixelT *PixelAtConst(const PF_EffectWorld *world, A_long x, A_long y)
 {
-	return reinterpret_cast<const PixelT *>(reinterpret_cast<const char *>(world->data) + y * world->rowbytes) + x;
+	return reinterpret_cast<const PixelT *>(reinterpret_cast<const std::uint8_t *>(world->data) +
+		static_cast<std::size_t>(y) * static_cast<std::size_t>(world->rowbytes)) + x;
 }
 
 template <typename PixelT>
@@ -823,45 +827,91 @@ static bool CanUseExact8(const PF_EffectWorld *input,
 	       info.render_scale_y > 0.0;
 }
 
-// Public beta lane for the already-portable, full-frame PF8 core.  Keep this
-// deliberately narrow: one-sided blur without component/noise modifiers.  It
-// is nevertheless source- and geometry-independent, including padded rows.
-static bool IsGenericFrontOnly8Parameters(const OLMDirectionalBlurInfo &info)
+// Public beta lane for the already-portable full-frame core.  The neutral
+// shape is kept separate from admission so malformed/out-of-UI generic tuples
+// cannot fall through into a legacy approximate or fixed-fixture route.
+static bool IsGenericFrontOnlyNeutralShape(const OLMDirectionalBlurInfo &info)
 {
-	return std::isfinite(info.angle_deg) && std::isfinite(info.brightness_gain) &&
-		std::isfinite(info.render_scale_x) && std::isfinite(info.render_scale_y) &&
-		info.front_strength > 0 && info.front_alpha_fade == 0 &&
+	return info.front_strength != 0 && info.front_alpha_fade == 0 &&
 		info.front_sharp_tail == 0.0 && info.back_strength == 0 &&
 		info.back_alpha_fade == 0 && info.back_sharp_tail == 0.0 &&
-		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
-		info.render_scale_x > 0.0 && info.render_scale_y > 0.0;
+		info.size_variation == 0.0 && info.noise_variation == 0.0;
 }
 
-static bool GenericFrontOnlyMemorySafe(A_long width, A_long height)
+static bool GenericFrontOnlyEffectiveStrength(const OLMDirectionalBlurInfo &info,
+	                                          bool require_unit_scale,
+	                                          int *effective_strength)
 {
-	// The current full-frame core owns fourteen float channels over a square
-	// whose side is the source diagonal.  Keep the beta lane below 512 MiB;
-	// 1080p fits, while UHD/4K fails closed pending a tiled implementation.
-	constexpr std::uint64_t kBudgetBytes = 512ull * 1024ull * 1024ull;
-	constexpr std::uint64_t kBytesPerWorkPixel = 14ull * sizeof(float);
-	if (width <= 0 || height <= 0) return false;
-	const std::uint64_t diagonal_squared =
-		static_cast<std::uint64_t>(width) * static_cast<std::uint64_t>(width) +
-		static_cast<std::uint64_t>(height) * static_cast<std::uint64_t>(height);
-	const std::uint64_t diagonal = static_cast<std::uint64_t>(
-		std::ceil(std::sqrt(static_cast<double>(diagonal_squared))));
-	const std::uint64_t side = diagonal + 4u;
-	return side <= std::numeric_limits<std::uint64_t>::max() / side &&
-		side * side <= kBudgetBytes / kBytesPerWorkPixel;
+	if (!effective_strength || !IsGenericFrontOnlyNeutralShape(info)) return false;
+	// PF_ADD_ANGLE stores signed 16.16 degrees; the other bounds mirror the
+	// visible generic controls.  Recheck the actual float values consumed by the
+	// core after narrowing, rather than relying only on PF_FpLong finiteness.
+	constexpr PF_FpLong kMinimumAngle = -32768.0;
+	constexpr PF_FpLong kMaximumAngle = 32767.9999847412109375;
+	if (!std::isfinite(info.angle_deg) || info.angle_deg < kMinimumAngle ||
+		info.angle_deg > kMaximumAngle ||
+		!std::isfinite(info.brightness_gain) || info.brightness_gain < 0.0 ||
+		info.brightness_gain > 10.0 || info.front_strength < 1 ||
+		info.front_strength > 4000 ||
+		!std::isfinite(info.render_scale_x) ||
+		!std::isfinite(info.render_scale_y) ||
+		info.render_scale_x <= 0.0 || info.render_scale_x > 1.0 ||
+		info.render_scale_y <= 0.0 || info.render_scale_y > 1.0) {
+		return false;
+	}
+	const float angle = static_cast<float>(info.angle_deg);
+	const float gain = static_cast<float>(info.brightness_gain);
+	const float scale_x = static_cast<float>(info.render_scale_x);
+	const float scale_y = static_cast<float>(info.render_scale_y);
+	if (!std::isfinite(angle) || !std::isfinite(gain) ||
+		!std::isfinite(scale_x) || !std::isfinite(scale_y) ||
+		scale_x <= 0.0f || scale_y <= 0.0f) {
+		return false;
+	}
+	if (require_unit_scale) {
+		if (info.render_scale_x != 1.0 || info.render_scale_y != 1.0) return false;
+		*effective_strength = static_cast<int>(info.front_strength);
+		return true;
+	}
+	const double radians = -info.angle_deg * kPi / 180.0;
+	const double vx = std::cos(radians);
+	const double vy = std::sin(radians);
+	const float projected_scale = static_cast<float>(std::sqrt(
+		std::pow(vx * info.render_scale_x, 2) +
+		std::pow(vy * info.render_scale_y, 2)));
+	const float scaled_strength =
+		static_cast<float>(info.front_strength) * projected_scale;
+	if (!std::isfinite(projected_scale) || projected_scale <= 0.0f ||
+		projected_scale > 1.0f || !std::isfinite(scaled_strength) ||
+		scaled_strength < 1.0f ||
+		scaled_strength > static_cast<float>(std::numeric_limits<int>::max())) {
+		return false;
+	}
+	*effective_strength = static_cast<int>(scaled_strength);
+	return *effective_strength > 0 && *effective_strength <= 4000;
+}
+
+static bool IsGenericFrontOnly8Parameters(const OLMDirectionalBlurInfo &info)
+{
+	int ignored_strength = 0;
+	return GenericFrontOnlyEffectiveStrength(info, false, &ignored_strength);
+}
+
+static bool IsGenericFrontOnlyDeepParameters(const OLMDirectionalBlurInfo &info)
+{
+	int ignored_strength = 0;
+	return GenericFrontOnlyEffectiveStrength(info, true, &ignored_strength);
 }
 
 static bool CanUseGenericFrontOnly8(const PF_EffectWorld *input,
 	                                const PF_EffectWorld *output,
 	                                const OLMDirectionalBlurInfo &info)
 {
+	int effective_strength = 0;
 	if (!input || !output || !input->data || !output->data ||
 		input->width <= 0 || input->height <= 0 ||
 		input->width != output->width || input->height != output->height ||
+		!GenericFrontOnlyEffectiveStrength(info, false, &effective_strength) ||
 		static_cast<std::size_t>(input->width) >
 			static_cast<std::size_t>(std::numeric_limits<A_long>::max()) / sizeof(PF_Pixel8)) {
 		return false;
@@ -872,24 +922,22 @@ static bool CanUseGenericFrontOnly8(const PF_EffectWorld *input,
 	const std::int64_t diagonal_squared =
 		static_cast<std::int64_t>(input->width) * input->width +
 		static_cast<std::int64_t>(input->height) * input->height;
+	olm::dblur::generic::RenderEstimate estimate = {};
 	return diagonal_squared <= std::numeric_limits<int>::max() &&
-		GenericFrontOnlyMemorySafe(input->width, input->height) &&
-		IsGenericFrontOnly8Parameters(info);
-}
-
-static bool IsGenericFrontOnlyDeepParameters(const OLMDirectionalBlurInfo &info)
-{
-	return IsGenericFrontOnly8Parameters(info) &&
-		info.render_scale_x == 1.0 && info.render_scale_y == 1.0;
+		olm::dblur::generic::EstimateRender(input->width, input->height, 8,
+			effective_strength, 0, &estimate);
 }
 
 template <typename PixelT>
 static bool GenericDeepWorldsSafe(const PF_EffectWorld *input,
-	                              const PF_EffectWorld *output)
+	                              const PF_EffectWorld *output,
+	                              const OLMDirectionalBlurInfo &info)
 {
+	int effective_strength = 0;
 	if (!input || !output || !input->data || !output->data || input->width <= 0 ||
 		input->height <= 0 || input->width != output->width ||
-		input->height != output->height || !GenericFrontOnlyMemorySafe(input->width, input->height)) {
+		input->height != output->height ||
+		!GenericFrontOnlyEffectiveStrength(info, true, &effective_strength)) {
 		return false;
 	}
 	const std::size_t width = static_cast<std::size_t>(input->width);
@@ -897,16 +945,24 @@ static bool GenericDeepWorldsSafe(const PF_EffectWorld *input,
 		return false;
 	}
 	const A_long active = static_cast<A_long>(width * sizeof(PixelT));
-	return input->rowbytes >= active && output->rowbytes >= active;
+	constexpr short depth = sizeof(PixelT) == 8 ? 16 : 32;
+	olm::dblur::generic::RenderEstimate estimate = {};
+	return input->rowbytes >= active && output->rowbytes >= active &&
+		olm::dblur::generic::EstimateRender(input->width, input->height, depth,
+			effective_strength, 0, &estimate);
 }
 
 static bool GenericPF16SDRInput(const PF_EffectWorld *input)
 {
 	for (A_long y = 0; y < input->height; ++y) {
-		const PF_Pixel16 *row = PixelAtConst<PF_Pixel16>(input, 0, y);
+		const std::uint8_t *row = reinterpret_cast<const std::uint8_t *>(input->data) +
+			static_cast<std::size_t>(y) * static_cast<std::size_t>(input->rowbytes);
 		for (A_long x = 0; x < input->width; ++x) {
-			if (row[x].alpha > 32768 || row[x].red > 32768 ||
-				row[x].green > 32768 || row[x].blue > 32768) return false;
+			PF_Pixel16 pixel = {};
+			std::memcpy(&pixel, row + static_cast<std::size_t>(x) * sizeof(pixel),
+				sizeof(pixel));
+			if (pixel.alpha > 32768 || pixel.red > 32768 ||
+				pixel.green > 32768 || pixel.blue > 32768) return false;
 		}
 	}
 	return true;
@@ -915,9 +971,13 @@ static bool GenericPF16SDRInput(const PF_EffectWorld *input)
 static bool GenericPF32SDRInput(const PF_EffectWorld *input)
 {
 	for (A_long y = 0; y < input->height; ++y) {
-		const PF_PixelFloat *row = PixelAtConst<PF_PixelFloat>(input, 0, y);
+		const std::uint8_t *row = reinterpret_cast<const std::uint8_t *>(input->data) +
+			static_cast<std::size_t>(y) * static_cast<std::size_t>(input->rowbytes);
 		for (A_long x = 0; x < input->width; ++x) {
-			const float values[] = {row[x].alpha, row[x].red, row[x].green, row[x].blue};
+			PF_PixelFloat pixel = {};
+			std::memcpy(&pixel, row + static_cast<std::size_t>(x) * sizeof(pixel),
+				sizeof(pixel));
+			const float values[] = {pixel.alpha, pixel.red, pixel.green, pixel.blue};
 			for (float value : values) if (!std::isfinite(value) || value < 0.0f || value > 1.0f) return false;
 		}
 	}
@@ -1126,7 +1186,8 @@ static void StageDirectionalWorld(const PF_EffectWorld *world, std::vector<Scala
 	pixels->resize(static_cast<std::size_t>(world->width) * world->height * 4);
 	for (A_long y = 0; y < world->height; ++y) {
 		std::memcpy(pixels->data() + static_cast<std::size_t>(y) * world->width * 4,
-			reinterpret_cast<const std::uint8_t *>(world->data) + y * world->rowbytes,
+			reinterpret_cast<const std::uint8_t *>(world->data) +
+				static_cast<std::size_t>(y) * static_cast<std::size_t>(world->rowbytes),
 			static_cast<std::size_t>(world->width) * sizeof(PixelT));
 	}
 }
@@ -1135,7 +1196,8 @@ template <typename PixelT, typename ScalarT>
 static void UnstageDirectionalWorld(const std::vector<ScalarT> &pixels, PF_EffectWorld *world)
 {
 	for (A_long y = 0; y < world->height; ++y) {
-		std::memcpy(reinterpret_cast<std::uint8_t *>(world->data) + y * world->rowbytes,
+		std::memcpy(reinterpret_cast<std::uint8_t *>(world->data) +
+				static_cast<std::size_t>(y) * static_cast<std::size_t>(world->rowbytes),
 			pixels.data() + static_cast<std::size_t>(y) * world->width * 4,
 			static_cast<std::size_t>(world->width) * sizeof(PixelT));
 	}
@@ -1230,7 +1292,7 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		if (CanUseGenericFrontOnly8(input, output, info)) {
 			return RenderExact8(input, output, nullptr, info, true);
 		}
-		if (IsGenericFrontOnly8Parameters(info) && input && output &&
+		if (IsGenericFrontOnlyNeutralShape(info) && input && output &&
 			input->width == output->width && input->height == output->height) {
 			// Do not let an invalid world or over-budget frame fall through to the
 			// older permissive exact predicate.
@@ -1248,11 +1310,12 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		return RenderDirectional8(input, output, info);
 	}
 	if (bitdepth == 16) {
-		if (IsGenericFrontOnlyDeepParameters(info) && GenericDeepWorldsSafe<PF_Pixel16>(input, output)) {
+		if (IsGenericFrontOnlyDeepParameters(info) &&
+			GenericDeepWorldsSafe<PF_Pixel16>(input, output, info)) {
 			return GenericPF16SDRInput(input)
 				? RenderGenericFrontOnly16(input, output, info) : PF_Err_BAD_CALLBACK_PARAM;
 		}
-		if (IsGenericFrontOnlyDeepParameters(info) && input && output &&
+		if (IsGenericFrontOnlyNeutralShape(info) && input && output &&
 			input->width == output->width && input->height == output->height) {
 			return PF_Err_BAD_CALLBACK_PARAM;
 		}
@@ -1458,11 +1521,12 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
 	if (bitdepth == 32) {
-		if (IsGenericFrontOnlyDeepParameters(info) && GenericDeepWorldsSafe<PF_PixelFloat>(input, output)) {
+		if (IsGenericFrontOnlyDeepParameters(info) &&
+			GenericDeepWorldsSafe<PF_PixelFloat>(input, output, info)) {
 			return GenericPF32SDRInput(input)
 				? RenderGenericFrontOnly32(input, output, info) : PF_Err_BAD_CALLBACK_PARAM;
 		}
-		if (IsGenericFrontOnlyDeepParameters(info) && input && output &&
+		if (IsGenericFrontOnlyNeutralShape(info) && input && output &&
 			input->width == output->width && input->height == output->height) {
 			return PF_Err_BAD_CALLBACK_PARAM;
 		}
@@ -1677,6 +1741,60 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 }
 
 #if defined(OLM_DBLUR_TEST_SEAM)
+struct OLMDirectionalBlurGenericEstimate {
+	std::uint64_t source_pixels;
+	std::uint64_t work_width;
+	std::uint64_t work_height;
+	std::uint64_t work_pixels;
+	std::uint64_t core_workspace_bytes;
+	std::uint64_t wrapper_bytes;
+	std::uint64_t weight_bytes;
+	std::uint64_t smart_staging_bytes;
+	std::uint64_t plugin_owned_live_bytes;
+	std::uint64_t operation_units;
+};
+
+// Test-only transparent view of the exact production estimator.  Tests do not
+// duplicate the geometry, live-allocation, or rowdriver-work arithmetic.
+extern "C" int OLMDirectionalBlurTestGenericEstimate(
+	A_long width,
+	A_long height,
+	short bitdepth,
+	A_long effective_strength,
+	std::size_t smart_staging_bytes,
+	OLMDirectionalBlurGenericEstimate *result)
+{
+	if (!result) return 0;
+	olm::dblur::generic::RenderEstimate estimate = {};
+	if (!olm::dblur::generic::EstimateRender(
+		width, height, bitdepth, static_cast<int>(effective_strength),
+		smart_staging_bytes, &estimate)) {
+		*result = {};
+		return 0;
+	}
+	result->source_pixels = estimate.source_pixels;
+	result->work_width = static_cast<std::uint64_t>(estimate.work.width);
+	result->work_height = static_cast<std::uint64_t>(estimate.work.height);
+	result->work_pixels = estimate.work.pixels;
+	result->core_workspace_bytes = estimate.core_workspace_bytes;
+	result->wrapper_bytes = estimate.wrapper_bytes;
+	result->weight_bytes = estimate.weight_bytes;
+	result->smart_staging_bytes = estimate.smart_staging_bytes;
+	result->plugin_owned_live_bytes = estimate.plugin_owned_live_bytes;
+	result->operation_units = estimate.operation_units;
+	return 1;
+}
+
+extern "C" int OLMDirectionalBlurTestGenericEffectiveStrength(
+	const OLMDirectionalBlurInfo *info,
+	short bitdepth,
+	int *effective_strength)
+{
+	return info && (bitdepth == 8 || bitdepth == 16 || bitdepth == 32) &&
+		GenericFrontOnlyEffectiveStrength(*info, bitdepth != 8, effective_strength)
+		? 1 : 0;
+}
+
 // Test-only entrypoint: keep the boundary probe on the production dispatcher.
 extern "C" PF_Err OLMDirectionalBlurTestRenderWorld(
 	PF_EffectWorld *input,
@@ -2113,30 +2231,46 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 				if (pre->render_scale_x > 0.0) render_scale_x = pre->render_scale_x;
 				if (pre->render_scale_y > 0.0) render_scale_y = pre->render_scale_y;
 			}
+			OLMDirectionalBlurInfo info = InfoFromParams(
+				param_ptrs, render_scale_x, render_scale_y);
 			std::uintptr_t output_begin = 0, output_end = 0;
 			if (!PayloadSpan(output_world, &output_begin, &output_end) ||
 				!DirectionalActiveRowBytes(extra->input->bitdepth, output_world->width,
 				                           &active_row_bytes) ||
 				active_row_bytes > static_cast<std::size_t>(output_world->rowbytes)) {
 				err = PF_Err_BAD_CALLBACK_PARAM;
-			} else {
+			}
+			const bool generic_shape = IsGenericFrontOnlyNeutralShape(info);
+			int effective_strength = 0;
+			if (!err && generic_shape) {
+				const bool parameters_safe = GenericFrontOnlyEffectiveStrength(
+					info, extra->input->bitdepth != 8, &effective_strength);
+				const bool worlds_safe = extra->input->bitdepth == 8
+					? CanUseGenericFrontOnly8(input_world, output_world, info)
+					: (extra->input->bitdepth == 16
+						? GenericDeepWorldsSafe<PF_Pixel16>(input_world, output_world, info)
+						: (extra->input->bitdepth == 32 &&
+							GenericDeepWorldsSafe<PF_PixelFloat>(input_world, output_world, info)));
+				olm::dblur::generic::RenderEstimate smart_estimate = {};
+				if (!parameters_safe || !worlds_safe ||
+					!olm::dblur::generic::EstimateRender(
+						input_world->width, input_world->height, extra->input->bitdepth,
+						effective_strength, output_end - output_begin, &smart_estimate) ||
+					(pre && pre->full_width > 0 && pre->full_height > 0 &&
+						(!pre->request_contains_full_frame ||
+						 !DirectionalGenericWorldIsFullFrame(
+							 input_world, pre->full_width, pre->full_height) ||
+						 !DirectionalGenericWorldIsFullFrame(
+							 output_world, pre->full_width, pre->full_height)))) {
+					err = PF_Err_BAD_CALLBACK_PARAM;
+				}
+			}
+			if (!err) {
 				staged_output.assign(output_end - output_begin, 0);
 				staged_world = *output_world;
 				staged_world.data = reinterpret_cast<PF_PixelPtr>(staged_output.data());
-				OLMDirectionalBlurInfo info = InfoFromParams(
-					param_ptrs, render_scale_x, render_scale_y);
-				const bool generic_neutral = extra->input->bitdepth == 8
-					? IsGenericFrontOnly8Parameters(info)
-					: IsGenericFrontOnlyDeepParameters(info);
-				if (generic_neutral && pre && pre->full_width > 0 && pre->full_height > 0 &&
-					(!pre->request_contains_full_frame ||
-					 !DirectionalGenericWorldIsFullFrame(input_world, pre->full_width, pre->full_height) ||
-					 !DirectionalGenericWorldIsFullFrame(output_world, pre->full_width, pre->full_height))) {
-					err = PF_Err_BAD_CALLBACK_PARAM;
-				} else {
-					err = RenderWorld(input_world, &staged_world, noise_world, info,
-					                  extra->input->bitdepth);
-				}
+				err = RenderWorld(input_world, &staged_world, noise_world, info,
+				                  extra->input->bitdepth);
 				render_complete = err == PF_Err_NONE;
 			}
 		}
