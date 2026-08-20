@@ -14,6 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / "mac/OLMKiraKira/OLMKiraKira.cpp"
+STRINGS_SOURCE = "mac/OLMKiraKira/OLMKiraKira_Strings.cpp"
 HARNESS = ROOT / "tests/olmkirakira_generic_beta_sanitizer_harness.cpp"
 GEOMETRIES = {"hd": (1920, 1080), "uhd": (3840, 2160)}
 MODES = {"box": 0, "approximated_gaussian": 3, "gaussian": 7, "exponential": 9}
@@ -33,7 +34,8 @@ def main() -> int:
             "-fno-fast-math", "-ffp-contract=off", "-isysroot", sdk, "-w",
             "-I", str(ROOT / "Headers"), "-I", str(ROOT / "Headers/SP"),
             "-I", str(ROOT / "Util"), "-I", str(ROOT / "Resources"),
-            f'-DKIRA_SOURCE="{SOURCE}"', str(HARNESS),
+            "-I", str(ROOT), f'-DKIRA_SOURCE="{SOURCE}"',
+            f'-DKIRA_STRINGS_SOURCE="{STRINGS_SOURCE}"', str(HARNESS),
             str(ROOT / "Util/AEGP_SuiteHandler.cpp"),
             str(ROOT / "Util/MissingSuiteError.cpp"),
             "-framework", "Cocoa", "-o", str(executable),

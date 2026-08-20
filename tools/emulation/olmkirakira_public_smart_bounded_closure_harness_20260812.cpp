@@ -10,8 +10,11 @@
 #ifndef KIRA_SOURCE
 #error KIRA_SOURCE must name the OLMKiraKira.cpp snapshot
 #endif
+#ifndef KIRA_STRINGS_SOURCE
+#define KIRA_STRINGS_SOURCE "../../mac/OLMKiraKira/OLMKiraKira_Strings.cpp"
+#endif
 #include KIRA_SOURCE
-#include "/Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMKiraKira/OLMKiraKira_Strings.cpp"
+#include KIRA_STRINGS_SOURCE
 
 static std::map<PF_Handle, A_HandleSize> g_sizes;
 static PF_EffectWorld *g_format_input_world = nullptr;
