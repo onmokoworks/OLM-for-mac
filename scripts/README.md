@@ -82,6 +82,20 @@ python3 scripts/verify_windows_ae_release_boundary_minimal_20260806.py RETURN.zi
 - 16bpc などの batch validation を回す
 - AE が modal / duplicate plugin / script 側で詰まっていないか診断する
 
+`run_ae_validation_batch.py` は各実行を `batch_run_<run_id>/` に隔離し、
+入力を single-link/read-only の `source_capsule/staged_requests/` に固定したうえで、
+`runtime/`、`raw_candidates/`、`validated_outputs/`、`validated_summaries/` を分離する。
+全 PNG の CRC・critical structure・IDAT inflate・SHA/ファイル identity 検証後、
+検証済みbytesを `validated_outputs/` へatomicに派生し、`AE_PIXEL_VALIDATION_BATCH_RESULT.json` を
+generation commit marker として最後に書く。`--results-base` はこの run tree の
+親ディレクトリであり、従来の共有 flat output ではない。request 単位の summary は
+単独では authoritative ではない。static な `passed` marker や `--batch-result-json` の
+published pointer だけでも authority にはせず、consumer は採用時ごとに
+published pointer/呼出し元が保持する `generation_commit_anchor.sha256` を期待値として
+`run_ae_validation_batch.verify_generation_commit(expected_commit_sha256=...)` を実行する。同 verifier が、同じ
+`run_id` の commit に列挙された staged source・raw/validated PNG・summary・raw JSON を
+O_NOFOLLOW/SHA/identity で再検査して成功した場合だけ generation を採用する。
+
 ## 4. プラグイン別の解析
 
 命名規則はだいたいこうです。
