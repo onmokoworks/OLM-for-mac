@@ -93,44 +93,98 @@
         return folder;
     }
 
-    function waitForStableFile(file, since, timeoutMs, sleepMs) {
+    function bytesMatch(value, expected) {
+        if (!value || value.length !== expected.length) {
+            return false;
+        }
+        for (var i = 0; i < expected.length; i++) {
+            if ((value.charCodeAt(i) & 255) !== expected[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function hasCompletePngTrailer(file) {
+        if (!file.exists || Number(file.length || 0) < 20) {
+            return false;
+        }
+        var opened = false;
+        try {
+            file.encoding = "BINARY";
+            if (!file.open("r")) {
+                return false;
+            }
+            opened = true;
+            var signature = file.read(8);
+            if (!bytesMatch(signature, [137, 80, 78, 71, 13, 10, 26, 10])) {
+                return false;
+            }
+            file.seek(-12, 2);
+            return bytesMatch(file.read(12), [0, 0, 0, 0, 73, 69, 78, 68, 174, 66, 96, 130]);
+        } catch (_) {
+            return false;
+        } finally {
+            if (opened) {
+                try { file.close(); } catch (_) {}
+            }
+        }
+    }
+
+    function waitForStableFile(file, since, timeoutMs, sleepMs, stableWindowMs) {
         var startedWaiting = new Date();
         var sinceMs = since.getTime() - 2000;
         var lastSize = -1;
         var lastModified = -1;
+        var stableStartedMs = 0;
         var stablePolls = 0;
         var polls = 0;
-        var observation = { status: "timeout", timeout_ms: timeoutMs, waited_ms: 0, polls: 0, stable_polls: 0, size_bytes: 0, modified_ms: 0 };
+        var observation = { status: "timeout", timeout_ms: timeoutMs, waited_ms: 0, polls: 0, stable_polls: 0, stable_for_ms: 0, stable_window_ms: stableWindowMs, size_bytes: 0, modified_ms: 0, format_complete: false, crc_validated: false };
         while (true) {
             polls++;
+            var nowMs = (new Date()).getTime();
             var exists = file.exists;
             var size = exists ? Number(file.length || 0) : 0;
             var modified = exists && file.modified ? file.modified.getTime() : 0;
             var fresh = exists && (!file.modified || modified >= sinceMs);
             if (fresh && size > 0) {
-                stablePolls = (size === lastSize && modified === lastModified) ? stablePolls + 1 : 1;
-                if (stablePolls >= 2) {
+                if (size === lastSize && modified === lastModified) {
+                    stablePolls++;
+                } else {
+                    stablePolls = 1;
+                    stableStartedMs = nowMs;
+                }
+                var stableForMs = nowMs - stableStartedMs;
+                var formatComplete = stableForMs >= stableWindowMs && hasCompletePngTrailer(file);
+                var verifiedSize = file.exists ? Number(file.length || 0) : 0;
+                var verifiedModified = file.exists && file.modified ? file.modified.getTime() : 0;
+                if (stableForMs >= stableWindowMs && formatComplete && verifiedSize === size && verifiedModified === modified) {
                     observation.status = "stable";
-                    observation.waited_ms = (new Date()).getTime() - startedWaiting.getTime();
+                    observation.waited_ms = nowMs - startedWaiting.getTime();
                     observation.polls = polls;
                     observation.stable_polls = stablePolls;
+                    observation.stable_for_ms = stableForMs;
                     observation.size_bytes = size;
                     observation.modified_ms = modified;
+                    observation.format_complete = true;
                     return observation;
                 }
                 lastSize = size;
                 lastModified = modified;
             } else {
                 stablePolls = 0;
+                stableStartedMs = 0;
                 lastSize = -1;
                 lastModified = -1;
             }
-            if ((new Date()).getTime() - startedWaiting.getTime() >= timeoutMs) {
-                observation.waited_ms = (new Date()).getTime() - startedWaiting.getTime();
+            if (nowMs - startedWaiting.getTime() >= timeoutMs) {
+                observation.waited_ms = nowMs - startedWaiting.getTime();
                 observation.polls = polls;
                 observation.stable_polls = stablePolls;
+                observation.stable_for_ms = stableStartedMs ? nowMs - stableStartedMs : 0;
                 observation.size_bytes = size;
                 observation.modified_ms = modified;
+                observation.format_complete = fresh && size > 0 && hasCompletePngTrailer(file);
                 observation.status = exists ? (size > 0 ? "unstable" : "empty") : "missing";
                 return observation;
             }
@@ -320,10 +374,20 @@
         if (caseRef.effects && caseRef.effects.length > 0) {
             setEffectParams(effect, caseRef.effects[0].params || [], paramErrors, valueScaleByMatchName);
         }
+        if (paramErrors.length) {
+            summary.errors.push(caseSpec.id + ": parameter assignment failed: " + paramErrors.join(" | "));
+            return false;
+        }
         var png = new File(outputPath);
+        if (png.alias) {
+            summary.errors.push(caseSpec.id + ": refusing aliased PNG output path");
+            return false;
+        }
         if (png.exists) {
             try {
-                png.remove();
+                if (!png.remove() || png.exists) {
+                    throw new Error("remove returned false or file still exists");
+                }
             } catch (removeError) {
                 summary.errors.push(caseSpec.id + ": could not remove stale PNG " + removeError.toString());
                 return false;
@@ -336,17 +400,18 @@
             summary.errors.push(caseSpec.id + ": render threw " + e.toString());
             return false;
         }
-        var observation = waitForStableFile(png, renderStarted, 120000, 250);
+        var observation = waitForStableFile(png, renderStarted, 120000, 250, 2000);
         summary.png_observations[caseSpec.id] = observation;
         appendText(progressLog, "png_observation " + caseSpec.id + " status=" + observation.status + " waited_ms=" + observation.waited_ms + " size_bytes=" + observation.size_bytes + "\n");
         if (observation.status !== "stable") {
             summary.errors.push(caseSpec.id + ": PNG was not stably written (" + observation.status + ")");
             return false;
         }
-        if (paramErrors.length) {
-            summary.warnings.push(caseSpec.id + ": " + paramErrors.join(" | "));
-        }
-        summary.rendered.push(caseSpec.frame);
+        // ExtendScript can cheaply prove that the file stopped changing and has
+        // a PNG signature/terminal IEND, but it does not validate every chunk
+        // CRC.  Keep this as a render candidate; the Python caller promotes it
+        // to `rendered` only after authoritative hostless PNG validation.
+        summary.render_candidates.push(caseSpec.frame);
         appendText(progressLog, "case_done " + requestManifest.request_id + " " + caseSpec.id + "\n");
         return true;
     }
@@ -369,9 +434,12 @@
         if (requestedBits) {
             try {
                 app.project.bitsPerChannel = requestedBits;
+                if (Number(app.project.bitsPerChannel) !== requestedBits) {
+                    throw new Error("readback differed: " + app.project.bitsPerChannel);
+                }
                 appendText(progressLog, "bits_per_channel " + requestedBits + " source=" + requestedBitsSource + "\n");
             } catch (bitsError) {
-                appendText(progressLog, "bits_per_channel_warning " + bitsError.toString() + "\n");
+                throw new Error("bits_per_channel setup failed: " + bitsError.toString());
             }
         }
         if (requestManifest.disable_project_color_management) {
@@ -385,11 +453,17 @@
         }
         var alias = requestManifest.request_id.replace(/^ae_pixel_/, "").replace(/_20[0-9][0-9][0-9][0-9][0-9][0-9]$/, "");
         var resultRoot = ensureFolder(outputBase.fsName + "/" + alias);
+        if (resultRoot.alias) {
+            throw new Error("refusing aliased request output folder " + resultRoot.fsName);
+        }
         var summary = {
+            schema_version: 2,
+            run_id: getenv("OLM_AE_RUN_ID") || "",
             request_id: requestManifest.request_id,
             effect_name: requestManifest.effect_name,
             output_dir: resultRoot.fsName,
             rendered: [],
+            render_candidates: [],
             png_observations: {},
             warnings: [],
             errors: []
@@ -415,15 +489,20 @@
         for (var observationId in summary.png_observations) {
             if (summary.png_observations.hasOwnProperty(observationId)) {
                 var observation = summary.png_observations[observationId];
-                observationParts.push("\"" + esc(observationId) + "\":{\"status\":\"" + esc(observation.status) + "\",\"timeout_ms\":" + observation.timeout_ms + ",\"waited_ms\":" + observation.waited_ms + ",\"polls\":" + observation.polls + ",\"stable_polls\":" + observation.stable_polls + ",\"size_bytes\":" + observation.size_bytes + ",\"modified_ms\":" + observation.modified_ms + "}");
+                observationParts.push("\"" + esc(observationId) + "\":{\"status\":\"" + esc(observation.status) + "\",\"timeout_ms\":" + observation.timeout_ms + ",\"waited_ms\":" + observation.waited_ms + ",\"polls\":" + observation.polls + ",\"stable_polls\":" + observation.stable_polls + ",\"stable_for_ms\":" + observation.stable_for_ms + ",\"stable_window_ms\":" + observation.stable_window_ms + ",\"size_bytes\":" + observation.size_bytes + ",\"modified_ms\":" + observation.modified_ms + ",\"format_complete\":" + (observation.format_complete ? "true" : "false") + ",\"crc_validated\":" + (observation.crc_validated ? "true" : "false") + "}");
             }
         }
         return "{\n" +
             "  \"kind\": \"olm_ae_pixel_validation_render_result\",\n" +
+            "  \"schema_version\": 2,\n" +
+            "  \"run_id\": \"" + esc(summary.run_id) + "\",\n" +
+            "  \"hostless_validation_required\": true,\n" +
+            "  \"rendered_authority\": \"python_hostless_png_integrity_required\",\n" +
             "  \"request_id\": \"" + esc(summary.request_id) + "\",\n" +
             "  \"effect_name\": \"" + esc(summary.effect_name) + "\",\n" +
             "  \"output_dir\": \"" + esc(summary.output_dir) + "\",\n" +
             "  \"rendered\": " + jsonStringArray(summary.rendered) + ",\n" +
+            "  \"render_candidates\": " + jsonStringArray(summary.render_candidates) + ",\n" +
             "  \"png_observations\": {" + observationParts.join(",") + "},\n" +
             "  \"warnings\": " + jsonStringArray(summary.warnings) + ",\n" +
             "  \"errors\": " + jsonStringArray(summary.errors) + "\n" +
@@ -487,6 +566,9 @@
 
     var top = "{\n";
     top += "  \"kind\": \"olm_ae_pixel_validation_batch_render_result\",\n";
+    top += "  \"schema_version\": 2,\n";
+    top += "  \"run_id\": \"" + esc(getenv("OLM_AE_RUN_ID") || "") + "\",\n";
+    top += "  \"hostless_validation_required\": true,\n";
     top += "  \"ae_version\": \"" + esc(app.version) + "\",\n";
     top += "  \"macos_version\": \"" + esc(shell("/usr/bin/sw_vers -productVersion")) + "\",\n";
     top += "  \"machine\": \"" + esc(shell("/usr/bin/uname -m")) + "\",\n";

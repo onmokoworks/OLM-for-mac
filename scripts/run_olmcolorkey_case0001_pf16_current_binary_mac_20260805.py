@@ -35,7 +35,7 @@ EXPECTED = {
     "windows_reference": "d650ed20952374cdce84872aa57777c2c758884bca9c8d2c7a036a4ee7dec133",
     "request_manifest": "baea985f4caddb557695d20b0bb06f482c5658c3511100f744f63556b7f5d8b9",
     "reference_manifest": "c4378358c8b4db2b2d5d12d0bf0b4142f141963538ca5ec4d86a49eeb8b9e71e",
-    "render_jsx": "3e7acd0735ff2947d8bbef565df7a4e92c3ed07bc419acf1c742b1b9d4c5fba9",
+    "render_jsx": "4cbf7a2a80eb38f8d81150cf48b353b9a326a589b91af81e0ab9833eae9c9804",
     "readable_params": "c5bcbc5d2cc1a7ffe28cd153a676dd0e22c5923de9ece7f65bb6b4655155fdb8",
     "case": "5001ce97595bc154d50c49360b599ee41d94807b0ad9d7965b3afec3b14a3356",
 }
