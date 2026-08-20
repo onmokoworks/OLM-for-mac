@@ -35,44 +35,98 @@
         return folder;
     }
 
-    function waitForStableFile(file, since, timeoutMs, sleepMs) {
+    function bytesMatch(value, expected) {
+        if (!value || value.length !== expected.length) {
+            return false;
+        }
+        for (var i = 0; i < expected.length; i++) {
+            if ((value.charCodeAt(i) & 255) !== expected[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function hasCompletePngTrailer(file) {
+        if (!file.exists || Number(file.length || 0) < 20) {
+            return false;
+        }
+        var opened = false;
+        try {
+            file.encoding = "BINARY";
+            if (!file.open("r")) {
+                return false;
+            }
+            opened = true;
+            var signature = file.read(8);
+            if (!bytesMatch(signature, [137, 80, 78, 71, 13, 10, 26, 10])) {
+                return false;
+            }
+            file.seek(-12, 2);
+            return bytesMatch(file.read(12), [0, 0, 0, 0, 73, 69, 78, 68, 174, 66, 96, 130]);
+        } catch (_) {
+            return false;
+        } finally {
+            if (opened) {
+                try { file.close(); } catch (_) {}
+            }
+        }
+    }
+
+    function waitForStableFile(file, since, timeoutMs, sleepMs, stableWindowMs) {
         var startedWaiting = new Date();
         var sinceMs = since.getTime() - 2000;
         var lastSize = -1;
         var lastModified = -1;
+        var stableStartedMs = 0;
         var stablePolls = 0;
         var polls = 0;
-        var observation = { status: "timeout", timeout_ms: timeoutMs, waited_ms: 0, polls: 0, stable_polls: 0, size_bytes: 0, modified_ms: 0 };
+        var observation = { status: "timeout", timeout_ms: timeoutMs, waited_ms: 0, polls: 0, stable_polls: 0, stable_for_ms: 0, stable_window_ms: stableWindowMs, size_bytes: 0, modified_ms: 0, format_complete: false, crc_validated: false };
         while (true) {
             polls++;
+            var nowMs = (new Date()).getTime();
             var exists = file.exists;
             var size = exists ? Number(file.length || 0) : 0;
             var modified = exists && file.modified ? file.modified.getTime() : 0;
             var fresh = exists && (!file.modified || modified >= sinceMs);
             if (fresh && size > 0) {
-                stablePolls = (size === lastSize && modified === lastModified) ? stablePolls + 1 : 1;
-                if (stablePolls >= 2) {
+                if (size === lastSize && modified === lastModified) {
+                    stablePolls++;
+                } else {
+                    stablePolls = 1;
+                    stableStartedMs = nowMs;
+                }
+                var stableForMs = nowMs - stableStartedMs;
+                var formatComplete = stableForMs >= stableWindowMs && hasCompletePngTrailer(file);
+                var verifiedSize = file.exists ? Number(file.length || 0) : 0;
+                var verifiedModified = file.exists && file.modified ? file.modified.getTime() : 0;
+                if (stableForMs >= stableWindowMs && formatComplete && verifiedSize === size && verifiedModified === modified) {
                     observation.status = "stable";
-                    observation.waited_ms = (new Date()).getTime() - startedWaiting.getTime();
+                    observation.waited_ms = nowMs - startedWaiting.getTime();
                     observation.polls = polls;
                     observation.stable_polls = stablePolls;
+                    observation.stable_for_ms = stableForMs;
                     observation.size_bytes = size;
                     observation.modified_ms = modified;
+                    observation.format_complete = true;
                     return observation;
                 }
                 lastSize = size;
                 lastModified = modified;
             } else {
                 stablePolls = 0;
+                stableStartedMs = 0;
                 lastSize = -1;
                 lastModified = -1;
             }
-            if ((new Date()).getTime() - startedWaiting.getTime() >= timeoutMs) {
-                observation.waited_ms = (new Date()).getTime() - startedWaiting.getTime();
+            if (nowMs - startedWaiting.getTime() >= timeoutMs) {
+                observation.waited_ms = nowMs - startedWaiting.getTime();
                 observation.polls = polls;
                 observation.stable_polls = stablePolls;
+                observation.stable_for_ms = stableStartedMs ? nowMs - stableStartedMs : 0;
                 observation.size_bytes = size;
                 observation.modified_ms = modified;
+                observation.format_complete = fresh && size > 0 && hasCompletePngTrailer(file);
                 observation.status = exists ? (size > 0 ? "unstable" : "empty") : "missing";
                 return observation;
             }
@@ -239,7 +293,7 @@
         output_dir: outputDir,
         output_png: "",
         output_exr: "",
-        png_observation: { status: "not_started", timeout_ms: 120000, waited_ms: 0, polls: 0, stable_polls: 0, size_bytes: 0, modified_ms: 0 },
+        png_observation: { status: "not_started", timeout_ms: 120000, waited_ms: 0, polls: 0, stable_polls: 0, stable_for_ms: 0, stable_window_ms: 2000, size_bytes: 0, modified_ms: 0, format_complete: false, crc_validated: false },
         project_bits_per_channel: -1,
         project_working_space: "unknown",
         project_linear_blending: false,
@@ -503,6 +557,10 @@
             }
             var exrBase = outputDir + "/" + caseId + ".exr";
             var exrSequence = exrBase.replace(/\.exr$/i, "_[#####].exr");
+            var exr = new File(exrSequence.replace("[#####]", "00000"));
+            if (exr.exists && (!exr.remove() || exr.exists)) {
+                throw new Error("could not remove stale EXR: " + exr.fsName);
+            }
             var rqItem = app.project.renderQueue.items.add(comp);
             rqItem.timeSpanStart = Number(caseRef.time || 0);
             rqItem.timeSpanDuration = 1.0 / Number(comp.frameRate || 24.0);
@@ -511,7 +569,6 @@
             outputModule.file = new File(exrSequence);
             appendText(logPath, "renderQueue template=" + outputTemplate + " output=" + exrSequence + "\n");
             app.project.renderQueue.render();
-            var exr = new File(exrSequence.replace("[#####]", "00000"));
             if (!exr.exists) {
                 throw new Error("EXR was not written: " + exrSequence);
             }
@@ -521,15 +578,15 @@
         } else {
             var outputPath = outputDir + "/" + requestCase.frame;
             var png = new File(outputPath);
-            if (png.exists) {
-                png.remove();
+            if (png.exists && (!png.remove() || png.exists)) {
+                throw new Error("could not remove stale PNG: " + png.fsName);
             }
             summary.output_png = outputPath;
             appendText(logPath, "saveFrameToPng " + outputPath + "\n");
             var renderStarted = new Date();
             comp.saveFrameToPng(Number(caseRef.time || 0), png);
             appendText(logPath, "saveFrameToPng returned\n");
-            summary.png_observation = waitForStableFile(png, renderStarted, 120000, 250);
+            summary.png_observation = waitForStableFile(png, renderStarted, 120000, 250, 2000);
             appendText(logPath, "png observation " + summary.png_observation.status + " waited_ms=" + summary.png_observation.waited_ms + " size_bytes=" + summary.png_observation.size_bytes + "\n");
             if (summary.png_observation.status !== "stable") {
                 throw new Error("PNG was not stably written (" + summary.png_observation.status + "): " + outputPath);
@@ -553,7 +610,7 @@
             "  \"output_dir\": \"" + esc(summary.output_dir) + "\",\n" +
             "  \"output_png\": \"" + esc(summary.output_png) + "\",\n" +
             "  \"output_exr\": \"" + esc(summary.output_exr) + "\",\n" +
-            "  \"png_observation\": {\"status\": \"" + esc(summary.png_observation.status) + "\", \"timeout_ms\": " + summary.png_observation.timeout_ms + ", \"waited_ms\": " + summary.png_observation.waited_ms + ", \"polls\": " + summary.png_observation.polls + ", \"stable_polls\": " + summary.png_observation.stable_polls + ", \"size_bytes\": " + summary.png_observation.size_bytes + ", \"modified_ms\": " + summary.png_observation.modified_ms + "},\n" +
+            "  \"png_observation\": {\"status\": \"" + esc(summary.png_observation.status) + "\", \"timeout_ms\": " + summary.png_observation.timeout_ms + ", \"waited_ms\": " + summary.png_observation.waited_ms + ", \"polls\": " + summary.png_observation.polls + ", \"stable_polls\": " + summary.png_observation.stable_polls + ", \"stable_for_ms\": " + summary.png_observation.stable_for_ms + ", \"stable_window_ms\": " + summary.png_observation.stable_window_ms + ", \"size_bytes\": " + summary.png_observation.size_bytes + ", \"modified_ms\": " + summary.png_observation.modified_ms + ", \"format_complete\": " + (summary.png_observation.format_complete ? "true" : "false") + ", \"crc_validated\": " + (summary.png_observation.crc_validated ? "true" : "false") + "},\n" +
             "  \"project_bits_per_channel\": " + summary.project_bits_per_channel + ",\n" +
             "  \"project_working_space\": \"" + esc(summary.project_working_space) + "\",\n" +
             "  \"project_linear_blending\": " + (summary.project_linear_blending ? "true" : "false") + ",\n" +
