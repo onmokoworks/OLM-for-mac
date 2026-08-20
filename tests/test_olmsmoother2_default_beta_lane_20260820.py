@@ -39,6 +39,7 @@ class OLMSmoother2DefaultBetaLane(unittest.TestCase):
             "world->height > 8192",
             "version == SMOOTHER_V1 || version == SMOOTHER_V2",
             "gamma_mode == GAMMA_NONE || gamma_mode == GAMMA_ALL_COLORS",
+            "gamma_mode == GAMMA_COLORS_ONLY",
             "smoothness >= 0 && smoothness <= 100",
             "smooth_range >= 0 && smooth_range <= 100",
             "extra_smooth >= 0 && extra_smooth <= 100",
@@ -54,12 +55,25 @@ class OLMSmoother2DefaultBetaLane(unittest.TestCase):
         self.assertIn("input_span", self.validate)
         self.assertIn("output_span", self.validate)
 
-    def test_smart_route_prefers_beta_without_expanding_fixture_union(self) -> None:
+    def test_smart_route_preserves_exact_fixture_precedence_then_uses_beta(self) -> None:
+        self.assertIn("const bool retained_fixture", self.smart)
         self.assertIn("const bool generic_beta", self.smart)
-        self.assertIn("!generic_beta && input_world->width == 1920", self.smart)
         self.assertRegex(
             self.smart,
-            re.compile(r"!generic_beta\s*&&\s*!V2SmartAdmission", re.MULTILINE),
+            re.compile(
+                r"generic_beta\s*=\s*!err\s*&&\s*!retained_fixture\s*&&\s*"
+                r"V2GenericBetaAdmission",
+                re.MULTILINE,
+            ),
+        )
+        self.assertIn(
+            "retained_fixture && input_world->width == 1920", self.smart
+        )
+        self.assertRegex(
+            self.smart,
+            re.compile(
+                r"!retained_fixture\s*&&\s*!generic_beta", re.MULTILINE
+            ),
         )
 
     def test_effectmain_accepts_arbitrary_source_at_all_depths(self) -> None:
@@ -194,7 +208,7 @@ int main() {{
     excluded.defs[SM_GAMMA_MODE].u.pd.value = GAMMA_COLORS_ONLY;
     excluded.defs[SM_GAMMA_VALUE].u.fs_d.value = 2.4;
     excluded.defs[SM_NUM_GAMMA_COLORS].u.sd.value = 1;
-    if (Smart(excluded) == 0) return 91;
+    if (Smart(excluded) != 0) return 91;
     excluded.defs[SM_GAMMA_MODE].u.pd.value = GAMMA_NONE;
     excluded.defs[SM_GAMMA_VALUE].u.fs_d.value = 2.400001;
     if (Smart(excluded) == 0) return 92;

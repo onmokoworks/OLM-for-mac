@@ -5072,8 +5072,9 @@ V2SmartAdmission(const PF_ParamDef *const params[], const PF_EffectWorld *world,
 }
 
 // Public-beta lane for the parameter axes covered by the retained Windows
-// classifier/typed-worker corpus. Gamma Colors/custom-LUT ownership remains a
-// separate fixed-fixture lane.
+// classifier/typed-worker corpus. Gamma Colors is portable when it uses the
+// captured transfer tables plus the inline AE color list; custom/user LUT
+// identities remain outside this lane.
 //
 // The polygon cardinal chain still contains structurally reconstructed pieces;
 // generic admission therefore does not imply that all 256 classifier indices
@@ -5109,15 +5110,19 @@ V2GenericBetaAdmission(const PF_ParamDef *const params[],
 	// yielding 2.40000009536743 when promoted to A_FpLong. Comparing against a
 	// double literal 2.4 rejects the untouched native-host default.
 	const A_FpLong gamma_ui_max = (A_FpLong)(float)2.4f;
+	const bool gamma_mode_and_count =
+	       ((gamma_mode == GAMMA_NONE || gamma_mode == GAMMA_ALL_COLORS) &&
+	        gamma_count >= 0 && gamma_count <= NUM_GAMMA_COLORS) ||
+	       (gamma_mode == GAMMA_COLORS_ONLY &&
+	        gamma_count >= 1 && gamma_count <= NUM_GAMMA_COLORS);
 	return (enable_key == 0 || enable_key == 1) &&
 	       (invert_key == 0 || invert_key == 1) &&
 	       (version == SMOOTHER_V1 || version == SMOOTHER_V2) &&
-	       (gamma_mode == GAMMA_NONE || gamma_mode == GAMMA_ALL_COLORS) &&
+	       gamma_mode_and_count &&
 	       std::isfinite(gamma_value) && gamma_value >= 1.0 && gamma_value <= gamma_ui_max &&
 	       smoothness >= 0 && smoothness <= 100 &&
 	       smooth_range >= 0 && smooth_range <= 100 &&
-	       extra_smooth >= 0 && extra_smooth <= 100 &&
-	       gamma_count >= 0 && gamma_count <= NUM_GAMMA_COLORS;
+	       extra_smooth >= 0 && extra_smooth <= 100;
 }
 
 static PF_Err
@@ -5283,14 +5288,17 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 			param_list[0].u.ld = *input_world;
 			err = ValidatePublicWorlds(in_data, out_data, input_world, output_world, &depth);
 			if (!err && depth != extra->input->bitdepth) err = PF_Err_BAD_CALLBACK_PARAM;
-			const bool generic_beta = !err && V2GenericBetaAdmission(
+			// Preserve the stronger source-bound owner when it matches exactly; only
+			// unmatched callers may fall through to the source-independent beta lane.
+			const bool retained_fixture = !err && V2SmartAdmission(
 				(const PF_ParamDef *const *)params, input_world, depth);
-			if (!err && !generic_beta && input_world->width == 1920 && input_world->height == 1080 &&
+			const bool generic_beta = !err && !retained_fixture && V2GenericBetaAdmission(
+				(const PF_ParamDef *const *)params, input_world, depth);
+			if (!err && retained_fixture && input_world->width == 1920 && input_world->height == 1080 &&
 			    !V2Case07WorldContract(in_data, input_world, output_world, depth)) {
 				err = PF_Err_BAD_CALLBACK_PARAM;
 			}
-			if (!err && !generic_beta &&
-			    !V2SmartAdmission((const PF_ParamDef *const *)params, input_world, depth)) {
+			if (!err && !retained_fixture && !generic_beta) {
 				err = PF_Err_BAD_CALLBACK_PARAM;
 			}
 			if (!err) {
