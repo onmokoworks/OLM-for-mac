@@ -14,7 +14,7 @@
 // OLMBlur.cpp also contains the non-Smart entry points, so their references to
 // AEGP_SuiteHandler must link even though this probe executes Smart Render only.
 // Define the four small out-of-line methods here instead of depending on the
-// untracked SDK utility translation units in a clean checkout.
+// ignored external-SDK utility translation units in a clean checkout.
 AEGP_SuiteHandler::AEGP_SuiteHandler(const SPBasicSuite *pica_basicP)
     : i_pica_basicP(pica_basicP) {
   std::memset(&i_suites, 0, sizeof(i_suites));

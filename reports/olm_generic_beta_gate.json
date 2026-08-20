@@ -13,7 +13,7 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_colorkeep_generic_beta_20260820.py"
       ],
-      "duration_seconds": 14.26421,
+      "duration_seconds": 11.420742,
       "exit_code": 0,
       "plugin": "ColorKeep",
       "source": "mac/ColorKeep/ColorKeep.cpp",
@@ -31,7 +31,7 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_colorkeep_roi_tile_beta_20260820.py"
       ],
-      "duration_seconds": 7.003211,
+      "duration_seconds": 6.371567,
       "exit_code": 0,
       "plugin": "ColorKeep-ROI",
       "source": "mac/ColorKeep/ColorKeep.cpp",
@@ -49,7 +49,7 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olmblur_generic_beta_lane_20260820.py"
       ],
-      "duration_seconds": 0.066356,
+      "duration_seconds": 0.059939,
       "exit_code": 0,
       "plugin": "OLMBlur",
       "source": "mac/OLMBlur/OLMBlur.cpp",
@@ -67,16 +67,16 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olmblur_generic_beta_sanitizers_20260820.py"
       ],
-      "duration_seconds": 7.376248,
+      "duration_seconds": 6.088943,
       "exit_code": 0,
       "plugin": "OLMBlur",
       "source": "tools/emulation/probe_olmblur_generic_beta_sanitized_20260820.cpp",
-      "source_sha256": "482f86c398180ee8df30caa7a64d08e165b554945e63980036c3279b4da069e8",
+      "source_sha256": "d02b03b47775cacf4781cb42e89ed78acc944c2112a40e9fb9c3fa507fb1a311",
       "status": "PASS",
       "stderr": "\n----------------------------------------------------------------------\nRan 0 tests in 0.000s\n\nNO TESTS RAN\n",
       "stdout": "",
       "test": "tests/test_olmblur_generic_beta_sanitizers_20260820.py",
-      "test_sha256": "bd706456d5be7bbb7d19840b65a6474751893f2b6fc11dc835d67eda06c063e1"
+      "test_sha256": "4564d4d80cb271c4d00c0ae20ad03b06913f35b85d04e67f5a98cb36eb1b3458"
     },
     {
       "command": [
@@ -85,7 +85,7 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olmblur_roi_halo_contract_20260820.py"
       ],
-      "duration_seconds": 0.064729,
+      "duration_seconds": 0.069287,
       "exit_code": 0,
       "plugin": "OLMBlur-ROI-policy",
       "source": "mac/OLMBlur/OLMBlur.cpp",
@@ -103,7 +103,7 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olmcolorkey_generic_pixel_local_beta.py"
       ],
-      "duration_seconds": 2.906911,
+      "duration_seconds": 2.694294,
       "exit_code": 0,
       "plugin": "OLMColorKey",
       "source": "mac/OLMColorKey/OLMColorKey.cpp",
@@ -121,7 +121,7 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olmcolorkey_generic_pixel_local_pairwise.py"
       ],
-      "duration_seconds": 16.029067,
+      "duration_seconds": 14.749238,
       "exit_code": 0,
       "plugin": "OLMColorKey",
       "source": "mac/OLMColorKey/OLMColorKey.cpp",
@@ -130,7 +130,7 @@
       "stderr": "\n----------------------------------------------------------------------\nRan 0 tests in 0.000s\n\nNO TESTS RAN\n",
       "stdout": "",
       "test": "tests/test_olmcolorkey_generic_pixel_local_pairwise.py",
-      "test_sha256": "28611546fe18b8a25c684e86f4ed6845432c5044ba7838266a2c7e1da2d8d76c"
+      "test_sha256": "daa3f38bd8743a2b9f1e8a99ebe26d9d8a1fdf9acc4adca2123eed630ba4a04a"
     },
     {
       "command": [
@@ -139,13 +139,13 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olmcolorkey_generic_roi_tile.py"
       ],
-      "duration_seconds": 5.630058,
+      "duration_seconds": 5.115876,
       "exit_code": 0,
       "plugin": "OLMColorKey-ROI",
       "source": "mac/OLMColorKey/OLMColorKey.cpp",
       "source_sha256": "879d19111db26988a0c8445d5cb13ab791f57af57d314dfc2c99a47820fd7345",
       "status": "PASS",
-      "stderr": "y marked deprecated here\n  278 | __deprecated_msg(\"This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.\")\n      | ^\n/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'\n  227 |         #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))\n      |                                                       ^\n/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olmck-roi-tile.idixf22o/olmcolorkey_mac_smartrender_adapter_probe.cpp:90:1072: warning: 'sprintf' is deprecated: This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead. [-Wdeprecated-declarations]\n   90 | const char* directionplane(){static char s[320];std::vector<u_char> matched(WIDTH*HEIGHT,0);matched[g_case>=47?5:0]=1;auto boundary=Boundary8(matched,WIDTH,HEIGHT);auto dist=EdgeBlurDistanceTo(boundary,WIDTH,HEIGHT,2);float amount=g_case>=47?2.0f:(g_case>=44?1.0f:(g_case>=32?2.0f:(g_case>=29?4.0f:(g_case>=26?3.5f:(g_case>=23?3.0f:(g_case>=20?2.5f:(g_case>=17?0.5f:(g_case>=14?1.5f:(g_case>=11?2.0f:1.0f)))))))));float scale=(((g_case>=8&&g_case<=12)||g_case==14||g_case==15||g_case==17||g_case==18||g_case==20||g_case==21||g_case==23||g_case==24||g_case==26||g_case==27||g_case==29||g_case==30||g_case==32||g_case==33||g_case==35||g_case==36||g_case==38||g_case==39||g_case==41||g_case==42||g_case==44||g_case==45||g_case==47||g_case==48)?255.0f:1.0f);int direction=g_case>=47?2:(g_case>=44?1:(g_case>=41?0:(g_case>=38?4:(g_case>=35?3:(g_case>=32?1:2)))));float w[12];for(int i=0;i<12;i++)w[i]=(direction==0||direction==3||direction==4)?(i==0?1.0f:(scale==1.0f&&dist[i]==1.0f?0.4999999701976776f:0.0f)):EdgeBlurWeight(matched[i]!=0,dist[i]*scale,amount,direction);std::sprintf(s,\"[%.17g,%.17g,%.17g,%.17g,%.17g,%.17g,%.17g,%.17g,%.17g,%.17g,%.17g,%.17g]\",w[0],w[1],w[2],w[3],w[4],w[5],w[6],w[7],w[8],w[9],w[10],w[11]);return s;}\n      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ^\n/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here\n  278 | __deprecated_msg(\"This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.\")\n      | ^\n/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'\n  227 |         #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))\n      |                                                       ^\n3 warnings generated.\n",
+      "stderr": "y marked deprecated here\n  278 | __deprecated_msg(\"This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.\")\n      | ^\n/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'\n  227 |         #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))\n      |                                                       ^\n/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olmck-roi-tile.7a_cey1f/olmcolorkey_mac_smartrender_adapter_probe.cpp:90:1072: warning: 'sprintf' is deprecated: This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead. [-Wdeprecated-declarations]\n   90 | const char* directionplane(){static char s[320];std::vector<u_char> matched(WIDTH*HEIGHT,0);matched[g_case>=47?5:0]=1;auto boundary=Boundary8(matched,WIDTH,HEIGHT);auto dist=EdgeBlurDistanceTo(boundary,WIDTH,HEIGHT,2);float amount=g_case>=47?2.0f:(g_case>=44?1.0f:(g_case>=32?2.0f:(g_case>=29?4.0f:(g_case>=26?3.5f:(g_case>=23?3.0f:(g_case>=20?2.5f:(g_case>=17?0.5f:(g_case>=14?1.5f:(g_case>=11?2.0f:1.0f)))))))));float scale=(((g_case>=8&&g_case<=12)||g_case==14||g_case==15||g_case==17||g_case==18||g_case==20||g_case==21||g_case==23||g_case==24||g_case==26||g_case==27||g_case==29||g_case==30||g_case==32||g_case==33||g_case==35||g_case==36||g_case==38||g_case==39||g_case==41||g_case==42||g_case==44||g_case==45||g_case==47||g_case==48)?255.0f:1.0f);int direction=g_case>=47?2:(g_case>=44?1:(g_case>=41?0:(g_case>=38?4:(g_case>=35?3:(g_case>=32?1:2)))));float w[12];for(int i=0;i<12;i++)w[i]=(direction==0||direction==3||direction==4)?(i==0?1.0f:(scale==1.0f&&dist[i]==1.0f?0.4999999701976776f:0.0f)):EdgeBlurWeight(matched[i]!=0,dist[i]*scale,amount,direction);std::sprintf(s,\"[%.17g,%.17g,%.17g,%.17g,%.17g,%.17g,%.17g,%.17g,%.17g,%.17g,%.17g,%.17g]\",w[0],w[1],w[2],w[3],w[4],w[5],w[6],w[7],w[8],w[9],w[10],w[11]);return s;}\n      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ^\n/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here\n  278 | __deprecated_msg(\"This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.\")\n      | ^\n/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'\n  227 |         #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))\n      |                                                       ^\n3 warnings generated.\n",
       "stdout": "",
       "test": "tests/test_olmcolorkey_generic_roi_tile.py",
       "test_sha256": "dd073d342df4681a894beb0d02df5c3e545298cc935c44e273d1adddce0d4076"
@@ -155,13 +155,13 @@
         "/opt/homebrew/opt/python@3.14/bin/python3.14",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/test_dblur_generic_pf8_geometry_beta_20260820.py"
       ],
-      "duration_seconds": 3.738688,
+      "duration_seconds": 3.379617,
       "exit_code": 0,
       "plugin": "OLMDirectionalBlur",
       "source": "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp",
       "source_sha256": "839a06e9816329fe92e17442a4aebc7e4b00a6ea55dc42c48f51336f80a537fa",
       "status": "PASS",
-      "stderr": " as/Util/AEGP_SuiteHandler.h:72:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/AE_EffectSuitesHelper.h:167:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n  167 | #include <adobesdk/config/PostConfig.h>\n      |          ^\nnote: previous '#pragma pack' directive that modifies alignment is here\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_generic_pf8_yd3pmdh_/probe.cpp:2:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:34:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/config/AdobesdkTypes.h:32:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n   32 | #include <adobesdk/config/PreConfig.h>\n      |          ^\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/config/PreConfig.h:6:9: note: previous '#pragma pack' directive that modifies alignment is here\n    6 | #pragma pack( push, AdobeSDKExternalAlign, 8 )\n      |         ^\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_generic_pf8_yd3pmdh_/probe.cpp:2:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:34:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/config/AdobesdkTypes.h:59:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n   59 | #include <adobesdk/config/PostConfig.h>\n      |          ^\nnote: previous '#pragma pack' directive that modifies alignment is here\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_generic_pf8_yd3pmdh_/probe.cpp:2:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:40:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n   40 | #include <adobesdk/config/PreConfig.h>\n      |          ^\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/config/PreConfig.h:6:9: note: previous '#pragma pack' directive that modifies alignment is here\n    6 | #pragma pack( push, AdobeSDKExternalAlign, 8 )\n      |         ^\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_generic_pf8_yd3pmdh_/probe.cpp:2:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:638:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n  638 | #include <adobesdk/config/PostConfig.h>\n      |          ^\nnote: previous '#pragma pack' directive that modifies alignment is here\n42 warnings generated.\n",
+      "stderr": " as/Util/AEGP_SuiteHandler.h:72:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/AE_EffectSuitesHelper.h:167:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n  167 | #include <adobesdk/config/PostConfig.h>\n      |          ^\nnote: previous '#pragma pack' directive that modifies alignment is here\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_generic_pf8_oqgnzbpl/probe.cpp:2:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:34:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/config/AdobesdkTypes.h:32:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n   32 | #include <adobesdk/config/PreConfig.h>\n      |          ^\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/config/PreConfig.h:6:9: note: previous '#pragma pack' directive that modifies alignment is here\n    6 | #pragma pack( push, AdobeSDKExternalAlign, 8 )\n      |         ^\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_generic_pf8_oqgnzbpl/probe.cpp:2:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:34:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/config/AdobesdkTypes.h:59:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n   59 | #include <adobesdk/config/PostConfig.h>\n      |          ^\nnote: previous '#pragma pack' directive that modifies alignment is here\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_generic_pf8_oqgnzbpl/probe.cpp:2:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:40:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n   40 | #include <adobesdk/config/PreConfig.h>\n      |          ^\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/config/PreConfig.h:6:9: note: previous '#pragma pack' directive that modifies alignment is here\n    6 | #pragma pack( push, AdobeSDKExternalAlign, 8 )\n      |         ^\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_generic_pf8_oqgnzbpl/probe.cpp:2:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:638:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n  638 | #include <adobesdk/config/PostConfig.h>\n      |          ^\nnote: previous '#pragma pack' directive that modifies alignment is here\n42 warnings generated.\n",
       "stdout": "ok: PF8 generic 1D/odd/HD, independent strides, boundaries, determinism, 4K rejection\n",
       "test": "tools/emulation/test_dblur_generic_pf8_geometry_beta_20260820.py",
       "test_sha256": "29e84806beb623649dededf3ec1cd179f31d6baa19614e9cef958fe6b1239da8"
@@ -171,13 +171,13 @@
         "/opt/homebrew/opt/python@3.14/bin/python3.14",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/test_dblur_generic_deep_geometry_beta_20260820.py"
       ],
-      "duration_seconds": 4.745575,
+      "duration_seconds": 4.530606,
       "exit_code": 0,
       "plugin": "OLMDirectionalBlur",
       "source": "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp",
       "source_sha256": "839a06e9816329fe92e17442a4aebc7e4b00a6ea55dc42c48f51336f80a537fa",
       "status": "PASS",
-      "stderr": "onal/OLM as/Util/AEGP_SuiteHandler.h:72:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/AE_EffectSuitesHelper.h:167:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n  167 | #include <adobesdk/config/PostConfig.h>\n      |          ^\nnote: previous '#pragma pack' directive that modifies alignment is here\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_deep_beta_b0s2x5ar/probe.cpp:2:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:34:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/config/AdobesdkTypes.h:32:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n   32 | #include <adobesdk/config/PreConfig.h>\n      |          ^\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/config/PreConfig.h:6:9: note: previous '#pragma pack' directive that modifies alignment is here\n    6 | #pragma pack( push, AdobeSDKExternalAlign, 8 )\n      |         ^\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_deep_beta_b0s2x5ar/probe.cpp:2:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:34:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/config/AdobesdkTypes.h:59:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n   59 | #include <adobesdk/config/PostConfig.h>\n      |          ^\nnote: previous '#pragma pack' directive that modifies alignment is here\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_deep_beta_b0s2x5ar/probe.cpp:2:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:40:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n   40 | #include <adobesdk/config/PreConfig.h>\n      |          ^\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/config/PreConfig.h:6:9: note: previous '#pragma pack' directive that modifies alignment is here\n    6 | #pragma pack( push, AdobeSDKExternalAlign, 8 )\n      |         ^\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_deep_beta_b0s2x5ar/probe.cpp:2:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:638:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n  638 | #include <adobesdk/config/PostConfig.h>\n      |          ^\nnote: previous '#pragma pack' directive that modifies alignment is here\n42 warnings generated.\n",
+      "stderr": "onal/OLM as/Util/AEGP_SuiteHandler.h:72:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/AE_EffectSuitesHelper.h:167:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n  167 | #include <adobesdk/config/PostConfig.h>\n      |          ^\nnote: previous '#pragma pack' directive that modifies alignment is here\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_deep_beta_kw_lqoje/probe.cpp:2:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:34:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/config/AdobesdkTypes.h:32:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n   32 | #include <adobesdk/config/PreConfig.h>\n      |          ^\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/config/PreConfig.h:6:9: note: previous '#pragma pack' directive that modifies alignment is here\n    6 | #pragma pack( push, AdobeSDKExternalAlign, 8 )\n      |         ^\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_deep_beta_kw_lqoje/probe.cpp:2:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:34:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/config/AdobesdkTypes.h:59:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n   59 | #include <adobesdk/config/PostConfig.h>\n      |          ^\nnote: previous '#pragma pack' directive that modifies alignment is here\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_deep_beta_kw_lqoje/probe.cpp:2:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:40:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n   40 | #include <adobesdk/config/PreConfig.h>\n      |          ^\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/config/PreConfig.h:6:9: note: previous '#pragma pack' directive that modifies alignment is here\n    6 | #pragma pack( push, AdobeSDKExternalAlign, 8 )\n      |         ^\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_deep_beta_kw_lqoje/probe.cpp:2:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:638:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n  638 | #include <adobesdk/config/PostConfig.h>\n      |          ^\nnote: previous '#pragma pack' directive that modifies alignment is here\n42 warnings generated.\n",
       "stdout": "ok: PF16/PF32 generic odd/HD, strides, SDR policy, 4K rejection\n",
       "test": "tools/emulation/test_dblur_generic_deep_geometry_beta_20260820.py",
       "test_sha256": "af1d846b231fa1be1aad91449c2d2860c310edf2e2c6f5bc0c582758614201fa"
@@ -187,13 +187,13 @@
         "/opt/homebrew/opt/python@3.14/bin/python3.14",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/test_dblur_generic_roi_policy_20260820.py"
       ],
-      "duration_seconds": 2.5016,
+      "duration_seconds": 2.291176,
       "exit_code": 0,
       "plugin": "OLMDirectionalBlur-ROI-policy",
       "source": "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp",
       "source_sha256": "839a06e9816329fe92e17442a4aebc7e4b00a6ea55dc42c48f51336f80a537fa",
       "status": "PASS",
-      "stderr": "from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:72:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/AE_EffectSuitesHelper.h:167:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n  167 | #include <adobesdk/config/PostConfig.h>\n      |          ^\nnote: previous '#pragma pack' directive that modifies alignment is here\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_roi_l97qfcux/p.cpp:3:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:34:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/config/AdobesdkTypes.h:32:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n   32 | #include <adobesdk/config/PreConfig.h>\n      |          ^\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/config/PreConfig.h:6:9: note: previous '#pragma pack' directive that modifies alignment is here\n    6 | #pragma pack( push, AdobeSDKExternalAlign, 8 )\n      |         ^\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_roi_l97qfcux/p.cpp:3:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:34:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/config/AdobesdkTypes.h:59:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n   59 | #include <adobesdk/config/PostConfig.h>\n      |          ^\nnote: previous '#pragma pack' directive that modifies alignment is here\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_roi_l97qfcux/p.cpp:3:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:40:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n   40 | #include <adobesdk/config/PreConfig.h>\n      |          ^\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/config/PreConfig.h:6:9: note: previous '#pragma pack' directive that modifies alignment is here\n    6 | #pragma pack( push, AdobeSDKExternalAlign, 8 )\n      |         ^\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_roi_l97qfcux/p.cpp:3:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:638:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n  638 | #include <adobesdk/config/PostConfig.h>\n      |          ^\nnote: previous '#pragma pack' directive that modifies alignment is here\n42 warnings generated.\n",
+      "stderr": "from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:72:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/AE_EffectSuitesHelper.h:167:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n  167 | #include <adobesdk/config/PostConfig.h>\n      |          ^\nnote: previous '#pragma pack' directive that modifies alignment is here\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_roi_thr6p8ba/p.cpp:3:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:34:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/config/AdobesdkTypes.h:32:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n   32 | #include <adobesdk/config/PreConfig.h>\n      |          ^\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/config/PreConfig.h:6:9: note: previous '#pragma pack' directive that modifies alignment is here\n    6 | #pragma pack( push, AdobeSDKExternalAlign, 8 )\n      |         ^\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_roi_thr6p8ba/p.cpp:3:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:34:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/config/AdobesdkTypes.h:59:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n   59 | #include <adobesdk/config/PostConfig.h>\n      |          ^\nnote: previous '#pragma pack' directive that modifies alignment is here\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_roi_thr6p8ba/p.cpp:3:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:40:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n   40 | #include <adobesdk/config/PreConfig.h>\n      |          ^\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/config/PreConfig.h:6:9: note: previous '#pragma pack' directive that modifies alignment is here\n    6 | #pragma pack( push, AdobeSDKExternalAlign, 8 )\n      |         ^\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_roi_thr6p8ba/p.cpp:3:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:638:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n  638 | #include <adobesdk/config/PostConfig.h>\n      |          ^\nnote: previous '#pragma pack' directive that modifies alignment is here\n42 warnings generated.\n",
       "stdout": "ok: Directional generic full/overscan normalize; partial/tile fail-close\n",
       "test": "tools/emulation/test_dblur_generic_roi_policy_20260820.py",
       "test_sha256": "8a9490912dd5e5e1e340560bd4450b634a35cc26389f3946104a05c29e600a07"
@@ -205,13 +205,13 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olmdistancegradation_generic_production_beta_20260820.py"
       ],
-      "duration_seconds": 7.680551,
+      "duration_seconds": 6.722188,
       "exit_code": 0,
       "plugin": "OLMDistanceGradation",
       "source": "mac/OLMDistanceGradation/OLMDistanceGradation.cpp",
       "source_sha256": "605f0c805d105c9fb5a145f6ea2a10e78168f87e03c591bd9b6c0822edccad0c",
       "status": "PASS",
-      "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 7.604s\n\nOK\n",
+      "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 6.654s\n\nOK\n",
       "stdout": "",
       "test": "tests/test_olmdistancegradation_generic_production_beta_20260820.py",
       "test_sha256": "d5aeb3ebd275b5b0cc1ddf672a7ea73e22bc5287a72236c88d0a2ce52f13d0ad"
@@ -223,7 +223,7 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olmdistancegradation_pf32_smart_unblurred_beta_20260820.py"
       ],
-      "duration_seconds": 0.063411,
+      "duration_seconds": 0.067521,
       "exit_code": 0,
       "plugin": "OLMDistanceGradation",
       "source": "mac/OLMDistanceGradation/OLMDistanceGradation.cpp",
@@ -241,7 +241,7 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olmkirakira_generic_beta_lane_20260820.py"
       ],
-      "duration_seconds": 0.063041,
+      "duration_seconds": 0.05949,
       "exit_code": 0,
       "plugin": "OLMKiraKira",
       "source": "mac/OLMKiraKira/OLMKiraKira.cpp",
@@ -259,13 +259,13 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olmkirakira_generic_beta_sanitizers_20260820.py"
       ],
-      "duration_seconds": 49.739658,
+      "duration_seconds": 42.901922,
       "exit_code": 0,
       "plugin": "OLMKiraKira",
       "source": "mac/OLMKiraKira/OLMKiraKira.cpp",
       "source_sha256": "0131c7fcd1c33356200f216fa01e7ff32231291e51cba15565ad60559fc59e86",
       "status": "PASS",
-      "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 49.671s\n\nOK\n",
+      "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 42.843s\n\nOK\n",
       "stdout": "",
       "test": "tests/test_olmkirakira_generic_beta_sanitizers_20260820.py",
       "test_sha256": "8baa4a712e815135bd6a5830fe3777813e92749d3bb566cca4bb6d1afa7136df"
@@ -277,13 +277,13 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olmkirakira_native_smoke_tuple_20260820.py"
       ],
-      "duration_seconds": 6.431518,
+      "duration_seconds": 4.87516,
       "exit_code": 0,
       "plugin": "OLMKiraKira",
       "source": "mac/OLMKiraKira/OLMKiraKira.cpp",
       "source_sha256": "0131c7fcd1c33356200f216fa01e7ff32231291e51cba15565ad60559fc59e86",
       "status": "PASS",
-      "stderr": "......\n----------------------------------------------------------------------\nRan 6 tests in 6.315s\n\nOK\n",
+      "stderr": "......\n----------------------------------------------------------------------\nRan 6 tests in 4.788s\n\nOK\n",
       "stdout": "",
       "test": "tests/test_olmkirakira_native_smoke_tuple_20260820.py",
       "test_sha256": "6527fa40a29e478d451bbfa1ae2ff1d9449d372b88ad1dd9a227d53dbe120e4b"
@@ -295,7 +295,7 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olmradialblur_generic_baseline_20260820.py"
       ],
-      "duration_seconds": 6.256779,
+      "duration_seconds": 3.923916,
       "exit_code": 0,
       "plugin": "OLMRadialBlur",
       "source": "mac/OLMRadialBlur/OLMRadialBlur.cpp",
@@ -313,7 +313,7 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olmradialblur_generic_baseline_sanitizers_20260820.py"
       ],
-      "duration_seconds": 20.868483,
+      "duration_seconds": 20.316623,
       "exit_code": 0,
       "plugin": "OLMRadialBlur",
       "source": "mac/OLMRadialBlur/OLMRadialBlur.cpp",
@@ -331,7 +331,7 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olmradialblur_generic_type3_sanitizers_20260820.py"
       ],
-      "duration_seconds": 19.318148,
+      "duration_seconds": 19.68918,
       "exit_code": 0,
       "plugin": "OLMRadialBlur",
       "source": "mac/OLMRadialBlur/OLMRadialBlur.cpp",
@@ -349,7 +349,7 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olmradialblur_global_polar_smart_contract_20260820.py"
       ],
-      "duration_seconds": 3.691179,
+      "duration_seconds": 3.891896,
       "exit_code": 0,
       "plugin": "OLMRadialBlur-ROI-policy",
       "source": "mac/OLMRadialBlur/OLMRadialBlur.cpp",
@@ -367,13 +367,13 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olmsmoother_v1_generic_classic_beta_20260820.py"
       ],
-      "duration_seconds": 16.72173,
+      "duration_seconds": 16.023989,
       "exit_code": 0,
       "plugin": "OLMSmoother",
       "source": "mac/OLMSmoother/Mac/OLMSmoother_port.cpp",
       "source_sha256": "6b49fdd9c96b4d2bf0da30b03f8a9b779f496810db284731ce27cad67bea8048",
       "status": "PASS",
-      "stderr": "...\n----------------------------------------------------------------------\nRan 3 tests in 16.652s\n\nOK\n",
+      "stderr": "...\n----------------------------------------------------------------------\nRan 3 tests in 15.965s\n\nOK\n",
       "stdout": "",
       "test": "tests/test_olmsmoother_v1_generic_classic_beta_20260820.py",
       "test_sha256": "2b968c53e31145c78b46e4268321c966e1f4f551f1ad165a392ad65db97e50e5"
@@ -385,13 +385,13 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olmsmoother2_default_beta_lane_20260820.py"
       ],
-      "duration_seconds": 3.129944,
+      "duration_seconds": 2.935393,
       "exit_code": 0,
       "plugin": "OLMSmoother2",
       "source": "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp",
       "source_sha256": "f2490a880e8df207ab49e5a4cb644ee459a44766a4e97fb8877e6f3d46a138db",
       "status": "PASS",
-      "stderr": "In file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olmsmoother2-beta-_j3l0ah6/probe.cpp:2:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/olmsmoother2_public_guard_harness_20260812.cpp:5:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/../../mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp:9:\n/Users/onmk/Documents/Projects/Personal/OLM as/cli/OLMSmoother2/shim/OLMSmoother2.h:221:54: warning: 'sprintf' is deprecated: This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead. [-Wdeprecated-declarations]\n  221 | static PF_ANSICallbacksSuite1 g_ansi_suite = { &std::sprintf };\n      |                                                      ^\n/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here\n  278 | __deprecated_msg(\"This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.\")\n      | ^\n/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'\n  227 |         #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))\n      |                                                       ^\n1 warning generated.\n....\n----------------------------------------------------------------------\nRan 4 tests in 3.064s\n\nOK\n",
+      "stderr": "In file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olmsmoother2-beta-y1xwqzpp/probe.cpp:2:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/olmsmoother2_public_guard_harness_20260812.cpp:5:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/../../mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp:9:\n/Users/onmk/Documents/Projects/Personal/OLM as/cli/OLMSmoother2/shim/OLMSmoother2.h:221:54: warning: 'sprintf' is deprecated: This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead. [-Wdeprecated-declarations]\n  221 | static PF_ANSICallbacksSuite1 g_ansi_suite = { &std::sprintf };\n      |                                                      ^\n/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here\n  278 | __deprecated_msg(\"This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.\")\n      | ^\n/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'\n  227 |         #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))\n      |                                                       ^\n1 warning generated.\n....\n----------------------------------------------------------------------\nRan 4 tests in 2.859s\n\nOK\n",
       "stdout": "",
       "test": "tests/test_olmsmoother2_default_beta_lane_20260820.py",
       "test_sha256": "4207fa6542718c56da335924788e622dac302a506b485846de152c8252893cda"
@@ -403,13 +403,13 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olmsmoother2_roi_fullframe_contract_20260820.py"
       ],
-      "duration_seconds": 3.069478,
+      "duration_seconds": 2.810234,
       "exit_code": 0,
       "plugin": "OLMSmoother2-ROI-policy",
       "source": "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp",
       "source_sha256": "f2490a880e8df207ab49e5a4cb644ee459a44766a4e97fb8877e6f3d46a138db",
       "status": "PASS",
-      "stderr": ".In file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/smoother2-roi-lbvop1zl/probe.cpp:2:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/olmsmoother2_public_guard_harness_20260812.cpp:5:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/../../mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp:9:\n/Users/onmk/Documents/Projects/Personal/OLM as/cli/OLMSmoother2/shim/OLMSmoother2.h:221:54: warning: 'sprintf' is deprecated: This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead. [-Wdeprecated-declarations]\n  221 | static PF_ANSICallbacksSuite1 g_ansi_suite = { &std::sprintf };\n      |                                                      ^\n/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here\n  278 | __deprecated_msg(\"This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.\")\n      | ^\n/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'\n  227 |         #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))\n      |                                                       ^\n1 warning generated.\n..\n----------------------------------------------------------------------\nRan 3 tests in 3.003s\n\nOK\n",
+      "stderr": ".In file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/smoother2-roi-xnrge21j/probe.cpp:2:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/olmsmoother2_public_guard_harness_20260812.cpp:5:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/../../mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp:9:\n/Users/onmk/Documents/Projects/Personal/OLM as/cli/OLMSmoother2/shim/OLMSmoother2.h:221:54: warning: 'sprintf' is deprecated: This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead. [-Wdeprecated-declarations]\n  221 | static PF_ANSICallbacksSuite1 g_ansi_suite = { &std::sprintf };\n      |                                                      ^\n/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here\n  278 | __deprecated_msg(\"This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.\")\n      | ^\n/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'\n  227 |         #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))\n      |                                                       ^\n1 warning generated.\n..\n----------------------------------------------------------------------\nRan 3 tests in 2.751s\n\nOK\n",
       "stdout": "",
       "test": "tests/test_olmsmoother2_roi_fullframe_contract_20260820.py",
       "test_sha256": "0ffd60b4c7d186d0c86e94c40713efe3274e7f3f71fd70e041bfd175130539b0"
@@ -421,7 +421,7 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olmtoondilate_generic_beta.py"
       ],
-      "duration_seconds": 3.902626,
+      "duration_seconds": 3.517162,
       "exit_code": 0,
       "plugin": "OLMToonDilate",
       "source": "mac/OLMToonDilate/OLMToonDilate.cpp",
@@ -439,7 +439,7 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olmtoondilate_roi_safety.py"
       ],
-      "duration_seconds": 0.819589,
+      "duration_seconds": 0.758487,
       "exit_code": 0,
       "plugin": "OLMToonDilate-ROI-safety",
       "source": "mac/OLMToonDilate/OLMToonDilate.cpp",
@@ -457,13 +457,13 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olm_world_safety.py"
       ],
-      "duration_seconds": 0.603203,
+      "duration_seconds": 0.444497,
       "exit_code": 0,
       "plugin": "common-world",
       "source": "tests/test_olm_world_safety.cpp",
       "source_sha256": "cc189b2db67a610cf67bb775e18e0ff644c0e5995a351e5e380f844c17e3e49a",
       "status": "PASS",
-      "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.542s\n\nOK\n",
+      "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.387s\n\nOK\n",
       "stdout": "",
       "test": "tests/test_olm_world_safety.py",
       "test_sha256": "bb353c0000660b2fe310f1602ad9cf47fabd1570fb467513509e04ebdcd0062c"
@@ -475,7 +475,7 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olm_checked_allocation.py"
       ],
-      "duration_seconds": 0.392249,
+      "duration_seconds": 0.263381,
       "exit_code": 0,
       "plugin": "common-world",
       "source": "core/olm_checked_allocation.h",
@@ -493,7 +493,7 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olm_checked_rect.py"
       ],
-      "duration_seconds": 0.413452,
+      "duration_seconds": 0.262012,
       "exit_code": 0,
       "plugin": "common-ROI",
       "source": "core/olm_checked_rect.h",
@@ -511,13 +511,13 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olm_roi_contract.py"
       ],
-      "duration_seconds": 0.558149,
+      "duration_seconds": 0.262675,
       "exit_code": 0,
       "plugin": "common-ROI",
       "source": "core/olm_roi_contract.h",
       "source_sha256": "105787ecbff536d11b256994b10a8053f728be1fb8ee0352d3e175c3064dc85e",
       "status": "PASS",
-      "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.418s\n\nOK\n",
+      "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.204s\n\nOK\n",
       "stdout": "",
       "test": "tests/test_olm_roi_contract.py",
       "test_sha256": "2f87e2e45cf5679a2b0be0119aeb29ff5b3dc8bf6bbb7cfb48409c7afdadf695"
@@ -529,13 +529,13 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olm_property_cases.py"
       ],
-      "duration_seconds": 0.086664,
+      "duration_seconds": 0.066243,
       "exit_code": 0,
       "plugin": "property",
       "source": "tests/test_olm_property_cases.py",
       "source_sha256": "03dfb582559d15558b41ef99144199622719129d37d66b44e2452351e9440aea",
       "status": "PASS",
-      "stderr": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.006s\n\nOK\n",
+      "stderr": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.005s\n\nOK\n",
       "stdout": "",
       "test": "tests/test_olm_property_cases.py",
       "test_sha256": "03dfb582559d15558b41ef99144199622719129d37d66b44e2452351e9440aea"
@@ -547,13 +547,13 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_olm_roi_tile_property.py"
       ],
-      "duration_seconds": 0.896585,
+      "duration_seconds": 0.669167,
       "exit_code": 0,
       "plugin": "roi_tile_property",
       "source": "tests/test_olm_roi_tile_property.py",
       "source_sha256": "39269384bf38fe27eea1da0bc6c7def0e9b3161b17d94f4354506e1bf8161b0f",
       "status": "PASS",
-      "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.826s\n\nOK\n",
+      "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.609s\n\nOK\n",
       "stdout": "",
       "test": "tests/test_olm_roi_tile_property.py",
       "test_sha256": "39269384bf38fe27eea1da0bc6c7def0e9b3161b17d94f4354506e1bf8161b0f"
@@ -565,13 +565,13 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_generate_aexcompat_oracle_campaign.py"
       ],
-      "duration_seconds": 0.231694,
+      "duration_seconds": 0.177383,
       "exit_code": 0,
       "plugin": "oracle",
       "source": "scripts/generate_aexcompat_oracle_campaign.py",
       "source_sha256": "c2e46bec02b2f0fd9ce432cfac1dac6e39c78af2024307113dbc7fb0ae763596",
       "status": "PASS",
-      "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.122s\n\nOK\n",
+      "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.082s\n\nOK\n",
       "stdout": "",
       "test": "tests/test_generate_aexcompat_oracle_campaign.py",
       "test_sha256": "1a1f3e3b0271e951c846ba8a688b215594e3a519c8c2d39bd0a78b1dcc6ab5bf"
@@ -583,13 +583,13 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_run_aexcompat_reference_20260725.py"
       ],
-      "duration_seconds": 1.956176,
+      "duration_seconds": 1.708684,
       "exit_code": 0,
       "plugin": "oracle",
       "source": "scripts/run_aexcompat_reference.py",
       "source_sha256": "9f9944f1a0dd068d14f2a946fcd6a439bff2ece98c5cbcc713b333f98af562f0",
       "status": "PASS",
-      "stderr": ".....................\n----------------------------------------------------------------------\nRan 21 tests in 1.865s\n\nOK\n",
+      "stderr": ".....................\n----------------------------------------------------------------------\nRan 21 tests in 1.626s\n\nOK\n",
       "stdout": "",
       "test": "tests/test_run_aexcompat_reference_20260725.py",
       "test_sha256": "d04123d98430f2c8ae1ff2feb482a9f66c2c6053367603283495733c198a42ae"
@@ -601,16 +601,16 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_generic_beta_windows_oracle_handoff.py"
       ],
-      "duration_seconds": 2.671625,
+      "duration_seconds": 1.995278,
       "exit_code": 0,
       "plugin": "windows-oracle-bundle",
       "source": "scripts/package_generic_beta_windows_oracle.py",
       "source_sha256": "14c39a1f3032b81b74b7aaddb0ca1d79ccf22f7db795ad29965b0372f69c2684",
       "status": "PASS",
-      "stderr": "........\n----------------------------------------------------------------------\nRan 8 tests in 2.521s\n\nOK\n",
-      "stdout": "/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/generic_beta_oracle_test_k3ahvjfz/bundle\n/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/generic_beta_oracle_test_9xce5hv7/bundle\n/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/generic_beta_oracle_test__kyemmbe/bundle\n/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/generic_beta_oracle_test_tzrfg1fq/bundle\n/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/generic_beta_oracle_test_b9_xktqx/bundle\n/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/generic_beta_oracle_test_brd8t2hr/bundle\n/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/generic_beta_oracle_test_xdvvdjse/bundle\n/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/generic_beta_oracle_test_fq07m4va/bundle\n{\"cases\": 21, \"request_id\": \"generic_beta_windows_oracle_20260820\", \"return_report_sha256\": \"7045204449a3ee96a8808db3836787cf5253e4072078f8bff4b5a8d5a8af4053\", \"status\": \"verified\", \"worker_sha256\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}\n",
+      "stderr": "........\n----------------------------------------------------------------------\nRan 8 tests in 1.891s\n\nOK\n",
+      "stdout": "/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/generic_beta_oracle_test_psjrrv77/bundle\n/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/generic_beta_oracle_test_ei_3sd8q/bundle\n/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/generic_beta_oracle_test_wvfdejo1/bundle\n/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/generic_beta_oracle_test_kaqrffl7/bundle\n/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/generic_beta_oracle_test_7gbekqwr/bundle\n/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/generic_beta_oracle_test_pjj_qrvh/bundle\n/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/generic_beta_oracle_test_57i86nfc/bundle\n/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/generic_beta_oracle_test_8qpf968t/bundle\n{\"cases\": 21, \"request_id\": \"generic_beta_windows_oracle_20260820\", \"return_report_sha256\": \"7045204449a3ee96a8808db3836787cf5253e4072078f8bff4b5a8d5a8af4053\", \"status\": \"verified\", \"worker_sha256\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}\n",
       "test": "tests/test_generic_beta_windows_oracle_handoff.py",
-      "test_sha256": "8674684ee8c7dcad6ace4cdf402df648ccbb3750374a1035984b455da4078d57"
+      "test_sha256": "95741351a322ce43963b54cf04fd1e10f945dfd98136d2ff30394a09a6e3ccb7"
     },
     {
       "command": [
@@ -619,13 +619,13 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_ae_generalization_smoke.py"
       ],
-      "duration_seconds": 0.373758,
+      "duration_seconds": 0.33829,
       "exit_code": 0,
       "plugin": "ae-smoke",
       "source": "scripts/run_ae_generalization_smoke.py",
       "source_sha256": "5352dd39054c292a7b35d97af8cdf2481a3393e45dbcae42c8414ec4a9a58de2",
       "status": "PASS",
-      "stderr": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.308s\n\nOK\n",
+      "stderr": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.270s\n\nOK\n",
       "stdout": "",
       "test": "tests/test_ae_generalization_smoke.py",
       "test_sha256": "9a2ff82000abb8228587f1c8bf4292f399973db41b2d0fb4171c5a2c7cf83757"
@@ -637,13 +637,13 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_beta_support_documentation.py"
       ],
-      "duration_seconds": 0.069723,
+      "duration_seconds": 0.066556,
       "exit_code": 0,
       "plugin": "documentation",
       "source": "docs/BETA_SUPPORT.md",
       "source_sha256": "a0da942298d594dfc1a206b2e122e0b23abb8bf3100d01523c1f5c9beeef89c9",
       "status": "PASS",
-      "stderr": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.008s\n\nOK\n",
+      "stderr": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.009s\n\nOK\n",
       "stdout": "",
       "test": "tests/test_beta_support_documentation.py",
       "test_sha256": "694e291afd693e6a25805427c043b6564b87298a09888b35ad2cd7064aaba10f"
@@ -655,7 +655,7 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_generic_beta_perf_smoke_runner.py"
       ],
-      "duration_seconds": 0.059959,
+      "duration_seconds": 0.063458,
       "exit_code": 0,
       "plugin": "performance",
       "source": "tools/perf/run_generic_beta_smoke.py",
@@ -673,7 +673,7 @@
         "--run-test-file",
         "/Users/onmk/Documents/Projects/Personal/OLM as/tests/test_verify_mac_plugin_package_hash.py"
       ],
-      "duration_seconds": 0.088706,
+      "duration_seconds": 0.096717,
       "exit_code": 0,
       "plugin": "package-hash",
       "source": "scripts/verify_mac_plugin_package.py",
@@ -685,7 +685,7 @@
       "test_sha256": "f0311e2725c49e46c59325be8f8666bb7ef7c84ad01e3b73e096b3b505274105"
     }
   ],
-  "generated_at": "2026-08-20T12:04:29.665963+00:00",
+  "generated_at": "2026-08-20T14:20:11.457392+00:00",
   "plugin_summary": {
     "ColorKeep": "PASS",
     "ColorKeep-ROI": "PASS",
