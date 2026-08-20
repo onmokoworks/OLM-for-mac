@@ -99,7 +99,7 @@ for(int replace: {0,1})for(Mode mode:modes)for(int depth: {8,16,32}){
  PF_EffectWorld in{inb.data(),rb,W,H,(A_short)depth,{0,0,W,H},0},out{outb.data(),rb,W,H,(A_short)depth,{0,0,W,H},0};OLMColorKeyInfo info{};
  info.color_keep=true;info.number_of_colors=2;info.use_color[0]=info.use_color[1]=true;info.colors[0]={1,0,0,0};info.colors[1]={1,0,1,0};
  info.enable_replace=replace;info.use_replace_color[0]=info.use_replace_color[1]=replace;info.replace_colors[0]={1,.90f,.10f,.75f};info.replace_colors[1]={1,.95f,.55f,.05f};
- info.edge_thin_amount=mode.thin;info.edge_thin_distance_type=2;info.edge_blur_amount=mode.blur;info.edge_blur_distance_type=2;info.edge_blur_direction=2;
+ info.edge_thin_amount=mode.thin;info.edge_thin_distance_type=2;info.edge_blur_amount=mode.blur;info.edge_blur_distance_type=2;info.edge_blur_direction=102;
  if(RenderWorld(&in,&out,info,(short)depth))return depth;std::fwrite(outb.data(),1,outb.size(),stdout);}
 return 0;}
 '''

@@ -57,6 +57,12 @@ static const MatrixCell kCells[] = {
 	{8, 640, 361, 6, 2, true, false, false, 0, 1, 2, 2, 103},
 	{16, 75, 49, 1, 1, false, false, false, 0, 1, 2, 2, 104},
 	{32, 325, 187, 2, 2, true, true, true, 0, 1, 1, 2, 101},
+	{8, 77, 51, 1, 2, false, false, false, -4, 2, 4, 2, 102},
+	{16, 720, 480, 2, 25, true, true, true, 4, 2, 4, 2, 102},
+	{32, 1920, 1080, 5, 2, true, false, false, -4, 2, 4, 2, 102},
+	{8, 323, 187, 6, 1, true, true, false, 4, 2, 4, 2, 102},
+	{16, 79, 53, 4, 2, false, false, true, -4, 2, 4, 2, 102},
+	{32, 641, 361, 1, 25, true, true, true, 4, 2, 4, 2, 102},
 };
 
 template <typename PixelT> struct Traits;

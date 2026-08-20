@@ -109,6 +109,36 @@ static bool Run(short depth, A_long width, A_long height)
 	invalid_thin.edge_thin_distance_type = 0;
 	if (PrepareRenderWorld(&in, &out, invalid_thin, depth, &prepared) !=
 	    PF_Err_BAD_CALLBACK_PARAM) return false;
+	OLMColorKeyInfo internal_blur = PixelLocalInfo();
+	internal_blur.edge_blur_amount = 4.0;
+	internal_blur.edge_blur_distance_type = 2;
+	internal_blur.edge_blur_direction = 2;
+	const auto output_before_internal_reject = output;
+	if (PrepareRenderWorld(&in, &out, internal_blur, depth, &prepared) !=
+	    PF_Err_BAD_CALLBACK_PARAM || output != output_before_internal_reject ||
+	    input != input_before) return false;
+	OLMColorKeyInfo composition = PixelLocalInfo();
+	composition.edge_thin_amount = 4.0;
+	composition.edge_thin_distance_type = 2;
+	composition.edge_blur_amount = 4.0;
+	composition.edge_blur_distance_type = 2;
+	composition.edge_blur_direction = 102;
+	if (PrepareRenderWorld(&in, &out, composition, depth, &prepared)) return false;
+	const auto output_before_reject = output;
+	composition.edge_blur_direction = 2;
+	if (PrepareRenderWorld(&in, &out, composition, depth, &prepared) !=
+	    PF_Err_BAD_CALLBACK_PARAM || output != output_before_reject ||
+	    input != input_before) return false;
+	composition.edge_blur_direction = 102;
+	composition.edge_thin_amount = 3.0;
+	if (PrepareRenderWorld(&in, &out, composition, depth, &prepared) !=
+	    PF_Err_BAD_CALLBACK_PARAM || output != output_before_reject ||
+	    input != input_before) return false;
+	composition.edge_thin_amount = 4.0;
+	composition.edge_blur_direction = 101;
+	if (PrepareRenderWorld(&in, &out, composition, depth, &prepared) !=
+	    PF_Err_BAD_CALLBACK_PARAM || output != output_before_reject ||
+	    input != input_before) return false;
 	return true;
 }
 

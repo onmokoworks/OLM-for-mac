@@ -1314,6 +1314,15 @@ static bool IsGenericEdgeBlurTuple(const OLMColorKeyInfo &info)
 	    (direction == 4 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 4.0);
 }
 
+static bool IsGenericEdgeCompositionTuple(const OLMColorKeyInfo &info)
+{
+	return info.edge_blur_direction == 102 &&
+	       (info.edge_thin_amount == -4.0 || info.edge_thin_amount == 4.0) &&
+	       info.edge_thin_distance_type == 2 &&
+	       info.edge_blur_amount == 4.0 &&
+	       info.edge_blur_distance_type == 2;
+}
+
 static float EdgeBlurWeight(bool inside, float dist, float amount, A_long direction)
 {
 	const float pi = 3.14159265358979323846f;
@@ -2288,6 +2297,7 @@ static bool IsPublicAdmission(const PF_EffectWorld *input,
 		return true;
 	}
 	if (IsGenericEdgeBlurTuple(info)) return true;
+	if (IsGenericEdgeCompositionTuple(info)) return true;
 	if ((size_t)input->rowbytes != (size_t)input->width * pixel_bytes + 8 ||
 	    (size_t)output->rowbytes != (size_t)output->width * pixel_bytes + 8) return false;
 	if (IsBoundedLab76NativeTuple<PixelT>(input, output, info)) return true;
