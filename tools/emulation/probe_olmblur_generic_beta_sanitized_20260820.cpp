@@ -1,8 +1,92 @@
-#define OLMBLUR_PF8_RETAINED_NO_MAIN 1
-#include "probe_olmblur_pf8_retained_public_admission_20260813.cpp"
-#undef OLMBLUR_PF8_RETAINED_NO_MAIN
-
+#include <cmath>
+#include <cstdio>
+#include <cstring>
 #include <type_traits>
+#include <vector>
+
+#include "AE_Effect.h"
+#include "AE_EffectCBSuites.h"
+#include "AE_EffectSuites.h"
+#include "SPBasic.h"
+
+#include "../../mac/OLMBlur/OLMBlur.cpp"
+
+// OLMBlur.cpp also contains the non-Smart entry points, so their references to
+// AEGP_SuiteHandler must link even though this probe executes Smart Render only.
+// Define the four small out-of-line methods here instead of depending on the
+// untracked SDK utility translation units in a clean checkout.
+AEGP_SuiteHandler::AEGP_SuiteHandler(const SPBasicSuite *pica_basicP)
+    : i_pica_basicP(pica_basicP) {
+  std::memset(&i_suites, 0, sizeof(i_suites));
+  if (!i_pica_basicP) MissingSuiteError();
+}
+
+AEGP_SuiteHandler::~AEGP_SuiteHandler() { ReleaseAllSuites(); }
+
+void AEGP_SuiteHandler::ReleaseSuite(const A_char *nameZ, A_long versionL) {
+  i_pica_basicP->ReleaseSuite(nameZ, versionL);
+}
+
+void AEGP_SuiteHandler::MissingSuiteError() const {
+  throw PF_Err_BAD_CALLBACK_PARAM;
+}
+
+// Minimal host implementation for the generic production lane. Keep this
+// probe self-contained: the retained exact-admission probes are research
+// artifacts and are intentionally not dependencies of the generic gate.
+static PF_EffectWorld *g_input=nullptr,*g_output=nullptr;
+static short g_depth=0;
+static double g_amount=5.0;
+static int g_smooth=100*65536,g_repeat=1,g_bias=1,g_legacy=0;
+static int g_pixels=0,g_output_hits=0,g_optional_checkin=0;
+static int g_param_out=0,g_param_in=0,g_copy=0;
+static int g_acquire=0,g_release=0,g_get_format=0;
+static PF_WorldSuite2 g_world_suite{};
+
+static PF_Err copy_world(PF_ProgPtr,PF_EffectWorld*src,PF_EffectWorld*dst,
+                         PF_Rect*,PF_Rect*) {
+  ++g_copy;
+  if(!src||!dst||!src->data||!dst->data||src->width!=dst->width||src->height!=dst->height)
+    return PF_Err_BAD_CALLBACK_PARAM;
+  const size_t active=(size_t)src->width*(g_depth==8?4u:g_depth==16?8u:16u);
+  if(src->rowbytes<(A_long)active||dst->rowbytes<(A_long)active)return PF_Err_BAD_CALLBACK_PARAM;
+  for(A_long y=0;y<src->height;++y)std::memcpy((unsigned char*)dst->data+(size_t)y*dst->rowbytes,
+    (const unsigned char*)src->data+(size_t)y*src->rowbytes,active);
+  return PF_Err_NONE;
+}
+
+static PF_Err checkout_param(PF_ProgPtr,PF_ParamIndex index,A_long,A_long,A_u_long,
+                             PF_ParamDef*param) {
+  if(!param||index<1||index>5)return PF_Err_BAD_CALLBACK_PARAM;
+  std::memset(param,0,sizeof(*param));++g_param_out;
+  if(index==1)param->u.fs_d.value=g_amount;
+  else if(index==2)param->u.fd.value=g_smooth;
+  else if(index==3)param->u.sd.value=g_repeat;
+  else if(index==4)param->u.pd.value=g_bias;
+  else param->u.bd.value=g_legacy;
+  return PF_Err_NONE;
+}
+static PF_Err checkin_param(PF_ProgPtr,PF_ParamDef*){++g_param_in;return PF_Err_NONE;}
+static PF_Err pixels(PF_ProgPtr,A_long id,PF_EffectWorld**world){
+  ++g_pixels;if(id!=0||!world)return PF_Err_BAD_CALLBACK_PARAM;*world=g_input;return PF_Err_NONE;
+}
+static PF_Err checkout_output(PF_ProgPtr,PF_EffectWorld**world){
+  ++g_output_hits;if(!world)return PF_Err_BAD_CALLBACK_PARAM;*world=g_output;return PF_Err_NONE;
+}
+static PF_Err optional_checkin(PF_ProgPtr,A_long){++g_optional_checkin;return PF_Err_NONE;}
+static PF_Err get_format(const PF_EffectWorld*world,PF_PixelFormat*format){
+  ++g_get_format;if(!format||(world!=g_input&&world!=g_output))return PF_Err_BAD_CALLBACK_PARAM;
+  *format=g_depth==8?PF_PixelFormat_ARGB32:g_depth==16?PF_PixelFormat_ARGB64:PF_PixelFormat_ARGB128;
+  return PF_Err_NONE;
+}
+static SPErr acquire_suite(const char*name,int32 version,const void**suite){
+  ++g_acquire;if(!name||std::strcmp(name,kPFWorldSuite)||version!=kPFWorldSuiteVersion2||!suite)
+    return kSPBadParameterError;*suite=&g_world_suite;return kSPNoError;
+}
+static SPErr release_suite(const char*name,int32 version){
+  ++g_release;return name&&!std::strcmp(name,kPFWorldSuite)&&version==kPFWorldSuiteVersion2?
+    kSPNoError:kSPBadParameterError;
+}
 
 struct GenericCase {
   const char *id;
@@ -41,9 +125,8 @@ static bool run_generic(const GenericCase& c) {
     ow=iw;ow.data=(PF_PixelPtr)output.data();ow.rowbytes=output_rb;
     if(c.depth!=8)iw.world_flags=ow.world_flags=PF_WorldFlag_DEEP;
     g_input=&iw;g_output=&ow;g_depth=c.depth;g_amount=c.amount;g_smooth=c.smooth_fixed;
-    g_repeat=c.repeat;g_bias=c.bias;g_legacy=c.legacy;g_mode=NORMAL;g_fail_ordinal=0;
-    g_input_format_override=g_output_format_override=PF_PixelFormat_INVALID;
-    g_pre=g_pixels=g_output_hits=g_optional_checkin=g_param_out=g_param_in=g_copy=0;
+    g_repeat=c.repeat;g_bias=c.bias;g_legacy=c.legacy;
+    g_pixels=g_output_hits=g_optional_checkin=g_param_out=g_param_in=g_copy=0;
     g_acquire=g_release=g_get_format=0;
     SPBasicSuite basic{};basic.AcquireSuite=acquire_suite;basic.ReleaseSuite=release_suite;
     PF_UtilCallbacks utils{};utils.copy=copy_world;PF_InData in{};PF_OutData out{};

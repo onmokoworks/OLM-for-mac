@@ -27,6 +27,13 @@ class GenericBetaWindowsOracleHandoffTests(unittest.TestCase):
         self.root = Path(self.temp.name)
         self.packager = load(ROOT / "scripts/package_generic_beta_windows_oracle.py", "generic_beta_packager_test")
         self.packager.OUT = self.root / "bundle"
+        fake_aex_dir = self.root / "fake-aex"
+        fake_aex_dir.mkdir()
+        self.packager.AEX = {}
+        for plugin in ("OLMToonDilate", "ColorKeep", "OLMColorKey"):
+            path = fake_aex_dir / f"{plugin}.aex"
+            path.write_bytes(f"deterministic fake AEX for {plugin}\n".encode())
+            self.packager.AEX[plugin] = path
         self.assertEqual(self.packager.main(), 0)
         self.verifier = load(self.packager.OUT / "VERIFY_RETURN.py", "generic_beta_verifier_test")
         self.return_dir = self.root / "return"

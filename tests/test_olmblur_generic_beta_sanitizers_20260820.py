@@ -11,8 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PROBE = ROOT / "tools/emulation/probe_olmblur_generic_beta_sanitized_20260820.cpp"
 SOURCES = [
-    "mac/OLMBlur/OLMBlur_Strings.cpp", "Util/AEGP_SuiteHandler.cpp",
-    "Util/MissingSuiteError.cpp", "core/olmblur_helper.cpp",
+    "mac/OLMBlur/OLMBlur_Strings.cpp", "core/olmblur_helper.cpp",
     "core/olmblur_fullworker_helper.cpp", "core/olmblur_worker16_nonlegacy.cpp",
     "core/olmblur_worker16_legacy.cpp", "core/olmblur_worker32_nonlegacy.cpp",
     "core/olmblur_worker32_legacy.cpp", "core/olmblur_worker8_legacy.cpp",

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import subprocess
 import tempfile
 from pathlib import Path
@@ -42,15 +43,30 @@ def test_generic_pixel_local_pairwise_matrix() -> None:
 
 
 def test_windows_oracle_connection_is_bounded_and_available() -> None:
-    # Existing returned Windows references cover the comparator/replace math.
-    # They are not HD/4K or arbitrary-stride evidence; the C++ probe above only
-    # promotes source/geometry/stride invariance of the same production renderer.
-    required = [
-        ROOT / "refs/win_references/20260604_olm/OLMColorKey",
-        ROOT / "refs/reference_requests/olmcolorkey_replace_colorspace_20260606.json",
-        ROOT / "refs/scripts/smoke_olmcolorkey_replace_colorspace_request_cli.py",
-    ]
-    assert all(path.exists() for path in required)
+    # Use compact, tracked actual-AEX/production reports instead of the 4.9 MiB
+    # returned-image tree, which is intentionally absent in a clean checkout.
+    colors = json.loads((
+        ROOT / "refs/conformance/olmcolorkey_colorspace_2_5_matrix_actual_aex_20260810.json"
+    ).read_text())
+    toggles = json.loads((
+        ROOT / "refs/conformance/olmcolorkey_keep_premult_replace_actual_aex_20260811.json"
+    ).read_text())
+    assert colors["status"] == toggles["status"] == "exact"
+    assert colors["matrix"]["color_spaces"] == [2, 5]  # HSV and YUV
+    assert colors["matrix"]["pixel_formats"] == ["PF8", "PF16", "PF32"]
+    assert len(colors["cases"]) == 36
+    assert toggles["matrix"] == {
+        "color_keep": [False, True],
+        "pixel_formats": ["PF8", "PF16", "PF32"],
+        "premultiplied": [False, True],
+        "replace": [False, True],
+    }
+    assert len(toggles["cases"]) == 24
+    for report in (colors, toggles):
+        assert len(report["actual_aex_sha256"]) == 64
+        assert all(case["status"] == "exact" for case in report["cases"])
+        assert all(case["actual_sha256"] == case["production_sha256"]
+                   for case in report["cases"])
 
 
 def test_generic_edge_thin_under_asan_ubsan() -> None:
