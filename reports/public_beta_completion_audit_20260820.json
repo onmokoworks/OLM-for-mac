@@ -1,6 +1,7 @@
 {
   "schema": "olm.public-beta-completion-audit/1",
   "date": "2026-08-20",
+  "updated_at": "2026-08-21",
   "objective": "All ten plugins accept arbitrary image content at practical general geometries and legal rowbytes within documented parameter, depth, and route bounds.",
   "overall": "partial",
   "criteria": {
@@ -29,7 +30,14 @@
     "capability_contract": "tests/test_beta_support_documentation.py",
     "hostless_gate": "reports/olm_generic_beta_gate.json",
     "performance": "reports/generic_beta_perf_smoke.json",
-    "performance_status": "current live-source hostless candidate: 20/20 HD/UHD cells passed; not immutable ROI v2 package evidence",
+    "performance_status": "current live-source hostless candidate: 20/20 HD/UHD cells passed with execution_pre_and_post exact source/toolchain binding; OLMDirectionalBlur contains 6 Front/Back cases/geometry at Strength 2; not immutable ROI v2 package evidence",
+    "directional_single_side_hostless": [
+      "tools/emulation/test_dblur_generic_backonly_beta_20260821.py",
+      "tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py"
+    ],
+    "directional_single_side_scope": "arbitrary-image generic route, strict Front-only or Back-only strength 1..4000 with the opposite side zero, neutral Fade/Sharp Tail/Size Variation/Noise Variation, documented geometry/work/memory/deep-SDR/render-scale admission only",
+    "directional_back_actual_aex_anchor": "refs/conformance/dblur_mode1_backonly_portable_20260805.json",
+    "directional_back_windows_exact_scope": "actual-AEX raw-callback anchors: PF8 960x540 Back 240 Angle 0 Gain 1 scale 0.5; fixed 16x16 PF8 Back 8 Angle 0/45 Gain 1, PF16 Back 1/2/8 Angle 45 Gain 1, PF32 Back 1 Angle 0/45 Gain 0.5/1 and Back 8 Angle 45 Gain 1, all scale 1; not native AE saved-frame, not general geometry, not all strengths, and not the ROI v2 package",
     "native_ae_pre_roi": "refs/conformance/olm_all10_generic_beta_quick_ae_smoke_20260820.json",
     "native_ae_current_roi": "partial / quick 10/10 passed",
     "native_ae_current_roi_evidence": "refs/conformance/olm_all10_roi_v2_quick_ae_smoke_20260820.json",

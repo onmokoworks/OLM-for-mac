@@ -18,6 +18,15 @@ SMOOTHER2_GAMMA_COLORS_TEST = (
     ROOT / "tests/test_olmsmoother2_gamma_colors_beta_20260820.py"
 )
 DIRECTIONAL_BUDGET = ROOT / "core/dblur_generic_budget.h"
+DIRECTIONAL_BACKONLY_DIRECT = (
+    ROOT / "tools/emulation/test_dblur_generic_backonly_beta_20260821.py"
+)
+DIRECTIONAL_BACKONLY_EFFECTMAIN = (
+    ROOT / "tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py"
+)
+DIRECTIONAL_BACKONLY_ANCHOR = (
+    ROOT / "refs/conformance/dblur_mode1_backonly_portable_20260805.json"
+)
 
 SOURCES = {
     "ColorKeep": ROOT / "mac/ColorKeep/ColorKeep.cpp",
@@ -52,7 +61,7 @@ class BetaSupportDocumentationContract(unittest.TestCase):
             "ColorKeep": ("Iterate8Suite2", "Iterate16Suite2", "IterateFloatSuite2"),
             "OLMBlur": ("bpc==8?4u:(bpc==16?8u:(bpc==32?16u:0u))", "SmartRender("),
             "OLMColorKey": ("RenderTyped<PF_Pixel8>", "RenderTyped<PF_Pixel16>", "RenderTyped<PF_PixelFloat>"),
-            "OLMDirectionalBlur": ("CanUseGenericFrontOnly8", "RenderGenericFrontOnly16", "RenderGenericFrontOnly32"),
+            "OLMDirectionalBlur": ("CanUseGenericSingleSide8", "RenderGenericSingleSide16", "RenderGenericSingleSide32"),
             "OLMDistanceGradation": ("RenderBits<PF_Pixel8>", "RenderBits<PF_Pixel16>", "RenderBits<PF_PixelFloat>"),
             "OLMKiraKira": ("IsGenericBetaMode12Tuple", "IsGenericBetaMode34TupleForGeometry", "BitDepthForFormat"),
             "OLMRadialBlur": ("IsGenericBaselineWorldPair<PixelT>", "RenderZoomTyped<PF_PixelFloat>"),
@@ -76,7 +85,12 @@ class BetaSupportDocumentationContract(unittest.TestCase):
                 "info.edge_blur_direction == 102",
                 "info.edge_thin_amount == -4.0 || info.edge_thin_amount == 4.0",
             ),
-            "OLMDirectionalBlur": ("info.front_strength > 0", "info.back_strength == 0", "info.noise_variation == 0.0"),
+            "OLMDirectionalBlur": (
+                "const bool front_only = info.front_strength != 0 && info.back_strength == 0",
+                "const bool back_only = info.front_strength == 0 && info.back_strength != 0",
+                "strength < 1 || strength > 4000",
+                "info.noise_variation == 0.0",
+            ),
             "OLMDistanceGradation": ("p.blur_mode == BLUR_MODE_NONE", "p.interp_mode == INTERP_CONSTANT || p.interp_mode == INTERP_LINEAR", "is_admitted_pf32_smart_oracle_profile", "PF32_POWER_GENERIC_MAX_ULP == 1"),
             "OLMKiraKira": ("info.blur_mode == 1 || info.blur_mode == 2", "IsGenericBetaMode34TupleForGeometry", "width >= 9 && height >= 7"),
             "OLMRadialBlur": ("info.outer_strength >= 0 && info.outer_strength <= 64", "info.inner_strength == 0", "info.quality >= 1.0 && info.quality <= 5.0"),
@@ -123,16 +137,94 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         ):
             self.assertIn(token, radial)
         directional = self.sources["OLMDirectionalBlur"]
-        for token in ("pixel.alpha > 32768", "IsGenericFrontOnlyDeepParameters", "GenericPF32SDRInput", "RenderExact8(input, output, nullptr, info, true)"):
+        for token in (
+            "pixel.alpha > 32768",
+            "IsGenericSingleSideDeepParameters",
+            "IsRetainedNeutralBackExact8",
+            "IsRetainedNeutralBackExact16",
+            "IsRetainedNeutralBackExact32",
+            "GenericPF32SDRInput",
+            "RenderExact8(input, output, nullptr, info, true)",
+        ):
             self.assertIn(token, directional)
         for claim in ("最大4096×2160", "Amount 1–1000", "Repeat 1–10", "3 GiB per-render plugin-owned admission", "3億5000万work-unit", "最小9×7", "16×16–8192×8192", "Search Radius 0–100", "Enabled Color Num 1–100", "Edge Thin −100〜100", "Distance Type 1〜3", "Outer/Inner Strength整数0–64", "Noise Variation 25/100", "Size Variation 1/25/100", "最大1 ULP契約", "Gamma 1.0–2.4"):
             self.assertIn(claim, self.doc)
         for claim in ("Thin ±4／DT2", "materialized 102", "full-frameのみ",
                       "任意source Windows exactは未主張", "native quickはEdge 0",
-                      "HD 513,671,168 bytes／4.789秒", "UHD 1,549,451,264 bytes／13.228秒",
+                      "FrontまたはBackの厳密片側", "6 cases/geometry",
+                      "actual-AEX raw-callback／production replay anchorはPF8 960×540・Back 240・Angle 0・Gain 1・scale 0.5",
+                      "native AE saved-frameではない",
+                      "16×16 retained exact unionはPF8 Back 8・Angle 0/45・Gain 1",
+                      "PF16 Back 1/2/8・Angle 45・Gain 1",
+                      "PF32 Back 1・Angle 0/45・Gain 0.5/1およびBack 8・Angle 45・Gain 1",
+                      "すべてscale 1",
+                      "一般geometry・全Strength・native AE・ROI v2 packageには遡及しない",
+                      "current canonical性能reportはHD/UHDそれぞれFront/Back×PF8/PF16/PF32の6 cases/geometry",
+                      "source/toolchainの実行前後一致",
                       "Gamma Colors palette count 1–5",
                       "palette order／duplicate／inactive tail／alpha semantics", "custom/user LUTは拒否"):
             self.assertIn(claim, self.doc)
+
+        direct = DIRECTIONAL_BACKONLY_DIRECT.read_text(encoding="utf-8")
+        effectmain = DIRECTIONAL_BACKONLY_EFFECTMAIN.read_text(encoding="utf-8")
+        for token in (
+            "PASS_DBLUR_GENERIC_BACKONLY_BETA",
+            "positive_depth<PF_Pixel8>(8)",
+            "positive_depth<PF_Pixel16>(16)",
+            "positive_depth<PF_PixelFloat>(32)",
+        ):
+            self.assertIn(token, direct)
+        for token in (
+            "PASS_DBLUR_GENERIC_BACKONLY_EFFECTMAIN",
+            "PF_Cmd_RENDER",
+            "PF_Cmd_SMART_PRE_RENDER",
+            "PF_Cmd_SMART_RENDER",
+            "back=2/8",
+        ):
+            self.assertIn(token, effectmain)
+        anchor = json.loads(DIRECTIONAL_BACKONLY_ANCHOR.read_text(encoding="utf-8"))
+        self.assertEqual(anchor["status"], "pass")
+        self.assertTrue(anchor["checks"]["actual_aex_raw_exact"])
+        self.assertEqual(anchor["parameters"]["back_strength_ui"], 240)
+        self.assertEqual(anchor["parameters"]["angle"], 0)
+        self.assertEqual(anchor["parameters"]["brightness_gain"], 1)
+        self.assertEqual(anchor["parameters"]["render_scale"], 0.5)
+        self.assertFalse(anchor["claim_boundary"]["windows_ae_pixel_exact"])
+        self.assertIn("saved-frame", anchor["claim_boundary"]["remaining"])
+
+        exact8 = directional.split("static bool IsRetainedNeutralBackExact8", 1)[1].split(
+            "static bool IsRetainedNeutralBackExact16", 1
+        )[0]
+        exact16 = directional.split("static bool IsRetainedNeutralBackExact16", 1)[1].split(
+            "static bool IsRetainedNeutralBackExact32", 1
+        )[0]
+        exact32 = directional.split("static bool IsRetainedNeutralBackExact32", 1)[1].split(
+            "static bool IsRetainedNeutralBackExact(", 1
+        )[0]
+        for token in (
+            "info.back_strength == 8",
+            "info.angle_deg == 0.0 || info.angle_deg == 45.0",
+            "info.brightness_gain != 1.0",
+            "info.back_strength == 240 && info.angle_deg == 0.0",
+            "info.render_scale_x == 0.5 && info.render_scale_y == 0.5",
+        ):
+            self.assertIn(token, exact8)
+        for token in (
+            "info.back_strength == 1 || info.back_strength == 2",
+            "info.back_strength == 8) && info.angle_deg == 45.0",
+            "info.brightness_gain == 1.0",
+            "info.render_scale_x == 1.0",
+        ):
+            self.assertIn(token, exact16)
+        for token in (
+            "info.back_strength == 1",
+            "info.angle_deg == 0.0 || info.angle_deg == 45.0",
+            "info.brightness_gain == 0.5 || info.brightness_gain == 1.0",
+            "info.back_strength == 8 && info.angle_deg == 45.0",
+            "info.brightness_gain == 1.0",
+            "info.render_scale_x == 1.0",
+        ):
+            self.assertIn(token, exact32)
 
         gamma_colors_test = SMOOTHER2_GAMMA_COLORS_TEST.read_text(encoding="utf-8")
         for token in (
@@ -374,12 +466,40 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         self.assertIn("対応セルはすべて成功", self.doc)
         self.assertIn("非対応セルはreasonとsupport predicate付き", self.doc)
         self.assertIn("未計測セルを成功扱いにしていません", self.doc)
+        self.assertIn("current live-source", self.doc)
         self.assertIn("20セルを実測し、20/20成功", self.doc)
+        self.assertIn("6 cases/geometryをStrength 2", self.doc)
+        self.assertIn("実行前後でhash照合", self.doc)
         directional = [row for row in rows if row["lane"] == "OLMDirectionalBlur"]
         self.assertEqual({row["geometry"] for row in directional}, {"hd", "uhd"})
         self.assertTrue(all(row["status"] == "passed" for row in directional))
-        self.assertTrue(all(len(row.get("case_results", [])) == 3
-                            for row in directional))
+        expected_directional_cases = {
+            (side, depth, front, back)
+            for depth in (8, 16, 32)
+            for side, front, back in (("front", 2, 0), ("back", 0, 2))
+        }
+        for row in directional:
+            cases = row.get("case_results", [])
+            self.assertEqual(
+                len(cases), 6,
+                "stale Directional performance report: expected exactly six "
+                "single-side cases per geometry",
+            )
+            observed = {
+                (case.get("side"), case.get("depth"),
+                 case.get("front_strength"), case.get("back_strength"))
+                for case in cases
+            }
+            self.assertEqual(
+                observed,
+                expected_directional_cases,
+                "stale Directional performance report: regenerate it with six "
+                "Front/Back single-side cases per geometry before restoring the "
+                "performance claim",
+            )
+            self.assertTrue(all(case.get("angle") == 37.25 for case in cases))
+            self.assertTrue(all(case.get("brightness_gain") == 0.75
+                                for case in cases))
 
         radial_perf = json.loads(
             (ROOT / "reports/generic_beta_perf_smoke_radial.json").read_text(encoding="utf-8")
@@ -424,10 +544,41 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         self.assertEqual(audit["criteria"]["native_ae_host"], "partial")
         self.assertIn("20/20 HD/UHD cells passed",
                       audit["evidence"]["performance_status"])
+        self.assertIn("execution_pre_and_post exact source/toolchain binding",
+                      audit["evidence"]["performance_status"])
+        self.assertIn("6 Front/Back cases/geometry",
+                      audit["evidence"]["performance_status"])
         directional_audit = next(
             row for row in audit["plugins"] if row["plugin"] == "OLMDirectionalBlur"
         )
         self.assertEqual(directional_audit["geometry_rowbytes"], "proven")
+        for axis in ("parameters", "windows", "ae_host", "roi"):
+            self.assertEqual(directional_audit[axis], "partial")
+        self.assertEqual(
+            audit["evidence"]["directional_single_side_hostless"],
+            [
+                "tools/emulation/test_dblur_generic_backonly_beta_20260821.py",
+                "tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py",
+            ],
+        )
+        self.assertEqual(
+            audit["evidence"]["directional_back_actual_aex_anchor"],
+            "refs/conformance/dblur_mode1_backonly_portable_20260805.json",
+        )
+        exact_scope = audit["evidence"]["directional_back_windows_exact_scope"]
+        for phrase in (
+            "actual-AEX raw-callback anchors",
+            "PF8 960x540 Back 240 Angle 0 Gain 1 scale 0.5",
+            "fixed 16x16 PF8 Back 8 Angle 0/45 Gain 1",
+            "PF16 Back 1/2/8 Angle 45 Gain 1",
+            "PF32 Back 1 Angle 0/45 Gain 0.5/1",
+            "Back 8 Angle 45 Gain 1",
+            "not native AE saved-frame",
+            "not general geometry",
+            "not all strengths",
+            "not the ROI v2 package",
+        ):
+            self.assertIn(phrase, exact_scope)
         self.assertEqual(audit["evidence"]["native_ae_current_roi"],
                          "partial / quick 10/10 passed")
         current_roi_scope = audit["evidence"]["native_ae_current_roi_scope"]

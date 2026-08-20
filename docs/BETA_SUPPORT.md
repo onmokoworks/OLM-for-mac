@@ -24,7 +24,7 @@ Windows版との全設定・全画素一致を意味しません。表にない�
 | ColorKeep | あり | Classic: 8/16、Smart: 8/16/32 | 正のgeometry、合法な独立stride。pointwise非ゼロorigin partial tile対応 | Enabled Color Num 1–100、指定色との一致保持 | Classic 32 bpcなし。tile座標はworld originをauthorityとする | typed iterate実装済み。8/16/32 bpc・1×1〜4K sanitizer、partial tile property成功。Windows/AE数値matrixは未完 |
 | OLMBlur | あり | Smart: 8/16/32 | 24×24より大きく、最大4096×2160。独立stride可 | Amount 1–1000、Smoothness 1–100、Repeat 1–10、Bias 1–2、Legacy on/off | ROI counterexampleによりfull-frame以外はfail-close。downsampleは1:1。4K超、高負荷条件は拒否 | hostless HD/4K性能smoke成功。Windows exactは固定fixtureのみ |
 | OLMColorKey | あり | Classic/Smart: 8/16/32 | pointwiseは非ゼロorigin partial tile対応。Thin＋Blurはfull-frameのみ | pixel-local key／replace、Edge Thin −100〜100・Distance Type 1〜3、oracle済みEdge Blur profile。portable合成laneはThin ±4／DT2＋Blur Direction 2（materialized 102）／Amount 4／DT2 | 上記以外のThin＋Blur、未知Blur tuple/internal directionは未対応。downsample 1:1 | hostless HD/4K・partial tile成功。固定13×11 actual-AEX 36 exactは非飽和combinedを識別しないため、合成laneの任意source Windows exactは未主張。current ROI v2 native quickはEdge 0で新合成laneを未収録 |
-| OLMDirectionalBlur | 限定あり | Classic/Smart: 8/16/32 | 各辺4096以下かつ総画素数4096×2160以下、padded row可。ROIはfull-frame-normalized overscan。3 GiB per-render plugin-owned admission（64 MiB reserve込み） | Front Strength 1–4000のうちgeometry別3億5000万work-unit上限内、Back=0、Fade/Sharp Tail/Size Variation/Noise Variation=0。Angleは16.16 UI域、Brightness 0–10。16/32はrender scale 1 | partial storageはfail-close。deep SDR制約あり。3 GiBはprocess/MFR全体の上限ではない。exact-tail等は固定union | 全深度front-only HD/UHD確認。canonical性能測定: HD 513,671,168 bytes／4.789秒、UHD 1,549,451,264 bytes／13.228秒。Windows exactは固定tuple中心 |
+| OLMDirectionalBlur | 限定あり | Classic/Smart: 8/16/32 | 各辺4096以下かつ総画素数4096×2160以下、padded row可。ROIはfull-frame-normalized overscan。3 GiB per-render plugin-owned admission（64 MiB reserve込み） | FrontまたはBackの厳密片側（他方は0）をStrength 1–4000のうちgeometry別3億5000万work-unit上限内で扱う。Fade/Sharp Tail/Size Variation/Noise Variation=0。Angleは16.16 UI域、Brightness 0–10。PF8は投影後effective strength 1以上、16/32はrender scale 1 | partial storageはfail-close。deep SDR制約あり。3 GiBはprocess/MFR全体の上限ではない。exact-tail等は固定union | direct／hostless EffectMainで両side・全深度を確認。current canonical性能reportはHD/UHDそれぞれFront/Back×PF8/PF16/PF32の6 cases/geometryをStrength 2で実測し、source/toolchainの実行前後一致を確認。actual-AEX raw-callback／production replay anchorはPF8 960×540・Back 240・Angle 0・Gain 1・scale 0.5で、native AE saved-frameではない。16×16 retained exact unionはPF8 Back 8・Angle 0/45・Gain 1、PF16 Back 1/2/8・Angle 45・Gain 1、PF32 Back 1・Angle 0/45・Gain 0.5/1およびBack 8・Angle 45・Gain 1（すべてscale 1）に限定する。一般geometry・全Strength・native AE・ROI v2 packageには遡及しない |
 | OLMDistanceGradation | あり | Classic: 8/16/32、Smart: 8/16。Smart 32は限定 | 正のgeometry、rowbytes≧active row。ROIはfull-frame-normalized overscan | 8/16 typed core。Smart 32は汎用Constant/Linear＋oracle profile | partial storageはfail-close。PF32 Powerは最大1 ULP契約。profile外設定は固定unionまたは拒否 | hostless HD/4K、overscan policy、PF32 profile検証。portable betaはbit-exact非保証 |
 | OLMKiraKira | 限定あり | Classic/Smart: 8/16/32 | full-frame、最小9×7。Mode 3/4はray admission必要 | oracle済みMode 1–4 tuple | ROI counterexampleによりpartial tileはfail-close。任意tupleではない | 全深度Mode 1–4 hostless 4K sanitizer/parity・性能smoke成功。Windows exactは元fixtureのみ |
 | OLMRadialBlur | 限定あり | Classic/Smart: 8/16/32 | 正のgeometry、独立stride。ROIはfull-frame-normalized overscan | Outer/Inner Strength整数0–64、Edge Fade 0–100、Ratio 1–5、Angle −360–360、Quality 1–5。Noise Variation 25/100、Size Variation 1/25/100、Zoom Type 3は列挙profile | partial storageはfail-close。Size/Noise交差等は限定 | baseline全深度HD/UHD、advanced、overscan policyをsanitizer検証。4K peak RSS約494 MiB。Windows/AE matrixは未完 |
@@ -54,13 +54,15 @@ ROI v2 package reportの`beta_support_sha256`は、zip内にビルド時収録�
 `docs/BETA_SUPPORT.md`は、その後の検証結果を追記するlive文書であり、同じhashを持つ必要はありません。
 live文書のhashでpackage manifest値を置き換えることもありません。
 
-2026-08-20時点では、ColorKeepの8/16/32 bpcについて1×1から4Kまでの
-AddressSanitizer／UndefinedBehaviorSanitizer検証が成功しています。またhostless性能smokeでは、
-current live-sourceのcanonical性能reportは全10プラグイン×HD/UHDの20セルを実測し、20/20成功しました。
-対応セルはすべて成功を要求し、非対応セルはreasonとsupport predicate付きで明示します。
-未計測セルを成功扱いにしていません。この20/20はhostless候補ソースの性能証拠であり、上記immutable
-ROI v2 packageへ後付けされるnative AE証拠ではありません。
-これらはWindows oracleやnative AE検証の代替ではありません。
+2026-08-21時点では、ColorKeepの8/16/32 bpcについて1×1から4Kまでの
+AddressSanitizer／UndefinedBehaviorSanitizer検証が成功しています。current live-sourceの
+canonical hostless性能reportは全10プラグイン×HD/UHDの20セルを実測し、20/20成功しました。
+Directionalは各geometryでFront/Back×PF8/PF16/PF32の6 casesをStrength 2で実行し、両sideを
+同時に隠すidentity fallbackを避ける非対称入力も検査します。reportはproduction／driver／toolchainを
+実行前後でhash照合し、exact matchでない測定を成功扱いにしません。対応セルはすべて成功を要求し、
+非対応セルはreasonとsupport predicate付きで明示します。未計測セルを成功扱いにしていません。
+このhostless性能証拠は、上記immutable ROI v2 packageへ後付けされるnative AE証拠ではなく、
+Windows oracleやnative AE検証の代替ではありません。
 
 日常の変更ではhostless、sanitizer、generic gateを実行します。native AEの54-case smokeは
 毎変更ではなく、milestoneまたはrelease candidateでまとめて実行する運用です。
