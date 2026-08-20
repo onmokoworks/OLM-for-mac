@@ -27,6 +27,9 @@ DIRECTIONAL_BACKONLY_EFFECTMAIN = (
 DIRECTIONAL_BACKONLY_ANCHOR = (
     ROOT / "refs/conformance/dblur_mode1_backonly_portable_20260805.json"
 )
+KIRAKIRA_MODE3_HELPER_CHAIN = (
+    ROOT / "refs/conformance/olmkirakira_mode3_geometry_generalization_actual_aex_20260810.json"
+)
 
 SOURCES = {
     "ColorKeep": ROOT / "mac/ColorKeep/ColorKeep.cpp",
@@ -63,7 +66,7 @@ class BetaSupportDocumentationContract(unittest.TestCase):
             "OLMColorKey": ("RenderTyped<PF_Pixel8>", "RenderTyped<PF_Pixel16>", "RenderTyped<PF_PixelFloat>"),
             "OLMDirectionalBlur": ("CanUseGenericSingleSide8", "RenderGenericSingleSide16", "RenderGenericSingleSide32"),
             "OLMDistanceGradation": ("RenderBits<PF_Pixel8>", "RenderBits<PF_Pixel16>", "RenderBits<PF_PixelFloat>"),
-            "OLMKiraKira": ("IsGenericBetaMode12Tuple", "IsGenericBetaMode34TupleForGeometry", "BitDepthForFormat"),
+            "OLMKiraKira": ("IsGenericBetaMode12Tuple", "IsGenericBetaMode3HorizontalTuple", "IsGenericBetaMode3BudgetAdmitted", "BitDepthForFormat"),
             "OLMRadialBlur": ("IsGenericBaselineWorldPair<PixelT>", "RenderZoomTyped<PF_PixelFloat>"),
             "OLMSmoother": ("if (depth == 8 || depth == 16) return true", "V1ClassicAdmission"),
             "OLMSmoother2": ("V2GenericBetaAdmission", "depth != 8 && depth != 16 && depth != 32"),
@@ -92,7 +95,21 @@ class BetaSupportDocumentationContract(unittest.TestCase):
                 "info.noise_variation == 0.0",
             ),
             "OLMDistanceGradation": ("p.blur_mode == BLUR_MODE_NONE", "p.interp_mode == INTERP_CONSTANT || p.interp_mode == INTERP_LINEAR", "is_admitted_pf32_smart_oracle_profile", "PF32_POWER_GENERIC_MAX_ULP == 1"),
-            "OLMKiraKira": ("info.blur_mode == 1 || info.blur_mode == 2", "IsGenericBetaMode34TupleForGeometry", "width >= 9 && height >= 7"),
+            "OLMKiraKira": (
+                "info.blur_mode == 1 || info.blur_mode == 2",
+                "IsGenericBetaMode3HorizontalTuple",
+                "info.horizontal_length < 1",
+                "info.horizontal_length > 300",
+                "owner_tuple.horizontal_length = 50",
+                "IsGenericBetaMode3BudgetAdmitted",
+                "kMaxGenericPixels",
+                "kMaxPluginOwnedBytes",
+                "kMaxMode3WorkUnits",
+                "GenericBetaInputIsFiniteSDR",
+                "generic_full_frame_request",
+                "request_contains_known_full_frame",
+                "width >= 9 && height >= 7",
+            ),
             "OLMRadialBlur": ("info.outer_strength >= 0 && info.outer_strength <= 64", "info.inner_strength == 0", "info.quality >= 1.0 && info.quality <= 5.0"),
             "OLMSmoother2": ("world->width < 16 || world->height < 16", "world->width > 8192 || world->height > 8192", "GAMMA_ALL_COLORS", "gamma_mode == GAMMA_COLORS_ONLY", "gamma_count >= 1 && gamma_count <= NUM_GAMMA_COLORS", "gamma_value >= 1.0 && gamma_value <= gamma_ui_max", "const A_FpLong gamma_ui_max = (A_FpLong)(float)2.4f", "smoothness >= 0 && smoothness <= 100", "custom/user LUT", "!retained_fixture && V2GenericBetaAdmission"),
             "OLMToonDilate": ("info.search_radius < 0.0", "ValidateToonBetaAdmission<PF_Pixel8>", "RenderTileWorld", "ToonCheckedHalo", "output->origin_x - input->origin_x"),
@@ -147,7 +164,7 @@ class BetaSupportDocumentationContract(unittest.TestCase):
             "RenderExact8(input, output, nullptr, info, true)",
         ):
             self.assertIn(token, directional)
-        for claim in ("最大4096×2160", "Amount 1–1000", "Repeat 1–10", "3 GiB per-render plugin-owned admission", "3億5000万work-unit", "最小9×7", "16×16–8192×8192", "Search Radius 0–100", "Enabled Color Num 1–100", "Edge Thin −100〜100", "Distance Type 1〜3", "Outer/Inner Strength整数0–64", "Noise Variation 25/100", "Size Variation 1/25/100", "最大1 ULP契約", "Gamma 1.0–2.4"):
+        for claim in ("最大4096×2160", "Amount 1–1000", "Repeat 1–10", "3 GiB per-render plugin-owned admission", "3億5000万work-unit", "最小9×7", "1 GiB per-render plugin-owned", "120億work-unit", "Horizontal-only", "Length 1–300", "Rotation 0/1", "16×16–8192×8192", "Search Radius 0–100", "Enabled Color Num 1–100", "Edge Thin −100〜100", "Distance Type 1〜3", "Outer/Inner Strength整数0–64", "Noise Variation 25/100", "Size Variation 1/25/100", "最大1 ULP契約", "Gamma 1.0–2.4"):
             self.assertIn(claim, self.doc)
         for claim in ("Thin ±4／DT2", "materialized 102", "full-frameのみ",
                       "任意source Windows exactは未主張", "native quickはEdge 0",
@@ -161,6 +178,11 @@ class BetaSupportDocumentationContract(unittest.TestCase):
                       "一般geometry・全Strength・native AE・ROI v2 packageには遡及しない",
                       "current canonical性能reportはHD/UHDそれぞれFront/Back×PF8/PF16/PF32の6 cases/geometry",
                       "source/toolchainの実行前後一致",
+                      "UI全300 Length×3深度=900",
+                      "HD/UHD各15 cases",
+                      "hostless helper chainは代表14 Lengthの66 cases／497,250 words exact",
+                      "Length 1–300全体のexported-owner／native AE exactは未主張",
+                      "旧fixture-only source／extent／stride negativesはgeneric safety契約に置換",
                       "Gamma Colors palette count 1–5",
                       "palette order／duplicate／inactive tail／alpha semantics", "custom/user LUTは拒否"):
             self.assertIn(claim, self.doc)
@@ -470,6 +492,13 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         self.assertIn("20セルを実測し、20/20成功", self.doc)
         self.assertIn("6 cases/geometryをStrength 2", self.doc)
         self.assertIn("実行前後でhash照合", self.doc)
+        self.assertEqual(perf["provenance"]["binding_mode"], "execution_pre_and_post")
+        self.assertEqual(
+            perf["provenance"]["measurement_source_identity"],
+            "exact_pre_and_post_match",
+        )
+        self.assertTrue(perf["provenance"]["post_run_dependency_match"])
+        self.assertTrue(perf["provenance"]["post_run_toolchain_match"])
         directional = [row for row in rows if row["lane"] == "OLMDirectionalBlur"]
         self.assertEqual({row["geometry"] for row in directional}, {"hd", "uhd"})
         self.assertTrue(all(row["status"] == "passed" for row in directional))
@@ -500,6 +529,80 @@ class BetaSupportDocumentationContract(unittest.TestCase):
             self.assertTrue(all(case.get("angle") == 37.25 for case in cases))
             self.assertTrue(all(case.get("brightness_gain") == 0.75
                                 for case in cases))
+
+        kirakira = [row for row in rows if row["lane"] == "OLMKiraKira"]
+        self.assertEqual({row["geometry"] for row in kirakira}, {"hd", "uhd"})
+        expected_kira_profiles = {
+            ("box", "m1_h7_r0", 7, 0.0),
+            ("approximated_gaussian", "m2_h7_ramp_r0", 7, 0.0),
+            ("gaussian_length50", "m3_h50_r0", 50, 0.0),
+            ("exponential", "m4_highlight_r3", 0, 0.0),
+            ("gaussian_length300", "m3_ui_length", 300, 1.0),
+        }
+        expected_kira_cases = {
+            (*profile, depth)
+            for profile in expected_kira_profiles
+            for depth in (8, 16, 32)
+        }
+        for row in kirakira:
+            cases = row.get("case_results", [])
+            self.assertEqual(len(cases), 15)
+            self.assertEqual(
+                {(case["mode"], case["tuple"], case["horizontal_length"],
+                  case["rotation_degrees"], case["depth_bpc"])
+                 for case in cases},
+                expected_kira_cases,
+            )
+            self.assertTrue(all(
+                case["returncode"] == 0 and case["wall_seconds"] > 0 and
+                case["peak_rss_bytes"] > 0 and case["classic_smart_parity"] and
+                case["deterministic"] and case["independent_strides"] and
+                case["input_span_unchanged"] and
+                case["output_padding_unchanged"] and
+                case["output_active_changed"] and
+                case["content_bounds"] == "full" and
+                case["callback_shape"] == "1/1/1/0"
+                for case in cases
+            ))
+            self.assertLess(row["wall_seconds"], row["timeout_seconds"])
+            self.assertLessEqual(row["peak_rss_bytes"], row["rss_budget_bytes"])
+            self.assertIn(f"{row['wall_seconds']:.2f}秒", self.doc)
+            self.assertIn(f"{row['peak_rss_bytes']:,} bytes", self.doc)
+            for fragment in (
+                "mode3_horizontal_only",
+                "1 <= length <= 300",
+                "per_render_plugin_owned_bytes <= 1073741824",
+                "mode3_work_units <= 12000000000",
+            ):
+                self.assertIn(fragment, row["support_predicate"])
+        self.assertIn("Mode 3 Horizontal Length 300・Rotation 1", self.doc)
+        self.assertIn("DCI 4096×2160 endpointの実測", self.doc)
+
+        helper = json.loads(KIRAKIRA_MODE3_HELPER_CHAIN.read_text(encoding="utf-8"))
+        self.assertEqual(helper["status"], "captured")
+        self.assertEqual(
+            helper["aex_sha256"],
+            "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+        )
+        self.assertEqual(len(helper["cases"]), 66)
+        self.assertEqual(
+            {case["length"] for case in helper["cases"]},
+            {1, 2, 3, 5, 7, 9, 11, 25, 50, 100, 200, 300, 301, 1000},
+        )
+        self.assertEqual(
+            {case["angle_degrees"] for case in helper["cases"]},
+            {-45, 0, 17, 45},
+        )
+        self.assertEqual(
+            sum(
+                len(case[stage]["words_u32"])
+                for case in helper["cases"]
+                for stage in ("forward", "gaussian", "final")
+            ),
+            497250,
+        )
+        self.assertIn("代表14 Length", self.doc)
+        self.assertIn(helper["aex_sha256"], self.doc)
 
         radial_perf = json.loads(
             (ROOT / "reports/generic_beta_perf_smoke_radial.json").read_text(encoding="utf-8")
@@ -548,12 +651,52 @@ class BetaSupportDocumentationContract(unittest.TestCase):
                       audit["evidence"]["performance_status"])
         self.assertIn("6 Front/Back cases/geometry",
                       audit["evidence"]["performance_status"])
+        self.assertIn("15 cases/geometry including Mode 3 Horizontal Length 300 Rotation 1",
+                      audit["evidence"]["performance_status"])
         directional_audit = next(
             row for row in audit["plugins"] if row["plugin"] == "OLMDirectionalBlur"
         )
         self.assertEqual(directional_audit["geometry_rowbytes"], "proven")
         for axis in ("parameters", "windows", "ae_host", "roi"):
             self.assertEqual(directional_audit[axis], "partial")
+        kirakira_audit = next(
+            row for row in audit["plugins"] if row["plugin"] == "OLMKiraKira"
+        )
+        self.assertEqual(kirakira_audit["geometry_rowbytes"], "proven")
+        self.assertEqual(kirakira_audit["depth_route"], "proven")
+        for axis in ("parameters", "windows", "ae_host"):
+            self.assertEqual(kirakira_audit[axis], "partial")
+        self.assertEqual(kirakira_audit["roi"], "missing")
+        self.assertEqual(
+            audit["evidence"]["kirakira_mode3_ui_hostless"],
+            "tests/test_olmkirakira_mode3_ui_length_beta_20260821.py",
+        )
+        self.assertEqual(
+            audit["evidence"]["kirakira_mode3_windows_helper_chain"],
+            "refs/conformance/olmkirakira_mode3_geometry_generalization_actual_aex_20260810.json",
+        )
+        for phrase in (
+            "Horizontal-only Mode 3 Length 1..300",
+            "Rotation 0/1",
+            "PF8/PF16/PF32 Classic and Smart",
+            "1 GiB per-render plugin-owned",
+            "12 billion work-unit caps",
+            "partial ROI/tile",
+        ):
+            self.assertIn(phrase, audit["evidence"]["kirakira_mode3_ui_scope"])
+        for phrase in (
+            "66 cases and 497250 words exact",
+            "the 14 sampled Lengths {1,2,3,5,7,9,11,25,50,100,200,300,301,1000}",
+            "angles {-45,0,17,45}",
+            "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+            "exported public EffectMain all-depth exact remains Length 50 only",
+            "not broad Length 1..300 exported-owner or native AE equality",
+        ):
+            self.assertIn(phrase, audit["evidence"]["kirakira_mode3_windows_exact_scope"])
+        self.assertIn(
+            "older fixture-only source/extent/stride rejection claims are superseded",
+            audit["evidence"]["kirakira_mode3_fixed32_supersession"],
+        )
         self.assertEqual(
             audit["evidence"]["directional_single_side_hostless"],
             [
@@ -642,7 +785,8 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         for key in ("capability_contract", "hostless_gate", "performance", "native_ae_pre_roi",
                     "native_ae_current_roi_evidence",
                     "windows_nonhd_roi_checkpoint", "windows_hd_checkpoint",
-                    "current_roi_package_report"):
+                    "current_roi_package_report", "kirakira_mode3_ui_hostless",
+                    "kirakira_mode3_windows_helper_chain"):
             evidence = audit["evidence"][key]
             self.assertTrue((ROOT / evidence).is_file(), evidence)
         for claim in ("ROI／tile／halo", "full-frame出力", "必要halo", "非ゼロorigin",
