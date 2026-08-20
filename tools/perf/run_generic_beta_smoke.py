@@ -290,7 +290,12 @@ SUPPORT_PREDICATES = {
     ),
     "OLMKiraKira": (
         "classic_or_smart && pf8_pf16_pf32 && full_frame && zero_origin && "
-        "width >= 9 && height >= 7 && oracle_tuple && mode_geometry_admitted"
+        "independent_nonoverlapping_rowbytes && width >= 9 && height >= 7 && "
+        "max(width,height) <= 4096 && width*height <= 8847360 && "
+        "pf16_sdr_0_32768 && pf32_finite_sdr_0_1 && "
+        "(oracle_tuple || (mode3_horizontal_only && 1 <= length <= 300 && "
+        "rotation in {0,1} && per_render_plugin_owned_bytes <= 1073741824 && "
+        "mode3_work_units <= 12000000000)) && mode_geometry_admitted"
     ),
     "OLMSmoother": (
         "classic && (pf8 || pf16) && (key_off || key_on) && "
@@ -320,7 +325,7 @@ CASE_DEPTH_COUNTS: dict[tuple[str, str], dict[int, int]] = {
 } | {
     (lane, geometry): {8: count, 16: count, 32: count}
     for lane, count in (
-        ("OLMDirectionalBlur", 2), ("OLMKiraKira", 4),
+        ("OLMDirectionalBlur", 2), ("OLMKiraKira", 5),
         ("OLMRadialBlur", 2), ("OLMToonDilate", 1),
     )
     for geometry in GEOMETRIES
@@ -974,9 +979,9 @@ def _parameters(lane: str, geometry: str) -> str:
             "pf8_pf16_pf32_odd_independent_strides"
         ),
         "OLMKiraKira": (
-            "box_tuple0_approximated_gaussian_tuple3_gaussian_tuple7_"
-            "exponential_tuple9_pf8_pf16_pf32_smart_two_classic_parity_"
-            "determinism"
+            "box_tuple0_approximated_gaussian_tuple3_gaussian_length50_"
+            "exponential_tuple9_gaussian_horizontal_length300_rotation1_"
+            "pf8_pf16_pf32_smart_two_classic_parity_determinism"
         ),
     }
     return overrides.get(lane, value)
@@ -1074,6 +1079,31 @@ def _validate_case_results(
             if (isinstance(rss, bool) or not isinstance(rss, int) or rss < 0
                     or rss > RSS_BUDGET_BYTES[geometry]):
                 raise EvidenceBindingError(f"case RSS is invalid: {lane}/{geometry}/{index}")
+        if lane == "OLMKiraKira":
+            required = {
+                "returncode", "dimensions", "wall_seconds", "peak_rss_bytes",
+                "workload", "classic_smart_parity", "deterministic",
+                "independent_strides", "input_span_unchanged",
+                "output_padding_unchanged", "output_active_changed",
+            }
+            if not required.issubset(case):
+                raise EvidenceBindingError(
+                    f"Kira case evidence is incomplete: {lane}/{geometry}/{index}"
+                )
+            if case["workload"] != (
+                "Smart plus two Classic production renders with parity/determinism checks"
+            ):
+                raise EvidenceBindingError(
+                    f"Kira workload identity mismatch: {lane}/{geometry}/{index}"
+                )
+            if case["wall_seconds"] <= 0:
+                raise EvidenceBindingError(
+                    f"Kira case timing is not positive: {lane}/{geometry}/{index}"
+                )
+            if case["peak_rss_bytes"] <= 0:
+                raise EvidenceBindingError(
+                    f"Kira case RSS is not positive: {lane}/{geometry}/{index}"
+                )
         for safety_key in (
             "input_span_unchanged", "output_active_changed",
             "output_padding_unchanged", "independent_strides",
@@ -1101,7 +1131,16 @@ def _validate_case_results(
                 case.get("opposite_side_output_differs"),
             ))
         elif lane == "OLMKiraKira":
-            observed_identities.append((case.get("mode"), depth))
+            observed_identities.append((
+                case.get("mode"), case.get("tuple"), depth,
+                case.get("horizontal_length"),
+                case.get("rotation_degrees"), case.get("classic_smart_parity"),
+                case.get("deterministic"), case.get("independent_strides"),
+                case.get("input_span_unchanged"),
+                case.get("output_padding_unchanged"),
+                case.get("output_active_changed"),
+                case.get("content_bounds"), case.get("callback_shape"),
+            ))
         elif lane == "OLMRadialBlur":
             observed_identities.append((case.get("family"), depth))
         elif lane == "OLMToonDilate":
@@ -1138,8 +1177,15 @@ def _validate_case_results(
         }
     elif lane == "OLMKiraKira":
         expected_identities = {
-            (mode, depth)
-            for mode in ("box", "approximated_gaussian", "gaussian", "exponential")
+            (mode, tuple_name, depth, length, rotation,
+             True, True, True, True, True, True, "full", "1/1/1/0")
+            for mode, tuple_name, length, rotation in (
+                ("box", "m1_h7_r0", 7, 0.0),
+                ("approximated_gaussian", "m2_h7_ramp_r0", 7, 0.0),
+                ("gaussian_length50", "m3_h50_r0", 50, 0.0),
+                ("exponential", "m4_highlight_r3", 0, 0.0),
+                ("gaussian_length300", "m3_ui_length", 300, 1.0),
+            )
             for depth in (8, 16, 32)
         }
     elif lane == "OLMRadialBlur":

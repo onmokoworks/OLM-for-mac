@@ -47,6 +47,32 @@ def directional_case_results(geometry: str) -> list[dict[str, object]]:
     ]
 
 
+def kirakira_case_results(geometry: str) -> list[dict[str, object]]:
+    dimensions = [1920, 1080] if geometry == "hd" else [3840, 2160]
+    profiles = (
+        ("box", "m1_h7_r0", 7, 0.0),
+        ("approximated_gaussian", "m2_h7_ramp_r0", 7, 0.0),
+        ("gaussian_length50", "m3_h50_r0", 50, 0.0),
+        ("exponential", "m4_highlight_r3", 0, 0.0),
+        ("gaussian_length300", "m3_ui_length", 300, 1.0),
+    )
+    return [
+        {
+            "mode": mode, "tuple": tuple_name, "depth_bpc": depth,
+            "dimensions": dimensions, "horizontal_length": length,
+            "rotation_degrees": rotation, "returncode": 0,
+            "wall_seconds": 0.1, "peak_rss_bytes": 1024,
+            "content_bounds": "full", "callback_shape": "1/1/1/0",
+            "workload": "Smart plus two Classic production renders with parity/determinism checks",
+            "classic_smart_parity": True, "deterministic": True,
+            "independent_strides": True, "input_span_unchanged": True,
+            "output_padding_unchanged": True, "output_active_changed": True,
+        }
+        for mode, tuple_name, length, rotation in profiles
+        for depth in (8, 16, 32)
+    ]
+
+
 def test_catalog_has_all_ten_lanes_and_both_geometries() -> None:
     module = load_module()
     assert len(module.LANES) == 10
@@ -481,6 +507,87 @@ def test_directionalblur_semantic_validator_requires_exact_single_side_matrix() 
     must_reject(lambda cases: cases[5].update(side="front"))
     must_reject(lambda cases: cases.__setitem__(3, dict(cases[0])))
     must_reject(lambda cases: cases[4].pop("back_strength"))
+
+
+def test_kirakira_perf_contract_includes_worst_admitted_ui_length() -> None:
+    module = load_module()
+    for geometry in ("hd", "uhd"):
+        assert module.CASE_DEPTH_COUNTS[("OLMKiraKira", geometry)] == {
+            8: 5, 16: 5, 32: 5,
+        }
+        command = module.COMMANDS[("OLMKiraKira", geometry)]
+        assert command[1] == "tools/perf/run_olmkirakira_generic_production_perf.py"
+        assert command[command.index("--geometry") + 1] == geometry
+        module._validate_case_results(
+            {"case_results": kirakira_case_results(geometry)},
+            "OLMKiraKira", geometry,
+        )
+    predicate = module.SUPPORT_PREDICATES["OLMKiraKira"]
+    assert "mode3_horizontal_only" in predicate
+    assert "1 <= length <= 300" in predicate
+    assert "per_render_plugin_owned_bytes <= 1073741824" in predicate
+    assert "mode3_work_units <= 12000000000" in predicate
+    assert "pf32_finite_sdr_0_1" in predicate
+    assert "gaussian_horizontal_length300_rotation1" in module._parameters(
+        "OLMKiraKira", "uhd"
+    )
+    driver = (ROOT / "tools/perf/run_olmkirakira_generic_production_perf.py").read_text(
+        encoding="utf-8"
+    )
+    assert "--single-mode3-length" in driver
+    assert '"horizontal_length": 300' in driver
+    assert '"rotation_degrees": 1.0' in driver
+    assert "GENERIC_ROW.fullmatch" in driver
+    assert "def parse_peak_rss" in driver
+    assert "len(matches) != 1" in driver
+    # Util is an external Adobe-SDK symlink and is bound by the global
+    # toolchain-tree identity; repo-relative lane dependencies must not escape.
+    dependencies = {path for _, path in module.LANE_DEPENDENCIES["OLMKiraKira"]}
+    assert "Util/AEGP_SuiteHandler.cpp" not in dependencies
+    assert "Util/MissingSuiteError.cpp" not in dependencies
+
+
+def test_kirakira_semantic_validator_rejects_profile_and_safety_tampering() -> None:
+    module = load_module()
+    valid = kirakira_case_results("hd")
+
+    def must_reject(mutator) -> None:
+        candidate = json.loads(json.dumps(valid))
+        mutator(candidate)
+        try:
+            module._validate_case_results(
+                {"case_results": candidate}, "OLMKiraKira", "hd"
+            )
+        except module.EvidenceBindingError:
+            return
+        raise AssertionError("invalid Kira performance case matrix was accepted")
+
+    must_reject(lambda cases: cases[-1].update(horizontal_length=299))
+    must_reject(lambda cases: cases[-1].update(rotation_degrees=0.0))
+    must_reject(lambda cases: cases[-1].update(tuple="m3_h50_r0"))
+    must_reject(lambda cases: cases[-1].update(classic_smart_parity=False))
+    must_reject(lambda cases: cases[-1].update(callback_shape="0/0/0/0"))
+    must_reject(lambda cases: cases.__setitem__(-1, dict(cases[0])))
+    must_reject(lambda cases: cases[-1].pop("wall_seconds"))
+    must_reject(lambda cases: cases[-1].pop("peak_rss_bytes"))
+    must_reject(lambda cases: cases[-1].pop("returncode"))
+    must_reject(lambda cases: cases[-1].pop("dimensions"))
+    must_reject(lambda cases: cases[-1].update(workload="labels_only"))
+    must_reject(lambda cases: cases[-1].update(wall_seconds=0))
+    must_reject(lambda cases: cases[-1].update(peak_rss_bytes=0))
+
+
+def test_kirakira_inner_rss_parser_requires_one_positive_measurement() -> None:
+    path = ROOT / "tools/perf/run_olmkirakira_generic_production_perf.py"
+    spec = importlib.util.spec_from_file_location("kira_perf_driver", path)
+    driver = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(driver)
+    line = "  12345  maximum resident set size\n"
+    assert driver.parse_peak_rss(line) == 12345
+    assert driver.parse_peak_rss("") is None
+    assert driver.parse_peak_rss("0 maximum resident set size\n") is None
+    assert driver.parse_peak_rss(line + line) is None
 
 
 def test_measure_fails_closed_when_peak_rss_is_unavailable() -> None:

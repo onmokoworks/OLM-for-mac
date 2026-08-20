@@ -1,6 +1,6 @@
 {
-  "finished_at": "2026-08-20T20:28:32.142008+00:00",
-  "generated_at_epoch_seconds": 1787257508,
+  "finished_at": "2026-08-20T22:01:35.782180+00:00",
+  "generated_at_epoch_seconds": 1787262964,
   "invocation": {
     "argv": [
       "/opt/homebrew/Cellar/python@3.14/3.14.6/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
@@ -58,17 +58,17 @@
   },
   "provenance": {
     "binding_mode": "execution_pre_and_post",
-    "catalog_projection_sha256": "03ba26b70aaa009330a360001cc5461e6d87528e9967a58f21c9339419e539d6",
+    "catalog_projection_sha256": "db460efb8fe3bc562010c9c49a410be2c649ee024bd21f7054b10befc322cd12",
     "dependency_bindings": {
       "ColorKeep": {
-        "binding_sha256": "81eec277ab0df8d863de2bc9f4d038740967cb8ae313da842922922eff04bbd1",
+        "binding_sha256": "823c6bdffa7292f7a7eb62b0d13857c9ddc3184ec915e66dfd6d1b290f38395b",
         "catalog_sha256": "53bbe8ac6cc04dd078e58cbde2e5cf0962774ab238871821462a154f1c5a5c06",
         "files": [
           {
             "path": "tools/perf/run_generic_beta_smoke.py",
             "role": "runner",
-            "sha256": "f30f01c833ef4265207b19130d363c62dd72550df23d2c6f825a26ff20d399b9",
-            "size_bytes": 76485
+            "sha256": "d77d98291b9b8f9235f111e5a3227a84503cd62951395890e01f42566e30d701",
+            "size_bytes": 78939
           },
           {
             "path": "tools/perf/run_colorkeep_generic_production_perf.py",
@@ -105,14 +105,14 @@
         "scope": "declared in-repository runner, driver, harness/direct build inputs, and production source; excludes system SDK/compiler transitive inputs"
       },
       "OLMBlur": {
-        "binding_sha256": "ed44a34f739f421f259116b6bb74c404f45a612ff7580a75515d58ad54a95eff",
+        "binding_sha256": "df833d88c5c1c96474cd63502136b45fbc73589910d2e1d68f817a146f1226ef",
         "catalog_sha256": "9292733b8be3a8cb84068449a15a6cc0bd06490396bd3c7d99011d0e59e93860",
         "files": [
           {
             "path": "tools/perf/run_generic_beta_smoke.py",
             "role": "runner",
-            "sha256": "f30f01c833ef4265207b19130d363c62dd72550df23d2c6f825a26ff20d399b9",
-            "size_bytes": 76485
+            "sha256": "d77d98291b9b8f9235f111e5a3227a84503cd62951395890e01f42566e30d701",
+            "size_bytes": 78939
           },
           {
             "path": "tools/perf/run_olmblur_generic_production_perf.py",
@@ -257,14 +257,14 @@
         "scope": "declared in-repository runner, driver, harness/direct build inputs, and production source; excludes system SDK/compiler transitive inputs"
       },
       "OLMColorKey": {
-        "binding_sha256": "640b2d563e1b3738144aa0f091b7c216aced23391f0357e0626eccb7a492f912",
+        "binding_sha256": "da08c8e6fb5ccd47d8c7f84c43f64a571ffd35e1006d96d58c05d1e4c5a8625a",
         "catalog_sha256": "eae84056ee1d43b10679c863f4020386241f4e666ec7e0e0865a2198c1b4abd7",
         "files": [
           {
             "path": "tools/perf/run_generic_beta_smoke.py",
             "role": "runner",
-            "sha256": "f30f01c833ef4265207b19130d363c62dd72550df23d2c6f825a26ff20d399b9",
-            "size_bytes": 76485
+            "sha256": "d77d98291b9b8f9235f111e5a3227a84503cd62951395890e01f42566e30d701",
+            "size_bytes": 78939
           },
           {
             "path": "tests/test_olmcolorkey_generic_pixel_local_pairwise.py",
@@ -307,14 +307,14 @@
         "scope": "declared in-repository runner, driver, harness/direct build inputs, and production source; excludes system SDK/compiler transitive inputs"
       },
       "OLMDirectionalBlur": {
-        "binding_sha256": "f5dc82bae3982c61f9aeeea16232606e8b6274d5c202299e416c5a9acfd6a8e0",
+        "binding_sha256": "2952d5de77df019edefa32c5d264037265dbc38176d54c1294412e4762eb0d54",
         "catalog_sha256": "a6dcee0b39785f78c76167799475ca27e4e5c673268693d84dabc65173265105",
         "files": [
           {
             "path": "tools/perf/run_generic_beta_smoke.py",
             "role": "runner",
-            "sha256": "f30f01c833ef4265207b19130d363c62dd72550df23d2c6f825a26ff20d399b9",
-            "size_bytes": 76485
+            "sha256": "d77d98291b9b8f9235f111e5a3227a84503cd62951395890e01f42566e30d701",
+            "size_bytes": 78939
           },
           {
             "path": "tools/emulation/test_dblur_generic_deep_geometry_beta_20260820.py",
@@ -423,14 +423,14 @@
         "scope": "declared in-repository runner, driver, harness/direct build inputs, and production source; excludes system SDK/compiler transitive inputs"
       },
       "OLMDistanceGradation": {
-        "binding_sha256": "b30cb511c61fe1e97fd01196f43fc86cdf6ebfa7ecbe0359c963b820f03fbe06",
+        "binding_sha256": "c21592be448a53af30392c7630ffd7d6fe63bfa9bf0a2bf093b32d582cfff53e",
         "catalog_sha256": "eb13b4099f1fd7ba14bdfceeaf069d73bbdb62ef7dba6781f1c88a08ca0aaec1",
         "files": [
           {
             "path": "tools/perf/run_generic_beta_smoke.py",
             "role": "runner",
-            "sha256": "f30f01c833ef4265207b19130d363c62dd72550df23d2c6f825a26ff20d399b9",
-            "size_bytes": 76485
+            "sha256": "d77d98291b9b8f9235f111e5a3227a84503cd62951395890e01f42566e30d701",
+            "size_bytes": 78939
           },
           {
             "path": "tests/test_olmdistancegradation_generic_production_beta_20260820.py",
@@ -551,26 +551,26 @@
         "scope": "declared in-repository runner, driver, harness/direct build inputs, and production source; excludes system SDK/compiler transitive inputs"
       },
       "OLMKiraKira": {
-        "binding_sha256": "90f540009a15f4b7289425ee8ff3fe867e15f9ca28f1535cc416a913a498cf40",
-        "catalog_sha256": "0094feab1aab9c2425f0b18bcbb3db5fc60f18bbe6e3db8855d5d387388f0516",
+        "binding_sha256": "e1e7208c4f208baad7bee2ef8224783fdfee55e7f2f21b4bc3c4c7f0f7234620",
+        "catalog_sha256": "8e16bd47b9c73c69b992845be0bd71a7e7a6e07b9fb015c839aaf9a2ccafbdd5",
         "files": [
           {
             "path": "tools/perf/run_generic_beta_smoke.py",
             "role": "runner",
-            "sha256": "f30f01c833ef4265207b19130d363c62dd72550df23d2c6f825a26ff20d399b9",
-            "size_bytes": 76485
+            "sha256": "d77d98291b9b8f9235f111e5a3227a84503cd62951395890e01f42566e30d701",
+            "size_bytes": 78939
           },
           {
             "path": "tools/perf/run_olmkirakira_generic_production_perf.py",
             "role": "driver",
-            "sha256": "858ca6006c039ab924f9bad252d7d822b7235ee819183ba7e5d7098ce3ca639c",
-            "size_bytes": 3101
+            "sha256": "37c062191a2fab44d0fc8c19ed3bfbfe006146601f8071765440d650bc5329fa",
+            "size_bytes": 6207
           },
           {
             "path": "tests/olmkirakira_generic_beta_sanitizer_harness.cpp",
             "role": "harness",
-            "sha256": "2dc870acc72f895e50909a63a93168bdbcebfc11a3891ccc5c015805221298d5",
-            "size_bytes": 12894
+            "sha256": "604ad3e40d8a885f43eb8f1fd04a7ee6652a0d2114666f5379a41cf4717a1acb",
+            "size_bytes": 46575
           },
           {
             "path": "tools/emulation/olmkirakira_public_smart_bounded_closure_harness_20260812.cpp",
@@ -581,8 +581,8 @@
           {
             "path": "mac/OLMKiraKira/OLMKiraKira.cpp",
             "role": "production_source",
-            "sha256": "0131c7fcd1c33356200f216fa01e7ff32231291e51cba15565ad60559fc59e86",
-            "size_bytes": 89800
+            "sha256": "f6e8d1759479f21206c8741df60457d976fca16de25c228b4e3eb13f9fbd80da",
+            "size_bytes": 97729
           },
           {
             "path": "mac/OLMKiraKira/OLMKiraKira.h",
@@ -637,14 +637,14 @@
         "scope": "declared in-repository runner, driver, harness/direct build inputs, and production source; excludes system SDK/compiler transitive inputs"
       },
       "OLMRadialBlur": {
-        "binding_sha256": "166a09286da41ed2f9fdbcf81cbd3497cb3a258a79c523be4ebab93a5040b623",
+        "binding_sha256": "bbd681289b12046ab08689427ab763812c63a24e3fea9280a976fe3a5b8c72bc",
         "catalog_sha256": "84bb5e8d1234c045c793ed8f19f72814b3a5d478530888f3136c82a180aaa900",
         "files": [
           {
             "path": "tools/perf/run_generic_beta_smoke.py",
             "role": "runner",
-            "sha256": "f30f01c833ef4265207b19130d363c62dd72550df23d2c6f825a26ff20d399b9",
-            "size_bytes": 76485
+            "sha256": "d77d98291b9b8f9235f111e5a3227a84503cd62951395890e01f42566e30d701",
+            "size_bytes": 78939
           },
           {
             "path": "tools/perf/run_olmradialblur_generic_production_perf.py",
@@ -687,14 +687,14 @@
         "scope": "declared in-repository runner, driver, harness/direct build inputs, and production source; excludes system SDK/compiler transitive inputs"
       },
       "OLMSmoother": {
-        "binding_sha256": "0561b62028c1f2e2c1bcf8a31280263b314a881446c2de5ffa06d5804406a9ac",
+        "binding_sha256": "08547cbe7e734f2b4f70423130f3b1af03fb45a5156267c3a3534d03076b99a9",
         "catalog_sha256": "4d372904aea8f0a532b00051a1c81aa48c4c26d46aada2ec5a43196d001f5ac2",
         "files": [
           {
             "path": "tools/perf/run_generic_beta_smoke.py",
             "role": "runner",
-            "sha256": "f30f01c833ef4265207b19130d363c62dd72550df23d2c6f825a26ff20d399b9",
-            "size_bytes": 76485
+            "sha256": "d77d98291b9b8f9235f111e5a3227a84503cd62951395890e01f42566e30d701",
+            "size_bytes": 78939
           },
           {
             "path": "tests/run_olmsmoother_v1_generic_production_perf.py",
@@ -773,14 +773,14 @@
         "scope": "declared in-repository runner, driver, harness/direct build inputs, and production source; excludes system SDK/compiler transitive inputs"
       },
       "OLMSmoother2": {
-        "binding_sha256": "7be9cc599982a97329a2e22ace86422ad066b63f454184f969d65f016df30b6b",
+        "binding_sha256": "71a9df50d11084c3cc83d75c54fe4ffae3d4c6eb3d35c833cfaf71ec47eeb39a",
         "catalog_sha256": "031ee5934c1b5d327b311f0395b93728b42ee4d28c8e4adf0f8692461213110b",
         "files": [
           {
             "path": "tools/perf/run_generic_beta_smoke.py",
             "role": "runner",
-            "sha256": "f30f01c833ef4265207b19130d363c62dd72550df23d2c6f825a26ff20d399b9",
-            "size_bytes": 76485
+            "sha256": "d77d98291b9b8f9235f111e5a3227a84503cd62951395890e01f42566e30d701",
+            "size_bytes": 78939
           },
           {
             "path": "tests/test_olmsmoother2_default_beta_lane_20260820.py",
@@ -829,14 +829,14 @@
         "scope": "declared in-repository runner, driver, harness/direct build inputs, and production source; excludes system SDK/compiler transitive inputs"
       },
       "OLMToonDilate": {
-        "binding_sha256": "c08b7436939b162adfb435a89172cbf5380f0a1b3e4e4f3eeacadd986487c1bc",
+        "binding_sha256": "8c21c348acc1a3ca030d2cbf3a8faba3ec958c55d4eebb74804185530203cf61",
         "catalog_sha256": "4f8c0f33266d9aa7f7bbf257b20ffa5d0d79c0a9fafcdd51d62ea72566b58f2b",
         "files": [
           {
             "path": "tools/perf/run_generic_beta_smoke.py",
             "role": "runner",
-            "sha256": "f30f01c833ef4265207b19130d363c62dd72550df23d2c6f825a26ff20d399b9",
-            "size_bytes": 76485
+            "sha256": "d77d98291b9b8f9235f111e5a3227a84503cd62951395890e01f42566e30d701",
+            "size_bytes": 78939
           },
           {
             "path": "tools/perf/run_olmtoondilate_generic_production_perf.py",
@@ -867,14 +867,14 @@
         "scope": "declared in-repository runner, driver, harness/direct build inputs, and production source; excludes system SDK/compiler transitive inputs"
       }
     },
-    "dependency_bindings_sha256": "471fd6369274fd03b3fa41e3bd2b1aac27ae92ce0dbda4418c5025c23533297a",
+    "dependency_bindings_sha256": "7775c434ce2462eaaf8bec029a524f241252a7813129ea69a8cc6cb5a9665547",
     "invocation_sha256": "2069508b38bbf830cdf951f266a7d334a7441abd598a67b56d2f7f04414ed110",
     "measurement_source_identity": "exact_pre_and_post_match",
     "platform_sha256": "dee15a16b30db3deea3a9df1c9bd1bc5bc4bd10fc207f53f04a1496bf15237f6",
     "post_run_dependency_match": true,
     "post_run_error": null,
     "post_run_toolchain_match": true,
-    "results_sha256": "e5d380e05a3d490103eba43877405fc8a400ebe046f822610872da36c77a77ee",
+    "results_sha256": "cf70ea012bc591020da384eebb6d73e1e343319b73c41c278e9b5d619eccc691",
     "toolchain_sha256": "021ba499fb81b39d1feb1c8b650299e5f504ceef67127235d8e6311a6e4de178"
   },
   "results": [
@@ -888,7 +888,7 @@
             1920,
             1080
           ],
-          "milliseconds": 2.68,
+          "milliseconds": 3.868,
           "status": "passed"
         },
         {
@@ -899,7 +899,7 @@
             1920,
             1080
           ],
-          "milliseconds": 3.905,
+          "milliseconds": 4.618,
           "status": "passed"
         },
         {
@@ -910,7 +910,7 @@
             1920,
             1080
           ],
-          "milliseconds": 6.921,
+          "milliseconds": 10.171,
           "status": "passed"
         },
         {
@@ -921,7 +921,7 @@
             1920,
             1080
           ],
-          "milliseconds": 16.228,
+          "milliseconds": 18.276,
           "status": "passed"
         },
         {
@@ -932,7 +932,7 @@
             1920,
             1080
           ],
-          "milliseconds": 23.664,
+          "milliseconds": 23.988,
           "status": "passed"
         },
         {
@@ -943,7 +943,7 @@
             1920,
             1080
           ],
-          "milliseconds": 13.298,
+          "milliseconds": 12.014,
           "status": "passed"
         },
         {
@@ -954,7 +954,7 @@
             1920,
             1080
           ],
-          "milliseconds": 116.936,
+          "milliseconds": 116.13,
           "status": "passed"
         },
         {
@@ -965,7 +965,7 @@
             1920,
             1080
           ],
-          "milliseconds": 141.226,
+          "milliseconds": 148.321,
           "status": "passed"
         },
         {
@@ -976,7 +976,7 @@
             1920,
             1080
           ],
-          "milliseconds": 70.219,
+          "milliseconds": 72.956,
           "status": "passed"
         }
       ],
@@ -986,7 +986,7 @@
         "--geometry",
         "hd"
       ],
-      "dependency_binding_sha256": "81eec277ab0df8d863de2bc9f4d038740967cb8ae313da842922922eff04bbd1",
+      "dependency_binding_sha256": "823c6bdffa7292f7a7eb62b0d13857c9ddc3184ec915e66dfd6d1b290f38395b",
       "dimensions": [
         1920,
         1080
@@ -995,17 +995,17 @@
       "hostless": true,
       "lane": "ColorKeep",
       "parameters": "smart_typed_workers_all_depths_counts_1_13_100_independent_strides_production_O2",
-      "peak_rss_bytes": 175079424,
+      "peak_rss_bytes": 170377216,
       "returncode": 0,
       "rss_budget_bytes": 2147483648,
       "status": "passed",
       "stderr_tail": "",
-      "stdout_tail": "ns\":[1920,1080],\"status\":\"passed\",\"milliseconds\":2.68,\"count\":1},{\"case\":\"smart_pf16_count1\",\"depth\":16,\"dimensions\":[1920,1080],\"status\":\"passed\",\"milliseconds\":3.905,\"count\":1},{\"case\":\"smart_pf32_count1\",\"depth\":32,\"dimensions\":[1920,1080],\"status\":\"passed\",\"milliseconds\":6.921,\"count\":1},{\"case\":\"smart_pf8_count13\",\"depth\":8,\"dimensions\":[1920,1080],\"status\":\"passed\",\"milliseconds\":16.228,\"count\":13},{\"case\":\"smart_pf16_count13\",\"depth\":16,\"dimensions\":[1920,1080],\"status\":\"passed\",\"milliseconds\":23.664,\"count\":13},{\"case\":\"smart_pf32_count13\",\"depth\":32,\"dimensions\":[1920,1080],\"status\":\"passed\",\"milliseconds\":13.298,\"count\":13},{\"case\":\"smart_pf8_count100\",\"depth\":8,\"dimensions\":[1920,1080],\"status\":\"passed\",\"milliseconds\":116.936,\"count\":100},{\"case\":\"smart_pf16_count100\",\"depth\":16,\"dimensions\":[1920,1080],\"status\":\"passed\",\"milliseconds\":141.226,\"count\":100},{\"case\":\"smart_pf32_count100\",\"depth\":32,\"dimensions\":[1920,1080],\"status\":\"passed\",\"milliseconds\":70.219,\"count\":100}]\n",
+      "stdout_tail": "s\":[1920,1080],\"status\":\"passed\",\"milliseconds\":3.868,\"count\":1},{\"case\":\"smart_pf16_count1\",\"depth\":16,\"dimensions\":[1920,1080],\"status\":\"passed\",\"milliseconds\":4.618,\"count\":1},{\"case\":\"smart_pf32_count1\",\"depth\":32,\"dimensions\":[1920,1080],\"status\":\"passed\",\"milliseconds\":10.171,\"count\":1},{\"case\":\"smart_pf8_count13\",\"depth\":8,\"dimensions\":[1920,1080],\"status\":\"passed\",\"milliseconds\":18.276,\"count\":13},{\"case\":\"smart_pf16_count13\",\"depth\":16,\"dimensions\":[1920,1080],\"status\":\"passed\",\"milliseconds\":23.988,\"count\":13},{\"case\":\"smart_pf32_count13\",\"depth\":32,\"dimensions\":[1920,1080],\"status\":\"passed\",\"milliseconds\":12.014,\"count\":13},{\"case\":\"smart_pf8_count100\",\"depth\":8,\"dimensions\":[1920,1080],\"status\":\"passed\",\"milliseconds\":116.13,\"count\":100},{\"case\":\"smart_pf16_count100\",\"depth\":16,\"dimensions\":[1920,1080],\"status\":\"passed\",\"milliseconds\":148.321,\"count\":100},{\"case\":\"smart_pf32_count100\",\"depth\":32,\"dimensions\":[1920,1080],\"status\":\"passed\",\"milliseconds\":72.956,\"count\":100}]\n",
       "support_predicate": "smart && pf8_pf16_pf32 && full_frame && zero_origin && 1 <= count <= 100 && width <= 3840 && height <= 2160",
       "support_predicate_role": "declared_admission_context_not_exhaustive_performance_coverage",
-      "time_metrics_tail": "real 2.41\nuser 1.93\nsys 0.30\n           175079424  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               54246  page reclaims\n                 890  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  48  voluntary context switches\n                2355  involuntary context switches\n           364704134  instructions retired\n           165264934  cycles elapsed\n            12879104  peak memory footprint\n",
+      "time_metrics_tail": "real 2.67\nuser 1.96\nsys 0.32\n           170377216  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               52791  page reclaims\n                 932  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                 532  voluntary context switches\n                2831  involuntary context switches\n           363372696  instructions retired\n           158161837  cycles elapsed\n            12960832  peak memory footprint\n",
       "timeout_seconds": 120,
-      "wall_seconds": 2.422824
+      "wall_seconds": 2.678867
     },
     {
       "case_results": [
@@ -1017,7 +1017,7 @@
             3840,
             2160
           ],
-          "milliseconds": 11.628,
+          "milliseconds": 10.918,
           "status": "passed"
         },
         {
@@ -1028,7 +1028,7 @@
             3840,
             2160
           ],
-          "milliseconds": 14.885,
+          "milliseconds": 20.668,
           "status": "passed"
         },
         {
@@ -1039,7 +1039,7 @@
             3840,
             2160
           ],
-          "milliseconds": 21.471,
+          "milliseconds": 19.818,
           "status": "passed"
         },
         {
@@ -1050,7 +1050,7 @@
             3840,
             2160
           ],
-          "milliseconds": 60.261,
+          "milliseconds": 67.11,
           "status": "passed"
         },
         {
@@ -1061,7 +1061,7 @@
             3840,
             2160
           ],
-          "milliseconds": 94.634,
+          "milliseconds": 92.719,
           "status": "passed"
         },
         {
@@ -1072,7 +1072,7 @@
             3840,
             2160
           ],
-          "milliseconds": 47.417,
+          "milliseconds": 48.476,
           "status": "passed"
         },
         {
@@ -1083,7 +1083,7 @@
             3840,
             2160
           ],
-          "milliseconds": 456.823,
+          "milliseconds": 452.185,
           "status": "passed"
         },
         {
@@ -1094,7 +1094,7 @@
             3840,
             2160
           ],
-          "milliseconds": 559.636,
+          "milliseconds": 552.491,
           "status": "passed"
         },
         {
@@ -1105,7 +1105,7 @@
             3840,
             2160
           ],
-          "milliseconds": 287.787,
+          "milliseconds": 274.64,
           "status": "passed"
         }
       ],
@@ -1115,7 +1115,7 @@
         "--geometry",
         "uhd"
       ],
-      "dependency_binding_sha256": "81eec277ab0df8d863de2bc9f4d038740967cb8ae313da842922922eff04bbd1",
+      "dependency_binding_sha256": "823c6bdffa7292f7a7eb62b0d13857c9ddc3184ec915e66dfd6d1b290f38395b",
       "dimensions": [
         3840,
         2160
@@ -1124,17 +1124,17 @@
       "hostless": true,
       "lane": "ColorKeep",
       "parameters": "smart_typed_workers_all_depths_counts_1_13_100_independent_strides_production_O2",
-      "peak_rss_bytes": 467959808,
+      "peak_rss_bytes": 467894272,
       "returncode": 0,
       "rss_budget_bytes": 3221225472,
       "status": "passed",
       "stderr_tail": "",
-      "stdout_tail": "3840,2160],\"status\":\"passed\",\"milliseconds\":11.628,\"count\":1},{\"case\":\"smart_pf16_count1\",\"depth\":16,\"dimensions\":[3840,2160],\"status\":\"passed\",\"milliseconds\":14.885,\"count\":1},{\"case\":\"smart_pf32_count1\",\"depth\":32,\"dimensions\":[3840,2160],\"status\":\"passed\",\"milliseconds\":21.471,\"count\":1},{\"case\":\"smart_pf8_count13\",\"depth\":8,\"dimensions\":[3840,2160],\"status\":\"passed\",\"milliseconds\":60.261,\"count\":13},{\"case\":\"smart_pf16_count13\",\"depth\":16,\"dimensions\":[3840,2160],\"status\":\"passed\",\"milliseconds\":94.634,\"count\":13},{\"case\":\"smart_pf32_count13\",\"depth\":32,\"dimensions\":[3840,2160],\"status\":\"passed\",\"milliseconds\":47.417,\"count\":13},{\"case\":\"smart_pf8_count100\",\"depth\":8,\"dimensions\":[3840,2160],\"status\":\"passed\",\"milliseconds\":456.823,\"count\":100},{\"case\":\"smart_pf16_count100\",\"depth\":16,\"dimensions\":[3840,2160],\"status\":\"passed\",\"milliseconds\":559.636,\"count\":100},{\"case\":\"smart_pf32_count100\",\"depth\":32,\"dimensions\":[3840,2160],\"status\":\"passed\",\"milliseconds\":287.787,\"count\":100}]\n",
+      "stdout_tail": ":[3840,2160],\"status\":\"passed\",\"milliseconds\":10.918,\"count\":1},{\"case\":\"smart_pf16_count1\",\"depth\":16,\"dimensions\":[3840,2160],\"status\":\"passed\",\"milliseconds\":20.668,\"count\":1},{\"case\":\"smart_pf32_count1\",\"depth\":32,\"dimensions\":[3840,2160],\"status\":\"passed\",\"milliseconds\":19.818,\"count\":1},{\"case\":\"smart_pf8_count13\",\"depth\":8,\"dimensions\":[3840,2160],\"status\":\"passed\",\"milliseconds\":67.11,\"count\":13},{\"case\":\"smart_pf16_count13\",\"depth\":16,\"dimensions\":[3840,2160],\"status\":\"passed\",\"milliseconds\":92.719,\"count\":13},{\"case\":\"smart_pf32_count13\",\"depth\":32,\"dimensions\":[3840,2160],\"status\":\"passed\",\"milliseconds\":48.476,\"count\":13},{\"case\":\"smart_pf8_count100\",\"depth\":8,\"dimensions\":[3840,2160],\"status\":\"passed\",\"milliseconds\":452.185,\"count\":100},{\"case\":\"smart_pf16_count100\",\"depth\":16,\"dimensions\":[3840,2160],\"status\":\"passed\",\"milliseconds\":552.491,\"count\":100},{\"case\":\"smart_pf32_count100\",\"depth\":32,\"dimensions\":[3840,2160],\"status\":\"passed\",\"milliseconds\":274.64,\"count\":100}]\n",
       "support_predicate": "smart && pf8_pf16_pf32 && full_frame && zero_origin && 1 <= count <= 100 && width <= 3840 && height <= 2160",
       "support_predicate_role": "declared_admission_context_not_exhaustive_performance_coverage",
-      "time_metrics_tail": "real 3.68\nuser 3.07\nsys 0.40\n           467959808  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               75818  page reclaims\n                 680  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  10  voluntary context switches\n                3051  involuntary context switches\n           377182608  instructions retired\n           167218675  cycles elapsed\n            13534528  peak memory footprint\n",
+      "time_metrics_tail": "real 3.67\nuser 3.05\nsys 0.41\n           467894272  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               79930  page reclaims\n                 684  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  23  voluntary context switches\n                3263  involuntary context switches\n           376469832  instructions retired\n           156016789  cycles elapsed\n            12616704  peak memory footprint\n",
       "timeout_seconds": 180,
-      "wall_seconds": 3.683756
+      "wall_seconds": 3.698269
     },
     {
       "case_results": [
@@ -1215,7 +1215,7 @@
         "--geometry",
         "hd"
       ],
-      "dependency_binding_sha256": "ed44a34f739f421f259116b6bb74c404f45a612ff7580a75515d58ad54a95eff",
+      "dependency_binding_sha256": "df833d88c5c1c96474cd63502136b45fbc73589910d2e1d68f817a146f1226ef",
       "dimensions": [
         1920,
         1080
@@ -1224,7 +1224,7 @@
       "hostless": true,
       "lane": "OLMBlur",
       "parameters": "representative_pf8_pf16_pf32_nonlegacy_legacy_amount3_repeat1_plus_pf8_nonlegacy_amount500_repeat1_independent_strides",
-      "peak_rss_bytes": 486916096,
+      "peak_rss_bytes": 499466240,
       "returncode": 0,
       "rss_budget_bytes": 2147483648,
       "status": "passed",
@@ -1232,9 +1232,9 @@
       "stdout_tail": "c=1 changed=1\nGENERIC hd_nl depth=16 1920x1080 legacy=0 ok=1 err=0/0 input=1 padding=1 deterministic=1 changed=1\nGENERIC hd_l depth=16 1920x1080 legacy=1 ok=1 err=0/0 input=1 padding=1 deterministic=1 changed=1\nGENERIC hd_nl depth=32 1920x1080 legacy=0 ok=1 err=0/0 input=1 padding=1 deterministic=1 changed=1\nGENERIC hd_l depth=32 1920x1080 legacy=1 ok=1 err=0/0 input=1 padding=1 deterministic=1 changed=1\nOLM_PERF_CASES_JSON=[{\"case\":\"hd_nl\",\"depth\":8,\"dimensions\":[1920,1080],\"legacy\":0,\"status\":\"passed\"},{\"case\":\"hd_l\",\"depth\":8,\"dimensions\":[1920,1080],\"legacy\":1,\"status\":\"passed\"},{\"case\":\"hd_high\",\"depth\":8,\"dimensions\":[1920,1080],\"legacy\":0,\"status\":\"passed\"},{\"case\":\"hd_nl\",\"depth\":16,\"dimensions\":[1920,1080],\"legacy\":0,\"status\":\"passed\"},{\"case\":\"hd_l\",\"depth\":16,\"dimensions\":[1920,1080],\"legacy\":1,\"status\":\"passed\"},{\"case\":\"hd_nl\",\"depth\":32,\"dimensions\":[1920,1080],\"legacy\":0,\"status\":\"passed\"},{\"case\":\"hd_l\",\"depth\":32,\"dimensions\":[1920,1080],\"legacy\":1,\"status\":\"passed\"}]\n",
       "support_predicate": "smart && pf8_pf16_pf32 && full_frame && width <= 4096 && height <= 2160 && amount <= 1000 && repeat <= 10 && pixels*ceil(amount)*repeat <= 3600000000",
       "support_predicate_role": "declared_admission_context_not_exhaustive_performance_coverage",
-      "time_metrics_tail": "real 5.39\nuser 4.62\nsys 0.58\n           486916096  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              109596  page reclaims\n                1562  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  53  voluntary context switches\n                3261  involuntary context switches\n           387290314  instructions retired\n           170593235  cycles elapsed\n            12960768  peak memory footprint\n",
+      "time_metrics_tail": "real 5.50\nuser 4.63\nsys 0.62\n           499466240  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              109801  page reclaims\n                2205  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                 124  voluntary context switches\n                4069  involuntary context switches\n           388225150  instructions retired\n           170939495  cycles elapsed\n            12796864  peak memory footprint\n",
       "timeout_seconds": 120,
-      "wall_seconds": 5.40246
+      "wall_seconds": 5.511461
     },
     {
       "case_results": [
@@ -1305,7 +1305,7 @@
         "--geometry",
         "uhd"
       ],
-      "dependency_binding_sha256": "ed44a34f739f421f259116b6bb74c404f45a612ff7580a75515d58ad54a95eff",
+      "dependency_binding_sha256": "df833d88c5c1c96474cd63502136b45fbc73589910d2e1d68f817a146f1226ef",
       "dimensions": [
         3840,
         2160
@@ -1314,7 +1314,7 @@
       "hostless": true,
       "lane": "OLMBlur",
       "parameters": "budget_pf8_pf16_pf32_nonlegacy_legacy_amount1_repeat1_independent_strides",
-      "peak_rss_bytes": 1212416000,
+      "peak_rss_bytes": 1030733824,
       "returncode": 0,
       "rss_budget_bytes": 3221225472,
       "status": "passed",
@@ -1322,9 +1322,9 @@
       "stdout_tail": "_l depth=8 3840x2160 legacy=1 ok=1 err=0/0 input=1 padding=1 deterministic=1 changed=1\nGENERIC uhd_nl depth=16 3840x2160 legacy=0 ok=1 err=0/0 input=1 padding=1 deterministic=1 changed=1\nGENERIC uhd_l depth=16 3840x2160 legacy=1 ok=1 err=0/0 input=1 padding=1 deterministic=1 changed=1\nGENERIC uhd_nl depth=32 3840x2160 legacy=0 ok=1 err=0/0 input=1 padding=1 deterministic=1 changed=1\nGENERIC uhd_l depth=32 3840x2160 legacy=1 ok=1 err=0/0 input=1 padding=1 deterministic=1 changed=1\nOLM_PERF_CASES_JSON=[{\"case\":\"uhd_nl\",\"depth\":8,\"dimensions\":[3840,2160],\"legacy\":0,\"status\":\"passed\"},{\"case\":\"uhd_l\",\"depth\":8,\"dimensions\":[3840,2160],\"legacy\":1,\"status\":\"passed\"},{\"case\":\"uhd_nl\",\"depth\":16,\"dimensions\":[3840,2160],\"legacy\":0,\"status\":\"passed\"},{\"case\":\"uhd_l\",\"depth\":16,\"dimensions\":[3840,2160],\"legacy\":1,\"status\":\"passed\"},{\"case\":\"uhd_nl\",\"depth\":32,\"dimensions\":[3840,2160],\"legacy\":0,\"status\":\"passed\"},{\"case\":\"uhd_l\",\"depth\":32,\"dimensions\":[3840,2160],\"legacy\":1,\"status\":\"passed\"}]\n",
       "support_predicate": "smart && pf8_pf16_pf32 && full_frame && width <= 4096 && height <= 2160 && amount <= 1000 && repeat <= 10 && pixels*ceil(amount)*repeat <= 3600000000",
       "support_predicate_role": "declared_admission_context_not_exhaustive_performance_coverage",
-      "time_metrics_tail": "real 7.77\nuser 6.36\nsys 1.02\n          1212416000  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              196427  page reclaims\n                1660  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  24  voluntary context switches\n                6520  involuntary context switches\n           386125416  instructions retired\n           164337689  cycles elapsed\n            12829696  peak memory footprint\n",
+      "time_metrics_tail": "real 7.77\nuser 6.27\nsys 1.07\n          1030733824  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              223523  page reclaims\n                1537  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  23  voluntary context switches\n                7984  involuntary context switches\n           387149340  instructions retired\n           167435676  cycles elapsed\n            12682176  peak memory footprint\n",
       "timeout_seconds": 180,
-      "wall_seconds": 7.781271
+      "wall_seconds": 7.78285
     },
     {
       "command": [
@@ -1333,7 +1333,7 @@
         "--geometry",
         "hd"
       ],
-      "dependency_binding_sha256": "640b2d563e1b3738144aa0f091b7c216aced23391f0357e0626eccb7a492f912",
+      "dependency_binding_sha256": "da08c8e6fb5ccd47d8c7f84c43f64a571ffd35e1006d96d58c05d1e4c5a8625a",
       "dimensions": [
         1920,
         1080
@@ -1342,15 +1342,15 @@
       "hostless": true,
       "lane": "OLMColorKey",
       "parameters": "pixel_local_pairwise_no_edge_lab76_excluded",
-      "peak_rss_bytes": 582909952,
+      "peak_rss_bytes": 584843264,
       "returncode": 0,
       "rss_budget_bytes": 2147483648,
       "status": "passed",
       "stderr_tail": "",
       "stdout_tail": "GENERIC_PIXEL_LOCAL_PAIRWISE pass=1 geometry=hd cells=6\n",
-      "time_metrics_tail": "real 4.23\nuser 3.62\nsys 0.42\n           582909952  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               85156  page reclaims\n                 750  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  36  voluntary context switches\n                2161  involuntary context switches\n           380019739  instructions retired\n           164911854  cycles elapsed\n            13108224  peak memory footprint\n",
+      "time_metrics_tail": "real 4.23\nuser 3.64\nsys 0.40\n           584843264  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               85615  page reclaims\n                 913  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  27  voluntary context switches\n                2323  involuntary context switches\n           380067549  instructions retired\n           166413148  cycles elapsed\n            12715008  peak memory footprint\n",
       "timeout_seconds": 120,
-      "wall_seconds": 4.238338
+      "wall_seconds": 4.238557
     },
     {
       "command": [
@@ -1359,7 +1359,7 @@
         "--geometry",
         "uhd"
       ],
-      "dependency_binding_sha256": "640b2d563e1b3738144aa0f091b7c216aced23391f0357e0626eccb7a492f912",
+      "dependency_binding_sha256": "da08c8e6fb5ccd47d8c7f84c43f64a571ffd35e1006d96d58c05d1e4c5a8625a",
       "dimensions": [
         3840,
         2160
@@ -1368,15 +1368,15 @@
       "hostless": true,
       "lane": "OLMColorKey",
       "parameters": "pixel_local_pairwise_no_edge_lab76_excluded",
-      "peak_rss_bytes": 418824192,
+      "peak_rss_bytes": 435175424,
       "returncode": 0,
       "rss_budget_bytes": 3221225472,
       "status": "passed",
       "stderr_tail": "",
       "stdout_tail": "GENERIC_PIXEL_LOCAL_PAIRWISE pass=1 geometry=uhd cells=2\n",
-      "time_metrics_tail": "real 5.21\nuser 4.75\nsys 0.36\n           418824192  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               71541  page reclaims\n                 666  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                   9  voluntary context switches\n                2538  involuntary context switches\n           377796560  instructions retired\n           164812917  cycles elapsed\n            13337664  peak memory footprint\n",
+      "time_metrics_tail": "real 5.26\nuser 4.79\nsys 0.35\n           435175424  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               72103  page reclaims\n                 666  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  13  voluntary context switches\n                3407  involuntary context switches\n           377170929  instructions retired\n           160138815  cycles elapsed\n            12928000  peak memory footprint\n",
       "timeout_seconds": 180,
-      "wall_seconds": 5.216475
+      "wall_seconds": 5.271963
     },
     {
       "case_results": [
@@ -1495,7 +1495,7 @@
         "--geometry",
         "hd"
       ],
-      "dependency_binding_sha256": "f5dc82bae3982c61f9aeeea16232606e8b6274d5c202299e416c5a9acfd6a8e0",
+      "dependency_binding_sha256": "2952d5de77df019edefa32c5d264037265dbc38176d54c1294412e4762eb0d54",
       "dimensions": [
         1920,
         1080
@@ -1504,17 +1504,17 @@
       "hostless": true,
       "lane": "OLMDirectionalBlur",
       "parameters": "neutral_single_side_front_back_angle37.25_gain0.75_strength2_pf8_pf16_pf32_odd_independent_strides",
-      "peak_rss_bytes": 547094528,
+      "peak_rss_bytes": 484392960,
       "returncode": 0,
       "rss_budget_bytes": 2147483648,
       "status": "passed",
-      "stderr_tail": "rojects/Personal/OLM as/Headers/adobesdk/config/PreConfig.h:6:9: note: previous '#pragma pack' directive that modifies alignment is here\n    6 | #pragma pack( push, AdobeSDKExternalAlign, 8 )\n      |         ^\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_deep_beta_9p9awt6i/probe.cpp:2:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:638:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n  638 | #include <adobesdk/config/PostConfig.h>\n      |          ^\nnote: previous '#pragma pack' directive that modifies alignment is here\n42 warnings generated.\n",
+      "stderr_tail": "rojects/Personal/OLM as/Headers/adobesdk/config/PreConfig.h:6:9: note: previous '#pragma pack' directive that modifies alignment is here\n    6 | #pragma pack( push, AdobeSDKExternalAlign, 8 )\n      |         ^\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_deep_beta_4hjawaqp/probe.cpp:2:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:638:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n  638 | #include <adobesdk/config/PostConfig.h>\n      |          ^\nnote: previous '#pragma pack' directive that modifies alignment is here\n42 warnings generated.\n",
       "stdout_tail": "strength\":0,\"back_strength\":2,\"input_padding_bytes\":5,\"output_padding_bytes\":17,\"input_span_unchanged\":true,\"output_active_changed\":true,\"output_padding_unchanged\":true,\"independent_strides\":true,\"opposite_side_output_differs\":true},{\"side\":\"back\",\"depth\":16,\"geometry\":\"hd\",\"width\":1920,\"height\":1080,\"angle\":37.25,\"brightness_gain\":0.75,\"front_strength\":0,\"back_strength\":2,\"input_padding_bytes\":1,\"output_padding_bytes\":3,\"input_span_unchanged\":true,\"output_active_changed\":true,\"output_padding_unchanged\":true,\"independent_strides\":true,\"opposite_side_output_differs\":true},{\"side\":\"back\",\"depth\":32,\"geometry\":\"hd\",\"width\":1920,\"height\":1080,\"angle\":37.25,\"brightness_gain\":0.75,\"front_strength\":0,\"back_strength\":2,\"input_padding_bytes\":1,\"output_padding_bytes\":3,\"input_span_unchanged\":true,\"output_active_changed\":true,\"output_padding_unchanged\":true,\"independent_strides\":true,\"opposite_side_output_differs\":true}]\nok: PF8/PF16/PF32 generic single-side front/back hd, strides and SDR policy\n",
       "support_predicate": "full_frame && pf8_pf16_pf32 && neutral_single_side && exactly_one(front_strength,back_strength) && -32768 <= angle <= 32767.9999847412109375 && 0 <= gain <= 10 && 1 <= active_strength <= 4000 && 0 < pf8_scale_x_y <= 1 && scale_1_for_pf16_pf32 && pf16_sdr_0_32768 && pf32_finite_sdr_0_1 && max(width,height) <= 4096 && width*height <= 8847360 && per_render_plugin_owned_live_bytes_with_64MiB_reserve <= 3221225472 && edge_clamped_operation_units <= 350000000",
       "support_predicate_role": "declared_admission_context_not_exhaustive_performance_coverage",
-      "time_metrics_tail": "real 6.81\nuser 6.13\nsys 0.41\n           547094528  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               79800  page reclaims\n                 786  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  41  voluntary context switches\n                3738  involuntary context switches\n           388124115  instructions retired\n           171524253  cycles elapsed\n            13370304  peak memory footprint\n",
+      "time_metrics_tail": "real 6.85\nuser 6.18\nsys 0.46\n           484392960  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               91280  page reclaims\n                1059  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                 148  voluntary context switches\n                4032  involuntary context switches\n           393110498  instructions retired\n           174090255  cycles elapsed\n            13567040  peak memory footprint\n",
       "timeout_seconds": 120,
-      "wall_seconds": 6.8235
+      "wall_seconds": 6.86003
     },
     {
       "case_results": [
@@ -1633,7 +1633,7 @@
         "--geometry",
         "uhd"
       ],
-      "dependency_binding_sha256": "f5dc82bae3982c61f9aeeea16232606e8b6274d5c202299e416c5a9acfd6a8e0",
+      "dependency_binding_sha256": "2952d5de77df019edefa32c5d264037265dbc38176d54c1294412e4762eb0d54",
       "dimensions": [
         3840,
         2160
@@ -1642,17 +1642,17 @@
       "hostless": true,
       "lane": "OLMDirectionalBlur",
       "parameters": "neutral_single_side_front_back_angle37.25_gain0.75_strength2_pf8_pf16_pf32_odd_independent_strides",
-      "peak_rss_bytes": 1911734272,
+      "peak_rss_bytes": 1640923136,
       "returncode": 0,
       "rss_budget_bytes": 3221225472,
       "status": "passed",
-      "stderr_tail": "rojects/Personal/OLM as/Headers/adobesdk/config/PreConfig.h:6:9: note: previous '#pragma pack' directive that modifies alignment is here\n    6 | #pragma pack( push, AdobeSDKExternalAlign, 8 )\n      |         ^\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_deep_beta_cx8gfbu7/probe.cpp:2:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:638:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n  638 | #include <adobesdk/config/PostConfig.h>\n      |          ^\nnote: previous '#pragma pack' directive that modifies alignment is here\n42 warnings generated.\n",
+      "stderr_tail": "rojects/Personal/OLM as/Headers/adobesdk/config/PreConfig.h:6:9: note: previous '#pragma pack' directive that modifies alignment is here\n    6 | #pragma pack( push, AdobeSDKExternalAlign, 8 )\n      |         ^\nIn file included from /var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/dblur_deep_beta__mgr8llm/probe.cpp:2:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDirectionalBlur/OLMDirectionalBlur.h:31:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/Util/AEGP_SuiteHandler.h:73:\n/Users/onmk/Documents/Projects/Personal/OLM as/Headers/adobesdk/DrawbotSuite.h:638:10: warning: the current #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n  638 | #include <adobesdk/config/PostConfig.h>\n      |          ^\nnote: previous '#pragma pack' directive that modifies alignment is here\n42 warnings generated.\n",
       "stdout_tail": "ength\":0,\"back_strength\":2,\"input_padding_bytes\":5,\"output_padding_bytes\":17,\"input_span_unchanged\":true,\"output_active_changed\":true,\"output_padding_unchanged\":true,\"independent_strides\":true,\"opposite_side_output_differs\":true},{\"side\":\"back\",\"depth\":16,\"geometry\":\"uhd\",\"width\":3840,\"height\":2160,\"angle\":37.25,\"brightness_gain\":0.75,\"front_strength\":0,\"back_strength\":2,\"input_padding_bytes\":1,\"output_padding_bytes\":3,\"input_span_unchanged\":true,\"output_active_changed\":true,\"output_padding_unchanged\":true,\"independent_strides\":true,\"opposite_side_output_differs\":true},{\"side\":\"back\",\"depth\":32,\"geometry\":\"uhd\",\"width\":3840,\"height\":2160,\"angle\":37.25,\"brightness_gain\":0.75,\"front_strength\":0,\"back_strength\":2,\"input_padding_bytes\":1,\"output_padding_bytes\":3,\"input_span_unchanged\":true,\"output_active_changed\":true,\"output_padding_unchanged\":true,\"independent_strides\":true,\"opposite_side_output_differs\":true}]\nok: PF8/PF16/PF32 generic single-side front/back uhd, strides and SDR policy\n",
       "support_predicate": "full_frame && pf8_pf16_pf32 && neutral_single_side && exactly_one(front_strength,back_strength) && -32768 <= angle <= 32767.9999847412109375 && 0 <= gain <= 10 && 1 <= active_strength <= 4000 && 0 < pf8_scale_x_y <= 1 && scale_1_for_pf16_pf32 && pf16_sdr_0_32768 && pf32_finite_sdr_0_1 && max(width,height) <= 4096 && width*height <= 8847360 && per_render_plugin_owned_live_bytes_with_64MiB_reserve <= 3221225472 && edge_clamped_operation_units <= 350000000",
       "support_predicate_role": "declared_admission_context_not_exhaustive_performance_coverage",
-      "time_metrics_tail": "real 21.56\nuser 19.32\nsys 1.51\n          1911734272  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              559554  page reclaims\n                 786  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  40  voluntary context switches\n               18535  involuntary context switches\n           398252136  instructions retired\n           196408391  cycles elapsed\n            13353984  peak memory footprint\n",
+      "time_metrics_tail": "real 22.68\nuser 19.74\nsys 1.63\n          1640923136  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              637003  page reclaims\n                1031  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  53  voluntary context switches\n               31621  involuntary context switches\n           401579479  instructions retired\n           201002674  cycles elapsed\n            12796864  peak memory footprint\n",
       "timeout_seconds": 180,
-      "wall_seconds": 21.571882
+      "wall_seconds": 22.687209
     },
     {
       "command": [
@@ -1661,7 +1661,7 @@
         "unittest",
         "tests/test_olmdistancegradation_generic_production_beta_20260820.py"
       ],
-      "dependency_binding_sha256": "b30cb511c61fe1e97fd01196f43fc86cdf6ebfa7ecbe0359c963b820f03fbe06",
+      "dependency_binding_sha256": "c21592be448a53af30392c7630ffd7d6fe63bfa9bf0a2bf093b32d582cfff53e",
       "dimensions": [
         1920,
         1080
@@ -1674,11 +1674,11 @@
       "returncode": 0,
       "rss_budget_bytes": 2147483648,
       "status": "passed",
-      "stderr_tail": "..\n----------------------------------------------------------------------\nRan 2 tests in 10.189s\n\nOK\n",
+      "stderr_tail": "..\n----------------------------------------------------------------------\nRan 2 tests in 10.680s\n\nOK\n",
       "stdout_tail": "",
-      "time_metrics_tail": "real 10.25\nuser 9.11\nsys 0.69\n           472940544  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              184377  page reclaims\n                2509  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                1033  voluntary context switches\n                5185  involuntary context switches\n           429476269  instructions retired\n           191484507  cycles elapsed\n            14402688  peak memory footprint\n",
+      "time_metrics_tail": "real 10.75\nuser 9.23\nsys 0.85\n           472940544  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              185243  page reclaims\n                5368  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                1638  voluntary context switches\n                6213  involuntary context switches\n           436074849  instructions retired\n           197312072  cycles elapsed\n            14566592  peak memory footprint\n",
       "timeout_seconds": 120,
-      "wall_seconds": 10.261692
+      "wall_seconds": 10.759563
     },
     {
       "command": [
@@ -1687,7 +1687,7 @@
         "unittest",
         "tests/test_olmdistancegradation_generic_production_beta_20260820.py"
       ],
-      "dependency_binding_sha256": "b30cb511c61fe1e97fd01196f43fc86cdf6ebfa7ecbe0359c963b820f03fbe06",
+      "dependency_binding_sha256": "c21592be448a53af30392c7630ffd7d6fe63bfa9bf0a2bf093b32d582cfff53e",
       "dimensions": [
         3840,
         2160
@@ -1696,160 +1696,361 @@
       "hostless": true,
       "lane": "OLMDistanceGradation",
       "parameters": "oracle_profile_linear_power_gaussian_sphere_median_bilateral_all_depths_independent_strides",
-      "peak_rss_bytes": 995377152,
+      "peak_rss_bytes": 995098624,
       "returncode": 0,
       "rss_budget_bytes": 3221225472,
       "status": "passed",
-      "stderr_tail": "..\n----------------------------------------------------------------------\nRan 2 tests in 30.087s\n\nOK\n",
+      "stderr_tail": "..\n----------------------------------------------------------------------\nRan 2 tests in 30.196s\n\nOK\n",
       "stdout_tail": "",
-      "time_metrics_tail": "real 30.13\nuser 27.61\nsys 1.81\n           995377152  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              583810  page reclaims\n                1122  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  83  voluntary context switches\n               17268  involuntary context switches\n           430051843  instructions retired\n           189881217  cycles elapsed\n            14959808  peak memory footprint\n",
+      "time_metrics_tail": "real 30.24\nuser 27.72\nsys 1.89\n           995098624  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              597694  page reclaims\n                1114  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  66  voluntary context switches\n               17698  involuntary context switches\n           433411976  instructions retired\n           195753911  cycles elapsed\n            14664832  peak memory footprint\n",
       "timeout_seconds": 180,
-      "wall_seconds": 30.141918
+      "wall_seconds": 30.252282
     },
     {
       "case_results": [
         {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
           "depth_bpc": 8,
+          "deterministic": true,
           "dimensions": [
             1920,
             1080
           ],
+          "horizontal_length": 7,
+          "independent_strides": true,
+          "input_span_unchanged": true,
           "mode": "box",
-          "peak_rss_bytes": 410746880,
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 346292224,
           "returncode": 0,
-          "wall_seconds": 0.589788,
+          "rotation_degrees": 0.0,
+          "tuple": "m1_h7_r0",
+          "wall_seconds": 0.558156,
           "workload": "Smart plus two Classic production renders with parity/determinism checks"
         },
         {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
           "depth_bpc": 16,
+          "deterministic": true,
           "dimensions": [
             1920,
             1080
           ],
+          "horizontal_length": 7,
+          "independent_strides": true,
+          "input_span_unchanged": true,
           "mode": "box",
-          "peak_rss_bytes": 394018816,
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 396165120,
           "returncode": 0,
-          "wall_seconds": 0.396407,
+          "rotation_degrees": 0.0,
+          "tuple": "m1_h7_r0",
+          "wall_seconds": 0.42593,
           "workload": "Smart plus two Classic production renders with parity/determinism checks"
         },
         {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
           "depth_bpc": 32,
+          "deterministic": true,
           "dimensions": [
             1920,
             1080
           ],
+          "horizontal_length": 7,
+          "independent_strides": true,
+          "input_span_unchanged": true,
           "mode": "box",
-          "peak_rss_bytes": 477052928,
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 479330304,
           "returncode": 0,
-          "wall_seconds": 0.38479,
+          "rotation_degrees": 0.0,
+          "tuple": "m1_h7_r0",
+          "wall_seconds": 0.41761,
           "workload": "Smart plus two Classic production renders with parity/determinism checks"
         },
         {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
           "depth_bpc": 8,
+          "deterministic": true,
           "dimensions": [
             1920,
             1080
           ],
+          "horizontal_length": 7,
+          "independent_strides": true,
+          "input_span_unchanged": true,
           "mode": "approximated_gaussian",
-          "peak_rss_bytes": 360660992,
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 346472448,
           "returncode": 0,
-          "wall_seconds": 0.457211,
+          "rotation_degrees": 0.0,
+          "tuple": "m2_h7_ramp_r0",
+          "wall_seconds": 0.468307,
           "workload": "Smart plus two Classic production renders with parity/determinism checks"
         },
         {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
           "depth_bpc": 16,
+          "deterministic": true,
           "dimensions": [
             1920,
             1080
           ],
+          "horizontal_length": 7,
+          "independent_strides": true,
+          "input_span_unchanged": true,
           "mode": "approximated_gaussian",
-          "peak_rss_bytes": 427311104,
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 387940352,
           "returncode": 0,
-          "wall_seconds": 0.490884,
+          "rotation_degrees": 0.0,
+          "tuple": "m2_h7_ramp_r0",
+          "wall_seconds": 0.517862,
           "workload": "Smart plus two Classic production renders with parity/determinism checks"
         },
         {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
           "depth_bpc": 32,
+          "deterministic": true,
           "dimensions": [
             1920,
             1080
           ],
+          "horizontal_length": 7,
+          "independent_strides": true,
+          "input_span_unchanged": true,
           "mode": "approximated_gaussian",
-          "peak_rss_bytes": 493666304,
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 504348672,
           "returncode": 0,
-          "wall_seconds": 0.47548,
+          "rotation_degrees": 0.0,
+          "tuple": "m2_h7_ramp_r0",
+          "wall_seconds": 0.494137,
           "workload": "Smart plus two Classic production renders with parity/determinism checks"
         },
         {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
           "depth_bpc": 8,
+          "deterministic": true,
           "dimensions": [
             1920,
             1080
           ],
-          "mode": "gaussian",
-          "peak_rss_bytes": 352321536,
+          "horizontal_length": 50,
+          "independent_strides": true,
+          "input_span_unchanged": true,
+          "mode": "gaussian_length50",
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 288129024,
           "returncode": 0,
-          "wall_seconds": 1.579687,
+          "rotation_degrees": 0.0,
+          "tuple": "m3_h50_r0",
+          "wall_seconds": 1.586083,
           "workload": "Smart plus two Classic production renders with parity/determinism checks"
         },
         {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
           "depth_bpc": 16,
+          "deterministic": true,
           "dimensions": [
             1920,
             1080
           ],
-          "mode": "gaussian",
-          "peak_rss_bytes": 343818240,
+          "horizontal_length": 50,
+          "independent_strides": true,
+          "input_span_unchanged": true,
+          "mode": "gaussian_length50",
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 371392512,
           "returncode": 0,
-          "wall_seconds": 1.567786,
+          "rotation_degrees": 0.0,
+          "tuple": "m3_h50_r0",
+          "wall_seconds": 1.657801,
           "workload": "Smart plus two Classic production renders with parity/determinism checks"
         },
         {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
           "depth_bpc": 32,
+          "deterministic": true,
           "dimensions": [
             1920,
             1080
           ],
-          "mode": "gaussian",
-          "peak_rss_bytes": 435322880,
+          "horizontal_length": 50,
+          "independent_strides": true,
+          "input_span_unchanged": true,
+          "mode": "gaussian_length50",
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 470745088,
           "returncode": 0,
-          "wall_seconds": 1.619379,
+          "rotation_degrees": 0.0,
+          "tuple": "m3_h50_r0",
+          "wall_seconds": 1.636892,
           "workload": "Smart plus two Classic production renders with parity/determinism checks"
         },
         {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
           "depth_bpc": 8,
+          "deterministic": true,
           "dimensions": [
             1920,
             1080
           ],
+          "horizontal_length": 0,
+          "independent_strides": true,
+          "input_span_unchanged": true,
           "mode": "exponential",
-          "peak_rss_bytes": 310296576,
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 404160512,
           "returncode": 0,
-          "wall_seconds": 0.313153,
+          "rotation_degrees": 0.0,
+          "tuple": "m4_highlight_r3",
+          "wall_seconds": 0.321373,
           "workload": "Smart plus two Classic production renders with parity/determinism checks"
         },
         {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
           "depth_bpc": 16,
+          "deterministic": true,
           "dimensions": [
             1920,
             1080
           ],
+          "horizontal_length": 0,
+          "independent_strides": true,
+          "input_span_unchanged": true,
           "mode": "exponential",
-          "peak_rss_bytes": 410075136,
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 420642816,
           "returncode": 0,
-          "wall_seconds": 0.330032,
+          "rotation_degrees": 0.0,
+          "tuple": "m4_highlight_r3",
+          "wall_seconds": 0.332995,
           "workload": "Smart plus two Classic production renders with parity/determinism checks"
         },
         {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
           "depth_bpc": 32,
+          "deterministic": true,
           "dimensions": [
             1920,
             1080
           ],
+          "horizontal_length": 0,
+          "independent_strides": true,
+          "input_span_unchanged": true,
           "mode": "exponential",
-          "peak_rss_bytes": 443383808,
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 478789632,
           "returncode": 0,
-          "wall_seconds": 0.347974,
+          "rotation_degrees": 0.0,
+          "tuple": "m4_highlight_r3",
+          "wall_seconds": 0.349735,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
+          "depth_bpc": 8,
+          "deterministic": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "horizontal_length": 300,
+          "independent_strides": true,
+          "input_span_unchanged": true,
+          "mode": "gaussian_length300",
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 322043904,
+          "returncode": 0,
+          "rotation_degrees": 1.0,
+          "tuple": "m3_ui_length",
+          "wall_seconds": 7.985016,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
+          "depth_bpc": 16,
+          "deterministic": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "horizontal_length": 300,
+          "independent_strides": true,
+          "input_span_unchanged": true,
+          "mode": "gaussian_length300",
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 363692032,
+          "returncode": 0,
+          "rotation_degrees": 1.0,
+          "tuple": "m3_ui_length",
+          "wall_seconds": 7.933755,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
+          "depth_bpc": 32,
+          "deterministic": true,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "horizontal_length": 300,
+          "independent_strides": true,
+          "input_span_unchanged": true,
+          "mode": "gaussian_length300",
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 430112768,
+          "returncode": 0,
+          "rotation_degrees": 1.0,
+          "tuple": "m3_ui_length",
+          "wall_seconds": 7.943784,
           "workload": "Smart plus two Classic production renders with parity/determinism checks"
         }
       ],
@@ -1859,7 +2060,7 @@
         "--geometry",
         "hd"
       ],
-      "dependency_binding_sha256": "90f540009a15f4b7289425ee8ff3fe867e15f9ca28f1535cc416a913a498cf40",
+      "dependency_binding_sha256": "e1e7208c4f208baad7bee2ef8224783fdfee55e7f2f21b4bc3c4c7f0f7234620",
       "dimensions": [
         1920,
         1080
@@ -1867,163 +2068,364 @@
       "geometry": "hd",
       "hostless": true,
       "lane": "OLMKiraKira",
-      "parameters": "box_tuple0_approximated_gaussian_tuple3_gaussian_tuple7_exponential_tuple9_pf8_pf16_pf32_smart_two_classic_parity_determinism",
-      "peak_rss_bytes": 493666304,
+      "parameters": "box_tuple0_approximated_gaussian_tuple3_gaussian_length50_exponential_tuple9_gaussian_horizontal_length300_rotation1_pf8_pf16_pf32_smart_two_classic_parity_determinism",
+      "peak_rss_bytes": 504348672,
       "returncode": 0,
       "rss_budget_bytes": 2147483648,
       "status": "passed",
       "stderr_tail": "",
-      "stdout_tail": "nds\":1.567786,\"peak_rss_bytes\":343818240,\"returncode\":0,\"workload\":\"Smart plus two Classic production renders with parity/determinism checks\"},{\"mode\":\"gaussian\",\"depth_bpc\":32,\"dimensions\":[1920,1080],\"wall_seconds\":1.619379,\"peak_rss_bytes\":435322880,\"returncode\":0,\"workload\":\"Smart plus two Classic production renders with parity/determinism checks\"},{\"mode\":\"exponential\",\"depth_bpc\":8,\"dimensions\":[1920,1080],\"wall_seconds\":0.313153,\"peak_rss_bytes\":310296576,\"returncode\":0,\"workload\":\"Smart plus two Classic production renders with parity/determinism checks\"},{\"mode\":\"exponential\",\"depth_bpc\":16,\"dimensions\":[1920,1080],\"wall_seconds\":0.330032,\"peak_rss_bytes\":410075136,\"returncode\":0,\"workload\":\"Smart plus two Classic production renders with parity/determinism checks\"},{\"mode\":\"exponential\",\"depth_bpc\":32,\"dimensions\":[1920,1080],\"wall_seconds\":0.347974,\"peak_rss_bytes\":443383808,\"returncode\":0,\"workload\":\"Smart plus two Classic production renders with parity/determinism checks\"}]\n",
-      "support_predicate": "classic_or_smart && pf8_pf16_pf32 && full_frame && zero_origin && width >= 9 && height >= 7 && oracle_tuple && mode_geometry_admitted",
+      "stdout_tail": "_length300\",\"depth_bpc\":16,\"tuple\":\"m3_ui_length\",\"dimensions\":[1920,1080],\"horizontal_length\":300,\"rotation_degrees\":1.0,\"wall_seconds\":7.933755,\"peak_rss_bytes\":363692032,\"returncode\":0,\"content_bounds\":\"full\",\"callback_shape\":\"1/1/1/0\",\"workload\":\"Smart plus two Classic production renders with parity/determinism checks\",\"classic_smart_parity\":true,\"deterministic\":true,\"independent_strides\":true,\"input_span_unchanged\":true,\"output_padding_unchanged\":true,\"output_active_changed\":true},{\"mode\":\"gaussian_length300\",\"depth_bpc\":32,\"tuple\":\"m3_ui_length\",\"dimensions\":[1920,1080],\"horizontal_length\":300,\"rotation_degrees\":1.0,\"wall_seconds\":7.943784,\"peak_rss_bytes\":430112768,\"returncode\":0,\"content_bounds\":\"full\",\"callback_shape\":\"1/1/1/0\",\"workload\":\"Smart plus two Classic production renders with parity/determinism checks\",\"classic_smart_parity\":true,\"deterministic\":true,\"independent_strides\":true,\"input_span_unchanged\":true,\"output_padding_unchanged\":true,\"output_active_changed\":true}]\n",
+      "support_predicate": "classic_or_smart && pf8_pf16_pf32 && full_frame && zero_origin && independent_nonoverlapping_rowbytes && width >= 9 && height >= 7 && max(width,height) <= 4096 && width*height <= 8847360 && pf16_sdr_0_32768 && pf32_finite_sdr_0_1 && (oracle_tuple || (mode3_horizontal_only && 1 <= length <= 300 && rotation in {0,1} && per_render_plugin_owned_bytes <= 1073741824 && mode3_work_units <= 12000000000)) && mode_geometry_admitted",
       "support_predicate_role": "declared_admission_context_not_exhaustive_performance_coverage",
-      "time_metrics_tail": "real 11.36\nuser 9.57\nsys 1.29\n           493666304  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              344157  page reclaims\n                2375  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                  12  signals received\n                1604  voluntary context switches\n                6775  involuntary context switches\n           411407825  instructions retired\n           204472761  cycles elapsed\n            13222912  peak memory footprint\n",
+      "time_metrics_tail": "real 36.38\nuser 33.68\nsys 1.91\n           504348672  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              424239  page reclaims\n                5981  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                  15  signals received\n                2333  voluntary context switches\n               18491  involuntary context switches\n           430127513  instructions retired\n           224667724  cycles elapsed\n            13567168  peak memory footprint\n",
       "timeout_seconds": 120,
-      "wall_seconds": 11.367988
+      "wall_seconds": 36.393509
     },
     {
       "case_results": [
         {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
           "depth_bpc": 8,
+          "deterministic": true,
           "dimensions": [
             3840,
             2160
           ],
+          "horizontal_length": 7,
+          "independent_strides": true,
+          "input_span_unchanged": true,
           "mode": "box",
-          "peak_rss_bytes": 931463168,
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 936148992,
           "returncode": 0,
-          "wall_seconds": 1.70654,
+          "rotation_degrees": 0.0,
+          "tuple": "m1_h7_r0",
+          "wall_seconds": 1.81351,
           "workload": "Smart plus two Classic production renders with parity/determinism checks"
         },
         {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
           "depth_bpc": 16,
+          "deterministic": true,
           "dimensions": [
             3840,
             2160
           ],
+          "horizontal_length": 7,
+          "independent_strides": true,
+          "input_span_unchanged": true,
           "mode": "box",
-          "peak_rss_bytes": 1098596352,
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 1109164032,
           "returncode": 0,
-          "wall_seconds": 1.429064,
+          "rotation_degrees": 0.0,
+          "tuple": "m1_h7_r0",
+          "wall_seconds": 1.461116,
           "workload": "Smart plus two Classic production renders with parity/determinism checks"
         },
         {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
           "depth_bpc": 32,
+          "deterministic": true,
           "dimensions": [
             3840,
             2160
           ],
+          "horizontal_length": 7,
+          "independent_strides": true,
+          "input_span_unchanged": true,
           "mode": "box",
-          "peak_rss_bytes": 1430241280,
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 1432518656,
           "returncode": 0,
-          "wall_seconds": 1.601998,
+          "rotation_degrees": 0.0,
+          "tuple": "m1_h7_r0",
+          "wall_seconds": 1.780015,
           "workload": "Smart plus two Classic production renders with parity/determinism checks"
         },
         {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
           "depth_bpc": 8,
+          "deterministic": true,
           "dimensions": [
             3840,
             2160
           ],
+          "horizontal_length": 7,
+          "independent_strides": true,
+          "input_span_unchanged": true,
           "mode": "approximated_gaussian",
-          "peak_rss_bytes": 932478976,
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 943046656,
           "returncode": 0,
-          "wall_seconds": 1.529182,
+          "rotation_degrees": 0.0,
+          "tuple": "m2_h7_ramp_r0",
+          "wall_seconds": 1.564718,
           "workload": "Smart plus two Classic production renders with parity/determinism checks"
         },
         {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
           "depth_bpc": 16,
+          "deterministic": true,
           "dimensions": [
             3840,
             2160
           ],
+          "horizontal_length": 7,
+          "independent_strides": true,
+          "input_span_unchanged": true,
           "mode": "approximated_gaussian",
-          "peak_rss_bytes": 1098563584,
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 1109213184,
           "returncode": 0,
-          "wall_seconds": 1.658356,
+          "rotation_degrees": 0.0,
+          "tuple": "m2_h7_ramp_r0",
+          "wall_seconds": 1.681543,
           "workload": "Smart plus two Classic production renders with parity/determinism checks"
         },
         {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
           "depth_bpc": 32,
+          "deterministic": true,
           "dimensions": [
             3840,
             2160
           ],
+          "horizontal_length": 7,
+          "independent_strides": true,
+          "input_span_unchanged": true,
           "mode": "approximated_gaussian",
-          "peak_rss_bytes": 1430552576,
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 1411268608,
           "returncode": 0,
-          "wall_seconds": 1.625743,
+          "rotation_degrees": 0.0,
+          "tuple": "m2_h7_ramp_r0",
+          "wall_seconds": 2.193241,
           "workload": "Smart plus two Classic production renders with parity/determinism checks"
         },
         {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
           "depth_bpc": 8,
+          "deterministic": true,
           "dimensions": [
             3840,
             2160
           ],
-          "mode": "gaussian",
-          "peak_rss_bytes": 932478976,
+          "horizontal_length": 50,
+          "independent_strides": true,
+          "input_span_unchanged": true,
+          "mode": "gaussian_length50",
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 943144960,
           "returncode": 0,
-          "wall_seconds": 6.153831,
+          "rotation_degrees": 0.0,
+          "tuple": "m3_h50_r0",
+          "wall_seconds": 6.190448,
           "workload": "Smart plus two Classic production renders with parity/determinism checks"
         },
         {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
           "depth_bpc": 16,
+          "deterministic": true,
           "dimensions": [
             3840,
             2160
           ],
-          "mode": "gaussian",
-          "peak_rss_bytes": 1098514432,
+          "horizontal_length": 50,
+          "independent_strides": true,
+          "input_span_unchanged": true,
+          "mode": "gaussian_length50",
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 1109147648,
           "returncode": 0,
-          "wall_seconds": 6.567211,
+          "rotation_degrees": 0.0,
+          "tuple": "m3_h50_r0",
+          "wall_seconds": 7.636487,
           "workload": "Smart plus two Classic production renders with parity/determinism checks"
         },
         {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
           "depth_bpc": 32,
+          "deterministic": true,
           "dimensions": [
             3840,
             2160
           ],
-          "mode": "gaussian",
-          "peak_rss_bytes": 1429520384,
+          "horizontal_length": 50,
+          "independent_strides": true,
+          "input_span_unchanged": true,
+          "mode": "gaussian_length50",
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 1441071104,
           "returncode": 0,
-          "wall_seconds": 6.659196,
+          "rotation_degrees": 0.0,
+          "tuple": "m3_h50_r0",
+          "wall_seconds": 6.76691,
           "workload": "Smart plus two Classic production renders with parity/determinism checks"
         },
         {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
           "depth_bpc": 8,
+          "deterministic": true,
           "dimensions": [
             3840,
             2160
           ],
+          "horizontal_length": 0,
+          "independent_strides": true,
+          "input_span_unchanged": true,
           "mode": "exponential",
-          "peak_rss_bytes": 1064812544,
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 1075445760,
           "returncode": 0,
-          "wall_seconds": 1.575633,
+          "rotation_degrees": 0.0,
+          "tuple": "m4_highlight_r3",
+          "wall_seconds": 1.582032,
           "workload": "Smart plus two Classic production renders with parity/determinism checks"
         },
         {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
           "depth_bpc": 16,
+          "deterministic": true,
           "dimensions": [
             3840,
             2160
           ],
+          "horizontal_length": 0,
+          "independent_strides": true,
+          "input_span_unchanged": true,
           "mode": "exponential",
-          "peak_rss_bytes": 1230864384,
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 1241464832,
           "returncode": 0,
-          "wall_seconds": 1.618248,
+          "rotation_degrees": 0.0,
+          "tuple": "m4_highlight_r3",
+          "wall_seconds": 1.722738,
           "workload": "Smart plus two Classic production renders with parity/determinism checks"
         },
         {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
           "depth_bpc": 32,
+          "deterministic": true,
           "dimensions": [
             3840,
             2160
           ],
+          "horizontal_length": 0,
+          "independent_strides": true,
+          "input_span_unchanged": true,
           "mode": "exponential",
-          "peak_rss_bytes": 1562918912,
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 1573453824,
           "returncode": 0,
-          "wall_seconds": 2.385894,
+          "rotation_degrees": 0.0,
+          "tuple": "m4_highlight_r3",
+          "wall_seconds": 1.950427,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
+          "depth_bpc": 8,
+          "deterministic": true,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "horizontal_length": 300,
+          "independent_strides": true,
+          "input_span_unchanged": true,
+          "mode": "gaussian_length300",
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 947060736,
+          "returncode": 0,
+          "rotation_degrees": 1.0,
+          "tuple": "m3_ui_length",
+          "wall_seconds": 33.144042,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
+          "depth_bpc": 16,
+          "deterministic": true,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "horizontal_length": 300,
+          "independent_strides": true,
+          "input_span_unchanged": true,
+          "mode": "gaussian_length300",
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 1046446080,
+          "returncode": 0,
+          "rotation_degrees": 1.0,
+          "tuple": "m3_ui_length",
+          "wall_seconds": 31.900179,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "callback_shape": "1/1/1/0",
+          "classic_smart_parity": true,
+          "content_bounds": "full",
+          "depth_bpc": 32,
+          "deterministic": true,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "horizontal_length": 300,
+          "independent_strides": true,
+          "input_span_unchanged": true,
+          "mode": "gaussian_length300",
+          "output_active_changed": true,
+          "output_padding_unchanged": true,
+          "peak_rss_bytes": 1355169792,
+          "returncode": 0,
+          "rotation_degrees": 1.0,
+          "tuple": "m3_ui_length",
+          "wall_seconds": 32.041329,
           "workload": "Smart plus two Classic production renders with parity/determinism checks"
         }
       ],
@@ -2033,7 +2435,7 @@
         "--geometry",
         "uhd"
       ],
-      "dependency_binding_sha256": "90f540009a15f4b7289425ee8ff3fe867e15f9ca28f1535cc416a913a498cf40",
+      "dependency_binding_sha256": "e1e7208c4f208baad7bee2ef8224783fdfee55e7f2f21b4bc3c4c7f0f7234620",
       "dimensions": [
         3840,
         2160
@@ -2041,18 +2443,18 @@
       "geometry": "uhd",
       "hostless": true,
       "lane": "OLMKiraKira",
-      "parameters": "box_tuple0_approximated_gaussian_tuple3_gaussian_tuple7_exponential_tuple9_pf8_pf16_pf32_smart_two_classic_parity_determinism",
-      "peak_rss_bytes": 1562918912,
+      "parameters": "box_tuple0_approximated_gaussian_tuple3_gaussian_length50_exponential_tuple9_gaussian_horizontal_length300_rotation1_pf8_pf16_pf32_smart_two_classic_parity_determinism",
+      "peak_rss_bytes": 1573453824,
       "returncode": 0,
       "rss_budget_bytes": 3221225472,
       "status": "passed",
       "stderr_tail": "",
-      "stdout_tail": "6.567211,\"peak_rss_bytes\":1098514432,\"returncode\":0,\"workload\":\"Smart plus two Classic production renders with parity/determinism checks\"},{\"mode\":\"gaussian\",\"depth_bpc\":32,\"dimensions\":[3840,2160],\"wall_seconds\":6.659196,\"peak_rss_bytes\":1429520384,\"returncode\":0,\"workload\":\"Smart plus two Classic production renders with parity/determinism checks\"},{\"mode\":\"exponential\",\"depth_bpc\":8,\"dimensions\":[3840,2160],\"wall_seconds\":1.575633,\"peak_rss_bytes\":1064812544,\"returncode\":0,\"workload\":\"Smart plus two Classic production renders with parity/determinism checks\"},{\"mode\":\"exponential\",\"depth_bpc\":16,\"dimensions\":[3840,2160],\"wall_seconds\":1.618248,\"peak_rss_bytes\":1230864384,\"returncode\":0,\"workload\":\"Smart plus two Classic production renders with parity/determinism checks\"},{\"mode\":\"exponential\",\"depth_bpc\":32,\"dimensions\":[3840,2160],\"wall_seconds\":2.385894,\"peak_rss_bytes\":1562918912,\"returncode\":0,\"workload\":\"Smart plus two Classic production renders with parity/determinism checks\"}]\n",
-      "support_predicate": "classic_or_smart && pf8_pf16_pf32 && full_frame && zero_origin && width >= 9 && height >= 7 && oracle_tuple && mode_geometry_admitted",
+      "stdout_tail": "gth300\",\"depth_bpc\":16,\"tuple\":\"m3_ui_length\",\"dimensions\":[3840,2160],\"horizontal_length\":300,\"rotation_degrees\":1.0,\"wall_seconds\":31.900179,\"peak_rss_bytes\":1046446080,\"returncode\":0,\"content_bounds\":\"full\",\"callback_shape\":\"1/1/1/0\",\"workload\":\"Smart plus two Classic production renders with parity/determinism checks\",\"classic_smart_parity\":true,\"deterministic\":true,\"independent_strides\":true,\"input_span_unchanged\":true,\"output_padding_unchanged\":true,\"output_active_changed\":true},{\"mode\":\"gaussian_length300\",\"depth_bpc\":32,\"tuple\":\"m3_ui_length\",\"dimensions\":[3840,2160],\"horizontal_length\":300,\"rotation_degrees\":1.0,\"wall_seconds\":32.041329,\"peak_rss_bytes\":1355169792,\"returncode\":0,\"content_bounds\":\"full\",\"callback_shape\":\"1/1/1/0\",\"workload\":\"Smart plus two Classic production renders with parity/determinism checks\",\"classic_smart_parity\":true,\"deterministic\":true,\"independent_strides\":true,\"input_span_unchanged\":true,\"output_padding_unchanged\":true,\"output_active_changed\":true}]\n",
+      "support_predicate": "classic_or_smart && pf8_pf16_pf32 && full_frame && zero_origin && independent_nonoverlapping_rowbytes && width >= 9 && height >= 7 && max(width,height) <= 4096 && width*height <= 8847360 && pf16_sdr_0_32768 && pf32_finite_sdr_0_1 && (oracle_tuple || (mode3_horizontal_only && 1 <= length <= 300 && rotation in {0,1} && per_render_plugin_owned_bytes <= 1073741824 && mode3_work_units <= 12000000000)) && mode_geometry_admitted",
       "support_predicate_role": "declared_admission_context_not_exhaustive_performance_coverage",
-      "time_metrics_tail": "real 36.99\nuser 31.32\nsys 4.27\n          1562918912  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n             1161996  page reclaims\n                 701  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                  12  signals received\n                 175  voluntary context switches\n               33139  involuntary context switches\n           414707447  instructions retired\n           218760914  cycles elapsed\n            13419712  peak memory footprint\n",
+      "time_metrics_tail": "real 136.97\nuser 125.82\nsys 6.49\n          1573453824  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n             1622844  page reclaims\n                5930  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                  15  signals received\n                1783  voluntary context switches\n              127853  involuntary context switches\n           441074816  instructions retired\n           245113679  cycles elapsed\n            13648960  peak memory footprint\n",
       "timeout_seconds": 180,
-      "wall_seconds": 36.996924
+      "wall_seconds": 136.978237
     },
     {
       "case_results": [
@@ -2061,18 +2463,18 @@
           "family": "zoom",
           "input_padding_pixels": 3,
           "output_padding_pixels": 7,
-          "peak_rss_bytes": 91062272,
+          "peak_rss_bytes": 91013120,
           "returncode": 0,
-          "wall_seconds": 0.480009
+          "wall_seconds": 0.536521
         },
         {
           "depth_bpc": 16,
           "family": "zoom",
           "input_padding_pixels": 3,
           "output_padding_pixels": 7,
-          "peak_rss_bytes": 107692032,
+          "peak_rss_bytes": 107675648,
           "returncode": 0,
-          "wall_seconds": 0.242773
+          "wall_seconds": 0.237832
         },
         {
           "depth_bpc": 32,
@@ -2081,7 +2483,7 @@
           "output_padding_pixels": 7,
           "peak_rss_bytes": 140967936,
           "returncode": 0,
-          "wall_seconds": 0.243214
+          "wall_seconds": 0.236917
         },
         {
           "depth_bpc": 8,
@@ -2090,25 +2492,25 @@
           "output_padding_pixels": 7,
           "peak_rss_bytes": 85786624,
           "returncode": 0,
-          "wall_seconds": 0.22235
+          "wall_seconds": 0.213077
         },
         {
           "depth_bpc": 16,
           "family": "rotation",
           "input_padding_pixels": 3,
           "output_padding_pixels": 7,
-          "peak_rss_bytes": 102498304,
+          "peak_rss_bytes": 102432768,
           "returncode": 0,
-          "wall_seconds": 0.22003
+          "wall_seconds": 0.219229
         },
         {
           "depth_bpc": 32,
           "family": "rotation",
           "input_padding_pixels": 3,
           "output_padding_pixels": 7,
-          "peak_rss_bytes": 135708672,
+          "peak_rss_bytes": 135741440,
           "returncode": 0,
-          "wall_seconds": 0.21763
+          "wall_seconds": 0.212977
         }
       ],
       "command": [
@@ -2117,7 +2519,7 @@
         "--geometry",
         "hd"
       ],
-      "dependency_binding_sha256": "166a09286da41ed2f9fdbcf81cbd3497cb3a258a79c523be4ebab93a5040b623",
+      "dependency_binding_sha256": "bbd681289b12046ab08689427ab763812c63a24e3fea9280a976fe3a5b8c72bc",
       "dimensions": [
         1920,
         1080
@@ -2126,15 +2528,15 @@
       "hostless": true,
       "lane": "OLMRadialBlur",
       "parameters": "generic_baseline_center_23_71_ratio_2.25_angle_-137.5_quality_1_strength_1_independent_strides",
-      "peak_rss_bytes": 253411328,
+      "peak_rss_bytes": 255475712,
       "returncode": 0,
       "rss_budget_bytes": 2147483648,
       "status": "passed",
       "stderr_tail": "",
-      "stdout_tail": "OLM_PERF_CASES_JSON=[{\"family\":\"zoom\",\"depth_bpc\":8,\"wall_seconds\":0.480009,\"peak_rss_bytes\":91062272,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"zoom\",\"depth_bpc\":16,\"wall_seconds\":0.242773,\"peak_rss_bytes\":107692032,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"zoom\",\"depth_bpc\":32,\"wall_seconds\":0.243214,\"peak_rss_bytes\":140967936,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"rotation\",\"depth_bpc\":8,\"wall_seconds\":0.22235,\"peak_rss_bytes\":85786624,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"rotation\",\"depth_bpc\":16,\"wall_seconds\":0.22003,\"peak_rss_bytes\":102498304,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"rotation\",\"depth_bpc\":32,\"wall_seconds\":0.21763,\"peak_rss_bytes\":135708672,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7}]\n",
-      "time_metrics_tail": "real 5.47\nuser 4.81\nsys 0.32\n           253411328  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               71818  page reclaims\n                2030  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   6  signals received\n                1523  voluntary context switches\n                3482  involuntary context switches\n           402908371  instructions retired\n           190862057  cycles elapsed\n            13255744  peak memory footprint\n",
+      "stdout_tail": "OLM_PERF_CASES_JSON=[{\"family\":\"zoom\",\"depth_bpc\":8,\"wall_seconds\":0.536521,\"peak_rss_bytes\":91013120,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"zoom\",\"depth_bpc\":16,\"wall_seconds\":0.237832,\"peak_rss_bytes\":107675648,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"zoom\",\"depth_bpc\":32,\"wall_seconds\":0.236917,\"peak_rss_bytes\":140967936,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"rotation\",\"depth_bpc\":8,\"wall_seconds\":0.213077,\"peak_rss_bytes\":85786624,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"rotation\",\"depth_bpc\":16,\"wall_seconds\":0.219229,\"peak_rss_bytes\":102432768,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"rotation\",\"depth_bpc\":32,\"wall_seconds\":0.212977,\"peak_rss_bytes\":135741440,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7}]\n",
+      "time_metrics_tail": "real 5.70\nuser 4.76\nsys 0.46\n           255475712  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               68351  page reclaims\n                5633  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   6  signals received\n                2576  voluntary context switches\n                3170  involuntary context switches\n           407649145  instructions retired\n           204075293  cycles elapsed\n            13288448  peak memory footprint\n",
       "timeout_seconds": 120,
-      "wall_seconds": 5.478574
+      "wall_seconds": 5.705161
     },
     {
       "case_results": [
@@ -2143,18 +2545,18 @@
           "family": "zoom",
           "input_padding_pixels": 3,
           "output_padding_pixels": 7,
-          "peak_rss_bytes": 294666240,
+          "peak_rss_bytes": 294584320,
           "returncode": 0,
-          "wall_seconds": 1.060746
+          "wall_seconds": 0.999526
         },
         {
           "depth_bpc": 16,
           "family": "zoom",
           "input_padding_pixels": 3,
           "output_padding_pixels": 7,
-          "peak_rss_bytes": 361054208,
+          "peak_rss_bytes": 361070592,
           "returncode": 0,
-          "wall_seconds": 0.932648
+          "wall_seconds": 0.872914
         },
         {
           "depth_bpc": 32,
@@ -2163,34 +2565,34 @@
           "output_padding_pixels": 7,
           "peak_rss_bytes": 494026752,
           "returncode": 0,
-          "wall_seconds": 0.951227
+          "wall_seconds": 0.868537
         },
         {
           "depth_bpc": 8,
           "family": "rotation",
           "input_padding_pixels": 3,
           "output_padding_pixels": 7,
-          "peak_rss_bytes": 284639232,
+          "peak_rss_bytes": 284590080,
           "returncode": 0,
-          "wall_seconds": 0.765252
+          "wall_seconds": 0.754062
         },
         {
           "depth_bpc": 16,
           "family": "rotation",
           "input_padding_pixels": 3,
           "output_padding_pixels": 7,
-          "peak_rss_bytes": 351092736,
+          "peak_rss_bytes": 350994432,
           "returncode": 0,
-          "wall_seconds": 0.789146
+          "wall_seconds": 0.774358
         },
         {
           "depth_bpc": 32,
           "family": "rotation",
           "input_padding_pixels": 3,
           "output_padding_pixels": 7,
-          "peak_rss_bytes": 483917824,
+          "peak_rss_bytes": 483885056,
           "returncode": 0,
-          "wall_seconds": 0.804531
+          "wall_seconds": 0.764582
         }
       ],
       "command": [
@@ -2199,7 +2601,7 @@
         "--geometry",
         "uhd"
       ],
-      "dependency_binding_sha256": "166a09286da41ed2f9fdbcf81cbd3497cb3a258a79c523be4ebab93a5040b623",
+      "dependency_binding_sha256": "bbd681289b12046ab08689427ab763812c63a24e3fea9280a976fe3a5b8c72bc",
       "dimensions": [
         3840,
         2160
@@ -2213,10 +2615,10 @@
       "rss_budget_bytes": 3221225472,
       "status": "passed",
       "stderr_tail": "",
-      "stdout_tail": "OLM_PERF_CASES_JSON=[{\"family\":\"zoom\",\"depth_bpc\":8,\"wall_seconds\":1.060746,\"peak_rss_bytes\":294666240,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"zoom\",\"depth_bpc\":16,\"wall_seconds\":0.932648,\"peak_rss_bytes\":361054208,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"zoom\",\"depth_bpc\":32,\"wall_seconds\":0.951227,\"peak_rss_bytes\":494026752,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"rotation\",\"depth_bpc\":8,\"wall_seconds\":0.765252,\"peak_rss_bytes\":284639232,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"rotation\",\"depth_bpc\":16,\"wall_seconds\":0.789146,\"peak_rss_bytes\":351092736,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"rotation\",\"depth_bpc\":32,\"wall_seconds\":0.804531,\"peak_rss_bytes\":483917824,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7}]\n",
-      "time_metrics_tail": "real 8.90\nuser 8.19\nsys 0.47\n           494026752  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              172052  page reclaims\n                 376  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   6  signals received\n                  62  voluntary context switches\n                7286  involuntary context switches\n           396641477  instructions retired\n           184986637  cycles elapsed\n            13600000  peak memory footprint\n",
+      "stdout_tail": "OLM_PERF_CASES_JSON=[{\"family\":\"zoom\",\"depth_bpc\":8,\"wall_seconds\":0.999526,\"peak_rss_bytes\":294584320,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"zoom\",\"depth_bpc\":16,\"wall_seconds\":0.872914,\"peak_rss_bytes\":361070592,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"zoom\",\"depth_bpc\":32,\"wall_seconds\":0.868537,\"peak_rss_bytes\":494026752,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"rotation\",\"depth_bpc\":8,\"wall_seconds\":0.754062,\"peak_rss_bytes\":284590080,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"rotation\",\"depth_bpc\":16,\"wall_seconds\":0.774358,\"peak_rss_bytes\":350994432,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"rotation\",\"depth_bpc\":32,\"wall_seconds\":0.764582,\"peak_rss_bytes\":483885056,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7}]\n",
+      "time_metrics_tail": "real 8.65\nuser 8.09\nsys 0.39\n           494026752  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              171555  page reclaims\n                 339  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   6  signals received\n                  97  voluntary context switches\n                4265  involuntary context switches\n           394448024  instructions retired\n           185982974  cycles elapsed\n            13272128  peak memory footprint\n",
       "timeout_seconds": 180,
-      "wall_seconds": 8.91099
+      "wall_seconds": 8.657994
     },
     {
       "command": [
@@ -2236,7 +2638,7 @@
         "255",
         "--use-key"
       ],
-      "dependency_binding_sha256": "0561b62028c1f2e2c1bcf8a31280263b314a881446c2de5ffa06d5804406a9ac",
+      "dependency_binding_sha256": "08547cbe7e734f2b4f70423130f3b1af03fb45a5156267c3a3534d03076b99a9",
       "dimensions": [
         1920,
         1080
@@ -2245,7 +2647,7 @@
       "hostless": true,
       "lane": "OLMSmoother",
       "parameters": "key_on_arbitrary_color_tolerance_255",
-      "peak_rss_bytes": 149929984,
+      "peak_rss_bytes": 143769600,
       "returncode": 0,
       "rss_budget_bytes": 2147483648,
       "status": "passed",
@@ -2253,9 +2655,9 @@
       "stdout_tail": "",
       "support_predicate": "classic && (pf8 || pf16) && (key_off || key_on) && width <= 3840 && height <= 2160",
       "support_predicate_role": "declared_admission_context_not_exhaustive_performance_coverage",
-      "time_metrics_tail": "real 3.56\nuser 3.20\nsys 0.12\n           149929984  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               28876  page reclaims\n                 531  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  75  voluntary context switches\n                2124  involuntary context switches\n           402488826  instructions retired\n           174905724  cycles elapsed\n            14271488  peak memory footprint\n",
+      "time_metrics_tail": "real 3.54\nuser 3.16\nsys 0.11\n           143769600  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               28225  page reclaims\n                 289  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  71  voluntary context switches\n                1748  involuntary context switches\n           400213644  instructions retired\n           172940574  cycles elapsed\n            14484544  peak memory footprint\n",
       "timeout_seconds": 120,
-      "wall_seconds": 3.568188
+      "wall_seconds": 3.549729
     },
     {
       "command": [
@@ -2275,7 +2677,7 @@
         "255",
         "--use-key"
       ],
-      "dependency_binding_sha256": "0561b62028c1f2e2c1bcf8a31280263b314a881446c2de5ffa06d5804406a9ac",
+      "dependency_binding_sha256": "08547cbe7e734f2b4f70423130f3b1af03fb45a5156267c3a3534d03076b99a9",
       "dimensions": [
         3840,
         2160
@@ -2292,9 +2694,9 @@
       "stdout_tail": "",
       "support_predicate": "classic && (pf8 || pf16) && (key_off || key_on) && width <= 3840 && height <= 2160",
       "support_predicate_role": "declared_admission_context_not_exhaustive_performance_coverage",
-      "time_metrics_tail": "real 8.37\nuser 7.94\nsys 0.21\n           465928192  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               59639  page reclaims\n                 345  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  13  voluntary context switches\n                4664  involuntary context switches\n           400210600  instructions retired\n           169639823  cycles elapsed\n            14337024  peak memory footprint\n",
+      "time_metrics_tail": "real 8.32\nuser 7.93\nsys 0.20\n           465928192  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               59313  page reclaims\n                 274  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  20  voluntary context switches\n                3750  involuntary context switches\n           397832007  instructions retired\n           168236350  cycles elapsed\n            14369728  peak memory footprint\n",
       "timeout_seconds": 180,
-      "wall_seconds": 8.377493
+      "wall_seconds": 8.324548
     },
     {
       "command": [
@@ -2303,7 +2705,7 @@
         "unittest",
         "tests.test_olmsmoother2_default_beta_lane_20260820.OLMSmoother2DefaultBetaLane.test_effectmain_accepts_arbitrary_source_at_all_depths"
       ],
-      "dependency_binding_sha256": "7be9cc599982a97329a2e22ace86422ad066b63f454184f969d65f016df30b6b",
+      "dependency_binding_sha256": "71a9df50d11084c3cc83d75c54fe4ffae3d4c6eb3d35c833cfaf71ec47eeb39a",
       "dimensions": [
         1920,
         1080
@@ -2312,17 +2714,17 @@
       "hostless": true,
       "lane": "OLMSmoother2",
       "parameters": "small_v1_v2_key_invert_gamma_none_all_smoothing_axes_plus_hd_depth_specific_representatives_independent_strides_asan_ubsan",
-      "peak_rss_bytes": 660389888,
+      "peak_rss_bytes": 673071104,
       "returncode": 0,
       "rss_budget_bytes": 2147483648,
       "status": "passed",
-      "stderr_tail": "eprecated-declarations]\n  221 | static PF_ANSICallbacksSuite1 g_ansi_suite = { &std::sprintf };\n      |                                                      ^\n/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here\n  278 | __deprecated_msg(\"This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.\")\n      | ^\n/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'\n  227 |         #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))\n      |                                                       ^\n1 warning generated.\n.\n----------------------------------------------------------------------\nRan 1 test in 6.451s\n\nOK\n",
+      "stderr_tail": "eprecated-declarations]\n  221 | static PF_ANSICallbacksSuite1 g_ansi_suite = { &std::sprintf };\n      |                                                      ^\n/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here\n  278 | __deprecated_msg(\"This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.\")\n      | ^\n/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'\n  227 |         #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))\n      |                                                       ^\n1 warning generated.\n.\n----------------------------------------------------------------------\nRan 1 test in 6.372s\n\nOK\n",
       "stdout_tail": "",
       "support_predicate": "smart && pf8_pf16_pf32 && v1_v2 && smoothing_ui_ranges && key_off_on_invert && (gamma_none || gamma_all || gamma_colors_count_1_5) && full_frame && 16 <= width,height <= 8192",
       "support_predicate_role": "declared_admission_context_not_exhaustive_performance_coverage",
-      "time_metrics_tail": "real 6.50\nuser 5.80\nsys 0.43\n           660389888  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              137567  page reclaims\n                1183  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   1  messages sent\n                   0  messages received\n                   0  signals received\n                 177  voluntary context switches\n                3744  involuntary context switches\n           420037325  instructions retired\n           183661579  cycles elapsed\n            15221696  peak memory footprint\n",
+      "time_metrics_tail": "real 6.42\nuser 5.76\nsys 0.40\n           673071104  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              137021  page reclaims\n                 970  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   1  messages sent\n                   0  messages received\n                   0  signals received\n                 370  voluntary context switches\n                3093  involuntary context switches\n           421476394  instructions retired\n           176667097  cycles elapsed\n            15303616  peak memory footprint\n",
       "timeout_seconds": 120,
-      "wall_seconds": 6.513888
+      "wall_seconds": 6.430097
     },
     {
       "command": [
@@ -2331,7 +2733,7 @@
         "unittest",
         "tests.test_olmsmoother2_default_beta_lane_20260820.OLMSmoother2DefaultBetaLane.test_effectmain_accepts_arbitrary_source_at_all_depths"
       ],
-      "dependency_binding_sha256": "7be9cc599982a97329a2e22ace86422ad066b63f454184f969d65f016df30b6b",
+      "dependency_binding_sha256": "71a9df50d11084c3cc83d75c54fe4ffae3d4c6eb3d35c833cfaf71ec47eeb39a",
       "dimensions": [
         3840,
         2160
@@ -2340,17 +2742,17 @@
       "hostless": true,
       "lane": "OLMSmoother2",
       "parameters": "small_v1_v2_key_invert_gamma_none_all_smoothing_axes_plus_uhd_safe_default_all_depths_independent_strides_asan_ubsan",
-      "peak_rss_bytes": 1608646656,
+      "peak_rss_bytes": 1647001600,
       "returncode": 0,
       "rss_budget_bytes": 3221225472,
       "status": "passed",
-      "stderr_tail": "precated-declarations]\n  221 | static PF_ANSICallbacksSuite1 g_ansi_suite = { &std::sprintf };\n      |                                                      ^\n/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here\n  278 | __deprecated_msg(\"This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.\")\n      | ^\n/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'\n  227 |         #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))\n      |                                                       ^\n1 warning generated.\n.\n----------------------------------------------------------------------\nRan 1 test in 22.471s\n\nOK\n",
+      "stderr_tail": "precated-declarations]\n  221 | static PF_ANSICallbacksSuite1 g_ansi_suite = { &std::sprintf };\n      |                                                      ^\n/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here\n  278 | __deprecated_msg(\"This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.\")\n      | ^\n/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'\n  227 |         #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))\n      |                                                       ^\n1 warning generated.\n.\n----------------------------------------------------------------------\nRan 1 test in 22.384s\n\nOK\n",
       "stdout_tail": "",
       "support_predicate": "smart && pf8_pf16_pf32 && v1_v2 && smoothing_ui_ranges && key_off_on_invert && (gamma_none || gamma_all || gamma_colors_count_1_5) && full_frame && 16 <= width,height <= 8192",
       "support_predicate_role": "declared_admission_context_not_exhaustive_performance_coverage",
-      "time_metrics_tail": "real 22.53\nuser 20.61\nsys 1.29\n          1608646656  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              551331  page reclaims\n                 552  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   1  messages sent\n                   0  messages received\n                   0  signals received\n                  53  voluntary context switches\n               13996  involuntary context switches\n           421320323  instructions retired\n           186033883  cycles elapsed\n            14844992  peak memory footprint\n",
+      "time_metrics_tail": "real 22.43\nuser 20.63\nsys 1.23\n          1647001600  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              536585  page reclaims\n                 573  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   1  messages sent\n                   0  messages received\n                   0  signals received\n                 293  voluntary context switches\n               11435  involuntary context switches\n           434291460  instructions retired\n           180331912  cycles elapsed\n            15008768  peak memory footprint\n",
       "timeout_seconds": 180,
-      "wall_seconds": 22.535801
+      "wall_seconds": 22.444836
     },
     {
       "case_results": [
@@ -2394,7 +2796,7 @@
         "--geometry",
         "hd"
       ],
-      "dependency_binding_sha256": "c08b7436939b162adfb435a89172cbf5380f0a1b3e4e4f3eeacadd986487c1bc",
+      "dependency_binding_sha256": "8c21c348acc1a3ca030d2cbf3a8faba3ec958c55d4eebb74804185530203cf61",
       "dimensions": [
         1920,
         1080
@@ -2403,17 +2805,17 @@
       "hostless": true,
       "lane": "OLMToonDilate",
       "parameters": "production_O2_pf8_radius13_scale1_pf16_radius2.5_scale0.5_pf32_radius0.99_scale1_independent_strides_chebyshev_oracle",
-      "peak_rss_bytes": 192266240,
+      "peak_rss_bytes": 183926784,
       "returncode": 0,
       "rss_budget_bytes": 2147483648,
       "status": "passed",
       "stderr_tail": "",
-      "stdout_tail": "OLM_PERF_CASES_JSON=[{\"geometry\":\"hd\",\"width\":1920,\"height\":1080,\"depth\":8,\"status\":\"passed\",\"oracle\":\"chebyshev_single_seed_full_words\",\"independent_strides\":true,\"radius\":13.0,\"comp_width\":1920},{\"geometry\":\"hd\",\"width\":1920,\"height\":1080,\"depth\":16,\"status\":\"passed\",\"oracle\":\"chebyshev_single_seed_full_words\",\"independent_strides\":true,\"radius\":2.5,\"comp_width\":3840},{\"geometry\":\"hd\",\"width\":1920,\"height\":1080,\"depth\":32,\"status\":\"passed\",\"oracle\":\"chebyshev_single_seed_full_words\",\"independent_strides\":true,\"radius\":0.99,\"comp_width\":1920}]\nok: ToonDilate hd PF8/PF16/PF32 O2 in 0.961s\n",
+      "stdout_tail": "OLM_PERF_CASES_JSON=[{\"geometry\":\"hd\",\"width\":1920,\"height\":1080,\"depth\":8,\"status\":\"passed\",\"oracle\":\"chebyshev_single_seed_full_words\",\"independent_strides\":true,\"radius\":13.0,\"comp_width\":1920},{\"geometry\":\"hd\",\"width\":1920,\"height\":1080,\"depth\":16,\"status\":\"passed\",\"oracle\":\"chebyshev_single_seed_full_words\",\"independent_strides\":true,\"radius\":2.5,\"comp_width\":3840},{\"geometry\":\"hd\",\"width\":1920,\"height\":1080,\"depth\":32,\"status\":\"passed\",\"oracle\":\"chebyshev_single_seed_full_words\",\"independent_strides\":true,\"radius\":0.99,\"comp_width\":1920}]\nok: ToonDilate hd PF8/PF16/PF32 O2 in 1.125s\n",
       "support_predicate": "smart && pf8_pf16_pf32 && full_frame && zero_origin && 0 <= search_radius <= 100 && positive_independent_rowbytes",
       "support_predicate_role": "declared_admission_context_not_exhaustive_performance_coverage",
-      "time_metrics_tail": "real 1.02\nuser 0.59\nsys 0.15\n           192266240  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               24294  page reclaims\n                1331  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                1002  voluntary context switches\n                 844  involuntary context switches\n           382666647  instructions retired\n           159932684  cycles elapsed\n            12551424  peak memory footprint\n",
+      "time_metrics_tail": "real 1.18\nuser 0.60\nsys 0.29\n           183926784  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               20989  page reclaims\n                4116  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                1144  voluntary context switches\n                1030  involuntary context switches\n           384380479  instructions retired\n           167003332  cycles elapsed\n            13141184  peak memory footprint\n",
       "timeout_seconds": 120,
-      "wall_seconds": 1.02703
+      "wall_seconds": 1.19358
     },
     {
       "case_results": [
@@ -2457,7 +2859,7 @@
         "--geometry",
         "uhd"
       ],
-      "dependency_binding_sha256": "c08b7436939b162adfb435a89172cbf5380f0a1b3e4e4f3eeacadd986487c1bc",
+      "dependency_binding_sha256": "8c21c348acc1a3ca030d2cbf3a8faba3ec958c55d4eebb74804185530203cf61",
       "dimensions": [
         3840,
         2160
@@ -2471,18 +2873,18 @@
       "rss_budget_bytes": 3221225472,
       "status": "passed",
       "stderr_tail": "",
-      "stdout_tail": "OLM_PERF_CASES_JSON=[{\"geometry\":\"uhd\",\"width\":3840,\"height\":2160,\"depth\":8,\"status\":\"passed\",\"oracle\":\"chebyshev_single_seed_full_words\",\"independent_strides\":true,\"radius\":13.0,\"comp_width\":3840},{\"geometry\":\"uhd\",\"width\":3840,\"height\":2160,\"depth\":16,\"status\":\"passed\",\"oracle\":\"chebyshev_single_seed_full_words\",\"independent_strides\":true,\"radius\":2.5,\"comp_width\":7680},{\"geometry\":\"uhd\",\"width\":3840,\"height\":2160,\"depth\":32,\"status\":\"passed\",\"oracle\":\"chebyshev_single_seed_full_words\",\"independent_strides\":true,\"radius\":0.99,\"comp_width\":3840}]\nok: ToonDilate uhd PF8/PF16/PF32 O2 in 1.132s\n",
+      "stdout_tail": "OLM_PERF_CASES_JSON=[{\"geometry\":\"uhd\",\"width\":3840,\"height\":2160,\"depth\":8,\"status\":\"passed\",\"oracle\":\"chebyshev_single_seed_full_words\",\"independent_strides\":true,\"radius\":13.0,\"comp_width\":3840},{\"geometry\":\"uhd\",\"width\":3840,\"height\":2160,\"depth\":16,\"status\":\"passed\",\"oracle\":\"chebyshev_single_seed_full_words\",\"independent_strides\":true,\"radius\":2.5,\"comp_width\":7680},{\"geometry\":\"uhd\",\"width\":3840,\"height\":2160,\"depth\":32,\"status\":\"passed\",\"oracle\":\"chebyshev_single_seed_full_words\",\"independent_strides\":true,\"radius\":0.99,\"comp_width\":3840}]\nok: ToonDilate uhd PF8/PF16/PF32 O2 in 1.152s\n",
       "support_predicate": "smart && pf8_pf16_pf32 && full_frame && zero_origin && 0 <= search_radius <= 100 && positive_independent_rowbytes",
       "support_predicate_role": "declared_admission_context_not_exhaustive_performance_coverage",
-      "time_metrics_tail": "real 1.18\nuser 0.84\nsys 0.14\n           731463680  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               58216  page reclaims\n                 324  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  12  voluntary context switches\n                 646  involuntary context switches\n           378466387  instructions retired\n           162371573  cycles elapsed\n            13108160  peak memory footprint\n",
+      "time_metrics_tail": "real 1.20\nuser 0.84\nsys 0.14\n           731463680  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               58276  page reclaims\n                 324  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  22  voluntary context switches\n                 727  involuntary context switches\n           377869364  instructions retired\n           163573163  cycles elapsed\n            13206656  peak memory footprint\n",
       "timeout_seconds": 180,
-      "wall_seconds": 1.184494
+      "wall_seconds": 1.205127
     }
   ],
-  "run_id": "bfb10a34-119e-467a-a7b5-805c5391e8fb",
+  "run_id": "4e61b4ac-2a8f-4b9f-abc9-7647e6b426b1",
   "run_state": "COMPLETED",
   "schema_version": 2,
-  "started_at": "2026-08-20T20:25:08.371845+00:00",
+  "started_at": "2026-08-20T21:56:04.868428+00:00",
   "toolchain": {
     "adobe_after_effects_sdk_workspace_roots": {
       "Headers": {
