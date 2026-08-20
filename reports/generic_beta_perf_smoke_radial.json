@@ -1,0 +1,178 @@
+{
+  "generated_at_epoch_seconds": 1787218632,
+  "policy": {
+    "exact_geometry_required": true,
+    "note": "Peak RSS is /usr/bin/time maximum resident set size for the hostless driver process.",
+    "rss_budgets_bytes": {
+      "hd": 2147483648,
+      "uhd": 3221225472
+    },
+    "timeouts_seconds": {
+      "hd": 120,
+      "uhd": 180
+    }
+  },
+  "results": [
+    {
+      "case_results": [
+        {
+          "depth_bpc": 8,
+          "family": "zoom",
+          "input_padding_pixels": 3,
+          "output_padding_pixels": 7,
+          "peak_rss_bytes": 91209728,
+          "returncode": 0,
+          "wall_seconds": 0.580727
+        },
+        {
+          "depth_bpc": 16,
+          "family": "zoom",
+          "input_padding_pixels": 3,
+          "output_padding_pixels": 7,
+          "peak_rss_bytes": 107855872,
+          "returncode": 0,
+          "wall_seconds": 0.337452
+        },
+        {
+          "depth_bpc": 32,
+          "family": "zoom",
+          "input_padding_pixels": 3,
+          "output_padding_pixels": 7,
+          "peak_rss_bytes": 140836864,
+          "returncode": 0,
+          "wall_seconds": 0.283789
+        },
+        {
+          "depth_bpc": 8,
+          "family": "rotation",
+          "input_padding_pixels": 3,
+          "output_padding_pixels": 7,
+          "peak_rss_bytes": 86048768,
+          "returncode": 0,
+          "wall_seconds": 0.275102
+        },
+        {
+          "depth_bpc": 16,
+          "family": "rotation",
+          "input_padding_pixels": 3,
+          "output_padding_pixels": 7,
+          "peak_rss_bytes": 102416384,
+          "returncode": 0,
+          "wall_seconds": 0.294087
+        },
+        {
+          "depth_bpc": 32,
+          "family": "rotation",
+          "input_padding_pixels": 3,
+          "output_padding_pixels": 7,
+          "peak_rss_bytes": 135692288,
+          "returncode": 0,
+          "wall_seconds": 0.478529
+        }
+      ],
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/perf/run_olmradialblur_generic_production_perf.py",
+        "--geometry",
+        "hd"
+      ],
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "geometry": "hd",
+      "hostless": true,
+      "lane": "OLMRadialBlur",
+      "parameters": "generic_baseline_center_23_71_ratio_2.25_angle_-137.5_quality_1_strength_1_independent_strides",
+      "peak_rss_bytes": 216662016,
+      "returncode": 0,
+      "rss_budget_bytes": 2147483648,
+      "status": "passed",
+      "stderr_tail": "real 8.24\nuser 5.78\nsys 0.49\n           216662016  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               77397  page reclaims\n                 461  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   6  signals received\n                 146  voluntary context switches\n               37891  involuntary context switches\n           396266126  instructions retired\n           240642949  cycles elapsed\n            14321024  peak memory footprint\n",
+      "stdout_tail": "OLM_PERF_CASES_JSON=[{\"family\":\"zoom\",\"depth_bpc\":8,\"wall_seconds\":0.580727,\"peak_rss_bytes\":91209728,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"zoom\",\"depth_bpc\":16,\"wall_seconds\":0.337452,\"peak_rss_bytes\":107855872,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"zoom\",\"depth_bpc\":32,\"wall_seconds\":0.283789,\"peak_rss_bytes\":140836864,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"rotation\",\"depth_bpc\":8,\"wall_seconds\":0.275102,\"peak_rss_bytes\":86048768,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"rotation\",\"depth_bpc\":16,\"wall_seconds\":0.294087,\"peak_rss_bytes\":102416384,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"rotation\",\"depth_bpc\":32,\"wall_seconds\":0.478529,\"peak_rss_bytes\":135692288,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7}]\n",
+      "timeout_seconds": 120,
+      "wall_seconds": 8.252712
+    },
+    {
+      "case_results": [
+        {
+          "depth_bpc": 8,
+          "family": "zoom",
+          "input_padding_pixels": 3,
+          "output_padding_pixels": 7,
+          "peak_rss_bytes": 294780928,
+          "returncode": 0,
+          "wall_seconds": 1.293965
+        },
+        {
+          "depth_bpc": 16,
+          "family": "zoom",
+          "input_padding_pixels": 3,
+          "output_padding_pixels": 7,
+          "peak_rss_bytes": 361168896,
+          "returncode": 0,
+          "wall_seconds": 2.153003
+        },
+        {
+          "depth_bpc": 32,
+          "family": "zoom",
+          "input_padding_pixels": 3,
+          "output_padding_pixels": 7,
+          "peak_rss_bytes": 494075904,
+          "returncode": 0,
+          "wall_seconds": 1.861583
+        },
+        {
+          "depth_bpc": 8,
+          "family": "rotation",
+          "input_padding_pixels": 3,
+          "output_padding_pixels": 7,
+          "peak_rss_bytes": 284655616,
+          "returncode": 0,
+          "wall_seconds": 1.050153
+        },
+        {
+          "depth_bpc": 16,
+          "family": "rotation",
+          "input_padding_pixels": 3,
+          "output_padding_pixels": 7,
+          "peak_rss_bytes": 351010816,
+          "returncode": 0,
+          "wall_seconds": 1.146243
+        },
+        {
+          "depth_bpc": 32,
+          "family": "rotation",
+          "input_padding_pixels": 3,
+          "output_padding_pixels": 7,
+          "peak_rss_bytes": 483934208,
+          "returncode": 0,
+          "wall_seconds": 1.400221
+        }
+      ],
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/perf/run_olmradialblur_generic_production_perf.py",
+        "--geometry",
+        "uhd"
+      ],
+      "dimensions": [
+        3840,
+        2160
+      ],
+      "geometry": "uhd",
+      "hostless": true,
+      "lane": "OLMRadialBlur",
+      "parameters": "generic_baseline_center_23_71_ratio_2.25_angle_-137.5_quality_1_strength_1_independent_strides",
+      "peak_rss_bytes": 494075904,
+      "returncode": 0,
+      "rss_budget_bytes": 3221225472,
+      "status": "passed",
+      "stderr_tail": "real 13.90\nuser 9.48\nsys 0.87\n           494075904  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              189428  page reclaims\n                 363  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   6  signals received\n                  55  voluntary context switches\n               64686  involuntary context switches\n           406656420  instructions retired\n           239351172  cycles elapsed\n            13698432  peak memory footprint\n",
+      "stdout_tail": "OLM_PERF_CASES_JSON=[{\"family\":\"zoom\",\"depth_bpc\":8,\"wall_seconds\":1.293965,\"peak_rss_bytes\":294780928,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"zoom\",\"depth_bpc\":16,\"wall_seconds\":2.153003,\"peak_rss_bytes\":361168896,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"zoom\",\"depth_bpc\":32,\"wall_seconds\":1.861583,\"peak_rss_bytes\":494075904,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"rotation\",\"depth_bpc\":8,\"wall_seconds\":1.050153,\"peak_rss_bytes\":284655616,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"rotation\",\"depth_bpc\":16,\"wall_seconds\":1.146243,\"peak_rss_bytes\":351010816,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"rotation\",\"depth_bpc\":32,\"wall_seconds\":1.400221,\"peak_rss_bytes\":483934208,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7}]\n",
+      "timeout_seconds": 180,
+      "wall_seconds": 13.912959
+    }
+  ],
+  "schema_version": 1
+}

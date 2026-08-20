@@ -1,0 +1,225 @@
+{
+  "aex_sha256": {
+    "ColorKeep": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+    "OLMColorKey": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+    "OLMToonDilate": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
+  },
+  "cases": [
+    {
+      "exit_code": 0,
+      "id": "OLMToonDilate_odd_alpha_radius_0",
+      "input": "odd_alpha",
+      "input_sha256": "559ddfd4588ef5a6b906afeb9900f8aa385fd62de7824feac3544d16db7e4caa",
+      "output_file": "OLMToonDilate_odd_alpha_radius_0.png",
+      "output_sha256": "a686973b2b953ad95f5c365e150f3308fe31bf04d0015897c9e16fdd700ae93b",
+      "parameters": "radius_0",
+      "plugin": "OLMToonDilate",
+      "render_error": 0,
+      "status": "ok",
+      "stderr_file": "OLMToonDilate_odd_alpha_radius_0.stderr.txt"
+    },
+    {
+      "exit_code": 0,
+      "id": "OLMToonDilate_odd_alpha_radius_2_01",
+      "input": "odd_alpha",
+      "input_sha256": "559ddfd4588ef5a6b906afeb9900f8aa385fd62de7824feac3544d16db7e4caa",
+      "output_file": "OLMToonDilate_odd_alpha_radius_2_01.png",
+      "output_sha256": "745b943e3c4719f5b2921f8652bd2612ebe24dffa1f30b1cd355577fcd326b1e",
+      "parameters": "radius_2_01",
+      "plugin": "OLMToonDilate",
+      "render_error": 0,
+      "status": "ok",
+      "stderr_file": "OLMToonDilate_odd_alpha_radius_2_01.stderr.txt"
+    },
+    {
+      "exit_code": 0,
+      "id": "OLMToonDilate_odd_alpha_radius_5",
+      "input": "odd_alpha",
+      "input_sha256": "559ddfd4588ef5a6b906afeb9900f8aa385fd62de7824feac3544d16db7e4caa",
+      "output_file": "OLMToonDilate_odd_alpha_radius_5.png",
+      "output_sha256": "6298bb9279ab4db663e2cffa4449fdf9b1ef12f1360fa10b5bc32af9b0f78301",
+      "parameters": "radius_5",
+      "plugin": "OLMToonDilate",
+      "render_error": 0,
+      "status": "ok",
+      "stderr_file": "OLMToonDilate_odd_alpha_radius_5.stderr.txt"
+    },
+    {
+      "exit_code": 0,
+      "id": "OLMToonDilate_sd_gradient_radius_0",
+      "input": "sd_gradient",
+      "input_sha256": "8f089d7a58ed74845392060064c64c939c3c7653bb1522cbf4ea9f57d9750e85",
+      "output_file": "OLMToonDilate_sd_gradient_radius_0.png",
+      "output_sha256": "6afbc77914f1df843b573742a9d1774094564178a0ebcbb73af56bdf0692359c",
+      "parameters": "radius_0",
+      "plugin": "OLMToonDilate",
+      "render_error": 0,
+      "status": "ok",
+      "stderr_file": "OLMToonDilate_sd_gradient_radius_0.stderr.txt"
+    },
+    {
+      "exit_code": 0,
+      "id": "OLMToonDilate_sd_gradient_radius_2_01",
+      "input": "sd_gradient",
+      "input_sha256": "8f089d7a58ed74845392060064c64c939c3c7653bb1522cbf4ea9f57d9750e85",
+      "output_file": "OLMToonDilate_sd_gradient_radius_2_01.png",
+      "output_sha256": "f7a72f5b423d6c40b2bcd0cf8a900ef38a92916fc35c14ed7fd2a36ed88ae0dc",
+      "parameters": "radius_2_01",
+      "plugin": "OLMToonDilate",
+      "render_error": 0,
+      "status": "ok",
+      "stderr_file": "OLMToonDilate_sd_gradient_radius_2_01.stderr.txt"
+    },
+    {
+      "exit_code": 0,
+      "id": "OLMToonDilate_sd_gradient_radius_5",
+      "input": "sd_gradient",
+      "input_sha256": "8f089d7a58ed74845392060064c64c939c3c7653bb1522cbf4ea9f57d9750e85",
+      "output_file": "OLMToonDilate_sd_gradient_radius_5.png",
+      "output_sha256": "0dfe39bddc803c3e45aff1cbd16e32e2e2dd59a58612995f938e996ed89206d4",
+      "parameters": "radius_5",
+      "plugin": "OLMToonDilate",
+      "render_error": 0,
+      "status": "ok",
+      "stderr_file": "OLMToonDilate_sd_gradient_radius_5.stderr.txt"
+    },
+    {
+      "exit_code": 0,
+      "id": "ColorKeep_odd_alpha_count_1",
+      "input": "odd_alpha",
+      "input_sha256": "559ddfd4588ef5a6b906afeb9900f8aa385fd62de7824feac3544d16db7e4caa",
+      "output_file": "ColorKeep_odd_alpha_count_1.png",
+      "output_sha256": "5e8b4174dba00bc0bccaf8dd1005f828d39df04f7b884a2acfb5c66a1bfe9aeb",
+      "parameters": "count_1",
+      "plugin": "ColorKeep",
+      "render_error": 0,
+      "status": "ok",
+      "stderr_file": "ColorKeep_odd_alpha_count_1.stderr.txt"
+    },
+    {
+      "exit_code": 0,
+      "id": "ColorKeep_odd_alpha_count_3",
+      "input": "odd_alpha",
+      "input_sha256": "559ddfd4588ef5a6b906afeb9900f8aa385fd62de7824feac3544d16db7e4caa",
+      "output_file": "ColorKeep_odd_alpha_count_3.png",
+      "output_sha256": "26b35b2b72d0b0d7890db7801e54192f212b847f6fc4550cde48acc8c27f7ee2",
+      "parameters": "count_3",
+      "plugin": "ColorKeep",
+      "render_error": 0,
+      "status": "ok",
+      "stderr_file": "ColorKeep_odd_alpha_count_3.stderr.txt"
+    },
+    {
+      "exit_code": 0,
+      "id": "ColorKeep_sd_gradient_count_1",
+      "input": "sd_gradient",
+      "input_sha256": "8f089d7a58ed74845392060064c64c939c3c7653bb1522cbf4ea9f57d9750e85",
+      "output_file": "ColorKeep_sd_gradient_count_1.png",
+      "output_sha256": "af6dc27c98f757451f0fb8c8727f052cc52187c9390365317ae26fc2a30d2381",
+      "parameters": "count_1",
+      "plugin": "ColorKeep",
+      "render_error": 0,
+      "status": "ok",
+      "stderr_file": "ColorKeep_sd_gradient_count_1.stderr.txt"
+    },
+    {
+      "exit_code": 0,
+      "id": "ColorKeep_sd_gradient_count_3",
+      "input": "sd_gradient",
+      "input_sha256": "8f089d7a58ed74845392060064c64c939c3c7653bb1522cbf4ea9f57d9750e85",
+      "output_file": "ColorKeep_sd_gradient_count_3.png",
+      "output_sha256": "50e5d63b385046b0f2e2d3ebc75b51ff001ed99b995ee9e65de77315a9821964",
+      "parameters": "count_3",
+      "plugin": "ColorKeep",
+      "render_error": 0,
+      "status": "ok",
+      "stderr_file": "ColorKeep_sd_gradient_count_3.stderr.txt"
+    },
+    {
+      "exit_code": 0,
+      "id": "OLMColorKey_odd_alpha_two_keys",
+      "input": "odd_alpha",
+      "input_sha256": "559ddfd4588ef5a6b906afeb9900f8aa385fd62de7824feac3544d16db7e4caa",
+      "output_file": "OLMColorKey_odd_alpha_two_keys.png",
+      "output_sha256": "be2a454fb4d0dc7d6b4b8e7c34d4314b0cad161c93da7a1eb4f7c3c9618e6e0b",
+      "parameters": "two_keys",
+      "plugin": "OLMColorKey",
+      "render_error": 0,
+      "status": "ok",
+      "stderr_file": "OLMColorKey_odd_alpha_two_keys.stderr.txt"
+    },
+    {
+      "exit_code": 0,
+      "id": "OLMColorKey_odd_alpha_edge_blur",
+      "input": "odd_alpha",
+      "input_sha256": "559ddfd4588ef5a6b906afeb9900f8aa385fd62de7824feac3544d16db7e4caa",
+      "output_file": "OLMColorKey_odd_alpha_edge_blur.png",
+      "output_sha256": "1ed955e194f8032aff4802f0d7495f7edeba08b001ebb039bae1e71901affd8e",
+      "parameters": "edge_blur",
+      "plugin": "OLMColorKey",
+      "render_error": 0,
+      "status": "ok",
+      "stderr_file": "OLMColorKey_odd_alpha_edge_blur.stderr.txt"
+    },
+    {
+      "exit_code": 0,
+      "id": "OLMColorKey_sd_gradient_two_keys",
+      "input": "sd_gradient",
+      "input_sha256": "8f089d7a58ed74845392060064c64c939c3c7653bb1522cbf4ea9f57d9750e85",
+      "output_file": "OLMColorKey_sd_gradient_two_keys.png",
+      "output_sha256": "f687ae0a0f00bdc011720c38524d6ba7421222bf526e97eadf9bf9ff7e48bc8c",
+      "parameters": "two_keys",
+      "plugin": "OLMColorKey",
+      "render_error": 0,
+      "status": "ok",
+      "stderr_file": "OLMColorKey_sd_gradient_two_keys.stderr.txt"
+    },
+    {
+      "exit_code": 0,
+      "id": "OLMColorKey_sd_gradient_edge_blur",
+      "input": "sd_gradient",
+      "input_sha256": "8f089d7a58ed74845392060064c64c939c3c7653bb1522cbf4ea9f57d9750e85",
+      "output_file": "OLMColorKey_sd_gradient_edge_blur.png",
+      "output_sha256": "3f76bcd70b35218fc5b30caad39e1e2b19876379d186ab48db130de8c8e0d3e1",
+      "parameters": "edge_blur",
+      "plugin": "OLMColorKey",
+      "render_error": 0,
+      "status": "ok",
+      "stderr_file": "OLMColorKey_sd_gradient_edge_blur.stderr.txt"
+    }
+  ],
+  "evidence_boundary": {
+    "aexcompat_source_commit": "0ee278943751b968ea2b0d5a0e0f483b70c0090d",
+    "execution_host": "macOS hostless AEXCompat/Unicorn; no After Effects process",
+    "geometry_filter": {
+      "included": [
+        "17x11",
+        "640x360"
+      ],
+      "max_pixels": 230400,
+      "pending": [
+        "1920x1080"
+      ]
+    },
+    "output_storage": "output PNGs retained only in isolated /tmp execution directory; hashes are the durable evidence"
+  },
+  "request_id": "generic_beta_windows_oracle_20260820",
+  "schema_version": 1,
+  "selection": {
+    "executed_cases": 14,
+    "pending_cases": [
+      "OLMToonDilate_hd_random_radius_0",
+      "OLMToonDilate_hd_random_radius_2_01",
+      "OLMToonDilate_hd_random_radius_5",
+      "ColorKeep_hd_random_count_1",
+      "ColorKeep_hd_random_count_3",
+      "OLMColorKey_hd_random_two_keys",
+      "OLMColorKey_hd_random_edge_blur"
+    ]
+  },
+  "status": "partial_complete",
+  "worker": {
+    "path_kind": "ephemeral_clean_build",
+    "sha256": "bbc432ab42f383775d0d84df43b40ee724d2250029737559d73d70b0d6d05c4c"
+  }
+}

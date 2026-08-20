@@ -1,0 +1,1330 @@
+{
+  "generated_at_epoch_seconds": 1787220280,
+  "policy": {
+    "exact_geometry_required": true,
+    "note": "Peak RSS is /usr/bin/time maximum resident set size for the hostless driver process.",
+    "rss_budgets_bytes": {
+      "hd": 2147483648,
+      "uhd": 3221225472
+    },
+    "timeouts_seconds": {
+      "hd": 120,
+      "uhd": 180
+    }
+  },
+  "results": [
+    {
+      "case_results": [
+        {
+          "case": "smart_pf8_count1",
+          "count": 1,
+          "depth": 8,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "milliseconds": 3.595,
+          "status": "passed"
+        },
+        {
+          "case": "smart_pf16_count1",
+          "count": 1,
+          "depth": 16,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "milliseconds": 13.1,
+          "status": "passed"
+        },
+        {
+          "case": "smart_pf32_count1",
+          "count": 1,
+          "depth": 32,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "milliseconds": 7.83,
+          "status": "passed"
+        },
+        {
+          "case": "smart_pf8_count13",
+          "count": 13,
+          "depth": 8,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "milliseconds": 24.135,
+          "status": "passed"
+        },
+        {
+          "case": "smart_pf16_count13",
+          "count": 13,
+          "depth": 16,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "milliseconds": 16.481,
+          "status": "passed"
+        },
+        {
+          "case": "smart_pf32_count13",
+          "count": 13,
+          "depth": 32,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "milliseconds": 14.697,
+          "status": "passed"
+        },
+        {
+          "case": "smart_pf8_count100",
+          "count": 100,
+          "depth": 8,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "milliseconds": 132.568,
+          "status": "passed"
+        },
+        {
+          "case": "smart_pf16_count100",
+          "count": 100,
+          "depth": 16,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "milliseconds": 159.018,
+          "status": "passed"
+        },
+        {
+          "case": "smart_pf32_count100",
+          "count": 100,
+          "depth": 32,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "milliseconds": 98.999,
+          "status": "passed"
+        }
+      ],
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/perf/run_colorkeep_generic_production_perf.py",
+        "--geometry",
+        "hd"
+      ],
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "geometry": "hd",
+      "hostless": true,
+      "lane": "ColorKeep",
+      "parameters": "smart_typed_workers_all_depths_counts_1_13_100_independent_strides_production_O2",
+      "peak_rss_bytes": 158580736,
+      "returncode": 0,
+      "rss_budget_bytes": 2147483648,
+      "status": "passed",
+      "stderr_tail": "real 3.53\nuser 2.22\nsys 0.48\n           158580736  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               54333  page reclaims\n                1034  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                1124  voluntary context switches\n               16637  involuntary context switches\n           369452003  instructions retired\n           190625544  cycles elapsed\n            13010048  peak memory footprint\n",
+      "stdout_tail": "ons\":[1920,1080],\"status\":\"passed\",\"milliseconds\":3.595,\"count\":1},{\"case\":\"smart_pf16_count1\",\"depth\":16,\"dimensions\":[1920,1080],\"status\":\"passed\",\"milliseconds\":13.1,\"count\":1},{\"case\":\"smart_pf32_count1\",\"depth\":32,\"dimensions\":[1920,1080],\"status\":\"passed\",\"milliseconds\":7.83,\"count\":1},{\"case\":\"smart_pf8_count13\",\"depth\":8,\"dimensions\":[1920,1080],\"status\":\"passed\",\"milliseconds\":24.135,\"count\":13},{\"case\":\"smart_pf16_count13\",\"depth\":16,\"dimensions\":[1920,1080],\"status\":\"passed\",\"milliseconds\":16.481,\"count\":13},{\"case\":\"smart_pf32_count13\",\"depth\":32,\"dimensions\":[1920,1080],\"status\":\"passed\",\"milliseconds\":14.697,\"count\":13},{\"case\":\"smart_pf8_count100\",\"depth\":8,\"dimensions\":[1920,1080],\"status\":\"passed\",\"milliseconds\":132.568,\"count\":100},{\"case\":\"smart_pf16_count100\",\"depth\":16,\"dimensions\":[1920,1080],\"status\":\"passed\",\"milliseconds\":159.018,\"count\":100},{\"case\":\"smart_pf32_count100\",\"depth\":32,\"dimensions\":[1920,1080],\"status\":\"passed\",\"milliseconds\":98.999,\"count\":100}]\n",
+      "support_predicate": "smart && pf8_pf16_pf32 && full_frame && zero_origin && 1 <= count <= 100 && width <= 3840 && height <= 2160",
+      "timeout_seconds": 120,
+      "wall_seconds": 3.536906
+    },
+    {
+      "case_results": [
+        {
+          "case": "smart_pf8_count1",
+          "count": 1,
+          "depth": 8,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "milliseconds": 19.415,
+          "status": "passed"
+        },
+        {
+          "case": "smart_pf16_count1",
+          "count": 1,
+          "depth": 16,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "milliseconds": 24.913,
+          "status": "passed"
+        },
+        {
+          "case": "smart_pf32_count1",
+          "count": 1,
+          "depth": 32,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "milliseconds": 28.535,
+          "status": "passed"
+        },
+        {
+          "case": "smart_pf8_count13",
+          "count": 13,
+          "depth": 8,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "milliseconds": 100.293,
+          "status": "passed"
+        },
+        {
+          "case": "smart_pf16_count13",
+          "count": 13,
+          "depth": 16,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "milliseconds": 115.896,
+          "status": "passed"
+        },
+        {
+          "case": "smart_pf32_count13",
+          "count": 13,
+          "depth": 32,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "milliseconds": 80.496,
+          "status": "passed"
+        },
+        {
+          "case": "smart_pf8_count100",
+          "count": 100,
+          "depth": 8,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "milliseconds": 617.293,
+          "status": "passed"
+        },
+        {
+          "case": "smart_pf16_count100",
+          "count": 100,
+          "depth": 16,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "milliseconds": 622.151,
+          "status": "passed"
+        },
+        {
+          "case": "smart_pf32_count100",
+          "count": 100,
+          "depth": 32,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "milliseconds": 349.722,
+          "status": "passed"
+        }
+      ],
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/perf/run_colorkeep_generic_production_perf.py",
+        "--geometry",
+        "uhd"
+      ],
+      "dimensions": [
+        3840,
+        2160
+      ],
+      "geometry": "uhd",
+      "hostless": true,
+      "lane": "ColorKeep",
+      "parameters": "smart_typed_workers_all_depths_counts_1_13_100_independent_strides_production_O2",
+      "peak_rss_bytes": 429801472,
+      "returncode": 0,
+      "rss_budget_bytes": 3221225472,
+      "status": "passed",
+      "stderr_tail": "real 5.16\nuser 3.49\nsys 0.73\n           429801472  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              127351  page reclaims\n                 758  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  38  voluntary context switches\n               28917  involuntary context switches\n           384101929  instructions retired\n           201451459  cycles elapsed\n            13698176  peak memory footprint\n",
+      "stdout_tail": "40,2160],\"status\":\"passed\",\"milliseconds\":19.415,\"count\":1},{\"case\":\"smart_pf16_count1\",\"depth\":16,\"dimensions\":[3840,2160],\"status\":\"passed\",\"milliseconds\":24.913,\"count\":1},{\"case\":\"smart_pf32_count1\",\"depth\":32,\"dimensions\":[3840,2160],\"status\":\"passed\",\"milliseconds\":28.535,\"count\":1},{\"case\":\"smart_pf8_count13\",\"depth\":8,\"dimensions\":[3840,2160],\"status\":\"passed\",\"milliseconds\":100.293,\"count\":13},{\"case\":\"smart_pf16_count13\",\"depth\":16,\"dimensions\":[3840,2160],\"status\":\"passed\",\"milliseconds\":115.896,\"count\":13},{\"case\":\"smart_pf32_count13\",\"depth\":32,\"dimensions\":[3840,2160],\"status\":\"passed\",\"milliseconds\":80.496,\"count\":13},{\"case\":\"smart_pf8_count100\",\"depth\":8,\"dimensions\":[3840,2160],\"status\":\"passed\",\"milliseconds\":617.293,\"count\":100},{\"case\":\"smart_pf16_count100\",\"depth\":16,\"dimensions\":[3840,2160],\"status\":\"passed\",\"milliseconds\":622.151,\"count\":100},{\"case\":\"smart_pf32_count100\",\"depth\":32,\"dimensions\":[3840,2160],\"status\":\"passed\",\"milliseconds\":349.722,\"count\":100}]\n",
+      "support_predicate": "smart && pf8_pf16_pf32 && full_frame && zero_origin && 1 <= count <= 100 && width <= 3840 && height <= 2160",
+      "timeout_seconds": 180,
+      "wall_seconds": 5.170444
+    },
+    {
+      "case_results": [
+        {
+          "case": "hd_nl",
+          "depth": 8,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "legacy": 0,
+          "status": "passed"
+        },
+        {
+          "case": "hd_l",
+          "depth": 8,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "legacy": 1,
+          "status": "passed"
+        },
+        {
+          "case": "hd_high",
+          "depth": 8,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "legacy": 0,
+          "status": "passed"
+        },
+        {
+          "case": "hd_nl",
+          "depth": 16,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "legacy": 0,
+          "status": "passed"
+        },
+        {
+          "case": "hd_l",
+          "depth": 16,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "legacy": 1,
+          "status": "passed"
+        },
+        {
+          "case": "hd_nl",
+          "depth": 32,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "legacy": 0,
+          "status": "passed"
+        },
+        {
+          "case": "hd_l",
+          "depth": 32,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "legacy": 1,
+          "status": "passed"
+        }
+      ],
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/perf/run_olmblur_generic_production_perf.py",
+        "--geometry",
+        "hd"
+      ],
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "geometry": "hd",
+      "hostless": true,
+      "lane": "OLMBlur",
+      "parameters": "hd_representative_all_depths_mixed_legacy_amount3_repeat1;hd_high_pf8_nonlegacy_amount500_repeat1;uhd_budget_all_depths_nonlegacy_amount1_repeat1_independent_strides",
+      "peak_rss_bytes": 417333248,
+      "returncode": 0,
+      "rss_budget_bytes": 2147483648,
+      "status": "passed",
+      "stderr_tail": "real 10.70\nuser 6.62\nsys 1.21\n           417333248  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              130142  page reclaims\n                3792  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                1264  voluntary context switches\n               45305  involuntary context switches\n           396962479  instructions retired\n           207266326  cycles elapsed\n            13124736  peak memory footprint\n",
+      "stdout_tail": "c=1 changed=1\nGENERIC hd_nl depth=16 1920x1080 legacy=0 ok=1 err=0/0 input=1 padding=1 deterministic=1 changed=1\nGENERIC hd_l depth=16 1920x1080 legacy=1 ok=1 err=0/0 input=1 padding=1 deterministic=1 changed=1\nGENERIC hd_nl depth=32 1920x1080 legacy=0 ok=1 err=0/0 input=1 padding=1 deterministic=1 changed=1\nGENERIC hd_l depth=32 1920x1080 legacy=1 ok=1 err=0/0 input=1 padding=1 deterministic=1 changed=1\nOLM_PERF_CASES_JSON=[{\"case\":\"hd_nl\",\"depth\":8,\"dimensions\":[1920,1080],\"legacy\":0,\"status\":\"passed\"},{\"case\":\"hd_l\",\"depth\":8,\"dimensions\":[1920,1080],\"legacy\":1,\"status\":\"passed\"},{\"case\":\"hd_high\",\"depth\":8,\"dimensions\":[1920,1080],\"legacy\":0,\"status\":\"passed\"},{\"case\":\"hd_nl\",\"depth\":16,\"dimensions\":[1920,1080],\"legacy\":0,\"status\":\"passed\"},{\"case\":\"hd_l\",\"depth\":16,\"dimensions\":[1920,1080],\"legacy\":1,\"status\":\"passed\"},{\"case\":\"hd_nl\",\"depth\":32,\"dimensions\":[1920,1080],\"legacy\":0,\"status\":\"passed\"},{\"case\":\"hd_l\",\"depth\":32,\"dimensions\":[1920,1080],\"legacy\":1,\"status\":\"passed\"}]\n",
+      "support_predicate": "smart && pf8_pf16_pf32 && full_frame && width <= 4096 && height <= 2160 && amount <= 1000 && repeat <= 10 && pixels*ceil(amount)*repeat <= 3600000000",
+      "timeout_seconds": 120,
+      "wall_seconds": 10.70981
+    },
+    {
+      "case_results": [
+        {
+          "case": "uhd_nl",
+          "depth": 8,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "legacy": 0,
+          "status": "passed"
+        },
+        {
+          "case": "uhd_l",
+          "depth": 8,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "legacy": 1,
+          "status": "passed"
+        },
+        {
+          "case": "uhd_nl",
+          "depth": 16,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "legacy": 0,
+          "status": "passed"
+        },
+        {
+          "case": "uhd_l",
+          "depth": 16,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "legacy": 1,
+          "status": "passed"
+        },
+        {
+          "case": "uhd_nl",
+          "depth": 32,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "legacy": 0,
+          "status": "passed"
+        },
+        {
+          "case": "uhd_l",
+          "depth": 32,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "legacy": 1,
+          "status": "passed"
+        }
+      ],
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/perf/run_olmblur_generic_production_perf.py",
+        "--geometry",
+        "uhd"
+      ],
+      "dimensions": [
+        3840,
+        2160
+      ],
+      "geometry": "uhd",
+      "hostless": true,
+      "lane": "OLMBlur",
+      "parameters": "hd_representative_all_depths_mixed_legacy_amount3_repeat1;hd_high_pf8_nonlegacy_amount500_repeat1;uhd_budget_all_depths_nonlegacy_amount1_repeat1_independent_strides",
+      "peak_rss_bytes": 1510866944,
+      "returncode": 0,
+      "rss_budget_bytes": 3221225472,
+      "status": "passed",
+      "stderr_tail": "real 10.20\nuser 7.47\nsys 1.51\n          1510866944  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              268261  page reclaims\n                2132  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                 319  voluntary context switches\n               36576  involuntary context switches\n           395147113  instructions retired\n           189575542  cycles elapsed\n            13403456  peak memory footprint\n",
+      "stdout_tail": "_l depth=8 3840x2160 legacy=1 ok=1 err=0/0 input=1 padding=1 deterministic=1 changed=1\nGENERIC uhd_nl depth=16 3840x2160 legacy=0 ok=1 err=0/0 input=1 padding=1 deterministic=1 changed=1\nGENERIC uhd_l depth=16 3840x2160 legacy=1 ok=1 err=0/0 input=1 padding=1 deterministic=1 changed=1\nGENERIC uhd_nl depth=32 3840x2160 legacy=0 ok=1 err=0/0 input=1 padding=1 deterministic=1 changed=1\nGENERIC uhd_l depth=32 3840x2160 legacy=1 ok=1 err=0/0 input=1 padding=1 deterministic=1 changed=1\nOLM_PERF_CASES_JSON=[{\"case\":\"uhd_nl\",\"depth\":8,\"dimensions\":[3840,2160],\"legacy\":0,\"status\":\"passed\"},{\"case\":\"uhd_l\",\"depth\":8,\"dimensions\":[3840,2160],\"legacy\":1,\"status\":\"passed\"},{\"case\":\"uhd_nl\",\"depth\":16,\"dimensions\":[3840,2160],\"legacy\":0,\"status\":\"passed\"},{\"case\":\"uhd_l\",\"depth\":16,\"dimensions\":[3840,2160],\"legacy\":1,\"status\":\"passed\"},{\"case\":\"uhd_nl\",\"depth\":32,\"dimensions\":[3840,2160],\"legacy\":0,\"status\":\"passed\"},{\"case\":\"uhd_l\",\"depth\":32,\"dimensions\":[3840,2160],\"legacy\":1,\"status\":\"passed\"}]\n",
+      "support_predicate": "smart && pf8_pf16_pf32 && full_frame && width <= 4096 && height <= 2160 && amount <= 1000 && repeat <= 10 && pixels*ceil(amount)*repeat <= 3600000000",
+      "timeout_seconds": 180,
+      "wall_seconds": 10.212067
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/test_olmcolorkey_generic_pixel_local_pairwise.py",
+        "--geometry",
+        "hd"
+      ],
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "geometry": "hd",
+      "hostless": true,
+      "lane": "OLMColorKey",
+      "parameters": "pixel_local_pairwise_no_edge_lab76_excluded",
+      "peak_rss_bytes": 455770112,
+      "returncode": 0,
+      "rss_budget_bytes": 2147483648,
+      "status": "passed",
+      "stderr_tail": "real 5.35\nuser 3.81\nsys 0.57\n           455770112  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              107446  page reclaims\n                 724  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  66  voluntary context switches\n               17358  involuntary context switches\n           371605715  instructions retired\n           176269346  cycles elapsed\n            13239552  peak memory footprint\n",
+      "stdout_tail": "GENERIC_PIXEL_LOCAL_PAIRWISE pass=1 geometry=hd cells=5\n",
+      "timeout_seconds": 120,
+      "wall_seconds": 5.361235
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/test_olmcolorkey_generic_pixel_local_pairwise.py",
+        "--geometry",
+        "uhd"
+      ],
+      "dimensions": [
+        3840,
+        2160
+      ],
+      "geometry": "uhd",
+      "hostless": true,
+      "lane": "OLMColorKey",
+      "parameters": "pixel_local_pairwise_no_edge_lab76_excluded",
+      "peak_rss_bytes": 402243584,
+      "returncode": 0,
+      "rss_budget_bytes": 3221225472,
+      "status": "passed",
+      "stderr_tail": "real 6.23\nuser 5.14\nsys 0.54\n           402243584  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               71624  page reclaims\n                 791  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                 163  voluntary context switches\n               18948  involuntary context switches\n           370741015  instructions retired\n           183410766  cycles elapsed\n            13501632  peak memory footprint\n",
+      "stdout_tail": "GENERIC_PIXEL_LOCAL_PAIRWISE pass=1 geometry=uhd cells=2\n",
+      "timeout_seconds": 180,
+      "wall_seconds": 6.240538
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/emulation/test_dblur_generic_pf8_geometry_beta_20260820.py"
+      ],
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "geometry": "hd",
+      "hostless": true,
+      "lane": "OLMDirectionalBlur",
+      "parameters": "safe_default",
+      "peak_rss_bytes": 398573568,
+      "returncode": 0,
+      "rss_budget_bytes": 2147483648,
+      "status": "passed",
+      "stderr_tail": "urrent #pragma pack alignment value is modified in the included file [-Wpragma-pack]\n  638 | #include <adobesdk/config/PostConfig.h>\n      |          ^\nnote: previous '#pragma pack' directive that modifies alignment is here\n42 warnings generated.\nreal 3.79\nuser 3.10\nsys 0.32\n           398573568  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               73435  page reclaims\n                1034  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                 282  voluntary context switches\n                5394  involuntary context switches\n           290242317  instructions retired\n           125563414  cycles elapsed\n            10240960  peak memory footprint\n",
+      "stdout_tail": "ok: PF8 generic 1D/odd/HD, independent strides, boundaries, determinism, 4K rejection\n",
+      "support_predicate": "full_frame && pf8_pf16_pf32 && neutral_front_only && finite_angle_gain && scale_1_for_pf16_pf32 && pf16_sdr_0_32768 && pf32_finite_sdr_0_1 && estimated_diagonal_work_bytes_14xf32 <= 536870912",
+      "timeout_seconds": 120,
+      "wall_seconds": 3.79465
+    },
+    {
+      "dimensions": [
+        3840,
+        2160
+      ],
+      "geometry": "uhd",
+      "hostless": true,
+      "lane": "OLMDirectionalBlur",
+      "parameters": "safe_default",
+      "reason": "3840x2160 exceeds the DirectionalBlur generic beta 512 MiB diagonal-work memory budget",
+      "status": "unsupported",
+      "support_predicate": "full_frame && pf8_pf16_pf32 && neutral_front_only && finite_angle_gain && scale_1_for_pf16_pf32 && pf16_sdr_0_32768 && pf32_finite_sdr_0_1 && estimated_diagonal_work_bytes_14xf32 <= 536870912"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "tests/test_olmdistancegradation_generic_production_beta_20260820.py"
+      ],
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "geometry": "hd",
+      "hostless": true,
+      "lane": "OLMDistanceGradation",
+      "parameters": "oracle_profile_linear_power_gaussian_sphere_median_bilateral_all_depths_independent_strides",
+      "peak_rss_bytes": 427704320,
+      "returncode": 0,
+      "rss_budget_bytes": 2147483648,
+      "status": "passed",
+      "stderr_tail": "..\n----------------------------------------------------------------------\nRan 2 tests in 20.322s\n\nOK\nreal 20.38\nuser 10.15\nsys 1.41\n           427704320  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              202531  page reclaims\n                3875  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                1818  voluntary context switches\n               79701  involuntary context switches\n           445062953  instructions retired\n           223570332  cycles elapsed\n            14517824  peak memory footprint\n",
+      "stdout_tail": "",
+      "timeout_seconds": 120,
+      "wall_seconds": 20.388866
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "tests/test_olmdistancegradation_generic_production_beta_20260820.py"
+      ],
+      "dimensions": [
+        3840,
+        2160
+      ],
+      "geometry": "uhd",
+      "hostless": true,
+      "lane": "OLMDistanceGradation",
+      "parameters": "oracle_profile_linear_power_gaussian_sphere_median_bilateral_all_depths_independent_strides",
+      "peak_rss_bytes": 916275200,
+      "returncode": 0,
+      "rss_budget_bytes": 3221225472,
+      "status": "passed",
+      "stderr_tail": "..\n----------------------------------------------------------------------\nRan 2 tests in 40.778s\n\nOK\nreal 40.85\nuser 29.47\nsys 3.73\n           916275200  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              752728  page reclaims\n                8639  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                3568  voluntary context switches\n              190829  involuntary context switches\n           444064623  instructions retired\n           239694774  cycles elapsed\n            14599360  peak memory footprint\n",
+      "stdout_tail": "",
+      "timeout_seconds": 180,
+      "wall_seconds": 40.859912
+    },
+    {
+      "case_results": [
+        {
+          "depth_bpc": 8,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "mode": "box",
+          "peak_rss_bytes": 344276992,
+          "returncode": 0,
+          "wall_seconds": 0.933219,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "depth_bpc": 16,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "mode": "box",
+          "peak_rss_bytes": 368902144,
+          "returncode": 0,
+          "wall_seconds": 0.390162,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "depth_bpc": 32,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "mode": "box",
+          "peak_rss_bytes": 477085696,
+          "returncode": 0,
+          "wall_seconds": 0.400758,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "depth_bpc": 8,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "mode": "approximated_gaussian",
+          "peak_rss_bytes": 360710144,
+          "returncode": 0,
+          "wall_seconds": 0.502511,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "depth_bpc": 16,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "mode": "approximated_gaussian",
+          "peak_rss_bytes": 393904128,
+          "returncode": 0,
+          "wall_seconds": 0.448411,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "depth_bpc": 32,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "mode": "approximated_gaussian",
+          "peak_rss_bytes": 468566016,
+          "returncode": 0,
+          "wall_seconds": 0.51689,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "depth_bpc": 8,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "mode": "gaussian",
+          "peak_rss_bytes": 335740928,
+          "returncode": 0,
+          "wall_seconds": 1.615007,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "depth_bpc": 16,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "mode": "gaussian",
+          "peak_rss_bytes": 393871360,
+          "returncode": 0,
+          "wall_seconds": 1.658854,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "depth_bpc": 32,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "mode": "gaussian",
+          "peak_rss_bytes": 476905472,
+          "returncode": 0,
+          "wall_seconds": 1.682735,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "depth_bpc": 8,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "mode": "exponential",
+          "peak_rss_bytes": 393428992,
+          "returncode": 0,
+          "wall_seconds": 0.330883,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "depth_bpc": 16,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "mode": "exponential",
+          "peak_rss_bytes": 401850368,
+          "returncode": 0,
+          "wall_seconds": 0.334801,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "depth_bpc": 32,
+          "dimensions": [
+            1920,
+            1080
+          ],
+          "mode": "exponential",
+          "peak_rss_bytes": 484868096,
+          "returncode": 0,
+          "wall_seconds": 0.352206,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        }
+      ],
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/perf/run_olmkirakira_generic_production_perf.py",
+        "--geometry",
+        "hd"
+      ],
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "geometry": "hd",
+      "hostless": true,
+      "lane": "OLMKiraKira",
+      "parameters": "safe_default",
+      "peak_rss_bytes": 484868096,
+      "returncode": 0,
+      "rss_budget_bytes": 2147483648,
+      "status": "passed",
+      "stderr_tail": "real 15.51\nuser 9.88\nsys 1.67\n           484868096  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              343006  page reclaims\n                6028  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                  12  signals received\n                2423  voluntary context switches\n               13075  involuntary context switches\n           414509077  instructions retired\n           236732837  cycles elapsed\n            13731072  peak memory footprint\n",
+      "stdout_tail": "nds\":1.658854,\"peak_rss_bytes\":393871360,\"returncode\":0,\"workload\":\"Smart plus two Classic production renders with parity/determinism checks\"},{\"mode\":\"gaussian\",\"depth_bpc\":32,\"dimensions\":[1920,1080],\"wall_seconds\":1.682735,\"peak_rss_bytes\":476905472,\"returncode\":0,\"workload\":\"Smart plus two Classic production renders with parity/determinism checks\"},{\"mode\":\"exponential\",\"depth_bpc\":8,\"dimensions\":[1920,1080],\"wall_seconds\":0.330883,\"peak_rss_bytes\":393428992,\"returncode\":0,\"workload\":\"Smart plus two Classic production renders with parity/determinism checks\"},{\"mode\":\"exponential\",\"depth_bpc\":16,\"dimensions\":[1920,1080],\"wall_seconds\":0.334801,\"peak_rss_bytes\":401850368,\"returncode\":0,\"workload\":\"Smart plus two Classic production renders with parity/determinism checks\"},{\"mode\":\"exponential\",\"depth_bpc\":32,\"dimensions\":[1920,1080],\"wall_seconds\":0.352206,\"peak_rss_bytes\":484868096,\"returncode\":0,\"workload\":\"Smart plus two Classic production renders with parity/determinism checks\"}]\n",
+      "support_predicate": "classic_or_smart && pf8_pf16_pf32 && full_frame && zero_origin && width >= 9 && height >= 7 && oracle_tuple && mode_geometry_admitted",
+      "timeout_seconds": 120,
+      "wall_seconds": 15.520071
+    },
+    {
+      "case_results": [
+        {
+          "depth_bpc": 8,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "mode": "box",
+          "peak_rss_bytes": 931528704,
+          "returncode": 0,
+          "wall_seconds": 1.675135,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "depth_bpc": 16,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "mode": "box",
+          "peak_rss_bytes": 1098530816,
+          "returncode": 0,
+          "wall_seconds": 1.493488,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "depth_bpc": 32,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "mode": "box",
+          "peak_rss_bytes": 1430618112,
+          "returncode": 0,
+          "wall_seconds": 1.502038,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "depth_bpc": 8,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "mode": "approximated_gaussian",
+          "peak_rss_bytes": 932478976,
+          "returncode": 0,
+          "wall_seconds": 1.629867,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "depth_bpc": 16,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "mode": "approximated_gaussian",
+          "peak_rss_bytes": 1098530816,
+          "returncode": 0,
+          "wall_seconds": 1.670284,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "depth_bpc": 32,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "mode": "approximated_gaussian",
+          "peak_rss_bytes": 1430618112,
+          "returncode": 0,
+          "wall_seconds": 1.773458,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "depth_bpc": 8,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "mode": "gaussian",
+          "peak_rss_bytes": 932446208,
+          "returncode": 0,
+          "wall_seconds": 6.750453,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "depth_bpc": 16,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "mode": "gaussian",
+          "peak_rss_bytes": 1098612736,
+          "returncode": 0,
+          "wall_seconds": 6.844433,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "depth_bpc": 32,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "mode": "gaussian",
+          "peak_rss_bytes": 1430650880,
+          "returncode": 0,
+          "wall_seconds": 6.688918,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "depth_bpc": 8,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "mode": "exponential",
+          "peak_rss_bytes": 1064779776,
+          "returncode": 0,
+          "wall_seconds": 1.670057,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "depth_bpc": 16,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "mode": "exponential",
+          "peak_rss_bytes": 1230864384,
+          "returncode": 0,
+          "wall_seconds": 1.763688,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        },
+        {
+          "depth_bpc": 32,
+          "dimensions": [
+            3840,
+            2160
+          ],
+          "mode": "exponential",
+          "peak_rss_bytes": 1562853376,
+          "returncode": 0,
+          "wall_seconds": 2.053813,
+          "workload": "Smart plus two Classic production renders with parity/determinism checks"
+        }
+      ],
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/perf/run_olmkirakira_generic_production_perf.py",
+        "--geometry",
+        "uhd"
+      ],
+      "dimensions": [
+        3840,
+        2160
+      ],
+      "geometry": "uhd",
+      "hostless": true,
+      "lane": "OLMKiraKira",
+      "parameters": "safe_default",
+      "peak_rss_bytes": 1562853376,
+      "returncode": 0,
+      "rss_budget_bytes": 3221225472,
+      "status": "passed",
+      "stderr_tail": "real 38.18\nuser 31.88\nsys 4.80\n          1562853376  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              973211  page reclaims\n                 918  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                  12  signals received\n                1216  voluntary context switches\n               56101  involuntary context switches\n           419117447  instructions retired\n           225398359  cycles elapsed\n            13157504  peak memory footprint\n",
+      "stdout_tail": "6.844433,\"peak_rss_bytes\":1098612736,\"returncode\":0,\"workload\":\"Smart plus two Classic production renders with parity/determinism checks\"},{\"mode\":\"gaussian\",\"depth_bpc\":32,\"dimensions\":[3840,2160],\"wall_seconds\":6.688918,\"peak_rss_bytes\":1430650880,\"returncode\":0,\"workload\":\"Smart plus two Classic production renders with parity/determinism checks\"},{\"mode\":\"exponential\",\"depth_bpc\":8,\"dimensions\":[3840,2160],\"wall_seconds\":1.670057,\"peak_rss_bytes\":1064779776,\"returncode\":0,\"workload\":\"Smart plus two Classic production renders with parity/determinism checks\"},{\"mode\":\"exponential\",\"depth_bpc\":16,\"dimensions\":[3840,2160],\"wall_seconds\":1.763688,\"peak_rss_bytes\":1230864384,\"returncode\":0,\"workload\":\"Smart plus two Classic production renders with parity/determinism checks\"},{\"mode\":\"exponential\",\"depth_bpc\":32,\"dimensions\":[3840,2160],\"wall_seconds\":2.053813,\"peak_rss_bytes\":1562853376,\"returncode\":0,\"workload\":\"Smart plus two Classic production renders with parity/determinism checks\"}]\n",
+      "support_predicate": "classic_or_smart && pf8_pf16_pf32 && full_frame && zero_origin && width >= 9 && height >= 7 && oracle_tuple && mode_geometry_admitted",
+      "timeout_seconds": 180,
+      "wall_seconds": 38.190508
+    },
+    {
+      "case_results": [
+        {
+          "depth_bpc": 8,
+          "family": "zoom",
+          "input_padding_pixels": 3,
+          "output_padding_pixels": 7,
+          "peak_rss_bytes": 91160576,
+          "returncode": 0,
+          "wall_seconds": 0.800642
+        },
+        {
+          "depth_bpc": 16,
+          "family": "zoom",
+          "input_padding_pixels": 3,
+          "output_padding_pixels": 7,
+          "peak_rss_bytes": 107741184,
+          "returncode": 0,
+          "wall_seconds": 0.395206
+        },
+        {
+          "depth_bpc": 32,
+          "family": "zoom",
+          "input_padding_pixels": 3,
+          "output_padding_pixels": 7,
+          "peak_rss_bytes": 141066240,
+          "returncode": 0,
+          "wall_seconds": 0.427152
+        },
+        {
+          "depth_bpc": 8,
+          "family": "rotation",
+          "input_padding_pixels": 3,
+          "output_padding_pixels": 7,
+          "peak_rss_bytes": 85819392,
+          "returncode": 0,
+          "wall_seconds": 0.234976
+        },
+        {
+          "depth_bpc": 16,
+          "family": "rotation",
+          "input_padding_pixels": 3,
+          "output_padding_pixels": 7,
+          "peak_rss_bytes": 102400000,
+          "returncode": 0,
+          "wall_seconds": 0.222559
+        },
+        {
+          "depth_bpc": 32,
+          "family": "rotation",
+          "input_padding_pixels": 3,
+          "output_padding_pixels": 7,
+          "peak_rss_bytes": 135708672,
+          "returncode": 0,
+          "wall_seconds": 0.221523
+        }
+      ],
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/perf/run_olmradialblur_generic_production_perf.py",
+        "--geometry",
+        "hd"
+      ],
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "geometry": "hd",
+      "hostless": true,
+      "lane": "OLMRadialBlur",
+      "parameters": "generic_baseline_center_23_71_ratio_2.25_angle_-137.5_quality_1_strength_1_independent_strides",
+      "peak_rss_bytes": 227147776,
+      "returncode": 0,
+      "rss_budget_bytes": 2147483648,
+      "status": "passed",
+      "stderr_tail": "real 7.48\nuser 5.27\nsys 0.63\n           227147776  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               70396  page reclaims\n                5698  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   6  signals received\n                1833  voluntary context switches\n               25083  involuntary context switches\n           408154122  instructions retired\n           208155436  cycles elapsed\n            13124736  peak memory footprint\n",
+      "stdout_tail": "OLM_PERF_CASES_JSON=[{\"family\":\"zoom\",\"depth_bpc\":8,\"wall_seconds\":0.800642,\"peak_rss_bytes\":91160576,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"zoom\",\"depth_bpc\":16,\"wall_seconds\":0.395206,\"peak_rss_bytes\":107741184,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"zoom\",\"depth_bpc\":32,\"wall_seconds\":0.427152,\"peak_rss_bytes\":141066240,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"rotation\",\"depth_bpc\":8,\"wall_seconds\":0.234976,\"peak_rss_bytes\":85819392,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"rotation\",\"depth_bpc\":16,\"wall_seconds\":0.222559,\"peak_rss_bytes\":102400000,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"rotation\",\"depth_bpc\":32,\"wall_seconds\":0.221523,\"peak_rss_bytes\":135708672,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7}]\n",
+      "timeout_seconds": 120,
+      "wall_seconds": 7.49184
+    },
+    {
+      "case_results": [
+        {
+          "depth_bpc": 8,
+          "family": "zoom",
+          "input_padding_pixels": 3,
+          "output_padding_pixels": 7,
+          "peak_rss_bytes": 294748160,
+          "returncode": 0,
+          "wall_seconds": 1.094869
+        },
+        {
+          "depth_bpc": 16,
+          "family": "zoom",
+          "input_padding_pixels": 3,
+          "output_padding_pixels": 7,
+          "peak_rss_bytes": 361201664,
+          "returncode": 0,
+          "wall_seconds": 1.367638
+        },
+        {
+          "depth_bpc": 32,
+          "family": "zoom",
+          "input_padding_pixels": 3,
+          "output_padding_pixels": 7,
+          "peak_rss_bytes": 494206976,
+          "returncode": 0,
+          "wall_seconds": 1.589771
+        },
+        {
+          "depth_bpc": 8,
+          "family": "rotation",
+          "input_padding_pixels": 3,
+          "output_padding_pixels": 7,
+          "peak_rss_bytes": 284753920,
+          "returncode": 0,
+          "wall_seconds": 1.342921
+        },
+        {
+          "depth_bpc": 16,
+          "family": "rotation",
+          "input_padding_pixels": 3,
+          "output_padding_pixels": 7,
+          "peak_rss_bytes": 351158272,
+          "returncode": 0,
+          "wall_seconds": 0.851505
+        },
+        {
+          "depth_bpc": 32,
+          "family": "rotation",
+          "input_padding_pixels": 3,
+          "output_padding_pixels": 7,
+          "peak_rss_bytes": 484016128,
+          "returncode": 0,
+          "wall_seconds": 0.802406
+        }
+      ],
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/perf/run_olmradialblur_generic_production_perf.py",
+        "--geometry",
+        "uhd"
+      ],
+      "dimensions": [
+        3840,
+        2160
+      ],
+      "geometry": "uhd",
+      "hostless": true,
+      "lane": "OLMRadialBlur",
+      "parameters": "generic_baseline_center_23_71_ratio_2.25_angle_-137.5_quality_1_strength_1_independent_strides",
+      "peak_rss_bytes": 494206976,
+      "returncode": 0,
+      "rss_budget_bytes": 3221225472,
+      "status": "passed",
+      "stderr_tail": "real 11.64\nuser 8.63\nsys 0.79\n           494206976  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              184210  page reclaims\n                 553  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   6  signals received\n                1485  voluntary context switches\n               36858  involuntary context switches\n           415247931  instructions retired\n           201201037  cycles elapsed\n            13288576  peak memory footprint\n",
+      "stdout_tail": "OLM_PERF_CASES_JSON=[{\"family\":\"zoom\",\"depth_bpc\":8,\"wall_seconds\":1.094869,\"peak_rss_bytes\":294748160,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"zoom\",\"depth_bpc\":16,\"wall_seconds\":1.367638,\"peak_rss_bytes\":361201664,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"zoom\",\"depth_bpc\":32,\"wall_seconds\":1.589771,\"peak_rss_bytes\":494206976,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"rotation\",\"depth_bpc\":8,\"wall_seconds\":1.342921,\"peak_rss_bytes\":284753920,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"rotation\",\"depth_bpc\":16,\"wall_seconds\":0.851505,\"peak_rss_bytes\":351158272,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7},{\"family\":\"rotation\",\"depth_bpc\":32,\"wall_seconds\":0.802406,\"peak_rss_bytes\":484016128,\"returncode\":0,\"input_padding_pixels\":3,\"output_padding_pixels\":7}]\n",
+      "timeout_seconds": 180,
+      "wall_seconds": 11.650076
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/run_olmsmoother_v1_generic_production_perf.py",
+        "--depth",
+        "both",
+        "--width",
+        "1920",
+        "--height",
+        "1080",
+        "--input-padding",
+        "18",
+        "--output-padding",
+        "34",
+        "--tolerance",
+        "255",
+        "--use-key"
+      ],
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "geometry": "hd",
+      "hostless": true,
+      "lane": "OLMSmoother",
+      "parameters": "key_on_arbitrary_color_tolerance_255",
+      "peak_rss_bytes": 146915328,
+      "returncode": 0,
+      "rss_budget_bytes": 2147483648,
+      "status": "passed",
+      "stderr_tail": "usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'\n  227 |         #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))\n      |                                                       ^\n1 warning generated.\nreal 3.72\nuser 3.17\nsys 0.18\n           146915328  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               27701  page reclaims\n                 902  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                 882  voluntary context switches\n                3129  involuntary context switches\n           404309503  instructions retired\n           164669365  cycles elapsed\n            13583296  peak memory footprint\n",
+      "stdout_tail": "",
+      "support_predicate": "classic && (pf8 || pf16) && (key_off || key_on) && width <= 3840 && height <= 2160",
+      "timeout_seconds": 120,
+      "wall_seconds": 3.724345
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/run_olmsmoother_v1_generic_production_perf.py",
+        "--depth",
+        "both",
+        "--width",
+        "3840",
+        "--height",
+        "2160",
+        "--input-padding",
+        "18",
+        "--output-padding",
+        "34",
+        "--tolerance",
+        "255",
+        "--use-key"
+      ],
+      "dimensions": [
+        3840,
+        2160
+      ],
+      "geometry": "uhd",
+      "hostless": true,
+      "lane": "OLMSmoother",
+      "parameters": "key_on_arbitrary_color_tolerance_255",
+      "peak_rss_bytes": 465944576,
+      "returncode": 0,
+      "rss_budget_bytes": 3221225472,
+      "status": "passed",
+      "stderr_tail": "usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'\n  227 |         #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))\n      |                                                       ^\n1 warning generated.\nreal 9.28\nuser 8.53\nsys 0.35\n           465944576  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               66287  page reclaims\n                 319  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                   9  voluntary context switches\n               14711  involuntary context switches\n           402604941  instructions retired\n           178809206  cycles elapsed\n            14402496  peak memory footprint\n",
+      "stdout_tail": "",
+      "support_predicate": "classic && (pf8 || pf16) && (key_off || key_on) && width <= 3840 && height <= 2160",
+      "timeout_seconds": 180,
+      "wall_seconds": 9.292238
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "tests.test_olmsmoother2_default_beta_lane_20260820.OLMSmoother2DefaultBetaLane.test_effectmain_accepts_arbitrary_source_at_all_depths"
+      ],
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "geometry": "hd",
+      "hostless": true,
+      "lane": "OLMSmoother2",
+      "parameters": "hd_representative_v1_v2_key_invert_gamma_none_all_smoothing_axes;uhd_safe_default;independent_strides",
+      "peak_rss_bytes": 619282432,
+      "returncode": 0,
+      "rss_budget_bytes": 2147483648,
+      "status": "passed",
+      "stderr_tail": " __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))\n      |                                                       ^\n1 warning generated.\n.\n----------------------------------------------------------------------\nRan 1 test in 17.192s\n\nOK\nreal 17.29\nuser 7.16\nsys 0.96\n           619282432  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              167195  page reclaims\n                3378  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   1  messages sent\n                   0  messages received\n                   0  signals received\n                1802  voluntary context switches\n               30330  involuntary context switches\n           434216296  instructions retired\n           242482606  cycles elapsed\n            16696576  peak memory footprint\n",
+      "stdout_tail": "",
+      "support_predicate": "smart && pf8_pf16_pf32 && v1_v2 && smoothing_ui_ranges && key_off_on_invert && (gamma_none || gamma_all) && full_frame && 16 <= width,height <= 8192",
+      "timeout_seconds": 120,
+      "wall_seconds": 17.305573
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "tests.test_olmsmoother2_default_beta_lane_20260820.OLMSmoother2DefaultBetaLane.test_effectmain_accepts_arbitrary_source_at_all_depths"
+      ],
+      "dimensions": [
+        3840,
+        2160
+      ],
+      "geometry": "uhd",
+      "hostless": true,
+      "lane": "OLMSmoother2",
+      "parameters": "hd_representative_v1_v2_key_invert_gamma_none_all_smoothing_axes;uhd_safe_default;independent_strides",
+      "peak_rss_bytes": 1303494656,
+      "returncode": 0,
+      "rss_budget_bytes": 3221225472,
+      "status": "passed",
+      "stderr_tail": "__deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))\n      |                                                       ^\n1 warning generated.\n.\n----------------------------------------------------------------------\nRan 1 test in 43.673s\n\nOK\nreal 43.78\nuser 23.42\nsys 3.05\n          1303494656  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n              748022  page reclaims\n                3511  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   1  messages sent\n                   0  messages received\n                   0  signals received\n                1778  voluntary context switches\n              168187  involuntary context switches\n           431694706  instructions retired\n           239314906  cycles elapsed\n            15533248  peak memory footprint\n",
+      "stdout_tail": "",
+      "support_predicate": "smart && pf8_pf16_pf32 && v1_v2 && smoothing_ui_ranges && key_off_on_invert && (gamma_none || gamma_all) && full_frame && 16 <= width,height <= 8192",
+      "timeout_seconds": 180,
+      "wall_seconds": 43.788743
+    },
+    {
+      "case_results": [
+        {
+          "comp_width": 1920,
+          "depth": 8,
+          "geometry": "hd",
+          "height": 1080,
+          "independent_strides": true,
+          "oracle": "chebyshev_single_seed_full_words",
+          "radius": 13.0,
+          "status": "passed",
+          "width": 1920
+        },
+        {
+          "comp_width": 3840,
+          "depth": 16,
+          "geometry": "hd",
+          "height": 1080,
+          "independent_strides": true,
+          "oracle": "chebyshev_single_seed_full_words",
+          "radius": 2.5,
+          "status": "passed",
+          "width": 1920
+        },
+        {
+          "comp_width": 1920,
+          "depth": 32,
+          "geometry": "hd",
+          "height": 1080,
+          "independent_strides": true,
+          "oracle": "chebyshev_single_seed_full_words",
+          "radius": 0.99,
+          "status": "passed",
+          "width": 1920
+        }
+      ],
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/perf/run_olmtoondilate_generic_production_perf.py",
+        "--geometry",
+        "hd"
+      ],
+      "dimensions": [
+        1920,
+        1080
+      ],
+      "geometry": "hd",
+      "hostless": true,
+      "lane": "OLMToonDilate",
+      "parameters": "production_O2_pf8_radius13_scale1_pf16_radius2.5_scale0.5_pf32_radius0.99_scale1_independent_strides_chebyshev_oracle",
+      "peak_rss_bytes": 183926784,
+      "returncode": 0,
+      "rss_budget_bytes": 2147483648,
+      "status": "passed",
+      "stderr_tail": "real 1.12\nuser 0.61\nsys 0.15\n           183926784  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               24152  page reclaims\n                 880  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                1289  voluntary context switches\n                1879  involuntary context switches\n           387420941  instructions retired\n           194791888  cycles elapsed\n            13649088  peak memory footprint\n",
+      "stdout_tail": "OLM_PERF_CASES_JSON=[{\"geometry\":\"hd\",\"width\":1920,\"height\":1080,\"depth\":8,\"status\":\"passed\",\"oracle\":\"chebyshev_single_seed_full_words\",\"independent_strides\":true,\"radius\":13.0,\"comp_width\":1920},{\"geometry\":\"hd\",\"width\":1920,\"height\":1080,\"depth\":16,\"status\":\"passed\",\"oracle\":\"chebyshev_single_seed_full_words\",\"independent_strides\":true,\"radius\":2.5,\"comp_width\":3840},{\"geometry\":\"hd\",\"width\":1920,\"height\":1080,\"depth\":32,\"status\":\"passed\",\"oracle\":\"chebyshev_single_seed_full_words\",\"independent_strides\":true,\"radius\":0.99,\"comp_width\":1920}]\nok: ToonDilate hd PF8/PF16/PF32 O2 in 1.037s\n",
+      "support_predicate": "smart && pf8_pf16_pf32 && full_frame && zero_origin && 0 <= search_radius <= 100 && positive_independent_rowbytes",
+      "timeout_seconds": 120,
+      "wall_seconds": 1.148785
+    },
+    {
+      "case_results": [
+        {
+          "comp_width": 3840,
+          "depth": 8,
+          "geometry": "uhd",
+          "height": 2160,
+          "independent_strides": true,
+          "oracle": "chebyshev_single_seed_full_words",
+          "radius": 13.0,
+          "status": "passed",
+          "width": 3840
+        },
+        {
+          "comp_width": 7680,
+          "depth": 16,
+          "geometry": "uhd",
+          "height": 2160,
+          "independent_strides": true,
+          "oracle": "chebyshev_single_seed_full_words",
+          "radius": 2.5,
+          "status": "passed",
+          "width": 3840
+        },
+        {
+          "comp_width": 3840,
+          "depth": 32,
+          "geometry": "uhd",
+          "height": 2160,
+          "independent_strides": true,
+          "oracle": "chebyshev_single_seed_full_words",
+          "radius": 0.99,
+          "status": "passed",
+          "width": 3840
+        }
+      ],
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/perf/run_olmtoondilate_generic_production_perf.py",
+        "--geometry",
+        "uhd"
+      ],
+      "dimensions": [
+        3840,
+        2160
+      ],
+      "geometry": "uhd",
+      "hostless": true,
+      "lane": "OLMToonDilate",
+      "parameters": "production_O2_pf8_radius13_scale1_pf16_radius2.5_scale0.5_pf32_radius0.99_scale1_independent_strides_chebyshev_oracle",
+      "peak_rss_bytes": 731463680,
+      "returncode": 0,
+      "rss_budget_bytes": 3221225472,
+      "status": "passed",
+      "stderr_tail": "real 1.31\nuser 0.87\nsys 0.20\n           731463680  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n               58364  page reclaims\n                 323  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                   9  voluntary context switches\n                3604  involuntary context switches\n           379193479  instructions retired\n           171867095  cycles elapsed\n            13813056  peak memory footprint\n",
+      "stdout_tail": "OLM_PERF_CASES_JSON=[{\"geometry\":\"uhd\",\"width\":3840,\"height\":2160,\"depth\":8,\"status\":\"passed\",\"oracle\":\"chebyshev_single_seed_full_words\",\"independent_strides\":true,\"radius\":13.0,\"comp_width\":3840},{\"geometry\":\"uhd\",\"width\":3840,\"height\":2160,\"depth\":16,\"status\":\"passed\",\"oracle\":\"chebyshev_single_seed_full_words\",\"independent_strides\":true,\"radius\":2.5,\"comp_width\":7680},{\"geometry\":\"uhd\",\"width\":3840,\"height\":2160,\"depth\":32,\"status\":\"passed\",\"oracle\":\"chebyshev_single_seed_full_words\",\"independent_strides\":true,\"radius\":0.99,\"comp_width\":3840}]\nok: ToonDilate uhd PF8/PF16/PF32 O2 in 1.260s\n",
+      "support_predicate": "smart && pf8_pf16_pf32 && full_frame && zero_origin && 0 <= search_radius <= 100 && positive_independent_rowbytes",
+      "timeout_seconds": 180,
+      "wall_seconds": 1.317019
+    }
+  ],
+  "schema_version": 1
+}

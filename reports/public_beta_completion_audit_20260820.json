@@ -1,0 +1,47 @@
+{
+  "schema": "olm.public-beta-completion-audit/1",
+  "date": "2026-08-20",
+  "objective": "All ten plugins accept arbitrary image content at practical general geometries and legal rowbytes within documented parameter, depth, and route bounds.",
+  "overall": "partial",
+  "criteria": {
+    "all_ten_plugins": "proven",
+    "arbitrary_image_content": "proven",
+    "general_geometry_and_rowbytes": "proven",
+    "major_parameter_axes": "partial",
+    "depth_and_classic_smart_routes": "partial",
+    "windows_grounding": "partial",
+    "native_ae_host": "partial",
+    "roi_tile_halo": "partial"
+  },
+  "plugins": [
+    {"plugin":"ColorKeep","arbitrary_image":"proven","geometry_rowbytes":"proven","parameters":"proven","depth_route":"partial","windows":"partial","ae_host":"partial","roi":"proven","roi_strategy":"pointwise nonzero-origin partial tiles","source":"mac/ColorKeep/ColorKeep.cpp"},
+    {"plugin":"OLMBlur","arbitrary_image":"proven","geometry_rowbytes":"proven","parameters":"proven","depth_route":"partial","windows":"partial","ae_host":"partial","roi":"missing","source":"mac/OLMBlur/OLMBlur.cpp"},
+    {"plugin":"OLMColorKey","arbitrary_image":"proven","geometry_rowbytes":"proven","parameters":"partial","depth_route":"proven","windows":"partial","ae_host":"partial","roi":"proven","roi_strategy":"pointwise nonzero-origin partial tiles","source":"mac/OLMColorKey/OLMColorKey.cpp"},
+    {"plugin":"OLMDirectionalBlur","arbitrary_image":"proven","geometry_rowbytes":"partial","parameters":"partial","depth_route":"proven","windows":"partial","ae_host":"partial","roi":"partial","roi_strategy":"full-frame-normalized overscan; partial storage fails closed","source":"mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp"},
+    {"plugin":"OLMDistanceGradation","arbitrary_image":"proven","geometry_rowbytes":"proven","parameters":"partial","depth_route":"partial","windows":"partial","ae_host":"partial","roi":"partial","roi_strategy":"full-frame-normalized overscan; partial storage fails closed","source":"mac/OLMDistanceGradation/OLMDistanceGradation.cpp"},
+    {"plugin":"OLMKiraKira","arbitrary_image":"proven","geometry_rowbytes":"partial","parameters":"partial","depth_route":"proven","windows":"partial","ae_host":"partial","roi":"missing","source":"mac/OLMKiraKira/OLMKiraKira.cpp"},
+    {"plugin":"OLMRadialBlur","arbitrary_image":"proven","geometry_rowbytes":"proven","parameters":"partial","depth_route":"proven","windows":"partial","ae_host":"partial","roi":"partial","roi_strategy":"full-frame-normalized overscan; partial storage fails closed","source":"mac/OLMRadialBlur/OLMRadialBlur.cpp"},
+    {"plugin":"OLMSmoother","arbitrary_image":"proven","geometry_rowbytes":"proven","parameters":"proven","depth_route":"partial","windows":"partial","ae_host":"partial","roi":"missing","source":"mac/OLMSmoother/Mac/OLMSmoother_port.cpp"},
+    {"plugin":"OLMSmoother2","arbitrary_image":"proven","geometry_rowbytes":"proven","parameters":"partial","depth_route":"partial","windows":"partial","ae_host":"partial","roi":"partial","roi_strategy":"full-frame-normalized overscan; partial storage fails closed","source":"mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp"},
+    {"plugin":"OLMToonDilate","arbitrary_image":"proven","geometry_rowbytes":"proven","parameters":"proven","depth_route":"partial","windows":"partial","ae_host":"partial","roi":"proven","roi_strategy":"finite-halo tiles within safety caps","source":"mac/OLMToonDilate/OLMToonDilate.cpp"}
+  ],
+  "evidence": {
+    "capability_contract": "tests/test_beta_support_documentation.py",
+    "hostless_gate": "reports/olm_generic_beta_gate.json",
+    "performance": "reports/generic_beta_perf_smoke.json",
+    "native_ae_pre_roi": "refs/conformance/olm_all10_generic_beta_quick_ae_smoke_20260820.json",
+    "native_ae_current_roi": "pending",
+    "native_ae_pre_roi_package_sha256": "9a3b4ec68068ee05238913743e34bfbc5499c4bee0e6c79c5ec982c34011e41e",
+    "current_roi_package_report": "reports/public_beta_roi_v2_package_20260820.json",
+    "current_roi_package_sha256": "7c8fb27e69ccb0a3fb2708ab026172e67050e8e15eff5acb49daf82d8f42b72b",
+    "windows_nonhd_roi_checkpoint": "refs/conformance/generic_beta_aexcompat_nonhd_checkpoint_20260820.json",
+    "windows_nonhd_roi_checkpoint_status": "14/14 passed",
+    "windows_hd7": "pending"
+  },
+  "interpretation": [
+    "proven means demonstrated inside the documented beta admission predicate, not unrestricted compatibility",
+    "partial means a useful bounded subset is implemented and verified",
+    "missing means no public beta contract is claimed",
+    "extent_hint is a content bound, not storage or coordinate authority"
+  ]
+}

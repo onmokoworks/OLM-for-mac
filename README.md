@@ -42,7 +42,8 @@ Windows版の全入力・全設定に対する完全互換を保証するもの�
 
 現在のバイナリはDeveloper ID署名およびAppleのnotarizationを行っていないため、Gatekeeperに拒否される可能性があります。
 
-詳しくは[既知の制限](KNOWN_LIMITATIONS.md)を参照してください。
+対応範囲の要約は[Public Beta対応表](docs/BETA_SUPPORT.md)、検証fixtureごとの詳細は
+[既知の制限](KNOWN_LIMITATIONS.md)を参照してください。
 
 ## 不具合報告
 

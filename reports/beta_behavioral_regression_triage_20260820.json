@@ -1,0 +1,44 @@
+{
+  "schema": "olm.beta-behavioral-regression-triage/1",
+  "unittest_snapshot": {
+    "files": 285,
+    "pass": 85,
+    "old_identity_pin": 75,
+    "old_reject_contract": 10,
+    "regression_compile_or_unclassified": 69,
+    "external_collection_or_timeout": 46
+  },
+  "fixed_fixture_regression": {
+    "full_command": "python3 scripts/run_olm_mac_fixed_fixture_regression_20260805.py",
+    "full_command_status": "interrupted_in_long_radialblur_ellipse_matrix",
+    "remaining_command": "python3 scripts/run_olm_mac_fixed_fixture_regression_20260805.py --plugin smoother --plugin smoother2 --plugin toondilate",
+    "remaining_command_status": "completed",
+    "remaining_failure_count": 17,
+    "remaining_failure_classification": "identity pins and legacy closure validation; completed numerical fixtures passed"
+  },
+  "behavioral_failures": [
+    {
+      "plugin": "OLMDirectionalBlur",
+      "command": "python3 tools/emulation/test_olmdirectionalblur_noise_public_pairwise_actual_aex_20260811.py",
+      "failure": "PF16 row=1 tuple (1,2,1,10,100,sharp50,32x18), rc=0, mismatch=20",
+      "resolution": "resolved_exact_tail_semantics_drift",
+      "recheck": "PASS_OLMDIRECTIONALBLUR_NOISE_PUBLIC_PAIRWISE rows=10 per_depth=10 raw=exact"
+    },
+    {
+      "plugin": "OLMDirectionalBlur",
+      "command": "python3 tools/emulation/test_olmdirectionalblur_pf32_size_coeff_geometry_matrix_actual_aex_20260811.py",
+      "failure": "32x18 front size=25 fade=50 sharp=0, mismatch=228, float_words=63, max_delta=0.807709813117981",
+      "resolution": "resolved_exact_tail_semantics_drift",
+      "recheck": "PASS_OLMDIRECTIONALBLUR_PF32_SIZE_COEFF_GEOMETRY cases=32 raw=exact"
+    }
+  ],
+  "unresolved_behavioral_failure_count": 0,
+  "other_behavioral_failures_observed": [],
+  "release_gate": {
+    "command": "python3 scripts/run_olm_release_gate_20260806.py --skip-regression --report /tmp/olm_release_gate_beta_20260820.json",
+    "status": "pending_or_invalid",
+    "classification": "stale ten-plugin Mac AE smoke identity/acceptance records",
+    "parameter_ui": "10/10 proven",
+    "universal_installs": "10/10 proven"
+  }
+}

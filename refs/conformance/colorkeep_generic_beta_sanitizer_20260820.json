@@ -1,0 +1,39 @@
+{
+  "schema": "colorkeep.generic-beta-sanitizer/1",
+  "status": "pass",
+  "production_source": "mac/ColorKeep/ColorKeep.cpp",
+  "test": "tests/test_colorkeep_generic_beta_20260820.py",
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "depths": [8, 16, 32],
+  "counts": [1, 5, 9, 13, 100],
+  "geometries": [
+    "1x1",
+    "17x11",
+    "127x73",
+    "1920x1080",
+    "3840x2160"
+  ],
+  "coverage": [
+    "independent input and output row strides",
+    "output padding canaries",
+    "count admission boundaries",
+    "undersized rowbytes rejection",
+    "matched nonzero positive and negative tile origins",
+    "out-of-bounds logical origin rejection",
+    "extent_hint treated as opaque content bounds",
+    "input-output alias rejection",
+    "PF8, PF16, and PF32 production typed workers",
+    "Smart checkout/checkin cleanup source contract",
+    "existing exact Windows 13-color dynamic owner evidence"
+  ],
+  "windows_owner_evidence": "refs/conformance/colorkeep_thirteen_color_effectmain_actual_aex_20260805.json",
+  "explicit_limits": [
+    "full-frame exact worlds plus contained 1:1 ROI/tile worlds",
+    "storage mapping uses origin plus width/height; extent_hint is not used as storage bounds",
+    "Classic Render remains PF8/PF16 only",
+    "checkout failure symmetry is source-contract checked; sanitizer execution directly exercises world validation and typed workers"
+  ]
+}

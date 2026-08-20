@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "profile": "generic_size_variation_area_1_4_9",
+  "status": "bounded_beta",
+  "component_semantics": {
+    "foreground": "finite alpha > 0",
+    "connectivity": "four_neighbor",
+    "required_sorted_areas": [1, 4, 9],
+    "factor": "(area / maximum_area) * (size_variation / 100) + (1 - size_variation / 100)",
+    "guard_cell": 0.0
+  },
+  "admitted_size_variation": [1, 25, 100],
+  "interactions": {
+    "noise_variation": 0,
+    "inner_strength": 0,
+    "outer_edge_fade": 0,
+    "inner_edge_fade": 0,
+    "offset_modes": "default_only"
+  },
+  "boundary_counterexample": {
+    "case": "move the isolated area-1 component from x=2 to x=width-1",
+    "generic_result": "PF_Err_BAD_CALLBACK_PARAM",
+    "reason": "the Windows worker performs a linear right-edge lookahead whose cross-row/final-row semantics are not established by the 32x18 oracle"
+  },
+  "claim_boundary": "Arbitrary source pixels, positions, rowbytes, and positive full-frame geometry are admitted only when the three components retain areas 1, 4, and 9 and no live component touches the right edge or final row."
+}

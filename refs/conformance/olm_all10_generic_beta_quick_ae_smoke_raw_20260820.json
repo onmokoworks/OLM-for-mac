@@ -1,0 +1,58 @@
+{
+  "schema": "olm.generic-beta-quick-ae-smoke-raw/1",
+  "date": "2026-08-20",
+  "profile": "quick",
+  "geometry": [1920, 1080],
+  "depth_policy": "first declared depth per plugin",
+  "campaigns": [
+    {
+      "source": "/tmp/olm_ae_quick_rc_20260820/campaign_result.json",
+      "status": "completed_with_failures",
+      "results": [
+        ["ColorKeep", "passed", "9c612bd7865b31e67de01b1b3a09cb8b34d5292ca996d0795ba5856945777ae3"],
+        ["OLMBlur", "passed", "d5e0accb84d54547f5ac088598292417898318fb514da5188285dd83e3580a96"],
+        ["OLMColorKey", "passed", "0252ef65a138c064107a33d84859f43e35a5700066165c2417c4f91e5a811c66"],
+        ["OLMDirectionalBlur", "passed", "ca6144a89dcbe49c9c65faf367bef69eca9dac97d6b66bd6f12a56ae0b6065ed"],
+        ["OLMDistanceGradation", "passed", "1c70e82a9d8a720dd16116a30d0ac32a7bd03d890faccd9e26458961fe4f9af3"],
+        ["OLMKiraKira", "failed", "b4827518c5fa3ac3b27b24481feff687e4bd6b1383131912635846bf3e396a1b"],
+        ["OLMRadialBlur", "passed", "97a96a61651bd48335b9b51ae099e94b5261bddd68040f826b080fa186066816"],
+        ["OLMSmoother", "passed", "98b76680d8fa17e15bc9907e9bcc1490286fa8db43c397c65e38aa887b1c4f67"],
+        ["OLMSmoother2", "failed", "dcf8bced2333c80fa03f2a5a2b2d3ec826be68f75372a2d42e9248864827b2e1"],
+        ["OLMToonDilate", "passed", "7e3d531df3a7d385f92296aeca0b445d9454906827418a39fac0afe55725900f"]
+      ]
+    },
+    {
+      "source": "/tmp/olm_ae_quick_retry_20260820/campaign_result.json",
+      "status": "completed_with_failures",
+      "results": [
+        ["OLMKiraKira", "failed", "3bf72e90d6913892d75d86b3e77dbe975e5780ba4d0b098e2262fcc173ab3ac1"],
+        ["OLMSmoother2", "passed", "77c056dc261e5c834fd2a2e0a5d5bf30e6303b910a54b622fd9931a20bae1d5b"]
+      ]
+    },
+    {
+      "source": "/tmp/olm_ae_kira_final_20260820/campaign_result.json",
+      "diagnostic_log": "/tmp/olm_ae_kira_final_20260820/kirakira_diagnostic.log",
+      "status": "completed",
+      "results": [
+        ["OLMKiraKira", "passed", "4b74d5a52455da73337fd8338d28ca58ff9c86e19d3135a66c4256a02716ba33"]
+      ]
+    },
+    {
+      "source": "/tmp/olm_ae_quick_final_package_20260820/campaign_result.json",
+      "status": "completed",
+      "package_sha256": "9a3b4ec68068ee05238913743e34bfbc5499c4bee0e6c79c5ec982c34011e41e",
+      "results": [
+        ["ColorKeep", "passed", "e1513ae6ded43a9eb5aa0fcd70abffabd12f968e399a7bf24b65f80d2ba70e7c"],
+        ["OLMBlur", "passed", "abd72e26d45b2620c4207d253bf4bbfd792304b8fd9f2551c6270835201826e6"],
+        ["OLMColorKey", "passed", "4e30561dfea5f27089a8d2bce8760b13336def18bdf46c9a52c8737ea69a06ae"],
+        ["OLMDirectionalBlur", "passed", "e96a255317b28d94cf1176f5c14198321f4b5fa922f0a9e0f1983d60d7d08b73"],
+        ["OLMDistanceGradation", "passed", "2b92c3dd27e8be748fbac033473f7a5dafeb719df0a1d7c8748f918029791746"],
+        ["OLMKiraKira", "passed", "4b74d5a52455da73337fd8338d28ca58ff9c86e19d3135a66c4256a02716ba33"],
+        ["OLMRadialBlur", "passed", "12930bbd46737bf481d5360ebbdb8c531089abb24ed1ee660cff6b576e5991b3"],
+        ["OLMSmoother", "passed", "4037d1e7d76d0c3b81be099ea67e25495f5225323197a94641599a484b6e9f8c"],
+        ["OLMSmoother2", "passed", "77c056dc261e5c834fd2a2e0a5d5bf30e6303b910a54b622fd9931a20bae1d5b"],
+        ["OLMToonDilate", "passed", "39442719a4943b7293c1b73e1adc8776c882989b07edc468bd631d73d638b84d"]
+      ]
+    }
+  ]
+}

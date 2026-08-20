@@ -1,0 +1,39 @@
+{
+  "schema": "olm.generic-beta-quick-ae-smoke/1",
+  "date": "2026-08-20",
+  "status": "pass",
+  "passed": 10,
+  "total": 10,
+  "host": "Adobe After Effects 2026 on macOS",
+  "raw_report": "refs/conformance/olm_all10_generic_beta_quick_ae_smoke_raw_20260820.json",
+  "package": {
+    "source_path": "handoff/public_beta/olm_mac_plugins_PublicBeta_20260820.zip",
+    "sha256": "9a3b4ec68068ee05238913743e34bfbc5499c4bee0e6c79c5ec982c34011e41e"
+  },
+  "claim_boundary": [
+    "One 1920x1080 case at each plugin's first declared depth",
+    "One selected admitted parameter tuple per plugin",
+    "Cumulative latest passing evidence across the initial, targeted retry, and final Kira campaigns",
+    "The final 10/10 campaign exercised the exact binaries in the final package",
+    "This is not the 54-case native AE smoke",
+    "No all-depth, all-parameter, ROI, 4K, or Windows-exact claim"
+  ],
+  "plugins": [
+    {"plugin": "ColorKeep", "status": "passed", "depth": 8, "tuple": "supported defaults", "installed_sha256": "e1513ae6ded43a9eb5aa0fcd70abffabd12f968e399a7bf24b65f80d2ba70e7c", "evidence_campaign": "final_package"},
+    {"plugin": "OLMBlur", "status": "passed", "depth": 8, "tuple": "supported defaults", "installed_sha256": "abd72e26d45b2620c4207d253bf4bbfd792304b8fd9f2551c6270835201826e6", "evidence_campaign": "final_package"},
+    {"plugin": "OLMColorKey", "status": "passed", "depth": 8, "tuple": "pixel-local defaults (Edge Thin/Blur 0)", "installed_sha256": "4e30561dfea5f27089a8d2bce8760b13336def18bdf46c9a52c8737ea69a06ae", "evidence_campaign": "final_package"},
+    {"plugin": "OLMDirectionalBlur", "status": "passed", "depth": 8, "tuple": "front-only baseline", "installed_sha256": "e96a255317b28d94cf1176f5c14198321f4b5fa922f0a9e0f1983d60d7d08b73", "evidence_campaign": "final_package"},
+    {"plugin": "OLMDistanceGradation", "status": "passed", "depth": 8, "tuple": "Blur None + Constant interpolation", "installed_sha256": "2b92c3dd27e8be748fbac033473f7a5dafeb719df0a1d7c8748f918029791746", "evidence_campaign": "final_package"},
+    {"plugin": "OLMKiraKira", "status": "passed", "depth": 8, "tuple": "closed Mode 2 Highlight radius 3 tuple", "installed_sha256": "4b74d5a52455da73337fd8338d28ca58ff9c86e19d3135a66c4256a02716ba33", "evidence_campaign": "final_package"},
+    {"plugin": "OLMRadialBlur", "status": "passed", "depth": 8, "tuple": "centered Zoom baseline", "installed_sha256": "12930bbd46737bf481d5360ebbdb8c531089abb24ed1ee660cff6b576e5991b3", "evidence_campaign": "final_package"},
+    {"plugin": "OLMSmoother", "status": "passed", "depth": 8, "tuple": "Use Key off default", "installed_sha256": "4037d1e7d76d0c3b81be099ea67e25495f5225323197a94641599a484b6e9f8c", "evidence_campaign": "final_package"},
+    {"plugin": "OLMSmoother2", "status": "passed", "depth": 8, "tuple": "v2 defaults", "installed_sha256": "77c056dc261e5c834fd2a2e0a5d5bf30e6303b910a54b622fd9931a20bae1d5b", "evidence_campaign": "final_package"},
+    {"plugin": "OLMToonDilate", "status": "passed", "depth": 8, "tuple": "finite nonnegative Search Radius default", "installed_sha256": "39442719a4943b7293c1b73e1adc8776c882989b07edc468bd631d73d638b84d", "evidence_campaign": "final_package"}
+  ],
+  "history": [
+    {"campaign": "initial", "result": "8/10 passed", "failures": ["OLMKiraKira", "OLMSmoother2"]},
+    {"campaign": "targeted_retry", "result": "OLMSmoother2 passed after gamma fix; OLMKiraKira still failed"},
+    {"campaign": "final", "result": "OLMKiraKira passed on installed SHA 4b74d5a52455da73337fd8338d28ca58ff9c86e19d3135a66c4256a02716ba33"},
+    {"campaign": "final_package", "result": "10/10 passed using the exact binaries in package SHA 9a3b4ec68068ee05238913743e34bfbc5499c4bee0e6c79c5ec982c34011e41e"}
+  ]
+}
