@@ -3,15 +3,21 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import unittest
+import zipfile
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 DOC = ROOT / "docs/BETA_SUPPORT.md"
 README = ROOT / "README.md"
+SMOOTHER2_GAMMA_COLORS_TEST = (
+    ROOT / "tests/test_olmsmoother2_gamma_colors_beta_20260820.py"
+)
+DIRECTIONAL_BUDGET = ROOT / "core/dblur_generic_budget.h"
 
 SOURCES = {
     "ColorKeep": ROOT / "mac/ColorKeep/ColorKeep.cpp",
@@ -35,6 +41,7 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         cls.sources = {
             name: path.read_text(encoding="utf-8") for name, path in SOURCES.items()
         }
+        cls.directional_budget = DIRECTIONAL_BUDGET.read_text(encoding="utf-8")
 
     def test_table_has_exactly_the_ten_shipped_plugins(self) -> None:
         rows = re.findall(r"^\| (?!プラグイン|---)([^|]+?) \|", self.doc, re.MULTILINE)
@@ -65,19 +72,33 @@ class BetaSupportDocumentationContract(unittest.TestCase):
                 "info.edge_thin_amount >= -100.0 && info.edge_thin_amount <= 100.0",
                 "info.edge_thin_distance_type >= 1 && info.edge_thin_distance_type <= 3",
                 "IsGenericEdgeBlurTuple(info)",
+                "IsGenericEdgeCompositionTuple(info)",
+                "info.edge_blur_direction == 102",
+                "info.edge_thin_amount == -4.0 || info.edge_thin_amount == 4.0",
             ),
             "OLMDirectionalBlur": ("info.front_strength > 0", "info.back_strength == 0", "info.noise_variation == 0.0"),
             "OLMDistanceGradation": ("p.blur_mode == BLUR_MODE_NONE", "p.interp_mode == INTERP_CONSTANT || p.interp_mode == INTERP_LINEAR", "is_admitted_pf32_smart_oracle_profile", "PF32_POWER_GENERIC_MAX_ULP == 1"),
             "OLMKiraKira": ("info.blur_mode == 1 || info.blur_mode == 2", "IsGenericBetaMode34TupleForGeometry", "width >= 9 && height >= 7"),
             "OLMRadialBlur": ("info.outer_strength >= 0 && info.outer_strength <= 64", "info.inner_strength == 0", "info.quality >= 1.0 && info.quality <= 5.0"),
-            "OLMSmoother2": ("world->width < 16 || world->height < 16", "world->width > 8192 || world->height > 8192", "GAMMA_ALL_COLORS", "gamma_value >= 1.0 && gamma_value <= gamma_ui_max", "const A_FpLong gamma_ui_max = (A_FpLong)(float)2.4f", "smoothness >= 0 && smoothness <= 100"),
+            "OLMSmoother2": ("world->width < 16 || world->height < 16", "world->width > 8192 || world->height > 8192", "GAMMA_ALL_COLORS", "gamma_mode == GAMMA_COLORS_ONLY", "gamma_count >= 1 && gamma_count <= NUM_GAMMA_COLORS", "gamma_value >= 1.0 && gamma_value <= gamma_ui_max", "const A_FpLong gamma_ui_max = (A_FpLong)(float)2.4f", "smoothness >= 0 && smoothness <= 100", "custom/user LUT", "!retained_fixture && V2GenericBetaAdmission"),
             "OLMToonDilate": ("info.search_radius < 0.0", "ValidateToonBetaAdmission<PF_Pixel8>", "RenderTileWorld", "ToonCheckedHalo", "output->origin_x - input->origin_x"),
         }
         for plugin, tokens in checks.items():
             for token in tokens:
                 self.assertIn(token, self.sources[plugin], f"{plugin}: limit drift: {token}")
 
-        self.assertIn("kBudgetBytes = 512ull * 1024ull * 1024ull", self.sources["OLMDirectionalBlur"])
+        for token in (
+            "kMaximumDimension = 4096u",
+            "kMaximumSourcePixels = 4096u * 2160u",
+            "kPluginOwnedLiveLimitBytes",
+            "3u * 1024u * 1024u * 1024u",
+            "kUnmodelledAllocationReserveBytes",
+            "64u * 1024u * 1024u",
+            "kOperationUnitLimit = 350000000ull",
+            "EstimateOperationUnits",
+            "EstimateRender",
+        ):
+            self.assertIn(token, self.directional_budget)
         self.assertIn("info.search_radius > 100.0", self.sources["OLMToonDilate"])
         self.assertIn("count >= 1 && count <= COLORKEEP_MAX_COLORS", self.sources["ColorKeep"])
         radial = self.sources["OLMRadialBlur"]
@@ -102,10 +123,27 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         ):
             self.assertIn(token, radial)
         directional = self.sources["OLMDirectionalBlur"]
-        for token in ("row[x].alpha > 32768", "IsGenericFrontOnlyDeepParameters", "GenericPF32SDRInput", "RenderExact8(input, output, nullptr, info, true)"):
+        for token in ("pixel.alpha > 32768", "IsGenericFrontOnlyDeepParameters", "GenericPF32SDRInput", "RenderExact8(input, output, nullptr, info, true)"):
             self.assertIn(token, directional)
-        for claim in ("最大4096×2160", "Amount 1–1000", "Repeat 1–10", "最大HD 1920×1080", "最小9×7", "16×16–8192×8192", "Search Radius 0–100", "Enabled Color Num 1–100", "Edge Thin −100〜100", "Distance Type 1〜3", "Outer/Inner Strength整数0–64", "Noise Variation 25/100", "Size Variation 1/25/100", "最大1 ULP契約", "Gamma 1.0–2.4"):
+        for claim in ("最大4096×2160", "Amount 1–1000", "Repeat 1–10", "3 GiB per-render plugin-owned admission", "3億5000万work-unit", "最小9×7", "16×16–8192×8192", "Search Radius 0–100", "Enabled Color Num 1–100", "Edge Thin −100〜100", "Distance Type 1〜3", "Outer/Inner Strength整数0–64", "Noise Variation 25/100", "Size Variation 1/25/100", "最大1 ULP契約", "Gamma 1.0–2.4"):
             self.assertIn(claim, self.doc)
+        for claim in ("Thin ±4／DT2", "materialized 102", "full-frameのみ",
+                      "任意source Windows exactは未主張", "native quickはEdge 0",
+                      "HD 513,671,168 bytes／4.789秒", "UHD 1,549,451,264 bytes／13.228秒",
+                      "Gamma Colors palette count 1–5",
+                      "palette order／duplicate／inactive tail／alpha semantics", "custom/user LUTは拒否"):
+            self.assertIn(claim, self.doc)
+
+        gamma_colors_test = SMOOTHER2_GAMMA_COLORS_TEST.read_text(encoding="utf-8")
+        for token in (
+            "for (int depth : {{8,16,32}})",
+            "for (int version : {{SMOOTHER_V1,SMOOTHER_V2}})",
+            "normal.output != order.output",
+            "normal.output != duplicate.output",
+            "count_one.output != inactive_tail.output",
+            "normal.output != alpha.output",
+        ):
+            self.assertIn(token, gamma_colors_test)
 
     def test_validation_language_does_not_overclaim(self) -> None:
         for phrase in (
@@ -150,6 +188,160 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         self.assertIn("10プラグインすべてで通過", self.doc)
         self.assertIn("54-case smokeの代替ではありません", self.doc)
 
+    def test_current_roi_v2_native_ae_quick_smoke_is_bounded(self) -> None:
+        summary_path = ROOT / "refs/conformance/olm_all10_roi_v2_quick_ae_smoke_20260820.json"
+        summary = json.loads(summary_path.read_text(encoding="utf-8"))
+        raw = json.loads((ROOT / summary["raw_report"]).read_text(encoding="utf-8"))
+        self.assertEqual(summary["schema"], "olm.roi-v2-quick-ae-smoke/1")
+        self.assertEqual(summary["status"], "pass")
+        self.assertEqual((summary["passed"], summary["total"]), (10, 10))
+        self.assertEqual(summary["package"]["sha256"],
+                         "7c8fb27e69ccb0a3fb2708ab026172e67050e8e15eff5acb49daf82d8f42b72b")
+        self.assertEqual(summary["package"]["path"],
+                         "handoff/public_beta/olm_mac_plugins_PublicBeta_ROI_v2_20260820.zip")
+        self.assertEqual(summary["execution_branch"], "codex/public-beta-roi")
+        self.assertEqual(summary["execution_head"],
+                         "3a97926a4bd5bf9baaad4151b6af5dfb0e1845a7")
+        self.assertEqual(summary["package_build_git_commit"],
+                         "f4e4dac86925b512d4c7b8784d250f1a68871cb7")
+        self.assertTrue(summary["package_build_git_dirty"])
+        self.assertEqual(summary["mediacore_backup"],
+                         "handoff/mac_plugin_backups/mediacore_20260820_232857")
+        self.assertEqual(raw["schema"], "olm.roi-v2-quick-ae-smoke-raw/1")
+        self.assertRegex(raw["source_campaign_sha256"], r"^[0-9a-f]{64}$")
+        self.assertEqual(raw["package"], summary["package"])
+        self.assertEqual(raw["execution_head"], summary["execution_head"])
+        self.assertEqual(raw["package_build_git_commit"],
+                         summary["package_build_git_commit"])
+        self.assertEqual(raw["package_build_git_dirty"],
+                         summary["package_build_git_dirty"])
+        self.assertEqual(raw["mediacore_backup"], summary["mediacore_backup"])
+        self.assertIn("recomputed after the campaign", raw["final_artifact_validation"])
+        self.assertIn("not authoritative", raw["final_artifact_validation"])
+        self.assertEqual(len(raw["cases"]), 10)
+        self.assertTrue(all(row["status"] == "passed" and row["depth"] == 8 and
+                            row["geometry"] == [1920, 1080] and row["output_size_bytes"] > 0
+                            for row in raw["cases"]))
+        for row in raw["cases"]:
+            self.assertRegex(row["installed_sha256"], r"^[0-9a-f]{64}$")
+            self.assertRegex(row["output_sha256"], r"^[0-9a-f]{64}$")
+        self.assertEqual(dict(summary["plugins"]),
+                         {row["plugin"]: row["installed_sha256"] for row in raw["cases"]})
+        color_key = next(row for row in raw["cases"] if row["plugin"] == "OLMColorKey")
+        self.assertEqual(color_key["tuple"], "pixel-local defaults (Edge Thin/Blur 0)")
+        boundary = " ".join(summary["claim_boundary"])
+        for phrase in ("Current ROI v2 binaries", "full-frame 1920x1080",
+                       "first declared depth", "selected admitted tuple",
+                       "not the 54-case", "does not prove partial ROI or tile parity"):
+            self.assertIn(phrase, boundary)
+        self.assertIn("immutable ROI v2 package", self.doc)
+        self.assertIn("今回の10件はすべて8 bpc", self.doc)
+        self.assertIn("partial ROI／tile parityをnative AEで証明するものではありません", self.doc)
+        self.assertIn("パッケージ後のソース／文書変更", self.doc)
+
+    def _assert_roi_v2_package_report(
+        self, local_archive: Path | None
+    ) -> bool:
+        report = json.loads((
+            ROOT / "reports/public_beta_roi_v2_package_20260820.json"
+        ).read_text(encoding="utf-8"))
+        self.assertEqual(report["artifact"],
+                         "handoff/public_beta/olm_mac_plugins_PublicBeta_ROI_v2_20260820.zip")
+        self.assertRegex(report["artifact_sha256"], r"^[0-9a-f]{64}$")
+        self.assertGreater(report["artifact_size_bytes"], 0)
+        self.assertEqual(report["package_manifest"]["path"],
+                         "OLM_Mac_Plugins_Release/manifest.json")
+        self.assertRegex(report["package_manifest"]["sha256"], r"^[0-9a-f]{64}$")
+        self.assertEqual(report["package_manifest"]["git_commit"],
+                         report["package_build_git_commit"])
+        self.assertEqual(report["package_manifest"]["git_dirty"],
+                         report["package_build_git_dirty"])
+        self.assertEqual(report["beta_support"]["embedded_path"],
+                         "OLM_Mac_Plugins_Release/BETA_SUPPORT.md")
+        self.assertEqual(report["beta_support"]["embedded_sha256"],
+                         report["beta_support_sha256"])
+        self.assertRegex(report["beta_support_sha256"], r"^[0-9a-f]{64}$")
+        self.assertEqual(report["beta_support"]["manifest_field"],
+                         "beta_support_sha256")
+        self.assertEqual(report["beta_support"]["live_repository_path"],
+                         "docs/BETA_SUPPORT.md")
+        self.assertFalse(
+            report["beta_support"]["live_repository_document_is_package_payload"]
+        )
+        self.assertNotEqual(hashlib.sha256(DOC.read_bytes()).hexdigest(),
+                            report["beta_support_sha256"])
+        self.assertIn("not the SHA-256 of the live docs/BETA_SUPPORT.md",
+                      report["beta_support_scope"])
+        self.assertIn("intentionally not substituted",
+                      report["beta_support"]["relationship"])
+        self.assertIn("immutable manifest hash", self.doc)
+        self.assertIn("live文書のhashでpackage manifest値を置き換えることもありません",
+                      self.doc)
+        self.assertEqual(list(report["plugins"]), list(SOURCES))
+        self.assertTrue(all(re.fullmatch(r"[0-9a-f]{64}", digest)
+                            for digest in report["plugins"].values()))
+
+        native = report["native_ae"]
+        summary = json.loads((
+            ROOT / native["current_roi_package_evidence"]
+        ).read_text(encoding="utf-8"))
+        self.assertEqual(native["current_roi_package"],
+                         "partial / quick 10/10 passed")
+        self.assertEqual(native["status"], "PASS_BOUNDED_QUICK_SMOKE")
+        self.assertEqual((native["passed"], native["total"]), (10, 10))
+        self.assertEqual(native["artifact_sha256"], report["artifact_sha256"])
+        self.assertEqual(summary["package"]["sha256"], report["artifact_sha256"])
+        self.assertEqual(dict(summary["plugins"]), report["plugins"])
+        self.assertIn("all ten selected cases were 8 bpc", native["coverage"]["depth"])
+        excluded = " ".join(native["not_proven"])
+        for phrase in ("54-case", "all-depth", "partial ROI", "Windows-to-Mac",
+                       "after this package was built"):
+            self.assertIn(phrase, excluded)
+        for phrase in ("immutable artifact", "10/10", "8 bpc", "not the 54-case",
+                       "later live-source/document changes"):
+            self.assertIn(phrase, report["claim_boundary"])
+
+        if local_archive is None:
+            return False
+
+        package_bytes = local_archive.read_bytes()
+        self.assertEqual(hashlib.sha256(package_bytes).hexdigest(),
+                         report["artifact_sha256"])
+        self.assertEqual(len(package_bytes), report["artifact_size_bytes"])
+        with zipfile.ZipFile(local_archive) as archive:
+            manifest_bytes = archive.read(report["package_manifest"]["path"])
+            embedded_doc = archive.read(report["beta_support"]["embedded_path"])
+        manifest = json.loads(manifest_bytes)
+        self.assertEqual(hashlib.sha256(manifest_bytes).hexdigest(),
+                         report["package_manifest"]["sha256"])
+        self.assertEqual(manifest["git_commit"], report["package_build_git_commit"])
+        self.assertEqual(manifest["git_dirty"], report["package_build_git_dirty"])
+        embedded_sha = hashlib.sha256(embedded_doc).hexdigest()
+        self.assertEqual(embedded_sha, manifest["beta_support_sha256"])
+        self.assertEqual(embedded_sha, report["beta_support_sha256"])
+        manifest_plugins = {
+            row["name"]: row["binary_sha256"] for row in manifest["plugins"]
+        }
+        self.assertEqual(manifest_plugins, report["plugins"])
+        return True
+
+    def test_roi_v2_package_report_binds_immutable_payload_not_live_docs(self) -> None:
+        report = json.loads((
+            ROOT / "reports/public_beta_roi_v2_package_20260820.json"
+        ).read_text(encoding="utf-8"))
+        package_path = ROOT / report["artifact"]
+        local_archive = package_path if package_path.is_file() else None
+        self.assertEqual(
+            self._assert_roi_v2_package_report(local_archive),
+            local_archive is not None,
+        )
+
+    def test_roi_v2_package_report_clean_checkout_needs_no_ignored_archive(self) -> None:
+        # Simulate a clean checkout even when the ignored distribution artifact is
+        # present locally. Durable report/summary assertions still execute; only
+        # the optional byte-level archive comparison is absent.
+        self.assertFalse(self._assert_roi_v2_package_report(None))
+
     def test_sanitizer_and_hd_4k_evidence_is_reported_fail_closed(self) -> None:
         sanitizer = json.loads(
             (ROOT / "refs/conformance/colorkeep_generic_beta_sanitizer_20260820.json").read_text(encoding="utf-8")
@@ -164,7 +356,10 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         self.assertIn("AddressSanitizer／UndefinedBehaviorSanitizer", self.doc)
         self.assertIn("1×1から4K", self.doc)
         rows = perf["results"]
-        self.assertTrue(rows)
+        self.assertEqual(len(rows), 20)
+        self.assertEqual({(row["lane"], row["geometry"]) for row in rows}, {
+            (plugin, geometry) for plugin in SOURCES for geometry in ("hd", "uhd")
+        })
         failed = [row for row in rows if row["status"] == "failed"]
         self.assertEqual(failed, [], f"failed performance cells: {failed}")
         for row in rows:
@@ -179,6 +374,12 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         self.assertIn("対応セルはすべて成功", self.doc)
         self.assertIn("非対応セルはreasonとsupport predicate付き", self.doc)
         self.assertIn("未計測セルを成功扱いにしていません", self.doc)
+        self.assertIn("20セルを実測し、20/20成功", self.doc)
+        directional = [row for row in rows if row["lane"] == "OLMDirectionalBlur"]
+        self.assertEqual({row["geometry"] for row in directional}, {"hd", "uhd"})
+        self.assertTrue(all(row["status"] == "passed" for row in directional))
+        self.assertTrue(all(len(row.get("case_results", [])) == 3
+                            for row in directional))
 
         radial_perf = json.loads(
             (ROOT / "reports/generic_beta_perf_smoke_radial.json").read_text(encoding="utf-8")
@@ -221,7 +422,20 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         self.assertTrue(all(row["arbitrary_image"] == "proven" for row in audit["plugins"]))
         self.assertTrue(all(row["ae_host"] == "partial" for row in audit["plugins"]))
         self.assertEqual(audit["criteria"]["native_ae_host"], "partial")
-        self.assertEqual(audit["evidence"]["native_ae_current_roi"], "pending")
+        self.assertIn("20/20 HD/UHD cells passed",
+                      audit["evidence"]["performance_status"])
+        directional_audit = next(
+            row for row in audit["plugins"] if row["plugin"] == "OLMDirectionalBlur"
+        )
+        self.assertEqual(directional_audit["geometry_rowbytes"], "proven")
+        self.assertEqual(audit["evidence"]["native_ae_current_roi"],
+                         "partial / quick 10/10 passed")
+        current_roi_scope = audit["evidence"]["native_ae_current_roi_scope"]
+        for phrase in (audit["evidence"]["current_roi_package_sha256"],
+                       "full-frame 1920x1080", "all selected cases 8 bpc",
+                       "one selected tuple per plugin", "excludes the 54-case matrix",
+                       "partial ROI/tile parity", "later source/document changes"):
+            self.assertIn(phrase, current_roi_scope)
         package_report = json.loads(
             (ROOT / audit["evidence"]["current_roi_package_report"]).read_text()
         )
@@ -229,7 +443,14 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         self.assertEqual(package_report["artifact_sha256"],
                          audit["evidence"]["current_roi_package_sha256"])
         self.assertEqual(package_report["generic_beta_gate"]["status"], "PASS")
-        self.assertEqual(package_report["native_ae"]["current_roi_package"], "pending")
+        self.assertEqual(package_report["native_ae"]["current_roi_package"],
+                         "partial / quick 10/10 passed")
+        self.assertEqual(package_report["native_ae"]["current_roi_package_evidence"],
+                         audit["evidence"]["native_ae_current_roi_evidence"])
+        self.assertIn("embedded in this immutable package", package_report["beta_support_scope"])
+        self.assertIn("not the 54-case matrix", package_report["claim_boundary"])
+        self.assertIn("does not prove all depths/routes/parameters, partial ROI/tile parity",
+                      package_report["claim_boundary"])
         roi = {row["plugin"]: row["roi"] for row in audit["plugins"]}
         self.assertEqual({name for name, status in roi.items() if status == "proven"},
                          {"ColorKeep", "OLMColorKey", "OLMToonDilate"})
@@ -242,17 +463,43 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         self.assertEqual(checkpoint["status"], "partial_complete")
         self.assertEqual(len(checkpoint["cases"]), 14)
         self.assertTrue(all(row["status"] == "ok" for row in checkpoint["cases"]))
-        self.assertEqual(audit["evidence"]["windows_hd7"], "pending")
+        hd = json.loads((ROOT / audit["evidence"]["windows_hd_checkpoint"]).read_text())
+        self.assertEqual(hd["schema"], "generic-beta-aexcompat-hd-checkpoint/1")
+        self.assertEqual(hd["status"], "PARTIAL_COMPLETE_5_OF_7")
+        self.assertEqual(len(hd["completed_cases"]), 5)
+        self.assertEqual(len(hd["pending_cases"]), 2)
+        self.assertTrue(all(row["status"] == "ok" and row["render_error"] == 0
+                            for row in hd["completed_cases"]))
+        self.assertTrue(all(re.fullmatch(r"[0-9a-f]{64}", row["input_sha256"])
+                            and re.fullmatch(r"[0-9a-f]{64}", row["output_sha256"])
+                            for row in hd["completed_cases"]))
+        self.assertEqual(set(hd["aex_sha256"]), {"ColorKeep", "OLMColorKey", "OLMToonDilate"})
+        self.assertTrue(all(re.fullmatch(r"[0-9a-f]{64}", value)
+                            for value in hd["aex_sha256"].values()))
+        self.assertRegex(hd["execution"]["runner_sha256"], r"^[0-9a-f]{64}$")
+        self.assertRegex(hd["execution"]["worker_sha256"], r"^[0-9a-f]{64}$")
+        self.assertFalse(hd["execution"]["process_residue_after_runs"])
+        self.assertEqual({row["id"] for row in hd["pending_cases"]}, {
+            "OLMToonDilate_hd_random_radius_2_01", "OLMToonDilate_hd_random_radius_5"
+        })
+        self.assertTrue(all("not executed" in row["reason"] and
+                            "campaign time budget" in row["reason"] and
+                            "runtime is unknown" in row["reason"] and
+                            "281.765s" in row["reason"] and "300s" in row["reason"]
+                            for row in hd["pending_cases"]))
+        self.assertEqual(audit["criteria"]["windows_grounding"], "partial")
         for key in ("capability_contract", "hostless_gate", "performance", "native_ae_pre_roi",
-                    "windows_nonhd_roi_checkpoint", "current_roi_package_report"):
+                    "native_ae_current_roi_evidence",
+                    "windows_nonhd_roi_checkpoint", "windows_hd_checkpoint",
+                    "current_roi_package_report"):
             evidence = audit["evidence"][key]
             self.assertTrue((ROOT / evidence).is_file(), evidence)
         for claim in ("ROI／tile／halo", "full-frame出力", "必要halo", "非ゼロorigin",
                       "ROI外の出力とpadding", "ASan／UBSan clean", "tile render",
-                      "finite-halo tile", "partial storage", "content bound", "14/14", "HD 7-case"):
+                      "finite-halo tile", "partial storage", "content bound", "14/14", "5/7",
+                      "所要時間は未計測", "native Windows／After Effects実行ではありません"):
             self.assertIn(claim, self.doc)
-        self.assertIn("ROI実装前のmilestone package", self.doc)
-        self.assertIn("現在のROI binariesはnative AE未実行", self.doc)
+        self.assertIn("immutable ROI v2 package", self.doc)
         self.assertNotIn("現在のgeneric buildはnative AE quick smoke", self.doc)
 
 

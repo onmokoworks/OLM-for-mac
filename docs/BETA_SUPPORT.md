@@ -8,7 +8,9 @@ Windows版との全設定・全画素一致を意味しません。表にない�
 ## 共通条件
 
 - CPU Softwareレンダーが対象です。GPUレンダーは対象外です。
-- 入出力は同じ幅・高さ・色深度で、各rowbytesが可視画素行以上必要です。
+- プラグイン別のpointwise ROI経路を除き、入出力は同じ幅・高さ・色深度です。
+  ROI経路ではworld originと各storage寸法から論理包含を検証します。いずれも各rowbytesは
+  そのworldの可視画素行以上必要です。
 - ROI方針はプラグイン別です。`extent_hint`はcontent boundで、storageや座標のauthorityではありません。
 - 独立した入出力バッファを前提とする経路があります。
 - 8／16／32 bpcは、それぞれAEのARGB32／ARGB64／ARGB128を指します。
@@ -21,13 +23,13 @@ Windows版との全設定・全画素一致を意味しません。表にない�
 |---|---|---|---|---|---|---|
 | ColorKeep | あり | Classic: 8/16、Smart: 8/16/32 | 正のgeometry、合法な独立stride。pointwise非ゼロorigin partial tile対応 | Enabled Color Num 1–100、指定色との一致保持 | Classic 32 bpcなし。tile座標はworld originをauthorityとする | typed iterate実装済み。8/16/32 bpc・1×1〜4K sanitizer、partial tile property成功。Windows/AE数値matrixは未完 |
 | OLMBlur | あり | Smart: 8/16/32 | 24×24より大きく、最大4096×2160。独立stride可 | Amount 1–1000、Smoothness 1–100、Repeat 1–10、Bias 1–2、Legacy on/off | ROI counterexampleによりfull-frame以外はfail-close。downsampleは1:1。4K超、高負荷条件は拒否 | hostless HD/4K性能smoke成功。Windows exactは固定fixtureのみ |
-| OLMColorKey | あり | Classic/Smart: 8/16/32 | 正のgeometry、合法な独立stride。pointwise非ゼロorigin partial tile対応 | pixel-local key／replace、Edge Thin −100〜100・Distance Type 1〜3、またはoracle済みEdge Blur profile tuple | Edge ThinとBlurの併用、未知のBlur tuple/internal directionは未対応。downsample 1:1 | hostless HD/4K・partial tile成功。Edge Thin Windows AEX 36ケース exact。Edge Blurは限定profile。native AE matrixは未完 |
-| OLMDirectionalBlur | 限定あり | Classic/Smart: 8/16/32 | 正のgeometry、padded row可。ROIはfull-frame-normalized overscan。512 MiB budget内（通常は最大HD 1920×1080） | Front Strength > 0、Back=0、Fade/Sharp Tail/Size Variation/Noise Variation=0。角度・Brightness finite。16/32はrender scale 1 | partial storageはfail-close。UHD/4K拒否。deep SDR制約あり。exact-tail等は固定union | 全深度front-only hostless HD、overscan policy確認。Windows exactは固定tuple中心 |
+| OLMColorKey | あり | Classic/Smart: 8/16/32 | pointwiseは非ゼロorigin partial tile対応。Thin＋Blurはfull-frameのみ | pixel-local key／replace、Edge Thin −100〜100・Distance Type 1〜3、oracle済みEdge Blur profile。portable合成laneはThin ±4／DT2＋Blur Direction 2（materialized 102）／Amount 4／DT2 | 上記以外のThin＋Blur、未知Blur tuple/internal directionは未対応。downsample 1:1 | hostless HD/4K・partial tile成功。固定13×11 actual-AEX 36 exactは非飽和combinedを識別しないため、合成laneの任意source Windows exactは未主張。current ROI v2 native quickはEdge 0で新合成laneを未収録 |
+| OLMDirectionalBlur | 限定あり | Classic/Smart: 8/16/32 | 各辺4096以下かつ総画素数4096×2160以下、padded row可。ROIはfull-frame-normalized overscan。3 GiB per-render plugin-owned admission（64 MiB reserve込み） | Front Strength 1–4000のうちgeometry別3億5000万work-unit上限内、Back=0、Fade/Sharp Tail/Size Variation/Noise Variation=0。Angleは16.16 UI域、Brightness 0–10。16/32はrender scale 1 | partial storageはfail-close。deep SDR制約あり。3 GiBはprocess/MFR全体の上限ではない。exact-tail等は固定union | 全深度front-only HD/UHD確認。canonical性能測定: HD 513,671,168 bytes／4.789秒、UHD 1,549,451,264 bytes／13.228秒。Windows exactは固定tuple中心 |
 | OLMDistanceGradation | あり | Classic: 8/16/32、Smart: 8/16。Smart 32は限定 | 正のgeometry、rowbytes≧active row。ROIはfull-frame-normalized overscan | 8/16 typed core。Smart 32は汎用Constant/Linear＋oracle profile | partial storageはfail-close。PF32 Powerは最大1 ULP契約。profile外設定は固定unionまたは拒否 | hostless HD/4K、overscan policy、PF32 profile検証。portable betaはbit-exact非保証 |
 | OLMKiraKira | 限定あり | Classic/Smart: 8/16/32 | full-frame、最小9×7。Mode 3/4はray admission必要 | oracle済みMode 1–4 tuple | ROI counterexampleによりpartial tileはfail-close。任意tupleではない | 全深度Mode 1–4 hostless 4K sanitizer/parity・性能smoke成功。Windows exactは元fixtureのみ |
 | OLMRadialBlur | 限定あり | Classic/Smart: 8/16/32 | 正のgeometry、独立stride。ROIはfull-frame-normalized overscan | Outer/Inner Strength整数0–64、Edge Fade 0–100、Ratio 1–5、Angle −360–360、Quality 1–5。Noise Variation 25/100、Size Variation 1/25/100、Zoom Type 3は列挙profile | partial storageはfail-close。Size/Noise交差等は限定 | baseline全深度HD/UHD、advanced、overscan policyをsanitizer検証。4K peak RSS約494 MiB。Windows/AE matrixは未完 |
 | OLMSmoother | あり | Classic: 8/16 | 正の同寸full-frame、独立stride可 | Use Key on/off、Tolerance 0–255 | ROI counterexampleによりpartial tileはfail-close。32 bpc/Smartなし | PF8/PF16 hostless HD/4K成功。Windows/AE matrixは未完 |
-| OLMSmoother2 | 限定あり | Smart: 8/16/32 | 16×16–8192×8192、独立stride。ROIはfull-frame-normalized overscan | v1/v2、Smoothness/Range/Extra各0–100、Key/Invert、Gamma None/All、Gamma 1.0–2.4 | partial storageはfail-close。custom LUT固定のみ。Classic拒否。classifier近似残存 | 全深度hostless HD/4K・overscan policy成功。classifier 191/256はWindows exact、残る65/256はsafety-only |
+| OLMSmoother2 | 限定あり | Smart: 8/16/32 | 16×16–8192×8192、独立stride。ROIはfull-frame-normalized overscan | v1/v2、Smoothness/Range/Extra各0–100、Key/Invert、Gamma None/All Colors、Gamma Colors palette count 1–5、Gamma 1.0–2.4 | partial storageはfail-close。custom/user LUTは拒否。Classic拒否。exact fixtureを汎用laneより優先。classifier近似残存 | 全深度hostless HD/4K。Gamma Colorsのpalette order／duplicate／inactive tail／alpha semanticsをhostless検証し、palette order／duplicate／toleranceにはPF16/PF32 padded 3×2 actual-AEX exact anchorがある。任意geometry・PF8・v1はhostless extrapolation。classifier 191/256はWindows exact、残る65/256はsafety-only |
 | OLMToonDilate | あり | Smart: 8/16/32 | 正のgeometry、独立stride。安全上限内のfinite-halo tile対応 | finite Search Radius 0–100、正のdownsample ratio | halo不足・不正origin/stride・安全上限超過はcommit前に拒否。Classic no-op | typed tile core、halo request、transactional commit検証。Windows/AE汎用matrixは未完 |
 
 ## 「検証済み」の読み方
@@ -37,22 +39,33 @@ Windows版との全設定・全画素一致を意味しません。表にない�
 - **native AE**: 実際のmacOS版After Effectsでロード・適用・レンダーした検証。
 
 現時点で新しい任意画像／一般geometryの各ベータ経路は「ソースに実装済み」の段階です。
-既存fixtureのWindows oracleとhostless回帰に加え、ROI実装前のmilestone packageはnative AE quick smokeを
-10プラグインすべてで通過しました。現在のROI binariesはnative AE未実行です。quick smoke自体も
-HD・各プラグインの最初の宣言深度・選択済みtuple各1件だけであり、
+既存fixtureのWindows oracleとhostless回帰に加え、2026-08-20のimmutable ROI v2 package
+（artifact SHA-256 `7c8fb27e69ccb0a3fb2708ab026172e67050e8e15eff5acb49daf82d8f42b72b`）に
+収録した10 binariesはnative AE quick smokeを10プラグインすべてで通過しました。ただし
+full-frame 1920×1080・各プラグインの最初の宣言深度（今回の10件はすべて8 bpc）・
+選択済みtuple各1件だけで、partial ROI／tile parityをnative AEで証明するものではありません。
+この10/10証拠は上記artifactのバイナリにだけ結び付き、パッケージ後のソース／文書変更や、
+全深度・Classic/Smart route・parameterの掛け合わせへ自動的に引き継がれません。
 上表の汎用範囲をすべて掛け合わせたWindows oracle／native AE検証は完了していません。
 したがって、重要な制作物では複製上で出力を確認してください。
 
+ROI v2 package reportの`beta_support_sha256`は、zip内にビルド時収録した
+`OLM_Mac_Plugins_Release/BETA_SUPPORT.md`のimmutable manifest hashです。現在閲覧中の
+`docs/BETA_SUPPORT.md`は、その後の検証結果を追記するlive文書であり、同じhashを持つ必要はありません。
+live文書のhashでpackage manifest値を置き換えることもありません。
+
 2026-08-20時点では、ColorKeepの8/16/32 bpcについて1×1から4Kまでの
 AddressSanitizer／UndefinedBehaviorSanitizer検証が成功しています。またhostless性能smokeでは、
-性能reportでは対応セルはすべて成功を要求し、非対応セルはreasonとsupport predicate付きで明示します。
-未計測セルを成功扱いにしていません。
+current live-sourceのcanonical性能reportは全10プラグイン×HD/UHDの20セルを実測し、20/20成功しました。
+対応セルはすべて成功を要求し、非対応セルはreasonとsupport predicate付きで明示します。
+未計測セルを成功扱いにしていません。この20/20はhostless候補ソースの性能証拠であり、上記immutable
+ROI v2 packageへ後付けされるnative AE証拠ではありません。
 これらはWindows oracleやnative AE検証の代替ではありません。
 
 日常の変更ではhostless、sanitizer、generic gateを実行します。native AEの54-case smokeは
 毎変更ではなく、milestoneまたはrelease candidateでまとめて実行する運用です。
 今回の10-case quick smokeもmilestone確認であり、54-case smokeの代替ではありません。証拠は
-[`olm_all10_generic_beta_quick_ae_smoke_20260820.json`](../refs/conformance/olm_all10_generic_beta_quick_ae_smoke_20260820.json)です。
+[`olm_all10_roi_v2_quick_ae_smoke_20260820.json`](../refs/conformance/olm_all10_roi_v2_quick_ae_smoke_20260820.json)です。
 
 ## 次の完了ゲート
 
@@ -78,8 +91,11 @@ full-frameへ正規化したoverscanを要求し、hostがpartial storageしか�
 Blur／KiraKira／Smoother v1はcounterexampleに基づきfull-frame以外をfail-closeします。
 `extent_hint`はcontent boundであり、storageや座標のauthorityとしては扱いません。
 
-AEXCompatの非HD checkpointは14/14成功しています。Windows HD 7-case checkpointは未実施です。
-残作業の優先順は、(1) HD7 Windows checkpoint、(2) overscan 4 laneのhost storage実証、
+AEXCompatの非HD checkpointは14/14成功しています。HD checkpointは5/7成功しています。
+ToonDilateのradius 2.01／5は未実行で、radius 0が281.765秒だったためcampaignの時間予算上
+延期しました。2件の所要時間は未計測です。これはmacOS上のhostless AEXCompat証拠で、
+native Windows／After Effects実行ではありません。
+残作業の優先順は、(1) HD Toon 2件の性能実行、(2) overscan 4 laneのhost storage実証、
 (3) counterexample 3 laneの全画面依存を解くことです。各laneのROI完了条件は次のとおりです。
 
 - full-frame出力と、同じframeを複数のROI／tileへ分割して合成した出力が対応全深度で一致する

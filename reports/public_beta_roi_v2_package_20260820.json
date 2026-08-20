@@ -5,6 +5,14 @@
   "artifact_sha256": "7c8fb27e69ccb0a3fb2708ab026172e67050e8e15eff5acb49daf82d8f42b72b",
   "artifact_size_bytes": 15845902,
   "configuration": "Release",
+  "package_build_git_commit": "f4e4dac86925b512d4c7b8784d250f1a68871cb7",
+  "package_build_git_dirty": true,
+  "package_manifest": {
+    "path": "OLM_Mac_Plugins_Release/manifest.json",
+    "sha256": "dbee69c0a38205bd21a5ecbec64f3b10ee16d2da9452687dec6250f41062408c",
+    "git_commit": "f4e4dac86925b512d4c7b8784d250f1a68871cb7",
+    "git_dirty": true
+  },
   "architectures": [
     "arm64",
     "x86_64"
@@ -17,11 +25,39 @@
     "status": "PASS",
     "passed": 38,
     "failed": 0,
-    "skipped": 0
+    "skipped": 0,
+    "scope": "Validation-time snapshot for the immutable ROI v2 artifact. The canonical report path may later be regenerated for newer live source and is not package payload metadata."
   },
   "beta_support_sha256": "a0da942298d594dfc1a206b2e122e0b23abb8bf3100d01523c1f5c9beeef89c9",
+  "beta_support_scope": "Compatibility field copied from package manifest: SHA-256 of OLM_Mac_Plugins_Release/BETA_SUPPORT.md embedded in this immutable package at build time. It is not the SHA-256 of the live docs/BETA_SUPPORT.md.",
+  "beta_support": {
+    "embedded_path": "OLM_Mac_Plugins_Release/BETA_SUPPORT.md",
+    "embedded_sha256": "a0da942298d594dfc1a206b2e122e0b23abb8bf3100d01523c1f5c9beeef89c9",
+    "manifest_field": "beta_support_sha256",
+    "live_repository_path": "docs/BETA_SUPPORT.md",
+    "live_repository_document_is_package_payload": false,
+    "relationship": "The live document includes post-package validation milestones; its current hash is intentionally not substituted for immutable package manifest metadata."
+  },
   "native_ae": {
-    "current_roi_package": "pending",
+    "current_roi_package": "partial / quick 10/10 passed",
+    "status": "PASS_BOUNDED_QUICK_SMOKE",
+    "artifact_sha256": "7c8fb27e69ccb0a3fb2708ab026172e67050e8e15eff5acb49daf82d8f42b72b",
+    "host": "native macOS After Effects",
+    "passed": 10,
+    "total": 10,
+    "current_roi_package_evidence": "refs/conformance/olm_all10_roi_v2_quick_ae_smoke_20260820.json",
+    "coverage": {
+      "geometry": "full-frame 1920x1080",
+      "depth": "first declared depth per plugin; all ten selected cases were 8 bpc",
+      "parameters": "one selected admitted tuple per plugin"
+    },
+    "not_proven": [
+      "the declared 54-case native AE matrix",
+      "all-depth, Classic/Smart-route, or parameter cross-products",
+      "partial ROI or tile parity in native AE",
+      "Windows-to-Mac pixel parity for these ten cases",
+      "source or documentation changes made after this package was built"
+    ],
     "pre_roi_milestone_evidence": "refs/conformance/olm_all10_generic_beta_quick_ae_smoke_20260820.json",
     "policy": "Run the native AE matrix only at a milestone or release-candidate boundary."
   },
@@ -37,5 +73,5 @@
     "OLMSmoother2": "2b99d33aeacd6b760573d2f065be9387b6c1e03886df7ef4c0350e69bc9e3d46",
     "OLMToonDilate": "ca4c09e28f87cdb55654a2532d20e33ac7e8d9cb57cf36f68f1699b7c48c5e85"
   },
-  "claim_boundary": "Hostless, sanitizer, build, and package verification are current. Native After Effects has not been run for these ROI binaries."
+  "claim_boundary": "The immutable artifact identified by artifact_sha256 passed its recorded 38-case generic gate and package verification, then its ten packaged binaries loaded, applied, and rendered in native After Effects for one full-frame 1920x1080, 8 bpc selected tuple each (10/10). This bounded quick smoke is not the 54-case matrix and does not prove all depths/routes/parameters, partial ROI/tile parity, Windows pixel parity, or any later live-source/document changes."
 }

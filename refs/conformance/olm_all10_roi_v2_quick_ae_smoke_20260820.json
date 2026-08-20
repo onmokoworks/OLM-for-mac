@@ -1,0 +1,32 @@
+{
+  "schema": "olm.roi-v2-quick-ae-smoke/1",
+  "date": "2026-08-20",
+  "status": "pass",
+  "passed": 10,
+  "total": 10,
+  "raw_report": "refs/conformance/olm_all10_roi_v2_quick_ae_smoke_raw_20260820.json",
+  "package": {"path": "handoff/public_beta/olm_mac_plugins_PublicBeta_ROI_v2_20260820.zip", "sha256": "7c8fb27e69ccb0a3fb2708ab026172e67050e8e15eff5acb49daf82d8f42b72b"},
+  "execution_branch": "codex/public-beta-roi",
+  "execution_head": "3a97926a4bd5bf9baaad4151b6af5dfb0e1845a7",
+  "package_build_git_commit": "f4e4dac86925b512d4c7b8784d250f1a68871cb7",
+  "package_build_git_dirty": true,
+  "mediacore_backup": "handoff/mac_plugin_backups/mediacore_20260820_232857",
+  "claim_boundary": [
+    "Current ROI v2 binaries load, apply, and render in native After Effects: 10/10 quick cases passed",
+    "One full-frame 1920x1080 case at each plugin's first declared depth and one selected admitted tuple",
+    "This is not the 54-case native AE smoke",
+    "This does not prove partial ROI or tile parity"
+  ],
+  "plugins": [
+    ["ColorKeep","2abf341d4c80ecd8932005879eaa0f4411ca9a217c56c9890ac5d280258cec4c"],
+    ["OLMBlur","36dce0185e7b52e8ff426f53a8308cfc62777e9dd01e410ed93903089bdecb74"],
+    ["OLMColorKey","742ec293c45a923c0282ffeb8c7d6c5e235c500499beab0d8fcffb958111a745"],
+    ["OLMDirectionalBlur","8af9da01072e4fb1f40fc285688a1924304914fc28af006113d594f31cfe3009"],
+    ["OLMDistanceGradation","8db9e3593312f2a9f762c10a89645b4807ac3d37430cb80cb27b0a0ba3cd3a56"],
+    ["OLMKiraKira","f1812e3356b876fcbe1233f999d8a5405b438663aee7f2e484361436488efefb"],
+    ["OLMRadialBlur","b8c2aa4d83c5ff9a1fa08338b02ef99a535e0dad5e48eca97a821d91836e38ad"],
+    ["OLMSmoother","51b69089822c6c6a2852805d3ab1452278fd603c5a99cec171e47e70851ba4d8"],
+    ["OLMSmoother2","2b99d33aeacd6b760573d2f065be9387b6c1e03886df7ef4c0350e69bc9e3d46"],
+    ["OLMToonDilate","ca4c09e28f87cdb55654a2532d20e33ac7e8d9cb57cf36f68f1699b7c48c5e85"]
+  ]
+}

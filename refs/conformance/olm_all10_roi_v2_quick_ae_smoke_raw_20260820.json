@@ -1,0 +1,25 @@
+{
+  "schema": "olm.roi-v2-quick-ae-smoke-raw/1",
+  "source_campaign": "/tmp/olm_roi_v2_quick_native_ae_20260820/campaign_result.json",
+  "source_campaign_sha256": "ca729285c1ef0c14dd81518901bd4a63800334b9ac463e8f64b53178dbb7f7ab",
+  "status": "completed",
+  "package": {"path": "handoff/public_beta/olm_mac_plugins_PublicBeta_ROI_v2_20260820.zip", "sha256": "7c8fb27e69ccb0a3fb2708ab026172e67050e8e15eff5acb49daf82d8f42b72b"},
+  "execution_branch": "codex/public-beta-roi",
+  "execution_head": "3a97926a4bd5bf9baaad4151b6af5dfb0e1845a7",
+  "package_build_git_commit": "f4e4dac86925b512d4c7b8784d250f1a68871cb7",
+  "package_build_git_dirty": true,
+  "mediacore_backup": "handoff/mac_plugin_backups/mediacore_20260820_232857",
+  "final_artifact_validation": "The recorded output SHA-256 and sizes were recomputed after the campaign from complete PNG files; the runner's immediate png_observation size is not authoritative for this evidence.",
+  "cases": [
+    {"plugin":"ColorKeep","case_id":"colorkeep_arbitrary_hd_8bpc","depth":8,"geometry":[1920,1080],"tuple":"supported defaults","status":"passed","installed_sha256":"2abf341d4c80ecd8932005879eaa0f4411ca9a217c56c9890ac5d280258cec4c","output_sha256":"0b7674ce3837c1f49f9b1dc1ade6319a5fa18c60b6a7ab069c993d54e7128632","output_size_bytes":8424},
+    {"plugin":"OLMBlur","case_id":"blur_arbitrary_hd_8bpc","depth":8,"geometry":[1920,1080],"tuple":"supported defaults","status":"passed","installed_sha256":"36dce0185e7b52e8ff426f53a8308cfc62777e9dd01e410ed93903089bdecb74","output_sha256":"217f741e25248fbfea8c88e3cb321e1e0dab83a0e67f6a9090cfa9bb03e3704c","output_size_bytes":2727479},
+    {"plugin":"OLMColorKey","case_id":"colorkey_arbitrary_hd_8bpc","depth":8,"geometry":[1920,1080],"tuple":"pixel-local defaults (Edge Thin/Blur 0)","status":"passed","installed_sha256":"742ec293c45a923c0282ffeb8c7d6c5e235c500499beab0d8fcffb958111a745","output_sha256":"daf822bf6ca7ecc50367f27cc04e6d112a9d9c9157118bbd0a22f6c64cfc04b4","output_size_bytes":889395},
+    {"plugin":"OLMDirectionalBlur","case_id":"directional_arbitrary_hd_8bpc","depth":8,"geometry":[1920,1080],"tuple":"front-only baseline","status":"passed","installed_sha256":"8af9da01072e4fb1f40fc285688a1924304914fc28af006113d594f31cfe3009","output_sha256":"0e9984fc33e90e585d2007b58c6ad2b1df06f487818300a7527c72d280a87b74","output_size_bytes":2416779},
+    {"plugin":"OLMDistanceGradation","case_id":"distance_arbitrary_hd_8bpc","depth":8,"geometry":[1920,1080],"tuple":"Blur None + Constant interpolation","status":"passed","installed_sha256":"8db9e3593312f2a9f762c10a89645b4807ac3d37430cb80cb27b0a0ba3cd3a56","output_sha256":"0bf0e14044d3692baf29d10ff5c099ead0eccd1f8a0bde19b38e7a39cc9c9dd5","output_size_bytes":34052},
+    {"plugin":"OLMKiraKira","case_id":"kirakira_arbitrary_hd_8bpc","depth":8,"geometry":[1920,1080],"tuple":"closed Mode 2 Highlight radius 3 tuple","status":"passed","installed_sha256":"f1812e3356b876fcbe1233f999d8a5405b438663aee7f2e484361436488efefb","output_sha256":"131fc7d27a6d422d483c0915cf5a6f991c5746646756ea0cc18d8aba4404f81b","output_size_bytes":1995737},
+    {"plugin":"OLMRadialBlur","case_id":"radial_arbitrary_hd_8bpc","depth":8,"geometry":[1920,1080],"tuple":"centered Zoom baseline","status":"passed","installed_sha256":"b8c2aa4d83c5ff9a1fa08338b02ef99a535e0dad5e48eca97a821d91836e38ad","output_sha256":"fd2fad230bc73ee7e7ecdc85c11aefe878e8658dd839130dcbb9c8919d175090","output_size_bytes":3993946},
+    {"plugin":"OLMSmoother","case_id":"smoother_arbitrary_hd_8bpc","depth":8,"geometry":[1920,1080],"tuple":"Use Key off default","status":"passed","installed_sha256":"51b69089822c6c6a2852805d3ab1452278fd603c5a99cec171e47e70851ba4d8","output_sha256":"3d22c1321fe3712db065ae855978b7948169cc9b2e51d2705c3891ce4ca6f941","output_size_bytes":2078762},
+    {"plugin":"OLMSmoother2","case_id":"smoother2_arbitrary_hd_8bpc","depth":8,"geometry":[1920,1080],"tuple":"v2 defaults","status":"passed","installed_sha256":"2b99d33aeacd6b760573d2f065be9387b6c1e03886df7ef4c0350e69bc9e3d46","output_sha256":"13019fb2ea7ab849fb70b6b44cdb8c49cd1224227f8727f4703cec63e4deac9b","output_size_bytes":2312783},
+    {"plugin":"OLMToonDilate","case_id":"toon_arbitrary_hd_8bpc","depth":8,"geometry":[1920,1080],"tuple":"finite nonnegative Search Radius default","status":"passed","installed_sha256":"ca4c09e28f87cdb55654a2532d20e33ac7e8d9cb57cf36f68f1699b7c48c5e85","output_sha256":"29ee6c2cee3e71fe0f4db003703337e0faf91228f04ea268fb60373927d9f41e","output_size_bytes":351949}
+  ]
+}
