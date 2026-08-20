@@ -1180,8 +1180,14 @@ static bool IsGenericBetaFullFrameDimensions(A_long width, A_long height)
 {
 	// The beta excludes tiny diagnostic leaves. 9x7 is also the minimum used by
 	// the geometry-general Mode 3/4 contracts and gives all directional kernels
-	// a meaningful border surface.
-	return width >= 9 && height >= 7;
+	// a meaningful border surface. Bound the generic lane to the production
+	// range this beta promises: DCI-4K area in either orientation, with neither
+	// side exceeding 4096. This also makes every frame-sized allocation and the
+	// Mode-3 worst-case Length 300 workload finite before any render allocation.
+	constexpr int64_t kMaxGenericPixels = INT64_C(4096) * INT64_C(2160);
+	return width >= 9 && height >= 7 && width <= 4096 && height <= 4096 &&
+		static_cast<int64_t>(width) * static_cast<int64_t>(height) <=
+			kMaxGenericPixels;
 }
 
 // Generic beta lane: retain the parameter tuples already closed against the
@@ -1192,6 +1198,115 @@ static bool IsGenericBetaMode12Tuple(const OLMKiraKiraInfo &info)
 {
 	return (info.blur_mode == 1 || info.blur_mode == 2) &&
 		ClassicClosureSourceFamilyForTuple(info) != ClassicClosureSource_None;
+}
+
+static bool IsGenericBetaMode3HorizontalTuple(const OLMKiraKiraInfo &info)
+{
+	// Keep the fixed Windows-exported closure at Length 50. The generic lane
+	// reuses that tuple's remaining controls while admitting the complete
+	// visible UI Length range grounded by the recovered Mode-3 helper chain.
+	if (info.blur_mode != 3 || info.horizontal_length < 1 ||
+		info.horizontal_length > 300) {
+		return false;
+	}
+	OLMKiraKiraInfo owner_tuple = info;
+	owner_tuple.horizontal_length = 50;
+	return ClassicClosureSourceFamilyForTuple(owner_tuple) ==
+		ClassicClosureSource_SemiTransparentColor;
+}
+
+static bool KiraCheckedMultiply(uint64_t left, uint64_t right, uint64_t *out)
+{
+	if (!out || (right != 0 && left > UINT64_MAX / right)) return false;
+	*out = left * right;
+	return true;
+}
+
+static bool KiraCheckedAdd(uint64_t left, uint64_t right, uint64_t *out)
+{
+	if (!out || left > UINT64_MAX - right) return false;
+	*out = left + right;
+	return true;
+}
+
+static bool IsGenericBetaMode3BudgetAdmitted(
+	const OLMKiraKiraInfo &info,
+	A_long width,
+	A_long height)
+{
+	if (!IsGenericBetaMode3HorizontalTuple(info) ||
+		!IsGenericBetaFullFrameDimensions(width, height)) {
+		return false;
+	}
+	const double pi = 3.14159265358979323846;
+	const double radians = info.glow_rotation * pi / 180.0;
+	const double absolute_cosine = std::abs(std::cos(radians));
+	const double absolute_sine = std::abs(std::sin(radians));
+	const A_long rotated_width =
+		AexRotatedExtent(width, height, absolute_cosine, absolute_sine);
+	const A_long rotated_height =
+		AexRotatedExtent(height, width, absolute_cosine, absolute_sine);
+	if (rotated_width <= 0 || rotated_height <= 0) return false;
+
+	uint64_t frame_pixels = 0;
+	uint64_t rotated_pixels = 0;
+	if (!KiraCheckedMultiply(static_cast<uint64_t>(width),
+			static_cast<uint64_t>(height), &frame_pixels) ||
+		!KiraCheckedMultiply(static_cast<uint64_t>(rotated_width),
+			static_cast<uint64_t>(rotated_height), &rotated_pixels)) {
+		return false;
+	}
+	const uint64_t kernel_taps =
+		static_cast<uint64_t>(info.horizontal_length) * 4u + 1u;
+	const uint64_t radius =
+		static_cast<uint64_t>(info.horizontal_length) * 2u;
+	const uint64_t reflect_period =
+		static_cast<uint64_t>(rotated_width - 1);
+	const uint64_t reflect_fold = std::max<uint64_t>(
+		1u, (radius + reflect_period - 1u) / reflect_period);
+	uint64_t gaussian_work_units = 0;
+	uint64_t folded_gaussian_work_units = 0;
+	uint64_t warp_work_units = 0;
+	uint64_t outer_work_units = 0;
+	uint64_t work_units = 0;
+	if (!KiraCheckedMultiply(rotated_pixels, kernel_taps,
+			&gaussian_work_units) ||
+		!KiraCheckedMultiply(gaussian_work_units, reflect_fold,
+			&folded_gaussian_work_units) ||
+		!KiraCheckedMultiply(rotated_pixels, 8u, &warp_work_units) ||
+		!KiraCheckedMultiply(frame_pixels, 20u, &outer_work_units) ||
+		!KiraCheckedAdd(folded_gaussian_work_units, warp_work_units,
+			&work_units) ||
+		!KiraCheckedAdd(work_units, outer_work_units, &work_units))
+		return false;
+
+	uint64_t steady_bytes = 0;
+	uint64_t ray_frame_bytes = 0;
+	uint64_t ray_rotated_bytes = 0;
+	uint64_t ray_peak_bytes = 0;
+	uint64_t compose_frame_bytes = 0;
+	uint64_t compose_rotated_bytes = 0;
+	uint64_t compose_peak_bytes = 0;
+	uint64_t kernel_bytes = 0;
+	uint64_t peak_bytes = 0;
+	if (!KiraCheckedMultiply(frame_pixels, 92u, &steady_bytes) ||
+		!KiraCheckedMultiply(frame_pixels, 44u, &ray_frame_bytes) ||
+		!KiraCheckedMultiply(rotated_pixels, 12u, &ray_rotated_bytes) ||
+		!KiraCheckedAdd(ray_frame_bytes, ray_rotated_bytes, &ray_peak_bytes) ||
+		!KiraCheckedMultiply(frame_pixels, 48u, &compose_frame_bytes) ||
+		!KiraCheckedMultiply(rotated_pixels, 8u, &compose_rotated_bytes) ||
+		!KiraCheckedAdd(compose_frame_bytes, compose_rotated_bytes,
+			&compose_peak_bytes) ||
+		!KiraCheckedMultiply(kernel_taps, 12u, &kernel_bytes) ||
+		!KiraCheckedAdd(std::max({steady_bytes, ray_peak_bytes,
+			compose_peak_bytes}), kernel_bytes, &peak_bytes)) {
+		return false;
+	}
+
+	constexpr uint64_t kMaxPluginOwnedBytes = UINT64_C(1) << 30;
+	constexpr uint64_t kMaxMode3WorkUnits = UINT64_C(12000000000);
+	return peak_bytes <= kMaxPluginOwnedBytes &&
+		work_units <= kMaxMode3WorkUnits;
 }
 
 static bool GenericBetaDirectionalRayIsAdmitted(
@@ -1227,10 +1342,13 @@ static bool IsGenericBetaMode34TupleForGeometry(
 	A_long height)
 {
 	if ((info.blur_mode != 3 && info.blur_mode != 4) ||
-		ClassicClosureSourceFamilyForTuple(info) == ClassicClosureSource_None ||
 		!IsGenericBetaFullFrameDimensions(width, height)) {
 		return false;
 	}
+	const bool tuple_is_admitted = info.blur_mode == 3
+		? IsGenericBetaMode3BudgetAdmitted(info, width, height)
+		: ClassicClosureSourceFamilyForTuple(info) != ClassicClosureSource_None;
+	if (!tuple_is_admitted) return false;
 	return GenericBetaDirectionalRayIsAdmitted(
 			width, height, info.vertical_length,
 			90.0 + info.glow_rotation, info.blur_mode) &&
@@ -1255,6 +1373,10 @@ static bool IsGenericBetaTupleForGeometry(
 		IsGenericBetaMode34TupleForGeometry(info, width, height);
 }
 
+static bool WorldStorageRangesDoNotOverlap(
+	const PF_EffectWorld *input,
+	const PF_EffectWorld *output);
+
 static bool IsGenericBetaClassicLayout(
 	const PF_EffectWorld *input,
 	const PF_EffectWorld *output)
@@ -1264,12 +1386,7 @@ static bool IsGenericBetaClassicLayout(
 		input->width == output->width && input->height == output->height &&
 		input->origin_x == 0 && input->origin_y == 0 &&
 		output->origin_x == 0 && output->origin_y == 0 &&
-		input->extent_hint.left == 0 && input->extent_hint.top == 0 &&
-		input->extent_hint.right == input->width &&
-		input->extent_hint.bottom == input->height &&
-		output->extent_hint.left == 0 && output->extent_hint.top == 0 &&
-		output->extent_hint.right == output->width &&
-		output->extent_hint.bottom == output->height;
+		WorldStorageRangesDoNotOverlap(input, output);
 }
 
 static bool IsMode3Closure32x18Tuple(const OLMKiraKiraInfo &info)
@@ -1299,7 +1416,11 @@ static bool IsClassicClosureLayout(
 	const int64_t closure_rowbytes =
 		5 * static_cast<int64_t>(pixel_size) + 12;
 	return input->rowbytes == closure_rowbytes &&
-		output->rowbytes == closure_rowbytes;
+		output->rowbytes == closure_rowbytes &&
+		input->extent_hint.left == 0 && input->extent_hint.top == 0 &&
+		input->extent_hint.right == 5 && input->extent_hint.bottom == 3 &&
+		output->extent_hint.left == 0 && output->extent_hint.top == 0 &&
+		output->extent_hint.right == 5 && output->extent_hint.bottom == 3;
 }
 
 static bool IsMode3Closure32x18Layout(
@@ -1318,7 +1439,11 @@ static bool IsMode3Closure32x18Layout(
 	const int64_t closure_rowbytes =
 		32 * static_cast<int64_t>(pixel_size) + 12;
 	return input->rowbytes == closure_rowbytes &&
-		output->rowbytes == closure_rowbytes;
+		output->rowbytes == closure_rowbytes &&
+		input->extent_hint.left == 0 && input->extent_hint.top == 0 &&
+		input->extent_hint.right == 32 && input->extent_hint.bottom == 18 &&
+		output->extent_hint.left == 0 && output->extent_hint.top == 0 &&
+		output->extent_hint.right == 32 && output->extent_hint.bottom == 18;
 }
 
 static A_u_short ClosureByteToPF16(A_u_char value)
@@ -1384,6 +1509,38 @@ static bool ClassicClosureSourceMatches(
 				}
 				default:
 					return false;
+			}
+		}
+	}
+	return true;
+}
+
+static bool GenericBetaInputIsFiniteSDR(
+	const PF_EffectWorld *input,
+	PF_PixelFormat format)
+{
+	if (!input) return false;
+	if (format == PF_PixelFormat_ARGB32) return true;
+	for (A_long y = 0; y < input->height; ++y) {
+		for (A_long x = 0; x < input->width; ++x) {
+			if (format == PF_PixelFormat_ARGB64) {
+				const PF_Pixel16 &pixel = *PixelAtConst<PF_Pixel16>(input, x, y);
+				if (pixel.alpha > PF_MAX_CHAN16 || pixel.red > PF_MAX_CHAN16 ||
+					pixel.green > PF_MAX_CHAN16 || pixel.blue > PF_MAX_CHAN16) {
+					return false;
+				}
+			} else if (format == PF_PixelFormat_ARGB128) {
+				const PF_PixelFloat &pixel =
+					*PixelAtConst<PF_PixelFloat>(input, x, y);
+				const float lanes[] = {
+					pixel.alpha, pixel.red, pixel.green, pixel.blue
+				};
+				for (float lane : lanes) {
+					if (!std::isfinite(lane) || lane < 0.0f || lane > 1.0f)
+						return false;
+				}
+			} else {
+				return false;
 			}
 		}
 	}
@@ -1824,9 +1981,14 @@ static PF_Err Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *para
 		(classic_closure || mode3_32x18_closure) &&
 		source_family != ClassicClosureSource_None &&
 		ClassicClosureSourceMatches(input, format, source_family);
+	// Exact bytes retain exact precedence. A different source, legal stride, or
+	// content extent is intentionally reclassified into the generic lane rather
+	// than inheriting the older fixture-only rejection boundary.
 	const bool generic_beta =
+		!exact_closure &&
 		IsGenericBetaTupleForGeometry(info, input->width, input->height) &&
-		IsGenericBetaClassicLayout(input, output);
+		IsGenericBetaClassicLayout(input, output) &&
+		GenericBetaInputIsFiniteSDR(input, format);
 	KiraDiagnosticLog("classic admission exact=%d generic=%d family=%d",
 		(int)exact_closure, (int)generic_beta, (int)source_family);
 	if (!exact_closure && !generic_beta) {
@@ -1842,6 +2004,7 @@ static PF_Err Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *para
 typedef struct {
 	PF_FpLong comp_width;
 	PF_FpLong comp_height;
+	bool generic_full_frame_request;
 } PreRenderData;
 
 constexpr A_long kSmartClosureWidth = 5;
@@ -1969,10 +2132,6 @@ static bool SmartGenericBetaWorldPairIsFullFrame(
 		output->width == width && output->height == height &&
 		input->origin_x == 0 && input->origin_y == 0 &&
 		output->origin_x == 0 && output->origin_y == 0 &&
-		input->extent_hint.left == 0 && input->extent_hint.top == 0 &&
-		input->extent_hint.right == width && input->extent_hint.bottom == height &&
-		output->extent_hint.left == 0 && output->extent_hint.top == 0 &&
-		output->extent_hint.right == width && output->extent_hint.bottom == height &&
 		WorldStorageRangesDoNotOverlap(input, output);
 }
 
@@ -2003,6 +2162,19 @@ static PF_Err SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra
 		has_generic_render_dimensions && requested_rect.left <= 0 &&
 		requested_rect.top <= 0 && requested_rect.right >= generic_render_width &&
 		requested_rect.bottom >= generic_render_height;
+	const bool mode3_32x18_request =
+		RectIsFullMode3SmartClosure(requested_rect);
+	const bool frame_dimensions_are_known =
+		in_data->width > 0 && in_data->height > 0;
+	const bool known_frame_is_one_to_one = frame_dimensions_are_known &&
+		in_data->downsample_x.num > 0 && in_data->downsample_x.den > 0 &&
+		in_data->downsample_y.num > 0 && in_data->downsample_y.den > 0 &&
+		in_data->downsample_x.num == in_data->downsample_x.den &&
+		in_data->downsample_y.num == in_data->downsample_y.den;
+	const bool request_contains_known_full_frame = known_frame_is_one_to_one &&
+		requested_rect.left <= 0 && requested_rect.top <= 0 &&
+		requested_rect.right >= in_data->width &&
+		requested_rect.bottom >= in_data->height;
 	// Keep generic ROI/tile requests closed.  The isotropic Highlight branch has
 	// finite per-axis halo passes * radius (Mode 1: radius, Modes 2/4: 3*radius).
 	// Directional Modes 1/2 use rotated-axis R = passes*max(floor(L/2),
@@ -2015,7 +2187,15 @@ static PF_Err SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra
 	// therefore changes coordinates and, for Mode 4, cannot have a finite exact
 	// halo.  Until SmartRender carries full-comp coordinates and a proved subset
 	// admission, only requests containing the complete frame may be normalized.
-	if (!SmartOutputRequestIsAdmitted(requested_rect) &&
+	// Preserve the historical 5x3 requests. The separate 32x18 owner is only
+	// valid for an unknown legacy host geometry or for a proved 1:1 full-frame
+	// request; being outside the generic SD-DCI cap must not make dimensions
+	// appear unknown and reopen a partial exact tile.
+	const bool exact_request_matches_known_frame =
+		SmartOutputRequestIsAdmitted(requested_rect) &&
+		(!mode3_32x18_request || !frame_dimensions_are_known ||
+		 request_contains_known_full_frame);
+	if (!exact_request_matches_known_frame &&
 		!request_contains_generic_full_frame) {
 		KiraDiagnosticLog("pre reject request_not_admitted");
 		return PF_Err_BAD_CALLBACK_PARAM;
@@ -2024,11 +2204,8 @@ static PF_Err SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra
 	PF_CheckoutResult in_result;
 	AEFX_CLR_STRUCT(in_result);
 
-	const bool mode3_32x18_request =
-		RectIsFullMode3SmartClosure(requested_rect);
 	const bool generic_beta_request =
 		!RectIsFullSmartClosure(requested_rect) &&
-		!mode3_32x18_request &&
 		request_contains_generic_full_frame;
 	const PF_LRect full_rect = generic_beta_request
 		? PF_LRect{0, 0, generic_render_width, generic_render_height}
@@ -2062,14 +2239,20 @@ static PF_Err SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra
 		(long)in_result.max_result_rect.right, (long)in_result.max_result_rect.bottom);
 	const A_long expected_width = full_rect.right;
 	const A_long expected_height = full_rect.bottom;
+	const bool exact_checkout_rects_are_full =
+		in_result.result_rect.left == 0 && in_result.result_rect.top == 0 &&
+		in_result.result_rect.right == expected_width &&
+		in_result.result_rect.bottom == expected_height &&
+		in_result.max_result_rect.left == 0 &&
+		in_result.max_result_rect.top == 0 &&
+		in_result.max_result_rect.right == expected_width &&
+		in_result.max_result_rect.bottom == expected_height;
+	// result_rect/max_result_rect describe content, not storage. Generic
+	// arbitrary images may therefore report empty or partial content bounds;
+	// ref_width/ref_height and the Smart worlds remain the storage authority.
 	if (in_result.ref_width != expected_width ||
 		in_result.ref_height != expected_height ||
-		in_result.result_rect.left != 0 || in_result.result_rect.top != 0 ||
-		in_result.result_rect.right != expected_width ||
-		in_result.result_rect.bottom != expected_height ||
-		in_result.max_result_rect.left != 0 || in_result.max_result_rect.top != 0 ||
-		in_result.max_result_rect.right != expected_width ||
-		in_result.max_result_rect.bottom != expected_height) {
+		(!generic_beta_request && !exact_checkout_rects_are_full)) {
 		KiraDiagnosticLog("pre reject checkout_geometry expected=%ldx%ld",
 			(long)expected_width, (long)expected_height);
 		return PF_Err_BAD_CALLBACK_PARAM;
@@ -2082,6 +2265,7 @@ static PF_Err SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra
 	}
 	pre->comp_width = expected_width;
 	pre->comp_height = expected_height;
+	pre->generic_full_frame_request = generic_beta_request;
 	extra->output->result_rect = full_rect;
 	extra->output->max_result_rect = full_rect;
 	extra->output->flags |= PF_RenderOutputFlag_RETURNS_EXTRA_PIXELS;
@@ -2149,6 +2333,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 			pre->comp_width == kMode3SmartClosureWidth &&
 			pre->comp_height == kMode3SmartClosureHeight;
 		const bool pre_is_generic_beta = pre &&
+			pre->generic_full_frame_request &&
 			IsGenericBetaFullFrameDimensions(
 				static_cast<A_long>(pre->comp_width),
 				static_cast<A_long>(pre->comp_height));
@@ -2185,12 +2370,18 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 			const bool exact_tuple_is_admitted =
 				(pre_is_classic && IsClassicClosureTuple(info)) ||
 				(pre_is_mode3_32x18 && IsMode3Closure32x18Tuple(info));
-			const bool exact_closure = exact_tuple_is_admitted &&
+			// The exact fixture remains isolated only when source and historical
+			// storage layout both match. Safe deviations are generic evidence and
+			// must satisfy its SDR, non-overlap, geometry, and budget checks.
+			const bool exact_closure = exact_world_layout &&
+				exact_tuple_is_admitted &&
 				source_family != ClassicClosureSource_None &&
 				ClassicClosureSourceMatches(input_world, format, source_family);
-			const bool generic_beta = pre_is_generic_beta &&
+			const bool generic_beta = !exact_closure &&
+				generic_world_layout && pre_is_generic_beta &&
 				IsGenericBetaTupleForGeometry(
-					info, input_world->width, input_world->height);
+					info, input_world->width, input_world->height) &&
+				GenericBetaInputIsFiniteSDR(input_world, format);
 			KiraDiagnosticLog(
 				"smart admission family=%d exact_tuple=%d exact=%d generic=%d",
 				(int)source_family, (int)exact_tuple_is_admitted,
