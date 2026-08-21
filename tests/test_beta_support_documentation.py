@@ -76,7 +76,7 @@ class BetaSupportDocumentationContract(unittest.TestCase):
             "ColorKeep": ("Iterate8Suite2", "Iterate16Suite2", "IterateFloatSuite2"),
             "OLMBlur": ("bpc==8?4u:(bpc==16?8u:(bpc==32?16u:0u))", "SmartRender("),
             "OLMColorKey": ("RenderTyped<PF_Pixel8>", "RenderTyped<PF_Pixel16>", "RenderTyped<PF_PixelFloat>"),
-            "OLMDirectionalBlur": ("CanUseGenericSingleSide8", "RenderGenericSingleSide16", "RenderGenericSingleSide32"),
+            "OLMDirectionalBlur": ("CanUseGenericNeutral8", "RenderGenericNeutral16", "RenderGenericNeutral32"),
             "OLMDistanceGradation": ("RenderBits<PF_Pixel8>", "RenderBits<PF_Pixel16>", "RenderBits<PF_PixelFloat>"),
             "OLMKiraKira": ("IsGenericBetaMode12Tuple", "IsGenericBetaMode3HorizontalTuple", "IsGenericBetaMode3BudgetAdmitted", "BitDepthForFormat"),
             "OLMRadialBlur": ("IsGenericBaselineWorldPair<PixelT>", "RenderZoomTyped<PF_PixelFloat>"),
@@ -101,9 +101,9 @@ class BetaSupportDocumentationContract(unittest.TestCase):
                 "info.edge_thin_amount == -4.0 || info.edge_thin_amount == 4.0",
             ),
             "OLMDirectionalBlur": (
-                "const bool front_only = info.front_strength != 0 && info.back_strength == 0",
-                "const bool back_only = info.front_strength == 0 && info.back_strength != 0",
-                "strength < 1 || strength > 4000",
+                "const bool any_side = info.front_strength != 0 || info.back_strength != 0",
+                "info.front_strength < 0",
+                "info.back_strength > 4000",
                 "info.noise_variation == 0.0",
             ),
             "OLMDistanceGradation": ("p.blur_mode == BLUR_MODE_NONE", "p.interp_mode == INTERP_CONSTANT || p.interp_mode == INTERP_LINEAR", "is_admitted_pf32_smart_oracle_profile", "PF32_POWER_GENERIC_MAX_ULP == 1"),
@@ -168,10 +168,11 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         directional = self.sources["OLMDirectionalBlur"]
         for token in (
             "pixel.alpha > 32768",
-            "IsGenericSingleSideDeepParameters",
+            "IsGenericNeutralDeepParameters",
             "IsRetainedNeutralBackExact8",
             "IsRetainedNeutralBackExact16",
             "IsRetainedNeutralBackExact32",
+            "IsRetainedNeutralDualExact16",
             "GenericPF32SDRInput",
             "RenderExact8(input, output, nullptr, info, true)",
         ):
@@ -180,15 +181,16 @@ class BetaSupportDocumentationContract(unittest.TestCase):
             self.assertIn(claim, self.doc)
         for claim in ("Thin ±4／DT2", "materialized 102", "full-frameのみ",
                       "任意source Windows exactは未主張", "native quickはEdge 0",
-                      "FrontまたはBackの厳密片側", "6 cases/geometry",
+                      "Front／Backの片側または両側", "9 cases/geometry",
                       "actual-AEX raw-callback／production replay anchorはPF8 960×540・Back 240・Angle 0・Gain 1・scale 0.5",
                       "native AE saved-frameではない",
                       "16×16 retained exact unionはPF8 Back 8・Angle 0/45・Gain 1",
                       "PF16 Back 1/2/8・Angle 45・Gain 1",
+                      "PF16 Dual Front 1/2/8＋Back 1・Angle 45・Gain 1",
                       "PF32 Back 1・Angle 0/45・Gain 0.5/1およびBack 8・Angle 45・Gain 1",
                       "すべてscale 1",
-                      "一般geometry・全Strength・native AE・ROI v2 packageには遡及しない",
-                      "current canonical性能reportはHD/UHDそれぞれFront/Back×PF8/PF16/PF32の6 cases/geometry",
+                      "一般geometry・全Strength組合せ・generic DualのWindows exact・native AE・ROI v2 packageには遡及しない",
+                      "current canonical性能reportはHD/UHDそれぞれFront／Back／Dual×PF8/PF16/PF32の9 cases/geometry",
                       "source/toolchainの実行前後一致",
                       "UI全300 Length×3深度=900",
                       "HD/UHD各15 cases",
@@ -507,7 +509,7 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         self.assertIn("未計測セルを成功扱いにしていません", self.doc)
         self.assertIn("current live-source", self.doc)
         self.assertIn("20セルを実測し、20/20成功", self.doc)
-        self.assertIn("6 cases/geometryをStrength 2", self.doc)
+        self.assertIn("9 cases/geometryを各active Strength 2", self.doc)
         self.assertIn("実行前後でhash照合", self.doc)
         self.assertEqual(perf["provenance"]["binding_mode"], "execution_pre_and_post")
         self.assertEqual(
@@ -522,14 +524,16 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         expected_directional_cases = {
             (side, depth, front, back)
             for depth in (8, 16, 32)
-            for side, front, back in (("front", 2, 0), ("back", 0, 2))
+            for side, front, back in (
+                ("front", 2, 0), ("back", 0, 2), ("dual", 2, 2)
+            )
         }
         for row in directional:
             cases = row.get("case_results", [])
             self.assertEqual(
-                len(cases), 6,
-                "stale Directional performance report: expected exactly six "
-                "single-side cases per geometry",
+                len(cases), 9,
+                "stale Directional performance report: expected exactly nine "
+                "neutral single/dual cases per geometry",
             )
             observed = {
                 (case.get("side"), case.get("depth"),
@@ -539,8 +543,8 @@ class BetaSupportDocumentationContract(unittest.TestCase):
             self.assertEqual(
                 observed,
                 expected_directional_cases,
-                "stale Directional performance report: regenerate it with six "
-                "Front/Back single-side cases per geometry before restoring the "
+                "stale Directional performance report: regenerate it with nine "
+                "Front/Back/Dual cases per geometry before restoring the "
                 "performance claim",
             )
             self.assertTrue(all(case.get("angle") == 37.25 for case in cases))
@@ -809,13 +813,13 @@ class BetaSupportDocumentationContract(unittest.TestCase):
                       audit["evidence"]["performance_status"])
         self.assertIn("execution_pre_and_post exact source/toolchain binding",
                       audit["evidence"]["performance_status"])
-        self.assertIn("6 Front/Back cases/geometry",
+        self.assertIn("9 Front/Back/Dual cases/geometry",
                       audit["evidence"]["performance_status"])
         self.assertIn("15 cases/geometry including Mode 3 Horizontal Length 300 Rotation 1",
                       audit["evidence"]["performance_status"])
-        self.assertIn("HD 36.28 seconds / peak 487800832 bytes",
+        self.assertIn("HD 37.90 seconds / peak 512049152 bytes",
                       audit["evidence"]["performance_status"])
-        self.assertIn("UHD 134.54 seconds / peak 1564688384 bytes",
+        self.assertIn("UHD 160.78 seconds / peak 1484931072 bytes",
                       audit["evidence"]["performance_status"])
         directional_audit = next(
             row for row in audit["plugins"] if row["plugin"] == "OLMDirectionalBlur"
@@ -905,11 +909,15 @@ class BetaSupportDocumentationContract(unittest.TestCase):
             audit["evidence"]["kirakira_mode3_fixed32_supersession"],
         )
         self.assertEqual(
-            audit["evidence"]["directional_single_side_hostless"],
+            audit["evidence"]["directional_neutral_hostless"],
             [
                 "tools/emulation/test_dblur_generic_backonly_beta_20260821.py",
                 "tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py",
             ],
+        )
+        self.assertIn(
+            "Front-only, Back-only, or Dual",
+            audit["evidence"]["directional_neutral_scope"],
         )
         self.assertEqual(
             audit["evidence"]["directional_back_actual_aex_anchor"],
@@ -921,11 +929,13 @@ class BetaSupportDocumentationContract(unittest.TestCase):
             "PF8 960x540 Back 240 Angle 0 Gain 1 scale 0.5",
             "fixed 16x16 PF8 Back 8 Angle 0/45 Gain 1",
             "PF16 Back 1/2/8 Angle 45 Gain 1",
+            "PF16 Dual Front 1/2/8 plus Back 1 Angle 45 Gain 1",
             "PF32 Back 1 Angle 0/45 Gain 0.5/1",
             "Back 8 Angle 45 Gain 1",
             "not native AE saved-frame",
+            "not generic Dual Windows exact",
             "not general geometry",
-            "not all strengths",
+            "not all strength combinations",
             "not the ROI v2 package",
         ):
             self.assertIn(phrase, exact_scope)
