@@ -304,7 +304,7 @@ SUPPORT_PREDICATES = {
         "width*height <= 8847360 && pf16_sdr_0_32768 && pf32_finite_sdr_0_1 && "
         "(baseline || (neutral_outer_only && size_variation in {25,100} && "
         "noise_variation in {25,100} && procedural_noise_type in {1,2} && "
-        "(all_opaque || finite_mixed_alpha_without_right_edge_foreground))) && "
+        "finite_alpha_general_4_connected_topology_including_image_edges)) && "
         "per_render_plugin_owned_bytes <= 1073741824 && work_units <= 350000000"
     ),
     "OLMSmoother": (

@@ -492,6 +492,7 @@ def test_radialblur_has_exact_geometry_release_like_drivers() -> None:
     assert "size_variation in {25,100}" in predicate
     assert "noise_variation in {25,100}" in predicate
     assert "procedural_noise_type in {1,2}" in predicate
+    assert "finite_alpha_general_4_connected_topology_including_image_edges" in predicate
 
 
 def test_radialblur_semantic_validator_rejects_incomplete_profile_matrix() -> None:
