@@ -298,6 +298,15 @@ SUPPORT_PREDICATES = {
         "rotation in {0,1} && per_render_plugin_owned_bytes <= 1073741824 && "
         "mode3_work_units <= 12000000000)) && mode_geometry_admitted"
     ),
+    "OLMRadialBlur": (
+        "classic_or_smart && pf8_pf16_pf32 && full_frame_normalized_overscan && "
+        "positive_aligned_independent_rowbytes && max(width,height) <= 4096 && "
+        "width*height <= 8847360 && pf16_sdr_0_32768 && pf32_finite_sdr_0_1 && "
+        "(baseline || (neutral_outer_only && size_variation in {25,100} && "
+        "noise_variation in {25,100} && procedural_noise_type in {1,2} && "
+        "(all_opaque || finite_mixed_alpha_without_right_edge_foreground))) && "
+        "per_render_plugin_owned_bytes <= 1073741824 && work_units <= 350000000"
+    ),
     "OLMSmoother": (
         "classic && (pf8 || pf16) && (key_off || key_on) && "
         "width <= 3840 && height <= 2160"
@@ -327,7 +336,7 @@ CASE_DEPTH_COUNTS: dict[tuple[str, str], dict[int, int]] = {
     (lane, geometry): {8: count, 16: count, 32: count}
     for lane, count in (
         ("OLMDirectionalBlur", 3), ("OLMKiraKira", 5),
-        ("OLMRadialBlur", 2), ("OLMToonDilate", 1),
+        ("OLMRadialBlur", 4), ("OLMToonDilate", 1),
     )
     for geometry in GEOMETRIES
 }
@@ -947,8 +956,8 @@ def _parameters(lane: str, geometry: str) -> str:
     )
     overrides = {
         "OLMRadialBlur": (
-            "generic_baseline_center_23_71_ratio_2.25_angle_-137.5_"
-            "quality_1_strength_1_independent_strides"
+            "generic_baseline_plus_size25_noise25_type1_outer4_"
+            "zoom_rotation_all_depths_independent_strides"
         ),
         "OLMBlur": (
             "representative_pf8_pf16_pf32_nonlegacy_legacy_amount3_repeat1_"
@@ -1145,7 +1154,7 @@ def _validate_case_results(
                 case.get("content_bounds"), case.get("callback_shape"),
             ))
         elif lane == "OLMRadialBlur":
-            observed_identities.append((case.get("family"), depth))
+            observed_identities.append((case.get("family"), case.get("profile"), depth))
         elif lane == "OLMToonDilate":
             observed_identities.append((
                 depth, case.get("radius"), case.get("comp_width"),
@@ -1193,7 +1202,8 @@ def _validate_case_results(
         }
     elif lane == "OLMRadialBlur":
         expected_identities = {
-            (family, depth) for family in ("zoom", "rotation")
+            (family, profile, depth) for family in ("zoom", "rotation")
+            for profile in ("baseline", "size_noise")
             for depth in (8, 16, 32)
         }
     else:

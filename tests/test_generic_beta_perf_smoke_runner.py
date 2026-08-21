@@ -74,6 +74,24 @@ def kirakira_case_results(geometry: str) -> list[dict[str, object]]:
     ]
 
 
+def radial_case_results(geometry: str) -> list[dict[str, object]]:
+    return [
+        {
+            "family": family,
+            "profile": profile,
+            "depth_bpc": depth,
+            "returncode": 0,
+            "wall_seconds": 0.1,
+            "peak_rss_bytes": 1024,
+            "input_padding_pixels": 3,
+            "output_padding_pixels": 7,
+        }
+        for family in ("zoom", "rotation")
+        for profile in ("baseline", "size_noise")
+        for depth in (8, 16, 32)
+    ]
+
+
 def test_catalog_has_all_ten_lanes_and_both_geometries() -> None:
     module = load_module()
     assert len(module.LANES) == 10
@@ -463,6 +481,38 @@ def test_radialblur_has_exact_geometry_release_like_drivers() -> None:
         command = module.COMMANDS[("OLMRadialBlur", geometry)]
         assert command[1] == "tools/perf/run_olmradialblur_generic_production_perf.py"
         assert command[command.index("--geometry") + 1] == geometry
+        assert module.CASE_DEPTH_COUNTS[("OLMRadialBlur", geometry)] == {
+            8: 4, 16: 4, 32: 4,
+        }
+        module._validate_case_results(
+            {"case_results": radial_case_results(geometry)},
+            "OLMRadialBlur", geometry,
+        )
+    predicate = module.SUPPORT_PREDICATES["OLMRadialBlur"]
+    assert "size_variation in {25,100}" in predicate
+    assert "noise_variation in {25,100}" in predicate
+    assert "procedural_noise_type in {1,2}" in predicate
+
+
+def test_radialblur_semantic_validator_rejects_incomplete_profile_matrix() -> None:
+    module = load_module()
+    valid = radial_case_results("hd")
+
+    def must_reject(mutator) -> None:
+        candidate = json.loads(json.dumps(valid))
+        mutator(candidate)
+        try:
+            module._validate_case_results(
+                {"case_results": candidate}, "OLMRadialBlur", "hd"
+            )
+        except module.EvidenceBindingError:
+            return
+        raise AssertionError("invalid Radial profile matrix was accepted")
+
+    must_reject(lambda cases: cases[0].update(profile="unknown"))
+    must_reject(lambda cases: cases[6].update(family="zoom"))
+    must_reject(lambda cases: cases.__setitem__(4, dict(cases[0])))
+    must_reject(lambda cases: cases.pop())
 
 
 def test_directionalblur_perf_rows_select_exact_geometry() -> None:
