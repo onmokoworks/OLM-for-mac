@@ -590,6 +590,30 @@ def test_kirakira_inner_rss_parser_requires_one_positive_measurement() -> None:
     assert driver.parse_peak_rss(line + line) is None
 
 
+def test_kirakira_driver_row_parser_binds_public_route_contract() -> None:
+    path = ROOT / "tools/perf/run_olmkirakira_generic_production_perf.py"
+    spec = importlib.util.spec_from_file_location("kira_perf_driver_rows", path)
+    driver = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(driver)
+    row = (
+        "GENERIC tuple=m3_ui_length length=300 rotation=1.0 depth=32 "
+        "size=1920x1080 ok=1 content=full callbacks=1/1/1/0 "
+        "strides=30736/30768/30800 params=25/25 lifecycle=1 headers=1 "
+        "mixed_alpha=1 zero_alpha_rgb=1 predata=1 deleted=1 handles=1"
+    )
+    parsed = driver.GENERIC_ROW.fullmatch(row)
+    assert parsed is not None
+    assert parsed.group(10) == "30736/30768/30800"
+    assert parsed.group(11) == "25/25"
+    assert all(parsed.group(index) == "1" for index in range(12, 19))
+    assert driver.GENERIC_ROW.fullmatch(
+        row.replace(" zero_alpha_rgb=1", "")
+    ) is None
+    assert driver.GENERIC_ROW.fullmatch(row + " unchecked=1") is None
+    assert {case["parameter_count"] for case in driver.CASES} == {25, 26}
+
+
 def test_measure_fails_closed_when_peak_rss_is_unavailable() -> None:
     module = load_module()
     completed = {

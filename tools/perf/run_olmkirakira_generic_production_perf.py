@@ -19,25 +19,32 @@ HARNESS = ROOT / "tests/olmkirakira_generic_beta_sanitizer_harness.cpp"
 GEOMETRIES = {"hd": (1920, 1080), "uhd": (3840, 2160)}
 CASES = (
     {"mode": "box", "tuple_index": 0, "tuple_name": "m1_h7_r0",
-     "horizontal_length": 7, "rotation_degrees": 0.0},
+     "horizontal_length": 7, "rotation_degrees": 0.0,
+     "parameter_count": 25},
     {"mode": "approximated_gaussian", "tuple_index": 3,
      "tuple_name": "m2_h7_ramp_r0",
-     "horizontal_length": 7, "rotation_degrees": 0.0},
+     "horizontal_length": 7, "rotation_degrees": 0.0,
+     "parameter_count": 26},
     {"mode": "gaussian_length50", "tuple_index": 7,
      "tuple_name": "m3_h50_r0",
-     "horizontal_length": 50, "rotation_degrees": 0.0},
+     "horizontal_length": 50, "rotation_degrees": 0.0,
+     "parameter_count": 25},
     {"mode": "exponential", "tuple_index": 9,
      "tuple_name": "m4_highlight_r3",
-     "horizontal_length": 0, "rotation_degrees": 0.0},
+     "horizontal_length": 0, "rotation_degrees": 0.0,
+     "parameter_count": 25},
     {"mode": "gaussian_length300", "tuple_index": None,
      "tuple_name": "m3_ui_length",
-     "horizontal_length": 300, "rotation_degrees": 1.0},
+     "horizontal_length": 300, "rotation_degrees": 1.0,
+     "parameter_count": 25},
 )
 RSS = re.compile(r"^\s*(\d+)\s+maximum resident set size\s*$", re.MULTILINE)
 GENERIC_ROW = re.compile(
     r"^GENERIC tuple=(\S+) length=(-?\d+) rotation=(-?\d+(?:\.\d+)?) "
     r"depth=(\d+) size=(\d+)x(\d+) ok=([01]) content=(\S+) "
-    r"callbacks=(\d+/\d+/\d+/\d+)$"
+    r"callbacks=(\d+/\d+/\d+/\d+) strides=(\d+/\d+/\d+) "
+    r"params=(\d+/\d+) lifecycle=([01]) headers=([01]) mixed_alpha=([01]) "
+    r"zero_alpha_rgb=([01]) predata=([01]) deleted=([01]) handles=([01])$"
 )
 
 
@@ -99,6 +106,17 @@ def main() -> int:
                 )
                 if completed_contract:
                     parsed = generic_rows[0]
+                    pixel_size = {8: 4, 16: 8, 32: 16}[depth]
+                    alignment = {8: 1, 16: 2, 32: 4}[depth]
+                    active = width * pixel_size
+                    expected_strides = "/".join(map(str, (
+                        active + 4 * alignment,
+                        active + 12 * alignment,
+                        active + 20 * alignment,
+                    )))
+                    expected_params = (
+                        f'{case["parameter_count"]}/{case["parameter_count"]}'
+                    )
                     completed_contract = (
                         parsed.group(1) == case["tuple_name"] and
                         int(parsed.group(2)) == case["horizontal_length"] and
@@ -107,7 +125,10 @@ def main() -> int:
                         int(parsed.group(5)) == width and
                         int(parsed.group(6)) == height and
                         parsed.group(7) == "1" and parsed.group(8) == "full" and
-                        parsed.group(9) == "1/1/1/0"
+                        parsed.group(9) == "1/1/1/0" and
+                        parsed.group(10) == expected_strides and
+                        parsed.group(11) == expected_params and
+                        all(parsed.group(index) == "1" for index in range(12, 19))
                     )
                 row = {
                     "mode": case["mode"], "depth_bpc": depth,
