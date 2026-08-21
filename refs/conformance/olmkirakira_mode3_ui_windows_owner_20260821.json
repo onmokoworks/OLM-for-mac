@@ -1,0 +1,1542 @@
+{
+  "cells": [
+    {
+      "active_bytes": 748,
+      "depth": "PF8",
+      "input_sha256": "3c024f8074f08c5152ba54c1b79e275eae2c5c2a2b4572a4497303cec836afd0",
+      "length": 1,
+      "mac_public_classic_sha256": "eda6a5de1a6644690275d34cc112cd210d4beb3378ed0b3db2b85dc0d38297b3",
+      "mac_public_smart_sha256": "eda6a5de1a6644690275d34cc112cd210d4beb3378ed0b3db2b85dc0d38297b3",
+      "pixel_format": "argb8",
+      "rotation_raw_fixed": 0,
+      "routes_exact": true,
+      "windows_exported_smart_sha256": "eda6a5de1a6644690275d34cc112cd210d4beb3378ed0b3db2b85dc0d38297b3",
+      "windows_lifecycle": {
+        "cleanup_complete": true,
+        "dropped_unsupported_suite_calls": 0,
+        "guards_intact": true,
+        "input_png_file_unchanged": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            17,
+            11
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          17,
+          11
+        ],
+        "render_error": 0,
+        "render_mode": "smart-cpu",
+        "setup_unsupported_suite_calls": [],
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "worker_schema_version": 1
+      }
+    },
+    {
+      "active_bytes": 1496,
+      "depth": "PF16",
+      "input_sha256": "b85a7304ea38b0ae22b142a3a95421a58ac3e1ff179ac53805b47a918a1f5ffb",
+      "length": 1,
+      "mac_public_classic_sha256": "47465802045ad76cec7dca9b0d8c90882f9b0f61c034ac042b0c1a4858ebb541",
+      "mac_public_smart_sha256": "47465802045ad76cec7dca9b0d8c90882f9b0f61c034ac042b0c1a4858ebb541",
+      "pixel_format": "argb16",
+      "rotation_raw_fixed": 0,
+      "routes_exact": true,
+      "windows_exported_smart_sha256": "47465802045ad76cec7dca9b0d8c90882f9b0f61c034ac042b0c1a4858ebb541",
+      "windows_lifecycle": {
+        "cleanup_complete": true,
+        "dropped_unsupported_suite_calls": 0,
+        "guards_intact": true,
+        "input_png_file_unchanged": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            17,
+            11
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          17,
+          11
+        ],
+        "render_error": 0,
+        "render_mode": "smart-cpu",
+        "setup_unsupported_suite_calls": [],
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "worker_schema_version": 1
+      }
+    },
+    {
+      "active_bytes": 2992,
+      "depth": "PF32",
+      "input_sha256": "2c8d46d068ef23fe313f151a4b6f4726cffbae6c98a66a5b331096e0eb849556",
+      "length": 1,
+      "mac_public_classic_sha256": "05f05cca83610e5160538c620a71b7f6447908fd9be8a64ded3dc8a9e0a2a1ae",
+      "mac_public_smart_sha256": "05f05cca83610e5160538c620a71b7f6447908fd9be8a64ded3dc8a9e0a2a1ae",
+      "pixel_format": "argb32f",
+      "rotation_raw_fixed": 0,
+      "routes_exact": true,
+      "windows_exported_smart_sha256": "05f05cca83610e5160538c620a71b7f6447908fd9be8a64ded3dc8a9e0a2a1ae",
+      "windows_lifecycle": {
+        "cleanup_complete": true,
+        "dropped_unsupported_suite_calls": 0,
+        "guards_intact": true,
+        "input_png_file_unchanged": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            17,
+            11
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          17,
+          11
+        ],
+        "render_error": 0,
+        "render_mode": "smart-cpu",
+        "setup_unsupported_suite_calls": [],
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "worker_schema_version": 1
+      }
+    },
+    {
+      "active_bytes": 748,
+      "depth": "PF8",
+      "input_sha256": "3c024f8074f08c5152ba54c1b79e275eae2c5c2a2b4572a4497303cec836afd0",
+      "length": 1,
+      "mac_public_classic_sha256": "f3beaa01425405ac51c329d9af0caad1115ec9b3b72238feb5c6260e115649a4",
+      "mac_public_smart_sha256": "f3beaa01425405ac51c329d9af0caad1115ec9b3b72238feb5c6260e115649a4",
+      "pixel_format": "argb8",
+      "rotation_raw_fixed": 1,
+      "routes_exact": true,
+      "windows_exported_smart_sha256": "f3beaa01425405ac51c329d9af0caad1115ec9b3b72238feb5c6260e115649a4",
+      "windows_lifecycle": {
+        "cleanup_complete": true,
+        "dropped_unsupported_suite_calls": 0,
+        "guards_intact": true,
+        "input_png_file_unchanged": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            17,
+            11
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          17,
+          11
+        ],
+        "render_error": 0,
+        "render_mode": "smart-cpu",
+        "setup_unsupported_suite_calls": [],
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "worker_schema_version": 1
+      }
+    },
+    {
+      "active_bytes": 1496,
+      "depth": "PF16",
+      "input_sha256": "b85a7304ea38b0ae22b142a3a95421a58ac3e1ff179ac53805b47a918a1f5ffb",
+      "length": 1,
+      "mac_public_classic_sha256": "0c6ce2c5786d69b0b67db2c6418f383da4d942a205688b0e6f131711d735beef",
+      "mac_public_smart_sha256": "0c6ce2c5786d69b0b67db2c6418f383da4d942a205688b0e6f131711d735beef",
+      "pixel_format": "argb16",
+      "rotation_raw_fixed": 1,
+      "routes_exact": true,
+      "windows_exported_smart_sha256": "0c6ce2c5786d69b0b67db2c6418f383da4d942a205688b0e6f131711d735beef",
+      "windows_lifecycle": {
+        "cleanup_complete": true,
+        "dropped_unsupported_suite_calls": 0,
+        "guards_intact": true,
+        "input_png_file_unchanged": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            17,
+            11
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          17,
+          11
+        ],
+        "render_error": 0,
+        "render_mode": "smart-cpu",
+        "setup_unsupported_suite_calls": [],
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "worker_schema_version": 1
+      }
+    },
+    {
+      "active_bytes": 2992,
+      "depth": "PF32",
+      "input_sha256": "2c8d46d068ef23fe313f151a4b6f4726cffbae6c98a66a5b331096e0eb849556",
+      "length": 1,
+      "mac_public_classic_sha256": "a3b0a45e7f958915a457b99c94f276e0bd9127f0f0e4418e1c0808d04aeae9b8",
+      "mac_public_smart_sha256": "a3b0a45e7f958915a457b99c94f276e0bd9127f0f0e4418e1c0808d04aeae9b8",
+      "pixel_format": "argb32f",
+      "rotation_raw_fixed": 1,
+      "routes_exact": true,
+      "windows_exported_smart_sha256": "a3b0a45e7f958915a457b99c94f276e0bd9127f0f0e4418e1c0808d04aeae9b8",
+      "windows_lifecycle": {
+        "cleanup_complete": true,
+        "dropped_unsupported_suite_calls": 0,
+        "guards_intact": true,
+        "input_png_file_unchanged": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            17,
+            11
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          17,
+          11
+        ],
+        "render_error": 0,
+        "render_mode": "smart-cpu",
+        "setup_unsupported_suite_calls": [],
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "worker_schema_version": 1
+      }
+    },
+    {
+      "active_bytes": 748,
+      "depth": "PF8",
+      "input_sha256": "3c024f8074f08c5152ba54c1b79e275eae2c5c2a2b4572a4497303cec836afd0",
+      "length": 2,
+      "mac_public_classic_sha256": "9c8dda8b11033e12e37271d079fbf2d073aab9851752ef2587fc0e2ee1d7d4ec",
+      "mac_public_smart_sha256": "9c8dda8b11033e12e37271d079fbf2d073aab9851752ef2587fc0e2ee1d7d4ec",
+      "pixel_format": "argb8",
+      "rotation_raw_fixed": 0,
+      "routes_exact": true,
+      "windows_exported_smart_sha256": "9c8dda8b11033e12e37271d079fbf2d073aab9851752ef2587fc0e2ee1d7d4ec",
+      "windows_lifecycle": {
+        "cleanup_complete": true,
+        "dropped_unsupported_suite_calls": 0,
+        "guards_intact": true,
+        "input_png_file_unchanged": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            17,
+            11
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          17,
+          11
+        ],
+        "render_error": 0,
+        "render_mode": "smart-cpu",
+        "setup_unsupported_suite_calls": [],
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "worker_schema_version": 1
+      }
+    },
+    {
+      "active_bytes": 1496,
+      "depth": "PF16",
+      "input_sha256": "b85a7304ea38b0ae22b142a3a95421a58ac3e1ff179ac53805b47a918a1f5ffb",
+      "length": 2,
+      "mac_public_classic_sha256": "31fe9a8a91e52220de1f9b4b0f54d4df4ec079e0a3d28c91a64dfd69886bcfc9",
+      "mac_public_smart_sha256": "31fe9a8a91e52220de1f9b4b0f54d4df4ec079e0a3d28c91a64dfd69886bcfc9",
+      "pixel_format": "argb16",
+      "rotation_raw_fixed": 0,
+      "routes_exact": true,
+      "windows_exported_smart_sha256": "31fe9a8a91e52220de1f9b4b0f54d4df4ec079e0a3d28c91a64dfd69886bcfc9",
+      "windows_lifecycle": {
+        "cleanup_complete": true,
+        "dropped_unsupported_suite_calls": 0,
+        "guards_intact": true,
+        "input_png_file_unchanged": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            17,
+            11
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          17,
+          11
+        ],
+        "render_error": 0,
+        "render_mode": "smart-cpu",
+        "setup_unsupported_suite_calls": [],
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "worker_schema_version": 1
+      }
+    },
+    {
+      "active_bytes": 2992,
+      "depth": "PF32",
+      "input_sha256": "2c8d46d068ef23fe313f151a4b6f4726cffbae6c98a66a5b331096e0eb849556",
+      "length": 2,
+      "mac_public_classic_sha256": "fc460437c07ef8624370054855df40574b7888212cfd3a4dc4b9f357119556b1",
+      "mac_public_smart_sha256": "fc460437c07ef8624370054855df40574b7888212cfd3a4dc4b9f357119556b1",
+      "pixel_format": "argb32f",
+      "rotation_raw_fixed": 0,
+      "routes_exact": true,
+      "windows_exported_smart_sha256": "fc460437c07ef8624370054855df40574b7888212cfd3a4dc4b9f357119556b1",
+      "windows_lifecycle": {
+        "cleanup_complete": true,
+        "dropped_unsupported_suite_calls": 0,
+        "guards_intact": true,
+        "input_png_file_unchanged": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            17,
+            11
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          17,
+          11
+        ],
+        "render_error": 0,
+        "render_mode": "smart-cpu",
+        "setup_unsupported_suite_calls": [],
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "worker_schema_version": 1
+      }
+    },
+    {
+      "active_bytes": 748,
+      "depth": "PF8",
+      "input_sha256": "3c024f8074f08c5152ba54c1b79e275eae2c5c2a2b4572a4497303cec836afd0",
+      "length": 2,
+      "mac_public_classic_sha256": "a2bc34e45730bf8690addef5e4d8407d1212f275e9e77d4fccf9b8b24fb194c0",
+      "mac_public_smart_sha256": "a2bc34e45730bf8690addef5e4d8407d1212f275e9e77d4fccf9b8b24fb194c0",
+      "pixel_format": "argb8",
+      "rotation_raw_fixed": 1,
+      "routes_exact": true,
+      "windows_exported_smart_sha256": "a2bc34e45730bf8690addef5e4d8407d1212f275e9e77d4fccf9b8b24fb194c0",
+      "windows_lifecycle": {
+        "cleanup_complete": true,
+        "dropped_unsupported_suite_calls": 0,
+        "guards_intact": true,
+        "input_png_file_unchanged": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            17,
+            11
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          17,
+          11
+        ],
+        "render_error": 0,
+        "render_mode": "smart-cpu",
+        "setup_unsupported_suite_calls": [],
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "worker_schema_version": 1
+      }
+    },
+    {
+      "active_bytes": 1496,
+      "depth": "PF16",
+      "input_sha256": "b85a7304ea38b0ae22b142a3a95421a58ac3e1ff179ac53805b47a918a1f5ffb",
+      "length": 2,
+      "mac_public_classic_sha256": "8f5a88be6d52892dcade6ecf2efbc63471515c07d9b556dabf30755c987703a5",
+      "mac_public_smart_sha256": "8f5a88be6d52892dcade6ecf2efbc63471515c07d9b556dabf30755c987703a5",
+      "pixel_format": "argb16",
+      "rotation_raw_fixed": 1,
+      "routes_exact": true,
+      "windows_exported_smart_sha256": "8f5a88be6d52892dcade6ecf2efbc63471515c07d9b556dabf30755c987703a5",
+      "windows_lifecycle": {
+        "cleanup_complete": true,
+        "dropped_unsupported_suite_calls": 0,
+        "guards_intact": true,
+        "input_png_file_unchanged": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            17,
+            11
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          17,
+          11
+        ],
+        "render_error": 0,
+        "render_mode": "smart-cpu",
+        "setup_unsupported_suite_calls": [],
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "worker_schema_version": 1
+      }
+    },
+    {
+      "active_bytes": 2992,
+      "depth": "PF32",
+      "input_sha256": "2c8d46d068ef23fe313f151a4b6f4726cffbae6c98a66a5b331096e0eb849556",
+      "length": 2,
+      "mac_public_classic_sha256": "6426f6c233c65385dc5545107af2d1ac896ed37efdf8e8d49cb53254574186f6",
+      "mac_public_smart_sha256": "6426f6c233c65385dc5545107af2d1ac896ed37efdf8e8d49cb53254574186f6",
+      "pixel_format": "argb32f",
+      "rotation_raw_fixed": 1,
+      "routes_exact": true,
+      "windows_exported_smart_sha256": "6426f6c233c65385dc5545107af2d1ac896ed37efdf8e8d49cb53254574186f6",
+      "windows_lifecycle": {
+        "cleanup_complete": true,
+        "dropped_unsupported_suite_calls": 0,
+        "guards_intact": true,
+        "input_png_file_unchanged": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            17,
+            11
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          17,
+          11
+        ],
+        "render_error": 0,
+        "render_mode": "smart-cpu",
+        "setup_unsupported_suite_calls": [],
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "worker_schema_version": 1
+      }
+    },
+    {
+      "active_bytes": 748,
+      "depth": "PF8",
+      "input_sha256": "3c024f8074f08c5152ba54c1b79e275eae2c5c2a2b4572a4497303cec836afd0",
+      "length": 50,
+      "mac_public_classic_sha256": "b74b1d577eaa942c8891e0b0a03399596efab46c7c3865ee8116dff6ae6567be",
+      "mac_public_smart_sha256": "b74b1d577eaa942c8891e0b0a03399596efab46c7c3865ee8116dff6ae6567be",
+      "pixel_format": "argb8",
+      "rotation_raw_fixed": 0,
+      "routes_exact": true,
+      "windows_exported_smart_sha256": "b74b1d577eaa942c8891e0b0a03399596efab46c7c3865ee8116dff6ae6567be",
+      "windows_lifecycle": {
+        "cleanup_complete": true,
+        "dropped_unsupported_suite_calls": 0,
+        "guards_intact": true,
+        "input_png_file_unchanged": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            17,
+            11
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          17,
+          11
+        ],
+        "render_error": 0,
+        "render_mode": "smart-cpu",
+        "setup_unsupported_suite_calls": [],
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "worker_schema_version": 1
+      }
+    },
+    {
+      "active_bytes": 1496,
+      "depth": "PF16",
+      "input_sha256": "b85a7304ea38b0ae22b142a3a95421a58ac3e1ff179ac53805b47a918a1f5ffb",
+      "length": 50,
+      "mac_public_classic_sha256": "7f16c397d5a3257d028764f08fbb4176b8390e19b2a4f1bf977e45dec980ddcc",
+      "mac_public_smart_sha256": "7f16c397d5a3257d028764f08fbb4176b8390e19b2a4f1bf977e45dec980ddcc",
+      "pixel_format": "argb16",
+      "rotation_raw_fixed": 0,
+      "routes_exact": true,
+      "windows_exported_smart_sha256": "7f16c397d5a3257d028764f08fbb4176b8390e19b2a4f1bf977e45dec980ddcc",
+      "windows_lifecycle": {
+        "cleanup_complete": true,
+        "dropped_unsupported_suite_calls": 0,
+        "guards_intact": true,
+        "input_png_file_unchanged": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            17,
+            11
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          17,
+          11
+        ],
+        "render_error": 0,
+        "render_mode": "smart-cpu",
+        "setup_unsupported_suite_calls": [],
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "worker_schema_version": 1
+      }
+    },
+    {
+      "active_bytes": 2992,
+      "depth": "PF32",
+      "input_sha256": "2c8d46d068ef23fe313f151a4b6f4726cffbae6c98a66a5b331096e0eb849556",
+      "length": 50,
+      "mac_public_classic_sha256": "b3f55ac2874ef537fd8a99e18e16b3e0e237e838b4cf93c5b08b70714167ea60",
+      "mac_public_smart_sha256": "b3f55ac2874ef537fd8a99e18e16b3e0e237e838b4cf93c5b08b70714167ea60",
+      "pixel_format": "argb32f",
+      "rotation_raw_fixed": 0,
+      "routes_exact": true,
+      "windows_exported_smart_sha256": "b3f55ac2874ef537fd8a99e18e16b3e0e237e838b4cf93c5b08b70714167ea60",
+      "windows_lifecycle": {
+        "cleanup_complete": true,
+        "dropped_unsupported_suite_calls": 0,
+        "guards_intact": true,
+        "input_png_file_unchanged": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            17,
+            11
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          17,
+          11
+        ],
+        "render_error": 0,
+        "render_mode": "smart-cpu",
+        "setup_unsupported_suite_calls": [],
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "worker_schema_version": 1
+      }
+    },
+    {
+      "active_bytes": 748,
+      "depth": "PF8",
+      "input_sha256": "3c024f8074f08c5152ba54c1b79e275eae2c5c2a2b4572a4497303cec836afd0",
+      "length": 50,
+      "mac_public_classic_sha256": "911736cfb0ad2a3358c3682dde220e50e97a85c3091d42b039f15cdc6e1d709e",
+      "mac_public_smart_sha256": "911736cfb0ad2a3358c3682dde220e50e97a85c3091d42b039f15cdc6e1d709e",
+      "pixel_format": "argb8",
+      "rotation_raw_fixed": 1,
+      "routes_exact": true,
+      "windows_exported_smart_sha256": "911736cfb0ad2a3358c3682dde220e50e97a85c3091d42b039f15cdc6e1d709e",
+      "windows_lifecycle": {
+        "cleanup_complete": true,
+        "dropped_unsupported_suite_calls": 0,
+        "guards_intact": true,
+        "input_png_file_unchanged": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            17,
+            11
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          17,
+          11
+        ],
+        "render_error": 0,
+        "render_mode": "smart-cpu",
+        "setup_unsupported_suite_calls": [],
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "worker_schema_version": 1
+      }
+    },
+    {
+      "active_bytes": 1496,
+      "depth": "PF16",
+      "input_sha256": "b85a7304ea38b0ae22b142a3a95421a58ac3e1ff179ac53805b47a918a1f5ffb",
+      "length": 50,
+      "mac_public_classic_sha256": "756a52e239ffd7d81a3b6888ffa3c725e524d62083c82978fe432dcad095071f",
+      "mac_public_smart_sha256": "756a52e239ffd7d81a3b6888ffa3c725e524d62083c82978fe432dcad095071f",
+      "pixel_format": "argb16",
+      "rotation_raw_fixed": 1,
+      "routes_exact": true,
+      "windows_exported_smart_sha256": "756a52e239ffd7d81a3b6888ffa3c725e524d62083c82978fe432dcad095071f",
+      "windows_lifecycle": {
+        "cleanup_complete": true,
+        "dropped_unsupported_suite_calls": 0,
+        "guards_intact": true,
+        "input_png_file_unchanged": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            17,
+            11
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          17,
+          11
+        ],
+        "render_error": 0,
+        "render_mode": "smart-cpu",
+        "setup_unsupported_suite_calls": [],
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "worker_schema_version": 1
+      }
+    },
+    {
+      "active_bytes": 2992,
+      "depth": "PF32",
+      "input_sha256": "2c8d46d068ef23fe313f151a4b6f4726cffbae6c98a66a5b331096e0eb849556",
+      "length": 50,
+      "mac_public_classic_sha256": "dc14003b4d762df96d43119829947dfbb2ef74d90c232ee4349965e7973ae730",
+      "mac_public_smart_sha256": "dc14003b4d762df96d43119829947dfbb2ef74d90c232ee4349965e7973ae730",
+      "pixel_format": "argb32f",
+      "rotation_raw_fixed": 1,
+      "routes_exact": true,
+      "windows_exported_smart_sha256": "dc14003b4d762df96d43119829947dfbb2ef74d90c232ee4349965e7973ae730",
+      "windows_lifecycle": {
+        "cleanup_complete": true,
+        "dropped_unsupported_suite_calls": 0,
+        "guards_intact": true,
+        "input_png_file_unchanged": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            17,
+            11
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          17,
+          11
+        ],
+        "render_error": 0,
+        "render_mode": "smart-cpu",
+        "setup_unsupported_suite_calls": [],
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "worker_schema_version": 1
+      }
+    },
+    {
+      "active_bytes": 748,
+      "depth": "PF8",
+      "input_sha256": "3c024f8074f08c5152ba54c1b79e275eae2c5c2a2b4572a4497303cec836afd0",
+      "length": 300,
+      "mac_public_classic_sha256": "7a8ac6daff4a8fbc6a442aa972699aeb5c847e304f09fbfd5c02842d8870b8c2",
+      "mac_public_smart_sha256": "7a8ac6daff4a8fbc6a442aa972699aeb5c847e304f09fbfd5c02842d8870b8c2",
+      "pixel_format": "argb8",
+      "rotation_raw_fixed": 0,
+      "routes_exact": true,
+      "windows_exported_smart_sha256": "7a8ac6daff4a8fbc6a442aa972699aeb5c847e304f09fbfd5c02842d8870b8c2",
+      "windows_lifecycle": {
+        "cleanup_complete": true,
+        "dropped_unsupported_suite_calls": 0,
+        "guards_intact": true,
+        "input_png_file_unchanged": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            17,
+            11
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          17,
+          11
+        ],
+        "render_error": 0,
+        "render_mode": "smart-cpu",
+        "setup_unsupported_suite_calls": [],
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "worker_schema_version": 1
+      }
+    },
+    {
+      "active_bytes": 1496,
+      "depth": "PF16",
+      "input_sha256": "b85a7304ea38b0ae22b142a3a95421a58ac3e1ff179ac53805b47a918a1f5ffb",
+      "length": 300,
+      "mac_public_classic_sha256": "c9ad199d26980be6db74ffa1d28d9ba31207b0cbfc0f079bb2080e63d356fc9b",
+      "mac_public_smart_sha256": "c9ad199d26980be6db74ffa1d28d9ba31207b0cbfc0f079bb2080e63d356fc9b",
+      "pixel_format": "argb16",
+      "rotation_raw_fixed": 0,
+      "routes_exact": true,
+      "windows_exported_smart_sha256": "c9ad199d26980be6db74ffa1d28d9ba31207b0cbfc0f079bb2080e63d356fc9b",
+      "windows_lifecycle": {
+        "cleanup_complete": true,
+        "dropped_unsupported_suite_calls": 0,
+        "guards_intact": true,
+        "input_png_file_unchanged": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            17,
+            11
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          17,
+          11
+        ],
+        "render_error": 0,
+        "render_mode": "smart-cpu",
+        "setup_unsupported_suite_calls": [],
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "worker_schema_version": 1
+      }
+    },
+    {
+      "active_bytes": 2992,
+      "depth": "PF32",
+      "input_sha256": "2c8d46d068ef23fe313f151a4b6f4726cffbae6c98a66a5b331096e0eb849556",
+      "length": 300,
+      "mac_public_classic_sha256": "7764aa12ae10fa59103800e376176025a5ec22db6b5349f84a95ab1d59aa907f",
+      "mac_public_smart_sha256": "7764aa12ae10fa59103800e376176025a5ec22db6b5349f84a95ab1d59aa907f",
+      "pixel_format": "argb32f",
+      "rotation_raw_fixed": 0,
+      "routes_exact": true,
+      "windows_exported_smart_sha256": "7764aa12ae10fa59103800e376176025a5ec22db6b5349f84a95ab1d59aa907f",
+      "windows_lifecycle": {
+        "cleanup_complete": true,
+        "dropped_unsupported_suite_calls": 0,
+        "guards_intact": true,
+        "input_png_file_unchanged": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            17,
+            11
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          17,
+          11
+        ],
+        "render_error": 0,
+        "render_mode": "smart-cpu",
+        "setup_unsupported_suite_calls": [],
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "worker_schema_version": 1
+      }
+    },
+    {
+      "active_bytes": 748,
+      "depth": "PF8",
+      "input_sha256": "3c024f8074f08c5152ba54c1b79e275eae2c5c2a2b4572a4497303cec836afd0",
+      "length": 300,
+      "mac_public_classic_sha256": "911736cfb0ad2a3358c3682dde220e50e97a85c3091d42b039f15cdc6e1d709e",
+      "mac_public_smart_sha256": "911736cfb0ad2a3358c3682dde220e50e97a85c3091d42b039f15cdc6e1d709e",
+      "pixel_format": "argb8",
+      "rotation_raw_fixed": 1,
+      "routes_exact": true,
+      "windows_exported_smart_sha256": "911736cfb0ad2a3358c3682dde220e50e97a85c3091d42b039f15cdc6e1d709e",
+      "windows_lifecycle": {
+        "cleanup_complete": true,
+        "dropped_unsupported_suite_calls": 0,
+        "guards_intact": true,
+        "input_png_file_unchanged": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            17,
+            11
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          17,
+          11
+        ],
+        "render_error": 0,
+        "render_mode": "smart-cpu",
+        "setup_unsupported_suite_calls": [],
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "worker_schema_version": 1
+      }
+    },
+    {
+      "active_bytes": 1496,
+      "depth": "PF16",
+      "input_sha256": "b85a7304ea38b0ae22b142a3a95421a58ac3e1ff179ac53805b47a918a1f5ffb",
+      "length": 300,
+      "mac_public_classic_sha256": "aa89b331e7bc4577c89109b00d4a345c9d94cb65de69189eed497bd03548c213",
+      "mac_public_smart_sha256": "aa89b331e7bc4577c89109b00d4a345c9d94cb65de69189eed497bd03548c213",
+      "pixel_format": "argb16",
+      "rotation_raw_fixed": 1,
+      "routes_exact": true,
+      "windows_exported_smart_sha256": "aa89b331e7bc4577c89109b00d4a345c9d94cb65de69189eed497bd03548c213",
+      "windows_lifecycle": {
+        "cleanup_complete": true,
+        "dropped_unsupported_suite_calls": 0,
+        "guards_intact": true,
+        "input_png_file_unchanged": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            17,
+            11
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          17,
+          11
+        ],
+        "render_error": 0,
+        "render_mode": "smart-cpu",
+        "setup_unsupported_suite_calls": [],
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "worker_schema_version": 1
+      }
+    },
+    {
+      "active_bytes": 2992,
+      "depth": "PF32",
+      "input_sha256": "2c8d46d068ef23fe313f151a4b6f4726cffbae6c98a66a5b331096e0eb849556",
+      "length": 300,
+      "mac_public_classic_sha256": "52e11572d7e0af042492bb3fa970b9b1c120e825aff174f2e0c9dae5d7eb64bc",
+      "mac_public_smart_sha256": "52e11572d7e0af042492bb3fa970b9b1c120e825aff174f2e0c9dae5d7eb64bc",
+      "pixel_format": "argb32f",
+      "rotation_raw_fixed": 1,
+      "routes_exact": true,
+      "windows_exported_smart_sha256": "52e11572d7e0af042492bb3fa970b9b1c120e825aff174f2e0c9dae5d7eb64bc",
+      "windows_lifecycle": {
+        "cleanup_complete": true,
+        "dropped_unsupported_suite_calls": 0,
+        "guards_intact": true,
+        "input_png_file_unchanged": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            17,
+            11
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          17,
+          11
+        ],
+        "render_error": 0,
+        "render_mode": "smart-cpu",
+        "setup_unsupported_suite_calls": [],
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "worker_schema_version": 1
+      }
+    }
+  ],
+  "cells_sha256": "865d282fa3e15d55b5155e1a406e629e39f14205256a1d5c4e06f5d76709bbd0",
+  "claim_boundary": "Actual Windows OLMKiraKira.aex exported SmartPreRender->SmartRender owner executed hostlessly by AEXCompat's Unicorn x86_64 backend is raw-active-byte exact against current Mac production-source public EffectMain Classic and Smart only for the fixed 17x11 fixture and listed Length, raw-fixed Rotation, and depth cells. This is not native Windows or macOS After Effects, installed-plugin, native Windows UCRT/trigonometry, GPU, or Windows padded-rowbytes evidence.",
+  "date": "2026-08-21",
+  "fixture": {
+    "counts": {
+      "opaque_pixels": 1,
+      "partial_alpha_pixels": 185,
+      "pixels": 187,
+      "transparent_pixels": 1,
+      "zero_alpha_nonzero_rgb_pixels": 1
+    },
+    "formula": "v=(x*0x9e3779b9)^(y*0x85ebca6b)^0x51f15e5d (u32); RGBA=(v&255,(v>>8)&255,(v>>16)&255,v==0x51f15e5d?0:32+((v>>24)&223))",
+    "height": 11,
+    "input_active_bytes": {
+      "argb16le": 1496,
+      "argb32fle": 2992,
+      "argb8": 748,
+      "rgba8": 748
+    },
+    "input_png_bytes": 827,
+    "input_png_sha256": "5444ab9dffb9f06489106229dc93f8db7219934a8e357721eb15d29914cd2904",
+    "input_sha256": {
+      "argb16le": "b85a7304ea38b0ae22b142a3a95421a58ac3e1ff179ac53805b47a918a1f5ffb",
+      "argb32fle": "2c8d46d068ef23fe313f151a4b6f4726cffbae6c98a66a5b331096e0eb849556",
+      "argb8": "3c024f8074f08c5152ba54c1b79e275eae2c5c2a2b4572a4497303cec836afd0",
+      "rgba8": "7934392d34781b2330e4f1b451f47773d93e2f281851bd4546717ba2252068ec"
+    },
+    "width": 17
+  },
+  "identities": {
+    "aex_guest_worker": {
+      "path": "aex-guest-worker",
+      "role": "aex_guest_worker",
+      "sha256": "fe376e9ba1d6ee1f20cd9b6954d63542555ed4ffd52a0dfb5e8c95d1f4ccdffe",
+      "size_bytes": 3886128
+    },
+    "aexcompat": {
+      "git_commit": "28d535469f84f67236ef3425afe4291ea2fb0991",
+      "repository": "https://github.com/onmokoworks/AEXCompat.git",
+      "source_files": [
+        {
+          "path": "guest/Cargo.lock",
+          "role": "cargo_lock",
+          "sha256": "9f7d4dd02083fb81cb622a318f4448ac9bd5b889e21744d9726942bac4d3dfa9",
+          "size_bytes": 42844
+        },
+        {
+          "path": "guest/crates/aex-guest-worker/src/main.rs",
+          "role": "worker_main",
+          "sha256": "987e47c71054cdbf73644f8fb5a6931cb7c10d086399e61ac81eebdda4df0b24",
+          "size_bytes": 41935
+        },
+        {
+          "path": "guest/crates/aex-guest-worker/src/classic.rs",
+          "role": "worker_classic",
+          "sha256": "d251b8fb03b8c32dafbceb04191dc04d82909dbd049129a2024974d4b5633c84",
+          "size_bytes": 122159
+        },
+        {
+          "path": "guest/crates/aex-guest-worker/src/pixel.rs",
+          "role": "worker_pixel",
+          "sha256": "ee4fd50ddf44dc3f86c182ea05ad4841507f333fc132e1488a302609456c8f84",
+          "size_bytes": 8546
+        }
+      ],
+      "tracked_worktree_clean": true,
+      "worker_build": {
+        "cargo_version": "cargo 1.95.0 (f2d3ce0bd 2026-03-21)",
+        "command": [
+          "cargo",
+          "build",
+          "--manifest-path",
+          "guest/Cargo.toml",
+          "--release",
+          "-p",
+          "aex-guest-worker",
+          "--frozen"
+        ],
+        "completed": true,
+        "rustc_version": "rustc 1.95.0 (59807616e 2026-04-14)",
+        "target": "guest/target/release/aex-guest-worker",
+        "target_sha256": "fe376e9ba1d6ee1f20cd9b6954d63542555ed4ffd52a0dfb5e8c95d1f4ccdffe",
+        "target_size_bytes": 3886128,
+        "working_directory": "."
+      }
+    },
+    "official_distribution": {
+      "archive_member": "OLMKiraKira/Plugins/64/2025/OLMKiraKira.aex",
+      "archive_member_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+      "archive_member_size_bytes": 25781248,
+      "checksum_manifest_path": "refs/upstream_official/20260619_olm_official_zips/SHA256SUMS.txt",
+      "checksum_manifest_sha256": "a3b06866b434df4119c2c9f448f5029570ae40205f4f9cd12b51ca586967675a",
+      "zip_path": "refs/upstream_official/20260619_olm_official_zips/zips/OLMKiraKira.zip",
+      "zip_sha256": "2fea5b879bdee4e7641946e0bdd01e234f9ad841c8146e171a7b50f33db26b03"
+    },
+    "repository_source": [
+      {
+        "path": "tools/emulation/test_olmkirakira_mode3_ui_windows_owner_20260821.py",
+        "role": "capture_verifier",
+        "sha256": "a01b360648cc39a42fe01059224dcb5bad00fe5d1f52b57175be3869a7e7b234",
+        "size_bytes": 52510
+      },
+      {
+        "path": "refs/upstream_official/20260619_olm_official_zips/SHA256SUMS.txt",
+        "role": "official_zip_checksums",
+        "sha256": "a3b06866b434df4119c2c9f448f5029570ae40205f4f9cd12b51ca586967675a",
+        "size_bytes": 1392
+      },
+      {
+        "path": "tests/olmkirakira_generic_beta_sanitizer_harness.cpp",
+        "role": "generic_public_harness",
+        "sha256": "d99ab31d98e12dce183086f9d2c981c24d542b30c4cb279b54d4fc2314edf2ec",
+        "size_bytes": 53666
+      },
+      {
+        "path": "tools/emulation/olmkirakira_public_smart_bounded_closure_harness_20260812.cpp",
+        "role": "public_smart_harness",
+        "sha256": "49e5922fac66eaa53f57b45edf5ac06073bfb13dd3f24d85ddaae9c619877800",
+        "size_bytes": 32631
+      },
+      {
+        "path": "mac/OLMKiraKira/OLMKiraKira.cpp",
+        "role": "production_source",
+        "sha256": "f6e8d1759479f21206c8741df60457d976fca16de25c228b4e3eb13f9fbd80da",
+        "size_bytes": 97729
+      },
+      {
+        "path": "mac/OLMKiraKira/OLMKiraKira.h",
+        "role": "production_header",
+        "sha256": "26c5209a6fddebbde96190fe09e0749b6f7dd6bec1421815b7a6e5fa6f73d64d",
+        "size_bytes": 4825
+      },
+      {
+        "path": "mac/OLMKiraKira/OLMKiraKira_Strings.cpp",
+        "role": "strings_source",
+        "sha256": "6fd2b40d6ab80da6fa0419fd0b0698ff8b51b34c08e1f6506008993c1908fd4e",
+        "size_bytes": 2211
+      },
+      {
+        "path": "mac/OLMKiraKira/OLMKiraKira_Strings.h",
+        "role": "strings_header",
+        "sha256": "66ed41709111e64f0137d35e4b4b0161763b619fbd15c96c094124546c30d41e",
+        "size_bytes": 1029
+      },
+      {
+        "path": "core/kirakira_gaussian.h",
+        "role": "core_gaussian",
+        "sha256": "ba13df9e1bc439bfb37be740dc23c8bc1a0481b46750977e15853b30d51980c1",
+        "size_bytes": 6335
+      },
+      {
+        "path": "core/kirakira_highlight.h",
+        "role": "core_highlight",
+        "sha256": "e98232e4224b6ae4dd372216e10c29f3ba6621f68ab6cb10b56a02b9cc248390",
+        "size_bytes": 3860
+      },
+      {
+        "path": "core/kirakira_mode4.h",
+        "role": "core_mode4",
+        "sha256": "03348ad80416d94529ec84cdba84a4851c511e4bda021bee0b89f606c3cf705e",
+        "size_bytes": 4106
+      },
+      {
+        "path": "core/kirakira_warp.h",
+        "role": "core_warp",
+        "sha256": "3963ae1d26e3c2d44a7c7afbc2c51a280ccfdffe857faf3c58304786e0e010a5",
+        "size_bytes": 3186
+      },
+      {
+        "path": "core/kirakira_merge2.h",
+        "role": "core_merge2",
+        "sha256": "be1bd69a85990886ab61dd8b4310bcf0c8d059e1ac6d75d2813e46a24803ce38",
+        "size_bytes": 11971
+      }
+    ],
+    "repository_source_scope": "Declared capture/verifier, public harness, production/header/strings, Kira core headers, tracked official ZIP checksum manifest, and exact AEXCompat worker source/build identity; excludes symlinked Adobe SDK/Util, Mac system SDK/compiler, and standard-library inputs.",
+    "windows_aex": {
+      "path": "OLMKiraKira.aex",
+      "role": "windows_aex",
+      "sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+      "size_bytes": 25781248
+    }
+  },
+  "parameters": {
+    "blur_mode": 3,
+    "brightness_gain_cli": "0.1",
+    "channel": 1,
+    "depths": [
+      "PF8",
+      "PF16",
+      "PF32"
+    ],
+    "diagonal2_length": 0,
+    "diagonal_length": 0,
+    "glow_rotation_override": "Glow Rotation=fixed:{raw_i32}",
+    "highlight_radius": 0,
+    "lengths": [
+      1,
+      2,
+      50,
+      300
+    ],
+    "merge_mode": 1,
+    "rotations_raw_fixed": [
+      0,
+      1
+    ],
+    "vertical_length": 0,
+    "worker_pixel_formats": {
+      "PF16": "argb16",
+      "PF32": "argb32f",
+      "PF8": "argb8"
+    }
+  },
+  "schema": "olmkirakira.mode3-ui-windows-owner/1",
+  "scope": {
+    "actual_windows_aex_exported_smart_via_aexcompat_unicorn": true,
+    "gpu": false,
+    "install_or_ae_run_performed": false,
+    "installed_plugin": false,
+    "mac_production_source_public_classic": true,
+    "mac_production_source_public_smart": true,
+    "native_macos_after_effects": false,
+    "native_windows_after_effects": false,
+    "native_windows_ucrt_or_trigonometry": false,
+    "raw_active_bytes_compared_by_sha256": true,
+    "windows_tight_rowbytes_only": true,
+    "worker_built_from_pinned_aexcompat_source": true
+  },
+  "status": "raw_active_bytes_exact",
+  "summary": {
+    "active_bytes_per_depth": {
+      "PF16": 1496,
+      "PF32": 2992,
+      "PF8": 748
+    },
+    "all_routes_exact": true,
+    "all_windows_lifecycle_exact": true,
+    "cell_count": 24,
+    "exact_cell_count": 24,
+    "route_count": 3
+  }
+}

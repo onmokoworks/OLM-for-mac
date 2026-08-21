@@ -1,3 +1,4 @@
+import hashlib
 import json
 import os
 import subprocess
@@ -12,6 +13,11 @@ HARNESS = ROOT / "tests/olmkirakira_generic_beta_sanitizer_harness.cpp"
 AEX_REPORT = ROOT / "refs/conformance/olmkirakira_mode3_geometry_generalization_actual_aex_20260810.json"
 AEX_REPLAY = ROOT / "tools/emulation/test_olmkirakira_mode3_geometry_generalization_actual_aex_20260810.py"
 EXPECTED_AEX_SHA256 = "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+EXPECTED_PUBLIC_SOURCE_SHA256 = {
+    8: "3c024f8074f08c5152ba54c1b79e275eae2c5c2a2b4572a4497303cec836afd0",
+    16: "b85a7304ea38b0ae22b142a3a95421a58ac3e1ff179ac53805b47a918a1f5ffb",
+    32: "2c8d46d068ef23fe313f151a4b6f4726cffbae6c98a66a5b331096e0eb849556",
+}
 
 
 class KiraKiraMode3UiLengthBetaTests(unittest.TestCase):
@@ -102,6 +108,73 @@ class KiraKiraMode3UiLengthBetaTests(unittest.TestCase):
         )
         self.assertTrue(all("callbacks=1/1/1/0" in row for row in rows))
         self.assertIn("MODE3_UI_GUARDS lengths=300 geometry=dci4k rotation=0/1 ok=1", output)
+
+    def test_public_effectmain_matrix_is_complete_and_sanitizer_clean(self) -> None:
+        expected = {
+            (length, rotation, depth)
+            for length in (1, 2, 50, 300)
+            for rotation in (0.0, 1.0)
+            for depth in (8, 16, 32)
+        }
+        for executable in (self.normal, self.sanitized):
+            with self.subTest(executable=executable.name):
+                output = self.run_harness(
+                    executable, "--mode3-public-matrix", 300,
+                )
+                rows = [
+                    line for line in output.splitlines()
+                    if line.startswith("GENERIC ")
+                ]
+                self.assertEqual(len(rows), 24)
+                actual = {
+                    (
+                        int(row.split("length=")[1].split()[0]),
+                        float(row.split("rotation=")[1].split()[0]),
+                        int(row.split("depth=")[1].split()[0]),
+                    )
+                    for row in rows
+                }
+                self.assertEqual(actual, expected)
+                self.assertTrue(all("size=17x11" in row for row in rows))
+                self.assertTrue(all("content=full" in row for row in rows))
+                self.assertTrue(all("ok=1" in row for row in rows))
+                self.assertTrue(all("callbacks=1/1/1/0" in row for row in rows))
+                self.assertTrue(all("params=25/25" in row for row in rows))
+                for token in (
+                    "lifecycle=1", "headers=1", "mixed_alpha=1",
+                    "zero_alpha_rgb=1", "predata=1", "deleted=1", "handles=1",
+                ):
+                    self.assertTrue(all(token in row for row in rows), token)
+                for row in rows:
+                    strides = row.split("strides=")[1].split()[0]
+                    input_stride, smart_stride, classic_stride = map(
+                        int, strides.split("/"),
+                    )
+                    self.assertEqual(
+                        len({input_stride, smart_stride, classic_stride}), 3,
+                    )
+                    depth = int(row.split("depth=")[1].split()[0])
+                    input_active = bytes.fromhex(
+                        row.split("input_active_hex=")[1].split()[0]
+                    )
+                    smart_active = bytes.fromhex(
+                        row.split("smart_active_hex=")[1].split()[0]
+                    )
+                    classic_active = bytes.fromhex(
+                        row.split("classic_active_hex=")[1].split()[0]
+                    )
+                    pixel_size = {8: 4, 16: 8, 32: 16}[depth]
+                    expected_size = 17 * 11 * pixel_size
+                    self.assertEqual(len(input_active), expected_size)
+                    self.assertEqual(len(smart_active), expected_size)
+                    self.assertEqual(len(classic_active), expected_size)
+                    self.assertEqual(
+                        hashlib.sha256(input_active).hexdigest(),
+                        EXPECTED_PUBLIC_SOURCE_SHA256[depth],
+                    )
+                    smart_sha = hashlib.sha256(smart_active).hexdigest()
+                    classic_sha = hashlib.sha256(classic_active).hexdigest()
+                    self.assertEqual(smart_sha, classic_sha)
 
     def test_representative_lengths_accept_content_bounds_and_reject_one_away(self) -> None:
         output = self.run_harness(self.normal, "--mode3-ui-matrix", 300)

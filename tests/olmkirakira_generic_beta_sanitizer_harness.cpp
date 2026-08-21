@@ -86,16 +86,22 @@ static bool active_changed(const std::vector<unsigned char> &bytes, int stride,
 
 template <class Pixel> static Pixel arbitrary_pixel(uint32_t v);
 template <> PF_Pixel8 arbitrary_pixel<PF_Pixel8>(uint32_t v) {
-    return {(A_u_char)(32 + ((v >> 24) & 223)), (A_u_char)v,
+    const A_u_char alpha = v == 0x51f15e5du
+        ? 0 : (A_u_char)(32 + ((v >> 24) & 223));
+    return {alpha, (A_u_char)v,
             (A_u_char)(v >> 8), (A_u_char)(v >> 16)};
 }
 template <> PF_Pixel16 arbitrary_pixel<PF_Pixel16>(uint32_t v) {
     auto cv = [](A_u_char x) { return (A_u_short)std::lround(x * 32768.0 / 255.0); };
-    return {cv((A_u_char)(32 + ((v >> 24) & 223))), cv((A_u_char)v),
+    const A_u_char alpha = v == 0x51f15e5du
+        ? 0 : (A_u_char)(32 + ((v >> 24) & 223));
+    return {cv(alpha), cv((A_u_char)v),
             cv((A_u_char)(v >> 8)), cv((A_u_char)(v >> 16))};
 }
 template <> PF_PixelFloat arbitrary_pixel<PF_PixelFloat>(uint32_t v) {
-    return {(32 + ((v >> 24) & 223)) / 255.0f, (v & 255) / 255.0f,
+    const float alpha = v == 0x51f15e5du
+        ? 0.0f : (32 + ((v >> 24) & 223)) / 255.0f;
+    return {alpha, (v & 255) / 255.0f,
             ((v >> 8) & 255) / 255.0f, ((v >> 16) & 255) / 255.0f};
 }
 
@@ -113,10 +119,77 @@ static void fill_arbitrary_source(std::vector<unsigned char> &bytes, int stride,
     }
 }
 
+template <class Pixel> static double normalized_alpha(const Pixel &pixel);
+template <> double normalized_alpha(const PF_Pixel8 &pixel) {
+    return pixel.alpha / 255.0;
+}
+template <> double normalized_alpha(const PF_Pixel16 &pixel) {
+    return pixel.alpha / 32768.0;
+}
+template <> double normalized_alpha(const PF_PixelFloat &pixel) {
+    return pixel.alpha;
+}
+
+template <class Pixel>
+static bool source_has_mixed_alpha(const std::vector<unsigned char> &bytes,
+                                   int stride, int width, int height) {
+    bool has_partial = false;
+    bool has_distinct = false;
+    double first = -1.0;
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            const Pixel &pixel = *reinterpret_cast<const Pixel *>(
+                bytes.data() + (size_t)y * stride + (size_t)x * sizeof(Pixel));
+            const double alpha = normalized_alpha(pixel);
+            if (first < 0.0) first = alpha;
+            has_distinct |= alpha != first;
+            has_partial |= alpha > 0.0 && alpha < 1.0;
+        }
+    }
+    return has_partial && has_distinct;
+}
+
+template <class Pixel>
+static bool source_has_zero_alpha_nonzero_rgb(
+    const std::vector<unsigned char> &bytes, int stride, int width, int height) {
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            const Pixel &pixel = *reinterpret_cast<const Pixel *>(
+                bytes.data() + (size_t)y * stride + (size_t)x * sizeof(Pixel));
+            if (pixel.alpha == 0 &&
+                (pixel.red != 0 || pixel.green != 0 || pixel.blue != 0)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+static void print_active_hex(const std::vector<unsigned char> &bytes,
+                             int stride, int active, int height) {
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < active; ++x) {
+            std::printf("%02x", (unsigned)bytes[(size_t)y * stride + x]);
+        }
+    }
+}
+
+static std::vector<int> expected_smart_parameter_order(const Tuple &tuple) {
+    std::vector<int> expected = {40, 5, 6, 7, 10, 11, 13};
+    expected.insert(expected.end(), {16, 17, 19});
+    if (tuple.horizontal_ramp) expected.push_back(20);
+    expected.insert(expected.end(), {22, 23, 25, 28, 29, 31, 34, 35, 37});
+    if (tuple.highlight_ramp) expected.push_back(38);
+    expected.insert(expected.end(), {8, 9, 1, 2, 3, 4});
+    return expected;
+}
+
 template <class Pixel>
 static int run_generic_case(PF_PixelFormat format, int depth, const Tuple &tuple,
                             int width, int height, bool overscan = false,
-                            bool partial_content_bounds = false) {
+                            bool partial_content_bounds = false,
+                            bool emit_active_hex = false) {
+    const size_t handle_count_before = g_sizes.size();
     const int active = width * (int)sizeof(Pixel);
     const int input_stride = active + 4 * (int)alignof(Pixel);
     const int smart_stride = active + 12 * (int)alignof(Pixel);
@@ -139,6 +212,10 @@ static int run_generic_case(PF_PixelFormat format, int depth, const Tuple &tuple
     sw = iw; sw.data = reinterpret_cast<PF_PixelPtr>(smart.data()); sw.rowbytes = smart_stride;
     cw = iw; cw.data = reinterpret_cast<PF_PixelPtr>(classic.data()); cw.rowbytes = classic_stride;
     rw = cw; rw.data = reinterpret_cast<PF_PixelPtr>(repeat.data());
+    const PF_EffectWorld iw_header = iw;
+    const PF_EffectWorld sw_header = sw;
+    const PF_EffectWorld cw_header = cw;
+    const PF_EffectWorld rw_header = rw;
     HostState state{&iw, &sw};
     PF_InData in{}; PF_OutData out{};
     in.pica_basicP = &g_basic; in.effect_ref = reinterpret_cast<PF_ProgPtr>(&state);
@@ -186,10 +263,48 @@ static int run_generic_case(PF_PixelFormat format, int depth, const Tuple &tuple
     g_format_classic_world = &rw;
     const PF_Err repeat_err = EffectMain(PF_Cmd_RENDER, &in, &out, params, &rw, nullptr);
 
-    const bool ok = pre_err == PF_Err_NONE && smart_err == PF_Err_NONE &&
+    const auto expected_order = expected_smart_parameter_order(tuple);
+    const bool parameter_lifecycle =
+        g_checkout_attempts == (int)expected_order.size() &&
+        g_checkin_attempts == (int)expected_order.size() &&
+        g_checkout_order == expected_order && g_checkin_order == expected_order;
+    const bool pre_rects_are_full =
+        pre_out.result_rect.left == 0 && pre_out.result_rect.top == 0 &&
+        pre_out.result_rect.right == width && pre_out.result_rect.bottom == height &&
+        pre_out.max_result_rect.left == 0 && pre_out.max_result_rect.top == 0 &&
+        pre_out.max_result_rect.right == width &&
+        pre_out.max_result_rect.bottom == height;
+    const bool predata_shape = pre_out.pre_render_data &&
+        pre_out.delete_pre_render_data_func &&
+        reinterpret_cast<const PreRenderData *>(pre_out.pre_render_data)->comp_width == width &&
+        reinterpret_cast<const PreRenderData *>(pre_out.pre_render_data)->comp_height == height &&
+        reinterpret_cast<const PreRenderData *>(pre_out.pre_render_data)->generic_full_frame_request;
+    const bool headers_immutable =
+        !std::memcmp(&iw, &iw_header, sizeof(iw)) &&
+        !std::memcmp(&sw, &sw_header, sizeof(sw)) &&
+        !std::memcmp(&cw, &cw_header, sizeof(cw)) &&
+        !std::memcmp(&rw, &rw_header, sizeof(rw));
+    const bool strides_are_independent =
+        input_stride != smart_stride && input_stride != classic_stride &&
+        smart_stride != classic_stride &&
+        input_stride % (int)alignof(Pixel) == 0 &&
+        smart_stride % (int)alignof(Pixel) == 0 &&
+        classic_stride % (int)alignof(Pixel) == 0;
+    const bool source_is_mixed =
+        source_has_mixed_alpha<Pixel>(input, input_stride, width, height);
+    const bool source_has_zero_alpha_rgb =
+        source_has_zero_alpha_nonzero_rgb<Pixel>(
+            input, input_stride, width, height);
+    const bool render_ok = pre_err == PF_Err_NONE && smart_err == PF_Err_NONE &&
         classic_err == PF_Err_NONE && repeat_err == PF_Err_NONE &&
         state.pre == 1 && state.pixels == 1 && state.output_checkout == 1 &&
         state.layer_checkin == 0 && state.preserve && state.full_request &&
+        state.checkout_id == OLMKIRAKIRA_INPUT &&
+        pre_rects_are_full &&
+        (pre_out.flags & PF_RenderOutputFlag_RETURNS_EXTRA_PIXELS) != 0 &&
+        predata_shape && parameter_lifecycle && headers_immutable &&
+        strides_are_independent && source_is_mixed &&
+        source_has_zero_alpha_rgb &&
         input == input_before &&
         active_changed(smart, smart_stride, active, height, 0xD3) &&
         active_changed(classic, classic_stride, active, height, 0xE5) &&
@@ -199,12 +314,15 @@ static int run_generic_case(PF_PixelFormat format, int depth, const Tuple &tuple
         padding_equal(smart, smart_stride, active, height, 0xD3) &&
         padding_equal(classic, classic_stride, active, height, 0xE5) &&
         padding_equal(repeat, classic_stride, active, height, 0xE5);
-    std::printf("GENERIC tuple=%s length=%d rotation=%.1f depth=%d size=%dx%d ok=%d content=%s callbacks=%d/%d/%d/%d\n",
-                tuple.name, tuple.horizontal, tuple.rotation, depth, width, height,
-                ok, partial_content_bounds ? "partial" : "full", state.pre,
-                state.pixels, state.output_checkout, state.layer_checkin);
-    if (pre_out.delete_pre_render_data_func && pre_out.pre_render_data)
+    bool predata_deleted = false;
+    if (pre_out.delete_pre_render_data_func && pre_out.pre_render_data) {
         pre_out.delete_pre_render_data_func(pre_out.pre_render_data);
+        predata_deleted = true;
+        pre_out.pre_render_data = nullptr;
+    } else if (pre_out.pre_render_data) {
+        delete reinterpret_cast<PreRenderData *>(pre_out.pre_render_data);
+        pre_out.pre_render_data = nullptr;
+    }
     g_generic_partial_content_bounds = false;
     for (int index : {OLMKIRAKIRA_VERTICAL_RAMP, OLMKIRAKIRA_HORIZONTAL_RAMP,
                       OLMKIRAKIRA_DIAGONAL_RAMP, OLMKIRAKIRA_DIAGONAL2_RAMP,
@@ -212,6 +330,30 @@ static int run_generic_case(PF_PixelFormat format, int depth, const Tuple &tuple
         host_dispose_handle(g_defs[index].u.arb_d.value);
         g_defs[index].u.arb_d.value = nullptr;
     }
+    const bool handle_lifecycle = g_sizes.size() == handle_count_before;
+    const bool ok = render_ok && predata_deleted && handle_lifecycle;
+    std::printf(
+        "GENERIC tuple=%s length=%d rotation=%.1f depth=%d size=%dx%d ok=%d "
+        "content=%s callbacks=%d/%d/%d/%d strides=%d/%d/%d params=%zu/%zu "
+        "lifecycle=%d headers=%d mixed_alpha=%d zero_alpha_rgb=%d "
+        "predata=%d deleted=%d handles=%d",
+        tuple.name, tuple.horizontal, tuple.rotation, depth, width, height,
+        ok, partial_content_bounds ? "partial" : "full", state.pre,
+        state.pixels, state.output_checkout, state.layer_checkin,
+        input_stride, smart_stride, classic_stride,
+        g_checkout_order.size(), g_checkin_order.size(),
+        parameter_lifecycle, headers_immutable, source_is_mixed,
+        source_has_zero_alpha_rgb, predata_shape, predata_deleted,
+        handle_lifecycle);
+    if (emit_active_hex) {
+        std::printf(" input_active_hex=");
+        print_active_hex(input, input_stride, active, height);
+        std::printf(" smart_active_hex=");
+        print_active_hex(smart, smart_stride, active, height);
+        std::printf(" classic_active_hex=");
+        print_active_hex(classic, classic_stride, active, height);
+    }
+    std::printf("\n");
     return ok ? 0 : 1;
 }
 
@@ -666,6 +808,22 @@ static int run_mode3_ui_sweep() {
     return failed;
 }
 
+static int run_mode3_public_matrix() {
+    int failed = 0;
+    for (double rotation : {0.0, 1.0}) {
+        for (int length : {1, 2, 50, 300}) {
+            const Tuple tuple = mode3_ui_tuple(length, rotation);
+            failed |= run_generic_case<PF_Pixel8>(
+                PF_PixelFormat_ARGB32, 8, tuple, 17, 11, false, false, true);
+            failed |= run_generic_case<PF_Pixel16>(
+                PF_PixelFormat_ARGB64, 16, tuple, 17, 11, false, false, true);
+            failed |= run_generic_case<PF_PixelFloat>(
+                PF_PixelFormat_ARGB128, 32, tuple, 17, 11, false, false, true);
+        }
+    }
+    return failed;
+}
+
 static int run_mode3_ui_matrix(bool sanitizer) {
     const std::vector<int> lengths = sanitizer
         ? std::vector<int>{1, 2, 50, 299, 300}
@@ -874,6 +1032,8 @@ static int run_depth(PF_PixelFormat format, int depth, bool extended) {
 }
 
 int main(int argc, char **argv) {
+    if (argc == 2 && !std::strcmp(argv[1], "--mode3-public-matrix"))
+        return run_mode3_public_matrix();
     if (argc == 2 && !std::strcmp(argv[1], "--mode3-ui-sweep"))
         return run_mode3_ui_sweep();
     if (argc == 2 && !std::strcmp(argv[1], "--mode3-ui-matrix"))
