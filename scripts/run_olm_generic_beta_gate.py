@@ -94,7 +94,7 @@ PERFORMANCE_DRIVERS = (
     "tests/test_olmsmoother2_default_beta_lane_20260820.py",
     "tools/perf/run_olmtoondilate_generic_production_perf.py",
 )
-DIRECTIONAL_BACKONLY_DEPENDENCIES = (
+DIRECTIONAL_NEUTRAL_DEPENDENCIES = (
     "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp",
     "mac/OLMDirectionalBlur/OLMDirectionalBlur.h",
     "mac/OLMDirectionalBlur/OLMDirectionalBlur_Strings.h",
@@ -164,10 +164,10 @@ DEPENDENCY_PATHS: dict[str, tuple[str, ...]] = {
         "scripts/run_ae_single_case.py",
     ),
     "tools/emulation/test_dblur_generic_backonly_beta_20260821.py": (
-        *DIRECTIONAL_BACKONLY_DEPENDENCIES,
+        *DIRECTIONAL_NEUTRAL_DEPENDENCIES,
     ),
     "tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py": (
-        *DIRECTIONAL_BACKONLY_DEPENDENCIES,
+        *DIRECTIONAL_NEUTRAL_DEPENDENCIES,
         "mac/OLMDirectionalBlur/OLMDirectionalBlur_Strings.cpp",
         "Util/AEGP_SuiteHandler.cpp",
         "Util/MissingSuiteError.cpp",
@@ -196,7 +196,7 @@ DEPENDENCY_PATHS: dict[str, tuple[str, ...]] = {
         "core/dblur_generic_budget.h",
         "tools/emulation/test_dblur_generic_backonly_beta_20260821.py",
         "tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py",
-        *DIRECTIONAL_BACKONLY_DEPENDENCIES,
+        *DIRECTIONAL_NEUTRAL_DEPENDENCIES,
         "tests/test_olmkirakira_mode3_ui_length_beta_20260821.py",
         *KIRAKIRA_MODE3_UI_DEPENDENCIES,
         "tests/test_olmkirakira_mode3_ui_windows_owner_20260821.py",

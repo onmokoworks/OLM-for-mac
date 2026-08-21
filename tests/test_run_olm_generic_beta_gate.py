@@ -125,7 +125,7 @@ class GenericBetaGateTests(unittest.TestCase):
             "refs/conformance/dblur_mode1_backonly_portable_20260805.json",
         }
         self.assertTrue(
-            directional_required.issubset(GATE.DIRECTIONAL_BACKONLY_DEPENDENCIES)
+            directional_required.issubset(GATE.DIRECTIONAL_NEUTRAL_DEPENDENCIES)
         )
         kirakira_required = {
             "mac/OLMKiraKira/OLMKiraKira.cpp",
@@ -203,7 +203,7 @@ class GenericBetaGateTests(unittest.TestCase):
                 "refs/conformance/olm_all10_roi_v2_quick_ae_smoke_raw_20260820.json",
                 "tools/emulation/test_dblur_generic_backonly_beta_20260821.py",
                 "tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py",
-                *GATE.DIRECTIONAL_BACKONLY_DEPENDENCIES,
+                *GATE.DIRECTIONAL_NEUTRAL_DEPENDENCIES,
                 "tests/test_olmkirakira_mode3_ui_length_beta_20260821.py",
                 *GATE.KIRAKIRA_MODE3_UI_DEPENDENCIES,
             },
@@ -214,10 +214,10 @@ class GenericBetaGateTests(unittest.TestCase):
                 *GATE.KIRAKIRA_MODE3_WINDOWS_OWNER_DEPENDENCIES,
             },
             "tools/emulation/test_dblur_generic_backonly_beta_20260821.py": {
-                *GATE.DIRECTIONAL_BACKONLY_DEPENDENCIES,
+                *GATE.DIRECTIONAL_NEUTRAL_DEPENDENCIES,
             },
             "tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py": {
-                *GATE.DIRECTIONAL_BACKONLY_DEPENDENCIES,
+                *GATE.DIRECTIONAL_NEUTRAL_DEPENDENCIES,
                 "mac/OLMDirectionalBlur/OLMDirectionalBlur_Strings.cpp",
                 "Util/AEGP_SuiteHandler.cpp",
                 "Util/MissingSuiteError.cpp",
