@@ -121,32 +121,55 @@ inline bool CheckedAddU64(std::uint64_t left, std::uint64_t right,
 	return true;
 }
 
-// Generic mode admits exactly one active side: either front or back.  Their
-// edge-clamped scatter costs are symmetric, so this estimate models one side
-// with effective Strength N.  It must not be reused for simultaneous
-// front+back admission without explicitly adding both scatter costs.  For a
-// row of W pixels, the admitted single side executes exactly
+// Each active side executes its own edge-clamped scatter.  For a row of W
+// pixels, a side with effective Strength N executes exactly
 //   (L - 1) * (2W - L - 2) / 2, L=min(N,W)
-// worst-case scatter-loop iterations after the row-edge clamp.
-inline bool EstimateOperationUnits(const WorkGeometry &work,
-	                               int effective_strength,
-	                               std::uint64_t *units) noexcept
+// worst-case scatter-loop iterations after the row-edge clamp.  Front and
+// back share the fixed passes and workspace, but their scatter work must be
+// added rather than approximated with max(front, back).
+inline bool EstimateScatterPerRow(std::uint64_t width, int effective_strength,
+	                              std::uint64_t *scatter_per_row) noexcept
 {
-	if (!units || work.width <= 2 || work.height <= 2 || work.pixels == 0 ||
-		effective_strength <= 0) {
+	if (!scatter_per_row || width <= 2 || effective_strength < 0 ||
+		effective_strength > 4000) {
 		return false;
 	}
-	const std::uint64_t width = static_cast<std::uint64_t>(work.width);
-	const std::uint64_t height = static_cast<std::uint64_t>(work.height);
+	if (effective_strength == 0) {
+		*scatter_per_row = 0;
+		return true;
+	}
 	const std::uint64_t length = std::min<std::uint64_t>(
 		static_cast<std::uint64_t>(effective_strength), width);
-	std::uint64_t scatter_per_row = 0;
+	std::uint64_t scatter = 0;
 	if (length > 1) {
 		std::uint64_t product = 0;
 		if (!CheckedMulU64(length - 1, 2 * width - length - 2, &product)) {
 			return false;
 		}
-		scatter_per_row = product / 2;
+		scatter = product / 2;
+	}
+	*scatter_per_row = scatter;
+	return true;
+}
+
+inline bool EstimateOperationUnits(const WorkGeometry &work,
+	                               int effective_front_strength,
+	                               int effective_back_strength,
+	                               std::uint64_t *units) noexcept
+{
+	if (!units || work.width <= 2 || work.height <= 2 || work.pixels == 0 ||
+		(effective_front_strength <= 0 && effective_back_strength <= 0)) {
+		return false;
+	}
+	const std::uint64_t width = static_cast<std::uint64_t>(work.width);
+	const std::uint64_t height = static_cast<std::uint64_t>(work.height);
+	std::uint64_t front_per_row = 0;
+	std::uint64_t back_per_row = 0;
+	std::uint64_t scatter_per_row = 0;
+	if (!EstimateScatterPerRow(width, effective_front_strength, &front_per_row) ||
+		!EstimateScatterPerRow(width, effective_back_strength, &back_per_row) ||
+		!CheckedAddU64(front_per_row, back_per_row, &scatter_per_row)) {
+		return false;
 	}
 	std::uint64_t scatter = 0;
 	std::uint64_t fixed = 0;
@@ -154,6 +177,13 @@ inline bool EstimateOperationUnits(const WorkGeometry &work,
 		CheckedMulU64(static_cast<std::uint64_t>(work.pixels),
 			kFixedUnitsPerWorkPixel, &fixed) &&
 		CheckedAddU64(scatter, fixed, units);
+}
+
+inline bool EstimateOperationUnits(const WorkGeometry &work,
+	                               int effective_strength,
+	                               std::uint64_t *units) noexcept
+{
+	return EstimateOperationUnits(work, effective_strength, 0, units);
 }
 
 inline bool PixelBytesForDepth(short bitdepth, std::size_t *pixel_bytes) noexcept
@@ -171,11 +201,16 @@ inline bool PixelBytesForDepth(short bitdepth, std::size_t *pixel_bytes) noexcep
 // route: fourteen float work channels, packed source/destination wrappers,
 // Gaussian tables, and (for SmartRender) the atomic output staging span.
 inline bool EstimateRender(int width, int height, short bitdepth,
-	                       int effective_strength,
+	                       int effective_front_strength,
+	                       int effective_back_strength,
 	                       std::size_t smart_staging_bytes,
 	                       RenderEstimate *result) noexcept
 {
-	if (!result || effective_strength <= 0 || effective_strength > 4000) return false;
+	if (!result || effective_front_strength < 0 || effective_front_strength > 4000 ||
+		effective_back_strength < 0 || effective_back_strength > 4000 ||
+		(effective_front_strength == 0 && effective_back_strength == 0)) {
+		return false;
+	}
 	RenderEstimate estimate = {};
 	if (!SourceGeometrySupported(width, height, &estimate.source_pixels) ||
 		!ComputeWorkGeometry(width, height, &estimate.work)) {
@@ -190,9 +225,11 @@ inline bool EstimateRender(int width, int height, short bitdepth,
 		!olm::allocation::checked_mul(estimate.wrapper_bytes, 2u,
 			&estimate.wrapper_bytes) ||
 		!olm::allocation::checked_mul(
-			static_cast<std::size_t>(effective_strength) + 2u, sizeof(float),
+			static_cast<std::size_t>(effective_front_strength) +
+				static_cast<std::size_t>(effective_back_strength) + 2u, sizeof(float),
 			&estimate.weight_bytes) ||
-		!EstimateOperationUnits(estimate.work, effective_strength,
+		!EstimateOperationUnits(estimate.work, effective_front_strength,
+			effective_back_strength,
 			&estimate.operation_units) ||
 		estimate.operation_units > kOperationUnitLimit) {
 		return false;
@@ -209,6 +246,15 @@ inline bool EstimateRender(int width, int height, short bitdepth,
 	estimate.plugin_owned_live_bytes = budget.used_bytes();
 	*result = estimate;
 	return true;
+}
+
+inline bool EstimateRender(int width, int height, short bitdepth,
+	                       int effective_strength,
+	                       std::size_t smart_staging_bytes,
+	                       RenderEstimate *result) noexcept
+{
+	return EstimateRender(width, height, bitdepth, effective_strength, 0,
+		smart_staging_bytes, result);
 }
 
 }  // namespace olm::dblur::generic

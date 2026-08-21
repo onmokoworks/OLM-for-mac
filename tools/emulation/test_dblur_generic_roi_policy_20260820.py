@@ -24,16 +24,21 @@ int main(){{
  w.extent_hint={{-16,-8,1936,1088}};if(!OLMDirectionalBlurTestGenericWorldIsFullFrame(&w,1920,1080))return 6;
  w.width=960;if(OLMDirectionalBlurTestGenericWorldIsFullFrame(&w,1920,1080))return 7;
  w.width=1920;w.origin_x=1;if(OLMDirectionalBlurTestGenericWorldIsFullFrame(&w,1920,1080))return 8;w.origin_x=0;
- PF_EffectWorld output=w;OLMDirectionalBlurInfo info{{}};info.brightness_gain=1;info.front_strength=2;info.render_scale_x=info.render_scale_y=1;
- for(short depth:{{8,16,32}}){{
-  if(!OLMDirectionalBlurTestGenericSmartFramePolicy(&full,&w,&output,&info,depth,1920,1080))return 8+depth;
-  if(!OLMDirectionalBlurTestGenericSmartFramePolicy(&over,&w,&output,&info,depth,1920,1080))return 50+depth;
-  if(OLMDirectionalBlurTestGenericSmartFramePolicy(&partial,&w,&output,&info,depth,1920,1080))return 90+depth;
+ PF_EffectWorld output=w;
+ for(int profile=0;profile<3;++profile){{
+  OLMDirectionalBlurInfo info{{}};info.brightness_gain=1;
+  info.front_strength=profile==1?0:2;info.back_strength=profile==0?0:2;
+  info.render_scale_x=info.render_scale_y=1;
+  for(short depth:{{8,16,32}}){{
+   if(!OLMDirectionalBlurTestGenericSmartFramePolicy(&full,&w,&output,&info,depth,1920,1080))return 8+depth+profile*100;
+   if(!OLMDirectionalBlurTestGenericSmartFramePolicy(&over,&w,&output,&info,depth,1920,1080))return 50+depth+profile*100;
+   if(OLMDirectionalBlurTestGenericSmartFramePolicy(&partial,&w,&output,&info,depth,1920,1080))return 90+depth+profile*100;
+  }}
  }}
  return 0;}}''')
   sdk=subprocess.run(["xcrun","--show-sdk-path"],capture_output=True,text=True,check=True).stdout.strip()
   cmd=[cxx,"-std=c++17","-O2","-ffunction-sections","-fdata-sections","-Wno-unused-function","-Wno-unused-parameter","-isysroot",sdk,"-I",str(ROOT/"Headers"),"-I",str(ROOT/"Headers/SP"),"-I",str(ROOT/"Util"),"-I",str(ROOT/"Resources"),str(src),str(ROOT/"core/dblur_frontonly.cpp"),str(ROOT/"core/dblur_rotate.cpp"),str(ROOT/"core/dblur_rowdriver.cpp"),str(ROOT/"core/dblur_field.cpp"),"-Wl,-dead_strip","-framework","Cocoa","-o",str(exe)]
   subprocess.run(cmd,cwd=ROOT,check=True);subprocess.run([str(exe)],cwd=ROOT,check=True)
- print("ok: Directional generic full/overscan normalize; partial/tile fail-close")
+ print("ok: Directional generic front/back/dual full/overscan normalize; partial/tile fail-close")
  return 0
 if __name__=="__main__":raise SystemExit(main())

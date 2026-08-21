@@ -48,6 +48,14 @@ static bool admitted(int w, int h, short depth, int strength,
         w, h, depth, strength, smart_bytes, out ? out : &local) == 1;
 }}
 
+static bool admitted_sides(int w, int h, short depth, int front, int back,
+                           std::size_t smart_bytes = 0,
+                           OLMDirectionalBlurGenericEstimate *out = nullptr) {{
+    OLMDirectionalBlurGenericEstimate local = {{}};
+    return OLMDirectionalBlurTestGenericEstimateSides(
+        w, h, depth, front, back, smart_bytes, out ? out : &local) == 1;
+}}
+
 static OLMDirectionalBlurInfo neutral() {{
     OLMDirectionalBlurInfo info = {{}};
     info.angle_deg = 37.25;
@@ -60,7 +68,8 @@ static OLMDirectionalBlurInfo neutral() {{
 
 template <typename Pixel>
 static bool rejected_world_is_atomic(short depth, int width, int height,
-                                     int rowbytes, int strength) {{
+                                     int rowbytes, int front_strength,
+                                     int back_strength = 0) {{
     // Rejected predicates must run before any pixel access.  A tiny guarded
     // payload is deliberate even when the declared geometry is large.
     std::vector<std::uint8_t> input(64, 0xa5), output(64, 0xee);
@@ -73,7 +82,8 @@ static bool rejected_world_is_atomic(short depth, int width, int height,
     in.height = out.height = height;
     in.rowbytes = out.rowbytes = rowbytes;
     OLMDirectionalBlurInfo info = neutral();
-    info.front_strength = strength;
+    info.front_strength = front_strength;
+    info.back_strength = back_strength;
     int exact = -1;
     const PF_Err err = OLMDirectionalBlurTestRenderWorld(
         &in, &out, &info, depth, &exact);
@@ -142,6 +152,25 @@ int main() {{
         admitted(3840, 2160, 32, 12))
         return fail(7, "UHD operation boundary");
 
+    // Dual-side admission adds both scatter loops while sharing the fixed
+    // passes and workspace.  These are exact production-estimator borders.
+    if (!admitted_sides(720, 480, 32, 272, 272, 0, &estimate) ||
+        estimate.operation_units != 349930728ull ||
+        admitted_sides(720, 480, 32, 273, 273))
+        return fail(71, "SD dual operation boundary");
+    if (!admitted_sides(4096, 2160, 32, 5, 5, 0, &estimate) ||
+        estimate.operation_units != 343453544ull ||
+        estimate.weight_bytes != 48ull ||
+        admitted_sides(4096, 2160, 32, 6, 6))
+        return fail(72, "DCI 4K dual operation boundary");
+    if (!admitted_sides(3840, 2160, 32, 6, 6, 0, &estimate) ||
+        estimate.operation_units != 349572032ull ||
+        admitted_sides(3840, 2160, 32, 7, 7))
+        return fail(73, "UHD dual operation boundary");
+    if (!admitted_sides(3840, 2160, 32, 2, 8, 0, &estimate) ||
+        estimate.operation_units != 310724328ull)
+        return fail(74, "asymmetric dual operation sum");
+
     // Per-depth wrapper accounting and exact per-render Smart byte boundary.
     std::uint64_t previous_wrapper = 0;
     for (short depth : {{8, 16, 32}}) {{
@@ -208,6 +237,21 @@ int main() {{
     info = neutral(); info.render_scale_x = 0.5;
     if (OLMDirectionalBlurTestGenericEffectiveStrength(&info, 16, &effective))
         return fail(18, "deep downsample admitted");
+    int effective_front = 0, effective_back = 0;
+    info = neutral(); info.front_strength = 8; info.back_strength = 4;
+    info.render_scale_x = 0.5; info.render_scale_y = 0.5;
+    if (!OLMDirectionalBlurTestGenericEffectiveStrengths(
+            &info, 8, &effective_front, &effective_back) ||
+        effective_front != 4 || effective_back != 2)
+        return fail(181, "dual PF8 projected strengths");
+    info.front_strength = 1;
+    if (OLMDirectionalBlurTestGenericEffectiveStrengths(
+            &info, 8, &effective_front, &effective_back))
+        return fail(182, "dual PF8 zero projected side admitted");
+    info = neutral(); info.front_strength = 2; info.back_strength = -1;
+    if (OLMDirectionalBlurTestGenericEffectiveStrengths(
+            &info, 32, &effective_front, &effective_back))
+        return fail(183, "negative dual side admitted");
 
     // Real production dispatcher: operation/geometry/UI rejection is atomic
     // for every depth and cannot fall through to a legacy renderer.
@@ -215,6 +259,10 @@ int main() {{
         !rejected_world_is_atomic<PF_Pixel16>(16, 4096, 2160, 4096 * 8, 10) ||
         !rejected_world_is_atomic<PF_PixelFloat>(32, 4096, 2160, 4096 * 16, 10))
         return fail(19, "operation reject output atomicity");
+    if (!rejected_world_is_atomic<PF_Pixel8>(8, 4096, 2160, 4096 * 4, 6, 6) ||
+        !rejected_world_is_atomic<PF_Pixel16>(16, 4096, 2160, 4096 * 8, 6, 6) ||
+        !rejected_world_is_atomic<PF_PixelFloat>(32, 4096, 2160, 4096 * 16, 6, 6))
+        return fail(191, "dual operation reject output atomicity");
     if (!rejected_world_is_atomic<PF_Pixel8>(8, 4097, 1, 4097 * 4, 2) ||
         !rejected_world_is_atomic<PF_Pixel16>(16, 4097, 1, 4097 * 8, 2) ||
         !rejected_world_is_atomic<PF_PixelFloat>(32, 4097, 1, 4097 * 16, 2))

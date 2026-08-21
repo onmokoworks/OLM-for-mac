@@ -60,6 +60,7 @@ struct HostState {
   int acquire = 0;
   int release = 0;
   int world_calls = 0;
+  int front_seen = -1;
   int back_seen = -1;
   int fail_checkout_index = -1;
   int fail_checkin_id = -1;
@@ -110,6 +111,9 @@ static PF_Err CheckoutParam(PF_ProgPtr effect_ref, PF_ParamIndex index,
   if (index == state->fail_checkout_index) return kCheckoutFailure;
   *param = state->defs[index];
   state->checkout_order.push_back(index);
+  if (index == OLMDIRECTIONALBLUR_FRONT_STRENGTH) {
+    state->front_seen = param->u.sd.value;
+  }
   if (index == OLMDIRECTIONALBLUR_BACK_STRENGTH) {
     state->back_seen = param->u.sd.value;
   }
@@ -228,7 +232,8 @@ static PF_EffectWorld MakeWorld(void* data, A_long rowbytes, A_long width,
 
 static void InitParams(PF_ParamDef defs[OLMDIRECTIONALBLUR_NUM_PARAMS],
                        PF_ParamDef* params[OLMDIRECTIONALBLUR_NUM_PARAMS],
-                       const PF_EffectWorld& input, int back_strength) {
+                       const PF_EffectWorld& input, int back_strength,
+                       int front_strength = 0) {
   std::memset(defs, 0, sizeof(PF_ParamDef) * OLMDIRECTIONALBLUR_NUM_PARAMS);
   for (int i = 0; i < OLMDIRECTIONALBLUR_NUM_PARAMS; ++i) {
     defs[i].uu.id = i;
@@ -239,7 +244,7 @@ static void InitParams(PF_ParamDef defs[OLMDIRECTIONALBLUR_NUM_PARAMS],
     static_cast<PF_Fixed>(std::lround(37.25 * 65536.0));
   defs[OLMDIRECTIONALBLUR_BRIGHTNESS_GAIN].u.fs_d.value = 0.75;
   defs[OLMDIRECTIONALBLUR_SIZE_VARIATION].u.fd.value = 0;
-  defs[OLMDIRECTIONALBLUR_FRONT_STRENGTH].u.sd.value = 0;
+  defs[OLMDIRECTIONALBLUR_FRONT_STRENGTH].u.sd.value = front_strength;
   defs[OLMDIRECTIONALBLUR_FRONT_ALPHA_FADE].u.sd.value = 0;
   defs[OLMDIRECTIONALBLUR_FRONT_SHARP_TAIL].u.fd.value = 0;
   defs[OLMDIRECTIONALBLUR_BACK_STRENGTH].u.sd.value = back_strength;
@@ -493,6 +498,48 @@ static int PositiveDepth(short depth, PF_PixelFormat format) {
   return 0;
 }
 
+template <class Pixel>
+static int DualPositiveDepth(short depth, PF_PixelFormat format) {
+  Fixture<Pixel> frame(23, 13, depth);
+  PF_ParamDef classic_defs[OLMDIRECTIONALBLUR_NUM_PARAMS] = {};
+  PF_ParamDef* classic_params[OLMDIRECTIONALBLUR_NUM_PARAMS] = {};
+  InitParams(classic_defs, classic_params, frame.input_world, 4, 8);
+  HostState classic_state;
+  classic_state.input = &classic_defs[OLMDIRECTIONALBLUR_INPUT].u.ld;
+  classic_state.output = &frame.classic_world;
+  classic_state.defs = classic_defs;
+  classic_state.format = format;
+  SPBasicSuite classic_basic = MakeBasic();
+  REQUIRE(InvokeClassic(&classic_state, &classic_basic, classic_params) == PF_Err_NONE,
+          1205 + depth);
+  const auto classic = frame.packed_classic();
+  REQUIRE(classic_state.acquire == 1 && classic_state.release == 1 &&
+          classic_state.world_calls == 1 && frame.input_unchanged() &&
+          frame.classic_padding() && frame.classic_changed() &&
+          classic != frame.packed_input(), 1215 + depth);
+
+  PF_ParamDef smart_defs[OLMDIRECTIONALBLUR_NUM_PARAMS] = {};
+  PF_ParamDef* unused[OLMDIRECTIONALBLUR_NUM_PARAMS] = {};
+  InitParams(smart_defs, unused, frame.input_world, 4, 8);
+  HostState smart_state;
+  smart_state.input = &frame.input_world;
+  smart_state.output = &frame.smart_world;
+  smart_state.defs = smart_defs;
+  smart_state.format = format;
+  SPBasicSuite smart_basic = MakeBasic();
+  REQUIRE(InvokeSmart(&smart_state, &smart_basic, depth, true) == PF_Err_NONE,
+          1225 + depth);
+  REQUIRE(smart_state.front_seen == 8 && smart_state.back_seen == 4 &&
+          smart_state.checkout_order == ExpectedParams() &&
+          smart_state.checkin_order == ExpectedParams() &&
+          smart_state.param_checkout_attempts == 21 &&
+          smart_state.param_checkin_attempts == 21 &&
+          smart_state.layer_checkin_order == std::vector<int>{0}, 1235 + depth);
+  REQUIRE(frame.input_unchanged() && frame.smart_padding() && frame.smart_changed() &&
+          frame.packed_smart() == classic, 1245 + depth);
+  return 0;
+}
+
 static int RepresentativeHD() {
   Fixture<PF_Pixel8> frame(1280, 720, 8);
   const PF_EffectWorld input_header = frame.input_world;
@@ -638,7 +685,8 @@ static std::uint8_t ValidInputCanary(short depth) {
 }
 
 template <class Pixel>
-static int OperationBudgetReject(short depth, PF_PixelFormat format) {
+static int OperationBudgetReject(short depth, PF_PixelFormat format,
+                                 int front_strength = 0, int back_strength = 12) {
   constexpr int width = 3840, height = 2160;
   const A_long rowbytes = width * (A_long)sizeof(Pixel);
   const std::size_t span = (std::size_t)rowbytes * height;
@@ -652,7 +700,7 @@ static int OperationBudgetReject(short depth, PF_PixelFormat format) {
 
   PF_ParamDef classic_defs[OLMDIRECTIONALBLUR_NUM_PARAMS] = {};
   PF_ParamDef* classic_params[OLMDIRECTIONALBLUR_NUM_PARAMS] = {};
-  InitParams(classic_defs, classic_params, input_world, 12);
+  InitParams(classic_defs, classic_params, input_world, back_strength, front_strength);
   HostState classic_state;
   classic_state.input = &classic_defs[OLMDIRECTIONALBLUR_INPUT].u.ld;
   classic_state.output = &output_world;
@@ -666,7 +714,7 @@ static int OperationBudgetReject(short depth, PF_PixelFormat format) {
   SetGuards(&output, kOutputCanary);
   PF_ParamDef smart_defs[OLMDIRECTIONALBLUR_NUM_PARAMS] = {};
   PF_ParamDef* unused[OLMDIRECTIONALBLUR_NUM_PARAMS] = {};
-  InitParams(smart_defs, unused, input_world, 12);
+  InitParams(smart_defs, unused, input_world, back_strength, front_strength);
   HostState smart_state;
   smart_state.input = &input_world;
   smart_state.output = &output_world;
@@ -770,6 +818,9 @@ int main() {
   REQUIRE(PositiveDepth<PF_Pixel8>(8, PF_PixelFormat_ARGB32) == 0, 2);
   REQUIRE(PositiveDepth<PF_Pixel16>(16, PF_PixelFormat_ARGB64) == 0, 3);
   REQUIRE(PositiveDepth<PF_PixelFloat>(32, PF_PixelFormat_ARGB128) == 0, 4);
+  REQUIRE(DualPositiveDepth<PF_Pixel8>(8, PF_PixelFormat_ARGB32) == 0, 41);
+  REQUIRE(DualPositiveDepth<PF_Pixel16>(16, PF_PixelFormat_ARGB64) == 0, 42);
+  REQUIRE(DualPositiveDepth<PF_PixelFloat>(32, PF_PixelFormat_ARGB128) == 0, 43);
   REQUIRE(RepresentativeHD() == 0, 19);
   REQUIRE(PartialReject<PF_Pixel8>(8, PF_PixelFormat_ARGB32) == 0, 5);
   REQUIRE(PartialReject<PF_Pixel16>(16, PF_PixelFormat_ARGB64) == 0, 6);
@@ -779,6 +830,9 @@ int main() {
   REQUIRE(OperationBudgetReject<PF_Pixel8>(8, PF_PixelFormat_ARGB32) == 0, 10);
   REQUIRE(OperationBudgetReject<PF_Pixel16>(16, PF_PixelFormat_ARGB64) == 0, 11);
   REQUIRE(OperationBudgetReject<PF_PixelFloat>(32, PF_PixelFormat_ARGB128) == 0, 12);
+  REQUIRE(OperationBudgetReject<PF_Pixel8>(8, PF_PixelFormat_ARGB32, 7, 7) == 0, 101);
+  REQUIRE(OperationBudgetReject<PF_Pixel16>(16, PF_PixelFormat_ARGB64, 7, 7) == 0, 102);
+  REQUIRE(OperationBudgetReject<PF_PixelFloat>(32, PF_PixelFormat_ARGB128, 7, 7) == 0, 103);
   REQUIRE(SmartMemoryBudgetReject<PF_Pixel8>(8, PF_PixelFormat_ARGB32) == 0, 13);
   REQUIRE(SmartMemoryBudgetReject<PF_Pixel16>(16, PF_PixelFormat_ARGB64) == 0, 14);
   REQUIRE(SmartMemoryBudgetReject<PF_PixelFloat>(32, PF_PixelFormat_ARGB128) == 0, 15);
@@ -786,7 +840,7 @@ int main() {
   REQUIRE(CallbackAtomic<PF_Pixel16>(16, PF_PixelFormat_ARGB64) == 0, 17);
   REQUIRE(CallbackAtomic<PF_PixelFloat>(32, PF_PixelFormat_ARGB128) == 0, 18);
   std::puts("PASS_DBLUR_GENERIC_BACKONLY_EFFECTMAIN classic=8/16/32 smart=8/16/32 "
-            "back=2/8 hd=1280x720 param=10 odd_strides=yes atomic=yes "
+            "back=2/8 dual=front8+back4 hd=1280x720 param=5/10 odd_strides=yes atomic=yes "
             "budgets=operation/memory");
   return 0;
 }

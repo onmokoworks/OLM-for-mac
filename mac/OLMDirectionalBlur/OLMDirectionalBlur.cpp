@@ -830,11 +830,10 @@ static bool CanUseExact8(const PF_EffectWorld *input,
 // Public beta lane for the already-portable full-frame core.  The neutral
 // shape is kept separate from admission so malformed/out-of-UI generic tuples
 // cannot fall through into a legacy approximate or fixed-fixture route.
-static bool IsGenericSingleSideNeutralShape(const OLMDirectionalBlurInfo &info)
+static bool IsGenericNeutralShape(const OLMDirectionalBlurInfo &info)
 {
-	const bool front_only = info.front_strength != 0 && info.back_strength == 0;
-	const bool back_only = info.front_strength == 0 && info.back_strength != 0;
-	return (front_only || back_only) && info.front_alpha_fade == 0 &&
+	const bool any_side = info.front_strength != 0 || info.back_strength != 0;
+	return any_side && info.front_alpha_fade == 0 &&
 		info.front_sharp_tail == 0.0 &&
 		info.back_alpha_fade == 0 && info.back_sharp_tail == 0.0 &&
 		info.size_variation == 0.0 && info.noise_variation == 0.0;
@@ -915,6 +914,20 @@ static bool IsRetainedNeutralBackExact32(const PF_EffectWorld *input,
 		info.render_scale_x == 1.0 && info.render_scale_y == 1.0;
 }
 
+static bool IsRetainedNeutralDualExact16(const PF_EffectWorld *input,
+	                                      const PF_EffectWorld *output,
+	                                      const OLMDirectionalBlurInfo &info)
+{
+	return RetainedNeutralBackWorlds(input, output, 16, 16, sizeof(PF_Pixel16)) &&
+		(info.front_strength == 1 || info.front_strength == 2 ||
+		 info.front_strength == 8) && info.back_strength == 1 &&
+		info.angle_deg == 45.0 && info.brightness_gain == 1.0 &&
+		info.front_alpha_fade == 0 && info.front_sharp_tail == 0.0 &&
+		info.back_alpha_fade == 0 && info.back_sharp_tail == 0.0 &&
+		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
+		info.render_scale_x == 1.0 && info.render_scale_y == 1.0;
+}
+
 static bool IsRetainedNeutralBackExact(const PF_EffectWorld *input,
 		                                const PF_EffectWorld *output,
 		                                const OLMDirectionalBlurInfo &info,
@@ -928,13 +941,22 @@ static bool IsRetainedNeutralBackExact(const PF_EffectWorld *input,
 	}
 }
 
-static bool GenericSingleSideEffectiveStrength(const OLMDirectionalBlurInfo &info,
-		                                          bool require_unit_scale,
-		                                          int *effective_strength)
+static bool IsRetainedNeutralExact(const PF_EffectWorld *input,
+	                                const PF_EffectWorld *output,
+	                                const OLMDirectionalBlurInfo &info,
+	                                short bitdepth)
 {
-	if (!effective_strength || !IsGenericSingleSideNeutralShape(info)) return false;
-	const A_long strength = info.front_strength != 0
-		? info.front_strength : info.back_strength;
+	return IsRetainedNeutralBackExact(input, output, info, bitdepth) ||
+		(bitdepth == 16 && IsRetainedNeutralDualExact16(input, output, info));
+}
+
+static bool GenericEffectiveStrengths(const OLMDirectionalBlurInfo &info,
+	                                  bool require_unit_scale,
+	                                  int *effective_front_strength,
+	                                  int *effective_back_strength)
+{
+	if (!effective_front_strength || !effective_back_strength ||
+		!IsGenericNeutralShape(info)) return false;
 	// PF_ADD_ANGLE stores signed 16.16 degrees; the other bounds mirror the
 	// visible generic controls.  Recheck the actual float values consumed by the
 	// core after narrowing, rather than relying only on PF_FpLong finiteness.
@@ -943,7 +965,9 @@ static bool GenericSingleSideEffectiveStrength(const OLMDirectionalBlurInfo &inf
 	if (!std::isfinite(info.angle_deg) || info.angle_deg < kMinimumAngle ||
 		info.angle_deg > kMaximumAngle ||
 		!std::isfinite(info.brightness_gain) || info.brightness_gain < 0.0 ||
-		info.brightness_gain > 10.0 || strength < 1 || strength > 4000 ||
+		info.brightness_gain > 10.0 || info.front_strength < 0 ||
+		info.front_strength > 4000 || info.back_strength < 0 ||
+		info.back_strength > 4000 ||
 		!std::isfinite(info.render_scale_x) ||
 		!std::isfinite(info.render_scale_y) ||
 		info.render_scale_x <= 0.0 || info.render_scale_x > 1.0 ||
@@ -961,8 +985,9 @@ static bool GenericSingleSideEffectiveStrength(const OLMDirectionalBlurInfo &inf
 	}
 	if (require_unit_scale) {
 		if (info.render_scale_x != 1.0 || info.render_scale_y != 1.0) return false;
-		*effective_strength = static_cast<int>(strength);
-		return true;
+		*effective_front_strength = static_cast<int>(info.front_strength);
+		*effective_back_strength = static_cast<int>(info.back_strength);
+		return *effective_front_strength > 0 || *effective_back_strength > 0;
 	}
 	const double radians = -info.angle_deg * kPi / 180.0;
 	const double vx = std::cos(radians);
@@ -970,39 +995,48 @@ static bool GenericSingleSideEffectiveStrength(const OLMDirectionalBlurInfo &inf
 	const float projected_scale = static_cast<float>(std::sqrt(
 		std::pow(vx * info.render_scale_x, 2) +
 		std::pow(vy * info.render_scale_y, 2)));
-	const float scaled_strength =
-		static_cast<float>(strength) * projected_scale;
+	const float scaled_front_strength =
+		static_cast<float>(info.front_strength) * projected_scale;
+	const float scaled_back_strength =
+		static_cast<float>(info.back_strength) * projected_scale;
 	if (!std::isfinite(projected_scale) || projected_scale <= 0.0f ||
-		projected_scale > 1.0f || !std::isfinite(scaled_strength) ||
-		scaled_strength < 1.0f ||
-		scaled_strength > static_cast<float>(std::numeric_limits<int>::max())) {
+		projected_scale > 1.0f || !std::isfinite(scaled_front_strength) ||
+		!std::isfinite(scaled_back_strength) ||
+		scaled_front_strength > static_cast<float>(std::numeric_limits<int>::max()) ||
+		scaled_back_strength > static_cast<float>(std::numeric_limits<int>::max())) {
 		return false;
 	}
-	*effective_strength = static_cast<int>(scaled_strength);
-	return *effective_strength > 0 && *effective_strength <= 4000;
+	*effective_front_strength = static_cast<int>(scaled_front_strength);
+	*effective_back_strength = static_cast<int>(scaled_back_strength);
+	// A side selected by the user must remain active after PF8's projected
+	// scale/truncation.  Otherwise a dual tuple could silently become single.
+	return (info.front_strength == 0 || *effective_front_strength > 0) &&
+		(info.back_strength == 0 || *effective_back_strength > 0) &&
+		*effective_front_strength <= 4000 && *effective_back_strength <= 4000;
 }
 
-static bool IsGenericSingleSide8Parameters(const OLMDirectionalBlurInfo &info)
+static bool IsGenericNeutral8Parameters(const OLMDirectionalBlurInfo &info)
 {
-	int ignored_strength = 0;
-	return GenericSingleSideEffectiveStrength(info, false, &ignored_strength);
+	int ignored_front = 0, ignored_back = 0;
+	return GenericEffectiveStrengths(info, false, &ignored_front, &ignored_back);
 }
 
-static bool IsGenericSingleSideDeepParameters(const OLMDirectionalBlurInfo &info)
+static bool IsGenericNeutralDeepParameters(const OLMDirectionalBlurInfo &info)
 {
-	int ignored_strength = 0;
-	return GenericSingleSideEffectiveStrength(info, true, &ignored_strength);
+	int ignored_front = 0, ignored_back = 0;
+	return GenericEffectiveStrengths(info, true, &ignored_front, &ignored_back);
 }
 
-static bool CanUseGenericSingleSide8(const PF_EffectWorld *input,
-		                                const PF_EffectWorld *output,
-		                                const OLMDirectionalBlurInfo &info)
+static bool CanUseGenericNeutral8(const PF_EffectWorld *input,
+	                              const PF_EffectWorld *output,
+	                              const OLMDirectionalBlurInfo &info)
 {
-	int effective_strength = 0;
+	int effective_front_strength = 0, effective_back_strength = 0;
 	if (!input || !output || !input->data || !output->data ||
 		input->width <= 0 || input->height <= 0 ||
 		input->width != output->width || input->height != output->height ||
-		!GenericSingleSideEffectiveStrength(info, false, &effective_strength) ||
+		!GenericEffectiveStrengths(info, false, &effective_front_strength,
+			&effective_back_strength) ||
 		static_cast<std::size_t>(input->width) >
 			static_cast<std::size_t>(std::numeric_limits<A_long>::max()) / sizeof(PF_Pixel8)) {
 		return false;
@@ -1016,7 +1050,7 @@ static bool CanUseGenericSingleSide8(const PF_EffectWorld *input,
 	olm::dblur::generic::RenderEstimate estimate = {};
 	return diagonal_squared <= std::numeric_limits<int>::max() &&
 		olm::dblur::generic::EstimateRender(input->width, input->height, 8,
-			effective_strength, 0, &estimate);
+			effective_front_strength, effective_back_strength, 0, &estimate);
 }
 
 template <typename PixelT>
@@ -1024,11 +1058,12 @@ static bool GenericDeepWorldsSafe(const PF_EffectWorld *input,
 	                              const PF_EffectWorld *output,
 	                              const OLMDirectionalBlurInfo &info)
 {
-	int effective_strength = 0;
+	int effective_front_strength = 0, effective_back_strength = 0;
 	if (!input || !output || !input->data || !output->data || input->width <= 0 ||
 		input->height <= 0 || input->width != output->width ||
 		input->height != output->height ||
-		!GenericSingleSideEffectiveStrength(info, true, &effective_strength)) {
+		!GenericEffectiveStrengths(info, true, &effective_front_strength,
+			&effective_back_strength)) {
 		return false;
 	}
 	const std::size_t width = static_cast<std::size_t>(input->width);
@@ -1040,7 +1075,7 @@ static bool GenericDeepWorldsSafe(const PF_EffectWorld *input,
 	olm::dblur::generic::RenderEstimate estimate = {};
 	return input->rowbytes >= active && output->rowbytes >= active &&
 		olm::dblur::generic::EstimateRender(input->width, input->height, depth,
-			effective_strength, 0, &estimate);
+			effective_front_strength, effective_back_strength, 0, &estimate);
 }
 
 static bool GenericPF16SDRInput(const PF_EffectWorld *input)
@@ -1294,7 +1329,7 @@ static void UnstageDirectionalWorld(const std::vector<ScalarT> &pixels, PF_Effec
 	}
 }
 
-static PF_Err RenderGenericSingleSide16(PF_EffectWorld *input, PF_EffectWorld *output,
+static PF_Err RenderGenericNeutral16(PF_EffectWorld *input, PF_EffectWorld *output,
 		                                     const OLMDirectionalBlurInfo &info)
 {
 	std::vector<std::uint16_t> source, destination;
@@ -1310,7 +1345,7 @@ static PF_Err RenderGenericSingleSide16(PF_EffectWorld *input, PF_EffectWorld *o
 	return PF_Err_NONE;
 }
 
-static PF_Err RenderGenericSingleSide32(PF_EffectWorld *input, PF_EffectWorld *output,
+static PF_Err RenderGenericNeutral32(PF_EffectWorld *input, PF_EffectWorld *output,
 		                                     const OLMDirectionalBlurInfo &info)
 {
 	std::vector<float> source, destination;
@@ -1329,7 +1364,7 @@ static PF_Err RenderGenericSingleSide32(PF_EffectWorld *input, PF_EffectWorld *o
 enum DirectionalRenderRoute {
 	kDirectionalRouteOther = 0,
 	kDirectionalRouteRetainedNeutralBackExact = 1,
-	kDirectionalRouteGenericSingleSide = 2,
+	kDirectionalRouteGenericNeutral = 2,
 };
 
 static void ObserveDirectionalRenderRoute(int *observed_route,
@@ -1404,12 +1439,12 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 				observed_route, kDirectionalRouteRetainedNeutralBackExact);
 			return RenderExact8(input, output, nullptr, info);
 		}
-		if (CanUseGenericSingleSide8(input, output, info)) {
+		if (CanUseGenericNeutral8(input, output, info)) {
 			ObserveDirectionalRenderRoute(
-				observed_route, kDirectionalRouteGenericSingleSide);
+				observed_route, kDirectionalRouteGenericNeutral);
 			return RenderExact8(input, output, nullptr, info, true);
 		}
-		if (IsGenericSingleSideNeutralShape(info)) {
+		if (IsGenericNeutralShape(info)) {
 			// Do not let an invalid world or over-budget frame fall through to the
 			// older permissive exact predicate.
 			return PF_Err_BAD_CALLBACK_PARAM;
@@ -1426,20 +1461,20 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		return RenderDirectional8(input, output, info);
 	}
 	if (bitdepth == 16) {
-		const bool retained_exact = IsRetainedNeutralBackExact16(input, output, info);
+		const bool retained_exact = IsRetainedNeutralExact(input, output, info, 16);
 		if (retained_exact) {
 			ObserveDirectionalRenderRoute(
 				observed_route, kDirectionalRouteRetainedNeutralBackExact);
 		}
 		if (!retained_exact &&
-			IsGenericSingleSideDeepParameters(info) &&
+			IsGenericNeutralDeepParameters(info) &&
 			GenericDeepWorldsSafe<PF_Pixel16>(input, output, info)) {
 			ObserveDirectionalRenderRoute(
-				observed_route, kDirectionalRouteGenericSingleSide);
+				observed_route, kDirectionalRouteGenericNeutral);
 			return GenericPF16SDRInput(input)
-				? RenderGenericSingleSide16(input, output, info) : PF_Err_BAD_CALLBACK_PARAM;
+				? RenderGenericNeutral16(input, output, info) : PF_Err_BAD_CALLBACK_PARAM;
 		}
-		if (!retained_exact && IsGenericSingleSideNeutralShape(info)) {
+		if (!retained_exact && IsGenericNeutralShape(info)) {
 			return PF_Err_BAD_CALLBACK_PARAM;
 		}
 		const bool front_only_exact =
@@ -1644,20 +1679,20 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
 	if (bitdepth == 32) {
-		const bool retained_exact = IsRetainedNeutralBackExact32(input, output, info);
+		const bool retained_exact = IsRetainedNeutralExact(input, output, info, 32);
 		if (retained_exact) {
 			ObserveDirectionalRenderRoute(
 				observed_route, kDirectionalRouteRetainedNeutralBackExact);
 		}
 		if (!retained_exact &&
-			IsGenericSingleSideDeepParameters(info) &&
+			IsGenericNeutralDeepParameters(info) &&
 			GenericDeepWorldsSafe<PF_PixelFloat>(input, output, info)) {
 			ObserveDirectionalRenderRoute(
-				observed_route, kDirectionalRouteGenericSingleSide);
+				observed_route, kDirectionalRouteGenericNeutral);
 			return GenericPF32SDRInput(input)
-				? RenderGenericSingleSide32(input, output, info) : PF_Err_BAD_CALLBACK_PARAM;
+				? RenderGenericNeutral32(input, output, info) : PF_Err_BAD_CALLBACK_PARAM;
 		}
-		if (!retained_exact && IsGenericSingleSideNeutralShape(info)) {
+		if (!retained_exact && IsGenericNeutralShape(info)) {
 			return PF_Err_BAD_CALLBACK_PARAM;
 		}
 		const bool front_alpha_fade_exact =
@@ -1915,14 +1950,61 @@ extern "C" int OLMDirectionalBlurTestGenericEstimate(
 	return 1;
 }
 
+extern "C" int OLMDirectionalBlurTestGenericEstimateSides(
+	A_long width,
+	A_long height,
+	short bitdepth,
+	A_long effective_front_strength,
+	A_long effective_back_strength,
+	std::size_t smart_staging_bytes,
+	OLMDirectionalBlurGenericEstimate *result)
+{
+	if (!result) return 0;
+	olm::dblur::generic::RenderEstimate estimate = {};
+	if (!olm::dblur::generic::EstimateRender(
+		width, height, bitdepth, static_cast<int>(effective_front_strength),
+		static_cast<int>(effective_back_strength), smart_staging_bytes, &estimate)) {
+		*result = {};
+		return 0;
+	}
+	result->source_pixels = estimate.source_pixels;
+	result->work_width = static_cast<std::uint64_t>(estimate.work.width);
+	result->work_height = static_cast<std::uint64_t>(estimate.work.height);
+	result->work_pixels = estimate.work.pixels;
+	result->core_workspace_bytes = estimate.core_workspace_bytes;
+	result->wrapper_bytes = estimate.wrapper_bytes;
+	result->weight_bytes = estimate.weight_bytes;
+	result->smart_staging_bytes = estimate.smart_staging_bytes;
+	result->plugin_owned_live_bytes = estimate.plugin_owned_live_bytes;
+	result->operation_units = estimate.operation_units;
+	return 1;
+}
+
 extern "C" int OLMDirectionalBlurTestGenericEffectiveStrength(
 	const OLMDirectionalBlurInfo *info,
 	short bitdepth,
 	int *effective_strength)
 {
+	int front = 0, back = 0;
+	if (!info || !effective_strength ||
+		(bitdepth != 8 && bitdepth != 16 && bitdepth != 32) ||
+		!GenericEffectiveStrengths(*info, bitdepth != 8, &front, &back) ||
+		(front > 0 && back > 0)) {
+		return 0;
+	}
+	*effective_strength = front > 0 ? front : back;
+	return 1;
+}
+
+extern "C" int OLMDirectionalBlurTestGenericEffectiveStrengths(
+	const OLMDirectionalBlurInfo *info,
+	short bitdepth,
+	int *effective_front_strength,
+	int *effective_back_strength)
+{
 	return info && (bitdepth == 8 || bitdepth == 16 || bitdepth == 32) &&
-			GenericSingleSideEffectiveStrength(*info, bitdepth != 8, effective_strength)
-		? 1 : 0;
+		GenericEffectiveStrengths(*info, bitdepth != 8,
+			effective_front_strength, effective_back_strength) ? 1 : 0;
 }
 
 // Test-only entrypoint: keep the boundary probe on the production dispatcher.
@@ -2183,11 +2265,11 @@ extern "C" int OLMDirectionalBlurTestGenericSmartFramePolicy(
 {
 	if (!request || !info) return 0;
 	PF_RenderRequest normalized = {};
-	const bool retained_exact = IsRetainedNeutralBackExact(input, output, *info, bitdepth);
+	const bool retained_exact = IsRetainedNeutralExact(input, output, *info, bitdepth);
 	const bool generic = !retained_exact &&
-		(bitdepth == 8 ? IsGenericSingleSide8Parameters(*info)
+		(bitdepth == 8 ? IsGenericNeutral8Parameters(*info)
 			: ((bitdepth == 16 || bitdepth == 32) &&
-			   IsGenericSingleSideDeepParameters(*info)));
+			   IsGenericNeutralDeepParameters(*info)));
 	return generic && DirectionalNormalizeFullFrameRequest(
 		*request, width, height, &normalized) &&
 		DirectionalGenericWorldIsFullFrame(input, width, height) &&
@@ -2384,16 +2466,16 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 				active_row_bytes > static_cast<std::size_t>(output_world->rowbytes)) {
 				err = PF_Err_BAD_CALLBACK_PARAM;
 			}
-				const bool retained_exact = IsRetainedNeutralBackExact(
-					input_world, output_world, info, extra->input->bitdepth);
-				const bool generic_shape = !retained_exact &&
-					IsGenericSingleSideNeutralShape(info);
-				int effective_strength = 0;
-				if (!err && generic_shape) {
-					const bool parameters_safe = GenericSingleSideEffectiveStrength(
-						info, extra->input->bitdepth != 8, &effective_strength);
-					const bool worlds_safe = extra->input->bitdepth == 8
-						? CanUseGenericSingleSide8(input_world, output_world, info)
+			const bool retained_exact = IsRetainedNeutralExact(
+				input_world, output_world, info, extra->input->bitdepth);
+			const bool generic_shape = !retained_exact && IsGenericNeutralShape(info);
+			int effective_front_strength = 0, effective_back_strength = 0;
+			if (!err && generic_shape) {
+				const bool parameters_safe = GenericEffectiveStrengths(
+					info, extra->input->bitdepth != 8, &effective_front_strength,
+					&effective_back_strength);
+				const bool worlds_safe = extra->input->bitdepth == 8
+					? CanUseGenericNeutral8(input_world, output_world, info)
 					: (extra->input->bitdepth == 16
 						? GenericDeepWorldsSafe<PF_Pixel16>(input_world, output_world, info)
 						: (extra->input->bitdepth == 32 &&
@@ -2402,7 +2484,8 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 				if (!parameters_safe || !worlds_safe ||
 					!olm::dblur::generic::EstimateRender(
 						input_world->width, input_world->height, extra->input->bitdepth,
-						effective_strength, output_end - output_begin, &smart_estimate) ||
+						effective_front_strength, effective_back_strength,
+						output_end - output_begin, &smart_estimate) ||
 					(pre && pre->full_width > 0 && pre->full_height > 0 &&
 						(!pre->request_contains_full_frame ||
 						 !DirectionalGenericWorldIsFullFrame(

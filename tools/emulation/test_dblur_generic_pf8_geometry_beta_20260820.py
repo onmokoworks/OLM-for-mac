@@ -27,7 +27,7 @@ def main() -> int:
 #include <vector>
 
 static int run(int width, int height, double angle, int strength, double scale,
-               bool expect_success, bool check_determinism) {{
+               bool expect_success, bool check_determinism, int back_strength = 0) {{
     const int input_rowbytes = width * 4 + 5;
     const int output_rowbytes = width * 4 + 17;
     std::vector<std::uint8_t> input((size_t)input_rowbytes * height, 0xa5);
@@ -43,7 +43,8 @@ static int run(int width, int height, double angle, int strength, double scale,
     out.data = (PF_PixelPtr)output.data(); out.rowbytes = output_rowbytes;
     out.width = width; out.height = height; out.extent_hint = {{0, 0, width, height}};
     OLMDirectionalBlurInfo info{{}}; info.angle_deg = angle; info.brightness_gain = 1.0;
-    info.front_strength = strength; info.render_scale_x = info.render_scale_y = scale;
+    info.front_strength = strength; info.back_strength = back_strength;
+    info.render_scale_x = info.render_scale_y = scale;
     int exact = 0;
     const PF_Err err = OLMDirectionalBlurTestRenderWorld(&in, &out, &info, 8, &exact);
     if (!expect_success) return err == PF_Err_BAD_CALLBACK_PARAM ? 0 : 9;
@@ -79,9 +80,12 @@ int main() {{
     if (run(1, 97, -179.5, 8, 0.5, true, true)) return 2;
     if (run(101, 1, 89.9, 2, 1.0, true, true)) return 3;
     if (run(37, 23, 45.0, 8, 1.0, true, true)) return 4;
+    if (run(37, 23, 37.25, 8, 1.0, true, true, 4)) return 41;
     if (run(1280, 720, -45.0, 2, 0.5, true, false)) return 5;
     if (run(1920, 1080, 0.0, 2, 1.0, true, false)) return 6;
+    if (run(1920, 1080, 37.25, 2, 1.0, true, false, 2)) return 61;
     if (run(3840, 2160, 0.0, 2, 1.0, true, false)) return 7;
+    if (run(3840, 2160, 37.25, 2, 1.0, true, false, 2)) return 71;
     return 0;
 }}
 ''', encoding="utf-8")

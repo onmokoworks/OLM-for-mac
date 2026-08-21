@@ -242,7 +242,8 @@ static int render(Storage<Pixel>& storage, short depth,
 
 template <class Pixel>
 static int positive_depth(short depth) {
-  Storage<Pixel> back_two(37, 23), back_eight(37, 23), repeated(37, 23), front(37, 23);
+  Storage<Pixel> back_two(37, 23), back_eight(37, 23), repeated(37, 23),
+      front(37, 23), dual(37, 23), dual_repeated(37, 23);
   const double scale = depth == 8 ? 0.5 : 1.0;
   const auto two = Info(0, 2, 37.25, scale);
   const auto eight = Info(0, 8, -21.5, scale);
@@ -257,9 +258,18 @@ static int positive_depth(short depth) {
   REQUIRE(OLMDirectionalBlurTestGenericEffectiveStrength(&eight, depth, &effective),
           70 + depth);
   REQUIRE(effective == (depth == 8 ? 4 : 8), 80 + depth);
-  auto dual = Info(2, 2, 37.25, scale);
-  REQUIRE(!OLMDirectionalBlurTestGenericEffectiveStrength(&dual, depth, &effective),
+  auto dual_info = Info(8, 8, 37.25, scale);
+  REQUIRE(!OLMDirectionalBlurTestGenericEffectiveStrength(&dual_info, depth, &effective),
           90 + depth);
+  int effective_front = 0, effective_back = 0;
+  REQUIRE(OLMDirectionalBlurTestGenericEffectiveStrengths(
+              &dual_info, depth, &effective_front, &effective_back), 93 + depth);
+  REQUIRE(effective_front == (depth == 8 ? 4 : 8) &&
+              effective_back == (depth == 8 ? 4 : 8), 96 + depth);
+  REQUIRE(render(dual, depth, dual_info, kRouteGeneric) == 0, 99 + depth);
+  REQUIRE(render(dual_repeated, depth, dual_info, kRouteGeneric) == 0, 102 + depth);
+  REQUIRE(dual.output == dual_repeated.output && !active_equal(dual, front) &&
+              !active_equal(dual, back_two), 105 + depth);
   return 0;
 }
 
@@ -358,16 +368,14 @@ static int atomic_rejects(short depth) {
           170 + depth);
   REQUIRE(input.output == ui_before, 180 + depth);
 
-  if (depth != 8) {
-    auto dual = Info(2, 2, 37.25);
-    input.clear_output();
-    const auto dual_before = input.output;
-    REQUIRE(OLMDirectionalBlurTestRenderWorldRoute(
-                &input.input_world, &input.output_world, &dual, depth, &route) ==
-                PF_Err_BAD_CALLBACK_PARAM,
-            190 + depth);
-    REQUIRE(input.output == dual_before, 200 + depth);
-  }
+  auto malformed_dual = Info(-1, 2, 37.25, depth == 8 ? 0.5 : 1.0);
+  input.clear_output();
+  const auto dual_before = input.output;
+  REQUIRE(OLMDirectionalBlurTestRenderWorldRoute(
+              &input.input_world, &input.output_world, &malformed_dual, depth, &route) ==
+              PF_Err_BAD_CALLBACK_PARAM,
+          190 + depth);
+  REQUIRE(input.output == dual_before, 200 + depth);
 
   constexpr int width = 3840, height = 2160;
   std::array<std::uint8_t, 64> tiny_input{}, tiny_output{};
@@ -382,12 +390,22 @@ static int atomic_rejects(short depth) {
   OLMDirectionalBlurGenericEstimate estimate{};
   REQUIRE(!OLMDirectionalBlurTestGenericEstimate(
               width, height, depth, 12, 0, &estimate), 210 + depth);
+  REQUIRE(OLMDirectionalBlurTestGenericEstimateSides(
+              width, height, depth, 6, 6, 0, &estimate), 211 + depth);
+  REQUIRE(!OLMDirectionalBlurTestGenericEstimateSides(
+              width, height, depth, 7, 7, 0, &estimate), 212 + depth);
   const auto operation_before = tiny_output;
   REQUIRE(OLMDirectionalBlurTestRenderWorldRoute(
               &huge_in, &huge_out, &operation, depth, &route) ==
               PF_Err_BAD_CALLBACK_PARAM,
           220 + depth);
   REQUIRE(tiny_output == operation_before, 230 + depth);
+  auto dual_operation = Info(7, 7, 37.25);
+  REQUIRE(OLMDirectionalBlurTestRenderWorldRoute(
+              &huge_in, &huge_out, &dual_operation, depth, &route) ==
+              PF_Err_BAD_CALLBACK_PARAM,
+          231 + depth);
+  REQUIRE(tiny_output == operation_before, 232 + depth);
   return 0;
 }
 
