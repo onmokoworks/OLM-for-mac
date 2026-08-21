@@ -32,8 +32,8 @@ def directional_case_results(geometry: str) -> list[dict[str, object]]:
             "height": height,
             "angle": 37.25,
             "brightness_gain": 0.75,
-            "front_strength": 2 if side == "front" else 0,
-            "back_strength": 2 if side == "back" else 0,
+            "front_strength": 0 if side == "back" else 2,
+            "back_strength": 0 if side == "front" else 2,
             "input_padding_bytes": 5 if depth == 8 else 1,
             "output_padding_bytes": 17 if depth == 8 else 3,
             "input_span_unchanged": True,
@@ -41,8 +41,9 @@ def directional_case_results(geometry: str) -> list[dict[str, object]]:
             "output_padding_unchanged": True,
             "independent_strides": True,
             "opposite_side_output_differs": True,
+            "profile_outputs_pairwise_differ": True,
         }
-        for side in ("front", "back")
+        for side in ("front", "back", "dual")
         for depth in (8, 16, 32)
     ]
 
@@ -188,9 +189,10 @@ def test_current_canonical_twenty_cells_can_be_bound_without_overclaiming() -> N
                    if row["lane"] == "OLMDirectionalBlur"]
     assert len(directional) == 2
     for row in directional:
-        assert len(row["case_results"]) == 6
+        assert len(row["case_results"]) == 9
         assert {(case["side"], case["depth"]) for case in row["case_results"]} == {
-            (side, depth) for side in ("front", "back") for depth in (8, 16, 32)
+            (side, depth) for side in ("front", "back", "dual")
+            for depth in (8, 16, 32)
         }
 
 
@@ -470,23 +472,23 @@ def test_directionalblur_perf_rows_select_exact_geometry() -> None:
         assert command[1] == "tools/emulation/test_dblur_generic_deep_geometry_beta_20260820.py"
         assert command[command.index("--geometry") + 1] == geometry
         assert module.CASE_DEPTH_COUNTS[("OLMDirectionalBlur", geometry)] == {
-            8: 2, 16: 2, 32: 2,
+            8: 3, 16: 3, 32: 3,
         }
     predicate = module.SUPPORT_PREDICATES["OLMDirectionalBlur"]
     assert "pf8_pf16_pf32" in predicate
-    assert "neutral_single_side" in predicate
-    assert "exactly_one(front_strength,back_strength)" in predicate
-    assert "1 <= active_strength <= 4000" in predicate
+    assert "neutral_single_or_dual_side" in predicate
+    assert "at_least_one(front_strength,back_strength)" in predicate
+    assert "0 <= front_strength,back_strength <= 4000" in predicate
     assert "3221225472" in predicate
     assert "width*height <= 8847360" in predicate
     assert "edge_clamped_operation_units <= 350000000" in predicate
     assert "per_render_plugin_owned_live_bytes" in predicate
     assert module._parameters("OLMDirectionalBlur", "hd").startswith(
-        "neutral_single_side_front_back_angle37.25_gain0.75_strength2_"
+        "neutral_single_dual_front_back_angle37.25_gain0.75_strength2_"
     )
 
 
-def test_directionalblur_semantic_validator_requires_exact_single_side_matrix() -> None:
+def test_directionalblur_semantic_validator_requires_exact_single_dual_matrix() -> None:
     module = load_module()
     valid = directional_case_results("hd")
     module._validate_case_results({"case_results": valid}, "OLMDirectionalBlur", "hd")
@@ -500,13 +502,15 @@ def test_directionalblur_semantic_validator_requires_exact_single_side_matrix() 
             )
         except module.EvidenceBindingError:
             return
-        raise AssertionError("invalid Directional single-side case matrix was accepted")
+        raise AssertionError("invalid Directional single/dual case matrix was accepted")
 
     must_reject(lambda cases: cases[3].update(back_strength=0))
     must_reject(lambda cases: cases[1].update(back_strength=2))
-    must_reject(lambda cases: cases[5].update(side="front"))
+    must_reject(lambda cases: cases[8].update(side="front"))
     must_reject(lambda cases: cases.__setitem__(3, dict(cases[0])))
     must_reject(lambda cases: cases[4].pop("back_strength"))
+    must_reject(lambda cases: cases[7].update(front_strength=0))
+    must_reject(lambda cases: cases[6].pop("profile_outputs_pairwise_differ"))
 
 
 def test_kirakira_perf_contract_includes_worst_admitted_ui_length() -> None:
