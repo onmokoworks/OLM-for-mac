@@ -177,7 +177,7 @@ class BetaSupportDocumentationContract(unittest.TestCase):
             "RenderExact8(input, output, nullptr, info, true)",
         ):
             self.assertIn(token, directional)
-        for claim in ("最大4096×2160", "Amount 1–1000", "Repeat 1–10", "3 GiB per-render plugin-owned admission", "3億5000万work-unit", "最小9×7", "1 GiB per-render plugin-owned", "120億work-unit", "Horizontal-only", "Length 1–300", "Rotation 0/1", "16×16–8192×8192", "Search Radius 0–100", "Enabled Color Num 1–100", "Edge Thin −100〜100", "Distance Type 1〜3", "Outer/Inner Strength整数0–64", "Noise Variation 25/100", "Size Variation 1/25/100", "最大1 ULP契約", "Gamma 1.0–2.4"):
+        for claim in ("最大4096×2160", "Amount 1–1000", "Repeat 1–10", "3 GiB per-render plugin-owned admission", "3億5000万work-unit", "最小9×7", "1 GiB per-render plugin-owned", "120億work-unit", "Horizontal-only", "Length 1–300", "Rotation 0/1", "16×16–8192×8192", "Search Radius 0–100", "Enabled Color Num 1–100", "Edge Thin −100〜100", "Distance Type 1〜3", "Size Variation 25/100 × procedural Noise Variation 25/100 Type 1/2", "1 GiB plugin-owned／350M work cap", "最大1 ULP契約", "Gamma 1.0–2.4"):
             self.assertIn(claim, self.doc)
         for claim in ("Thin ±4／DT2", "materialized 102", "full-frameのみ",
                       "任意source Windows exactは未主張", "native quickはEdge 0",
@@ -626,16 +626,21 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         self.assertIn(helper["aex_sha256"], self.doc)
 
         radial_perf = json.loads(
-            (ROOT / "reports/generic_beta_perf_smoke_radial.json").read_text(encoding="utf-8")
+            (ROOT / "reports/generic_beta_perf_smoke.json").read_text(encoding="utf-8")
         )
         radial_rows = [row for row in radial_perf["results"] if row["lane"] == "OLMRadialBlur"]
         self.assertEqual({row["geometry"] for row in radial_rows}, {"hd", "uhd"})
         self.assertTrue(all(row["status"] == "passed" for row in radial_rows))
         uhd = next(row for row in radial_rows if row["geometry"] == "uhd")
-        self.assertEqual({(case["family"], case["depth_bpc"]) for case in uhd["case_results"]}, {
-            (family, depth) for family in ("zoom", "rotation") for depth in (8, 16, 32)
+        self.assertEqual({(case["family"], case["profile"], case["depth_bpc"]) for case in uhd["case_results"]}, {
+            (family, profile, depth) for family in ("zoom", "rotation")
+            for profile in ("baseline", "size_noise") for depth in (8, 16, 32)
         })
-        self.assertIn("4K peak RSS約494 MiB", self.doc)
+        self.assertEqual(len(uhd["case_results"]), 12)
+        self.assertIn("HD 8.38 s / 255787008 B", self.doc)
+        self.assertIn("UHD 16.52 s / 704692224 B", self.doc)
+        self.assertIn("一般4連結topology", self.doc)
+        self.assertIn("1 GiB plugin-owned／350M work cap", self.doc)
 
         classifier_doc = (
             ROOT / "refs/conformance/olmsmoother2_geometry_classifier_matrix_actual_aex_20260811.md"
@@ -817,9 +822,9 @@ class BetaSupportDocumentationContract(unittest.TestCase):
                       audit["evidence"]["performance_status"])
         self.assertIn("15 cases/geometry including Mode 3 Horizontal Length 300 Rotation 1",
                       audit["evidence"]["performance_status"])
-        self.assertIn("HD 37.90 seconds / peak 512049152 bytes",
+        self.assertIn("HD 38.19 seconds / peak 503742464 bytes",
                       audit["evidence"]["performance_status"])
-        self.assertIn("UHD 160.78 seconds / peak 1484931072 bytes",
+        self.assertIn("UHD 141.89 seconds / peak 1470169088 bytes",
                       audit["evidence"]["performance_status"])
         directional_audit = next(
             row for row in audit["plugins"] if row["plugin"] == "OLMDirectionalBlur"
