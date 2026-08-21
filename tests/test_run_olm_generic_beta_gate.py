@@ -100,6 +100,11 @@ class GenericBetaGateTests(unittest.TestCase):
             "tests/test_olmkirakira_mode3_ui_length_beta_20260821.py",
             "mac/OLMKiraKira/OLMKiraKira.cpp",
         ), rows)
+        self.assertIn((
+            "OLMKiraKira",
+            "tests/test_olmkirakira_mode3_ui_windows_owner_20260821.py",
+            "tools/emulation/test_olmkirakira_mode3_ui_windows_owner_20260821.py",
+        ), rows)
         directional_required = {
             "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp",
             "mac/OLMDirectionalBlur/OLMDirectionalBlur.h",
@@ -141,6 +146,39 @@ class GenericBetaGateTests(unittest.TestCase):
         self.assertTrue(
             kirakira_required.issubset(GATE.KIRAKIRA_MODE3_UI_DEPENDENCIES)
         )
+        kirakira_windows_owner_required = {
+            "tests/test_olmkirakira_mode3_ui_windows_owner_20260821.py",
+            "tools/emulation/test_olmkirakira_mode3_ui_windows_owner_20260821.py",
+            "refs/conformance/olmkirakira_mode3_ui_windows_owner_20260821.json",
+            "refs/conformance/olmkirakira_mode3_ui_windows_owner_20260821.sha256",
+            "refs/upstream_official/20260619_olm_official_zips/SHA256SUMS.txt",
+            "tests/olmkirakira_generic_beta_sanitizer_harness.cpp",
+            "tools/emulation/olmkirakira_public_smart_bounded_closure_harness_20260812.cpp",
+            "mac/OLMKiraKira/OLMKiraKira.cpp",
+            "mac/OLMKiraKira/OLMKiraKira.h",
+            "mac/OLMKiraKira/OLMKiraKira_Strings.cpp",
+            "mac/OLMKiraKira/OLMKiraKira_Strings.h",
+            "core/kirakira_gaussian.h",
+            "core/kirakira_highlight.h",
+            "core/kirakira_mode4.h",
+            "core/kirakira_warp.h",
+            "core/kirakira_merge2.h",
+        }
+        self.assertEqual(
+            set(GATE.KIRAKIRA_MODE3_WINDOWS_OWNER_DEPENDENCIES),
+            kirakira_windows_owner_required,
+        )
+        root = ROOT.resolve(strict=True)
+        for dependency in GATE.KIRAKIRA_MODE3_WINDOWS_OWNER_DEPENDENCIES:
+            with self.subTest(kirakira_windows_owner_dependency=dependency):
+                relative = Path(dependency)
+                self.assertFalse(relative.is_absolute())
+                self.assertNotIn("..", relative.parts)
+                resolved = (ROOT / relative).resolve(strict=True)
+                try:
+                    resolved.relative_to(root)
+                except ValueError:
+                    self.fail(f"Kira Windows-owner dependency escapes repo: {dependency}")
         external_sdk_prefixes = ("Headers/", "Util/", "Resources/")
         self.assertFalse(any(
             dependency.startswith(external_sdk_prefixes)
@@ -171,6 +209,9 @@ class GenericBetaGateTests(unittest.TestCase):
             },
             "tests/test_olmkirakira_mode3_ui_length_beta_20260821.py": {
                 *GATE.KIRAKIRA_MODE3_UI_DEPENDENCIES,
+            },
+            "tests/test_olmkirakira_mode3_ui_windows_owner_20260821.py": {
+                *GATE.KIRAKIRA_MODE3_WINDOWS_OWNER_DEPENDENCIES,
             },
             "tools/emulation/test_dblur_generic_backonly_beta_20260821.py": {
                 *GATE.DIRECTIONAL_BACKONLY_DEPENDENCIES,
