@@ -1536,9 +1536,9 @@ static bool BuildRadialSizeFactorPlaneAEX(
 			const float alpha = RadialZoomPixelTraits<PixelT>::Read(
 				*PixelAtConst<PixelT>(input, x, y), 3);
 			// NaN is accepted by the AEX's COMISS/SETC predicate, but it is not
-			// part of this bounded admission.  The AEX also has a right-edge run
-			// lookahead quirk, so callers admit only fixtures whose live pixels do
-			// not touch the right edge or final row.
+			// part of this bounded admission.  The portable label pass below uses
+			// explicit x/y bounds and therefore does not inherit the AEX run
+			// scanner's right-edge lookahead quirk.
 			if (!std::isfinite(alpha)) return false;
 			mask[(size_t)y * w + x] = alpha > 0.0f ? 1 : 0;
 		}
@@ -2419,11 +2419,11 @@ static PF_Err RenderZoomTyped(
 	bool component_fixture_safe = info.size_variation != 0.0 && input &&
 		BuildRadialSizeFactorPlaneAEX<PixelT>(input, (float)info.size_variation,
 			&component_size_factor, &component_areas);
+	const bool source_general_topology = component_fixture_safe;
 	for (A_long y = 0; component_fixture_safe && y < input->height; ++y) {
 		const PixelT *right = PixelAtConst<PixelT>(input, input->width - 1, y);
 		if (RadialZoomPixelTraits<PixelT>::Read(*right, 3) > 0.0f) component_fixture_safe = false;
 	}
-	const bool source_general_topology = source_alpha_strictly_positive || component_fixture_safe;
 	for (A_long x = 0; component_fixture_safe && x < input->width; ++x) {
 		const PixelT *bottom = PixelAtConst<PixelT>(input, x, input->height - 1);
 		if (RadialZoomPixelTraits<PixelT>::Read(*bottom, 3) > 0.0f) component_fixture_safe = false;
@@ -3411,11 +3411,11 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	bool component_fixture_safe = info.size_variation != 0.0 && input &&
 		BuildRadialSizeFactorPlaneAEX<PixelT>(input, (float)info.size_variation,
 			&component_size_factor, &component_areas);
+	const bool source_general_topology = component_fixture_safe;
 	for (A_long y = 0; component_fixture_safe && y < input->height; ++y) {
 		const PixelT *right = PixelAtConst<PixelT>(input, input->width - 1, y);
 		if (RadialZoomPixelTraits<PixelT>::Read(*right, 3) > 0.0f) component_fixture_safe = false;
 	}
-	const bool source_general_topology = source_alpha_strictly_positive || component_fixture_safe;
 	for (A_long x = 0; component_fixture_safe && x < input->width; ++x) {
 		const PixelT *bottom = PixelAtConst<PixelT>(input, x, input->height - 1);
 		if (RadialZoomPixelTraits<PixelT>::Read(*bottom, 3) > 0.0f) component_fixture_safe = false;

@@ -30,13 +30,15 @@ template<class P> int one(short depth,int type,int w,int h,int extra,bool bounda
  PF_Err e=OLMRadialBlurTestRenderWorld(&x,&y,&q,depth);if(e!=(boundary?PF_Err_BAD_CALLBACK_PARAM:PF_Err_NONE))return 1;
  q.quality=5;q.outer_strength=4;q.ratio=1;q.angle_deg=0;q.center_x=w/2.0;q.center_y=h/2.0;
  q.size_variation=25;q.noise_variation=25;q.noise_type=1;q.seed=1;q.noise_offset=0;q.thickness=10;
- e=OLMRadialBlurTestRenderWorld(&x,&y,&q,depth);return e==(boundary?PF_Err_BAD_CALLBACK_PARAM:PF_Err_NONE)?0:2;
+ e=OLMRadialBlurTestRenderWorld(&x,&y,&q,depth);return e==PF_Err_NONE?0:2;
 }}
 int main(int c,char**v){{int w=atoi(v[1]),h=atoi(v[2]);
  for(int t=1;t<=2;++t){{fprintf(stderr,"family=%d depth=8\\n",t);if(one<PF_Pixel8>(8,t,w,h,1))return 1;
  fprintf(stderr,"family=%d depth=16\\n",t);if(one<PF_Pixel16>(16,t,w,h,3))return 2;
  fprintf(stderr,"family=%d depth=32\\n",t);if(one<PF_PixelFloat>(32,t,w,h,5))return 3;}}
- if(one<PF_Pixel8>(8,1,w,h,1,true))return 4;return 0;}}
+ for(int t=1;t<=2;++t){{if(one<PF_Pixel8>(8,t,w,h,1,true))return 4;
+  if(one<PF_Pixel16>(16,t,w,h,3,true))return 5;
+  if(one<PF_PixelFloat>(32,t,w,h,5,true))return 6;}}return 0;}}
 ''')
         sdk = subprocess.run(["xcrun", "--show-sdk-path"], text=True, capture_output=True, check=True).stdout.strip()
         command = ["clang++", "-std=c++17", "-arch", "arm64", "-O1", "-g",
