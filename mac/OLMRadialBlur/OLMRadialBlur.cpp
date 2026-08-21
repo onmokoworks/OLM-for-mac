@@ -864,21 +864,8 @@ static bool IsGenericProceduralNoiseProfile(const OLMRadialBlurInfo &info)
 	return false;
 }
 
-template <typename PixelT>
-static bool IsGenericBaselineWorldPair(
-	const PF_EffectWorld *input,
-	const PF_EffectWorld *output,
-	const OLMRadialBlurInfo &info)
+static bool IsGenericBaselineControlProfile(const OLMRadialBlurInfo &info)
 {
-	if (!input || !output || !input->data || !output->data ||
-		input->width <= 0 || input->height <= 0 ||
-		input->width != output->width || input->height != output->height ||
-		input->width > std::numeric_limits<A_long>::max() / (A_long)sizeof(PixelT) ||
-		input->rowbytes < input->width * (A_long)sizeof(PixelT) ||
-		output->rowbytes < output->width * (A_long)sizeof(PixelT)) return false;
-	size_t rgba_words = 0;
-	if (!CheckedCellProduct(input->width, input->height, 4, &rgba_words) ||
-		rgba_words > std::numeric_limits<size_t>::max() / sizeof(float)) return false;
 	const bool outer_offset_supported =
 		(info.outer_offset_mode == 1 && info.outer_offset == 0) ||
 		((info.outer_offset_mode == 2 || info.outer_offset_mode == 3) &&
@@ -887,11 +874,8 @@ static bool IsGenericBaselineWorldPair(
 		(info.inner_offset_mode == 1 && info.inner_offset == 0) ||
 		(info.blur_type == 2 && (info.inner_offset_mode == 2 || info.inner_offset_mode == 3) &&
 		 (info.inner_offset == 2 || info.inner_offset == 4));
-	return info.comp_width == (PF_FpLong)input->width &&
-		info.comp_height == (PF_FpLong)input->height &&
+	return (info.blur_type == 1 || info.blur_type == 2) &&
 		std::isfinite(info.center_x) && std::isfinite(info.center_y) &&
-		info.center_x >= 0.0 && info.center_x <= (PF_FpLong)input->width &&
-		info.center_y >= 0.0 && info.center_y <= (PF_FpLong)input->height &&
 		info.outer_strength >= 0 && info.outer_strength <= 64 &&
 		info.outer_edge_fade >= 0 && info.outer_edge_fade <= 100 && outer_offset_supported &&
 		info.inner_strength >= 0 && info.inner_strength <= 64 &&
@@ -908,8 +892,171 @@ static bool IsGenericBaselineWorldPair(
 		  info.inner_strength == 0 && info.outer_edge_fade == 0 && info.inner_edge_fade == 0 &&
 		  info.outer_offset_mode == 1 && info.outer_offset == 0 &&
 		  info.inner_offset_mode == 1 && info.inner_offset == 0)) &&
-		info.noise_layer == 0 &&
-		IsGenericProceduralNoiseProfile(info);
+		info.noise_layer == 0 && IsGenericProceduralNoiseProfile(info);
+}
+
+static bool IsGenericSizeNoiseControlProfile(const OLMRadialBlurInfo &info)
+{
+	return (info.blur_type == 1 || info.blur_type == 2) &&
+		std::isfinite(info.center_x) && std::isfinite(info.center_y) &&
+		info.outer_strength == 4 && info.outer_edge_fade == 0 &&
+		info.outer_offset_mode == 1 && info.outer_offset == 0 &&
+		info.inner_strength == 0 && info.inner_edge_fade == 0 &&
+		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
+		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
+		info.quality == 5.0 && info.brightness_gain == 1.0 &&
+		(info.size_variation == 25.0 || info.size_variation == 100.0) &&
+		(info.noise_variation == 25.0 || info.noise_variation == 100.0) &&
+		(info.noise_type == 1 || info.noise_type == 2) && info.noise_layer == 0 &&
+		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0;
+}
+
+static bool IsGenericRadialControlProfile(const OLMRadialBlurInfo &info)
+{
+	return IsGenericBaselineControlProfile(info) || IsGenericSizeNoiseControlProfile(info);
+}
+
+template <typename PixelT>
+static bool IsGenericBaselineWorldPair(
+	const PF_EffectWorld *input,
+	const PF_EffectWorld *output,
+	const OLMRadialBlurInfo &info)
+{
+	if (!input || !output || !input->data || !output->data ||
+		input->width <= 0 || input->height <= 0 ||
+		input->width != output->width || input->height != output->height ||
+		input->width > std::numeric_limits<A_long>::max() / (A_long)sizeof(PixelT) ||
+		input->rowbytes <= 0 || output->rowbytes <= 0 ||
+		input->rowbytes < input->width * (A_long)sizeof(PixelT) ||
+		output->rowbytes < output->width * (A_long)sizeof(PixelT) ||
+		(input->rowbytes % (A_long)alignof(PixelT)) != 0 ||
+		(output->rowbytes % (A_long)alignof(PixelT)) != 0 ||
+		(reinterpret_cast<std::uintptr_t>(input->data) % alignof(PixelT)) != 0 ||
+		(reinterpret_cast<std::uintptr_t>(output->data) % alignof(PixelT)) != 0) return false;
+	const size_t input_rowbytes = (size_t)input->rowbytes;
+	const size_t output_rowbytes = (size_t)output->rowbytes;
+	const size_t last_row = (size_t)input->height - 1;
+	if ((last_row != 0 && input_rowbytes > std::numeric_limits<size_t>::max() / last_row) ||
+		(last_row != 0 && output_rowbytes > std::numeric_limits<size_t>::max() / last_row)) return false;
+	size_t rgba_words = 0;
+	if (!CheckedCellProduct(input->width, input->height, 4, &rgba_words) ||
+		rgba_words > std::numeric_limits<size_t>::max() / sizeof(float)) return false;
+	return info.comp_width == (PF_FpLong)input->width &&
+		info.comp_height == (PF_FpLong)input->height &&
+		info.center_x >= 0.0 && info.center_x <= (PF_FpLong)input->width &&
+		info.center_y >= 0.0 && info.center_y <= (PF_FpLong)input->height &&
+		IsGenericBaselineControlProfile(info);
+}
+
+template <typename PixelT>
+static bool IsGenericSizeNoiseWorldPair(
+	const PF_EffectWorld *input,
+	const PF_EffectWorld *output,
+	const OLMRadialBlurInfo &info)
+{
+	if (!IsGenericSizeNoiseControlProfile(info)) return false;
+	OLMRadialBlurInfo neutral = info;
+	neutral.size_variation = 0.0;
+	neutral.noise_variation = 0.0;
+	neutral.noise_type = 1;
+	return IsGenericBaselineWorldPair<PixelT>(input, output, neutral);
+}
+
+static bool CheckedRadialGenericBudget(
+	A_long width,
+	A_long height,
+	short bitdepth,
+	const OLMRadialBlurInfo &info,
+	bool smart_render,
+	size_t *estimated_bytes = nullptr,
+	uint64_t *estimated_work = nullptr)
+{
+	static constexpr uint64_t kMaxPixels = UINT64_C(4096) * UINT64_C(2160);
+	static constexpr uint64_t kMaxBytes = UINT64_C(1) << 30;
+	static constexpr uint64_t kReserveBytes = UINT64_C(64) << 20;
+	static constexpr uint64_t kMaxWork = UINT64_C(350000000);
+	if (width <= 0 || height <= 0 || width > 4096 || height > 4096 ||
+		!IsGenericRadialControlProfile(info)) return false;
+	const uint64_t w = (uint64_t)width;
+	const uint64_t h = (uint64_t)height;
+	if (w > UINT64_MAX / h) return false;
+	const uint64_t pixels = w * h;
+	if (pixels > kMaxPixels) return false;
+	uint64_t pixel_bytes = 0;
+	if (bitdepth == 8) pixel_bytes = sizeof(PF_Pixel8);
+	else if (bitdepth == 16) pixel_bytes = sizeof(PF_Pixel16);
+	else if (bitdepth == 32) pixel_bytes = sizeof(PF_PixelFloat);
+	else return false;
+
+	const long double cx = (long double)info.center_x;
+	const long double cy = (long double)info.center_y;
+	const long double ratio = (long double)info.ratio;
+	const uint64_t angular = (uint64_t)(360.0L * (long double)info.quality);
+	if (angular == 0) return false;
+	long double min_distance = 0.0L;
+	long double max_distance = 0.0L;
+	if (info.blur_type == 1) {
+		const long double min_dx = (cx >= 0.0L && cx < w) ? 0.0L : fabsl(cx < 0.0L ? cx : cx - w);
+		const long double min_dy = (cy >= 0.0L && cy < h) ? 0.0L : fabsl(cy < 0.0L ? cy : cy - h);
+		const long double max_dx = (cx >= 0.0L && cx < w) ? std::max(cx, (long double)w - cx) : (cx < 0.0L ? (long double)w - cx : cx);
+		const long double max_dy = (cy >= 0.0L && cy < h) ? std::max(cy, (long double)h - cy) : (cy < 0.0L ? (long double)h - cy : cy);
+		min_distance = sqrtl(min_dx * min_dx + min_dy * min_dy) / ratio;
+		max_distance = sqrtl(max_dx * max_dx + max_dy * max_dy);
+	} else {
+		const long double left = std::max(0.0L, -cx);
+		const long double right = std::max(std::max(0.0L, cx - w), cx <= w / 2.0L ? (long double)w - cx : cx);
+		const long double top = std::max(0.0L, -cy);
+		const long double bottom = std::max(std::max(0.0L, cy - h), cy <= h / 2.0L ? (long double)h - cy : cy);
+		min_distance = sqrtl(left * left + top * top) / ratio;
+		max_distance = sqrtl(std::max(left, right) * std::max(left, right) +
+			std::max(top, bottom) * std::max(top, bottom));
+	}
+	if (!std::isfinite((double)min_distance) || !std::isfinite((double)max_distance)) return false;
+	const uint64_t min_r = min_distance >= 2.0L ? (uint64_t)min_distance - 2 : 0;
+	const uint64_t max_r = (uint64_t)max_distance + 2;
+	if (max_r < min_r || max_r - min_r == UINT64_MAX) return false;
+	const uint64_t radius = max_r - min_r + 1;
+	if (radius == 0 || angular > UINT64_MAX / radius) return false;
+	const uint64_t polar = angular * radius;
+
+	// Conservative peak for the generic Size/Noise topology: source/factor
+	// planes, polar transform/accumulators, one tight Smart destination, and a
+	// fixed reserve for vectors, weights, thread state, and allocator overhead.
+	if (pixels > (UINT64_MAX - kReserveBytes) / 40 || polar > UINT64_MAX / 52)
+		return false;
+	uint64_t bytes = kReserveBytes + pixels * 40 + polar * 52;
+	if (smart_render) {
+		if (pixels > (UINT64_MAX - bytes) / pixel_bytes) return false;
+		bytes += pixels * pixel_bytes;
+	}
+	const uint64_t strength = (uint64_t)info.outer_strength + (uint64_t)info.inner_strength;
+	if (strength > UINT64_MAX - 8 || polar > UINT64_MAX / (strength + 8)) return false;
+	const uint64_t work = polar * (strength + 8);
+	if (estimated_bytes) *estimated_bytes = bytes > SIZE_MAX ? SIZE_MAX : (size_t)bytes;
+	if (estimated_work) *estimated_work = work;
+	return bytes <= kMaxBytes && work <= kMaxWork;
+}
+
+template <typename PixelT>
+static bool GenericRadialInputIsSDR(const PF_EffectWorld *input)
+{
+	if (!input || !input->data || input->width <= 0 || input->height <= 0 ||
+		input->rowbytes < input->width * (A_long)sizeof(PixelT)) return false;
+	for (A_long y = 0; y < input->height; ++y) {
+		const PixelT *row = reinterpret_cast<const PixelT *>(
+			reinterpret_cast<const A_u_char *>(input->data) + (size_t)y * input->rowbytes);
+		for (A_long x = 0; x < input->width; ++x) {
+			if constexpr (std::is_same<PixelT, PF_Pixel16>::value) {
+				if (row[x].alpha > 32768 || row[x].red > 32768 ||
+					row[x].green > 32768 || row[x].blue > 32768) return false;
+			} else if constexpr (std::is_same<PixelT, PF_PixelFloat>::value) {
+				const float values[4] = {row[x].alpha, row[x].red, row[x].green, row[x].blue};
+				for (float value : values) if (!std::isfinite(value) || value < 0.0f || value > 1.0f)
+					return false;
+			}
+		}
+	}
+	return true;
 }
 
 template <typename PixelT>
@@ -1397,21 +1544,27 @@ static bool BuildRadialSizeFactorPlaneAEX(
 		}
 	}
 
-	std::vector<A_u_char> visited(count, 0);
+	// Label once, then materialize factors in a second linear pass.  This keeps
+	// the arbitrary-topology path O(N) and avoids a per-component member vector
+	// whose repeated growth used to make allocation behavior shape-dependent.
+	std::vector<uint32_t> labels(count, 0);
 	std::vector<size_t> pending;
-	std::vector<size_t> members;
-	std::vector<float> areas(count, 0.0f);
+	pending.reserve(count);
+	std::vector<A_long> areas(1, 0);
 	component_areas->clear();
 	A_long maximum_area = 0;
 	for (size_t start = 0; start < count; ++start) {
-		if (visited[start] || !mask[start]) continue;
-		visited[start] = 1;
+		if (labels[start] != 0 || !mask[start]) continue;
+		if (areas.size() > (size_t)std::numeric_limits<uint32_t>::max()) return false;
+		const uint32_t label = (uint32_t)areas.size();
+		labels[start] = label;
 		pending.assign(1, start);
-		members.clear();
+		A_long area = 0;
 		while (!pending.empty()) {
 			const size_t cell = pending.back();
 			pending.pop_back();
-			members.push_back(cell);
+			if (area == std::numeric_limits<A_long>::max()) return false;
+			++area;
 			const A_long x = (A_long)(cell % (size_t)w);
 			const A_long y = (A_long)(cell / (size_t)w);
 			const size_t neighbors[4] = {cell - 1, cell + 1, cell - (size_t)w, cell + (size_t)w};
@@ -1419,16 +1572,15 @@ static bool BuildRadialSizeFactorPlaneAEX(
 			for (int direction = 0; direction < 4; ++direction) {
 				if (!allowed[direction]) continue;
 				const size_t neighbor = neighbors[direction];
-				if (!visited[neighbor] && mask[neighbor]) {
-					visited[neighbor] = 1;
+				if (labels[neighbor] == 0 && mask[neighbor]) {
+					labels[neighbor] = label;
 					pending.push_back(neighbor);
 				}
 			}
 		}
-		const A_long area = (A_long)members.size();
+		areas.push_back(area);
 		component_areas->push_back(area);
 		maximum_area = std::max(maximum_area, area);
-		for (size_t cell : members) areas[cell] = (float)area;
 	}
 	std::sort(component_areas->begin(), component_areas->end());
 	const float sv = RadialF32Mul(size_variation_percent, 0.01f);
@@ -1437,7 +1589,9 @@ static bool BuildRadialSizeFactorPlaneAEX(
 	const float inverse_sv = RadialF32Sub(1.0f, sv);
 	factor_plane->resize(count + 1);
 	for (size_t cell = 0; cell < count; ++cell) {
-		float factor = RadialF32Mul(areas[cell], inverse_maximum);
+		const uint32_t label = labels[cell];
+		const float component_area = label == 0 ? 0.0f : (float)areas[(size_t)label];
+		float factor = RadialF32Mul(component_area, inverse_maximum);
 		factor = RadialF32Mul(factor, sv);
 		(*factor_plane)[cell] = RadialF32Add(factor, inverse_sv);
 	}
@@ -1641,15 +1795,21 @@ static FloatImage BuildZoomAEXOuterOnlyPolar(
 	const A_long thread_count = std::max<A_long>(
 		1, std::min<A_long>(32, std::min<A_long>(angular_count,
 			hardware_threads ? (A_long)hardware_threads : 1)));
+	// Allocate every worker-owned buffer before launching any thread.  A
+	// bad_alloc is then propagated through the public render exception boundary
+	// rather than escaping a worker and terminating the host process.
+	std::vector<std::vector<float> > worker_source_scalar(
+		(size_t)thread_count, std::vector<float>((size_t)radius_count));
 	std::vector<std::thread> threads;
 	threads.reserve((size_t)thread_count);
+	try {
 	for (A_long thread_index = 0; thread_index < thread_count; ++thread_index) {
-		threads.emplace_back([&]() {
+		threads.emplace_back([&, thread_index]() {
+			std::vector<float> &faded_source_scalar = worker_source_scalar[(size_t)thread_index];
 			for (;;) {
 				const A_long ai = next_row.fetch_add(1, std::memory_order_relaxed);
 				if (ai >= angular_count) break;
 				const size_t row_cell = (size_t)ai * radius_count;
-				std::vector<float> faded_source_scalar((size_t)radius_count);
 				for (A_long ri = 0; ri < radius_count; ++ri) {
 					const size_t cell = row_cell + ri;
 					const size_t rgba = cell * 4;
@@ -1772,6 +1932,10 @@ static FloatImage BuildZoomAEXOuterOnlyPolar(
 				}
 			}
 		});
+	}
+	} catch (...) {
+		for (std::thread &thread : threads) if (thread.joinable()) thread.join();
+		throw;
 	}
 	for (std::thread &thread : threads) thread.join();
 	return normalized;
@@ -2226,6 +2390,8 @@ static PF_Err RenderZoomTyped(
 {
 	const bool use_generic_baseline =
 		info.blur_type == 1 && IsGenericBaselineWorldPair<PixelT>(input, output, info);
+	const bool use_generic_size_noise =
+		info.blur_type == 1 && IsGenericSizeNoiseWorldPair<PixelT>(input, output, info);
 	const bool use_generic_type3 =
 		IsGenericType3ZoomProfile<PixelT>(input, output, noise_world, info);
 	const bool use_aex_zoom_geometry = input && output && input->data && output->data &&
@@ -2257,6 +2423,7 @@ static PF_Err RenderZoomTyped(
 		const PixelT *right = PixelAtConst<PixelT>(input, input->width - 1, y);
 		if (RadialZoomPixelTraits<PixelT>::Read(*right, 3) > 0.0f) component_fixture_safe = false;
 	}
+	const bool source_general_topology = source_alpha_strictly_positive || component_fixture_safe;
 	for (A_long x = 0; component_fixture_safe && x < input->width; ++x) {
 		const PixelT *bottom = PixelAtConst<PixelT>(input, x, input->height - 1);
 		if (RadialZoomPixelTraits<PixelT>::Read(*bottom, 3) > 0.0f) component_fixture_safe = false;
@@ -2268,6 +2435,7 @@ static PF_Err RenderZoomTyped(
 	if (use_generic_baseline && info.size_variation != 0.0 && !source_components_area_profile) {
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
+	if (use_generic_size_noise && !source_general_topology) return PF_Err_BAD_CALLBACK_PARAM;
 	const PF_FpLong offcenter_base_x = !input ? 0.0 : std::is_same<PixelT, PF_Pixel8>::value
 		? (PF_FpLong)input->width / 2.0 : (PF_FpLong)(input->width / 2);
 	const PF_FpLong offcenter_base_y = !input ? 0.0 : std::is_same<PixelT, PF_Pixel8>::value
@@ -2519,7 +2687,7 @@ static PF_Err RenderZoomTyped(
 		(info.noise_type == 1 || info.noise_type == 2) && info.noise_layer == 0 &&
 		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0 &&
 		info.comp_width == 32.0 && info.comp_height == 18.0 && source_components_1_4_9;
-	if (!use_generic_baseline && !use_generic_type3 && !use_aex_typed_zoom_edge_fade_32x18 && !use_aex_typed_zoom_edge_noise_32x18 &&
+	if (!use_generic_baseline && !use_generic_size_noise && !use_generic_type3 && !use_aex_typed_zoom_edge_fade_32x18 && !use_aex_typed_zoom_edge_noise_32x18 &&
 		!use_aex_typed_zoom_size_edge_components_32x18 &&
 		!use_aex_typed_zoom_any_size_edge_noise_components_32x18 &&
 		!use_aex_typed_zoom_dual_size_components_32x18 &&
@@ -2682,7 +2850,7 @@ static PF_Err RenderZoomTyped(
 		info.size_variation == 0.0 && info.noise_variation == 0.0 &&
 		info.noise_type == 1 && info.noise_layer == 0 && info.seed == 1 &&
 		info.noise_offset == 0 && info.thickness == 10.0;
-	if (!use_generic_baseline && !use_generic_type3 && (info.blur_type != 1 || (info.inner_strength != 0 && !use_aex_pf32_zoom_inner_small &&
+	if (!use_generic_baseline && !use_generic_size_noise && !use_generic_type3 && (info.blur_type != 1 || (info.inner_strength != 0 && !use_aex_pf32_zoom_inner_small &&
 	    !use_aex_pf32_zoom_inner_noise_small && !use_aex_typed_zoom_inner_pairwise &&
 	    !use_aex_typed_zoom_dual_size_components_32x18 &&
 	    !use_aex_typed_zoom_inner_offset_pairwise &&
@@ -2776,7 +2944,7 @@ static PF_Err RenderZoomTyped(
 		info.thickness == 10.0 && info.comp_width == 9.0 && info.comp_height == 7.0;
 	const bool use_aex_pf16_bounded_offset_small =
 		use_aex_pf16_offset_mode2_ui2_small || use_aex_pf16_offset_mode3_ui2_small;
-	bool use_aex_outer_only = use_generic_baseline || use_generic_type3 || (
+	bool use_aex_outer_only = use_generic_baseline || use_generic_size_noise || use_generic_type3 || (
 		info.inner_strength == 0 && info.inner_offset == 0 && info.inner_edge_fade == 0 &&
 		info.outer_offset == 0 && info.outer_edge_fade == 0 &&
 		info.size_variation == 0.0 && info.noise_variation == 0.0) ||
@@ -2816,20 +2984,21 @@ static PF_Err RenderZoomTyped(
 				source_factor_with_guard.data(), source_factor_with_guard.data(), (size_t)w * h);
 			if (layer_err) return layer_err;
 		}
-		if (((use_generic_baseline && info.size_variation != 0.0) ||
+		if (((use_generic_baseline && info.size_variation != 0.0) || use_generic_size_noise ||
 			 use_aex_typed_zoom_size_variation_32x18 ||
 			 use_aex_typed_zoom_dual_size_components_32x18 ||
 			 use_aex_typed_zoom_size_edge_components_32x18 ||
 			 use_aex_typed_zoom_any_size_edge_noise_components_32x18 ||
 			 use_aex_typed_zoom_size_noise_components_32x18) &&
-			(source_components_1_4_9 || (use_generic_baseline && source_components_area_profile))) {
+			(source_components_1_4_9 || (use_generic_baseline && source_components_area_profile) ||
+			 use_generic_size_noise)) {
 			source_factor_with_guard = component_size_factor;
 			if (use_aex_typed_zoom_any_size_edge_noise_components_32x18) {
 				fade_factor_with_guard = component_size_factor;
 				fade_factor_plane.resize((size_t)angular_count * radius_count);
 			}
 		}
-			if ((use_generic_baseline && info.noise_variation != 0.0) ||
+			if ((use_generic_baseline && info.noise_variation != 0.0) || use_generic_size_noise ||
 				use_aex_pf32_zoom_noise_type1_small || use_aex_typed_zoom_noise_type1_pairwise ||
 			use_aex_pf32_zoom_inner_noise_small || use_aex_typed_zoom_noise_type2_small ||
 			(use_aex_typed_zoom_inner_pairwise && info.noise_variation != 0.0) ||
@@ -2851,7 +3020,7 @@ static PF_Err RenderZoomTyped(
 			const float nv = (float)info.noise_variation * 0.01f;
 			for (A_long y = 0; y < h; ++y) {
 				for (A_long x = 0; x < w; ++x) {
-					const float noise = ((use_generic_baseline && info.noise_type == 2) ||
+					const float noise = (((use_generic_baseline || use_generic_size_noise) && info.noise_type == 2) ||
 						use_aex_typed_zoom_noise_type2_small ||
 						(use_aex_typed_zoom_inner_pairwise && info.noise_type == 2) ||
 						(use_aex_typed_zoom_dual_size_components_32x18 && info.noise_type == 2) ||
@@ -2865,7 +3034,8 @@ static PF_Err RenderZoomTyped(
 					const float mixed =
 						RadialF32Add(RadialF32Mul(nv, noise), RadialF32Sub(1.0f, nv));
 					source_factor_with_guard[source_cell] =
-						((use_aex_typed_zoom_dual_size_components_32x18 && info.noise_variation != 0.0) ||
+						(use_generic_size_noise ||
+						 (use_aex_typed_zoom_dual_size_components_32x18 && info.noise_variation != 0.0) ||
 						 use_aex_typed_zoom_size_noise_components_32x18 ||
 						 use_aex_typed_zoom_any_size_edge_noise_components_32x18)
 						? RadialF32Mul(mixed, source_factor_with_guard[source_cell]) : mixed;
@@ -3222,6 +3392,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 {
 	const bool use_generic_baseline =
 		info.blur_type == 2 && IsGenericBaselineWorldPair<PixelT>(input, output, info);
+	const bool use_generic_size_noise =
+		info.blur_type == 2 && IsGenericSizeNoiseWorldPair<PixelT>(input, output, info);
 	bool source_alpha_strictly_positive = info.size_variation != 0.0 &&
 		input && input->data && input->width > 0 && input->height > 0 &&
 		input->rowbytes >= input->width * (A_long)sizeof(PixelT);
@@ -3243,6 +3415,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		const PixelT *right = PixelAtConst<PixelT>(input, input->width - 1, y);
 		if (RadialZoomPixelTraits<PixelT>::Read(*right, 3) > 0.0f) component_fixture_safe = false;
 	}
+	const bool source_general_topology = source_alpha_strictly_positive || component_fixture_safe;
 	for (A_long x = 0; component_fixture_safe && x < input->width; ++x) {
 		const PixelT *bottom = PixelAtConst<PixelT>(input, x, input->height - 1);
 		if (RadialZoomPixelTraits<PixelT>::Read(*bottom, 3) > 0.0f) component_fixture_safe = false;
@@ -3254,6 +3427,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	if (use_generic_baseline && info.size_variation != 0.0 && !source_components_area_profile) {
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
+	if (use_generic_size_noise && !source_general_topology) return PF_Err_BAD_CALLBACK_PARAM;
 	const bool use_aex_pf32_opaque_size_variation_small = input && output &&
 		std::is_same<PixelT, PF_PixelFloat>::value &&
 		input->width == 9 && input->height == 7 && output->width == 9 && output->height == 7 &&
@@ -3766,7 +3940,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0 &&
 		info.comp_width == 32.0 && info.comp_height == 18.0 &&
 		MatchesRadialSizeComponentFixture<PixelT>(input, false);
-	if (!use_generic_baseline && (info.blur_type != 2 || (info.inner_strength != 0 &&
+	if (!use_generic_baseline && !use_generic_size_noise && (info.blur_type != 2 || (info.inner_strength != 0 &&
 	    !use_aex_typed_rotation_dual_size_noise_offset_components_32x18 &&
 	    !use_aex_typed_rotation_size_offset_components_32x18 &&
 	    !use_aex_typed_rotation_edge_offset_noise_components_32x18 &&
@@ -4032,7 +4206,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		(info.inner_strength != 0 || info.outer_edge_fade != 0 || info.inner_edge_fade != 0 ||
 		 info.outer_offset_mode != 1 || info.inner_offset_mode != 1 ||
 		 info.noise_variation != 0.0 || info.size_variation != 0.0);
-	if (!use_generic_baseline && !use_aex_exact) return PF_Err_BAD_CALLBACK_PARAM;
+	if (!use_generic_baseline && !use_generic_size_noise && !use_aex_exact) return PF_Err_BAD_CALLBACK_PARAM;
 	const RadialBlurDebugConfig debug = LoadRadialBlurDebugConfig();
 	FloatImage src;
 	src.width = w;
@@ -4090,7 +4264,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	std::vector<float> rotation_scalar_source_with_guard((size_t)w * h + 1, 1.0f);
 	std::vector<float> rotation_fade_source_with_guard;
 	rotation_scalar_source_with_guard.back() = 0.0f;
-	if (((use_generic_baseline && info.size_variation != 0.0) ||
+	if (((use_generic_baseline && info.size_variation != 0.0) || use_generic_size_noise ||
 		 use_aex_typed_rotation_size_variation_32x18 ||
 		 use_aex_typed_rotation_dual_size_noise_offset_components_32x18 ||
 		 (use_aex_typed_rotation_dual_strength_32x18 && info.size_variation != 0.0) ||
@@ -4098,13 +4272,14 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		 use_aex_typed_rotation_size_edge_components_32x18 ||
 		 use_aex_typed_rotation_any_size_edge_noise_components_32x18 ||
 		 use_aex_typed_rotation_size_noise_components_32x18) &&
-		(source_components_1_4_9 || (use_generic_baseline && source_components_area_profile))) {
+		(source_components_1_4_9 || (use_generic_baseline && source_components_area_profile) ||
+		 use_generic_size_noise)) {
 		rotation_scalar_source_with_guard = component_size_factor;
 		if (use_aex_typed_rotation_any_size_edge_noise_components_32x18) {
 			rotation_fade_source_with_guard = component_size_factor;
 		}
 	}
-	if ((use_generic_baseline && info.noise_variation != 0.0) ||
+	if ((use_generic_baseline && info.noise_variation != 0.0) || use_generic_size_noise ||
 		use_aex_typed_rotation_edge_offset_noise_components_32x18 || use_aex_pf32_noise_type1_small || use_aex_typed_noise_type1_pairwise ||
 		use_aex_typed_noise_type2_small || use_aex_pf32_strength5_noise_type1_small ||
 		use_aex_typed_rotation_dual_size_noise_offset_components_32x18 ||
@@ -4137,13 +4312,13 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			 use_aex_typed_rotation_size_noise_components_32x18);
 		for (A_long y = 0; y < h; ++y) {
 			for (A_long x = 0; x < w; ++x) {
-				const float noise = ((use_generic_baseline && info.noise_type == 1) ||
+				const float noise = (((use_generic_baseline || use_generic_size_noise) && info.noise_type == 1) ||
 					use_aex_typed_rotation_edge_offset_noise_components_32x18 ||
 					use_aex_typed_rotation_offset_noise_components_32x18 ||
 					(use_aex_typed_rotation_dual_size_noise_offset_components_32x18 && info.noise_type == 1) ||
 					use_aex_rotation_type1_inverse_cell_32x18)
 					? olm::dblur::sample_radial_noise_plane(noise_view, x, y, info.noise_type == 1)
-					: ((use_generic_baseline && info.noise_type == 2) || use_aex_typed_noise_type2_small ||
+					: (((use_generic_baseline || use_generic_size_noise) && info.noise_type == 2) || use_aex_typed_noise_type2_small ||
 					(use_aex_typed_rotation_dual_size_noise_offset_components_32x18 && info.noise_type == 2) ||
 					(use_aex_typed_rotation_dual_strength_32x18 && info.noise_type == 2) ||
 					(use_aex_typed_rotation_edge_noise_32x18 && info.noise_type == 2) ||
@@ -4157,7 +4332,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				const float mixed =
 					RadialF32Add(RadialF32Mul(nv, noise), RadialF32Sub(1.0f, nv));
 				rotation_scalar_source_with_guard[source_cell] =
-					(use_aex_typed_rotation_dual_size_noise_offset_components_32x18 ||
+					(use_generic_size_noise || use_aex_typed_rotation_dual_size_noise_offset_components_32x18 ||
 					 (use_aex_typed_rotation_dual_strength_32x18 && info.size_variation != 0.0 &&
 					  info.noise_variation != 0.0) ||
 					 use_aex_typed_rotation_size_noise_components_32x18 ||
@@ -4917,6 +5092,26 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		if (bitdepth == 16) return RenderZoom16(input, output, info, noise_world);
 		if (bitdepth == 32) return RenderZoomFloat(input, output, info, noise_world);
 		return PF_Err_BAD_CALLBACK_PARAM;
+	}
+	// A request whose controls select the generic beta family must either pass
+	// that family's complete world/layout contract or stop here.  In
+	// particular, malformed rowbytes/alignment/dimensions must never fall
+	// through to one of the historical fixed-fixture classifiers below.
+	if (IsGenericRadialControlProfile(info)) {
+		bool admitted = false;
+		if (bitdepth == 8) admitted = (IsGenericBaselineWorldPair<PF_Pixel8>(input, output, info) ||
+			IsGenericSizeNoiseWorldPair<PF_Pixel8>(input, output, info)) &&
+			GenericRadialInputIsSDR<PF_Pixel8>(input);
+		else if (bitdepth == 16) admitted = (IsGenericBaselineWorldPair<PF_Pixel16>(input, output, info) ||
+			IsGenericSizeNoiseWorldPair<PF_Pixel16>(input, output, info)) &&
+			GenericRadialInputIsSDR<PF_Pixel16>(input);
+		else if (bitdepth == 32) admitted = (IsGenericBaselineWorldPair<PF_PixelFloat>(input, output, info) ||
+			IsGenericSizeNoiseWorldPair<PF_PixelFloat>(input, output, info)) &&
+			GenericRadialInputIsSDR<PF_PixelFloat>(input);
+		else return PF_Err_BAD_CALLBACK_PARAM;
+		if (!admitted) return PF_Err_BAD_CALLBACK_PARAM;
+		if (!CheckedRadialGenericBudget(input->width, input->height, bitdepth, info, false))
+			return PF_Err_OUT_OF_MEMORY;
 	}
 	if (bitdepth == 8) {
 		if (info.blur_type == 2) return RenderRotationTyped<PF_Pixel8>(input, output, info);
@@ -5683,12 +5878,12 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 			if (RequiresNoiseLayer(info) != requires_noise_layer) {
 				err = PF_Err_BAD_CALLBACK_PARAM;
 			}
-			if (!err && requires_noise_layer) {
+			if (!err) {
 				PF_PixelFormat input_format = PF_PixelFormat_INVALID;
 				PF_PixelFormat noise_format = PF_PixelFormat_INVALID;
 				PF_PixelFormat output_format = PF_PixelFormat_INVALID;
 				err = GetRadialPixelFormats(in_data, input_world, output_world, noise_world,
-					&input_format, &output_format, &noise_format);
+					&input_format, &output_format, noise_world ? &noise_format : NULL);
 				PF_PixelFormat expected_format = PF_PixelFormat_INVALID;
 				switch (extra->input->bitdepth) {
 				case 8: expected_format = PF_PixelFormat_ARGB32; break;
@@ -5698,7 +5893,12 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 				}
 				if (!err && (expected_format == PF_PixelFormat_INVALID ||
 					input_format != expected_format || output_format != expected_format ||
-					noise_format != expected_format)) err = PF_Err_BAD_CALLBACK_PARAM;
+					(noise_world && noise_format != expected_format))) err = PF_Err_BAD_CALLBACK_PARAM;
+			}
+			if (!err && IsGenericRadialControlProfile(info) &&
+				!CheckedRadialGenericBudget(input_world->width, input_world->height,
+					extra->input->bitdepth, info, true)) {
+				err = PF_Err_OUT_OF_MEMORY;
 			}
 			std::uintptr_t output_begin = 0, output_end = 0;
 			if (!err && (!RadialPayloadSpan(output_world, &output_begin, &output_end) ||
@@ -5708,9 +5908,18 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 				err = PF_Err_BAD_CALLBACK_PARAM;
 			}
 			if (!err) {
-				staged_output.assign(output_end - output_begin, 0);
+				const std::size_t height = static_cast<std::size_t>(output_world->height);
+				if (height == 0 || active_row_bytes >
+					std::numeric_limits<std::size_t>::max() / height) {
+					err = PF_Err_BAD_CALLBACK_PARAM;
+				} else {
+					staged_output.assign(active_row_bytes * height, 0);
+				}
+			}
+			if (!err) {
 				staged_world = *output_world;
 				staged_world.data = reinterpret_cast<PF_PixelPtr>(staged_output.data());
+				staged_world.rowbytes = static_cast<A_long>(active_row_bytes);
 				#if defined(OLM_RADIALBLUR_DIAGNOSTIC_CAPTURE)
 				ERR(CaptureDiagnosticPF32World("input", input_world, info, extra->input->bitdepth));
 				#endif

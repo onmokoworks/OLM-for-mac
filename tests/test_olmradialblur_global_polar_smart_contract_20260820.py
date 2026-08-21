@@ -55,3 +55,7 @@ def test_smart_lifecycle_advertises_extra_pixels_and_preserves_cleanup() -> None
     assert "IsGlobalPolarFullFrameWorld(output_world, pre->full_frame_rect)" in text
     assert text.index("if (noise_checked_out)") < text.index("if (input_checked_out)")
     assert "render_complete = err == PF_Err_NONE" in text
+    assert "staged_output.assign(active_row_bytes * height, 0)" in text
+    assert "staged_world.rowbytes = static_cast<A_long>(active_row_bytes)" in text
+    assert "input_format != expected_format || output_format != expected_format" in text
+    assert "(noise_world && noise_format != expected_format)" in text
