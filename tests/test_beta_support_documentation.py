@@ -637,9 +637,11 @@ class BetaSupportDocumentationContract(unittest.TestCase):
             for profile in ("baseline", "size_noise") for depth in (8, 16, 32)
         })
         self.assertEqual(len(uhd["case_results"]), 12)
-        self.assertIn("HD 8.38 s / 255787008 B", self.doc)
-        self.assertIn("UHD 16.52 s / 704692224 B", self.doc)
+        self.assertIn("HD 9.50 s / 235913216 B", self.doc)
+        self.assertIn("UHD 18.32 s / 704593920 B", self.doc)
         self.assertIn("一般4連結topology", self.doc)
+        self.assertIn("画像端を含むfinite mixed-alpha", self.doc)
+        self.assertIn("portable右端処理", self.doc)
         self.assertIn("1 GiB plugin-owned／350M work cap", self.doc)
 
         classifier_doc = (
@@ -822,9 +824,9 @@ class BetaSupportDocumentationContract(unittest.TestCase):
                       audit["evidence"]["performance_status"])
         self.assertIn("15 cases/geometry including Mode 3 Horizontal Length 300 Rotation 1",
                       audit["evidence"]["performance_status"])
-        self.assertIn("HD 38.19 seconds / peak 503742464 bytes",
+        self.assertIn("HD 42.11 seconds / peak 520355840 bytes",
                       audit["evidence"]["performance_status"])
-        self.assertIn("UHD 141.89 seconds / peak 1470169088 bytes",
+        self.assertIn("UHD 141.49 seconds / peak 1573421056 bytes",
                       audit["evidence"]["performance_status"])
         directional_audit = next(
             row for row in audit["plugins"] if row["plugin"] == "OLMDirectionalBlur"
