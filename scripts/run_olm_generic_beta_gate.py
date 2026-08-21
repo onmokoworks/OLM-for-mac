@@ -54,6 +54,8 @@ MANIFEST = [
     ("OLMRadialBlur", "tests/test_olmradialblur_generic_baseline_20260820.py", "mac/OLMRadialBlur/OLMRadialBlur.cpp"),
     ("OLMRadialBlur", "tests/test_olmradialblur_generic_baseline_sanitizers_20260820.py", "mac/OLMRadialBlur/OLMRadialBlur.cpp"),
     ("OLMRadialBlur", "tests/test_olmradialblur_generic_type3_sanitizers_20260820.py", "mac/OLMRadialBlur/OLMRadialBlur.cpp"),
+    ("OLMRadialBlur-budget", "tests/test_olmradialblur_generic_budget_20260821.py", "mac/OLMRadialBlur/OLMRadialBlur.cpp"),
+    ("OLMRadialBlur-SizeNoise-EffectMain", "tests/test_olmradialblur_size_noise_effectmain_20260821.py", "mac/OLMRadialBlur/OLMRadialBlur.cpp"),
     ("OLMRadialBlur-ROI-policy", "tests/test_olmradialblur_global_polar_smart_contract_20260820.py", "mac/OLMRadialBlur/OLMRadialBlur.cpp"),
     ("OLMSmoother", "tests/test_olmsmoother_v1_generic_classic_beta_20260820.py", "mac/OLMSmoother/Mac/OLMSmoother_port.cpp"),
     ("OLMSmoother2", "tests/test_olmsmoother2_default_beta_lane_20260820.py", "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp"),
@@ -147,6 +149,15 @@ KIRAKIRA_MODE3_WINDOWS_OWNER_DEPENDENCIES = (
     "core/kirakira_warp.h",
     "core/kirakira_merge2.h",
 )
+RADIAL_SIZE_NOISE_DEPENDENCIES = (
+    "mac/OLMRadialBlur/OLMRadialBlur.cpp",
+    "mac/OLMRadialBlur/OLMRadialBlur.h",
+    "mac/OLMRadialBlur/OLMRadialBlur_Strings.cpp",
+    "mac/OLMRadialBlur/OLMRadialBlur_Strings.h",
+    "core/dblur_noise.h",
+    "core/olm_checked_allocation.h",
+    "core/olm_world_safety.h",
+)
 DEPENDENCY_PATHS: dict[str, tuple[str, ...]] = {
     "tests/test_ae_generalization_smoke.py": (
         "scripts/run_ae_generalization_smoke.py",
@@ -178,6 +189,15 @@ DEPENDENCY_PATHS: dict[str, tuple[str, ...]] = {
     "tests/test_olmkirakira_mode3_ui_windows_owner_20260821.py": (
         *KIRAKIRA_MODE3_WINDOWS_OWNER_DEPENDENCIES,
     ),
+    "tests/test_olmradialblur_generic_budget_20260821.py": (
+        *RADIAL_SIZE_NOISE_DEPENDENCIES,
+    ),
+    "tests/test_olmradialblur_size_noise_effectmain_20260821.py": (
+        *RADIAL_SIZE_NOISE_DEPENDENCIES,
+        "Util/AEGP_SuiteHandler.cpp",
+        "Util/AEGP_SuiteHandler.h",
+        "Util/MissingSuiteError.cpp",
+    ),
     "tests/test_generic_beta_perf_smoke_runner.py": (
         "tools/perf/run_generic_beta_smoke.py",
         "reports/generic_beta_perf_smoke.json",
@@ -208,6 +228,8 @@ DEPENDENCY_PATHS: dict[str, tuple[str, ...]] = {
         "mac/OLMDistanceGradation/OLMDistanceGradation.cpp",
         "mac/OLMKiraKira/OLMKiraKira.cpp",
         "mac/OLMRadialBlur/OLMRadialBlur.cpp",
+        "tests/test_olmradialblur_generic_budget_20260821.py",
+        "tests/test_olmradialblur_size_noise_effectmain_20260821.py",
         "mac/OLMSmoother/Mac/OLMSmoother_port.cpp",
         "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp",
         "mac/OLMToonDilate/OLMToonDilate.cpp",

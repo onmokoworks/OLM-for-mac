@@ -213,6 +213,15 @@ class GenericBetaGateTests(unittest.TestCase):
             "tests/test_olmkirakira_mode3_ui_windows_owner_20260821.py": {
                 *GATE.KIRAKIRA_MODE3_WINDOWS_OWNER_DEPENDENCIES,
             },
+            "tests/test_olmradialblur_generic_budget_20260821.py": {
+                *GATE.RADIAL_SIZE_NOISE_DEPENDENCIES,
+            },
+            "tests/test_olmradialblur_size_noise_effectmain_20260821.py": {
+                *GATE.RADIAL_SIZE_NOISE_DEPENDENCIES,
+                "Util/AEGP_SuiteHandler.cpp",
+                "Util/AEGP_SuiteHandler.h",
+                "Util/MissingSuiteError.cpp",
+            },
             "tools/emulation/test_dblur_generic_backonly_beta_20260821.py": {
                 *GATE.DIRECTIONAL_NEUTRAL_DEPENDENCIES,
             },
