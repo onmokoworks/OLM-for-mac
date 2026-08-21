@@ -30,6 +30,18 @@ DIRECTIONAL_BACKONLY_ANCHOR = (
 KIRAKIRA_MODE3_HELPER_CHAIN = (
     ROOT / "refs/conformance/olmkirakira_mode3_geometry_generalization_actual_aex_20260810.json"
 )
+KIRAKIRA_MODE3_WINDOWS_OWNER_REPORT = (
+    ROOT / "refs/conformance/olmkirakira_mode3_ui_windows_owner_20260821.json"
+)
+KIRAKIRA_MODE3_WINDOWS_OWNER_DIGEST = (
+    ROOT / "refs/conformance/olmkirakira_mode3_ui_windows_owner_20260821.sha256"
+)
+KIRAKIRA_MODE3_WINDOWS_OWNER_TEST = (
+    ROOT / "tests/test_olmkirakira_mode3_ui_windows_owner_20260821.py"
+)
+KIRAKIRA_MODE3_WINDOWS_OWNER_VERIFIER = (
+    ROOT / "tools/emulation/test_olmkirakira_mode3_ui_windows_owner_20260821.py"
+)
 
 SOURCES = {
     "ColorKeep": ROOT / "mac/ColorKeep/ColorKeep.cpp",
@@ -181,7 +193,12 @@ class BetaSupportDocumentationContract(unittest.TestCase):
                       "UI全300 Length×3深度=900",
                       "HD/UHD各15 cases",
                       "hostless helper chainは代表14 Lengthの66 cases／497,250 words exact",
-                      "Length 1–300全体のexported-owner／native AE exactは未主張",
+                      "zero-alpha／nonzero-RGBを含む固定17×11 source",
+                      "Length {1,2,50,300}×raw-fixed Rotation {0,1}×PF8/16/32",
+                      "24/24がMac public EffectMain Classic/Smartとraw active-byte exact",
+                      "全Length 1–300、任意source／geometry",
+                      "Windows padded rowbytes／Classic",
+                      "native Windows UCRT／trigonometry",
                       "旧fixture-only source／extent／stride negativesはgeneric safety契約に置換",
                       "Gamma Colors palette count 1–5",
                       "palette order／duplicate／inactive tail／alpha semantics", "custom/user LUTは拒否"):
@@ -626,6 +643,149 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         self.assertIn("native AEの54-case smoke", self.doc)
         self.assertIn("milestoneまたはrelease candidate", self.doc)
 
+    def test_kirakira_mode3_windows_owner_report_is_exact_and_bounded(self) -> None:
+        report = json.loads(
+            KIRAKIRA_MODE3_WINDOWS_OWNER_REPORT.read_text(encoding="utf-8")
+        )
+        self.assertEqual(report["schema"], "olmkirakira.mode3-ui-windows-owner/1")
+        self.assertEqual(report["status"], "raw_active_bytes_exact")
+        self.assertEqual(report["date"], "2026-08-21")
+        self.assertEqual(report["summary"], {
+            "active_bytes_per_depth": {"PF8": 748, "PF16": 1496, "PF32": 2992},
+            "all_routes_exact": True,
+            "all_windows_lifecycle_exact": True,
+            "cell_count": 24,
+            "exact_cell_count": 24,
+            "route_count": 3,
+        })
+        self.assertEqual(
+            (report["fixture"]["width"], report["fixture"]["height"]),
+            (17, 11),
+        )
+        self.assertEqual(
+            report["fixture"]["counts"]["zero_alpha_nonzero_rgb_pixels"], 1
+        )
+        self.assertEqual(report["parameters"]["lengths"], [1, 2, 50, 300])
+        self.assertEqual(report["parameters"]["rotations_raw_fixed"], [0, 1])
+        self.assertEqual(report["parameters"]["depths"], ["PF8", "PF16", "PF32"])
+        expected_cells = {
+            (length, rotation, depth)
+            for length in (1, 2, 50, 300)
+            for rotation in (0, 1)
+            for depth in ("PF8", "PF16", "PF32")
+        }
+        self.assertEqual(
+            {(cell["length"], cell["rotation_raw_fixed"], cell["depth"])
+             for cell in report["cells"]},
+            expected_cells,
+        )
+        self.assertEqual(len(report["cells"]), 24)
+        for cell in report["cells"]:
+            self.assertTrue(cell["routes_exact"])
+            self.assertEqual(
+                {
+                    cell["windows_exported_smart_sha256"],
+                    cell["mac_public_classic_sha256"],
+                    cell["mac_public_smart_sha256"],
+                },
+                {cell["windows_exported_smart_sha256"]},
+            )
+            lifecycle = cell["windows_lifecycle"]
+            self.assertEqual(lifecycle["render_mode"], "smart-cpu")
+            self.assertEqual(lifecycle["render_error"], 0)
+            self.assertTrue(lifecycle["guards_intact"])
+            self.assertTrue(lifecycle["cleanup_complete"])
+            self.assertTrue(lifecycle["input_png_file_unchanged"])
+
+        scope = report["scope"]
+        for key in (
+            "actual_windows_aex_exported_smart_via_aexcompat_unicorn",
+            "mac_production_source_public_classic",
+            "mac_production_source_public_smart",
+            "raw_active_bytes_compared_by_sha256",
+            "windows_tight_rowbytes_only",
+        ):
+            self.assertIs(scope[key], True)
+        for key in (
+            "native_windows_after_effects",
+            "native_macos_after_effects",
+            "installed_plugin",
+            "native_windows_ucrt_or_trigonometry",
+            "gpu",
+            "install_or_ae_run_performed",
+        ):
+            self.assertIs(scope[key], False)
+
+        identities = report["identities"]
+        worker = identities["aex_guest_worker"]
+        self.assertEqual(
+            (worker["sha256"], worker["size_bytes"]),
+            ("fe376e9ba1d6ee1f20cd9b6954d63542555ed4ffd52a0dfb5e8c95d1f4ccdffe",
+             3886128),
+        )
+        aexcompat = identities["aexcompat"]
+        self.assertEqual(
+            aexcompat["git_commit"],
+            "28d535469f84f67236ef3425afe4291ea2fb0991",
+        )
+        self.assertTrue(aexcompat["tracked_worktree_clean"])
+        build = aexcompat["worker_build"]
+        self.assertTrue(build["completed"])
+        self.assertEqual(build["command"][-1], "--frozen")
+        self.assertEqual(build["target_sha256"], worker["sha256"])
+        self.assertEqual(build["target_size_bytes"], worker["size_bytes"])
+        self.assertIn("cargo 1.95.0", build["cargo_version"])
+        self.assertIn("rustc 1.95.0", build["rustc_version"])
+
+        repository_paths = {row["path"] for row in identities["repository_source"]}
+        self.assertEqual(repository_paths, {
+            "tools/emulation/test_olmkirakira_mode3_ui_windows_owner_20260821.py",
+            "refs/upstream_official/20260619_olm_official_zips/SHA256SUMS.txt",
+            "tests/olmkirakira_generic_beta_sanitizer_harness.cpp",
+            "tools/emulation/olmkirakira_public_smart_bounded_closure_harness_20260812.cpp",
+            "mac/OLMKiraKira/OLMKiraKira.cpp",
+            "mac/OLMKiraKira/OLMKiraKira.h",
+            "mac/OLMKiraKira/OLMKiraKira_Strings.cpp",
+            "mac/OLMKiraKira/OLMKiraKira_Strings.h",
+            "core/kirakira_gaussian.h",
+            "core/kirakira_highlight.h",
+            "core/kirakira_mode4.h",
+            "core/kirakira_warp.h",
+            "core/kirakira_merge2.h",
+        })
+        root = ROOT.resolve(strict=True)
+        for relative in repository_paths:
+            with self.subTest(kirakira_windows_owner_source=relative):
+                (ROOT / relative).resolve(strict=True).relative_to(root)
+        source_scope = identities["repository_source_scope"]
+        for phrase in (
+            "excludes symlinked Adobe SDK/Util",
+            "Mac system SDK/compiler",
+            "standard-library inputs",
+        ):
+            self.assertIn(phrase, source_scope)
+
+        boundary = report["claim_boundary"]
+        for phrase in (
+            "Actual Windows OLMKiraKira.aex exported SmartPreRender->SmartRender owner",
+            "AEXCompat's Unicorn x86_64 backend",
+            "fixed 17x11 fixture",
+            "not native Windows or macOS After Effects",
+            "native Windows UCRT/trigonometry",
+            "Windows padded-rowbytes evidence",
+        ):
+            self.assertIn(phrase, boundary)
+        for phrase in (
+            "追加の24-cell Windows-owner証拠",
+            "24/24が3経路でexact",
+            "独立sidecarに固定",
+            "JSON型混同もfail-close",
+            "tight rowbytes",
+            "Rotation 1のtrigonometry importはhost代替",
+            "Adobe SDK／symlinked Util",
+        ):
+            self.assertIn(phrase, self.doc)
+
     def test_readme_stays_concise_and_links_once(self) -> None:
         self.assertLessEqual(len(self.readme.splitlines()), 80)
         self.assertEqual(self.readme.count("docs/BETA_SUPPORT.md"), 1)
@@ -652,6 +812,10 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         self.assertIn("6 Front/Back cases/geometry",
                       audit["evidence"]["performance_status"])
         self.assertIn("15 cases/geometry including Mode 3 Horizontal Length 300 Rotation 1",
+                      audit["evidence"]["performance_status"])
+        self.assertIn("HD 36.28 seconds / peak 487800832 bytes",
+                      audit["evidence"]["performance_status"])
+        self.assertIn("UHD 134.54 seconds / peak 1564688384 bytes",
                       audit["evidence"]["performance_status"])
         directional_audit = next(
             row for row in audit["plugins"] if row["plugin"] == "OLMDirectionalBlur"
@@ -689,10 +853,53 @@ class BetaSupportDocumentationContract(unittest.TestCase):
             "the 14 sampled Lengths {1,2,3,5,7,9,11,25,50,100,200,300,301,1000}",
             "angles {-45,0,17,45}",
             "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
-            "exported public EffectMain all-depth exact remains Length 50 only",
+            "the earlier exported public EffectMain all-depth report is Length-50-only",
+            "separate pinned exported Smart-owner differential covers only the explicitly documented 24 cells",
             "not broad Length 1..300 exported-owner or native AE equality",
         ):
             self.assertIn(phrase, audit["evidence"]["kirakira_mode3_windows_exact_scope"])
+        self.assertEqual(
+            audit["evidence"]["kirakira_mode3_windows_owner_report"],
+            "refs/conformance/olmkirakira_mode3_ui_windows_owner_20260821.json",
+        )
+        self.assertEqual(
+            audit["evidence"]["kirakira_mode3_windows_owner_digest"],
+            "refs/conformance/olmkirakira_mode3_ui_windows_owner_20260821.sha256: "
+            "50bbf05233f985608e4e320473970e734987d60ffd9e1d859c63bd10b1d8f687",
+        )
+        self.assertEqual(
+            KIRAKIRA_MODE3_WINDOWS_OWNER_DIGEST.read_text(encoding="ascii"),
+            "50bbf05233f985608e4e320473970e734987d60ffd9e1d859c63bd10b1d8f687\n",
+        )
+        self.assertEqual(
+            audit["evidence"]["kirakira_mode3_windows_owner_test"],
+            "tests/test_olmkirakira_mode3_ui_windows_owner_20260821.py",
+        )
+        self.assertEqual(
+            audit["evidence"]["kirakira_mode3_windows_owner_verifier"],
+            "tools/emulation/test_olmkirakira_mode3_ui_windows_owner_20260821.py",
+        )
+        owner_scope = audit["evidence"]["kirakira_mode3_windows_owner_scope"]
+        for phrase in (
+            "raw active bytes exact 24/24 only",
+            "fixed mixed-alpha 17x11 source containing zero-alpha/nonzero-RGB",
+            "Lengths {1,2,50,300}",
+            "owner raw-fixed Rotations {0,1}",
+            "PF8/PF16/PF32",
+            "commit 28d535469f84f67236ef3425afe4291ea2fb0991 exact-checkout target",
+            "cargo --frozen",
+            "cargo/rustc 1.95",
+            "fe376e9ba1d6ee1f20cd9b6954d63542555ed4ffd52a0dfb5e8c95d1f4ccdffe",
+            "tight Windows rowbytes only",
+            "Rotation 1 trigonometry is host-substituted",
+            "not all Length 1..300",
+            "Windows padded rowbytes or Classic",
+            "native Windows/macOS After Effects",
+            "native Windows UCRT/trigonometry",
+            "helper-chain generalization",
+            "Adobe SDK/symlinked Util",
+        ):
+            self.assertIn(phrase, owner_scope)
         self.assertIn(
             "older fixture-only source/extent/stride rejection claims are superseded",
             audit["evidence"]["kirakira_mode3_fixed32_supersession"],
@@ -786,7 +993,10 @@ class BetaSupportDocumentationContract(unittest.TestCase):
                     "native_ae_current_roi_evidence",
                     "windows_nonhd_roi_checkpoint", "windows_hd_checkpoint",
                     "current_roi_package_report", "kirakira_mode3_ui_hostless",
-                    "kirakira_mode3_windows_helper_chain"):
+                    "kirakira_mode3_windows_helper_chain",
+                    "kirakira_mode3_windows_owner_report",
+                    "kirakira_mode3_windows_owner_test",
+                    "kirakira_mode3_windows_owner_verifier"):
             evidence = audit["evidence"][key]
             self.assertTrue((ROOT / evidence).is_file(), evidence)
         for claim in ("ROI／tile／halo", "full-frame出力", "必要halo", "非ゼロorigin",

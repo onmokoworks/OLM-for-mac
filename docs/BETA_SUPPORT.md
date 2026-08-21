@@ -26,7 +26,7 @@ Windows版との全設定・全画素一致を意味しません。表にない�
 | OLMColorKey | あり | Classic/Smart: 8/16/32 | pointwiseは非ゼロorigin partial tile対応。Thin＋Blurはfull-frameのみ | pixel-local key／replace、Edge Thin −100〜100・Distance Type 1〜3、oracle済みEdge Blur profile。portable合成laneはThin ±4／DT2＋Blur Direction 2（materialized 102）／Amount 4／DT2 | 上記以外のThin＋Blur、未知Blur tuple/internal directionは未対応。downsample 1:1 | hostless HD/4K・partial tile成功。固定13×11 actual-AEX 36 exactは非飽和combinedを識別しないため、合成laneの任意source Windows exactは未主張。current ROI v2 native quickはEdge 0で新合成laneを未収録 |
 | OLMDirectionalBlur | 限定あり | Classic/Smart: 8/16/32 | 各辺4096以下かつ総画素数4096×2160以下、padded row可。ROIはfull-frame-normalized overscan。3 GiB per-render plugin-owned admission（64 MiB reserve込み） | FrontまたはBackの厳密片側（他方は0）をStrength 1–4000のうちgeometry別3億5000万work-unit上限内で扱う。Fade/Sharp Tail/Size Variation/Noise Variation=0。Angleは16.16 UI域、Brightness 0–10。PF8は投影後effective strength 1以上、16/32はrender scale 1 | partial storageはfail-close。deep SDR制約あり。3 GiBはprocess/MFR全体の上限ではない。exact-tail等は固定union | direct／hostless EffectMainで両side・全深度を確認。current canonical性能reportはHD/UHDそれぞれFront/Back×PF8/PF16/PF32の6 cases/geometryをStrength 2で実測し、source/toolchainの実行前後一致を確認。actual-AEX raw-callback／production replay anchorはPF8 960×540・Back 240・Angle 0・Gain 1・scale 0.5で、native AE saved-frameではない。16×16 retained exact unionはPF8 Back 8・Angle 0/45・Gain 1、PF16 Back 1/2/8・Angle 45・Gain 1、PF32 Back 1・Angle 0/45・Gain 0.5/1およびBack 8・Angle 45・Gain 1（すべてscale 1）に限定する。一般geometry・全Strength・native AE・ROI v2 packageには遡及しない |
 | OLMDistanceGradation | あり | Classic: 8/16/32、Smart: 8/16。Smart 32は限定 | 正のgeometry、rowbytes≧active row。ROIはfull-frame-normalized overscan | 8/16 typed core。Smart 32は汎用Constant/Linear＋oracle profile | partial storageはfail-close。PF32 Powerは最大1 ULP契約。profile外設定は固定unionまたは拒否 | hostless HD/4K、overscan policy、PF32 profile検証。portable betaはbit-exact非保証 |
-| OLMKiraKira | 限定あり | Classic/Smart: 8/16/32 | full-frame、最小9×7、各辺4096以下かつ総画素4096×2160以下。合法な独立aligned padded stride。Mode 3は1 GiB per-render plugin-owned／120億work-unit上限 | oracle済みMode 1–4 tuple。追加genericはMode 3 Horizontal-only、Length 1–300、Rotation 0/1。Vertical／Diagonal／Diagonal2は0で、残りcontrolはLength 50 closureと同じneutral値 | partial ROI／tileとnon-1:1 downsampleはfail-close。PF16は0–32768、PF32はfinite 0–1。multi-ray、未列挙rotation、予算超過は拒否 | UI全300 Length×3深度=900、Classic/Smart、allocation全ordinal、HD/UHD各15 casesを検証。canonical reportはLength 300／Rotation 1を含み、source/toolchainの実行前後一致を確認。Windows actual-AEX（SHA-256 `60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7`）のhostless helper chainは代表14 Lengthの66 cases／497,250 words exactだが、Length 1–300全体のexported-owner／native AE exactは未主張。32×18 Length 50 fixed positiveは保持し、旧fixture-only source／extent／stride negativesはgeneric safety契約に置換 |
+| OLMKiraKira | 限定あり | Classic/Smart: 8/16/32 | full-frame、最小9×7、各辺4096以下かつ総画素4096×2160以下。合法な独立aligned padded stride。Mode 3は1 GiB per-render plugin-owned／120億work-unit上限 | oracle済みMode 1–4 tuple。追加genericはMode 3 Horizontal-only、Length 1–300、Rotation 0/1。Vertical／Diagonal／Diagonal2は0で、残りcontrolはLength 50 closureと同じneutral値 | partial ROI／tileとnon-1:1 downsampleはfail-close。PF16は0–32768、PF32はfinite 0–1。multi-ray、未列挙rotation、予算超過は拒否 | UI全300 Length×3深度=900、Classic/Smart、allocation全ordinal、HD/UHD各15 casesを検証。canonical reportはLength 300／Rotation 1を含み、source/toolchainの実行前後一致を確認。Windows actual-AEX（SHA-256 `60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7`）のhostless helper chainは代表14 Lengthの66 cases／497,250 words exact。別のexported-owner matrixでは、zero-alpha／nonzero-RGBを含む固定17×11 source、Length {1,2,50,300}×raw-fixed Rotation {0,1}×PF8/16/32の24/24がMac public EffectMain Classic/Smartとraw active-byte exact。これは全Length 1–300、任意source／geometry、Windows padded rowbytes／Classic、native Windows／macOS AE、installed plugin、native Windows UCRT／trigonometry、GPUの証拠ではない。32×18 Length 50 fixed positiveは保持し、旧fixture-only source／extent／stride negativesはgeneric safety契約に置換 |
 | OLMRadialBlur | 限定あり | Classic/Smart: 8/16/32 | 正のgeometry、独立stride。ROIはfull-frame-normalized overscan | Outer/Inner Strength整数0–64、Edge Fade 0–100、Ratio 1–5、Angle −360–360、Quality 1–5。Noise Variation 25/100、Size Variation 1/25/100、Zoom Type 3は列挙profile | partial storageはfail-close。Size/Noise交差等は限定 | baseline全深度HD/UHD、advanced、overscan policyをsanitizer検証。4K peak RSS約494 MiB。Windows/AE matrixは未完 |
 | OLMSmoother | あり | Classic: 8/16 | 正の同寸full-frame、独立stride可 | Use Key on/off、Tolerance 0–255 | ROI counterexampleによりpartial tileはfail-close。32 bpc/Smartなし | PF8/PF16 hostless HD/4K成功。Windows/AE matrixは未完 |
 | OLMSmoother2 | 限定あり | Smart: 8/16/32 | 16×16–8192×8192、独立stride。ROIはfull-frame-normalized overscan | v1/v2、Smoothness/Range/Extra各0–100、Key/Invert、Gamma None/All Colors、Gamma Colors palette count 1–5、Gamma 1.0–2.4 | partial storageはfail-close。custom/user LUTは拒否。Classic拒否。exact fixtureを汎用laneより優先。classifier近似残存 | 全深度hostless HD/4K。Gamma Colorsのpalette order／duplicate／inactive tail／alpha semanticsをhostless検証し、palette order／duplicate／toleranceにはPF16/PF32 padded 3×2 actual-AEX exact anchorがある。任意geometry・PF8・v1はhostless extrapolation。classifier 191/256はWindows exact、残る65/256はsafety-only |
@@ -62,12 +62,27 @@ Directionalは各geometryでFront/Back×PF8/PF16/PF32の6 casesをStrength 2で�
 実行前後でhash照合し、exact matchでない測定を成功扱いにしません。対応セルはすべて成功を要求し、
 非対応セルはreasonとsupport predicate付きで明示します。未計測セルを成功扱いにしていません。
 KiraKiraは各geometryでMode 1／2／3／4の既存代表4件に、Mode 3 Horizontal Length 300・Rotation 1を
-全深度で加えた15 casesを実行します。current reportではHD 36.39秒／peak 504,348,672 bytes、
-UHD 136.98秒／peak 1,573,453,824 bytesで、各caseのSmart対Classic parity、Classic再実行の決定性、
+全深度で加えた15 casesを実行します。current reportではHD 36.28秒／peak 487,800,832 bytes、
+UHD 134.54秒／peak 1,564,688,384 bytesで、各caseのSmart対Classic parity、Classic再実行の決定性、
 独立stride、input／padding不変、active output変更を確認しました。これはHD/UHDの実測であり、
 budget predicateが許可するDCI 4096×2160 endpointの実測やWindows／native AE数値一致ではありません。
 このhostless性能証拠は、上記immutable ROI v2 packageへ後付けされるnative AE証拠ではなく、
 Windows oracleやnative AE検証の代替ではありません。
+
+追加の24-cell Windows-owner証拠では、actual Windows `OLMKiraKira.aex`のexported
+`SmartPreRender`→`SmartRender` ownerをmacOS上のAEXCompat／Unicorn x86_64 backendでhostless実行し、
+current Mac production sourceのpublic `EffectMain` Classic／Smartとactive bytesのSHA-256を比較しました。
+固定17×11 sourceにはalpha 0かつRGB非ゼロの画素を含み、Length {1,2,50,300}、owner raw-fixed
+Rotation {0,1}、PF8／PF16／PF32の24/24が3経路でexactです。workerはAEXCompat commit
+`28d535469f84f67236ef3425afe4291ea2fb0991`のexact checkout内targetをCargo `--frozen`でbuildした
+SHA-256 `fe376e9ba1d6ee1f20cd9b6954d63542555ed4ffd52a0dfb5e8c95d1f4ccdffe`
+（3,886,128 bytes）で、reportはcargo／rustc 1.95、source/build identity、actual-AEX、公式配布ZIPを
+cross-bindします。canonical report SHA-256 `50bbf05233f985608e4e320473970e734987d60ffd9e1d859c63bd10b1d8f687`
+は独立sidecarに固定し、既定verifierは協調したcell hash書換えやJSON型混同もfail-closeします。
+AEXCompat側はtight rowbytesで、Rotation 1のtrigonometry importはhost代替です。
+したがって、これは全Length 1–300、任意source／geometry／tuple、Windows padded rowbytes／Classic、
+native Windows／macOS AE、installed plugin、native Windows UCRT／trigonometry、GPUを証明しません。
+Adobe SDK／symlinked Util／Mac system SDK・compiler・standard libraryもin-repo source closureの対象外です。
 
 日常の変更ではhostless、sanitizer、generic gateを実行します。native AEの54-case smokeは
 毎変更ではなく、milestoneまたはrelease candidateでまとめて実行する運用です。
