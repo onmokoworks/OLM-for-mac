@@ -16,6 +16,9 @@ DOC = ROOT / "docs/BETA_SUPPORT.md"
 THREE_GATES = ROOT / "docs/PUBLIC_BETA_3_GATES.md"
 CURRENT_RC_IDENTITY = ROOT / "refs/conformance/olm_public_beta_rc_identity_20260822.json"
 CURRENT_RC_NATIVE_AE = ROOT / "refs/conformance/olm_public_beta_rc_native_ae_quick_20260822.json"
+COLORKEEP_NATIVE_AE_ALL_DEPTHS = (
+    ROOT / "refs/conformance/colorkeep_native_ae_hd_4k_all_depths_20260822.json"
+)
 README = ROOT / "README.md"
 SMOOTHER2_GAMMA_COLORS_TEST = (
     ROOT / "tests/test_olmsmoother2_gamma_colors_beta_20260820.py"
@@ -78,7 +81,11 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         gates = THREE_GATES.read_text(encoding="utf-8")
         report = json.loads(CURRENT_RC_NATIVE_AE.read_text(encoding="utf-8"))
         identity = json.loads(CURRENT_RC_IDENTITY.read_text(encoding="utf-8"))
-        self.assertEqual(gates.count("現行RC HD/8bpc native AE通過"), 10)
+        self.assertEqual(gates.count("現行RC HD/8bpc native AE通過"), 9)
+        self.assertIn(
+            "現行candidateのSmart 8/16/32 bpcをHD/4K native AEで6/6通過",
+            gates,
+        )
         self.assertIn("追加ゲートではありません", self.doc)
         self.assertEqual(report["status"], "accepted_exact")
         self.assertIn("not the full depth/route/parameter matrix", report["scope"])
@@ -86,6 +93,23 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         expected = {row["plugin"]: row["sha256"] for row in identity["plugins"]}
         observed = {row["plugin"]: row["plugin_sha256"] for row in report["accepted_cases"]}
         self.assertEqual(observed, expected)
+
+    def test_colorkeep_all_depth_native_ae_evidence_is_bounded_and_source_bound(self) -> None:
+        report = json.loads(COLORKEEP_NATIVE_AE_ALL_DEPTHS.read_text(encoding="utf-8"))
+        self.assertEqual(report["status"], "passed")
+        self.assertIn("not a new gate", report["gate_scope"])
+        self.assertEqual(report["campaign"]["passed"], 6)
+        self.assertEqual(report["campaign"]["total"], 6)
+        self.assertEqual(report["campaign"]["consumer_reverified"], 6)
+        self.assertEqual(
+            {(row["depth"], row["width"], row["height"]) for row in report["cells"]},
+            {(depth, width, height) for depth in (8, 16, 32)
+             for width, height in ((1920, 1080), (3840, 2160))},
+        )
+        source_sha = hashlib.sha256(SOURCES["ColorKeep"].read_bytes()).hexdigest()
+        self.assertEqual(report["candidate"]["production_source_sha256"], source_sha)
+        self.assertTrue(any("does not claim 16-bit numerical" in item
+                            for item in report["claim_boundary"]))
 
     def test_depth_and_route_claims_are_anchored_in_dispatch_code(self) -> None:
         required_tokens = {

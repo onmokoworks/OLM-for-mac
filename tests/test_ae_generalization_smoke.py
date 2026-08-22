@@ -77,6 +77,13 @@ class AEGeneralizationSmokeTests(unittest.TestCase):
         actual = {(row["plugin"], row["depth"], row["width"], row["height"])
                   for row in report["matrix"]}
         self.assertEqual(actual, expected)
+        self.assertTrue(all(
+            (row["output_mode"], row["output_template"]) ==
+            (("png", "") if row["depth"] == 8 else
+             ("png16_render_queue", campaign.PNG16_TEMPLATE) if row["depth"] == 16 else
+             ("exr_render_queue", campaign.EXR_TEMPLATE))
+            for row in report["matrix"]
+        ))
         self.assertTrue(report["unsupported_routes"])
 
     def test_two_plugin_retry_filter_and_parameter_evidence(self) -> None:

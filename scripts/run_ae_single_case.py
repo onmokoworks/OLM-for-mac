@@ -1356,6 +1356,14 @@ def build_expected_output_binding(
         validate_portable_leaf(case_id, "EXR case id")
         output_kind = "exr"
         output_path = output_dir / f"{case_id}_00000.exr"
+    elif output_mode == "png16_render_queue":
+        frame = validate_portable_leaf(
+            matches[0].get("frame"),
+            "PNG16 frame",
+            suffix=".png",
+        )
+        output_kind = "png"
+        output_path = output_dir / frame
     else:
         raise ValueError(f"unsupported output mode: {output_mode}")
     try:
@@ -2768,7 +2776,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--case-id", required=True)
     parser.add_argument("--output-dir", type=Path, default=None)
     parser.add_argument("--app-name", default="Adobe After Effects 2026")
-    parser.add_argument("--output-mode", choices=("png", "exr_render_queue"), default="png")
+    parser.add_argument(
+        "--output-mode",
+        choices=("png", "png16_render_queue", "exr_render_queue"),
+        default="png",
+    )
     parser.add_argument("--output-template", default="", help="Output Module template required for --output-mode exr_render_queue.")
     parser.add_argument("--keep-open", action="store_true", help="Keep the live AE project/application open after rendering.")
     parser.add_argument("--timeout", type=int, default=1200)
@@ -2936,8 +2948,8 @@ def main() -> int:
             )
             return 1
         ae_env[key] = value
-    if args.output_mode == "exr_render_queue" and not args.output_template:
-        print("[FAIL] --output-template is required for --output-mode exr_render_queue", file=sys.stderr)
+    if args.output_mode in ("png16_render_queue", "exr_render_queue") and not args.output_template:
+        print("[FAIL] --output-template is required for render-queue output modes", file=sys.stderr)
         return 1
     if args.dump_js:
         requested_dump_path = Path(args.dump_js).absolute()

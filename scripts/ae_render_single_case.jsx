@@ -161,6 +161,10 @@
         }
     }
 
+    function shellDoubleQuote(value) {
+        return "\"" + String(value).replace(/([\\\"$`])/g, "\\$1") + "\"";
+    }
+
     function readText(path) {
         var file = new File(path);
         file.encoding = "UTF-8";
@@ -559,30 +563,53 @@
             appendText(logPath, "pause.continue marker=" + continueMarkerPath + "\n");
         }
 
-        if (outputMode === "exr_render_queue") {
+        if (outputMode === "exr_render_queue" || outputMode === "png16_render_queue") {
             if (!outputTemplate) {
-                throw new Error("OLM_AE_OUTPUT_TEMPLATE is required for exr_render_queue");
+                throw new Error("OLM_AE_OUTPUT_TEMPLATE is required for render-queue output");
             }
-            var exrBase = outputDir + "/" + caseId + ".exr";
-            var exrSequence = exrBase.replace(/\.exr$/i, "_[#####].exr");
-            var exr = new File(exrSequence.replace("[#####]", "00000"));
-            if (exr.exists && (!exr.remove() || exr.exists)) {
-                throw new Error("could not remove stale EXR: " + exr.fsName);
+            var renderExtension = outputMode === "exr_render_queue" ? ".exr" : ".tif";
+            var renderBase = outputDir + "/" + caseId + renderExtension;
+            var renderSequence = renderBase.substring(0, renderBase.length - renderExtension.length) + "_[#####]" + renderExtension;
+            var rendered = new File(renderSequence.replace("[#####]", "00000"));
+            if (rendered.exists && (!rendered.remove() || rendered.exists)) {
+                throw new Error("could not remove stale render-queue output: " + rendered.fsName);
             }
             var rqItem = app.project.renderQueue.items.add(comp);
             rqItem.timeSpanStart = Number(caseRef.time || 0);
             rqItem.timeSpanDuration = 1.0 / Number(comp.frameRate || 24.0);
             var outputModule = rqItem.outputModule(1);
             outputModule.applyTemplate(outputTemplate);
-            outputModule.file = new File(exrSequence);
-            appendText(logPath, "renderQueue template=" + outputTemplate + " output=" + exrSequence + "\n");
+            outputModule.file = new File(renderSequence);
+            appendText(logPath, "renderQueue template=" + outputTemplate + " output=" + renderSequence + "\n");
             app.project.renderQueue.render();
-            if (!exr.exists) {
-                throw new Error("EXR was not written: " + exrSequence);
+            appendText(logPath, "renderQueue status=" + rqItem.status + " elapsed_seconds=" + rqItem.elapsedSeconds + "\n");
+            rendered = new File(rendered.fsName);
+            if (!rendered.exists) {
+                throw new Error("render-queue output was not written status=" + rqItem.status + ": " + renderSequence);
             }
-            summary.output_exr = exr.fsName;
+            if (outputMode === "exr_render_queue") {
+                summary.output_exr = rendered.fsName;
+            } else {
+                var convertedPng = new File(outputDir + "/" + requestCase.frame);
+                if (convertedPng.exists && (!convertedPng.remove() || convertedPng.exists)) {
+                    throw new Error("could not remove stale converted PNG: " + convertedPng.fsName);
+                }
+                var conversion = system.callSystem(
+                    "/usr/bin/sips -s format png " + shellDoubleQuote(rendered.fsName) +
+                    " --out " + shellDoubleQuote(convertedPng.fsName)
+                );
+                convertedPng = new File(convertedPng.fsName);
+                if (!convertedPng.exists || Number(convertedPng.length || 0) <= 0) {
+                    throw new Error("TIFF-to-PNG conversion failed: " + conversion);
+                }
+                if (!rendered.remove() || rendered.exists) {
+                    throw new Error("could not remove intermediate TIFF: " + rendered.fsName);
+                }
+                summary.output_png = convertedPng.fsName;
+                rendered = convertedPng;
+            }
             try { rqItem.remove(); } catch (_) {}
-            appendText(logPath, "exr exists " + summary.output_exr + "\n");
+            appendText(logPath, "render-queue output exists " + rendered.fsName + "\n");
         } else {
             var outputPath = outputDir + "/" + requestCase.frame;
             var png = new File(outputPath);

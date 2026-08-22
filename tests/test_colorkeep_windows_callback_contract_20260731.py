@@ -24,17 +24,22 @@ class ColorKeepWindowsContractTests(unittest.TestCase):
         self.assertIn("casePF_Cmd_RENDER:err=Render", compact)
         self.assertIn("casePF_Cmd_SMART_PRE_RENDER:err=SmartPreRender", compact)
         self.assertIn("casePF_Cmd_SMART_RENDER:err=SmartRender", compact)
-        self.assertIn("if(PF_WORLD_IS_DEEP(output))", compact)
-        self.assertIn("ColorKeep16Func,output", compact)
-        self.assertIn("ColorKeep8Func,output", compact)
-        self.assertIn("if(bpc==8)", compact)
-        self.assertIn("ColorKeep8Func,output_world", compact)
-        self.assertIn("elseif(bpc==16)", compact)
-        self.assertIn("ColorKeep16Func,output_world", compact)
-        self.assertIn("elseif(bpc==32)", compact)
-        self.assertIn("ColorKeepFloatFunc,output_world", compact)
+        self.assertIn("PF_GetPixelFormat(input,&input_format)", compact)
+        self.assertIn("PF_GetPixelFormat(output,&output_format)", compact)
+        self.assertIn("if(input_format!=output_format)", compact)
+        self.assertIn("casePF_PixelFormat_ARGB32:bitdepth=8", compact)
+        self.assertIn("casePF_PixelFormat_ARGB64:bitdepth=16", compact)
+        self.assertIn("ColorKeepValidateWorldPair(input,output,bitdepth)", compact)
+        self.assertIn("ColorKeep16Func)", compact)
+        self.assertIn("ColorKeep8Func)", compact)
+        self.assertIn("if(!err&&bpc==8)", compact)
+        self.assertIn("ColorKeepRenderMapped<PF_Pixel8>", compact)
+        self.assertIn("elseif(!err&&bpc==16)", compact)
+        self.assertIn("ColorKeepRenderMapped<PF_Pixel16>", compact)
+        self.assertIn("elseif(!err&&bpc==32)", compact)
+        self.assertIn("ColorKeepRenderMapped<PF_PixelFloat>", compact)
         self.assertIn(
-            "for(A_longi=0;i<COLORKEEP_MAX_COLORS&&!err;++i)", compact
+            "for(A_longi=0;i<=COLORKEEP_MAX_COLORS;++i)", compact
         )
 
     def test_parameter_schema_and_zero_count_ui_boundary(self):

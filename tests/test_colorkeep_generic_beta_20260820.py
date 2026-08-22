@@ -114,7 +114,8 @@ def test_generic_worlds_counts_and_typed_workers() -> None:
 template <class P>
 static bool valid_world(A_long width, A_long height, A_long input_padding,
                         A_long output_padding, short depth,
-                        A_long origin_x=0, A_long origin_y=0) {{
+                        A_long origin_x=0, A_long origin_y=0,
+                        PF_WorldFlags additional_flags=0) {{
     const A_long input_rb = width * (A_long)sizeof(P) + input_padding;
     const A_long output_rb = width * (A_long)sizeof(P) + output_padding;
     std::vector<P> input_storage(((size_t)input_rb * height + sizeof(P) - 1) / sizeof(P));
@@ -132,7 +133,8 @@ static bool valid_world(A_long width, A_long height, A_long input_padding,
     input.extent_hint.bottom = output.extent_hint.bottom = origin_y + height;
     input.origin_x = output.origin_x = origin_x;
     input.origin_y = output.origin_y = origin_y;
-    input.world_flags = output.world_flags = depth == 8 ? 0 : PF_WorldFlag_DEEP;
+    input.world_flags = output.world_flags =
+        (depth == 16 ? PF_WorldFlag_DEEP : 0) | additional_flags;
     return ColorKeepValidateWorldPair(&input, &output, depth) == PF_Err_NONE;
 }}
 
@@ -175,6 +177,12 @@ int main() {{
     if (!valid_world<PF_Pixel8>(37, 19, 20, 4, 8, 311, -207)) return 18;
     if (!valid_world<PF_Pixel16>(23, 17, 8, 40, 16, -91, 53)) return 19;
     if (!valid_world<PF_PixelFloat>(13, 7, 48, 16, 32, 4096, 2048)) return 20;
+    if (!valid_world<PF_Pixel8>(19, 13, 8, 24, 8, 0, 0,
+                                PF_WorldFlag_RESERVED0)) return 21;
+    if (!valid_world<PF_Pixel16>(19, 13, 8, 24, 16, 0, 0,
+                                 PF_WorldFlag_RESERVED0)) return 22;
+    if (!valid_world<PF_PixelFloat>(19, 13, 8, 24, 32, 0, 0,
+                                    PF_WorldFlag_RESERVED0)) return 23;
     if (!exercise<PF_Pixel8>(1, 1, 0, 12, 1, 8, ColorKeep8Func)) return 10;
     if (!exercise<PF_Pixel8>(17, 11, 12, 4, 5, 8, ColorKeep8Func)) return 11;
     if (!exercise<PF_Pixel16>(1920, 1080, 32, 64, 9, 16, ColorKeep16Func)) return 12;

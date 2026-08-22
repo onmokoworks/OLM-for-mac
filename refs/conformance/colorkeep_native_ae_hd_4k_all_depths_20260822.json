@@ -1,0 +1,42 @@
+{
+  "schema": "olm.colorkeep-native-ae-generalization/1",
+  "status": "passed",
+  "gate_scope": "evidence for the existing major-operations and compatibility/native-AE gates; not a new gate",
+  "host": {
+    "application": "Adobe After Effects 2026",
+    "renderer": "SOFTWARE",
+    "route": "Smart"
+  },
+  "candidate": {
+    "installed_binary": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/ColorKeep.plugin/Contents/MacOS/ColorKeep",
+    "installed_sha256_pre_and_post": "ae9643a5a02f111ac48d284d646418cb1f6c4e9b3eaf213a34c17c5698dd1a10",
+    "architectures": ["x86_64", "arm64"],
+    "production_source": "mac/ColorKeep/ColorKeep.cpp",
+    "production_source_sha256": "7d47836709f9a6dc76285ce249ed0de55a04329e0fa1900f7214553563a8301e"
+  },
+  "campaign": {
+    "report": "handoffs/olm_public_beta_rc_native_ae_colorkeep_full_final_20260822/campaign_result.json",
+    "report_sha256": "67f65d1033138c58404e66fce38d2425a09cbc54eaf2030385baeb3a045b6c3a",
+    "passed": 6,
+    "total": 6,
+    "consumer_reverified": 6
+  },
+  "cells": [
+    {"case_id": "colorkeep_arbitrary_hd_8bpc", "depth": 8, "width": 1920, "height": 1080, "output_mode": "png", "commit_sha256": "9f90b7da43fecb1e173ea30935fab076866a5f7267b277d116a4a07ace0aaede"},
+    {"case_id": "colorkeep_arbitrary_4k_8bpc", "depth": 8, "width": 3840, "height": 2160, "output_mode": "png", "commit_sha256": "797b67a60b8531a23104e3f29a6a51d2d2ebbd3d4e0cdd91a131b2a8807a7600"},
+    {"case_id": "colorkeep_arbitrary_hd_16bpc", "depth": 16, "width": 1920, "height": 1080, "output_mode": "png16_render_queue", "commit_sha256": "72e0ab815350c18e33641f1c0e590ae68771b2a2cc982e1bcc8494ebc0df0577"},
+    {"case_id": "colorkeep_arbitrary_4k_16bpc", "depth": 16, "width": 3840, "height": 2160, "output_mode": "png16_render_queue", "commit_sha256": "8ef9de52108a1aad9983852f6af2de97560e93a8142833354527325047146504"},
+    {"case_id": "colorkeep_arbitrary_hd_32bpc", "depth": 32, "width": 1920, "height": 1080, "output_mode": "exr_render_queue", "commit_sha256": "54a02538b7e1dd60d5b4a33056d7f6cbc1bc8cfa7e9871a43da8c8b788366429"},
+    {"case_id": "colorkeep_arbitrary_4k_32bpc", "depth": 32, "width": 3840, "height": 2160, "output_mode": "exr_render_queue", "commit_sha256": "b25bd25ff212929bd8da903f2f4dc783870dae2fecb610a24376d0d352efca2b"}
+  ],
+  "world_flag_contract": {
+    "observed_16bpc": "PF_WorldFlag_DEEP plus host-reserved flags",
+    "observed_32bpc": "host-reserved flags without PF_WorldFlag_DEEP",
+    "admission": "pixel format selects 8/16/32; DEEP bit must be set only for 16bpc; unrelated host flags are permitted"
+  },
+  "claim_boundary": [
+    "16bpc is rendered by AE through a 16bpc project and the TIFF output-module path, then converted to PNG for structural publication verification; this does not claim 16-bit numerical output equality.",
+    "32bpc uses the OLM EXR 32 Float output module and a structurally verified EXR publication artifact.",
+    "These cells use supported default parameters and do not prove all Enabled Color Num 1-100 combinations or native-AE numerical equality with Windows."
+  ]
+}

@@ -168,9 +168,11 @@ static PF_Err ColorKeepValidateWorldPair(const PF_EffectWorld *input,
 	    output->rowbytes < output->width * pixel_bytes) {
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
-	const PF_WorldFlags expected_flags = bitdepth == 8 ? 0 : PF_WorldFlag_DEEP;
-	if (input->world_flags != expected_flags ||
-	    output->world_flags != expected_flags ||
+	const bool expected_deep = bitdepth == 16;
+	const bool input_is_deep = (input->world_flags & PF_WorldFlag_DEEP) != 0;
+	const bool output_is_deep = (output->world_flags & PF_WorldFlag_DEEP) != 0;
+	if (input_is_deep != expected_deep ||
+	    output_is_deep != expected_deep ||
 	    (int64_t)output->origin_x < input->origin_x ||
 	    (int64_t)output->origin_y < input->origin_y ||
 	    (int64_t)output->origin_x + output->width > (int64_t)input->origin_x + input->width ||
@@ -269,6 +271,30 @@ ColorKeepFloatFunc(void *refcon, A_long, A_long, PF_PixelFloat *inP, PF_PixelFlo
 	return PF_Err_NONE;
 }
 
+template <typename PixelT, typename PixelFuncT>
+static PF_Err ColorKeepRenderRows(PF_EffectWorld *input,
+	                              PF_EffectWorld *output,
+	                              ColorKeepInfo *info,
+	                              PixelFuncT pixel_func)
+{
+	const A_long offset_x = output->origin_x - input->origin_x;
+	const A_long offset_y = output->origin_y - input->origin_y;
+	for (A_long y = 0; y < output->height; ++y) {
+		PixelT *in_row = reinterpret_cast<PixelT *>(
+			reinterpret_cast<uint8_t *>(input->data) +
+			(size_t)(y + offset_y) * (size_t)input->rowbytes);
+		PixelT *out_row = reinterpret_cast<PixelT *>(
+			reinterpret_cast<uint8_t *>(output->data) +
+			(size_t)y * (size_t)output->rowbytes);
+		for (A_long x = 0; x < output->width; ++x) {
+			const PF_Err err = pixel_func((void *)info, x, y,
+			                              in_row + x + offset_x, out_row + x);
+			if (err) return err;
+		}
+	}
+	return PF_Err_NONE;
+}
+
 template <typename PixelT, typename IterateSuiteT, typename PixelFuncT>
 static PF_Err ColorKeepRenderMapped(PF_InData *in_data,
 	                                IterateSuiteT *iterate_suite,
@@ -288,17 +314,7 @@ static PF_Err ColorKeepRenderMapped(PF_InData *in_data,
 		err = iterate_suite->iterate(in_data, 0, output->height, input, NULL,
 		                            (void *)info, pixel_func, &staged_output);
 	} else {
-		const A_long offset_x = output->origin_x - input->origin_x;
-		const A_long offset_y = output->origin_y - input->origin_y;
-		for (A_long y = 0; y < output->height && !err; ++y) {
-			PixelT *in_row = reinterpret_cast<PixelT *>(
-				reinterpret_cast<uint8_t *>(input->data) +
-				(size_t)(y + offset_y) * (size_t)input->rowbytes);
-			PixelT *out_row = reinterpret_cast<PixelT *>(
-				staging.data() + (size_t)y * (size_t)output->rowbytes);
-			for (A_long x = 0; x < output->width && !err; ++x)
-				err = pixel_func((void *)info, x, y, in_row + x + offset_x, out_row + x);
-		}
+		err = ColorKeepRenderRows<PixelT>(input, &staged_output, info, pixel_func);
 	}
 	if (!err) memcpy(output->data, staging.data(), output_span);
 	return err;

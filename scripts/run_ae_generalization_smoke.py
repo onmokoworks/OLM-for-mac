@@ -70,6 +70,8 @@ PLUGINS = {
 }
 DEPTHS = (8, 16, 32)
 SIZES = ((1920, 1080, "hd"), (3840, 2160, "4k"))
+EXR_TEMPLATE = "OLM EXR 32 Float"
+PNG16_TEMPLATE = "TIFF シーケンス (アルファ付き)"
 
 
 def sha256(path: Path) -> str | None:
@@ -242,6 +244,16 @@ def main() -> int:
                     case_id = f"{state['key']}_arbitrary_{size_name}_{depth}bpc"
                     row = {"plugin": state["binary"], "depth": depth, "width": width,
                            "height": height, "case_id": case_id, "status": "planned",
+                           "output_mode": (
+                               "png" if depth == 8 else
+                               "png16_render_queue" if depth == 16 else
+                               "exr_render_queue"
+                           ),
+                           "output_template": (
+                               "" if depth == 8 else
+                               PNG16_TEMPLATE if depth == 16 else
+                               EXR_TEMPLATE
+                           ),
                            "execution_route": state["execution_route"],
                            "supported_tuple": state["supported_tuple"],
                            "parameter_overrides": [
@@ -258,6 +270,12 @@ def main() -> int:
                                    "--timeout", str(args.timeout), "--ae-env", "OLM_AE_FORCE_NEW_PROJECT=1",
                                    "--ae-env", "OLM_AE_FORCE_SOFTWARE=1",
                                    "--ae-env", "OLM_AE_DISABLE_PROJECT_COLOR_MANAGEMENT=1"]
+                        if depth == 16:
+                            command.extend(("--output-mode", "png16_render_queue",
+                                            "--output-template", PNG16_TEMPLATE))
+                        elif depth == 32:
+                            command.extend(("--output-mode", "exr_render_queue",
+                                            "--output-template", EXR_TEMPLATE))
                         for value in args.ae_env:
                             command.extend(("--ae-env", value))
                         completed = subprocess.run(command, text=True, capture_output=True)

@@ -12,7 +12,7 @@ geometry、parameter cellは各ゲートを支える証拠であり、新しい�
 
 | プラグイン | 安全性 | 主要操作 | 互換性・実機 | RCまでの残件 |
 |---|---|---|---|---|
-| ColorKeep | 通過 | 限定 | 限定 | 現行RC HD/8bpc native AE通過。3深度Windows 5色worker代表は現行callback exact。全route/depth native AEは未完 |
+| ColorKeep | 通過 | 限定 | 限定 | 現行candidateのSmart 8/16/32 bpcをHD/4K native AEで6/6通過。3深度Windows 5色worker代表は現行callback exact。Classic native AEと全1–100色の数値一致は未完 |
 | OLMBlur | 通過 | 限定 | 限定 | 現行RC HD/8bpc native AE通過。Classic 32 bpcは非対応 |
 | OLMColorKey | 通過 | 限定 | 限定 | 現行RC HD/8bpc native AE通過。Thin＋Blur同時指定を既知差分として維持 |
 | OLMDirectionalBlur | 通過 | 限定 | 限定 | 現行RC HD/8bpc native AE通過。generic DualのWindows代表確認は未完 |
