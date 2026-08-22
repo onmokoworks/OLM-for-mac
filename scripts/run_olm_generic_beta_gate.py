@@ -150,6 +150,7 @@ SMOOTHER_V1_GENERIC_DEPENDENCIES = (
     "cli/OLMSmoother/shim/OLMSmoother.h",
     "cli/OLMSmoother/shim/AEFX_SuiteHandlerTemplate.h",
     "mac/OLMSmoother/OLMSmootherPiPL.r",
+    "refs/conformance/olmsmoother_v1_pf16_practical_geometry_actual_aex_20260812.json",
 )
 KIRAKIRA_MODE3_UI_DEPENDENCIES = (
     "mac/OLMKiraKira/OLMKiraKira.cpp",

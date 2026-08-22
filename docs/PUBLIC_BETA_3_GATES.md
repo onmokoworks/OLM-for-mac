@@ -19,7 +19,7 @@ geometry、parameter cellは各ゲートを支える証拠であり、新しい�
 | OLMDistanceGradation | 通過 | 限定 | 限定 | PF32 Power/Bilateralは既知差分。現行RC native AE |
 | OLMKiraKira | 通過 | 限定 | 限定 | generic Mode 3の代表Windows確認と現行RC native AE |
 | OLMRadialBlur | 通過 | 限定 | 限定 | 一般topologyの代表Windows確認と現行RC native AE |
-| OLMSmoother | 通過 | 限定 | 未完 | Smart代表Windows確認と現行RC native AE |
+| OLMSmoother | 通過 | 限定 | 限定 | PF16 Windows実用代表は現行Classic/Smart exact。現行RC native AE |
 | OLMSmoother2 | 通過 | 限定 | 限定 | classifier近似を既知差分として維持。現行RC native AE |
 | OLMToonDilate | 通過 | 限定 | 限定 | 3深度Windows corner-seed代表は現行core exact。現行RC native AE |
 

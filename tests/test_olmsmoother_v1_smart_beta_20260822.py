@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import hashlib
+import json
 import subprocess
 import tempfile
 import textwrap
@@ -94,7 +96,46 @@ static bool cleanup_atomic(bool layer_failure){
     return err!=0&&out==before&&param_checkins==SM_NUM_PARAMS-1&&layer_checkins==1;
 }
 
+static bool windows_oracle_pf16(const char*path,bool key,int tolerance){
+    const int w=64,h=36,active=w*(int)sizeof(PF_Pixel16),rb=active+32;
+    std::vector<uint8_t> input((size_t)rb*h),classic((size_t)rb*h,0xa5),smart_out((size_t)rb*h,0xa5);
+    const unsigned alphas[]={0,1,17,32,63,64,95,127,128,159,191,223,254,255};
+    auto q=[](unsigned v){return(uint16_t)((v*0x8000u+0x80u)/255u);};
+    for(int y=0;y<h;++y){
+        for(int x=0;x<w;++x){
+            const bool island=(x==0&&y==0)||(x==w-1&&y==0)||(x==w/2&&y==h/2)||
+                              (x==0&&y==h-1)||(x==w-1&&y==h-1);
+            unsigned a=255,r=0,g=0,b=0;
+            if(island){r=202;g=187;b=230;}
+            else{
+                if((x+y*3)%11==0)a=alphas[(x*5+y*3)%14];
+                if(x<16&&y<16&&a==255)r=g=b=(x*17+y*23)&255;
+                else{r=std::min((unsigned)((x*37+y*19+13)&255),a);
+                     g=std::min((unsigned)((x*11+y*53+201)&255),a);
+                     b=std::min((unsigned)((x*71+y*7+41)&255),a);}
+            }
+            PF_Pixel16 p{q(a),q(r),q(g),q(b)};
+            std::memcpy(input.data()+(size_t)y*rb+(size_t)x*sizeof(p),&p,sizeof(p));
+        }
+        std::memset(input.data()+(size_t)y*rb+active,0xc0+(y%31),32);
+    }
+    const auto original=input;
+    PF_EffectWorld iw{},cw{},sw{};iw.data=input.data();iw.width=w;iw.height=h;iw.rowbytes=rb;iw.bitdepth=16;iw.extent_hint={0,0,w,h};
+    cw=iw;cw.data=classic.data();sw=iw;sw.data=smart_out.data();
+    PF_ParamDef defs[SM_NUM_PARAMS]{};PF_ParamDef*ptrs[SM_NUM_PARAMS]{};for(int i=0;i<SM_NUM_PARAMS;++i)ptrs[i]=defs+i;
+    defs[SM_INPUT].u.ld=iw;defs[SM_USE_KEY].u.bd.value=key?1:0;defs[SM_KEY_COLOR].u.cd.value={255,202,187,230};defs[SM_TOLERANCE].u.sd.value=tolerance;
+    PF_InData id{};PF_OutData od{};if(EffectMain(PF_Cmd_RENDER,&id,&od,ptrs,&cw,nullptr)!=0)return false;
+    std::memcpy(params_store,defs,sizeof(defs));reset_callbacks();if(smart(iw,sw,16)!=0)return false;
+    if(classic!=smart_out||input!=original||layer_calls!=1||output_calls!=1||
+       param_calls!=SM_NUM_PARAMS-1||param_checkins!=SM_NUM_PARAMS-1||layer_checkins!=1)return false;
+    std::FILE*f=std::fopen(path,"wb");if(!f)return false;
+    const bool wrote=std::fwrite(smart_out.data(),1,smart_out.size(),f)==smart_out.size();
+    return std::fclose(f)==0&&wrote;
+}
+
 int main(int argc,char**argv){
+    if(argc==5&&std::strcmp(argv[1],"oracle-pf16")==0)
+        return windows_oracle_pf16(argv[4],std::atoi(argv[2])!=0,std::atoi(argv[3]))?0:30;
     if(argc==3){
         const bool uhd=std::strcmp(argv[1],"uhd")==0,want8=std::strcmp(argv[2],"pf8")==0;
         const int w=uhd?3840:1920,h=uhd?2160:1080;
@@ -145,6 +186,42 @@ class SmootherV1SmartBeta(unittest.TestCase):
             ["hd", "pf8"], ["hd", "pf16"],
             ["uhd", "pf8"], ["uhd", "pf16"],
         ])
+
+    def test_current_classic_and_smart_match_windows_pf16_practical_oracle(self) -> None:
+        report_path = ROOT / "refs/conformance/olmsmoother_v1_pf16_practical_geometry_actual_aex_20260812.json"
+        report = json.loads(report_path.read_text())
+        self.assertEqual(report["status"], "exact")
+        self.assertEqual(
+            report["actual_aex_sha256"],
+            "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+        )
+        expected = {
+            (row["use_key"], row["tolerance"]): (row["raw_sha256"], row["active_sha256"])
+            for row in report["practical_cases"]
+        }
+        self.assertEqual(set(expected), {(0, 6), (0, 127), (1, 6), (1, 127)})
+        with tempfile.TemporaryDirectory(prefix="olmsmoother-v1-windows-smart-") as tmp:
+            source = Path(tmp) / "probe.cpp"
+            binary = Path(tmp) / "probe"
+            source.write_text(textwrap.dedent(HARNESS))
+            build = subprocess.run(
+                ["clang++", "-std=c++17", "-O2", "-I", str(ROOT / "cli/OLMSmoother/shim"),
+                 "-I", str(ROOT), str(source), "-o", str(binary)],
+                cwd=ROOT, text=True, capture_output=True,
+            )
+            self.assertEqual(build.returncode, 0, build.stdout + build.stderr)
+            for (use_key, tolerance), (raw_sha, active_sha) in expected.items():
+                output = Path(tmp) / f"oracle-{use_key}-{tolerance}.bin"
+                run = subprocess.run(
+                    [str(binary), "oracle-pf16", str(use_key), str(tolerance), str(output)],
+                    cwd=ROOT, text=True, capture_output=True,
+                )
+                self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+                payload = output.read_bytes()
+                self.assertEqual(len(payload), 544 * 36)
+                active = b"".join(payload[y * 544:y * 544 + 512] for y in range(36))
+                self.assertEqual(hashlib.sha256(payload).hexdigest(), raw_sha)
+                self.assertEqual(hashlib.sha256(active).hexdigest(), active_sha)
 
 
 if __name__ == "__main__":

@@ -19,6 +19,8 @@ def test_three_gate_matrix_is_fixed_and_covers_all_plugins() -> None:
     assert text.count("| 通過 |") == len(plugins)
     assert "| ColorKeep | 通過 | 限定 | 限定 |" in text
     assert "3深度Windows 5色worker代表は現行callback exact" in text
+    assert "| OLMSmoother | 通過 | 限定 | 限定 |" in text
+    assert "PF16 Windows実用代表は現行Classic/Smart exact" in text
     assert "| OLMToonDilate | 通過 | 限定 | 限定 |" in text
     assert "3深度Windows corner-seed代表は現行core exact" in text
 
