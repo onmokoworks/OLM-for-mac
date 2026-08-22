@@ -30,7 +30,7 @@
     "capability_contract": "tests/test_beta_support_documentation.py",
     "hostless_gate": "reports/olm_generic_beta_gate.json",
     "performance": "reports/generic_beta_perf_smoke.json",
-    "performance_status": "current live-source hostless candidate: 20/20 HD/UHD cells passed with execution_pre_and_post exact source/toolchain binding; OLMDirectionalBlur contains 9 Front/Back/Dual cases/geometry at active Strength 2; OLMKiraKira contains 15 cases/geometry including Mode 3 Horizontal Length 300 Rotation 1 at all depths, HD 42.11 seconds / peak 520355840 bytes and UHD 141.49 seconds / peak 1573421056 bytes; OLMRadialBlur contains 12 baseline/Size-Noise cases/geometry across Zoom/Rotation/all depths, HD 9.50 seconds / peak 235913216 bytes and UHD 18.32 seconds / peak 704593920 bytes; not immutable ROI v2 package evidence",
+    "performance_status": "current live-source hostless candidate: 20/20 HD/UHD cells passed in run 15770a76-a0ca-4190-aa54-37c4ded96bb4 with execution_pre_and_post exact source/toolchain binding; OLMDistanceGradation includes the all-depth unblurred Sphere lane, HD 12.91 seconds / peak 501219328 bytes and UHD 36.20 seconds / peak 1069694976 bytes; OLMDirectionalBlur contains 9 Front/Back/Dual cases/geometry at active Strength 2; OLMKiraKira contains 15 cases/geometry including Mode 3 Horizontal Length 300 Rotation 1 at all depths, HD 38.75 seconds / peak 495878144 bytes and UHD 145.47 seconds / peak 1573502976 bytes; OLMRadialBlur contains 12 baseline/Size-Noise cases/geometry across Zoom/Rotation/all depths, HD 8.45 seconds / peak 256442368 bytes and UHD 16.40 seconds / peak 704593920 bytes; not immutable ROI v2 package evidence",
 	"radial_size_noise_hostless": [
 	  "tests/test_olmradialblur_generic_baseline_sanitizers_20260820.py",
 	  "tests/test_olmradialblur_generic_budget_20260821.py",
@@ -38,6 +38,8 @@
 	],
 	"radial_size_noise_scope": "Zoom and Rotation, neutral outer-only Strength 4, Size Variation {25,100} x procedural Noise Variation {25,100} Type {1,2}, seed 1/offset 0/thickness 10, arbitrary finite-alpha general 4-connected topology including foreground on image edges, PF8/PF16/PF32 Classic and Smart full-frame routes, aligned legal independent rowbytes, PF16/PF32 SDR, 1 GiB plugin-owned and 350M work caps; partial storage, unlisted intersections and native AE remain outside this claim",
 	"radial_size_noise_windows_scope": "Windows actual-AEX evidence grounds the component-factor rule on fixed alternate topologies and the Size x Noise composition on fixed 32x18 component fixtures; arbitrary source/general topology/general geometry/HD-UHD/native AE Windows exact equality is not claimed",
+	"distancegradation_pf32_sphere_hostless": "tests/test_olmdistancegradation_generic_production_beta_20260820.py",
+	"distancegradation_pf32_sphere_scope": "Smart PF32 unblurred Constant/Linear/Sphere accepts arbitrary finite-SDR source at full-frame zero-origin geometry through 4096x2160 area with aligned disjoint padded rowbytes; negative/HDR/nonfinite/overlap/misaligned/partial inputs fail closed; Windows exact remains limited to the retained exported-owner matrix and bounded oracle profile",
     "directional_neutral_hostless": [
       "tools/emulation/test_dblur_generic_backonly_beta_20260821.py",
       "tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py"

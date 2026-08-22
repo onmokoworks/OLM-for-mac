@@ -40,7 +40,9 @@ template<class P> static void fill(std::vector<uint8_t>& b,int rb,int w,int h) {
 template<class P> static int one(int w,int h,int ipad,int opad,bool smart,A_long interp,
                                  A_long inout,A_long render,bool bg,bool invert,int threshold,
                                  A_long blur=BLUR_MODE_NONE,A_long blur_size=0) {
-  const int active=w*(int)sizeof(P),irb=active+ipad,orb=active+opad;
+  const int active=w*(int)sizeof(P);
+  const int irb=active+((ipad+(int)alignof(P)-1)/(int)alignof(P))*(int)alignof(P);
+  const int orb=active+((opad+(int)alignof(P)-1)/(int)alignof(P))*(int)alignof(P);
   std::vector<uint8_t> ib((size_t)irb*h,0x6d),ob((size_t)orb*h,0xa5);
   fill<P>(ib,irb,w,h);const auto before=ib;
   PF_EffectWorld iw{ib.data(),w,h,irb,(short)(sizeof(P)==4?8:sizeof(P)==8?16:32),{0,0,w,h}};
@@ -125,6 +127,39 @@ template<class P>static bool shifted_and_partial_storage_rejected(){
   return shifted&&partial;
 }
 
+static PF_Err render_pf32_sphere(PF_EffectWorld *iw,PF_EffectWorld *ow){
+  PF_ParamDef d[DG_NUM_PARAMS]{};PF_ParamDef*p[DG_NUM_PARAMS]{};for(int i=0;i<DG_NUM_PARAMS;++i)p[i]=d+i;
+  d[DG_INPUT].u.ld=*iw;d[DG_INVERT].u.bd.value=0;d[DG_IN_OUT].u.pd.value=IN_OUT_BOTH;
+  d[DG_INSIDE_THRESHOLD].u.sd.value=37;d[DG_OUTSIDE_THRESHOLD].u.sd.value=211;
+  d[DG_RENDER_MODE].u.pd.value=RENDER_MODE_LAYER;d[DG_USE_BG_COLOR].u.bd.value=1;
+  d[DG_GRAD_COLOR].u.cd.value={255,83,17,221};d[DG_BG_COLOR].u.cd.value={255,9,177,61};
+  d[DG_INTERP_MODE].u.pd.value=INTERP_SPHERE;d[DG_POWER].u.fs_d.value=7.75;
+  d[DG_BLUR_MODE].u.pd.value=BLUR_MODE_NONE;d[DG_BLUR_SIZE].u.sd.value=0;
+  PF_InData id{};id.downsample_x={1,1};id.downsample_y={1,1};
+  return RenderBits<PF_PixelFloat>(&id,p,iw,ow,true);
+}
+
+static bool pf32_sphere_general_and_safety(){
+  const int w=67,h=43,rb=w*(int)sizeof(PF_PixelFloat)+16;
+  std::vector<uint8_t>ib((size_t)rb*h,0x6d),ob((size_t)rb*h,0xa5);fill<PF_PixelFloat>(ib,rb,w,h);
+  PF_EffectWorld iw{ib.data(),w,h,rb,32,{0,0,w,h}},ow{ob.data(),w,h,rb,32,{0,0,w,h}};
+  const auto input_before=ib;if(render_pf32_sphere(&iw,&ow)!=PF_Err_NONE||ib!=input_before)return false;
+  bool changed=false;for(int y=0;y<h;++y){for(int x=0;x<w*(int)sizeof(PF_PixelFloat);++x)changed|=ob[(size_t)y*rb+x]!=0xa5;
+    for(int x=w*(int)sizeof(PF_PixelFloat);x<rb;++x)if(ob[(size_t)y*rb+x]!=0xa5)return false;}
+  if(!changed)return false;
+  auto reject_value=[&](float value){fill<PF_PixelFloat>(ib,rb,w,h);((PF_PixelFloat*)ib.data())[0].red=value;
+    std::fill(ob.begin(),ob.end(),0xa5);const auto before=ob;return render_pf32_sphere(&iw,&ow)==PF_Err_BAD_CALLBACK_PARAM&&ob==before;};
+  if(!reject_value(-0.01f)||!reject_value(1.01f)||!reject_value(std::numeric_limits<float>::infinity())||
+     !reject_value(std::numeric_limits<float>::quiet_NaN()))return false;
+  fill<PF_PixelFloat>(ib,rb,w,h);std::fill(ob.begin(),ob.end(),0xa5);const auto before=ob;
+  iw.rowbytes=rb-1;if(render_pf32_sphere(&iw,&ow)!=PF_Err_BAD_CALLBACK_PARAM||ob!=before)return false;iw.rowbytes=rb;
+  ow.rowbytes=rb-1;if(render_pf32_sphere(&iw,&ow)!=PF_Err_BAD_CALLBACK_PARAM||ob!=before)return false;ow.rowbytes=rb;
+  ow.data=iw.data;if(render_pf32_sphere(&iw,&ow)!=PF_Err_BAD_CALLBACK_PARAM||ib!=input_before)return false;ow.data=ob.data();
+  PF_EffectWorld huge_iw{ib.data(),4096,2161,4096*(A_long)sizeof(PF_PixelFloat),32,{0,0,4096,2161}};
+  PF_EffectWorld huge_ow{ob.data(),4096,2161,4096*(A_long)sizeof(PF_PixelFloat),32,{0,0,4096,2161}};
+  return render_pf32_sphere(&huge_iw,&huge_ow)==PF_Err_BAD_CALLBACK_PARAM;
+}
+
 int main(){
   if(const char* geometry=std::getenv("OLM_PERF_GEOMETRY")) {
     const int w=std::strcmp(geometry,"hd")==0?1920:std::strcmp(geometry,"uhd")==0?3840:0;
@@ -135,20 +170,23 @@ int main(){
     if(one<P>(w,h,7,23,true,INTERP_POWER,IN_OUT_INSIDE,RENDER_MODE_RGB,false,true,4,BLUR_MODE_SCALE,1))return BASE+1; \
     if(one<P>(w,h,7,23,true,INTERP_SPHERE,IN_OUT_INSIDE,RENDER_MODE_RGB,false,true,4,BLUR_MODE_MEDIAN,1))return BASE+2; \
     if(one<P>(w,h,7,23,true,INTERP_LINEAR,IN_OUT_INSIDE,RENDER_MODE_RGB,false,true,4,BLUR_MODE_BILATERAL,1))return BASE+3; \
+    if(one<P>(w,h,7,23,true,INTERP_SPHERE,IN_OUT_BOTH,RENDER_MODE_LAYER,true,false,211,BLUR_MODE_NONE,0))return BASE+4; \
   } while(0)
-    PERF_DEPTH(PF_Pixel8,61);PERF_DEPTH(PF_Pixel16,65);PERF_DEPTH(PF_PixelFloat,69);
+    PERF_DEPTH(PF_Pixel8,61);PERF_DEPTH(PF_Pixel16,66);PERF_DEPTH(PF_PixelFloat,71);
 #undef PERF_DEPTH
     return 0;
   }
   if(const char* sanitizer=std::getenv("OLM_DG_SANITIZER")) {
     (void)sanitizer;
     if(!pf32_oracle_profile())return 70;
+    if(!pf32_sphere_general_and_safety())return 73;
     if(!smart_pre_full_frame_lifecycle(8)||!smart_pre_full_frame_lifecycle(16)||!smart_pre_full_frame_lifecycle(32))return 71;
     if(!shifted_and_partial_storage_rejected<PF_Pixel8>()||!shifted_and_partial_storage_rejected<PF_Pixel16>()||!shifted_and_partial_storage_rejected<PF_PixelFloat>())return 72;
     return 0;
   }
   if(suite<PF_Pixel8>())return 10;if(suite<PF_Pixel16>())return 20;if(suite<PF_PixelFloat>())return 30;
   if(!pf32_unlisted_exact_lanes_reject())return 40;
+  if(!pf32_sphere_general_and_safety())return 44;
   if(!pf32_oracle_profile())return 41;
   if(!smart_pre_full_frame_lifecycle(8)||!smart_pre_full_frame_lifecycle(16)||!smart_pre_full_frame_lifecycle(32))return 42;
   if(!shifted_and_partial_storage_rejected<PF_Pixel8>()||!shifted_and_partial_storage_rejected<PF_Pixel16>()||!shifted_and_partial_storage_rejected<PF_PixelFloat>())return 43;

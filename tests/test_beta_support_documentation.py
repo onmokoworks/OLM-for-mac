@@ -106,7 +106,7 @@ class BetaSupportDocumentationContract(unittest.TestCase):
                 "info.back_strength > 4000",
                 "info.noise_variation == 0.0",
             ),
-            "OLMDistanceGradation": ("p.blur_mode == BLUR_MODE_NONE", "p.interp_mode == INTERP_CONSTANT || p.interp_mode == INTERP_LINEAR", "is_admitted_pf32_smart_oracle_profile", "PF32_POWER_GENERIC_MAX_ULP == 1"),
+            "OLMDistanceGradation": ("p.blur_mode == BLUR_MODE_NONE", "p.interp_mode == INTERP_CONSTANT || p.interp_mode == INTERP_LINEAR ||", "p.interp_mode == INTERP_SPHERE", "pf32_smart_worlds_are_bounded_sdr", "is_admitted_pf32_smart_oracle_profile", "PF32_POWER_GENERIC_MAX_ULP == 1"),
             "OLMKiraKira": (
                 "info.blur_mode == 1 || info.blur_mode == 2",
                 "IsGenericBetaMode3HorizontalTuple",
@@ -637,8 +637,8 @@ class BetaSupportDocumentationContract(unittest.TestCase):
             for profile in ("baseline", "size_noise") for depth in (8, 16, 32)
         })
         self.assertEqual(len(uhd["case_results"]), 12)
-        self.assertIn("HD 9.50 s / 235913216 B", self.doc)
-        self.assertIn("UHD 18.32 s / 704593920 B", self.doc)
+        self.assertIn("HD 8.45 s / 256442368 B", self.doc)
+        self.assertIn("UHD 16.40 s / 704593920 B", self.doc)
         self.assertIn("一般4連結topology", self.doc)
         self.assertIn("画像端を含むfinite mixed-alpha", self.doc)
         self.assertIn("portable右端処理", self.doc)
@@ -824,9 +824,9 @@ class BetaSupportDocumentationContract(unittest.TestCase):
                       audit["evidence"]["performance_status"])
         self.assertIn("15 cases/geometry including Mode 3 Horizontal Length 300 Rotation 1",
                       audit["evidence"]["performance_status"])
-        self.assertIn("HD 42.11 seconds / peak 520355840 bytes",
+        self.assertIn("HD 38.75 seconds / peak 495878144 bytes",
                       audit["evidence"]["performance_status"])
-        self.assertIn("UHD 141.49 seconds / peak 1573421056 bytes",
+        self.assertIn("UHD 145.47 seconds / peak 1573502976 bytes",
                       audit["evidence"]["performance_status"])
         directional_audit = next(
             row for row in audit["plugins"] if row["plugin"] == "OLMDirectionalBlur"
@@ -834,6 +834,21 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         self.assertEqual(directional_audit["geometry_rowbytes"], "proven")
         for axis in ("parameters", "windows", "ae_host", "roi"):
             self.assertEqual(directional_audit[axis], "partial")
+        self.assertEqual(
+            audit["evidence"]["distancegradation_pf32_sphere_hostless"],
+            "tests/test_olmdistancegradation_generic_production_beta_20260820.py",
+        )
+        for phrase in (
+            "unblurred Constant/Linear/Sphere",
+            "arbitrary finite-SDR source",
+            "4096x2160 area",
+            "aligned disjoint padded rowbytes",
+            "HDR/nonfinite/overlap/misaligned/partial inputs fail closed",
+            "retained exported-owner matrix and bounded oracle profile",
+        ):
+            self.assertIn(
+                phrase, audit["evidence"]["distancegradation_pf32_sphere_scope"]
+            )
         kirakira_audit = next(
             row for row in audit["plugins"] if row["plugin"] == "OLMKiraKira"
         )

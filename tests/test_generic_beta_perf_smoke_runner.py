@@ -473,6 +473,14 @@ def test_distancegradation_has_independent_hd_and_uhd_production_drivers() -> No
     for geometry in ("hd", "uhd"):
         command = module.COMMANDS[("OLMDistanceGradation", geometry)]
         assert "test_olmdistancegradation_generic_production_beta_20260820.py" in command[-1]
+    predicate = module.SUPPORT_PREDICATES["OLMDistanceGradation"]
+    assert "interpolation in {constant,linear,sphere}" in predicate
+    assert "positive_aligned_disjoint_rowbytes" in predicate
+    assert "finite_sdr_0_1" in predicate
+    assert "width*height <= 8847360" in predicate
+    assert "unblurred_sphere_all_depths" in module._parameters(
+        "OLMDistanceGradation", "uhd"
+    )
 
 
 def test_radialblur_has_exact_geometry_release_like_drivers() -> None:

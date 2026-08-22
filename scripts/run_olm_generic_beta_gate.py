@@ -115,6 +115,14 @@ DIRECTIONAL_NEUTRAL_DEPENDENCIES = (
     "core/olm_sha256_rows.h",
     "refs/conformance/dblur_mode1_backonly_portable_20260805.json",
 )
+DISTANCEGRADATION_GENERIC_DEPENDENCIES = (
+    "mac/OLMDistanceGradation/OLMDistanceGradation.cpp",
+    "mac/OLMDistanceGradation/OLMDistanceGradation.h",
+    "mac/OLMDistanceGradation/OLMDistanceGradation_Strings.h",
+    "core/olmdistancegradation_fieldgen.cpp",
+    "core/olmdistancegradation_fieldgen.h",
+    "core/olm_world_safety.h",
+)
 KIRAKIRA_MODE3_UI_DEPENDENCIES = (
     "mac/OLMKiraKira/OLMKiraKira.cpp",
     "mac/OLMKiraKira/OLMKiraKira.h",
@@ -182,6 +190,12 @@ DEPENDENCY_PATHS: dict[str, tuple[str, ...]] = {
         "mac/OLMDirectionalBlur/OLMDirectionalBlur_Strings.cpp",
         "Util/AEGP_SuiteHandler.cpp",
         "Util/MissingSuiteError.cpp",
+    ),
+    "tests/test_olmdistancegradation_generic_production_beta_20260820.py": (
+        *DISTANCEGRADATION_GENERIC_DEPENDENCIES,
+    ),
+    "tests/test_olmdistancegradation_pf32_smart_unblurred_beta_20260820.py": (
+        *DISTANCEGRADATION_GENERIC_DEPENDENCIES,
     ),
     "tests/test_olmkirakira_mode3_ui_length_beta_20260821.py": (
         *KIRAKIRA_MODE3_UI_DEPENDENCIES,

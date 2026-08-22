@@ -1,6 +1,7 @@
 #include "OLMDistanceGradation.h"
 #include <AEFX_SuiteHelper.h>
 #include "../../core/olmdistancegradation_fieldgen.h"
+#include "../../core/olm_world_safety.h"
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
@@ -1327,11 +1328,49 @@ static bool is_admitted_pf32_smart_unblurred_beta(const DGParams &p)
 {
 	return p.smart_owner && p.pixel_size == sizeof(PF_PixelFloat) &&
 	       p.blur_mode == BLUR_MODE_NONE &&
-	       (p.interp_mode == INTERP_CONSTANT || p.interp_mode == INTERP_LINEAR) &&
+	       (p.interp_mode == INTERP_CONSTANT || p.interp_mode == INTERP_LINEAR ||
+	        p.interp_mode == INTERP_SPHERE) &&
 	       p.in_out >= IN_OUT_INSIDE && p.in_out <= IN_OUT_BOTH &&
 	       p.render_mode >= RENDER_MODE_RGB && p.render_mode <= RENDER_MODE_LAYER &&
 	       p.inside_threshold >= 0 && p.outside_threshold >= 0 &&
 	       p.ds_x > 0.0f && p.ds_y > 0.0f;
+}
+
+static bool pf32_smart_worlds_are_bounded_sdr(
+	const PF_LayerDef *input, const PF_LayerDef *output)
+{
+	if (!input || !output || !input->data || !output->data ||
+	    input->width <= 0 || input->height <= 0 ||
+	    input->width != output->width || input->height != output->height ||
+	    input->width > 4096 || input->height > 4096) return false;
+	const size_t width = (size_t)input->width;
+	const size_t height = (size_t)input->height;
+	if (width > 4096u * 2160u / height) return false;
+	if ((reinterpret_cast<uintptr_t>(input->data) % alignof(PF_PixelFloat)) != 0 ||
+	    (reinterpret_cast<uintptr_t>(output->data) % alignof(PF_PixelFloat)) != 0 ||
+	    input->rowbytes <= 0 || output->rowbytes <= 0 ||
+	    ((size_t)input->rowbytes % alignof(PF_PixelFloat)) != 0 ||
+	    ((size_t)output->rowbytes % alignof(PF_PixelFloat)) != 0) return false;
+	const olm::world_safety::ConstWorld source = {
+		input->data, width, height, (size_t)input->rowbytes, sizeof(PF_PixelFloat)};
+	const olm::world_safety::ConstWorld destination = {
+		output->data, width, height, (size_t)output->rowbytes, sizeof(PF_PixelFloat)};
+	if (olm::world_safety::validate_layout(source) != olm::world_safety::Status::ok ||
+	    olm::world_safety::validate_layout(destination) != olm::world_safety::Status::ok ||
+	    olm::world_safety::require_disjoint(source, destination) !=
+	        olm::world_safety::Status::ok) return false;
+	for (size_t y = 0; y < height; ++y) {
+		const PF_PixelFloat *row = reinterpret_cast<const PF_PixelFloat *>(
+			reinterpret_cast<const uint8_t *>(input->data) + y * (size_t)input->rowbytes);
+		for (size_t x = 0; x < width; ++x) {
+			const PF_PixelFloat &pixel = row[x];
+			const float channels[4] = {pixel.alpha, pixel.red, pixel.green, pixel.blue};
+			for (float value : channels) {
+				if (!std::isfinite(value) || value < 0.0f || value > 1.0f) return false;
+			}
+		}
+	}
+	return true;
 }
 
 // Windows-oracle profile with only the fixture's source and geometry removed.
@@ -1402,6 +1441,10 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	p.w = w; p.h = h;
 	p.pixel_size = sizeof(P);
 	p.smart_owner = smart_owner;
+	if (smart_owner && sizeof(P) == sizeof(PF_PixelFloat) &&
+	    !pf32_smart_worlds_are_bounded_sdr(input, output)) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
 
 	// Extract normalized alpha for DT
 	std::vector<float> alpha(pixel_count, 0.0f);

@@ -215,6 +215,7 @@ LANE_DEPENDENCIES: dict[str, tuple[tuple[str, str], ...]] = {
         ("production_header", "mac/OLMDistanceGradation/OLMDistanceGradation_Strings.h"),
         ("production_auxiliary", "core/olmdistancegradation_fieldgen.cpp"),
         ("production_auxiliary", "core/olmdistancegradation_fieldgen.h"),
+        ("production_header", "core/olm_world_safety.h"),
     ),
     "OLMKiraKira": (
         ("driver", "tools/perf/run_olmkirakira_generic_production_perf.py"),
@@ -288,6 +289,14 @@ SUPPORT_PREDICATES = {
         "max(width,height) <= 4096 && width*height <= 8847360 && "
         "per_render_plugin_owned_live_bytes_with_64MiB_reserve <= 3221225472 && "
         "edge_clamped_operation_units <= 350000000"
+    ),
+    "OLMDistanceGradation": (
+        "classic_pf8_pf16_pf32_or_smart_pf8_pf16 || "
+        "(smart_pf32 && full_frame && zero_origin && "
+        "positive_aligned_disjoint_rowbytes && max(width,height) <= 4096 && "
+        "width*height <= 8847360 && finite_sdr_0_1 && "
+        "((blur_none && interpolation in {constant,linear,sphere}) || "
+        "bounded_windows_oracle_profile))"
     ),
     "OLMKiraKira": (
         "classic_or_smart && pf8_pf16_pf32 && full_frame && zero_origin && "
@@ -981,8 +990,8 @@ def _parameters(lane: str, geometry: str) -> str:
             "pf32_radius0.99_scale1_independent_strides_chebyshev_oracle"
         ),
         "OLMDistanceGradation": (
-            "oracle_profile_linear_power_gaussian_sphere_median_"
-            "bilateral_all_depths_independent_strides"
+            "oracle_profile_linear_power_gaussian_sphere_median_bilateral_"
+            "plus_unblurred_sphere_all_depths_independent_strides"
         ),
         "OLMDirectionalBlur": (
             "neutral_single_dual_front_back_angle37.25_gain0.75_strength2_"

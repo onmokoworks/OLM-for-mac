@@ -231,6 +231,12 @@ class GenericBetaGateTests(unittest.TestCase):
                 "Util/AEGP_SuiteHandler.cpp",
                 "Util/MissingSuiteError.cpp",
             },
+            "tests/test_olmdistancegradation_generic_production_beta_20260820.py": {
+                *GATE.DISTANCEGRADATION_GENERIC_DEPENDENCIES,
+            },
+            "tests/test_olmdistancegradation_pf32_smart_unblurred_beta_20260820.py": {
+                *GATE.DISTANCEGRADATION_GENERIC_DEPENDENCIES,
+            },
         }
         for test, expected in required.items():
             self.assertTrue(expected.issubset(GATE.DEPENDENCY_PATHS[test]))
