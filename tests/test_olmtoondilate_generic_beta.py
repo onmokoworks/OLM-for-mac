@@ -8,6 +8,8 @@ worker without duplicating it in Python or depending on an installed plug-in.
 from __future__ import annotations
 
 import os
+import hashlib
+import json
 import shutil
 import subprocess
 import tempfile
@@ -127,7 +129,7 @@ int main(){
 
 @pytest.mark.skipif(shutil.which(os.environ.get("CXX", "clang++")) is None,
                     reason="C++ compiler unavailable")
-def _compile_and_run(extra_flags: list[str]) -> None:
+def _compile_and_run(extra_flags: list[str], source_text: str = STUB) -> subprocess.CompletedProcess[bytes]:
     compiler = shutil.which(os.environ.get("CXX", "clang++"))
     assert compiler
     with tempfile.TemporaryDirectory(prefix="toondilate_generic_beta_") as tmp:
@@ -135,14 +137,15 @@ def _compile_and_run(extra_flags: list[str]) -> None:
         probe = directory / "probe.cpp"
         exe = directory / "probe"
         (directory / "AEFX_SuiteHelper.h").write_text("#pragma once\n", encoding="utf-8")
-        probe.write_text(STUB.replace("SOURCE_PATH", str(SOURCE)), encoding="utf-8")
+        probe.write_text(source_text.replace("SOURCE_PATH", str(SOURCE)), encoding="utf-8")
         build = subprocess.run(
             [compiler, "-std=c++17", "-O1", *extra_flags, "-I", str(directory), str(probe), "-o", str(exe)],
             cwd=ROOT, capture_output=True, text=True, check=False,
         )
         assert build.returncode == 0, build.stdout + build.stderr
-        run = subprocess.run([str(exe)], cwd=ROOT, capture_output=True, text=True, check=False)
-        assert run.returncode == 0, run.stdout + run.stderr
+        run = subprocess.run([str(exe)], cwd=ROOT, capture_output=True, check=False)
+        assert run.returncode == 0, run.stdout.decode(errors="replace") + run.stderr.decode(errors="replace")
+        return run
 
 
 def test_production_worker_accepts_generic_images_geometry_strides_and_depths():
@@ -160,3 +163,32 @@ def test_smart_adapter_requests_halo_and_uses_coordinate_aware_tile_worker():
     assert "RenderTileWorld(input_world, &staged_world" in source
     assert "output->origin_x - input->origin_x" in source
     assert "extra->cb->checkin_layer_pixels" in source
+
+
+def test_current_core_matches_tracked_windows_corner_seed_all_depths():
+    oracle_main = r'''
+template<class P>P oracle_pixel(int kind);
+template<>PF_Pixel8 oracle_pixel<PF_Pixel8>(int kind){const PF_Pixel8 p[]={{255,10,20,30},{255,90,80,70},{0,3,5,7}};return p[kind];}
+template<>PF_Pixel16 oracle_pixel<PF_Pixel16>(int kind){const PF_Pixel16 p[]={{32768,1001,2002,3003},{32768,4004,5005,6006},{0,17,19,23}};return p[kind];}
+template<>PF_PixelFloat oracle_pixel<PF_PixelFloat>(int kind){const PF_PixelFloat p[]={{1,.125f,.25f,.5f},{1,.75f,.625f,.375f},{0,.03125f,.0625f,.09375f}};return p[kind];}
+template<class P>bool oracle(int depth){constexpr int W=5,H=5;std::vector<uint8_t>a(W*H*sizeof(P)),b(W*H*sizeof(P));
+ for(int y=0;y<H;y++)for(int x=0;x<W;x++){int k=(x==0&&y==0)?0:(x==4&&y==4)?1:2;P p=oracle_pixel<P>(k);std::memcpy(a.data()+(y*W+x)*sizeof(P),&p,sizeof(P));}
+ PF_EffectWorld in{a.data(),W*(int)sizeof(P),W,H},out{b.data(),W*(int)sizeof(P),W,H};OLMToonDilateInfo info{4.0,5.0};
+ if(RenderWorld(&in,&out,info,depth))return false;return std::fwrite(b.data(),1,b.size(),stdout)==b.size();}
+int main(){return oracle<PF_Pixel8>(8)&&oracle<PF_Pixel16>(16)&&oracle<PF_PixelFloat>(32)?0:1;}
+'''
+    source_text = STUB[:STUB.index("int main(){")] + oracle_main
+    run = _compile_and_run([], source_text)
+    report = json.loads((
+        ROOT / "refs/conformance/olmtoondilate_corner_seed_all_depths_20260805.json"
+    ).read_text())
+    assert report["status"] == "PASS_CORNER_SEED_ALL_DEPTHS"
+    assert report["aex_sha256"] == "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3"
+    assert all(report["gates"].values())
+    offset = 0
+    for case, size in zip(report["cases"], (5 * 5 * 4, 5 * 5 * 8, 5 * 5 * 16)):
+        payload = run.stdout[offset:offset + size]
+        offset += size
+        assert all(case["gates"].values())
+        assert hashlib.sha256(payload).hexdigest() == case["actual_visible_sha256"]
+    assert offset == len(run.stdout)

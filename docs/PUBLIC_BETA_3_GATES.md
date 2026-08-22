@@ -21,7 +21,7 @@ geometry、parameter cellは各ゲートを支える証拠であり、新しい�
 | OLMRadialBlur | 通過 | 限定 | 限定 | 一般topologyの代表Windows確認と現行RC native AE |
 | OLMSmoother | 通過 | 限定 | 未完 | Smart代表Windows確認と現行RC native AE |
 | OLMSmoother2 | 通過 | 限定 | 限定 | classifier近似を既知差分として維持。現行RC native AE |
-| OLMToonDilate | 通過 | 限定 | 未完 | Windows代表行列と現行RC native AE |
+| OLMToonDilate | 通過 | 限定 | 限定 | 3深度Windows corner-seed代表は現行core exact。現行RC native AE |
 
 詳細な対応範囲は [BETA_SUPPORT.md](BETA_SUPPORT.md) をauthorityとする。この表は
 進捗を一目で判断する索引であり、個別テストが増えても行・列・完了基準を増やさない。

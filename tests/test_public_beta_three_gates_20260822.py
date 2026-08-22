@@ -17,6 +17,8 @@ def test_three_gate_matrix_is_fixed_and_covers_all_plugins() -> None:
     for plugin in plugins:
         assert text.count(f"| {plugin} |") == 1
     assert text.count("| 通過 |") == len(plugins)
+    assert "| OLMToonDilate | 通過 | 限定 | 限定 |" in text
+    assert "3深度Windows corner-seed代表は現行core exact" in text
 
 
 if __name__ == "__main__":
