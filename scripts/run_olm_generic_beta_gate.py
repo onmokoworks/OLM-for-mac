@@ -58,6 +58,7 @@ MANIFEST = [
     ("OLMRadialBlur-SizeNoise-EffectMain", "tests/test_olmradialblur_size_noise_effectmain_20260821.py", "mac/OLMRadialBlur/OLMRadialBlur.cpp"),
     ("OLMRadialBlur-ROI-policy", "tests/test_olmradialblur_global_polar_smart_contract_20260820.py", "mac/OLMRadialBlur/OLMRadialBlur.cpp"),
     ("OLMSmoother", "tests/test_olmsmoother_v1_generic_classic_beta_20260820.py", "mac/OLMSmoother/Mac/OLMSmoother_port.cpp"),
+    ("OLMSmoother-Smart", "tests/test_olmsmoother_v1_smart_beta_20260822.py", "mac/OLMSmoother/Mac/OLMSmoother_port.cpp"),
     ("OLMSmoother2", "tests/test_olmsmoother2_default_beta_lane_20260820.py", "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp"),
     ("OLMSmoother2", "tests/test_olmsmoother2_gamma_colors_beta_20260820.py", "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp"),
     ("OLMSmoother2-ROI-policy", "tests/test_olmsmoother2_roi_fullframe_contract_20260820.py", "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp"),
@@ -129,6 +130,9 @@ SMOOTHER_V1_GENERIC_DEPENDENCIES = (
     "mac/OLMSmoother/OLMSmoother_Strings.h",
     "core/olm_sha256_rows.h",
     "core/olm_world_safety.h",
+    "cli/OLMSmoother/shim/OLMSmoother.h",
+    "cli/OLMSmoother/shim/AEFX_SuiteHandlerTemplate.h",
+    "mac/OLMSmoother/OLMSmootherPiPL.r",
 )
 KIRAKIRA_MODE3_UI_DEPENDENCIES = (
     "mac/OLMKiraKira/OLMKiraKira.cpp",
@@ -205,6 +209,9 @@ DEPENDENCY_PATHS: dict[str, tuple[str, ...]] = {
         *DISTANCEGRADATION_GENERIC_DEPENDENCIES,
     ),
     "tests/test_olmsmoother_v1_generic_classic_beta_20260820.py": (
+        *SMOOTHER_V1_GENERIC_DEPENDENCIES,
+    ),
+    "tests/test_olmsmoother_v1_smart_beta_20260822.py": (
         *SMOOTHER_V1_GENERIC_DEPENDENCIES,
     ),
     "tests/test_olmkirakira_mode3_ui_length_beta_20260821.py": (

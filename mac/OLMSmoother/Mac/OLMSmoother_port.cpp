@@ -100,7 +100,7 @@ GlobalSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	out_data->my_version = PF_VERSION(MAJOR_VERSION, MINOR_VERSION, BUG_VERSION,
 	                                  STAGE_VERSION, BUILD_VERSION);
 	out_data->out_flags  = 0x02000040;
-	out_data->out_flags2 = 0x08000000;
+	out_data->out_flags2 = 0x08000000 | PF_OutFlag2_SUPPORTS_SMART_RENDER;
 	return PF_Err_NONE;
 }
 
@@ -4104,9 +4104,14 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	PF_EffectWorld *input_world  = nullptr;
 	PF_EffectWorld *output_world = nullptr;
 	PF_ParamDef param_list[SM_NUM_PARAMS];
+	PF_ParamDef *param_ptrs[SM_NUM_PARAMS] = {};
 	for (A_long i = 0; i < SM_NUM_PARAMS; ++i) AEFX_CLR_STRUCT(param_list[i]);
+	for (A_long i = 0; i < SM_NUM_PARAMS; ++i) param_ptrs[i] = &param_list[i];
 	bool param_checked_out[SM_NUM_PARAMS] = {};
 	bool layer_checked_out = false;
+	bool render_complete = false;
+	size_t active_bytes = 0;
+	std::vector<uint8_t> pending_output;
 	try {
 		ERR(extra->cb->checkout_layer_pixels(in_data->effect_ref, SM_INPUT, &input_world));
 		if (!err) layer_checked_out = true;
@@ -4122,10 +4127,27 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 			short bitdepth = 0;
 			err = ValidatePublicWorlds(in_data, out_data, input_world, output_world, &bitdepth);
 			if (!err && bitdepth != extra->input->bitdepth) err = PF_Err_BAD_CALLBACK_PARAM;
-			// The original v1 plug-in does not advertise Smart Render and every
-			// retained exported-owner witness enters the classic Render command.
-			// Complete the host lifecycle, but keep numerical execution fail-closed.
-			if (!err) err = PF_Err_BAD_CALLBACK_PARAM;
+			// Mac Public Beta Smart lane: reuse the Windows-derived Classic integer
+			// kernel, but render into a private tight world.  Host output is committed
+			// only after every parameter and layer checkout has been balanced, so a
+			// cleanup callback failure cannot leave a partially successful frame.
+			if (!err) {
+				active_bytes = (size_t)input_world->width *
+					(bitdepth == 8 ? sizeof(PF_Pixel8) : sizeof(PF_Pixel16));
+				pending_output.resize(active_bytes * (size_t)input_world->height);
+				for (A_long y = 0; y < output_world->height; ++y) {
+					memcpy(pending_output.data() + (size_t)y * active_bytes,
+					       (const uint8_t *)output_world->data +
+					           (size_t)y * (size_t)output_world->rowbytes,
+					       active_bytes);
+				}
+				PF_EffectWorld pending_world = *output_world;
+				pending_world.data = reinterpret_cast<decltype(pending_world.data)>(
+					pending_output.data());
+				pending_world.rowbytes = (A_long)active_bytes;
+				err = Render(in_data, out_data, param_ptrs, &pending_world);
+				render_complete = !err;
+			}
 		} else if (!err) {
 			err = PF_Err_BAD_CALLBACK_PARAM;
 		}
@@ -4186,6 +4208,14 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 		}
 	}
 #endif
+	if (!err && render_complete) {
+		for (A_long y = 0; y < output_world->height; ++y) {
+			memcpy((uint8_t *)output_world->data +
+			           (size_t)y * (size_t)output_world->rowbytes,
+			       pending_output.data() + (size_t)y * active_bytes,
+			       active_bytes);
+		}
+	}
 	return err;
 }
 

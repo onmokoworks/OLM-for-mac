@@ -25,7 +25,7 @@ resource 'PiPL' (16000) {
 		AE_Effect_Version { 591872 /* 0x00090800 — Win版 eVER に一致 (vers=1, subvers=2, bugfix=1) */ },
 		AE_Effect_Info_Flags { 2 },
 		AE_Effect_Global_OutFlags { 0x02000040 },
-		AE_Effect_Global_OutFlags_2 { 0x08000000 },
+		AE_Effect_Global_OutFlags_2 { 0x08000400 },
 		AE_Effect_Match_Name { "OLM Smoother" },
 		AE_Reserved_Info { 0 },
 		AE_Effect_Support_URL { "https://olm.co.jp/" }

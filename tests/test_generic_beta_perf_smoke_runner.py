@@ -489,6 +489,7 @@ def test_smoother_v1_performance_lane_binds_bounded_world_contract() -> None:
         path for _role, path in module.LANE_DEPENDENCIES["OLMSmoother"]
     }
     assert "core/olm_world_safety.h" in dependencies
+    assert "mac/OLMSmoother/OLMSmootherPiPL.r" in dependencies
     predicate = module.SUPPORT_PREDICATES["OLMSmoother"]
     assert "positive_disjoint_rowbytes" in predicate
     assert "max(width,height) <= 4096" in predicate

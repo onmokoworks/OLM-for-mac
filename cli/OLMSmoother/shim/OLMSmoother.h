@@ -24,6 +24,7 @@ typedef double   A_FpLong;
 
 typedef A_long PF_Err;
 enum { PF_Err_NONE = 0 };
+enum { PF_OutFlag2_SUPPORTS_SMART_RENDER = 1L << 10 };
 
 typedef void *PF_ProgPtr;
 

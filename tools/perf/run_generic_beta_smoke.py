@@ -243,6 +243,7 @@ LANE_DEPENDENCIES: dict[str, tuple[tuple[str, str], ...]] = {
         ("driver", "tests/run_olmsmoother_v1_generic_production_perf.py"),
         ("harness", "tests/test_olmsmoother_v1_generic_classic_beta_20260820.py"),
         ("production_source", "mac/OLMSmoother/Mac/OLMSmoother_port.cpp"),
+        ("production_resource", "mac/OLMSmoother/OLMSmootherPiPL.r"),
         ("production_header", "core/olm_sha256_rows.h"),
         ("production_header", "core/olm_world_safety.h"),
         ("production_auxiliary", "mac/OLMSmoother/Mac/OLMSmoother_classifier8_tail.generated.inc"),

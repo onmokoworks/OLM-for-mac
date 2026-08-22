@@ -80,7 +80,7 @@ class BetaSupportDocumentationContract(unittest.TestCase):
             "OLMDistanceGradation": ("RenderBits<PF_Pixel8>", "RenderBits<PF_Pixel16>", "RenderBits<PF_PixelFloat>"),
             "OLMKiraKira": ("IsGenericBetaMode12Tuple", "IsGenericBetaMode3HorizontalTuple", "IsGenericBetaMode3BudgetAdmitted", "BitDepthForFormat"),
             "OLMRadialBlur": ("IsGenericBaselineWorldPair<PixelT>", "RenderZoomTyped<PF_PixelFloat>"),
-            "OLMSmoother": ("if (depth == 8 || depth == 16) return true", "V1ClassicAdmission", "kMaxSide = 4096", "kMaxPixels = (size_t)4096 * (size_t)2160", "TightStaging staging"),
+            "OLMSmoother": ("if (depth == 8 || depth == 16) return true", "V1ClassicAdmission", "kMaxSide = 4096", "kMaxPixels = (size_t)4096 * (size_t)2160", "TightStaging staging", "PF_OutFlag2_SUPPORTS_SMART_RENDER", "render_complete = !err"),
             "OLMSmoother2": ("V2GenericBetaAdmission", "depth != 8 && depth != 16 && depth != 32"),
             "OLMToonDilate": ("ValidateToonBetaAdmission<PF_Pixel8>", "ValidateToonBetaAdmission<PF_PixelFloat>"),
         }
@@ -637,8 +637,8 @@ class BetaSupportDocumentationContract(unittest.TestCase):
             for profile in ("baseline", "size_noise") for depth in (8, 16, 32)
         })
         self.assertEqual(len(uhd["case_results"]), 12)
-        self.assertIn("HD 8.03 s / 256049152 B", self.doc)
-        self.assertIn("UHD 15.98 s / 704577536 B", self.doc)
+        self.assertIn("HD 8.49 s / 259571712 B", self.doc)
+        self.assertIn("UHD 18.81 s / 704692224 B", self.doc)
         self.assertIn("一般4連結topology", self.doc)
         self.assertIn("画像端を含むfinite mixed-alpha", self.doc)
         self.assertIn("portable右端処理", self.doc)
@@ -824,9 +824,9 @@ class BetaSupportDocumentationContract(unittest.TestCase):
                       audit["evidence"]["performance_status"])
         self.assertIn("15 cases/geometry including Mode 3 Horizontal Length 300 Rotation 1",
                       audit["evidence"]["performance_status"])
-        self.assertIn("HD 36.05 seconds / peak 504446976 bytes",
+        self.assertIn("HD 36.64 seconds / peak 495943680 bytes",
                       audit["evidence"]["performance_status"])
-        self.assertIn("UHD 134.36 seconds / peak 1573470208 bytes",
+        self.assertIn("UHD 143.44 seconds / peak 1564770304 bytes",
                       audit["evidence"]["performance_status"])
         directional_audit = next(
             row for row in audit["plugins"] if row["plugin"] == "OLMDirectionalBlur"
@@ -858,9 +858,22 @@ class BetaSupportDocumentationContract(unittest.TestCase):
             "Tolerance 0-255/key polarities",
             "each side <=4096 and area <=4096x2160",
             "overlap, malformed layout, partial storage and over-budget geometry fail before commit",
-            "Smart, PF32, native AE and general Windows exact remain outside this claim",
+            "Smart is covered by the separate Mac beta parity claim",
+            "PF32, native AE and general Windows exact remain outside this bounded Classic claim",
         ):
             self.assertIn(phrase, audit["evidence"]["smoother_v1_bounded_scope"])
+        self.assertEqual(
+            audit["evidence"]["smoother_v1_smart_hostless"],
+            "tests/test_olmsmoother_v1_smart_beta_20260822.py",
+        )
+        for phrase in (
+            "advertises Smart Render for PF8/PF16",
+            "same Windows-derived integer kernel as Classic",
+            "HD/UHD active-byte Classic parity",
+            "transactional non-commit on parameter/layer cleanup failure",
+            "PF32, partial ROI, Windows Smart owner and native AE remain outside this claim",
+        ):
+            self.assertIn(phrase, audit["evidence"]["smoother_v1_smart_scope"])
         kirakira_audit = next(
             row for row in audit["plugins"] if row["plugin"] == "OLMKiraKira"
         )
