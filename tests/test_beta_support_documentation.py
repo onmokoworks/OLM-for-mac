@@ -97,8 +97,8 @@ class BetaSupportDocumentationContract(unittest.TestCase):
                 "info.edge_thin_distance_type >= 1 && info.edge_thin_distance_type <= 3",
                 "IsGenericEdgeBlurTuple(info)",
                 "IsGenericEdgeCompositionTuple(info)",
-                "info.edge_blur_direction == 102",
-                "info.edge_thin_amount == -4.0 || info.edge_thin_amount == 4.0",
+                "Keep simultaneous Thin+Blur closed",
+                "return false;",
             ),
             "OLMDirectionalBlur": (
                 "const bool any_side = info.front_strength != 0 || info.back_strength != 0",
@@ -179,8 +179,8 @@ class BetaSupportDocumentationContract(unittest.TestCase):
             self.assertIn(token, directional)
         for claim in ("最大4096×2160", "Amount 1–1000", "Repeat 1–10", "3 GiB per-render plugin-owned admission", "3億5000万work-unit", "最小9×7", "1 GiB per-render plugin-owned", "120億work-unit", "Horizontal-only", "Length 1–300", "Rotation 0/1", "16×16–8192×8192", "Search Radius 0–100", "Enabled Color Num 1–100", "Edge Thin −100〜100", "Distance Type 1〜3", "Size Variation 25/100 × procedural Noise Variation 25/100 Type 1/2", "1 GiB plugin-owned／350M work cap", "最大1 ULP契約", "Gamma 1.0–2.4"):
             self.assertIn(claim, self.doc)
-        for claim in ("Thin ±4／DT2", "materialized 102", "full-frameのみ",
-                      "任意source Windows exactは未主張", "native quickはEdge 0",
+        for claim in ("Thin＋Blur同時指定", "内部値0", "full-frameのみ",
+                      "公開popup 1〜3の合成根拠には使わない", "native quickはEdge 0",
                       "Front／Backの片側または両側", "9 cases/geometry",
                       "actual-AEX raw-callback／production replay anchorはPF8 960×540・Back 240・Angle 0・Gain 1・scale 0.5",
                       "native AE saved-frameではない",
@@ -637,8 +637,12 @@ class BetaSupportDocumentationContract(unittest.TestCase):
             for profile in ("baseline", "size_noise") for depth in (8, 16, 32)
         })
         self.assertEqual(len(uhd["case_results"]), 12)
-        self.assertIn("HD 9.67 s / 269434880 B", self.doc)
-        self.assertIn("UHD 24.88 s / 640286720 B", self.doc)
+        for row in radial_rows:
+            label = "HD" if row["geometry"] == "hd" else "UHD"
+            self.assertIn(
+                f"{label} {row['wall_seconds']:.2f} s / {row['peak_rss_bytes']} B",
+                self.doc,
+            )
         self.assertIn("一般4連結topology", self.doc)
         self.assertIn("画像端を含むfinite mixed-alpha", self.doc)
         self.assertIn("portable右端処理", self.doc)

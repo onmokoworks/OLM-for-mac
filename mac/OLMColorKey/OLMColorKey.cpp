@@ -1316,11 +1316,13 @@ static bool IsGenericEdgeBlurTuple(const OLMColorKeyInfo &info)
 
 static bool IsGenericEdgeCompositionTuple(const OLMColorKeyInfo &info)
 {
-	return info.edge_blur_direction == 102 &&
-	       (info.edge_thin_amount == -4.0 || info.edge_thin_amount == 4.0) &&
-	       info.edge_thin_distance_type == 2 &&
-	       info.edge_blur_amount == 4.0 &&
-	       info.edge_blur_distance_type == 2;
+	(void)info;
+	// The retained 13x11 composition capture left the native Edge Thin
+	// Distance Type field at its zero-initialized internal value.  It therefore
+	// cannot ground any public popup value (1..3), even though the saturated
+	// +/-4 matte happened to compare equal.  Keep simultaneous Thin+Blur closed
+	// until a capture explicitly materializes and distinguishes that field.
+	return false;
 }
 
 static float EdgeBlurWeight(bool inside, float dist, float amount, A_long direction)

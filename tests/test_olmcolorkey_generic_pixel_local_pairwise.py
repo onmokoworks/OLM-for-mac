@@ -38,7 +38,7 @@ def _compile_and_run(geometry: str = "all") -> subprocess.CompletedProcess[str]:
 
 def test_generic_pixel_local_pairwise_matrix() -> None:
     assert _compile_and_run().stderr.strip() == (
-        "GENERIC_PIXEL_LOCAL_PAIRWISE pass=1 geometry=all cells=42"
+        "GENERIC_PIXEL_LOCAL_PAIRWISE pass=1 geometry=all cells=36"
     )
 
 
@@ -65,7 +65,7 @@ def test_windows_oracle_connection_is_bounded_and_available() -> None:
         "replace": [False, True],
     }
     assert len(toggles["cases"]) == 24
-    assert composition["schema_version"] == 1
+    assert composition["schema_version"] == 2
     assert composition["matrix"] == {
         "edge_modes": [
             "none",
@@ -79,16 +79,18 @@ def test_windows_oracle_connection_is_bounded_and_available() -> None:
         "replace": [False, True],
     }
     assert len(composition["cases"]) == 36
+    assert composition["native_materialized_parameters"] == {
+        "edge_blur_direction_internal": 2,
+        "edge_blur_distance_type_internal": 2,
+        "edge_thin_distance_type_internal": 0,
+    }
     assert {
         colors["actual_aex_sha256"],
         toggles["actual_aex_sha256"],
         composition["actual_aex_sha256"],
     } == {"9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c"}
-    assert composition["claim_boundary"] == (
-        "Exact for the declared 13x11 two-key fixture, Replace off/on, Edge "
-        "none/Thin -4/Thin +4/Blur Direction 2 Amount 4, the two Thin+Blur "
-        "combinations, and PF8/PF16/PF32. Other directions, amounts, geometry, "
-        "and AE-host execution are not claimed."
+    assert "does not prove any public Edge Thin Distance Type 1..3" in (
+        composition["claim_boundary"]
     )
     for report in (colors, toggles, composition):
         assert len(report["actual_aex_sha256"]) == 64
@@ -100,7 +102,7 @@ def test_windows_oracle_connection_is_bounded_and_available() -> None:
 
 def test_generic_edge_thin_under_asan_ubsan() -> None:
     assert _compile_and_run("sanitizer").stderr.strip() == (
-        "GENERIC_PIXEL_LOCAL_PAIRWISE pass=1 geometry=sanitizer cells=27"
+        "GENERIC_PIXEL_LOCAL_PAIRWISE pass=1 geometry=sanitizer cells=22"
     )
 
 
