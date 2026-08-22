@@ -167,6 +167,7 @@ LANE_DEPENDENCIES: dict[str, tuple[tuple[str, str], ...]] = {
         ("production_header", "core/olmblur_worker8_legacy.h"),
         ("production_auxiliary", "core/olmblur_worker_orchestration.cpp"),
         ("production_header", "core/olmblur_worker_orchestration.h"),
+        ("production_header", "core/olm_world_safety.h"),
     ),
     "OLMColorKey": (
         ("driver", "tests/test_olmcolorkey_generic_pixel_local_pairwise.py"),

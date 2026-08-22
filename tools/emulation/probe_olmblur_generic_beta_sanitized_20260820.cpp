@@ -39,6 +39,7 @@ static short g_depth=0;
 static double g_amount=5.0;
 static int g_smooth=100*65536,g_repeat=1,g_bias=1,g_legacy=0;
 static int g_pixels=0,g_output_hits=0,g_optional_checkin=0;
+static PF_Err g_checkin_error=PF_Err_NONE;
 static int g_param_out=0,g_param_in=0,g_copy=0;
 static int g_acquire=0,g_release=0,g_get_format=0;
 static PF_WorldSuite2 g_world_suite{};
@@ -73,7 +74,7 @@ static PF_Err pixels(PF_ProgPtr,A_long id,PF_EffectWorld**world){
 static PF_Err checkout_output(PF_ProgPtr,PF_EffectWorld**world){
   ++g_output_hits;if(!world)return PF_Err_BAD_CALLBACK_PARAM;*world=g_output;return PF_Err_NONE;
 }
-static PF_Err optional_checkin(PF_ProgPtr,A_long){++g_optional_checkin;return PF_Err_NONE;}
+static PF_Err optional_checkin(PF_ProgPtr,A_long){++g_optional_checkin;return g_checkin_error;}
 static PF_Err get_format(const PF_EffectWorld*world,PF_PixelFormat*format){
   ++g_get_format;if(!format||(world!=g_input&&world!=g_output))return PF_Err_BAD_CALLBACK_PARAM;
   *format=g_depth==8?PF_PixelFormat_ARGB32:g_depth==16?PF_PixelFormat_ARGB64:PF_PixelFormat_ARGB128;
@@ -153,6 +154,37 @@ static bool run_generic(const GenericCase& c) {
   return ok;
 }
 
+template<class Pixel>
+static bool run_safety_rejections(int depth) {
+  const int w=65,h=33,active=w*(int)sizeof(Pixel),rb=active+29;
+  std::vector<unsigned char> input((size_t)rb*h+sizeof(Pixel),0xa5),output((size_t)rb*h,0xee);
+  fill_generic<Pixel>(input.data(),rb,w,h);const auto input_before=input,output_before=output;
+  PF_EffectWorld iw{},ow{};iw.data=(PF_PixelPtr)input.data();iw.rowbytes=rb;
+  iw.width=w;iw.height=h;iw.extent_hint={0,0,w,h};ow=iw;
+  if(depth!=8)iw.world_flags=ow.world_flags=PF_WorldFlag_DEEP;
+  auto invoke=[&]()->PF_Err{
+    g_input=&iw;g_output=&ow;g_depth=depth;g_amount=5.0;g_smooth=100*65536;
+    g_repeat=2;g_bias=1;g_legacy=0;g_optional_checkin=0;
+    SPBasicSuite basic{};basic.AcquireSuite=acquire_suite;basic.ReleaseSuite=release_suite;
+    PF_UtilCallbacks utils{};utils.copy=copy_world;PF_InData in{};PF_OutData out{};
+    in.effect_ref=(PF_ProgPtr)1;in.current_time=7;in.time_step=1;in.time_scale=24;
+    in.downsample_x={1,1};in.downsample_y={1,1};in.pica_basicP=&basic;in.utils=&utils;
+    in.inter.checkout_param=checkout_param;in.inter.checkin_param=checkin_param;
+    PF_SmartRenderInput si{};si.bitdepth=depth;PF_SmartRenderCallbacks cb{};
+    cb.checkout_layer_pixels=pixels;cb.checkout_output=checkout_output;cb.checkin_layer_pixels=optional_checkin;
+    PF_SmartRenderExtra se{&si,&cb};return EffectMain(PF_Cmd_SMART_RENDER,&in,&out,nullptr,nullptr,&se);
+  };
+  // Partial overlap must be detected from addressable active spans before work.
+  ow.data=(PF_PixelPtr)(input.data()+sizeof(Pixel));g_checkin_error=PF_Err_NONE;
+  const PF_Err overlap_err=invoke();const bool overlap_ok=overlap_err!=PF_Err_NONE&&input==input_before;
+  // Successful numerical work followed by host cleanup failure must not commit.
+  ow.data=(PF_PixelPtr)output.data();g_checkin_error=97;
+  const PF_Err cleanup_err=invoke();g_checkin_error=PF_Err_NONE;
+  const bool cleanup_ok=cleanup_err==97&&output==output_before&&g_optional_checkin==1;
+  std::printf("SAFETY depth=%d overlap=%d cleanup_atomic=%d\n",depth,overlap_ok,cleanup_ok);
+  return overlap_ok&&cleanup_ok;
+}
+
 int main(int argc,char**argv){
   const char*geometry=argc>1?argv[1]:"all";
   g_world_suite.PF_GetPixelFormat=get_format;bool ok=true;
@@ -187,6 +219,11 @@ int main(int argc,char**argv){
     if(!std::strcmp(geometry,"odd")&&(c.width!=65||c.height!=33))continue;
     if(!std::strcmp(geometry,"sd")&&(c.width!=720||c.height!=480))continue;
     if(c.depth==8)ok&=run_generic<PF_Pixel8>(c);else if(c.depth==16)ok&=run_generic<PF_Pixel16>(c);else ok&=run_generic<PF_PixelFloat>(c);
+  }
+  if(!std::strcmp(geometry,"odd")||!std::strcmp(geometry,"all")){
+    ok&=run_safety_rejections<PF_Pixel8>(8);
+    ok&=run_safety_rejections<PF_Pixel16>(16);
+    ok&=run_safety_rejections<PF_PixelFloat>(32);
   }
   return ok?0:4;
 }

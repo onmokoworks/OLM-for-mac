@@ -496,6 +496,12 @@ def test_smoother_v1_performance_lane_binds_bounded_world_contract() -> None:
     assert "width*height <= 8847360" in predicate
 
 
+def test_blur_performance_lane_binds_transactional_world_safety() -> None:
+    module = load_module()
+    dependencies = {path for _role, path in module.LANE_DEPENDENCIES["OLMBlur"]}
+    assert "core/olm_world_safety.h" in dependencies
+
+
 def test_radialblur_has_exact_geometry_release_like_drivers() -> None:
     module = load_module()
     for geometry in ("hd", "uhd"):

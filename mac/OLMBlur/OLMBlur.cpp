@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <vector>
+#include "../../core/olm_world_safety.h"
 
 static PF_Err
 About(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
@@ -1817,10 +1818,34 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 		in_data->downsample_x.num==1 && in_data->downsample_x.den==1 &&
 		in_data->downsample_y.num==1 && in_data->downsample_y.den==1) {
 		err=GetPublicWorldFormats(in_data,input_world,output_world,bpc);
-		if (!err) err=BlurRender(in_data,input_world,output_world,bpc,&bp);
+		olm::world_safety::TightStaging staging;
+		if (!err) {
+			const olm::world_safety::Status stage_status = staging.prepare(
+				{input_world->data, (size_t)input_world->width,
+				 (size_t)input_world->height, (size_t)input_world->rowbytes,
+				 pixel_bytes},
+				{output_world->data, (size_t)output_world->width,
+				 (size_t)output_world->height, (size_t)output_world->rowbytes,
+				 pixel_bytes});
+			if (stage_status == olm::world_safety::Status::out_of_memory)
+				err = PF_Err_OUT_OF_MEMORY;
+			else if (stage_status != olm::world_safety::Status::ok)
+				err = PF_Err_BAD_CALLBACK_PARAM;
+		}
+		PF_EffectWorld staged_input = *input_world;
+		PF_EffectWorld staged_output = *output_world;
+		if (!err) {
+			staged_input.data = (PF_PixelPtr)const_cast<uint8_t *>(staging.input_data());
+			staged_input.rowbytes = (A_long)staging.row_bytes();
+			staged_output.data = (PF_PixelPtr)staging.output_data();
+			staged_output.rowbytes = (A_long)staging.row_bytes();
+			err=BlurRender(in_data,&staged_input,&staged_output,bpc,&bp);
+		}
 		const PF_Err checkin_err=extra->cb->checkin_layer_pixels ?
 			extra->cb->checkin_layer_pixels(in_data->effect_ref,OLMBLUR_INPUT) : PF_Err_NONE;
 		if (!err) err=checkin_err;
+		if (!err && staging.commit() != olm::world_safety::Status::ok)
+			err=PF_Err_BAD_CALLBACK_PARAM;
 		return err;
 	}
 	const bool public24 = raw.amount==5.0 && raw.smoothness_fixed==100*65536 &&

@@ -116,6 +116,21 @@ DIRECTIONAL_NEUTRAL_DEPENDENCIES = (
     "core/olm_sha256_rows.h",
     "refs/conformance/dblur_mode1_backonly_portable_20260805.json",
 )
+BLUR_GENERIC_DEPENDENCIES = (
+    "mac/OLMBlur/OLMBlur.cpp",
+    "mac/OLMBlur/OLMBlur.h",
+    "mac/OLMBlur/OLMBlur_Strings.h",
+    "core/olm_world_safety.h",
+    "tools/emulation/probe_olmblur_generic_beta_sanitized_20260820.cpp",
+    "core/olmblur_helper.cpp",
+    "core/olmblur_fullworker_helper.cpp",
+    "core/olmblur_worker16_nonlegacy.cpp",
+    "core/olmblur_worker16_legacy.cpp",
+    "core/olmblur_worker32_nonlegacy.cpp",
+    "core/olmblur_worker32_legacy.cpp",
+    "core/olmblur_worker8_legacy.cpp",
+    "core/olmblur_worker_orchestration.cpp",
+)
 DISTANCEGRADATION_GENERIC_DEPENDENCIES = (
     "mac/OLMDistanceGradation/OLMDistanceGradation.cpp",
     "mac/OLMDistanceGradation/OLMDistanceGradation.h",
@@ -178,6 +193,12 @@ RADIAL_SIZE_NOISE_DEPENDENCIES = (
     "core/olm_world_safety.h",
 )
 DEPENDENCY_PATHS: dict[str, tuple[str, ...]] = {
+    "tests/test_olmblur_generic_beta_lane_20260820.py": (
+        *BLUR_GENERIC_DEPENDENCIES,
+    ),
+    "tests/test_olmblur_generic_beta_sanitizers_20260820.py": (
+        *BLUR_GENERIC_DEPENDENCIES,
+    ),
     "tests/test_ae_generalization_smoke.py": (
         "scripts/run_ae_generalization_smoke.py",
         "scripts/run_ae_single_case.py",

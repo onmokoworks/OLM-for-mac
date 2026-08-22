@@ -185,6 +185,12 @@ class GenericBetaGateTests(unittest.TestCase):
             for dependency in GATE.KIRAKIRA_MODE3_UI_DEPENDENCIES
         ))
         required = {
+            "tests/test_olmblur_generic_beta_lane_20260820.py": {
+                *GATE.BLUR_GENERIC_DEPENDENCIES,
+            },
+            "tests/test_olmblur_generic_beta_sanitizers_20260820.py": {
+                *GATE.BLUR_GENERIC_DEPENDENCIES,
+            },
             "tests/test_ae_batch_png_integrity.py": {
                 "scripts/run_ae_validation_batch.py",
                 "scripts/ae_pixel_validation_render.jsx",

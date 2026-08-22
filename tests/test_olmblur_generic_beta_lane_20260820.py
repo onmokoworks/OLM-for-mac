@@ -26,7 +26,10 @@ class GenericBetaLaneTest(unittest.TestCase):
         lane = self.source[self.source.index("// Generic beta lane."):]
         self.assertIn("GenericBetaWorld(input_world", lane)
         self.assertIn("GenericBetaWorld(output_world", lane)
-        self.assertIn("BlurRender(in_data,input_world,output_world,bpc,&bp)", lane)
+        self.assertIn("olm::world_safety::TightStaging staging", lane)
+        self.assertIn("BlurRender(in_data,&staged_input,&staged_output,bpc,&bp)", lane)
+        self.assertIn("staging.commit()", lane)
+        self.assertLess(lane.index("checkin_layer_pixels"), lane.index("staging.commit()"))
 
     def test_geometry_memory_and_work_limits_are_explicit(self):
         body = re.search(
