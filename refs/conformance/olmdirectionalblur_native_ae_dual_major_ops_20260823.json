@@ -1,0 +1,37 @@
+{
+  "kind": "olmdirectionalblur_native_ae_major_operations_profile",
+  "schema": 1,
+  "date": "2026-08-23",
+  "status": "passed",
+  "gate_scope": "Evidence for the existing major-operations and compatibility/native-AE gates; not a new gate and not part of the fixed baseline 54-cell matrix.",
+  "host": "Adobe After Effects 2026 26.3x87",
+  "renderer": "Software",
+  "plugin": "OLMDirectionalBlur",
+  "installed_sha256": "bced525426da29a67c45d5cb3071de06cc417d9732a15108dfa1188cb03a7bcc",
+  "campaign_path": "handoffs/olm_public_beta_directional_dual_major_ops_20260823/campaign_result.json",
+  "campaign_sha256": "08bbe2993066a7a38cd2af1cfc92a82ae8f59116069f21f7b75b2bd563754759",
+  "profile": {
+    "route": "Smart",
+    "angle": 37.25,
+    "brightness_gain": 0.75,
+    "front_strength": 2,
+    "back_strength": 2,
+    "fade_sharp_size_noise": "neutral"
+  },
+  "totals": {"cells": 6, "campaign_passed": 6, "consumer_reverified": 6, "failed": 0},
+  "cells": [
+    {"case_id":"directional_arbitrary_hd_8bpc","depth":8,"width":1920,"height":1080,"output_mode":"png_render_queue","commit_sha256":"5f57bd35325dff11cc531328fe0ac37f30dfdf6666efc9cadcac8acd016a9e79"},
+    {"case_id":"directional_arbitrary_4k_8bpc","depth":8,"width":3840,"height":2160,"output_mode":"png_render_queue","commit_sha256":"9d9c8de73f9fb3b915e1ad44bcd25f6030570758a893b73a3b0e7bade4ac72e9"},
+    {"case_id":"directional_arbitrary_hd_16bpc","depth":16,"width":1920,"height":1080,"output_mode":"png16_render_queue","commit_sha256":"945c5a3b3091667531b4985763980eb3718261fd2362f560fd75fc8cf80324de"},
+    {"case_id":"directional_arbitrary_4k_16bpc","depth":16,"width":3840,"height":2160,"output_mode":"png16_render_queue","commit_sha256":"13c1894841e6cbe9150e62aa5c8fd2fa9b5938b4200134071988d11d52ccec1c"},
+    {"case_id":"directional_arbitrary_hd_32bpc","depth":32,"width":1920,"height":1080,"output_mode":"exr_render_queue","commit_sha256":"f0361c028c33463a519dae89604687213d922a489f2493194188bc53d256b759"},
+    {"case_id":"directional_arbitrary_4k_32bpc","depth":32,"width":3840,"height":2160,"output_mode":"exr_render_queue","commit_sha256":"7c3d27a2aa6a593ea6afa0aee39cc9e3b70e7af4824dcc0c9d9121927f921394"}
+  ],
+  "boundaries": [
+    "The input is a deterministic arbitrary gradient, not a Windows fixture or admitted input SHA.",
+    "16 bpc proves execution in a 16 bpc AE project and publication integrity after TIFF-to-PNG conversion, not 16-bit numerical equality.",
+    "32 bpc publication verifies a 32 Float EXR.",
+    "This does not prove generic Dual numerical equality to Windows; the paired Windows host was offline during this campaign.",
+    "It does not cover non-neutral Fade, Sharp Tail, Size Variation, Noise Variation, partial storage, GPU, or every admitted strength."
+  ]
+}

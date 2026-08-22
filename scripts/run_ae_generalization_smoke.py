@@ -128,6 +128,25 @@ def plugin_state(key: str) -> dict[str, object]:
     }
 
 
+def apply_parameter_profile(state: dict[str, object], profile: str) -> None:
+    if profile == "baseline":
+        return
+    if profile != "directional-dual" or state.get("key") != "directional":
+        raise ValueError(f"parameter profile {profile!r} is not valid for {state.get('key')!r}")
+    state["declared_depths"] = (8, 16, 32)
+    state["execution_route"] = "Smart"
+    state["supported_tuple"] = (
+        "neutral Dual Angle 37.25 Gain 0.75 Front/Back Strength 2"
+    )
+    state["params"] = (
+        ("OLM Directional Blur-0001", "Angle", 37.25),
+        ("OLM Directional Blur-0002", "Brightness Gain", 0.75),
+        ("OLM Directional Blur-0005", "Front Blur Strength", 2),
+        ("OLM Directional Blur-0010", "Back Blur Strength", 2),
+    )
+    state["params_by_size"] = {}
+
+
 def png_chunk(kind: bytes, payload: bytes) -> bytes:
     return struct.pack(">I", len(payload)) + kind + payload + struct.pack(">I", zlib.crc32(kind + payload) & 0xFFFFFFFF)
 
@@ -200,6 +219,12 @@ def main() -> int:
                         help="Explicitly test installed binaries even if they differ from local builds.")
     parser.add_argument("--profile", choices=("quick", "full"), default="full",
                         help="quick runs HD at each plug-in's first declared depth; full runs the declared 54-case matrix.")
+    parser.add_argument(
+        "--parameter-profile",
+        choices=("baseline", "directional-dual"),
+        default="baseline",
+        help="Select a bounded major-operations profile without changing the baseline 54-cell matrix.",
+    )
     parser.add_argument("--app-name", default="Adobe After Effects 2026")
     parser.add_argument("--timeout", type=int, default=1200)
     parser.add_argument("--ae-env", action="append", default=[], metavar="NAME=VALUE",
@@ -207,9 +232,14 @@ def main() -> int:
     args = parser.parse_args()
     selected_keys = args.plugin or list(PLUGINS)
     states = [plugin_state(key) for key in selected_keys]
+    if args.parameter_profile != "baseline":
+        if selected_keys != ["directional"]:
+            parser.error("--parameter-profile directional-dual requires exactly --plugin directional")
+        apply_parameter_profile(states[0], args.parameter_profile)
     report: dict[str, object] = {
         "kind": "olm_ae_generalization_smoke_campaign", "schema": 1,
         "profile": args.profile,
+        "parameter_profile": args.parameter_profile,
         "selected_plugin_keys": selected_keys,
         "policy": {"mutates_mediacore": False, "closes_unsaved_project": False,
                    "isolated_plugin_path_supported": False},

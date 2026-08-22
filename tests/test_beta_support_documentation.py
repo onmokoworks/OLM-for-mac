@@ -22,6 +22,9 @@ COLORKEEP_NATIVE_AE_ALL_DEPTHS = (
 DECLARED_NATIVE_AE_MATRIX = (
     ROOT / "refs/conformance/olm_native_ae_declared_matrix_54_20260823.json"
 )
+DIRECTIONAL_DUAL_NATIVE_AE = (
+    ROOT / "refs/conformance/olmdirectionalblur_native_ae_dual_major_ops_20260823.json"
+)
 README = ROOT / "README.md"
 SMOOTHER2_GAMMA_COLORS_TEST = (
     ROOT / "tests/test_olmsmoother2_gamma_colors_beta_20260820.py"
@@ -120,6 +123,27 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         self.assertEqual(report["candidate"]["production_source_sha256"], source_sha)
         self.assertTrue(any("does not claim 16-bit numerical" in item
                             for item in report["claim_boundary"]))
+
+    def test_directional_dual_native_ae_profile_is_major_ops_evidence(self) -> None:
+        report = json.loads(DIRECTIONAL_DUAL_NATIVE_AE.read_text(encoding="utf-8"))
+        self.assertEqual(report["status"], "passed")
+        self.assertIn("not a new gate", report["gate_scope"])
+        self.assertIn("not part of the fixed baseline 54-cell matrix", report["gate_scope"])
+        self.assertEqual(
+            report["totals"],
+            {"cells": 6, "campaign_passed": 6, "consumer_reverified": 6, "failed": 0},
+        )
+        self.assertEqual(
+            {(row["depth"], row["width"], row["height"]) for row in report["cells"]},
+            {(depth, width, height)
+             for depth in (8, 16, 32)
+             for width, height in ((1920, 1080), (3840, 2160))},
+        )
+        self.assertEqual(report["profile"]["front_strength"], 2)
+        self.assertEqual(report["profile"]["back_strength"], 2)
+        self.assertTrue(all(len(row["commit_sha256"]) == 64 for row in report["cells"]))
+        self.assertTrue(any("does not prove generic Dual numerical equality to Windows" in item
+                            for item in report["boundaries"]))
 
     def test_depth_and_route_claims_are_anchored_in_dispatch_code(self) -> None:
         required_tokens = {
@@ -239,7 +263,7 @@ class BetaSupportDocumentationContract(unittest.TestCase):
                       "PF16 Dual Front 1/2/8＋Back 1・Angle 45・Gain 1",
                       "PF32 Back 1・Angle 0/45・Gain 0.5/1およびBack 8・Angle 45・Gain 1",
                       "すべてscale 1",
-                      "一般geometry・全Strength組合せ・generic DualのWindows exact・native AE・ROI v2 packageには遡及しない",
+                      "一般geometry・全Strength組合せ・generic DualのWindows exact・ROI v2 packageには遡及しない",
                       "current canonical性能reportはHD/UHDそれぞれFront／Back／Dual×PF8/PF16/PF32の9 cases/geometry",
                       "source/toolchainの実行前後一致",
                       "UI全300 Length×3深度=900",

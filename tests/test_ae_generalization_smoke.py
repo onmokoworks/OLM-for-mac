@@ -46,6 +46,19 @@ class AEGeneralizationSmokeTests(unittest.TestCase):
         self.assertEqual(campaign.PLUGINS["smoother"]["depths"], (8, 16))
         self.assertEqual(campaign.PLUGINS["smoother"]["route"], "Smart")
 
+    def test_directional_dual_profile_is_separate_from_baseline_matrix(self) -> None:
+        baseline = campaign.plugin_state("directional")
+        profiled = campaign.plugin_state("directional")
+        campaign.apply_parameter_profile(profiled, "directional-dual")
+        self.assertEqual(baseline["declared_depths"], (8,))
+        self.assertEqual(profiled["declared_depths"], (8, 16, 32))
+        params = {match: value for match, _name, value in profiled["params"]}
+        self.assertEqual(params["OLM Directional Blur-0001"], 37.25)
+        self.assertEqual(params["OLM Directional Blur-0002"], 0.75)
+        self.assertEqual(params["OLM Directional Blur-0005"], 2)
+        self.assertEqual(params["OLM Directional Blur-0010"], 2)
+        self.assertEqual(campaign.PLUGINS["directional"]["depths"], (8,))
+
     def run_preflight(self, profile: str, plugins: tuple[str, ...] = ()) -> dict:
         with tempfile.TemporaryDirectory() as raw:
             plugin_args = [item for plugin in plugins for item in ("--plugin", plugin)]
