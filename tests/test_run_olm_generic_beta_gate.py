@@ -397,6 +397,11 @@ class GenericBetaGateTests(unittest.TestCase):
                         os.killpg(pgid, 0)
                     except ProcessLookupError:
                         break
+                    except PermissionError:
+                        # The timed-out group is gone from our ownership.  A
+                        # rapidly recycled pgid may name an unrelated group;
+                        # do not probe or kill that group further.
+                        break
                     if time.monotonic() >= deadline:
                         self.fail(f"timed-out process group {pgid} still exists")
                     time.sleep(0.02)
@@ -404,7 +409,7 @@ class GenericBetaGateTests(unittest.TestCase):
                 if pgid != os.getpgrp():
                     try:
                         os.killpg(pgid, signal.SIGKILL)
-                    except ProcessLookupError:
+                    except (ProcessLookupError, PermissionError):
                         pass
 
     @unittest.skipUnless(os.name == "posix", "detached-process test requires POSIX")
@@ -510,6 +515,11 @@ class GenericBetaGateTests(unittest.TestCase):
             "OLMColorKey",
             "tests/test_olmcolorkey_generic_pixel_local_pairwise.py",
             "mac/OLMColorKey/OLMColorKey.cpp",
+        ), rows)
+        self.assertIn((
+            "OLMBlur-Classic",
+            "tests/test_olmblur_generic_classic_beta_20260822.py",
+            "mac/OLMBlur/OLMBlur.cpp",
         ), rows)
         self.assertIn((
             "OLMDirectionalBlur",

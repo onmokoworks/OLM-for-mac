@@ -637,8 +637,8 @@ class BetaSupportDocumentationContract(unittest.TestCase):
             for profile in ("baseline", "size_noise") for depth in (8, 16, 32)
         })
         self.assertEqual(len(uhd["case_results"]), 12)
-        self.assertIn("HD 10.31 s / 257916928 B", self.doc)
-        self.assertIn("UHD 19.56 s / 704659456 B", self.doc)
+        self.assertIn("HD 9.08 s / 262012928 B", self.doc)
+        self.assertIn("UHD 17.65 s / 672530432 B", self.doc)
         self.assertIn("一般4連結topology", self.doc)
         self.assertIn("画像端を含むfinite mixed-alpha", self.doc)
         self.assertIn("portable右端処理", self.doc)
@@ -824,9 +824,9 @@ class BetaSupportDocumentationContract(unittest.TestCase):
                       audit["evidence"]["performance_status"])
         self.assertIn("15 cases/geometry including Mode 3 Horizontal Length 300 Rotation 1",
                       audit["evidence"]["performance_status"])
-        self.assertIn("HD 38.08 seconds / peak 503726080 bytes",
+        self.assertIn("HD 37.28 seconds / peak 495534080 bytes",
                       audit["evidence"]["performance_status"])
-        self.assertIn("UHD 149.33 seconds / peak 1571897344 bytes",
+        self.assertIn("UHD 143.13 seconds / peak 1562656768 bytes",
                       audit["evidence"]["performance_status"])
         directional_audit = next(
             row for row in audit["plugins"] if row["plugin"] == "OLMDirectionalBlur"
@@ -883,9 +883,21 @@ class BetaSupportDocumentationContract(unittest.TestCase):
             "overflow-safe tight staging",
             "require disjoint full-frame payloads",
             "partial overlap or layer checkin failure leaves host output unchanged",
-            "Classic numerical generalization, partial ROI, general Windows exact and native AE remain outside this claim",
+            "partial ROI, general Windows exact and native AE remain outside this claim",
         ):
             self.assertIn(phrase, audit["evidence"]["blur_smart_transactional_scope"])
+        self.assertEqual(
+            audit["evidence"]["blur_classic_copy_hostless"],
+            "tests/test_olmblur_generic_classic_beta_20260822.py",
+        )
+        for phrase in (
+            "Classic PF8/PF16 general full-frame worlds",
+            "Windows public owner's default copy-only tuple",
+            "independent legal padded rowbytes",
+            "odd/SD/HD/UHD and ASan/UBSan coverage",
+            "PF32, non-default numerical Classic work",
+        ):
+            self.assertIn(phrase, audit["evidence"]["blur_classic_copy_scope"])
         kirakira_audit = next(
             row for row in audit["plugins"] if row["plugin"] == "OLMKiraKira"
         )

@@ -1343,6 +1343,22 @@ BlurRender(PF_InData *in_data, PF_EffectWorld *input, PF_EffectWorld *output,
 }
 
 static PF_Err
+ClassicCopyGeometry(const PF_EffectWorld *input, const PF_EffectWorld *output,
+	std::size_t pixel_bytes)
+{
+	if (!input || !output || !input->data || !output->data || !pixel_bytes ||
+		input->width <= 0 || input->height <= 0 ||
+		input->width != output->width || input->height != output->height ||
+		input->width > 4096 || input->height > 2160)
+		return PF_Err_BAD_CALLBACK_PARAM;
+	const std::size_t width = (std::size_t)input->width;
+	const std::size_t height = (std::size_t)input->height;
+	if (width > ((std::size_t)-1) / height || width * height > 3840u * 2160u)
+		return PF_Err_BAD_CALLBACK_PARAM;
+	return PF_Err_NONE;
+}
+
+static PF_Err
 Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output)
 {
 	PF_Err err = PF_Err_NONE;
@@ -1355,7 +1371,7 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	}
 	PF_EffectWorld *input = &params[OLMBLUR_INPUT]->u.ld;
 	if (!input->data || !output->data || input->width != output->width ||
-		input->height != output->height || input->rowbytes != output->rowbytes) {
+		input->height != output->height) {
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
 	PF_PixelFormat input_format = PF_PixelFormat_INVALID;
@@ -1367,13 +1383,13 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	if (err) return err;
 	if (input_format != output_format) return PF_Err_BAD_CALLBACK_PARAM;
 
-	A_long expected_rowbytes = 0;
+	std::size_t pixel_bytes = 0;
 	switch (output_format) {
 	case PF_PixelFormat_ARGB32:
-		expected_rowbytes = 24 * (A_long)sizeof(PF_Pixel8) + 17;
+		pixel_bytes = sizeof(PF_Pixel8);
 		break;
 	case PF_PixelFormat_ARGB64:
-		expected_rowbytes = 24 * (A_long)sizeof(PF_Pixel16) + 23;
+		pixel_bytes = sizeof(PF_Pixel16);
 		break;
 	case PF_PixelFormat_ARGB128:
 		// The retained Windows classic owner tests only PF_WorldFlag_DEEP,
@@ -1383,15 +1399,14 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	default:
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
-	if (input->width != 24 || input->height != 24 ||
-		input->rowbytes != expected_rowbytes) {
-		return PF_Err_BAD_CALLBACK_PARAM;
-	}
+	ERR(ClassicCopyGeometry(input, output, pixel_bytes));
+	if (err) return err;
 
 	// The current Windows classic export reads only parameter slots 1..3 and,
 	// with the registered float-slider default, observes a zero low dword for
 	// Blur Amount.  Its PF8/PF16 non-Legacy worker therefore returns after the
-	// initial world copy.  Admit only that bounded public tuple here.  Bias and
+	// initial world copy.  Admit that copy-only tuple for bounded general worlds.
+	// Bias and
 	// Legacy are deliberately not consumed: the classic owner does not read
 	// slots 4 or 5.  All numerical/non-default work remains on Smart Render.
 	const PF_FpLong blur_amount = params[OLMBLUR_BLUR_AMOUNT]->u.fs_d.value;
@@ -1401,8 +1416,19 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
 
-	ERR(PF_COPY(input, output, NULL, NULL));
-	return err;
+	olm::world_safety::TightStaging staging;
+	const olm::world_safety::Status stage_status = staging.prepare(
+		{input->data, (std::size_t)input->width, (std::size_t)input->height,
+		 (std::size_t)input->rowbytes, pixel_bytes},
+		{output->data, (std::size_t)output->width, (std::size_t)output->height,
+		 (std::size_t)output->rowbytes, pixel_bytes});
+	if (stage_status != olm::world_safety::Status::ok)
+		return stage_status == olm::world_safety::Status::out_of_memory ?
+			PF_Err_OUT_OF_MEMORY : PF_Err_BAD_CALLBACK_PARAM;
+	std::memcpy(staging.output_data(), staging.input_data(),
+		staging.row_bytes() * staging.height());
+	return staging.commit() == olm::world_safety::Status::ok ?
+		PF_Err_NONE : PF_Err_BAD_CALLBACK_PARAM;
 }
 
 static PF_Err

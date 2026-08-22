@@ -33,6 +33,7 @@ MANIFEST = [
     ("ColorKeep-ROI", "tests/test_colorkeep_roi_tile_beta_20260820.py", "mac/ColorKeep/ColorKeep.cpp"),
     ("OLMBlur", "tests/test_olmblur_generic_beta_lane_20260820.py", "mac/OLMBlur/OLMBlur.cpp"),
     ("OLMBlur", "tests/test_olmblur_generic_beta_sanitizers_20260820.py", "tools/emulation/probe_olmblur_generic_beta_sanitized_20260820.cpp"),
+    ("OLMBlur-Classic", "tests/test_olmblur_generic_classic_beta_20260822.py", "mac/OLMBlur/OLMBlur.cpp"),
     ("OLMBlur-ROI-policy", "tests/test_olmblur_roi_halo_contract_20260820.py", "mac/OLMBlur/OLMBlur.cpp"),
     ("OLMColorKey", "tests/test_olmcolorkey_generic_pixel_local_beta.py", "mac/OLMColorKey/OLMColorKey.cpp"),
     ("OLMColorKey", "tests/test_olmcolorkey_generic_pixel_local_pairwise.py", "mac/OLMColorKey/OLMColorKey.cpp"),
@@ -197,6 +198,9 @@ DEPENDENCY_PATHS: dict[str, tuple[str, ...]] = {
         *BLUR_GENERIC_DEPENDENCIES,
     ),
     "tests/test_olmblur_generic_beta_sanitizers_20260820.py": (
+        *BLUR_GENERIC_DEPENDENCIES,
+    ),
+    "tests/test_olmblur_generic_classic_beta_20260822.py": (
         *BLUR_GENERIC_DEPENDENCIES,
     ),
     "tests/test_ae_generalization_smoke.py": (

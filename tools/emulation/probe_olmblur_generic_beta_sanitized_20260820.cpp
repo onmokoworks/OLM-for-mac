@@ -185,6 +185,37 @@ static bool run_safety_rejections(int depth) {
   return overlap_ok&&cleanup_ok;
 }
 
+template<class Pixel>
+static bool run_classic_copy(int depth,int width,int height) {
+  const int active=width*(int)sizeof(Pixel),input_rb=active+7,output_rb=active+29;
+  std::vector<unsigned char> input((size_t)input_rb*height,0xa5);
+  std::vector<unsigned char> output((size_t)output_rb*height,0xee);
+  fill_generic<Pixel>(input.data(),input_rb,width,height);
+  const auto input_before=input,output_before=output;
+  PF_ParamDef defs[6]{};PF_ParamDef*params[6]{};
+  for(int i=0;i<6;++i)params[i]=&defs[i];
+  defs[0].u.ld.data=(PF_PixelPtr)input.data();defs[0].u.ld.rowbytes=input_rb;
+  defs[0].u.ld.width=width;defs[0].u.ld.height=height;
+  defs[1].u.fs_d.value=5.0;defs[2].u.fd.value=100*65536;defs[3].u.sd.value=2;
+  PF_LayerDef out=defs[0].u.ld;out.data=(PF_PixelPtr)output.data();out.rowbytes=output_rb;
+  if(depth!=8)defs[0].u.ld.world_flags=out.world_flags=PF_WorldFlag_DEEP;
+  g_input=&defs[0].u.ld;g_output=&out;g_depth=depth;
+  SPBasicSuite basic{};basic.AcquireSuite=acquire_suite;basic.ReleaseSuite=release_suite;
+  PF_InData in{};PF_OutData od{};in.pica_basicP=&basic;
+  const PF_Err err=EffectMain(PF_Cmd_RENDER,&in,&od,params,&out,nullptr);
+  bool exact=err==PF_Err_NONE&&input==input_before;
+  for(int y=0;y<height;++y){
+    exact&=std::memcmp(output.data()+(size_t)y*output_rb,input.data()+(size_t)y*input_rb,active)==0;
+    for(int i=active;i<output_rb;++i)exact&=output[(size_t)y*output_rb+i]==0xee;
+  }
+  out.data=(PF_PixelPtr)(input.data()+sizeof(Pixel));
+  const PF_Err overlap=EffectMain(PF_Cmd_RENDER,&in,&od,params,&out,nullptr);
+  const bool safe=overlap!=PF_Err_NONE&&input==input_before;
+  std::printf("CLASSIC depth=%d %dx%d exact=%d overlap=%d err=%d\n",
+    depth,width,height,exact,safe,err);
+  return exact&&safe&&output!=output_before;
+}
+
 int main(int argc,char**argv){
   const char*geometry=argc>1?argv[1]:"all";
   g_world_suite.PF_GetPixelFormat=get_format;bool ok=true;
@@ -224,6 +255,22 @@ int main(int argc,char**argv){
     ok&=run_safety_rejections<PF_Pixel8>(8);
     ok&=run_safety_rejections<PF_Pixel16>(16);
     ok&=run_safety_rejections<PF_PixelFloat>(32);
+  }
+  if(!std::strcmp(geometry,"odd")||!std::strcmp(geometry,"all")){
+    ok&=run_classic_copy<PF_Pixel8>(8,65,33);
+    ok&=run_classic_copy<PF_Pixel16>(16,65,33);
+  }
+  if(!std::strcmp(geometry,"sd")||!std::strcmp(geometry,"all")){
+    ok&=run_classic_copy<PF_Pixel8>(8,720,480);
+    ok&=run_classic_copy<PF_Pixel16>(16,720,480);
+  }
+  if(!std::strcmp(geometry,"hd")||!std::strcmp(geometry,"all")){
+    ok&=run_classic_copy<PF_Pixel8>(8,1920,1080);
+    ok&=run_classic_copy<PF_Pixel16>(16,1920,1080);
+  }
+  if(!std::strcmp(geometry,"uhd")||!std::strcmp(geometry,"all")){
+    ok&=run_classic_copy<PF_Pixel8>(8,3840,2160);
+    ok&=run_classic_copy<PF_Pixel16>(16,3840,2160);
   }
   return ok?0:4;
 }
