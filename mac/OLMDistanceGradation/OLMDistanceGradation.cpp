@@ -1336,6 +1336,37 @@ static bool is_admitted_pf32_smart_unblurred_beta(const DGParams &p)
 	       p.ds_x > 0.0f && p.ds_y > 0.0f;
 }
 
+static bool is_admitted_pf32_smart_blurred_beta(const DGParams &p, long w, long h)
+{
+	if (!p.smart_owner || p.pixel_size != sizeof(PF_PixelFloat) ||
+		(p.interp_mode != INTERP_CONSTANT && p.interp_mode != INTERP_LINEAR &&
+		 p.interp_mode != INTERP_SPHERE) ||
+		p.blur_mode < BLUR_MODE_NO_SCALE || p.blur_mode > BLUR_MODE_MEDIAN ||
+		p.blur_size < 1 || p.blur_size > 500 ||
+		p.in_out < IN_OUT_INSIDE || p.in_out > IN_OUT_BOTH ||
+		p.render_mode < RENDER_MODE_RGB || p.render_mode > RENDER_MODE_LAYER ||
+		p.inside_threshold < 0 || p.inside_threshold > 1000 ||
+		p.outside_threshold < 0 || p.outside_threshold > 1000 ||
+		p.ds_x != 1.0f || p.ds_y != 1.0f || w <= 0 || h <= 0)
+		return false;
+	if (!std::isfinite(p.power) || p.power < 0.01f || p.power > 5.0f) return false;
+	const float controls[] = {
+		p.grad_color.alpha, p.grad_color.red, p.grad_color.green,
+		p.grad_color.blue, p.bg_color.alpha, p.bg_color.red,
+		p.bg_color.green, p.bg_color.blue};
+	for (float value : controls)
+		if (!std::isfinite(value) || value < 0.0f || value > 1.0f) return false;
+	const size_t pixels = (size_t)w * (size_t)h;
+	const size_t kernel = (size_t)p.blur_size * 2u + 1u;
+	static constexpr size_t kSeparableWorkBudget = 1200u * 1000u * 1000u;
+	static constexpr size_t kMedianWorkBudget = 400u * 1000u * 1000u;
+	if (p.blur_mode == BLUR_MODE_MEDIAN) {
+		return kernel <= kMedianWorkBudget / kernel &&
+			pixels <= kMedianWorkBudget / (kernel * kernel);
+	}
+	return pixels <= kSeparableWorkBudget / (kernel * 2u);
+}
+
 static bool pf32_smart_worlds_are_bounded_sdr(
 	const PF_LayerDef *input, const PF_LayerDef *output)
 {
@@ -1465,9 +1496,10 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 			p.pf32_smart_matrix_admitted = false;
 		}
 		const bool unblurred_beta = is_admitted_pf32_smart_unblurred_beta(p);
+		const bool blurred_beta = is_admitted_pf32_smart_blurred_beta(p, w, h);
 		p.pf32_smart_oracle_profile_admitted =
 			is_admitted_pf32_smart_oracle_profile(p);
-		if (!p.pf32_smart_matrix_admitted && !unblurred_beta &&
+		if (!p.pf32_smart_matrix_admitted && !unblurred_beta && !blurred_beta &&
 		    !p.pf32_smart_oracle_profile_admitted) {
 			return PF_Err_BAD_CALLBACK_PARAM;
 		}
@@ -1683,6 +1715,8 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	PF_EffectWorld *input_world  = nullptr;
 	PF_EffectWorld *output_world = nullptr;
 	bool input_checked_out = false;
+	bool render_complete = false;
+	olm::world_safety::TightStaging staging;
 	PF_ParamDef param_list[DG_NUM_PARAMS];
 	bool param_checked_out[DG_NUM_PARAMS] = {};
 	for (A_long i = 0; i < DG_NUM_PARAMS; ++i) AEFX_CLR_STRUCT(param_list[i]);
@@ -1721,21 +1755,43 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 		}
 
 		if (!err) {
-			// Fill params[DG_INPUT]->u.ld for the render helpers
-			param_list[0].u.ld = *input_world;
-			if (depth == 8) {
-				err = RenderBits<PF_Pixel8>(in_data, params, input_world, output_world, true);
-			} else if (depth == 16) {
-				err = RenderBits<PF_Pixel16>(in_data, params, input_world, output_world, true);
-			} else if (depth == 32) {
-				err = RenderBits<PF_PixelFloat>(in_data, params, input_world, output_world, true);
-			}
 			const DGPreRenderData *pre = reinterpret_cast<const DGPreRenderData *>(
 				extra->input->pre_render_data);
-			if (!err && pre && (input_world->width != pre->width || input_world->height != pre->height ||
-			                    output_world->width != pre->width || output_world->height != pre->height)) {
+			if (pre && (input_world->width != pre->width || input_world->height != pre->height ||
+			            output_world->width != pre->width || output_world->height != pre->height)) {
 				err = PF_Err_BAD_CALLBACK_PARAM;
 			}
+		}
+		if (!err) {
+			const size_t pixel_bytes = depth == 8 ? sizeof(PF_Pixel8) :
+				(depth == 16 ? sizeof(PF_Pixel16) : sizeof(PF_PixelFloat));
+			const olm::world_safety::Status stage_status = staging.prepare(
+				{input_world->data, (size_t)input_world->width, (size_t)input_world->height,
+				 (size_t)input_world->rowbytes, pixel_bytes},
+				{output_world->data, (size_t)output_world->width, (size_t)output_world->height,
+				 (size_t)output_world->rowbytes, pixel_bytes});
+			if (stage_status != olm::world_safety::Status::ok) {
+				err = stage_status == olm::world_safety::Status::out_of_memory ?
+					PF_Err_OUT_OF_MEMORY : PF_Err_BAD_CALLBACK_PARAM;
+			}
+		}
+
+		if (!err) {
+			// Fill params[DG_INPUT]->u.ld for the render helpers
+			PF_EffectWorld staged_input = *input_world;
+			PF_EffectWorld staged_output = *output_world;
+			staged_input.data = (decltype(staged_input.data))staging.input_data();
+			staged_output.data = (decltype(staged_output.data))staging.output_data();
+			staged_input.rowbytes = staged_output.rowbytes = (A_long)staging.row_bytes();
+			param_list[0].u.ld = staged_input;
+			if (depth == 8) {
+				err = RenderBits<PF_Pixel8>(in_data, params, &staged_input, &staged_output, true);
+			} else if (depth == 16) {
+				err = RenderBits<PF_Pixel16>(in_data, params, &staged_input, &staged_output, true);
+			} else if (depth == 32) {
+				err = RenderBits<PF_PixelFloat>(in_data, params, &staged_input, &staged_output, true);
+			}
+			render_complete = !err;
 		}
 	} catch (const PF_Err &thrown_err) {
 		err = thrown_err;
@@ -1764,6 +1820,10 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 		} catch (...) {
 			if (!err) err = PF_Err_INTERNAL_STRUCT_DAMAGED;
 		}
+	}
+	if (!err && render_complete &&
+		staging.commit() != olm::world_safety::Status::ok) {
+		err = PF_Err_BAD_CALLBACK_PARAM;
 	}
 	return err;
 }

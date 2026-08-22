@@ -522,6 +522,11 @@ class GenericBetaGateTests(unittest.TestCase):
             "mac/OLMBlur/OLMBlur.cpp",
         ), rows)
         self.assertIn((
+            "OLMDistanceGradation-atomic",
+            "tests/test_olmdistancegradation_smart_transactional_20260822.py",
+            "mac/OLMDistanceGradation/OLMDistanceGradation.cpp",
+        ), rows)
+        self.assertIn((
             "OLMDirectionalBlur",
             "tools/emulation/test_dblur_generic_deep_geometry_beta_20260820.py",
             "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp",

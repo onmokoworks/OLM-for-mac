@@ -30,8 +30,22 @@ class DistanceGradationPF32SmartUnblurredBeta(unittest.TestCase):
 
     def test_pf32_admission_is_union_of_exact_and_beta_lanes(self):
         self.assertIn(
-            "if (!p.pf32_smart_matrix_admitted && !unblurred_beta &&", self.source
+            "if (!p.pf32_smart_matrix_admitted && !unblurred_beta && !blurred_beta &&", self.source
         )
+
+    def test_blurred_beta_has_general_controls_and_geometry_dependent_budget(self):
+        body = self.source.split(
+            "static bool is_admitted_pf32_smart_blurred_beta", 1
+        )[1].split("static bool pf32_smart_worlds_are_bounded_sdr", 1)[0]
+        self.assertIn("p.interp_mode != INTERP_CONSTANT", body)
+        self.assertIn("p.interp_mode != INTERP_LINEAR", body)
+        self.assertIn("p.interp_mode != INTERP_SPHERE", body)
+        self.assertIn("p.blur_mode > BLUR_MODE_MEDIAN", body)
+        self.assertIn("p.blur_size < 1 || p.blur_size > 500", body)
+        self.assertIn("kSeparableWorkBudget = 1200u * 1000u * 1000u", body)
+        self.assertIn("kMedianWorkBudget = 400u * 1000u * 1000u", body)
+        self.assertNotIn("BLUR_MODE_BILATERAL", body)
+        self.assertNotIn("INTERP_POWER", body)
 
     def test_oracle_profile_removes_only_source_and_geometry(self):
         body = self.source.split(

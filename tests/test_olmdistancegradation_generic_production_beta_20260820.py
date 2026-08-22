@@ -95,6 +95,36 @@ static bool pf32_oracle_profile() {
   return true;
 }
 
+static bool pf32_blurred_general(bool include_large) {
+  for(A_long interp:{INTERP_CONSTANT,INTERP_LINEAR,INTERP_SPHERE})
+    for(A_long blur:{BLUR_MODE_NO_SCALE,BLUR_MODE_SCALE,BLUR_MODE_MEDIAN})
+      if(one<PF_PixelFloat>(67,43,13,31,true,interp,IN_OUT_BOTH,
+          RENDER_MODE_LAYER,true,false,211,blur,2))return false;
+  if(one<PF_PixelFloat>(67,43,13,31,true,INTERP_LINEAR,IN_OUT_BOTH,
+      RENDER_MODE_LAYER,true,false,211,BLUR_MODE_NO_SCALE,500))return false;
+  if(!include_large)return true;
+  if(one<PF_PixelFloat>(1920,1080,13,31,true,INTERP_LINEAR,IN_OUT_BOTH,
+      RENDER_MODE_LAYER,true,false,211,BLUR_MODE_MEDIAN,2))return false;
+  if(one<PF_PixelFloat>(3840,2160,13,31,true,INTERP_SPHERE,IN_OUT_BOTH,
+      RENDER_MODE_LAYER,true,false,211,BLUR_MODE_SCALE,8))return false;
+  return true;
+}
+
+static bool pf32_blurred_budget_rejects() {
+  const int w=67,h=43,rb=w*(int)sizeof(PF_PixelFloat)+16;
+  std::vector<uint8_t>ib((size_t)rb*h,0x6d),ob((size_t)rb*h,0xa5);fill<PF_PixelFloat>(ib,rb,w,h);
+  PF_EffectWorld iw{ib.data(),w,h,rb,32,{0,0,w,h}},ow{ob.data(),w,h,rb,32,{0,0,w,h}};
+  PF_ParamDef d[DG_NUM_PARAMS]{};PF_ParamDef*p[DG_NUM_PARAMS]{};for(int i=0;i<DG_NUM_PARAMS;++i)p[i]=d+i;
+  d[DG_INPUT].u.ld=iw;d[DG_INVERT].u.bd.value=0;d[DG_IN_OUT].u.pd.value=IN_OUT_BOTH;
+  d[DG_INSIDE_THRESHOLD].u.sd.value=211;d[DG_OUTSIDE_THRESHOLD].u.sd.value=211;
+  d[DG_RENDER_MODE].u.pd.value=RENDER_MODE_LAYER;d[DG_USE_BG_COLOR].u.bd.value=1;
+  d[DG_GRAD_COLOR].u.cd.value={255,83,17,221};d[DG_BG_COLOR].u.cd.value={255,9,177,61};
+  d[DG_INTERP_MODE].u.pd.value=INTERP_SPHERE;d[DG_POWER].u.fs_d.value=1.0;
+  d[DG_BLUR_MODE].u.pd.value=BLUR_MODE_MEDIAN;d[DG_BLUR_SIZE].u.sd.value=500;
+  PF_InData id{};id.downsample_x={1,1};id.downsample_y={1,1};const auto before=ob;
+  return RenderBits<PF_PixelFloat>(&id,p,&iw,&ow,true)==PF_Err_BAD_CALLBACK_PARAM&&ob==before;
+}
+
 static bool smart_pre_full_frame_lifecycle(short depth) {
   PF_InData id{};id.width=321;id.height=181;id.downsample_x={1,1};id.downsample_y={1,1};
   PF_OutData od{};PF_PreRenderInput pi{};pi.bitdepth=depth;pi.output_request.rect={17,9,101,77};
@@ -179,6 +209,8 @@ int main(){
   if(const char* sanitizer=std::getenv("OLM_DG_SANITIZER")) {
     (void)sanitizer;
     if(!pf32_oracle_profile())return 70;
+    if(!pf32_blurred_general(false))return 74;
+    if(!pf32_blurred_budget_rejects())return 75;
     if(!pf32_sphere_general_and_safety())return 73;
     if(!smart_pre_full_frame_lifecycle(8)||!smart_pre_full_frame_lifecycle(16)||!smart_pre_full_frame_lifecycle(32))return 71;
     if(!shifted_and_partial_storage_rejected<PF_Pixel8>()||!shifted_and_partial_storage_rejected<PF_Pixel16>()||!shifted_and_partial_storage_rejected<PF_PixelFloat>())return 72;
@@ -188,6 +220,8 @@ int main(){
   if(!pf32_unlisted_exact_lanes_reject())return 40;
   if(!pf32_sphere_general_and_safety())return 44;
   if(!pf32_oracle_profile())return 41;
+  if(!pf32_blurred_general(true))return 45;
+  if(!pf32_blurred_budget_rejects())return 46;
   if(!smart_pre_full_frame_lifecycle(8)||!smart_pre_full_frame_lifecycle(16)||!smart_pre_full_frame_lifecycle(32))return 42;
   if(!shifted_and_partial_storage_rejected<PF_Pixel8>()||!shifted_and_partial_storage_rejected<PF_Pixel16>()||!shifted_and_partial_storage_rejected<PF_PixelFloat>())return 43;
   size_t count=123;

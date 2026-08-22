@@ -637,8 +637,8 @@ class BetaSupportDocumentationContract(unittest.TestCase):
             for profile in ("baseline", "size_noise") for depth in (8, 16, 32)
         })
         self.assertEqual(len(uhd["case_results"]), 12)
-        self.assertIn("HD 9.08 s / 262012928 B", self.doc)
-        self.assertIn("UHD 17.65 s / 672530432 B", self.doc)
+        self.assertIn("HD 9.67 s / 269434880 B", self.doc)
+        self.assertIn("UHD 24.88 s / 640286720 B", self.doc)
         self.assertIn("一般4連結topology", self.doc)
         self.assertIn("画像端を含むfinite mixed-alpha", self.doc)
         self.assertIn("portable右端処理", self.doc)
@@ -824,9 +824,9 @@ class BetaSupportDocumentationContract(unittest.TestCase):
                       audit["evidence"]["performance_status"])
         self.assertIn("15 cases/geometry including Mode 3 Horizontal Length 300 Rotation 1",
                       audit["evidence"]["performance_status"])
-        self.assertIn("HD 37.28 seconds / peak 495534080 bytes",
+        self.assertIn("HD 42.28 seconds / peak 495501312 bytes",
                       audit["evidence"]["performance_status"])
-        self.assertIn("UHD 143.13 seconds / peak 1562656768 bytes",
+        self.assertIn("UHD 146.02 seconds / peak 1573486592 bytes",
                       audit["evidence"]["performance_status"])
         directional_audit = next(
             row for row in audit["plugins"] if row["plugin"] == "OLMDirectionalBlur"
@@ -839,15 +839,30 @@ class BetaSupportDocumentationContract(unittest.TestCase):
             "tests/test_olmdistancegradation_generic_production_beta_20260820.py",
         )
         for phrase in (
-            "unblurred Constant/Linear/Sphere",
+            "Smart PF32 Constant/Linear/Sphere",
             "arbitrary finite-SDR source",
             "4096x2160 area",
             "aligned disjoint padded rowbytes",
+            "Box/Gaussian/Median admit Blur Size 1-500",
+            "HD median, UHD Gaussian",
             "HDR/nonfinite/overlap/misaligned/partial inputs fail closed",
             "retained exported-owner matrix and bounded oracle profile",
         ):
             self.assertIn(
                 phrase, audit["evidence"]["distancegradation_pf32_sphere_scope"]
+            )
+        self.assertEqual(
+            audit["evidence"]["distancegradation_smart_transactional_hostless"],
+            "tests/test_olmdistancegradation_smart_transactional_20260822.py",
+        )
+        for phrase in (
+            "Smart PF8/PF16/PF32",
+            "disjoint tight staging",
+            "after every checked-out parameter and input layer is checked in",
+            "leave host output unchanged under ASan/UBSan",
+        ):
+            self.assertIn(
+                phrase, audit["evidence"]["distancegradation_smart_transactional_scope"]
             )
         self.assertEqual(
             audit["evidence"]["smoother_v1_bounded_hostless"],

@@ -47,6 +47,7 @@ MANIFEST = [
     ("OLMDirectionalBlur-ROI-policy", "tools/emulation/test_dblur_generic_roi_policy_20260820.py", "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp"),
     ("OLMDistanceGradation", "tests/test_olmdistancegradation_generic_production_beta_20260820.py", "mac/OLMDistanceGradation/OLMDistanceGradation.cpp"),
     ("OLMDistanceGradation", "tests/test_olmdistancegradation_pf32_smart_unblurred_beta_20260820.py", "mac/OLMDistanceGradation/OLMDistanceGradation.cpp"),
+    ("OLMDistanceGradation-atomic", "tests/test_olmdistancegradation_smart_transactional_20260822.py", "mac/OLMDistanceGradation/OLMDistanceGradation.cpp"),
     ("OLMKiraKira", "tests/test_olmkirakira_generic_beta_lane_20260820.py", "mac/OLMKiraKira/OLMKiraKira.cpp"),
     ("OLMKiraKira", "tests/test_olmkirakira_generic_beta_sanitizers_20260820.py", "mac/OLMKiraKira/OLMKiraKira.cpp"),
     ("OLMKiraKira", "tests/test_olmkirakira_native_smoke_tuple_20260820.py", "mac/OLMKiraKira/OLMKiraKira.cpp"),
@@ -232,6 +233,11 @@ DEPENDENCY_PATHS: dict[str, tuple[str, ...]] = {
     ),
     "tests/test_olmdistancegradation_pf32_smart_unblurred_beta_20260820.py": (
         *DISTANCEGRADATION_GENERIC_DEPENDENCIES,
+    ),
+    "tests/test_olmdistancegradation_smart_transactional_20260822.py": (
+        *DISTANCEGRADATION_GENERIC_DEPENDENCIES,
+        "tools/emulation/dg_public_smart_owner_contract_harness_20260812.cpp",
+        "tools/emulation/dg_renderbits_real_harness_20260716_sdk_shim.h",
     ),
     "tests/test_olmsmoother_v1_generic_classic_beta_20260820.py": (
         *SMOOTHER_V1_GENERIC_DEPENDENCIES,
