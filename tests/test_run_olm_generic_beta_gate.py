@@ -237,6 +237,9 @@ class GenericBetaGateTests(unittest.TestCase):
             "tests/test_olmdistancegradation_pf32_smart_unblurred_beta_20260820.py": {
                 *GATE.DISTANCEGRADATION_GENERIC_DEPENDENCIES,
             },
+            "tests/test_olmsmoother_v1_generic_classic_beta_20260820.py": {
+                *GATE.SMOOTHER_V1_GENERIC_DEPENDENCIES,
+            },
         }
         for test, expected in required.items():
             self.assertTrue(expected.issubset(GATE.DEPENDENCY_PATHS[test]))

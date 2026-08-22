@@ -244,6 +244,7 @@ LANE_DEPENDENCIES: dict[str, tuple[tuple[str, str], ...]] = {
         ("harness", "tests/test_olmsmoother_v1_generic_classic_beta_20260820.py"),
         ("production_source", "mac/OLMSmoother/Mac/OLMSmoother_port.cpp"),
         ("production_header", "core/olm_sha256_rows.h"),
+        ("production_header", "core/olm_world_safety.h"),
         ("production_auxiliary", "mac/OLMSmoother/Mac/OLMSmoother_classifier8_tail.generated.inc"),
         ("production_auxiliary", "mac/OLMSmoother/Mac/OLMSmoother_classifier16.generated.inc"),
         ("production_auxiliary", "mac/OLMSmoother/Mac/OLMSmoother_edgewalker16.generated.inc"),
@@ -318,7 +319,8 @@ SUPPORT_PREDICATES = {
     ),
     "OLMSmoother": (
         "classic && (pf8 || pf16) && (key_off || key_on) && "
-        "width <= 3840 && height <= 2160"
+        "full_frame && positive_disjoint_rowbytes && max(width,height) <= 4096 && "
+        "width*height <= 8847360"
     ),
     "OLMSmoother2": (
         "smart && pf8_pf16_pf32 && v1_v2 && smoothing_ui_ranges && "

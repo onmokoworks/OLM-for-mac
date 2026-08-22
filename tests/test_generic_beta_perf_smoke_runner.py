@@ -483,6 +483,18 @@ def test_distancegradation_has_independent_hd_and_uhd_production_drivers() -> No
     )
 
 
+def test_smoother_v1_performance_lane_binds_bounded_world_contract() -> None:
+    module = load_module()
+    dependencies = {
+        path for _role, path in module.LANE_DEPENDENCIES["OLMSmoother"]
+    }
+    assert "core/olm_world_safety.h" in dependencies
+    predicate = module.SUPPORT_PREDICATES["OLMSmoother"]
+    assert "positive_disjoint_rowbytes" in predicate
+    assert "max(width,height) <= 4096" in predicate
+    assert "width*height <= 8847360" in predicate
+
+
 def test_radialblur_has_exact_geometry_release_like_drivers() -> None:
     module = load_module()
     for geometry in ("hd", "uhd"):
@@ -724,7 +736,8 @@ def test_smoother_v1_hd_and_uhd_use_explicit_pf8_pf16_production_dimensions() ->
         assert int(command[command.index("--height") + 1]) == dimensions[1]
     predicate = module.SUPPORT_PREDICATES["OLMSmoother"]
     assert "pf8 || pf16" in predicate and "key_off" in predicate
-    assert "width <= 3840" in predicate and "height <= 2160" in predicate
+    assert "max(width,height) <= 4096" in predicate
+    assert "width*height <= 8847360" in predicate
 
 
 def test_smoother2_support_predicate_tracks_gamma_colors_beta_lane() -> None:

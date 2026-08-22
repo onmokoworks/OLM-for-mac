@@ -35,6 +35,7 @@
 #include <new>
 #include <exception>
 #include "../../../core/olm_sha256_rows.h"
+#include "../../../core/olm_world_safety.h"
 
 #ifdef OLMSMOOTHER_SHIM_H
 // The standalone evidence harness only needs a stable non-zero rejection.
@@ -3982,6 +3983,16 @@ ValidatePublicWorlds(PF_InData *in_data,
 	    output->extent_hint.bottom != output->height) {
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
+	// Bound the public lane to the production envelope exercised by the beta
+	// suite.  The contour walkers are frame-wide and Render stages both worlds,
+	// so accepting arbitrary positive A_long geometry would permit unbounded
+	// per-render memory and work even when row layouts themselves are legal.
+	static const A_long kMaxSide = 4096;
+	static const size_t kMaxPixels = (size_t)4096 * (size_t)2160;
+	if (input->width > kMaxSide || input->height > kMaxSide ||
+	    (size_t)input->width > kMaxPixels / (size_t)input->height) {
+		return PF_Err_BAD_CALLBACK_PARAM;
+	}
 	short input_depth = 0, output_depth = 0;
 	PF_Err err = WorldDepth(in_data, out_data, input, &input_depth);
 	if (!err) err = WorldDepth(in_data, out_data, output, &output_depth);
@@ -3989,25 +4000,17 @@ ValidatePublicWorlds(PF_InData *in_data,
 	if (input_depth != output_depth || input_depth == 32) {
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
-	const A_long pixel_size = input_depth == 8 ? (A_long)sizeof(PF_Pixel8)
-	                                                : (A_long)sizeof(PF_Pixel16);
-	if (input->width > INT32_MAX / pixel_size ||
-	    input->rowbytes < input->width * pixel_size ||
-	    output->rowbytes < output->width * pixel_size ||
-	    input->height > INT32_MAX / input->rowbytes ||
-	    output->height > INT32_MAX / output->rowbytes) {
-		return PF_Err_BAD_CALLBACK_PARAM;
-	}
-	const uintptr_t input_begin = (uintptr_t)input->data;
-	const uintptr_t output_begin = (uintptr_t)output->data;
-	const size_t input_span = (size_t)(input->height - 1) * (size_t)input->rowbytes +
-	                          (size_t)input->width * (size_t)pixel_size;
-	const size_t output_span = (size_t)(output->height - 1) * (size_t)output->rowbytes +
-	                           (size_t)output->width * (size_t)pixel_size;
-	if (input_begin > UINTPTR_MAX - input_span ||
-	    output_begin > UINTPTR_MAX - output_span ||
-	    (input_begin < output_begin + output_span &&
-	     output_begin < input_begin + input_span)) {
+	const size_t pixel_size = input_depth == 8 ? sizeof(PF_Pixel8) : sizeof(PF_Pixel16);
+	const olm::world_safety::ConstWorld safe_input = {
+		input->data, (size_t)input->width, (size_t)input->height,
+		(size_t)input->rowbytes, pixel_size};
+	const olm::world_safety::ConstWorld safe_output = {
+		output->data, (size_t)output->width, (size_t)output->height,
+		(size_t)output->rowbytes, pixel_size};
+	if (olm::world_safety::validate_layout(safe_input) != olm::world_safety::Status::ok ||
+	    olm::world_safety::validate_layout(safe_output) != olm::world_safety::Status::ok ||
+	    olm::world_safety::require_disjoint(safe_input, safe_output) !=
+	        olm::world_safety::Status::ok) {
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
 	*depth = input_depth;
@@ -4028,31 +4031,27 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	if (!V1ClassicAdmission((const PF_ParamDef *const *)params, input, bitdepth)) {
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
-	const size_t active_bytes = (size_t)input->width *
-		(bitdepth == 8 ? sizeof(PF_Pixel8) : sizeof(PF_Pixel16));
-	const size_t input_stage_bytes = active_bytes * (size_t)input->height;
-	const size_t output_stage_bytes = (size_t)output->rowbytes * (size_t)output->height;
-	std::vector<uint8_t> staged_input_bytes(input_stage_bytes);
-	std::vector<uint8_t> staged_output_bytes(output_stage_bytes);
-	for (A_long y = 0; y < input->height; ++y) {
-		memcpy(staged_input_bytes.data() + (size_t)y * active_bytes,
-		       (const uint8_t *)input->data + (size_t)y * (size_t)input->rowbytes,
-		       active_bytes);
+	const size_t pixel_size = bitdepth == 8 ? sizeof(PF_Pixel8) : sizeof(PF_Pixel16);
+	olm::world_safety::TightStaging staging;
+	const olm::world_safety::Status stage_status = staging.prepare(
+		{input->data, (size_t)input->width, (size_t)input->height,
+		 (size_t)input->rowbytes, pixel_size},
+		{output->data, (size_t)output->width, (size_t)output->height,
+		 (size_t)output->rowbytes, pixel_size});
+	if (stage_status != olm::world_safety::Status::ok) {
+		return stage_status == olm::world_safety::Status::out_of_memory ?
+			(PF_Err)4 : PF_Err_BAD_CALLBACK_PARAM;
 	}
-	memcpy(staged_output_bytes.data(), output->data, output_stage_bytes);
 	PF_EffectWorld staged_input = *input;
 	PF_EffectWorld staged_output = *output;
-	staged_input.data = reinterpret_cast<decltype(staged_input.data)>(staged_input_bytes.data());
-	staged_input.rowbytes = (A_long)active_bytes;
-	staged_output.data = reinterpret_cast<decltype(staged_output.data)>(staged_output_bytes.data());
+	staged_input.data = reinterpret_cast<decltype(staged_input.data)>(
+		const_cast<uint8_t *>(staging.input_data()));
+	staged_input.rowbytes = (A_long)staging.row_bytes();
+	staged_output.data = reinterpret_cast<decltype(staged_output.data)>(staging.output_data());
+	staged_output.rowbytes = (A_long)staging.row_bytes();
 	err = DispatchRender(in_data, params, &staged_input, &staged_output, bitdepth);
-	if (!err) {
-		for (A_long y = 0; y < output->height; ++y) {
-			memcpy((uint8_t *)output->data + (size_t)y * (size_t)output->rowbytes,
-			       staged_output_bytes.data() + (size_t)y * (size_t)staged_output.rowbytes,
-			       active_bytes);
-		}
-	}
+	if (!err && staging.commit() != olm::world_safety::Status::ok)
+		err = PF_Err_BAD_CALLBACK_PARAM;
 	return err;
 }
 

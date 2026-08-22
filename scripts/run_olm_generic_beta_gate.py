@@ -123,6 +123,13 @@ DISTANCEGRADATION_GENERIC_DEPENDENCIES = (
     "core/olmdistancegradation_fieldgen.h",
     "core/olm_world_safety.h",
 )
+SMOOTHER_V1_GENERIC_DEPENDENCIES = (
+    "mac/OLMSmoother/Mac/OLMSmoother_port.cpp",
+    "mac/OLMSmoother/OLMSmoother.h",
+    "mac/OLMSmoother/OLMSmoother_Strings.h",
+    "core/olm_sha256_rows.h",
+    "core/olm_world_safety.h",
+)
 KIRAKIRA_MODE3_UI_DEPENDENCIES = (
     "mac/OLMKiraKira/OLMKiraKira.cpp",
     "mac/OLMKiraKira/OLMKiraKira.h",
@@ -196,6 +203,9 @@ DEPENDENCY_PATHS: dict[str, tuple[str, ...]] = {
     ),
     "tests/test_olmdistancegradation_pf32_smart_unblurred_beta_20260820.py": (
         *DISTANCEGRADATION_GENERIC_DEPENDENCIES,
+    ),
+    "tests/test_olmsmoother_v1_generic_classic_beta_20260820.py": (
+        *SMOOTHER_V1_GENERIC_DEPENDENCIES,
     ),
     "tests/test_olmkirakira_mode3_ui_length_beta_20260821.py": (
         *KIRAKIRA_MODE3_UI_DEPENDENCIES,

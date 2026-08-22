@@ -81,6 +81,40 @@ static bool arbitrary_keyed_source_accepted() {
     return true;
 }
 
+static bool unsafe_worlds_rejected_without_commit() {
+    PF_ParamDef d[SM_NUM_PARAMS]{}; PF_ParamDef *p[SM_NUM_PARAMS]{};
+    for (int i=0;i<SM_NUM_PARAMS;++i) p[i]=d+i;
+    d[SM_USE_KEY].u.bd.value=0; d[SM_KEY_COLOR].u.cd.value={255,1,2,3};
+    d[SM_TOLERANCE].u.sd.value=6;
+    PF_InData id{}; PF_OutData od{};
+
+    std::vector<uint8_t> storage(256,0x31), output(256,0xa5);
+    PF_EffectWorld iw{},ow{}; iw.data=storage.data(); iw.width=4; iw.height=4;
+    iw.rowbytes=16; iw.bitdepth=8; iw.extent_hint={0,0,4,4};
+    ow=iw; ow.data=output.data(); d[SM_INPUT].u.ld=iw;
+
+    // Partially overlapping payloads must fail before output mutation.
+    ow.data=storage.data()+4;
+    const auto overlap_before=storage;
+    if (EffectMain(PF_Cmd_RENDER,&id,&od,p,&ow,nullptr)==0 || storage!=overlap_before)
+        return false;
+
+    // Legal-looking rowbytes cannot open geometry beyond the DCI-area budget.
+    iw.width=4096; iw.height=2161; iw.rowbytes=4096*4;
+    iw.extent_hint={0,0,4096,2161}; ow=iw; ow.data=output.data();
+    d[SM_INPUT].u.ld=iw; const auto output_before=output;
+    if (EffectMain(PF_Cmd_RENDER,&id,&od,p,&ow,nullptr)==0 || output!=output_before)
+        return false;
+
+    // A side longer than 4096 is rejected independently of the area check.
+    iw.width=4097; iw.height=1; iw.rowbytes=4097*4;
+    iw.extent_hint={0,0,4097,1}; ow=iw; ow.data=output.data();
+    d[SM_INPUT].u.ld=iw;
+    if (EffectMain(PF_Cmd_RENDER,&id,&od,p,&ow,nullptr)==0 || output!=output_before)
+        return false;
+    return true;
+}
+
 template <typename P>
 static bool tile_compose_is_not_full_frame(int depth, bool use_key) {
     const int width=64,height=36,split=31,pixel=(int)sizeof(P);
@@ -157,12 +191,24 @@ int main(int argc, char **argv) {
 	if (!tile_compose_is_not_full_frame<PF_Pixel8>(8,true)) return 21;
 	if (!tile_compose_is_not_full_frame<PF_Pixel16>(16,false)) return 22;
 	if (!tile_compose_is_not_full_frame<PF_Pixel16>(16,true)) return 23;
+    if (!unsafe_worlds_rejected_without_commit()) return 24;
     return 0;
 }
 """
 
 
 class GenericClassicBeta(unittest.TestCase):
+    def test_source_uses_bounded_transactional_world_safety(self) -> None:
+        source = (ROOT / "mac/OLMSmoother/Mac/OLMSmoother_port.cpp").read_text()
+        for token in (
+            'kMaxSide = 4096',
+            'kMaxPixels = (size_t)4096 * (size_t)2160',
+            'olm::world_safety::require_disjoint',
+            'olm::world_safety::TightStaging staging',
+            'staging.commit()',
+        ):
+            self.assertIn(token, source)
+
     def compile_and_run(self, flags: list[str], args: list[str]) -> None:
         with tempfile.TemporaryDirectory(prefix="olmsmoother-v1-beta-") as tmp:
             source = Path(tmp) / "probe.cpp"
