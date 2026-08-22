@@ -33,7 +33,11 @@ PLUGINS = {
                  "depths": (8, 16, 32), "route": "Smart", "tuple": "pixel-local defaults (Edge Thin/Blur 0)"},
     "directional": {"binary": "OLMDirectionalBlur", "match": "OLM Directional Blur", "name": "OLM DirectionalBlur",
                     "depths": (8,), "route": "host-selected Classic/Smart", "tuple": "front-only baseline",
-                    "params": [("OLM Directional Blur-0005", "Blur Strength", 48)]},
+                    "render_queue_8": True,
+                    "params": [("OLM Directional Blur-0005", "Blur Strength", 48)],
+                    "params_by_size": {
+                        "4k": [("OLM Directional Blur-0005", "Blur Strength", 8)],
+                    }},
     "distance": {"binary": "OLMDistanceGradation", "match": "OLM Distance Gradation", "name": "Distance Gradation",
                  "depths": (8, 16, 32), "route": "Smart", "tuple": "Blur None + Constant interpolation",
                  "params": [("OLM Distance Gradation-0009", "Interpolation Mode", 1),
@@ -88,6 +92,13 @@ def executable(bundle: Path, binary_name: str) -> Path:
     return bundle / "Contents/MacOS" / binary_name
 
 
+def after_effects_running() -> bool:
+    executable_path = APP / "Contents/MacOS/After Effects"
+    return subprocess.run(
+        ["pgrep", "-f", f"^{executable_path}$"], capture_output=True
+    ).returncode == 0
+
+
 def plugin_state(key: str) -> dict[str, object]:
     spec = PLUGINS[key]
     binary = str(spec["binary"])
@@ -106,7 +117,9 @@ def plugin_state(key: str) -> dict[str, object]:
         "declared_depths": spec["depths"],
         "execution_route": spec["route"],
         "supported_tuple": spec["tuple"],
+        "render_queue_8": bool(spec.get("render_queue_8", False)),
         "params": spec.get("params", ()),
+        "params_by_size": spec.get("params_by_size", {}),
         "installed_path": str(installed),
         "installed_sha256": installed_hash,
         "local_candidates": candidates,
@@ -139,6 +152,10 @@ def write_pattern_png(path: Path, width: int, height: int) -> None:
                      png_chunk(b"IDAT", bytes(compressed)) + png_chunk(b"IEND", b""))
 
 
+def effective_params(state: dict[str, object], size_name: str):
+    return state.get("params_by_size", {}).get(size_name, state.get("params", ()))
+
+
 def prepare_request(base: Path, state: dict[str, object], depth: int,
                     width: int, height: int, size_name: str) -> tuple[Path, str]:
     case_id = f"{state['key']}_arbitrary_{size_name}_{depth}bpc"
@@ -147,7 +164,7 @@ def prepare_request(base: Path, state: dict[str, object], depth: int,
     output_name = f"{case_id}.png"
     write_pattern_png(request / "input" / source_name, width, height)
     params = [{"match_name": match, "name": name, "value": value}
-              for match, name, value in state.get("params", ())]
+              for match, name, value in effective_params(state, size_name)]
     case = {
         "id": case_id, "time": 0, "before_effects_frame": source_name,
         "effects": [{"name": state["effect_name"], "match_name": state["effect_match_name"], "params": params}],
@@ -197,8 +214,7 @@ def main() -> int:
         "policy": {"mutates_mediacore": False, "closes_unsaved_project": False,
                    "isolated_plugin_path_supported": False},
         "host": {"app_path": str(APP), "app_present": APP.is_dir(),
-                 "after_effects_running": subprocess.run(
-                     ["pgrep", "-f", "Adobe After Effects"], capture_output=True).returncode == 0},
+                 "after_effects_running": after_effects_running()},
         "plugins": states, "matrix": [], "unsupported_routes": [],
         "status": "prepared", "blockers": [],
     }
@@ -242,23 +258,24 @@ def main() -> int:
             for depth in selected_depths:
                 for width, height, size_name in selected_sizes:
                     case_id = f"{state['key']}_arbitrary_{size_name}_{depth}bpc"
+                    output_mode = (
+                        "png_render_queue" if depth == 8 and state.get("render_queue_8") else
+                        "png" if depth == 8 else
+                        "png16_render_queue" if depth == 16 else
+                        "exr_render_queue"
+                    )
+                    output_template = "" if output_mode == "png" else (
+                        EXR_TEMPLATE if output_mode == "exr_render_queue" else PNG16_TEMPLATE
+                    )
                     row = {"plugin": state["binary"], "depth": depth, "width": width,
                            "height": height, "case_id": case_id, "status": "planned",
-                           "output_mode": (
-                               "png" if depth == 8 else
-                               "png16_render_queue" if depth == 16 else
-                               "exr_render_queue"
-                           ),
-                           "output_template": (
-                               "" if depth == 8 else
-                               PNG16_TEMPLATE if depth == 16 else
-                               EXR_TEMPLATE
-                           ),
+                           "output_mode": output_mode,
+                           "output_template": output_template,
                            "execution_route": state["execution_route"],
                            "supported_tuple": state["supported_tuple"],
                            "parameter_overrides": [
                                {"match_name": match, "name": name, "value": value}
-                               for match, name, value in state.get("params", ())
+                               for match, name, value in effective_params(state, size_name)
                            ]}
                     if args.run or args.prepare_inputs:
                         request, case_id = prepare_request(requests, state, depth, width, height, size_name)
@@ -270,7 +287,10 @@ def main() -> int:
                                    "--timeout", str(args.timeout), "--ae-env", "OLM_AE_FORCE_NEW_PROJECT=1",
                                    "--ae-env", "OLM_AE_FORCE_SOFTWARE=1",
                                    "--ae-env", "OLM_AE_DISABLE_PROJECT_COLOR_MANAGEMENT=1"]
-                        if depth == 16:
+                        if output_mode == "png_render_queue":
+                            command.extend(("--output-mode", "png_render_queue",
+                                            "--output-template", PNG16_TEMPLATE))
+                        elif depth == 16:
                             command.extend(("--output-mode", "png16_render_queue",
                                             "--output-template", PNG16_TEMPLATE))
                         elif depth == 32:

@@ -223,6 +223,7 @@ class AePngCompletionContractTests(unittest.TestCase):
         self.assertIn("could not remove stale PNG", source)
         self.assertIn("could not remove stale render-queue output", source)
         self.assertIn('outputMode === "png16_render_queue"', source)
+        self.assertIn('outputMode === "png_render_queue"', source)
         self.assertIn("/usr/bin/sips -s format png", source)
         self.assertIn("could not remove intermediate TIFF", source)
         runner_source = (ROOT / "scripts/run_ae_single_case.py").read_text(encoding="utf-8")

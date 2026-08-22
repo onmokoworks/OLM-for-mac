@@ -67,6 +67,16 @@ commitをconsumer-timeで再検証しています。証拠は
 16-bit数値出力一致の証拠ではありません。32 bpcは32 Float EXRを検証します。この6セルは既存3ゲートの
 証拠であり、新しい判断基準ではありません。
 
+2026-08-23には、上記ColorKeepを含む全10プラグインについて、各プラグインが宣言するnative AE
+深度をHD 1920×1080と4K 3840×2160で実行し、合計54/54セルが成功しました。各publication
+commitは生成後に独立したconsumer verifierで再検証しています。集約証拠は
+[`olm_native_ae_declared_matrix_54_20260823.json`](../refs/conformance/olm_native_ae_declared_matrix_54_20260823.json)
+です。Directional Blurは安全予算に従いHD Strength 48、4K Strength 8です。4K Strength 48は
+350,000,000 operation-unit上限を超えるためfail-closeする既知境界であり、4K対応の失敗とは扱いません。
+16 bpcは16 bpc projectで実行後にTIFFからPNGへ変換してpublication integrityを検証するため、
+16-bit数値一致の証拠ではありません。32 bpcは32 Float EXRを検証します。この54セルも3ゲートを
+支える証拠であり、全parameter cross-productや任意入力のWindows bit exactという追加条件ではありません。
+
 ROI v2 package reportの`beta_support_sha256`は、zip内にビルド時収録した
 `OLM_Mac_Plugins_Release/BETA_SUPPORT.md`のimmutable manifest hashです。現在閲覧中の
 `docs/BETA_SUPPORT.md`は、その後の検証結果を追記するlive文書であり、同じhashを持つ必要はありません。

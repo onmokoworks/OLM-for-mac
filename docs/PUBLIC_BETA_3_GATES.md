@@ -13,15 +13,18 @@ geometry、parameter cellは各ゲートを支える証拠であり、新しい�
 | プラグイン | 安全性 | 主要操作 | 互換性・実機 | RCまでの残件 |
 |---|---|---|---|---|
 | ColorKeep | 通過 | 限定 | 限定 | 現行candidateのSmart 8/16/32 bpcをHD/4K native AEで6/6通過。3深度Windows 5色worker代表は現行callback exact。Classic native AEと全1–100色の数値一致は未完 |
-| OLMBlur | 通過 | 限定 | 限定 | 現行RC HD/8bpc native AE通過。Classic 32 bpcは非対応 |
-| OLMColorKey | 通過 | 限定 | 限定 | 現行RC HD/8bpc native AE通過。Thin＋Blur同時指定を既知差分として維持 |
-| OLMDirectionalBlur | 通過 | 限定 | 限定 | 現行RC HD/8bpc native AE通過。generic DualのWindows代表確認は未完 |
-| OLMDistanceGradation | 通過 | 限定 | 限定 | 現行RC HD/8bpc native AE通過。PF32 Power/Bilateralは既知差分 |
-| OLMKiraKira | 通過 | 限定 | 限定 | 現行RC HD/8bpc native AE通過。generic Mode 3の代表Windows確認は未完 |
-| OLMRadialBlur | 通過 | 限定 | 限定 | 現行RC HD/8bpc native AE通過。一般topologyの代表Windows確認は未完 |
-| OLMSmoother | 通過 | 限定 | 限定 | 現行RC HD/8bpc native AE通過。PF16 Windows実用代表は現行Classic/Smart exact |
-| OLMSmoother2 | 通過 | 限定 | 限定 | 現行RC HD/8bpc native AE通過。classifier近似を既知差分として維持 |
-| OLMToonDilate | 通過 | 限定 | 限定 | 現行RC HD/8bpc native AE通過。3深度Windows corner-seed代表は現行core exact |
+| OLMBlur | 通過 | 限定 | 限定 | 現行binaryのSmart HD/4K×8/16/32を6/6 native AE通過。Classic 32 bpcは非対応 |
+| OLMColorKey | 通過 | 限定 | 限定 | 現行binaryのSmart HD/4K×8/16/32を6/6 native AE通過。Thin＋Blur同時指定を既知差分として維持 |
+| OLMDirectionalBlur | 通過 | 限定 | 限定 | 現行binaryの宣言範囲HD/4K×8 bpcを2/2 native AE通過（HD Strength 48、4K Strength 8）。generic DualのWindows代表確認は未完 |
+| OLMDistanceGradation | 通過 | 限定 | 限定 | 現行binaryのSmart HD/4K×8/16/32を6/6 native AE通過。PF32 Power/Bilateralは既知差分 |
+| OLMKiraKira | 通過 | 限定 | 限定 | 現行binaryのSmart HD/4K×8/16/32を6/6 native AE通過。generic Mode 3の代表Windows確認は未完 |
+| OLMRadialBlur | 通過 | 限定 | 限定 | 現行binaryのSmart HD/4K×8/16/32を6/6 native AE通過。一般topologyの代表Windows確認は未完 |
+| OLMSmoother | 通過 | 限定 | 限定 | 現行binaryのSmart HD/4K×8/16を4/4 native AE通過。PF16 Windows実用代表は現行Classic/Smart exact |
+| OLMSmoother2 | 通過 | 限定 | 限定 | 現行binaryのSmart HD/4K×8/16/32を6/6 native AE通過。classifier近似を既知差分として維持 |
+| OLMToonDilate | 通過 | 限定 | 限定 | 現行binaryのSmart HD/4K×8/16/32を6/6 native AE通過。3深度Windows corner-seed代表は現行core exact |
 
 詳細な対応範囲は [BETA_SUPPORT.md](BETA_SUPPORT.md) をauthorityとする。この表は
 進捗を一目で判断する索引であり、個別テストが増えても行・列・完了基準を増やさない。
+宣言済みnative AE matrixは2026-08-23時点で54/54成功し、全publication commitをconsumer-timeで
+再検証済み。集約証拠は
+[`olm_native_ae_declared_matrix_54_20260823.json`](../refs/conformance/olm_native_ae_declared_matrix_54_20260823.json)。

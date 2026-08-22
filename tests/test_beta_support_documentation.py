@@ -19,6 +19,9 @@ CURRENT_RC_NATIVE_AE = ROOT / "refs/conformance/olm_public_beta_rc_native_ae_qui
 COLORKEEP_NATIVE_AE_ALL_DEPTHS = (
     ROOT / "refs/conformance/colorkeep_native_ae_hd_4k_all_depths_20260822.json"
 )
+DECLARED_NATIVE_AE_MATRIX = (
+    ROOT / "refs/conformance/olm_native_ae_declared_matrix_54_20260823.json"
+)
 README = ROOT / "README.md"
 SMOOTHER2_GAMMA_COLORS_TEST = (
     ROOT / "tests/test_olmsmoother2_gamma_colors_beta_20260820.py"
@@ -81,11 +84,18 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         gates = THREE_GATES.read_text(encoding="utf-8")
         report = json.loads(CURRENT_RC_NATIVE_AE.read_text(encoding="utf-8"))
         identity = json.loads(CURRENT_RC_IDENTITY.read_text(encoding="utf-8"))
-        self.assertEqual(gates.count("現行RC HD/8bpc native AE通過"), 9)
+        matrix = json.loads(DECLARED_NATIVE_AE_MATRIX.read_text(encoding="utf-8"))
+        self.assertEqual(gates.count("| 通過 | 限定 | 限定 |"), 10)
         self.assertIn(
             "現行candidateのSmart 8/16/32 bpcをHD/4K native AEで6/6通過",
             gates,
         )
+        self.assertIn("54/54", gates)
+        self.assertEqual(matrix["totals"]["plugins"], 10)
+        self.assertEqual(matrix["totals"]["cells"], 54)
+        self.assertEqual(matrix["totals"]["campaign_passed"], 54)
+        self.assertEqual(matrix["totals"]["consumer_reverified"], 54)
+        self.assertIn("not additional gates", matrix["three_gate_policy"])
         self.assertIn("追加ゲートではありません", self.doc)
         self.assertEqual(report["status"], "accepted_exact")
         self.assertIn("not the full depth/route/parameter matrix", report["scope"])

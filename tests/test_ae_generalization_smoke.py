@@ -33,6 +33,11 @@ class AEGeneralizationSmokeTests(unittest.TestCase):
         self.assertIn("installed_sha256", state)
         self.assertEqual([row["config"] for row in state["local_candidates"]], ["Debug", "Release"])
 
+    def test_host_probe_targets_only_the_main_ae_executable(self) -> None:
+        source = (ROOT / "scripts/run_ae_generalization_smoke.py").read_text()
+        self.assertIn('f"^{executable_path}$"', source)
+        self.assertNotIn('["pgrep", "-f", "Adobe After Effects"]', source)
+
     def test_all_ten_pipl_match_names_and_declared_depths_are_encoded(self) -> None:
         self.assertEqual(len(campaign.PLUGINS), 10)
         self.assertEqual(campaign.PLUGINS["toon"]["match"], "ADBE OLMToonDilate")
@@ -79,12 +84,21 @@ class AEGeneralizationSmokeTests(unittest.TestCase):
         self.assertEqual(actual, expected)
         self.assertTrue(all(
             (row["output_mode"], row["output_template"]) ==
-            (("png", "") if row["depth"] == 8 else
+            (("png_render_queue", campaign.PNG16_TEMPLATE)
+             if row["depth"] == 8 and row["plugin"] == "OLMDirectionalBlur" else
+             ("png", "") if row["depth"] == 8 else
              ("png16_render_queue", campaign.PNG16_TEMPLATE) if row["depth"] == 16 else
              ("exr_render_queue", campaign.EXR_TEMPLATE))
             for row in report["matrix"]
         ))
         self.assertTrue(report["unsupported_routes"])
+        directional = [row for row in report["matrix"]
+                       if row["plugin"] == "OLMDirectionalBlur"]
+        strengths = {
+            (row["width"], row["height"]): row["parameter_overrides"][0]["value"]
+            for row in directional
+        }
+        self.assertEqual(strengths, {(1920, 1080): 48, (3840, 2160): 8})
 
     def test_two_plugin_retry_filter_and_parameter_evidence(self) -> None:
         report = self.run_preflight("quick", ("kirakira", "smoother2"))

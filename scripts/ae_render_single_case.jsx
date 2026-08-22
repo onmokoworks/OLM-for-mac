@@ -563,7 +563,7 @@
             appendText(logPath, "pause.continue marker=" + continueMarkerPath + "\n");
         }
 
-        if (outputMode === "exr_render_queue" || outputMode === "png16_render_queue") {
+        if (outputMode === "exr_render_queue" || outputMode === "png_render_queue" || outputMode === "png16_render_queue") {
             if (!outputTemplate) {
                 throw new Error("OLM_AE_OUTPUT_TEMPLATE is required for render-queue output");
             }

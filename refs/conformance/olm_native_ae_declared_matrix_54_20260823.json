@@ -1,0 +1,28 @@
+{
+  "kind": "olm_native_ae_declared_matrix_summary",
+  "schema": 1,
+  "date": "2026-08-23",
+  "host": "Adobe After Effects 2026 26.3x87",
+  "renderer": "Software",
+  "scope": "HD and 4K at every depth declared by the selected native AE route",
+  "three_gate_policy": "The 54 cells are evidence for the fixed safety, major-operations, and compatibility/native-AE gates; they are not additional gates.",
+  "totals": {"plugins":10,"cells":54,"campaign_passed":54,"consumer_reverified":54,"failed":0},
+  "campaigns": [
+    {"plugin":"ColorKeep","cells":6,"installed_sha256":"ae9643a5a02f111ac48d284d646418cb1f6c4e9b3eaf213a34c17c5698dd1a10","campaign_sha256":"67f65d1033138c58404e66fce38d2425a09cbc54eaf2030385baeb3a045b6c3a","path":"handoffs/olm_public_beta_rc_native_ae_colorkeep_full_final_20260822/campaign_result.json"},
+    {"plugin":"OLMBlur","cells":6,"installed_sha256":"b6df72f7c2ef12a8ccb013bcd98f95b113b59571731f2cf26a6080615bae30b9","campaign_sha256":"98c6d21324a856261582f19dfd8d6957411b47be76a89f1e96f2e521c0a777a0","path":"handoffs/olm_public_beta_rc_native_ae_olmblur_full_20260822/campaign_result.json"},
+    {"plugin":"OLMColorKey","cells":6,"installed_sha256":"60b5ba2d4cf39d97bd32a9da99cd0ee31778374031a8dad78fd5deb70aec791a","campaign_sha256":"2082d721cbef2a150a6cb5ffcebf9e7c90b59fd8d7784ad221e1814e29508771","path":"handoffs/olm_public_beta_rc_native_ae_olmcolorkey_full_20260822/campaign_result.json"},
+    {"plugin":"OLMDirectionalBlur","cells":2,"installed_sha256":"bced525426da29a67c45d5cb3071de06cc417d9732a15108dfa1188cb03a7bcc","campaign_sha256":"2264f99a06cb8e320a0cb7ce84082344f6177d5f1d6814f39bb861aa59fff275","path":"handoffs/olm_public_beta_rc_native_ae_directional_full_safeparams_v2_20260823/campaign_result.json"},
+    {"plugin":"OLMDistanceGradation","cells":6,"installed_sha256":"ce48b9ebf92bb1b66db9e3da1c0c17f4b176553a4f5097fed0b5f5630d6cb1e5","campaign_sha256":"574bf42561d91051af8dea30f3abdf7e3cfcdb321736a634ab83436438542c43","path":"handoffs/olm_public_beta_rc_native_ae_distance_full_v2_20260823/campaign_result.json"},
+    {"plugin":"OLMKiraKira","cells":6,"installed_sha256":"e0c53b073d36296fdedec9c074d7c6c253a7287f9eeb7043548b38044835d84e","campaign_sha256":"4d3c4fca24650eb0e9b87389f0a040c08f7d732278739707617f99b81d3b6c86","path":"handoffs/olm_public_beta_rc_native_ae_kirakira_full_20260823/campaign_result.json"},
+    {"plugin":"OLMRadialBlur","cells":6,"installed_sha256":"0ed4a2f573c1e48471309b3a35209bbefda90d977aee8ddca3b216a94f7014c9","campaign_sha256":"7366d1ef5f9524c055ef40362db0d162ad91657282e57dfd79bc3b2e2c690b4a","path":"handoffs/olm_public_beta_rc_native_ae_radial_full_v2_20260823/campaign_result.json"},
+    {"plugin":"OLMSmoother","cells":4,"installed_sha256":"0c4db1cf1fa6b495ea4644e55332794704d9a3a4a7e94c9b79b7f3e300cc71e3","campaign_sha256":"f0668a978e513328b5c1a7a428bf495ccd4e63a607f63a8d4a517d109679af12","path":"handoffs/olm_public_beta_rc_native_ae_smoother_full_v2_20260823/campaign_result.json"},
+    {"plugin":"OLMSmoother2","cells":6,"installed_sha256":"b465f78b5668d6280c0d1d8250fe172af19f63fa79af3bb7a66e0efbcaed7ff5","campaign_sha256":"4793cdafd95c0c5be00e730cde0d66c81db90fd0b114e52d02da7141e19bff97","path":"handoffs/olm_public_beta_rc_native_ae_smoother2_full_20260823/campaign_result.json"},
+    {"plugin":"OLMToonDilate","cells":6,"installed_sha256":"fb51ccf3373bded030b1d3a809d1dc23b2df9270161ac55e0d29cba34201eb9d","campaign_sha256":"68a5a256f8efabbbf61cac45f2fb2af6e0b02b1a95196cfba7018c7438a08a4a","path":"handoffs/olm_public_beta_rc_native_ae_toon_full_v2_20260823/campaign_result.json"}
+  ],
+  "boundaries": [
+    "16 bpc executes in a 16 bpc AE project, then TIFF is converted to PNG for publication integrity; this is not a 16-bit numerical equality claim.",
+    "32 bpc publication verifies a 32 Float EXR.",
+    "OLMDirectionalBlur uses Strength 48 at HD and admitted Strength 8 at 4K; Strength 48 at 4K exceeds the documented 350,000,000 operation-unit safety budget and fails closed.",
+    "This summary does not claim arbitrary-input Windows bit equality, all parameter cross-products, GPU support, or undeclared Classic routes."
+  ]
+}
