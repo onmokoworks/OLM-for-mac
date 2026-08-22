@@ -208,6 +208,11 @@ class AePngCompletionContractTests(unittest.TestCase):
     def test_single_case_uses_png_terminal_gate_and_two_second_window(self):
         source = (ROOT / "scripts/ae_render_single_case.jsx").read_text(encoding="utf-8")
         self.assertIn("function hasCompletePngTrailer", source)
+        self.assertIn("var watchedPath = file.fsName;", source)
+        self.assertIn("file = new File(watchedPath);", source)
+        self.assertIn("var verifiedFile = new File(watchedPath);", source)
+        self.assertIn("file.seek(Number(file.length) - 12, 0);", source)
+        self.assertNotIn("file.seek(-12, 2);", source)
         self.assertIn("waitForStableFile(png, renderStarted, 120000, 250, 2000)", source)
         self.assertIn("stableForMs >= stableWindowMs && formatComplete", source)
         self.assertNotIn("stablePolls >= 2", source)
@@ -1442,6 +1447,24 @@ class AePngCompletionContractTests(unittest.TestCase):
                         ),
                         verification,
                     )
+
+    def test_runtime_source_comparison_allows_only_ctime_drift(self):
+        source = single_case_runner.BoundSource(
+            Path("/tmp/runtime.jsx"), "a" * 64, 1, 2, 3, 4, 5, 1
+        )
+        ctime_only = source._replace(changed_ns=6)
+        content_changed = source._replace(sha256="b" * 64, changed_ns=6)
+
+        self.assertTrue(
+            single_case_runner.runtime_source_snapshots_match(
+                (source,), (ctime_only,)
+            )
+        )
+        self.assertFalse(
+            single_case_runner.runtime_source_snapshots_match(
+                (source,), (content_changed,)
+            )
+        )
 
     def test_consumer_rejects_coordinated_semantically_invalid_result_rewrite(self):
         with tempfile.TemporaryDirectory() as raw:

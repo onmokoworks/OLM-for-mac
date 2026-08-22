@@ -1,0 +1,254 @@
+{
+  "accepted_cases": [
+    {
+      "case_id": "colorkeep_arbitrary_hd_8bpc",
+      "commit_sha256": "bcfb7836a070afe649bffb8ba8ceaa19a996b520690349c7abeb700e9763d879",
+      "depth": 8,
+      "execution_route": "Smart",
+      "height": 1080,
+      "parameter_overrides": [],
+      "plugin": "ColorKeep",
+      "plugin_sha256": "e8ecd696c470053ac15be76784381ee32198b62ec4ae6d81d1d0d42e02f3c4cb",
+      "validated_output_sha256": "0b7674ce3837c1f49f9b1dc1ade6319a5fa18c60b6a7ab069c993d54e7128632",
+      "validated_output_size_bytes": 8424,
+      "width": 1920
+    },
+    {
+      "case_id": "blur_arbitrary_hd_8bpc",
+      "commit_sha256": "c3680eb1842294e089a50a9402e01ee99b063c10497e6c6082859d8355b4843c",
+      "depth": 8,
+      "execution_route": "Smart",
+      "height": 1080,
+      "parameter_overrides": [],
+      "plugin": "OLMBlur",
+      "plugin_sha256": "b6df72f7c2ef12a8ccb013bcd98f95b113b59571731f2cf26a6080615bae30b9",
+      "validated_output_sha256": "217f741e25248fbfea8c88e3cb321e1e0dab83a0e67f6a9090cfa9bb03e3704c",
+      "validated_output_size_bytes": 2727479,
+      "width": 1920
+    },
+    {
+      "case_id": "colorkey_arbitrary_hd_8bpc",
+      "commit_sha256": "a490c559bb1c92f8eb697d4336ec1d72fa164e717849fc482fd7d1cefa055792",
+      "depth": 8,
+      "execution_route": "Smart",
+      "height": 1080,
+      "parameter_overrides": [],
+      "plugin": "OLMColorKey",
+      "plugin_sha256": "60b5ba2d4cf39d97bd32a9da99cd0ee31778374031a8dad78fd5deb70aec791a",
+      "validated_output_sha256": "daf822bf6ca7ecc50367f27cc04e6d112a9d9c9157118bbd0a22f6c64cfc04b4",
+      "validated_output_size_bytes": 889395,
+      "width": 1920
+    },
+    {
+      "case_id": "directional_arbitrary_hd_8bpc",
+      "commit_sha256": "ab8ec4a4f1f0218e82c3f5d7eb5bd0ec8aee54556982415df8675a98d1e3b7ee",
+      "depth": 8,
+      "execution_route": "host-selected Classic/Smart",
+      "height": 1080,
+      "parameter_overrides": [
+        {
+          "match_name": "OLM Directional Blur-0005",
+          "name": "Blur Strength",
+          "value": 48
+        }
+      ],
+      "plugin": "OLMDirectionalBlur",
+      "plugin_sha256": "bced525426da29a67c45d5cb3071de06cc417d9732a15108dfa1188cb03a7bcc",
+      "validated_output_sha256": "0e9984fc33e90e585d2007b58c6ad2b1df06f487818300a7527c72d280a87b74",
+      "validated_output_size_bytes": 2416779,
+      "width": 1920
+    },
+    {
+      "case_id": "distance_arbitrary_hd_8bpc",
+      "commit_sha256": "5d4c1ae4597a923a23a83b3ff3cb6a55c95e5ebaade252dadc4f57cad808046c",
+      "depth": 8,
+      "execution_route": "Smart",
+      "height": 1080,
+      "parameter_overrides": [
+        {
+          "match_name": "OLM Distance Gradation-0009",
+          "name": "Interpolation Mode",
+          "value": 1
+        },
+        {
+          "match_name": "OLM Distance Gradation-0011",
+          "name": "Blur Mode",
+          "value": 1
+        }
+      ],
+      "plugin": "OLMDistanceGradation",
+      "plugin_sha256": "ce48b9ebf92bb1b66db9e3da1c0c17f4b176553a4f5097fed0b5f5630d6cb1e5",
+      "validated_output_sha256": "0bf0e14044d3692baf29d10ff5c099ead0eccd1f8a0bde19b38e7a39cc9c9dd5",
+      "validated_output_size_bytes": 34052,
+      "width": 1920
+    },
+    {
+      "case_id": "kirakira_arbitrary_hd_8bpc",
+      "commit_sha256": "a22f1e1c526b6cf9eab4a1e678ef872925598f022c544e76a69b2f007a713a91",
+      "depth": 8,
+      "execution_route": "Smart",
+      "height": 1080,
+      "parameter_overrides": [
+        {
+          "match_name": "OLM OLM Kira Kira-0003",
+          "name": "Vertical Length",
+          "value": 0
+        },
+        {
+          "match_name": "OLM OLM Kira Kira-0004",
+          "name": "Horizontal Length",
+          "value": 0
+        },
+        {
+          "match_name": "OLM OLM Kira Kira-0005",
+          "name": "Diagonal Length",
+          "value": 0
+        },
+        {
+          "match_name": "OLM OLM Kira Kira-0026",
+          "name": "Diagonal 2 length",
+          "value": 0
+        },
+        {
+          "match_name": "OLM OLM Kira Kira-0006",
+          "name": "Highlight Radius",
+          "value": 3
+        }
+      ],
+      "plugin": "OLMKiraKira",
+      "plugin_sha256": "e0c53b073d36296fdedec9c074d7c6c253a7287f9eeb7043548b38044835d84e",
+      "validated_output_sha256": "131fc7d27a6d422d483c0915cf5a6f991c5746646756ea0cc18d8aba4404f81b",
+      "validated_output_size_bytes": 1995737,
+      "width": 1920
+    },
+    {
+      "case_id": "radial_arbitrary_hd_8bpc",
+      "commit_sha256": "9f5b39f042e4c740467157bd4e796bfb34a933134440d66f99e40d8d07e498f6",
+      "depth": 8,
+      "execution_route": "Smart",
+      "height": 1080,
+      "parameter_overrides": [
+        {
+          "match_name": "OLM RadialBlur-0004",
+          "name": "Strength",
+          "value": 4
+        }
+      ],
+      "plugin": "OLMRadialBlur",
+      "plugin_sha256": "0ed4a2f573c1e48471309b3a35209bbefda90d977aee8ddca3b216a94f7014c9",
+      "validated_output_sha256": "fd2fad230bc73ee7e7ecdc85c11aefe878e8658dd839130dcbb9c8919d175090",
+      "validated_output_size_bytes": 3993946,
+      "width": 1920
+    },
+    {
+      "case_id": "smoother_arbitrary_hd_8bpc",
+      "commit_sha256": "1c03819cfe58a06a5babd760e1abd00f0ed0dd9d9716a8dbf80f8bb9b7dd0eed",
+      "depth": 8,
+      "execution_route": "Smart",
+      "height": 1080,
+      "parameter_overrides": [],
+      "plugin": "OLMSmoother",
+      "plugin_sha256": "0c4db1cf1fa6b495ea4644e55332794704d9a3a4a7e94c9b79b7f3e300cc71e3",
+      "validated_output_sha256": "3d22c1321fe3712db065ae855978b7948169cc9b2e51d2705c3891ce4ca6f941",
+      "validated_output_size_bytes": 2078762,
+      "width": 1920
+    },
+    {
+      "case_id": "smoother2_arbitrary_hd_8bpc",
+      "commit_sha256": "d9c3fdbc3b5c3519ccfff9c92715fd727b6fe1b8b733179e95a23454a938bd48",
+      "depth": 8,
+      "execution_route": "Smart",
+      "height": 1080,
+      "parameter_overrides": [
+        {
+          "match_name": "OLM Smoother v2-0001",
+          "name": "Enable Color Key",
+          "value": 0
+        },
+        {
+          "match_name": "OLM Smoother v2-0015",
+          "name": "Invert Color Key",
+          "value": 0
+        },
+        {
+          "match_name": "OLM Smoother v2-0003",
+          "name": "Smoothness",
+          "value": 100
+        },
+        {
+          "match_name": "OLM Smoother v2-0004",
+          "name": "Extra Smooth",
+          "value": 0
+        },
+        {
+          "match_name": "OLM Smoother v2-0005",
+          "name": "Smooth Range",
+          "value": 2
+        },
+        {
+          "match_name": "OLM Smoother v2-0006",
+          "name": "Smoother Version",
+          "value": 2
+        },
+        {
+          "match_name": "OLM Smoother v2-0007",
+          "name": "Gamma Correction",
+          "value": 1
+        },
+        {
+          "match_name": "OLM Smoother v2-0008",
+          "name": "Gamma Value",
+          "value": 2.4
+        },
+        {
+          "match_name": "OLM Smoother v2-0009",
+          "name": "Number of Gamma Colors",
+          "value": 1
+        }
+      ],
+      "plugin": "OLMSmoother2",
+      "plugin_sha256": "b465f78b5668d6280c0d1d8250fe172af19f63fa79af3bb7a66e0efbcaed7ff5",
+      "validated_output_sha256": "13019fb2ea7ab849fb70b6b44cdb8c49cd1224227f8727f4703cec63e4deac9b",
+      "validated_output_size_bytes": 2312783,
+      "width": 1920
+    },
+    {
+      "case_id": "toon_arbitrary_hd_8bpc",
+      "commit_sha256": "6e117a3da3c18d531df024dd08f65fd67b8b947b945217706bc875deee329175",
+      "depth": 8,
+      "execution_route": "Smart",
+      "height": 1080,
+      "parameter_overrides": [],
+      "plugin": "OLMToonDilate",
+      "plugin_sha256": "fb51ccf3373bded030b1d3a809d1dc23b2df9270161ac55e0d29cba34201eb9d",
+      "validated_output_sha256": "29ee6c2cee3e71fe0f4db003703337e0faf91228f04ea268fb60373927d9f41e",
+      "validated_output_size_bytes": 351949,
+      "width": 1920
+    }
+  ],
+  "campaign": {
+    "accepted_cases": 10,
+    "path": "handoffs/olm_public_beta_rc_native_ae_final_20260822/campaign_result.json",
+    "profile": "quick",
+    "sha256": "24102fce8950836a12f872b9ad21bf734d77a9e07dbb0a06874d4389477bebe1"
+  },
+  "host": {
+    "ae_versions": [
+      "26.3x87"
+    ],
+    "application": "Adobe After Effects 2026",
+    "renderer": "SOFTWARE"
+  },
+  "installed_identity_manifest": {
+    "accepted_at": "2026-08-22T08:11:24.333096+00:00",
+    "path": "refs/conformance/olm_public_beta_rc_identity_20260822.json",
+    "sha256": "8a393f7d47dbd52e54d328dfc9528fcdf9ed08d48edba84138493b223a88d3b6"
+  },
+  "package": {
+    "filename": "olm_public_beta_rc_20260822.zip",
+    "sha256": "74dd05284203287a61205a9f937e25c62731d4a07bbe6fbcecb3d951f523f80d"
+  },
+  "schema": "olm.public-beta-rc-native-ae-quick/1",
+  "scope": "ten-plugin HD 8bpc quick smoke only; not the full depth/route/parameter matrix",
+  "status": "accepted_exact"
+}

@@ -23,6 +23,11 @@ def test_three_gate_matrix_is_fixed_and_covers_all_plugins() -> None:
     assert "PF16 Windows実用代表は現行Classic/Smart exact" in text
     assert "| OLMToonDilate | 通過 | 限定 | 限定 |" in text
     assert "3深度Windows corner-seed代表は現行core exact" in text
+    assert text.count("現行RC HD/8bpc native AE通過") == len(plugins)
+    support = (ROOT / "docs/BETA_SUPPORT.md").read_text()
+    assert "Public Betaの判断基準は" in support
+    assert "追加ゲートではありません" in support
+    assert "74dd05284203287a61205a9f937e25c62731d4a07bbe6fbcecb3d951f523f80d" in support
 
 
 if __name__ == "__main__":

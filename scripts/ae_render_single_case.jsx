@@ -62,7 +62,9 @@
             if (!bytesMatch(signature, [137, 80, 78, 71, 13, 10, 26, 10])) {
                 return false;
             }
-            file.seek(-12, 2);
+            // AE 26.3 returns false for negative SEEK_END offsets. Use the
+            // observed byte length and an absolute offset instead.
+            file.seek(Number(file.length) - 12, 0);
             return bytesMatch(file.read(12), [0, 0, 0, 0, 73, 69, 78, 68, 174, 66, 96, 130]);
         } catch (_) {
             return false;
@@ -74,6 +76,10 @@
     }
 
     function waitForStableFile(file, since, timeoutMs, sleepMs, stableWindowMs) {
+        // AE writes the PNG asynchronously. ExtendScript may cache metadata on
+        // an existing File object, so observe the path through a fresh object
+        // on every poll.
+        var watchedPath = file.fsName;
         var startedWaiting = new Date();
         var sinceMs = since.getTime() - 2000;
         var lastSize = -1;
@@ -84,6 +90,7 @@
         var observation = { status: "timeout", timeout_ms: timeoutMs, waited_ms: 0, polls: 0, stable_polls: 0, stable_for_ms: 0, stable_window_ms: stableWindowMs, size_bytes: 0, modified_ms: 0, format_complete: false, crc_validated: false };
         while (true) {
             polls++;
+            file = new File(watchedPath);
             var nowMs = (new Date()).getTime();
             var exists = file.exists;
             var size = exists ? Number(file.length || 0) : 0;
@@ -98,8 +105,9 @@
                 }
                 var stableForMs = nowMs - stableStartedMs;
                 var formatComplete = stableForMs >= stableWindowMs && hasCompletePngTrailer(file);
-                var verifiedSize = file.exists ? Number(file.length || 0) : 0;
-                var verifiedModified = file.exists && file.modified ? file.modified.getTime() : 0;
+                var verifiedFile = new File(watchedPath);
+                var verifiedSize = verifiedFile.exists ? Number(verifiedFile.length || 0) : 0;
+                var verifiedModified = verifiedFile.exists && verifiedFile.modified ? verifiedFile.modified.getTime() : 0;
                 if (stableForMs >= stableWindowMs && formatComplete && verifiedSize === size && verifiedModified === modified) {
                     observation.status = "stable";
                     observation.waited_ms = nowMs - startedWaiting.getTime();

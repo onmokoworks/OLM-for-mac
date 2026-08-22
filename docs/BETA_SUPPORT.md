@@ -49,6 +49,14 @@ full-frame 1920×1080・各プラグインの最初の宣言深度（今回の10
 上表の汎用範囲をすべて掛け合わせたWindows oracle／native AE検証は完了していません。
 したがって、重要な制作物では複製上で出力を確認してください。
 
+さらに2026-08-22の現行Debug RC package（SHA-256
+`74dd05284203287a61205a9f937e25c62731d4a07bbe6fbcecb3d951f523f80d`）について、package内と
+MediaCore内がbyte exactなUniversal 10 binariesをAfter Effects 2026 `26.3x87`のSoftware rendererで
+HD 1920×1080・8 bpc・選択済みtuple各1件レンダーし、10/10をconsumer-time再検証込みで通過しました。
+証拠は [`olm_public_beta_rc_native_ae_quick_20260822.json`](../refs/conformance/olm_public_beta_rc_native_ae_quick_20260822.json)
+です。この結果は現行RC artifactのnative AE残件を限定範囲で満たしますが、16/32 bpc、全Classic/Smart、
+全parameter、SD/4K、native AE上のWindows exactを通過へ引き上げるものではありません。
+
 ROI v2 package reportの`beta_support_sha256`は、zip内にビルド時収録した
 `OLM_Mac_Plugins_Release/BETA_SUPPORT.md`のimmutable manifest hashです。現在閲覧中の
 `docs/BETA_SUPPORT.md`は、その後の検証結果を追記するlive文書であり、同じhashを持つ必要はありません。
@@ -58,7 +66,8 @@ live文書のhashでpackage manifest値を置き換えることもありませ�
 AddressSanitizer／UndefinedBehaviorSanitizer検証が成功しています。current live-sourceの
 worker callbackは、同一Windows AEX SHAから取得した5色のunrolled／scalar-tail代表について、
 PF8／PF16／PF32それぞれの一致3ケースと不一致1ケースをtracked reportから再生し、出力単位／float bitがexactです。
-この接続はhostlessなone-pixel worker oracleであり、現行RCのAfter Effects内レンダー証拠ではありません。
+この接続自体はhostlessなone-pixel worker oracleです。現行RCのAfter Effects内レンダー証拠は上記quick smokeで、
+同じ5色worker cellのnative AE数値一致を主張するものではありません。
 current live-sourceの
 canonical hostless性能reportは全10プラグイン×HD/UHDの20セルを実測し、20/20成功しました。
 Directionalは各geometryでFront／Back／Dual×PF8/PF16/PF32の9 casesを各active Strength 2で実行し、
@@ -93,9 +102,10 @@ Adobe SDK／symlinked Util／Mac system SDK・compiler・standard libraryもin-r
 今回の10-case quick smokeもmilestone確認であり、54-case smokeの代替ではありません。証拠は
 [`olm_all10_roi_v2_quick_ae_smoke_20260820.json`](../refs/conformance/olm_all10_roi_v2_quick_ae_smoke_20260820.json)です。
 
-## 次の完了ゲート
+## 主要操作ゲートを「通過」へ引き上げる証拠範囲
 
-各汎用laneについて、最低限次を満たした時点で「一般利用向け」と表記します。
+Public Betaの判断基準は [PUBLIC_BETA_3_GATES.md](PUBLIC_BETA_3_GATES.md) の3本だけです。
+次は「主要操作」ゲートを現在の`限定`から`通過`へ引き上げるための証拠内訳であり、追加ゲートではありません。
 
 - 8/16/32 bpcのうち表で対応する全深度
 - 透明、単色、impulse、gradient、seed固定randomの5入力

@@ -12,16 +12,16 @@ geometry、parameter cellは各ゲートを支える証拠であり、新しい�
 
 | プラグイン | 安全性 | 主要操作 | 互換性・実機 | RCまでの残件 |
 |---|---|---|---|---|
-| ColorKeep | 通過 | 限定 | 限定 | 3深度Windows 5色worker代表は現行callback exact。現行RC native AE |
-| OLMBlur | 通過 | 限定 | 限定 | 現行RC native AE。Classic 32 bpcは非対応 |
-| OLMColorKey | 通過 | 限定 | 限定 | Thin＋Blur同時指定を既知差分として維持。現行RC native AE |
-| OLMDirectionalBlur | 通過 | 限定 | 限定 | generic DualのWindows代表確認と現行RC native AE |
-| OLMDistanceGradation | 通過 | 限定 | 限定 | PF32 Power/Bilateralは既知差分。現行RC native AE |
-| OLMKiraKira | 通過 | 限定 | 限定 | generic Mode 3の代表Windows確認と現行RC native AE |
-| OLMRadialBlur | 通過 | 限定 | 限定 | 一般topologyの代表Windows確認と現行RC native AE |
-| OLMSmoother | 通過 | 限定 | 限定 | PF16 Windows実用代表は現行Classic/Smart exact。現行RC native AE |
-| OLMSmoother2 | 通過 | 限定 | 限定 | classifier近似を既知差分として維持。現行RC native AE |
-| OLMToonDilate | 通過 | 限定 | 限定 | 3深度Windows corner-seed代表は現行core exact。現行RC native AE |
+| ColorKeep | 通過 | 限定 | 限定 | 現行RC HD/8bpc native AE通過。3深度Windows 5色worker代表は現行callback exact。全route/depth native AEは未完 |
+| OLMBlur | 通過 | 限定 | 限定 | 現行RC HD/8bpc native AE通過。Classic 32 bpcは非対応 |
+| OLMColorKey | 通過 | 限定 | 限定 | 現行RC HD/8bpc native AE通過。Thin＋Blur同時指定を既知差分として維持 |
+| OLMDirectionalBlur | 通過 | 限定 | 限定 | 現行RC HD/8bpc native AE通過。generic DualのWindows代表確認は未完 |
+| OLMDistanceGradation | 通過 | 限定 | 限定 | 現行RC HD/8bpc native AE通過。PF32 Power/Bilateralは既知差分 |
+| OLMKiraKira | 通過 | 限定 | 限定 | 現行RC HD/8bpc native AE通過。generic Mode 3の代表Windows確認は未完 |
+| OLMRadialBlur | 通過 | 限定 | 限定 | 現行RC HD/8bpc native AE通過。一般topologyの代表Windows確認は未完 |
+| OLMSmoother | 通過 | 限定 | 限定 | 現行RC HD/8bpc native AE通過。PF16 Windows実用代表は現行Classic/Smart exact |
+| OLMSmoother2 | 通過 | 限定 | 限定 | 現行RC HD/8bpc native AE通過。classifier近似を既知差分として維持 |
+| OLMToonDilate | 通過 | 限定 | 限定 | 現行RC HD/8bpc native AE通過。3深度Windows corner-seed代表は現行core exact |
 
 詳細な対応範囲は [BETA_SUPPORT.md](BETA_SUPPORT.md) をauthorityとする。この表は
 進捗を一目で判断する索引であり、個別テストが増えても行・列・完了基準を増やさない。

@@ -39,6 +39,7 @@ class AEGeneralizationSmokeTests(unittest.TestCase):
         self.assertEqual(campaign.PLUGINS["blur"]["match"], "OLM OLM Blur")
         self.assertEqual(campaign.PLUGINS["directional"]["depths"], (8,))
         self.assertEqual(campaign.PLUGINS["smoother"]["depths"], (8, 16))
+        self.assertEqual(campaign.PLUGINS["smoother"]["route"], "Smart")
 
     def run_preflight(self, profile: str, plugins: tuple[str, ...] = ()) -> dict:
         with tempfile.TemporaryDirectory() as raw:

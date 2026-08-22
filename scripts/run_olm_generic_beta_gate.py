@@ -276,7 +276,10 @@ DEPENDENCY_PATHS: dict[str, tuple[str, ...]] = {
     ),
     "tests/test_beta_support_documentation.py": (
         "docs/BETA_SUPPORT.md",
+        "docs/PUBLIC_BETA_3_GATES.md",
         "README.md",
+        "refs/conformance/olm_public_beta_rc_identity_20260822.json",
+        "refs/conformance/olm_public_beta_rc_native_ae_quick_20260822.json",
         "reports/public_beta_completion_audit_20260820.json",
         "reports/public_beta_roi_v2_package_20260820.json",
         "refs/conformance/olm_all10_roi_v2_quick_ae_smoke_20260820.json",

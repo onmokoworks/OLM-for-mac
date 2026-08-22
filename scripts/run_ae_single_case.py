@@ -1148,7 +1148,26 @@ def runtime_source_snapshot_matches(
         current = read_fixed_runtime_sources(runtime_dir, dir_fd=dir_fd)
     except (OSError, ValueError):
         return False
-    return current == snapshot
+    return runtime_source_snapshots_match(current, snapshot)
+
+
+def runtime_source_snapshots_match(
+    left: tuple[BoundSource, ...],
+    right: tuple[BoundSource, ...],
+) -> bool:
+    """Compare sealed JSX sources while tolerating macOS TCC xattr ctime drift.
+
+    After Effects may add ``com.apple.macl`` when it opens a wrapper. That only
+    changes inode ctime; content SHA, inode, size, mtime, mode and link count
+    remain bound. Every other identity field stays fail-closed here.
+    """
+
+    if len(left) != len(right):
+        return False
+    return all(
+        lhs._replace(changed_ns=0) == rhs._replace(changed_ns=0)
+        for lhs, rhs in zip(left, right)
+    )
 
 
 def create_single_run_directory(output_container: Path) -> tuple[str, Path]:
@@ -2043,9 +2062,18 @@ def _directory_matches_entry(
     )
 
 
-def _source_entry_matches(actual: BoundSource, entry: object) -> bool:
+def _source_entry_matches(
+    actual: BoundSource,
+    entry: object,
+    *,
+    allow_changed_ns_drift: bool = False,
+) -> bool:
+    payload = _bound_source_payload(actual)
+    if allow_changed_ns_drift and isinstance(entry, dict):
+        payload.pop("changed_ns", None)
+        entry = {key: value for key, value in entry.items() if key != "changed_ns"}
     return json_values_equal_exact(
-        _bound_source_payload(actual),
+        payload,
         entry,
     )
 
@@ -2203,6 +2231,7 @@ def verify_single_case_commit(
             if not _source_entry_matches(
                 source,
                 runtime_entries_by_path.get(str(source.path)),
+                allow_changed_ns_drift=True,
             ):
                 errors.append(f"runtime source identity mismatch: {source.path}")
 
@@ -2468,7 +2497,10 @@ def verify_single_case_commit(
             runtime_dir,
             dir_fd=runtime_descriptor,
         )
-        if final_runtime_sources != current_runtime_sources:
+        if not runtime_source_snapshots_match(
+            final_runtime_sources,
+            current_runtime_sources,
+        ):
             errors.append("runtime sources changed during consumer verification")
         final_commit_bytes, final_commit_source = read_bound_source_at(
             publication_descriptor,
@@ -2550,7 +2582,10 @@ def publish_single_case_evidence(
             Path(run_dir) / "runtime",
             dir_fd=runtime_descriptor,
         )
-        if runtime_sources != runtime_source_snapshot:
+        if not runtime_source_snapshots_match(
+            runtime_sources,
+            runtime_source_snapshot,
+        ):
             raise ValueError("runtime sources changed before publication")
         artifact = copy_validated_output(
             result,
@@ -3128,7 +3163,18 @@ def main() -> int:
             or not host_leaf_identities_match
             or not runtime_sources_match
         ):
-            print("[FAIL] run-owned host inputs or result leaves changed", file=sys.stderr)
+            failed_invariants = []
+            if not host_tree_matches:
+                failed_invariants.append("directory_chains")
+            if not host_leaf_identities_match:
+                failed_invariants.append("result_leaf_identities")
+            if not runtime_sources_match:
+                failed_invariants.append("runtime_sources")
+            print(
+                "[FAIL] run-owned host inputs or result leaves changed: "
+                + ", ".join(failed_invariants),
+                file=sys.stderr,
+            )
             try:
                 active_marker.unlink()
             except OSError:

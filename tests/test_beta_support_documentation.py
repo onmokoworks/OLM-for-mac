@@ -13,6 +13,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DOC = ROOT / "docs/BETA_SUPPORT.md"
+THREE_GATES = ROOT / "docs/PUBLIC_BETA_3_GATES.md"
+CURRENT_RC_IDENTITY = ROOT / "refs/conformance/olm_public_beta_rc_identity_20260822.json"
+CURRENT_RC_NATIVE_AE = ROOT / "refs/conformance/olm_public_beta_rc_native_ae_quick_20260822.json"
 README = ROOT / "README.md"
 SMOOTHER2_GAMMA_COLORS_TEST = (
     ROOT / "tests/test_olmsmoother2_gamma_colors_beta_20260820.py"
@@ -70,6 +73,19 @@ class BetaSupportDocumentationContract(unittest.TestCase):
     def test_table_has_exactly_the_ten_shipped_plugins(self) -> None:
         rows = re.findall(r"^\| (?!プラグイン|---)([^|]+?) \|", self.doc, re.MULTILINE)
         self.assertEqual(rows, list(SOURCES))
+
+    def test_current_rc_quick_evidence_stays_inside_the_fixed_three_gates(self) -> None:
+        gates = THREE_GATES.read_text(encoding="utf-8")
+        report = json.loads(CURRENT_RC_NATIVE_AE.read_text(encoding="utf-8"))
+        identity = json.loads(CURRENT_RC_IDENTITY.read_text(encoding="utf-8"))
+        self.assertEqual(gates.count("現行RC HD/8bpc native AE通過"), 10)
+        self.assertIn("追加ゲートではありません", self.doc)
+        self.assertEqual(report["status"], "accepted_exact")
+        self.assertIn("not the full depth/route/parameter matrix", report["scope"])
+        self.assertEqual(len(report["accepted_cases"]), 10)
+        expected = {row["plugin"]: row["sha256"] for row in identity["plugins"]}
+        observed = {row["plugin"]: row["plugin_sha256"] for row in report["accepted_cases"]}
+        self.assertEqual(observed, expected)
 
     def test_depth_and_route_claims_are_anchored_in_dispatch_code(self) -> None:
         required_tokens = {
