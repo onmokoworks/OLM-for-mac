@@ -194,7 +194,15 @@ RADIAL_SIZE_NOISE_DEPENDENCIES = (
     "core/olm_checked_allocation.h",
     "core/olm_world_safety.h",
 )
+COLORKEEP_WINDOWS_ORACLE_DEPENDENCIES = (
+    "mac/ColorKeep/ColorKeep.cpp",
+    "refs/conformance/colorkeep_pf8_pf16_multicolor_actual_aex_20260805.json",
+    "refs/conformance/colorkeep_pf32_multicolor_actual_aex_20260805.json",
+)
 DEPENDENCY_PATHS: dict[str, tuple[str, ...]] = {
+    "tests/test_colorkeep_generic_beta_20260820.py": (
+        *COLORKEEP_WINDOWS_ORACLE_DEPENDENCIES,
+    ),
     "tests/test_olmblur_generic_beta_lane_20260820.py": (
         *BLUR_GENERIC_DEPENDENCIES,
     ),

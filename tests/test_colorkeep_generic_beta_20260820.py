@@ -55,6 +55,57 @@ def test_checkout_cleanup_contract_and_windows_owner_evidence() -> None:
 
 
 def test_generic_worlds_counts_and_typed_workers() -> None:
+    pf816_report = json.loads(
+        (ROOT / "refs/conformance/colorkeep_pf8_pf16_multicolor_actual_aex_20260805.json")
+        .read_text(encoding="utf-8")
+    )
+    pf32_report = json.loads(
+        (ROOT / "refs/conformance/colorkeep_pf32_multicolor_actual_aex_20260805.json")
+        .read_text(encoding="utf-8")
+    )
+    assert pf816_report["status"] == pf32_report["status"] == "exact"
+    assert pf816_report["aex_sha256"] == pf32_report["aex_sha256"]
+    assert pf816_report["aex_sha256"] == (
+        "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86"
+    )
+    assert pf816_report["scope"]["paths"] == pf32_report["scope"]["paths"] == [
+        "four-color unrolled group", "one-color scalar tail",
+    ]
+
+    def words(rows: list[list[str]]) -> str:
+        return ",\n        ".join(
+            "{" + ", ".join(f"{int(value, 16)}u" for value in row) + "}" for row in rows
+        )
+
+    def units(rows: list[list[int]]) -> str:
+        return ",\n        ".join("{" + ", ".join(str(value) for value in row) + "}" for row in rows)
+
+    case_order = ("first_unrolled_match", "fourth_unrolled_match", "fifth_tail_match", "no_match")
+    win_float_colors = words(pf816_report["colors_argb_f32_bits"])
+    win_pf8_sources = units([
+        pf816_report["depth_results"]["PF8"]["cases"][name]["source_argb_units"]
+        for name in case_order
+    ])
+    win_pf8_expected = units([
+        pf816_report["depth_results"]["PF8"]["cases"][name]["observed_argb_units"]
+        for name in case_order
+    ])
+    win_pf16_sources = units([
+        pf816_report["depth_results"]["PF16"]["cases"][name]["source_argb_units"]
+        for name in case_order
+    ])
+    win_pf16_expected = units([
+        pf816_report["depth_results"]["PF16"]["cases"][name]["observed_argb_units"]
+        for name in case_order
+    ])
+    win_pf32_colors = words(pf32_report["enabled_color_argb_bits"])
+    win_pf32_sources = words([
+        pf32_report["cases"][name]["source_argb_bits"] for name in case_order
+    ])
+    win_pf32_expected = words([
+        pf32_report["cases"][name]["observed_argb_bits"] for name in case_order
+    ])
+
     probe = f'''#include <cstdint>
 #include <cstring>
 #include <vector>
@@ -169,6 +220,59 @@ int main() {{
     if (ColorKeepFloatFunc(&info, 0, 0, &inf, &outf) || outf.alpha != inf.alpha) return 7;
     inf.red = 0.251f;
     if (ColorKeepFloatFunc(&info, 0, 0, &inf, &outf) || outf.alpha != 0.0f) return 8;
+
+    // Bind the current production callbacks to the tracked Windows 2025 AEX
+    // worker oracle. These are the same five-color unrolled/tail match and
+    // no-match calls recorded in the two conformance reports loaded above.
+    const uint32_t pf816_color_bits[5][4] = {{
+        {win_float_colors}
+    }};
+    ColorKeepInfo win816 = {{}};
+    win816.count = 5;
+    std::memcpy(win816.colors, pf816_color_bits, sizeof(pf816_color_bits));
+    const uint8_t pf8_source[4][4] = {{
+        {win_pf8_sources}
+    }};
+    const uint8_t pf8_expected[4][4] = {{
+        {win_pf8_expected}
+    }};
+    for (int i = 0; i < 4; ++i) {{
+        PF_Pixel8 source{{pf8_source[i][0], pf8_source[i][1], pf8_source[i][2], pf8_source[i][3]}};
+        PF_Pixel8 actual{{}};
+        if (ColorKeep8Func(&win816, 0, 0, &source, &actual) ||
+            std::memcmp(&actual, pf8_expected[i], sizeof(actual))) return 24 + i;
+    }}
+    const uint16_t pf16_source[4][4] = {{
+        {win_pf16_sources}
+    }};
+    const uint16_t pf16_expected[4][4] = {{
+        {win_pf16_expected}
+    }};
+    for (int i = 0; i < 4; ++i) {{
+        PF_Pixel16 source{{pf16_source[i][0], pf16_source[i][1], pf16_source[i][2], pf16_source[i][3]}};
+        PF_Pixel16 actual{{}};
+        if (ColorKeep16Func(&win816, 0, 0, &source, &actual) ||
+            std::memcmp(&actual, pf16_expected[i], sizeof(actual))) return 28 + i;
+    }}
+
+    const uint32_t pf32_color_bits[5][4] = {{
+        {win_pf32_colors}
+    }};
+    ColorKeepInfo win32 = {{}};
+    win32.count = 5;
+    std::memcpy(win32.colors, pf32_color_bits, sizeof(pf32_color_bits));
+    const uint32_t pf32_source_bits[4][4] = {{
+        {win_pf32_sources}
+    }};
+    const uint32_t pf32_expected_bits[4][4] = {{
+        {win_pf32_expected}
+    }};
+    for (int i = 0; i < 4; ++i) {{
+        PF_PixelFloat source{{}}, actual{{}};
+        std::memcpy(&source, pf32_source_bits[i], sizeof(source));
+        if (ColorKeepFloatFunc(&win32, 0, 0, &source, &actual) ||
+            std::memcmp(&actual, pf32_expected_bits[i], sizeof(actual))) return 32 + i;
+    }}
     return 0;
 }}
 '''
