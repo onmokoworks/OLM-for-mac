@@ -154,6 +154,20 @@ def apply_parameter_profile(state: dict[str, object], profile: str) -> None:
         )
         state["params_by_size"] = {}
         return
+    if profile == "colorkey-edge-blur" and state.get("key") == "colorkey":
+        state["supported_tuple"] = (
+            "single enabled input-matched key with Edge Blur Amount 4 "
+            "Distance Type 1 Direction Around"
+        )
+        state["params"] = (
+            ("OLM Color Key-0017", "Amount", 4),
+            ("OLM Color Key-0018", "Distance Type", 1),
+            ("OLM Color Key-0019", "Direction", 2),
+            ("OLM Color Key-0524", "Use Color 1", 1),
+            ("OLM Color Key-0022", "Color 1", [17 / 255, 5 / 255, 1 / 255]),
+        )
+        state["params_by_size"] = {}
+        return
     if profile != "directional-dual" or state.get("key") != "directional":
         raise ValueError(f"parameter profile {profile!r} is not valid for {state.get('key')!r}")
     state["declared_depths"] = (8, 16, 32)
@@ -245,7 +259,7 @@ def main() -> int:
     parser.add_argument(
         "--parameter-profile",
         choices=("baseline", "directional-dual", "colorkeep-count100",
-                 "blur-legacy-repeat10"),
+                 "blur-legacy-repeat10", "colorkey-edge-blur"),
         default="baseline",
         help="Select a bounded major-operations profile without changing the baseline 54-cell matrix.",
     )
@@ -261,6 +275,7 @@ def main() -> int:
             "directional-dual": "directional",
             "colorkeep-count100": "colorkeep",
             "blur-legacy-repeat10": "blur",
+            "colorkey-edge-blur": "colorkey",
         }[args.parameter_profile]
         if selected_keys != [required_plugin]:
             parser.error(

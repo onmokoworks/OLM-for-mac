@@ -1,0 +1,49 @@
+{
+  "kind": "olmcolorkey_native_ae_major_operations_profile",
+  "schema": 1,
+  "date": "2026-08-24",
+  "status": "passed",
+  "gate_scope": "Evidence for the existing major-operations and compatibility/native-AE gates; not a new gate and not part of the fixed baseline 54-cell matrix.",
+  "host": "Adobe After Effects 2026 26.3x87",
+  "renderer": "Software",
+  "plugin": "OLMColorKey",
+  "installed_sha256": "60b5ba2d4cf39d97bd32a9da99cd0ee31778374031a8dad78fd5deb70aec791a",
+  "installed_matches_local_debug": true,
+  "campaign_path": "handoffs/olm_public_beta_colorkey_edge_blur_major_ops_20260824/campaign_result.json",
+  "campaign_sha256": "d9bc47d1aff5d9ae498e622c4197b73ae493f3b4748a415885db9be404c7891f",
+  "windows_actual_aex_anchor": {
+    "path": "refs/conformance/olmcolorkey_edge_blur_complete_family_20260806.json",
+    "report_sha256": "106995529055c27882a30dc7ae42bd0bdb1dfef470410202c5f48c7566909325",
+    "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+    "scope": "production-admitted 4x3 Edge Blur family, 46 cells across PF8/PF16/PF32, including Amount 4 and public directions"
+  },
+  "profile": {
+    "route": "Smart",
+    "edge_thin_amount": 0,
+    "edge_blur_amount": 4,
+    "edge_blur_distance_type": 1,
+    "edge_blur_direction": 2,
+    "edge_blur_direction_name": "Around",
+    "use_color_1": true,
+    "color_1_rgb": [0.06666666666666667, 0.0196078431372549, 0.00392156862745098],
+    "matched_input_pixel": [1, 0],
+    "matched_input_rgb8": [17, 5, 1]
+  },
+  "totals": {"cells": 6, "campaign_passed": 6, "consumer_reverified": 6, "failed": 0},
+  "cells": [
+    {"case_id":"colorkey_arbitrary_hd_8bpc","depth":8,"width":1920,"height":1080,"output_mode":"png","commit_sha256":"5b7a2d5b70decb6ce323f6de1d9bd8b3405538494be2e2389f1e1f0fa9b0410c","validated_output_sha256":"8e3be815ae90b370b7fa4884c7649092f236b15fcc8e6292907ca5a372a3fe3d"},
+    {"case_id":"colorkey_arbitrary_4k_8bpc","depth":8,"width":3840,"height":2160,"output_mode":"png","commit_sha256":"8191d4e05ec912fbc64425f0aa02f55a77a8358136f36e4af3f89415f7dbbac3","validated_output_sha256":"0e8a0d4339208bbe335efbc003b0f35e5993e31484a9216e3aa393d8c7307f8f"},
+    {"case_id":"colorkey_arbitrary_hd_16bpc","depth":16,"width":1920,"height":1080,"output_mode":"png16_render_queue","commit_sha256":"4073b200ff0b2de19ce00e7ba52d2610c418e4af5c7376978f696005b7868605","validated_output_sha256":"82b02305ba359a850fc44a3c8c9d4c04d0499bfc6e21037ecd322756e9ad8072"},
+    {"case_id":"colorkey_arbitrary_4k_16bpc","depth":16,"width":3840,"height":2160,"output_mode":"png16_render_queue","commit_sha256":"c4f942a563f8d58d784092fe7984e878d5b96ce440218f24f3c18f739f6692b5","validated_output_sha256":"3d510bb9edad902f140f4a4bbdc92b73e5bd730df964d7530bd81921900b9d96"},
+    {"case_id":"colorkey_arbitrary_hd_32bpc","depth":32,"width":1920,"height":1080,"output_mode":"exr_render_queue","commit_sha256":"20fe66b61dba7868c60935b53c57185fe33988a23495c52bc976658c6aad5adc","validated_output_sha256":"9b46a63f369a06cc9186852796a49896452c2bef0a6e239ffb0784c08f82cfc2"},
+    {"case_id":"colorkey_arbitrary_4k_32bpc","depth":32,"width":3840,"height":2160,"output_mode":"exr_render_queue","commit_sha256":"5a17a896b4c31b994b4e1e2ea8e76592dd03a1f86e637393ece4cf86200c5d4b","validated_output_sha256":"988c56df4e104e11d57a7140ab670701a3f7b8a1d3cf7a4ada03526d86a337f9"}
+  ],
+  "boundaries": [
+    "The input is a deterministic arbitrary gradient with an enabled key matching pixel (1,0), not the bounded Windows fixture or an admitted input SHA.",
+    "The Windows anchor covers the selected Edge Blur family in all three depths, but these six native-AE frames are not pixel-by-pixel Windows-to-Mac comparisons.",
+    "Edge Thin remains zero; the known Thin-plus-Blur intersection is outside this profile.",
+    "16 bpc proves execution in a 16 bpc AE project and publication integrity after TIFF-to-PNG conversion, not 16-bit numerical equality.",
+    "32 bpc publication verifies a 32 Float EXR.",
+    "Other key/color-space/replace combinations, GPU, partial storage for Edge Blur, and the parameter cross-product remain outside this profile."
+  ]
+}

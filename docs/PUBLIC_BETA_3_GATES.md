@@ -14,7 +14,7 @@ geometry、parameter cellは各ゲートを支える証拠であり、新しい�
 |---|---|---|---|---|
 | ColorKeep | 通過 | 限定 | 限定 | baselineに加え、count 100＋100番目の色をSmart HD/4K×8/16/32 native AEで6/6通過。Windows実AEXのcount 5/100末尾色境界は3深度hostless exact。Classic native AEと全1–100色の数値一致は未完 |
 | OLMBlur | 通過 | 限定 | 限定 | baselineに加えRepeat 10＋Legacy onをSmart HD/4K×8/16/32 native AEで6/6通過。同tupleはWindows実AEX→Mac Smartで3深度exact。Classic 32 bpcは非対応 |
-| OLMColorKey | 通過 | 限定 | 限定 | 現行binaryのSmart HD/4K×8/16/32を6/6 native AE通過。Thin＋Blur同時指定を既知差分として維持 |
+| OLMColorKey | 通過 | 限定 | 限定 | baselineに加え入力一致key＋Edge Blur Amount 4をSmart HD/4K×8/16/32 native AEで6/6通過。Windows実AEXのEdge Blur familyは3深度46-cell exact。Thin＋Blur同時指定を既知差分として維持 |
 | OLMDirectionalBlur | 通過 | 限定 | 限定 | baseline HD/4K×8 bpcを2/2、別の主要操作Dual profileをHD/4K×8/16/32で6/6 native AE通過。generic DualのWindows代表確認は未完 |
 | OLMDistanceGradation | 通過 | 限定 | 限定 | 現行binaryのSmart HD/4K×8/16/32を6/6 native AE通過。PF32 Power/Bilateralは既知差分 |
 | OLMKiraKira | 通過 | 限定 | 限定 | 現行binaryのSmart HD/4K×8/16/32を6/6 native AE通過。generic Mode 3の代表Windows確認は未完 |

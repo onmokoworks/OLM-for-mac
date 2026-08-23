@@ -86,6 +86,20 @@ class AEGeneralizationSmokeTests(unittest.TestCase):
         self.assertEqual(baseline["params"], ())
         self.assertEqual(campaign.PLUGINS["blur"].get("params", ()), ())
 
+    def test_colorkey_edge_blur_profile_enables_an_input_matched_key(self) -> None:
+        baseline = campaign.plugin_state("colorkey")
+        profiled = campaign.plugin_state("colorkey")
+        campaign.apply_parameter_profile(profiled, "colorkey-edge-blur")
+        params = {match: value for match, _name, value in profiled["params"]}
+        self.assertEqual(params["OLM Color Key-0017"], 4)
+        self.assertEqual(params["OLM Color Key-0018"], 1)
+        self.assertEqual(params["OLM Color Key-0019"], 2)
+        self.assertEqual(params["OLM Color Key-0524"], 1)
+        self.assertEqual(params["OLM Color Key-0022"], [17 / 255, 5 / 255, 1 / 255])
+        self.assertNotIn("OLM Color Key-0013", params)
+        self.assertEqual(profiled["declared_depths"], (8, 16, 32))
+        self.assertEqual(baseline["params"], ())
+
     def run_preflight(self, profile: str, plugins: tuple[str, ...] = ()) -> dict:
         with tempfile.TemporaryDirectory() as raw:
             plugin_args = [item for plugin in plugins for item in ("--plugin", plugin)]
