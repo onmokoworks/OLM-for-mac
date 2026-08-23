@@ -25,6 +25,9 @@ DECLARED_NATIVE_AE_MATRIX = (
 DIRECTIONAL_DUAL_NATIVE_AE = (
     ROOT / "refs/conformance/olmdirectionalblur_native_ae_dual_major_ops_20260823.json"
 )
+COLORKEEP_COUNT100_NATIVE_AE = (
+    ROOT / "refs/conformance/colorkeep_native_ae_count100_major_ops_20260824.json"
+)
 README = ROOT / "README.md"
 SMOOTHER2_GAMMA_COLORS_TEST = (
     ROOT / "tests/test_olmsmoother2_gamma_colors_beta_20260820.py"
@@ -90,7 +93,7 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         matrix = json.loads(DECLARED_NATIVE_AE_MATRIX.read_text(encoding="utf-8"))
         self.assertEqual(gates.count("| 通過 | 限定 | 限定 |"), 10)
         self.assertIn(
-            "現行candidateのSmart 8/16/32 bpcをHD/4K native AEで6/6通過",
+            "count 100＋100番目の色をSmart HD/4K×8/16/32 native AEで6/6通過",
             gates,
         )
         self.assertIn("54/54", gates)
@@ -143,6 +146,27 @@ class BetaSupportDocumentationContract(unittest.TestCase):
         self.assertEqual(report["profile"]["back_strength"], 2)
         self.assertTrue(all(len(row["commit_sha256"]) == 64 for row in report["cells"]))
         self.assertTrue(any("does not prove generic Dual numerical equality to Windows" in item
+                            for item in report["boundaries"]))
+
+    def test_colorkeep_count100_native_ae_profile_is_major_ops_evidence(self) -> None:
+        report = json.loads(COLORKEEP_COUNT100_NATIVE_AE.read_text(encoding="utf-8"))
+        self.assertEqual(report["status"], "passed")
+        self.assertIn("not a new gate", report["gate_scope"])
+        self.assertIn("not part of the fixed baseline 54-cell matrix", report["gate_scope"])
+        self.assertEqual(report["profile"]["enabled_color_num"], 100)
+        self.assertEqual(report["profile"]["last_palette_match_name"], "OLM Color Keep-0101")
+        self.assertEqual(
+            report["totals"],
+            {"cells": 6, "campaign_passed": 6, "consumer_reverified": 6, "failed": 0},
+        )
+        self.assertEqual(
+            {(row["depth"], row["width"], row["height"]) for row in report["cells"]},
+            {(depth, width, height)
+             for depth in (8, 16, 32)
+             for width, height in ((1920, 1080), (3840, 2160))},
+        )
+        self.assertTrue(all(len(row["commit_sha256"]) == 64 for row in report["cells"]))
+        self.assertTrue(any("not a pixel-by-pixel Windows-to-Mac" in item
                             for item in report["boundaries"]))
 
     def test_depth_and_route_claims_are_anchored_in_dispatch_code(self) -> None:

@@ -21,7 +21,7 @@ Windows版との全設定・全画素一致を意味しません。表にない�
 
 | プラグイン | 任意画像のベータ経路 | 深度／経路 | geometry・stride | 対応パラメーター範囲 | 主な残存制限 | 検証状態 |
 |---|---|---|---|---|---|---|
-| ColorKeep | あり | Classic: 8/16、Smart: 8/16/32 | 正のgeometry、合法な独立stride。pointwise非ゼロorigin partial tile対応。depthはPixelFormatで選択し、DEEP bitは16 bpcだけ必須。AEの無関係なhost-reserved world flagsは許可 | Enabled Color Num 1–100、指定色との一致保持 | Classic 32 bpcなし。tile座標はworld originをauthorityとする | typed iterate実装済み。8/16/32 bpc・1×1〜4K sanitizer、partial tile property成功。Windows actual-AEX（SHA-256 `6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86`）の5色worker代表（先頭／4番目／末尾一致と不一致）は現行callbackと全3深度exact。現行candidateのnative AE Smart HD/4K×8/16/32は6/6通過。これは全1–100色、Classic native AE、native AE上のWindows数値一致を証明しない |
+| ColorKeep | あり | Classic: 8/16、Smart: 8/16/32 | 正のgeometry、合法な独立stride。pointwise非ゼロorigin partial tile対応。depthはPixelFormatで選択し、DEEP bitは16 bpcだけ必須。AEの無関係なhost-reserved world flagsは許可 | Enabled Color Num 1–100、指定色との一致保持 | Classic 32 bpcなし。tile座標はworld originをauthorityとする | typed iterate実装済み。8/16/32 bpc・1×1〜4K sanitizer、partial tile property成功。Windows actual-AEX（SHA-256 `6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86`）はcount 5/100の末尾色境界を全3深度hostless exact。現行candidateはbaselineに加えcount 100＋100番目の色をnative AE Smart HD/4K×8/16/32で6/6通過。これは全1–100色、Classic native AE、同一frameのWindows-to-Mac数値一致を証明しない |
 | OLMBlur | あり | Classic: 8/16 copy-only、Smart: 8/16/32 numerical | Classicは正のgeometry〜最大4096×2160かつUHD面積、Smartは24×24より大きく同じ辺上限。いずれも独立・非overlap stride可 | ClassicはWindows owner由来の既定tuple（Amount 5、Smoothness 100、Repeat 2。Bias/Legacyは未読）。SmartはAmount 1–1000、Smoothness 1–100、Repeat 1–10、Bias 1–2、Legacy on/off | Classic PF32はownerがPF16と識別できないため拒否。ROI counterexampleによりfull-frame以外はfail-close。Smart downsampleは1:1。4K超、高負荷条件は拒否 | Classic PF8/PF16とSmart全深度をtight stagingで成功時のみcommit。独立padded stride、overlap拒否、入力・padding保持、ASan/UBSan、hostless SD/HD/UHD成功。Windows numerical exactは固定fixtureのみ |
 | OLMColorKey | あり | Classic/Smart: 8/16/32 | pointwiseは非ゼロorigin partial tile対応。Thin/Blurはfull-frameのみ | pixel-local key／replace、Edge Thin −100〜100・Distance Type 1〜3、oracle済みEdge Blur profile | Thin＋Blur同時指定、未知Blur tuple/internal directionは未対応。downsample 1:1 | hostless HD/4K・partial tile成功。固定13×11 actual-AEX 36-cell captureはThin Distance Typeが内部値0のままで、公開popup 1〜3の合成根拠には使わない。current ROI v2 native quickはEdge 0 |
 | OLMDirectionalBlur | 限定あり | Classic/Smart: 8/16/32 | 各辺4096以下かつ総画素数4096×2160以下、padded row可。ROIはfull-frame-normalized overscan。3 GiB per-render plugin-owned admission（64 MiB reserve込み） | Front／Backの片側または両側を各Strength 0–4000（少なくとも片側1以上）のうち、両sideのscatterを合算したgeometry別3億5000万work-unit上限内で扱う。Fade/Sharp Tail/Size Variation/Noise Variation=0。Angleは16.16 UI域、Brightness 0–10。PF8は選択した各sideの投影後effective strength 1以上、16/32はrender scale 1 | partial storageはfail-close。deep SDR制約あり。3 GiBはprocess/MFR全体の上限ではない。exact-tail等は固定union | direct／hostless EffectMainでFront／Back／Dual・全深度を確認。current canonical性能reportはHD/UHDそれぞれFront／Back／Dual×PF8/PF16/PF32の9 cases/geometryを各active Strength 2で実測し、source/toolchainの実行前後一致を確認。native AEではDual Angle 37.25・Gain 0.75・両Strength 2をHD/4K×8/16/32で6/6確認。actual-AEX raw-callback／production replay anchorはPF8 960×540・Back 240・Angle 0・Gain 1・scale 0.5で、native AE saved-frameではない。16×16 retained exact unionはPF8 Back 8・Angle 0/45・Gain 1、PF16 Back 1/2/8・Angle 45・Gain 1に加えてPF16 Dual Front 1/2/8＋Back 1・Angle 45・Gain 1、PF32 Back 1・Angle 0/45・Gain 0.5/1およびBack 8・Angle 45・Gain 1（すべてscale 1）に限定する。一般geometry・全Strength組合せ・generic DualのWindows exact・ROI v2 packageには遡及しない |
@@ -76,6 +76,14 @@ commitは生成後に独立したconsumer verifierで再検証しています。
 16 bpcは16 bpc projectで実行後にTIFFからPNGへ変換してpublication integrityを検証するため、
 16-bit数値一致の証拠ではありません。32 bpcは32 Float EXRを検証します。この54セルも3ゲートを
 支える証拠であり、全parameter cross-productや任意入力のWindows bit exactという追加条件ではありません。
+
+2026-08-24にはColorKeepの別主要操作profileとして、`Enabled Color Num=100`を設定し、100番目の
+palette entryへ任意gradientの画素(1,0)と同じRGBを指定しました。Smart経路のHD/4K×8/16/32 bpcを
+6/6通過し、全publication commitをconsumer-timeで再検証しています。証拠は
+[`colorkeep_native_ae_count100_major_ops_20260824.json`](../refs/conformance/colorkeep_native_ae_count100_major_ops_20260824.json)
+です。Windows実AEX側には別途count 5/100と末尾paletteの3深度hostless exact anchorがありますが、
+このnative AE 6セルと同一frameを数値比較した証拠ではありません。このprofileは既存の主要操作・実機ゲートを
+支える証拠であり、新しいゲートでも固定54セルmatrixの追加セルでもありません。
 
 ROI v2 package reportの`beta_support_sha256`は、zip内にビルド時収録した
 `OLM_Mac_Plugins_Release/BETA_SUPPORT.md`のimmutable manifest hashです。現在閲覧中の

@@ -59,6 +59,17 @@ class AEGeneralizationSmokeTests(unittest.TestCase):
         self.assertEqual(params["OLM Directional Blur-0010"], 2)
         self.assertEqual(campaign.PLUGINS["directional"]["depths"], (8,))
 
+    def test_colorkeep_count100_profile_reaches_last_palette_entry(self) -> None:
+        baseline = campaign.plugin_state("colorkeep")
+        profiled = campaign.plugin_state("colorkeep")
+        campaign.apply_parameter_profile(profiled, "colorkeep-count100")
+        params = {match: value for match, _name, value in profiled["params"]}
+        self.assertEqual(params["OLM Color Keep-0001"], 100)
+        self.assertEqual(params["OLM Color Keep-0101"], [17 / 255, 5 / 255, 1 / 255])
+        self.assertEqual(profiled["declared_depths"], (8, 16, 32))
+        self.assertEqual(baseline["params"], ())
+        self.assertEqual(campaign.PLUGINS["colorkeep"].get("params", ()), ())
+
     def run_preflight(self, profile: str, plugins: tuple[str, ...] = ()) -> dict:
         with tempfile.TemporaryDirectory() as raw:
             plugin_args = [item for plugin in plugins for item in ("--plugin", plugin)]

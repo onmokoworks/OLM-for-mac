@@ -131,6 +131,16 @@ def plugin_state(key: str) -> dict[str, object]:
 def apply_parameter_profile(state: dict[str, object], profile: str) -> None:
     if profile == "baseline":
         return
+    if profile == "colorkeep-count100" and state.get("key") == "colorkeep":
+        state["supported_tuple"] = (
+            "Enabled Color Num 100 with the 100th color matching input pixel (1,0)"
+        )
+        state["params"] = (
+            ("OLM Color Keep-0001", "Enabled Color Num", 100),
+            ("OLM Color Keep-0101", "Color", [17 / 255, 5 / 255, 1 / 255]),
+        )
+        state["params_by_size"] = {}
+        return
     if profile != "directional-dual" or state.get("key") != "directional":
         raise ValueError(f"parameter profile {profile!r} is not valid for {state.get('key')!r}")
     state["declared_depths"] = (8, 16, 32)
@@ -221,7 +231,7 @@ def main() -> int:
                         help="quick runs HD at each plug-in's first declared depth; full runs the declared 54-case matrix.")
     parser.add_argument(
         "--parameter-profile",
-        choices=("baseline", "directional-dual"),
+        choices=("baseline", "directional-dual", "colorkeep-count100"),
         default="baseline",
         help="Select a bounded major-operations profile without changing the baseline 54-cell matrix.",
     )
@@ -233,8 +243,15 @@ def main() -> int:
     selected_keys = args.plugin or list(PLUGINS)
     states = [plugin_state(key) for key in selected_keys]
     if args.parameter_profile != "baseline":
-        if selected_keys != ["directional"]:
-            parser.error("--parameter-profile directional-dual requires exactly --plugin directional")
+        required_plugin = {
+            "directional-dual": "directional",
+            "colorkeep-count100": "colorkeep",
+        }[args.parameter_profile]
+        if selected_keys != [required_plugin]:
+            parser.error(
+                f"--parameter-profile {args.parameter_profile} requires exactly "
+                f"--plugin {required_plugin}"
+            )
         apply_parameter_profile(states[0], args.parameter_profile)
     report: dict[str, object] = {
         "kind": "olm_ae_generalization_smoke_campaign", "schema": 1,

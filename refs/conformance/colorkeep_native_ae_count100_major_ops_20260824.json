@@ -1,0 +1,43 @@
+{
+  "kind": "colorkeep_native_ae_major_operations_profile",
+  "schema": 1,
+  "date": "2026-08-24",
+  "status": "passed",
+  "gate_scope": "Evidence for the existing major-operations and compatibility/native-AE gates; not a new gate and not part of the fixed baseline 54-cell matrix.",
+  "host": "Adobe After Effects 2026 26.3x87",
+  "renderer": "Software",
+  "plugin": "ColorKeep",
+  "installed_sha256": "ae9643a5a02f111ac48d284d646418cb1f6c4e9b3eaf213a34c17c5698dd1a10",
+  "campaign_path": "handoffs/olm_public_beta_colorkeep_count100_major_ops_20260824/campaign_result.json",
+  "campaign_sha256": "93c482e5e56d73d170e5c0157987f1d12dbc7337acac6ae74fc735917e1d249f",
+  "windows_actual_aex_anchor": {
+    "path": "refs/conformance/colorkeep_count_late_boundary_combo_actual_aex_20260810.json",
+    "aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+    "scope": "hostless actual-AEX count 5/100 late-palette boundary exact across PF8/PF16/PF32"
+  },
+  "profile": {
+    "route": "Smart",
+    "enabled_color_num": 100,
+    "last_palette_match_name": "OLM Color Keep-0101",
+    "last_palette_rgb": [0.06666666666666667, 0.0196078431372549, 0.00392156862745098],
+    "matched_input_pixel": [1, 0],
+    "matched_input_rgb8": [17, 5, 1]
+  },
+  "totals": {"cells": 6, "campaign_passed": 6, "consumer_reverified": 6, "failed": 0},
+  "cells": [
+    {"case_id":"colorkeep_arbitrary_hd_8bpc","depth":8,"width":1920,"height":1080,"output_mode":"png","commit_sha256":"bcb2ed01abeac576a0e612d2c6817f12b0768b186d02896bfccb1e05bbae636c","validated_output_sha256":"d1656edce80fb6db59ad04d2be09ad2e41da42328fe98d46079bfe478c7c01cb"},
+    {"case_id":"colorkeep_arbitrary_4k_8bpc","depth":8,"width":3840,"height":2160,"output_mode":"png","commit_sha256":"9b027b6c2be3a90ea5c2a255f3e8dd82a6dda00fae92a0b2018a49f75503528b","validated_output_sha256":"5331297b8a797e469fb14b919b42514e0f77c5412ba1d14b8f137e937f54c65e"},
+    {"case_id":"colorkeep_arbitrary_hd_16bpc","depth":16,"width":1920,"height":1080,"output_mode":"png16_render_queue","commit_sha256":"d6498eea4c1f76e655871547996f5bb5228be1e39a81037e273c29778ccb262f","validated_output_sha256":"e3503643dcecafa23eb3d19a716a4e31949c1d99602217272cee87d234be8328"},
+    {"case_id":"colorkeep_arbitrary_4k_16bpc","depth":16,"width":3840,"height":2160,"output_mode":"png16_render_queue","commit_sha256":"a5f610990ef0b5206febc72490de08fbaffc2ec5434a06532639aa1c1531283b","validated_output_sha256":"be3382db97be51ee7edc261a10e4dd4fc562045c12f2f410401cdab04a36b758"},
+    {"case_id":"colorkeep_arbitrary_hd_32bpc","depth":32,"width":1920,"height":1080,"output_mode":"exr_render_queue","commit_sha256":"9096c98050a2d034871611da2526edec35e0abf7e7a8acd2c0a5b33c768f5c55","validated_output_sha256":"7fb725c4654eed7f41136fb18bd68b1d0e1c2aab4700729cff3d69e2288bde37"},
+    {"case_id":"colorkeep_arbitrary_4k_32bpc","depth":32,"width":3840,"height":2160,"output_mode":"exr_render_queue","commit_sha256":"895ac81489c575634f7b02e5f01d685b56924af8417b4c48c8b1130f3a4dc48f","validated_output_sha256":"f40c400851e5d332174df524e08805233a3b48e0fd2417551b91b1c523583d56"}
+  ],
+  "boundaries": [
+    "The input is a deterministic arbitrary gradient, not a Windows fixture or admitted input SHA.",
+    "This proves native-AE execution with count 100 and a value assigned to the 100th palette entry; it is not a pixel-by-pixel Windows-to-Mac numerical comparison of these six frames.",
+    "The Windows anchor separately proves actual-AEX count 100 and late-palette semantics across all three depths in its bounded hostless fixtures.",
+    "16 bpc proves execution in a 16 bpc AE project and publication integrity after TIFF-to-PNG conversion, not 16-bit numerical equality.",
+    "32 bpc publication verifies a 32 Float EXR.",
+    "Classic native AE, all 1-100 count values, all palette contents, GPU, partial storage, and the parameter cross-product remain outside this profile."
+  ]
+}
