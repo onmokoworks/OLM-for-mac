@@ -100,6 +100,28 @@ class AEGeneralizationSmokeTests(unittest.TestCase):
         self.assertEqual(profiled["declared_depths"], (8, 16, 32))
         self.assertEqual(baseline["params"], ())
 
+    def test_distance_linear_gaussian_profile_is_separate_from_baseline(self) -> None:
+        baseline = campaign.plugin_state("distance")
+        profiled = campaign.plugin_state("distance")
+        campaign.apply_parameter_profile(profiled, "distance-linear-gaussian")
+        params = {match: value for match, _name, value in profiled["params"]}
+        self.assertEqual(params, {
+            "OLM Distance Gradation-0001": 1,
+            "OLM Distance Gradation-0002": 1,
+            "OLM Distance Gradation-0003": 4,
+            "OLM Distance Gradation-0005": 1,
+            "OLM Distance Gradation-0006": 0,
+            "OLM Distance Gradation-0009": 2,
+            "OLM Distance Gradation-0011": 3,
+            "OLM Distance Gradation-0012": 1,
+        })
+        self.assertEqual(profiled["declared_depths"], (8, 16, 32))
+        self.assertEqual(baseline["params"], [
+            ("OLM Distance Gradation-0009", "Interpolation Mode", 1),
+            ("OLM Distance Gradation-0011", "Blur Mode", 1),
+        ])
+        self.assertEqual(campaign.PLUGINS["distance"]["params"], baseline["params"])
+
     def run_preflight(self, profile: str, plugins: tuple[str, ...] = ()) -> dict:
         with tempfile.TemporaryDirectory() as raw:
             plugin_args = [item for plugin in plugins for item in ("--plugin", plugin)]

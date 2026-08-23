@@ -34,6 +34,9 @@ BLUR_LEGACY_REPEAT10_NATIVE_AE = (
 COLORKEY_EDGE_BLUR_NATIVE_AE = (
     ROOT / "refs/conformance/olmcolorkey_native_ae_edge_blur_major_ops_20260824.json"
 )
+DISTANCE_LINEAR_GAUSSIAN_NATIVE_AE = (
+    ROOT / "refs/conformance/olmdistancegradation_native_ae_linear_gaussian_major_ops_20260824.json"
+)
 README = ROOT / "README.md"
 SMOOTHER2_GAMMA_COLORS_TEST = (
     ROOT / "tests/test_olmsmoother2_gamma_colors_beta_20260820.py"
@@ -215,6 +218,27 @@ class BetaSupportDocumentationContract(unittest.TestCase):
              for width, height in ((1920, 1080), (3840, 2160))},
         )
         self.assertTrue(any("Thin-plus-Blur intersection is outside" in item
+                            for item in report["boundaries"]))
+
+    def test_distance_linear_gaussian_native_ae_profile_is_major_ops_evidence(self) -> None:
+        report = json.loads(DISTANCE_LINEAR_GAUSSIAN_NATIVE_AE.read_text(encoding="utf-8"))
+        self.assertEqual(report["status"], "passed")
+        self.assertIn("not a new gate", report["gate_scope"])
+        self.assertTrue(report["installed_matches_local_debug"])
+        self.assertEqual(report["profile"]["interpolation_name"], "Linear")
+        self.assertEqual(report["profile"]["blur_name"], "Gaussian")
+        self.assertEqual(report["profile"]["blur_size"], 1)
+        self.assertEqual(
+            report["totals"],
+            {"cells": 6, "campaign_passed": 6, "consumer_reverified": 6, "failed": 0},
+        )
+        self.assertEqual(
+            {(row["depth"], row["width"], row["height"]) for row in report["cells"]},
+            {(depth, width, height)
+             for depth in (8, 16, 32)
+             for width, height in ((1920, 1080), (3840, 2160))},
+        )
+        self.assertTrue(any("not pixel-by-pixel Windows-to-Mac" in item
                             for item in report["boundaries"]))
 
     def test_depth_and_route_claims_are_anchored_in_dispatch_code(self) -> None:

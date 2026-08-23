@@ -168,6 +168,23 @@ def apply_parameter_profile(state: dict[str, object], profile: str) -> None:
         )
         state["params_by_size"] = {}
         return
+    if profile == "distance-linear-gaussian" and state.get("key") == "distance":
+        state["supported_tuple"] = (
+            "Inside RGB invert threshold 4 with Linear interpolation and "
+            "Gaussian Blur Size 1"
+        )
+        state["params"] = (
+            ("OLM Distance Gradation-0001", "Invert", 1),
+            ("OLM Distance Gradation-0002", "In/Out", 1),
+            ("OLM Distance Gradation-0003", "Inside Threshold", 4),
+            ("OLM Distance Gradation-0005", "Render Mode", 1),
+            ("OLM Distance Gradation-0006", "Use Background Color", 0),
+            ("OLM Distance Gradation-0009", "Interpolation Mode", 2),
+            ("OLM Distance Gradation-0011", "Blur Mode", 3),
+            ("OLM Distance Gradation-0012", "Blur Size", 1),
+        )
+        state["params_by_size"] = {}
+        return
     if profile != "directional-dual" or state.get("key") != "directional":
         raise ValueError(f"parameter profile {profile!r} is not valid for {state.get('key')!r}")
     state["declared_depths"] = (8, 16, 32)
@@ -259,7 +276,8 @@ def main() -> int:
     parser.add_argument(
         "--parameter-profile",
         choices=("baseline", "directional-dual", "colorkeep-count100",
-                 "blur-legacy-repeat10", "colorkey-edge-blur"),
+                 "blur-legacy-repeat10", "colorkey-edge-blur",
+                 "distance-linear-gaussian"),
         default="baseline",
         help="Select a bounded major-operations profile without changing the baseline 54-cell matrix.",
     )
@@ -276,6 +294,7 @@ def main() -> int:
             "colorkeep-count100": "colorkeep",
             "blur-legacy-repeat10": "blur",
             "colorkey-edge-blur": "colorkey",
+            "distance-linear-gaussian": "distance",
         }[args.parameter_profile]
         if selected_keys != [required_plugin]:
             parser.error(

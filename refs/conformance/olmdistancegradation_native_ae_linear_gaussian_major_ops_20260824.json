@@ -1,0 +1,51 @@
+{
+  "kind": "olmdistancegradation_native_ae_major_operations_profile",
+  "schema": 1,
+  "date": "2026-08-24",
+  "status": "passed",
+  "gate_scope": "Evidence for the existing major-operations and compatibility/native-AE gates; not a new gate and not part of the fixed baseline 54-cell matrix.",
+  "host": "Adobe After Effects 2026 26.3x87",
+  "renderer": "Software",
+  "plugin": "OLMDistanceGradation",
+  "installed_sha256": "ce48b9ebf92bb1b66db9e3da1c0c17f4b176553a4f5097fed0b5f5630d6cb1e5",
+  "installed_matches_local_debug": true,
+  "campaign_path": "handoffs/olm_public_beta_distance_linear_gaussian_major_ops_20260824/campaign_result.json",
+  "campaign_sha256": "97948daa40a756908ac53695686051476d43e51c17440a843ee94402485f70dc",
+  "windows_actual_aex_anchor": {
+    "path": "refs/conformance/olmdistancegradation_classic_pf8_blur_modes45_family_exact_20260810.json",
+    "report_sha256": "bce2e4eefee8805e972063259871f1f96fb7e2176967b7669fd1c4ee23feb917",
+    "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+    "scope": "PF8 17x11 padded Classic numerical chain; Inside RGB, invert on, threshold 4, blur size 1, background off; Constant/Linear x Gaussian/Median/Bilateral exact"
+  },
+  "profile": {
+    "route": "Smart",
+    "in_out": 1,
+    "in_out_name": "Inside",
+    "invert": true,
+    "inside_threshold": 4,
+    "render_mode": 1,
+    "render_mode_name": "RGB",
+    "use_background_color": false,
+    "interpolation_mode": 2,
+    "interpolation_name": "Linear",
+    "blur_mode": 3,
+    "blur_name": "Gaussian",
+    "blur_size": 1
+  },
+  "totals": {"cells": 6, "campaign_passed": 6, "consumer_reverified": 6, "failed": 0},
+  "cells": [
+    {"case_id": "distance_arbitrary_hd_8bpc", "depth": 8, "width": 1920, "height": 1080, "output_mode": "png", "commit_sha256": "1e034bb4d39637365813a12d7312369532d065c9b7c4a0e6852b7d8e21168109", "validated_output_sha256": "4122098307714bbc2f263b9bc4e5e668c23a3534e9c336515e94020a8a5533da"},
+    {"case_id": "distance_arbitrary_4k_8bpc", "depth": 8, "width": 3840, "height": 2160, "output_mode": "png", "commit_sha256": "a62d21f6bcc23b5700ebe024a1a8ca3a15364380cfa13cdc871854dd7d420f25", "validated_output_sha256": "09b1e415738dcbb1e57b7fe67f675c78b9a9dba08684b2838f2548d8c7580c04"},
+    {"case_id": "distance_arbitrary_hd_16bpc", "depth": 16, "width": 1920, "height": 1080, "output_mode": "png16_render_queue", "commit_sha256": "dd7204524290208a559af629747141c1ee504eba5c19949eb2828268e0e091a2", "validated_output_sha256": "8826aa9fb94b8e22fb476b63df8c0a0a9c7895c3bbbd3abe3f2c2c4550fcaa52"},
+    {"case_id": "distance_arbitrary_4k_16bpc", "depth": 16, "width": 3840, "height": 2160, "output_mode": "png16_render_queue", "commit_sha256": "663a26f09f8e50df0611feccb393e84782fe954003d92c43bb79710eb3a740fa", "validated_output_sha256": "125aada100e233d777e8c427c5ac62ea7006b8a18cbf91a38e6e8ac308df06b0"},
+    {"case_id": "distance_arbitrary_hd_32bpc", "depth": 32, "width": 1920, "height": 1080, "output_mode": "exr_render_queue", "commit_sha256": "974213b789d83a1e8d15ddc43def6a4a1d0a240e4ea68b9d1cdcac61841af0b6", "validated_output_sha256": "91d0d8962bd4791ed7dcbe6159e1ec3586b1c782d8bddd46c94f6d871350e465"},
+    {"case_id": "distance_arbitrary_4k_32bpc", "depth": 32, "width": 3840, "height": 2160, "output_mode": "exr_render_queue", "commit_sha256": "c88584f90d3131d3814db3797b630e4c73617fd75bf9d0c3d73f43a6edb34ea1", "validated_output_sha256": "300a5858bce10bf8e3e7be1a4bf0f2ff9441a476b0853ee39346eabb57e3a1b9"}
+  ],
+  "boundaries": [
+    "The input is a deterministic arbitrary gradient, not the bounded Windows fixture and not an admitted input SHA.",
+    "The Windows anchor covers the same selected Linear/Gaussian/Size 1 parameter tuple only in a bounded PF8 17x11 Classic numerical chain; these six native-AE frames are not pixel-by-pixel Windows-to-Mac comparisons.",
+    "16 bpc proves execution in a 16 bpc AE project and publication integrity after TIFF-to-PNG conversion, not 16-bit numerical equality.",
+    "32 bpc publication verifies a 32 Float EXR.",
+    "Other thresholds, interpolation and blur modes or sizes, Power, Bilateral, parameter cross-products, GPU, and partial storage remain outside this profile."
+  ]
+}

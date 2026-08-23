@@ -21,6 +21,7 @@ def test_three_gate_matrix_is_fixed_and_covers_all_plugins() -> None:
     assert "Windows実AEXのcount 5/100末尾色境界は3深度hostless exact" in text
     assert "Repeat 10＋Legacy onをSmart HD/4K×8/16/32 native AEで6/6通過" in text
     assert "入力一致key＋Edge Blur Amount 4をSmart HD/4K×8/16/32 native AEで6/6通過" in text
+    assert "Linear補間＋Gaussian Blur Size 1をSmart HD/4K×8/16/32 native AEで6/6通過" in text
     assert "| OLMSmoother | 通過 | 限定 | 限定 |" in text
     assert "PF16 Windows実用代表は現行Classic/Smart exact" in text
     assert "| OLMToonDilate | 通過 | 限定 | 限定 |" in text
