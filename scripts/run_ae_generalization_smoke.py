@@ -141,6 +141,19 @@ def apply_parameter_profile(state: dict[str, object], profile: str) -> None:
         )
         state["params_by_size"] = {}
         return
+    if profile == "blur-legacy-repeat10" and state.get("key") == "blur":
+        state["supported_tuple"] = (
+            "Amount 5 Smoothness 100 Repeat 10 Bias Vertical Legacy on"
+        )
+        state["params"] = (
+            ("OLM OLM Blur-0005", "Blur Amount", 5),
+            ("OLM OLM Blur-0006", "Blur Smoothness", 100),
+            ("OLM OLM Blur-0003", "Number of Repeat", 10),
+            ("OLM OLM Blur-0004", "Bias Direction", 1),
+            ("OLM OLM Blur-0007", "Legacy", 1),
+        )
+        state["params_by_size"] = {}
+        return
     if profile != "directional-dual" or state.get("key") != "directional":
         raise ValueError(f"parameter profile {profile!r} is not valid for {state.get('key')!r}")
     state["declared_depths"] = (8, 16, 32)
@@ -231,7 +244,8 @@ def main() -> int:
                         help="quick runs HD at each plug-in's first declared depth; full runs the declared 54-case matrix.")
     parser.add_argument(
         "--parameter-profile",
-        choices=("baseline", "directional-dual", "colorkeep-count100"),
+        choices=("baseline", "directional-dual", "colorkeep-count100",
+                 "blur-legacy-repeat10"),
         default="baseline",
         help="Select a bounded major-operations profile without changing the baseline 54-cell matrix.",
     )
@@ -246,6 +260,7 @@ def main() -> int:
         required_plugin = {
             "directional-dual": "directional",
             "colorkeep-count100": "colorkeep",
+            "blur-legacy-repeat10": "blur",
         }[args.parameter_profile]
         if selected_keys != [required_plugin]:
             parser.error(

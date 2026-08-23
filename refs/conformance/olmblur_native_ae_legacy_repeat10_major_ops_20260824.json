@@ -1,0 +1,44 @@
+{
+  "kind": "olmblur_native_ae_major_operations_profile",
+  "schema": 1,
+  "date": "2026-08-24",
+  "status": "passed",
+  "gate_scope": "Evidence for the existing major-operations and compatibility/native-AE gates; not a new gate and not part of the fixed baseline 54-cell matrix.",
+  "host": "Adobe After Effects 2026 26.3x87",
+  "renderer": "Software",
+  "plugin": "OLMBlur",
+  "installed_sha256": "b6df72f7c2ef12a8ccb013bcd98f95b113b59571731f2cf26a6080615bae30b9",
+  "installed_matches_local_debug": true,
+  "campaign_path": "handoffs/olm_public_beta_blur_legacy_repeat10_major_ops_20260824/campaign_result.json",
+  "campaign_sha256": "115a3c438853e6222f4d7cc0bfcedcd1e8ed6518128270d66911f1acbf384cae",
+  "windows_actual_aex_anchor": {
+    "path": "refs/conformance/olmblur_amount_repeat_legacy_matrix_actual_aex_20260810.json",
+    "report_sha256": "a825decc396ab41e8be60b8eaf07e05a1ba2ef7e7dbaef4fef799003d4a18f79",
+    "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+    "scope": "actual-AEX typed worker to production Mac Smart EffectMain, Amount 5/129.4 x Repeat 1/2/10 x Legacy off/on across PF8/PF16/PF32, 36/36 exact"
+  },
+  "profile": {
+    "route": "Smart",
+    "blur_amount": 5,
+    "blur_smoothness": 100,
+    "repeat": 10,
+    "bias_direction": 1,
+    "legacy": 1
+  },
+  "totals": {"cells": 6, "campaign_passed": 6, "consumer_reverified": 6, "failed": 0},
+  "cells": [
+    {"case_id":"blur_arbitrary_hd_8bpc","depth":8,"width":1920,"height":1080,"output_mode":"png","commit_sha256":"d51831bc11e72ddea8bca435cd2a98e5b8f4089f807563ffc67e5ecd68b5e377","validated_output_sha256":"79260452b49e29d2ee92db503c7319139f20b5a103bb7c8e18f8ff249d993d96"},
+    {"case_id":"blur_arbitrary_4k_8bpc","depth":8,"width":3840,"height":2160,"output_mode":"png","commit_sha256":"f2bc288feb261a80971d4a0e26c5c7c6a32ac5794c2828733623201b3bc2e593","validated_output_sha256":"0b95e683cfd0cce5b2f4953103cf2c37bbd99e9ff534f98ac42995d131184af8"},
+    {"case_id":"blur_arbitrary_hd_16bpc","depth":16,"width":1920,"height":1080,"output_mode":"png16_render_queue","commit_sha256":"f55ed3cc99b38d12345f67078a3962809bb9220a40e6bc7e15b767385e13b380","validated_output_sha256":"17d2f60d3f2c65c24490523f5bbe05c7ed08b215e364f3b426e07dd8e4a772a9"},
+    {"case_id":"blur_arbitrary_4k_16bpc","depth":16,"width":3840,"height":2160,"output_mode":"png16_render_queue","commit_sha256":"beaf3defdcbbb04d0798b37bd53826eec1bdce46e7a33ea432a33301b643894a","validated_output_sha256":"7d6fcc758dfcae87e34207ea52f759c69f34efbbecdcb04184578ca873131291"},
+    {"case_id":"blur_arbitrary_hd_32bpc","depth":32,"width":1920,"height":1080,"output_mode":"exr_render_queue","commit_sha256":"c21982b6480a0c442e26002192c96d64efa033a875e3f377d8e60823e695040b","validated_output_sha256":"bf63cdbea158aa2f56d6784ee1123a1b2c21354721c5f40917923ef19764e600"},
+    {"case_id":"blur_arbitrary_4k_32bpc","depth":32,"width":3840,"height":2160,"output_mode":"exr_render_queue","commit_sha256":"1f5394e547fd1cb5a3513364055556fbab41567135a9bb47fb26694b6db58f12","validated_output_sha256":"ed247e64d28e994e043022ca23d74fb07f5cd456722da489aefc12db48badac0"}
+  ],
+  "boundaries": [
+    "The input is a deterministic arbitrary gradient, not the bounded Windows fixture or an admitted input SHA.",
+    "The Windows anchor covers this exact parameter tuple in all three depths, but these six native-AE frames are not pixel-by-pixel Windows-to-Mac comparisons.",
+    "16 bpc proves execution in a 16 bpc AE project and publication integrity after TIFF-to-PNG conversion, not 16-bit numerical equality.",
+    "32 bpc publication verifies a 32 Float EXR.",
+    "Classic numerical rendering, other Amount/Smoothness/Bias combinations, GPU, partial storage, and the parameter cross-product remain outside this profile."
+  ]
+}

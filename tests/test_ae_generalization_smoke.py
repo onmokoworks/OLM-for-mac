@@ -70,6 +70,22 @@ class AEGeneralizationSmokeTests(unittest.TestCase):
         self.assertEqual(baseline["params"], ())
         self.assertEqual(campaign.PLUGINS["colorkeep"].get("params", ()), ())
 
+    def test_blur_legacy_repeat10_profile_is_separate_from_baseline(self) -> None:
+        baseline = campaign.plugin_state("blur")
+        profiled = campaign.plugin_state("blur")
+        campaign.apply_parameter_profile(profiled, "blur-legacy-repeat10")
+        params = {match: value for match, _name, value in profiled["params"]}
+        self.assertEqual(params, {
+            "OLM OLM Blur-0005": 5,
+            "OLM OLM Blur-0006": 100,
+            "OLM OLM Blur-0003": 10,
+            "OLM OLM Blur-0004": 1,
+            "OLM OLM Blur-0007": 1,
+        })
+        self.assertEqual(profiled["declared_depths"], (8, 16, 32))
+        self.assertEqual(baseline["params"], ())
+        self.assertEqual(campaign.PLUGINS["blur"].get("params", ()), ())
+
     def run_preflight(self, profile: str, plugins: tuple[str, ...] = ()) -> dict:
         with tempfile.TemporaryDirectory() as raw:
             plugin_args = [item for plugin in plugins for item in ("--plugin", plugin)]
