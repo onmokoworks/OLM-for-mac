@@ -1,0 +1,3922 @@
+{
+  "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+  "case_count": 108,
+  "cases": [
+    {
+      "actual_alpha_sha256": "02f9db2147132efed24fa77ba62e8802f8740ec95e4cda843f8d7f0197cf4bbd",
+      "actual_sha256": "8786eb8e165c9fbb6d084e89f18a4ea9fbd73b8a442667f0fc3c978b8a9a45e1",
+      "depth": "PF8",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "none",
+        "thin": 0
+      },
+      "production_alpha_sha256": "02f9db2147132efed24fa77ba62e8802f8740ec95e4cda843f8d7f0197cf4bbd",
+      "production_sha256": "8786eb8e165c9fbb6d084e89f18a4ea9fbd73b8a442667f0fc3c978b8a9a45e1",
+      "replace": false,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "3f1ca0d141e2e55381ad1329f5441cbad8f7672c6e6389be148eaf3d47de0dc5",
+      "actual_sha256": "4561193adbfae0cfd7c13994f56f61aa21d19373d790a2e779500367ca7b800c",
+      "depth": "PF16",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "none",
+        "thin": 0
+      },
+      "production_alpha_sha256": "3f1ca0d141e2e55381ad1329f5441cbad8f7672c6e6389be148eaf3d47de0dc5",
+      "production_sha256": "4561193adbfae0cfd7c13994f56f61aa21d19373d790a2e779500367ca7b800c",
+      "replace": false,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "cbe1cbfffb3f723d79ad40195afa5f023366a371c83f14af7aa93976adb575c3",
+      "actual_sha256": "fd2b397522449c1f0bbc2d2fb63d1eb974cb43134a6570cc442f549a3a9840f7",
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "none",
+        "thin": 0
+      },
+      "production_alpha_sha256": "cbe1cbfffb3f723d79ad40195afa5f023366a371c83f14af7aa93976adb575c3",
+      "production_sha256": "fd2b397522449c1f0bbc2d2fb63d1eb974cb43134a6570cc442f549a3a9840f7",
+      "replace": false,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "fc22a071579d266e9adc84767fd739a4b0f14c311c81edb6be7922b5c74a4331",
+      "actual_sha256": "053010dae082af641501a47f515f00199aee15e67132b86c76368717c912b042",
+      "depth": "PF8",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_negative1",
+        "thin": -1
+      },
+      "production_alpha_sha256": "fc22a071579d266e9adc84767fd739a4b0f14c311c81edb6be7922b5c74a4331",
+      "production_sha256": "053010dae082af641501a47f515f00199aee15e67132b86c76368717c912b042",
+      "replace": false,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "8aa9eccb6fb2680250bac79dec5f83c8176bf82b606fb05b2efae7f0c0ab46e0",
+      "actual_sha256": "beb8222c66ad420fc85ddab7d163143eca0ba989e6c8c40a46cc1b1828e46c5b",
+      "depth": "PF16",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_negative1",
+        "thin": -1
+      },
+      "production_alpha_sha256": "8aa9eccb6fb2680250bac79dec5f83c8176bf82b606fb05b2efae7f0c0ab46e0",
+      "production_sha256": "beb8222c66ad420fc85ddab7d163143eca0ba989e6c8c40a46cc1b1828e46c5b",
+      "replace": false,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "147fc4954afa17b717c3e5c36ebfe544601fac8e319935cba5f9b9e3010d730a",
+      "actual_sha256": "1a77eb6a91575cfb56e662566b0ed816516a199bd4d1b3f28d778faef2f01f40",
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_negative1",
+        "thin": -1
+      },
+      "production_alpha_sha256": "147fc4954afa17b717c3e5c36ebfe544601fac8e319935cba5f9b9e3010d730a",
+      "production_sha256": "1a77eb6a91575cfb56e662566b0ed816516a199bd4d1b3f28d778faef2f01f40",
+      "replace": false,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "02f9db2147132efed24fa77ba62e8802f8740ec95e4cda843f8d7f0197cf4bbd",
+      "actual_sha256": "8786eb8e165c9fbb6d084e89f18a4ea9fbd73b8a442667f0fc3c978b8a9a45e1",
+      "depth": "PF8",
+      "different_bytes": 56,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 0,
+      "first_production_byte": 255,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_positive1",
+        "thin": 1
+      },
+      "production_alpha_sha256": "ad7cc0c174e495dc8787d85987b2e3ebb6aa1784fdacb0374db499decc0c1ce4",
+      "production_sha256": "c68d789b2b47c72c88dcda90bfc617827c9401e03b1cf42568cde6817c606e10",
+      "replace": false,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "3f1ca0d141e2e55381ad1329f5441cbad8f7672c6e6389be148eaf3d47de0dc5",
+      "actual_sha256": "4561193adbfae0cfd7c13994f56f61aa21d19373d790a2e779500367ca7b800c",
+      "depth": "PF16",
+      "different_bytes": 56,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 1,
+      "first_production_byte": 128,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_positive1",
+        "thin": 1
+      },
+      "production_alpha_sha256": "737f41c05820726e3f621e5551d2c7fdc2f2cf11157bea9040f1facc18d96fb3",
+      "production_sha256": "e6aef439bf34e7a5bcf81dfc27f1c5079ba28422eb17a2f5dde30af77ae516d7",
+      "replace": false,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "06e5856d0a75f68216d590314ce42d189d1ed33dd1ef91effc56e04260c70c9a",
+      "actual_sha256": "fd635e47ed847b5936f0602ac62025da9dcdddb463d9bd0bf57906baf11b102a",
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_positive1",
+        "thin": 1
+      },
+      "production_alpha_sha256": "06e5856d0a75f68216d590314ce42d189d1ed33dd1ef91effc56e04260c70c9a",
+      "production_sha256": "fd635e47ed847b5936f0602ac62025da9dcdddb463d9bd0bf57906baf11b102a",
+      "replace": false,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "2fed21a8cf8d063093b4badbc1287145c6686f9c5c3a4e00501b2d8befc376ef",
+      "actual_sha256": "ff8ef6021e4e86a0edcf3487d36741d880b6d3a6388f8b4f9e68126dab0c1851",
+      "depth": "PF8",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "blur4",
+        "thin": 0
+      },
+      "production_alpha_sha256": "2fed21a8cf8d063093b4badbc1287145c6686f9c5c3a4e00501b2d8befc376ef",
+      "production_sha256": "ff8ef6021e4e86a0edcf3487d36741d880b6d3a6388f8b4f9e68126dab0c1851",
+      "replace": false,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "5d4d372dffbab26eea51eaec1a924b9093bd89df1adbec3a7a9ba4cdc5a03c0b",
+      "actual_sha256": "d4cc83158f9a0cfda8543e302466940cec3f3f213db6f3d7aef37ddad16a04c9",
+      "depth": "PF16",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "blur4",
+        "thin": 0
+      },
+      "production_alpha_sha256": "5d4d372dffbab26eea51eaec1a924b9093bd89df1adbec3a7a9ba4cdc5a03c0b",
+      "production_sha256": "d4cc83158f9a0cfda8543e302466940cec3f3f213db6f3d7aef37ddad16a04c9",
+      "replace": false,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "92fba0e4d4d1107c1c9652b92aa9acb9d757b3bc22be9fa257b3e2217d863c20",
+      "actual_sha256": "2275d229ebd21f75f5d6a4b3cff81403a5f47b02e22121f7ee79589b192646e2",
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "blur4",
+        "thin": 0
+      },
+      "production_alpha_sha256": "92fba0e4d4d1107c1c9652b92aa9acb9d757b3bc22be9fa257b3e2217d863c20",
+      "production_sha256": "2275d229ebd21f75f5d6a4b3cff81403a5f47b02e22121f7ee79589b192646e2",
+      "replace": false,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "a0301f23abba01c8a23081c4db4dc1e4b81750207511179bb11cc30d24b8637d",
+      "actual_sha256": "d5b87ea0b8427ed684b59a93af0758e4a453a46dc5e4cf331338d74de451afe3",
+      "depth": "PF8",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_negative1_blur4",
+        "thin": -1
+      },
+      "production_alpha_sha256": "a0301f23abba01c8a23081c4db4dc1e4b81750207511179bb11cc30d24b8637d",
+      "production_sha256": "d5b87ea0b8427ed684b59a93af0758e4a453a46dc5e4cf331338d74de451afe3",
+      "replace": false,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "aa8bc837e9189f435ab024c4cc55f78a53cf7c2cda72b1a110fc05300d4de88b",
+      "actual_sha256": "c9e859a9f18d14d9cdde7d904093a3a9fd16617a3336a1b1dbcba5ccf8deb89f",
+      "depth": "PF16",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_negative1_blur4",
+        "thin": -1
+      },
+      "production_alpha_sha256": "aa8bc837e9189f435ab024c4cc55f78a53cf7c2cda72b1a110fc05300d4de88b",
+      "production_sha256": "c9e859a9f18d14d9cdde7d904093a3a9fd16617a3336a1b1dbcba5ccf8deb89f",
+      "replace": false,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "d410bb83586336a5cafcbfed33b05d13a83aaeed34e2b3c0f87e6c0327dbaa10",
+      "actual_sha256": "e48f032b527505df27ae846863c0cf62c4536dedff0c9548fbab090bc0589c8b",
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_negative1_blur4",
+        "thin": -1
+      },
+      "production_alpha_sha256": "d410bb83586336a5cafcbfed33b05d13a83aaeed34e2b3c0f87e6c0327dbaa10",
+      "production_sha256": "e48f032b527505df27ae846863c0cf62c4536dedff0c9548fbab090bc0589c8b",
+      "replace": false,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "2fed21a8cf8d063093b4badbc1287145c6686f9c5c3a4e00501b2d8befc376ef",
+      "actual_sha256": "ff8ef6021e4e86a0edcf3487d36741d880b6d3a6388f8b4f9e68126dab0c1851",
+      "depth": "PF8",
+      "different_bytes": 104,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 0,
+      "first_production_byte": 255,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_positive1_blur4",
+        "thin": 1
+      },
+      "production_alpha_sha256": "16a2a04fa01a59813d94547cb55afae2552b8045d5f09e85030997a3fc65dc2c",
+      "production_sha256": "44f5b82ecb45447f241c2cadfb7f2b1cae43c0a6d41f1284d0525a0b183592a1",
+      "replace": false,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "5d4d372dffbab26eea51eaec1a924b9093bd89df1adbec3a7a9ba4cdc5a03c0b",
+      "actual_sha256": "d4cc83158f9a0cfda8543e302466940cec3f3f213db6f3d7aef37ddad16a04c9",
+      "depth": "PF16",
+      "different_bytes": 104,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 1,
+      "first_production_byte": 128,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_positive1_blur4",
+        "thin": 1
+      },
+      "production_alpha_sha256": "339e61423b2da82fe4158279d94a8f596427b863b05fdd42dba2674e8ca98e76",
+      "production_sha256": "5930a6459245c20b70a48e9bcd1e25429dc39fa9bd281f864a797f2b6fed4347",
+      "replace": false,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "2dc1ca70fc48106318baa2df4189563b595befad67e0fb6d188940f0c9de2755",
+      "actual_sha256": "3d4faa45b14e6f34d0db32c0fa2bb7ebec1c773dbc8070f4697ac5c6b2b4efe7",
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_positive1_blur4",
+        "thin": 1
+      },
+      "production_alpha_sha256": "2dc1ca70fc48106318baa2df4189563b595befad67e0fb6d188940f0c9de2755",
+      "production_sha256": "3d4faa45b14e6f34d0db32c0fa2bb7ebec1c773dbc8070f4697ac5c6b2b4efe7",
+      "replace": false,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "02f9db2147132efed24fa77ba62e8802f8740ec95e4cda843f8d7f0197cf4bbd",
+      "actual_sha256": "8786eb8e165c9fbb6d084e89f18a4ea9fbd73b8a442667f0fc3c978b8a9a45e1",
+      "depth": "PF8",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "none",
+        "thin": 0
+      },
+      "production_alpha_sha256": "02f9db2147132efed24fa77ba62e8802f8740ec95e4cda843f8d7f0197cf4bbd",
+      "production_sha256": "8786eb8e165c9fbb6d084e89f18a4ea9fbd73b8a442667f0fc3c978b8a9a45e1",
+      "replace": false,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "3f1ca0d141e2e55381ad1329f5441cbad8f7672c6e6389be148eaf3d47de0dc5",
+      "actual_sha256": "4561193adbfae0cfd7c13994f56f61aa21d19373d790a2e779500367ca7b800c",
+      "depth": "PF16",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "none",
+        "thin": 0
+      },
+      "production_alpha_sha256": "3f1ca0d141e2e55381ad1329f5441cbad8f7672c6e6389be148eaf3d47de0dc5",
+      "production_sha256": "4561193adbfae0cfd7c13994f56f61aa21d19373d790a2e779500367ca7b800c",
+      "replace": false,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "cbe1cbfffb3f723d79ad40195afa5f023366a371c83f14af7aa93976adb575c3",
+      "actual_sha256": "fd2b397522449c1f0bbc2d2fb63d1eb974cb43134a6570cc442f549a3a9840f7",
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "none",
+        "thin": 0
+      },
+      "production_alpha_sha256": "cbe1cbfffb3f723d79ad40195afa5f023366a371c83f14af7aa93976adb575c3",
+      "production_sha256": "fd2b397522449c1f0bbc2d2fb63d1eb974cb43134a6570cc442f549a3a9840f7",
+      "replace": false,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "fc22a071579d266e9adc84767fd739a4b0f14c311c81edb6be7922b5c74a4331",
+      "actual_sha256": "053010dae082af641501a47f515f00199aee15e67132b86c76368717c912b042",
+      "depth": "PF8",
+      "different_bytes": 6,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 128,
+      "first_production_byte": 255,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_negative1",
+        "thin": -1
+      },
+      "production_alpha_sha256": "0cc209d03223b6c60f8209f496cb85b8cfa3cdeae9ed5c98cb18cfdd29ce74e3",
+      "production_sha256": "3cf91d2e0944af85ba75b9ed86b6b6e422bb90a4be7da93a48507420ab9f7643",
+      "replace": false,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "8aa9eccb6fb2680250bac79dec5f83c8176bf82b606fb05b2efae7f0c0ab46e0",
+      "actual_sha256": "beb8222c66ad420fc85ddab7d163143eca0ba989e6c8c40a46cc1b1828e46c5b",
+      "depth": "PF16",
+      "different_bytes": 6,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 241,
+      "first_production_byte": 128,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_negative1",
+        "thin": -1
+      },
+      "production_alpha_sha256": "f33db186488b113f794a425744b4ad2e2254bea5f8f90f42e07cd45ea0b89595",
+      "production_sha256": "86fd940f88b7113374626789efad29dbef37d4b28bd6fa5d000a609c51430b56",
+      "replace": false,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "147fc4954afa17b717c3e5c36ebfe544601fac8e319935cba5f9b9e3010d730a",
+      "actual_sha256": "1a77eb6a91575cfb56e662566b0ed816516a199bd4d1b3f28d778faef2f01f40",
+      "depth": "PF32",
+      "different_bytes": 12,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 466,
+      "first_production_byte": 128,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_negative1",
+        "thin": -1
+      },
+      "production_alpha_sha256": "768f55f828221f1a6b41a175bae3dda310f3c8dbf4d040e90115b388d142aeae",
+      "production_sha256": "3a8632c36e9fbc1b03c5ae5ec6ecd2b3a52fdd350593a41bf8d7eb2e57ab961e",
+      "replace": false,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "02f9db2147132efed24fa77ba62e8802f8740ec95e4cda843f8d7f0197cf4bbd",
+      "actual_sha256": "8786eb8e165c9fbb6d084e89f18a4ea9fbd73b8a442667f0fc3c978b8a9a45e1",
+      "depth": "PF8",
+      "different_bytes": 79,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 0,
+      "first_production_byte": 255,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_positive1",
+        "thin": 1
+      },
+      "production_alpha_sha256": "4f636c31c89dd38d2b8d7edfd17eddee499b460649a1a9766ea73ac27ff8d498",
+      "production_sha256": "ab53cde888f1ebdd034b56639e54fa8f23688d18f3e8c7f51b81412577ec880a",
+      "replace": false,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "3f1ca0d141e2e55381ad1329f5441cbad8f7672c6e6389be148eaf3d47de0dc5",
+      "actual_sha256": "4561193adbfae0cfd7c13994f56f61aa21d19373d790a2e779500367ca7b800c",
+      "depth": "PF16",
+      "different_bytes": 79,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 1,
+      "first_production_byte": 128,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_positive1",
+        "thin": 1
+      },
+      "production_alpha_sha256": "e262424e68bbde9da0ba5ccdded40b510efeea3a51ab330c18255be8848334e1",
+      "production_sha256": "16741b2fbc42ac44f35bd5f084edd8564973941c20e2e67237e414758b275bb0",
+      "replace": false,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "510f2a63eeade40ae9cf200d16f9580aa97cc94fcdfc14044e9d1624f73af3b6",
+      "actual_sha256": "8a27e3f1854d0f3e35e99517d750c0be5827de866284bd989f2ef6a5c663529d",
+      "depth": "PF32",
+      "different_bytes": 70,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 2,
+      "first_production_byte": 128,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_positive1",
+        "thin": 1
+      },
+      "production_alpha_sha256": "c3c22a921dfdcfc3e603ed234d4d89c393367b65b2ff63af4aa165d174346431",
+      "production_sha256": "e79ff4e87ccedc8ab6e12c0165f9247cb1d2621cfc5c91346269a53be291a808",
+      "replace": false,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "2fed21a8cf8d063093b4badbc1287145c6686f9c5c3a4e00501b2d8befc376ef",
+      "actual_sha256": "ff8ef6021e4e86a0edcf3487d36741d880b6d3a6388f8b4f9e68126dab0c1851",
+      "depth": "PF8",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "blur4",
+        "thin": 0
+      },
+      "production_alpha_sha256": "2fed21a8cf8d063093b4badbc1287145c6686f9c5c3a4e00501b2d8befc376ef",
+      "production_sha256": "ff8ef6021e4e86a0edcf3487d36741d880b6d3a6388f8b4f9e68126dab0c1851",
+      "replace": false,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "5d4d372dffbab26eea51eaec1a924b9093bd89df1adbec3a7a9ba4cdc5a03c0b",
+      "actual_sha256": "d4cc83158f9a0cfda8543e302466940cec3f3f213db6f3d7aef37ddad16a04c9",
+      "depth": "PF16",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "blur4",
+        "thin": 0
+      },
+      "production_alpha_sha256": "5d4d372dffbab26eea51eaec1a924b9093bd89df1adbec3a7a9ba4cdc5a03c0b",
+      "production_sha256": "d4cc83158f9a0cfda8543e302466940cec3f3f213db6f3d7aef37ddad16a04c9",
+      "replace": false,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "92fba0e4d4d1107c1c9652b92aa9acb9d757b3bc22be9fa257b3e2217d863c20",
+      "actual_sha256": "2275d229ebd21f75f5d6a4b3cff81403a5f47b02e22121f7ee79589b192646e2",
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "blur4",
+        "thin": 0
+      },
+      "production_alpha_sha256": "92fba0e4d4d1107c1c9652b92aa9acb9d757b3bc22be9fa257b3e2217d863c20",
+      "production_sha256": "2275d229ebd21f75f5d6a4b3cff81403a5f47b02e22121f7ee79589b192646e2",
+      "replace": false,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "a0301f23abba01c8a23081c4db4dc1e4b81750207511179bb11cc30d24b8637d",
+      "actual_sha256": "d5b87ea0b8427ed684b59a93af0758e4a453a46dc5e4cf331338d74de451afe3",
+      "depth": "PF8",
+      "different_bytes": 6,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 128,
+      "first_production_byte": 127,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_negative1_blur4",
+        "thin": -1
+      },
+      "production_alpha_sha256": "6e58266d79e130696245e744adebbe3e228acc96bfcdd05c6233d2b74f2d1e80",
+      "production_sha256": "bc1b15b23445396819cc5f7d2cbe787ef8a10cce6e0198d4fce643976196c158",
+      "replace": false,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "aa8bc837e9189f435ab024c4cc55f78a53cf7c2cda72b1a110fc05300d4de88b",
+      "actual_sha256": "c9e859a9f18d14d9cdde7d904093a3a9fd16617a3336a1b1dbcba5ccf8deb89f",
+      "depth": "PF16",
+      "different_bytes": 6,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 241,
+      "first_production_byte": 64,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_negative1_blur4",
+        "thin": -1
+      },
+      "production_alpha_sha256": "ad1dfc627ee41a4010bb998698a03431f3e75fbaff665c108fd13660c70fa9e6",
+      "production_sha256": "595be75fa171c236e0054cfd1811220b832892c45fa753b920731524a22f0c47",
+      "replace": false,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "d410bb83586336a5cafcbfed33b05d13a83aaeed34e2b3c0f87e6c0327dbaa10",
+      "actual_sha256": "e48f032b527505df27ae846863c0cf62c4536dedff0c9548fbab090bc0589c8b",
+      "depth": "PF32",
+      "different_bytes": 316,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 16,
+      "first_production_byte": 32,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_negative1_blur4",
+        "thin": -1
+      },
+      "production_alpha_sha256": "d7d576f0713f37b02be78ef9d9db27ab7682f0cdfb6216956c17046fa70cfaf8",
+      "production_sha256": "8afba9ba884ee1b89b369371ee22170351ea490dca798e113de03470fb4dbffb",
+      "replace": false,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "2fed21a8cf8d063093b4badbc1287145c6686f9c5c3a4e00501b2d8befc376ef",
+      "actual_sha256": "ff8ef6021e4e86a0edcf3487d36741d880b6d3a6388f8b4f9e68126dab0c1851",
+      "depth": "PF8",
+      "different_bytes": 127,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 0,
+      "first_production_byte": 255,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_positive1_blur4",
+        "thin": 1
+      },
+      "production_alpha_sha256": "ac3b7bf9969e87bdeef1c1a4bfd07823cd8acd7a458e621e6255714dbe878e70",
+      "production_sha256": "9cc28fe9a7567b72340bc4cf0b8dd9712a1451cc2e859c6d17e45ed026bda46d",
+      "replace": false,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "5d4d372dffbab26eea51eaec1a924b9093bd89df1adbec3a7a9ba4cdc5a03c0b",
+      "actual_sha256": "d4cc83158f9a0cfda8543e302466940cec3f3f213db6f3d7aef37ddad16a04c9",
+      "depth": "PF16",
+      "different_bytes": 127,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 1,
+      "first_production_byte": 128,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_positive1_blur4",
+        "thin": 1
+      },
+      "production_alpha_sha256": "5adcd6eb840fb5233aa3bc88bc4990e713feaeb2e9caf398d38bfe603514e1a1",
+      "production_sha256": "64fecc7e4c870cff9c4faf48119964ae07d515636b5f5e0dd42e727139bc7551",
+      "replace": false,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "28df658fff241548a91bb34bde163b0fde0796279ca234ee3abe69a9c6f66c08",
+      "actual_sha256": "09bafaac8697240f7bdac0edd0263e8a56807b9ac2b421131311ee7fbb468380",
+      "depth": "PF32",
+      "different_bytes": 457,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 18,
+      "first_different_byte": 0,
+      "first_production_byte": 0,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_positive1_blur4",
+        "thin": 1
+      },
+      "production_alpha_sha256": "8ec74db423e2667b024c7004c99725567e7a4158ae1460e586edad316664c1cf",
+      "production_sha256": "3c6af2a5a5757805f00bead0ec1e56c5f615784d8c5cb67e3442abaf7ece114f",
+      "replace": false,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "02f9db2147132efed24fa77ba62e8802f8740ec95e4cda843f8d7f0197cf4bbd",
+      "actual_sha256": "8786eb8e165c9fbb6d084e89f18a4ea9fbd73b8a442667f0fc3c978b8a9a45e1",
+      "depth": "PF8",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "none",
+        "thin": 0
+      },
+      "production_alpha_sha256": "02f9db2147132efed24fa77ba62e8802f8740ec95e4cda843f8d7f0197cf4bbd",
+      "production_sha256": "8786eb8e165c9fbb6d084e89f18a4ea9fbd73b8a442667f0fc3c978b8a9a45e1",
+      "replace": false,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "3f1ca0d141e2e55381ad1329f5441cbad8f7672c6e6389be148eaf3d47de0dc5",
+      "actual_sha256": "4561193adbfae0cfd7c13994f56f61aa21d19373d790a2e779500367ca7b800c",
+      "depth": "PF16",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "none",
+        "thin": 0
+      },
+      "production_alpha_sha256": "3f1ca0d141e2e55381ad1329f5441cbad8f7672c6e6389be148eaf3d47de0dc5",
+      "production_sha256": "4561193adbfae0cfd7c13994f56f61aa21d19373d790a2e779500367ca7b800c",
+      "replace": false,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "cbe1cbfffb3f723d79ad40195afa5f023366a371c83f14af7aa93976adb575c3",
+      "actual_sha256": "fd2b397522449c1f0bbc2d2fb63d1eb974cb43134a6570cc442f549a3a9840f7",
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "none",
+        "thin": 0
+      },
+      "production_alpha_sha256": "cbe1cbfffb3f723d79ad40195afa5f023366a371c83f14af7aa93976adb575c3",
+      "production_sha256": "fd2b397522449c1f0bbc2d2fb63d1eb974cb43134a6570cc442f549a3a9840f7",
+      "replace": false,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "fc22a071579d266e9adc84767fd739a4b0f14c311c81edb6be7922b5c74a4331",
+      "actual_sha256": "053010dae082af641501a47f515f00199aee15e67132b86c76368717c912b042",
+      "depth": "PF8",
+      "different_bytes": 6,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 128,
+      "first_production_byte": 255,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_negative1",
+        "thin": -1
+      },
+      "production_alpha_sha256": "0cc209d03223b6c60f8209f496cb85b8cfa3cdeae9ed5c98cb18cfdd29ce74e3",
+      "production_sha256": "3cf91d2e0944af85ba75b9ed86b6b6e422bb90a4be7da93a48507420ab9f7643",
+      "replace": false,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "8aa9eccb6fb2680250bac79dec5f83c8176bf82b606fb05b2efae7f0c0ab46e0",
+      "actual_sha256": "beb8222c66ad420fc85ddab7d163143eca0ba989e6c8c40a46cc1b1828e46c5b",
+      "depth": "PF16",
+      "different_bytes": 6,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 241,
+      "first_production_byte": 128,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_negative1",
+        "thin": -1
+      },
+      "production_alpha_sha256": "f33db186488b113f794a425744b4ad2e2254bea5f8f90f42e07cd45ea0b89595",
+      "production_sha256": "86fd940f88b7113374626789efad29dbef37d4b28bd6fa5d000a609c51430b56",
+      "replace": false,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "147fc4954afa17b717c3e5c36ebfe544601fac8e319935cba5f9b9e3010d730a",
+      "actual_sha256": "1a77eb6a91575cfb56e662566b0ed816516a199bd4d1b3f28d778faef2f01f40",
+      "depth": "PF32",
+      "different_bytes": 12,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 466,
+      "first_production_byte": 128,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_negative1",
+        "thin": -1
+      },
+      "production_alpha_sha256": "768f55f828221f1a6b41a175bae3dda310f3c8dbf4d040e90115b388d142aeae",
+      "production_sha256": "3a8632c36e9fbc1b03c5ae5ec6ecd2b3a52fdd350593a41bf8d7eb2e57ab961e",
+      "replace": false,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "02f9db2147132efed24fa77ba62e8802f8740ec95e4cda843f8d7f0197cf4bbd",
+      "actual_sha256": "8786eb8e165c9fbb6d084e89f18a4ea9fbd73b8a442667f0fc3c978b8a9a45e1",
+      "depth": "PF8",
+      "different_bytes": 44,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 4,
+      "first_production_byte": 255,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_positive1",
+        "thin": 1
+      },
+      "production_alpha_sha256": "7c442eaddb989d749dadad26481aee32ac519f5afaab8582de103d687877acb0",
+      "production_sha256": "8e3a9b7ab068740d52a2f7bcf99a6f925f6faa6ee393da5ccda8abfc77a5ab3f",
+      "replace": false,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "3f1ca0d141e2e55381ad1329f5441cbad8f7672c6e6389be148eaf3d47de0dc5",
+      "actual_sha256": "4561193adbfae0cfd7c13994f56f61aa21d19373d790a2e779500367ca7b800c",
+      "depth": "PF16",
+      "different_bytes": 44,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 9,
+      "first_production_byte": 128,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_positive1",
+        "thin": 1
+      },
+      "production_alpha_sha256": "96a26f9423d4d3fa12f925f3c8f27895ebcf7a4e8cfa0489bcb65d9d12c8cf2d",
+      "production_sha256": "9f9f6c0b0579c38959411f6a218d7ae3d21addeed782ddf00bb2c6c0fd4801c0",
+      "replace": false,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "510f2a63eeade40ae9cf200d16f9580aa97cc94fcdfc14044e9d1624f73af3b6",
+      "actual_sha256": "8a27e3f1854d0f3e35e99517d750c0be5827de866284bd989f2ef6a5c663529d",
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_positive1",
+        "thin": 1
+      },
+      "production_alpha_sha256": "510f2a63eeade40ae9cf200d16f9580aa97cc94fcdfc14044e9d1624f73af3b6",
+      "production_sha256": "8a27e3f1854d0f3e35e99517d750c0be5827de866284bd989f2ef6a5c663529d",
+      "replace": false,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "2fed21a8cf8d063093b4badbc1287145c6686f9c5c3a4e00501b2d8befc376ef",
+      "actual_sha256": "ff8ef6021e4e86a0edcf3487d36741d880b6d3a6388f8b4f9e68126dab0c1851",
+      "depth": "PF8",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "blur4",
+        "thin": 0
+      },
+      "production_alpha_sha256": "2fed21a8cf8d063093b4badbc1287145c6686f9c5c3a4e00501b2d8befc376ef",
+      "production_sha256": "ff8ef6021e4e86a0edcf3487d36741d880b6d3a6388f8b4f9e68126dab0c1851",
+      "replace": false,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "5d4d372dffbab26eea51eaec1a924b9093bd89df1adbec3a7a9ba4cdc5a03c0b",
+      "actual_sha256": "d4cc83158f9a0cfda8543e302466940cec3f3f213db6f3d7aef37ddad16a04c9",
+      "depth": "PF16",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "blur4",
+        "thin": 0
+      },
+      "production_alpha_sha256": "5d4d372dffbab26eea51eaec1a924b9093bd89df1adbec3a7a9ba4cdc5a03c0b",
+      "production_sha256": "d4cc83158f9a0cfda8543e302466940cec3f3f213db6f3d7aef37ddad16a04c9",
+      "replace": false,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "92fba0e4d4d1107c1c9652b92aa9acb9d757b3bc22be9fa257b3e2217d863c20",
+      "actual_sha256": "2275d229ebd21f75f5d6a4b3cff81403a5f47b02e22121f7ee79589b192646e2",
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "blur4",
+        "thin": 0
+      },
+      "production_alpha_sha256": "92fba0e4d4d1107c1c9652b92aa9acb9d757b3bc22be9fa257b3e2217d863c20",
+      "production_sha256": "2275d229ebd21f75f5d6a4b3cff81403a5f47b02e22121f7ee79589b192646e2",
+      "replace": false,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "a0301f23abba01c8a23081c4db4dc1e4b81750207511179bb11cc30d24b8637d",
+      "actual_sha256": "d5b87ea0b8427ed684b59a93af0758e4a453a46dc5e4cf331338d74de451afe3",
+      "depth": "PF8",
+      "different_bytes": 6,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 128,
+      "first_production_byte": 127,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_negative1_blur4",
+        "thin": -1
+      },
+      "production_alpha_sha256": "6e58266d79e130696245e744adebbe3e228acc96bfcdd05c6233d2b74f2d1e80",
+      "production_sha256": "bc1b15b23445396819cc5f7d2cbe787ef8a10cce6e0198d4fce643976196c158",
+      "replace": false,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "aa8bc837e9189f435ab024c4cc55f78a53cf7c2cda72b1a110fc05300d4de88b",
+      "actual_sha256": "c9e859a9f18d14d9cdde7d904093a3a9fd16617a3336a1b1dbcba5ccf8deb89f",
+      "depth": "PF16",
+      "different_bytes": 6,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 241,
+      "first_production_byte": 64,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_negative1_blur4",
+        "thin": -1
+      },
+      "production_alpha_sha256": "ad1dfc627ee41a4010bb998698a03431f3e75fbaff665c108fd13660c70fa9e6",
+      "production_sha256": "595be75fa171c236e0054cfd1811220b832892c45fa753b920731524a22f0c47",
+      "replace": false,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "d410bb83586336a5cafcbfed33b05d13a83aaeed34e2b3c0f87e6c0327dbaa10",
+      "actual_sha256": "e48f032b527505df27ae846863c0cf62c4536dedff0c9548fbab090bc0589c8b",
+      "depth": "PF32",
+      "different_bytes": 316,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 16,
+      "first_production_byte": 32,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_negative1_blur4",
+        "thin": -1
+      },
+      "production_alpha_sha256": "d7d576f0713f37b02be78ef9d9db27ab7682f0cdfb6216956c17046fa70cfaf8",
+      "production_sha256": "8afba9ba884ee1b89b369371ee22170351ea490dca798e113de03470fb4dbffb",
+      "replace": false,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "2fed21a8cf8d063093b4badbc1287145c6686f9c5c3a4e00501b2d8befc376ef",
+      "actual_sha256": "ff8ef6021e4e86a0edcf3487d36741d880b6d3a6388f8b4f9e68126dab0c1851",
+      "depth": "PF8",
+      "different_bytes": 81,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 4,
+      "first_production_byte": 127,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_positive1_blur4",
+        "thin": 1
+      },
+      "production_alpha_sha256": "246ca360d180577f4dba9221e479c26f4166274eeeb8236ddc837888fd0bbd59",
+      "production_sha256": "f4fb0d66b2ebdc3a46b0668922e88b9235437df47234e6e0778aec1036e55f2b",
+      "replace": false,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "5d4d372dffbab26eea51eaec1a924b9093bd89df1adbec3a7a9ba4cdc5a03c0b",
+      "actual_sha256": "d4cc83158f9a0cfda8543e302466940cec3f3f213db6f3d7aef37ddad16a04c9",
+      "depth": "PF16",
+      "different_bytes": 81,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 9,
+      "first_production_byte": 64,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_positive1_blur4",
+        "thin": 1
+      },
+      "production_alpha_sha256": "b0584834c1d42e44592148e33af10b4a423a965f40dfad28c19a8236b37ce7b0",
+      "production_sha256": "97380c42bb80ed520fa1e24aa86c645fe120696066432a7fbbc3b10e70829aef",
+      "replace": false,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "28df658fff241548a91bb34bde163b0fde0796279ca234ee3abe69a9c6f66c08",
+      "actual_sha256": "09bafaac8697240f7bdac0edd0263e8a56807b9ac2b421131311ee7fbb468380",
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_positive1_blur4",
+        "thin": 1
+      },
+      "production_alpha_sha256": "28df658fff241548a91bb34bde163b0fde0796279ca234ee3abe69a9c6f66c08",
+      "production_sha256": "09bafaac8697240f7bdac0edd0263e8a56807b9ac2b421131311ee7fbb468380",
+      "replace": false,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "02f9db2147132efed24fa77ba62e8802f8740ec95e4cda843f8d7f0197cf4bbd",
+      "actual_sha256": "49f62698bb03fa1c09414950ac2dd73a534a4716d6f55cb51b71084e489e08c9",
+      "depth": "PF8",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "none",
+        "thin": 0
+      },
+      "production_alpha_sha256": "02f9db2147132efed24fa77ba62e8802f8740ec95e4cda843f8d7f0197cf4bbd",
+      "production_sha256": "49f62698bb03fa1c09414950ac2dd73a534a4716d6f55cb51b71084e489e08c9",
+      "replace": true,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "3f1ca0d141e2e55381ad1329f5441cbad8f7672c6e6389be148eaf3d47de0dc5",
+      "actual_sha256": "66fac9f73970280043cc26784bbf71549770e6a33dbb89b0f7631fb52b0a3889",
+      "depth": "PF16",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "none",
+        "thin": 0
+      },
+      "production_alpha_sha256": "3f1ca0d141e2e55381ad1329f5441cbad8f7672c6e6389be148eaf3d47de0dc5",
+      "production_sha256": "66fac9f73970280043cc26784bbf71549770e6a33dbb89b0f7631fb52b0a3889",
+      "replace": true,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "cbe1cbfffb3f723d79ad40195afa5f023366a371c83f14af7aa93976adb575c3",
+      "actual_sha256": "d2c145ea56526ead8f8a1deb74d81d5482e0af30bc809ba0f6caa5d8ca0e194d",
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "none",
+        "thin": 0
+      },
+      "production_alpha_sha256": "cbe1cbfffb3f723d79ad40195afa5f023366a371c83f14af7aa93976adb575c3",
+      "production_sha256": "d2c145ea56526ead8f8a1deb74d81d5482e0af30bc809ba0f6caa5d8ca0e194d",
+      "replace": true,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "fc22a071579d266e9adc84767fd739a4b0f14c311c81edb6be7922b5c74a4331",
+      "actual_sha256": "cdd28943cf589bc83ebd2bc5c5e47a348dec502db3bbf2fb38d0789575090503",
+      "depth": "PF8",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_negative1",
+        "thin": -1
+      },
+      "production_alpha_sha256": "fc22a071579d266e9adc84767fd739a4b0f14c311c81edb6be7922b5c74a4331",
+      "production_sha256": "cdd28943cf589bc83ebd2bc5c5e47a348dec502db3bbf2fb38d0789575090503",
+      "replace": true,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "8aa9eccb6fb2680250bac79dec5f83c8176bf82b606fb05b2efae7f0c0ab46e0",
+      "actual_sha256": "d3e2d89e3e3cfc30e22caf2ad830c3e1285b79f288bf72974f17c686d799c638",
+      "depth": "PF16",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_negative1",
+        "thin": -1
+      },
+      "production_alpha_sha256": "8aa9eccb6fb2680250bac79dec5f83c8176bf82b606fb05b2efae7f0c0ab46e0",
+      "production_sha256": "d3e2d89e3e3cfc30e22caf2ad830c3e1285b79f288bf72974f17c686d799c638",
+      "replace": true,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "147fc4954afa17b717c3e5c36ebfe544601fac8e319935cba5f9b9e3010d730a",
+      "actual_sha256": "b28a142f1ec6e6f342339e7307702173f9f8b92c2b97e020bd38dd8e4ba7849d",
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_negative1",
+        "thin": -1
+      },
+      "production_alpha_sha256": "147fc4954afa17b717c3e5c36ebfe544601fac8e319935cba5f9b9e3010d730a",
+      "production_sha256": "b28a142f1ec6e6f342339e7307702173f9f8b92c2b97e020bd38dd8e4ba7849d",
+      "replace": true,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "02f9db2147132efed24fa77ba62e8802f8740ec95e4cda843f8d7f0197cf4bbd",
+      "actual_sha256": "49f62698bb03fa1c09414950ac2dd73a534a4716d6f55cb51b71084e489e08c9",
+      "depth": "PF8",
+      "different_bytes": 56,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 0,
+      "first_production_byte": 255,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_positive1",
+        "thin": 1
+      },
+      "production_alpha_sha256": "ad7cc0c174e495dc8787d85987b2e3ebb6aa1784fdacb0374db499decc0c1ce4",
+      "production_sha256": "fc2b27ec433b415d297030ac790bab11e65355883c5a3787a3b2ea9ff931f01f",
+      "replace": true,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "3f1ca0d141e2e55381ad1329f5441cbad8f7672c6e6389be148eaf3d47de0dc5",
+      "actual_sha256": "66fac9f73970280043cc26784bbf71549770e6a33dbb89b0f7631fb52b0a3889",
+      "depth": "PF16",
+      "different_bytes": 56,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 1,
+      "first_production_byte": 128,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_positive1",
+        "thin": 1
+      },
+      "production_alpha_sha256": "737f41c05820726e3f621e5551d2c7fdc2f2cf11157bea9040f1facc18d96fb3",
+      "production_sha256": "365c5f5ddd377d6abf906e1fefee71bbb1eea9bb737357385b39788b6360a070",
+      "replace": true,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "06e5856d0a75f68216d590314ce42d189d1ed33dd1ef91effc56e04260c70c9a",
+      "actual_sha256": "2347c74ec8a23dd20092ff12bb52e61965212d4aeb06066e7e699df53cd0d0eb",
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_positive1",
+        "thin": 1
+      },
+      "production_alpha_sha256": "06e5856d0a75f68216d590314ce42d189d1ed33dd1ef91effc56e04260c70c9a",
+      "production_sha256": "2347c74ec8a23dd20092ff12bb52e61965212d4aeb06066e7e699df53cd0d0eb",
+      "replace": true,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "2fed21a8cf8d063093b4badbc1287145c6686f9c5c3a4e00501b2d8befc376ef",
+      "actual_sha256": "c4797d00dfe430ccadd59c60985145fb34fdbd03bef9d9406bc0eea321039ff2",
+      "depth": "PF8",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "blur4",
+        "thin": 0
+      },
+      "production_alpha_sha256": "2fed21a8cf8d063093b4badbc1287145c6686f9c5c3a4e00501b2d8befc376ef",
+      "production_sha256": "c4797d00dfe430ccadd59c60985145fb34fdbd03bef9d9406bc0eea321039ff2",
+      "replace": true,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "5d4d372dffbab26eea51eaec1a924b9093bd89df1adbec3a7a9ba4cdc5a03c0b",
+      "actual_sha256": "d7fac3d1873b4a42bfeae51ab089052ef56a70eaea5629f9ae0c0963b4926b12",
+      "depth": "PF16",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "blur4",
+        "thin": 0
+      },
+      "production_alpha_sha256": "5d4d372dffbab26eea51eaec1a924b9093bd89df1adbec3a7a9ba4cdc5a03c0b",
+      "production_sha256": "d7fac3d1873b4a42bfeae51ab089052ef56a70eaea5629f9ae0c0963b4926b12",
+      "replace": true,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "92fba0e4d4d1107c1c9652b92aa9acb9d757b3bc22be9fa257b3e2217d863c20",
+      "actual_sha256": "7944ddbd095a0862374d675540b1a0dd476a4acc120ff59c92e0661802656392",
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "blur4",
+        "thin": 0
+      },
+      "production_alpha_sha256": "92fba0e4d4d1107c1c9652b92aa9acb9d757b3bc22be9fa257b3e2217d863c20",
+      "production_sha256": "7944ddbd095a0862374d675540b1a0dd476a4acc120ff59c92e0661802656392",
+      "replace": true,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "a0301f23abba01c8a23081c4db4dc1e4b81750207511179bb11cc30d24b8637d",
+      "actual_sha256": "6b083eeabcb8a609ceb4c9de8ba07818f1e2cfeb27145803bcca114ae5825d4f",
+      "depth": "PF8",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_negative1_blur4",
+        "thin": -1
+      },
+      "production_alpha_sha256": "a0301f23abba01c8a23081c4db4dc1e4b81750207511179bb11cc30d24b8637d",
+      "production_sha256": "6b083eeabcb8a609ceb4c9de8ba07818f1e2cfeb27145803bcca114ae5825d4f",
+      "replace": true,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "aa8bc837e9189f435ab024c4cc55f78a53cf7c2cda72b1a110fc05300d4de88b",
+      "actual_sha256": "3cf48c1fd2b0b6b6f5a9019ec11bbd599a901fe365375eb7bb8d4422463bf68a",
+      "depth": "PF16",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_negative1_blur4",
+        "thin": -1
+      },
+      "production_alpha_sha256": "aa8bc837e9189f435ab024c4cc55f78a53cf7c2cda72b1a110fc05300d4de88b",
+      "production_sha256": "3cf48c1fd2b0b6b6f5a9019ec11bbd599a901fe365375eb7bb8d4422463bf68a",
+      "replace": true,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "d410bb83586336a5cafcbfed33b05d13a83aaeed34e2b3c0f87e6c0327dbaa10",
+      "actual_sha256": "43d3c19259ec06a876cb0e2f515ac919ddb51f5221c3b9961626140bc8ad67d0",
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_negative1_blur4",
+        "thin": -1
+      },
+      "production_alpha_sha256": "d410bb83586336a5cafcbfed33b05d13a83aaeed34e2b3c0f87e6c0327dbaa10",
+      "production_sha256": "43d3c19259ec06a876cb0e2f515ac919ddb51f5221c3b9961626140bc8ad67d0",
+      "replace": true,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "2fed21a8cf8d063093b4badbc1287145c6686f9c5c3a4e00501b2d8befc376ef",
+      "actual_sha256": "c4797d00dfe430ccadd59c60985145fb34fdbd03bef9d9406bc0eea321039ff2",
+      "depth": "PF8",
+      "different_bytes": 104,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 0,
+      "first_production_byte": 255,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_positive1_blur4",
+        "thin": 1
+      },
+      "production_alpha_sha256": "16a2a04fa01a59813d94547cb55afae2552b8045d5f09e85030997a3fc65dc2c",
+      "production_sha256": "e1ffa8682942ea06105c5b642caa303a7cd02e0f1d63301c6a3f7bb92684ccf2",
+      "replace": true,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "5d4d372dffbab26eea51eaec1a924b9093bd89df1adbec3a7a9ba4cdc5a03c0b",
+      "actual_sha256": "d7fac3d1873b4a42bfeae51ab089052ef56a70eaea5629f9ae0c0963b4926b12",
+      "depth": "PF16",
+      "different_bytes": 104,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 1,
+      "first_production_byte": 128,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_positive1_blur4",
+        "thin": 1
+      },
+      "production_alpha_sha256": "339e61423b2da82fe4158279d94a8f596427b863b05fdd42dba2674e8ca98e76",
+      "production_sha256": "ef2f29de3918f10580268cc6598f3ad7f543f3b662743e6dbb0c733456a16d4d",
+      "replace": true,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "2dc1ca70fc48106318baa2df4189563b595befad67e0fb6d188940f0c9de2755",
+      "actual_sha256": "0e8e483636796eeec99b219554c66a2ec38fd4bd18b7f8f38a908dc8cafdccef",
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_positive1_blur4",
+        "thin": 1
+      },
+      "production_alpha_sha256": "2dc1ca70fc48106318baa2df4189563b595befad67e0fb6d188940f0c9de2755",
+      "production_sha256": "0e8e483636796eeec99b219554c66a2ec38fd4bd18b7f8f38a908dc8cafdccef",
+      "replace": true,
+      "thin_distance_type": 1,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "02f9db2147132efed24fa77ba62e8802f8740ec95e4cda843f8d7f0197cf4bbd",
+      "actual_sha256": "49f62698bb03fa1c09414950ac2dd73a534a4716d6f55cb51b71084e489e08c9",
+      "depth": "PF8",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "none",
+        "thin": 0
+      },
+      "production_alpha_sha256": "02f9db2147132efed24fa77ba62e8802f8740ec95e4cda843f8d7f0197cf4bbd",
+      "production_sha256": "49f62698bb03fa1c09414950ac2dd73a534a4716d6f55cb51b71084e489e08c9",
+      "replace": true,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "3f1ca0d141e2e55381ad1329f5441cbad8f7672c6e6389be148eaf3d47de0dc5",
+      "actual_sha256": "66fac9f73970280043cc26784bbf71549770e6a33dbb89b0f7631fb52b0a3889",
+      "depth": "PF16",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "none",
+        "thin": 0
+      },
+      "production_alpha_sha256": "3f1ca0d141e2e55381ad1329f5441cbad8f7672c6e6389be148eaf3d47de0dc5",
+      "production_sha256": "66fac9f73970280043cc26784bbf71549770e6a33dbb89b0f7631fb52b0a3889",
+      "replace": true,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "cbe1cbfffb3f723d79ad40195afa5f023366a371c83f14af7aa93976adb575c3",
+      "actual_sha256": "d2c145ea56526ead8f8a1deb74d81d5482e0af30bc809ba0f6caa5d8ca0e194d",
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "none",
+        "thin": 0
+      },
+      "production_alpha_sha256": "cbe1cbfffb3f723d79ad40195afa5f023366a371c83f14af7aa93976adb575c3",
+      "production_sha256": "d2c145ea56526ead8f8a1deb74d81d5482e0af30bc809ba0f6caa5d8ca0e194d",
+      "replace": true,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "fc22a071579d266e9adc84767fd739a4b0f14c311c81edb6be7922b5c74a4331",
+      "actual_sha256": "cdd28943cf589bc83ebd2bc5c5e47a348dec502db3bbf2fb38d0789575090503",
+      "depth": "PF8",
+      "different_bytes": 6,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 128,
+      "first_production_byte": 255,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_negative1",
+        "thin": -1
+      },
+      "production_alpha_sha256": "0cc209d03223b6c60f8209f496cb85b8cfa3cdeae9ed5c98cb18cfdd29ce74e3",
+      "production_sha256": "50ba17b1163bb0dac46a5fafd25aa2e71b60a55a7071f5777ae8fcba77418efa",
+      "replace": true,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "8aa9eccb6fb2680250bac79dec5f83c8176bf82b606fb05b2efae7f0c0ab46e0",
+      "actual_sha256": "d3e2d89e3e3cfc30e22caf2ad830c3e1285b79f288bf72974f17c686d799c638",
+      "depth": "PF16",
+      "different_bytes": 6,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 241,
+      "first_production_byte": 128,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_negative1",
+        "thin": -1
+      },
+      "production_alpha_sha256": "f33db186488b113f794a425744b4ad2e2254bea5f8f90f42e07cd45ea0b89595",
+      "production_sha256": "8f40815c78ef72b2f9fca1361ac83cb21436a8bc0f49f9b156d31512c076a572",
+      "replace": true,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "147fc4954afa17b717c3e5c36ebfe544601fac8e319935cba5f9b9e3010d730a",
+      "actual_sha256": "b28a142f1ec6e6f342339e7307702173f9f8b92c2b97e020bd38dd8e4ba7849d",
+      "depth": "PF32",
+      "different_bytes": 12,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 466,
+      "first_production_byte": 128,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_negative1",
+        "thin": -1
+      },
+      "production_alpha_sha256": "768f55f828221f1a6b41a175bae3dda310f3c8dbf4d040e90115b388d142aeae",
+      "production_sha256": "d844391aa21485db38fdad51969b9dc02dc19a6ac2ce97191f899dc8d2b03c6c",
+      "replace": true,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "02f9db2147132efed24fa77ba62e8802f8740ec95e4cda843f8d7f0197cf4bbd",
+      "actual_sha256": "49f62698bb03fa1c09414950ac2dd73a534a4716d6f55cb51b71084e489e08c9",
+      "depth": "PF8",
+      "different_bytes": 79,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 0,
+      "first_production_byte": 255,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_positive1",
+        "thin": 1
+      },
+      "production_alpha_sha256": "4f636c31c89dd38d2b8d7edfd17eddee499b460649a1a9766ea73ac27ff8d498",
+      "production_sha256": "26b49708a96255387b996980e9a5ee898871cd108148b6155c8b3d828a016144",
+      "replace": true,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "3f1ca0d141e2e55381ad1329f5441cbad8f7672c6e6389be148eaf3d47de0dc5",
+      "actual_sha256": "66fac9f73970280043cc26784bbf71549770e6a33dbb89b0f7631fb52b0a3889",
+      "depth": "PF16",
+      "different_bytes": 79,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 1,
+      "first_production_byte": 128,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_positive1",
+        "thin": 1
+      },
+      "production_alpha_sha256": "e262424e68bbde9da0ba5ccdded40b510efeea3a51ab330c18255be8848334e1",
+      "production_sha256": "757295d20b07beb4ed74c6b26643833748995c91d00b7a8d1f2c12ef875df2c8",
+      "replace": true,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "510f2a63eeade40ae9cf200d16f9580aa97cc94fcdfc14044e9d1624f73af3b6",
+      "actual_sha256": "6e054eea5006e286b8fecf51cbddf66e593afea39ffe40717f453bd575344815",
+      "depth": "PF32",
+      "different_bytes": 70,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 2,
+      "first_production_byte": 128,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_positive1",
+        "thin": 1
+      },
+      "production_alpha_sha256": "c3c22a921dfdcfc3e603ed234d4d89c393367b65b2ff63af4aa165d174346431",
+      "production_sha256": "eaeb6f1b0f7d89ef5987b77022e43281d1f415d5e62625466e42330e607cded7",
+      "replace": true,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "2fed21a8cf8d063093b4badbc1287145c6686f9c5c3a4e00501b2d8befc376ef",
+      "actual_sha256": "c4797d00dfe430ccadd59c60985145fb34fdbd03bef9d9406bc0eea321039ff2",
+      "depth": "PF8",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "blur4",
+        "thin": 0
+      },
+      "production_alpha_sha256": "2fed21a8cf8d063093b4badbc1287145c6686f9c5c3a4e00501b2d8befc376ef",
+      "production_sha256": "c4797d00dfe430ccadd59c60985145fb34fdbd03bef9d9406bc0eea321039ff2",
+      "replace": true,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "5d4d372dffbab26eea51eaec1a924b9093bd89df1adbec3a7a9ba4cdc5a03c0b",
+      "actual_sha256": "d7fac3d1873b4a42bfeae51ab089052ef56a70eaea5629f9ae0c0963b4926b12",
+      "depth": "PF16",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "blur4",
+        "thin": 0
+      },
+      "production_alpha_sha256": "5d4d372dffbab26eea51eaec1a924b9093bd89df1adbec3a7a9ba4cdc5a03c0b",
+      "production_sha256": "d7fac3d1873b4a42bfeae51ab089052ef56a70eaea5629f9ae0c0963b4926b12",
+      "replace": true,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "92fba0e4d4d1107c1c9652b92aa9acb9d757b3bc22be9fa257b3e2217d863c20",
+      "actual_sha256": "7944ddbd095a0862374d675540b1a0dd476a4acc120ff59c92e0661802656392",
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "blur4",
+        "thin": 0
+      },
+      "production_alpha_sha256": "92fba0e4d4d1107c1c9652b92aa9acb9d757b3bc22be9fa257b3e2217d863c20",
+      "production_sha256": "7944ddbd095a0862374d675540b1a0dd476a4acc120ff59c92e0661802656392",
+      "replace": true,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "a0301f23abba01c8a23081c4db4dc1e4b81750207511179bb11cc30d24b8637d",
+      "actual_sha256": "6b083eeabcb8a609ceb4c9de8ba07818f1e2cfeb27145803bcca114ae5825d4f",
+      "depth": "PF8",
+      "different_bytes": 6,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 128,
+      "first_production_byte": 127,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_negative1_blur4",
+        "thin": -1
+      },
+      "production_alpha_sha256": "6e58266d79e130696245e744adebbe3e228acc96bfcdd05c6233d2b74f2d1e80",
+      "production_sha256": "1c9bded4f25fcb31899391bfa898841637a9523e1ed5db7fb483a658c019cbf5",
+      "replace": true,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "aa8bc837e9189f435ab024c4cc55f78a53cf7c2cda72b1a110fc05300d4de88b",
+      "actual_sha256": "3cf48c1fd2b0b6b6f5a9019ec11bbd599a901fe365375eb7bb8d4422463bf68a",
+      "depth": "PF16",
+      "different_bytes": 6,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 241,
+      "first_production_byte": 64,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_negative1_blur4",
+        "thin": -1
+      },
+      "production_alpha_sha256": "ad1dfc627ee41a4010bb998698a03431f3e75fbaff665c108fd13660c70fa9e6",
+      "production_sha256": "d1b7d0965d2d668b35a280bbcffeb17f46bdecc18e38f9a4701e0546fcdb7543",
+      "replace": true,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "d410bb83586336a5cafcbfed33b05d13a83aaeed34e2b3c0f87e6c0327dbaa10",
+      "actual_sha256": "43d3c19259ec06a876cb0e2f515ac919ddb51f5221c3b9961626140bc8ad67d0",
+      "depth": "PF32",
+      "different_bytes": 316,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 16,
+      "first_production_byte": 32,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_negative1_blur4",
+        "thin": -1
+      },
+      "production_alpha_sha256": "d7d576f0713f37b02be78ef9d9db27ab7682f0cdfb6216956c17046fa70cfaf8",
+      "production_sha256": "a2f56f1119dc516950e98bc75736dd102a44da1600bcbc9aa774c4693cf61678",
+      "replace": true,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "2fed21a8cf8d063093b4badbc1287145c6686f9c5c3a4e00501b2d8befc376ef",
+      "actual_sha256": "c4797d00dfe430ccadd59c60985145fb34fdbd03bef9d9406bc0eea321039ff2",
+      "depth": "PF8",
+      "different_bytes": 127,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 0,
+      "first_production_byte": 255,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_positive1_blur4",
+        "thin": 1
+      },
+      "production_alpha_sha256": "ac3b7bf9969e87bdeef1c1a4bfd07823cd8acd7a458e621e6255714dbe878e70",
+      "production_sha256": "c03b63419e3075e37c93759295ff0bf01ebe41a573fa74f94910468d76b4a6b0",
+      "replace": true,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "5d4d372dffbab26eea51eaec1a924b9093bd89df1adbec3a7a9ba4cdc5a03c0b",
+      "actual_sha256": "d7fac3d1873b4a42bfeae51ab089052ef56a70eaea5629f9ae0c0963b4926b12",
+      "depth": "PF16",
+      "different_bytes": 127,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 1,
+      "first_production_byte": 128,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_positive1_blur4",
+        "thin": 1
+      },
+      "production_alpha_sha256": "5adcd6eb840fb5233aa3bc88bc4990e713feaeb2e9caf398d38bfe603514e1a1",
+      "production_sha256": "4e64d77a4b2b629b4e66624b1f6701faa3d749a04db526efbe34d0edc986fec5",
+      "replace": true,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "28df658fff241548a91bb34bde163b0fde0796279ca234ee3abe69a9c6f66c08",
+      "actual_sha256": "1a0607b1e2a25ad8d41643a78265581b06fb138130f218981f2d8dbd04407181",
+      "depth": "PF32",
+      "different_bytes": 457,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 18,
+      "first_different_byte": 0,
+      "first_production_byte": 0,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_positive1_blur4",
+        "thin": 1
+      },
+      "production_alpha_sha256": "8ec74db423e2667b024c7004c99725567e7a4158ae1460e586edad316664c1cf",
+      "production_sha256": "2975f1b2f603927600db6f2b1f0294223b130d98e32a729ce65c71312a621c31",
+      "replace": true,
+      "thin_distance_type": 2,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "02f9db2147132efed24fa77ba62e8802f8740ec95e4cda843f8d7f0197cf4bbd",
+      "actual_sha256": "49f62698bb03fa1c09414950ac2dd73a534a4716d6f55cb51b71084e489e08c9",
+      "depth": "PF8",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "none",
+        "thin": 0
+      },
+      "production_alpha_sha256": "02f9db2147132efed24fa77ba62e8802f8740ec95e4cda843f8d7f0197cf4bbd",
+      "production_sha256": "49f62698bb03fa1c09414950ac2dd73a534a4716d6f55cb51b71084e489e08c9",
+      "replace": true,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "3f1ca0d141e2e55381ad1329f5441cbad8f7672c6e6389be148eaf3d47de0dc5",
+      "actual_sha256": "66fac9f73970280043cc26784bbf71549770e6a33dbb89b0f7631fb52b0a3889",
+      "depth": "PF16",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "none",
+        "thin": 0
+      },
+      "production_alpha_sha256": "3f1ca0d141e2e55381ad1329f5441cbad8f7672c6e6389be148eaf3d47de0dc5",
+      "production_sha256": "66fac9f73970280043cc26784bbf71549770e6a33dbb89b0f7631fb52b0a3889",
+      "replace": true,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "cbe1cbfffb3f723d79ad40195afa5f023366a371c83f14af7aa93976adb575c3",
+      "actual_sha256": "d2c145ea56526ead8f8a1deb74d81d5482e0af30bc809ba0f6caa5d8ca0e194d",
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "none",
+        "thin": 0
+      },
+      "production_alpha_sha256": "cbe1cbfffb3f723d79ad40195afa5f023366a371c83f14af7aa93976adb575c3",
+      "production_sha256": "d2c145ea56526ead8f8a1deb74d81d5482e0af30bc809ba0f6caa5d8ca0e194d",
+      "replace": true,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "fc22a071579d266e9adc84767fd739a4b0f14c311c81edb6be7922b5c74a4331",
+      "actual_sha256": "cdd28943cf589bc83ebd2bc5c5e47a348dec502db3bbf2fb38d0789575090503",
+      "depth": "PF8",
+      "different_bytes": 6,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 128,
+      "first_production_byte": 255,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_negative1",
+        "thin": -1
+      },
+      "production_alpha_sha256": "0cc209d03223b6c60f8209f496cb85b8cfa3cdeae9ed5c98cb18cfdd29ce74e3",
+      "production_sha256": "50ba17b1163bb0dac46a5fafd25aa2e71b60a55a7071f5777ae8fcba77418efa",
+      "replace": true,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "8aa9eccb6fb2680250bac79dec5f83c8176bf82b606fb05b2efae7f0c0ab46e0",
+      "actual_sha256": "d3e2d89e3e3cfc30e22caf2ad830c3e1285b79f288bf72974f17c686d799c638",
+      "depth": "PF16",
+      "different_bytes": 6,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 241,
+      "first_production_byte": 128,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_negative1",
+        "thin": -1
+      },
+      "production_alpha_sha256": "f33db186488b113f794a425744b4ad2e2254bea5f8f90f42e07cd45ea0b89595",
+      "production_sha256": "8f40815c78ef72b2f9fca1361ac83cb21436a8bc0f49f9b156d31512c076a572",
+      "replace": true,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "147fc4954afa17b717c3e5c36ebfe544601fac8e319935cba5f9b9e3010d730a",
+      "actual_sha256": "b28a142f1ec6e6f342339e7307702173f9f8b92c2b97e020bd38dd8e4ba7849d",
+      "depth": "PF32",
+      "different_bytes": 12,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 466,
+      "first_production_byte": 128,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_negative1",
+        "thin": -1
+      },
+      "production_alpha_sha256": "768f55f828221f1a6b41a175bae3dda310f3c8dbf4d040e90115b388d142aeae",
+      "production_sha256": "d844391aa21485db38fdad51969b9dc02dc19a6ac2ce97191f899dc8d2b03c6c",
+      "replace": true,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "02f9db2147132efed24fa77ba62e8802f8740ec95e4cda843f8d7f0197cf4bbd",
+      "actual_sha256": "49f62698bb03fa1c09414950ac2dd73a534a4716d6f55cb51b71084e489e08c9",
+      "depth": "PF8",
+      "different_bytes": 44,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 4,
+      "first_production_byte": 255,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_positive1",
+        "thin": 1
+      },
+      "production_alpha_sha256": "7c442eaddb989d749dadad26481aee32ac519f5afaab8582de103d687877acb0",
+      "production_sha256": "e3e4f9b3d583ff5879cf3a102c374a0ef775458b717655b56c707fb236dc4e20",
+      "replace": true,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "3f1ca0d141e2e55381ad1329f5441cbad8f7672c6e6389be148eaf3d47de0dc5",
+      "actual_sha256": "66fac9f73970280043cc26784bbf71549770e6a33dbb89b0f7631fb52b0a3889",
+      "depth": "PF16",
+      "different_bytes": 44,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 9,
+      "first_production_byte": 128,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_positive1",
+        "thin": 1
+      },
+      "production_alpha_sha256": "96a26f9423d4d3fa12f925f3c8f27895ebcf7a4e8cfa0489bcb65d9d12c8cf2d",
+      "production_sha256": "e511dc73708e8d9e0e08ff1105e75c2c74ff39d3a5f5f0e556a5b172e4b6f8eb",
+      "replace": true,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "510f2a63eeade40ae9cf200d16f9580aa97cc94fcdfc14044e9d1624f73af3b6",
+      "actual_sha256": "6e054eea5006e286b8fecf51cbddf66e593afea39ffe40717f453bd575344815",
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 0.0,
+        "name": "thin_positive1",
+        "thin": 1
+      },
+      "production_alpha_sha256": "510f2a63eeade40ae9cf200d16f9580aa97cc94fcdfc14044e9d1624f73af3b6",
+      "production_sha256": "6e054eea5006e286b8fecf51cbddf66e593afea39ffe40717f453bd575344815",
+      "replace": true,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "2fed21a8cf8d063093b4badbc1287145c6686f9c5c3a4e00501b2d8befc376ef",
+      "actual_sha256": "c4797d00dfe430ccadd59c60985145fb34fdbd03bef9d9406bc0eea321039ff2",
+      "depth": "PF8",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "blur4",
+        "thin": 0
+      },
+      "production_alpha_sha256": "2fed21a8cf8d063093b4badbc1287145c6686f9c5c3a4e00501b2d8befc376ef",
+      "production_sha256": "c4797d00dfe430ccadd59c60985145fb34fdbd03bef9d9406bc0eea321039ff2",
+      "replace": true,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "5d4d372dffbab26eea51eaec1a924b9093bd89df1adbec3a7a9ba4cdc5a03c0b",
+      "actual_sha256": "d7fac3d1873b4a42bfeae51ab089052ef56a70eaea5629f9ae0c0963b4926b12",
+      "depth": "PF16",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "blur4",
+        "thin": 0
+      },
+      "production_alpha_sha256": "5d4d372dffbab26eea51eaec1a924b9093bd89df1adbec3a7a9ba4cdc5a03c0b",
+      "production_sha256": "d7fac3d1873b4a42bfeae51ab089052ef56a70eaea5629f9ae0c0963b4926b12",
+      "replace": true,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "92fba0e4d4d1107c1c9652b92aa9acb9d757b3bc22be9fa257b3e2217d863c20",
+      "actual_sha256": "7944ddbd095a0862374d675540b1a0dd476a4acc120ff59c92e0661802656392",
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "blur4",
+        "thin": 0
+      },
+      "production_alpha_sha256": "92fba0e4d4d1107c1c9652b92aa9acb9d757b3bc22be9fa257b3e2217d863c20",
+      "production_sha256": "7944ddbd095a0862374d675540b1a0dd476a4acc120ff59c92e0661802656392",
+      "replace": true,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "a0301f23abba01c8a23081c4db4dc1e4b81750207511179bb11cc30d24b8637d",
+      "actual_sha256": "6b083eeabcb8a609ceb4c9de8ba07818f1e2cfeb27145803bcca114ae5825d4f",
+      "depth": "PF8",
+      "different_bytes": 6,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 128,
+      "first_production_byte": 127,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_negative1_blur4",
+        "thin": -1
+      },
+      "production_alpha_sha256": "6e58266d79e130696245e744adebbe3e228acc96bfcdd05c6233d2b74f2d1e80",
+      "production_sha256": "1c9bded4f25fcb31899391bfa898841637a9523e1ed5db7fb483a658c019cbf5",
+      "replace": true,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "aa8bc837e9189f435ab024c4cc55f78a53cf7c2cda72b1a110fc05300d4de88b",
+      "actual_sha256": "3cf48c1fd2b0b6b6f5a9019ec11bbd599a901fe365375eb7bb8d4422463bf68a",
+      "depth": "PF16",
+      "different_bytes": 6,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 241,
+      "first_production_byte": 64,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_negative1_blur4",
+        "thin": -1
+      },
+      "production_alpha_sha256": "ad1dfc627ee41a4010bb998698a03431f3e75fbaff665c108fd13660c70fa9e6",
+      "production_sha256": "d1b7d0965d2d668b35a280bbcffeb17f46bdecc18e38f9a4701e0546fcdb7543",
+      "replace": true,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "d410bb83586336a5cafcbfed33b05d13a83aaeed34e2b3c0f87e6c0327dbaa10",
+      "actual_sha256": "43d3c19259ec06a876cb0e2f515ac919ddb51f5221c3b9961626140bc8ad67d0",
+      "depth": "PF32",
+      "different_bytes": 316,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 16,
+      "first_production_byte": 32,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_negative1_blur4",
+        "thin": -1
+      },
+      "production_alpha_sha256": "d7d576f0713f37b02be78ef9d9db27ab7682f0cdfb6216956c17046fa70cfaf8",
+      "production_sha256": "a2f56f1119dc516950e98bc75736dd102a44da1600bcbc9aa774c4693cf61678",
+      "replace": true,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "2fed21a8cf8d063093b4badbc1287145c6686f9c5c3a4e00501b2d8befc376ef",
+      "actual_sha256": "c4797d00dfe430ccadd59c60985145fb34fdbd03bef9d9406bc0eea321039ff2",
+      "depth": "PF8",
+      "different_bytes": 81,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 4,
+      "first_production_byte": 127,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_positive1_blur4",
+        "thin": 1
+      },
+      "production_alpha_sha256": "246ca360d180577f4dba9221e479c26f4166274eeeb8236ddc837888fd0bbd59",
+      "production_sha256": "237859deb7fdaccdb27f1dd0dea23c5b46fdddc8c1c02aab693ddef659baa80b",
+      "replace": true,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf8_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "5d4d372dffbab26eea51eaec1a924b9093bd89df1adbec3a7a9ba4cdc5a03c0b",
+      "actual_sha256": "d7fac3d1873b4a42bfeae51ab089052ef56a70eaea5629f9ae0c0963b4926b12",
+      "depth": "PF16",
+      "different_bytes": 81,
+      "exact": false,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": 0,
+      "first_different_byte": 9,
+      "first_production_byte": 64,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_positive1_blur4",
+        "thin": 1
+      },
+      "production_alpha_sha256": "b0584834c1d42e44592148e33af10b4a423a965f40dfad28c19a8236b37ce7b0",
+      "production_sha256": "7271b8fc58dda5b4e16cca4bfdf7bacf1b50f37d2f5283d4d1101cd1ab7abb78",
+      "replace": true,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf16_worker": 1,
+        "smart_worker": 1
+      }
+    },
+    {
+      "actual_alpha_sha256": "28df658fff241548a91bb34bde163b0fde0796279ca234ee3abe69a9c6f66c08",
+      "actual_sha256": "1a0607b1e2a25ad8d41643a78265581b06fb138130f218981f2d8dbd04407181",
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "execution_gates": {
+        "checkout_callbacks_exact": true,
+        "direct_actual_final_pixel_callback_normal_returns": true,
+        "direct_actual_pixel_callback_normal_returns": true,
+        "exact_dispatch_hits": true,
+        "normal_return": true,
+        "output_padding_preserved": true
+      },
+      "first_actual_byte": null,
+      "first_different_byte": null,
+      "first_production_byte": null,
+      "mode": {
+        "blur": 4.0,
+        "name": "thin_positive1_blur4",
+        "thin": 1
+      },
+      "production_alpha_sha256": "28df658fff241548a91bb34bde163b0fde0796279ca234ee3abe69a9c6f66c08",
+      "production_sha256": "1a0607b1e2a25ad8d41643a78265581b06fb138130f218981f2d8dbd04407181",
+      "replace": true,
+      "thin_distance_type": 3,
+      "worker_hits": {
+        "parameter_materialize": 1,
+        "pf32_worker": 1,
+        "smart_worker": 1
+      }
+    }
+  ],
+  "date": "2026-10-01",
+  "dependency_sha256": {
+    "tools/emulation/aex_loader.py": "f277dbecd70c4c495aa05e6495d80fdc5ce07c5df51b9076be331c232e26c9ab",
+    "tools/emulation/probe_olmcolorkey_pf16_full_worker_20260805.py": "082b122461d916465335c748c2a1df3980f507ec09ad26a78ed310117abeb315",
+    "tools/emulation/test_olmcolorkey_mac_smartrender_adapter_20260717.py": "6282a798fc855280f01b865741dbf1f60e19ab549191d5fe67352d4486a5ed50",
+    "tools/emulation/test_olmcolorkey_replace_edge_composition_actual_aex_20260811.py": "35d6f41054c03a4f08a1a325238e75016fbc6a11688d8f3453a17baf180c71df"
+  },
+  "distance_distinguishability": [
+    {
+      "depth": "PF8",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "8786eb8e165c9fbb6d084e89f18a4ea9fbd73b8a442667f0fc3c978b8a9a45e1",
+        "8786eb8e165c9fbb6d084e89f18a4ea9fbd73b8a442667f0fc3c978b8a9a45e1",
+        "8786eb8e165c9fbb6d084e89f18a4ea9fbd73b8a442667f0fc3c978b8a9a45e1"
+      ],
+      "mode": "none",
+      "replace": false
+    },
+    {
+      "depth": "PF16",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "4561193adbfae0cfd7c13994f56f61aa21d19373d790a2e779500367ca7b800c",
+        "4561193adbfae0cfd7c13994f56f61aa21d19373d790a2e779500367ca7b800c",
+        "4561193adbfae0cfd7c13994f56f61aa21d19373d790a2e779500367ca7b800c"
+      ],
+      "mode": "none",
+      "replace": false
+    },
+    {
+      "depth": "PF32",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "fd2b397522449c1f0bbc2d2fb63d1eb974cb43134a6570cc442f549a3a9840f7",
+        "fd2b397522449c1f0bbc2d2fb63d1eb974cb43134a6570cc442f549a3a9840f7",
+        "fd2b397522449c1f0bbc2d2fb63d1eb974cb43134a6570cc442f549a3a9840f7"
+      ],
+      "mode": "none",
+      "replace": false
+    },
+    {
+      "depth": "PF8",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "053010dae082af641501a47f515f00199aee15e67132b86c76368717c912b042",
+        "053010dae082af641501a47f515f00199aee15e67132b86c76368717c912b042",
+        "053010dae082af641501a47f515f00199aee15e67132b86c76368717c912b042"
+      ],
+      "mode": "thin_negative1",
+      "replace": false
+    },
+    {
+      "depth": "PF16",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "beb8222c66ad420fc85ddab7d163143eca0ba989e6c8c40a46cc1b1828e46c5b",
+        "beb8222c66ad420fc85ddab7d163143eca0ba989e6c8c40a46cc1b1828e46c5b",
+        "beb8222c66ad420fc85ddab7d163143eca0ba989e6c8c40a46cc1b1828e46c5b"
+      ],
+      "mode": "thin_negative1",
+      "replace": false
+    },
+    {
+      "depth": "PF32",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "1a77eb6a91575cfb56e662566b0ed816516a199bd4d1b3f28d778faef2f01f40",
+        "1a77eb6a91575cfb56e662566b0ed816516a199bd4d1b3f28d778faef2f01f40",
+        "1a77eb6a91575cfb56e662566b0ed816516a199bd4d1b3f28d778faef2f01f40"
+      ],
+      "mode": "thin_negative1",
+      "replace": false
+    },
+    {
+      "depth": "PF8",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "8786eb8e165c9fbb6d084e89f18a4ea9fbd73b8a442667f0fc3c978b8a9a45e1",
+        "8786eb8e165c9fbb6d084e89f18a4ea9fbd73b8a442667f0fc3c978b8a9a45e1",
+        "8786eb8e165c9fbb6d084e89f18a4ea9fbd73b8a442667f0fc3c978b8a9a45e1"
+      ],
+      "mode": "thin_positive1",
+      "replace": false
+    },
+    {
+      "depth": "PF16",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "4561193adbfae0cfd7c13994f56f61aa21d19373d790a2e779500367ca7b800c",
+        "4561193adbfae0cfd7c13994f56f61aa21d19373d790a2e779500367ca7b800c",
+        "4561193adbfae0cfd7c13994f56f61aa21d19373d790a2e779500367ca7b800c"
+      ],
+      "mode": "thin_positive1",
+      "replace": false
+    },
+    {
+      "depth": "PF32",
+      "distinct_distance_outputs": 2,
+      "hashes": [
+        "fd635e47ed847b5936f0602ac62025da9dcdddb463d9bd0bf57906baf11b102a",
+        "8a27e3f1854d0f3e35e99517d750c0be5827de866284bd989f2ef6a5c663529d",
+        "8a27e3f1854d0f3e35e99517d750c0be5827de866284bd989f2ef6a5c663529d"
+      ],
+      "mode": "thin_positive1",
+      "replace": false
+    },
+    {
+      "depth": "PF8",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "ff8ef6021e4e86a0edcf3487d36741d880b6d3a6388f8b4f9e68126dab0c1851",
+        "ff8ef6021e4e86a0edcf3487d36741d880b6d3a6388f8b4f9e68126dab0c1851",
+        "ff8ef6021e4e86a0edcf3487d36741d880b6d3a6388f8b4f9e68126dab0c1851"
+      ],
+      "mode": "blur4",
+      "replace": false
+    },
+    {
+      "depth": "PF16",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "d4cc83158f9a0cfda8543e302466940cec3f3f213db6f3d7aef37ddad16a04c9",
+        "d4cc83158f9a0cfda8543e302466940cec3f3f213db6f3d7aef37ddad16a04c9",
+        "d4cc83158f9a0cfda8543e302466940cec3f3f213db6f3d7aef37ddad16a04c9"
+      ],
+      "mode": "blur4",
+      "replace": false
+    },
+    {
+      "depth": "PF32",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "2275d229ebd21f75f5d6a4b3cff81403a5f47b02e22121f7ee79589b192646e2",
+        "2275d229ebd21f75f5d6a4b3cff81403a5f47b02e22121f7ee79589b192646e2",
+        "2275d229ebd21f75f5d6a4b3cff81403a5f47b02e22121f7ee79589b192646e2"
+      ],
+      "mode": "blur4",
+      "replace": false
+    },
+    {
+      "depth": "PF8",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "d5b87ea0b8427ed684b59a93af0758e4a453a46dc5e4cf331338d74de451afe3",
+        "d5b87ea0b8427ed684b59a93af0758e4a453a46dc5e4cf331338d74de451afe3",
+        "d5b87ea0b8427ed684b59a93af0758e4a453a46dc5e4cf331338d74de451afe3"
+      ],
+      "mode": "thin_negative1_blur4",
+      "replace": false
+    },
+    {
+      "depth": "PF16",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "c9e859a9f18d14d9cdde7d904093a3a9fd16617a3336a1b1dbcba5ccf8deb89f",
+        "c9e859a9f18d14d9cdde7d904093a3a9fd16617a3336a1b1dbcba5ccf8deb89f",
+        "c9e859a9f18d14d9cdde7d904093a3a9fd16617a3336a1b1dbcba5ccf8deb89f"
+      ],
+      "mode": "thin_negative1_blur4",
+      "replace": false
+    },
+    {
+      "depth": "PF32",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "e48f032b527505df27ae846863c0cf62c4536dedff0c9548fbab090bc0589c8b",
+        "e48f032b527505df27ae846863c0cf62c4536dedff0c9548fbab090bc0589c8b",
+        "e48f032b527505df27ae846863c0cf62c4536dedff0c9548fbab090bc0589c8b"
+      ],
+      "mode": "thin_negative1_blur4",
+      "replace": false
+    },
+    {
+      "depth": "PF8",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "ff8ef6021e4e86a0edcf3487d36741d880b6d3a6388f8b4f9e68126dab0c1851",
+        "ff8ef6021e4e86a0edcf3487d36741d880b6d3a6388f8b4f9e68126dab0c1851",
+        "ff8ef6021e4e86a0edcf3487d36741d880b6d3a6388f8b4f9e68126dab0c1851"
+      ],
+      "mode": "thin_positive1_blur4",
+      "replace": false
+    },
+    {
+      "depth": "PF16",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "d4cc83158f9a0cfda8543e302466940cec3f3f213db6f3d7aef37ddad16a04c9",
+        "d4cc83158f9a0cfda8543e302466940cec3f3f213db6f3d7aef37ddad16a04c9",
+        "d4cc83158f9a0cfda8543e302466940cec3f3f213db6f3d7aef37ddad16a04c9"
+      ],
+      "mode": "thin_positive1_blur4",
+      "replace": false
+    },
+    {
+      "depth": "PF32",
+      "distinct_distance_outputs": 2,
+      "hashes": [
+        "3d4faa45b14e6f34d0db32c0fa2bb7ebec1c773dbc8070f4697ac5c6b2b4efe7",
+        "09bafaac8697240f7bdac0edd0263e8a56807b9ac2b421131311ee7fbb468380",
+        "09bafaac8697240f7bdac0edd0263e8a56807b9ac2b421131311ee7fbb468380"
+      ],
+      "mode": "thin_positive1_blur4",
+      "replace": false
+    },
+    {
+      "depth": "PF8",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "49f62698bb03fa1c09414950ac2dd73a534a4716d6f55cb51b71084e489e08c9",
+        "49f62698bb03fa1c09414950ac2dd73a534a4716d6f55cb51b71084e489e08c9",
+        "49f62698bb03fa1c09414950ac2dd73a534a4716d6f55cb51b71084e489e08c9"
+      ],
+      "mode": "none",
+      "replace": true
+    },
+    {
+      "depth": "PF16",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "66fac9f73970280043cc26784bbf71549770e6a33dbb89b0f7631fb52b0a3889",
+        "66fac9f73970280043cc26784bbf71549770e6a33dbb89b0f7631fb52b0a3889",
+        "66fac9f73970280043cc26784bbf71549770e6a33dbb89b0f7631fb52b0a3889"
+      ],
+      "mode": "none",
+      "replace": true
+    },
+    {
+      "depth": "PF32",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "d2c145ea56526ead8f8a1deb74d81d5482e0af30bc809ba0f6caa5d8ca0e194d",
+        "d2c145ea56526ead8f8a1deb74d81d5482e0af30bc809ba0f6caa5d8ca0e194d",
+        "d2c145ea56526ead8f8a1deb74d81d5482e0af30bc809ba0f6caa5d8ca0e194d"
+      ],
+      "mode": "none",
+      "replace": true
+    },
+    {
+      "depth": "PF8",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "cdd28943cf589bc83ebd2bc5c5e47a348dec502db3bbf2fb38d0789575090503",
+        "cdd28943cf589bc83ebd2bc5c5e47a348dec502db3bbf2fb38d0789575090503",
+        "cdd28943cf589bc83ebd2bc5c5e47a348dec502db3bbf2fb38d0789575090503"
+      ],
+      "mode": "thin_negative1",
+      "replace": true
+    },
+    {
+      "depth": "PF16",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "d3e2d89e3e3cfc30e22caf2ad830c3e1285b79f288bf72974f17c686d799c638",
+        "d3e2d89e3e3cfc30e22caf2ad830c3e1285b79f288bf72974f17c686d799c638",
+        "d3e2d89e3e3cfc30e22caf2ad830c3e1285b79f288bf72974f17c686d799c638"
+      ],
+      "mode": "thin_negative1",
+      "replace": true
+    },
+    {
+      "depth": "PF32",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "b28a142f1ec6e6f342339e7307702173f9f8b92c2b97e020bd38dd8e4ba7849d",
+        "b28a142f1ec6e6f342339e7307702173f9f8b92c2b97e020bd38dd8e4ba7849d",
+        "b28a142f1ec6e6f342339e7307702173f9f8b92c2b97e020bd38dd8e4ba7849d"
+      ],
+      "mode": "thin_negative1",
+      "replace": true
+    },
+    {
+      "depth": "PF8",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "49f62698bb03fa1c09414950ac2dd73a534a4716d6f55cb51b71084e489e08c9",
+        "49f62698bb03fa1c09414950ac2dd73a534a4716d6f55cb51b71084e489e08c9",
+        "49f62698bb03fa1c09414950ac2dd73a534a4716d6f55cb51b71084e489e08c9"
+      ],
+      "mode": "thin_positive1",
+      "replace": true
+    },
+    {
+      "depth": "PF16",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "66fac9f73970280043cc26784bbf71549770e6a33dbb89b0f7631fb52b0a3889",
+        "66fac9f73970280043cc26784bbf71549770e6a33dbb89b0f7631fb52b0a3889",
+        "66fac9f73970280043cc26784bbf71549770e6a33dbb89b0f7631fb52b0a3889"
+      ],
+      "mode": "thin_positive1",
+      "replace": true
+    },
+    {
+      "depth": "PF32",
+      "distinct_distance_outputs": 2,
+      "hashes": [
+        "2347c74ec8a23dd20092ff12bb52e61965212d4aeb06066e7e699df53cd0d0eb",
+        "6e054eea5006e286b8fecf51cbddf66e593afea39ffe40717f453bd575344815",
+        "6e054eea5006e286b8fecf51cbddf66e593afea39ffe40717f453bd575344815"
+      ],
+      "mode": "thin_positive1",
+      "replace": true
+    },
+    {
+      "depth": "PF8",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "c4797d00dfe430ccadd59c60985145fb34fdbd03bef9d9406bc0eea321039ff2",
+        "c4797d00dfe430ccadd59c60985145fb34fdbd03bef9d9406bc0eea321039ff2",
+        "c4797d00dfe430ccadd59c60985145fb34fdbd03bef9d9406bc0eea321039ff2"
+      ],
+      "mode": "blur4",
+      "replace": true
+    },
+    {
+      "depth": "PF16",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "d7fac3d1873b4a42bfeae51ab089052ef56a70eaea5629f9ae0c0963b4926b12",
+        "d7fac3d1873b4a42bfeae51ab089052ef56a70eaea5629f9ae0c0963b4926b12",
+        "d7fac3d1873b4a42bfeae51ab089052ef56a70eaea5629f9ae0c0963b4926b12"
+      ],
+      "mode": "blur4",
+      "replace": true
+    },
+    {
+      "depth": "PF32",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "7944ddbd095a0862374d675540b1a0dd476a4acc120ff59c92e0661802656392",
+        "7944ddbd095a0862374d675540b1a0dd476a4acc120ff59c92e0661802656392",
+        "7944ddbd095a0862374d675540b1a0dd476a4acc120ff59c92e0661802656392"
+      ],
+      "mode": "blur4",
+      "replace": true
+    },
+    {
+      "depth": "PF8",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "6b083eeabcb8a609ceb4c9de8ba07818f1e2cfeb27145803bcca114ae5825d4f",
+        "6b083eeabcb8a609ceb4c9de8ba07818f1e2cfeb27145803bcca114ae5825d4f",
+        "6b083eeabcb8a609ceb4c9de8ba07818f1e2cfeb27145803bcca114ae5825d4f"
+      ],
+      "mode": "thin_negative1_blur4",
+      "replace": true
+    },
+    {
+      "depth": "PF16",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "3cf48c1fd2b0b6b6f5a9019ec11bbd599a901fe365375eb7bb8d4422463bf68a",
+        "3cf48c1fd2b0b6b6f5a9019ec11bbd599a901fe365375eb7bb8d4422463bf68a",
+        "3cf48c1fd2b0b6b6f5a9019ec11bbd599a901fe365375eb7bb8d4422463bf68a"
+      ],
+      "mode": "thin_negative1_blur4",
+      "replace": true
+    },
+    {
+      "depth": "PF32",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "43d3c19259ec06a876cb0e2f515ac919ddb51f5221c3b9961626140bc8ad67d0",
+        "43d3c19259ec06a876cb0e2f515ac919ddb51f5221c3b9961626140bc8ad67d0",
+        "43d3c19259ec06a876cb0e2f515ac919ddb51f5221c3b9961626140bc8ad67d0"
+      ],
+      "mode": "thin_negative1_blur4",
+      "replace": true
+    },
+    {
+      "depth": "PF8",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "c4797d00dfe430ccadd59c60985145fb34fdbd03bef9d9406bc0eea321039ff2",
+        "c4797d00dfe430ccadd59c60985145fb34fdbd03bef9d9406bc0eea321039ff2",
+        "c4797d00dfe430ccadd59c60985145fb34fdbd03bef9d9406bc0eea321039ff2"
+      ],
+      "mode": "thin_positive1_blur4",
+      "replace": true
+    },
+    {
+      "depth": "PF16",
+      "distinct_distance_outputs": 1,
+      "hashes": [
+        "d7fac3d1873b4a42bfeae51ab089052ef56a70eaea5629f9ae0c0963b4926b12",
+        "d7fac3d1873b4a42bfeae51ab089052ef56a70eaea5629f9ae0c0963b4926b12",
+        "d7fac3d1873b4a42bfeae51ab089052ef56a70eaea5629f9ae0c0963b4926b12"
+      ],
+      "mode": "thin_positive1_blur4",
+      "replace": true
+    },
+    {
+      "depth": "PF32",
+      "distinct_distance_outputs": 2,
+      "hashes": [
+        "0e8e483636796eeec99b219554c66a2ec38fd4bd18b7f8f38a908dc8cafdccef",
+        "1a0607b1e2a25ad8d41643a78265581b06fb138130f218981f2d8dbd04407181",
+        "1a0607b1e2a25ad8d41643a78265581b06fb138130f218981f2d8dbd04407181"
+      ],
+      "mode": "thin_positive1_blur4",
+      "replace": true
+    }
+  ],
+  "exact_count": 56,
+  "fixture": {
+    "height": 11,
+    "padding": 8,
+    "width": 13
+  },
+  "popup_reader": [
+    {
+      "events": [
+        {
+          "event": "checkout",
+          "index": 0,
+          "value": 1
+        },
+        {
+          "event": "checkin"
+        }
+      ],
+      "observed_internal_value": 1,
+      "public_value": 1
+    },
+    {
+      "events": [
+        {
+          "event": "checkout",
+          "index": 0,
+          "value": 2
+        },
+        {
+          "event": "checkin"
+        }
+      ],
+      "observed_internal_value": 2,
+      "public_value": 2
+    },
+    {
+      "events": [
+        {
+          "event": "checkout",
+          "index": 0,
+          "value": 3
+        },
+        {
+          "event": "checkin"
+        }
+      ],
+      "observed_internal_value": 3,
+      "public_value": 3
+    }
+  ],
+  "probe_sha256": "0894eb19bfd57c74fc086bb0b32a9e17888604b90663fb8021bb46483aa08989",
+  "production_source_sha256": "0ad70097f41054045331420d26782afb481ed61124628f9aaef5d44a0064554f",
+  "schema": "olmcolorkey.legal-composition-diagnostic/1",
+  "scope": "Actual AEX popup reader plus typed worker versus current Mac RenderWorldDirect; full parameter materializer replaced, Mac public admission bypassed; no native AE or exported-owner claim",
+  "status": "measured"
+}
