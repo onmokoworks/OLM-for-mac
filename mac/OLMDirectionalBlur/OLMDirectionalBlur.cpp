@@ -2051,10 +2051,21 @@ extern "C" PF_Err OLMDirectionalBlurTestRenderWorldWithNoise(
 }
 #endif
 
+static PF_FpLong WindowsWholeAngleDegrees(PF_Fixed value)
+{
+	// FUN_180006c50 reads the signed word at PF_ParamDef+0x3a.
+	// Preserve the upper 16 bits, including negative fractional angles;
+	// signed division by 65536 would instead truncate them toward zero.
+	const std::uint32_t whole = static_cast<std::uint32_t>(value) >> 16;
+	return static_cast<PF_FpLong>(whole >= 0x8000u
+		? static_cast<std::int32_t>(whole) - 0x10000
+		: static_cast<std::int32_t>(whole));
+}
+
 static OLMDirectionalBlurInfo InfoFromParams(PF_ParamDef *params[], PF_FpLong render_scale_x, PF_FpLong render_scale_y)
 {
 	OLMDirectionalBlurInfo info;
-	info.angle_deg = static_cast<PF_FpLong>(params[OLMDIRECTIONALBLUR_ANGLE]->u.ad.value) / 65536.0;
+	info.angle_deg = WindowsWholeAngleDegrees(params[OLMDIRECTIONALBLUR_ANGLE]->u.ad.value);
 	info.brightness_gain = params[OLMDIRECTIONALBLUR_BRIGHTNESS_GAIN]->u.fs_d.value;
 	info.size_variation = static_cast<PF_FpLong>(params[OLMDIRECTIONALBLUR_SIZE_VARIATION]->u.fd.value) / 65536.0;
 	info.front_strength = params[OLMDIRECTIONALBLUR_FRONT_STRENGTH]->u.sd.value;

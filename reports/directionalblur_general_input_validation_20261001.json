@@ -1,0 +1,61 @@
+{
+  "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+  "baseline_boundary_count": 54,
+  "baseline_boundary_exact": 18,
+  "baseline_source_sha256": "4c87fb0b77efc426a48d2ac133d4d3c31ab477ed1a78d4ba06391b56523769a8",
+  "checks": [
+    {
+      "builds": [
+        "O2",
+        "O1 ASan UBSan"
+      ],
+      "case_count": 162,
+      "exit_code": 0,
+      "test": "tests/test_directionalblur_general_input_owner_20261001.py"
+    },
+    {
+      "exit_code": 0,
+      "test": "tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py"
+    },
+    {
+      "exit_code": 0,
+      "test": "tools/emulation/test_dblur_generic_roi_policy_20260820.py"
+    },
+    {
+      "exit_code": 0,
+      "test": "tools/emulation/test_dblur_generic_admission_budget_20260821.py"
+    }
+  ],
+  "claims_not_made": [
+    "No Windows AE execution or native UCRT fidelity claim",
+    "No installed bundle verification",
+    "No new public Mac checkout-to-Windows exact claim",
+    "No full repository gate rerun",
+    "No arbitrary input or full compatibility completion"
+  ],
+  "dependencies": {
+    "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+    "core/dblur_frontonly.cpp": "488834530c422a785958b6ffebd521da73092b6419df385b9eade68d0b750349",
+    "core/dblur_rotate.cpp": "5b02748d421befb1ecda0fd36ff34c5b225ebee5e928e0460e1c14d174c101d7",
+    "core/dblur_rowdriver.cpp": "9f271073adaf2746a5144cf4793f0ebe574f51787705f265421710215596481d",
+    "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "ed8ea8baa8048f7988e0bd7b90fedba62f8ebc69cecce39d35cd94f221fcaeb5",
+    "reports/directionalblur_general_input_boundary_20261001.json": "144387d918feb8df86658530e61a4f9eb06538b0ebd1e4866c764b0de3fc8a60",
+    "reports/directionalblur_general_input_boundary_production_20261001.json": "80afd2f092fc1e46f62fbf8f9562a0c5d543b29582de75d0800ac0a6f2c7d5ac",
+    "reports/directionalblur_general_input_owner_20261001.json": "44431d7135a47bbd208f3408421712617217ce5fabeef0fd43d2a0b4a34c95e8",
+    "reports/directionalblur_general_input_production_20261001.json": "5d631c989b80ddd8f61781af6fe812ee19b49c2654b412ec46613dbf4d6e9b06",
+    "reports/directionalblur_general_input_signed_production_20261001.json": "d34eb2f81966551f0e9072cf6bf9d2fc55d8a6d71e4099d98755e14416c1828d",
+    "tests/test_directionalblur_general_input_owner_20261001.py": "9aa83d38061ce259015b2f84060bc18b974a6e9c1574a39c65a36c209fc681fe",
+    "tools/emulation/directionalblur_general_input_harness_20261001.cpp": "b246e821a08a5dd1e8b7c25915fea6b89ac4f920a9aa05c3d63710fe6da11298",
+    "tools/emulation/probe_directionalblur_general_input_20261001.py": "8d317b2d633dee8322ee8e4ab25d67c74c01608be3c5a34e94901c2b21255e28"
+  },
+  "native_param_angle_byte_offset": "0x3a",
+  "native_parameter_builder_rva": "0x6c50",
+  "native_signed_angle_load_rva": "0x6cd0",
+  "production_exact_count": 162,
+  "production_source_sha256": "ed8ea8baa8048f7988e0bd7b90fedba62f8ebc69cecce39d35cd94f221fcaeb5",
+  "schema": "directionalblur.general-input-validation/1",
+  "verdict": "PASS_WHOLE_ANGLE_BUILDER_RECOVERY",
+  "whole_degree_candidate_count": 54,
+  "whole_degree_candidate_exact": 54,
+  "worker_sha256": "0eb2f7705598f7b5f53563b9d920274ba094c835ff3dbaaf5f6fb214ec0cfd61"
+}

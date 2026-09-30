@@ -286,6 +286,43 @@ installed bundle/native AEは更新・再比較していない。完全互換Goa
 `Render`から`ValidateWorldPair`/`GetKiraPixelFormats`への呼び出しを検査が認識しない。
 今回のSmoother2画素差とは分け、検査自体を未対応として残す。
 
+## DB-ANGLE-007: 公開builderの角度端数を復元
+
+小型の独自入力7×5（alpha0/半透明/不透明混在）と9×7（不透明）を生成し、
+同じARGB8/16/floatのbytesをWindows AEX公開Smart ownerとMac dispatcherへ渡した。
+ノイズ・Fade・Sharp・Size Variationなし。0/45/90度のFront4/Back3、Front4のみ、
+Back3のみは54/54 exact。実際に出力が入力と異なり、54出力hashも全て異なる。
+
+−45/17.25/123.5度、両側strength 1/1、7/11、31/17では18/54 exact。
+17.25/123.5度の36ケースは全depth・両sourceで異なる。
+`FUN_180006c50` / asm `0x180006cd0`のsigned word loadはPF_ParamDef+0x3aを読む。
+WindowsはAngleの16.16上位16bitを符号付き整数として取り、端数を使用しない。
+Mac `InfoFromParams`は65536.0で割って端数を保持していた。
+
+角度をwhole-degreeへ置いた独立候補再生は54/54 exact。これを根拠にMacの実getterを
+signed upper-wordの復元へ変更。符号付きdivisionでは負の端数を0へ切り捨てるため、
+unsigned shift後に16bit符号を復元する。17.25→17、123.5→123、−17.25→−18、
+−0.25→−1、0.25→0。回転・field・writerの画素演算を変更しない。
+
+修正後は実PF_ParamDef→InfoFromParams→本番dispatcherを使い、54 neutral controls、
+54 positive-boundary、54 signed-boundaryの162ケースが公開AEXとraw exact。
+全部をO2およびASan/UBSanでも再生し、input不変・padding保持と同じraw hashを確認。
+既存generic Back/Dual Classic/Smart EffectMain、ROI、operation/memory budgetもPASS。
+
+公開workerのrender-png CLIはtyped Angleを構成できず、角度overrideで入力エラーに
+なった。resident v4 payloadの`angle`型を使用し、同一typed raw worldを直接渡して解消。
+CLIのエラーをプラグインの画素不一致には分類しない。
+
+修正前のowner/boundary reportを保持し、修正後の3 reportとvalidationを別に保存。
+`reports/directionalblur_general_input_validation_20261001.json`にsource/probe/core/workerと
+実行をbindする。第三者AEXやnative raw imageはPushしない。
+
+境界: この162ケースのnative側はローカルAEX emulation。Windows AE/native UCRT、
+installed bundle、Mac公開checkoutの新しいWindows対比較は未完。
+Mac EffectMainの既存別テストを今回の162ケースの公開exact証拠へ流用しない。
+Size/Sharp/Noiseの上位word読取りもstaticに見えるが、動的witnessなしに変更しない。
+次は同じbuilderの固定小数と一般Fade/Noise経路を調べる。完全互換Goalはactive。
+
 ## 次の順序
 
 1. ColorKeyの他Blur設定を公開ownerで再検証し、旧import stub依存の分岐を復元。
