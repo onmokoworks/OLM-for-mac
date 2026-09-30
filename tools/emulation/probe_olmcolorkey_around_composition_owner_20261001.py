@@ -8,6 +8,7 @@ from __future__ import annotations
 import argparse
 import json
 import subprocess
+import struct
 import tempfile
 from pathlib import Path
 from PIL import Image
@@ -83,16 +84,38 @@ def compile_public(directory: Path, body: str) -> Path:
         thin_owner.HARNESS = saved
 
 
+def source_fixture(definition: dict, depth: str) -> tuple[bytes, int]:
+    source, rb = thin_owner.general.fixture(definition, depth)
+    if 'pattern' not in definition: return source, rb
+    channels = (0,0,0) if definition['pattern']=='solid' else (80,95,110)
+    raw = bytearray(source)
+    for y in range(definition['height']):
+        for x in range(definition['width']):
+            offset=y*rb+x*thin_owner.general.DEPTHS[depth]
+            if depth=='PF8': struct.pack_into('<3B',raw,offset+1,*channels)
+            elif depth=='PF16': struct.pack_into('<3H',raw,offset+2,*[(v*32768+127)//255 for v in channels])
+            else: struct.pack_into('<3f',raw,offset+4,*[v/255 for v in channels])
+    return bytes(raw),rb
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('--worker', type=Path, required=True)
     parser.add_argument('--production', action='store_true')
+    parser.add_argument('--range-generalization', action='store_true', help='Also cover edge/mixed-alpha sources and all toggles at slider limits')
+    parser.add_argument('--blur-zero', action='store_true', help='Thin-only control; same typed/public parameter path')
+    parser.add_argument('--legal-range', action='store_true', help='Empty/solid matte at slider limit +/-4000')
+    parser.add_argument('--range-candidate', action='store_true', help='Only relax current +/-100 admission for an experiment')
     parser.add_argument('--boundaries', action='store_true', help='Singleton/one-dimensional worlds and Thin +/-100')
     parser.add_argument('--quick', action='store_true', help='One mixed-alpha geometry, Replace/premultiplied off')
     parser.add_argument('--report', type=Path, required=True)
     args = parser.parse_args()
+    blur = 0 if args.blur_zero else 4
     original = SOURCE.read_text()
-    body = original if args.production else candidate_source(original)
+    body = original if args.production or args.range_candidate else candidate_source(original)
+    if args.range_candidate:
+        body = body.replace('info.edge_thin_amount >= -100.0 && info.edge_thin_amount <= 100.0',
+                            'info.edge_thin_amount >= -4000.0 && info.edge_thin_amount <= 4000.0')
     sha = thin_owner.general.base.sha
     probe = thin_owner.general.base.retained.actual_probe
     rows = []
@@ -102,13 +125,18 @@ def main() -> int:
                     {'id':'column_opaque','width':1,'height':7,'alpha':'opaque'},
                     {'id':'row_mixed_zero','width':9,'height':1,'alpha':'mixed'})
     amounts = (0,-100,-4,-1,1,4,100) if args.boundaries else (0,-4,-1,1,4)
-    toggles = ((False, False),) if args.quick else ((False, False), (False, True), (True, False), (True, True))
+    if args.legal_range:
+        fixtures = tuple({'id':f'{pattern}_{w}x{h}','width':w,'height':h,'alpha':'opaque','pattern':pattern}
+                         for pattern in ('empty','solid') for w,h in ((1,1),(5,4)))
+        amounts = (-4000,-3999,-256,-255,-101,0,101,255,256,3999,4000)
+        if args.range_generalization: fixtures = fixtures + thin_owner.general.FIXTURES
+    toggles = ((False, False),) if args.quick or (args.legal_range and not args.range_generalization) else ((False, False), (False, True), (True, False), (True, True))
     with tempfile.TemporaryDirectory(prefix='olmck_around_owner_') as raw:
         directory = Path(raw)
         exe = compile_public(directory/'mac', body)
         for fixture in fixtures:
             w, h = fixture['width'], fixture['height']
-            source8, rb = thin_owner.general.fixture(fixture, 'PF8')
+            source8, rb = source_fixture(fixture, 'PF8')
             image = Image.new('RGBA', (w, h))
             image.putdata([tuple(source8[y*rb+x*4+1:y*rb+x*4+4])+(source8[y*rb+x*4],)
                            for y in range(h) for x in range(w)])
@@ -121,7 +149,7 @@ def main() -> int:
                                 params = [f'Color Keep={int(keep)}', f'Premultiplied Color={int(premultiplied)}',
                                     'Number of Colors=2', 'Use Color 1=1', 'Color 1=255,0,0,0',
                                     'Use Color 2=1', 'Color 2=255,0,255,0', f'Amount@14={thin}',
-                                    f'Distance Type@15={distance}', 'Amount@18=4', 'Distance Type@19=2', 'Direction@20=2',
+                                    f'Distance Type@15={distance}', f'Amount@18={blur}', 'Distance Type@19=2', 'Direction@20=2',
                                     f'Enable Replace={int(replace)}', 'Use Replace Color 1=1', 'Replace Color 1=255,224,32,96',
                                     'Use Replace Color 2=1', 'Replace Color 2=255,26,89,242']
                                 actual = json.loads(subprocess.check_output([str(args.worker), 'render-png', str(probe.AEX),
@@ -130,28 +158,28 @@ def main() -> int:
                                     actual['dropped_unsupported_suite_calls'] or actual['setup']['global_setup_error'] or
                                     actual['setup']['params_setup_error']): raise RuntimeError('AEX exported owner failure')
                                 values = {p['slot']:p.get('value') for p in actual['parameter_values']}
-                                required = {1:int(keep),4:int(premultiplied),14:thin,15:distance,18:4,19:2,20:2,23:int(replace)}
+                                required = {1:int(keep),4:int(premultiplied),14:thin,15:distance,18:blur,19:2,20:2,23:int(replace)}
                                 if any(values[k] != v for k,v in required.items()): raise RuntimeError('parameter propagation drift')
-                                source, _ = thin_owner.general.fixture(fixture, depth)
+                                source, _ = source_fixture(fixture, depth)
                                 results = {}
                                 for route, name in ((0,'classic'),(1,'smart')):
                                     output = subprocess.check_output([str(exe),str(w),str(h),depth[2:],str(thin),str(distance),
-                                        str(int(keep)),str(route),'4',str(int(premultiplied)),str(int(replace))],input=source)
+                                        str(int(keep)),str(route),str(blur),str(int(premultiplied)),str(int(replace))],input=source)
                                     if len(output) != actual['raw_pixel_bytes']: raise RuntimeError('output size drift')
                                     digest = sha(output)
                                     results[name] = {'exact':digest==actual['raw_pixel_sha256'],'sha256':digest}
                                 rows.append({'fixture':fixture,'depth':depth,'keep':keep,'premultiplied':premultiplied,
-                                    'replace':replace,'thin':thin,'type':distance,'blur':4,'input_sha256':sha(source),
+                                    'replace':replace,'thin':thin,'type':distance,'blur':blur,'input_sha256':sha(source),
                                     'input_png_sha256':actual['input_png_sha256'],'actual_sha256':actual['raw_pixel_sha256'],
                                     'parameter_values':actual['parameter_values'],'guards_intact':actual['guards_intact'],'results':results})
                     print(f"{fixture['id']} premultiplied={premultiplied} replace={replace} keep={keep}",flush=True)
-    report = {'schema':'olmcolorkey.around-composition-owner/1','date':'2026-10-01','production':args.production,
+    report = {'schema':'olmcolorkey.around-composition-owner/1','date':'2026-10-01','production':args.production and not args.range_candidate,'range_candidate':args.range_candidate,
         'case_count':len(rows),'source_sha256':sha(original.encode()),'candidate_source_sha256':sha(body.encode()),
         'probe_sha256':sha(Path(__file__).read_bytes()),'aex_sha256':sha(probe.AEX.read_bytes()),
         'worker_sha256':sha(args.worker.read_bytes()),'dependencies':{str(p.relative_to(ROOT)):sha(p.read_bytes()) for p in
             (Path(thin_owner.__file__),Path(thin_owner.general.__file__),thin_owner.SDK_PROBE,SOURCE.with_suffix('.h'))},
         'summary':{route:sum(r['results'][route]['exact'] for r in rows) for route in ('classic','smart')},'cases':rows,
-        'scope':'Around public2, Manhattan public2, Blur4; exported AEX Smart CPU owner and real SDK Mac Classic/Smart. Actual builder, full-resolution typed RGBA8 promotion. No native AE/installed claim.'}
+        'scope':f'Around public2, Manhattan public2, Blur{blur}; exported AEX Smart CPU owner and real SDK Mac Classic/Smart. Actual builder, full-resolution typed RGBA8 promotion. No native AE/installed claim.'}
     metadata = {k:v for k,v in report.items() if k != 'cases'}
     prefix = json.dumps(metadata,sort_keys=True,indent=2).rstrip()[:-1].rstrip()
     args.report.write_text(prefix+',\n  "cases": [\n'+',\n'.join(

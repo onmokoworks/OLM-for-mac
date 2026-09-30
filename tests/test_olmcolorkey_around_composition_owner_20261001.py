@@ -15,7 +15,9 @@ def test_around_composition_public_owner_exact() -> None:
     with tempfile.TemporaryDirectory(prefix='olmck_around_replay_') as raw:
         executable = owner.compile_public(Path(raw)/'mac', owner.SOURCE.read_text())
         for filename, count in (('colorkey_around_composition_production_20261001.json',1080),
-                                ('colorkey_around_composition_boundary_production_20261001.json',1512)):
+                                ('colorkey_around_composition_boundary_production_20261001.json',1512),
+                                ('colorkey_thin_legal_range_generalization_production_20261001.json',5544),
+                                ('colorkey_thin_legal_range_no_blur_production_20261001.json',792)):
             report = json.loads((ROOT/'reports'/filename).read_text())
             assert report['production'] and report['case_count'] == len(report['cases']) == count
             assert report['summary'] == {'classic':count,'smart':count}
@@ -23,11 +25,11 @@ def test_around_composition_public_owner_exact() -> None:
             identities = set()
             for case in report['cases']:
                 fixture = case['fixture']
-                source, _ = owner.thin_owner.general.fixture(fixture, case['depth'])
+                source, _ = owner.source_fixture(fixture, case['depth'])
                 assert owner.thin_owner.general.base.sha(source) == case['input_sha256']
                 values = {p['slot']:p.get('value') for p in case['parameter_values']}
                 required = {1:int(case['keep']),4:int(case['premultiplied']),14:case['thin'],
-                            15:case['type'],18:4,19:2,20:2,23:int(case['replace'])}
+                            15:case['type'],18:case['blur'],19:2,20:2,23:int(case['replace'])}
                 assert all(values[k] == v for k,v in required.items()) and case['guards_intact']
                 identity = (fixture['id'],case['depth'],case['keep'],case['premultiplied'],case['replace'],case['thin'],case['type'])
                 assert identity not in identities
@@ -35,7 +37,7 @@ def test_around_composition_public_owner_exact() -> None:
                 for route in (0,1):
                     output = subprocess.check_output([str(executable),str(fixture['width']),str(fixture['height']),
                         case['depth'][2:],str(case['thin']),str(case['type']),str(int(case['keep'])),str(route),
-                        '4',str(int(case['premultiplied'])),str(int(case['replace']))],input=source)
+                        str(case['blur']),str(int(case['premultiplied'])),str(int(case['replace']))],input=source)
                     assert len(output) == fixture['width']*fixture['height']*owner.thin_owner.general.DEPTHS[case['depth']]
                     assert owner.thin_owner.general.base.sha(output) == case['actual_sha256'],(identity,route)
 

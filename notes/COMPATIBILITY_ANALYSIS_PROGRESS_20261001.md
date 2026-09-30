@@ -205,6 +205,38 @@ Thin単独の公開216設定は別のexported workerによる証拠であり、�
 次は同じ公開ownerを用いてAroundの残りamountと他のdirection/typeを比較し、旧import stubに
 依存した分岐・記録を区別する。完全互換Goalはactiveのまま。
 
+## CK-RANGE-005: Thin合法範囲±4000と距離cap
+
+分類: visible UI範囲±100を合法slider範囲±4000と取り違えた公開制限を解消。
+範囲だけを広げた一時案は792設定中738 exact。空/solid matteのType1/2で54反例。
+
+native L1/Chessboard生成（PF16 `FUN_1800058a0` / `FUN_1800066f0`、typed同等関数）は
+距離cap=4000を使い、最初の非seedをcap-1=3999に初期化する。空seedの場合にも同じ。
+Macは無限大1e9を使っていたので、正Thin3999/4000、負Thin-4000で異なるmatteになった。
+L1/Chessboardの初期planeを4000、非seedの先頭を3999へ戻し、同じ一般距離走査を使用。
+Euclideanへこのcapを流用しない。1列Type1の別走査は前項の復元を維持する。
+
+Thin単独、および復元済みAround/Manhattan/Blur4とのcompositionを合法範囲±4000で
+public admissionへ追加。PARAMS_SETUPは元々valid min/max±4000なのでUI定義は変更しない。
+拒否境界の回帰は101から4001へ移す。
+
+検証:
+
+- 空matte/solid matteの1×1/5×4、Keep off/on、Type1/2/3、全depth、
+  Thin -4000/-3999/-256/-255/-101/0/+101/+255/+256/+3999/+4000。
+  Blur4の792設定は修正後792 exact。Thin単独の同じ792設定も792 exact。
+- 同じ極値に17×15/9×7の端・穴・alpha0・半透明入力を加え、Premultiplied/Replace
+  off/onも加えた5544設定は全てWindows公開Smart→Mac Classic/Smartでraw exact。
+- `reports/colorkey_thin_legal_range_generalization_production_20261001.json`
+- `reports/colorkey_thin_legal_range_no_blur_production_20261001.json`
+- `reports/colorkey_thin_legal_range_validation_20261001.json`
+- Around公開回帰にこの2集合を追加。先行2592設定も残し、保持した8928 witnessを
+  現行Mac両公開経路へ再生する。先行ASan/UBSan54設定、公開126/Thin216、generic/ROIも再検証。
+
+境界: 11個のslider値と復元した一般distance処理の根拠。全設定・全画像・native AEの
+完了証拠にはしない。他Blur設定、全color space/threshold/25 keys、HDR、ROI/downsample、
+installed/native hostは残る。次は他Blur設定の旧stub依存分岐を公開ownerで調べる。
+
 ## BASELINE-001: 検証証拠の環境差
 
 Thin修正後のgeneric gateも52 PASS/1 FAIL/0 SKIP（既存baselineと同じ）。性能レポートの実行prefixはPython 3.14.6をbindし、
@@ -214,7 +246,7 @@ Thin修正後のgeneric gateも52 PASS/1 FAIL/0 SKIP（既存baselineと同じ�
 ## 次の順序
 
 1. ColorKeyの他Blur設定を公開ownerで再検証し、旧import stub依存の分岐を復元。
-2. Thin合法範囲±4000、全color/threshold、HDRとnative host/ROI/downsampleを拡張検証。
+2. 全color/threshold、HDRとnative host/ROI/downsampleを拡張検証。
 3. Smoother2の現行sourceによる114ケース再生と、未到達65分類の到達性調査。
 
 既存の作業ツリー変更は今回のcommitに混ぜない。第三者AEXとnative raw出力をPushしない。

@@ -1,0 +1,42 @@
+{
+  "checks": [
+    {
+      "exit_code": 0,
+      "test": "tests/test_olmcolorkey_around_composition_owner_20261001.py",
+      "test_sha256": "807d4e90dfc44f555d875c3639ab71cdf0c09ff401e20201ab35c5065d16ebd2"
+    },
+    {
+      "exit_code": 0,
+      "test": "tests/test_olmcolorkey_generic_pixel_local_beta.py",
+      "test_sha256": "8dfd9d71aa164de7c34af052b00e05761ad79ab9f3ac98524e7f2a4e0d746753"
+    },
+    {
+      "exit_code": 0,
+      "test": "tests/test_olmcolorkey_public_entries_real_sdk_20260813.py",
+      "test_sha256": "73a11c8d969ac12838abff46af2bf4ff00c3bf3a4b50aad0c58a39bf3cf1c75d"
+    },
+    {
+      "exit_code": 0,
+      "test": "tests/test_olmcolorkey_thin_public_owner_20261001.py",
+      "test_sha256": "f6d68e20fd0b476054a57afff583059987697ef832196091a7579abf4ef51eb6"
+    },
+    {
+      "exit_code": 0,
+      "test": "tests/test_olmcolorkey_generic_pixel_local_pairwise.py",
+      "test_sha256": "4acfb5fbeb55d86b331665bd7887efb3d838940b08d45f224fad0f1b430e6086"
+    },
+    {
+      "exit_code": 0,
+      "test": "tests/test_olmcolorkey_generic_roi_tile.py",
+      "test_sha256": "dd073d342df4681a894beb0d02df5c3e545298cc935c44e273d1adddce0d4076"
+    }
+  ],
+  "date": "2026-10-01",
+  "reports": {
+    "reports/colorkey_thin_legal_range_generalization_production_20261001.json": "da16fa3569c224982d15633febae791a9baaca3626f886850a62519f07077e9c",
+    "reports/colorkey_thin_legal_range_no_blur_production_20261001.json": "43e9c4e5005aee76712595c23d2a303470f79b085c5d9e015bb019032d2deed7"
+  },
+  "schema": "olmcolorkey.thin-range-validation/1",
+  "scope": "Current source: 5544 legal-range Blur4 and 792 Thin-only exported AEX witnesses; old2592 Around witnesses replayed too; both real-SDK Mac entries. Prior column ASan/UBSan54, public126/Thin216, generic safety/ROI checks pass. No native AE/installed/all-parameter claim.",
+  "source_sha256": "0d7a250963f51c8b9ea7488c3de4420d0ae5ebf2952cf4940eaacf503fc83b34"
+}

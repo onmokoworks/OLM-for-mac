@@ -102,7 +102,7 @@ static bool Run(short depth, A_long width, A_long height)
 	if (PrepareRenderWorld(&in, &out, edge, depth, &prepared) !=
 	    PF_Err_BAD_CALLBACK_PARAM) return false;
 	OLMColorKeyInfo invalid_thin = PixelLocalInfo();
-	invalid_thin.edge_thin_amount = 101.0;
+	invalid_thin.edge_thin_amount = 4001.0;
 	if (PrepareRenderWorld(&in, &out, invalid_thin, depth, &prepared) !=
 	    PF_Err_BAD_CALLBACK_PARAM) return false;
 	invalid_thin.edge_thin_amount = 1.0;

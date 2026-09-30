@@ -631,11 +631,14 @@ CheckoutSmartInfo(PF_InData *in_data, OLMColorKeyInfo *info)
 
 static std::vector<float> L1DistanceTo(const std::vector<u_char> &mask, A_long w, A_long h)
 {
-	const float inf = 1.0e9f;
+	// Native city-block/chessboard scans cap the plane at 4000 and
+	// initialize the first nonseed to cap - 1, even when there are no seeds.
+	const float inf = 4000.0f;
 	std::vector<float> d((size_t)w * (size_t)h, inf);
 	for (A_long i = 0; i < w * h; ++i) {
 		if (mask[i]) d[i] = 0.0f;
 	}
+	if (!mask[0]) d[0] = 3999.0f;
 	for (A_long x = 1; x < w; ++x) {
 		for (A_long y = 0; y < h; ++y) {
 			A_long i = y * w + x;
@@ -687,11 +690,14 @@ static std::vector<float> ChessboardDistanceTo(const std::vector<u_char> &mask, 
 		return d;
 	}
 
-	const float inf = 1.0e9f;
+	// Native city-block/chessboard scans cap the plane at 4000 and
+	// initialize the first nonseed to cap - 1, even when there are no seeds.
+	const float inf = 4000.0f;
 	std::vector<float> d((size_t)w * (size_t)h, inf);
 	for (A_long i = 0; i < w * h; ++i) {
 		if (mask[i]) d[i] = 0.0f;
 	}
+	if (!mask[0]) d[0] = 3999.0f;
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
 			A_long i = y * w + x;
@@ -1345,7 +1351,7 @@ static bool IsRecoveredAroundBlur(const OLMColorKeyInfo &info)
 static bool IsGenericEdgeCompositionTuple(const OLMColorKeyInfo &info)
 {
 	return IsRecoveredAroundBlur(info) &&
-		   info.edge_thin_amount >= -100.0 && info.edge_thin_amount <= 100.0 &&
+		   info.edge_thin_amount >= -4000.0 && info.edge_thin_amount <= 4000.0 &&
 		   info.edge_thin_distance_type >= 1 && info.edge_thin_distance_type <= 3;
 }
 
@@ -2354,7 +2360,7 @@ static bool IsPublicAdmission(const PF_EffectWorld *input,
 	// are geometry-independent. Promote the visible UI range while keeping Edge
 	// Blur's captured geometry/curve quirks on the bounded lane below.
 	if (info.edge_blur_amount == 0.0 &&
-	    info.edge_thin_amount >= -100.0 && info.edge_thin_amount <= 100.0 &&
+	    info.edge_thin_amount >= -4000.0 && info.edge_thin_amount <= 4000.0 &&
 	    info.edge_thin_distance_type >= 1 && info.edge_thin_distance_type <= 3) {
 		return true;
 	}
