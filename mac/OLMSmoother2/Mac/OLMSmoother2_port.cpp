@@ -4359,13 +4359,17 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 
 	// Stage: load input AE layer into float scratch (logical equivalent of FUN_180002600 copy).
 	for (int32_t y = 0; y < h; ++y) {
-		const P *row = (const P *)((char *)input->data + (size_t)y * input->rowbytes);
+		const unsigned char *row = (const unsigned char *)input->data + (size_t)y * input->rowbytes;
 		FPix   *dst  = scratch.data() + (size_t)y * w;
 		for (int32_t x = 0; x < w; ++x) {
+			// AEX typed loads accept byte strides. Use an aligned local pixel
+			// instead of dereferencing a potentially unaligned layer address.
+			P source_pixel;
+			std::memcpy(&source_pixel, row + (size_t)x * sizeof(P), sizeof(P));
 			float a, r, g, b;
-			load_rgba(&row[x], a, r, g, b);
+			load_rgba(&source_pixel, a, r, g, b);
 			if (g_olmsmoother2_force_input_premultiply) {
-				diagnostic_premultiply_input(&row[x], a, r, g, b);
+				diagnostic_premultiply_input(&source_pixel, a, r, g, b);
 			}
 			dst[x].r = r; dst[x].g = g; dst[x].b = b; dst[x].a = a;
 		}
@@ -4583,8 +4587,9 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	const float one = K_ONE;
 
 	for (int32_t y = 0; y < h; ++y) {
-		P *dst = (P *)((char *)output->data + (size_t)y * output->rowbytes);
+		unsigned char *dst = (unsigned char *)output->data + (size_t)y * output->rowbytes;
 		for (int32_t x = 0; x < w; ++x) {
+			P stored_pixel;
 			FPix px = plane_out.base[(size_t)y * w + x];
 			float r = px.r, g = px.g, b = px.b, a = px.a;
 
@@ -4608,7 +4613,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 			}
 
 			if (std::is_same<P, PF_Pixel8>::value) {
-				PF_Pixel8 *q = (PF_Pixel8 *)&dst[x];
+				PF_Pixel8 *q = (PF_Pixel8 *)&stored_pixel;
 				q->alpha = clamp8(a); q->red = clamp8(r); q->green = clamp8(g); q->blue = clamp8(b);
 				if (g_olmsmoother2_writer_frame_probe.json_path &&
 				    x == g_olmsmoother2_writer_frame_probe.x && y == g_olmsmoother2_writer_frame_probe.y) {
@@ -4618,7 +4623,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 					g_olmsmoother2_writer_frame_probe.actual[3] = q->blue;
 				}
 			} else if (std::is_same<P, PF_Pixel16>::value) {
-				PF_Pixel16 *q = (PF_Pixel16 *)&dst[x];
+				PF_Pixel16 *q = (PF_Pixel16 *)&stored_pixel;
 				q->alpha = clamp16(a); q->red = clamp16(r); q->green = clamp16(g); q->blue = clamp16(b);
 			} else {
 				// Win FUN_1800036e0 (PF_PixelFloat writer) at 0x1800036e0 writes
@@ -4628,9 +4633,10 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 				// push them outside [0,1] when alpha > 1, but Win still writes the
 				// raw value.  Alpha (`local_cc`) is written verbatim from
 				// FUN_18000cce0 with no clamp at all.  Match Win byte-for-byte.
-				PF_PixelFloat *q = (PF_PixelFloat *)&dst[x];
+				PF_PixelFloat *q = (PF_PixelFloat *)&stored_pixel;
 				q->alpha = a; q->red = r; q->green = g; q->blue = b;
 			}
+			std::memcpy(dst + (size_t)x * sizeof(P), &stored_pixel, sizeof(P));
 		}
 	}
 	OLMSmoother2WriteWriterFrameProbe(apply_inverse_gamma, p.keep_premul);

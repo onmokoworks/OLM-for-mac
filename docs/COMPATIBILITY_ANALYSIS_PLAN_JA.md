@@ -50,7 +50,7 @@ Windows自身が非対応の経路は移植側の機能欠落と混同しない�
 | OLMKiraKira | Mode3 Length代表4値×Rotation2値×3深度の24 retainedセルがexact。他source/geometry/依存関数へは未一般化 | まず異なるsourceと奇数geometryでpublic ownerを比較。相違がなければ長さ境界・他ray/modeの欠落へ進み、helper差とhost代替差を区別 |
 | OLMRadialBlur | 固定component anchorsはexact。一般topologyの右端処理等は未証明 | 画像端に接する連結成分、穴、離れた島の同一typed入力で比較。component/field/sampler/writerの最初の差を閉じる |
 | OLMSmoother | PF16実用geometryにClassic/Smart exact anchor。PF32非対応 | Windowsの深度・owner契約を確認後、透明/半透明とTolerance境界を比較。未対応のWindows仕様を不要に追加しない |
-| OLMSmoother2 | retained 114ケースは191種のswitch indexに到達。残る65種は「未到達」であり65種の不一致を実証した数字ではない。現行source hashは当時と異なる | 現行sourceで再生後、未到達indexに対する最小入力を作る。到達不能は根拠付きで示す。class plane→dispatch→scan→weight→writerを比較し一般分岐を復元 |
+| OLMSmoother2 | 114 retainedケースを現行sourceで再生して一致。未到達65種は4×3の自然入力で到達し、両version×3深度の390ケースがローカルAEXと一致。保持した到達witnessは256種になった。奇数strideの型アクセスで見つけたUBはbyte copyで修正 | 分類番号の網羅を全演算・全設定の復元と混同しない。色・透明度・パラメータでscan/weightの状態を変え、最初の差を復元する。public owner/native AEとLUT構築の境界も残る |
 | OLMToonDilate | corner-seedの3深度anchor。HD radius 2.01/5の過去campaignは未実行 | 小型でfractional radius/画像端/haloを比較して意味を復元後、HD性能とnative ROIを確認。遅さ・未実行を数値不一致と混同しない |
 
 全10本に共通して、custom UIのEVENT/UPDATE、動的ラベル・preview・操作、
@@ -107,8 +107,10 @@ float精度、演算順、走査順、境界規則、依存先を含める。コ
 - 旧generic gateの依存hashは1箇所が現行と異なる（AE smoke runner）。
 - KiraKira Mode3のoffline verifierは現行checkoutで成功。24既存セルの証拠検証であり、
   新しいWindows実行やnative AE比較を行ったという意味ではない。
-- Smoother2の191分類reportと現行production sourceはhash不一致。114ケースの過去PASSを
-  現行sourceへ昇格しない。
+- 計画作成時はSmoother2の191分類reportと現行sourceがhash不一致だった。
+  その後114ケースを再生し、未到達65分類の390 AEX witnessを追加した。
+  安全な型アクセスへ修正後もO2/ASan/UBSanで一致。過去captureのsource hashは
+  書き換えず、新しい再生のbindingを別のvalidation reportへ記録した。
 
 この文書は解析の実行計画。既存release gate、個別exact証拠、ledgerの禁止事項を
-変更しない。productionやinstalled binaryの変更は今回行っていない。
+変更しない。実装変更と再検証は進捗記録に追記する。installed/native hostは別に確認する。

@@ -243,10 +243,54 @@ Thin修正後のgeneric gateも52 PASS/1 FAIL/0 SKIP（既存baselineと同じ�
 現行実行は3.14.7。verifierがbindingを拒否した。記録を現在のhashへ書き換えるだけで
 過去性能の実行時証拠にしない。必要な性能再測定を別項目として残す。
 
+## SM2-REACH-006: 未到達65分類の自然入力と型アクセス
+
+既存114ケースを現行sourceで再生し、出力raw hashとswitch histogramが114/114一致。
+その191 indexを除いた65 indexは不一致数でも到達不能数でもなかった。
+
+`FUN_18000c280`の8ビットは中心と8近傍のedge比較を表す。中心を不透明黒にし、
+bit=0の近傍を不透明白、bit=1を黒にすると、各bitを独立に作れる。4×3の中心(1,1)では
+TOP-RIGHTの特別なguard `x+1 < w-1`も開く。これは全分類に使える小型構成であり、
+個々のindexについて最小geometryを証明したという意味ではない。
+
+- 65 index × version1/2 × PF8/PF16/PF32 = 390ケース。
+- class planeを注入せず、実AEX classifierとtyped workerを実行。
+  390/390で指定した中心indexへ到達し、Mac output/paddingと全画面histogramが一致。
+- 実行importは実装済みVCOMPの5種のみ。未実装importを拒否する監査を追加。
+  この集合では数学importを実行していない。
+- LUTは保持済み10,000要素を使用し、decode/encode hashを記録。
+  public parameter builder/Windows AE/native UCRTの新しい証拠ではない。
+- `reports/olmsmoother2_switch_reachability_20261001.json`は修正前source
+  `b7420807a37ce318b6eedc6285af5735cb344020a84ed2ef869cbb5b448d5ae1`で採った
+  AEX比較の記録。過去のbindingは維持する。
+
+ASan/UBSanでPF16のrowbytes=39を再生すると、source line354の構造体loadが
+alignment violationになった。数値差ではなく、byte strideを型pointerで読むMac側UB。
+入力を整列したlocal pixelへ`memcpy`してから既存loadを実行し、出力も同じ型のlocal
+pixelからbyte copyで格納する。分類・丸め・重みの演算とpremultiply診断を維持する。
+
+修正後は114 retainedケースをO2で再生し、新規390ケースをO2とASan/UBSanの両方で
+再生して全raw hash/histogramが一致。source input不変と行paddingも確認。
+再生結果・現行source hashは別のvalidation reportにbindし、AEX captureのhashを
+現在のhashへ付け替えない。
+
+`reports/olmsmoother2_switch_reachability_validation_20261001.json`へ上記再生を記録。
+default beta lane 4テスト、Gamma Colors 3テスト、ROI full-frame 3テストも修正後PASS。
+
+この集合と旧191 indexのwitnessを合わせて256 indexへ到達する証拠が揃った。
+全scan距離、weight状態、Gamma/key、任意の色/alpha/設定を覆う証明ではない。
+分類番号の網羅だけで全分岐の元ソース復元やWindows完全互換を宣言しない。
+installed bundle/native AEは更新・再比較していない。完全互換Goalはactive。
+
+追加検証で既存Classic深度の文字列検査がKiraKiraでFAIL。HEADでも同じ条件がFAILし、
+`Render`から`ValidateWorldPair`/`GetKiraPixelFormats`への呼び出しを検査が認識しない。
+今回のSmoother2画素差とは分け、検査自体を未対応として残す。
+
 ## 次の順序
 
 1. ColorKeyの他Blur設定を公開ownerで再検証し、旧import stub依存の分岐を復元。
 2. 全color/threshold、HDRとnative host/ROI/downsampleを拡張検証。
-3. Smoother2の現行sourceによる114ケース再生と、未到達65分類の到達性調査。
+3. Smoother2の分類到達は今回の集合で確認済み。色・alpha・scan/weightの状態と
+   public owner/native hostの比較は残る。計画に沿いDirectionalBlur Dual等の一般入力も進める。
 
 既存の作業ツリー変更は今回のcommitに混ぜない。第三者AEXとnative raw出力をPushしない。

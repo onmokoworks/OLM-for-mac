@@ -1,0 +1,90 @@
+{
+  "baseline_sanitizer_witness": {
+    "classification": "Mac C++ alignment undefined behavior; no observed output difference",
+    "depth": "PF16",
+    "diagnostic": "member access and load of misaligned PF_Pixel16",
+    "geometry": [
+      4,
+      3
+    ],
+    "rowbytes": 39,
+    "source_line": 354,
+    "source_sha256": "b7420807a37ce318b6eedc6285af5735cb344020a84ed2ef869cbb5b448d5ae1"
+  },
+  "capture_serialization": "JSON normalized to one line per case; metadata and numerical evidence unchanged",
+  "capture_unchanged": true,
+  "checks": [
+    {
+      "builds": [
+        "clang O2",
+        "clang O1 ASan UBSan"
+      ],
+      "exit_code": 0,
+      "id": "current_source_retained_and_reachability_replay",
+      "observations": [
+        "output SHA exact",
+        "histogram exact",
+        "input unchanged",
+        "padding unchanged",
+        "no sanitizer violations"
+      ],
+      "reachability_case_count": 390,
+      "retained_case_count": 114,
+      "sanitized_case_count": 390,
+      "test": "tests/test_olmsmoother2_switch_reachability_20261001.py",
+      "unittest_count": 1
+    },
+    {
+      "exit_code": 0,
+      "id": "roi_fullframe_contract",
+      "test": "tests/test_olmsmoother2_roi_fullframe_contract_20260820.py",
+      "unittest_count": 3
+    },
+    {
+      "exit_code": 0,
+      "id": "default_beta_lane",
+      "test": "tests/test_olmsmoother2_default_beta_lane_20260820.py",
+      "unittest_count": 4
+    },
+    {
+      "exit_code": 0,
+      "id": "gamma_colors_beta",
+      "test": "tests/test_olmsmoother2_gamma_colors_beta_20260820.py",
+      "unittest_count": 3
+    }
+  ],
+  "claims_not_made": [
+    "No new Windows AE or installed bundle proof",
+    "No arbitrary input or parameter generalization",
+    "No complete source recovery",
+    "No full repository gate rerun"
+  ],
+  "dependencies": {
+    "cli/OLMSmoother2/shim/OLMSmoother2.h": "7fb3928ba44ed4336335080bc589ea00d34f59b461faa675811436bcb49a4fcf",
+    "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp": "b1cd2a4dfebe7c94cd22dddd9e7bfa355faf7564af7ae7f15732d3a7eb11d871",
+    "refs/conformance/olmsmoother2_geometry_classifier_matrix_actual_aex_20260811.json": "a027c7a91ae7e37a0f53099cfce029a3b1e0ce5b34a9ffec51b331920af07c61",
+    "reports/olmsmoother2_switch_reachability_20261001.json": "1499504fb979da33309b123a9bead0902606e5d3192ab0f946a1d03593d8f6f1",
+    "tests/test_olmsmoother2_switch_reachability_20261001.py": "ebed6da50f395132e27a6445eec007530594c0872c6d991764db2b15b958e8b8",
+    "tools/emulation/aex_loader.py": "f277dbecd70c4c495aa05e6495d80fdc5ce07c5df51b9076be331c232e26c9ab",
+    "tools/emulation/olmsmoother2_geometry_classifier_matrix_production_harness_20260811.cpp": "89661e40ca0846a63d36e91fd1bb6103601a429b32aa8964ea99a3b48d64089e",
+    "tools/emulation/olmsmoother2_switch_reachability_harness_20261001.cpp": "b73b247c73a20e8e43aefa93331543099ce685824c754b69e0ef53d7fc866b10",
+    "tools/emulation/probe_olmsmoother2_switch_reachability_20261001.py": "dbdc8560ea2be19ec19dd91f86c0edcc0254724556655a12e600a75fe4fd6228",
+    "tools/emulation/test_olmsmoother2_geometry_classifier_matrix_actual_aex_20260811.py": "ccfc573d1195f75cc730a2f62b78aaf00998a4494dc45ad3385846a677790347",
+    "tools/emulation/test_olmsmoother2_nonuniform_geometry_actual_aex_20260805.py": "31c488f62a3c970ce928704f6a3195098d44b1feca1b6e6946ccc96e66a6d113",
+    "tools/emulation/test_olmsmoother2_typed_writeback_20260717.py": "7334b688e090fc044f417160a224d2752b005f6420fa2149e36ce8007bffd2c8",
+    "tools/emulation/test_olmsmoother2_v2_nonuniform_actual_aex_20260805.py": "06a220a7296c6f851402120794d6b268cd056d3290f1ce4601fc7c23bfc25460"
+  },
+  "known_failures": [
+    {
+      "classification": "existing source-literal contract fails for KiraKira helper-based world format validation; same literal condition fails at HEAD",
+      "exit_code": 1,
+      "numeric_mismatch_proved": false,
+      "test": "tests/test_kirakira_smoother2_classic_render_bitdepth_dispatch_20260716.py"
+    }
+  ],
+  "native_capture_report_sha256": "1499504fb979da33309b123a9bead0902606e5d3192ab0f946a1d03593d8f6f1",
+  "native_capture_source_sha256": "b7420807a37ce318b6eedc6285af5735cb344020a84ed2ef869cbb5b448d5ae1",
+  "production_source_sha256": "b1cd2a4dfebe7c94cd22dddd9e7bfa355faf7564af7ae7f15732d3a7eb11d871",
+  "schema": "olmsmoother2.switch-reachability-validation/1",
+  "verdict": "PASS_CURRENT_SOURCE_REPLAY_AND_SAFE_TYPED_ACCESS"
+}
