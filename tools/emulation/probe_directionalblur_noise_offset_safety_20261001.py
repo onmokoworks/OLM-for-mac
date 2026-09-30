@@ -9,7 +9,7 @@ from capstone import Cs,CS_ARCH_X86,CS_MODE_64
 sha=feature.sha
 ROOT=feature.owner.ROOT
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--output',type=Path,required=True);args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--output',type=Path,required=True);ap.add_argument('--expect-guard',action='store_true');args=ap.parse_args()
     rows=[]
     with tempfile.TemporaryDirectory(prefix='dblur_negative_') as td:
         binary=Path(td)/'sanitized';previous=fixed.HARNESS
@@ -21,14 +21,19 @@ def main():
                 params={5:7,10:11,15:73.75,19:offset};data=feature.owner.typed(feature.owner.pixels(9,7,True),depth)
                 q=subprocess.run([str(binary),'9','7',str(depth),','.join(f'{s}={v}' for s,v in params.items())],input=data,capture_output=True,env=env)
                 err=q.stderr.decode();kind='UBSan unsigned pointer offset overflow' if 'addition of unsigned offset' in err and 'overflowed' in err else 'ASan heap-buffer-overflow' if 'AddressSanitizer: heap-buffer-overflow' in err else 'none' if q.returncode==0 else 'other_failure'
-                rows.append({'offset':offset,'depth':depth,'parameters':params,'geometry':[9,7],'input_sha256':sha(data),'exit_code':q.returncode,'sanitizer_result':kind,'public_admission':'rejected; candidate only'})
+                lines=dict(line.split(' ',1) for line in q.stdout.decode().splitlines()) if q.returncode==0 else {}
+                render_error=int(lines['ERROR']) if lines else None
+                if render_error and lines.get('RAW')!='':raise RuntimeError('rejected candidate wrote output')
+                rows.append({'candidate_render_error':render_error,'offset':offset,'depth':depth,'parameters':params,'geometry':[9,7],'input_sha256':sha(data),'exit_code':q.returncode,'sanitizer_result':kind,'public_admission':'rejected; candidate only'})
     # This excerpt is the actual AEX: only the upper bound is folded before
     # signed truncation and the indexed table reads. No lower-bound fold exists.
     loader=AexLoader(str(feature.owner.AEX),verbose=False,fast=False)
     start=0x1800037a4;raw=loader.read_bytes(start,0x37fe-0x37a4)
     instructions=[{'rva':hex(i.address-0x180000000),'mnemonic':i.mnemonic,'operands':i.op_str} for i in Cs(CS_ARCH_X86,CS_MODE_64).disasm(raw,start)]
     assert [i['mnemonic'] for i in instructions][:9]==['xorps','cvtsi2ss','comiss','jb','subss','comiss','jae','cvttss2si','xorps']
-    r={'schema':'directionalblur.noise-offset-safety/1','production_source_sha256':sha(feature.owner.SOURCE.read_bytes()),'core_noise_sha256':sha((ROOT/'core/dblur_noise.h').read_bytes()),'probe_sha256':sha(Path(__file__).read_bytes()),'harness_sha256':sha(feature.HARNESS.read_bytes()),'aex_sha256':sha(feature.owner.AEX.read_bytes()),'loader_sha256':sha((ROOT/'tools/emulation/aex_loader.py').read_bytes()),'native_generator_rva':'0x34e0','native_table_index_instructions':instructions,'native_instruction_bytes_sha256':sha(raw),'cases':rows,'case_count':len(rows),'sanitizer_failure_count':sum(x['exit_code']!=0 for x in rows),'native_static_fact':'Upper-bound subtraction only; signed negative index reaches table read','inference':'Negative Offset below -36 can read before the native allocated noise table; host behavior needs allocation-bound witness','claims_not_made':['No native memory-bound execution proof yet','No numeric comparison for invalid candidate memory access','No public admission change','No full compatibility completion']}
-    assert r['sanitizer_failure_count']==4 and all(x['sanitizer_result']!='other_failure' for x in rows)
+    r={'schema':'directionalblur.noise-offset-safety/1','production_source_sha256':sha(feature.owner.SOURCE.read_bytes()),'core_noise_sha256':sha((ROOT/'core/dblur_noise.h').read_bytes()),'probe_sha256':sha(Path(__file__).read_bytes()),'harness_sha256':sha(feature.HARNESS.read_bytes()),'aex_sha256':sha(feature.owner.AEX.read_bytes()),'loader_sha256':sha((ROOT/'tools/emulation/aex_loader.py').read_bytes()),'native_generator_rva':'0x34e0','native_table_index_instructions':instructions,'native_instruction_bytes_sha256':sha(raw),'cases':rows,'case_count':len(rows),'sanitizer_failure_count':sum(x['exit_code']!=0 for x in rows),'native_static_fact':'Upper-bound subtraction only; signed negative index reaches table read','native_bounds_report':'directionalblur_native_noise_bounds_20261001.json','claims_not_made':['No Windows native allocator output claim','No numeric comparison for invalid candidate memory access','No public admission change','No full compatibility completion']}
+    assert r['sanitizer_failure_count']==(0 if args.expect_guard else 4) and all(x['sanitizer_result']!='other_failure' for x in rows)
+    if args.expect_guard:assert sum(x['candidate_render_error']==-1 for x in rows)==4
+    r['expected_guard']=args.expect_guard
     args.output.write_text(json.dumps(r,indent=2,sort_keys=True)+'\n');print('RETAINED SAFETY FAILURE',r['sanitizer_failure_count'],'/',len(rows))
 if __name__=='__main__':main()

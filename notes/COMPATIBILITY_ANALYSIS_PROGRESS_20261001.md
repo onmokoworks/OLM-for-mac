@@ -395,6 +395,40 @@ Fade weight tablesとgather演算量を数える必要がある。Smartのatomic
 ROI検査にも同じ予算を適用する。Layer Noise、HDR、downsample、元AEX負Offsetの
 定義境界は残件。候補180 exactと安全性診断4 failureを分けて保存し、Goalはactive。
 
+## DB-NOISE-BOUNDS-010: native allocation境界を観測し候補の不正参照を止める
+
+actual builderでOffsetの上位wordを読み、得られた正規化float bitsを変更せず
+`FUN_1800034e0`のstack引数へ渡す。generator自体、MT seed/generation、index演算を
+差し替えない。AE PF Handle Suite2のAcquire/Release/allocate/lockをhost callbackで
+提供し、binaryが要求したallocationサイズと実table baseを記録する。
+
+work15×15/51×51、Seed1/7/1000、Offset−32768/−720/−36/−35/−18/32767の36条件。
+Noise planeとは別に101 float＝404 bytesのtableが確保され、`0x37f3/0x37f8`の読取り
+直前でbase、signed index、address offsetを観測した。12条件（−32768と−720の全Seed/
+work）がtableより前のaddressを使う。最初の範囲外命令で停止し、allocator周辺bytesを
+読ませない。残る24条件はgenerator完了、全table readがallocation内。
+実importはmemset/powf。powfは登録host mathでありnative UCRT証明ではない。
+index生成はpowfの戻り値に依存しない。Windows AE/native allocator実行は未確認。
+
+前項のnative負indexは推論だけだったが、今回の条件では実行上のallocation境界逸脱を
+確認できた。元AEXの不正参照後の出力は隣接メモリに依存し得るため、noise値をclamp/
+moduloしてbit exactと主張しない。full compatibility Goalの未閉鎖境界として保持する。
+
+`core/dblur_noise.h`のDirectional generatorへ、index<0またはindex>=100ならfalseを
+返すチェックを加える。テーブル参照以降の数値演算は変更せず、呼び出し元のstaged
+renderは失敗時に出力をcommitしない。Radial generatorは別関数で、今回変更しない。
+
+native境界36条件を再観測。本番PF8と解析PF16/PF32、3 Seed、6 Offsetの54条件を
+O2とASan/UBSanで検証（計108実行）。範囲外条件では失敗し、input・output・padding
+不変。候補の4 sanitizer failureは0になり、代わりに4件が安全にrender errorを返す。
+既存一般機能180候補および固定getter47/候補135も両buildで同じnative hashを維持。
+Noise sampler12件と固定生成planeのhash回帰もPASS。
+
+旧sanitizer failure reportと旧native capture hashを保持し、修正後診断・validationを
+別reportへ保存。安全な拒否はWindows完全互換達成ではなく、不正参照の解消である。
+通常の深度Size/Sharp/Noise/Fade公開機能不足、追加workspace/Noise/Fade予算、Smart
+full-frame/atomic契約、native AE/UCRT、installed bundleは引き続き残る。Goalはactive。
+
 ## 次の順序
 
 1. ColorKeyの他Blur設定を公開ownerで再検証し、旧import stub依存の分岐を復元。

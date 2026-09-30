@@ -1,0 +1,32 @@
+{
+  "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+  "case_count": 12,
+  "cases": [
+    {"candidate_render_error":-1,"depth":16,"exit_code":0,"geometry":[9,7],"input_sha256":"1517d3704915d860803b51667f48716347de5937c87b21ac7ae846a181e47078","offset":-32768,"parameters":{"10":11,"15":73.75,"19":-32768,"5":7},"public_admission":"rejected; candidate only","sanitizer_result":"none"},
+    {"candidate_render_error":-1,"depth":32,"exit_code":0,"geometry":[9,7],"input_sha256":"0ee1aa4947c0c390f198fea72a11b0695356158e08fb693c90649b5b8f706da0","offset":-32768,"parameters":{"10":11,"15":73.75,"19":-32768,"5":7},"public_admission":"rejected; candidate only","sanitizer_result":"none"},
+    {"candidate_render_error":-1,"depth":16,"exit_code":0,"geometry":[9,7],"input_sha256":"1517d3704915d860803b51667f48716347de5937c87b21ac7ae846a181e47078","offset":-720,"parameters":{"10":11,"15":73.75,"19":-720,"5":7},"public_admission":"rejected; candidate only","sanitizer_result":"none"},
+    {"candidate_render_error":-1,"depth":32,"exit_code":0,"geometry":[9,7],"input_sha256":"0ee1aa4947c0c390f198fea72a11b0695356158e08fb693c90649b5b8f706da0","offset":-720,"parameters":{"10":11,"15":73.75,"19":-720,"5":7},"public_admission":"rejected; candidate only","sanitizer_result":"none"},
+    {"candidate_render_error":0,"depth":16,"exit_code":0,"geometry":[9,7],"input_sha256":"1517d3704915d860803b51667f48716347de5937c87b21ac7ae846a181e47078","offset":-36,"parameters":{"10":11,"15":73.75,"19":-36,"5":7},"public_admission":"rejected; candidate only","sanitizer_result":"none"},
+    {"candidate_render_error":0,"depth":32,"exit_code":0,"geometry":[9,7],"input_sha256":"0ee1aa4947c0c390f198fea72a11b0695356158e08fb693c90649b5b8f706da0","offset":-36,"parameters":{"10":11,"15":73.75,"19":-36,"5":7},"public_admission":"rejected; candidate only","sanitizer_result":"none"},
+    {"candidate_render_error":0,"depth":16,"exit_code":0,"geometry":[9,7],"input_sha256":"1517d3704915d860803b51667f48716347de5937c87b21ac7ae846a181e47078","offset":-35,"parameters":{"10":11,"15":73.75,"19":-35,"5":7},"public_admission":"rejected; candidate only","sanitizer_result":"none"},
+    {"candidate_render_error":0,"depth":32,"exit_code":0,"geometry":[9,7],"input_sha256":"0ee1aa4947c0c390f198fea72a11b0695356158e08fb693c90649b5b8f706da0","offset":-35,"parameters":{"10":11,"15":73.75,"19":-35,"5":7},"public_admission":"rejected; candidate only","sanitizer_result":"none"},
+    {"candidate_render_error":0,"depth":16,"exit_code":0,"geometry":[9,7],"input_sha256":"1517d3704915d860803b51667f48716347de5937c87b21ac7ae846a181e47078","offset":-18,"parameters":{"10":11,"15":73.75,"19":-18,"5":7},"public_admission":"rejected; candidate only","sanitizer_result":"none"},
+    {"candidate_render_error":0,"depth":32,"exit_code":0,"geometry":[9,7],"input_sha256":"0ee1aa4947c0c390f198fea72a11b0695356158e08fb693c90649b5b8f706da0","offset":-18,"parameters":{"10":11,"15":73.75,"19":-18,"5":7},"public_admission":"rejected; candidate only","sanitizer_result":"none"},
+    {"candidate_render_error":0,"depth":16,"exit_code":0,"geometry":[9,7],"input_sha256":"1517d3704915d860803b51667f48716347de5937c87b21ac7ae846a181e47078","offset":32767,"parameters":{"10":11,"15":73.75,"19":32767,"5":7},"public_admission":"rejected; candidate only","sanitizer_result":"none"},
+    {"candidate_render_error":0,"depth":32,"exit_code":0,"geometry":[9,7],"input_sha256":"0ee1aa4947c0c390f198fea72a11b0695356158e08fb693c90649b5b8f706da0","offset":32767,"parameters":{"10":11,"15":73.75,"19":32767,"5":7},"public_admission":"rejected; candidate only","sanitizer_result":"none"}
+  ],
+  "claims_not_made": ["No Windows native allocator output claim", "No numeric comparison for invalid candidate memory access", "No public admission change", "No full compatibility completion"],
+  "core_noise_sha256": "9e8841d9d59bfe0fbf39f8792b09ba3daed0a2232a0d9df7d76e26e0f7b26477",
+  "expected_guard": true,
+  "harness_sha256": "82132dabb7d9b2c3af97e2a05a29c6b100eb643e25756a2286a9fe5f1f8b0044",
+  "loader_sha256": "f277dbecd70c4c495aa05e6495d80fdc5ce07c5df51b9076be331c232e26c9ab",
+  "native_bounds_report": "directionalblur_native_noise_bounds_20261001.json",
+  "native_generator_rva": "0x34e0",
+  "native_instruction_bytes_sha256": "0385def7a93e49cd0c4ca9789db2b6665f91c30fd07524e46541261efac908bf",
+  "native_static_fact": "Upper-bound subtraction only; signed negative index reaches table read",
+  "native_table_index_instructions": [{"mnemonic": "xorps", "operands": "xmm1, xmm1", "rva": "0x37a4"}, {"mnemonic": "cvtsi2ss", "operands": "xmm1, ebx", "rva": "0x37a7"}, {"mnemonic": "comiss", "operands": "xmm6, xmm1", "rva": "0x37ab"}, {"mnemonic": "jb", "operands": "0x1800037b9", "rva": "0x37ae"}, {"mnemonic": "subss", "operands": "xmm6, xmm1", "rva": "0x37b0"}, {"mnemonic": "comiss", "operands": "xmm6, xmm1", "rva": "0x37b4"}, {"mnemonic": "jae", "operands": "0x1800037b0", "rva": "0x37b7"}, {"mnemonic": "cvttss2si", "operands": "ebx, xmm6", "rva": "0x37b9"}, {"mnemonic": "xorps", "operands": "xmm0, xmm0", "rva": "0x37bd"}, {"mnemonic": "cvtsi2ss", "operands": "xmm0, ebx", "rva": "0x37c0"}, {"mnemonic": "subss", "operands": "xmm6, xmm0", "rva": "0x37c4"}, {"mnemonic": "movaps", "operands": "xmm1, xmm11", "rva": "0x37c8"}, {"mnemonic": "movaps", "operands": "xmm0, xmm6", "rva": "0x37cc"}, {"mnemonic": "call", "operands": "0x18000a67c", "rva": "0x37cf"}, {"mnemonic": "addss", "operands": "xmm6, xmm6", "rva": "0x37d4"}, {"mnemonic": "movaps", "operands": "xmm1, xmm13", "rva": "0x37d8"}, {"mnemonic": "subss", "operands": "xmm1, xmm6", "rva": "0x37dc"}, {"mnemonic": "mulss", "operands": "xmm0, xmm1", "rva": "0x37e0"}, {"mnemonic": "movsxd", "operands": "rcx, ebx", "rva": "0x37e4"}, {"mnemonic": "mov", "operands": "rax, qword ptr [rdi + 0x28]", "rva": "0x37e7"}, {"mnemonic": "movaps", "operands": "xmm1, xmm9", "rva": "0x37eb"}, {"mnemonic": "subss", "operands": "xmm1, xmm0", "rva": "0x37ef"}, {"mnemonic": "mulss", "operands": "xmm1, dword ptr [rax + rcx*4]", "rva": "0x37f3"}, {"mnemonic": "mulss", "operands": "xmm0, dword ptr [rax + rcx*4 + 4]", "rva": "0x37f8"}],
+  "probe_sha256": "ac2e477872252260a343a55e4bccf519b15385d6b66b1006d7b8c7f73b9fa206",
+  "production_source_sha256": "9c105f51a3e2659b42d9f07faca3ef68ab947a295df19bbea473e028ee93df1a",
+  "sanitizer_failure_count": 0,
+  "schema": "directionalblur.noise-offset-safety/1"
+}

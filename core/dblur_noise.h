@@ -76,6 +76,13 @@ inline bool generate_noise_plane(int source_width, int source_height,
             table_position -= 100.0f;
         }
         const int table_index = static_cast<int>(table_position);
+        // The AEX folds only the upper bound. Negative Offset can leave a
+        // negative signed index and read before its 101-entry allocation.
+        // Preserve defined samples; reject that state before indexing rather
+        // than inventing a wrap/clamp and calling it Windows-equivalent.
+        if (table_index < 0 || table_index >= 100) {
+            return false;
+        }
         const float fraction = table_position - static_cast<float>(table_index);
         float smooth = static_cast<float>(
             std::pow(static_cast<double>(fraction), 2.0));
