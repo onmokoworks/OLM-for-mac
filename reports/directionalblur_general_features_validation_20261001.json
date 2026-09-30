@@ -1,0 +1,53 @@
+{
+  "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+  "checks": [
+    {
+      "builds": [
+        "O2",
+        "O1 ASan UBSan"
+      ],
+      "candidate_case_count": 180,
+      "exit_code": 0,
+      "test": "tests/test_directionalblur_general_features_20261001.py"
+    },
+    {
+      "diagnostic_case_count": 12,
+      "exit_code": 0,
+      "meaning": "Probe successfully retains known candidate safety failures; this is not a successful render safety gate",
+      "retained_undefined_behavior_count": 4,
+      "test": "tools/emulation/probe_directionalblur_noise_offset_safety_20261001.py"
+    }
+  ],
+  "claims_not_made": [
+    "No production admission change",
+    "All 180 cases remain rejected by production dispatcher",
+    "No dynamic native allocation-bound witness for negative Offset",
+    "No Windows AE/native UCRT/installed verification",
+    "No full repository gate rerun",
+    "No compatibility completion"
+  ],
+  "dependencies": {
+    "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+    "core/dblur_frontonly.cpp": "488834530c422a785958b6ffebd521da73092b6419df385b9eade68d0b750349",
+    "core/dblur_generic_budget.h": "d15ecf147785deeb0a835e3e53af996b95db7a2a620e5dd7f19301ba669131c7",
+    "core/dblur_noise.h": "f0600bb4bb208ed8fba92cc6586eb66ac8f767299c8928ec88fc4635c1cfb591",
+    "core/dblur_rotate.cpp": "5b02748d421befb1ecda0fd36ff34c5b225ebee5e928e0460e1c14d174c101d7",
+    "core/dblur_rowdriver.cpp": "9f271073adaf2746a5144cf4793f0ebe574f51787705f265421710215596481d",
+    "docs/COMPATIBILITY_ANALYSIS_PLAN_JA.md": "a32aed38166c5bde22e92fe062e80c9ffd784eddd5b19c30d0323a2745135365",
+    "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "9c105f51a3e2659b42d9f07faca3ef68ab947a295df19bbea473e028ee93df1a",
+    "notes/COMPATIBILITY_ANALYSIS_PROGRESS_20261001.md": "dc6b29f2219f68028e473851923491b2c80f8af4823c1474ce4b0e663c9c731b",
+    "reports/directionalblur_general_features_candidate_20261001.json": "6347b6dfa285a07c4b2c962d0d0a626579405fa9bb14d10d82e040b5a10b1419",
+    "reports/directionalblur_noise_offset_safety_20261001.json": "b898f8ddbc7199ff198570094e97ba9512a3a8ac592412b6fc11f1685356a053",
+    "tests/test_directionalblur_general_features_20261001.py": "28e1c46ea51abff622b66563f0550f2620d2b79e428c95d098954f20f1117799",
+    "tools/emulation/aex_loader.py": "f277dbecd70c4c495aa05e6495d80fdc5ce07c5df51b9076be331c232e26c9ab",
+    "tools/emulation/directionalblur_general_features_harness_20261001.cpp": "82132dabb7d9b2c3af97e2a05a29c6b100eb643e25756a2286a9fe5f1f8b0044",
+    "tools/emulation/probe_directionalblur_fixed_getter_20261001.py": "15828cb5ad38e2fb6b9a8e9b9dbc76e63a63bad58c95afffac5ffec44b50558a",
+    "tools/emulation/probe_directionalblur_general_features_20261001.py": "810d0fcdcf1f874f6056edee9dfeb126e387309a735a5779cda29cba207f27d2",
+    "tools/emulation/probe_directionalblur_general_input_20261001.py": "8d317b2d633dee8322ee8e4ab25d67c74c01608be3c5a34e94901c2b21255e28",
+    "tools/emulation/probe_directionalblur_noise_offset_safety_20261001.py": "de39b653bc4ee7957871a8b55b60207726681b7b41566e87bbf892e92e32eae4"
+  },
+  "production_source_sha256": "9c105f51a3e2659b42d9f07faca3ef68ab947a295df19bbea473e028ee93df1a",
+  "schema": "directionalblur.general-features-validation/1",
+  "verdict": "EVIDENCE_GENERAL_CORE_EXACT_WITH_PUBLIC_REJECTION_AND_OFFSET_SAFETY_FAILURE",
+  "worker_sha256": "0eb2f7705598f7b5f53563b9d920274ba094c835ff3dbaaf5f6fb214ec0cfd61"
+}

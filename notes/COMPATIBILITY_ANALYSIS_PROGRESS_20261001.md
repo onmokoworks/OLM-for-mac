@@ -361,6 +361,40 @@ native側はローカルAEX emulationであり、Windows AE/native UCRT、instal
 次は深度16/32の非ゼロSize/Sharp/Noise公開経路を、追加witnessと安全性契約に基づき
 復元する。Fade、Noise Layer、HDR、大画像、ROI/downsampleも残る。完全互換Goalはactive。
 
+## DB-GENERAL-009: 深度の一般機能候補と負Offsetの安全性境界
+
+本番sourceを変更せず、実PF_ParamDef→InfoFromParamsを使う解析用harnessを拡張。
+Windows公開Smart ownerへ同じtyped ARGB16/float bytesを渡し、候補coreのraw hashを比較。
+Front7のみ・Back11のみ・Dual7/11、角度123.5/−17.25/17.25、独自mixed-alphaの
+1×9、9×7、37×29を使う。Size37.75、Front Sharp31.75、Back Sharp63.75、Noise73.75の
+単独と組合せ、Noise Type2/Seed7/Offset−17.25、Fade5/7、全percent100/Fade100/
+Seed1000/Offset32767、Gain2.25/Thickness1.25等10組を両depthへ渡した。
+全値を公開controlsの合法範囲内で選び、getterが端数を落とす挙動もそのまま使う。
+
+180/180が公開AEX出力とbit exact。本番dispatcherでは180件とも拒否（516）し、
+明示的な解析core bypass route1001で得た結果である。公開機能復元とは扱わない。
+O2とASan/UBSanで全180 native hashを再生し、input不変・行padding保持を確認。
+この証拠はサイズ・設定tupleのwhitelist追加を正当化するためではなく、一般coreと
+公開admission/Smart契約の差を切り分けるために残す。
+
+追加の負Offset安全性診断12件では、−32768と−720が各depthでUBSanのunsigned pointer
+offset overflow（計4件）。候補Noise generatorは負のtable indexをsize_tへ変換して
+tableより前を参照する。−36/−35/−18/32767の8件はこの入力ではsanitizer failureなし。
+後者の成功を全Seed・任意worldでの安全証明にはしない。
+
+actual AEX `FUN_1800034e0`の`0x37a4..0x37fd`を再読取りしたstatic fact:
+上限100以上だけsubssで折り返し、`0x37b9`でsigned truncation、`0x37e4`で符号拡張、
+`0x37f3/0x37f8`でtable[index]/table[index+1]を読む。下限0への折り返しはない。
+負Offsetでnativeもallocation外読取りに達する可能性がある、という点は推論。
+動的allocation境界witness/native hostの状態依存性は未確認。負値へmodulo/clampを
+加えてWindows exactと主張する修正は行わない。
+
+公開admissionを広げる前に、既存neutral EstimateRenderの14 float channel見積もりに
+含まれないcomponent visited/pending/componentのvector容量、Noise plane/table、
+Fade weight tablesとgather演算量を数える必要がある。Smartのatomic stagingとfull-frame
+ROI検査にも同じ予算を適用する。Layer Noise、HDR、downsample、元AEX負Offsetの
+定義境界は残件。候補180 exactと安全性診断4 failureを分けて保存し、Goalはactive。
+
 ## 次の順序
 
 1. ColorKeyの他Blur設定を公開ownerで再検証し、旧import stub依存の分岐を復元。
