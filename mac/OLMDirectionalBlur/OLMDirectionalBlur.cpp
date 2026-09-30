@@ -1339,7 +1339,7 @@ static PF_Err RenderGenericNeutral16(PF_EffectWorld *input, PF_EffectWorld *outp
 		input->width, input->height, static_cast<int>(info.front_strength),
 		static_cast<int>(info.back_strength),
 		static_cast<float>(info.brightness_gain), static_cast<float>(info.angle_deg),
-		0.0f, 1, 1, 0, 10.0f, 1);
+		0.0f, 1, 1, 0, 10.0f, 0);
 	if (result != 0) return result == -5 ? PF_Err_OUT_OF_MEMORY : PF_Err_INTERNAL_STRUCT_DAMAGED;
 	UnstageDirectionalWorld<PF_Pixel16>(destination, output);
 	return PF_Err_NONE;
@@ -1355,7 +1355,7 @@ static PF_Err RenderGenericNeutral32(PF_EffectWorld *input, PF_EffectWorld *outp
 		input->width, input->height, static_cast<int>(info.front_strength),
 		static_cast<int>(info.back_strength), 0.0f,
 		static_cast<float>(info.angle_deg), static_cast<float>(info.brightness_gain),
-		0.0f, 1, 1, 0, 10.0f, nullptr, 0, 1);
+		0.0f, 1, 1, 0, 10.0f, nullptr, 0, 0);
 	if (result != 0) return result == -5 ? PF_Err_OUT_OF_MEMORY : PF_Err_INTERNAL_STRUCT_DAMAGED;
 	UnstageDirectionalWorld<PF_PixelFloat>(destination, output);
 	return PF_Err_NONE;
@@ -1442,7 +1442,10 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		if (CanUseGenericNeutral8(input, output, info)) {
 			ObserveDirectionalRenderRoute(
 				observed_route, kDirectionalRouteGenericNeutral);
-			return RenderExact8(input, output, nullptr, info, true);
+			// Native owners schedule min(height,32) equal integer row ranges.
+			// The remainder keeps the preseeded rotated source, even in this
+			// general route; overwriting all rows changes Windows output.
+			return RenderExact8(input, output, nullptr, info, false);
 		}
 		if (IsGenericNeutralShape(info)) {
 			// Do not let an invalid world or over-budget frame fall through to the
@@ -2051,7 +2054,7 @@ extern "C" PF_Err OLMDirectionalBlurTestRenderWorldWithNoise(
 }
 #endif
 
-static PF_FpLong WindowsWholeAngleDegrees(PF_Fixed value)
+static PF_FpLong WindowsFixedWholeNumber(PF_Fixed value)
 {
 	// FUN_180006c50 reads the signed word at PF_ParamDef+0x3a.
 	// Preserve the upper 16 bits, including negative fractional angles;
@@ -2065,20 +2068,20 @@ static PF_FpLong WindowsWholeAngleDegrees(PF_Fixed value)
 static OLMDirectionalBlurInfo InfoFromParams(PF_ParamDef *params[], PF_FpLong render_scale_x, PF_FpLong render_scale_y)
 {
 	OLMDirectionalBlurInfo info;
-	info.angle_deg = WindowsWholeAngleDegrees(params[OLMDIRECTIONALBLUR_ANGLE]->u.ad.value);
+	info.angle_deg = WindowsFixedWholeNumber(params[OLMDIRECTIONALBLUR_ANGLE]->u.ad.value);
 	info.brightness_gain = params[OLMDIRECTIONALBLUR_BRIGHTNESS_GAIN]->u.fs_d.value;
-	info.size_variation = static_cast<PF_FpLong>(params[OLMDIRECTIONALBLUR_SIZE_VARIATION]->u.fd.value) / 65536.0;
+	info.size_variation = WindowsFixedWholeNumber(params[OLMDIRECTIONALBLUR_SIZE_VARIATION]->u.fd.value);
 	info.front_strength = params[OLMDIRECTIONALBLUR_FRONT_STRENGTH]->u.sd.value;
 	info.front_alpha_fade = params[OLMDIRECTIONALBLUR_FRONT_ALPHA_FADE]->u.sd.value;
-	info.front_sharp_tail = static_cast<PF_FpLong>(params[OLMDIRECTIONALBLUR_FRONT_SHARP_TAIL]->u.fd.value) / 65536.0;
+	info.front_sharp_tail = WindowsFixedWholeNumber(params[OLMDIRECTIONALBLUR_FRONT_SHARP_TAIL]->u.fd.value);
 	info.back_strength = params[OLMDIRECTIONALBLUR_BACK_STRENGTH]->u.sd.value;
 	info.back_alpha_fade = params[OLMDIRECTIONALBLUR_BACK_ALPHA_FADE]->u.sd.value;
-	info.back_sharp_tail = static_cast<PF_FpLong>(params[OLMDIRECTIONALBLUR_BACK_SHARP_TAIL]->u.fd.value) / 65536.0;
-	info.noise_variation = static_cast<PF_FpLong>(params[OLMDIRECTIONALBLUR_NOISE_VARIATION]->u.fd.value) / 65536.0;
+	info.back_sharp_tail = WindowsFixedWholeNumber(params[OLMDIRECTIONALBLUR_BACK_SHARP_TAIL]->u.fd.value);
+	info.noise_variation = WindowsFixedWholeNumber(params[OLMDIRECTIONALBLUR_NOISE_VARIATION]->u.fd.value);
 	info.noise_type = params[OLMDIRECTIONALBLUR_NOISE_TYPE]->u.pd.value;
 	info.noise_layer = params[OLMDIRECTIONALBLUR_NOISE_LAYER]->u.ld.dephault;
 	info.seed = params[OLMDIRECTIONALBLUR_SEED]->u.sd.value;
-	info.noise_offset = params[OLMDIRECTIONALBLUR_NOISE_OFFSET]->u.ad.value / 65536;
+	info.noise_offset = static_cast<A_long>(WindowsFixedWholeNumber(params[OLMDIRECTIONALBLUR_NOISE_OFFSET]->u.ad.value));
 	info.thickness = params[OLMDIRECTIONALBLUR_THICKNESS]->u.fs_d.value;
 	info.render_scale_x = render_scale_x;
 	info.render_scale_y = render_scale_y;

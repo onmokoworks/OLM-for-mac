@@ -1,0 +1,89 @@
+{
+  "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+  "baseline_core_candidate_exact_count": 102,
+  "baseline_getter_exact_count": 19,
+  "checks": [
+    {
+      "builds": [
+        "O2",
+        "O1 ASan UBSan"
+      ],
+      "candidate_render_case_count": 135,
+      "exit_code": 0,
+      "getter_case_count": 47,
+      "test": "tests/test_directionalblur_fixed_getter_20261001.py"
+    },
+    {
+      "builds": [
+        "O2",
+        "O1 ASan UBSan"
+      ],
+      "case_count": 162,
+      "exit_code": 0,
+      "test": "tests/test_directionalblur_general_input_owner_20261001.py"
+    },
+    {
+      "exit_code": 0,
+      "test": "tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py"
+    },
+    {
+      "exit_code": 0,
+      "test": "tools/emulation/test_dblur_generic_deep_geometry_beta_20260820.py"
+    },
+    {
+      "exit_code": 0,
+      "test": "tools/emulation/test_dblur_generic_roi_policy_20260820.py"
+    },
+    {
+      "exit_code": 0,
+      "test": "tools/emulation/test_olmdirectionalblur_smart_cleanup_atomic_20260813.py"
+    }
+  ],
+  "claims_not_made": [
+    "No public dispatch completion: nonzero deep Size/Sharp/Noise remain rejected",
+    "No Windows AE/native UCRT verification",
+    "No installed bundle verification",
+    "No new Mac public checkout-to-Windows exact proof",
+    "No full repository gate rerun",
+    "No full compatibility or source recovery completion"
+  ],
+  "core_candidate_case_count": 135,
+  "core_candidate_exact_count": 135,
+  "dependencies": {
+    "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+    "core/dblur_frontonly.cpp": "488834530c422a785958b6ffebd521da73092b6419df385b9eade68d0b750349",
+    "core/dblur_rotate.cpp": "5b02748d421befb1ecda0fd36ff34c5b225ebee5e928e0460e1c14d174c101d7",
+    "core/dblur_rowdriver.cpp": "9f271073adaf2746a5144cf4793f0ebe574f51787705f265421710215596481d",
+    "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "9c105f51a3e2659b42d9f07faca3ef68ab947a295df19bbea473e028ee93df1a",
+    "reports/directionalblur_fixed_getter_baseline_20261001.json": "1cbad24eda6fd86df7f55e6bbaa3460ffc9beb327d0e178c546992633929d575",
+    "reports/directionalblur_fixed_getter_core_candidate_20261001.json": "ab4c7c93bc18f12a6323dfebc9a21deee64cbe6bf33f22bb1490267c96085c9c",
+    "reports/directionalblur_fixed_getter_core_partition_production_20261001.json": "67dfe30d70e1c4c1869e0ced0ae303eff5acbb3490db05903d4fc0eebdaf2891",
+    "reports/directionalblur_fixed_getter_dispatch_production_20261001.json": "0a72b1f5dd58512604cf6865bbd7479332fb06e61e65c08c3484b29f76ee12d2",
+    "reports/directionalblur_fixed_getter_production_20261001.json": "5f7d82efd887478860891083cf1896262fafbc04ef32dc4cf922d6955c11ac77",
+    "tests/test_directionalblur_fixed_getter_20261001.py": "e45b3d2a66e4b2b39f5d8cec2bd09545bb4f93e9b0b2a19663642b89d055f3d8",
+    "tests/test_directionalblur_general_input_owner_20261001.py": "dfc018d1102515f0b96fc6f52321752a49153180aecda0495b26af41fa97fcfb",
+    "tools/emulation/aex_loader.py": "f277dbecd70c4c495aa05e6495d80fdc5ce07c5df51b9076be331c232e26c9ab",
+    "tools/emulation/directionalblur_fixed_getter_harness_20261001.cpp": "bd89891794928a001ba217fe2bd89b05745f5ee9742bf58af68ea2dae978b653",
+    "tools/emulation/probe_directionalblur_fixed_getter_20261001.py": "15828cb5ad38e2fb6b9a8e9b9dbc76e63a63bad58c95afffac5ffec44b50558a",
+    "tools/emulation/probe_directionalblur_general_input_20261001.py": "8d317b2d633dee8322ee8e4ab25d67c74c01608be3c5a34e94901c2b21255e28",
+    "tools/emulation/test_olmdirectionalblur_mac_smartrender_adapter_20260717.py": "dfd8bc8d5cde2cc7ce8442b5b7c2409727ab0d0f51050cedfcaf662ef0652f06"
+  },
+  "getter_exact_count": 47,
+  "native_builder_rva": "0x6c50",
+  "native_fixed_word_offset": "0x3a",
+  "native_row_owner_rvas": [
+    "0x4a20",
+    "0x3c90",
+    "0x57b0"
+  ],
+  "normal_dispatch_case_count": 45,
+  "normal_dispatch_exact_count": 37,
+  "normal_dispatch_feature_rejection_count": 8,
+  "production_source_sha256": "9c105f51a3e2659b42d9f07faca3ef68ab947a295df19bbea473e028ee93df1a",
+  "public_dispatch_exact_count": 111,
+  "public_dispatch_feature_rejection_count": 24,
+  "resolved_numeric_difference_count": 33,
+  "schema": "directionalblur.fixed-getter-validation/1",
+  "verdict": "PASS_FIXED_GETTER_AND_NATIVE_ROW_PARTITION_RECOVERY",
+  "worker_sha256": "0eb2f7705598f7b5f53563b9d920274ba094c835ff3dbaaf5f6fb214ec0cfd61"
+}

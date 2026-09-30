@@ -45,7 +45,7 @@ Windows自身が非対応の経路は移植側の機能欠落と混同しない�
 | ColorKeep | count 5/100の末尾色に3深度anchor。全count/全paletteとClassicの契約は未完 | count 1/4/5/99/100、重複・透明色・不一致、public checkoutを比較。scalar/unrolled/tailの分岐とparameter対応を復元してexact |
 | OLMBlur | repeat/legacy等の固定exactと一般laneが存在。Classic PF32は非対応として記載 | Windows側のClassic能力を先に確認。fractional Smoothness、Repeat、Biasのbuilder→worker→writerの最初の差を特定し一般処理で閉じる |
 | OLMColorKey | Thin公開216設定に加え、Around/Manhattan/Blur4＋Thinの2592設定を公開AEX Smart→Mac Classic/Smartでexact確認。Thin±4000は距離capを復元し公開制限を解消。旧workerの255 contextと未実装sinfを隔離 | 他のBlur amount/distance/directionを公開ownerで再検証し旧stub依存分岐を復元。全color/threshold/HDR、native AEとROI/downsampleを閉じる |
-| OLMDirectionalBlur | 独自の奇数・mixed-alpha入力でFront/Back/Dualを公開AEX ownerと比較。非整数角度の差はWindows builderのsigned upper-word読取りを復元し、修正後162ケースがexact。Mac側は実parameter getter→本番dispatcherの検証 | Size/Sharp/Noise/Offset等の固定小数解釈を同じbuilderで検証。Fade/Noise等の一般public経路、全設定・素材、native AE/UCRTを閉じる。回転差に見えるparameter解釈差を先に分離 |
+| OLMDirectionalBlur | 非整数角度162ケースに加え、Windows公開builderの固定小数getter47件を復元。一般経路の等分行範囲へ戻して37×29の33画素差を解消。135候補中111件は本番dispatcherでもexact、24件は深度16/32の機能拒否 | 非ゼロSize/Sharp/Noiseの深度16/32公開admission・Smart契約を復元。解析用core候補135件の一致を公開機能完成とは扱わない。Fade/Noise Layer、全設定・素材、native AE/UCRTを閉じる |
 | OLMDistanceGradation | PF32 Powerのnative-UCRT 8固定セルは解決済み。一般Power/Bilateralへは未一般化 | 63組のpowf表を一般実装と混同しない。未登録引数でnative依存関数との差を測り、field/blur/writerと分離して復元 |
 | OLMKiraKira | Mode3 Length代表4値×Rotation2値×3深度の24 retainedセルがexact。他source/geometry/依存関数へは未一般化 | まず異なるsourceと奇数geometryでpublic ownerを比較。相違がなければ長さ境界・他ray/modeの欠落へ進み、helper差とhost代替差を区別 |
 | OLMRadialBlur | 固定component anchorsはexact。一般topologyの右端処理等は未証明 | 画像端に接する連結成分、穴、離れた島の同一typed入力で比較。component/field/sampler/writerの最初の差を閉じる |

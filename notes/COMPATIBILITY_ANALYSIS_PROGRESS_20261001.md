@@ -323,6 +323,44 @@ Mac EffectMainの既存別テストを今回の162ケースの公開exact証拠�
 Size/Sharp/Noiseの上位word読取りもstaticに見えるが、動的witnessなしに変更しない。
 次は同じbuilderの固定小数と一般Fade/Noise経路を調べる。完全互換Goalはactive。
 
+## DB-FIXED-PARTITION-008: 固定小数getterと等分行範囲を復元
+
+公開builder `FUN_180006c50`を実checkout/checkin callbackで実行し、Size Variation、
+Front/Back Sharp Tail、Noise Variation、Offsetの47境界値を調べた。14 checkoutと
+14 checkinを確認し、実行importはmemsetのみ。手でcontext値を注入した比較ではない。
+各値とwhole-number独立controlの全context hashが一致する。
+
+Mac旧getterは19/47一致。WindowsはAngleと同様に16.16上位wordを符号付き整数として
+読む。percentの0.75→0、25.75→25、Offsetの−0.25→−1、−17.25→−18を復元し、
+実PF_ParamDef→InfoFromParamsで47/47一致。固定小数の一般decodeのみ変更した。
+
+同じtyped raw入力を公開AEX Smart ownerとMacへ渡す45件は修正前14 exact、
+24 feature rejection、7 numeric difference。getter修正後37 exact、8 feature rejection、
+0 numeric difference。深度16/32で非ゼロSize/Sharp/Noiseを本番dispatcherが拒否する
+機能不足は残る。解析専用の明示的core bypassを本番admissionとは分けて記録する。
+
+7×5、9×7、37×29の135件へ広げると、getter修正後のcore候補は102 exact、33 numeric
+差。全33差は37×29のgeneric経路。native PF8/PF16/PF32 ownerはmin(height,32)個の
+workerへ整数商の等分範囲を配り、余り行を処理しない。omp_get_max_threadsの戻り値は
+使用しない。例では回転work height51のうち32行を処理し、19行はpreseeded sourceを保持。
+Mac generic wrapperの全行上書き指定を外し、既存coreの等分処理へ戻す。
+画素field/rotate/writeback演算や座標別の例外は追加しない。
+
+修正後の解析候補は135/135 raw exact。本番dispatcherでは同集合の111件exactと
+24件の機能拒否を確認した。通常の45件も37 exact/8拒否であり、公開135件の完全一致
+とは主張しない。47 getterと135候補をO2、ASan/UBSanで再生し、input不変、padding保持、
+拒否時の出力不変を確認。既存角度162件も両buildで全hash一致。
+
+既存Back/Dual Classic/Smart EffectMain、deep geometry、ROI、Smart cleanup atomic
+17件がPASS。Smart cleanupの疑似SDKに欠けていたPF_Fixed型を補った。
+修正前後の5 normalized reportを保持し、historical source hashを付け替えない。
+現行source・依存・再生結果はfixed_getter_validation reportへ別にbindする。
+
+native側はローカルAEX emulationであり、Windows AE/native UCRT、installed bundle、
+新規Mac公開checkout対Windows比較は未完。全リポジトリgateは再実行していない。
+次は深度16/32の非ゼロSize/Sharp/Noise公開経路を、追加witnessと安全性契約に基づき
+復元する。Fade、Noise Layer、HDR、大画像、ROI/downsampleも残る。完全互換Goalはactive。
+
 ## 次の順序
 
 1. ColorKeyの他Blur設定を公開ownerで再検証し、旧import stub依存の分岐を復元。

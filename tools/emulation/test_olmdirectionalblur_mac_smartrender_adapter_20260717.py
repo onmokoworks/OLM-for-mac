@@ -34,7 +34,7 @@ def compile_probe(directory: Path) -> Path:
 #include <vector>
 using A_long = std::int32_t; using A_u_long = std::uint32_t; using A_u_char = std::uint8_t; using A_short = std::int16_t;
 using PF_ProgPtr = void *; using PF_PixelPtr = void *; using PF_PluginDataPtr = void *; using PF_PluginDataCB2 = void *;
-struct SPBasicSuite; using PF_Err = A_long; using PF_FpLong = double;
+struct SPBasicSuite; using PF_Err = A_long; using PF_FpLong = double; using PF_Fixed = A_long;
 enum {{ PF_Err_NONE = 0, PF_Err_BAD_CALLBACK_PARAM = -1, PF_Err_INTERNAL_STRUCT_DAMAGED = -2, PF_Err_OUT_OF_MEMORY = -3, PF_Err_INVALID_CALLBACK = -4 }};
 enum PF_Cmd {{ PF_Cmd_ABOUT, PF_Cmd_GLOBAL_SETUP, PF_Cmd_PARAMS_SETUP, PF_Cmd_RENDER, PF_Cmd_SMART_PRE_RENDER, PF_Cmd_SMART_RENDER }};
 enum PF_PixelFormat {{ PF_PixelFormat_INVALID, PF_PixelFormat_ARGB32, PF_PixelFormat_ARGB64, PF_PixelFormat_ARGB128 }};
