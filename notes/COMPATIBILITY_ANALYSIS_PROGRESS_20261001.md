@@ -145,6 +145,66 @@ Mac入力不変・output padding不変・suite/checkinの収支も各実行で�
 Thin全範囲・全color space・Replace/premultiplied・native Windows/Mac AE・installed bundle・
 downsample/ROIは未完了。完全互換Goalは引き続きactive。
 
+## CK-COMPOSITION-004: 正弦依存先・RGB処理順・1列走査の復元
+
+分類: 合成ホストに加え、旧import stubによる誤ったoracleを検出・隔離。
+CK-COMPOSITION-001/002/003のworker/core Blur一致は数値のWindows仕様証拠として使用しない。
+Thin単独の公開216設定は別のexported workerによる証拠であり、この問題に依存しない。
+
+事実:
+
+- `aex_loader.py`のmath importsにはdouble `sin`があるがfloat `sinf`がない。
+  未実装importはRAX=0で戻り、XMM0を変更しない。native Around callbackが呼ぶ
+  `sinf`は恒等関数として観測され、旧linear/overshoot分岐につながった。
+  `probe_olmcolorkey_composition_generalization_20261001.py`は今後、未実装sinfがあれば
+  通常の実行を拒否する。明示的な履歴stub実行もvalid_numerical_oracle=falseと記録。
+  過去reportの値を書き換えて数学依存先が実装されていたことにはしない。
+- native `FUN_180005550`のAround曲線はFLOAT32 pi/2/amount、signed phase、
+  sinf、+1、*0.5の順。`DAT_18001f6b0`をPEから読むと1.5707963705062866。
+  公開AEX ownerと比較し、距離0は0.5、amount以上はinside1/outside0、間はこの曲線に復元。
+- native PF8 `FUN_1800085b0`、PF16 `FUN_180008320`はalpha*weightを整数に切り捨てる。
+  ceilを使う一時案は整数depthに反例が残り棄却。PF32はfloat multiplyのまま。
+  Keep offはその後source alpha - final matte alpha。
+- ReplaceはThinより先。負Thinのalpha-only消去後もRGBは残る。
+  正Thinがゼロmatteに拡張するとsource RGBAをコピーし、先行Replace RGBを上書きする。
+  matched_indexとthin_expandedの一般処理でこの順序を再現。固定座標補正は使用しない。
+- 1×7 opaque 2-key/Thin -4/Type1で追加反例。nativeの距離planeを直接採取すると
+  `[2,1,2,2,2,1,2]`。Type2/3には同じ反例がない。
+  native Type1は幅1でも左右端を走査し、float pixel pointer x=±1が隣接rowへaliasする。
+  forward/reverseの順序を、ゼロscratchと範囲付きreadを持つ配列で再現した。
+  PEの距離cap定数は4000、最初の非seedは3999。AEX外の未定義メモリreadはMacへ移植しない。
+
+本番変更: Around public2 / Manhattan public2 / Blur4の曲線・単位距離・alpha0 seedを
+復元し、Thin public Type1/2/3・visible範囲±100とのcompositionをpublic admissionへ追加。
+他のBlur設定は未解決の旧stub依存分岐を含むので、今回の証拠を流用しない。
+
+公開owner検証:
+
+- 3入力（端に接するring/穴、opaque、zero-alpha/半透明、17×15/9×7）× Keep2 ×
+  Premultiplied2 × Replace2 × Thin0/±1/±4 × Thin Type1/2/3 × depth3 = 1080設定。
+  一時案は954 exact。RGB順序を復元後、本番1080 exact。
+- 1×1 opaque、1×7 opaque、9×1 mixed-zero × 同toggle/Type/depth × Thin0/±1/±4/±100 =
+  1512設定。一時案は1464 exact（1列・Type1に48反例）。走査復元後、本番1512 exact。
+- 両集合で、Windows exported Smart CPU ownerのtyped raw output hashに対して
+  Mac実SDK Classic/Smart両方が全設定で一致。実builderのslider/popup/toggle、suite収支、
+  入力不変とoutput padding不変も各実行で検証。
+
+証拠:
+
+- `reports/colorkey_around_composition_production_20261001.json`
+- `reports/colorkey_around_composition_boundary_production_20261001.json`
+- `reports/colorkey_around_composition_validation_20261001.json`に現行sourceの6検証とbindingを記録。
+- `tests/test_olmcolorkey_around_composition_owner_20261001.py`は全2592 Windows witnessを
+  現行Mac両公開経路へ再生。単画素/1列の54設定を両公開経路でASan/UBSanに通す。
+  raw画像や第三者AEXは保管・Pushしない。
+- 既存公開126出力、Thin公開216設定、generic pixel-local、pairwise/ASan/UBSan、ROI/tileもPASS。
+  旧public composition拒否の2期待だけを新しいadmissionの期待へ変更。
+
+残る境界: native Windows/Mac AE、installed bundle、他のBlur amount/distance/direction、
+全color space・threshold・25 keys・HDR、Thin合法範囲±4000、downsample/ROIは未完了。
+次は同じ公開ownerを用いてAroundの残りamountと他のdirection/typeを比較し、旧import stubに
+依存した分岐・記録を区別する。完全互換Goalはactiveのまま。
+
 ## BASELINE-001: 検証証拠の環境差
 
 Thin修正後のgeneric gateも52 PASS/1 FAIL/0 SKIP（既存baselineと同じ）。性能レポートの実行prefixはPython 3.14.6をbindし、
@@ -153,8 +213,8 @@ Thin修正後のgeneric gateも52 PASS/1 FAIL/0 SKIP（既存baselineと同じ�
 
 ## 次の順序
 
-1. CK-COMPOSITION-001のThin中間値・型依存処理の復元。
-2. public Classic/Smartと別source/geometryで修正を検証。
+1. ColorKeyの他Blur設定を公開ownerで再検証し、旧import stub依存の分岐を復元。
+2. Thin合法範囲±4000、全color/threshold、HDRとnative host/ROI/downsampleを拡張検証。
 3. Smoother2の現行sourceによる114ケース再生と、未到達65分類の到達性調査。
 
 既存の作業ツリー変更は今回のcommitに混ぜない。第三者AEXとnative raw出力をPushしない。

@@ -1,0 +1,54 @@
+{
+  "checks": [
+    {
+      "exit_code": 0,
+      "stderr_sha256": "e70fec2825d9bf206d27463a792768195039599cb39bcca66339f47283f84cce",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test": "tests/test_olmcolorkey_around_composition_owner_20261001.py",
+      "test_sha256": "c60a9c6a4652a65250f261e13471906dd992320c5794560a8bb9df0210183020"
+    },
+    {
+      "exit_code": 0,
+      "stderr_sha256": "880da6bb8e94d839545763fa7684897d977eb53070fe916b7499f3a0e27fbe3a",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test": "tests/test_olmcolorkey_public_entries_real_sdk_20260813.py",
+      "test_sha256": "73a11c8d969ac12838abff46af2bf4ff00c3bf3a4b50aad0c58a39bf3cf1c75d"
+    },
+    {
+      "exit_code": 0,
+      "stderr_sha256": "e70fec2825d9bf206d27463a792768195039599cb39bcca66339f47283f84cce",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test": "tests/test_olmcolorkey_thin_public_owner_20261001.py",
+      "test_sha256": "f6d68e20fd0b476054a57afff583059987697ef832196091a7579abf4ef51eb6"
+    },
+    {
+      "exit_code": 0,
+      "stderr_sha256": "e70fec2825d9bf206d27463a792768195039599cb39bcca66339f47283f84cce",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test": "tests/test_olmcolorkey_generic_pixel_local_beta.py",
+      "test_sha256": "8dfd9d71aa164de7c34af052b00e05761ad79ab9f3ac98524e7f2a4e0d746753"
+    },
+    {
+      "exit_code": 0,
+      "stderr_sha256": "e70fec2825d9bf206d27463a792768195039599cb39bcca66339f47283f84cce",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test": "tests/test_olmcolorkey_generic_pixel_local_pairwise.py",
+      "test_sha256": "4acfb5fbeb55d86b331665bd7887efb3d838940b08d45f224fad0f1b430e6086"
+    },
+    {
+      "exit_code": 0,
+      "stderr_sha256": "0b9255211573c2e467c9af01e2dd3ab52f46b5e6dc0ac49470bbb5635351b633",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test": "tests/test_olmcolorkey_generic_roi_tile.py",
+      "test_sha256": "dd073d342df4681a894beb0d02df5c3e545298cc935c44e273d1adddce0d4076"
+    }
+  ],
+  "date": "2026-10-01",
+  "reports": {
+    "reports/colorkey_around_composition_boundary_production_20261001.json": "5bdef6cf7e25d33e9ffa17d5be01cac654099d42f3a7eb1ba9d01cfc98f67910",
+    "reports/colorkey_around_composition_production_20261001.json": "7e4d8301967dc27a59f37c41e5ff4eecf7ea7bde7c2ff87ce73f1784d5717246"
+  },
+  "schema": "olmcolorkey.around-composition-validation/1",
+  "scope": "Current source: 2592 exported Windows owner witnesses replayed through both real-SDK Mac entries; 54 singleton/column cells through both entries under ASan/UBSan; prior public126/Thin216 and generic safety/ROI checks. No native AE/installed or all-parameter claim.",
+  "source_sha256": "ee89c16874766e7d6afdd3a6eda06157d0d1e6fe945d2e42a9cac78ef517cfeb"
+}

@@ -665,6 +665,28 @@ static std::vector<float> L1DistanceTo(const std::vector<u_char> &mask, A_long w
 
 static std::vector<float> ChessboardDistanceTo(const std::vector<u_char> &mask, A_long w, A_long h)
 {
+	if (w == 1) {
+		// FUN_1800066f0/6e20/7550 visits both row edges even for one column.
+		// Its x=1/-1 float pointers alias the next/previous contiguous row.
+		// Reproduce that scan in bounded storage with the zeroed native scratch
+		// plane; the ordinary eight-neighbor transform gives different results.
+		std::vector<float> d((size_t)h, 0.0f);
+		d[0] = mask[0] ? 0.0f : 3999.0f;
+		auto read = [&](A_long y) { return y >= 0 && y < h ? d[(size_t)y] : 0.0f; };
+		for (A_long y = 1; y < h; ++y) {
+			float left = mask[(size_t)y] ? 0.0f : std::min(read(y - 1), read(y)) + 1.0f;
+			d[(size_t)y] = mask[(size_t)y] ? 0.0f :
+			    std::min(left + 1.0f, std::min(read(y - 1), read(y - 2)) + 1.0f);
+		}
+		for (A_long y = h - 2; y >= 0; --y) {
+			float right = std::min(read(y + 1), read(y)) + 1.0f;
+			d[(size_t)y] = std::min(read(y), right);
+			float left = std::min(std::min(read(y + 1), read(y + 2)), read(y)) + 1.0f;
+			d[(size_t)y] = std::min(read(y), std::min(left, right + 1.0f));
+		}
+		return d;
+	}
+
 	const float inf = 1.0e9f;
 	std::vector<float> d((size_t)w * (size_t)h, inf);
 	for (A_long i = 0; i < w * h; ++i) {
@@ -1314,15 +1336,17 @@ static bool IsGenericEdgeBlurTuple(const OLMColorKeyInfo &info)
 	    (direction == 4 && info.edge_blur_distance_type == 1 && info.edge_blur_amount == 4.0);
 }
 
+static bool IsRecoveredAroundBlur(const OLMColorKeyInfo &info)
+{
+	return info.edge_blur_direction == 102 && info.edge_blur_distance_type == 2 &&
+		   info.edge_blur_amount == 4.0;
+}
+
 static bool IsGenericEdgeCompositionTuple(const OLMColorKeyInfo &info)
 {
-	(void)info;
-	// The retained 13x11 composition capture left the native Edge Thin
-	// Distance Type field at its zero-initialized internal value.  It therefore
-	// cannot ground any public popup value (1..3), even though the saturated
-	// +/-4 matte happened to compare equal.  Keep simultaneous Thin+Blur closed
-	// until a capture explicitly materializes and distinguishes that field.
-	return false;
+	return IsRecoveredAroundBlur(info) &&
+		   info.edge_thin_amount >= -100.0 && info.edge_thin_amount <= 100.0 &&
+		   info.edge_thin_distance_type >= 1 && info.edge_thin_distance_type <= 3;
 }
 
 static float EdgeBlurWeight(bool inside, float dist, float amount, A_long direction)
@@ -1734,10 +1758,9 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
 	// Native PF8/PF16/PF32 final callbacks subtract the finished matched matte
-	// from source. Apply Thin before this subtraction; complementing the mask
-	// before Blur changes PF32 rounding. Blur-only paths retain their separately
-	// verified owner behavior until their general reconstruction is complete.
-	if (!info.color_keep && info.edge_thin_amount != 0.0) {
+	// from source. Thin and the recovered Around curve finish the matched matte
+	// before this subtraction. Complementing the mask first changes PF32 rounding.
+	if (!info.color_keep && (info.edge_thin_amount != 0.0 || IsRecoveredAroundBlur(info))) {
 		OLMColorKeyInfo matte_info = info;
 		matte_info.color_keep = true;
 		matte_info.enable_replace = false;
@@ -1753,6 +1776,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	const size_t pixel_count = (size_t)w * (size_t)h;
 	std::vector<u_char> matched(pixel_count, 0);
 	std::vector<int> matched_index(pixel_count, -1);
+	std::vector<u_char> thin_expanded(pixel_count, 0);
 	float key_epsilon = OLMCKPixelTraits<PixelT>::native_key_epsilon();
 	if (info.force_lower_precision == 3) {
 		key_epsilon = 0.5f / 255.0f;
@@ -1916,7 +1940,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			matched_index[idx] = hit_index;
 		}
 	}
-	if (info.color_keep && info.edge_thin_amount != 0.0) {
+	if (info.color_keep && (info.edge_thin_amount != 0.0 || IsRecoveredAroundBlur(info))) {
 		for (A_long y = 0; y < h; ++y) for (A_long x = 0; x < w; ++x) {
 			if (OLMCKPixelTraits<PixelT>::a(*PixelAtConst<PixelT>(
 					input, x + input_offset_x, y + input_offset_y)) == 0.0f)
@@ -1939,11 +1963,12 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		const float distance_scale = 1.0f;
 		const float limit = (float)info.edge_thin_amount;
 		for (A_long i = 0; i < w * h; ++i) {
-			matched[i] = (matched[i] || dist[i] * distance_scale <= limit) ? 1 : 0;
+			thin_expanded[i] = (!matched[i] && dist[i] * distance_scale <= limit) ? 1 : 0;
+			matched[i] = (matched[i] || thin_expanded[i]) ? 1 : 0;
 		}
 	}
 
-	if (info.color_keep && info.edge_thin_amount != 0.0) {
+	if (info.color_keep && (info.edge_thin_amount != 0.0 || IsRecoveredAroundBlur(info))) {
 		for (A_long y = 0; y < h; ++y) for (A_long x = 0; x < w; ++x) {
 			if (OLMCKPixelTraits<PixelT>::a(*PixelAtConst<PixelT>(
 					input, x + input_offset_x, y + input_offset_y)) == 0.0f)
@@ -1966,14 +1991,14 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				// hidden RGB therefore survives at alpha zero in both modes.
 				OLMCKPixelTraits<PixelT>::zero_alpha(*outP);
 			}
-			// Replacement precedes the Edge Thin/Blur orchestration in the AEX.
-			// On straight input its RGB therefore survives a later alpha clear.
-			// Premultiplied pixels retain the historical all-channel clear.
+			// Native replacement precedes Thin/Blur and survives alpha-only erosion.
+			// Positive Thin copies original RGBA into zero-matte pixels, overriding
+			// earlier replacement even when source alpha is zero. Reproduce that order.
 			size_t idx = (size_t)y * (size_t)w + (size_t)x;
 			int key_index = matched_index[idx];
 			if (info.color_keep && info.enable_replace && key_index >= 0 &&
 			    key_index < OLMCOLORKEY_MAX_COLORS && info.use_replace_color[key_index] &&
-			    (keep || !info.premultiplied)) {
+			    !thin_expanded[idx]) {
 				OLMCKPixelTraits<PixelT>::replace_rgb(*outP, info.replace_colors[key_index]);
 			}
 		}
@@ -2046,7 +2071,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		// PF32 stores pixel distances directly.  The distinction is observable at
 		// Edge Blur 2.0 even though the final PF8/PF16 quantization matches 1.0.
 		const float distance_scale =
-		    (bounded_public_owner_lane || OLMCKPixelTraits<PixelT>::is_32bpc()) ? 1.0f : 255.0f;
+		    (IsRecoveredAroundBlur(info) || bounded_public_owner_lane || OLMCKPixelTraits<PixelT>::is_32bpc()) ? 1.0f : 255.0f;
 		for (A_long y = 0; y < h; ++y) {
 			for (A_long x = 0; x < w; ++x) {
 				size_t idx = (size_t)y * (size_t)w + (size_t)x;
@@ -2076,6 +2101,21 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				float weight = EdgeBlurWeight(keep, native_dist,
 				                              (float)info.edge_blur_amount,
 				                              edge_blur_direction);
+				if (IsRecoveredAroundBlur(info)) {
+					// FUN_180005550: FLOAT32 pi/2/amount, signed phase,
+					// sinf, add 1, multiply 0.5; native integer writer truncates.
+					if (native_dist == 0.0f) weight = 0.5f;
+					else if (native_dist >= (float)info.edge_blur_amount) weight = keep ? 1.0f : 0.0f;
+					else {
+						float phase = native_dist * (1.5707963705062866f / (float)info.edge_blur_amount);
+						if (!keep) phase = -phase;
+						float sine = std::sin(phase);
+						weight = (sine + 1.0f) * 0.5f;
+					}
+					if (!keep && weight != 0.0f) OLMCKPixelTraits<PixelT>::restore_alpha(*outP, *inP);
+					OLMCKPixelTraits<PixelT>::scale_alpha_unbounded(*outP, weight);
+					continue;
+				}
 				if (bounded_public_owner_lane && edge_blur_direction == 1) {
 					const float pi = 3.14159265358979323846f;
 					if (keep) weight = 1.0f;

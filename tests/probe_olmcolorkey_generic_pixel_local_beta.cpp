@@ -125,7 +125,7 @@ static bool Run(short depth, A_long width, A_long height)
 	composition.edge_blur_direction = 102;
 	const auto output_before_reject = output;
 	if (PrepareRenderWorld(&in, &out, composition, depth, &prepared) !=
-	    PF_Err_BAD_CALLBACK_PARAM || output != output_before_reject ||
+	    PF_Err_NONE || output != output_before_reject ||
 	    input != input_before) return false;
 	composition.edge_blur_direction = 2;
 	if (PrepareRenderWorld(&in, &out, composition, depth, &prepared) !=
@@ -134,7 +134,7 @@ static bool Run(short depth, A_long width, A_long height)
 	composition.edge_blur_direction = 102;
 	composition.edge_thin_amount = 3.0;
 	if (PrepareRenderWorld(&in, &out, composition, depth, &prepared) !=
-	    PF_Err_BAD_CALLBACK_PARAM || output != output_before_reject ||
+	    PF_Err_NONE || output != output_before_reject ||
 	    input != input_before) return false;
 	composition.edge_thin_amount = 4.0;
 	composition.edge_blur_direction = 101;

@@ -95,6 +95,7 @@ def compile_core(directory: Path, body: str, name: str) -> Path:
 def main() -> int:
     parser=argparse.ArgumentParser()
     parser.add_argument("--quick",action="store_true")
+    parser.add_argument("--permit-retained-stubs",action="store_true",help="Historical diagnostic only; mark missing sinf import as invalid oracle evidence")
     parser.add_argument("--standard-host",action="store_true",help="Use unit downsample numerators instead of the retained synthetic integer-255 context")
     parser.add_argument("--remove",action="store_true",help="Color Keep off; same matched-matte operations, final alpha complement")
     parser.add_argument("--report",type=Path,default=ROOT/"reports/colorkey_composition_generalization_20261001.json")
@@ -127,6 +128,11 @@ def main() -> int:
                 'const float distance_scale = 1.0f;').replace(
                 '(bounded_public_owner_lane || OLMCKPixelTraits<PixelT>::is_32bpc()) ? 1.0f : 255.0f;',
                 '1.0f;')
+    math_audit = probe.AexLoader(str(probe.AEX), verbose=False, fast=False)
+    missing_math = [name for name in ("sinf",) if name not in math_audit.import_impls]
+    if missing_math and not args.permit_retained_stubs:
+        raise RuntimeError("retained loader has unimplemented math imports: " + ",".join(missing_math) +
+                           "; use the exported around_composition_owner probe for numerical evidence")
     original_record=base.retained._original_parameter_record
     current_thin,current_type,current_blur=0,1,0
     definition=definitions[0]
@@ -184,7 +190,8 @@ def main() -> int:
                    "regressions":sum(r["results"]["baseline"]["exact"] and not r["results"][name]["exact"] for r in rows)}
              for name in exes}
     report={"schema":"olmcolorkey.composition-generalization/1","date":"2026-10-01","status":"measured",
-            "case_count":len(rows),"color_keep":not args.remove,"standard_host":args.standard_host,
+            "case_count":len(rows),"color_keep":not args.remove,"missing_math_imports":missing_math,
+            "valid_numerical_oracle":not missing_math,"standard_host":args.standard_host,
             "historical_baseline_sha256":base.sha(historical.encode()),
             "effective_aex_probe_sha256":base.sha((probe_body if args.standard_host else Path(probe.__file__).read_text()).encode()),
             "host_metric_numerators":"1/1" if args.standard_host else "synthetic integer255/float1",
