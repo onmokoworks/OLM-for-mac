@@ -1,0 +1,70 @@
+{
+  "aggregate_gate": {
+    "classification": "Existing performance invocation executable-prefix binding mismatch; Python 3.14.6 retained evidence versus current 3.14.7. No new generic functional failures.",
+    "completed_at": "2026-09-30T16:22:20.892747+00:00",
+    "counts": {
+      "FAIL": 1,
+      "PASS": 52,
+      "SKIP": 0
+    },
+    "failure_tests": [
+      "tests/test_generic_beta_perf_smoke_runner.py"
+    ],
+    "gate_sha256": "aacfded94ac9284fadeab11eafc1576b1da690ebf20badb131e255567872e785",
+    "raw_report_sha256": "67008033b16d243189023b0acdd000e717efce7054741e1126546754bf8103fa",
+    "run_id": "db95c518e4a54811a8dec304c2a1226a"
+  },
+  "baseline_public_exact": 97,
+  "baseline_ref": "290e150d",
+  "baseline_source_sha256": "0ad70097f41054045331420d26782afb481ed61124628f9aaef5d44a0064554f",
+  "checks": [
+    {
+      "exit_code": 0,
+      "stderr_sha256": "e70fec2825d9bf206d27463a792768195039599cb39bcca66339f47283f84cce",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test": "tests/test_olmcolorkey_thin_public_owner_20261001.py",
+      "test_sha256": "f6d68e20fd0b476054a57afff583059987697ef832196091a7579abf4ef51eb6"
+    },
+    {
+      "exit_code": 0,
+      "stderr_sha256": "4fbf0fa978ec42df434153ae5b02bb3b869315afb1c7d4bfc1e144632c7967d3",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test": "tests/test_olmcolorkey_public_entries_real_sdk_20260813.py",
+      "test_sha256": "73a11c8d969ac12838abff46af2bf4ff00c3bf3a4b50aad0c58a39bf3cf1c75d"
+    },
+    {
+      "exit_code": 0,
+      "stderr_sha256": "e70fec2825d9bf206d27463a792768195039599cb39bcca66339f47283f84cce",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test": "tests/test_olmcolorkey_generic_pixel_local_beta.py",
+      "test_sha256": "8dfd9d71aa164de7c34af052b00e05761ad79ab9f3ac98524e7f2a4e0d746753"
+    },
+    {
+      "exit_code": 0,
+      "stderr_sha256": "e70fec2825d9bf206d27463a792768195039599cb39bcca66339f47283f84cce",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test": "tests/test_olmcolorkey_generic_pixel_local_pairwise.py",
+      "test_sha256": "4acfb5fbeb55d86b331665bd7887efb3d838940b08d45f224fad0f1b430e6086"
+    },
+    {
+      "exit_code": 0,
+      "stderr_sha256": "48a676ad63e2aa14eff5bc66400548adc1a8cad87ee6acc847d3e255e891dd16",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "test": "tests/test_olmcolorkey_generic_roi_tile.py",
+      "test_sha256": "dd073d342df4681a894beb0d02df5c3e545298cc935c44e273d1adddce0d4076"
+    }
+  ],
+  "date": "2026-10-01",
+  "production_public_exact": 216,
+  "public_owner_report_sha256": "9708524acdbac12f607886ee126d910be7201bc93fb7f13c0870d6fce6b71d2a",
+  "schema": "olmcolorkey.thin-production-validation/1",
+  "source_sha256": "bf3d162c5f7fdcafe700c435ba3866e22f7ffe0f6b1981e03cee0ad42e97ab9f",
+  "stale_test": {
+    "baseline_exit": 3,
+    "baseline_stderr": "SOURCE_BOUND_ATOMIC pass=0 positives=0 negatives=0",
+    "classification": "pre-existing stale source-bound rejection expectation; not introduced by Thin fix",
+    "current_exit": 3,
+    "current_stderr": "SOURCE_BOUND_ATOMIC pass=0 positives=0 negatives=0",
+    "test": "tests/test_olmcolorkey_source_bound_atomic_20260813.py"
+  }
+}

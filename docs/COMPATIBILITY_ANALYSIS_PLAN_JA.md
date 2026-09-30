@@ -44,7 +44,7 @@ Windows自身が非対応の経路は移植側の機能欠落と混同しない�
 |---|---|---|
 | ColorKeep | count 5/100の末尾色に3深度anchor。全count/全paletteとClassicの契約は未完 | count 1/4/5/99/100、重複・透明色・不一致、public checkoutを比較。scalar/unrolled/tailの分岐とparameter対応を復元してexact |
 | OLMBlur | repeat/legacy等の固定exactと一般laneが存在。Classic PF32は非対応として記載 | Windows側のClassic能力を先に確認。fractional Smoothness、Repeat、Biasのbuilder→worker→writerの最初の差を特定し一般処理で閉じる |
-| OLMColorKey | public Thin+Blurは意図的に拒否。旧composition witnessのThin Distance Typeは内部0でpublic 1..3の証拠にならない | 下記の最初の作業を実施。合法popup値と順序を実AEXで復元し、Classic/Smartから同じ出力に到達 |
+| OLMColorKey | Thin単独は通常ホスト条件の216設定を公開AEX Smart→Mac Classic/Smartでexact確認し修正。旧255距離尺度は合成context由来。public Thin+Blurは拒否を継続 | Around/Type2/Blur4の通常ホストによるalpha0 seed・距離尺度・最終alpha順序を公開builderで検証し、独立geometryと既存Blur回帰を閉じる |
 | OLMDirectionalBlur | generic Front/Back/Dualの安全性とAE動作はあるが一般Windows exactは未証明 | 同一小型奇数・mixed-alpha入力でDualを比較。rotate/field/expf/rowdriver/writebackを順に分離し、差が出た最初の段だけ解析 |
 | OLMDistanceGradation | PF32 Powerのnative-UCRT 8固定セルは解決済み。一般Power/Bilateralへは未一般化 | 63組のpowf表を一般実装と混同しない。未登録引数でnative依存関数との差を測り、field/blur/writerと分離して復元 |
 | OLMKiraKira | Mode3 Length代表4値×Rotation2値×3深度の24 retainedセルがexact。他source/geometry/依存関数へは未一般化 | まず異なるsourceと奇数geometryでpublic ownerを比較。相違がなければ長さ境界・他ray/modeの欠落へ進み、helper差とhost代替差を区別 |

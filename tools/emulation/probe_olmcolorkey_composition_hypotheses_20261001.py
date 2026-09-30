@@ -43,10 +43,45 @@ def kernel_variants(original: str) -> dict[str, str]:
             matched[i] = (matched[i] && dist[i] * scale >= amount) ? 1 : 0;
         }
 ''' + positive_limit[negative_end:]
+    alpha_gate = '''\tif (info.color_keep && (info.edge_thin_amount != 0.0 || info.edge_blur_amount != 0.0)) {
+        for (A_long y = 0; y < h; ++y) for (A_long x = 0; x < w; ++x) {
+            if (OLMCKPixelTraits<PixelT>::a(*PixelAtConst<PixelT>(
+                    input, x + input_offset_x, y + input_offset_y)) == 0.0f)
+                matched[(size_t)y * (size_t)w + (size_t)x] = 0;
+        }
+    }
+'''
+    alpha_boundary = base.replace_once(boundary_negative,
+        "\tif (info.edge_thin_amount < 0.0) {", alpha_gate + "\tif (info.edge_thin_amount < 0.0) {")
+    alpha_boundary = base.replace_once(alpha_boundary,
+        "\tstd::vector<u_char> keep_mask((size_t)w * (size_t)h, 0);",
+        alpha_gate + "\tstd::vector<u_char> keep_mask((size_t)w * (size_t)h, 0);")
+    alpha_all_modes = alpha_boundary.replace(
+        "if (info.color_keep && (info.edge_thin_amount != 0.0 || info.edge_blur_amount != 0.0))",
+        "if (info.edge_thin_amount != 0.0 || info.edge_blur_amount != 0.0)")
+    final_complement = base.replace_once(alpha_boundary,
+        "\tconst size_t pixel_count = (size_t)w * (size_t)h;", r'''	// Native final callbacks subtract the finished matched matte from source.
+    if (!info.color_keep && (info.edge_thin_amount != 0.0 || info.edge_blur_amount != 0.0)) {
+        OLMColorKeyInfo matte_info = info;
+        matte_info.color_keep = true;
+        matte_info.enable_replace = false;
+        PF_Err err = RenderTyped<PixelT>(input, output, matte_info);
+        if (err) return err;
+        for (A_long y = 0; y < h; ++y) for (A_long x = 0; x < w; ++x) {
+            const PixelT *inP = PixelAtConst<PixelT>(input, x + input_offset_x, y + input_offset_y);
+            PixelT *outP = PixelAt<PixelT>(output, x, y);
+            outP->alpha = inP->alpha - outP->alpha;
+        }
+        return PF_Err_NONE;
+    }
+	const size_t pixel_count = (size_t)w * (size_t)h;''')
     return {"current": original, "positive_typed_scale": positive_scale,
                 "positive_scale_no_type2_offset": positive_limit,
                 "negative_chessboard_control": negative_metric,
-                "negative_native_boundary_strict": boundary_negative}
+                "negative_native_boundary_strict": boundary_negative,
+                "native_boundary_alpha_matte": alpha_boundary,
+                "native_boundary_alpha_all_modes": alpha_all_modes,
+                "native_final_complement": final_complement}
 
 
 def main() -> int:

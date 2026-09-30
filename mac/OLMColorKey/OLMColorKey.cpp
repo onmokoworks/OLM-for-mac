@@ -1733,6 +1733,23 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	        std::numeric_limits<size_t>::max() / sizeof(int)) {
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
+	// Native PF8/PF16/PF32 final callbacks subtract the finished matched matte
+	// from source. Apply Thin before this subtraction; complementing the mask
+	// before Blur changes PF32 rounding. Blur-only paths retain their separately
+	// verified owner behavior until their general reconstruction is complete.
+	if (!info.color_keep && info.edge_thin_amount != 0.0) {
+		OLMColorKeyInfo matte_info = info;
+		matte_info.color_keep = true;
+		matte_info.enable_replace = false;
+		PF_Err err = RenderTyped<PixelT>(input, output, matte_info);
+		if (err) return err;
+		for (A_long y = 0; y < h; ++y) for (A_long x = 0; x < w; ++x) {
+			const PixelT *inP = PixelAtConst<PixelT>(input, x + input_offset_x, y + input_offset_y);
+			PixelT *outP = PixelAt<PixelT>(output, x, y);
+			outP->alpha = inP->alpha - outP->alpha;
+		}
+		return PF_Err_NONE;
+	}
 	const size_t pixel_count = (size_t)w * (size_t)h;
 	std::vector<u_char> matched(pixel_count, 0);
 	std::vector<int> matched_index(pixel_count, -1);
@@ -1899,37 +1916,40 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			matched_index[idx] = hit_index;
 		}
 	}
+	if (info.color_keep && info.edge_thin_amount != 0.0) {
+		for (A_long y = 0; y < h; ++y) for (A_long x = 0; x < w; ++x) {
+			if (OLMCKPixelTraits<PixelT>::a(*PixelAtConst<PixelT>(
+					input, x + input_offset_x, y + input_offset_y)) == 0.0f)
+				matched[(size_t)y * (size_t)w + (size_t)x] = 0;
+		}
+	}
 	if (info.edge_thin_amount < 0.0) {
-		std::vector<u_char> nonmatch((size_t)w * (size_t)h, 0);
-		for (A_long i = 0; i < w * h; ++i) nonmatch[i] = matched[i] ? 0 : 1;
-		// The native negative Edge Thin path uses its boundary/chessboard plane
-		// irrespective of the popup selection.  Integer planes encode boundary
-		// depth as 0, 255, 510, ... while PF32 uses the equivalent pixel-domain
-		// distance with the boundary at one.
-		const A_long thin_distance_type = info.color_keep
-		    ? info.edge_thin_distance_type : 1;
-		std::vector<float> dist = MatteDistanceTo(nonmatch, w, h, thin_distance_type);
+		std::vector<u_char> boundary = Boundary8(matched, w, h);
+		std::vector<float> dist = MatteDistanceTo(boundary, w, h, info.edge_thin_distance_type);
+		// Distance generators read PF_InData downsample numerators. Standard
+		// full-resolution hosts pass 1 for both axes, independently of depth.
+		const float scale = 1.0f;
 		const float amount = (float)std::fabs(info.edge_thin_amount);
 		for (A_long i = 0; i < w * h; ++i) {
-			const float native_dist = (info.color_keep || OLMCKPixelTraits<PixelT>::is_32bpc())
-			    ? dist[i] : std::max(0.0f, dist[i] - 1.0f) * 255.0f;
-			matched[i] = (matched[i] && native_dist > amount) ? 1 : 0;
+			matched[i] = (matched[i] && dist[i] * scale >= amount) ? 1 : 0;
 		}
 	} else if (info.edge_thin_amount > 0.0) {
 		std::vector<float> dist = MatteDistanceTo(matched, w, h, info.edge_thin_distance_type);
-		// PF8/PF16 store the positive expansion plane in 255 metric units;
-		// PF32 stores pixel distances.  The same typed-plane distinction also
-		// appears in Edge Blur and is observable before final quantization here.
-		const float distance_scale = (info.color_keep || OLMCKPixelTraits<PixelT>::is_32bpc()) ? 1.0f : 255.0f;
-		const float limit = (float)info.edge_thin_amount +
-		    ((info.color_keep &&
-		      (info.edge_thin_distance_type == 0 || info.edge_thin_distance_type == 2))
-		         ? 2.0f : 0.0f);
+		// Standard-host positive Thin distances are in pixel units at every depth.
+		const float distance_scale = 1.0f;
+		const float limit = (float)info.edge_thin_amount;
 		for (A_long i = 0; i < w * h; ++i) {
 			matched[i] = (matched[i] || dist[i] * distance_scale <= limit) ? 1 : 0;
 		}
 	}
 
+	if (info.color_keep && info.edge_thin_amount != 0.0) {
+		for (A_long y = 0; y < h; ++y) for (A_long x = 0; x < w; ++x) {
+			if (OLMCKPixelTraits<PixelT>::a(*PixelAtConst<PixelT>(
+					input, x + input_offset_x, y + input_offset_y)) == 0.0f)
+				matched[(size_t)y * (size_t)w + (size_t)x] = 0;
+		}
+	}
 	std::vector<u_char> keep_mask((size_t)w * (size_t)h, 0);
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
