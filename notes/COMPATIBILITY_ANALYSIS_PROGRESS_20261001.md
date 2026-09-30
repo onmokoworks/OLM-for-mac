@@ -53,6 +53,44 @@ exported EffectMain owner、native AE、installed binaryのexactを主張しな�
 終了条件: 原因に対応する一般処理を復元し、別geometry/境界値の反例と既存回帰がexact、
 その後合法parameter builderを通るpublic Classic/Smartで一致を確認する。
 
+## CK-COMPOSITION-002: 閾値境界による反証と境界planeの復元
+
+事実:
+
+- 一時sourceで整数depthの正Thin scaleを255にすると108セル中80 exact。
+  Color Keep/Type2の+2補正を外すと84 exact。負Thinをchessboardへ固定する仮説は
+  この108セルでは108 exactだが、それだけでは一般アルゴリズムを復元したことにならない。
+- 独立にThin 0/±1/±4/±255/±256、Blur0/4、Type1/2/3、全深度の162セルを測定。
+  ±255/256はvisible UI範囲外だが、PARAMS_SETUPの合法slider範囲±4000内。
+  現行coreは74 exact。chessboard仮説は138 exactで、負Thin -4/-255の整数depthに
+  24反例が残る。この仮説の一般化は棄却した。
+- guestのfloat distance worldを採取。PF8/PF16は0/255/510/...、PF32は0/1/2/...。
+  Type2ではL1、Type3ではsqrtを含む距離値が現れる。負Thinでも実AEXはpopupで
+  距離生成先を分岐するので、popupを無視する一般化はしない。
+- workerのdecomp/disasmでは、負Thinは非match画素の最近傍距離ではなく、
+  先に8近傍のmatched境界を生成し、選択metricで距離を求める。
+  消去条件はdistance < abs(amount)。distance == abs(amount)は保持する。
+  正Thinはdistance <= amountで拡張する。
+- 一時kernelを「matched boundary→選択metric→depth scale→厳密な不等号」へ
+  修正したreplayは独立162セルすべてraw exact。座標や期待wordの補正は行っていない。
+  現行coreを同時再生し、既存162セルのsource/output hash一致を要求した。
+
+証拠:
+
+- reports/colorkey_composition_hypotheses_20261001.json
+- reports/colorkey_thin_metric_boundaries_20261001.json
+- reports/colorkey_thin_boundary_replay_20261001.json
+
+境界: いずれもopaque 13×11 two-key sourceのcore比較。一時sourceの実験であり、
+production、installed binary、public Thin+Blur admissionはまだ変更していない。
+別source/geometry、mixed-alpha、public materializer経路を閉じるまで
+この162 exactを完全互換や一般入力exactとして扱わない。
+
+次の実験: 同じ一般kernelで画像端に接する別geometryとmixed-alphaを比較する。
+その後productionへ原因に対応する修正を入れ、合法parameterを通るpublic経路と
+既存安全性・exact回帰を検証する。内部Type0 witnessの過去PASSは履歴として保持し、
+合法Type2等の証拠に流用しない。
+
 ## BASELINE-001: 検証証拠の環境差
 
 generic gateは52 PASS/1 FAIL。性能レポートの実行prefixはPython 3.14.6をbindし、
