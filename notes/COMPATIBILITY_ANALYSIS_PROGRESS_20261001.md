@@ -1409,11 +1409,59 @@ reports/radialblur_public_parameter_validation_20261001.jsonに実行結果と�
 全設定・任意topology・native両AE/UCRT・UI保存・ROI/downsample・全10本の完全互換は未完。
 Goalはactive。
 
+## RB-TYPED-ANGLE-022 — 公開非zero Angleと整数化境界を復元
+
+前回の非zero Angle/Offset trace未達はfixture CLIの表現能力の不足だった。hash固定の
+controlled referenceを別の一時コピーへ移し、MPL-2.0 CLI parserだけに:angle指定を加えた。
+resident v4と同じParameterValue.angleと元のmaterializerを通す。親source/workerは保持し、
+元AEX・parameter setter・数学importは変更しない。親と新workerのresident30条件を再取得し、
+入力とnative raw hashが全て一致することを校正した。元のfrozen workerもhash不変。
+
+FACT: 公開Smartのtyped Angle12値×2 familyとOffset1/30×2 familyの28条件をread-only trace。
+8690 config、a2a0/a2b0 getter、Zoom56f0/Rotation4640 initを採り、Center(10,7)、AD raw、
+configの整数角度、Offset FLOAT32、transformのFLOAT32 cos/sinを観測した。private contextの
+全byte/addressは公開せず、選んだscalar値・bits・trace/input/output hashだけを保持する。
+同じ設定のresident出力とtrace出力も全28条件でraw hashが一致した。Angle45はraw2949120
+から51471になり、Offset1は0x3c8efa35、Offset30は0x3f060a92へ変換されていた。
+
+整数化境界のraw -20564372/-7055345/14253070/20963609では、旧kPiによる度変換・65536乗算
+と元DOUBLE 0.017453292500000002を使う計算の結果が1ずれる。元AEXの整数値は順に
+-358915/-123138/248762/365883。元のADをdoubleの度として読むため、Mac getterはSDKの
+u.ad.value/65536へ変更し、kernelの整数化は(angle_degrees*65536)*元DOUBLE定数→truncへ
+復元した。ADの32bit整数を2の冪で戻すので、publicのrawをこの順序で再構成できる。
+cos/sinへその整数を直接渡す元の挙動を保持し、通常のラジアン引数へ置き換えない。
+SDK builderとtransform引数・cos/sin bitsは28条件×O2/sanitizerの56再生で元の観測と一致。
+このcos/sin値の一致はcontrolled host mathであり、Windows UCRT実装の証明ではない。
+
+FACT: 本番の公開getters30条件は4→5 exactへ増加し、追加でZoom PF8 Angle45/Ratio2.25が
+一致した。他の19画素差と6 Offset拒否は残る。新しいtyped28条件は11 exact、13画素差、
+4 Offset拒否。O2/ASan/UBSanの両公開cmdで112回再生して保存した全結果を再現した。
+旧Angle計算順だけへ戻した一時コピーでは4つの境界のZoom一致が全て崩れた。本番と
+native出力は変更せず、その8 family条件の反証を別reportに保持した。
+
+Rotationは元initの整数引数を再現できても、generic baselineのpolar生成が別のdouble経路を
+選ぶため、この4境界で旧計算順へ戻しても出力が変わらなかった。このsource接続の差を
+踏まえ、一時コピーだけでgeneric baselineを全て既存二段経路へ通す仮説を検査した。
+typed14＋topology126の140 Rotation条件は12 exact・84画素差・44拒否のままで、12 exactは
+empty topologyだった。この変更だけでは元の処理へ戻せないため本番へ採用しない。
+同じentrypointやflag変更を繰り返さず、自然public経路のpolar field→normalized field→
+final samplerで最初の不一致を採ることを次の手法とする。
+
+以前の282条件はO2/ASan/UBSanの両公開cmdで1128回再生した。各buildの両cmd合計は
+114 exact・270画素差・180拒否であり、回帰testのPASSを全画素exactとは呼ばない。
+Edge Fade合法整数0..100の404設定読み取り検査も保持し、上記112新renderと合わせた
+public再生は1644回。新typed test3本と既存public test3本、generic baseline・sanitizer・Type3・
+budget・SizeNoise EffectMain・ROIの6回帰がPASS。arm64/x86_64 O2実SDK buildも成功した。
+前回確認した旧Thickness文字列assertの既存FAILはUI設定変更で解消したとは扱わない。
+実行結果とbindingはreports/radialblur_typed_angle_validation_20261001.jsonへ保存する。
+Noise OffsetのFLOAT32化、Rotation/Zoom PF32・一般topology、Size25の面積制限、native両AE/
+UCRT、installed、通常UI/保存、ROI/downsample、全10本の完全互換は未完。Goalはactive。
+
 ## 次の順序
 
 1. Smoother2のHDR/Gamma合成と色境界の今回の有限集合は検証済み。公開builderのLUT構築とnative依存先を分け、未測定scan長・任意float・独立paletteの最初の差を復元する。
 2. ColorKeyの未検証geometry/任意float/paletteとThin/Blur合成を拡張する。今回の境界・overflow比較を全入力の証明とは扱わず、固定workerとcontrolled Lab94参照を分け、native Windows UCRTとの比較を残す。
 3. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
-4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはPointを揃えた282条件に残るAngle/Offsetの読み取りと標準field/sampler差を閉じ、Size25の面積制限・端/穴/島へ進む。その後KiraKira一般入力を比較する。
+4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurは公開typed Angleの読み取り・整数化を復元した。次はOffsetのFLOAT32読取りと自然public field/samplerの最初の差を閉じ、Size25の面積制限・端/穴/島へ進む。その後KiraKira一般入力を比較する。
 
 既存の作業ツリー変更は今回のcommitに混ぜない。第三者AEXとnative raw出力をPushしない。

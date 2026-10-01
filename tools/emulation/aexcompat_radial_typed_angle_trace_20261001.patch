@@ -1,0 +1,32 @@
+--- a/crates/aex-guest-worker/src/main.rs
++++ b/crates/aex-guest-worker/src/main.rs
+@@ -812,6 +812,10 @@
+         let (identity, encoded) = value
+             .split_once('=')
+             .ok_or_else(|| format!("parameter assignment must be name=value: {value:?}"))?;
++        // Explicit typed Angle for read-only tracing; same ParameterValue field
++        // and materializer used by resident v4 angle components.
++        let typed_angle = identity.ends_with(":angle");
++        let identity = identity.strip_suffix(":angle").unwrap_or(identity);
+         let (name, slot) = match identity.rsplit_once('@') {
+             Some((name, slot)) => {
+                 let slot = slot
+@@ -873,13 +877,16 @@
+                 ));
+             }
+         };
++        if typed_angle && (numeric.is_none() || point.is_some() || color.is_some()) {
++            return Err("typed Angle requires exactly one scalar component".into());
++        }
+         parsed.push(ParameterValue {
+             slot,
+             name: name.to_string(),
+-            value: numeric,
++            value: if typed_angle { None } else { numeric },
+             color,
+             point,
+-            angle: None,
++            angle: if typed_angle { numeric } else { None },
+             point3d: None,
+         });
+     }

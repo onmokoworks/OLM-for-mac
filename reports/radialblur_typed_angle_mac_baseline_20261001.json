@@ -1,0 +1,1344 @@
+{
+  "case_count": 28,
+  "claims_not_made": [
+    "Noise Offset remains unrestored",
+    "Remaining raw mismatches are not accepted as completion",
+    "No installed/native Windows AE/UCRT equivalence or full compatibility proof"
+  ],
+  "dependencies_sha256": {
+    "core/dblur_noise.h": "9e8841d9d59bfe0fbf39f8792b09ba3daed0a2232a0d9df7d76e26e0f7b26477",
+    "core/olm_sha256_rows.h": "bfdcc9a2f4575aabab692b7b4ca1cf9ddb8188c7fbb1efdae30d197bf0f2d9e5",
+    "mac/OLMRadialBlur/OLMRadialBlur.cpp": "63eb0e3b02d7d299dcd6ba3e73e4d616edece1aec2e8245f84cec785072d0198",
+    "mac/OLMRadialBlur/OLMRadialBlur.h": "15a2d8b9b27e19eae99c219e57249684a1c61bef2826480d9d6021eab6da7c60",
+    "reports/radialblur_typed_angle_public_route_20261001.json": "b24dc85df55a215a9d62af63dccd6e8f27c1e7ea1d2e8f81fcdbb4410e90c11e",
+    "tools/emulation/probe_radialblur_public_aligned_20261001.py": "002e24e68da244655ac800e902ef87543be36b0fcfb74864efa27e132bee633f",
+    "tools/emulation/probe_radialblur_topology_20261001.py": "50992ac32fdee5313ab15d3c78ca9199d19b6103dd1c4f57923b194dd32fe8f5",
+    "tools/emulation/probe_radialblur_typed_angle_mac_20261001.py": "180ea5ce8590b70add872772e23d246ebc5b7d026ae0a427be551702173a40a3",
+    "tools/emulation/radialblur_topology_effectmain_harness_20261001.cpp": "079dfaa39b055c34e4bd9422c5382b29e2eaf6c40929ea7b80a7f232fd922a41"
+  },
+  "rows": [
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "8d8400c01d1bff1dd81e7d50e517897522d965b8c15369863264cb7732cfbb5a",
+      "results": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "angle": -360.0,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": true,
+          "raw_sha256": "8d8400c01d1bff1dd81e7d50e517897522d965b8c15369863264cb7732cfbb5a"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "angle": -360.0,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": true,
+          "raw_sha256": "8d8400c01d1bff1dd81e7d50e517897522d965b8c15369863264cb7732cfbb5a"
+        }
+      },
+      "row_index": 0
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "3b32d5a0b5662effe7d39b9ab3072e62f959375c379da87422964fd2e7656051",
+      "results": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "angle": -313.78741455078125,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": true,
+          "raw_sha256": "3b32d5a0b5662effe7d39b9ab3072e62f959375c379da87422964fd2e7656051"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "angle": -313.78741455078125,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": true,
+          "raw_sha256": "3b32d5a0b5662effe7d39b9ab3072e62f959375c379da87422964fd2e7656051"
+        }
+      },
+      "row_index": 1
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "a81cca74161961aa04fe87b99a4a5b1831a2264aead470624c9dd8e5f6529f8f",
+      "results": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "angle": -107.65602111816406,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": true,
+          "raw_sha256": "a81cca74161961aa04fe87b99a4a5b1831a2264aead470624c9dd8e5f6529f8f"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "angle": -107.65602111816406,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": true,
+          "raw_sha256": "a81cca74161961aa04fe87b99a4a5b1831a2264aead470624c9dd8e5f6529f8f"
+        }
+      },
+      "row_index": 2
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "e6013d379f4b3e79e748378896f2707f5c53451459cf5cee457121f941c32900",
+      "results": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "angle": -0.25,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": true,
+          "raw_sha256": "e6013d379f4b3e79e748378896f2707f5c53451459cf5cee457121f941c32900"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "angle": -0.25,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": true,
+          "raw_sha256": "e6013d379f4b3e79e748378896f2707f5c53451459cf5cee457121f941c32900"
+        }
+      },
+      "row_index": 3
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "1476da7752ba9fd3b1929bf37d3b5361304c3eacfa762001cb3fe0e9c2fa24fc",
+      "results": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "angle": -1.52587890625e-05,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": true,
+          "raw_sha256": "1476da7752ba9fd3b1929bf37d3b5361304c3eacfa762001cb3fe0e9c2fa24fc"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "angle": -1.52587890625e-05,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": true,
+          "raw_sha256": "1476da7752ba9fd3b1929bf37d3b5361304c3eacfa762001cb3fe0e9c2fa24fc"
+        }
+      },
+      "row_index": 4
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "1476da7752ba9fd3b1929bf37d3b5361304c3eacfa762001cb3fe0e9c2fa24fc",
+      "results": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "angle": 0.0,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": true,
+          "raw_sha256": "1476da7752ba9fd3b1929bf37d3b5361304c3eacfa762001cb3fe0e9c2fa24fc"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "angle": 0.0,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": true,
+          "raw_sha256": "1476da7752ba9fd3b1929bf37d3b5361304c3eacfa762001cb3fe0e9c2fa24fc"
+        }
+      },
+      "row_index": 5
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "1476da7752ba9fd3b1929bf37d3b5361304c3eacfa762001cb3fe0e9c2fa24fc",
+      "results": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "angle": 1.52587890625e-05,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": true,
+          "raw_sha256": "1476da7752ba9fd3b1929bf37d3b5361304c3eacfa762001cb3fe0e9c2fa24fc"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "angle": 1.52587890625e-05,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": true,
+          "raw_sha256": "1476da7752ba9fd3b1929bf37d3b5361304c3eacfa762001cb3fe0e9c2fa24fc"
+        }
+      },
+      "row_index": 6
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "b6b9900383aaaa8f260fa34a3ed3c9d8a32b5f155f1a4b3a229798bd11deddc0",
+      "results": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "angle": 0.25,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "0f5c98136393fcb30afcff04d5beaf1a178d10356024fb42f418ecb8bf1c3b68"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "angle": 0.25,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "0f5c98136393fcb30afcff04d5beaf1a178d10356024fb42f418ecb8bf1c3b68"
+        }
+      },
+      "row_index": 7
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "2a9f8b8cafa0b6660f744178cb249ec007708fb9fd7922df02a7ee6ba7cfd1a5",
+      "results": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "angle": 45.0,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": true,
+          "raw_sha256": "2a9f8b8cafa0b6660f744178cb249ec007708fb9fd7922df02a7ee6ba7cfd1a5"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "angle": 45.0,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": true,
+          "raw_sha256": "2a9f8b8cafa0b6660f744178cb249ec007708fb9fd7922df02a7ee6ba7cfd1a5"
+        }
+      },
+      "row_index": 8
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "97046634ddbc425274562aa9d1d1ce00eadb0de9d191bba7913276fd42fdb0a4",
+      "results": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "angle": 217.48458862304688,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": true,
+          "raw_sha256": "97046634ddbc425274562aa9d1d1ce00eadb0de9d191bba7913276fd42fdb0a4"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "angle": 217.48458862304688,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": true,
+          "raw_sha256": "97046634ddbc425274562aa9d1d1ce00eadb0de9d191bba7913276fd42fdb0a4"
+        }
+      },
+      "row_index": 9
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "ad3ee1093b52c83f2bf44a0f1fe2e6e3dbd4a58f947dc4801d207b6576dd007c",
+      "results": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "angle": 319.87928771972656,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": true,
+          "raw_sha256": "ad3ee1093b52c83f2bf44a0f1fe2e6e3dbd4a58f947dc4801d207b6576dd007c"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "angle": 319.87928771972656,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": true,
+          "raw_sha256": "ad3ee1093b52c83f2bf44a0f1fe2e6e3dbd4a58f947dc4801d207b6576dd007c"
+        }
+      },
+      "row_index": 10
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "c4c1b0430235fd8f70ec16165403eb64faa1c9f3a4d52d6ffefeeb47b8e76cc1",
+      "results": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "angle": 360.0,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": true,
+          "raw_sha256": "c4c1b0430235fd8f70ec16165403eb64faa1c9f3a4d52d6ffefeeb47b8e76cc1"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "angle": 360.0,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": true,
+          "raw_sha256": "c4c1b0430235fd8f70ec16165403eb64faa1c9f3a4d52d6ffefeeb47b8e76cc1"
+        }
+      },
+      "row_index": 11
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "e0e5287ff10d93843fc6c03a1647f4b5e9c89a9855f01fc16ee9d2ff1e7e0ff4",
+      "results": {
+        "classic": {
+          "error": 516,
+          "metadata": {
+            "angle": 0.0,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 65536,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": null
+        },
+        "smart": {
+          "error": 516,
+          "metadata": {
+            "angle": 0.0,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 65536,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": null
+        }
+      },
+      "row_index": 12
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "e0e5287ff10d93843fc6c03a1647f4b5e9c89a9855f01fc16ee9d2ff1e7e0ff4",
+      "results": {
+        "classic": {
+          "error": 516,
+          "metadata": {
+            "angle": 0.0,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 1966080,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": null
+        },
+        "smart": {
+          "error": 516,
+          "metadata": {
+            "angle": 0.0,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 1966080,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": null
+        }
+      },
+      "row_index": 13
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "f9c90578e10d23f20d2bd9bedd5d2810521f128414fe40ed39a1aa89a9bb4627",
+      "results": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "angle": -360.0,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "860944b9e403e0f01ea5a32994a9f2c4c6669abeb4ce1ebdbceb0592f95011db"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "angle": -360.0,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "860944b9e403e0f01ea5a32994a9f2c4c6669abeb4ce1ebdbceb0592f95011db"
+        }
+      },
+      "row_index": 14
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "b1c5ef5a59c506dc2730754534fceff475380076af0e9624b1ef48ff43eb68e2",
+      "results": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "angle": -313.78741455078125,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "2857449c063e6a3dcc6d34adc99cc67a43a50839aa8cf0bcfbcf3dcf84dad048"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "angle": -313.78741455078125,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "2857449c063e6a3dcc6d34adc99cc67a43a50839aa8cf0bcfbcf3dcf84dad048"
+        }
+      },
+      "row_index": 15
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "3072788a5d238d09d3a30101b55f5f31b7d57b5eb3eab34c926a8983782f112f",
+      "results": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "angle": -107.65602111816406,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "094d8f126940f01cc1d1bca718fe83645a4e95fbdd905f09933f93d31fdf1f26"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "angle": -107.65602111816406,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "094d8f126940f01cc1d1bca718fe83645a4e95fbdd905f09933f93d31fdf1f26"
+        }
+      },
+      "row_index": 16
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "3b5b18c8a78b729658925120eb465ab34f4712127b7c0dab393a203d35429fa0",
+      "results": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "angle": -0.25,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "df5a3f4d7e54754442d7acabcb319beee78733b44e2e36b008313292276f298f"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "angle": -0.25,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "df5a3f4d7e54754442d7acabcb319beee78733b44e2e36b008313292276f298f"
+        }
+      },
+      "row_index": 17
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "5c9d71e54d4aacc6934a59fb8d607cf98bdafec08c221e23b58a8cddc7a8eb3a",
+      "results": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "angle": -1.52587890625e-05,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "d5efb676255c609137a25b274f05180bfb30fe5ce2a206af81a8b3678895b567"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "angle": -1.52587890625e-05,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "d5efb676255c609137a25b274f05180bfb30fe5ce2a206af81a8b3678895b567"
+        }
+      },
+      "row_index": 18
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "5c9d71e54d4aacc6934a59fb8d607cf98bdafec08c221e23b58a8cddc7a8eb3a",
+      "results": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "angle": 0.0,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "860944b9e403e0f01ea5a32994a9f2c4c6669abeb4ce1ebdbceb0592f95011db"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "angle": 0.0,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "860944b9e403e0f01ea5a32994a9f2c4c6669abeb4ce1ebdbceb0592f95011db"
+        }
+      },
+      "row_index": 19
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "5c9d71e54d4aacc6934a59fb8d607cf98bdafec08c221e23b58a8cddc7a8eb3a",
+      "results": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "angle": 1.52587890625e-05,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "b937a9dfc28048526f6bcbfbe7bad59f9ba46acdf691383904f40d7cfef0cab3"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "angle": 1.52587890625e-05,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "b937a9dfc28048526f6bcbfbe7bad59f9ba46acdf691383904f40d7cfef0cab3"
+        }
+      },
+      "row_index": 20
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "477747610ddf0d1c48e84ef7f9e31469402e02b67cf2a505607db82764ab0d3d",
+      "results": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "angle": 0.25,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "3d849c341cf84fa9d213bfe5a364058ee854e0501e81fce246855b505ab6ee6f"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "angle": 0.25,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "3d849c341cf84fa9d213bfe5a364058ee854e0501e81fce246855b505ab6ee6f"
+        }
+      },
+      "row_index": 21
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "edafa17867abe5bf17128b844ffb6cd28cde9c3e78db052efc338a8e9e3ad233",
+      "results": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "angle": 45.0,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "d3af1a69ac068d6b0363149db765908125259a7fa00b46f5f325aa962d861c3b"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "angle": 45.0,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "d3af1a69ac068d6b0363149db765908125259a7fa00b46f5f325aa962d861c3b"
+        }
+      },
+      "row_index": 22
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "e32b1158bd91cdba3dfa297ebe9c6db5213fc1d031dd06b264848cacc745aa45",
+      "results": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "angle": 217.48458862304688,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "689c4ef2609c9531575a0e47eb42de8ac29effc5153c0e79e9a51b8e686ab0fd"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "angle": 217.48458862304688,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "689c4ef2609c9531575a0e47eb42de8ac29effc5153c0e79e9a51b8e686ab0fd"
+        }
+      },
+      "row_index": 23
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "81590ec8fcbaf4360878a75fa1de33fee08f13cc05e450ec2aab221a4bf6f943",
+      "results": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "angle": 319.87928771972656,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "f33e55341e7e668dc0791d579d93a2c6ebd8210449a1aac5356e9bf5dab5c1b5"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "angle": 319.87928771972656,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "f33e55341e7e668dc0791d579d93a2c6ebd8210449a1aac5356e9bf5dab5c1b5"
+        }
+      },
+      "row_index": 24
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "cfd193d5ab9be5bf8980e52cdbec1b4e0c8f0c01cef4ff60772f16145d3acf58",
+      "results": {
+        "classic": {
+          "error": 0,
+          "metadata": {
+            "angle": 360.0,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "860944b9e403e0f01ea5a32994a9f2c4c6669abeb4ce1ebdbceb0592f95011db"
+        },
+        "smart": {
+          "error": 0,
+          "metadata": {
+            "angle": 360.0,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 0,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": "860944b9e403e0f01ea5a32994a9f2c4c6669abeb4ce1ebdbceb0592f95011db"
+        }
+      },
+      "row_index": 25
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "7e31110447af465cfc9c8d80a18a667ad4ec9b458e34cbf3b85e96576ef78bb9",
+      "results": {
+        "classic": {
+          "error": 516,
+          "metadata": {
+            "angle": 0.0,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 65536,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": null
+        },
+        "smart": {
+          "error": 516,
+          "metadata": {
+            "angle": 0.0,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 65536,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": null
+        }
+      },
+      "row_index": 26
+    },
+    {
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_raw_sha256": "7e31110447af465cfc9c8d80a18a667ad4ec9b458e34cbf3b85e96576ef78bb9",
+      "results": {
+        "classic": {
+          "error": 516,
+          "metadata": {
+            "angle": 0.0,
+            "callbacks": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 1966080,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": null
+        },
+        "smart": {
+          "error": 516,
+          "metadata": {
+            "angle": 0.0,
+            "callbacks": [
+              1,
+              32,
+              32,
+              1,
+              1,
+              1,
+              1
+            ],
+            "inner_edge": 0,
+            "noise_offset": 1966080,
+            "outer_edge": 0
+          },
+          "raw_exact": false,
+          "raw_sha256": null
+        }
+      },
+      "row_index": 27
+    }
+  ],
+  "schema": "radialblur.typed-angle-public-mac/1",
+  "source_sha256": "63eb0e3b02d7d299dcd6ba3e73e4d616edece1aec2e8245f84cec785072d0198",
+  "summary": {
+    "both_commands_exact": 11,
+    "different": 13,
+    "mac_rejected": 4
+  }
+}

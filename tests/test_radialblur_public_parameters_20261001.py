@@ -48,7 +48,9 @@ class PublicParameterTests(unittest.TestCase):
         self.assertEqual(topology['summary']['both_cmd_exact_count'], 52)
         self.assertEqual(before['source_sha256'], topology['source_sha256'])
         self.assertNotEqual(before['source_sha256'], after['source_sha256'])
-        self.assertEqual(public.sha(public.SOURCE.read_bytes()), after['source_sha256'])
+        current = report('radialblur_public_getters_angle_fixed_20261001.json')
+        self.assertEqual(public.sha(public.SOURCE.read_bytes()), current['source_sha256'])
+        self.assertEqual(current['summary']['both_cmd_exact_count'], 5)
         self.assertTrue(build['frozen_source_and_worker_unchanged'])
         for before_case, after_case in zip(before['cases'], after['cases']):
             for key in ('input_sha256', 'parameters', 'parameter_payload', 'native_api_parameters', 'native_raw_sha256'):
@@ -73,7 +75,7 @@ class PublicParameterTests(unittest.TestCase):
         self.assertEqual(sum(c['results']['classic']['error'] != 0 for c in topology['cases']), 84)
 
     def test_live_public_replay_o2_and_sanitizers(self):
-        captures = [report('radialblur_public_getters_edge_fixed_20261001.json'),
+        captures = [report('radialblur_public_getters_angle_fixed_20261001.json'),
                     report('radialblur_public_topology_aligned_20261001.json')]
         env = dict(os.environ, ASAN_OPTIONS='detect_leaks=0:halt_on_error=1',
                    UBSAN_OPTIONS='halt_on_error=1:print_stacktrace=1')
@@ -96,7 +98,7 @@ class PublicParameterTests(unittest.TestCase):
                                              else [1,32,32,1,1,1,1])
                             outcomes['error' if error else 'exact' if expected['raw_exact'] else 'different'] += 1
                             total += 1
-                self.assertEqual(outcomes, {'exact': 112, 'different': 272, 'error': 180})
+                self.assertEqual(outcomes, {'exact': 114, 'different': 270, 'error': 180})
                 # Independently exercise all integer UI values, including values
                 # for which the current renderer still rejects this input.
                 base = next(c for c in public.specifications('getters')

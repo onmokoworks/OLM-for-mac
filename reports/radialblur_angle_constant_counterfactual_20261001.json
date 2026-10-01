@@ -1,0 +1,100 @@
+{
+  "claims_not_made": [
+    "Variant is an isolated experiment, not production or native code",
+    "Rotation residuals and all-input/native Windows UCRT/AE compatibility remain open"
+  ],
+  "dependencies_sha256": {
+    "mac/OLMRadialBlur/OLMRadialBlur.cpp": "63eb0e3b02d7d299dcd6ba3e73e4d616edece1aec2e8245f84cec785072d0198",
+    "reports/radialblur_typed_angle_mac_baseline_20261001.json": "0dd3caea68e8d640ee423de91d10fdbda6239ce70a671be66063c4ce15f29eb4",
+    "reports/radialblur_typed_angle_public_route_20261001.json": "b24dc85df55a215a9d62af63dccd6e8f27c1e7ea1d2e8f81fcdbb4410e90c11e",
+    "tools/emulation/probe_radialblur_angle_constant_counterfactual_20261001.py": "4729a0e08b91f37b4736aacf17e2ff384c782f9e8ff9ac9fcf7b493eb3b0ccc8",
+    "tools/emulation/probe_radialblur_public_aligned_20261001.py": "002e24e68da244655ac800e902ef87543be36b0fcfb74864efa27e132bee633f",
+    "tools/emulation/probe_radialblur_topology_20261001.py": "50992ac32fdee5313ab15d3c78ca9199d19b6103dd1c4f57923b194dd32fe8f5",
+    "tools/emulation/radialblur_topology_effectmain_harness_20261001.cpp": "079dfaa39b055c34e4bd9422c5382b29e2eaf6c40929ea7b80a7f232fd922a41"
+  },
+  "disposable_variant_sha256": "60301ca4599363236e480bdf68266527ff0a766d0f83e9357509b743b4cbdfff",
+  "rows": [
+    {
+      "angle": -313.78741455078125,
+      "family": 1,
+      "native_angle_i32": -358915,
+      "previous_and_restored_outputs_equal": false,
+      "previous_order_native_exact": false,
+      "raw_sha256": "d66982a68a0d460755eb25f32fadeea888c0c7f8bf2df0f60de6c5526acd69ed",
+      "restored_order_native_exact": true,
+      "row_index": 1
+    },
+    {
+      "angle": -107.65602111816406,
+      "family": 1,
+      "native_angle_i32": -123138,
+      "previous_and_restored_outputs_equal": false,
+      "previous_order_native_exact": false,
+      "raw_sha256": "8eba12d58ee1fb72ca1725adb85caa3f762da44e81e2bf9a3fe98a46ad694bfa",
+      "restored_order_native_exact": true,
+      "row_index": 2
+    },
+    {
+      "angle": 217.48458862304688,
+      "family": 1,
+      "native_angle_i32": 248762,
+      "previous_and_restored_outputs_equal": false,
+      "previous_order_native_exact": false,
+      "raw_sha256": "ca53c57ba38913f0cfb100930745820ed760d1e7d28f2024f77cc5d9ae6e237b",
+      "restored_order_native_exact": true,
+      "row_index": 9
+    },
+    {
+      "angle": 319.87928771972656,
+      "family": 1,
+      "native_angle_i32": 365883,
+      "previous_and_restored_outputs_equal": false,
+      "previous_order_native_exact": false,
+      "raw_sha256": "fdb3d31aefdd51ae8fc1ef574ca7b4788dcf431c94bc1b0116e8444e64c02604",
+      "restored_order_native_exact": true,
+      "row_index": 10
+    },
+    {
+      "angle": -313.78741455078125,
+      "family": 2,
+      "native_angle_i32": -358915,
+      "previous_and_restored_outputs_equal": true,
+      "previous_order_native_exact": false,
+      "raw_sha256": "2857449c063e6a3dcc6d34adc99cc67a43a50839aa8cf0bcfbcf3dcf84dad048",
+      "restored_order_native_exact": false,
+      "row_index": 15
+    },
+    {
+      "angle": -107.65602111816406,
+      "family": 2,
+      "native_angle_i32": -123138,
+      "previous_and_restored_outputs_equal": true,
+      "previous_order_native_exact": false,
+      "raw_sha256": "094d8f126940f01cc1d1bca718fe83645a4e95fbdd905f09933f93d31fdf1f26",
+      "restored_order_native_exact": false,
+      "row_index": 16
+    },
+    {
+      "angle": 217.48458862304688,
+      "family": 2,
+      "native_angle_i32": 248762,
+      "previous_and_restored_outputs_equal": true,
+      "previous_order_native_exact": false,
+      "raw_sha256": "689c4ef2609c9531575a0e47eb42de8ac29effc5153c0e79e9a51b8e686ab0fd",
+      "restored_order_native_exact": false,
+      "row_index": 23
+    },
+    {
+      "angle": 319.87928771972656,
+      "family": 2,
+      "native_angle_i32": 365883,
+      "previous_and_restored_outputs_equal": true,
+      "previous_order_native_exact": false,
+      "raw_sha256": "f33e55341e7e668dc0791d579d93a2c6ebd8210449a1aac5356e9bf5dab5c1b5",
+      "restored_order_native_exact": false,
+      "row_index": 24
+    }
+  ],
+  "schema": "radialblur.angle-constant-counterfactual/1",
+  "source_sha256": "63eb0e3b02d7d299dcd6ba3e73e4d616edece1aec2e8245f84cec785072d0198"
+}

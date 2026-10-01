@@ -1,0 +1,191 @@
+{
+  "claims_not_made": [
+    "Regression success is not full native raw equivalence; residuals remain",
+    "Controlled host math is not native Windows UCRT proof",
+    "No native AE/installed/UI/save/ROI/downsample/all-ten completion"
+  ],
+  "dependencies_sha256": {
+    "mac/OLMRadialBlur/OLMRadialBlur.cpp": "63eb0e3b02d7d299dcd6ba3e73e4d616edece1aec2e8245f84cec785072d0198",
+    "reports/radialblur_angle_constant_counterfactual_20261001.json": "8119cb308c13838a8bfbbbbf43b2f869ca9679950304b0a635abda20c879da3a",
+    "reports/radialblur_public_getters_angle_fixed_20261001.json": "2679ee4ea88a8845406a4929a1388ed082fbe10298d135e4473dd88046e485c6",
+    "reports/radialblur_rotation_path_diagnostic_20261001.json": "b51da18f05764c73066c182087eddb95f1fdd69b16a19f12bf247a734a6ff936",
+    "reports/radialblur_typed_angle_mac_baseline_20261001.json": "0dd3caea68e8d640ee423de91d10fdbda6239ce70a671be66063c4ce15f29eb4",
+    "reports/radialblur_typed_angle_public_route_20261001.json": "b24dc85df55a215a9d62af63dccd6e8f27c1e7ea1d2e8f81fcdbb4410e90c11e",
+    "reports/radialblur_typed_trace_reference_build_20261001.json": "59ee5311674aa6b2bd65a66469f52e2034c9fa9a3d8a8a2abeccea38526f885c",
+    "tests/test_radialblur_public_parameters_20261001.py": "f22216eaf0ced686626cb0d0b4ee609233b3f50152d9b297a1a30a313895f30b",
+    "tests/test_radialblur_typed_angle_20261001.py": "9f6b556830c959b000cd9ce5b22fa37e7c0504e88a2a3c767d2fa0a55dc5627f",
+    "tools/emulation/aexcompat_radial_typed_angle_trace_20261001.patch": "ca857050b100a0436b60c2dbcafd013c3bb7121ce19e713345919dcecfb80f68",
+    "tools/emulation/build_radialblur_typed_trace_worker_20261001.py": "f53abaacc3d4ecdae380aaf46a5f8909d299bf1e0281f71c13babd9b6928df7c",
+    "tools/emulation/probe_radialblur_angle_constant_counterfactual_20261001.py": "4729a0e08b91f37b4736aacf17e2ff384c782f9e8ff9ac9fcf7b493eb3b0ccc8",
+    "tools/emulation/probe_radialblur_rotation_path_diagnostic_20261001.py": "ce21285b6c97e5a6ef6a82aebd55c6094bc9aa5c480c8ab3d28febcce6b221b3",
+    "tools/emulation/probe_radialblur_typed_angle_mac_20261001.py": "180ea5ce8590b70add872772e23d246ebc5b7d026ae0a427be551702173a40a3",
+    "tools/emulation/probe_radialblur_typed_angle_route_20261001.py": "f3958314092ece7a4deca76e26742f62e33a9ee034d8811815f7ff97c1ce297d",
+    "tools/emulation/radialblur_angle_sdk_harness_20261001.cpp": "e5276553576bf5e567bbdd6972b22ade099ee8d0eb3eab121c37852733902a8f"
+  },
+  "existing_regressions": [
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_generic_baseline_20260820.py"
+      ],
+      "return_code": 0,
+      "seconds": 4.16,
+      "test_file": "tests/test_olmradialblur_generic_baseline_20260820.py"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_generic_baseline_sanitizers_20260820.py"
+      ],
+      "return_code": 0,
+      "seconds": 31.271,
+      "test_file": "tests/test_olmradialblur_generic_baseline_sanitizers_20260820.py"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_generic_type3_sanitizers_20260820.py"
+      ],
+      "return_code": 0,
+      "seconds": 17.653,
+      "test_file": "tests/test_olmradialblur_generic_type3_sanitizers_20260820.py"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_generic_budget_20260821.py"
+      ],
+      "return_code": 0,
+      "seconds": 3.797,
+      "test_file": "tests/test_olmradialblur_generic_budget_20260821.py"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_size_noise_effectmain_20260821.py"
+      ],
+      "return_code": 0,
+      "seconds": 4.719,
+      "test_file": "tests/test_olmradialblur_size_noise_effectmain_20260821.py"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_global_polar_smart_contract_20260820.py"
+      ],
+      "return_code": 0,
+      "seconds": 3.588,
+      "test_file": "tests/test_olmradialblur_global_polar_smart_contract_20260820.py"
+    }
+  ],
+  "isolated_counterfactuals": {
+    "force_generic_two_stage": {
+      "cases": 140,
+      "different": 84,
+      "exact": 12,
+      "hypothesis_closes_rotation": false,
+      "mac_rejected": 44,
+      "production_changed": false
+    },
+    "old_angle_order": {
+      "all_four_zoom_outputs_lose_native_exact": true,
+      "cases": 8,
+      "rotation_baseline_outputs_unchanged": true
+    }
+  },
+  "production_changes": [
+    "Read Angle from SDK u.ad.value divided by 65536",
+    "Recover raw AD then multiply original DOUBLE constant before integer truncation in both renderers"
+  ],
+  "public_summaries": {
+    "getters": {
+      "cases": 30,
+      "different": 19,
+      "exact": 5,
+      "mac_rejected": 6
+    },
+    "topology": {
+      "cases": 252,
+      "different": 116,
+      "exact": 52,
+      "mac_rejected": 84
+    },
+    "typed": {
+      "both_commands_exact": 11,
+      "different": 13,
+      "mac_rejected": 4
+    }
+  },
+  "reference_calibration": {
+    "frozen_worker_unchanged": true,
+    "parent_and_typed_worker_equal": true,
+    "parent_source_and_worker_unchanged": true,
+    "resident_cases": 30,
+    "trace_and_resident_raw_outputs_equal": true,
+    "typed_trace_cases": 28
+  },
+  "schema": "radialblur.typed-angle-validation/1",
+  "sdk_materialization": {
+    "angle_i32_and_controlled_cos_sin_bits_equal": true,
+    "noise_offset_restored": false,
+    "o2_asan_ubsan_evaluations": 56,
+    "rows": 28
+  },
+  "source_sha256": "63eb0e3b02d7d299dcd6ba3e73e4d616edece1aec2e8245f84cec785072d0198",
+  "tests": [
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_radialblur_public_parameters_20261001.py"
+      ],
+      "public_renders": 1532,
+      "return_code": 0,
+      "tests": 3
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_radialblur_typed_angle_20261001.py"
+      ],
+      "public_renders": 112,
+      "return_code": 0,
+      "sdk_materialization_evaluations": 56,
+      "tests": 3
+    }
+  ],
+  "universal_sdk_build": {
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "configuration": "Debug",
+    "disposable_output": true,
+    "installed": false,
+    "optimization": "O2",
+    "return_code": 0
+  }
+}

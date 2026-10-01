@@ -22,6 +22,13 @@
 
 static constexpr PF_FpLong kPi = 3.141592653589793238462643383279502884;
 
+static int32_t RadialAngleFixedRadians(PF_FpLong angle_degrees)
+{
+	// Native 8690 multiplies the raw AD fixed value by this DOUBLE constant,
+	// then truncates. Reordering with kPi changes integer boundary cases.
+	return (int32_t)((angle_degrees * 65536.0) * 0.017453292500000002);
+}
+
 struct RadialBlurDebugPoint {
 	A_long x = 0;
 	A_long y = 0;
@@ -3052,7 +3059,7 @@ static PF_Err RenderZoomTyped(
 		: (float)step_rad;
 	// The AEX setup stores radians as a truncated signed 16.16 integer, but the
 	// Zoom core converts that integer directly to double before calling sin/cos.
-	const int32_t base_angle_fixed_radians = (int32_t)(base_angle * 65536.0);
+	const int32_t base_angle_fixed_radians = RadialAngleFixedRadians(info.angle_deg);
 	const float cos_a_f = (float)std::cos((double)base_angle_fixed_radians);
 	const float sin_a_f = (float)std::sin((double)base_angle_fixed_radians);
 	const double cos_a = std::cos(base_angle);
@@ -4348,7 +4355,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		? RadialF32Div(1.0f, RadialF32Div(
 			RadialF32Mul((float)quality, 180.0f), (float)kPi))
 		: (float)step_rad;
-	const int32_t base_angle_fixed_radians = (int32_t)(base_angle * 65536.0);
+	const int32_t base_angle_fixed_radians = RadialAngleFixedRadians(info.angle_deg);
 	const float cos_a_f = (float)std::cos((double)base_angle_fixed_radians);
 	const float sin_a_f = (float)std::sin((double)base_angle_fixed_radians);
 	const double cos_a = std::cos(base_angle);
@@ -5455,7 +5462,7 @@ static OLMRadialBlurInfo InfoFromParams(PF_ParamDef *params[], PF_FpLong comp_wi
 	info.inner_offset = params[OLMRADIALBLUR_INNER_OFFSET]->u.sd.value;
 	info.repeat_border = params[OLMRADIALBLUR_REPEAT_BORDER]->u.bd.value;
 	info.ratio = params[OLMRADIALBLUR_RATIO]->u.fs_d.value;
-	info.angle_deg = params[OLMRADIALBLUR_ANGLE]->u.fs_d.value;
+	info.angle_deg = (PF_FpLong)params[OLMRADIALBLUR_ANGLE]->u.ad.value / 65536.0;
 	info.quality = params[OLMRADIALBLUR_QUALITY]->u.fs_d.value;
 	info.brightness_gain = params[OLMRADIALBLUR_BRIGHTNESS_GAIN]->u.fs_d.value;
 	info.size_variation = params[OLMRADIALBLUR_SIZE_VARIATION]->u.fs_d.value;
