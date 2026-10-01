@@ -507,6 +507,40 @@ padding保持、Smart21 parameter checkout/checkinとlayer/suite cleanupを確�
 bundle未完。PF16非SDR、Layer Noise、downsample、旧個別owner契約、大画像/強設定の
 予算拒否と全設定/素材は残る。完全互換Goalはactive。
 
+## DB-LAYER-013: 独立Layerのfield witnessと実parameter宣言を分離
+
+sourceと異なる独自Layerを2種類作り、9×7/37×29、Front7/Back11/Dual7+11、
+角度123.5/−17.25/17.25、Layer Noise単独/components/Fade+Gain2.25の3設定を
+PF16/PF32へ渡す計72条件。worker resident v4のfixture-layers-v1 manifestでslot17へ
+typed raw worldをcheckoutし、Windows公開Smart ownerを実行した。画像・Layer・native
+raw出力は一時ディレクトリのみ、正規化hashとmetadataを保存する。
+
+native outputは72/72でsourceと異なり、同一source/設定で2 Layerを入れ替えた36組全て
+native output hashが変わる。Layer未使用の疑似PASSではない。Mac公開dispatcherは72件
+とも拒否（516）。実PF_ParamDef→InfoFromParams後、明示的解析bypass route1001で
+既存full typed coreを呼ぶと72/72 raw exact。input/Layer不変、両worldのpadding保持を
+O2とASan/UBSanで全72条件（計144再生）確認した。公開復元完了とは扱わない。
+
+重要なparameter contract: AEXの実ParamsSetupはNoise Typeのchoices stringを
+`Smooth | Block | Layer`と返すが、valid_max/slider_maxは2。Macの実SDK・test seamなしの
+PF_Cmd_PARAMS_SETUPもnum_choices=2、labels=3（21 callback）で一致する。今回の
+Type3は宣言範囲外の値を公開ownerが受け入れたstate witnessである。通常AE UIで
+Layerを選べる証明ではなく、合法UI入力の72条件とも主張しない。
+
+宣言範囲内のType1/2について、両depth・同じ9×7 sourceをLayer未選択と独立Layer2種類
+選択で比較。8 selected-layer outputは全て同じTypeの生成Noise出力とbit exact。
+選択LayerだけでType3へ移る挙動はこの集合にない。descriptorとrender branchを混同し、
+Macだけnum_choicesを3へ増やす変更は行わない。実AE UIの挙動は未確認。
+
+fixture workerはraw world dumpをcreate-newで保存するため、同じsession directoryを
+再使用するとFile existsで止まった。caseごとに固有の一時directoryを使って解消。
+このworker契約の失敗をAEXの画素差やPF32不対応とは分類しない。
+
+Layer coreの同寸法・原点0の数字は一致する証拠が得られた。次はType3 stateの公開
+admission/Smart checkoutと追加2 field plane/Layer staging予算を復元し、同時に異寸法/
+原点、HDR Layer、欠落Layer、ROI/downsampleを検証する。Window/Mac共通の宣言範囲と
+枝の到達性を別に保持し、完全互換Goalはactive。native AE/UCRT/installedも未完。
+
 ## 次の順序
 
 1. ColorKeyの他Blur設定を公開ownerで再検証し、旧import stub依存の分岐を復元。
