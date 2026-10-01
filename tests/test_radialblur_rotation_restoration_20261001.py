@@ -44,8 +44,9 @@ class RotationRestorationTests(unittest.TestCase):
         print('ROTATION_GAUSSIAN_NATIVE_ARGS', 30000, 'SDK_EXPS', 60000, 'WEIGHT_LENGTHS', 2*len(lengths), flush=True)
 
     def test_full_matrix_production_and_frozen_original_reference(self):
-        saved = current.capture(); old = json.loads(probe.BEFORE.read_text())
-        self.assertEqual(public.SOURCE.read_text(), probe.restored_source())
+        saved = json.loads((ROOT/'reports/radialblur_rotation_restoration_public_20261001.json').read_text()); old = json.loads(probe.BEFORE.read_text())
+        live = current.capture()
+        self.assertEqual(public.sha(probe.restored_source().encode()), saved['source_sha256'])
         self.assertEqual(saved['counterfactual_source_sha256'], public.sha(probe.inverse.candidate_inverse_source(probe.before_source()).encode()))
         self.assertEqual(saved['summary'], probe.writer.summarize(saved['rows']))
         self.assertEqual(saved['summary'], {'case_count': 694, 'both_commands_exact': 505, 'different': 105,
@@ -72,7 +73,7 @@ class RotationRestorationTests(unittest.TestCase):
                     native_count += 1
             for sanitize in [False, True]:
                 binary = public.build(temp/('san' if sanitize else 'o2'), public.SOURCE.read_text(), sanitize)
-                for case in saved['rows']:
+                for case in live['rows']:
                     for command in ['classic', 'smart']:
                         error, raw, metadata = public.mac_render(binary, temp, case, command, env)
                         expected = case['results'][command]

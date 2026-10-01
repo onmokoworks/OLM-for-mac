@@ -4242,10 +4242,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		use_aex_pf32_offset_mode3_ui2_small || use_aex_pf32_offset_mode3_ui3_small ||
 		use_aex_pf32_offset_mode3_ui4_small || use_aex_pf16_offset_mode3_ui2_small ||
 		use_aex_pf16_offset_mode3_ui3_small;
-	const bool use_generic_two_stage = use_generic_baseline &&
-		(info.inner_strength != 0 || info.outer_edge_fade != 0 || info.inner_edge_fade != 0 ||
-		 info.outer_offset_mode != 1 || info.inner_offset_mode != 1 ||
-		 info.noise_variation != 0.0 || info.size_variation != 0.0);
+	const bool use_generic_two_stage = use_generic_baseline;
 	if (!use_generic_baseline && !use_generic_size_noise && !use_aex_exact) return PF_Err_BAD_CALLBACK_PARAM;
 	const RadialBlurDebugConfig debug = LoadRadialBlurDebugConfig();
 	FloatImage src;
@@ -4851,13 +4848,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			};
 			const RadialBlurOuterSampleState outer_state = ComputeRadialBlurOuterSampleState(
 				fx, fy, x0, x1, y0, y1, sample, sample_valid, (float)info.brightness_gain,
-				((use_aex_typed_rotation_size_variation_32x18 && info.size_variation == 100.0) ||
-				 (use_aex_typed_rotation_dual_size_noise_offset_components_32x18 && info.size_variation == 100.0) ||
-				 (use_aex_typed_rotation_dual_strength_32x18 && info.size_variation == 100.0) ||
-				 (use_aex_typed_rotation_size_offset_components_32x18 && info.size_variation == 100.0) ||
-				 (use_aex_typed_rotation_size_edge_components_32x18 && info.size_variation == 100.0) ||
-				 use_aex_typed_rotation_any_size_edge_noise_components_32x18 ||
-				 use_aex_typed_rotation_size_noise_components_32x18) && source_components_1_4_9,
+				use_aex_two_stage,
 				(use_aex_exact || use_generic_two_stage));
 			PixelT *out = PixelAt<PixelT>(output, x, y);
 #if defined(OLM_RADIALBLUR_TEST_SEAM)
