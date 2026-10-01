@@ -1326,11 +1326,42 @@ v1、比較許容幅、palette値、LUT内容、pow依存先、走査、最終by
 任意float/scan長、全設定直積、full LUT/native UCRT/両AE/installed、UI保存、ROI/downsample、
 8192上限と全10本の完全互換は引き続き未完。Goalはactive。
 
+## DB-DUAL-INDEPENDENT-020 — 独立typed入力と長いDualを公開経路で比較
+
+DirectionalBlurの次の未検証条件として、同寸法Noise Layerの非zero原点を検討した。
+固定workerのResidentLayerEntryはslot/width/height/pathだけを受け付ける。実際にmanifestへ
+origin_x=2/origin_y=1を加えるとunknown fieldとして終了した。これはfixture hostの表現能力の
+不足であり、元AEXの非zero原点renderの拒否・数値差ではない。旧PF8 origin witnessは内部
+render owner経路なので、今回の公開Smart証拠へ昇格しない。原点を0へ偽装した成功も作らない。
+
+入力の独立性と走査長を拡張して、17×11/61×47、PF16/PF32、3 source profile×2 Layer profile、
+Front31/Back47/Dual31+47、Layerのみ/components/Fade+Gainの216条件を公開AEXで取得した。
+角度は89.99998474121094、-90.00001525878906、179.99998474121094。Size/Sharpには
+fractional値、Noise量には73.75と0.25を使う。sourceとLayerのLCG seedは別々に保持する。
+sparseは右端・下端・対角以外のalphaを0にしRGBは残す。PF16 raw_rangeはuint16全範囲、
+PF32はRGB -2..6、alpha0/-0.5/0.5/1/2。boundaryは負ゼロ・subnormal・1の隣接bits等を含む。
+通常AE UIでこれらのworldが生じるという意味ではない。Type3は宣言choices2の外のstateで、
+通常UI/project保存の到達性を別に扱う。
+
+FACT: 固定workerのexported Smartは216条件全て成功、guards intact、session clean、
+unsupported suite callsなし。実SDKを使うfake AE hostのMac Classic/Smartも全216条件で
+元のactive bytesと一致し、数値本体は変更していない。source+5/output+11/Layer+7のstride、
+source/Layer/padding不変、拒否時atomic、suite balance、Smartの21 parameterと2 Layerの
+checkinを既存の公開harnessで検査する。元側のworldはtightで、Mac側のodd stride証拠と分ける。
+
+O2とASan/UBSanで両公開cmdを再生する新しい回帰を追加し、864 render全exactでPASS。
+sourceと数値coreの変更を
+強いる新しい反例はまだないため、ここでentrypoint解析を繰り返さず次のRadialBlur topologyへ
+切り替える。実行結果・source/core/probe/harness/report hashは
+reports/directionalblur_dual_independent_validation_20261001.jsonへ記録する。
+非zero Layer原点、native Windows UCRT/AE・installed、通常UI/保存、ROI/downsample、
+全入力/全設定/巨大画像と全10本の完全互換は未完。Goalはactive。
+
 ## 次の順序
 
 1. Smoother2のHDR/Gamma合成と色境界の今回の有限集合は検証済み。公開builderのLUT構築とnative依存先を分け、未測定scan長・任意float・独立paletteの最初の差を復元する。
 2. ColorKeyの未検証geometry/任意float/paletteとThin/Blur合成を拡張する。今回の境界・overflow比較を全入力の証明とは扱わず、固定workerとcontrolled Lab94参照を分け、native Windows UCRTとの比較を残す。
 3. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
-4. 計画に沿いDirectionalBlur Dual、RadialBlur topology、KiraKira等の一般入力も進める。
+4. DirectionalBlurの独立216条件は公開比較済み。次はRadialBlurの画像端に接する成分・穴・離れた島を公開比較し、その後KiraKira一般入力へ進む。
 
 既存の作業ツリー変更は今回のcommitに混ぜない。第三者AEXとnative raw出力をPushしない。

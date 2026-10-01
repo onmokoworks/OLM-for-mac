@@ -1,0 +1,112 @@
+{
+  "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+  "claims_not_made": [
+    "AEX exported CPU Smart uses emulated host imports, not native Windows UCRT/AE",
+    "Mac public Classic/Smart use real SDK in a fake host, not installed/native AE",
+    "Type 3 Layer state exceeds native declared popup choices2; no normal UI/save reachability proof",
+    "No native Layer parameter readback or padded native world proof",
+    "Resident Layer manifest rejects origin fields; no exported nonzero-origin numerical proof",
+    "No arbitrary input/settings/geometry/ROI/downsample or all-ten compatibility completion",
+    "No production source fix or installed bundle change needed by these new cases",
+    "No existing release/native-UI gate re-run or full completion claim"
+  ],
+  "dependencies_sha256": {
+    "Util/AEGP_SuiteHandler.cpp": "7c054c7b0778b1b26463d6bf31cd57ee1d971946e8da22fb174e9f088741606f",
+    "Util/MissingSuiteError.cpp": "8c0cc22b898c94c73556778f5cef1ccf9cded81ee590bd04feb49028ff4f44d9",
+    "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+    "core/dblur_field.h": "eb5da4273883d057eb6daaed2471e377168df0ac56a9e84756fef87b5dfc20ec",
+    "core/dblur_frontonly.cpp": "488834530c422a785958b6ffebd521da73092b6419df385b9eade68d0b750349",
+    "core/dblur_frontonly.h": "55281fd1240fa0cae51f6f047e651fefec1ff6fda892d5494f04accb441d6f57",
+    "core/dblur_gaussian.h": "c51bfca6d7f8a3d30ac58f3a2605a2bade053876c42f1179c0e02f60adb8258c",
+    "core/dblur_generic_budget.h": "63b03db92522c2222a73472681c3429b0b6768b9ea21b23e9db1c3e3f6267fd7",
+    "core/dblur_noise.h": "9e8841d9d59bfe0fbf39f8792b09ba3daed0a2232a0d9df7d76e26e0f7b26477",
+    "core/dblur_rotate.cpp": "5b02748d421befb1ecda0fd36ff34c5b225ebee5e928e0460e1c14d174c101d7",
+    "core/dblur_rotate.h": "67c255dc7d9f7a23125c355b64eac3aae43dcebb06dc96a318212764f6a9b57f",
+    "core/dblur_rowdriver.cpp": "a6fff9d9fdb1ce3d582b24123d858d2c6b9f801ff18bc2994241ba5479f724a9",
+    "core/dblur_rowdriver.h": "2bbe5c880fc4372aad19d497c38cd745852160b6c8096428a96b9739eb11df15",
+    "core/olm_sha256_rows.h": "bfdcc9a2f4575aabab692b7b4ca1cf9ddb8188c7fbb1efdae30d197bf0f2d9e5",
+    "docs/COMPATIBILITY_ANALYSIS_PLAN_JA.md": "a4bd91e9c479987ff3b2a750b88d5b4dcc2e54bd930b06ff0b6a6282548c243f",
+    "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "54a4d79221ba067b72cde629ff6288cb1e81c0846af77ae441bc74a9cd78aaa5",
+    "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+    "mac/OLMDirectionalBlur/OLMDirectionalBlur_Strings.cpp": "a9898e0e2cdd9d9c4e6f234c680081f68bb229772254a10ab1c1810fbf348daf",
+    "mac/OLMDirectionalBlur/OLMDirectionalBlur_Strings.h": "330057a1aa8608fdccc6e37f53f0db2f9646026eededda648ee6d68a5fc9217b",
+    "notes/COMPATIBILITY_ANALYSIS_PROGRESS_20261001.md": "65288406b18a1e835e73fb39664fb4c28cb04ddf45788e0af9ef58b5474d265f",
+    "reports/directionalblur_dual_independent_baseline_20261001.json": "dd62a9b2016b475de1cef386a6375f29bc90fe0f219be5bb984c1882f2928e96",
+    "tests/test_directionalblur_dual_independent_20261001.py": "91efa9994458ab0b9083f776dad729a87dbff3a46922910d642a30a4fd6be8a6",
+    "tools/emulation/directionalblur_layer_geometry_effectmain_harness_20261001.cpp": "5ba5d299f7ee12c71759c6eb349b6f1ab4fa5e2492fe7e5b56d48e07ca21008d",
+    "tools/emulation/probe_directionalblur_dual_independent_20261001.py": "7b286f09985628a0bbc5e49971af19989f43918f7ed60aa28d1f1782f6c81fd7",
+    "tools/emulation/probe_directionalblur_fixed_getter_20261001.py": "15828cb5ad38e2fb6b9a8e9b9dbc76e63a63bad58c95afffac5ffec44b50558a",
+    "tools/emulation/probe_directionalblur_general_features_20261001.py": "810d0fcdcf1f874f6056edee9dfeb126e387309a735a5779cda29cba207f27d2",
+    "tools/emulation/probe_directionalblur_general_input_20261001.py": "8d317b2d633dee8322ee8e4ab25d67c74c01608be3c5a34e94901c2b21255e28",
+    "tools/emulation/probe_directionalblur_layer_general_20261001.py": "909ae008c8d489de8af689db91d16fc5acd29faa80f116ede869d24e360bff4a",
+    "tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py": "52ad31e1e2236644b7ff3797421c6f083e81a7d0d727ae4a5dba67595f3e57cb"
+  },
+  "live_public_replay": {
+    "asan_ubsan_classic_exact": 216,
+    "asan_ubsan_smart_exact": 216,
+    "exit_code": 0,
+    "input_layer_padding_immutable": true,
+    "no_test_seam": true,
+    "o2_classic_exact": 216,
+    "o2_smart_exact": 216,
+    "output_padding_immutable": true,
+    "render_count": 864,
+    "sdk_headers_used": true,
+    "smart_layer_checkin": 2,
+    "smart_parameter_checkout_checkin": [
+      21,
+      21
+    ],
+    "suite_acquire_release_balanced": true,
+    "unittest_count": 1
+  },
+  "next_action": "RadialBlur exported comparisons with right/bottom-edge components, holes and disjoint islands; origin host authority remains separately unproven",
+  "origin_capability_probe": {
+    "aex_origin_render_proved": false,
+    "exit_code": 1,
+    "stderr_sha256": "04b1179e540ed69f36080a0c5386884f268a85ee7170b87113e35cd966e926c4",
+    "unknown_origin_field_rejected": true
+  },
+  "production_numerical_source_modified": false,
+  "public_aex_capture": {
+    "case_count": 216,
+    "classic_o2_exact": 216,
+    "depths": [
+      16,
+      32
+    ],
+    "directions": [
+      "front31",
+      "back47",
+      "dual31+47"
+    ],
+    "full_settings_cartesian_product": false,
+    "geometry": [
+      [
+        17,
+        11
+      ],
+      [
+        61,
+        47
+      ]
+    ],
+    "guards_sessions_suites_valid": true,
+    "input_seed": "0x41c64e6d",
+    "layer_profiles": [
+      "sparse",
+      "raw_range"
+    ],
+    "layer_seed": "0x1234abcd",
+    "settings_states_per_direction": 3,
+    "smart_o2_exact": 216,
+    "source_profiles": [
+      "sparse",
+      "raw_range",
+      "boundary"
+    ]
+  },
+  "schema": "directionalblur.dual-independent-validation/1",
+  "source_sha256": "54a4d79221ba067b72cde629ff6288cb1e81c0846af77ae441bc74a9cd78aaa5",
+  "worker_sha256": "0eb2f7705598f7b5f53563b9d920274ba094c835ff3dbaaf5f6fb214ec0cfd61"
+}
