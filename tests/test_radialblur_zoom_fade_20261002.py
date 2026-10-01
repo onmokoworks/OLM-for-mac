@@ -23,7 +23,7 @@ class ZoomFadeTests(unittest.TestCase):
         generated=probe.independent_cases();self.assertEqual(generated,[{key:r[key] for key in generated[0]} for r in report['independent_rows']])
         self.assertEqual(report['independent_summary'],probe.writer.summarize(report['independent_rows']))
         self.assertEqual(report['independent_summary'],{'case_count':199,'both_commands_exact':199,'different':0,'mac_rejected':0,'became_exact':147,'lost_exact':0,'raw_changed':147})
-        for path,expected in report['dependencies_sha256'].items():self.assertEqual(public.sha((ROOT/path).read_bytes()),expected,path)
+        for path,expected in report['dependencies_sha256'].items():self.assertEqual(current.historical_dependency_sha256(path),expected,path)
         parent=Path(os.environ['RADIAL_PARENT_WORKER']);self.assertEqual(public.sha(parent.read_bytes()),report['controlled_worker_sha256'])
         native_count=replays=0
         with tempfile.TemporaryDirectory(prefix='radial_zoom_fade_production_') as name:

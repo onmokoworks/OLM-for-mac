@@ -118,7 +118,7 @@ class AxisReferenceTests(unittest.TestCase):
                 elif path == 'mac/OLMRadialBlur/OLMRadialBlur.h':
                     self.assertEqual(expected, offset['header_before_sha256'])
                 else:
-                    self.assertEqual(public.sha((ROOT/path).read_bytes()), expected, path)
+                    self.assertEqual(latest.historical_dependency_sha256(path), expected, path)
         self.assertEqual(capture['source_sha256'], offset['source_before_sha256'])
         self.assertEqual(json.loads((ROOT/'reports/radialblur_pf8_writer_public_20261001.json').read_text())['source_before_sha256'], offset['candidate_source_sha256'])
         self.assertEqual(sampler['public_coordinate'], [0, 5])

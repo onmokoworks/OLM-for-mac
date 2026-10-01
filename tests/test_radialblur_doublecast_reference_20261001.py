@@ -32,7 +32,7 @@ class DoublecastReferenceTests(unittest.TestCase):
         for key, name in [('patch_sha256', 'tools/emulation/aexcompat_radial_doublecast_reference_20261001.patch'),
                           ('builder_sha256', 'tools/emulation/build_radialblur_doublecast_reference_20261001.py'),
                           ('parent_build_sha256', 'reports/radialblur_axis_reference_build_20261001.json')]:
-            self.assertEqual(build[key], public.sha((ROOT/name).read_bytes()))
+            self.assertEqual(build[key], latest.historical_dependency_sha256(name))
         for name in ['radialblur_doublecast_reference_public_20261001.json',
                      'radialblur_doublecast_sampler_native_coverage_20261001.json']:
             report = load(name)
@@ -42,7 +42,7 @@ class DoublecastReferenceTests(unittest.TestCase):
                 if path == 'mac/OLMRadialBlur/OLMRadialBlur.cpp':
                     self.assertEqual(expected, json.loads((ROOT/'reports/radialblur_pf8_writer_public_20261001.json').read_text())['source_before_sha256'])
                 else:
-                    self.assertEqual(public.sha((ROOT/path).read_bytes()), expected, path)
+                    self.assertEqual(latest.historical_dependency_sha256(path), expected, path)
         self.assertEqual(load('radialblur_doublecast_reference_public_20261001.json')['build_sha256'],
                          public.sha((ROOT/'reports/radialblur_doublecast_reference_build_20261001.json').read_bytes()))
 

@@ -52,7 +52,7 @@ class RotationRestorationTests(unittest.TestCase):
         self.assertEqual(saved['summary'], {'case_count': 694, 'both_commands_exact': 505, 'different': 105,
                                             'mac_rejected': 84, 'became_exact': 197, 'lost_exact': 0, 'raw_changed': 237})
         for path, expected in saved['dependencies_sha256'].items():
-            self.assertEqual(public.sha((ROOT/path).read_bytes()), expected, path)
+            self.assertEqual(current.historical_dependency_sha256(path), expected, path)
         worker = Path(os.environ['RADIAL_PARENT_WORKER'])
         self.assertEqual(public.sha(worker.read_bytes()), saved['controlled_worker_sha256'])
         env = dict(os.environ, ASAN_OPTIONS='detect_leaks=0:halt_on_error=1',

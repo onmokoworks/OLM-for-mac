@@ -137,12 +137,17 @@ inline bool generate_radial_noise_plane(int source_width, int source_height,
                                         float cell_size, float offset, std::uint32_t seed,
                                         std::vector<float>* output, int* plane_width,
                                         int* plane_height) {
+#if defined(__clang__)
+#pragma clang fp contract(off)
+#endif
     if (source_width <= 0 || source_height <= 0 || cell_size <= 0.0f ||
         output == nullptr || plane_width == nullptr || plane_height == nullptr) {
         return false;
     }
-    *plane_width = static_cast<int>(static_cast<float>(source_width) / cell_size + 3.0f);
-    *plane_height = static_cast<int>(static_cast<float>(source_height) / cell_size + 3.0f);
+    // Original RadialBlur computes one FLOAT32 reciprocal before MULSS/ADDSS.
+    const float inverse_cell_size = 1.0f / cell_size;
+    *plane_width = static_cast<int>(static_cast<float>(source_width) * inverse_cell_size + 3.0f);
+    *plane_height = static_cast<int>(static_cast<float>(source_height) * inverse_cell_size + 3.0f);
     if (*plane_width <= 0 || *plane_height <= 0) {
         return false;
     }

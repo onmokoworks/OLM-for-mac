@@ -1,0 +1,2843 @@
+{
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "case_count": 20,
+  "claims_not_made": [
+    "Initialized original grids and reciprocal rule do not close arbitrary inputs/settings or native Windows UCRT/ISA/AE.",
+    "Original binaries, private contexts, full planes and traces remain private."
+  ],
+  "core_sha256": "5098f0acafc9d7a76136d306bd15193ca0c987fd3610e9340b311e6646001bee",
+  "default_compiler_contract_exact": true,
+  "dependencies_sha256": {
+    "reports/radialblur_size_range_public_20261002.json": "3e56e2695513254a708df2c2e6c78a570e5a664efbbaf1d9df3bedfe9fd7806a",
+    "tools/emulation/probe_radialblur_noise_offset_field_20261001.py": "67996d4b84bd424db522a5033d042778d8b5f297a06de1d8f78fc61115fd3eda",
+    "tools/emulation/probe_radialblur_seed_thickness_grid_20261002.py": "3099b61b7f9f39f7cc92cc8d79fe26c3a0228d7aa02256883c755af5179825cf",
+    "tools/emulation/radialblur_noise_plane_harness_20261001.cpp": "30907042c8db855ed193f03e2d01569bc70bf966f7ece17fea8c813f9da27bb2"
+  },
+  "division_dimension_counterexample_count": 16,
+  "native_dimension_rule": {
+    "code_sha256": "ed22603aa7be6e4cd77cabc9ede0a64f3aa0c2cf2c5f0d271dd883c4e4b2c81c",
+    "margin_f32_le_hex": "00004040",
+    "one_f32_le_hex": "0000803f",
+    "rule": "93de DIVSS computes FLOAT32 1/Thickness once; 9409/940d MULSS, 9411/9416 ADDSS 3, 941b/941f CVTTSS2SI construct dimensions."
+  },
+  "native_parameter_declarations": [
+    {
+      "default_value": 1.0,
+      "flags": 1,
+      "index": -1,
+      "name": "Seed",
+      "param_type": 1,
+      "precision": null,
+      "slider_max": 1000.0,
+      "slider_min": 1.0,
+      "slot": 27,
+      "ui_flags": 64,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": 1000.0,
+      "valid_min": 1.0
+    },
+    {
+      "default_value": 10.0,
+      "flags": 64,
+      "index": -1,
+      "name": "Thickness",
+      "param_type": 10,
+      "precision": 2,
+      "slider_max": 100.0,
+      "slider_min": 1.0,
+      "slot": 29,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": 100.0,
+      "valid_min": 1.0
+    }
+  ],
+  "o2_and_strict_sanitizer_exact": true,
+  "plane_word_count": 2080,
+  "rows": [
+    {
+      "case": {
+        "depth": 8,
+        "family": 1,
+        "geometry": [
+          17,
+          15
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 1
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              8,
+              7
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 2
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0.0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 3.4
+          }
+        ],
+        "pattern": "opaque",
+        "state": "noise_offset"
+      },
+      "direct_division_dimensions": [
+        8,
+        7
+      ],
+      "division_changes_dimensions": true,
+      "initialized_plane_exact": true,
+      "native_dimensions": [
+        7,
+        7
+      ],
+      "native_plane_sha256": "a027a7abba37b1c503c8b3f0ca778eb650dda563492785c0c8e15451e3114689",
+      "phase_f32_word": "00000000",
+      "plane_first_four_f32_le_hex": "388f833e26aa413fe04c693f82792a3f",
+      "plane_word_count": 49,
+      "sampler_leaves_plane_unchanged": true,
+      "thickness_f32_word": "4059999a",
+      "trace_sha256": "0a58028289bb900a33b258eda2a8d50df9b831fbc30a10715ca54313a8dc8694"
+    },
+    {
+      "case": {
+        "depth": 8,
+        "family": 1,
+        "geometry": [
+          17,
+          15
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 1
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              8,
+              7
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 53
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 1.0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 1.7000000476837158
+          }
+        ],
+        "pattern": "opaque",
+        "state": "noise_offset"
+      },
+      "direct_division_dimensions": [
+        13,
+        11
+      ],
+      "division_changes_dimensions": true,
+      "initialized_plane_exact": true,
+      "native_dimensions": [
+        12,
+        11
+      ],
+      "native_plane_sha256": "c780a89257b7757bdcdeddc0070ff854df7f8e07ee96abb09bccc38ec0be9633",
+      "phase_f32_word": "3c8efa35",
+      "plane_first_four_f32_le_hex": "dec1173f7406ee3e524fad3e376e113f",
+      "plane_word_count": 132,
+      "sampler_leaves_plane_unchanged": true,
+      "thickness_f32_word": "3fd9999a",
+      "trace_sha256": "1415de5c95e06b58758c5bcc0fdf40308cb52dea723f6ccdf5d2b5cc99a74efe"
+    },
+    {
+      "case": {
+        "depth": 8,
+        "family": 1,
+        "geometry": [
+          17,
+          15
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 1
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              8,
+              7
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 2
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 997
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 30.0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 1.888888955116272
+          }
+        ],
+        "pattern": "opaque",
+        "state": "noise_offset"
+      },
+      "direct_division_dimensions": [
+        12,
+        10
+      ],
+      "division_changes_dimensions": true,
+      "initialized_plane_exact": true,
+      "native_dimensions": [
+        11,
+        10
+      ],
+      "native_plane_sha256": "e5f0e41702012dd1dc172195375a5526cb5b0b2dfca368aab8816d29b4ebed56",
+      "phase_f32_word": "3f060a92",
+      "plane_first_four_f32_le_hex": "c28cf73e691caa3ed09ac33ed663343d",
+      "plane_word_count": 110,
+      "sampler_leaves_plane_unchanged": true,
+      "thickness_f32_word": "3ff1c71d",
+      "trace_sha256": "8c0ac25f258ef4366c535cc2c52102e8b2b6a2b2bb635a835a34e9f12927b9d2"
+    },
+    {
+      "case": {
+        "depth": 8,
+        "family": 1,
+        "geometry": [
+          23,
+          13
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 1
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              11,
+              6
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1000
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 90.0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 1.9166667461395264
+          }
+        ],
+        "pattern": "opaque",
+        "state": "noise_offset"
+      },
+      "direct_division_dimensions": [
+        14,
+        9
+      ],
+      "division_changes_dimensions": true,
+      "initialized_plane_exact": true,
+      "native_dimensions": [
+        15,
+        9
+      ],
+      "native_plane_sha256": "de4cb92af535a6514dbc11f06e95ce6d03615711c27eb090783bee5b1e3ae659",
+      "phase_f32_word": "3fc90fdb",
+      "plane_first_four_f32_le_hex": "00000000ef00c43e0000803fee87e83d",
+      "plane_word_count": 135,
+      "sampler_leaves_plane_unchanged": true,
+      "thickness_f32_word": "3ff55556",
+      "trace_sha256": "dfcecf46f8c59be8c0429e7f019618693502eb45f06271f7af820a23dc05b0cb"
+    },
+    {
+      "case": {
+        "depth": 8,
+        "family": 1,
+        "geometry": [
+          23,
+          13
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 1
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              11,
+              6
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 2
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0.0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 1.769230842590332
+          }
+        ],
+        "pattern": "opaque",
+        "state": "noise_offset"
+      },
+      "direct_division_dimensions": [
+        15,
+        10
+      ],
+      "division_changes_dimensions": true,
+      "initialized_plane_exact": true,
+      "native_dimensions": [
+        16,
+        10
+      ],
+      "native_plane_sha256": "06148352625af09d915b24a25eed9721db00a442d0f1c05053a826a2e74e3e62",
+      "phase_f32_word": "00000000",
+      "plane_first_four_f32_le_hex": "388f833e26aa413fe04c693f82792a3f",
+      "plane_word_count": 160,
+      "sampler_leaves_plane_unchanged": true,
+      "thickness_f32_word": "3fe27628",
+      "trace_sha256": "49930500ad2a1f11cae78c33808bdedec8fa159cbc40e131bb911dca9be3bdc6"
+    },
+    {
+      "case": {
+        "depth": 8,
+        "family": 1,
+        "geometry": [
+          31,
+          7
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 1
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              15,
+              3
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 53
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 1.0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 3.4444446563720703
+          }
+        ],
+        "pattern": "opaque",
+        "state": "noise_offset"
+      },
+      "direct_division_dimensions": [
+        11,
+        5
+      ],
+      "division_changes_dimensions": true,
+      "initialized_plane_exact": true,
+      "native_dimensions": [
+        12,
+        5
+      ],
+      "native_plane_sha256": "c5cf45986fcdae41c33edcc53cd8b7019fbf1d36daec9680e0970630e931ec8c",
+      "phase_f32_word": "3c8efa35",
+      "plane_first_four_f32_le_hex": "dec1173f7406ee3e524fad3e376e113f",
+      "plane_word_count": 60,
+      "sampler_leaves_plane_unchanged": true,
+      "thickness_f32_word": "405c71c8",
+      "trace_sha256": "4e7413725299a300583597577183cb5055219b44635bc96e7e34b3a6a594330a"
+    },
+    {
+      "case": {
+        "depth": 8,
+        "family": 1,
+        "geometry": [
+          7,
+          5
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 1
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 2
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 997
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 30.0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 7.000000953674316
+          }
+        ],
+        "pattern": "opaque",
+        "state": "noise_offset"
+      },
+      "direct_division_dimensions": [
+        4,
+        3
+      ],
+      "division_changes_dimensions": true,
+      "initialized_plane_exact": true,
+      "native_dimensions": [
+        3,
+        3
+      ],
+      "native_plane_sha256": "4156ce34228cc7de4a0981ea483b290d4a70f6862cd21ea7cd609796e49e0576",
+      "phase_f32_word": "3f060a92",
+      "plane_first_four_f32_le_hex": "c28cf73e691caa3ed09ac33ed663343d",
+      "plane_word_count": 9,
+      "sampler_leaves_plane_unchanged": true,
+      "thickness_f32_word": "40e00002",
+      "trace_sha256": "42d310abf72cbb3d32ff57d16dc48eda27d0f9d95b68bae201d2d33080fedaec"
+    },
+    {
+      "case": {
+        "depth": 8,
+        "family": 1,
+        "geometry": [
+          7,
+          5
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 1
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1000
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 90.0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 3.500000476837158
+          }
+        ],
+        "pattern": "opaque",
+        "state": "noise_offset"
+      },
+      "direct_division_dimensions": [
+        5,
+        4
+      ],
+      "division_changes_dimensions": true,
+      "initialized_plane_exact": true,
+      "native_dimensions": [
+        4,
+        4
+      ],
+      "native_plane_sha256": "de074484d8fee5f61d73602af7b77a205f992f3e943ac0f8578955c01d4f572a",
+      "phase_f32_word": "3fc90fdb",
+      "plane_first_four_f32_le_hex": "00000000ef00c43e0000803fee87e83d",
+      "plane_word_count": 16,
+      "sampler_leaves_plane_unchanged": true,
+      "thickness_f32_word": "40600002",
+      "trace_sha256": "6333966f0128cbea67972dc53516209fd80fec9791fa5cda234ea40b6cdc48f3"
+    },
+    {
+      "case": {
+        "depth": 8,
+        "family": 1,
+        "geometry": [
+          17,
+          15
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 1
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              8,
+              7
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 2
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0.0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 1
+          }
+        ],
+        "pattern": "opaque",
+        "state": "noise_offset"
+      },
+      "direct_division_dimensions": [
+        20,
+        18
+      ],
+      "division_changes_dimensions": false,
+      "initialized_plane_exact": true,
+      "native_dimensions": [
+        20,
+        18
+      ],
+      "native_plane_sha256": "a38bb0ba42400f7d4e6dd0bd45f5c4f308a09dd55d4650e345625cc2470dfee0",
+      "phase_f32_word": "00000000",
+      "plane_first_four_f32_le_hex": "388f833e26aa413fe04c693f82792a3f",
+      "plane_word_count": 360,
+      "sampler_leaves_plane_unchanged": true,
+      "thickness_f32_word": "3f800000",
+      "trace_sha256": "eaa6e3e75a20c534b531d338ffe7d0172c7478d68f9b2ed872bced8d065058f9"
+    },
+    {
+      "case": {
+        "depth": 8,
+        "family": 1,
+        "geometry": [
+          17,
+          15
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 1
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              8,
+              7
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 53
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 1.0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 100
+          }
+        ],
+        "pattern": "opaque",
+        "state": "noise_offset"
+      },
+      "direct_division_dimensions": [
+        3,
+        3
+      ],
+      "division_changes_dimensions": false,
+      "initialized_plane_exact": true,
+      "native_dimensions": [
+        3,
+        3
+      ],
+      "native_plane_sha256": "b88741cc2bde6cb4eba1e606f7c799ecd6ec16718a52ba0db4098f741b694607",
+      "phase_f32_word": "3c8efa35",
+      "plane_first_four_f32_le_hex": "dec1173f7406ee3e524fad3e376e113f",
+      "plane_word_count": 9,
+      "sampler_leaves_plane_unchanged": true,
+      "thickness_f32_word": "42c80000",
+      "trace_sha256": "2487ca1e712a282c1757000c823f6e2b7693fb57779dfa2e740d2acf5a215649"
+    },
+    {
+      "case": {
+        "depth": 8,
+        "family": 2,
+        "geometry": [
+          17,
+          15
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              8,
+              7
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 2
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0.0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 3.4
+          }
+        ],
+        "pattern": "opaque",
+        "state": "noise_offset"
+      },
+      "direct_division_dimensions": [
+        8,
+        7
+      ],
+      "division_changes_dimensions": true,
+      "initialized_plane_exact": true,
+      "native_dimensions": [
+        7,
+        7
+      ],
+      "native_plane_sha256": "a027a7abba37b1c503c8b3f0ca778eb650dda563492785c0c8e15451e3114689",
+      "phase_f32_word": "00000000",
+      "plane_first_four_f32_le_hex": "388f833e26aa413fe04c693f82792a3f",
+      "plane_word_count": 49,
+      "sampler_leaves_plane_unchanged": true,
+      "thickness_f32_word": "4059999a",
+      "trace_sha256": "e157ec2e9d9f6d60d2cf690c316193dc2ccf5343ee61a41c422e5ed85b5eb7f6"
+    },
+    {
+      "case": {
+        "depth": 8,
+        "family": 2,
+        "geometry": [
+          17,
+          15
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              8,
+              7
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 53
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 1.0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 1.7000000476837158
+          }
+        ],
+        "pattern": "opaque",
+        "state": "noise_offset"
+      },
+      "direct_division_dimensions": [
+        13,
+        11
+      ],
+      "division_changes_dimensions": true,
+      "initialized_plane_exact": true,
+      "native_dimensions": [
+        12,
+        11
+      ],
+      "native_plane_sha256": "c780a89257b7757bdcdeddc0070ff854df7f8e07ee96abb09bccc38ec0be9633",
+      "phase_f32_word": "3c8efa35",
+      "plane_first_four_f32_le_hex": "dec1173f7406ee3e524fad3e376e113f",
+      "plane_word_count": 132,
+      "sampler_leaves_plane_unchanged": true,
+      "thickness_f32_word": "3fd9999a",
+      "trace_sha256": "44bdb8f16cc91b0c29e129af47b2eeccbcf4f5a0b9500ea41e24a2439ceb046b"
+    },
+    {
+      "case": {
+        "depth": 8,
+        "family": 2,
+        "geometry": [
+          17,
+          15
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              8,
+              7
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 2
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 997
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 30.0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 1.888888955116272
+          }
+        ],
+        "pattern": "opaque",
+        "state": "noise_offset"
+      },
+      "direct_division_dimensions": [
+        12,
+        10
+      ],
+      "division_changes_dimensions": true,
+      "initialized_plane_exact": true,
+      "native_dimensions": [
+        11,
+        10
+      ],
+      "native_plane_sha256": "e5f0e41702012dd1dc172195375a5526cb5b0b2dfca368aab8816d29b4ebed56",
+      "phase_f32_word": "3f060a92",
+      "plane_first_four_f32_le_hex": "c28cf73e691caa3ed09ac33ed663343d",
+      "plane_word_count": 110,
+      "sampler_leaves_plane_unchanged": true,
+      "thickness_f32_word": "3ff1c71d",
+      "trace_sha256": "9813e514b3eb2a315d340b6f2f9b9e163bf18ae1d7527f27fb3cdde763fdfb22"
+    },
+    {
+      "case": {
+        "depth": 8,
+        "family": 2,
+        "geometry": [
+          23,
+          13
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              11,
+              6
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1000
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 90.0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 1.9166667461395264
+          }
+        ],
+        "pattern": "opaque",
+        "state": "noise_offset"
+      },
+      "direct_division_dimensions": [
+        14,
+        9
+      ],
+      "division_changes_dimensions": true,
+      "initialized_plane_exact": true,
+      "native_dimensions": [
+        15,
+        9
+      ],
+      "native_plane_sha256": "de4cb92af535a6514dbc11f06e95ce6d03615711c27eb090783bee5b1e3ae659",
+      "phase_f32_word": "3fc90fdb",
+      "plane_first_four_f32_le_hex": "00000000ef00c43e0000803fee87e83d",
+      "plane_word_count": 135,
+      "sampler_leaves_plane_unchanged": true,
+      "thickness_f32_word": "3ff55556",
+      "trace_sha256": "28babc1ba3f85fff4a76c5e53e02da088728b8d904abfb4ef1a1d3fee74a9b87"
+    },
+    {
+      "case": {
+        "depth": 8,
+        "family": 2,
+        "geometry": [
+          23,
+          13
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              11,
+              6
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 2
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0.0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 1.769230842590332
+          }
+        ],
+        "pattern": "opaque",
+        "state": "noise_offset"
+      },
+      "direct_division_dimensions": [
+        15,
+        10
+      ],
+      "division_changes_dimensions": true,
+      "initialized_plane_exact": true,
+      "native_dimensions": [
+        16,
+        10
+      ],
+      "native_plane_sha256": "06148352625af09d915b24a25eed9721db00a442d0f1c05053a826a2e74e3e62",
+      "phase_f32_word": "00000000",
+      "plane_first_four_f32_le_hex": "388f833e26aa413fe04c693f82792a3f",
+      "plane_word_count": 160,
+      "sampler_leaves_plane_unchanged": true,
+      "thickness_f32_word": "3fe27628",
+      "trace_sha256": "98c0701419e8fd28190f521f1ffd74f57ab19d21f3986d437c975e489b8a4f39"
+    },
+    {
+      "case": {
+        "depth": 8,
+        "family": 2,
+        "geometry": [
+          31,
+          7
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              15,
+              3
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 53
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 1.0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 3.4444446563720703
+          }
+        ],
+        "pattern": "opaque",
+        "state": "noise_offset"
+      },
+      "direct_division_dimensions": [
+        11,
+        5
+      ],
+      "division_changes_dimensions": true,
+      "initialized_plane_exact": true,
+      "native_dimensions": [
+        12,
+        5
+      ],
+      "native_plane_sha256": "c5cf45986fcdae41c33edcc53cd8b7019fbf1d36daec9680e0970630e931ec8c",
+      "phase_f32_word": "3c8efa35",
+      "plane_first_four_f32_le_hex": "dec1173f7406ee3e524fad3e376e113f",
+      "plane_word_count": 60,
+      "sampler_leaves_plane_unchanged": true,
+      "thickness_f32_word": "405c71c8",
+      "trace_sha256": "af7531189331332defadad6379d5e34c5f82b47dce3ff9ed3babe1894ce4944f"
+    },
+    {
+      "case": {
+        "depth": 8,
+        "family": 2,
+        "geometry": [
+          7,
+          5
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 2
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 997
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 30.0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 7.000000953674316
+          }
+        ],
+        "pattern": "opaque",
+        "state": "noise_offset"
+      },
+      "direct_division_dimensions": [
+        4,
+        3
+      ],
+      "division_changes_dimensions": true,
+      "initialized_plane_exact": true,
+      "native_dimensions": [
+        3,
+        3
+      ],
+      "native_plane_sha256": "4156ce34228cc7de4a0981ea483b290d4a70f6862cd21ea7cd609796e49e0576",
+      "phase_f32_word": "3f060a92",
+      "plane_first_four_f32_le_hex": "c28cf73e691caa3ed09ac33ed663343d",
+      "plane_word_count": 9,
+      "sampler_leaves_plane_unchanged": true,
+      "thickness_f32_word": "40e00002",
+      "trace_sha256": "d1fdabf5e3542a354854c17689665d209037306a96c47ba43b10343d2197b0b7"
+    },
+    {
+      "case": {
+        "depth": 8,
+        "family": 2,
+        "geometry": [
+          7,
+          5
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1000
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 90.0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 3.500000476837158
+          }
+        ],
+        "pattern": "opaque",
+        "state": "noise_offset"
+      },
+      "direct_division_dimensions": [
+        5,
+        4
+      ],
+      "division_changes_dimensions": true,
+      "initialized_plane_exact": true,
+      "native_dimensions": [
+        4,
+        4
+      ],
+      "native_plane_sha256": "de074484d8fee5f61d73602af7b77a205f992f3e943ac0f8578955c01d4f572a",
+      "phase_f32_word": "3fc90fdb",
+      "plane_first_four_f32_le_hex": "00000000ef00c43e0000803fee87e83d",
+      "plane_word_count": 16,
+      "sampler_leaves_plane_unchanged": true,
+      "thickness_f32_word": "40600002",
+      "trace_sha256": "47a35abbca4ecd84a1ebc185331d2deb4674e10c6e56154c3b5a6683cfbe2470"
+    },
+    {
+      "case": {
+        "depth": 8,
+        "family": 2,
+        "geometry": [
+          17,
+          15
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              8,
+              7
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 2
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0.0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 1
+          }
+        ],
+        "pattern": "opaque",
+        "state": "noise_offset"
+      },
+      "direct_division_dimensions": [
+        20,
+        18
+      ],
+      "division_changes_dimensions": false,
+      "initialized_plane_exact": true,
+      "native_dimensions": [
+        20,
+        18
+      ],
+      "native_plane_sha256": "a38bb0ba42400f7d4e6dd0bd45f5c4f308a09dd55d4650e345625cc2470dfee0",
+      "phase_f32_word": "00000000",
+      "plane_first_four_f32_le_hex": "388f833e26aa413fe04c693f82792a3f",
+      "plane_word_count": 360,
+      "sampler_leaves_plane_unchanged": true,
+      "thickness_f32_word": "3f800000",
+      "trace_sha256": "cf9c6055ff82399deb8f6144aba5b22dfe60d6d502d00dcf45fd7fcaff3db150"
+    },
+    {
+      "case": {
+        "depth": 8,
+        "family": 2,
+        "geometry": [
+          17,
+          15
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              8,
+              7
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 53
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 1.0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 100
+          }
+        ],
+        "pattern": "opaque",
+        "state": "noise_offset"
+      },
+      "direct_division_dimensions": [
+        3,
+        3
+      ],
+      "division_changes_dimensions": false,
+      "initialized_plane_exact": true,
+      "native_dimensions": [
+        3,
+        3
+      ],
+      "native_plane_sha256": "b88741cc2bde6cb4eba1e606f7c799ecd6ec16718a52ba0db4098f741b694607",
+      "phase_f32_word": "3c8efa35",
+      "plane_first_four_f32_le_hex": "dec1173f7406ee3e524fad3e376e113f",
+      "plane_word_count": 9,
+      "sampler_leaves_plane_unchanged": true,
+      "thickness_f32_word": "42c80000",
+      "trace_sha256": "fcd1bfbbbf18659829c871a5be973facb10abb302bd3ba750c6eab7ac1332db3"
+    }
+  ],
+  "schema": "radialblur.seed-thickness-grid/1",
+  "worker_sha256": "cebdd7d5d88885ce3bba8768c4680e9e7a27e8fcbeb396d1230f724b8d064eca"
+}

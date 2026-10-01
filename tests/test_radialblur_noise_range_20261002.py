@@ -6,23 +6,29 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+import subprocess
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'tools/emulation'))
 probe=importlib.import_module('probe_radialblur_noise_range_20261002')
 current=importlib.import_module('radialblur_current_public_20261001')
 public=probe.public
+REPORT=ROOT/'reports/radialblur_noise_range_public_20261002.json'
+EPOCH='a79c54d2df1e14e5fea585eb6fc77dad421bca42'
 
 
 class NoiseRangeTests(unittest.TestCase):
     def test_actual_public_percentage_and_retained_cases(self):
-        report=current.capture();before=json.loads(probe.BEFORE.read_text())
-        self.assertEqual(public.SOURCE.read_text(),probe.candidate_source(probe.before_source()))
+        live=current.capture();report=json.loads(REPORT.read_text());before=json.loads(probe.BEFORE.read_text())
+        self.assertEqual(public.sha(probe.candidate_source(probe.before_source()).encode()),report['source_sha256'])
+        self.assertEqual(live['summary'],report['summary'])
         self.assertEqual(report['summary'],before['summary'])
         generated=probe.independent_cases()
         self.assertEqual(generated,[{k:r[k] for k in generated[0]} for r in report['independent_rows']])
         for rel,expected in report['dependencies_sha256'].items():
-            self.assertEqual(public.sha((ROOT/rel).read_bytes()),expected,rel)
+            data=(subprocess.check_output(['git','show',EPOCH+':'+rel],cwd=ROOT)
+                  if rel=='core/dblur_noise.h' else (ROOT/rel).read_bytes())
+            self.assertEqual(public.sha(data),expected,rel)
         parent=Path(os.environ['RADIAL_PARENT_WORKER'])
         self.assertEqual(public.sha(parent.read_bytes()),report['controlled_worker_sha256'])
         self.assertEqual(public.sha(public.initial.AEX.read_bytes()),report['aex_sha256'])
@@ -47,7 +53,7 @@ class NoiseRangeTests(unittest.TestCase):
         print('NOISE_RANGE_PRODUCTION',replays,'NATIVE',native_count,flush=True)
 
     def test_original_percentage_and_composition_fields(self):
-        report=current.capture();worker=Path(os.environ['RADIAL_WINDOWS_WORKER'])
+        current.capture();report=json.loads(REPORT.read_text());worker=Path(os.environ['RADIAL_WINDOWS_WORKER'])
         self.assertEqual(public.sha(worker.read_bytes()),report['window_worker_sha256'])
         with tempfile.TemporaryDirectory(prefix='radial_noise_range_scalars_') as name:
             actual=probe.scalar_maps(worker,Path(name),report['independent_rows'],public.SOURCE.read_text())

@@ -71,7 +71,7 @@ class PF8WriterTests(unittest.TestCase):
         self.assertEqual(public.sha(pe.get_data(0x17400, 0x39)), report['native_writer_bytes_sha256'])
         self.assertEqual(public.sha(pe.get_data(0x7bdd, 0x1e)), report['native_owner_rgb_min_bytes_sha256'])
         for path, expected in report['dependencies_sha256'].items():
-            self.assertEqual(public.sha((ROOT/path).read_bytes()), expected, path)
+            self.assertEqual(current.historical_dependency_sha256(path), expected, path)
         self.assertEqual(report['summary'], probe.summarize(report['rows']))
         self.assertEqual(report['summary'], {'case_count': 694, 'both_commands_exact': 308,
                                             'different': 302, 'mac_rejected': 84, 'became_exact': 45,

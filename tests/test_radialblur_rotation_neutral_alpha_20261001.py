@@ -56,7 +56,7 @@ class NeutralAlphaTests(unittest.TestCase):
         self.assertEqual(saved['summary'], {'case_count': 694, 'both_commands_exact': 559, 'different': 51,
                                             'mac_rejected': 84, 'became_exact': 54, 'lost_exact': 0, 'raw_changed': 54})
         for path, expected in saved['dependencies_sha256'].items():
-            self.assertEqual(public.sha((ROOT/path).read_bytes()), expected)
+            self.assertEqual(current.historical_dependency_sha256(path), expected)
         worker = Path(os.environ['RADIAL_WINDOWS_WORKER']); parent = Path(os.environ['RADIAL_PARENT_WORKER'])
         self.assertEqual(public.sha(worker.read_bytes()), saved['window_worker_sha256'])
         self.assertEqual(public.sha(parent.read_bytes()), saved['controlled_worker_sha256'])

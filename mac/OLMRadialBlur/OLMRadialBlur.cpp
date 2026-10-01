@@ -871,15 +871,11 @@ static bool IsGenericProceduralNoiseProfile(const OLMRadialBlurInfo &info)
 	// Negative phases can address before the native random table; still unverified.
 	if (!std::isfinite(info.noise_offset) || info.noise_offset < 0.0f ||
 		info.noise_offset > RadialNoiseOffsetRadians(std::numeric_limits<PF_Fixed>::max())) return false;
-	if (info.noise_type == 1 && info.quality == 5.0) {
-		return (info.seed == 1 && info.thickness == 3.0) ||
-			(info.seed == 2 && info.thickness == 10.0);
-	}
-	if (info.noise_type == 2 && info.seed == 1) {
-		return (info.quality == 5.0 && (info.thickness == 3.0 || info.thickness == 10.0)) ||
-			(info.quality == 3.0 && info.thickness == 10.0);
-	}
-	return false;
+	return info.seed >= 1 && info.seed <= 1000 &&
+        std::isfinite(info.thickness) && info.thickness >= 1.0 && info.thickness <= 100.0 &&
+        ((info.noise_type == 1 && info.quality == 5.0) ||
+         (info.noise_type == 2 && (info.quality == 5.0 ||
+          (info.quality == 3.0 && info.seed == 1 && info.thickness == 10.0))));
 }
 
 static bool IsGenericBaselineControlProfile(const OLMRadialBlurInfo &info)

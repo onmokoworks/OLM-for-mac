@@ -18,7 +18,7 @@ class ZoomOuterFadeTests(unittest.TestCase):
     def test_all_outer_fade_lengths_on_actual_public_sdk(self):
         report=json.loads((ROOT/'reports/radialblur_zoom_fade_outer_public_20261002.json').read_text());live=current.capture()
         self.assertEqual(report['source_sha256'],json.loads((ROOT/'reports/radialblur_zoom_fade_public_20261002.json').read_text())['source_sha256']);self.assertEqual(report['summary'],{'case_count':100,'both_commands_exact':100,'typed_sdk_public_replays':400})
-        for path,expected in report['dependencies_sha256'].items():self.assertEqual(public.sha((ROOT/path).read_bytes()),expected,path)
+        for path,expected in report['dependencies_sha256'].items():self.assertEqual(current.historical_dependency_sha256(path),expected,path)
         parent=Path(os.environ['RADIAL_PARENT_WORKER']);self.assertEqual(public.sha(parent.read_bytes()),report['controlled_worker_sha256'])
         with tempfile.TemporaryDirectory(prefix='radial_zoom_outer_fade_') as name:
             directory=Path(name);binaries={name:public.build(directory/name,public.SOURCE.read_text(),name=='san') for name in ['o2','san']}

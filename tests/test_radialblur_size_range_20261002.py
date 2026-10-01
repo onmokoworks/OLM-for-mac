@@ -25,7 +25,7 @@ class SizeRangeTests(unittest.TestCase):
         generated=probe.independent_cases()
         self.assertEqual(generated,[{k:r[k] for k in generated[0]} for r in report['independent_rows']])
         for path,expected in report['dependencies_sha256'].items():
-            self.assertEqual(public.sha((ROOT/path).read_bytes()),expected,path)
+            self.assertEqual(current.historical_dependency_sha256(path),expected,path)
         parent=Path(os.environ['RADIAL_PARENT_WORKER'])
         self.assertEqual(public.sha(parent.read_bytes()),report['controlled_worker_sha256'])
         retained=probe.retained_cases(before);self.assertEqual(len(retained),575)

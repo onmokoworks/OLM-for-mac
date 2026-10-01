@@ -22,7 +22,7 @@ class SizeTopologyTests(unittest.TestCase):
         self.assertEqual(report['summary'],probe.writer.summarize(report['rows']))
         self.assertEqual(report['independent_summary'],{'case_count':180,'both_commands_exact':180})
         generated=probe.independent_cases();self.assertEqual(generated,[{k:r[k] for k in generated[0]} for r in report['independent_rows']])
-        for path,expected in report['dependencies_sha256'].items():self.assertEqual(public.sha((ROOT/path).read_bytes()),expected,path)
+        for path,expected in report['dependencies_sha256'].items():self.assertEqual(current.historical_dependency_sha256(path),expected,path)
         parent=Path(os.environ['RADIAL_PARENT_WORKER']);self.assertEqual(public.sha(parent.read_bytes()),report['controlled_worker_sha256'])
         retained=before['independent_rows']+[r for path in probe.RETAINED for r in json.loads(path.read_text())['rows']]
         self.assertEqual(len(retained),395);replays=native_count=0
@@ -62,7 +62,7 @@ class SizeTopologyTests(unittest.TestCase):
         self.assertEqual(report['header_sha256'],public.sha(public.SOURCE.with_suffix('.h').read_bytes()))
         self.assertEqual(report['aex_sha256'],public.sha(public.initial.AEX.read_bytes()))
         for path,expected in report['dependencies_sha256'].items():
-            self.assertEqual(public.sha((ROOT/path).read_bytes()),expected,path)
+            self.assertEqual(current.historical_dependency_sha256(path),expected,path)
         import pefile
         pe=pefile.PE(str(public.initial.AEX))
         self.assertEqual(public.sha(pe.get_data(0x83ed,0x3c)),report['native_code_sha256'])

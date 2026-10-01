@@ -2155,11 +2155,56 @@ Noiseの有限割合と既存seed/thickness/quality/offset profileの復元で�
 scalar Fade3語・Windows RCPPS/ISA/UCRT、allocator末尾、Rotation追加半径行、
 native両AE/UI/保存/ROI/downsample、全10本の完全互換は未完。Goalはactive。
 
+## RB-SEED-THICKNESS-RECIPROCAL-GRID-037 — Noiseの合法Seed/Thicknessと元格子寸法を復元
+
+前回a79c54d2のNoise合法割合とゼロ時Type2はPush済み。元公開builderのSeedは
+integer 1–1000、ThicknessはFLOAT slider 1–100（precision2）であり、Macの列挙tuple制限を調べた。
+元AEX・固定/controlled worker・SDKとinstalled bundleを保持して、最初に候補をprivateで測定した。
+
+FACT: 元9380のconstructorは93de DIVSSでFLOAT32 1/Thicknessを一度計算し、
+9409/940d MULSS、9411/9416 ADDSS 3、941b/941f CVTTSS2SIで格子寸法を作る。
+旧coreの直接FLOAT32除算は同じ式の値を保証しない。17×15、UI Thickness3.4
+（FLOAT32 3.4000000953674316）で、元の格子は7×7、直接除算は8×7となる。
+23幅/Thickness1.9166667461395264では元15、直接除算14と逆方向の差もある。
+列数が変わると格子の行strideとsampling位置が変わり、最終rawにも差が出る。
+
+Seed/Thicknessの受入だけを広げた最初の12条件は5 exact・7差分。
+Radial generatorの寸法だけを逆数乗算へ修正すると同じ12条件が全exactになった。
+通常O2でも格子を比較すると初期修正coreは8/20 exactで、FLOAT32乗算/加算の統合で12条件が異なった。Radial generatorだけへclang contract(off)を指定すると通常/厳密設定とも20/20 exact、通常設定の最終画像12条件もexact。厳密設定での指定前後の格子objectはbyte-identicalで、既存の数値演算を変更しない。
+乱数はstd::mt19937、1 drawのuint32→FLOAT32→2^32除算、101-entry table、
+smooth補間の別々の0.5f積を保持。Directional generator/samplerと乱数/interpolation全行は不変。
+Quality5・Type1/2でSeed整数1–1000とThickness有限1–100を共通profileへ渡す。
+Quality3のType2/Seed1/Thickness10、非負phaseの受付境界、他control/SDR/budget契約は保持。
+
+候補source b9d9d776b8a30180f1e52f2a768eec1c5bb3477baa35ac87cbb14efe604cadfb、core 5098f0acafc9d7a76136d306bd15193ca0c987fd3610e9340b311e6646001bee。
+Seed1–1000の1000条件（family/typeとThickness1/3.4/10/37.5/100を切替）、Thickness整数1–100×両family/typeの400条件、
+11小数/隣接FLOAT32×3深度×両family/type/両Fadeの132条件を元公開AEXと比較。
+1532条件全exact（旧1531拒否・旧1 exact）。元AEXを本番testで再取得し、
+本番Classic/Smart・O2/strict ASan/UBSan/通常コンパイル設定の30198再生が全一致。
+従来694と独立2807（575＋Size range560＋Size enabled720＋Noise range952）を保持した。
+
+元first sampler9680で初期化済み格子20条件をreadonly取得。実Thickness/phaseのbitsを
+SDKへ渡し、両buildで全2080 FLOAT32語が一致。16条件は直接除算との寸法差を持つ。
+Seed1/53/997/1000、正のphase、厚さ両端と丸め境界を含む。constructor entryの未初期化面を
+証拠に使わず、samplerで面が変化していないことも確認。raw planes/contexts/tracesはprivate。
+
+最初の新3 testではraw20132と格子20は一致したが、RNG不変checkがDirectional側の最初のmt19937から比較して失敗した。比較開始位置をRadial関数へ限定して訂正。最終新3＋既存41 unittest（shared Directional180条件/360再生の1 testとROI gateの1 testを含む）、
+7 generic gateはPASS。既存checkの厳密設定は指定前coreで実行し、function-local指定はその数値codeと同一。最終30198公開再生と3設定の格子比較は指定後coreで新規実行。Noise Range952条件を新規取得し、本番14004再生と16係数mapを保持。
+古いNoise Range/Noise OffsetとAngle/Axis/PF8等のreportのcore hashはa79c54d2 epochとして保持し、
+実際の本番coreで従来96格子を再生する。過去reportを書き換えて新しい証拠に見せない。最初の5履歴checkは旧core hashを現行coreと比較して失敗した。16 reportが同じ旧core hashを保持することを確認し、履歴dependencyを旧Git blobへ接続、本番hashは新captureで別に固定した。5 checkを再実行し全PASS。
+実SDK arm64/x86_64 O2 build成功、build前後のsource/header/core不変。
+元AEX・3 worker・controlled parent440 source・SDK90入力は不変。installedは変更していない。
+
+有限集合と元寸法/乱数生成の規則を根拠とする復元であり、全設定の完成ではない。
+他Quality/Gain/Strength/Layer/Offset、任意入力/複合設定、scalar Fade3語・Windows
+RCPPS/ISA/UCRT、allocator末尾、Rotation追加半径行、native両AE/UI/保存/ROI/downsample、
+全10本の完全互換は未完。Goalはactive。
+
 ## 次の順序
 
 1. Smoother2のHDR/Gamma合成と色境界の今回の有限集合は検証済み。公開builderのLUT構築とnative依存先を分け、未測定scan長・任意float・独立paletteの最初の差を復元する。
 2. ColorKeyの未検証geometry/任意float/paletteとThin/Blur合成を拡張する。今回の境界・overflow比較を全入力の証明とは扱わず、固定workerとcontrolled Lab94参照を分け、native Windows UCRTとの比較を残す。
 3. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
-4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはAngle/Edge/PointとNoise OffsetのFLOAT32接続を復元した。参照atan2f非軸差は保存Windows scalarの有限集合へ校正済み。Zoom PF8の共通writerは復元済み。Rotationの自然field/scatterは代表全量でGaussian差を分離し、別コピーのinverse復元で代表rawが一致した。generic two-stageのGaussian/finalを本番へ復元し、694条件505 exact、独立384全exactを確認。no-noise/neutral/Angleと微小alphaも本番へ復元し、559 exact、typed28と独立384全exactを確認。Rotation Edge/Inner Edgeも本番へ復元し、565 exact・45差分・84拒否。Size100+Noiseも共通経路と行境界area規則を復元し、本番601 exact・9差分・84拒否。独立96も全exact。Zoomの正負alphaとゼロseed加算も復元し、本番607 exact・3差分・84拒否。Zoomの両fadeもB680へ接続し、本番610 exact・差分0・84拒否。Size25は一般領域factorへ接続し、Zoom最大alpha判定と共通PF32 callerのMINSS上限も復元した。最新694条件は全exact・拒否0、独立180も全exact。scalar fade3語、native RCPPS/ISA/UCRTを未解決に保持。他の合法Size・複合設定・任意入力を測り、その後KiraKira一般入力を比較する。
+4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはAngle/Edge/PointとNoise OffsetのFLOAT32接続を復元した。参照atan2f非軸差は保存Windows scalarの有限集合へ校正済み。Zoom PF8の共通writerは復元済み。Rotationの自然field/scatterは代表全量でGaussian差を分離し、別コピーのinverse復元で代表rawが一致した。generic two-stageのGaussian/finalを本番へ復元し、694条件505 exact、独立384全exactを確認。no-noise/neutral/Angleと微小alphaも本番へ復元し、559 exact、typed28と独立384全exactを確認。Rotation Edge/Inner Edgeも本番へ復元し、565 exact・45差分・84拒否。Size100+Noiseも共通経路と行境界area規則を復元し、本番601 exact・9差分・84拒否。独立96も全exact。Zoomの正負alphaとゼロseed加算も復元し、本番607 exact・3差分・84拒否。Zoomの両fadeもB680へ接続し、本番610 exact・差分0・84拒否。Size25は一般領域factorへ接続し、Zoom最大alpha判定と共通PF32 callerのMINSS上限も復元した。最新694条件は全exact・拒否0、独立180も全exact。scalar fade3語、native RCPPS/ISA/UCRTを未解決に保持。Size/Noiseの合法割合とQuality5のSeed/Thicknessは共通処理へ復元した。未列挙Quality/Gain/Strength/Layer/Offset・複合設定・任意入力を測り、その後KiraKira一般入力を比較する。
 
 既存の作業ツリー変更は今回のcommitに混ぜない。第三者AEXとnative raw出力をPushしない。

@@ -21,7 +21,7 @@ class SizeEnabledTests(unittest.TestCase):
         self.assertEqual(probe.native_rows(),report['native_enabled_rows'])
         self.assertEqual(len(report['native_enabled_rows']),20)
         for path,expected in report['dependencies_sha256'].items():
-            self.assertEqual(public.sha((ROOT/path).read_bytes()),expected,path)
+            self.assertEqual(current.historical_dependency_sha256(path),expected,path)
         with tempfile.TemporaryDirectory(prefix='radial_size_enabled_leaf_') as name:
             self.assertEqual(probe.sdk_replay(Path(name),public.SOURCE.read_text(),report['native_enabled_rows']),40)
         print('SIZE_ENABLED_ORIGINAL_BLOCK',20,'SDK',40,flush=True)
@@ -59,7 +59,7 @@ class SizeEnabledTests(unittest.TestCase):
         worker=Path(os.environ['RADIAL_WINDOWS_WORKER'])
         self.assertEqual(public.sha(worker.read_bytes()),report['window_worker_sha256'])
         for path,expected in report['dependencies_sha256'].items():
-            self.assertEqual(public.sha((ROOT/path).read_bytes()),expected,path)
+            self.assertEqual(current.historical_dependency_sha256(path),expected,path)
         with tempfile.TemporaryDirectory(prefix='radial_size_disabled_factors_') as name:
             actual=factors.factor_maps(worker,Path(name),public.SOURCE.read_text())
             self.assertEqual(len(actual),20)

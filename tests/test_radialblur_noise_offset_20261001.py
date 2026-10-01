@@ -75,6 +75,12 @@ class NoiseOffsetTests(unittest.TestCase):
             for path, expected in capture['dependencies_sha256'].items():
                 if path == 'mac/OLMRadialBlur/OLMRadialBlur.cpp':
                     self.assertEqual(expected, json.loads((ROOT/'reports/radialblur_pf8_writer_public_20261001.json').read_text())['source_before_sha256'])
+                elif path == 'core/dblur_noise.h':
+                    # Preserve the archived capture's core epoch; the actual core
+                    # below must still reproduce all 96 initialized native grids.
+                    archived = subprocess.check_output(['git', 'show',
+                        'a79c54d2df1e14e5fea585eb6fc77dad421bca42:'+path], cwd=ROOT)
+                    self.assertEqual(public.sha(archived), expected, path)
                 else:
                     self.assertEqual(public.sha((ROOT/path).read_bytes()), expected, path)
         with tempfile.TemporaryDirectory(prefix='radial_offset_grid_test_') as directory:

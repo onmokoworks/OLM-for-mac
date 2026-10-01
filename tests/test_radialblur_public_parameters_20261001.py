@@ -24,7 +24,7 @@ class PublicParameterTests(unittest.TestCase):
         capture = report('radialblur_parameter_units_20261001.json')
         self.assertEqual(public.sha(public.initial.AEX.read_bytes()), capture['aex_sha256'])
         for name, expected in capture['dependencies_sha256'].items():
-            self.assertEqual(public.sha((ROOT/name).read_bytes()), expected, name)
+            self.assertEqual(latest.historical_dependency_sha256(name), expected, name)
         constants, rows = units.leaf_observations()
         self.assertEqual(constants, capture['constants'])
         self.assertEqual(rows, capture['leaf_rows'])
@@ -68,7 +68,7 @@ class PublicParameterTests(unittest.TestCase):
                 elif name == 'mac/OLMRadialBlur/OLMRadialBlur.h':
                     self.assertEqual(expected, offset['header_before_sha256'])
                 else:
-                    self.assertEqual(public.sha((ROOT/name).read_bytes()), expected, name)
+                    self.assertEqual(latest.historical_dependency_sha256(name), expected, name)
             self.assertEqual(len(capture['cases']), capture['case_count'])
             for case in capture['cases']:
                 self.assertEqual(public.sha(public.fixture(case)), case['input_sha256'])

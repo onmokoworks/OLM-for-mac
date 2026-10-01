@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT/'tools/emulation'))
 probe = importlib.import_module('probe_radialblur_rotation_fields_20261001')
 public = probe.public
 restoration = importlib.import_module('probe_radialblur_rotation_restoration_20261001')
+current = importlib.import_module('radialblur_current_public_20261001')
 
 
 def report():
@@ -38,7 +39,7 @@ class RotationFieldsTests(unittest.TestCase):
         self.assertEqual(public.sha(probe.candidate_source(restoration.before_source()).encode()),
                          saved['candidate_source_sha256'])
         for path, expected in saved['dependencies_sha256'].items():
-            self.assertEqual(public.sha((ROOT/path).read_bytes()), expected, path)
+            self.assertEqual(current.historical_dependency_sha256(path), expected, path)
         self.assertEqual(saved['native_dimensions'], [1800, 15])
         self.assertEqual(saved['mac_dimensions'], [1800, 16])
         self.assertTrue(saved['native_owned_rows_only'])
@@ -89,7 +90,7 @@ class RotationFieldsTests(unittest.TestCase):
         self.assertEqual(saved['comparisons']['before']['coordinates']['different_words'], 183)
         self.assertEqual(saved['comparisons']['before']['sample_rgba']['different_words'], 573)
         for path, expected in saved['dependencies_sha256'].items():
-            self.assertEqual(public.sha((ROOT/path).read_bytes()), expected)
+            self.assertEqual(current.historical_dependency_sha256(path), expected)
 
 
     def test_natural_sdk_planes_and_readonly_reference_replay(self):
