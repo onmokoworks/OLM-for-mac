@@ -5083,8 +5083,8 @@ V2SmartAdmission(const PF_ParamDef *const params[], const PF_EffectWorld *world,
 // identities remain outside this lane.
 //
 // The polygon cardinal chain still contains structurally reconstructed pieces;
-// generic admission therefore does not imply that all 256 classifier indices
-// have independent Windows numerical witnesses.
+// all 256 indices now have local AEX reachability witnesses. That coverage
+// does not establish every scan length, parameter state, or native AE contract.
 static bool
 V2GenericBetaAdmission(const PF_ParamDef *const params[],
                        const PF_EffectWorld *world, short depth)
@@ -5095,11 +5095,10 @@ V2GenericBetaAdmission(const PF_ParamDef *const params[],
 	const A_long pixel_size = depth == 8 ? (A_long)sizeof(PF_Pixel8) :
 	                          depth == 16 ? (A_long)sizeof(PF_Pixel16) :
 	                                        (A_long)sizeof(PF_PixelFloat);
-	// Exclude tiny diagnostic cells from the generalized lane.  They remain
-	// available only through the exact fixture admission above; 16x16 and up
-	// covers ordinary artwork and video frames without claiming every scanner
-	// boundary configuration as proven.
-	if (world->width < 16 || world->height < 16 ||
+	// The exported AEX Smart owner accepts positive dimensions, including
+	// single rows/columns. Their edge handling is shared with larger frames;
+	// do not impose the former beta-only 16x16 lower bound.
+	if (world->width < 1 || world->height < 1 ||
 	    world->width > 8192 || world->height > 8192 ||
 	    world->rowbytes < world->width * pixel_size) return false;
 
@@ -5219,7 +5218,7 @@ SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extr
 	// for the complete 1:1 source and advertise that complete result instead.
 	// SmartRender's full-world validation then fails closed if the host supplies
 	// only the requested tile despite this checkout.
-	if (in_data->width < 16 || in_data->height < 16 ||
+	if (in_data->width < 1 || in_data->height < 1 ||
 	    in_data->width > 8192 || in_data->height > 8192 ||
 	    in_data->downsample_x.num <= 0 ||
 	    in_data->downsample_x.num != in_data->downsample_x.den ||

@@ -33,8 +33,8 @@ class OLMSmoother2DefaultBetaLane(unittest.TestCase):
         self.assertNotRegex(self.beta, r'"[0-9a-f]{64}"')
         for contract in (
             "depth != 8 && depth != 16 && depth != 32",
-            "world->width < 16",
-            "world->height < 16",
+            "world->width < 1",
+            "world->height < 1",
             "world->width > 8192",
             "world->height > 8192",
             "version == SMOOTHER_V1 || version == SMOOTHER_V2",
@@ -199,7 +199,9 @@ int main() {{
     small.defs[SM_GAMMA_MODE].u.pd.value = GAMMA_NONE;
     small.defs[SM_GAMMA_VALUE].u.fs_d.value = 2.4;
     small.defs[SM_NUM_GAMMA_COLORS].u.sd.value = 1;
-    if (Smart(small) == 0) return 90;
+    // Exported AEX positive-dimension witnesses supersede the old beta-only
+    // 16x16 exclusion. The ordinary full-world checks still apply.
+    if (Smart(small) != 0) return 90;
     Fixture excluded(8, 19, 17, 5);
     std::memset(excluded.defs, 0, sizeof(excluded.defs));
     excluded.defs[SM_SMOOTHNESS].u.sd.value = 100;

@@ -1185,9 +1185,56 @@ source/report/tool/testの依存hashと参照境界を新しいYUV validationへ
 Windows UCRT/実AE、Mac installed、任意入力・palette・geometry・設定、UI/project保存、
 ROI/downsample・色管理は未完。全10本の完全互換Goalはactive。
 
+## SM2-COLOR-SCAN-013 — 色・半透明の走査検証と正の小画像の公開受付
+
+4×3の8近傍を自然入力から作り、colored/partialの256分類×2 profileをv1 PF32で測定。
+さらに16分類×colored/partial/premul/epsilon×7組のSmoothness/Range/Extra×両version×
+3深度を測定した。512＋2688条件の出力とclass planeはすべてローカルAEXと一致。
+内部参照はtyped inputから正規化したRGBA scratchと文書化済みconfig ABIを使い、
+v2はcaptured LUTを使う。公開builder、入力world unpack、native Windows UCRT/AEの
+検証へ昇格しない。Mac observerは一時コピーでclass planeを読むだけで、置き換えない。
+
+最初の集計では2688条件の384件にhistogram差があった。これはnative側がclass plane
+から算出した理論index、Mac側が実行したdispatch数で、異なる対象を比較したため。
+FACT: Smoothnessは0xc2bbのMOVD→CVTDQ2PS→DIVSS、0xc2c7のUCOMISSで0と比較し、
+JP/JNEがactive側へ分岐する。0ではindex生成前に処理を省略する。実AEXの0xc50a
+CMP EAX,0xfc直前をread-only hookで観測し、3200条件を再取得した。入力・native出力・
+class plane hashを保持し、実dispatchも全一致。384件は双方の実行回数が0であり、
+出力の不具合としてソースを変更しない。元の理論histogram reportはそのまま保持する。
+
+7×9/17×19のdiagonal/staircase/islands/ramp_alpha、3組の設定、両version・3深度の
+144条件も出力・class plane・実dispatchが一致。scan長やweightを変える独立patternであり、
+全走査長・任意float・全設定の証明とは扱わない。
+
+公開経路は固定AEXCompat resident workerの実AEX EffectMain/parameter builder/Smartを
+使い、MacのCLI-shim EffectMain SmartPreRender→SmartRenderと比較した。7 geometry
+（1×1、1×9、9×1、2×2、4×3、7×9、17×19）×2 pattern×3設定×両version×3深度の
+252条件。Gamma None/Key off、gamma値はnative defaultのFLOAT32 2.4をDOUBLEへ昇格。
+最初の試行はMac harnessのwidth/height/downsampleとcheckout ref寸法が未設定であり、
+互換性差の測定として採用しなかった。host authorityを設定して再測定したbaselineでは
+17×19の36条件がexact、小画像216条件がbeta-only最小16×16条件で拒否された。
+元AEXの全252条件はSmart成功、guards intact、unsupported suite callsなし、session clean。
+
+小画像の拒否は一般処理へ入る前の受付差。候補ではSmartPreRenderとgeneric admissionの
+最小寸法を1へ変更し、同じ252条件のO2/ASan/UBSan504 renderがexact。同じ規則を本番へ
+反映した。fixture whitelistや数値本体、LUT、最終byteは変更しない。公開本番再生504 render
+と元AEX252条件の再取得も全exact。入力・設定payload・元の出力hashはbaselineと保持。
+上限8192、等倍、full-frame、原点/stride/非重複、parameterとatomic cleanupの契約は残る。
+これは全Windows geometryの受付完了ではない。
+
+本番の内部3344条件をO2/ASan/UBSan6688 render再生し、出力・class plane・実dispatchが
+全一致。従来114 retainedと65分類390行も再生PASS。default beta4、Gamma Colors3、
+ROI3のunittestがPASS。新しいpre-render検証は21合法条件、126不正host条件と21 ref寸法
+不一致を検査し、拒否時にcallback/outputの契約を保持。実SDKのO2 universal buildも成功。
+build成功はnative AE/installed検証の代わりにはしない。依存hashと証拠境界は
+reports/olmsmoother2_color_weight_validation_20261001.jsonへ記録する。
+
+tiny geometryのKey/Gamma、任意float/HDR、未測定scan長、native Windows UCRTのLUT構築、
+native両AE、UI/project保存、ROI/downsampleと8192上限は未完。全10本の完全互換Goalはactive。
+
 ## 次の順序
 
-1. Smoother2の256分類到達witnessを維持し、独立した色・半透明入力とSmoothness/Range/Extraの境界でscan/weightの状態を比較する。captured LUTを用いたclassifier/worker証拠と公開builder/native host証拠を分け、最初の差を復元する。
+1. Smoother2の公開builderでtiny geometryのKey/Invert・Gamma None/All/Colorsを比較し、内部captured LUTとの差を分離する。任意float/HDRとscan長の独立witnessも拡張し、最初の差を復元する。
 2. ColorKeyの未検証geometry/任意float/paletteとThin/Blur合成を拡張する。今回の境界・overflow比較を全入力の証明とは扱わず、固定workerとcontrolled Lab94参照を分け、native Windows UCRTとの比較を残す。
 3. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
 4. 計画に沿いDirectionalBlur Dual、RadialBlur topology、KiraKira等の一般入力も進める。
