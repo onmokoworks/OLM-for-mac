@@ -1,0 +1,131 @@
+{
+  "abi": "XMM6 gain1, XMM7 alpha-.125, XMM8 blue, XMM9 green.25, XMM10 red, XMM11 bound1; output saved at rsp+40h. Stop at8429 after17490.",
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "claims_not_made": [
+    "A caller-block test does not prove arbitrary full renders, signaling-NaN exceptions/denormal controls, native Windows CPU/AE or all-ten completion."
+  ],
+  "dependencies_sha256": {
+    "tools/emulation/probe_radialblur_size_topology_20261002.py": "1d9d76de626e61d76ed4d66bf9471f9f1a2b5d11dfda41d0b477618e28ceafcf",
+    "tools/emulation/probe_radialblur_zoom_float_writer_20261002.py": "d7e3e0027327651972815683c08057ac4e3ee4a1a34444831ff9c3c0f119186f",
+    "tools/emulation/radialblur_zoom_float_writer_sdk_harness_20261002.cpp": "699c565011254eb11627227a0ad7f74d521818040e8f6f3d2bd987088e8bfab2"
+  },
+  "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+  "native_code_range": "83ed-8429",
+  "native_code_sha256": "a33936254d69ecd5db0855cdd2dfb133432fd9d519f800cd78ad1a2fb3a38ee6",
+  "rows": [
+    {
+      "import_calls": 0,
+      "input_word": "00000000",
+      "native_argb_f32_words": "be000000000000003e80000000000000",
+      "output_tail_guard_intact": true
+    },
+    {
+      "import_calls": 0,
+      "input_word": "80000000",
+      "native_argb_f32_words": "be000000800000003e80000080000000",
+      "output_tail_guard_intact": true
+    },
+    {
+      "import_calls": 0,
+      "input_word": "3f7fffff",
+      "native_argb_f32_words": "be0000003f7fffff3e8000003f7fffff",
+      "output_tail_guard_intact": true
+    },
+    {
+      "import_calls": 0,
+      "input_word": "3f800000",
+      "native_argb_f32_words": "be0000003f8000003e8000003f800000",
+      "output_tail_guard_intact": true
+    },
+    {
+      "import_calls": 0,
+      "input_word": "3f800001",
+      "native_argb_f32_words": "be0000003f8000003e8000003f800000",
+      "output_tail_guard_intact": true
+    },
+    {
+      "import_calls": 0,
+      "input_word": "bf800000",
+      "native_argb_f32_words": "be000000bf8000003e800000bf800000",
+      "output_tail_guard_intact": true
+    },
+    {
+      "import_calls": 0,
+      "input_word": "40000000",
+      "native_argb_f32_words": "be0000003f8000003e8000003f800000",
+      "output_tail_guard_intact": true
+    },
+    {
+      "import_calls": 0,
+      "input_word": "c0000000",
+      "native_argb_f32_words": "be000000c00000003e800000c0000000",
+      "output_tail_guard_intact": true
+    },
+    {
+      "import_calls": 0,
+      "input_word": "7f7fffff",
+      "native_argb_f32_words": "be0000003f8000003e8000003f800000",
+      "output_tail_guard_intact": true
+    },
+    {
+      "import_calls": 0,
+      "input_word": "ff7fffff",
+      "native_argb_f32_words": "be000000ff7fffff3e800000ff7fffff",
+      "output_tail_guard_intact": true
+    },
+    {
+      "import_calls": 0,
+      "input_word": "00800000",
+      "native_argb_f32_words": "be000000008000003e80000000800000",
+      "output_tail_guard_intact": true
+    },
+    {
+      "import_calls": 0,
+      "input_word": "80800000",
+      "native_argb_f32_words": "be000000808000003e80000080800000",
+      "output_tail_guard_intact": true
+    },
+    {
+      "import_calls": 0,
+      "input_word": "00000001",
+      "native_argb_f32_words": "be000000000000013e80000000000001",
+      "output_tail_guard_intact": true
+    },
+    {
+      "import_calls": 0,
+      "input_word": "80000001",
+      "native_argb_f32_words": "be000000800000013e80000080000001",
+      "output_tail_guard_intact": true
+    },
+    {
+      "import_calls": 0,
+      "input_word": "7f800000",
+      "native_argb_f32_words": "be0000003f8000003e8000003f800000",
+      "output_tail_guard_intact": true
+    },
+    {
+      "import_calls": 0,
+      "input_word": "ff800000",
+      "native_argb_f32_words": "be000000ff8000003e800000ff800000",
+      "output_tail_guard_intact": true
+    },
+    {
+      "import_calls": 0,
+      "input_word": "7fc00000",
+      "native_argb_f32_words": "be0000003f8000003e8000003f800000",
+      "output_tail_guard_intact": true
+    },
+    {
+      "import_calls": 0,
+      "input_word": "ffc00000",
+      "native_argb_f32_words": "be0000003f8000003e8000003f800000",
+      "output_tail_guard_intact": true
+    }
+  ],
+  "schema": "radialblur.zoom-float-writer/1",
+  "source_sha256": "874a08b25648e1dadc275f1619d1d17d7adffbb68bde81a68df58fd58772e631",
+  "summary": {
+    "native_caller_block_cases": 18,
+    "sdk_trait_replays": 36
+  }
+}

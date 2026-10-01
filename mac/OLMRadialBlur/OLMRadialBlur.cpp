@@ -1577,7 +1577,10 @@ struct RadialZoomPixelTraits<PF_PixelFloat> {
 	}
 	static void WriteZoom(PF_PixelFloat &pixel, const RadialBlurOuterSampleState &state, bool use_fft)
 	{
-		Write(pixel, state, use_fft);
+		// The common PF32 caller applies MINSS after gain before17490.
+		RadialBlurOuterSampleState bounded = state;
+		for (int c = 0; c < 3; ++c) bounded.final_rgb[c] = state.final_rgb[c] < 1.0f ? state.final_rgb[c] : 1.0f;
+		Write(pixel, bounded, use_fft);
 	}
 };
 
@@ -2005,7 +2008,7 @@ static FloatImage BuildZoomAEXOuterOnlyPolar(
 					const size_t cell = row_cell + ri;
 					const size_t rgba = cell * 4;
 					const float denominator = accum_alpha[cell];
-					if (denominator == 0.0f) {
+					if (max_alpha[cell] == 0.0f) {
 						for (int c = 0; c < 3; ++c) normalized.rgba[rgba + c] = 0.0f;
 					} else {
 						for (int c = 0; c < 3; ++c) {
@@ -2517,7 +2520,7 @@ static PF_Err RenderZoomTyped(
 		component_areas == std::vector<A_long>({1, 4, 9});
 	const bool source_components_1_4_9 = source_components_area_profile &&
 		MatchesRadialSizeComponentFixture<PixelT>(input, true);
-	if (use_generic_baseline && info.size_variation != 0.0 && !source_components_area_profile) {
+	if (use_generic_baseline && info.size_variation != 0.0 && !source_general_topology) {
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
 	if (use_generic_size_noise && !source_general_topology) return PF_Err_BAD_CALLBACK_PARAM;
@@ -3075,7 +3078,7 @@ static PF_Err RenderZoomTyped(
 			 use_aex_typed_zoom_size_edge_components_32x18 ||
 			 use_aex_typed_zoom_any_size_edge_noise_components_32x18 ||
 			 use_aex_typed_zoom_size_noise_components_32x18) &&
-			(source_components_1_4_9 || (use_generic_baseline && source_components_area_profile) ||
+			(source_components_1_4_9 || (use_generic_baseline && source_general_topology) ||
 			 use_generic_size_noise)) {
 			source_factor_with_guard = component_size_factor;
 			if (use_aex_typed_zoom_any_size_edge_noise_components_32x18) {
@@ -3324,21 +3327,7 @@ static PF_Err RenderZoomTyped(
 					}
 				}
 			}
-			if constexpr (std::is_same<PixelT, PF_PixelFloat>::value) {
-				if ((use_aex_typed_zoom_offcenter_brightness && info.brightness_gain == 2.0) ||
-					(use_aex_typed_zoom_size_noise_components_32x18 && info.brightness_gain == 2.0) ||
-					use_aex_typed_zoom_inner_pairwise || use_aex_typed_zoom_inner_offset_pairwise ||
-					use_aex_typed_zoom_dual_size_components_32x18 ||
-					use_aex_typed_zoom_edge_fade_32x18 ||
-					use_aex_typed_zoom_size_edge_components_32x18 ||
-					use_aex_typed_zoom_any_size_edge_noise_components_32x18 ||
-					use_aex_typed_zoom_edge_noise_32x18) {
-					for (int c = 0; c < 3; ++c) {
-						output_state.final_rgb[c] = output_state.final_rgb[c] < 1.0f
-							? output_state.final_rgb[c] : 1.0f;
-					}
-				}
-			}
+
 			PixelT *out = PixelAt<PixelT>(output, x, y);
 			const bool exact_pf8_ellipse_store =
 				std::is_same<PixelT, PF_Pixel8>::value &&
@@ -3509,7 +3498,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		component_areas == std::vector<A_long>({1, 4, 9});
 	const bool source_components_1_4_9 = source_components_area_profile &&
 		MatchesRadialSizeComponentFixture<PixelT>(input, false);
-	if (use_generic_baseline && info.size_variation != 0.0 && !source_components_area_profile) {
+	if (use_generic_baseline && info.size_variation != 0.0 && !source_general_topology) {
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
 	if (use_generic_size_noise && !source_general_topology) return PF_Err_BAD_CALLBACK_PARAM;
@@ -4354,7 +4343,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		 use_aex_typed_rotation_size_edge_components_32x18 ||
 		 use_aex_typed_rotation_any_size_edge_noise_components_32x18 ||
 		 use_aex_typed_rotation_size_noise_components_32x18) &&
-		(source_components_1_4_9 || (use_generic_baseline && source_components_area_profile) ||
+		(source_components_1_4_9 || (use_generic_baseline && source_general_topology) ||
 		 use_generic_size_noise)) {
 		rotation_scalar_source_with_guard = component_size_factor;
 		if (use_aex_typed_rotation_any_size_edge_noise_components_32x18) {

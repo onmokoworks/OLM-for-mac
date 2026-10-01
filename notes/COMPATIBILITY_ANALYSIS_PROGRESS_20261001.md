@@ -1996,11 +1996,63 @@ Size25の84拒否、scalar fade150語中3語、Windows RCPPS/ISA/一般UCRT、ma
 Rotation追加半径行、任意入力/設定、native両AE/UI/保存/ROI/downsampleと全10本完全互換は未完。
 次はSize25の領域factorと保守的な受入制限を、同じ入力・設定の元ownerから追う。Goalはactive。
 
+## RB-SIZE-TOPOLOGY-MAX-WRITER-034 — 一般領域SizeとZoom共通規則を復元
+
+前回58175851のZoom両fade接続はPush済み。残るSize25の84拒否を、既に元8930/8dd0から
+復元した領域run面積とfactorへ接続する。元AEX・固定/controlled worker・元SDK入力は保持。
+
+FACT: generic baselineのSize非zero受入とfactor workspaceへの接続は、元の一般領域処理が
+存在するのに、面積が1/4/9のfixtureだけに限定されていた。Zoom/Rotationとも
+source_general_topologyを受入とfactor接続に使う最初の候補は694条件全exact・拒否0になった。
+独立geometry・patternと自然fieldを追加した結果、この候補だけでは未解決の差が残った。
+この最初の候補は本番へ採用していない。
+
+FACT: 独立19×17 diagonal PF32のSize1/25だけに9 byte差を得た。座標(0,2)の元9d80出力は
+RGB約1.35825/1.38854/1.15759、alpha約0.00301542で、元17490後のRGBは全て1になっていた。
+採取した自然call trace全体は私有保持し、publicには少数scalar witnessとhashだけを残す。83ed/83f7/8401は
+Gain乗算、83f2/83fc/8406は上限1のMINSS、8424はraw writer17490へのcallである。
+17490自体へclampを加えるのではなく、PF32の共通WriteZoomへ元callerのMINSS規則を接続し、
+従来の座標・設定tuple別clampを削除する。負値とalphaは保持、NaN RGBはMINSSの第2operand1へ。
+元83ed–8429 blockをimport-freeで直接実行した±zero、1隣接、正負有限最大/min-normal/
+subnormal、Infとquiet NaNの18境界に、実SDKのO2/strict sanitizer trait36再生が全bit一致。
+このleafだけでfull NaN経路・例外・FTZ/DAZを閉鎖したとは扱わない。
+
+FACT: 自然20×14 diagonalのSize25ではpolar/span/preaccum/premax/accum/maxは既に一致し、
+normalized57語だけが異なった。元5ce7は最大alphaをloadし、5cec/5cefで最大alphaのゼロを
+判定する。旧Macは蓄積alphaのゼロを判定していた。最大alphaが0ならRGBを0にし、非zeroなら
+蓄積alphaでRGBを割り、出力alphaには最大alphaを使う元規則へ復元。蓄積alphaが負なのに
+最大alphaが0のcellが、旧判定でRGBを残す原因だった。入力やGaussian表を変更していない。
+
+最終sourceは874a08b25648e1dadc275f1619d1d17d7adffbb68bde81a68df58fd58772e631。
+候補694条件は全exact・差分0・拒否0、新exact84・raw変更84・lost0。
+23×13/19×17、islands/ring/diagonal/opaque/empty、Size1/25/100、Zoom/Rotation・3深度の
+独立180条件も元resident typedと全exact。旧Size/Noise96・Inner Fade199・Outer Fade100の
+395条件を保持し、候補O2/strict sanitizer Classic/Smart計5076公開再生が一致した。
+自然6画像の元所有field2479347 FLOAT32語とZoom eligibility77400 bytes、最終rawが一致。
+Zoomは元inclusive radiusとMacが一致。Rotationは元所有prefixだけを比較し、Macの追加半径行を
+証明したとは扱わない。Zero Fade長0でも元B680を呼ぶため、initialized workspaceの1語を
+採取するが、その値をGaussian表の証拠にはしない。
+
+本番の新3 testはPASS。5076公開再生、新exact84＋独立180の元AEX再取得264条件、自然6画像、
+元caller block18/実SDK36回を現行sourceで再確認した。既存24 unittestと7 gate、更新した
+Zoom fade履歴3 testもPASS。履歴は旧610 sourceのbindingを保持し、本番3956＋400公開再生と
+元302条件、fade自然3画像1607400語を再確認する。旧generic sanitizerが右端領域の拒否を
+期待して1件失敗したため、一般factorによる受入へ期待値を訂正した。17×11/720×480/1920×1080の
+ASan/UBSan再実行はPASS。最初の失敗hashと訂正理由もvalidationへ保存する。
+Gaussian60000 exp/30長さ、PF8 quantizer2196、Angle/Offset352、Noise grid96、Rotation sampler72を
+保持。実SDK arm64/x86_64 O2 build成功。元AEX・固定/controlled worker・parent440 source・
+SDK90入力は不変、installedは変更していない。size_topology_public/float_writer/validation、
+元caller SDK harness、probe/testと計画へ記録した。
+
+Sizeの他の合法値・fractional設定・任意geometry/入力、scalar fade150語中3語、Windows
+RCPPS/ISA/一般UCRT、mask末尾allocator、Rotation追加半径行、native両AE/UI/保存/ROI/downsampleと
+全10本完全互換は未完。次は残る合法Size・複合設定の最初の差を同じownerから測る。Goalはactive。
+
 ## 次の順序
 
 1. Smoother2のHDR/Gamma合成と色境界の今回の有限集合は検証済み。公開builderのLUT構築とnative依存先を分け、未測定scan長・任意float・独立paletteの最初の差を復元する。
 2. ColorKeyの未検証geometry/任意float/paletteとThin/Blur合成を拡張する。今回の境界・overflow比較を全入力の証明とは扱わず、固定workerとcontrolled Lab94参照を分け、native Windows UCRTとの比較を残す。
 3. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
-4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはAngle/Edge/PointとNoise OffsetのFLOAT32接続を復元した。参照atan2f非軸差は保存Windows scalarの有限集合へ校正済み。Zoom PF8の共通writerは復元済み。Rotationの自然field/scatterは代表全量でGaussian差を分離し、別コピーのinverse復元で代表rawが一致した。generic two-stageのGaussian/finalを本番へ復元し、694条件505 exact、独立384全exactを確認。no-noise/neutral/Angleと微小alphaも本番へ復元し、559 exact、typed28と独立384全exactを確認。Rotation Edge/Inner Edgeも本番へ復元し、565 exact・45差分・84拒否。Size100+Noiseも共通経路と行境界area規則を復元し、本番601 exact・9差分・84拒否。独立96も全exact。Zoomの正負alphaとゼロseed加算も復元し、本番607 exact・3差分・84拒否。Zoomの両fadeもB680へ接続し、本番610 exact・差分0・84拒否。次はSize25制限を自然fieldとarea規則から閉じる。scalar fade3語、native RCPPS/ISA/UCRTを未解決に保持。負位相のnative契約・Size25の面積制限・端/穴/島へ進み、その後KiraKira一般入力を比較する。
+4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはAngle/Edge/PointとNoise OffsetのFLOAT32接続を復元した。参照atan2f非軸差は保存Windows scalarの有限集合へ校正済み。Zoom PF8の共通writerは復元済み。Rotationの自然field/scatterは代表全量でGaussian差を分離し、別コピーのinverse復元で代表rawが一致した。generic two-stageのGaussian/finalを本番へ復元し、694条件505 exact、独立384全exactを確認。no-noise/neutral/Angleと微小alphaも本番へ復元し、559 exact、typed28と独立384全exactを確認。Rotation Edge/Inner Edgeも本番へ復元し、565 exact・45差分・84拒否。Size100+Noiseも共通経路と行境界area規則を復元し、本番601 exact・9差分・84拒否。独立96も全exact。Zoomの正負alphaとゼロseed加算も復元し、本番607 exact・3差分・84拒否。Zoomの両fadeもB680へ接続し、本番610 exact・差分0・84拒否。Size25は一般領域factorへ接続し、Zoom最大alpha判定と共通PF32 callerのMINSS上限も復元した。最新694条件は全exact・拒否0、独立180も全exact。scalar fade3語、native RCPPS/ISA/UCRTを未解決に保持。他の合法Size・複合設定・任意入力を測り、その後KiraKira一般入力を比較する。
 
 既存の作業ツリー変更は今回のcommitに混ぜない。第三者AEXとnative raw出力をPushしない。

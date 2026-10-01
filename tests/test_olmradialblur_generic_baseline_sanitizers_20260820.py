@@ -27,7 +27,8 @@ template<class P> int one(short depth,int type,int w,int h,int extra,bool bounda
  OLMRadialBlurInfo q{{}};q.blur_type=type;q.center_x=w*.23;q.center_y=h*.71;q.outer_strength=7;
  q.outer_offset_mode=1;q.inner_offset_mode=1;q.repeat_border=TRUE;q.ratio=2.25;q.angle_deg=-137.5;
  q.quality=1;q.brightness_gain=1;q.size_variation=depth==8?1:(depth==16?25:100);q.noise_type=1;q.seed=1;q.thickness=10;q.comp_width=w;q.comp_height=h;
- PF_Err e=OLMRadialBlurTestRenderWorld(&x,&y,&q,depth);if(e!=(boundary?PF_Err_BAD_CALLBACK_PARAM:PF_Err_NONE))return 1;
+ // General component factors now admit components touching the right edge.
+ PF_Err e=OLMRadialBlurTestRenderWorld(&x,&y,&q,depth);if(e!=PF_Err_NONE)return 1;
  q.quality=5;q.outer_strength=4;q.ratio=1;q.angle_deg=0;q.center_x=w/2.0;q.center_y=h/2.0;
  q.size_variation=25;q.noise_variation=25;q.noise_type=1;q.seed=1;q.noise_offset=0;q.thickness=10;
  e=OLMRadialBlurTestRenderWorld(&x,&y,&q,depth);return e==PF_Err_NONE?0:2;
