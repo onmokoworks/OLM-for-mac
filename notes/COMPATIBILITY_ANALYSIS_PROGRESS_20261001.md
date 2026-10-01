@@ -1050,9 +1050,59 @@ UCRT/AE、Mac installed/UI/保存state、全色/閾値/入力/geometry、Lab94 s
 ROI/downsampleの完了を主張しない。source/report/tool/testのhashをLab validationへ保持し、
 全10本の完全互換Goalはactive。
 
+## CK-LAB94-010 — 参照atan2fを分離しscalarのDOUBLE境界を復元
+
+固定workerのLab94 scalar失敗を調べた。FACT: fmodfのdispatchとdeterministic_fmodfは既に
+あり、欠けていたのはapi-ms-win-crt-math-l1-1-0.dll!atan2fだった。render-trace-pngも
+失敗時にmemory witnessを返さなかったため、成功したowner recordをscalarのrecordへ
+手書きで変えて公開owner証拠として扱うことはしない。
+
+別repoと固定workerは保持し、guest sourceを一時領域へコピーした。追加したのは
+atan2fの限定dispatchとXMM0(y)/XMM1(x)→XMM0のlow FLOAT32 return hookのみ。host f32
+atan2を使い、引数/戻りbitsの短いlogを保持する。register read/write失敗はguestを停止する。
+これはWindows UCRTの復元完了ではない。既存fmodf、powf、他host処理はコピー元を使う。
+
+最初のコピーでrootのtarget cacheを除く指定がvendor/qemu/targetまで除き、Unicornの
+C source欠落でbuild失敗した。除外をrootのtargetだけに限定して一時コピーを作り直し、
+offline/lockedのrelease buildが成功した。外部の436 source fileと元worker SHAを再確認し、
+一切変わっていない。新workerはc996d4fba8d84fd7f6484ca0ad545a370b552484398605d21a6eb07389aecef7。
+build reportはコピー元全file hash、2つのpatch適用先hash、patch/builder/worker hashを保持。
+元workerのsource/binary対応を推測で宣言しない。公開するのは小さなMPL-2.0参照overlay、
+構築器、独自probe、数値結果であり、外部source全体やworker binaryは公開しない。
+
+元AEXの公開resident ownerを新workerで実行した。前の396測定space行は、同じ入力で
+全output hashが固定workerの保持済みoracleと一致した。以前測定できなかった36 scalar、
+独立色順序scalar144、隣接FLOAT32境界54を加えた630条件は、変更前Macも復元案も両cmd
+全exactだった。従って、この一致だけでは本番を変更しなかった。固定workerの36失敗は
+そのまま残し、controlled referenceでの測定と区別する。
+
+次にscalarの9境界族（3precision×3depth）について、最後のnonmatchと最初のmatchの
+FLOAT32間隔を1/16刻みのDOUBLEで横切った。各族でGlobal/Per Color両方、33値ずつ、
+計594条件。変更前の本番は492一致/102不一致、復元案は594全一致。input(44,75,119)、
+opaque 1×1、単色cyan、Keep true/Replace false、typed bytesを記録。native builderが
+FLOAT32へ丸めたthresholdと、DOUBLEのまま保持したMac thresholdの境界差である。
+
+FACT: 元AEX 0x18000460c以降はFLOAT32 threshold+epsilonをADDSS、CVTPS2PDでdoubleへ
+上げ、0x18001f6e8のdouble 352.978（LE cff753e3a50f7640）をMULSDし、FLOAT32へ戻す。
+MacはPF_FpLongのthresholdを含めてdouble加算していた。thresholdをfloatへmaterializeし、
+float加算→double倍率→float limitへ戻す順序を本番へ復元した。色/しきい値/geometryで
+fixtureを識別せず、最終output bitの補正もしない。Lab94Distanceやhost atan2fの値を
+Windowsに一致したという推測で変更しない。
+
+本番はcontrolled630＋DOUBLE594の1224 capture rowsをClassic/Smart、O2、ASan/UBSanで
+計4896render再生し全exact。元AEXで102差分を新規再取得し、本番両cmd102/102一致、
+入力/parameter payload/native hashを保持した。Lab76/94成分別990行3960render、
+Lab Thin/Blur合成144行576render、typed HDR/最大25色等8120renderと48 atomic失敗、
+旧公開126 output＋13 callback controlもPASS。
+これらは重複を除いたunique入力数ではなく、native/controlled hostの証拠境界を保つ。
+
+実Windows UCRTのatan2f、Windows/Mac実AE、全palette/threshold/任意float/HDR/geometry、
+ROI/downsample、UI/project保存は未完。参照環境の関数欠落で測定が止まる箇所は分離できたが、
+controlled atan2fをnative UCRTへ昇格しない。全10本の完全互換Goalはactive。
+
 ## 次の順序
 
-1. ColorKey Lab94 scalarのatan2f/fmodf依存先を参照hostとの差として分離し、元comparatorの引数/演算順を復元。Lab76/94成分別は今回の一般復元を保持し、未検証HDR/任意float・thresholdと入力を比較する。
+1. ColorKeyの未検証HDR/任意float・全palette/thresholdを、新しいcontrolled Lab94参照と固定workerの一致範囲を分けて比較する。Lab comparatorの復元を保持し、数学関数のnative Windows UCRTとの比較は未完として扱う。
 2. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
 3. Smoother2の分類到達は今回の集合で確認済み。色・alpha・scan/weightの状態と
    public owner/native hostの比較は残る。計画に沿いDirectionalBlur Dual等の一般入力も進める。

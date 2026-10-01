@@ -1,0 +1,112 @@
+{
+  "claims_not_made": [
+    "Controlled host atan2f does not prove Windows UCRT implementation or arbitrary arguments",
+    "Frozen worker 36 import failures remain separate",
+    "Calibration and exact replays do not prove all source/color/threshold/HDR/geometry/state",
+    "No native Windows AE or Mac installed completion",
+    "No full generic gate, performance, complete RGB Around/Inside/Outside or generic ROI suite rerun in this change",
+    "Capture rows/render counts are not deduplicated unique condition counts",
+    "No resident per-frame parameter readback evidence",
+    "All 10 plugins full compatibility Goal remains active"
+  ],
+  "controlled_reference": {
+    "all_436_base_source_files_and_frozen_worker_unchanged": true,
+    "calibration_count": 396,
+    "calibration_exact_count": 396,
+    "controlled_worker_sha256": "c996d4fba8d84fd7f6484ca0ad545a370b552484398605d21a6eb07389aecef7",
+    "frozen_worker_sha256": "0eb2f7705598f7b5f53563b9d920274ba094c835ff3dbaaf5f6fb214ec0cfd61",
+    "kind": "controlled-host-f32-atan2f",
+    "native_windows_ucrt_proven": false,
+    "old_unmeasured_scalar_rows_measured": 36
+  },
+  "dependencies_sha256": {
+    "mac/OLMColorKey/OLMColorKey.cpp": "38227a4245d206c4ceea905176f1dbcb348f5a964d9a7a816bc204690d079635",
+    "reports/colorkey_lab94_controlled_owner_20261001.json": "9e5e35cf9dad2a000cbb1d4d85c1281d03f4d09b60df869655b9d66042306815",
+    "reports/colorkey_lab94_controlled_worker_build_20261001.json": "fa65173e24ba3b7afbdb9f9711eb89adbc2c7cc5886f22ad6c68b116281d813c",
+    "reports/colorkey_lab94_double_slider_20261001.json": "44a13aca21199ae0f5034830b874cbd342778216375a35d35edf8a0c641bc83c",
+    "reports/colorkey_lab94_double_slider_production_20261001.json": "d6405103ab3ed4f3aaade846a54300dc82e119e9962d183cf3289b28b7273bf4",
+    "tests/test_olmcolorkey_lab94_controlled_20261001.py": "6f69f25cf723150398dcbc10aca626b57e475c69ec32b0738581e160104cec96",
+    "tests/test_olmcolorkey_lab_edge_transfer_20261001.py": "557b903e21615d9fac73620e18a152bc4e7364822777676c2b8a4f7bbdf6a4d8",
+    "tests/test_olmcolorkey_lab_state_boundary_20261001.py": "4dbb3670c6be0845c3d5091bd3a3f278ab0e065c35a66369413017ed50c13ca7",
+    "tests/test_olmcolorkey_public_entries_real_sdk_20260813.py": "73a11c8d969ac12838abff46af2bf4ff00c3bf3a4b50aad0c58a39bf3cf1c75d",
+    "tests/test_olmcolorkey_typed_controls_20261001.py": "9f7171cfddda958be97f0ec2a8ba6386fcc75d8cac03c54dd2bcde3feb7fbcb5",
+    "tools/emulation/aexcompat_colorkey_lab94_controlled_atan2f_20261001.patch": "e17838ff8608089ced428d9995fbf7699483dabcda466a40cab28194a2dec3af",
+    "tools/emulation/build_olmcolorkey_lab94_controlled_worker_20261001.py": "d1ab865d619d8afda9835a1dd0afc47bce8d44f98a98e102e03e6484f6beb8cc",
+    "tools/emulation/colorkey_lab94_scalar_candidate_20261001.py": "573bf0801e23b00f977ab10ef215ba9bab4dbb718fd424fbb5c8c6b005a55f49",
+    "tools/emulation/colorkey_typed_controls_harness_20261001.cpp": "a6639f1a657e907ee86518a74ba90c06d20b7543d5f2e735c3473228f3183a66",
+    "tools/emulation/probe_olmcolorkey_lab94_controlled_20261001.py": "95f8119539bc7eb86502425f8f66df283ac727017b2cd5e94375b29926d0ad62",
+    "tools/emulation/probe_olmcolorkey_lab94_double_slider_20261001.py": "00df30029dde271420e39e378f4e4fea77ac39f8bdc211f0dfdfb121f8e57a18",
+    "tools/emulation/probe_olmcolorkey_lab_state_boundary_20261001.py": "439360da93d3e61c9af8eaf9c87509eedfebe3cd7ca2564f7ddbd9e98236b9a2",
+    "tools/emulation/probe_olmcolorkey_typed_controls_20261001.py": "c89b82a6447440b3c7dd6945b74430dcb4cdf78ed28d6af6e68e0472e205a37e",
+    "tools/emulation/recapture_olmcolorkey_lab94_double_slider_20261001.py": "fb47a452734988b3edb038ae48079bc5c7af510f5595f400afad51a6be6421c7"
+  },
+  "lab_edge_regression": {
+    "all_exact": true,
+    "asan_ubsan_render_count": 288,
+    "capture_rows": 144,
+    "elapsed_seconds": 27.891,
+    "exit_code": 0,
+    "o2_render_count": 288,
+    "test_file": "tests/test_olmcolorkey_lab_edge_transfer_20261001.py"
+  },
+  "lab_regression": {
+    "all_exact": true,
+    "asan_ubsan_render_count": 1980,
+    "capture_rows": 990,
+    "elapsed_seconds": 148.535,
+    "exit_code": 0,
+    "o2_render_count": 1980,
+    "test_file": "tests/test_olmcolorkey_lab_state_boundary_20261001.py"
+  },
+  "native_case_report_sha256": {
+    "reports/colorkey_lab94_controlled_owner_20261001.json": "9e5e35cf9dad2a000cbb1d4d85c1281d03f4d09b60df869655b9d66042306815",
+    "reports/colorkey_lab94_double_slider_20261001.json": "44a13aca21199ae0f5034830b874cbd342778216375a35d35edf8a0c641bc83c",
+    "reports/colorkey_lab94_double_slider_production_20261001.json": "d6405103ab3ed4f3aaade846a54300dc82e119e9962d183cf3289b28b7273bf4"
+  },
+  "native_threshold_facts": {
+    "comparator_rva": "0x4510",
+    "double_scale": 352.978,
+    "double_scale_data_rva": "0x1f6e8",
+    "double_scale_le_bytes": "cff753e3a50f7640",
+    "order": "Materialized FLOAT32 threshold plus FLOAT32 epsilon, promote to DOUBLE, scale, materialize FLOAT32 limit",
+    "scalar_threshold_add_rva": "0x4618",
+    "scalar_threshold_promote_rva": "0x4649",
+    "scalar_threshold_scale_rva": "0x4659"
+  },
+  "new_lab94_replay": {
+    "all_exact": true,
+    "asan_ubsan_render_count": 2448,
+    "capture_rows": 1224,
+    "elapsed_seconds": 180.5,
+    "exit_code": 0,
+    "o2_render_count": 2448,
+    "test_file": "tests/test_olmcolorkey_lab94_controlled_20261001.py"
+  },
+  "production_reference_recapture": {
+    "classic_exact_count": 102,
+    "historical_differences_closed": 102,
+    "input_settings_and_native_hashes_preserved": true,
+    "report_sha256": "d6405103ab3ed4f3aaade846a54300dc82e119e9962d183cf3289b28b7273bf4",
+    "smart_exact_count": 102
+  },
+  "schema": "olmcolorkey.lab94-production-validation/1",
+  "sdk_regression": {
+    "all_exact": true,
+    "callback_control_count": 13,
+    "elapsed_seconds": 2.845,
+    "exit_code": 0,
+    "render_count": 126,
+    "test_file": "tests/test_olmcolorkey_public_entries_real_sdk_20260813.py"
+  },
+  "source_sha256": "38227a4245d206c4ceea905176f1dbcb348f5a964d9a7a816bc204690d079635",
+  "typed_controls_regression": {
+    "all_successful_renders_exact": true,
+    "asan_ubsan_render_count": 3592,
+    "atomic_failure_render_count": 48,
+    "capture_rows": 2264,
+    "elapsed_seconds": 268.477,
+    "exit_code": 0,
+    "o2_render_count": 4528,
+    "test_file": "tests/test_olmcolorkey_typed_controls_20261001.py"
+  }
+}

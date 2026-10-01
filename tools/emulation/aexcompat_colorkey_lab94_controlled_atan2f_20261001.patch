@@ -1,0 +1,76 @@
+--- a/crates/aex-guest-worker/src/x64/imports.rs
++++ b/crates/aex-guest-worker/src/x64/imports.rs
+@@ -214,6 +214,7 @@
+     Floor,
+     FloorF,
+     FmodF,
++    ColorKeyLab94Atan2F,
+     FdClass,
+     DClass,
+     LRound,
+@@ -1116,6 +1117,8 @@
+         ("api-ms-win-crt-math-l1-1-0.dll" | "ucrtbase.dll", "floor") => LegacyWin64Import::Floor,
+         (_, "floor") => return Win64ImportDispatch::UnsupportedLegacyImport,
+         ("api-ms-win-crt-math-l1-1-0.dll", "fmodf") => LegacyWin64Import::FmodF,
++        ("api-ms-win-crt-math-l1-1-0.dll", "atan2f") => LegacyWin64Import::ColorKeyLab94Atan2F,
++        (_, "atan2f") => return Win64ImportDispatch::UnsupportedLegacyImport,
+         (_, "fmodf") => return Win64ImportDispatch::UnsupportedLegacyImport,
+         ("api-ms-win-crt-math-l1-1-0.dll" | "ucrtbase.dll", "_fdclass") => {
+             LegacyWin64Import::FdClass
+@@ -2649,6 +2652,9 @@
+                 }
+                 LegacyWin64Import::FmodF => {
+                     install_fmodf_import(unicorn, stub)?;
++                }
++                LegacyWin64Import::ColorKeyLab94Atan2F => {
++                    install_colorkey_lab94_atan2f_import(unicorn, stub)?;
+                 }
+                 LegacyWin64Import::FdClass => {
+                     uc("write _fdclass return", unicorn.mem_write(stub, &[0xc3]))?;
+--- a/crates/aex-guest-worker/src/x64/callbacks.rs
++++ b/crates/aex-guest-worker/src/x64/callbacks.rs
+@@ -668,6 +668,44 @@
+         }),
+     )
+     .map(|_| ())
++}
++
++// Controlled ColorKey Lab94 reference import. This is host f32 atan2,
++// not a claim that native Windows UCRT has the same implementation.
++fn install_colorkey_lab94_atan2f_import(
++    unicorn: &mut Unicorn<'static, GuestState>,
++    address: u64,
++) -> Result<(), GuestError> {
++    uc(
++        "install controlled ColorKey Lab94 atan2f import",
++        unicorn.add_code_hook(address, address, |unicorn, _, _| {
++            let result = (|| -> Result<(), String> {
++                let mut xmm0 = unicorn.reg_read_long(RegisterX86::XMM0)
++                    .map_err(|error| format!("atan2f XMM0: {error}"))?;
++                let xmm1 = unicorn.reg_read_long(RegisterX86::XMM1)
++                    .map_err(|error| format!("atan2f XMM1: {error}"))?;
++                let y = f32::from_le_bytes(xmm0[..4].try_into().unwrap());
++                let x = f32::from_le_bytes(xmm1[..4].try_into().unwrap());
++                let output = y.atan2(x);
++                if unicorn.get_data().math_calls.len() < 32 {
++                    unicorn.get_data_mut().math_calls.push(format!(
++                        "atan2f(y_bits={:08x},x_bits={:08x})={:08x}",
++                        y.to_bits(), x.to_bits(), output.to_bits()
++                    ));
++                }
++                xmm0[..4].copy_from_slice(&output.to_le_bytes());
++                unicorn.reg_write_long(RegisterX86::XMM0, &xmm0)
++                    .map_err(|error| format!("atan2f result: {error}"))?;
++                Ok(())
++            })();
++            if let Err(error) = result {
++                if unicorn.get_data().callback_error.is_none() {
++                    unicorn.get_data_mut().callback_error = Some(error);
++                }
++                let _ = unicorn.emu_stop();
++            }
++        }),
++    ).map(|_| ())
+ }
+ 
+ fn normalized_f32_significand(bits: u32) -> (u32, i32) {

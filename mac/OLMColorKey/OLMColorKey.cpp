@@ -1920,7 +1920,10 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						    && std::fabs(cmp[2] - key[2]) <= limit_b;
 					} else {
 						PF_FpLong threshold = info.per_color ? info.thresholds[i] : info.threshold;
-						hit = Lab94Distance(key, cmp) <= (float)((double)(key_epsilon + threshold) * 352.978);
+						// FUN_180004510: ADDSS precedes promotion to double for the scale.
+						float limit = key_epsilon + (float)threshold;
+						limit = (float)((double)limit * 352.978);
+						hit = Lab94Distance(key, cmp) <= limit;
 					}
 				} else if (info.color_space == 2) {
 					if (info.per_component) {
