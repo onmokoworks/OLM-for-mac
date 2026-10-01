@@ -1,0 +1,10 @@
+{
+  "candidate_sha256": "c35e713cd297acd7eca8b363998ef158e9282ccf117b91c8622dde564f37d0f9",
+  "candidate_tool_sha256": "fd933d906206bad7118ebf036f7cbfd8265327ed03db7e133f6f565e4ac7eac1",
+  "case_count": 720,
+  "exact_count": 720,
+  "native_case_report_sha256": "ddbb71c4a859cded984e495f65d904e51fc5c4b05166313921c3d83250382c13",
+  "schema": "olmcolorkey.around-workspace-candidate/1",
+  "scope": "Replay all 720 one-column Box Blur cases from exported-owner boundary capture through temporary real-SDK Classic candidate. No production edit or native AE proof.",
+  "source_sha256": "0d7a250963f51c8b9ea7488c3de4420d0ae5ebf2952cf4940eaacf503fc83b34"
+}

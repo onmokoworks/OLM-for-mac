@@ -1,0 +1,142 @@
+{
+  "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+  "baseline": {
+    "accepted_different_count": 30,
+    "case_count": 540,
+    "exact_count": 18,
+    "public_rejection_count": 492
+  },
+  "baseline_context_commit": "02c9ad647805991fa3a9ce4d55436e1be0fdb188",
+  "before_workspace_boundary_case_count": 6480,
+  "before_workspace_boundary_exact_count": 6256,
+  "capture_original_serialization_sha256": {
+    "reports/colorkey_around_range_baseline_20261001.json": "f3b070b2d576459a48c154b3d862fb7636274fb5db03505499433d14794cf769",
+    "reports/colorkey_around_range_boundary_candidate_20261001.json": "ddbb71c4a859cded984e495f65d904e51fc5c4b05166313921c3d83250382c13",
+    "reports/colorkey_around_range_candidate_20261001.json": "61170ac3cfdc740277e369483790d327e7a73f820345120da3ae61435ed1105e",
+    "reports/colorkey_around_range_column_production_20261001.json": "b6145d93ebadbe830c790103e436a2d18cf1f12a3f72aea1ae1b83ccd1ef153a",
+    "reports/colorkey_around_range_full_candidate_20261001.json": "0c321b0aa09fad966df2fdfe72171e560b97837850fefa78abb85da23e6edf92",
+    "reports/colorkey_around_range_production_20261001.json": "1ebe04db042b6e7714222c271b01decd22d480f98f8af727a48ed2c96bafba22",
+    "reports/colorkey_blur_float_materialization_candidate_20261001.json": "53c8cd0fc7c89a0a76572a5881be7ba42b869a90896fbf34929d32fde6f6a610",
+    "reports/colorkey_blur_float_materialization_production_20261001.json": "fafd592df59a82058c1a62b4917a42efcc1325ddea93417e37e556b7162e66a6"
+  },
+  "checks": [
+    {
+      "exit_code": 0,
+      "test": "tests/test_olmcolorkey_around_range_20261001.py"
+    },
+    {
+      "exit_code": 0,
+      "test": "tests/test_olmcolorkey_public_entries_real_sdk_20260813.py"
+    },
+    {
+      "exit_code": 0,
+      "test": "tests/test_olmcolorkey_around_composition_owner_20261001.py"
+    },
+    {
+      "exit_code": 0,
+      "test": "tests/test_olmcolorkey_thin_public_owner_20261001.py"
+    },
+    {
+      "exit_code": 0,
+      "test": "tests/test_olmcolorkey_generic_pixel_local_pairwise.py"
+    },
+    {
+      "exit_code": 0,
+      "runner": "scripts/run_olm_generic_beta_gate.py --run-test-file",
+      "test": "tests/test_olmcolorkey_generic_pixel_local_beta.py"
+    },
+    {
+      "exit_code": 0,
+      "runner": "scripts/run_olm_generic_beta_gate.py --run-test-file",
+      "test": "tests/test_olmcolorkey_generic_roi_tile.py"
+    }
+  ],
+  "claims_not_made": [
+    "No full ten-plugin compatibility completion",
+    "No native Windows/macOS AE/UCRT/installed proof",
+    "No normal UI generation of tiny double sliders proved",
+    "No Inside/Outside general Blur completion",
+    "No all color/threshold/palette/HDR/geometry/ROI/downsample completion",
+    "No full generic beta gate/performance rerun",
+    "No invalid harness aggregate used as a numerical oracle"
+  ],
+  "current_public_validation": {
+    "all_successful_render_count": 30360,
+    "asan_ubsan_successful_render_count": 3300,
+    "atomic_failure_render_count": 48,
+    "color_calls": 4,
+    "commands": [
+      "Classic",
+      "Smart"
+    ],
+    "native_case_count": 13530,
+    "o2_successful_render_count": 27060,
+    "smart_layer_checkin_count": 1,
+    "smart_parameter_checkin_count": 33,
+    "suite_acquire_release_count": 2,
+    "world_format_calls": 2
+  },
+  "dependencies": {
+    "Headers/AE_Effect.h": "a6d5cdeba53f6934a9bac19c2c1b46b1478266f39995795c59244e3d9a355a0d",
+    "Util/AEGP_SuiteHandler.cpp": "7c054c7b0778b1b26463d6bf31cd57ee1d971946e8da22fb174e9f088741606f",
+    "Util/MissingSuiteError.cpp": "8c0cc22b898c94c73556778f5cef1ccf9cded81ee590bd04feb49028ff4f44d9",
+    "decomp/OLMColorKey.aex.c.txt": "19a2a6b200dd68ae046bca69d471dd886415245aec533264e6f7bee8caa33ca8",
+    "disasm/OLMColorKey.aex.asm.txt": "c9d4a8fe258d265e32433b6a38422ffa20dfd76e1bf688571377c9c87f0a8176",
+    "docs/BETA_SUPPORT.md": "904825f0d6d4f67d84f88555fa98ce24c868b7f41078be8396638241f2d8b45a",
+    "docs/COMPATIBILITY_ANALYSIS_PLAN_JA.md": "9e7bd737206781277b413b52a62fcaa0df06f4bdb75efce829d270ce0ae0465a",
+    "mac/OLMColorKey/OLMColorKey.cpp": "c35e713cd297acd7eca8b363998ef158e9282ccf117b91c8622dde564f37d0f9",
+    "mac/OLMColorKey/OLMColorKey.h": "aad301f085f286d7a7ca62165d7a72eef10f6dd309d4f0b52c914ceae0fed576",
+    "mac/OLMColorKey/OLMColorKey_Strings.cpp": "f999375d3608b8c7950df6bfc3d23de8dc771003904ba910e788d9bbd8ce0725",
+    "mac/OLMColorKey/OLMColorKey_Strings.h": "c05a77450f53c7a28d8245bc665127fbf749dc28c765881d6e377cf199eaa9cd",
+    "notes/COMPATIBILITY_ANALYSIS_PROGRESS_20261001.md": "967feee7fe571a60d802e07831d3657bd3dd02ea3679111cdac3b0d8fb3583dc",
+    "reports/colorkey_around_composition_boundary_production_20261001.json": "5bdef6cf7e25d33e9ffa17d5be01cac654099d42f3a7eb1ba9d01cfc98f67910",
+    "reports/colorkey_around_composition_production_20261001.json": "7e4d8301967dc27a59f37c41e5ff4eecf7ea7bde7c2ff87ce73f1784d5717246",
+    "reports/colorkey_around_range_baseline_20261001.json": "4a1e0ccf1e6a282c5dfff42969501afbb1017251c2857a75b48751001601d221",
+    "reports/colorkey_around_range_boundary_candidate_20261001.json": "28f9dbbcc03f7ba78e98078b9a6f634d0c62b9aab063cefedf40cf5eec93fac8",
+    "reports/colorkey_around_range_candidate_20261001.json": "55d81dedd50aa02e73457f81656e15b5c52a253ea5905786e7d8177b56ff8758",
+    "reports/colorkey_around_range_column_production_20261001.json": "9e6129a6c6a242deb70586a163655f2765bff1773829bf2f046b77f2e8390b73",
+    "reports/colorkey_around_range_full_candidate_20261001.json": "977a433c784f3f782dc75cde3ad2827fca8e617a15f62465756465999528870b",
+    "reports/colorkey_around_range_invalid_harness_20261001.json": "2aa575363a156d14af884d0af9687170fb8d27da995d723d3ec5743c510b8a70",
+    "reports/colorkey_around_range_production_20261001.json": "7bd1cb629b43ebc97b980eccfdfae1395c966e6f38773cadbd52ac7993a6d002",
+    "reports/colorkey_around_workspace_candidate_20261001.json": "75d853b6ae2b77ec5f04de7f96422b70f2870e470ff494bc64eb2ade8c931c9e",
+    "reports/colorkey_blur_float_materialization_candidate_20261001.json": "84b4543d5870346ed5c8523a5de1a5676abe922e3e89b911e883fb73c378e145",
+    "reports/colorkey_blur_float_materialization_production_20261001.json": "5a794a334690cc9879374dbd6867aabe4a78fea26fbe7a8f8bf6fa525598e777",
+    "reports/colorkey_thin_legal_range_generalization_production_20261001.json": "da16fa3569c224982d15633febae791a9baaca3626f886850a62519f07077e9c",
+    "reports/colorkey_thin_legal_range_no_blur_production_20261001.json": "43e9c4e5005aee76712595c23d2a303470f79b085c5d9e015bb019032d2deed7",
+    "reports/colorkey_thin_public_owner_production_20261001.json": "9708524acdbac12f607886ee126d910be7201bc93fb7f13c0870d6fce6b71d2a",
+    "scripts/run_olm_generic_beta_gate.py": "aacfded94ac9284fadeab11eafc1576b1da690ebf20badb131e255567872e785",
+    "tests/probe_olmcolorkey_generic_pixel_local_beta.cpp": "212b2b43c834198df93911ae116f59a28f0b218ef09e771e275f2af65773ca2d",
+    "tests/probe_olmcolorkey_generic_pixel_local_pairwise.cpp": "22ece178331f6f50fffe37820d2ca0e2fb0baf13d7de0d9ca71505125260b4bc",
+    "tests/test_olmcolorkey_around_composition_owner_20261001.py": "807d4e90dfc44f555d875c3639ab71cdf0c09ff401e20201ab35c5065d16ebd2",
+    "tests/test_olmcolorkey_around_range_20261001.py": "93b8a5268f865ad1c2ed7c01fe2bb4c5db4117acc206f2db0f71a1eeff7857d3",
+    "tests/test_olmcolorkey_generic_pixel_local_beta.py": "8dfd9d71aa164de7c34af052b00e05761ad79ab9f3ac98524e7f2a4e0d746753",
+    "tests/test_olmcolorkey_generic_pixel_local_pairwise.py": "4acfb5fbeb55d86b331665bd7887efb3d838940b08d45f224fad0f1b430e6086",
+    "tests/test_olmcolorkey_generic_roi_tile.py": "dd073d342df4681a894beb0d02df5c3e545298cc935c44e273d1adddce0d4076",
+    "tests/test_olmcolorkey_public_entries_real_sdk_20260813.py": "73a11c8d969ac12838abff46af2bf4ff00c3bf3a4b50aad0c58a39bf3cf1c75d",
+    "tests/test_olmcolorkey_thin_public_owner_20261001.py": "f6d68e20fd0b476054a57afff583059987697ef832196091a7579abf4ef51eb6",
+    "tools/emulation/colorkey_around_workspace_candidate_20261001.py": "fd933d906206bad7118ebf036f7cbfd8265327ed03db7e133f6f565e4ac7eac1",
+    "tools/emulation/colorkey_thin_public_host_20261001.hpp": "eaaf87c7f53b0f1238a9ecce4c4b10476272a95d88634a329f94ebfc8f6bec5d",
+    "tools/emulation/probe_olmcolorkey_around_column_20261001.py": "8352f95bbc3534c6c70dffc1d57ab2ccf412386a6c881a6237367d2012921685",
+    "tools/emulation/probe_olmcolorkey_around_composition_owner_20261001.py": "4554a07089e96ee7bbfad710a7b9536dce8bf82045c87b30f10dddd96f4a94d7",
+    "tools/emulation/probe_olmcolorkey_around_range_20261001.py": "cd8838d5bac413936736c4f594e89d70c03738ca9d0b34f57031024eb8c6371b",
+    "tools/emulation/probe_olmcolorkey_blur_float_materialization_20261001.py": "ac4eaf3be34b1fb920291fc51d48f74890cce67a027791121f882e348561f210",
+    "tools/emulation/probe_olmcolorkey_composition_generalization_20261001.py": "30b0821f5bbbaf8db4d9e83b58cfb66e057c13e7c615d533fc9d5f1e92bf4f78",
+    "tools/emulation/probe_olmcolorkey_public_entries_real_sdk_20260813.cpp": "8193b267695107b42a8b32751e6fb016a50bb24e121d378159d2604bf4582372",
+    "tools/emulation/probe_olmcolorkey_thin_public_owner_20261001.py": "a1d65f5414945aaa9c31e31eec437dbfc70234543e49c6feabfb90e63519ccfb"
+  },
+  "float_amount_after_exact_count": 30,
+  "float_amount_before_exact_count": 24,
+  "float_amount_case_count": 30,
+  "historical_around_asan_ubsan_successful_render_count": 108,
+  "historical_around_regression_case_count": 8928,
+  "historical_around_regression_successful_render_count": 17856,
+  "historical_public_regression_successful_render_count": 126,
+  "historical_thin_regression_case_count": 216,
+  "schema": "olmcolorkey.around-range-validation/1",
+  "source_sha256": "c35e713cd297acd7eca8b363998ef158e9282ccf117b91c8622dde564f37d0f9",
+  "stored_case_serialization": "Equivalent JSON values; metadata and one compact case per line. Original pretty serialization hashes preserved above, including the historical workspace candidate reference.",
+  "verdict": "PASS_LOCAL_EXPORTED_AEX_AND_REAL_SDK_FAKE_HOST",
+  "worker_sha256": "0eb2f7705598f7b5f53563b9d920274ba094c835ff3dbaaf5f6fb214ec0cfd61",
+  "workspace_candidate_column_case_count": 720,
+  "workspace_candidate_column_exact_count": 720
+}

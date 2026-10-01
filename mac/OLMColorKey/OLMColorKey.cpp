@@ -481,7 +481,7 @@ CheckoutInfo(PF_InData *in_data, PF_ParamDef *params[], OLMColorKeyInfo *info)
 	info->threshold_b = params[OLMCOLORKEY_THRESHOLD_B]->u.fs_d.value;
 	info->edge_thin_amount = params[OLMCOLORKEY_EDGE_THIN_AMOUNT]->u.sd.value;
 	info->edge_thin_distance_type = params[OLMCOLORKEY_EDGE_THIN_DISTANCE_TYPE]->u.pd.value;
-	info->edge_blur_amount = params[OLMCOLORKEY_EDGE_BLUR_AMOUNT]->u.fs_d.value;
+	info->edge_blur_amount = static_cast<float>(params[OLMCOLORKEY_EDGE_BLUR_AMOUNT]->u.fs_d.value);
 	info->edge_blur_distance_type = params[OLMCOLORKEY_EDGE_BLUR_DISTANCE_TYPE]->u.pd.value;
 	// Values materialized by the public AE parameter surface use the native
 	// owner lane.  Keep that provenance distinct from declared-record worker
@@ -585,7 +585,7 @@ CheckoutSmartInfo(PF_InData *in_data, OLMColorKeyInfo *info)
 		get(OLMCOLORKEY_THRESHOLD_B, [&](const PF_ParamDef &p){ info->threshold_b = p.u.fs_d.value; return PF_Err_NONE; });
 		get(OLMCOLORKEY_EDGE_THIN_AMOUNT, [&](const PF_ParamDef &p){ info->edge_thin_amount = p.u.sd.value; return PF_Err_NONE; });
 		get(OLMCOLORKEY_EDGE_THIN_DISTANCE_TYPE, [&](const PF_ParamDef &p){ info->edge_thin_distance_type = p.u.pd.value; return PF_Err_NONE; });
-		get(OLMCOLORKEY_EDGE_BLUR_AMOUNT, [&](const PF_ParamDef &p){ info->edge_blur_amount = p.u.fs_d.value; return PF_Err_NONE; });
+		get(OLMCOLORKEY_EDGE_BLUR_AMOUNT, [&](const PF_ParamDef &p){ info->edge_blur_amount = static_cast<float>(p.u.fs_d.value); return PF_Err_NONE; });
 		get(OLMCOLORKEY_EDGE_BLUR_DISTANCE_TYPE, [&](const PF_ParamDef &p){ info->edge_blur_distance_type = p.u.pd.value; return PF_Err_NONE; });
 		get(OLMCOLORKEY_EDGE_BLUR_DIRECTION, [&](const PF_ParamDef &p){ info->edge_blur_direction = p.u.pd.value + 100; return PF_Err_NONE; });
 		get(OLMCOLORKEY_NUMBER_OF_COLORS, [&](const PF_ParamDef &p){ info->number_of_colors = p.u.sd.value; return PF_Err_NONE; });
@@ -666,20 +666,21 @@ static std::vector<float> L1DistanceTo(const std::vector<u_char> &mask, A_long w
 	return d;
 }
 
-static std::vector<float> ChessboardDistanceTo(const std::vector<u_char> &mask, A_long w, A_long h)
+static std::vector<float> ChessboardDistanceTo(const std::vector<u_char> &mask, A_long w, A_long h, const std::vector<float> *initial = nullptr)
 {
 	if (w == 1) {
 		// FUN_1800066f0/6e20/7550 visits both row edges even for one column.
 		// Its x=1/-1 float pointers alias the next/previous contiguous row.
 		// Reproduce that scan in bounded storage with the zeroed native scratch
 		// plane; the ordinary eight-neighbor transform gives different results.
-		std::vector<float> d((size_t)h, 0.0f);
+		std::vector<float> d = initial && initial->size() == (size_t)h
+            ? *initial : std::vector<float>((size_t)h, 0.0f);
 		d[0] = mask[0] ? 0.0f : 3999.0f;
 		auto read = [&](A_long y) { return y >= 0 && y < h ? d[(size_t)y] : 0.0f; };
 		for (A_long y = 1; y < h; ++y) {
-			float left = mask[(size_t)y] ? 0.0f : std::min(read(y - 1), read(y)) + 1.0f;
+			float left = mask[(size_t)y] ? 0.0f : std::min(4000.0f, std::min(read(y - 1), read(y)) + 1.0f);
 			d[(size_t)y] = mask[(size_t)y] ? 0.0f :
-			    std::min(left + 1.0f, std::min(read(y - 1), read(y - 2)) + 1.0f);
+			    std::min(4000.0f, std::min(left + 1.0f, std::min(read(y - 1), read(y - 2)) + 1.0f));
 		}
 		for (A_long y = h - 2; y >= 0; --y) {
 			float right = std::min(read(y + 1), read(y)) + 1.0f;
@@ -1344,8 +1345,9 @@ static bool IsGenericEdgeBlurTuple(const OLMColorKeyInfo &info)
 
 static bool IsRecoveredAroundBlur(const OLMColorKeyInfo &info)
 {
-	return info.edge_blur_direction == 102 && info.edge_blur_distance_type == 2 &&
-		   info.edge_blur_amount == 4.0;
+	return info.edge_blur_direction == 102 && info.edge_blur_distance_type >= 1 &&
+           info.edge_blur_distance_type <= 3 && std::isfinite(info.edge_blur_amount) &&
+           info.edge_blur_amount > 0.0 && info.edge_blur_amount <= 4000.0;
 }
 
 static bool IsGenericEdgeCompositionTuple(const OLMColorKeyInfo &info)
@@ -1783,6 +1785,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	std::vector<u_char> matched(pixel_count, 0);
 	std::vector<int> matched_index(pixel_count, -1);
 	std::vector<u_char> thin_expanded(pixel_count, 0);
+	std::vector<float> thin_distance_workspace;
 	float key_epsilon = OLMCKPixelTraits<PixelT>::native_key_epsilon();
 	if (info.force_lower_precision == 3) {
 		key_epsilon = 0.5f / 255.0f;
@@ -1963,8 +1966,13 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		for (A_long i = 0; i < w * h; ++i) {
 			matched[i] = (matched[i] && dist[i] * scale >= amount) ? 1 : 0;
 		}
+        if (w == 1 && IsRecoveredAroundBlur(info) && info.edge_blur_distance_type == 1)
+            thin_distance_workspace = std::move(dist);
 	} else if (info.edge_thin_amount > 0.0) {
 		std::vector<float> dist = MatteDistanceTo(matched, w, h, info.edge_thin_distance_type);
+        if (w == 1 && IsRecoveredAroundBlur(info) && info.edge_blur_distance_type == 1)
+            thin_distance_workspace = MatteDistanceTo(Boundary8(matched, w, h), w, h,
+                info.edge_thin_distance_type);
 		// Standard-host positive Thin distances are in pixel units at every depth.
 		const float distance_scale = 1.0f;
 		const float limit = (float)info.edge_thin_amount;
@@ -2061,7 +2069,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		// opposite side and shifts the PF16 blur by one pixel.
 		std::vector<u_char> boundary = Boundary8(matched, w, h);
 		const bool use_pf32_amount2_native_plane =
-		    OLMCKPixelTraits<PixelT>::is_32bpc() && info.edge_blur_amount == 2.0 &&
+            !IsRecoveredAroundBlur(info) && OLMCKPixelTraits<PixelT>::is_32bpc() && info.edge_blur_amount == 2.0 &&
 		    edge_blur_direction >= 1 && edge_blur_direction <= 3;
 		const bool use_pf32_internal_amount4_native_plane =
 		    !bounded_public_owner_lane && OLMCKPixelTraits<PixelT>::is_32bpc() &&
@@ -2072,7 +2080,10 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 		    (use_pf32_amount2_native_plane || use_pf32_internal_amount4_native_plane) &&
 		            info.edge_blur_distance_type == 3
 		        ? EuclideanSquaredDistanceTo(boundary, w, h)
-		        : EdgeBlurDistanceTo(boundary, w, h, info.edge_blur_distance_type);
+            : (w == 1 && IsRecoveredAroundBlur(info) && info.edge_blur_distance_type == 1 &&
+               !thin_distance_workspace.empty())
+                ? ChessboardDistanceTo(boundary, w, h, &thin_distance_workspace)
+                : EdgeBlurDistanceTo(boundary, w, h, info.edge_blur_distance_type);
 		// The integer workers store this temporary plane in 0..255 metric units;
 		// PF32 stores pixel distances directly.  The distinction is observable at
 		// Edge Blur 2.0 even though the final PF8/PF16 quantization matches 1.0.

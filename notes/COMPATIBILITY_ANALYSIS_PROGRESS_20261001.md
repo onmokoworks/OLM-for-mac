@@ -237,6 +237,63 @@ public admissionへ追加。PARAMS_SETUPは元々valid min/max±4000なのでUI�
 完了証拠にはしない。他Blur設定、全color space/threshold/25 keys、HDR、ROI/downsample、
 installed/native hostは残る。次は他Blur設定の旧stub依存分岐を公開ownerで調べる。
 
+
+## CK-AROUND-RANGE-006 — AroundのBlur量・距離方式・workspaceを復元
+
+005後の残件だった他Blur量/距離方式を、exported AEX Smart ownerと実builderで比較。
+AroundのBlur量0.1/0.5/1/1.5/2/4/7.3/31.5/100/4000、距離方式1/2/3、Thin0/−4/+4、
+Keep off/on、全depthの9×7 mixed-alpha 540条件。正しい同一parameter比較で、変更前は
+18exact、30出力差分、492公開拒否だった。Aroundの既存曲線を全合法量/metricへ使い、
+PF32の旧Amount2専用planeをこの復元経路で通さない一時案は540/540 exact。
+
+初回の比較ハーネスは指定Blur Typeを後から2へ戻してしまっていた。parameterのnative
+propagationだけではMac側の同一設定を証明できないと分かった。FillParams後にもBlur
+Type/Amount一致をassertするよう修正して両比較を取得し直した。未公開の誤った集計は
+破棄し、invalid_harness reportにhashと無効理由を残す。本番判断には使用しない。
+
+同じ一時案を3独立geometry/alpha入力×Premultiplied2×Replace2へ広げると6480 exact。
+1×1/1×7/9×1の別6480条件は6256 exactで、224反例は1列・Thin≠0・Blur Type1に集中。
+native typed workerはThin/Blurでlocal_188のfloat distance worldを再利用する。
+1列Type1ではx±1 pointerのrow aliasにより、現在rowに残った前段値を読む。そのため
+毎回ゼロplaneを作り直したMacでは、前段距離が後段Blurに伝わらなかった。
+
+単にCore Thinのdistanceを渡す案は720中608 exactに留まった。正Thinの判定に使う
+matched距離と、nativeがworkspaceへ残すmatched境界距離は出力matteが同じでも異なる。
+native workerは正負どちらでもまずboundaryを作ってdistanceを計算する。正Thinは
+出力判定を維持しつつ1列・Around Type1で境界distanceを保持、負Thinは元のdistanceを
+引継ぐ。後段Box走査へその初期planeを渡し、4000 capを使う一般処理を復元した。
+全720条件が一時SDK Classicでexact。固定座標、期待出力byte、epsilon補正は使わない。
+AEXのworld外read自体は移植せず、以前と同じ範囲付きrow alias readを保つ。
+
+別にBlur sliderのdouble→float materializationを観測。0/1e−50/1e−40/0.1/1.5、Keep2、
+depth3の30条件で、量だけを広げた案は24exact。1e−50はnativeのfloat fieldでは0で
+Blurを実行しないが、Macはdoubleの正値を残していた。native FUN_18000de90のfloat
+宛先（info+0x40）に合わせClassic/Smart取得時にfloatへ変換すると30exact。
+通常UIが極小doubleを生成する証明とは区別する。
+
+本番はAround、Blur0〜4000、Type1/2/3、Thin±4000とのcompositionへ一般化。
+Inside/Outsideや旧internal directionにこの証拠を流用しない。source/parameter UI定義は
+変更せず、数値処理・入出力staging・cleanup規則を維持する。公開540条件は本番で
+全exact、独立1×13 mixed-alpha column540条件も新規native比較で全exact、float境界30も
+新規native比較で全exact。基準となるnative raw hashは保持する。
+
+現行productionを実SDK Classic/Smartで全13530条件へO2再生し27060成功render、さらに
+幅1・Blur Type1の1620条件とfloat30条件をASan/UBSanで両cmd再生し3300成功render。
+合計30360がnative hash一致。入出力padding/source不変、suite acquire/release各2、
+world format照会2、color照会4、Smartの33 parameter/1 Layer checkinを各実行で確認。
+Blur−1/4001、Thin±4001の48失敗renderは全出力を変更せず拒否。
+
+従来公開126出力、Around/Thinの8928 witness（17856公開再生＋既存sanitizer54条件）、
+Thin公開216、generic pairwise、pixel-localとROI/tileの回帰もPASS。古いpixel-local
+admission testのAround/Type1/Amount1拒否だけは、今回の根拠に合わせ成功・staging非commit
+の期待へ変更。test functionのみのファイルは単なるpython実行では検証されないため、
+run_olm_generic_beta_gate --run-test-fileで実行を確認した。full generic gate/性能を再実行
+したという主張はしない。
+
+証拠はlocal AEX math substituteと実SDK fake host。Windows UCRT/native AE、installed、
+全color/threshold/25 keys/HDR、Inside/Outside、任意geometry/全状態、ROI/downsampleは
+未完。取得した全件の一致を全10本の完成には一般化せず、Goalはactive。
+
 ## BASELINE-001: 検証証拠の環境差
 
 Thin修正後のgeneric gateも52 PASS/1 FAIL/0 SKIP（既存baselineと同じ）。性能レポートの実行prefixはPython 3.14.6をbindし、
@@ -816,7 +873,7 @@ BETA_SUPPORTのDirectionalBlur欄に残るdeep SDR制約を、PF16 raw uint16/ P
 
 ## 次の順序
 
-1. ColorKeyの他Blur設定を公開ownerで再検証し、旧import stub依存の分岐を復元。
+1. ColorKeyのInside/Outside Blur設定を公開ownerで再検証し、旧import stub依存の分岐を復元。
 2. 全color/threshold、HDRとnative host/ROI/downsampleを拡張検証。
 3. Smoother2の分類到達は今回の集合で確認済み。色・alpha・scan/weightの状態と
    public owner/native hostの比較は残る。計画に沿いDirectionalBlur Dual等の一般入力も進める。

@@ -99,8 +99,9 @@ static bool Run(short depth, A_long width, A_long height)
 	    PF_Err_BAD_CALLBACK_PARAM) return false;
 	OLMColorKeyInfo edge = PixelLocalInfo();
 	edge.edge_blur_amount = 1.0;
+	const auto output_before_around = output;
 	if (PrepareRenderWorld(&in, &out, edge, depth, &prepared) !=
-	    PF_Err_BAD_CALLBACK_PARAM) return false;
+	    PF_Err_NONE || output != output_before_around || input != input_before) return false;
 	OLMColorKeyInfo invalid_thin = PixelLocalInfo();
 	invalid_thin.edge_thin_amount = 4001.0;
 	if (PrepareRenderWorld(&in, &out, invalid_thin, depth, &prepared) !=

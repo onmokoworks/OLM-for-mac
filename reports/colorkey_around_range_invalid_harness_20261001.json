@@ -1,0 +1,10 @@
+{
+  "discarded_probe_sha256": "c36c75252c72df0c50001f031bfaabbb6bd543f25a3127414a91f39e38dcd56c",
+  "discarded_report_sha256": {
+    "colorkey_around_range_baseline_20261001.json": "72eb7a95c331dc50004888838c120606157f028ebd7d42df8d6c4acb9fe0228f",
+    "colorkey_around_range_candidate_20261001.json": "78c826bd64238a266910526b84d63882cafc6cd11db915ad18f4da43456b22cf"
+  },
+  "reason": "Mac test info Blur distance override preceded the inherited default assignment to 2. Native builder values were correct, Mac was not identical for requested metric 1/3. Old unpublished reports are discarded and recaptured; no production change used them.",
+  "schema": "olmcolorkey.invalid-range-harness/1",
+  "valid_numerical_comparison": false
+}
