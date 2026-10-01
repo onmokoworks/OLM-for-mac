@@ -140,7 +140,7 @@ static bool Run(short depth, A_long width, A_long height)
 	composition.edge_thin_amount = 4.0;
 	composition.edge_blur_direction = 101;
 	if (PrepareRenderWorld(&in, &out, composition, depth, &prepared) !=
-	    PF_Err_BAD_CALLBACK_PARAM || output != output_before_reject ||
+	    PF_Err_NONE || output != output_before_reject ||
 	    input != input_before) return false;
 	return true;
 }

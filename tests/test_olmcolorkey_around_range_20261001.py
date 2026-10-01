@@ -8,7 +8,7 @@ class AroundRangeTests(unittest.TestCase):
   read=lambda name:json.loads((ROOT/'reports'/name).read_text())
   baseline=read('colorkey_around_range_baseline_20261001.json');production=read('colorkey_around_range_production_20261001.json')
   self.assertEqual(baseline['case_count'],540);self.assertEqual(baseline['summary'],{'classic':18,'smart':18})
-  self.assertEqual(production['summary'],{'classic':540,'smart':540});self.assertEqual(production['source_sha256'],owner.sha(owner.SOURCE.read_bytes()))
+  self.assertEqual(production['summary'],{'classic':540,'smart':540});self.assertEqual(production['source_sha256'],'c35e713cd297acd7eca8b363998ef158e9282ccf117b91c8622dde564f37d0f9') # Historical capture; current source is replayed below.
   self.assertEqual([c['actual_sha256'] for c in baseline['cases']],[c['actual_sha256'] for c in production['cases']])
   reports=[read(n) for n in ('colorkey_around_range_full_candidate_20261001.json','colorkey_around_range_boundary_candidate_20261001.json','colorkey_around_range_column_production_20261001.json')]
   self.assertEqual([r['case_count'] for r in reports],[6480,6480,540]);self.assertEqual(reports[1]['summary'],{'classic':6256,'smart':6256})

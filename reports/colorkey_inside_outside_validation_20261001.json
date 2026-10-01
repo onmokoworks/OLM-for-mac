@@ -1,0 +1,86 @@
+{
+  "all_successful_render_count": 29088,
+  "atomic_failure_render_count": 96,
+  "claims_not_made": [
+    "No native Windows AE/UCRT/Mac AE/installed completion",
+    "No all color-space/threshold/HDR/ROI/downsample completion",
+    "No all-ten completion"
+  ],
+  "dependencies_sha256": {
+    "mac/OLMColorKey/OLMColorKey.cpp": "e29ef41ebbc9aea49ad323dbec0f67f3f31645ace601d5429610918cc18b0d0b",
+    "reports/colorkey_blur_nan_semantics_20261001.json": "12bdbf74824c9cb63eb73d57bb78a97f3996f318bec297ecc0862b7abf906b3f",
+    "reports/colorkey_inside_outside_candidate_replay_20261001.json": "7698c319934bd52688159ad05217325f426ca1f5477a174b40be6bef44646808",
+    "reports/colorkey_inside_outside_production_20261001.json": "0f94e0c06601f0c7b5a8bd6ed096244dc932b94bf28227615c43825dc834c7db",
+    "tests/probe_olmcolorkey_generic_pixel_local_beta.cpp": "0cda770d6d05b2c50b2bda4a15e975b3113b842147c819ce4e1e355266806b68",
+    "tests/test_olmcolorkey_around_composition_owner_20261001.py": "807d4e90dfc44f555d875c3639ab71cdf0c09ff401e20201ab35c5065d16ebd2",
+    "tests/test_olmcolorkey_around_range_20261001.py": "0e74d400edabeba4e18f4535e065d4ea2c0846101e0f66443b253517d9d51d67",
+    "tests/test_olmcolorkey_generic_pixel_local_beta.py": "8dfd9d71aa164de7c34af052b00e05761ad79ab9f3ac98524e7f2a4e0d746753",
+    "tests/test_olmcolorkey_generic_pixel_local_pairwise.py": "4acfb5fbeb55d86b331665bd7887efb3d838940b08d45f224fad0f1b430e6086",
+    "tests/test_olmcolorkey_generic_roi_tile.py": "dd073d342df4681a894beb0d02df5c3e545298cc935c44e273d1adddce0d4076",
+    "tests/test_olmcolorkey_inside_outside_owner_20261001.py": "8c58265e0145d8d646df10ef2e725784686d49d50547110c9b865e33f4f7aa55",
+    "tests/test_olmcolorkey_public_entries_real_sdk_20260813.py": "73a11c8d969ac12838abff46af2bf4ff00c3bf3a4b50aad0c58a39bf3cf1c75d",
+    "tests/test_olmcolorkey_thin_public_owner_20261001.py": "f6d68e20fd0b476054a57afff583059987697ef832196091a7579abf4ef51eb6",
+    "tools/emulation/colorkey_public_blur_candidate_20261001.py": "6f287e23f4cbc85b9187a85bd405bc47f649a2c40e072c03fc2f9e9d3627cf06",
+    "tools/emulation/colorkey_thin_public_host_20261001.hpp": "eaaf87c7f53b0f1238a9ecce4c4b10476272a95d88634a329f94ebfc8f6bec5d",
+    "tools/emulation/probe_olmcolorkey_around_column_20261001.py": "8352f95bbc3534c6c70dffc1d57ab2ccf412386a6c881a6237367d2012921685",
+    "tools/emulation/probe_olmcolorkey_around_composition_owner_20261001.py": "4554a07089e96ee7bbfad710a7b9536dce8bf82045c87b30f10dddd96f4a94d7",
+    "tools/emulation/probe_olmcolorkey_around_range_20261001.py": "cd8838d5bac413936736c4f594e89d70c03738ca9d0b34f57031024eb8c6371b",
+    "tools/emulation/probe_olmcolorkey_blur_float_materialization_20261001.py": "ac4eaf3be34b1fb920291fc51d48f74890cce67a027791121f882e348561f210",
+    "tools/emulation/probe_olmcolorkey_blur_nan_semantics_20261001.py": "e14e69e12543dfee2fa9ad7fc5d4f74c4e0eb49a0453308e40470a564ca32738",
+    "tools/emulation/probe_olmcolorkey_composition_generalization_20261001.py": "30b0821f5bbbaf8db4d9e83b58cfb66e057c13e7c615d533fc9d5f1e92bf4f78",
+    "tools/emulation/probe_olmcolorkey_composition_hypotheses_20261001.py": "a22de535de9a764acb78ae41bc215126eb9d62b147d005c55c82a46703886edc",
+    "tools/emulation/probe_olmcolorkey_inside_outside_owner_20261001.py": "ded701f55b24ed1121f1de5a1239937fa071407d02134f6b8e8a131a5f148f41",
+    "tools/emulation/probe_olmcolorkey_legal_composition_20261001.py": "0894eb19bfd57c74fc086bb0b32a9e17888604b90663fb8021bb46483aa08989",
+    "tools/emulation/probe_olmcolorkey_public_blur_recovery_20261001.py": "db225339d62f36cbf8ab4c1c9691a67a407ac96c626a1a47073f69d148bc9dc9",
+    "tools/emulation/probe_olmcolorkey_public_entries_real_sdk_20260813.cpp": "8193b267695107b42a8b32751e6fb016a50bb24e121d378159d2604bf4582372",
+    "tools/emulation/probe_olmcolorkey_thin_boundary_replay_20261001.py": "957b4641926dd23e8d06e74106e81a87d8cf6f9889f616799c2d2b90a14437f4",
+    "tools/emulation/probe_olmcolorkey_thin_metric_boundaries_20261001.py": "b70f450d79733c4cf3110a6878d6a974d940b6f1ac4073862a344ed8f7298875",
+    "tools/emulation/probe_olmcolorkey_thin_public_owner_20261001.py": "a1d65f5414945aaa9c31e31eec437dbfc70234543e49c6feabfb90e63519ccfb"
+  },
+  "existing_regressions": {
+    "around_composition_asan_ubsan_successful_render_count": 108,
+    "around_composition_native_case_count": 8928,
+    "around_composition_o2_successful_render_count": 17856,
+    "around_range_asan_ubsan_successful_render_count": 3300,
+    "around_range_atomic_failure_render_count": 48,
+    "around_range_native_case_count": 13530,
+    "around_range_o2_successful_render_count": 27060,
+    "full_generic_gate_and_performance_rerun": false,
+    "generic_pixel_local_beta": "PASS",
+    "generic_pixel_local_pairwise_cells": 36,
+    "generic_roi_tile": "PASS",
+    "historical_public_callback_controls": 13,
+    "historical_public_successful_render_count": 126,
+    "thin_public_native_case_count": 216
+  },
+  "native_case_count": 11232,
+  "native_case_report_sha256": {
+    "reports/colorkey_inside_outside_baseline_candidate_20261001.json": "05e3a424621e26e7b8f2959e6e5e940cc402e48447a7dfbc4163b98544c62368",
+    "reports/colorkey_inside_outside_boundary_candidate_20261001.json": "0a1beb26bf2bcfee9ecc1445b6174b2f5ca2152b3240a895de4bce4431db2587",
+    "reports/colorkey_inside_outside_toggle_candidate_20261001.json": "254ac7508009aa11cdfcea28a30437948d7952548f2d61c1a3fe7c406a2a4ee1"
+  },
+  "production_recapture": {
+    "case_count": 1404,
+    "exact_counts": {
+      "classic": 1404,
+      "smart": 1404
+    },
+    "report_sha256": "0f94e0c06601f0c7b5a8bd6ed096244dc932b94bf28227615c43825dc834c7db",
+    "source_parameter_native_hash_records_equal_to_baseline": true
+  },
+  "schema": "olmcolorkey.inside-outside-live-validation/1",
+  "sdk_lifecycle": {
+    "color_calls": 4,
+    "failure_output_unchanged": true,
+    "smart_layer_checkout_checkin_count": 1,
+    "smart_parameter_checkout_checkin_count": 33,
+    "source_and_padding_unchanged": true,
+    "suite_acquire_release_count": 2,
+    "world_format_calls": 2
+  },
+  "source_sha256": "e29ef41ebbc9aea49ad323dbec0f67f3f31645ace601d5429610918cc18b0d0b",
+  "successful_render_counts": {
+    "asan_ubsan": 6624,
+    "o2": 22464
+  }
+}

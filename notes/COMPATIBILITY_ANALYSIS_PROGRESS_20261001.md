@@ -871,10 +871,68 @@ BETA_SUPPORTのDirectionalBlur欄に残るdeep SDR制約を、PF16 raw uint16/ P
 整数境界・保守的予算の拒否は未閉鎖。150条件や汎用入力制限の解除で全互換とは
 扱わず、Goalはactive。
 
+## CK-IO-RANGE-007 — Inside/Outsideの一般曲線とSSE境界を復元
+
+006で残したInside/Outsideを、同じ元AEXの公開Smart ownerと実parameter builderで
+比較した。新しい実SDK harnessはBlur Direction/Type/AmountをFillParams後にもassert。
+公開Direction 1/3、Blur Type 1/2/3、Thin 0/−4/+4（Type 2/1/3）、Keep off/on、3深度、
+Blur 0/1e−50/1e−40/0.1/0.5/1/1.5/2/4/7.3/31.5/100/4000を独自9×7 mixed-alpha入力へ
+適用。変更前は1404条件のうち222 exact、36出力差分、1146公開拒否だった。
+
+静的事実: FUN_1800053a0はmatched matte側だけにInside曲線を適用し、外側を0にする。
+FUN_1800056f0はmatched matte側を1とし、外側だけにOutside曲線を適用する。共に
+FLOAT32 pi/amountとdistanceの積をdoubleへ変換し、double pi/2を減算／逆順減算して
+sinを呼ぶ。doubleで+1した後floatへ変換し、0.5fを乗算する。PE内の定数値とbitsを
+確認した。Aroundのsinfへ統合せず、この変換順を復元する。writer後にKeep-offがsource
+alphaからfinished matched matteを引く。先にmask/weightを補数にすると丸めが違う。
+
+初案は1392/1404 exact。残る12条件はPF32 Inside・Blur1e−40・Thin0/+4で、通常量の
+曲線誤差ではなかった。typed resident ownerで同じraw hashを取得し、元AEXのalphaは
+0xffc00000、Mac初案は0x7fc00000と確認（各条件の差分pixel countと最初の8箇所を保持）。
+floatのpi/amountが+Infとなり、boundary distance0とのMULSSでinvalidが発生する。
+x86 SSEの負quiet NaNをphaseの演算段階で再現し、sin/加算/変換/writerへそのまま渡す。
+最終出力のNaN bitsを後から補正しない。通常AE UIが極小doubleを生成する証明とは別。
+
+PF8/PF16 writerの実命令はCVTTSS2SI→低byte/word store。NaN/Inf/範囲外をINT32_MIN、
+それ以外をtruncにする定義済みhelperを使い、NaN→C++ intの未定義動作を避けた。
+初案のcaptureを変更せず、改訂案は1404条件のClassic/Smart 2808 renderで全raw exact。
+float materialization/NaNの324条件はASan/UBSan両cmdの648 renderでもexactだった。
+
+別17×15 mixed-alpha入力×Premultiplied/Replaceの4 toggleでは5616/5616 exact。
+1×1 opaque、1×13 mixed-alpha column、9×1 mixed-alpha rowの4212条件も全exact。
+1列Type1のThin/Blur workspace再利用は3つの公開directionへ同じnative規則で拡張する。
+旧PF32 Amount2専用planeと正Thin/Outside捕捉専用callerを復元済みpublic経路で通さない。
+旧internal direction0/4の証拠を公開Inside/Outsideへ読み替えない。
+
+本番はInside/Around/OutsideのBlur 0〜4000、Type1〜3、Thin±4000との合成へ一般化。
+新しい公開AEX再取得1404条件はClassic/Smartで全exactで、以前の同じ条件のnative raw
+hash・source hash・parameter readbackを全保持した。3つの独立集合の11232条件は重複なし。
+production seamなし・実SDK fake hostでO2の22464成功renderが全native hash一致。
+幅1・Blur Type1とfloat materialization/NaNの3312条件をASan/UBSanで両cmd再生し、
+6624成功renderも全hash一致。合計29088成功render。Blur−1/4001、Thin±4001の
+96失敗renderは出力不変で拒否。入出力padding/source不変、suite acquire/release各2、
+world format照会2、color照会4、Smart33 parameter/1 Layerのcheckout/checkinを確認。
+現行source/依存hashと結果はcolorkey_inside_outside_validation_20261001.jsonへ記録。
+
+従来の公開126出力とcallback13 controls、Thin公開216、Around/Thinの8928 witness、
+Around range13530条件、generic pairwise36 cells、pixel-local、ROI/tileの回帰がPASS。
+pixel-local admissionのInside/Thin合法tupleだけは今回の根拠に合わせ受入れへ変更。
+古いAroundのsource hashは83175141の取得時bindingとして固定し、現行sourceの出力は
+別途全再生した。capture/native hashを現在sourceへ付け替えない。full generic gateと
+性能の再測定、installed/native AEを実行したという主張はしない。
+
+candidate生成toolsは取得時83175141のsourceを対象とする履歴解析用。現行productionは
+--candidateなしで再取得できる。元AEX本体、native raw画像、decompや別repoのworkerは
+commit/Pushしない。公開するのは復元source、独自入力生成器、検証とhash/事実の記録。
+
+証拠はlocal exported AEXのmath substituteと実SDK fake host。Windows UCRT/native AE、
+Mac installed、全color/threshold/25 keys/HDR、任意geometry/全状態、ROI/downsample、
+UI/project保存は未完。全10本の完全互換を達成とは扱わず、Goalはactive。
+
 ## 次の順序
 
-1. ColorKeyのInside/Outside Blur設定を公開ownerで再検証し、旧import stub依存の分岐を復元。
-2. 全color/threshold、HDRとnative host/ROI/downsampleを拡張検証。
+1. ColorKeyの全color/thresholdとHDRをtyped public ownerで比較し、最初の不一致を分類・復元。
+2. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
 3. Smoother2の分類到達は今回の集合で確認済み。色・alpha・scan/weightの状態と
    public owner/native hostの比較は残る。計画に沿いDirectionalBlur Dual等の一般入力も進める。
 
