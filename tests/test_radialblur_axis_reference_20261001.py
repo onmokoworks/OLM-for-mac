@@ -20,6 +20,8 @@ def load(name):
 class AxisReferenceTests(unittest.TestCase):
     def test_current_public_pixels_with_strict_sanitizers(self):
         capture = load('radialblur_axis_reference_public_20261001.json')
+        offset = load('radialblur_noise_offset_counterfactual_20261001.json')
+        current = {(r['matrix'], r['row_index']): r for r in offset['rows'] if r['group'] == 'retained'}
         env = dict(os.environ, ASAN_OPTIONS='detect_leaks=0:halt_on_error=1',
                    UBSAN_OPTIONS='halt_on_error=1:print_stacktrace=1')
         count = 0
@@ -29,12 +31,12 @@ class AxisReferenceTests(unittest.TestCase):
             for row in capture['rows']:
                 for command in ('classic', 'smart'):
                     error, raw, metadata = public.mac_render(binary, temp, row, command, env)
-                    result = row['results'][command]
+                    result = current[(row['matrix'], row['row_index'])]['results']['getter_and_profiles'][command]
                     self.assertEqual(error, result['error'])
                     self.assertEqual(public.sha(raw) if not error else None, result['raw_sha256'])
                     self.assertEqual(metadata, result['metadata'])
                     self.assertEqual(not error and public.sha(raw) == row['corrected_raw_sha256'],
-                                     result['corrected_raw_exact'])
+                                     result['raw_exact'])
                     count += 1
         self.assertEqual(count, 620)
         print('AXIS_STRICT_SANITIZER_PUBLIC', count, flush=True)
@@ -99,6 +101,7 @@ class AxisReferenceTests(unittest.TestCase):
         sampler = load('radialblur_axis_sampler_first_difference_20261001.json')
         build = load('radialblur_axis_reference_build_20261001.json')
         parent = load('radialblur_typed_trace_reference_build_20261001.json')
+        offset = load('radialblur_noise_offset_counterfactual_20261001.json')
         self.assertEqual(build['parent_worker_sha256'], parent['worker_sha256'])
         self.assertTrue(build['parent_source_and_worker_unchanged'])
         self.assertEqual(build['parent_build_sha256'], public.sha((ROOT/'reports/radialblur_typed_trace_reference_build_20261001.json').read_bytes()))
@@ -109,8 +112,14 @@ class AxisReferenceTests(unittest.TestCase):
         for name in ('radialblur_atan2_axis_scalar_20261001.json', 'radialblur_axis_reference_public_20261001.json',
                      'radialblur_axis_sampler_first_difference_20261001.json'):
             for path, expected in load(name)['dependencies_sha256'].items():
-                self.assertEqual(public.sha((ROOT/path).read_bytes()), expected, path)
-        self.assertEqual(capture['source_sha256'], public.sha(public.SOURCE.read_bytes()))
+                if path == 'mac/OLMRadialBlur/OLMRadialBlur.cpp':
+                    self.assertEqual(expected, offset['source_before_sha256'])
+                elif path == 'mac/OLMRadialBlur/OLMRadialBlur.h':
+                    self.assertEqual(expected, offset['header_before_sha256'])
+                else:
+                    self.assertEqual(public.sha((ROOT/path).read_bytes()), expected, path)
+        self.assertEqual(capture['source_sha256'], offset['source_before_sha256'])
+        self.assertEqual(public.sha(public.SOURCE.read_bytes()), offset['candidate_source_sha256'])
         self.assertEqual(sampler['public_coordinate'], [0, 5])
         self.assertEqual(sampler['relative_coordinate'], [-8, 0])
         self.assertEqual(sampler['traces']['parent']['angle_f32_le_hex'], 'da0f4940')

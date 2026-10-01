@@ -81,8 +81,10 @@ class TypedAngleTests(unittest.TestCase):
                         self.assertEqual(struct.pack('<I', int(sine, 16)).hex(), row['transform_sin_f32_hex'])
                         if raw_angle in expected_boundary:
                             self.assertEqual(int(argument), expected_boundary[raw_angle])
-                        # Offset is a separately demonstrated outstanding getter.
-                        self.assertEqual(int(observed_offset), raw_offset)
+                        # This historical SDK harness prints the integer part.
+                        # Full phase bits are checked by the separate Offset test.
+                        phase = struct.unpack('<f', bytes.fromhex(row['noise_offset_f32_hex']))[0]
+                        self.assertEqual(int(observed_offset), int(phase))
                         total += 1
                     print('RADIAL_TYPED_SDK', 'san' if sanitize else 'o2', total, flush=True)
         finally:
@@ -93,8 +95,17 @@ class TypedAngleTests(unittest.TestCase):
         native = load('radialblur_typed_angle_public_route_20261001.json')
         capture = load('radialblur_typed_angle_mac_baseline_20261001.json')
         self.assertEqual(capture['summary'], {'both_commands_exact': 11, 'different': 13, 'mac_rejected': 4})
+        offset = load('radialblur_noise_offset_counterfactual_20261001.json')
+        current_rows = [r for r in offset['rows'] if r['group'] == 'retained' and r['matrix'] == 'typed']
+        self.assertEqual(len(current_rows), 28)
         for name, expected in capture['dependencies_sha256'].items():
-            self.assertEqual(public.sha((ROOT/name).read_bytes()), expected, name)
+            if name == 'mac/OLMRadialBlur/OLMRadialBlur.cpp':
+                self.assertEqual(expected, offset['source_before_sha256'])
+            elif name == 'mac/OLMRadialBlur/OLMRadialBlur.h':
+                self.assertEqual(expected, offset['header_before_sha256'])
+            else:
+                self.assertEqual(public.sha((ROOT/name).read_bytes()), expected, name)
+        self.assertEqual(public.sha(public.SOURCE.read_bytes()), offset['candidate_source_sha256'])
         env = dict(os.environ, ASAN_OPTIONS='detect_leaks=0:halt_on_error=1',
                    UBSAN_OPTIONS='halt_on_error=1:print_stacktrace=1')
         total = 0
@@ -102,13 +113,13 @@ class TypedAngleTests(unittest.TestCase):
             temp = Path(directory)
             for sanitize in (False, True):
                 binary = public.build(temp/('san' if sanitize else 'o2'), public.SOURCE.read_text(), sanitize)
-                for index, (case, row) in enumerate(zip(native['rows'], capture['rows'])):
+                for index, (case, row) in enumerate(zip(native['rows'], current_rows)):
                     self.assertEqual(row['row_index'], index)
                     self.assertEqual(case['input_sha256'], row['input_sha256'])
                     self.assertEqual(case['native_raw_sha256'], row['native_raw_sha256'])
                     for mode in ('classic', 'smart'):
                         error, raw, metadata = public.mac_render(binary, temp, case, mode, env)
-                        result = row['results'][mode]
+                        result = row['results']['getter_and_profiles'][mode]
                         self.assertEqual(error, result['error'])
                         self.assertEqual(public.sha(raw) if not error else None, result['raw_sha256'])
                         self.assertEqual(not error and public.sha(raw) == case['native_raw_sha256'], result['raw_exact'])

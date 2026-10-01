@@ -128,7 +128,7 @@ typedef struct {
 	A_long noise_type;
 	A_long noise_layer;
 	A_long seed;
-	A_long noise_offset;
+	float noise_offset;
 	PF_FpLong thickness;
 	PF_FpLong comp_width;
 	PF_FpLong comp_height;

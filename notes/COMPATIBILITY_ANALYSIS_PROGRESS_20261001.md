@@ -1500,11 +1500,69 @@ radialblur_axis_reference_validation_20261001.jsonに実行と現行bindingを�
 Size25制限、一般UCRT/native両AE、installed、UI保存、ROI/downsample、全10本完全互換は
 未完。Goalはactive。
 
+## RB-NOISE-OFFSET-024 — 公開ADからFLOAT32位相とノイズ格子への接続を復元
+
+前回の参照軸修正・310条件再測定・Pushはprogressだった。今回は残っていた公開Noise
+Offsetの型・単位を、元getterから自然公開格子と出力まで比較して本番へ接続した。
+
+FACT: import-free a2b0はAD rawのsigned32をDOUBLEへ変換し、元定数
+2.663161090079238e-7（bytes399d52a246df913e）で乗算し、FLOAT32へ丸めて書く。
+従来MacはAngle型のrecordをu.sd.valueとして読み、A_longに生fixed値を保持していた。
+本番getterをu.ad.value→上記定数乗算→floatへ変更し、info.noise_offsetの型もfloatへ変更。
+内部noise格子は元からfloat位相を受け取る。UI1°は0x3c8efa35、30°は0x3f060a92であり、
+生fixedの65536/1966080をそのまま位相として渡す挙動を復元規則とは扱わない。
+
+FACT: 公開元AEXの初回9680 samplerから、初期化済みcontextとnoise格子をread-only採取。
+9380 constructor-entryのderefは未初期化で、返却時にもentry時のpointerを使うため、
+その読取りを格子の証拠に使わない。Zoom/Rotation、23×13/31×19、Type1 seed1/Thickness3、
+Type1 seed2/Thickness10、Type2 seed1/Thickness10、raw0/1/16384/65536/1966080/5898240/
+23592960/INT32_MAXの96条件で、元のAD変換と既存coreのnoise格子全byteが一致した。
+格子はsampler前後で不変、PNG traceのraw hashも同じ設定のtyped resident出力と全行一致。
+元context/格子の全byteや画像は公開せず、scalar bits・全格子hash・先頭4 floatだけを保持。
+これはcontrolled importを使う公開AEXの証拠で、native Windows AE/UCRT比較とは分ける。
+
+FACT: 本番を変更する前に、旧source、getter/typeだけ直すsource、位相profileも直すsource
+を別コピーで比較した。旧0/1だけの位相条件では、getterだけ直しても拒否を解消できない。
+元の正の位相はTABLE100への加算と100減算wrapで処理され、full signed ADの非負入力では
+生成positionが有限でindex0..99に保たれる。既存Type1のseed/thickness組とType2のseed1/
+quality/thickness組で、この一般位相規則を採用。noise量と他controlの制限は別に残る。
+負位相にはCVTTSS2SIの負indexからtable前を読む境界があり、実際の契約は未検証。
+負を正へwrapする新仕様や固定case補正を発明せず、未完として記録する。
+
+既存310条件は94 exact・122差分・94拒否から、99 exact・127差分・84拒否へ変わった。
+既存exactを失った条件は0、Offset10拒否はすべて解消し5条件が追加exact、5条件は他の差を
+保持する。getters30は10 exact・20差分・0拒否、topology252は76 exact・92差分・84拒否、
+typed28は13 exact・15差分・0拒否。Offset0の全行は旧raw/errorと同じ。
+
+独立23×13/31×19の384条件は、2 family・3深度・Type1二組/Type2二組・Noise25/100・
+Offset0/1/90/360°を公開residentで取得した。旧32 exact・64差分・288拒否から、129 exact・
+255差分・0拒否。追加97 exact。Zoom PF16の64条件は全exactだが、Zoom PF8は33/64、
+PF32は32/64、Rotationは0/192 exactである。格子は復元できてもfield/scatter/sampler/writerの
+他の境界は閉じていない。31×19は保存Windows scalarでhost atan2f差がある(±8,9)を含むため、
+残差を全て移植bugと断定せず、参照を再監査することを次の手法とする。
+
+本番sourceは9a4e9eddec319185c01d2dd289d586aa41e3aafeca7aeefe23d1a86cd3243548。
+別コピーの本番候補と同じsource/header hashを確認してから適用した。実SDKのNoise Offset
+readerは負値を含む148 raw入力×O2/ASan/UBSanの296再生で元のimport-free getterとbit一致。
+694公開条件のO2/strict sanitizer両cmdは2776再生で別コピーの全raw/error/metadataを再現。
+新3 unittest、更新したpublic parameter/typed Angle/reference-axisの10 unittestもPASS。
+後者は過去source/headerの記録を保持し、現行再生だけを今回のcandidate bindingへ移した。
+Edge Fade合法0..100も両getter/両cmd/両build404回維持。現行public再生合計は5040回、
+Noise Offset296＋Angle56のSDK scalar再生は352回。旧sourceの別コピー比較3544回、公開AEX
+trace96＋resident96＋独立resident384も別に保持する。テストPASSを未解消画素のexactとは
+呼ばない。generic baseline・sanitizer・Type3・budget・SizeNoise EffectMain・global polar ROI
+の6回帰と共通ROI契約もPASS。arm64/x86_64 O2実SDK buildも成功し、installedは変更しない。
+
+reports/radialblur_noise_offset_field_20261001.json、noise_offset_counterfactual_20261001.json、
+noise_offset_validation_20261001.jsonへ根拠・反証・現行bindingを保存する。負位相、任意
+seed/thickness/noise量、Rotation/Zoom残差、参照の非軸4 scalar差、Size25制限、一般UCRT/
+native両AE、installed、UI保存、ROI/downsample、全10本完全互換は未完。Goalはactive。
+
 ## 次の順序
 
 1. Smoother2のHDR/Gamma合成と色境界の今回の有限集合は検証済み。公開builderのLUT構築とnative依存先を分け、未測定scan長・任意float・独立paletteの最初の差を復元する。
 2. ColorKeyの未検証geometry/任意float/paletteとThin/Blur合成を拡張する。今回の境界・overflow比較を全入力の証明とは扱わず、固定workerとcontrolled Lab94参照を分け、native Windows UCRTとの比較を残す。
 3. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
-4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはtyped Angleの読み取り・整数化と比較workerの正ゼロ/負x atan2f軸を復元し、旧参照由来の26不一致を切り分けた。次はOffsetのFLOAT32読取りと残る自然public field/samplerの最初の差を閉じ、Size25の面積制限・端/穴/島へ進む。その後KiraKira一般入力を比較する。
+4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはAngle/Edge/PointとNoise OffsetのFLOAT32接続を復元した。まず31×19の残差に含まれる参照atan2f非軸4 scalar差を再監査し、残る自然public field/samplerの最初の差を閉じる。負位相のnative契約・Size25の面積制限・端/穴/島へ進み、その後KiraKira一般入力を比較する。
 
 既存の作業ツリー変更は今回のcommitに混ぜない。第三者AEXとnative raw出力をPushしない。

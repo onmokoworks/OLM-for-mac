@@ -22,6 +22,12 @@
 
 static constexpr PF_FpLong kPi = 3.141592653589793238462643383279502884;
 
+static float RadialNoiseOffsetRadians(PF_Fixed raw_angle)
+{
+	// Native a2b0: signed AD -> DOUBLE multiply -> FLOAT32 phase.
+	return (float)((double)raw_angle * 2.663161090079238e-7);
+}
+
 static int32_t RadialAngleFixedRadians(PF_FpLong angle_degrees)
 {
 	// Native 8690 multiplies the raw AD fixed value by this DOUBLE constant,
@@ -858,13 +864,15 @@ static bool IsGenericProceduralNoiseProfile(const OLMRadialBlurInfo &info)
 {
 	if (info.noise_variation == 0.0) return info.noise_type == 1;
 	if (info.noise_variation != 25.0 && info.noise_variation != 100.0) return false;
+	// Nonnegative phases from the full signed AD range keep table indices valid.
+	// Negative phases can address before the native random table; still unverified.
+	if (!std::isfinite(info.noise_offset) || info.noise_offset < 0.0f ||
+		info.noise_offset > RadialNoiseOffsetRadians(std::numeric_limits<PF_Fixed>::max())) return false;
 	if (info.noise_type == 1 && info.quality == 5.0) {
-		return (info.seed == 1 && info.noise_offset == 0 && info.thickness == 3.0) ||
-			(info.seed == 2 && info.noise_offset == 1 && info.thickness == 10.0) ||
-			(info.seed == 1 && info.noise_offset == 1 && info.thickness == 3.0) ||
-			(info.seed == 2 && info.noise_offset == 0 && info.thickness == 10.0);
+		return (info.seed == 1 && info.thickness == 3.0) ||
+			(info.seed == 2 && info.thickness == 10.0);
 	}
-	if (info.noise_type == 2 && info.seed == 1 && info.noise_offset == 0) {
+	if (info.noise_type == 2 && info.seed == 1) {
 		return (info.quality == 5.0 && (info.thickness == 3.0 || info.thickness == 10.0)) ||
 			(info.quality == 3.0 && info.thickness == 10.0);
 	}
@@ -5470,7 +5478,8 @@ static OLMRadialBlurInfo InfoFromParams(PF_ParamDef *params[], PF_FpLong comp_wi
 	info.noise_type = params[OLMRADIALBLUR_NOISE_TYPE]->u.pd.value;
 	info.noise_layer = params[OLMRADIALBLUR_NOISE_LAYER]->u.ld.dephault;
 	info.seed = params[OLMRADIALBLUR_SEED]->u.sd.value;
-	info.noise_offset = params[OLMRADIALBLUR_NOISE_OFFSET]->u.sd.value;
+	info.noise_offset = RadialNoiseOffsetRadians(
+		params[OLMRADIALBLUR_NOISE_OFFSET]->u.ad.value);
 	info.thickness = params[OLMRADIALBLUR_THICKNESS]->u.fs_d.value;
 	info.comp_width = comp_width;
 	info.comp_height = comp_height;
