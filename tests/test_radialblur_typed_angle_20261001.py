@@ -12,6 +12,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'tools/emulation'))
 public = importlib.import_module('probe_radialblur_public_aligned_20261001')
+latest = importlib.import_module('radialblur_current_public_20261001')
 route = importlib.import_module('probe_radialblur_typed_angle_route_20261001')
 HARNESS = ROOT/'tools/emulation/radialblur_angle_sdk_harness_20261001.cpp'
 
@@ -96,7 +97,7 @@ class TypedAngleTests(unittest.TestCase):
         capture = load('radialblur_typed_angle_mac_baseline_20261001.json')
         self.assertEqual(capture['summary'], {'both_commands_exact': 11, 'different': 13, 'mac_rejected': 4})
         offset = load('radialblur_noise_offset_counterfactual_20261001.json')
-        current_rows = [r for r in offset['rows'] if r['group'] == 'retained' and r['matrix'] == 'typed']
+        current_rows = [r for r in latest.rows() if r['group'] == 'retained' and r['matrix'] == 'typed']
         self.assertEqual(len(current_rows), 28)
         for name, expected in capture['dependencies_sha256'].items():
             if name == 'mac/OLMRadialBlur/OLMRadialBlur.cpp':
@@ -105,7 +106,7 @@ class TypedAngleTests(unittest.TestCase):
                 self.assertEqual(expected, offset['header_before_sha256'])
             else:
                 self.assertEqual(public.sha((ROOT/name).read_bytes()), expected, name)
-        self.assertEqual(public.sha(public.SOURCE.read_bytes()), offset['candidate_source_sha256'])
+        self.assertEqual(latest.capture()['source_before_sha256'], offset['candidate_source_sha256'])
         env = dict(os.environ, ASAN_OPTIONS='detect_leaks=0:halt_on_error=1',
                    UBSAN_OPTIONS='halt_on_error=1:print_stacktrace=1')
         total = 0
@@ -116,13 +117,13 @@ class TypedAngleTests(unittest.TestCase):
                 for index, (case, row) in enumerate(zip(native['rows'], current_rows)):
                     self.assertEqual(row['row_index'], index)
                     self.assertEqual(case['input_sha256'], row['input_sha256'])
-                    self.assertEqual(case['native_raw_sha256'], row['native_raw_sha256'])
+                    self.assertEqual(case['native_raw_sha256'], next(r for r in offset['rows'] if r['group'] == 'retained' and r['matrix'] == 'typed' and r['row_index'] == index)['native_raw_sha256'])
                     for mode in ('classic', 'smart'):
                         error, raw, metadata = public.mac_render(binary, temp, case, mode, env)
-                        result = row['results']['getter_and_profiles'][mode]
+                        result = row['results'][mode]
                         self.assertEqual(error, result['error'])
                         self.assertEqual(public.sha(raw) if not error else None, result['raw_sha256'])
-                        self.assertEqual(not error and public.sha(raw) == case['native_raw_sha256'], result['raw_exact'])
+                        self.assertEqual(not error and public.sha(raw) == row['reference_raw_sha256'], result['raw_exact'])
                         self.assertEqual(metadata, result['metadata'])
                         total += 1
                 print('RADIAL_TYPED_PIXELS', 'san' if sanitize else 'o2', total, flush=True)

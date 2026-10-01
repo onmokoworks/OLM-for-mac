@@ -13,6 +13,7 @@ sys.path.insert(0, str(ROOT/'tools/emulation'))
 probe = importlib.import_module('probe_radialblur_doublecast_reference_20261001')
 axis = importlib.import_module('probe_radialblur_axis_reference_20261001')
 public = probe.public
+latest = importlib.import_module('radialblur_current_public_20261001')
 
 
 def load(name):
@@ -38,7 +39,10 @@ class DoublecastReferenceTests(unittest.TestCase):
             self.assertEqual(report['worker_sha256'], build['worker_sha256'])
             self.assertEqual(report['parent_worker_sha256'], build['parent_worker_sha256'])
             for path, expected in report['dependencies_sha256'].items():
-                self.assertEqual(public.sha((ROOT/path).read_bytes()), expected, path)
+                if path == 'mac/OLMRadialBlur/OLMRadialBlur.cpp':
+                    self.assertEqual(expected, latest.capture()['source_before_sha256'])
+                else:
+                    self.assertEqual(public.sha((ROOT/path).read_bytes()), expected, path)
         self.assertEqual(load('radialblur_doublecast_reference_public_20261001.json')['build_sha256'],
                          public.sha((ROOT/'reports/radialblur_doublecast_reference_build_20261001.json').read_bytes()))
 
@@ -134,6 +138,7 @@ class DoublecastReferenceTests(unittest.TestCase):
         env = dict(os.environ, ASAN_OPTIONS='detect_leaks=0:halt_on_error=1',
                    UBSAN_OPTIONS='halt_on_error=1:print_stacktrace=1')
         count = 0
+        current = latest.keyed_rows()
         with tempfile.TemporaryDirectory(prefix='radial_doublecast_public_test_') as directory:
             temp = Path(directory)
             for sanitize in [False, True]:
@@ -141,7 +146,7 @@ class DoublecastReferenceTests(unittest.TestCase):
                 for row in selected:
                     for command in ['classic', 'smart']:
                         error, raw, metadata = public.mac_render(binary, temp, row, command, env)
-                        expected = row['results'][command]
+                        expected = current[(row['group'], row['matrix'], row['row_index'])]['results'][command]
                         self.assertEqual(error, expected['error'])
                         self.assertEqual(public.sha(raw) if not error else None, expected['raw_sha256'])
                         self.assertEqual(metadata, expected['metadata'])

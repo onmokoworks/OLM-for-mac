@@ -13,6 +13,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'tools/emulation'))
 public = importlib.import_module('probe_radialblur_public_aligned_20261001')
+latest = importlib.import_module('radialblur_current_public_20261001')
 field = importlib.import_module('probe_radialblur_noise_offset_field_20261001')
 cf = importlib.import_module('probe_radialblur_noise_offset_counterfactual_20261001')
 SDK = ROOT/'tools/emulation/radialblur_noise_offset_sdk_harness_20261001.cpp'
@@ -68,11 +69,14 @@ class NoiseOffsetTests(unittest.TestCase):
         counterfactual = load('radialblur_noise_offset_counterfactual_20261001.json')
         self.assertEqual(native['case_count'], 96)
         self.assertEqual(native['summary'], {'plane_raw_exact': 96, 'typed_resident_matches_trace': 96})
-        self.assertEqual(public.sha(public.SOURCE.read_bytes()), counterfactual['candidate_source_sha256'])
+        self.assertEqual(latest.capture()['source_before_sha256'], counterfactual['candidate_source_sha256'])
         self.assertEqual(public.sha(cf.HEADER.read_bytes()), counterfactual['candidate_header_sha256'])
         for capture in (native, counterfactual):
             for path, expected in capture['dependencies_sha256'].items():
-                self.assertEqual(public.sha((ROOT/path).read_bytes()), expected, path)
+                if path == 'mac/OLMRadialBlur/OLMRadialBlur.cpp':
+                    self.assertEqual(expected, latest.capture()['source_before_sha256'])
+                else:
+                    self.assertEqual(public.sha((ROOT/path).read_bytes()), expected, path)
         with tempfile.TemporaryDirectory(prefix='radial_offset_grid_test_') as directory:
             binary = Path(directory)/'grid'
             subprocess.run(['clang++', '-std=c++17', '-O2', '-fno-fast-math', '-ffp-contract=off',
@@ -106,7 +110,7 @@ class NoiseOffsetTests(unittest.TestCase):
                     self.assertEqual(before[command]['error'], after[command]['error'])
 
     def test_current_public_paths_o2_strict_sanitizers(self):
-        capture = load('radialblur_noise_offset_counterfactual_20261001.json')
+        capture = latest.capture()
         self.assertEqual(len(capture['rows']), 694)
         env = dict(os.environ, ASAN_OPTIONS='detect_leaks=0:halt_on_error=1',
                    UBSAN_OPTIONS='halt_on_error=1:print_stacktrace=1')
@@ -119,11 +123,11 @@ class NoiseOffsetTests(unittest.TestCase):
                     self.assertEqual(public.sha(public.fixture(row)), row['input_sha256'])
                     for command in ('classic', 'smart'):
                         error, raw, metadata = public.mac_render(binary, temp, row, command, env)
-                        expected = row['results']['getter_and_profiles'][command]
+                        expected = row['results'][command]
                         self.assertEqual(error, expected['error'])
                         self.assertEqual(public.sha(raw) if not error else None, expected['raw_sha256'])
                         self.assertEqual(metadata, expected['metadata'])
-                        self.assertEqual(not error and public.sha(raw) == row['native_raw_sha256'], expected['raw_exact'])
+                        self.assertEqual(not error and public.sha(raw) == row['reference_raw_sha256'], expected['raw_exact'])
                         count += 1
                 print('OFFSET_PUBLIC', 'san' if sanitize else 'o2', count, flush=True)
         self.assertEqual(count, 2776)

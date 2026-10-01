@@ -11,6 +11,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'tools/emulation'))
 public = importlib.import_module('probe_radialblur_public_aligned_20261001')
+latest = importlib.import_module('radialblur_current_public_20261001')
 units = importlib.import_module('probe_radialblur_parameter_units_20261001')
 
 
@@ -51,7 +52,7 @@ class PublicParameterTests(unittest.TestCase):
         current = report('radialblur_public_getters_angle_fixed_20261001.json')
         offset = report('radialblur_noise_offset_counterfactual_20261001.json')
         self.assertEqual(offset['source_before_sha256'], current['source_sha256'])
-        self.assertEqual(public.sha(public.SOURCE.read_bytes()), offset['candidate_source_sha256'])
+        self.assertEqual(latest.capture()['source_before_sha256'], offset['candidate_source_sha256'])
         self.assertEqual(current['summary']['both_cmd_exact_count'], 5)
         self.assertTrue(build['frozen_source_and_worker_unchanged'])
         for before_case, after_case in zip(before['cases'], after['cases']):
@@ -79,7 +80,7 @@ class PublicParameterTests(unittest.TestCase):
         self.assertEqual(sum(c['results']['classic']['error'] != 0 for c in topology['cases']), 84)
 
     def test_live_public_replay_o2_and_sanitizers(self):
-        offset = report('radialblur_noise_offset_counterfactual_20261001.json')
+        offset = latest.capture()
         cases = [r for r in offset['rows'] if r['group'] == 'retained' and r['matrix'] in ('getters', 'topology')]
         self.assertEqual(len(cases), 282)
         env = dict(os.environ, ASAN_OPTIONS='detect_leaks=0:halt_on_error=1',
@@ -93,18 +94,18 @@ class PublicParameterTests(unittest.TestCase):
                 for case in cases:
                     for route in ('classic', 'smart'):
                         error, raw, metadata = public.mac_render(binary, temp, case, route, env)
-                        expected = case['results']['getter_and_profiles'][route]
+                        expected = case['results'][route]
                         self.assertEqual(error, expected['error'])
                         self.assertEqual(public.sha(raw) if not error else None, expected['raw_sha256'])
                         self.assertEqual(metadata, expected['metadata'])
-                        self.assertEqual(not error and public.sha(raw) == case['native_raw_sha256'], expected['raw_exact'])
+                        self.assertEqual(not error and public.sha(raw) == case['reference_raw_sha256'], expected['raw_exact'])
                         self.assertEqual(metadata['callbacks'], [0,0,0,0,0,1,1] if route == 'classic'
                                          else [1,32,32,1,1,1,1])
                         outcomes['error' if error else 'exact' if expected['raw_exact'] else 'different'] += 1
                         total += 1
                 expected_outcomes = collections.Counter()
                 for case in cases:
-                    for expected in case['results']['getter_and_profiles'].values():
+                    for expected in case['results'].values():
                         expected_outcomes['error' if expected['error'] else 'exact' if expected['raw_exact'] else 'different'] += 1
                 self.assertEqual(outcomes, expected_outcomes)
                 # Independently exercise all integer UI values, including values

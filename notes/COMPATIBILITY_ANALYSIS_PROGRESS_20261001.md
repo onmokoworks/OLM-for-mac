@@ -1600,11 +1600,58 @@ doublecast_sampler_native_coverage_20261001.json、doublecast_reference_validati
 未完: Zoom PF8、Rotation、Size25制限、任意noise条件と負位相、未測定角度、一般UCRT、
 native両AE、installed、通常UI/保存、ROI/downsample、全10本完全互換。Goalはactive。
 
+## RB-ZOOM-PF8-WRITER-026 — 自然samplerの一致を根拠に共通書き戻しを復元
+
+前の参照校正・テスト・e1d2069cのPushはprogress。本番を凍結したままZoom PF8の最初の
+差を採取し、field/samplerの問題ではなくwriterの演算順序へ分離して修正した。
+
+FACT: 23×13 opaque、Zoom、Noise100/Type1/seed1/Thickness3/Offset0の公開出力は55byte差。
+最初の画素(14,0)でnative samplerのredはFLOAT32 0x3f11918d、旧Macのdebug scalarも同じ。
+元writerは0x90、旧Macは0x91を出していた。Mac共通Zoom writerはRGBに1e-4を足し、DOUBLE
+255倍をfloorしていた。元AEX 7520 public ownerは7bdd..7bf6でbrightness-scaled RGBを
+MINSS 1.0へ上限処理し、7c14で17400 writerを呼ぶ。17400はMULSS 255→CVTTSS2SI→low-byte
+ARGB保存。epsilonもDOUBLE乗算も下限clampもなく、alphaはMINSSを経由しない。
+旧コメントの173f0は元AEXではpaddingであり、根拠を実際の17400へ修正した。
+
+FACT: 23×13/31×19、Noise25/100の4自然公開caseをtyped residentとPNG traceで取得しraw
+hash一致。各4点の9d80 sample RGBAは旧MacのFLOAT32値と全bit一致。17400で保存された
+ARGB8を同じ点の出力へ結び付けた。Noise25の両geometryは旧rawもexact、Noise100の55/130
+byte差はwriterを復元した別コピーで全raw exact。全context/trace/raw/画像はprivateのまま。
+
+FACT: 本番変更前に694条件を別コピーのO2/strict ASan/UBSan両cmdで2776回比較。
+45条件が追加exact、旧exactを失った条件0、raw変更51条件。6条件はwriter以外の差を残す。
+誤差を座標やfixture別に補正せず、共通WriteZoomへ元ownerのMINSSとFLOAT32整数化を採用。
+本番source hashは877fadcded9fb3b004902195f3041f98a7596154c783749eb0ce21c8277adafa、header不変。
+
+最新694条件は263→308 exact、302差分、84拒否。getters30は12 exact・18差分、topology252は
+76→90 exact・78差分・84拒否、typed28は14 exact・14差分。独立384は161→192 exact・192差分。
+独立ZoomのPF8/PF16/PF32はそれぞれ64/64 exact、Rotationの各深度64条件は全て差を残す。
+比較参照は前回のcontrolled DOUBLE atan2→FLOAT32のまま。保存Windowsの未測定31角度や
+任意引数をnative exactへ昇格させない。有限条件のZoom一致を全機能の完成とは扱わない。
+
+本番適用後に3 unittestがPASS。694条件の両cmd/O2/strict sanitizer2776回は別コピーの全
+raw/error/metadataを再現。元import-free17400の1098組（整数/255の隣接FLOAT32、負値、負ゼロ、
+NaN/Inf、int32変換範囲外と独立bit列）に対し、実SDKの本番writerはO2/strict sanitizer2196回
+のARGB byteが一致。RGBには実ownerのMINSS 1を渡し、alphaはそのまま、leaf後のsentinel12byte
+とimport未使用を確認した。自然公開証拠に加えるscalar検証で、手製builderの証明ではない。
+
+過去captureは書き換えず、5既存testの現在の期待値だけを最新source/hashへ結び付けた。
+既存16 unittestもPASSし、public parameter1532・typed112・axis620・doublecast188の計2452
+public再生とNoise Offset296/Angle56のSDK readerを維持。Noise grid96も維持。現在のpublic
+再生総数は5228、SDK writer/readerは2548回。新しいfull694再生と同じ処理を行う旧Noise Offset
+full再生だけは重複実行せず、そのreader/grid2testを実行した。generic baseline/sanitizer/
+Type3/budget/SizeNoise/global polar ROIと共通ROIの7回帰PASS。arm64/x86_64 O2実SDK build成功。
+installedは変更しない。元AEX・固定worker・controlled worker・外部SDK入力の不変もhash確認。
+
+reports/radialblur_pf8_writer_public_20261001.json、pf8_writer_validation_20261001.jsonとprobe、
+実SDK writer harness、testへ根拠を保存。Rotation、残るZoom、84拒否、任意noise/負位相、
+一般UCRT/native両AE、installed、UI保存、ROI/downsample、全10本完全互換は未完。Goalはactive。
+
 ## 次の順序
 
 1. Smoother2のHDR/Gamma合成と色境界の今回の有限集合は検証済み。公開builderのLUT構築とnative依存先を分け、未測定scan長・任意float・独立paletteの最初の差を復元する。
 2. ColorKeyの未検証geometry/任意float/paletteとThin/Blur合成を拡張する。今回の境界・overflow比較を全入力の証明とは扱わず、固定workerとcontrolled Lab94参照を分け、native Windows UCRTとの比較を残す。
 3. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
-4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはAngle/Edge/PointとNoise OffsetのFLOAT32接続を復元した。参照atan2f非軸差は保存Windows scalarの有限集合へ校正済み。まずZoom PF8のsampler/writer、Rotationの自然public field/scatterの最初の差を閉じる。負位相のnative契約・Size25の面積制限・端/穴/島へ進み、その後KiraKira一般入力を比較する。
+4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはAngle/Edge/PointとNoise OffsetのFLOAT32接続を復元した。参照atan2f非軸差は保存Windows scalarの有限集合へ校正済み。Zoom PF8の共通writerは復元済み。次はRotationの自然public field/scatter、残るZoom topology/typedの最初の差を閉じる。負位相のnative契約・Size25の面積制限・端/穴/島へ進み、その後KiraKira一般入力を比較する。
 
 既存の作業ツリー変更は今回のcommitに混ぜない。第三者AEXとnative raw出力をPushしない。

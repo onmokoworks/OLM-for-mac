@@ -1464,12 +1464,19 @@ struct RadialZoomPixelTraits<PF_Pixel8> {
 		pixel.blue = (A_u_char)ClampFloat((float)std::floor(state.final_rgb[2] * 255.0 + rgb_epsilon), 0.0f, 255.0f);
 		pixel.alpha = (A_u_char)ClampFloat((float)std::floor(state.alpha * 255.0), 0.0f, 255.0f);
 	}
-	static void WriteZoom(PF_Pixel8 &pixel, const RadialBlurOuterSampleState &state, bool use_fft)
+	static void WriteZoom(PF_Pixel8 &pixel, const RadialBlurOuterSampleState &state, bool)
 	{
-		Write(pixel, state, use_fft);
-		// FUN_1800173f0 converts Zoom alpha to an integer and stores the low
-		// byte without the RGB upper saturation step.
-		pixel.alpha = (A_u_char)(int)std::floor(state.alpha * 255.0f);
+		// The public PF8 owner applies MINSS 1.0 to brightness-scaled RGB,
+		// then FUN_180017400 uses MULSS 255 and CVTTSS2SI, storing low bytes.
+		// No epsilon or DOUBLE multiplication occurs; alpha is not saturated.
+		auto store_rgb = [](float value) -> A_u_char {
+			const float saturated = value < 1.0f ? value : 1.0f;
+			return (A_u_char)RadialCVTTSS2SI(RadialF32Mul(saturated, 255.0f));
+		};
+		pixel.red = store_rgb(state.final_rgb[0]);
+		pixel.green = store_rgb(state.final_rgb[1]);
+		pixel.blue = store_rgb(state.final_rgb[2]);
+		pixel.alpha = (A_u_char)RadialCVTTSS2SI(RadialF32Mul(state.alpha, 255.0f));
 	}
 };
 

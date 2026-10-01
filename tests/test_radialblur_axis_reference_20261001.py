@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'tools/emulation'))
 probe = importlib.import_module('probe_radialblur_axis_reference_20261001')
 public = probe.public
+latest = importlib.import_module('radialblur_current_public_20261001')
 
 
 def load(name):
@@ -21,7 +22,7 @@ class AxisReferenceTests(unittest.TestCase):
     def test_current_public_pixels_with_strict_sanitizers(self):
         capture = load('radialblur_axis_reference_public_20261001.json')
         offset = load('radialblur_noise_offset_counterfactual_20261001.json')
-        current = {(r['matrix'], r['row_index']): r for r in offset['rows'] if r['group'] == 'retained'}
+        current = {(r['matrix'], r['row_index']): r for r in latest.rows() if r['group'] == 'retained'}
         env = dict(os.environ, ASAN_OPTIONS='detect_leaks=0:halt_on_error=1',
                    UBSAN_OPTIONS='halt_on_error=1:print_stacktrace=1')
         count = 0
@@ -31,12 +32,12 @@ class AxisReferenceTests(unittest.TestCase):
             for row in capture['rows']:
                 for command in ('classic', 'smart'):
                     error, raw, metadata = public.mac_render(binary, temp, row, command, env)
-                    result = current[(row['matrix'], row['row_index'])]['results']['getter_and_profiles'][command]
+                    result = current[(row['matrix'], row['row_index'])]['results'][command]
                     self.assertEqual(error, result['error'])
                     self.assertEqual(public.sha(raw) if not error else None, result['raw_sha256'])
                     self.assertEqual(metadata, result['metadata'])
                     self.assertEqual(not error and public.sha(raw) == row['corrected_raw_sha256'],
-                                     result['raw_exact'])
+                                     not result['error'] and result['raw_sha256'] == row['corrected_raw_sha256'])
                     count += 1
         self.assertEqual(count, 620)
         print('AXIS_STRICT_SANITIZER_PUBLIC', count, flush=True)
@@ -119,7 +120,7 @@ class AxisReferenceTests(unittest.TestCase):
                 else:
                     self.assertEqual(public.sha((ROOT/path).read_bytes()), expected, path)
         self.assertEqual(capture['source_sha256'], offset['source_before_sha256'])
-        self.assertEqual(public.sha(public.SOURCE.read_bytes()), offset['candidate_source_sha256'])
+        self.assertEqual(latest.capture()['source_before_sha256'], offset['candidate_source_sha256'])
         self.assertEqual(sampler['public_coordinate'], [0, 5])
         self.assertEqual(sampler['relative_coordinate'], [-8, 0])
         self.assertEqual(sampler['traces']['parent']['angle_f32_le_hex'], 'da0f4940')
