@@ -429,6 +429,53 @@ Noise sampler12件と固定生成planeのhash回帰もPASS。
 通常の深度Size/Sharp/Noise/Fade公開機能不足、追加workspace/Noise/Fade予算、Smart
 full-frame/atomic契約、native AE/UCRT、installed bundleは引き続き残る。Goalはactive。
 
+## DB-GENERAL-PUBLIC-011: 深度の一般機能をClassic/Smart公開経路へ復元
+
+DB-GENERAL-009の180合法ケースは本番dispatcherで全件拒否だった。既存typed coreが
+同じ公開AEX ownerのraw outputと一致する証拠を使い、一般Size/Front・Back Sharp/
+Noise Type1・2/FadeのPF16/PF32経路を復元。geometry・設定tupleのwhitelistは追加しない。
+SDR world、両side Strength0..4000、percent/Fade0..100、Noise Seed1..1000/Thickness1..100、
+signed Offset、unit downsample等のcontrolsとworld検査を使う。Layer Noiseと既存個別
+higher-order owner制約は引き続き別の未閉鎖契約。
+
+一般深度は既存full coreをuse_expfloat=1、Windowsの等分行範囲で呼ぶ。実parameter
+getterを維持し、画像・component・Noise・回転・writer演算は変更しない。packed source/
+destinationへstageし、成功時だけactive bytesを出力へcommitする。
+
+EstimateGeneralDeepRenderを追加。neutralの14 float channel/packed wrapper/strength
+weights/Smart atomic spanに加え、component visited/pending/componentの容量増加と
+reallocation overlapを含む24 bytes/work pixel、Noise plane +101 float table、Fade
+weightsを数える。Fade gather・component traversal・Noise生成の追加演算量を保守的に
+積み上げる。既存3 GiB/350M単位の限度を共用し、失敗時はestimateを更新しない。
+この限度は全Windows機能を完了させる定義ではなく、現在の安全な実装限界である。
+
+SmartRenderは同じparameter/estimate検査にatomic output spanを渡し、allocateや
+source readより前に検査する。full-frame要求とworld geometry/originの検査も一般機能へ
+適用。Classicはdispatcherで同じcore/workspace見積もりを使う。
+
+修正後の公開AEX再capture180/180は本番route3（bypassなし）、public_dispatch_error=0。
+実SDK translation unitをOLM_DBLUR_TEST_SEAMなしでcompileし、PF World Suite2と実型
+parameter checkout/checkinを提供するfake AE hostでClassic/Smart EffectMainを再生。
+両公開cmdの全180 native hashが一致。O2とASan/UBSanで計720成功renderを確認。
+input不変、odd rowbytes（input+5/output+11）のpadding保持、Smart21 parameterの
+checkout/checkin、layer checkin、suite releaseも確認。
+
+partial ROI、param checkout/checkin失敗、layer checkin失敗、output checkout失敗、
+演算量超過、Smart stagingメモリ超過、native不正Noise indexとClassicでの演算量/
+不正index失敗の10状態を両depth・両buildで計40 failure renderとして検証。未読可能なsource pointerを渡す予算超過ケースも先に拒否。
+全失敗でactive output/input/padding不変。checked estimateのoverflow、invalid depth/
+Fade/Thickness、reserveの保持と追加workspace/operationの検査もPASS。
+
+既存getter47/固定小数135、一般180候補、角度162を両buildで再生し全native hash維持。
+固定小数集合で残っていた24 dispatcher拒否も今回の一般経路で解消。負index native境界
+36件再観測と54候補/各buildもPASS。既存Back/Dual EffectMain、ROI、Smart cleanup17件
+もPASS。旧capture source/hashを付け替えず、現在のlive再生とproduction/validationを
+別に保存する。
+
+このfake hostはWindows AE/native UCRTまたはMac installed bundle実行ではない。
+公開360 renderの一致を任意画像/HDR/Layer Noise/downsample/全設定へ一般化しない。
+予算で拒否される大画像・強設定、元AEX不正Offsetの状態依存出力も残る。Goalはactive。
+
 ## 次の順序
 
 1. ColorKeyの他Blur設定を公開ownerで再検証し、旧import stub依存の分岐を復元。

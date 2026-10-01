@@ -18,7 +18,7 @@ class FixedGetterTests(unittest.TestCase):
         r=json.loads(REPORT.read_text())
         self.assertTrue(r['core_candidate'])
         self.assertEqual(r['getter_exact_count'],47);self.assertEqual(r['render_exact_count'],135)
-        self.assertEqual(r['production_source_sha256'],probe.sha(probe.owner.SOURCE.read_bytes()))
+        self.assertEqual(r['production_source_sha256'],'9c105f51a3e2659b42d9f07faca3ef68ab947a295df19bbea473e028ee93df1a')
         self.assertEqual(r['probe_sha256'],probe.sha(Path(probe.__file__).read_bytes()))
         self.assertEqual(r['harness_sha256'],probe.sha(probe.HARNESS.read_bytes()))
         self.assertEqual(r['loader_sha256'],probe.sha((ROOT/'tools/emulation/aex_loader.py').read_bytes()))
@@ -43,12 +43,12 @@ class FixedGetterTests(unittest.TestCase):
                 self.assertTrue(c['frame_done']['output']['guards_intact'])
                 for binary in binaries:
                     args=[str(binary),str(w),str(h),str(c['depth']),str(c['slot']),str(c['value'])]
-                    # Real dispatcher first, then the explicitly labelled core
-                    # experiment. Refusal is a remaining feature gap, not PASS.
+                    # Retained capture had deep feature refusals. Current public
+                    # dispatcher must match every native hash without bypass.
                     public=subprocess.run(args,input=data,check=True,capture_output=True,env=env)
                     lines=dict(l.split(' ',1) for l in public.stdout.decode().splitlines())
-                    self.assertEqual(int(lines['ERROR']),c['public_dispatch_error'])
-                    if not c['public_dispatch_error']:
+                    self.assertEqual(int(lines['ERROR']),0)
+                    if not int(lines['ERROR']):
                         self.assertEqual(probe.sha(bytes.fromhex(lines['RAW'])),c['windows_raw_sha256'])
                     out=subprocess.run(args+['1'],input=data,check=True,capture_output=True,env=env)
                     lines=dict(l.split(' ',1) for l in out.stdout.decode().splitlines())

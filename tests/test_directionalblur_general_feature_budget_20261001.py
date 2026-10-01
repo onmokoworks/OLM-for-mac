@@ -1,0 +1,32 @@
+import subprocess,tempfile,unittest
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[1]
+CPP=r'''
+#include "core/dblur_generic_budget.h"
+#include <limits>
+using namespace olm::dblur::generic;
+int main(){
+ RenderEstimate neutral{},features{},rejected{};rejected.plugin_owned_live_bytes=123;
+ if(!EstimateRender(37,29,32,7,11,0,&neutral))return 1;
+ if(!EstimateGeneralDeepRender(37,29,32,7,11,5,7,true,true,3,1000,&features))return 2;
+ if(features.plugin_owned_live_bytes<=neutral.plugin_owned_live_bytes+1000||features.operation_units<=neutral.operation_units)return 3;
+ if(features.smart_staging_bytes!=1000||features.weight_bytes<=neutral.weight_bytes)return 4;
+ if(EstimateGeneralDeepRender(4096,2160,32,4000,4000,100,100,true,true,1,0,&rejected)||rejected.plugin_owned_live_bytes!=123)return 5;
+ if(EstimateGeneralDeepRender(37,29,32,7,11,5,7,true,true,3,std::numeric_limits<std::size_t>::max(),&rejected))return 6;
+ if(EstimateGeneralDeepRender(37,29,32,7,11,101,7,true,true,3,0,&rejected))return 7;
+ if(EstimateGeneralDeepRender(37,29,32,7,11,5,7,true,true,.5f,0,&rejected))return 8;
+ if(EstimateGeneralDeepRender(37,29,32,7,11,5,7,true,true,std::numeric_limits<float>::quiet_NaN(),0,&rejected))return 9;
+ if(EstimateGeneralDeepRender(37,29,8,7,11,5,7,true,true,3,0,&rejected))return 10;
+ if(EstimateGeneralDeepRender(-1,29,32,7,11,5,7,true,true,3,0,&rejected))return 11;
+ if(!EstimateGeneralDeepRender(37,29,32,7,11,0,0,false,false,0,0,&features))return 12;
+ if(features.core_workspace_bytes!=neutral.core_workspace_bytes||features.operation_units!=neutral.operation_units)return 13;
+ return 0;
+}
+'''
+class FeatureBudgetTests(unittest.TestCase):
+ def test_checked_budget_and_rejection(self):
+  with tempfile.TemporaryDirectory(prefix='dblur_feature_budget_') as td:
+   src=Path(td)/'probe.cpp';binary=Path(td)/'probe';src.write_text(CPP)
+   subprocess.run(['clang++','-std=c++17','-O2','-I',str(ROOT),str(src),'-o',str(binary)],check=True,capture_output=True)
+   subprocess.run([str(binary)],check=True,capture_output=True)
+if __name__=='__main__':unittest.main()

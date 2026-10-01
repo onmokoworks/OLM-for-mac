@@ -38,6 +38,8 @@ class NoiseBoundsTests(unittest.TestCase):
                                 if depth==8:
                                     self.assertNotEqual(int(lines['PUBLIC_ERROR']),0)
                                     self.assertNotEqual(int(lines['ROUTE']),1001)
-                                else:self.assertEqual(int(lines['ERROR']),-1)
+                                else:
+                                    self.assertEqual(int(lines['ERROR']),-1)
+                                    self.assertNotEqual(int(lines['PUBLIC_ERROR']),0)
                             else:self.assertEqual(int(lines['ERROR']),0)
 if __name__=='__main__':unittest.main()
