@@ -64,7 +64,7 @@ class PF8WriterTests(unittest.TestCase):
         print('PF8_WRITER_NATIVE_SCALARS', len(vectors), 'SDK_REPLAYS', 2*len(vectors), flush=True)
 
     def test_natural_sampler_and_writer_witness_bindings(self):
-        report = current.capture()
+        report = json.loads((ROOT/'reports/radialblur_pf8_writer_public_20261001.json').read_text())
         import pefile
         pe = pefile.PE(str(public.initial.AEX))
         self.assertEqual(public.sha(public.initial.AEX.read_bytes()), report['aex_sha256'])

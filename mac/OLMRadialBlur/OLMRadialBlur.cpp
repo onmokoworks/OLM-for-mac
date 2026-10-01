@@ -1395,6 +1395,24 @@ static std::vector<float> ZoomGaussianWeights(A_long length)
 	return weights;
 }
 
+// AEX FUN_18001ebc0 vector Gaussian-domain polynomial.
+// Native Windows RCPPS/ISA selection still requires independent verification.
+static float RotationGaussianSIMDExp(float exponent)
+{
+    static constexpr unsigned mantissa[64] = {0x000000u, 0x0164d2u, 0x02cd87u, 0x043a29u, 0x05aac3u, 0x071f62u, 0x08980fu, 0x0a14d5u, 0x0b95c2u, 0x0d1adfu, 0x0ea43au, 0x1031dcu, 0x11c3d3u, 0x135a2bu, 0x14f4f0u, 0x16942du, 0x1837f0u, 0x19e046u, 0x1b8d3au, 0x1d3edau, 0x1ef532u, 0x20b051u, 0x227043u, 0x243516u, 0x25fed7u, 0x27cd94u, 0x29a15bu, 0x2b7a3au, 0x2d583fu, 0x2f3b79u, 0x3123f6u, 0x3311c4u, 0x3504f3u, 0x36fd92u, 0x38fbafu, 0x3aff5bu, 0x3d08a4u, 0x3f179au, 0x412c4du, 0x4346cdu, 0x45672au, 0x478d75u, 0x49b9beu, 0x4bec15u, 0x4e248cu, 0x506334u, 0x52a81eu, 0x54f35bu, 0x5744fdu, 0x599d16u, 0x5bfbb8u, 0x5e60f5u, 0x60ccdfu, 0x633f89u, 0x65b907u, 0x68396au, 0x6ac0c7u, 0x6d4f30u, 0x6fe4bau, 0x728177u, 0x75257du, 0x77d0dfu, 0x7a83b3u, 0x7d3e0cu};
+    const float scaled = RadialF32Mul(exponent, 92.33248138427734f);
+    const float lower = std::floor(scaled);
+    const float fraction = RadialF32Sub(scaled, lower);
+    int n = (int)lower;
+    if (fraction > 0.5f || (fraction == 0.5f && (n & 1))) ++n;
+    float r = RadialF32Sub(exponent, RadialF32Mul((float)n, .01082611083984375f));
+    r = RadialF32Sub(r, RadialF32Mul((float)n, .000004313856607041089f));
+    const float polynomial = RadialF32Add(RadialF32Add(RadialF32Add(r, r), 2.0f), RadialF32Mul(r, r));
+    const unsigned scale_bits = (((unsigned)(8064+n) >> 6) << 23) | mantissa[n & 63];
+    float scale; std::memcpy(&scale, &scale_bits, sizeof(scale));
+    return RadialF32Mul(polynomial, scale);
+}
+
 static std::vector<float> RotationGaussianWeights(A_long length, bool apply_case0010_aex_ulp = false)
 {
 	if (length <= 1) return std::vector<float>{1.0f};
@@ -1411,9 +1429,9 @@ static std::vector<float> RotationGaussianWeights(A_long length, bool apply_case
 		const A_long table_index = (A_long)((float)i * (float)idx_scale);
 		const int square = (int)table_index * (int)table_index;
 		const float exponent = RadialF32Mul((float)-square, inv_denom);
-		// The AEX builds its 30,000-entry table from a float32 exponent,
-		// then rounds the imported expf result once to float.
-		weights[(size_t)i] = (float)std::exp((double)exponent);
+		// The AEX vector path builds its 30,000-entry table from a
+		// FLOAT32 exponent using the embedded SIMD exp polynomial.
+		weights[(size_t)i] = RotationGaussianSIMDExp(exponent);
 	}
 	return weights;
 }
@@ -4778,7 +4796,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			float angle_index = 0.0f;
 			float radius_index = 0.0f;
 			float angle_raw_debug = 0.0f;
-			if (use_aex_exact) {
+			if ((use_aex_exact || use_generic_two_stage)) {
 				// FUN_180001b10 keeps the Cartesian path in scalar float32,
 				// rounds atan2 once to float, performs the negative-angle add in
 				// double, then multiplies by the stored float32 angle scale.
@@ -4795,9 +4813,11 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				// which is slightly below correctly rounded 2*pi.
 				if (angle < 0.0f) angle = (float)((double)angle + 0x1.921fb53c8d4f1p+2);
 				angle_raw_debug = angle;
-				const float angle_scale = (use_aex_typed_quality_repeat || rotation_quality_repeat_noise_tuple) && info.quality == 3.0
-					? RadialF32Div(RadialF32Mul((float)quality, 180.0f), (float)kPi)
-					: (float)(quality * 180.0 / kPi);
+				const float angle_scale = use_generic_two_stage
+					? RadialF32Div(1.0f, (float)((double)(float)(1.0 / quality) * 0.017453292500000002))
+					: ((use_aex_typed_quality_repeat || rotation_quality_repeat_noise_tuple) && info.quality == 3.0
+					   ? RadialF32Div(RadialF32Mul((float)quality, 180.0f), (float)kPi)
+					   : (float)(quality * 180.0 / kPi));
 				angle_index = RadialF32Mul(angle, angle_scale);
 				radius_index = RadialF32Sub(radius, (float)min_r);
 			} else {
@@ -4813,10 +4833,10 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 			}
 			const A_long xi = (A_long)std::floor(angle_index);
 			const A_long yi_raw = (A_long)std::floor(radius_index);
-			const float fx = use_aex_exact
+			const float fx = (use_aex_exact || use_generic_two_stage)
 				? RadialF32Sub(angle_index, (float)xi)
 				: angle_index - (float)xi;
-			const float fy = use_aex_exact
+			const float fy = (use_aex_exact || use_generic_two_stage)
 				? RadialF32Sub(radius_index, (float)yi_raw)
 				: radius_index - (float)yi_raw;
 			const A_long x0 = ((xi % angular_count) + angular_count) % angular_count;
@@ -4838,7 +4858,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				 (use_aex_typed_rotation_size_edge_components_32x18 && info.size_variation == 100.0) ||
 				 use_aex_typed_rotation_any_size_edge_noise_components_32x18 ||
 				 use_aex_typed_rotation_size_noise_components_32x18) && source_components_1_4_9,
-				use_aex_exact);
+				(use_aex_exact || use_generic_two_stage));
 			PixelT *out = PixelAt<PixelT>(output, x, y);
 #if defined(OLM_RADIALBLUR_TEST_SEAM)
 			if (g_rotation_test_capture && g_rotation_test_capture->final_rgba &&
@@ -4854,7 +4874,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				g_rotation_test_capture->final_coordinates[dst + 1] = radius_index;
 			}
 #endif
-			if (use_aex_exact) {
+			if ((use_aex_exact || use_generic_two_stage)) {
 				// The PF8 owner applies gain and MINSS(..., 1.0) to RGB only.
 				// FUN_180017400 then CVTTSS2SI(channel * 255) and stores the
 				// low byte in ARGB order; negative RGB is intentionally not

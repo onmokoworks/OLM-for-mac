@@ -52,7 +52,7 @@ class PublicParameterTests(unittest.TestCase):
         current = report('radialblur_public_getters_angle_fixed_20261001.json')
         offset = report('radialblur_noise_offset_counterfactual_20261001.json')
         self.assertEqual(offset['source_before_sha256'], current['source_sha256'])
-        self.assertEqual(latest.capture()['source_before_sha256'], offset['candidate_source_sha256'])
+        self.assertEqual(json.loads((ROOT/'reports/radialblur_pf8_writer_public_20261001.json').read_text())['source_before_sha256'], offset['candidate_source_sha256'])
         self.assertEqual(current['summary']['both_cmd_exact_count'], 5)
         self.assertTrue(build['frozen_source_and_worker_unchanged'])
         for before_case, after_case in zip(before['cases'], after['cases']):

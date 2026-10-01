@@ -1700,11 +1700,61 @@ rotation_inverse_20261001.json、rotation_fields_validation_20261001.jsonへ保�
 反映できるか判断する。Size25/負位相/任意noise、未測定UCRT/ISAとnative両AE、通常UI/保存、
 ROI/downsample、全10本完全互換は未完。Goalはactive。
 
+## RB-ROTATION-RESTORE-028 — generic two-stageのGaussianとfinalを共通処理へ復元
+
+前回の自然field採取・SIMD/inverse候補の検証・6d0904f8のPushはprogress。元AEXの自然
+fieldとinverseに基づく候補を全694条件で比較し、本番へ一般化した。
+
+FACT: 本番を877fadcdへ凍結したまま、別コピーのO2とstrict ASan/UBSan、Classic/Smartで
+全694条件を2776再生。FLOAT32 exponentから元1ebc0のSIMD polynomialを使うRotation
+Gaussianと、generic two-stage finalのFLOAT32座標/sampler/writer、1ac0 setter順のQuality
+angleScaleを復元すると308→505条件がexact。追加exact197、lost exact0、raw変更237。
+パラメータ、input、error、callback balanceなどのmetadataは保持。RGB/alphaの固定値や
+座標別補正を加えず、実際に生成したfieldを共通final処理へ接続する。
+
+本番変更はRotationGaussianSIMDExpとRotationGaussianWeights、final座標・fraction・
+sampler・packerのgateに限る。既存two-stageのpolar生成/scatter、Zoom、noise core、header、
+元AEX、固定workerとcontrolled parent/window workerは保持した。本番hashは
+ aaa6345af78f66589200b1e7deff1d6d7afa2eeff69ee9be6afaa91d31720593。
+候補63304981との差は診断用コメントを本番用へ正しただけで、公開captureに両hashを保持。
+
+最新694条件は505 exact・105差分・84拒否。getters30は15 exact・15差分、topology252は
+90 exact・78差分・84拒否、typed28は16 exact・12差分。独立384は全exactとなり、Zoom/Rotation
+それぞれPF8/PF16/PF32各64条件が全bit一致。Noise Offsetの有限独立集合での全一致であり、
+任意seed/thickness/noise量や負位相、全Quality/入力/geometryの証明にはしない。
+残差105はZoom Inner Edge3、Zoom topology neutral/size100_noise各3、Rotation getters12、
+Rotation topology neutral/size100_noise各36、Rotation typed Angle12。Size25の42×2拒否も残る。
+
+本番適用後の2 unittest PASS。元import-free SIMD vector leaf30000引数を再実行し、実SDKの
+本番Gaussian helperをO2/strict sanitizerで60000回比較、全bit一致。さらにlength1/2/3/4/7/9/
+16/31/32/63/100/251/1000/2999/3000の30回で30000-entry tableの整数strideを確認。本番の
+全694条件を両cmd/両build2776再生し候補のraw/error/metadataを再現。追加exact197条件は
+controlled parentから自然public AEXを再取得し、raw hash、guard、session/suiteを確認した。
+
+既存22 unittest PASS（public parameter3、typed Angle3、axis4、doublecast4、Noise Offset2、
+PF8 scalar/historical2、Rotation field/inverse4）。public2452再生、Noise grid96、Offset/Angle
+SDK reader352、PF8 writer2196、親/windowの24resident再取得とnative plane/inverseも維持。
+古いcaptureは書き換えず、古い証拠のsource bindingはPF8 epochへ明示的に固定した。
+field/inverseの歴史再現は6d0904f8から取得する本物の前sourceを使い、現在のpublic期待値は
+新reportへ接続。本番全694再生と同じ旧PF8 full testだけ重複実行せず、そのscalar/history
+2testを実行した。generic baseline/sanitizer/Type3/budget/SizeNoise/global-polar-ROI/common-ROI
+の7gate PASS。実SDK Universal arm64/x86_64 O2 build成功。installedは変更していない。
+
+参照の限界は保持。Unicorn RCPPSは近似ではなくFLOAT32除算、Windows CPU ISA/RCPPSの
+一般証明ではない。controlled DOUBLE atan2→FLOAT32の保存Windows scalar576組を超える
+native UCRTも未検証。r5900xへ既存aliasでread-only SSHを試したが5秒でtimeoutし、local
+Tailscale停止を確認。接続設定は変えず、ローカルの一般処理復元・検証を続ける。
+
+reports/radialblur_rotation_restoration_public_20261001.json、rotation_restoration_validation_20261001.json、
+probe、実SDK Gaussian harness、testへ根拠を保存。次は残るRotationのno-noise/neutralとAngle、
+Zoom Inner Edge/topology、Size25制限を自然fieldから分離する。Macの追加半径行、任意noiseと
+負位相、一般native CPU/UCRT/両AE、UI/保存/ROI/downsample、全10本完全互換は未完。Goalはactive。
+
 ## 次の順序
 
 1. Smoother2のHDR/Gamma合成と色境界の今回の有限集合は検証済み。公開builderのLUT構築とnative依存先を分け、未測定scan長・任意float・独立paletteの最初の差を復元する。
 2. ColorKeyの未検証geometry/任意float/paletteとThin/Blur合成を拡張する。今回の境界・overflow比較を全入力の証明とは扱わず、固定workerとcontrolled Lab94参照を分け、native Windows UCRTとの比較を残す。
 3. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
-4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはAngle/Edge/PointとNoise OffsetのFLOAT32接続を復元した。参照atan2f非軸差は保存Windows scalarの有限集合へ校正済み。Zoom PF8の共通writerは復元済み。Rotationの自然field/scatterは代表全量でGaussian差を分離し、別コピーのinverse復元で代表rawが一致した。次はinverse候補の全694条件/sanitizer検証と本番一般化、残るZoom topology/typedの最初の差を閉じる。負位相のnative契約・Size25の面積制限・端/穴/島へ進み、その後KiraKira一般入力を比較する。
+4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはAngle/Edge/PointとNoise OffsetのFLOAT32接続を復元した。参照atan2f非軸差は保存Windows scalarの有限集合へ校正済み。Zoom PF8の共通writerは復元済み。Rotationの自然field/scatterは代表全量でGaussian差を分離し、別コピーのinverse復元で代表rawが一致した。generic two-stageのGaussian/finalを本番へ復元し、694条件505 exact、独立384全exactを確認。次は残るRotation no-noise/neutralとAngle、Zoom Inner Edge/topologyを自然fieldから閉じる。負位相のnative契約・Size25の面積制限・端/穴/島へ進み、その後KiraKira一般入力を比較する。
 
 既存の作業ツリー変更は今回のcommitに混ぜない。第三者AEXとnative raw出力をPushしない。

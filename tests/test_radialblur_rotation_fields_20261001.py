@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'tools/emulation'))
 probe = importlib.import_module('probe_radialblur_rotation_fields_20261001')
 public = probe.public
+restoration = importlib.import_module('probe_radialblur_rotation_restoration_20261001')
 
 
 def report():
@@ -32,9 +33,9 @@ class RotationFieldsTests(unittest.TestCase):
 
     def test_binding_and_candidate_scope(self):
         saved = report()
-        self.assertEqual(public.sha(public.SOURCE.read_bytes()), saved['source_sha256'])
+        self.assertEqual(public.sha(restoration.before_source().encode()), saved['source_sha256'])
         self.assertFalse(saved['production_source_changed'])
-        self.assertEqual(public.sha(probe.candidate_source(public.SOURCE.read_text()).encode()),
+        self.assertEqual(public.sha(probe.candidate_source(restoration.before_source()).encode()),
                          saved['candidate_source_sha256'])
         for path, expected in saved['dependencies_sha256'].items():
             self.assertEqual(public.sha((ROOT/path).read_bytes()), expected, path)
@@ -72,7 +73,13 @@ class RotationFieldsTests(unittest.TestCase):
         saved = json.loads((ROOT/'reports/radialblur_rotation_inverse_20261001.json').read_text())
         worker = Path(os.environ['RADIAL_WINDOWS_WORKER'])
         with tempfile.TemporaryDirectory(prefix='radial_inverse_test_') as directory:
-            observed = inverse.run(worker, Path(directory))
+            temp = Path(directory); historical = temp/'historical.cpp'
+            historical.write_text(restoration.before_source()); current_source = public.SOURCE
+            try:
+                public.SOURCE = historical
+                observed = inverse.run(worker, temp)
+            finally:
+                public.SOURCE = current_source
         for key in ['comparisons', 'selected_points', 'native_angle_scale_f32_le_hex',
                     'native_step_degree_f32_le_hex', 'native_step_radian_f32_le_hex',
                     'witness_count', 'native_raw_sha256', 'source_sha256', 'candidate_inverse_source_sha256',
@@ -98,9 +105,9 @@ class RotationFieldsTests(unittest.TestCase):
             temp = Path(directory); hp = temp/'planes.cpp'; hp.write_text(probe.plane_harness())
             try:
                 public.initial.HARNESS = hp
-                for name, source, sanitize in [('before', public.SOURCE.read_text(), False),
-                        ('candidate', probe.candidate_source(public.SOURCE.read_text()), False),
-                        ('candidate_san', probe.candidate_source(public.SOURCE.read_text()), True)]:
+                for name, source, sanitize in [('before', restoration.before_source(), False),
+                        ('candidate', probe.candidate_source(restoration.before_source()), False),
+                        ('candidate_san', probe.candidate_source(restoration.before_source()), True)]:
                     binary = public.build(temp/name, source, sanitize=sanitize)
                     planes = temp/f'{name}_planes'; planes.mkdir()
                     for command in ['classic', 'smart']:

@@ -1,0 +1,378 @@
+{
+  "additional_current_public_regression_replays": 2452,
+  "before_commit": "6d0904f8ea86d2deb572aa4ddb4c2aca2c5ba61c",
+  "claims_not_made": [
+    "505 finite exact cases are not all-input or all-settings compatibility.",
+    "105 differences and 84 rejects remain open.",
+    "Windows CPU ISA/RCPPS and arbitrary native UCRT arguments remain unverified.",
+    "Mac extra radius row, negative phase, arbitrary noise/Quality, native AE/UI/save/installed/ROI/downsample and all-ten completion remain open."
+  ],
+  "controlled_worker_sha256": "722255eed6de0246f3918a11837d21eae0cb6cd6286ed1ae2d49f823ee92f4ec",
+  "counterfactual_public_replay_count": 2776,
+  "counterfactual_source_sha256": "6330498141c4e567164b64ea89ab41583e5634b6abedf28a287b653972c4bc2d",
+  "current_public_summary": {
+    "became_exact": 197,
+    "both_commands_exact": 505,
+    "case_count": 694,
+    "different": 105,
+    "lost_exact": 0,
+    "mac_rejected": 84,
+    "raw_changed": 237
+  },
+  "dependencies_sha256": {
+    "docs/COMPATIBILITY_ANALYSIS_PLAN_JA.md": "f1b972859ed6dd1583c491ced3e2dabc0f41ae076f81f7277ed7eac854f72b4e",
+    "mac/OLMRadialBlur/OLMRadialBlur.cpp": "aaa6345af78f66589200b1e7deff1d6d7afa2eeff69ee9be6afaa91d31720593",
+    "notes/COMPATIBILITY_ANALYSIS_PROGRESS_20261001.md": "1f6ba0aa250b5139d4c153beee1f27d8b611d228ce5f14a0a594f26ec236ecdc",
+    "reports/radialblur_rotation_restoration_public_20261001.json": "0393406ac5335ae422f813d541ee41c40010e782361c36323f54aab0675fd58d",
+    "tests/test_radialblur_axis_reference_20261001.py": "1fd3cb16eb147cf8048b12d29d9b0054142d48941d3c6878e88eb7331b240916",
+    "tests/test_radialblur_doublecast_reference_20261001.py": "a7d11b6bc3534ee48c02ee9904eb4464ae66528033300d70031c6ce789617470",
+    "tests/test_radialblur_noise_offset_20261001.py": "9b38cfee29f1955b44df4bf4c5ebd8c4665799e56a3d3f4eb255107d5dd219ba",
+    "tests/test_radialblur_pf8_writer_20261001.py": "c64ef9a4b1aedff1b71dfdd7c17a758143868ebfcedeab8e7cf0525652eef7d9",
+    "tests/test_radialblur_public_parameters_20261001.py": "cfe75a265ea44b4ca6ec5927c9f77aed06c998d3ebcce663d8c9d119ba3926a0",
+    "tests/test_radialblur_rotation_fields_20261001.py": "2112d08e5c9cb1bc3ffc4b79be8f3fafb0ba2ce3ab18b3831175b284c7038db7",
+    "tests/test_radialblur_rotation_restoration_20261001.py": "560b306de1e231249e56c95674a6a2609ee9df6e97c6e4634a7171ac777a73f0",
+    "tests/test_radialblur_typed_angle_20261001.py": "330d286102891f1083d5586b2800da9ea369efc56bb5c52530baf877decb7043",
+    "tools/emulation/probe_radialblur_rotation_restoration_20261001.py": "83ad1f203dfcbbfe1cf804b3b277b65b1cc0a0919496b6bfdeff5f189a4811eb",
+    "tools/emulation/radialblur_current_public_20261001.py": "a977454799a634bdfb2b377d9c7191b847a37bae28dbed8d8f719f6afd9781e3",
+    "tools/emulation/radialblur_rotation_gaussian_sdk_harness_20261001.cpp": "1ccfea08a30e63e65dc5bd1b40d46461d6d9c03bfb769b023af40511a86ec63c"
+  },
+  "existing_checks": [
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_public_parameters_20261001.py",
+        "-v"
+      ],
+      "elapsed_seconds": 86.088,
+      "exit_code": 0,
+      "log_sha256": "6651257daefa0fd970c49f42ea699dd084369b0e501f490399e5dfa46fc9e6c2",
+      "name": "public_parameters"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_typed_angle_20261001.py",
+        "-v"
+      ],
+      "elapsed_seconds": 46.282,
+      "exit_code": 0,
+      "log_sha256": "f1f7af7580fb8ce7b5dbe3bf9f791a97bc546f6c7906e9e57e02b7450157a5e4",
+      "name": "typed_angle"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_axis_reference_20261001.py",
+        "-v"
+      ],
+      "elapsed_seconds": 63.403,
+      "exit_code": 0,
+      "log_sha256": "db903264765671dadf3f8419cc45b62ee863eb0595d12b0018ac7dd556603135",
+      "name": "axis_reference"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_doublecast_reference_20261001.py",
+        "-v"
+      ],
+      "elapsed_seconds": 29.183,
+      "exit_code": 0,
+      "log_sha256": "c1c49417465b43920460610f7a7e6fd211be318c3722fd951ccc70603e62ef60",
+      "name": "doublecast_reference"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_noise_offset_20261001.py",
+        "NoiseOffsetTests.test_sdk_phase_against_import_free_native_leaf",
+        "NoiseOffsetTests.test_initialized_native_grid_and_production_bindings",
+        "-v"
+      ],
+      "elapsed_seconds": 39.362,
+      "exit_code": 0,
+      "log_sha256": "5012f19cb0af80d6674a8e9947d9944b4d730c21ce54129e161b00b09237c7e5",
+      "name": "noise_offset"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_generic_baseline_20260820.py"
+      ],
+      "elapsed_seconds": 4.325,
+      "exit_code": 0,
+      "log_sha256": "e70fec2825d9bf206d27463a792768195039599cb39bcca66339f47283f84cce",
+      "name": "test_olmradialblur_generic_baseline_20260820"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_generic_baseline_sanitizers_20260820.py"
+      ],
+      "elapsed_seconds": 35.159,
+      "exit_code": 0,
+      "log_sha256": "e70fec2825d9bf206d27463a792768195039599cb39bcca66339f47283f84cce",
+      "name": "test_olmradialblur_generic_baseline_sanitizers_20260820"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_generic_type3_sanitizers_20260820.py"
+      ],
+      "elapsed_seconds": 18.803,
+      "exit_code": 0,
+      "log_sha256": "e70fec2825d9bf206d27463a792768195039599cb39bcca66339f47283f84cce",
+      "name": "test_olmradialblur_generic_type3_sanitizers_20260820"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_generic_budget_20260821.py"
+      ],
+      "elapsed_seconds": 3.84,
+      "exit_code": 0,
+      "log_sha256": "e70fec2825d9bf206d27463a792768195039599cb39bcca66339f47283f84cce",
+      "name": "test_olmradialblur_generic_budget_20260821"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_size_noise_effectmain_20260821.py"
+      ],
+      "elapsed_seconds": 5.379,
+      "exit_code": 0,
+      "log_sha256": "e70fec2825d9bf206d27463a792768195039599cb39bcca66339f47283f84cce",
+      "name": "test_olmradialblur_size_noise_effectmain_20260821"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_global_polar_smart_contract_20260820.py"
+      ],
+      "elapsed_seconds": 3.742,
+      "exit_code": 0,
+      "log_sha256": "e70fec2825d9bf206d27463a792768195039599cb39bcca66339f47283f84cce",
+      "name": "test_olmradialblur_global_polar_smart_contract_20260820"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olm_roi_contract.py"
+      ],
+      "elapsed_seconds": 0.382,
+      "exit_code": 0,
+      "log_sha256": "db37516843f2c7c5d4cf0e63316372d046ef781c814092cc6f939f04c3937eaa",
+      "name": "test_olm_roi_contract"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_pf8_writer_20261001.py",
+        "PF8WriterTests.test_native_quantizer_integer_boundaries_and_indefinite_values",
+        "PF8WriterTests.test_natural_sampler_and_writer_witness_bindings",
+        "-v"
+      ],
+      "elapsed_seconds": 19.212,
+      "exit_code": 0,
+      "log_sha256": "f45170d20905df419d5ff42f63ebe41e73dd43327a8ecdf9da151d6315c8e716",
+      "name": "pf8_scalar_and_historical"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_rotation_fields_20261001.py",
+        "-v"
+      ],
+      "elapsed_seconds": 42.35,
+      "exit_code": 0,
+      "log_sha256": "be2db2d3f445687c76a6ad3233701baf5a0a8860d77ac822de6adb35469703bb",
+      "name": "rotation_fields_history"
+    }
+  ],
+  "existing_generic_gate_count": 7,
+  "existing_unittest_count": 22,
+  "external_sdk_dependencies_sha256": {
+    "Headers/A.h": "994bd510d18d9e4120dcb51ab2198cf55f80ea73eae0dc76a0e38015cbf8ac7d",
+    "Headers/AEConfig.h": "39c764a37cd77118af47de55f917e0b1eda4d51e19d8700fe62b027d0c5a30e6",
+    "Headers/AEFX_SuiteHandlerTemplate.h": "8c5816260b7e9c6dde8e9ef4201af2645db950ec4a64a6398daf55cd1a259db7",
+    "Headers/AE_AdvEffectSuites.h": "17ad1ba44f9c9f4a68d1b027393e5700d06dcda06bd36a7bcb83f0843c462240",
+    "Headers/AE_CacheOnLoadSuite.h": "e72dd815e7d36e9e3a8ccc0792ced44649ef60b59bab8132fc4045ee73ec315b",
+    "Headers/AE_ChannelSuites.h": "4d46ea52742d1422a607e2477eed05f1024b0cd6c6ed3aa26b5bc77bea719f45",
+    "Headers/AE_ComputeCacheSuite.h": "40e2bc8df1a4e994c7c36724d746e44e1894f254f6fac46e3b500ff9655893cc",
+    "Headers/AE_CreatorInfo.h": "3b49735fc7f28ef2e31bdf31606e4e54df75c4cd60e2f41041fbfd3523f155b0",
+    "Headers/AE_Effect.h": "a6d5cdeba53f6934a9bac19c2c1b46b1478266f39995795c59244e3d9a355a0d",
+    "Headers/AE_EffectCB.h": "1b380add9dd0b67f42ecff6438ce2424e7f4af335d1793af27910e285997a178",
+    "Headers/AE_EffectCBSuites.h": "e866395d6ee4187b476b08784297454ec9e367476862e0dd8ebcca67d6faba3b",
+    "Headers/AE_EffectGPUSuites.h": "8c9207c2b5186c92b0bb4460ebf2ee78de5b7c87ba070c587e0cefed2c2d9e48",
+    "Headers/AE_EffectPixelFormat.h": "af63f900d3c602e94e48aa897a64b983f523734f057f662019f0939c9d2ac63f",
+    "Headers/AE_EffectSuites.h": "592190334b7164f0196bb06e5ca1d5687fad068868e48d1d49aa89abdc2976ed",
+    "Headers/AE_EffectSuitesHelper.h": "51531dcfea0d1a314d826b29426b03965beebce0d40606082c723e45c6437e20",
+    "Headers/AE_EffectSuitesOld.h": "e1de2a7c7a88bf10a711b0c07b5c90115dbae59361838c1f93b704e7e464fd4e",
+    "Headers/AE_EffectUI.h": "173af476556623a884516597a70674fbf2445e3a7c6eb85cde3bca7117724db2",
+    "Headers/AE_EffectVers.h": "fcecc7038ac2634aca643429c0e1648dd6045cc5bb5fb39850e2dc80cf5856ec",
+    "Headers/AE_GeneralPlug.h": "dc0c94c7bded3a4052cb4f7621bd5947af8f30f3307929b0321a3f2df10c8c2c",
+    "Headers/AE_GeneralPlugOld.h": "9891e732dcd2968123e39c4bd9be458675c9734e16989d771d55b6faa3470773",
+    "Headers/AE_GeneralPlugPanels.h": "c10d148e2aa0cd3cfb29ef6484d9b92b5036264ce4490cff6f42eacb8a800a25",
+    "Headers/AE_GeneralPlugPost.h": "bb52ae8c474253b355cb4b16045cc154d2ee2b9e760ff4c473720bedd31a3800",
+    "Headers/AE_GeneralPlugPre.h": "fb0d3114589113300761af6c9cb75873b97b8f937fadae74083c42c8387023dd",
+    "Headers/AE_HashSuite.h": "6eb036d72124d4fd40178e2d2319748d5c95b18ef39a4e9091fddeae40426d7e",
+    "Headers/AE_Hook.h": "8e8af18a1eac85a3d53aac4e94e27549da4c46f286213405fd3d104977fbfcfc",
+    "Headers/AE_IO.h": "acbd86f89bc31f6d54f916a5949c30e8712bce4f1d23f46f6f8f544abd2d4449",
+    "Headers/AE_IO_FileExt.h": "7708e1124cbe9104552d732387427c1314ad5eac8c4ecd32e18494475bf11d23",
+    "Headers/AE_Macros.h": "d51b007444cec1fd404fd076f88e3e1290349159b8d0152e3dba3a2d1f773c46",
+    "Headers/AE_PluginData.h": "60e8ca5ec8deec48f5dbacdff76dd18923112c10939025b261a51d3dd47cb865",
+    "Headers/FIEL_Public.h": "9d467ce24bbfbe65cb5bef8aa4ff02684796d60ba92cce20019e1293154333f1",
+    "Headers/Mach-O_prefix.h": "ee3fb8a2cab1831f870d1bd676389cb17d3f63af364809993d105318bddee4af",
+    "Headers/PF_Masks.h": "762f05c08d062b18bf3ab45cd0064335268e636fe905ba9374960300ae4e4234",
+    "Headers/PR_Public.h": "27f794d12ae0fed69c8a6fe79ed5d257c95a14534a8d6379aa8d2486321721e7",
+    "Headers/PT_Public.h": "06a93beaff7d384bd9016c9ec008e0eefe3db423bc6b9369ea7e44aa38c392c8",
+    "Headers/PrSDKAESupport.h": "e3f0846074fedbbd560fa6b8f45e3733195c96f0c3e38f1ae31ffa815f9d79c3",
+    "Headers/PrSDKPixelFormat.h": "4e57a50103e5cc153914aa2851b6284ddf847b0bc500f1c1b7220b87579bad3a",
+    "Headers/SP/PSIntTypes.h": "5cf96c2dcbfb1c095be4250d72c6ce5357f441710c1dc897b3731c72cf4c95d8",
+    "Headers/SP/SPAccess.h": "809e8f8e67e0f5f0321cfb77529446919ab106f0d7bae7cb405a40e4f5b5b3a3",
+    "Headers/SP/SPAdapts.h": "ec71783a0224131aed10434e791bb886a1299a6547997975c37855d598d2350b",
+    "Headers/SP/SPBasic.h": "8d3cb86910d3f4cccb9a7336a8779870ae4156454f4d705ba00b94d9b3c02293",
+    "Headers/SP/SPBckDbg.h": "f6823f78440a474d8739643215daca29be0e6d7990092e0e4e20bb2e30797bb1",
+    "Headers/SP/SPBlocks.h": "f8307e1d3c0383ceb0c934bc98ea6b40db5f20d2842abd332705819a0a5fb397",
+    "Headers/SP/SPCOM.h": "fb3557270b55c9c7234119f98d5f1a9806641b3d82b8397cc7d608e56feeba00",
+    "Headers/SP/SPCaches.h": "7e9c1c00df303cb5fed5b2a299494d13731991502b9224aa75a653605fb3600a",
+    "Headers/SP/SPConfig.h": "18de4580a578afb259111e86444d181683951a9fa7ca04c22e1e93f81b3b2531",
+    "Headers/SP/SPEDebug.c": "65a2952941792a98e0c1c5812373fa216a52af88342c23e849cdc2d9638c0941",
+    "Headers/SP/SPErrorCodes.h": "59d3eb25efe60209efc91442124a570392170b5ab28b68b475ac675065707ee5",
+    "Headers/SP/SPErrors.h": "7676199d698c8f2aeb7652095258012e0e75fed745bdb9226eaaaf23615fcb3d",
+    "Headers/SP/SPFiles.h": "6f8fdb97ba1637691495bd00b8ea03c7f3ad6c62e90f0466f9324199d8e860ca",
+    "Headers/SP/SPHost.h": "2e37151d857fbf24bd907093ca280435100e6da22c6b8c9dc38fa3cb44089519",
+    "Headers/SP/SPInterf.h": "589159f263f96511f7fec17efbe3c5f4aaf8b4854f1ab069ad9d2414b0266ee5",
+    "Headers/SP/SPMData.h": "7fdf899b86687e2aad94d3086845ba663dce347d0bce1485f99dbd9899efd6d3",
+    "Headers/SP/SPObject.h": "b492433253d765c268b8a274bb235ef3824737d5facc52d38f0ff1bf6f25b275",
+    "Headers/SP/SPPiPL.h": "beda525cdbc1533c6e849bd193195944c370f884d6ca7aa6ccf6e9d6dd3dbbba",
+    "Headers/SP/SPPlugs.h": "6933ccaabac3b020577bbc4a3621af8aa650f2775031b2943eb1e529f78e8e3a",
+    "Headers/SP/SPProps.h": "a65fb4e08c7f62b466bba9d6e2637ccbaa3f0fc35a68227bc3aedc2a298e6cc8",
+    "Headers/SP/SPRuntme.h": "da9fa7c8057286623573920e3ec2f8e8e1637e4434fe4d041cdd935e90f3930e",
+    "Headers/SP/SPSTSPrp.h": "ea9e82bf1ff4cc3ce02dec01d742f8839b372e012871b1f7bff6807119febf67",
+    "Headers/SP/SPStrngs.h": "62077cc7634a8cb3681225edfb632b3dbc488610f75afb5380a857413c1e370e",
+    "Headers/SP/SPSuites.h": "25f6e0f52436b46589f875206342d79c9b2ea5ddc1519ea5cf226d276f8da5db",
+    "Headers/SP/SPTypes.h": "a4cef624073275ed191a3a5ce407a398f50e9dee118848dd93f04aebb8d43ab3",
+    "Headers/SP/artemis/config/platform.hpp": "a96301b3bab0b3c551b32efffb836cfe1a86ef0dcb93229b11a2e6caac160968",
+    "Headers/SP/photoshop/config/platform.hpp": "9002dfd37abc63ea62c506e14724a06f8c6c7ebc31bf247fd666958173f07512",
+    "Headers/SuiteHelper.h": "09a48dd94145deb9521433a87a47c320df617a8684a51b7b6283c23f6a3a33fe",
+    "Headers/adobesdk/DrawbotSuite.h": "6dbd8be70d6112581cd68057aba12823e547ef9f48d58038d10ba2ef0d87ad35",
+    "Headers/adobesdk/config/AdobesdkTypes.h": "80e5c991f64997f41bb0fecfe01a1862a26d2e8dbc420d621a756e984b367872",
+    "Headers/adobesdk/config/PostConfig.h": "d8498d3669469dca2439f7cac36093226ea7f191eda9d9928a8f77a7b40bce2e",
+    "Headers/adobesdk/config/PreConfig.h": "078079dc305335cbe7866030e61ef1a937172019ad95103aa5b93bca27a3c35b",
+    "Headers/adobesdk/drawbotsuite/DrawbotSuiteTypes.h": "0cc545ac1ff4fa8fa4d108abee29bd64b9e0459fca135557a75902b7ae2a881a",
+    "Resources/AE_General.r": "7ff870f2b64405a6c20d2d6b8c8c3c13dca13b04bb08c3a3b221821d53866ced",
+    "Resources/Mach-O_prefix.h": "ee3fb8a2cab1831f870d1bd676389cb17d3f63af364809993d105318bddee4af",
+    "Util/AEFX_ArbParseHelper.c": "47685e506fa8cd4d87e453a9f00a2606cdebce3b00a4569c44b60f91c6c1b59d",
+    "Util/AEFX_ArbParseHelper.h": "9bccc77c38c2f89b322373f6e4d2c5bc79c16efa5e6bbd14a4d8ee7d23ba21fb",
+    "Util/AEFX_ChannelDepthTpl.h": "5bfacde03ab8691c6bb9a1b2f9a4aa2b017d71e7dd8a5151e96a6470c3f0925e",
+    "Util/AEFX_SuiteHelper.c": "d786edee3bcf7e0c6d458d6508425fafa89a94feec0ee0eeaccf5b3d154c5bea",
+    "Util/AEFX_SuiteHelper.h": "c8773e1eea64a4273bc8744e805324d4dd2f122c87c54c105529a3c61b46a513",
+    "Util/AEGP_SuiteHandler.cpp": "7c054c7b0778b1b26463d6bf31cd57ee1d971946e8da22fb174e9f088741606f",
+    "Util/AEGP_SuiteHandler.h": "36e1acf66a90979bd541bfb260e4dbf58dab2d00afec7d749dfcffc43a6843f7",
+    "Util/AEGP_Utils.cpp": "4e503ec7c0e0df31fb85283408a6e84c5b2b0a887a33f53f72e2a698e4b597b5",
+    "Util/AEGP_Utils.h": "4a95b29c48ca919585abd7cdff322c75c43736c78732491ef32440cc9069130c",
+    "Util/DirectXUtils.cpp": "eed954fb595513fb6ab0261680d63917484701d9a1ad163d1df91c0909aa1457",
+    "Util/DirectXUtils.h": "c684d2fc0fca4ff69070c9fcbd6e95c8dd48ad28ee059e100de0ca5785b67677",
+    "Util/DuckSuite.h": "544f9048a2c9dbdbf034ee203b6524469d7fba090c981f8aeaf3de92155408d5",
+    "Util/MissingSuiteError.cpp": "8c0cc22b898c94c73556778f5cef1ccf9cded81ee590bd04feb49028ff4f44d9",
+    "Util/Param_Utils.h": "f6ab665ea85a208c2c8f68c1d233f2135b7b3871d73fe3a7ebc131054627c978",
+    "Util/Smart_Utils.cpp": "860aaaa6b9fd6448ea3bf9b5b6a1c687519cfe66150715fa0fd8da7ad0990c8c",
+    "Util/Smart_Utils.h": "7b6f64457c7b0763ef79a662bdb3fc323652db5522a30d62d4d19a2f9c091bb6",
+    "Util/String_Utils.c": "50c9398fda8afd93d78fc3e3dc33af2b2b432ed7b04b051b9494e33ee5597050",
+    "Util/String_Utils.h": "b0f9c18777e2085c2f0fbb0828452550aeef11e6f5b18916e28c4efa3749ceff",
+    "Util/entry.h": "a688efa8ac191ca98f9b7bf93f0dc58ece9444c69e49f07c0ed37c97faa74e1f"
+  },
+  "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+  "matrix_summaries": {
+    "getters": {
+      "became_exact": 3,
+      "both_commands_exact": 15,
+      "case_count": 30,
+      "different": 15,
+      "lost_exact": 0,
+      "mac_rejected": 0,
+      "raw_changed": 11
+    },
+    "independent": {
+      "became_exact": 192,
+      "both_commands_exact": 384,
+      "case_count": 384,
+      "different": 0,
+      "lost_exact": 0,
+      "mac_rejected": 0,
+      "raw_changed": 192
+    },
+    "topology": {
+      "became_exact": 0,
+      "both_commands_exact": 90,
+      "case_count": 252,
+      "different": 78,
+      "lost_exact": 0,
+      "mac_rejected": 84,
+      "raw_changed": 32
+    },
+    "typed": {
+      "became_exact": 2,
+      "both_commands_exact": 16,
+      "case_count": 28,
+      "different": 12,
+      "lost_exact": 0,
+      "mac_rejected": 0,
+      "raw_changed": 2
+    }
+  },
+  "native_vector_leaf_arguments": 30000,
+  "new_exact_native_reacquired_count": 197,
+  "new_tests": {
+    "count": 2,
+    "exit_code": 0,
+    "log_sha256": "e4184c60ddfe528bb50a7e07801bec94034f8aa22f973e4252a2adadffccaeb0"
+  },
+  "noise_grid_replays": 96,
+  "omitted_duplicate_test": "PF8WriterTests.test_live_public_current_production repeats the same 694 cases and builds now exercised by RotationRestorationTests; PF8 scalar and historical checks ran.",
+  "original_aex_worker_and_controlled_workers_unchanged": true,
+  "parent_source_files_verified": 440,
+  "production_public_replay_count": 2776,
+  "production_sdk_gaussian_exponents": 60000,
+  "production_sdk_offset_angle_readers": 352,
+  "production_sdk_pf8_writer_replays": 2196,
+  "production_source_changed": true,
+  "schema": "radialblur.rotation-restoration-validation/1",
+  "sdk_gaussian_weight_length_replays": 30,
+  "source_before_sha256": "877fadcded9fb3b004902195f3041f98a7596154c783749eb0ce21c8277adafa",
+  "source_sha256": "aaa6345af78f66589200b1e7deff1d6d7afa2eeff69ee9be6afaa91d31720593",
+  "status": "PASS-CONTROLLED-REFERENCE",
+  "universal_sdk_build": {
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "exit_code": 0,
+    "installed": false,
+    "log_sha256": "21b386fa8752f8f82c3822f15310382b529e4d4250fa7c7beeb7279af4f50172",
+    "optimization": "O2",
+    "product_sha256": "d33710cd72fd3e15afc8f21ced1ffc8642ae3fad0d6724a9dc0b8753dc679ffc"
+  },
+  "window_worker_sha256": "cebdd7d5d88885ce3bba8768c4680e9e7a27e8fcbeb396d1230f724b8d064eca",
+  "windows_readonly_ssh_result": {
+    "configuration_changed": false,
+    "connected": false,
+    "local_tailscale_state": "stopped",
+    "timeout_seconds": 5
+  }
+}

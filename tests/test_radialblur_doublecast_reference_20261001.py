@@ -40,7 +40,7 @@ class DoublecastReferenceTests(unittest.TestCase):
             self.assertEqual(report['parent_worker_sha256'], build['parent_worker_sha256'])
             for path, expected in report['dependencies_sha256'].items():
                 if path == 'mac/OLMRadialBlur/OLMRadialBlur.cpp':
-                    self.assertEqual(expected, latest.capture()['source_before_sha256'])
+                    self.assertEqual(expected, json.loads((ROOT/'reports/radialblur_pf8_writer_public_20261001.json').read_text())['source_before_sha256'])
                 else:
                     self.assertEqual(public.sha((ROOT/path).read_bytes()), expected, path)
         self.assertEqual(load('radialblur_doublecast_reference_public_20261001.json')['build_sha256'],

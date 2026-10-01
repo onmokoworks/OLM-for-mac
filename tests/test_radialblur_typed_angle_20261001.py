@@ -106,7 +106,7 @@ class TypedAngleTests(unittest.TestCase):
                 self.assertEqual(expected, offset['header_before_sha256'])
             else:
                 self.assertEqual(public.sha((ROOT/name).read_bytes()), expected, name)
-        self.assertEqual(latest.capture()['source_before_sha256'], offset['candidate_source_sha256'])
+        self.assertEqual(json.loads((ROOT/'reports/radialblur_pf8_writer_public_20261001.json').read_text())['source_before_sha256'], offset['candidate_source_sha256'])
         env = dict(os.environ, ASAN_OPTIONS='detect_leaks=0:halt_on_error=1',
                    UBSAN_OPTIONS='halt_on_error=1:print_stacktrace=1')
         total = 0

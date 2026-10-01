@@ -69,12 +69,12 @@ class NoiseOffsetTests(unittest.TestCase):
         counterfactual = load('radialblur_noise_offset_counterfactual_20261001.json')
         self.assertEqual(native['case_count'], 96)
         self.assertEqual(native['summary'], {'plane_raw_exact': 96, 'typed_resident_matches_trace': 96})
-        self.assertEqual(latest.capture()['source_before_sha256'], counterfactual['candidate_source_sha256'])
+        self.assertEqual(json.loads((ROOT/'reports/radialblur_pf8_writer_public_20261001.json').read_text())['source_before_sha256'], counterfactual['candidate_source_sha256'])
         self.assertEqual(public.sha(cf.HEADER.read_bytes()), counterfactual['candidate_header_sha256'])
         for capture in (native, counterfactual):
             for path, expected in capture['dependencies_sha256'].items():
                 if path == 'mac/OLMRadialBlur/OLMRadialBlur.cpp':
-                    self.assertEqual(expected, latest.capture()['source_before_sha256'])
+                    self.assertEqual(expected, json.loads((ROOT/'reports/radialblur_pf8_writer_public_20261001.json').read_text())['source_before_sha256'])
                 else:
                     self.assertEqual(public.sha((ROOT/path).read_bytes()), expected, path)
         with tempfile.TemporaryDirectory(prefix='radial_offset_grid_test_') as directory:
