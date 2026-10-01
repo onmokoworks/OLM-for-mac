@@ -3243,12 +3243,12 @@ static PF_Err RenderZoomTyped(
 			(use_aex_typed_zoom_transform_worker_32x18 && transform_axis_edge_tuple))
 			? info.outer_edge_fade : 0;
 		const std::vector<float> outer_fade_weights = outer_fade_span > 0
-			? ZoomGaussianWeights(outer_fade_span) : std::vector<float>();
+			? RotationFadeGaussianWeights(outer_fade_span) : std::vector<float>();
 		const A_long inner_fade_span = (use_generic_baseline && info.inner_edge_fade != 0) ||
 			use_aex_typed_zoom_inner_size_edge_noise_components_32x18
 			? info.inner_edge_fade : 0;
 		const std::vector<float> inner_fade_weights = inner_fade_span > 0
-			? ZoomGaussianWeights(inner_fade_span) : std::vector<float>();
+			? RotationFadeGaussianWeights(inner_fade_span) : std::vector<float>();
 		blurred = BuildZoomAEXOuterOnlyPolar(
 			polar, ZoomGaussianWeights(ZoomEffectiveLength(worker_info)), polar_valid,
 			span_plane, source_scalar_plane, worker_info.outer_strength,

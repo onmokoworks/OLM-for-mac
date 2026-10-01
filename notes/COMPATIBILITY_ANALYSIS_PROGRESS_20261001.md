@@ -1950,11 +1950,57 @@ source bindingを履歴として保持し、testの現行期待値をcurrent607�
 scalar fade3語、Windows RCPPS/ISA/一般UCRT、追加半径行、任意入力・設定、native AE/UI/保存/
 ROI/downsampleと全10本完全互換は未完。Goalはactive。
 
+## RB-ZOOM-FADE-GAUSSIAN-033 — Zoomの両fadeを元B680へ接続
+
+前回ef3af484のZoom6差分解消とPushはprogress。694条件に残る20×14 opaque Inner Edge37の
+3深度を追った。原AEX・固定/controlled workerは保持し、自然callのreadonly採取で比較する。
+
+FACT: Zoom owner56f0は57c1/57e6でStrength表、580bでOuter Fade、5830でInner Fade表を
+いずれもB680へ渡す。現行Zoomはfadeにもscalar DOUBLE exp→FLOAT32を全要素に使っていた。
+既に復元したRotationFadeGaussianWeightsは元B680のfour-wide1ebc0 expとscalar tailの規則で、
+Zoomでも同じhelperを両fadeへ使う。Strength用の既存scalar policyはこの変更では保持する。
+37要素の元Inner Fade表と共通helperのmodelは全語一致した。
+
+初回にwork+0x18/+0x1cのmin/maxを0/14と読み、14セルと解釈したが、589c SUBに続く589f INCを
+確認して15セルへ訂正した。Macのmax-min+1はZoomでは正しかった。radiusだけ減らす候補と
+radius＋fade候補は3深度とも不一致、fadeだけの候補は全一致。Rotationの追加半径行と混同しない。
+またB150のR8はFLOAT32の前処理scalar workspaceで、eligibilityではない。A9D0 stack5の
+byte planeがeligibilityであることをcallsiteと読み取り命令から確認し、自然比較も全byte一致。
+
+FACT: 自然20×14 opaqueでは、元/旧Macのpolar、span、eligibilityは既に全一致していた。
+最初の差はB150後のpreaccum4415語・premax1127語で、A9D0後accum4342語・max1123語、
+9d80入口normalized5151語へ伝わった。fade表の接続だけでこれらの差は全て0になり、rawも一致。
+別geometry23×13のring/diagonalでも同じ段階から差が発生し、全fieldとrawが候補で一致する。
+自然3画像の7 FLOAT32 plane計1607400語、eligibility84600 bytesを元と照合。元B150後/A9D0後の
+accum/maxはwork+0x4210/+0x4218をreadonly dereferenceし、Macは実helperの各段階をpassive copy。
+RGBA seed/accumとmaxを混同せず、native owned dimensionsもMacと一致。採取用変更は私有コピーのみ。
+
+最終sourceは6a2cb8d0845b397e4cf8c0e6874836bfd2236af2cc671c6c65d2baf0003465f6。
+694条件は610 exact・差分0・84拒否、新exact3・raw変更3・lost0。候補O2/strict sanitizerの
+Classic/Smart2776再生と独立Size/Noise96条件384再生が一致。従来のsource/設定/error/metadataを保持。
+独立20×14 opaque PF32のInner Fade1–100と、23×13 opaque/ring/diagonal・3深度・
+1/4/5/10/13/19/37/50/51/64/100の計199条件を元resident typedと接続。全exact、旧147差分を解消、
+新しい796公開再生にlost0。両fade callerを変更したため、Outer Fade1–100の20×14 opaque PF32も
+追加し、元100条件とO2/strict sanitizerのClassic/Smart400再生で全exactを確認した。
+
+本番の新2 testとOuter Fade追加1 testはPASS。元の新3＋独立199＋Outer100を再取得し、
+本番3956＋400公開再生と自然3画像を再確認。既存24 unittest/7 gateと更新したZoom alpha履歴
+2 testもPASS。alpha履歴の3160公開再生・自然6画像・import-free native44/実SDK88回を保持。
+Gaussian/PF8 quantizer/Angle/Offset/noise grid/Rotation samplerの既存回帰も通過。
+実SDK arm64/x86_64 O2 build成功。元AEX・固定/controlled worker・parent440 source・SDK90入力の
+不変を確認し、installedは変更していない。
+
+zoom_fade_public/outer_public、probeとtestに記録。過去Zoom alpha607報告とleaf44条件の
+source bindingを履歴として保持し、現行sourceの公開出力とprimitive samplerを再検証する。
+Size25の84拒否、scalar fade150語中3語、Windows RCPPS/ISA/一般UCRT、mask末尾allocatorと
+Rotation追加半径行、任意入力/設定、native両AE/UI/保存/ROI/downsampleと全10本完全互換は未完。
+次はSize25の領域factorと保守的な受入制限を、同じ入力・設定の元ownerから追う。Goalはactive。
+
 ## 次の順序
 
 1. Smoother2のHDR/Gamma合成と色境界の今回の有限集合は検証済み。公開builderのLUT構築とnative依存先を分け、未測定scan長・任意float・独立paletteの最初の差を復元する。
 2. ColorKeyの未検証geometry/任意float/paletteとThin/Blur合成を拡張する。今回の境界・overflow比較を全入力の証明とは扱わず、固定workerとcontrolled Lab94参照を分け、native Windows UCRTとの比較を残す。
 3. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
-4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはAngle/Edge/PointとNoise OffsetのFLOAT32接続を復元した。参照atan2f非軸差は保存Windows scalarの有限集合へ校正済み。Zoom PF8の共通writerは復元済み。Rotationの自然field/scatterは代表全量でGaussian差を分離し、別コピーのinverse復元で代表rawが一致した。generic two-stageのGaussian/finalを本番へ復元し、694条件505 exact、独立384全exactを確認。no-noise/neutral/Angleと微小alphaも本番へ復元し、559 exact、typed28と独立384全exactを確認。Rotation Edge/Inner Edgeも本番へ復元し、565 exact・45差分・84拒否。Size100+Noiseも共通経路と行境界area規則を復元し、本番601 exact・9差分・84拒否。独立96も全exact。Zoomの正負alphaとゼロseed加算も復元し、本番607 exact・3差分・84拒否。次はZoom Inner Edge3とSize25制限を自然fieldから閉じる。scalar fade3語、native RCPPS/ISA/UCRTを未解決に保持。負位相のnative契約・Size25の面積制限・端/穴/島へ進み、その後KiraKira一般入力を比較する。
+4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはAngle/Edge/PointとNoise OffsetのFLOAT32接続を復元した。参照atan2f非軸差は保存Windows scalarの有限集合へ校正済み。Zoom PF8の共通writerは復元済み。Rotationの自然field/scatterは代表全量でGaussian差を分離し、別コピーのinverse復元で代表rawが一致した。generic two-stageのGaussian/finalを本番へ復元し、694条件505 exact、独立384全exactを確認。no-noise/neutral/Angleと微小alphaも本番へ復元し、559 exact、typed28と独立384全exactを確認。Rotation Edge/Inner Edgeも本番へ復元し、565 exact・45差分・84拒否。Size100+Noiseも共通経路と行境界area規則を復元し、本番601 exact・9差分・84拒否。独立96も全exact。Zoomの正負alphaとゼロseed加算も復元し、本番607 exact・3差分・84拒否。Zoomの両fadeもB680へ接続し、本番610 exact・差分0・84拒否。次はSize25制限を自然fieldとarea規則から閉じる。scalar fade3語、native RCPPS/ISA/UCRTを未解決に保持。負位相のnative契約・Size25の面積制限・端/穴/島へ進み、その後KiraKira一般入力を比較する。
 
 既存の作業ツリー変更は今回のcommitに混ぜない。第三者AEXとnative raw出力をPushしない。
