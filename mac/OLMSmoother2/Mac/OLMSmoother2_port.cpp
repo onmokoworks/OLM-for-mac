@@ -3977,18 +3977,20 @@ static float win_FUN_18000bb10_adaptive_gamma(const FPix &center,
 
 	// Win internal mode 3 — key-color test against the Gamma Color list.
 	// UI "Gamma Colors" maps here. FUN_18000a9c0 compares RGB only using
-	// DAT_18002268c; only the zero-valued internal config uses output transfer.
+	// DAT_18002268c; the zero-valued internal config uses output transfer.
 	if (win_gamma_mode == 3 && p.num_gamma_colors > 0) {
 		const bool trace_this_pixel =
 		    poly.cur_x == g_olmsmoother2_trace_x && poly.cur_y == g_olmsmoother2_trace_y;
 		auto matches_gamma_color = [&](float r, float g, float b) -> bool {
 			// FUN_18000cce0 receives the setup struct at +8. Its low 32-bit
 			// field is the internal version flag: v1=1, v2=0. a9c0 applies the
-			// output transfer when that flag is zero, so UI v2 must re-encode.
+			// output transfer when that flag is zero. The exported v2 setup
+			// has a 10000-entry inverse LUT: a9c0 calls 4c30 at aa39/aa4a/aa5c.
+			// Use that interpolation for membership as well as output packing.
 			if (p.version != SMOOTHER_V1) {
-				r = (float)win_FUN_180004d70_literal(r);
-				g = (float)win_FUN_180004d70_literal(g);
-				b = (float)win_FUN_180004d70_literal(b);
+				r = win_srgb_lut_interpolate(_tmp_smoother2_inverse_lut_10000_bin, r);
+				g = win_srgb_lut_interpolate(_tmp_smoother2_inverse_lut_10000_bin, g);
+				b = win_srgb_lut_interpolate(_tmp_smoother2_inverse_lut_10000_bin, b);
 			}
 			const int n = std::min(p.num_gamma_colors, NUM_GAMMA_COLORS);
 			for (int i = 0; i < n; ++i) {

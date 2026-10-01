@@ -1284,9 +1284,51 @@ reports/olmsmoother2_key_gamma_hdr_validation_20261001.jsonへ記録する。
 HDRとGammaを同時に変える入力、全float/geometry/走査長、native Windows UCRT/AE、
 Mac installed、UI/project保存、ROI/downsampleと8192上限は未完。全10本Goalはactive。
 
+## SM2-GAMMA-MEMBERSHIP-015 — v2 Gamma Colorsのinverse LUT判定を復元
+
+公開resident AEX SmartとMac public parameter-file harnessで、PF16高値3 profile、PF32の
+HDR/signed/alpha/float_bits/seed固定finite profileを比較した。4×3/7×9/17×19、
+diagonal/ramp_alpha、独立7 Gamma/key/count/smoothing state、両versionの840条件は変更前から
+全exact。random_finiteはRGBをseed付きLCGで-4..4（1/256刻み）、alphaを0/-0.25/0.5/1/2
+から構成し、このprofileではpattern名を入力生成へ使わない。840条件を840独立入力とは呼ばない。
+通常AE UIでの高値world到達を証明するものではない。
+
+さらにPF32 4×3、4 RGB anchor、3成分・両側境界、5隣接bits・2 alpha・両version・
+Gamma Colors/Key/Invert Keyの1440条件を取得した。境界中心はFLOAT32色値±元の許容幅
+0x3b008081から見積もり、全transitionを二分探索したとは宣言しない。旧本番は1424 exact、
+16差分は全てv2 Gamma Colors。例: RGB(41,83,137)のR下側bits 0x3e22a2a3..a5と
+上側0x3e26a6a7..a9。差は72 byteで最初はbyte36。Key/Invertとv1は一致した。
+
+FACT（static）: a9c0はconfig+8のversion flag非zeroでtransferを飛ばす。zeroの場合は
+config+16のctxを使い、ctx+16のlengthが0なら4d70の数式、非zeroならaa39/aa4a/aa5cで
+4c30を呼ぶ。4c30は入力<=0を0、>=1を1へ戻し、(length-1)*入力をDOUBLEで計算して
+index/fractionを求め、隣接FLOAT32要素とDOUBLE積・加算で補間しFLOAT32へ丸める。
+
+FACT（公開read-only trace）: 独立4×3 PNG、Gamma Colors count1/value1.8、色(41,83,137)
+のv1/v2をrender-trace-png Smartで取得。v1のflag1ではGammaからの4c30観測0回、v2のflag0で
+12回、呼出し元は上記3 RVA。両ctx lengthは10000、v2のinverse LUT先頭4096 byteのSHAは
+既存captured encode LUT先頭と一致した。watch上限は4096であり、40000 byte全表のreadbackや
+native Windows UCRTのbuilder一致とは呼ばない。PNG traceは境界resident frameとは別の入力と
+host経路で、分岐到達の証拠。private trace/PNGを公開せずhashと経路metadataだけ保持する。
+
+INFERENCEと修正: 旧Macのv2 palette判定は常に4d70数式を選んでいたが、公開元AEXの
+setupは非空inverse LUTを使う。既存win_srgb_lut_interpolateをv2の候補RGBへ適用する。
+v1、比較許容幅、palette値、LUT内容、pow依存先、走査、最終byteは変更しない。
+一時候補の2280条件O2/ASan/UBSan4560再生は全exact。本番へ同じ一般規則を反映し、
+本番4560再生と固定workerで元AEX2280条件の再取得も全exact。baselineのsource SHAは保持し、
+入力・parameter payload・native hashが全て同一であることを新しいtestで検証する。
+
+従来の公開1692条件3384再生、以前の公開252条件504再生、色/scan内部3344条件6688再生は
+全exact。retained114と未到達390行、Gamma Colors3/default beta4/ROI3の回帰もPASS。
+実SDK arm64/x86_64 O2 buildも成功。native AE/installed実行の代用とはしない。
+実行結果と依存hashはreports/olmsmoother2_gamma_membership_validation_20261001.jsonへ記録する。
+新probe/replayと保存物はruntimeに組み込まず、fixture別補正やoracle出力の書換えもしない。
+任意float/scan長、全設定直積、full LUT/native UCRT/両AE/installed、UI保存、ROI/downsample、
+8192上限と全10本の完全互換は引き続き未完。Goalはactive。
+
 ## 次の順序
 
-1. Smoother2の公開builderでHDRとGamma All/Colorsの合成、palette/tolerance境界を比較する。内部captured LUTとの差を分離し、未測定scan長と任意floatの最初の差を復元する。
+1. Smoother2のHDR/Gamma合成と色境界の今回の有限集合は検証済み。公開builderのLUT構築とnative依存先を分け、未測定scan長・任意float・独立paletteの最初の差を復元する。
 2. ColorKeyの未検証geometry/任意float/paletteとThin/Blur合成を拡張する。今回の境界・overflow比較を全入力の証明とは扱わず、固定workerとcontrolled Lab94参照を分け、native Windows UCRTとの比較を残す。
 3. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
 4. 計画に沿いDirectionalBlur Dual、RadialBlur topology、KiraKira等の一般入力も進める。

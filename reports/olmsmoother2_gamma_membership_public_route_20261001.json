@@ -1,0 +1,125 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "case_count": 2,
+  "claims_not_made": [
+    "Different authored PNG input and exported render-trace Smart path; routing evidence, not a boundary-frame recapture",
+    "Read-only a9c0 context and 4c30 call-site snapshots from emulated AEX, not native Windows/AE",
+    "Only a 4096-byte inverse LUT prefix was read; no full 40000-byte table readback claim",
+    "Full local trace/output PNGs remain private; published report contains hashes and routing metadata",
+    "No arbitrary LUT/library/environment/UI/save/ROI/downsample or full compatibility completion"
+  ],
+  "dependencies_sha256": {
+    "mac/OLMSmoother2/Mac/OLMSmoother2_encode_lut_10000.h": "8fd0f56cea32a719d1576a6d0788d0e3d2823a6cfd627588e9b3e7e9084ac2ac",
+    "tools/emulation/probe_olmsmoother2_gamma_composition_20261001.py": "600b9a071efcd325ae721e6d7a9dfda599030eb20fbd0744cdf6d8cfe4afb1ea",
+    "tools/emulation/probe_olmsmoother2_gamma_membership_route_20261001.py": "fe3a0e49c3eacb85d83896105868b41b450a029d8d1c8f3923747b1a7e9eb507",
+    "tools/emulation/probe_olmsmoother2_key_gamma_hdr_20261001.py": "807ee172cd3b87e73470bd27ee689058ab5e9796f25552dd52fd9beecd4c8a42",
+    "tools/emulation/probe_olmsmoother2_switch_reachability_20261001.py": "dbdc8560ea2be19ec19dd91f86c0edcc0254724556655a12e600a75fe4fd6228"
+  },
+  "frozen_worker_sha256": "0eb2f7705598f7b5f53563b9d920274ba094c835ff3dbaaf5f6fb214ec0cfd61",
+  "rows": [
+    {
+      "a9c0_context_observations": 4,
+      "gamma_color_4c30_call_observations": 0,
+      "gamma_color_4c30_call_rvas": [],
+      "guards_intact": true,
+      "input_png_sha256": "29cb0d0948b461c1c1c9de33f750554eb086a7c1fddb461a57ea290a37dd93bb",
+      "internal_version_flag": 1,
+      "inverse_lut_length": 10000,
+      "inverse_lut_prefix_bytes": 0,
+      "inverse_lut_prefix_sha256": [],
+      "local_trace_sha256": "aad809367e52fc02af22d88a495ef649ddb5d0120357ae9a4b5c0723c947af78",
+      "parameter_values": [
+        {
+          "name": "Smoother Version",
+          "slot": 7,
+          "value": 1.0
+        },
+        {
+          "name": "Gamma Correction",
+          "slot": 8,
+          "value": 2.0
+        },
+        {
+          "name": "Gamma Value",
+          "slot": 9,
+          "value": 1.8
+        },
+        {
+          "name": "Number of Gamma Colors",
+          "slot": 10,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            41,
+            83,
+            137
+          ],
+          "name": "Gamma Color",
+          "slot": 11
+        }
+      ],
+      "raw_output_sha256": "93c44909af4b0b47512973caca7fa9347a5a2193cdcb149486bc2dab0f2f10c3",
+      "render_mode": "smart-cpu",
+      "unsupported_suite_calls": [],
+      "version": 1
+    },
+    {
+      "a9c0_context_observations": 4,
+      "gamma_color_4c30_call_observations": 12,
+      "gamma_color_4c30_call_rvas": [
+        "0xaa39",
+        "0xaa4a",
+        "0xaa5c"
+      ],
+      "guards_intact": true,
+      "input_png_sha256": "29cb0d0948b461c1c1c9de33f750554eb086a7c1fddb461a57ea290a37dd93bb",
+      "internal_version_flag": 0,
+      "inverse_lut_length": 10000,
+      "inverse_lut_prefix_bytes": 4096,
+      "inverse_lut_prefix_sha256": [
+        "70dd2eef5016fea6828db79d2b4b8befd6f96b966014aefb893e0c80f9b02e5c"
+      ],
+      "local_trace_sha256": "d454e4770c92a6077b66ef5c306eb52624237f43f266cbfa4ab817b00226b1ce",
+      "parameter_values": [
+        {
+          "name": "Smoother Version",
+          "slot": 7,
+          "value": 2.0
+        },
+        {
+          "name": "Gamma Correction",
+          "slot": 8,
+          "value": 2.0
+        },
+        {
+          "name": "Gamma Value",
+          "slot": 9,
+          "value": 1.8
+        },
+        {
+          "name": "Number of Gamma Colors",
+          "slot": 10,
+          "value": 1.0
+        },
+        {
+          "color": [
+            255,
+            41,
+            83,
+            137
+          ],
+          "name": "Gamma Color",
+          "slot": 11
+        }
+      ],
+      "raw_output_sha256": "db07aa24c6f5aaea34f67aae0780c13be9233da262a8e9d75cba163a72382abc",
+      "render_mode": "smart-cpu",
+      "unsupported_suite_calls": [],
+      "version": 2
+    }
+  ],
+  "schema": "olmsmoother2.gamma-membership-public-route/1",
+  "source_sha256": "d44b4e653077fa79a2a717be3f9fc809f2a4d66f3431dec4dad3c4f702d64d03"
+}
