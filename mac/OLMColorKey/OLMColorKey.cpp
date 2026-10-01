@@ -864,11 +864,11 @@ static void RGBToPluginHSV(const float rgb[3], float out[3])
 	float h;
 	if (delta == 0.0f) h = 0.0f;
 	else if (mx == r) h = (g - b) * 60.0f / delta;
-	else if (mx == g) h = (b - r) * 60.0f / delta + 120.0f;
-	else h = (r - g) * 60.0f / delta + 240.0f;
+	else if (mx == g) h = (b - r) * 60.0f * (1.0f / delta) + 120.0f;
+	else h = (r - g) * 60.0f * (1.0f / delta) + 240.0f;
 	h = std::fmod(h, 360.0f);
 	if (h < 0.0f) h += 360.0f;
-	out[0] = h / 360.0f;
+	out[0] = h * 0.0027777778450399637f;
 	out[1] = mx == 0.0f ? 0.0f : delta / mx;
 	out[2] = mx;
 }
@@ -1628,10 +1628,11 @@ struct OLMCKPixelTraits<PF_Pixel8> {
 	static float native_key_epsilon() { return 0.5f / 255.0f; }
 	static bool is_16bpc() { return false; }
 	static bool is_32bpc() { return false; }
-	static float r(const PF_Pixel8 &p) { return (float)p.red / 255.0f; }
-	static float g(const PF_Pixel8 &p) { return (float)p.green / 255.0f; }
-	static float b(const PF_Pixel8 &p) { return (float)p.blue / 255.0f; }
-	static float a(const PF_Pixel8 &p) { return (float)p.alpha / 255.0f; }
+	// FUN_180011450 normalizes source bytes by FLOAT32 inverse multiplication.
+	static float r(const PF_Pixel8 &p) { return (float)p.red * 0.003921568859368563f; }
+	static float g(const PF_Pixel8 &p) { return (float)p.green * 0.003921568859368563f; }
+	static float b(const PF_Pixel8 &p) { return (float)p.blue * 0.003921568859368563f; }
+	static float a(const PF_Pixel8 &p) { return (float)p.alpha * 0.003921568859368563f; }
 	static void zero(PF_Pixel8 &p) { p.alpha = p.red = p.green = p.blue = 0; }
 	static void zero_alpha(PF_Pixel8 &p) { p.alpha = 0; }
 	static void replace_rgb(PF_Pixel8 &p, const PF_PixelFloat &rep)
@@ -1823,12 +1824,9 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			};
 			auto classifier_component = [&](float value) {
 				if (!info.premultiplied) return value;
-				float premultiplied = value * alpha;
-				if (!OLMCKPixelTraits<PixelT>::is_32bpc()) {
-					const float maximum = OLMCKPixelTraits<PixelT>::max_chan();
-					premultiplied = std::floor(premultiplied * maximum + 0.5f) / maximum;
-				}
-				return premultiplied;
+				// Typed callbacks multiply the normalized source by alpha with MULSS.
+				// Integer source worlds do not quantize this intermediate again.
+				return value * alpha;
 			};
 			float cmp[3] = {
 				classifier_component(rgb[0]),
@@ -1932,16 +1930,19 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						PF_FpLong tb = info.per_color ? info.thresholds_b[i] : info.threshold_b;
 						float sh = cmp[0];
 						if (sh < key[0]) sh += 1.0f;
-						hit = (sh - key[0]) <= key_epsilon + tr
-						    && std::fabs(cmp[1] - key[1]) <= key_epsilon + tg
-						    && std::fabs(cmp[2] - key[2]) <= key_epsilon + tb;
+						// COMISS + JA rejects greater values, accepting unordered results.
+						// A finite subnormal RGB triple can produce NaN hue via reciprocal overflow.
+						hit = !((sh - key[0]) > (float)(key_epsilon + (float)tr))
+						    && !(std::fabs(cmp[1] - key[1]) > (float)(key_epsilon + (float)tg))
+						    && !(std::fabs(cmp[2] - key[2]) > (float)(key_epsilon + (float)tb));
 					} else {
 						PF_FpLong threshold = info.per_color ? info.thresholds[i] : info.threshold;
 						float d0 = cmp[0] - key[0];
 						float d1 = cmp[1] - key[1];
 						float d2 = cmp[2] - key[2];
 						float dist = std::sqrt(d0 * d0 + d1 * d1 + d2 * d2);
-						hit = dist <= std::sqrt(3.0f) * (key_epsilon + threshold);
+						const float limit = std::sqrt(3.0f) * (key_epsilon + (float)threshold);
+						hit = dist <= limit;
 					}
 				} else if (info.color_space == 3 && !info.per_component) {
 					PF_FpLong threshold = info.per_color ? info.thresholds[i] : info.threshold;
@@ -1953,16 +1954,21 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 					if (info.color_space == 3) {
 						hit = LabPerComponentHit(cmp, key, tr, tg, tb, key_epsilon);
 					} else {
-						hit = std::fabs(cmp[0] - key[0]) <= key_epsilon + tr * comp_scale[0]
-						    && std::fabs(cmp[1] - key[1]) <= key_epsilon + tg * comp_scale[1]
-						    && std::fabs(cmp[2] - key[2]) <= key_epsilon + tb * comp_scale[2];
+						hit = std::fabs(cmp[0] - key[0]) <= (float)(key_epsilon + (float)tr * comp_scale[0])
+						    && std::fabs(cmp[1] - key[1]) <= (float)(key_epsilon + (float)tg * comp_scale[1])
+						    && std::fabs(cmp[2] - key[2]) <= (float)(key_epsilon + (float)tb * comp_scale[2]);
 					}
 				} else {
 					PF_FpLong threshold = info.per_color ? info.thresholds[i] : info.threshold;
-					float mean = (std::fabs(cmp[0] - key[0]) +
-					              std::fabs(cmp[1] - key[1]) +
-					              std::fabs(cmp[2] - key[2])) / 3.0f;
-					hit = mean <= threshold;
+					// FUN_180004190 uses FLOAT32 Euclidean distance in scalar mode.
+					const float d0 = key[0] - cmp[0];
+					const float d1 = key[1] - cmp[1];
+					const float d2 = key[2] - cmp[2];
+					float squared = d0 * d0;
+					squared += d1 * d1;
+					squared += d2 * d2;
+					const float limit = std::sqrt(3.0f) * (key_epsilon + (float)threshold);
+					hit = std::sqrt(squared) <= limit;
 				}
 				if (hit && hit_index == -1) hit_index = (int)i;
 				hit_any = hit_any || hit;

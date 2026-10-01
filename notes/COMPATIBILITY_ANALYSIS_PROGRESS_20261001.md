@@ -1100,9 +1100,49 @@ Lab Thin/Blur合成144行576render、typed HDR/最大25色等8120renderと48 ato
 ROI/downsample、UI/project保存は未完。参照環境の関数欠落で測定が止まる箇所は分離できたが、
 controlled atan2fをnative UCRTへ昇格しない。全10本の完全互換Goalはactive。
 
+## CK-COLOR-HDR-011 — RGB/HSVの距離・正規化・Premultiplied演算を復元
+
+独立13×5 paletteで6色空間、scalar/成分別、3深度、count1/2/4/25、重複・無効key、
+Per Color/Keep/Replace/Premultiplied/precisionと異なる成分thresholdを記録した576条件を比較。
+PF16はRGB/alphaを32768超まで、PF32はHDR、signed RGB/alpha、負ゼロと隣接FLOAT32、
+subnormalを含む13種のbit値を使用した。PF32のalpha_hdr/combined profileは、奇数x+yで
+alphaを2倍、偶数で−1倍するので、名前にかかわらずHDRとsigned alphaが混在する。
+これはパラメーターの全直積ではない。528条件は元の固定worker、Lab94 scalarの48条件は
+校正済みcontrolled host atan2f workerであり、native Windows UCRTへ昇格しない。
+
+変更前はClassic/Smartとも560/576一致、16条件で差分。RGB scalar9、HSV scalar1、
+HSV成分別6であり、このcampaignのLab/YUV/YCrCbは一致した。
+FACT: 元AEXのRGB comparator 0x4190は平均絶対差ではなくFLOAT32ユークリッド距離を
+sqrt(3f)*(FLOAT32 threshold+epsilon)と比較する。HSV converter 0x9e10はG/B branchで
+逆数を先に計算し、hueをFLOAT32 inverse 360との積で正規化する。8bit source unpack
+0x11450も1/255のFLOAT32逆数乗算であり、color parameterの別normalizationと一致する
+とは限らない。3深度のPremultipliedはnormalized RGBとalphaをMULSSし、整数深度でも
+中間値を再量子化しない。HSV成分別のCOMISS+JAはunordered結果をgreaterとして拒否しない。
+有限subnormal入力でも逆数overflowからNaN hueが生じるので、この分岐規則が必要になる。
+
+独立した1×1 gray sourceと同じbyte値のcolor keyのexported traceでも、source RGBとkey RGB、
+変換後hueのFLOAT32丸めが異なることを観測した。source hue 0.2777777910232544、key hue
+0.27777794003486633となり、元の比較はhue wrapを通る。見た目が同じ色という理由で値を
+補正しない。測定値と保持したlocal traceのhashをvalidationへ記録し、raw traceは公開しない。
+
+最初の距離/HSV演算案は両cmd/O2/sanitizerで2280/2304render一致し、HSV成分別6条件を
+残した。source正規化、Premultiplied、unordered分岐も復元した案は2304/2304一致。
+同じ一般処理を本番へ適用した。fixture識別や最終byte補正を使わない。本番576条件を
+元AEXで再取得しClassic/Smart全exact、入力・parameter payload・workerとnative出力hashを
+全行で保持した。本番の同じ再生2304renderもO2/ASan/UBSan全exact。
+
+本番変更後、Lab94 scalar/DOUBLE1224行4896render、Lab状態/境界990行3960render、
+Lab Thin/Blur144行576render、従来typed8120renderと48 atomic失敗、旧公開126 outputと
+13 callback controlがPASS。generic pairwise36＋sanitizer22、ROI/tileもfunction runnerでPASS。
+これらは重複を除いたunique条件数ではない。過去reportのsource/hashを付け替えず、新しい
+validationで今回のsource/tool/test/report依存hashと結果を保持する。
+
+全入力・palette・threshold・geometry・設定、native Windows UCRT/AE、Mac installed、
+UI/project保存、ROI/downsample・色管理は未完。全10本の完全互換Goalはactive。
+
 ## 次の順序
 
-1. ColorKeyの未検証HDR/任意float・全palette/thresholdを、新しいcontrolled Lab94参照と固定workerの一致範囲を分けて比較する。Lab comparatorの復元を保持し、数学関数のnative Windows UCRTとの比較は未完として扱う。
+1. ColorKeyの未検証threshold境界・任意float/paletteとThin/Blur合成を拡張する。今回の576条件を全入力の証明とは扱わず、固定workerとcontrolled Lab94参照の境界を分け、native Windows UCRTとの比較を残す。
 2. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
 3. Smoother2の分類到達は今回の集合で確認済み。色・alpha・scan/weightの状態と
    public owner/native hostの比較は残る。計画に沿いDirectionalBlur Dual等の一般入力も進める。

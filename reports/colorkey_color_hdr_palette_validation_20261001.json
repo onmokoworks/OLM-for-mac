@@ -1,0 +1,188 @@
+{
+  "baseline": {
+    "capture_rows": 576,
+    "classic_exact": 560,
+    "historical_counterexamples": 16,
+    "smart_exact": 560
+  },
+  "candidate_replay": {
+    "asan_ubsan": {
+      "exact_count": 1152,
+      "render_count": 1152
+    },
+    "o2": {
+      "exact_count": 1152,
+      "render_count": 1152
+    }
+  },
+  "claims_not_made": [
+    "No full input/palette/threshold/geometry/settings/state completion",
+    "Controlled host f32 atan2f is not native Windows UCRT",
+    "Local exported AEX and real-SDK shim are not installed Windows/Mac AE",
+    "No new full generic gate or performance validation",
+    "No complete UI, project save, ROI/downsample or color management compatibility",
+    "Capture rows and render counts are not deduplicated unique conditions",
+    "Per-frame resident parameter readback unavailable",
+    "All 10 full compatibility Goal remains active"
+  ],
+  "dependencies_sha256": {
+    "mac/OLMColorKey/OLMColorKey.cpp": "7db4c8abb57d53d759a069ffd9a027eafa9de480e95d5a65cb7fec622d30b927",
+    "reports/colorkey_classifier_materialization_candidate_replay_20261001.json": "8bd0984ec71fe4bef314f1b6879b3f2375f10dd6c47685c295b0d3fcde538b85",
+    "reports/colorkey_color_hdr_palette_baseline_20261001.json": "5ae28dc82a6e691784aaef069ef9a33e1ddc6f2094e7fc6c56df3b7a46c1ff4d",
+    "reports/colorkey_color_hdr_palette_production_20261001.json": "1ac2c6b387171ff1689f43a232175b362f3ac29785c1d3f31e7d64d1a4a1ed14",
+    "reports/colorkey_rgb_hsv_candidate_replay_20261001.json": "1f0d047d5adebdd36e42707b0e167b6c60fff86c7afe6fe4e0f9df44bc9c7440",
+    "scripts/run_olm_generic_beta_gate.py": "aacfded94ac9284fadeab11eafc1576b1da690ebf20badb131e255567872e785",
+    "tests/test_olmcolorkey_color_hdr_palette_20261001.py": "163ae47c2d4755c20f81c4e4b580128245f2b7edff8410f84bbd8255f68525bc",
+    "tests/test_olmcolorkey_generic_pixel_local_pairwise.py": "4acfb5fbeb55d86b331665bd7887efb3d838940b08d45f224fad0f1b430e6086",
+    "tests/test_olmcolorkey_generic_roi_tile.py": "dd073d342df4681a894beb0d02df5c3e545298cc935c44e273d1adddce0d4076",
+    "tests/test_olmcolorkey_lab94_controlled_20261001.py": "6f69f25cf723150398dcbc10aca626b57e475c69ec32b0738581e160104cec96",
+    "tests/test_olmcolorkey_lab_edge_transfer_20261001.py": "557b903e21615d9fac73620e18a152bc4e7364822777676c2b8a4f7bbdf6a4d8",
+    "tests/test_olmcolorkey_lab_state_boundary_20261001.py": "4dbb3670c6be0845c3d5091bd3a3f278ab0e065c35a66369413017ed50c13ca7",
+    "tests/test_olmcolorkey_public_entries_real_sdk_20260813.py": "73a11c8d969ac12838abff46af2bf4ff00c3bf3a4b50aad0c58a39bf3cf1c75d",
+    "tests/test_olmcolorkey_typed_controls_20261001.py": "9f7171cfddda958be97f0ec2a8ba6386fcc75d8cac03c54dd2bcde3feb7fbcb5",
+    "tools/emulation/colorkey_classifier_materialization_candidate_20261001.py": "6297c0659399818567d21d7c66531a3d947248c559a7d5edf45c3bfdb534fcd6",
+    "tools/emulation/colorkey_rgb_hsv_candidate_20261001.py": "ba3710fe50af2399efc36fbf02fdae7bd82550f277f3b3e27aedf1cebdcec288",
+    "tools/emulation/colorkey_typed_controls_harness_20261001.cpp": "a6639f1a657e907ee86518a74ba90c06d20b7543d5f2e735c3473228f3183a66",
+    "tools/emulation/probe_olmcolorkey_color_hdr_palette_20261001.py": "0c2ae0b05d4587223055053a13d90c5fa7c2521f7921a210fdc2c7ce492862c9",
+    "tools/emulation/replay_olmcolorkey_classifier_materialization_candidate_20261001.py": "317327391dd2965a63de1381056bd40a139ef18db488de9438d4f969de34f4d1",
+    "tools/emulation/replay_olmcolorkey_rgb_hsv_candidate_20261001.py": "99b89253c1147b87ac90d03165c78f45b105f916fd22eafd027174ff03f2bee9"
+  },
+  "fixture_profile_notes": {
+    "PF32_alpha_hdr_and_combined": "Alpha multiplied by 2 for odd x+y and by -1 for even x+y; includes negative alpha/negative zero",
+    "float_grains_u32": [
+      "00000000",
+      "80000000",
+      "000116c2",
+      "358637bd",
+      "3b808080",
+      "3effffff",
+      "3f000000",
+      "3f000001",
+      "3f7fffff",
+      "3f800000",
+      "3f800001",
+      "40100000",
+      "beaaaaab"
+    ]
+  },
+  "native_facts": {
+    "gray_conversion_measurements": [
+      {
+        "hsv_f32": [
+          0.2777777910232544,
+          0.023255812004208565,
+          0.5058823823928833
+        ],
+        "hsv_u32": [
+          1049508068,
+          1019118329,
+          1057063298
+        ],
+        "rgb_f32": [
+          0.49803924560546875,
+          0.5058823823928833,
+          0.4941176772117615
+        ],
+        "rgb_u32": [
+          1056898816,
+          1057063298,
+          1056767230
+        ],
+        "role": "source"
+      },
+      {
+        "hsv_f32": [
+          0.27777794003486633,
+          0.02325586974620819,
+          0.5058823823928833
+        ],
+        "hsv_u32": [
+          1049508073,
+          1019118360,
+          1057063298
+        ],
+        "rgb_f32": [
+          0.49803921580314636,
+          0.5058823823928833,
+          0.4941176474094391
+        ],
+        "rgb_u32": [
+          1056898815,
+          1057063298,
+          1056767229
+        ],
+        "role": "color_parameter"
+      }
+    ],
+    "gray_trace_raw_output_sha256": "fb0d8c069b0cc28eb5943506ed303a5d2820c29e22bea783ad967cb261adb70f",
+    "gray_trace_retained_locally_sha256": "2a8ac91bb22e0296015bf8153d6b03273f60c19a9a0a17ed6589f1477f1877ff",
+    "hsv_comparator_rva": "0x4290",
+    "hsv_converter_rva": "0x9e10",
+    "hsv_operations": "G/B branches use reciprocal multiply; hue normalization multiplies FLOAT32 inverse 360; COMISS + JA per-component accepts unordered values",
+    "pf16_unpack_rva": "0x114c0",
+    "pf8_source_inverse_f32": 0.003921568859368563,
+    "pf8_unpack_rva": "0x11450",
+    "premultiplied_operations": "Normalized RGB MULSS alpha without intermediate integer quantization",
+    "rgb_comparator_rva": "0x4190",
+    "rgb_scalar_metric": "FLOAT32 Euclidean distance <= sqrt(3f) * (FLOAT32 threshold + FLOAT32 epsilon)"
+  },
+  "production_recapture": {
+    "capture_rows": 576,
+    "classic_exact": 576,
+    "controlled_host_atan2f_rows": 48,
+    "frozen_reference_rows": 528,
+    "input_settings_reference_and_native_hashes_preserved": true,
+    "smart_exact": 576
+  },
+  "regressions": {
+    "color_hdr_palette": {
+      "asan_ubsan_renders": 1152,
+      "elapsed_seconds": 94.433,
+      "exit_code": 0,
+      "o2_renders": 1152
+    },
+    "generic_pixel_local_pairwise": {
+      "asan_ubsan_cells": 22,
+      "exit_code": 0,
+      "o2_cells": 36,
+      "runner": "scripts/run_olm_generic_beta_gate.py --run-test-file"
+    },
+    "generic_roi_tile": {
+      "exit_code": 0,
+      "runner": "scripts/run_olm_generic_beta_gate.py --run-test-file"
+    },
+    "lab94_controlled": {
+      "asan_ubsan_renders": 2448,
+      "elapsed_seconds": 187.306,
+      "exit_code": 0,
+      "o2_renders": 2448
+    },
+    "lab_edge_transfer": {
+      "asan_ubsan_renders": 288,
+      "elapsed_seconds": 31.657,
+      "exit_code": 0,
+      "o2_renders": 288
+    },
+    "lab_state_boundary": {
+      "asan_ubsan_renders": 1980,
+      "elapsed_seconds": 153.574,
+      "exit_code": 0,
+      "o2_renders": 1980
+    },
+    "public_entries_real_sdk": {
+      "callback_controls": 13,
+      "elapsed_seconds": 3.184,
+      "exit_code": 0,
+      "output_count": 126
+    },
+    "typed_controls": {
+      "asan_ubsan_renders": 3592,
+      "atomic_failure_renders": 48,
+      "elapsed_seconds": 271.92,
+      "exit_code": 0,
+      "o2_renders": 4528
+    }
+  },
+  "schema": "olmcolorkey.color-hdr-palette-production-validation/1",
+  "source_sha256": "7db4c8abb57d53d759a069ffd9a027eafa9de480e95d5a65cb7fec622d30b927"
+}
