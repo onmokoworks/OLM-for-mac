@@ -1,0 +1,5340 @@
+{
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "claims_not_made": [
+    "Read-only natural owner masks have a measured zero end guard; arbitrary native allocator contents and non-finite alpha are not proved.",
+    "Finite run masks do not prove all geometry/inputs, native Windows AE/UCRT/ROI/downsample or all-ten completion."
+  ],
+  "dependencies_sha256": {
+    "tools/emulation/probe_radialblur_rotation_size_noise_20261001.py": "290d973f432c6fcf2967222a4a84b29871df0f785ec77f72deab0bf770527e77",
+    "tools/emulation/probe_radialblur_size_run_boundary_20261001.py": "71b7f48ce68f46328f3c7a9a5d93daa3d6a2ca7470df46f59a12138bf4860136",
+    "tools/emulation/radialblur_size_factor_sdk_harness_20261001.cpp": "6d24b5c6ab1efa409c2c97fc6cf7d9d07bbc6f9406517027d164287b3ad576bd"
+  },
+  "inclusive_run_write_code_sha256": "0c5efa2a20aa6197739d7e3e618303e384794e86b029db68e52daf85476e3331",
+  "normalization_code_sha256": "6264b48073dabf385b353cb4cc767e57352918308b6e11924791ca7c4fde35ad",
+  "probe_start_source_sha256": "82800c32473afbc69db4e67f2f973c527f3f76211f01104e3a88221d038584b6",
+  "production_source_changed_during_probe": false,
+  "rows": [
+    {
+      "area_sha256": "4e8c8e2831c93da3e200742c82a8faaf5fd091dbbc9214ea097f2fcaffaa8fa8",
+      "area_word_count": 280,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          20,
+          14
+        ],
+        "mask": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              10,
+              7
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 25
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "opaque",
+        "row_index": 0,
+        "size": 25
+      },
+      "component_areas": [
+        293
+      ],
+      "factor_sha256": "61c818989db13bf4028408060ee0205f186dc0fcb2bec5908410c88fa76aa74c",
+      "maximum_area": 293,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "a4df68ab0762eeee6c6691be9378923bba35283795df0fdd5be24fe17b58e19b",
+        "trace_sha256": "d3e82e78284fbdb9019fbf87899a329cbce23b40063ef6f0f5a88423903ea0c6",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "4e8c8e2831c93da3e200742c82a8faaf5fd091dbbc9214ea097f2fcaffaa8fa8",
+      "area_word_count": 280,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          20,
+          14
+        ],
+        "mask": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              10,
+              7
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 100
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "opaque",
+        "row_index": 1,
+        "size": 100
+      },
+      "component_areas": [
+        293
+      ],
+      "factor_sha256": "14cea54ce2386dbc34d35c8b84bd47cc8827c2339396c8058772782c4ec146ff",
+      "maximum_area": 293,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "a4df68ab0762eeee6c6691be9378923bba35283795df0fdd5be24fe17b58e19b",
+        "trace_sha256": "fccc0bb28d849c16fc13b0627d0aa7a1b8affb6ec76704bc1a9bd7772d9db54f",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "24045c10c12a89f4c11e3b88ea34558fcdf926a8c1008cd08cc33bc71407c774",
+      "area_word_count": 35,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          7,
+          5
+        ],
+        "mask": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 25
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "empty",
+        "row_index": 2,
+        "size": 25
+      },
+      "component_areas": [],
+      "factor_sha256": "eeac3ac89245b2bc4e766f7d834428f57f2d24814ac5e21f15317365cc32fd3d",
+      "maximum_area": 0,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "738c079dff6c9b77a0891ac42db1cabcab933a672b14aed8ecfcf94c0e77bb40",
+        "trace_sha256": "09bbcb760128f8d2a9894b48f44a4dbbc44203c73a5e8d4a1e1b93ab3f6bb19c",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "24045c10c12a89f4c11e3b88ea34558fcdf926a8c1008cd08cc33bc71407c774",
+      "area_word_count": 35,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          7,
+          5
+        ],
+        "mask": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 100
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "empty",
+        "row_index": 3,
+        "size": 100
+      },
+      "component_areas": [],
+      "factor_sha256": "24045c10c12a89f4c11e3b88ea34558fcdf926a8c1008cd08cc33bc71407c774",
+      "maximum_area": 0,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "738c079dff6c9b77a0891ac42db1cabcab933a672b14aed8ecfcf94c0e77bb40",
+        "trace_sha256": "ff3cf4276417022884a13d9f5c8deef590187776597b49de1528c893789c5d88",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "93793fedb491ec43472a9cc98cd01e91f084fb71b5971bbb3543f46cf32eac11",
+      "area_word_count": 35,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          7,
+          5
+        ],
+        "mask": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 25
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "opaque",
+        "row_index": 4,
+        "size": 25
+      },
+      "component_areas": [
+        39
+      ],
+      "factor_sha256": "321dc975767ac8cf04ece12769d71be587b16ee537131cf08e6b545555e3b51a",
+      "maximum_area": 39,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "5e6fc2a18cfab2af9f902f9b363e801ddca1d231c8fd4442befa6a9628f5231e",
+        "trace_sha256": "10e2347ff19bc3ecdd7ee223b8dd350a16aa10b7d4f161cd09c445df4f606d01",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "93793fedb491ec43472a9cc98cd01e91f084fb71b5971bbb3543f46cf32eac11",
+      "area_word_count": 35,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          7,
+          5
+        ],
+        "mask": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 100
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "opaque",
+        "row_index": 5,
+        "size": 100
+      },
+      "component_areas": [
+        39
+      ],
+      "factor_sha256": "321dc975767ac8cf04ece12769d71be587b16ee537131cf08e6b545555e3b51a",
+      "maximum_area": 39,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "5e6fc2a18cfab2af9f902f9b363e801ddca1d231c8fd4442befa6a9628f5231e",
+        "trace_sha256": "157d2e371120f2e97145ebb77692c961891c924203e746b7fe623101a488d9fa",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "2f8450f4347b04c9db559c868a4edfdcc0642311d10757aecd0eeac6465e0a0c",
+      "area_word_count": 5,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          1,
+          5
+        ],
+        "mask": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              0,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 25
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "column",
+        "row_index": 6,
+        "size": 25
+      },
+      "component_areas": [
+        9
+      ],
+      "factor_sha256": "f603f94b1d517d5138cdeae0c125779455d596b548a58e5cb4d941f97a1a242a",
+      "maximum_area": 9,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "ca6bd83bfa9f2758594e40420efdbe2d0638c247a84c8ca19d7d8dfb07baf4ba",
+        "trace_sha256": "5ebeb1595660a49802adf861d227140fc21a008a9ca1343df3b9481859efc422",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "2f8450f4347b04c9db559c868a4edfdcc0642311d10757aecd0eeac6465e0a0c",
+      "area_word_count": 5,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          1,
+          5
+        ],
+        "mask": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              0,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 100
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "column",
+        "row_index": 7,
+        "size": 100
+      },
+      "component_areas": [
+        9
+      ],
+      "factor_sha256": "f603f94b1d517d5138cdeae0c125779455d596b548a58e5cb4d941f97a1a242a",
+      "maximum_area": 9,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "ca6bd83bfa9f2758594e40420efdbe2d0638c247a84c8ca19d7d8dfb07baf4ba",
+        "trace_sha256": "05d2e538e265b2795f5904b600dc5ba647a9a0bd9dddffa236404b79e784bfbf",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "6b7095d9bf95d5c02144a46d3bb05a4f05c256babda494fe2eaf0ae10676715a",
+      "area_word_count": 5,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          5,
+          1
+        ],
+        "mask": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              2,
+              0
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 25
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "row",
+        "row_index": 8,
+        "size": 25
+      },
+      "component_areas": [
+        5
+      ],
+      "factor_sha256": "f603f94b1d517d5138cdeae0c125779455d596b548a58e5cb4d941f97a1a242a",
+      "maximum_area": 5,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "d24eee32e5d7da0c9050df0d92c1e636eae9000ee8d663365cb15756c653ca81",
+        "trace_sha256": "1891c6248d6ead79c9d273de54938a9353b7d7248e1c055d6b684647489155b9",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "6b7095d9bf95d5c02144a46d3bb05a4f05c256babda494fe2eaf0ae10676715a",
+      "area_word_count": 5,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          5,
+          1
+        ],
+        "mask": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              2,
+              0
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 100
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "row",
+        "row_index": 9,
+        "size": 100
+      },
+      "component_areas": [
+        5
+      ],
+      "factor_sha256": "f603f94b1d517d5138cdeae0c125779455d596b548a58e5cb4d941f97a1a242a",
+      "maximum_area": 5,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "d24eee32e5d7da0c9050df0d92c1e636eae9000ee8d663365cb15756c653ca81",
+        "trace_sha256": "c303792ca2376c0026d88772edf883c1b92f40b807e8866c9b58689676c18492",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "86353b65f17cee7bc4a7c23c54234fc0f93207b3c2a6225cee7e272df1169a46",
+      "area_word_count": 35,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          7,
+          5
+        ],
+        "mask": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 25
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "left_column",
+        "row_index": 10,
+        "size": 25
+      },
+      "component_areas": [
+        5
+      ],
+      "factor_sha256": "94259b0aa907cadf30ab38ad6dad721b158bd07a1e610e0abf1a5d767fbf0733",
+      "maximum_area": 5,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "7d809b041bfd0500d2f4031afa71238fa3b53acc4be202d1f98d2e30348a8c34",
+        "trace_sha256": "a466f7a81b71e126d91baec3d3257225b0226c20160a59a8753cc0ab623be229",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "86353b65f17cee7bc4a7c23c54234fc0f93207b3c2a6225cee7e272df1169a46",
+      "area_word_count": 35,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          7,
+          5
+        ],
+        "mask": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 100
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "left_column",
+        "row_index": 11,
+        "size": 100
+      },
+      "component_areas": [
+        5
+      ],
+      "factor_sha256": "74c5da5d604d8e43677a623210ba0db98be91c631e3e2922fee5712e97a7876c",
+      "maximum_area": 5,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "5035d97cf99209637086ddebbac832bb412e11a84140b973ebfb8b12e18ae595",
+        "trace_sha256": "63e9ccd723ce3e028793204a5b62b5ff4bab1e0557a7753729736b8ed3c9b1cf",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "980d75ab158d39df9b509400a11411f34f484b2b936859462dbbbbfd1e145638",
+      "area_word_count": 35,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          7,
+          5
+        ],
+        "mask": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 25
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "right_column",
+        "row_index": 12,
+        "size": 25
+      },
+      "component_areas": [
+        5
+      ],
+      "factor_sha256": "f5a4159a43e03a4f213e9e0f2bc091b4c9b0b858200a054cda9f85934a89e931",
+      "maximum_area": 5,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "e07873f572889afa5e0c154c9548536501cc19447affdbe809eb59e235507266",
+        "trace_sha256": "4a74ee956c71b102bf38e2862578a8739b4c12eb1828966399db5eab215d43c3",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "980d75ab158d39df9b509400a11411f34f484b2b936859462dbbbbfd1e145638",
+      "area_word_count": 35,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          7,
+          5
+        ],
+        "mask": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 100
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "right_column",
+        "row_index": 13,
+        "size": 100
+      },
+      "component_areas": [
+        5
+      ],
+      "factor_sha256": "e937b6bb899f00eb0b2b4d73eb16252af21fcfaded524974997cddd8286da197",
+      "maximum_area": 5,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "6e9a9ed628b346ffd592ad428b4a89884ec9eb223588dcc1c9585ee7eb5697b4",
+        "trace_sha256": "c4ea9908a30f73e840bb3ccf76196a87f145278a323d4d014428a494b5390a4f",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "aac00173d698c752b94139564cad1ecf5b2a30627bd5563af19de0d08667e967",
+      "area_word_count": 35,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          7,
+          5
+        ],
+        "mask": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 25
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "later_right_overwrites_left",
+        "row_index": 14,
+        "size": 25
+      },
+      "component_areas": [
+        5,
+        8
+      ],
+      "factor_sha256": "047d712155b62add28f7454adecc650d20a8680134109026545a4460cf7ce382",
+      "maximum_area": 8,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "8b6a648b9d615d67fdb5ebf5805092ca7b465d319d22350934b5836ed9448b52",
+        "trace_sha256": "532fa354a5e715b9b7783b2a291bf31ce871d4f818906926c27f3f49862d5d8c",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "aac00173d698c752b94139564cad1ecf5b2a30627bd5563af19de0d08667e967",
+      "area_word_count": 35,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          7,
+          5
+        ],
+        "mask": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 100
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "later_right_overwrites_left",
+        "row_index": 15,
+        "size": 100
+      },
+      "component_areas": [
+        5,
+        8
+      ],
+      "factor_sha256": "0a84262aeb5c0fc36ff9f332d0f7ee00dcfeb865fc472488bdf8cfa5a671f20f",
+      "maximum_area": 8,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "d317674d622709b737cca7fde6939e8e25aa112e4b403c7d949f11709fb899cb",
+        "trace_sha256": "caf87ff8ce4370e85cd0c93b162ca29d040f29dc25c110afd52d326222926528",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "8ca8d6f84b3392182a50dab9b7d0b1ffa4eff62343a5603ddab2c0d3174a9d80",
+      "area_word_count": 35,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          7,
+          5
+        ],
+        "mask": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 25
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "separate_row_end",
+        "row_index": 16,
+        "size": 25
+      },
+      "component_areas": [
+        2,
+        3
+      ],
+      "factor_sha256": "3a0cb66edbee0405d6f31317a15b3d4a2b3a579d1e3ccb8b56a186583cfec146",
+      "maximum_area": 3,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "8a57faec5ed475edb759408750b637d44f46914c902b34fb4aaaef1389f26f7a",
+        "trace_sha256": "4bbe44f114293b7b4e8cb9fb3d05160be8c408d66e597e18949790ae6437c3f8",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "8ca8d6f84b3392182a50dab9b7d0b1ffa4eff62343a5603ddab2c0d3174a9d80",
+      "area_word_count": 35,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          7,
+          5
+        ],
+        "mask": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 100
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "separate_row_end",
+        "row_index": 17,
+        "size": 100
+      },
+      "component_areas": [
+        2,
+        3
+      ],
+      "factor_sha256": "931457b31bf33395392fdfac6beaf8429f5077cfd70f7b8dfd18b8e189f42290",
+      "maximum_area": 3,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "f0e178418a62a4caffff2a76893f78a110d24f14162a5e26c7c3a10be645aef0",
+        "trace_sha256": "97cbeb2ae550bf129de7ff38f54c24d2306be32ca4891da25c23d2a0d1f725b9",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "7421d50547462326a75cebaa85bb0200caad79cb66b40f72e12fe09ddb6be819",
+      "area_word_count": 35,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          7,
+          5
+        ],
+        "mask": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 25
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "merge_inside",
+        "row_index": 18,
+        "size": 25
+      },
+      "component_areas": [
+        19
+      ],
+      "factor_sha256": "c5ec16b7dab58386fe73acc4a34a81b15d2b8ec0d8f48d178bafcbbb9c0b5b04",
+      "maximum_area": 19,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "aa108d3d9d534f0cffd273c6d9cacdea8a6e4ea44996505b17a537456b94d784",
+        "trace_sha256": "b57183b79945cf5030d0a11045721a416a891cafa9c9411777148b811a1dc560",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "7421d50547462326a75cebaa85bb0200caad79cb66b40f72e12fe09ddb6be819",
+      "area_word_count": 35,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          7,
+          5
+        ],
+        "mask": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 100
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "merge_inside",
+        "row_index": 19,
+        "size": 100
+      },
+      "component_areas": [
+        19
+      ],
+      "factor_sha256": "6d205972e779a12f56905688869f286831f4be5dae6980d486868eb7f96cf271",
+      "maximum_area": 19,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "9346b3b2bfd339dc6e92987d8757f80e34e514c3232540ad5af6f969fb958c7f",
+        "trace_sha256": "a1c93e81d83a9d515b9de5814ef9919d31ccdbcd02e98a0f0b0449fb7423ecc7",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "993fcef63dff1d2d9115c6d34ae835fe1fb6c0905e09486e1f08aa8162b7e48c",
+      "area_word_count": 35,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          7,
+          5
+        ],
+        "mask": [
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 25
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "alternating_runs",
+        "row_index": 20,
+        "size": 25
+      },
+      "component_areas": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "factor_sha256": "09af81c5d5c819ab5878099aaee796849081089846565ff0c9fc19ce64bd5250",
+      "maximum_area": 1,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "601cdf984f7dd8cc2c34b1e1fcfab2233fe7e387c1912aaa2c8950e597c3915e",
+        "trace_sha256": "d39b386be9f6ff2153fc3de1143fcb94e6250a11c794ea6397ebd93ad8ae21ac",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "993fcef63dff1d2d9115c6d34ae835fe1fb6c0905e09486e1f08aa8162b7e48c",
+      "area_word_count": 35,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          7,
+          5
+        ],
+        "mask": [
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 100
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "alternating_runs",
+        "row_index": 21,
+        "size": 100
+      },
+      "component_areas": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "factor_sha256": "993fcef63dff1d2d9115c6d34ae835fe1fb6c0905e09486e1f08aa8162b7e48c",
+      "maximum_area": 1,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "751a9f5164675b7e0bc3f7da7269dc8fcfb8803d6cda9689d91ed2ba0b89802d",
+        "trace_sha256": "a45419c8ae929bb98c8c4bad466bceb1f084882531ed3bc3bebdfd3a501369d7",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "ae17be7fddb09c8672a4e0ae032d7cd18a53d61c49b0684b4de7c7722403a992",
+      "area_word_count": 35,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          7,
+          5
+        ],
+        "mask": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 25
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "small_hole",
+        "row_index": 22,
+        "size": 25
+      },
+      "component_areas": [
+        36
+      ],
+      "factor_sha256": "6e767fadfd26f410bb622ec62b129c3eafe59bbdcdbec30fb1f9e6027d7fa8f1",
+      "maximum_area": 36,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "075488b649d34aebf689f967384469ef2c6939bb08363b8977dc5f72a7e2116a",
+        "trace_sha256": "c832bdb0bf1f7c0e09513429f278c7bf315d620bc8a0e600df7daa82258ac384",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "ae17be7fddb09c8672a4e0ae032d7cd18a53d61c49b0684b4de7c7722403a992",
+      "area_word_count": 35,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          7,
+          5
+        ],
+        "mask": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 100
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "small_hole",
+        "row_index": 23,
+        "size": 100
+      },
+      "component_areas": [
+        36
+      ],
+      "factor_sha256": "0a2b1aa992a2a92f1ec364cc65d5ec8ec472b7d35fa8d3f41ec577e7ca827b0a",
+      "maximum_area": 36,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "54e030675b1308cf99930ed3e7f36feccf95fd8798b05c9bfdea4fd9c9752a9b",
+        "trace_sha256": "16d4dc987934b74ff181179ea3a3686577cd661080068d732f434ef6880714b1",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "e0ab03c8fb65fb1a380e44f20dffe2a9dc458f25ecbf7b6eac08e098a4e2307f",
+      "area_word_count": 35,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          7,
+          5
+        ],
+        "mask": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 25
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "two_floating_runs",
+        "row_index": 24,
+        "size": 25
+      },
+      "component_areas": [
+        6,
+        7
+      ],
+      "factor_sha256": "beb0a7e5481870ec30fd88d91cd105cc7d8d3a4c3009384966e664f094038b83",
+      "maximum_area": 7,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "3e863752c9c885c93f8e7e3b37fded6d32fe7a504fdf1eeeddd214e7a666a261",
+        "trace_sha256": "e77975c88dfa0d5ddc4c4313f27a14b717ea3b15d3513b542a9c033aceab052d",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "e0ab03c8fb65fb1a380e44f20dffe2a9dc458f25ecbf7b6eac08e098a4e2307f",
+      "area_word_count": 35,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          7,
+          5
+        ],
+        "mask": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 100
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "two_floating_runs",
+        "row_index": 25,
+        "size": 100
+      },
+      "component_areas": [
+        6,
+        7
+      ],
+      "factor_sha256": "149a5264c85c807341e2336bfda1fc95244e2f840a1fa7ec9be924e098e61aa2",
+      "maximum_area": 7,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "2107df0f6ad5c27ca243dfa2852924633120b52ab486eb8277716dcef4b0c0ff",
+        "trace_sha256": "6ebcb4127eb1944c59101c8b8575996e75138a81a293de61da2c255821b38c4c",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "4e16e784934489d9e6d8f9fe93d2f4a30c25257324b58fde06892e7330384583",
+      "area_word_count": 35,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          7,
+          5
+        ],
+        "mask": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 25
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "mixed_edges",
+        "row_index": 26,
+        "size": 25
+      },
+      "component_areas": [
+        1,
+        2,
+        2,
+        11
+      ],
+      "factor_sha256": "4ddbebd2052602c9d27febd0a72e93513df683a4a5031285a3591b3bfb418d79",
+      "maximum_area": 11,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "19bea2cc99e962c5976f057094e05458a58e5d454b6f6b36b64df78ad4d33382",
+        "trace_sha256": "055e678de1d97c656ba1957dc283cf2e64f862ba570cc2c78ca4ca2b11cb3303",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    },
+    {
+      "area_sha256": "4e16e784934489d9e6d8f9fe93d2f4a30c25257324b58fde06892e7330384583",
+      "area_word_count": 35,
+      "case": {
+        "depth": 32,
+        "family": 2,
+        "geometry": [
+          7,
+          5
+        ],
+        "mask": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "parameters": [
+          {
+            "kind": "u",
+            "slot": 1,
+            "value": 2
+          },
+          {
+            "kind": "p",
+            "slot": 2,
+            "value": [
+              3,
+              2
+            ]
+          },
+          {
+            "kind": "i",
+            "slot": 4,
+            "value": 4
+          },
+          {
+            "kind": "u",
+            "slot": 5,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 6,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 7,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 10,
+            "value": 0
+          },
+          {
+            "kind": "u",
+            "slot": 11,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 12,
+            "value": 0
+          },
+          {
+            "kind": "i",
+            "slot": 13,
+            "value": 0
+          },
+          {
+            "kind": "b",
+            "slot": 15,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 17,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 18,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 20,
+            "value": 5
+          },
+          {
+            "kind": "s",
+            "slot": 21,
+            "value": 1
+          },
+          {
+            "kind": "s",
+            "slot": 22,
+            "value": 100
+          },
+          {
+            "kind": "s",
+            "slot": 24,
+            "value": 25
+          },
+          {
+            "kind": "u",
+            "slot": 25,
+            "value": 1
+          },
+          {
+            "kind": "i",
+            "slot": 27,
+            "value": 1
+          },
+          {
+            "kind": "a",
+            "slot": 28,
+            "value": 0
+          },
+          {
+            "kind": "s",
+            "slot": 29,
+            "value": 10
+          }
+        ],
+        "pattern": "mixed_edges",
+        "row_index": 27,
+        "size": 100
+      },
+      "component_areas": [
+        1,
+        2,
+        2,
+        11
+      ],
+      "factor_sha256": "b6c3b70deaa332222f77ddd1692f56e42d262d119a64ebcd31ab355a891d1584",
+      "maximum_area": 11,
+      "trace": {
+        "guards_intact": true,
+        "mask_guard_byte": 0,
+        "raw_sha256": "d1d251e1615db9f286f2d957cee7a80db8532da6e7209fb04c13183ae563e952",
+        "trace_sha256": "2c1bffadabc9b0313c1ebb53e1e34c1dcd92482b5dec25309135b04f4bcd2e7f",
+        "witness_count": 4
+      },
+      "typed_sdk_replays": 6
+    }
+  ],
+  "scanner_read_before_bound_code_sha256": "5d0eadf961ef9ff18524e9637fc34b7cc87df170542f73a4570e848d2b9153bf",
+  "schema": "radialblur.size-run-boundary/1",
+  "source_before_sha256": "82800c32473afbc69db4e67f2f973c527f3f76211f01104e3a88221d038584b6",
+  "source_sha256": "7e136a1bc3b2c7db22d072ee735e24909d53170cf2f1decef9a51c98d0b072d9",
+  "summary": {
+    "case_count": 28,
+    "native_source_maps_exact": 28,
+    "typed_sdk_replays": 168
+  },
+  "window_worker_sha256": "cebdd7d5d88885ce3bba8768c4680e9e7a27e8fcbeb396d1230f724b8d064eca"
+}

@@ -1599,9 +1599,8 @@ static bool BuildRadialSizeFactorPlaneAEX(
 			const float alpha = RadialZoomPixelTraits<PixelT>::Read(
 				*PixelAtConst<PixelT>(input, x, y), 3);
 			// NaN is accepted by the AEX's COMISS/SETC predicate, but it is not
-			// part of this bounded admission.  The portable label pass below uses
-			// explicit x/y bounds and therefore does not inherit the AEX run
-			// scanner's right-edge lookahead quirk.
+			// part of this bounded admission.  Label visible cells with four-neighbor
+			// connectivity, then reproduce the run scanner's right-edge count/write.
 			if (!std::isfinite(alpha)) return false;
 			mask[(size_t)y * w + x] = alpha > 0.0f ? 1 : 0;
 		}
@@ -1645,6 +1644,21 @@ static bool BuildRadialSizeFactorPlaneAEX(
 		component_areas->push_back(area);
 		maximum_area = std::max(maximum_area, area);
 	}
+	// AEX 8ad4 reads x == width before checking the row boundary.  An
+	// occupied next-row first cell extends this run by one, without adding a
+	// horizontal connection across rows.  The source mask has a zero guard.
+	for (size_t edge = (size_t)w - 1; edge + 1 < count; edge += (size_t)w) {
+		if (!mask[edge] || !mask[edge + 1]) continue;
+		A_long &area = areas[labels[edge]];
+		if (area == std::numeric_limits<A_long>::max()) return false;
+		++area;
+	}
+	component_areas->clear();
+	maximum_area = 0;
+	for (size_t label = 1; label < areas.size(); ++label) {
+		component_areas->push_back(areas[label]);
+		maximum_area = std::max(maximum_area, areas[label]);
+	}
 	std::sort(component_areas->begin(), component_areas->end());
 	const float sv = RadialF32Mul(size_variation_percent, 0.01f);
 	const float inverse_maximum = maximum_area > 0
@@ -1652,7 +1666,12 @@ static bool BuildRadialSizeFactorPlaneAEX(
 	const float inverse_sv = RadialF32Sub(1.0f, sv);
 	factor_plane->resize(count + 1);
 	for (size_t cell = 0; cell < count; ++cell) {
-		const uint32_t label = labels[cell];
+		uint32_t label = labels[cell];
+		// AEX 8dd0 also writes the extended endpoint into next-row x == 0.
+		// Components materialize in first-run order; the later component wins.
+		if (cell > 0 && cell % (size_t)w == 0 && mask[cell - 1] && mask[cell]) {
+			label = std::max(label, labels[cell - 1]);
+		}
 		const float component_area = label == 0 ? 0.0f : (float)areas[(size_t)label];
 		float factor = RadialF32Mul(component_area, inverse_maximum);
 		factor = RadialF32Mul(factor, sv);
@@ -4265,7 +4284,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		use_aex_pf32_offset_mode3_ui2_small || use_aex_pf32_offset_mode3_ui3_small ||
 		use_aex_pf32_offset_mode3_ui4_small || use_aex_pf16_offset_mode3_ui2_small ||
 		use_aex_pf16_offset_mode3_ui3_small;
-	const bool use_generic_two_stage = use_generic_baseline;
+	const bool use_generic_two_stage = use_generic_baseline || use_generic_size_noise;
 	if (!use_generic_baseline && !use_generic_size_noise && !use_aex_exact) return PF_Err_BAD_CALLBACK_PARAM;
 	const RadialBlurDebugConfig debug = LoadRadialBlurDebugConfig();
 	FloatImage src;

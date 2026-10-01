@@ -18,8 +18,9 @@ current = importlib.import_module('radialblur_current_public_20261001')
 
 class RotationFadeTests(unittest.TestCase):
     def test_live_matrix_preserves_previous_exact_and_reacquires_new_exact(self):
-        saved = current.capture(); before = json.loads(probe.BEFORE.read_text())
-        self.assertEqual(public.SOURCE.read_text(), probe.candidate_source(probe.before_source()))
+        saved = json.loads((ROOT/'reports/radialblur_rotation_fade_public_20261001.json').read_text())
+        live = current.capture(); before = json.loads(probe.BEFORE.read_text())
+        self.assertEqual(public.sha(probe.candidate_source(probe.before_source()).encode()), saved['source_sha256'])
         self.assertEqual(saved['summary'], probe.writer.summarize(saved['rows']))
         self.assertEqual(saved['summary'], {'case_count': 694, 'both_commands_exact': 565, 'different': 45,
                                             'mac_rejected': 84, 'became_exact': 6, 'lost_exact': 0, 'raw_changed': 6})
@@ -45,7 +46,7 @@ class RotationFadeTests(unittest.TestCase):
                     self.assertTrue(close['session_clean']); self.assertFalse(close['unsupported_suite_calls']); native_count += 1
             for sanitize in [False, True]:
                 binary = public.build(temp/('san' if sanitize else 'o2'), public.SOURCE.read_text(), sanitize)
-                for case in saved['rows']:
+                for case in live['rows']:
                     for command in ['classic', 'smart']:
                         error, raw, metadata = public.mac_render(binary, temp, case, command, env)
                         expected = case['results'][command]
@@ -63,7 +64,8 @@ class RotationFadeTests(unittest.TestCase):
         print('FADE_NEW_EXACT_NATIVE', native_count, flush=True)
 
     def test_natural_planes_and_all_legal_table_lengths(self):
-        saved = current.capture(); before = json.loads(probe.BEFORE.read_text())
+        saved = json.loads((ROOT/'reports/radialblur_rotation_fade_public_20261001.json').read_text())
+        live = current.capture(); before = json.loads(probe.BEFORE.read_text())
         worker = Path(os.environ['RADIAL_WINDOWS_WORKER']); parent = Path(os.environ['RADIAL_PARENT_WORKER'])
         self.assertEqual(public.sha(worker.read_bytes()), saved['window_worker_sha256'])
         self.assertEqual(public.sha(parent.read_bytes()), saved['controlled_worker_sha256'])
