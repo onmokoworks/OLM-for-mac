@@ -1647,11 +1647,64 @@ reports/radialblur_pf8_writer_public_20261001.json、pf8_writer_validation_20261
 実SDK writer harness、testへ根拠を保存。Rotation、残るZoom、84拒否、任意noise/負位相、
 一般UCRT/native両AE、installed、UI保存、ROI/downsample、全10本完全互換は未完。Goalはactive。
 
+## RB-ROTATION-FIELDS-027 — 自然fieldの全量比較とSIMD Gaussian・逆変換の分離復元
+
+直前の進捗説明だけのturnはno progress。元AEXと本番sourceを再確認し、自然公開経路の
+Rotation中間fieldを採取する作業へ戻った。本番sourceは877fadcd、HEADは790921e8のまま。
+
+FACT: 23×13 opaque、Rotation、center(11,6)、Outer4、Inner0、repeat、Quality5、Noise25、
+Type1/seed1/Thickness3/Offset0のPF32公開出力は620byte差。SDKの本物のparameter unionから
+EffectMain Classicへ入り、既存のpassive seamだけで全planeを採取した。手製のnative builderや
+contextは使わない。元AEXのnative-owned領域は1800×15、Macは1800×16。末尾の追加行を除き、
+polar108000語、source scalar27000語、Cartesian span299語、max alpha27000語は全bit一致。
+accum108000語には187差、normalized108000語には157差が残った。追加行の契約は未閉鎖。
+
+FACT: 元B680はvector分岐で1d0e0を呼ぶ。自然public traceでこのdirect callを観測した。
+1ebc0の普通のGaussian引数域は64分割の2^fraction mantissaと2*r+2+r*rをFLOAT32順序で
+組み合わせる内蔵SIMD exp。単にimported expfの丸めを疑った前の説明は不十分だった。
+元tableの64 mantissaは2^(i/64)から生成して全bit確認した。Gaussian引数30000個を7500回の
+元import-free vector leafで再実行し、scalar transcriptionと全bit一致。自然B680の30000語も
+同じmodelへ全一致。従来DOUBLE exp→FLOAT32とは13090語の差がある。
+
+FACT: 別コピーでRotationGaussianWeightsだけをSIMD polynomialへ置き換えると、代表の
+accum/normalizedを含む6plane計378299語が全bit一致。O2とstrict ASan/UBSanも同じ。
+全694条件を両公開cmd・両buildで2776再生したところraw変更69、追加exact0、lost exact0。
+308 exact・302差分・84拒否は本番のまま。重みの一致だけでrenderer完成と扱わない。
+
+FACT: さらに自然AEXから全299画素の1b10 radius/angleと1000 sampler RGBAを898 read-only
+witnessで取得。旧Macは座標598語中183差、sample1196語中573差。Gaussian復元コピーも同じ。
+元1ac0 setterはFLOAT32(1/Quality)→DOUBLE 0.017453292500000002乗算→FLOAT32 stepRad→
+FLOAT32 reciprocalでangleScaleを作る。Quality5では0x438f3d4d。旧generic finalはDOUBLE座標
+経路に入り、このsetter順序も使っていなかった。別コピーのgeneric two-stageのfinalだけを
+既存FLOAT32座標/sampler/writerへ接続し、このsetter順を復元すると座標とsampleが全一致し、
+代表の最終rawも元AEXと全bit一致。元データへ座標別の補正値は加えない。このinverse候補は
+まだ全694条件やsanitizerで検証していないので、本番には反映していない。
+
+参照境界: passive windowの一時workerはcontrolled DOUBLE atan2 parentのコピーだけを変更。
+callback/import/math実装とparent source/workerは不変。既存4096byteの上限は維持し、pointer
+解決後のbyte offsetを追加した。403window＋dispatcher1件の404witnessは非truncated。
+親とwindow workerはZoom/Rotation×3深度×2geometryの12条件、計24resident取得で同じraw。
+offset未指定・明示0・16byte窓の実測と、duplicate/offset上限/deref上限/size上限の拒否も確認。
+Unicorn RCPPSはFLOAT32除算で、Windows CPUの近似逆数とは異なる。30000の分母ではその
+Newton refinementと元のDIVSS逆数が同bitだが、実WindowsのISA分岐・RCPPSを証明しない。
+
+4 unittest PASS。元vector leaf全30000引数、自然SDKのbefore/Gaussian候補の両cmdとstrict
+sanitizer、全native planeの再取得、親との24resident取得、窓0/16と不正値、inverseの全画素
+再取得を確認。第三者AEX・全trace・raw・plane・画像はprivateのまま。公開するのはprobe、
+passive patch/builder、hash/count/scalar根拠だけ。source/headerが前回検証と同hashなので、
+既存7gateとUniversal実SDK buildの証拠はhash bindingで維持し、同じ本番を再buildしない。
+
+reports/radialblur_readonly_windows_reference_build_20261001.json、rotation_fields_20261001.json、
+rotation_inverse_20261001.json、rotation_fields_validation_20261001.jsonへ保存。
+次はinverse候補を全694条件とstrict sanitizerで比較し、差分を閉じる一般処理として本番へ
+反映できるか判断する。Size25/負位相/任意noise、未測定UCRT/ISAとnative両AE、通常UI/保存、
+ROI/downsample、全10本完全互換は未完。Goalはactive。
+
 ## 次の順序
 
 1. Smoother2のHDR/Gamma合成と色境界の今回の有限集合は検証済み。公開builderのLUT構築とnative依存先を分け、未測定scan長・任意float・独立paletteの最初の差を復元する。
 2. ColorKeyの未検証geometry/任意float/paletteとThin/Blur合成を拡張する。今回の境界・overflow比較を全入力の証明とは扱わず、固定workerとcontrolled Lab94参照を分け、native Windows UCRTとの比較を残す。
 3. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
-4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはAngle/Edge/PointとNoise OffsetのFLOAT32接続を復元した。参照atan2f非軸差は保存Windows scalarの有限集合へ校正済み。Zoom PF8の共通writerは復元済み。次はRotationの自然public field/scatter、残るZoom topology/typedの最初の差を閉じる。負位相のnative契約・Size25の面積制限・端/穴/島へ進み、その後KiraKira一般入力を比較する。
+4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはAngle/Edge/PointとNoise OffsetのFLOAT32接続を復元した。参照atan2f非軸差は保存Windows scalarの有限集合へ校正済み。Zoom PF8の共通writerは復元済み。Rotationの自然field/scatterは代表全量でGaussian差を分離し、別コピーのinverse復元で代表rawが一致した。次はinverse候補の全694条件/sanitizer検証と本番一般化、残るZoom topology/typedの最初の差を閉じる。負位相のnative契約・Size25の面積制限・端/穴/島へ進み、その後KiraKira一般入力を比較する。
 
 既存の作業ツリー変更は今回のcommitに混ぜない。第三者AEXとnative raw出力をPushしない。

@@ -1,0 +1,288 @@
+{
+  "angle_scale_matches_native_setter_order": true,
+  "candidate_inverse_source_sha256": "6330498141c4e567164b64ea89ab41583e5634b6abedf28a287b653972c4bc2d",
+  "claims_not_made": [
+    "No inverse coordinate/sampler/writer production change.",
+    "Gaussian matching does not close final output differences.",
+    "Controlled atan2 and RCPPS remain unverified for arbitrary native Windows inputs."
+  ],
+  "comparisons": {
+    "before": {
+      "coordinates": {
+        "different_words": 183,
+        "first_differences": [
+          {
+            "mac_f32_le_hex": "ac618244",
+            "native_f32_le_hex": "ad618244",
+            "word": 0
+          },
+          {
+            "mac_f32_le_hex": "33da8344",
+            "native_f32_le_hex": "34da8344",
+            "word": 2
+          },
+          {
+            "mac_f32_le_hex": "2f8b8744",
+            "native_f32_le_hex": "308b8744",
+            "word": 6
+          },
+          {
+            "mac_f32_le_hex": "98259844",
+            "native_f32_le_hex": "99259844",
+            "word": 16
+          },
+          {
+            "mac_f32_le_hex": "683a9d44",
+            "native_f32_le_hex": "693a9d44",
+            "word": 18
+          },
+          {
+            "mac_f32_le_hex": "07d6a244",
+            "native_f32_le_hex": "08d6a244",
+            "word": 20
+          },
+          {
+            "mac_f32_le_hex": "00c0a844",
+            "native_f32_le_hex": "01c0a844",
+            "word": 22
+          },
+          {
+            "mac_f32_le_hex": "685ab944",
+            "native_f32_le_hex": "695ab944",
+            "word": 28
+          }
+        ],
+        "mac_sha256": "c13a6ec7b00ddcafc7ded2e31c43f7e105aca4c12d79e65a21accb36079d0feb",
+        "native_sha256": "516cd3ec467372f3fbeb8102b2c4fb71b55c2e70f1099cdc5051b77e7496f499",
+        "word_count": 598
+      },
+      "sample_rgba": {
+        "different_words": 573,
+        "first_differences": [
+          {
+            "mac_f32_le_hex": "fc60873d",
+            "native_f32_le_hex": "2261873d",
+            "word": 0
+          },
+          {
+            "mac_f32_le_hex": "f038353d",
+            "native_f32_le_hex": "5c38353d",
+            "word": 1
+          },
+          {
+            "mac_f32_le_hex": "cad9e23c",
+            "native_f32_le_hex": "8cd9e23c",
+            "word": 2
+          },
+          {
+            "mac_f32_le_hex": "344f683e",
+            "native_f32_le_hex": "484f683e",
+            "word": 4
+          },
+          {
+            "mac_f32_le_hex": "5ac4c23d",
+            "native_f32_le_hex": "19c4c23d",
+            "word": 5
+          },
+          {
+            "mac_f32_le_hex": "2d4ef13d",
+            "native_f32_le_hex": "224ef13d",
+            "word": 6
+          },
+          {
+            "mac_f32_le_hex": "0c630c3f",
+            "native_f32_le_hex": "12630c3f",
+            "word": 12
+          },
+          {
+            "mac_f32_le_hex": "7c89493e",
+            "native_f32_le_hex": "6389493e",
+            "word": 13
+          }
+        ],
+        "mac_sha256": "6cc55bf17def6fdaefa7822b05b41fbc7fe0a144bec4cb38c5f44d30a7f86f3c",
+        "native_sha256": "852e33d19589f307dcf0c41bad96b3ace564653e16034da90da3a33544e6108e",
+        "word_count": 1196
+      }
+    },
+    "gaussian_candidate": {
+      "coordinates": {
+        "different_words": 183,
+        "first_differences": [
+          {
+            "mac_f32_le_hex": "ac618244",
+            "native_f32_le_hex": "ad618244",
+            "word": 0
+          },
+          {
+            "mac_f32_le_hex": "33da8344",
+            "native_f32_le_hex": "34da8344",
+            "word": 2
+          },
+          {
+            "mac_f32_le_hex": "2f8b8744",
+            "native_f32_le_hex": "308b8744",
+            "word": 6
+          },
+          {
+            "mac_f32_le_hex": "98259844",
+            "native_f32_le_hex": "99259844",
+            "word": 16
+          },
+          {
+            "mac_f32_le_hex": "683a9d44",
+            "native_f32_le_hex": "693a9d44",
+            "word": 18
+          },
+          {
+            "mac_f32_le_hex": "07d6a244",
+            "native_f32_le_hex": "08d6a244",
+            "word": 20
+          },
+          {
+            "mac_f32_le_hex": "00c0a844",
+            "native_f32_le_hex": "01c0a844",
+            "word": 22
+          },
+          {
+            "mac_f32_le_hex": "685ab944",
+            "native_f32_le_hex": "695ab944",
+            "word": 28
+          }
+        ],
+        "mac_sha256": "c13a6ec7b00ddcafc7ded2e31c43f7e105aca4c12d79e65a21accb36079d0feb",
+        "native_sha256": "516cd3ec467372f3fbeb8102b2c4fb71b55c2e70f1099cdc5051b77e7496f499",
+        "word_count": 598
+      },
+      "sample_rgba": {
+        "different_words": 573,
+        "first_differences": [
+          {
+            "mac_f32_le_hex": "fc60873d",
+            "native_f32_le_hex": "2261873d",
+            "word": 0
+          },
+          {
+            "mac_f32_le_hex": "f038353d",
+            "native_f32_le_hex": "5c38353d",
+            "word": 1
+          },
+          {
+            "mac_f32_le_hex": "cad9e23c",
+            "native_f32_le_hex": "8cd9e23c",
+            "word": 2
+          },
+          {
+            "mac_f32_le_hex": "344f683e",
+            "native_f32_le_hex": "484f683e",
+            "word": 4
+          },
+          {
+            "mac_f32_le_hex": "5ac4c23d",
+            "native_f32_le_hex": "19c4c23d",
+            "word": 5
+          },
+          {
+            "mac_f32_le_hex": "2d4ef13d",
+            "native_f32_le_hex": "224ef13d",
+            "word": 6
+          },
+          {
+            "mac_f32_le_hex": "0c630c3f",
+            "native_f32_le_hex": "12630c3f",
+            "word": 12
+          },
+          {
+            "mac_f32_le_hex": "7c89493e",
+            "native_f32_le_hex": "6389493e",
+            "word": 13
+          }
+        ],
+        "mac_sha256": "6cc55bf17def6fdaefa7822b05b41fbc7fe0a144bec4cb38c5f44d30a7f86f3c",
+        "native_sha256": "852e33d19589f307dcf0c41bad96b3ace564653e16034da90da3a33544e6108e",
+        "word_count": 1196
+      }
+    },
+    "inverse_candidate": {
+      "coordinates": {
+        "different_words": 0,
+        "first_differences": [],
+        "mac_sha256": "516cd3ec467372f3fbeb8102b2c4fb71b55c2e70f1099cdc5051b77e7496f499",
+        "native_sha256": "516cd3ec467372f3fbeb8102b2c4fb71b55c2e70f1099cdc5051b77e7496f499",
+        "word_count": 598
+      },
+      "sample_rgba": {
+        "different_words": 0,
+        "first_differences": [],
+        "mac_sha256": "852e33d19589f307dcf0c41bad96b3ace564653e16034da90da3a33544e6108e",
+        "native_sha256": "852e33d19589f307dcf0c41bad96b3ace564653e16034da90da3a33544e6108e",
+        "word_count": 1196
+      }
+    }
+  },
+  "dependencies_sha256": {
+    "tools/emulation/probe_radialblur_rotation_fields_20261001.py": "c644dadee1422fc809ea50f76da2a872f62a2790f8d6f8cda63bcf9308488913",
+    "tools/emulation/probe_radialblur_rotation_inverse_20261001.py": "f0952ececf946000f6465ac4d11a9962a8f3a4dc6001893fb0d102aa93bb4a49",
+    "tools/emulation/radialblur_topology_effectmain_harness_20261001.cpp": "079dfaa39b055c34e4bd9422c5382b29e2eaf6c40929ea7b80a7f232fd922a41"
+  },
+  "field_report_sha256": "0b238661ec7c6289240b9e81736dd792c78c39bbe961ac793825bcc05994519d",
+  "inverse_candidate_natural_raw_exact": true,
+  "mac_raw_sha256": {
+    "before": "d6580979a8427fbfb454207ec2f7f4b0f837f8454eaab18b89ea1be735d898d3",
+    "gaussian_candidate": "d6580979a8427fbfb454207ec2f7f4b0f837f8454eaab18b89ea1be735d898d3",
+    "inverse_candidate": "221813b99246b5b83ffccb0bd8cd7fae031fe4959ae0454fcc8eb97fb112b721"
+  },
+  "native_angle_scale_f32_le_hex": "4d3d8f43",
+  "native_raw_sha256": "221813b99246b5b83ffccb0bd8cd7fae031fe4959ae0454fcc8eb97fb112b721",
+  "native_step_degree_f32_le_hex": "cdcc4c3e",
+  "native_step_radian_f32_le_hex": "88c3643b",
+  "production_source_changed": false,
+  "schema": "radialblur.rotation-inverse/1",
+  "selected_points": [
+    {
+      "before_coordinates_f32_le_hex": "ac618244bc7a4841",
+      "coordinate": [
+        0,
+        0
+      ],
+      "native_angle_f32_le_hex": "26056940",
+      "native_angle_index_f32_le_hex": "ad618244",
+      "native_radius_f32_le_hex": "bc7a4841"
+    },
+    {
+      "before_coordinates_f32_le_hex": "33da834428973a41",
+      "coordinate": [
+        1,
+        0
+      ],
+      "native_angle_f32_le_hex": "16a66b40",
+      "native_angle_index_f32_le_hex": "34da8344",
+      "native_radius_f32_le_hex": "28973a41"
+    },
+    {
+      "before_coordinates_f32_le_hex": "0000000000000000",
+      "coordinate": [
+        11,
+        6
+      ],
+      "native_angle_f32_le_hex": "00000000",
+      "native_angle_index_f32_le_hex": "00000000",
+      "native_radius_f32_le_hex": "00000000"
+    },
+    {
+      "before_coordinates_f32_le_hex": "630d0f43bc7a4841",
+      "coordinate": [
+        22,
+        12
+      ],
+      "native_angle_f32_le_hex": "60aaff3e",
+      "native_angle_index_f32_le_hex": "640d0f43",
+      "native_radius_f32_le_hex": "bc7a4841"
+    }
+  ],
+  "source_sha256": "877fadcded9fb3b004902195f3041f98a7596154c783749eb0ce21c8277adafa",
+  "trace_sha256": "1532f3d5616150a4a23c960e1ffb72f85b4cf06b9660cf69c76e61a2c3368fb6",
+  "truncated": false,
+  "witness_count": 898,
+  "worker_sha256": "cebdd7d5d88885ce3bba8768c4680e9e7a27e8fcbeb396d1230f724b8d064eca"
+}

@@ -1,0 +1,62 @@
+{
+  "before_commit": "790921e85bccced2d46a325f732c1e4a696a2b5f",
+  "candidate_gaussian_public_replays": 2776,
+  "candidate_gaussian_summary": {
+    "became_exact": 0,
+    "both_commands_exact": 308,
+    "case_count": 694,
+    "lost_exact": 0,
+    "raw_changed": 69
+  },
+  "claims_not_made": [
+    "Diagnostic candidates have not been promoted to production or installed.",
+    "The inverse candidate still requires full public matrix, strict sanitizers and branch-specific checks.",
+    "No native Windows CPU/UCRT/AE, extra-row ownership, UI/save, ROI/downsample or all-ten completion."
+  ],
+  "dependencies_sha256": {
+    "docs/COMPATIBILITY_ANALYSIS_PLAN_JA.md": "bf15b6b68bc68123b55ebc49941a3aa200221c91483bc09ef939465a95d7d7e8",
+    "notes/COMPATIBILITY_ANALYSIS_PROGRESS_20261001.md": "e98d35d5e7743a440637225e85ecaba7c83dbdfa65dab47b671b3a0985b0d9be",
+    "reports/radialblur_readonly_windows_reference_build_20261001.json": "98a520160bf16f334476afa795696ce0cc602a8d7c683a8f38edf1f6507d4d63",
+    "reports/radialblur_rotation_fields_20261001.json": "0b238661ec7c6289240b9e81736dd792c78c39bbe961ac793825bcc05994519d",
+    "reports/radialblur_rotation_inverse_20261001.json": "63a4f1d91291a5022773831f35b9954f0a31912fd37ddab8ffcfa17f54af8174",
+    "tests/test_radialblur_rotation_fields_20261001.py": "dacac54ab5f9fd9f36f5f44b17b591cac90107903704f7c4976ae3d711b27b8b",
+    "tools/emulation/aexcompat_radial_readonly_windows_20261001.patch": "5b161c8730b454a80c68018e76cc317ef15d2ca3ba87db4a9d4e3fc0512e3639",
+    "tools/emulation/build_radialblur_readonly_windows_reference_20261001.py": "e76e2cded3d0c9d3826c8d31d4b90c8c137bd55f25bf8831a59ee2a9c6e7d638",
+    "tools/emulation/probe_radialblur_rotation_fields_20261001.py": "c644dadee1422fc809ea50f76da2a872f62a2790f8d6f8cda63bcf9308488913",
+    "tools/emulation/probe_radialblur_rotation_inverse_20261001.py": "f0952ececf946000f6465ac4d11a9962a8f3a4dc6001893fb0d102aa93bb4a49"
+  },
+  "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+  "invalid_window_argument_rejections": 4,
+  "inverse_candidate_full_matrix_or_sanitizer_verified": false,
+  "math_callbacks_unchanged": true,
+  "native_vector_leaf_argument_count": 30000,
+  "native_windows_rcpps_or_isa_verified": false,
+  "natural_candidate_gaussian_fields_exact": true,
+  "natural_inverse_pixel_count": 299,
+  "natural_inverse_raw_exact": true,
+  "natural_native_field_words": 378299,
+  "new_tests": {
+    "count": 4,
+    "exit_code": 0,
+    "log_sha256": "a735ed5f4bb6195a359a55f1c6ad4dce64d34ead7460d3ea5f31a0dca8623144"
+  },
+  "offset_zero_and_nonzero_window_verified": true,
+  "original_aex_and_worker_unchanged": true,
+  "parent_source_and_worker_unchanged": true,
+  "parent_source_files_verified": 440,
+  "parent_worker_sha256": "722255eed6de0246f3918a11837d21eae0cb6cd6286ed1ae2d49f823ee92f4ec",
+  "production_checks_retained_by_hash": {
+    "external_sdk_dependencies_verified": 90,
+    "note": "Production source/header unchanged; previous seven gates and Universal build were not repeated.",
+    "prior_validation_sha256": "7733bad165e03e4d11140d3fa7bf49e41c9eb7dfe67f7dfc7078071f104db1c7",
+    "unchanged_source_sha256": "877fadcded9fb3b004902195f3041f98a7596154c783749eb0ce21c8277adafa",
+    "universal_sdk_build_prior_pass": true
+  },
+  "production_source_changed": false,
+  "qemu_rcpps_helper_sha256": "c8fcee1e7c5210b7ea5e75edc59b6eb3501de8c2124e196352929e43160f59f3",
+  "reference_calibration_resident_count": 24,
+  "schema": "radialblur.rotation-fields-validation/1",
+  "source_sha256": "877fadcded9fb3b004902195f3041f98a7596154c783749eb0ce21c8277adafa",
+  "status": "PASS-DIAGNOSTIC-ONLY",
+  "window_worker_sha256": "cebdd7d5d88885ce3bba8768c4680e9e7a27e8fcbeb396d1230f724b8d064eca"
+}
