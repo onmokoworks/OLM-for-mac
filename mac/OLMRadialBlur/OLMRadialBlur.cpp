@@ -873,9 +873,7 @@ static bool IsGenericProceduralNoiseProfile(const OLMRadialBlurInfo &info)
 		info.noise_offset > RadialNoiseOffsetRadians(std::numeric_limits<PF_Fixed>::max())) return false;
 	return info.seed >= 1 && info.seed <= 1000 &&
         std::isfinite(info.thickness) && info.thickness >= 1.0 && info.thickness <= 100.0 &&
-        ((info.noise_type == 1 && info.quality == 5.0) ||
-         (info.noise_type == 2 && (info.quality == 5.0 ||
-          (info.quality == 3.0 && info.seed == 1 && info.thickness == 10.0))));
+        (info.noise_type == 1 || info.noise_type == 2);
 }
 
 static bool IsGenericBaselineControlProfile(const OLMRadialBlurInfo &info)
@@ -897,7 +895,7 @@ static bool IsGenericBaselineControlProfile(const OLMRadialBlurInfo &info)
 		info.repeat_border != FALSE && std::isfinite(info.ratio) &&
 		info.ratio >= 1.0 && info.ratio <= 5.0 && std::isfinite(info.angle_deg) &&
 		info.angle_deg >= -360.0 && info.angle_deg <= 360.0 &&
-		std::isfinite(info.quality) && info.quality >= 1.0 && info.quality <= 5.0 &&
+		std::isfinite(info.quality) && info.quality >= 1.0 && info.quality <= 50.0 &&
 		info.brightness_gain == 1.0 &&
 		(std::isfinite(info.size_variation) && info.size_variation >= 0.0 && info.size_variation <= 100.0) &&
 		info.noise_layer == 0 && IsGenericProceduralNoiseProfile(info);
@@ -999,7 +997,8 @@ static bool CheckedRadialGenericBudget(
 	const long double cx = (long double)info.center_x;
 	const long double cy = (long double)info.center_y;
 	const long double ratio = (long double)info.ratio;
-	const uint64_t angular = (uint64_t)(360.0L * (long double)info.quality);
+	const float budget_quality_step = RadialF32Div(1.0f, (float)info.quality);
+	const uint64_t angular = (uint64_t)RadialF32Div(360.0f, budget_quality_step);
 	if (angular == 0) return false;
 	long double min_distance = 0.0L;
 	long double max_distance = 0.0L;
@@ -1037,7 +1036,12 @@ static bool CheckedRadialGenericBudget(
 		if (pixels > (UINT64_MAX - bytes) / pixel_bytes) return false;
 		bytes += pixels * pixel_bytes;
 	}
-	const uint64_t strength = (uint64_t)info.outer_strength + (uint64_t)info.inner_strength;
+	const uint64_t raw_strength = (uint64_t)info.outer_strength + (uint64_t)info.inner_strength;
+	const double budget_quality_scale = 0.2 / (double)budget_quality_step;
+	const uint64_t scaled_strength = info.blur_type == 2
+		? (uint64_t)((double)info.outer_strength * budget_quality_scale) +
+		  (uint64_t)((double)info.inner_strength * budget_quality_scale) : raw_strength;
+	const uint64_t strength = std::max(raw_strength, scaled_strength);
 	if (strength > UINT64_MAX - 8 || polar > UINT64_MAX / (strength + 8)) return false;
 	const uint64_t work = polar * (strength + 8);
 	if (estimated_bytes) *estimated_bytes = bytes > SIZE_MAX ? SIZE_MAX : (size_t)bytes;
@@ -2983,10 +2987,13 @@ static PF_Err RenderZoomTyped(
 	const double cy = info.center_y * ((double)h / comp_h);
 	const double ratio = info.ratio > 0.0 ? info.ratio : 1.0;
 	const double base_angle = info.angle_deg * kPi / 180.0;
-	const double quality = info.quality > 0.0 ? info.quality : 5.0;
-	const double step_deg = 1.0 / quality;
-	const double step_rad = step_deg * kPi / 180.0;
-	const A_long angular_count = (A_long)(360.0 / step_deg);
+	// Original builder: FLOAT32 Quality -> DIVSS reciprocal; constructor:
+	// CVTSS2SD -> MULSD stored constant -> FLOAT32 radians. Count uses DIVSS.
+	const bool use_native_quality_setup = use_generic_baseline || use_generic_size_noise;
+	const double quality = use_native_quality_setup ? (double)(float)info.quality : (info.quality > 0.0 ? info.quality : 5.0);
+	const double step_deg = use_native_quality_setup ? (double)RadialF32Div(1.0f, (float)quality) : 1.0 / quality;
+	const double step_rad = use_native_quality_setup ? (double)(float)(step_deg * 0.017453292500000002) : step_deg * kPi / 180.0;
+	const A_long angular_count = use_native_quality_setup ? (A_long)RadialF32Div(360.0f, (float)step_deg) : (A_long)(360.0 / step_deg);
 
 	const double min_dx = (0.0 <= cx && cx < w) ? 0.0 : std::abs(cx < 0.0 ? cx : cx - w);
 	const double min_dy = (0.0 <= cy && cy < h) ? 0.0 : std::abs(cy < 0.0 ? cy : cy - h);
@@ -3259,7 +3266,7 @@ static PF_Err RenderZoomTyped(
 		const std::vector<float> inner_fade_weights = inner_fade_span > 0
 			? RotationFadeGaussianWeights(inner_fade_span) : std::vector<float>();
 		blurred = BuildZoomAEXOuterOnlyPolar(
-			polar, ZoomGaussianWeights(ZoomEffectiveLength(worker_info)), polar_valid,
+			polar, ZoomGaussianWeights(use_native_quality_setup ? info.outer_strength : ZoomEffectiveLength(worker_info)), polar_valid,
 			span_plane, source_scalar_plane, worker_info.outer_strength,
 			use_aex_zoom_inner ? &inner_weights : nullptr,
 			use_aex_zoom_inner ? info.inner_strength : 0,
@@ -4311,10 +4318,13 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	const double cy = info.center_y * ((double)h / comp_h);
 	const double ratio = info.ratio > 0.0 ? info.ratio : 1.0;
 	const double base_angle = info.angle_deg * kPi / 180.0;
-	const double quality = info.quality > 0.0 ? info.quality : 5.0;
-	const double step_deg = 1.0 / quality;
-	const double step_rad = step_deg * kPi / 180.0;
-	const A_long angular_count = (A_long)(360.0 / step_deg);
+	// Original builder: FLOAT32 Quality -> DIVSS reciprocal; constructor:
+	// CVTSS2SD -> MULSD stored constant -> FLOAT32 radians. Count uses DIVSS.
+	const bool use_native_quality_setup = use_generic_baseline || use_generic_size_noise;
+	const double quality = use_native_quality_setup ? (double)(float)info.quality : (info.quality > 0.0 ? info.quality : 5.0);
+	const double step_deg = use_native_quality_setup ? (double)RadialF32Div(1.0f, (float)quality) : 1.0 / quality;
+	const double step_rad = use_native_quality_setup ? (double)(float)(step_deg * 0.017453292500000002) : step_deg * kPi / 180.0;
+	const A_long angular_count = use_native_quality_setup ? (A_long)RadialF32Div(360.0f, (float)step_deg) : (A_long)(360.0 / step_deg);
 
 	const double left = std::max(0.0, -cx);
 	const double right = std::max({0.0, cx - (double)w, cx <= (double)w / 2.0 ? (double)w - cx : cx});
@@ -4490,8 +4500,13 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		std::vector<float> prepass_alpha((size_t)radius_count * angular_count);
 		// Setup truncates the host's zero-based slider value: UI 50/100 arrives
 		// at FUN_180002780 as 49/99 for this Quality-5 fixture.
-		const A_long outer_fade_span = std::max<A_long>(0, info.outer_edge_fade - 1);
-		const A_long inner_fade_span = std::max<A_long>(0, info.inner_edge_fade - 1);
+		// 4640 scales each raw integer by DOUBLE 0.2/step before CVTTSD2SI.
+		const double native_quality_scale = 0.2 / step_deg;
+		const auto native_quality_control = [&](A_long value) {
+			return std::max<A_long>(0, (A_long)((double)value * native_quality_scale));
+		};
+		const A_long outer_fade_span = use_native_quality_setup ? native_quality_control(info.outer_edge_fade) : std::max<A_long>(0, info.outer_edge_fade - 1);
+		const A_long inner_fade_span = use_native_quality_setup ? native_quality_control(info.inner_edge_fade) : std::max<A_long>(0, info.inner_edge_fade - 1);
 		const std::vector<float> outer_fade_weights = outer_fade_span > 1
 			? RotationFadeGaussianWeights(outer_fade_span) : std::vector<float>{1.0f};
 		const std::vector<float> inner_fade_weights = inner_fade_span > 1
@@ -4593,7 +4608,10 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				use_aex_typed_rotation_offset_mode3 ||
 				use_aex_typed_rotation_edge_offset_32x18) &&
 				info.outer_offset_mode == 2;
-			const A_long outer_span = info.outer_offset_mode == 3
+			const A_long outer_span = use_native_quality_setup
+				? (info.outer_offset_mode == 3 ? DynamicOffsetForRadius(radius_count, native_quality_control(info.outer_offset), ri)
+				   : (info.outer_offset_mode == 2 ? std::max(native_quality_control(info.outer_strength), DynamicOffsetForRadius(radius_count, native_quality_control(info.outer_offset), ri)) : native_quality_control(info.outer_strength)))
+				: info.outer_offset_mode == 3
 				? DynamicOffsetForRadius(radius_count, std::max<A_long>(0, info.outer_offset - 1), ri)
 				: (use_mode2_dynamic
 					? std::max<A_long>(RotationEffectiveLength(
@@ -4612,7 +4630,10 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				use_aex_typed_rotation_offset_noise_components_32x18 ||
 				use_aex_typed_rotation_inner_offset_pairwise ||
 				use_aex_typed_rotation_edge_offset_32x18;
-			const A_long inner_span = use_dynamic_inner_offset &&
+			const A_long inner_span = use_native_quality_setup
+				? (info.inner_offset_mode == 3 ? DynamicOffsetForRadius(radius_count, native_quality_control(info.inner_offset), ri)
+				   : (info.inner_offset_mode == 2 ? std::max(native_quality_control(info.inner_strength), DynamicOffsetForRadius(radius_count, native_quality_control(info.inner_offset), ri)) : native_quality_control(info.inner_strength)))
+				: use_dynamic_inner_offset &&
 				info.inner_offset_mode == 3
 				? DynamicOffsetForRadius(
 					radius_count, std::max<A_long>(0, info.inner_offset - 1), ri)

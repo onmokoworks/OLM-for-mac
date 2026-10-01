@@ -17,8 +17,9 @@ public=probe.public
 
 class SeedThicknessTests(unittest.TestCase):
     def test_actual_public_seed_thickness_and_retained_cases(self):
-        report=current.capture()
-        self.assertEqual(public.SOURCE.read_text(),probe.candidate_source(probe.before_source()))
+        live=current.capture();report=json.loads((ROOT/'reports/radialblur_seed_thickness_public_20261002.json').read_text())
+        self.assertEqual(public.sha(probe.candidate_source(probe.before_source()).encode()),report['source_sha256'])
+        self.assertEqual(live['summary'],report['summary'])
         self.assertEqual(report['summary'],json.loads(probe.BEFORE.read_text())['summary'])
         generated=probe.independent_cases()
         self.assertEqual(generated,[{k:r[k] for k in generated[0]} for r in report['independent_rows']])

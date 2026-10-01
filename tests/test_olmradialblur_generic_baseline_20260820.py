@@ -71,11 +71,13 @@ template <typename P> int run(short depth, int blur_type) {{
   i.inner_strength=0;
 	i.outer_edge_fade=0;i.inner_edge_fade=0;i.outer_offset_mode=1;i.outer_offset=0;i.inner_offset_mode=1;i.inner_offset=0;
 	i.ratio=.5;if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,depth)!=PF_Err_BAD_CALLBACK_PARAM)return 6;i.ratio=1;
-  i.quality=5.01;if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,depth)!=PF_Err_BAD_CALLBACK_PARAM)return 6;i.quality=1;
+  i.quality=5.01;if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,depth)!=PF_Err_NONE)return 15;
+  i.quality=50.01;if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,depth)!=PF_Err_BAD_CALLBACK_PARAM)return 6;i.quality=1;
   i.outer_strength=65;if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,depth)!=PF_Err_BAD_CALLBACK_PARAM)return 7;i.outer_strength=1;
   i.center_x=-.01;if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,depth)!=PF_Err_BAD_CALLBACK_PARAM)return 8;i.center_x=1;
   i.angle_deg=360.01;if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,depth)!=PF_Err_BAD_CALLBACK_PARAM)return 9;
-	i.angle_deg=0;i.noise_variation=.01;if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,depth)!=PF_Err_BAD_CALLBACK_PARAM)return 10;
+	i.angle_deg=0;i.noise_variation=.01;if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,depth)!=PF_Err_NONE)return 16;
+	i.seed=0;if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,depth)!=PF_Err_BAD_CALLBACK_PARAM)return 10;
   return 0;
 }}
 template <typename P> int malformed(short depth) {{

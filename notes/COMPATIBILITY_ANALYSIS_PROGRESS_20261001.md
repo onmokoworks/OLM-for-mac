@@ -2200,11 +2200,67 @@ Seed1/53/997/1000、正のphase、厚さ両端と丸め境界を含む。constru
 RCPPS/ISA/UCRT、allocator末尾、Rotation追加半径行、native両AE/UI/保存/ROI/downsample、
 全10本の完全互換は未完。Goalはactive。
 
+## RB-QUALITY-NATIVE-SETUP-038 — 合法QualityとRotation制御値の元換算を復元
+
+前回9dc4789のSeed/Thickness・元格子はPush済み。元公開builderのQualityは
+FLOAT slider 1–50、default5、precision2。現行一般経路はQuality1–5、Noiseありは
+主にQuality5に限定していた。受入だけを広げたprivate候補は176条件中65 exact・111差分。
+
+FACT: 元8690 builderはQualityをFLOAT32へ変換し、8811 DIVSSで1/Qualityを保存する。
+Zoom a810/Rotation1ac0 constructorはCVTSS2SD→MULSD stored DOUBLE
+0.017453292500000002（bits 12e7faa146df913f）→FLOAT32へradianを丸める。
+角度セル数は360f/stepのDIVSS→整数変換。旧DOUBLE 1/QualityとkPi/180は同じbitsを保証しない。
+Rotation4640はstored DOUBLE0.2（9a9999999999c93f）/stepを求め、raw integer
+Strength・Offset・FadeをDOUBLE積→CVTTSD2SIで換算する。Quality5で使っていた
+値−1は、このFLOAT32逆数に由来する特定条件での一致だった。
+元計算へ戻すと同じ176条件が全exactになった。
+
+新しい左右非対称Fade37/31とOffset Mode1/2/3、旧9×7/32×18 profileの252条件では、
+Zoom Mode3/Offset2に18差分が現れた。FACT: 元56f0はwork+64のStrengthから
+Gaussian表を作り、+58/+60のOffsetを表長にしない。旧MacのZoomEffectiveLengthは
+Mode3でOffsetを選んでいた。一般Zoomの表をStrengthへ戻すと252条件が全exact。
+Offset4/Strength4の従来ケースだけではこの差を検出できなかった。
+
+最初のprivate制御値traceで+28/+30をStrengthと誤ってラベル付けした。
+実builderのraw領域と命令を照合して、+58/+60はOuter/Inner Offset、+64/+68は
+Outer/Inner Strength、+6c/+70はOuter/Inner Fadeと確定。Rotationの出力先は
++28/+30（Offset）、+3a9e8/+3a9ec（Strength）、+3c930/+3c934（Fade）。
+このラベル訂正はMac画素演算の変更ではない。正しい対応でreadonly60条件を新規取得し、
+Quality逆数/radianと全controlが一致。Zoomは+3ed8/+3edcのStrength、
++4200/+4204のFadeがQualityによらずraw値のままであることも確認した。
+full contexts/planes/traces/raw framesはprivate。公開は構成した設定、hash、少数のscalar値。
+
+本番source ddf2786c2693246970b48deb10267a39354e89a33be98aef4df5ca2af5c4f79c、coreは前回5098f0acafc9d7a76136d306bd15193ca0c987fd3610e9340b311e6646001beeで不変。
+Quality整数1–50と17小数/隣接DOUBLE・FLOAT32、両family、plain/Noise1/Dual/
+Offset Mode2/3、8/16/32 bpcの2010条件に、非対称108と旧profile交差144を追加。
+新規2262条件が元公開AEXのcontrolled parentと全raw exact。
+旧Sourceでは2046拒否・57差分。
+従来694＋独立4339（575＋Size560＋enabled720＋Noise952＋Seed/Thickness1532）を保持。
+候補および最終実sourceのClassic/Smart・strictO2/strictASan/UBSan/通常O2で各43770再生が一致。
+本番testでは新規2262条件を元AEXから再取得し、元setup60条件も再取得して照合。
+
+budgetは元FLOAT32角度セル数とQualityによるRotation Strength換算を反映する。
+23×13/Quality50は通り、1024×1024/Strength4/Rotation Quality50はメモリ見積もりが
+1GiB未満でも350M workを超えて拒否する。Fade・動的Offsetの詳細なwork見積もり、
+保守的予算による合法大画像/強設定の拒否は残件であり、全互換完成とは扱わない。
+最初のgeneric baseline gateはQuality5.01とQuality1でのNoiseを旧拒否境界としてassertして失敗した。
+新しい合法範囲に合わせて両方の受入を確認し、Quality50.01とSeed0の拒否を確認するgateへ更新。
+sourceの画素演算を変更せずgateを再実行しPASS。初回失敗と回復logのhashは別に保持する。
+最終新2＋既存44 unittest、7 generic gateはPASS。旧Seed/Thickness captureは不変、
+そのsource証拠を履歴SHAへ接続し、実sourceで従来30198再生とnative1532再取得も全一致。
+実SDK arm64/x86_64 O2 build成功、build前後のsource/header/core不変。
+元AEX・3 worker・controlled parent440 source・SDK90入力は不変。installedは変更していない。
+
+有限ケースと元計算・分岐の復元根拠であり、任意入力/全設定の証明ではない。
+Gain/Strength/Layer/Offsetの未対応域、HDR/nonfinite、scalar Fade3語・Windows
+RCPPS/ISA/UCRT、allocator末尾、Rotation追加半径行、native両AE/UI/保存/ROI/downsample、
+全10本の完全互換は未完。Goalはactive。
+
 ## 次の順序
 
 1. Smoother2のHDR/Gamma合成と色境界の今回の有限集合は検証済み。公開builderのLUT構築とnative依存先を分け、未測定scan長・任意float・独立paletteの最初の差を復元する。
 2. ColorKeyの未検証geometry/任意float/paletteとThin/Blur合成を拡張する。今回の境界・overflow比較を全入力の証明とは扱わず、固定workerとcontrolled Lab94参照を分け、native Windows UCRTとの比較を残す。
 3. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
-4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはAngle/Edge/PointとNoise OffsetのFLOAT32接続を復元した。参照atan2f非軸差は保存Windows scalarの有限集合へ校正済み。Zoom PF8の共通writerは復元済み。Rotationの自然field/scatterは代表全量でGaussian差を分離し、別コピーのinverse復元で代表rawが一致した。generic two-stageのGaussian/finalを本番へ復元し、694条件505 exact、独立384全exactを確認。no-noise/neutral/Angleと微小alphaも本番へ復元し、559 exact、typed28と独立384全exactを確認。Rotation Edge/Inner Edgeも本番へ復元し、565 exact・45差分・84拒否。Size100+Noiseも共通経路と行境界area規則を復元し、本番601 exact・9差分・84拒否。独立96も全exact。Zoomの正負alphaとゼロseed加算も復元し、本番607 exact・3差分・84拒否。Zoomの両fadeもB680へ接続し、本番610 exact・差分0・84拒否。Size25は一般領域factorへ接続し、Zoom最大alpha判定と共通PF32 callerのMINSS上限も復元した。最新694条件は全exact・拒否0、独立180も全exact。scalar fade3語、native RCPPS/ISA/UCRTを未解決に保持。Size/Noiseの合法割合とQuality5のSeed/Thicknessは共通処理へ復元した。未列挙Quality/Gain/Strength/Layer/Offset・複合設定・任意入力を測り、その後KiraKira一般入力を比較する。
+4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはAngle/Edge/PointとNoise OffsetのFLOAT32接続を復元した。参照atan2f非軸差は保存Windows scalarの有限集合へ校正済み。Zoom PF8の共通writerは復元済み。Rotationの自然field/scatterは代表全量でGaussian差を分離し、別コピーのinverse復元で代表rawが一致した。generic two-stageのGaussian/finalを本番へ復元し、694条件505 exact、独立384全exactを確認。no-noise/neutral/Angleと微小alphaも本番へ復元し、559 exact、typed28と独立384全exactを確認。Rotation Edge/Inner Edgeも本番へ復元し、565 exact・45差分・84拒否。Size100+Noiseも共通経路と行境界area規則を復元し、本番601 exact・9差分・84拒否。独立96も全exact。Zoomの正負alphaとゼロseed加算も復元し、本番607 exact・3差分・84拒否。Zoomの両fadeもB680へ接続し、本番610 exact・差分0・84拒否。Size25は一般領域factorへ接続し、Zoom最大alpha判定と共通PF32 callerのMINSS上限も復元した。最新694条件は全exact・拒否0、独立180も全exact。scalar fade3語、native RCPPS/ISA/UCRTを未解決に保持。Size/Noiseの合法割合、Seed/Thickness、Quality1–50を共通処理へ復元した。未列挙Gain/Strength/Layer/Offset・複合設定・任意入力を測り、その後KiraKira一般入力を比較する。
 
 既存の作業ツリー変更は今回のcommitに混ぜない。第三者AEXとnative raw出力をPushしない。

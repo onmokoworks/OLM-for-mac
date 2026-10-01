@@ -31,6 +31,14 @@ int main(){{size_t classic=0,smart=0;uint64_t work=0;
  q=profile(4097,1080,4);if(CheckedRadialGenericBudget(4097,1080,8,q,false))return 7;
  q=profile(4096,2161,4);if(CheckedRadialGenericBudget(4096,2161,8,q,false))return 8;
  q=profile(17,11,4);q.blur_type=2;if(!CheckedRadialGenericBudget(17,11,8,q,true))return 9;
+ // The small Quality50 owner is covered by the typed public replay.  At
+ // 1024x1024 its Rotation spans cost about ten times the raw UI Strength.
+ q=profile(23,13,4);q.blur_type=2;q.quality=50;
+ if(!CheckedRadialGenericBudget(23,13,32,q,true))return 10;
+ q=profile(1024,1024,4);q.blur_type=2;q.quality=50;
+ size_t quality_bytes=0;uint64_t quality_work=0;
+ if(CheckedRadialGenericBudget(1024,1024,32,q,true,&quality_bytes,&quality_work))return 11;
+ if(!(quality_bytes<(UINT64_C(1)<<30)&&quality_work>UINT64_C(350000000)))return 12;
  std::printf("dci_classic=%zu dci_smart=%zu work=%llu\\n",classic,smart,(unsigned long long)work);
  return 0;}}
 ''')
