@@ -1413,6 +1413,29 @@ static float RotationGaussianSIMDExp(float exponent)
     return RadialF32Mul(polynomial, scale);
 }
 
+// AEX B680 builds fade weights with four-wide embedded exp and a scalar tail.
+// Keep the existing scalar expf policy; native Windows ISA/RCPPS remain open.
+static std::vector<float> RotationFadeGaussianWeights(A_long length)
+{
+    auto weights = ZoomGaussianWeights(length);
+    if (length < 4) return weights;
+    float denominator = RadialF32Mul((float)length, (float)length);
+    denominator = RadialF32Mul(denominator, 0.111111119389534f);
+    denominator = RadialF32Add(denominator, denominator);
+    denominator = (float)((double)denominator + 1.0e-5);
+    const float inverse = RadialF32Div(1.0f, denominator);
+    // The controlled interpreter supplies a division seed to original RCPPS.
+    // Preserve the AEX's separate FLOAT32 Newton operations after that seed.
+    const float refined = RadialF32Sub(RadialF32Add(inverse, inverse),
+        RadialF32Mul(RadialF32Mul(inverse, inverse), denominator));
+    const A_long vector_end = length & ~3;
+    for (A_long i = 0; i < vector_end; ++i) {
+        const float exponent = RadialF32Mul((float)(-((int)i * (int)i)), refined);
+        weights[(size_t)i] = RotationGaussianSIMDExp(exponent);
+    }
+    return weights;
+}
+
 static std::vector<float> RotationGaussianWeights(A_long length, bool apply_case0010_aex_ulp = false)
 {
 	if (length <= 1) return std::vector<float>{1.0f};
@@ -4451,9 +4474,9 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		const A_long outer_fade_span = std::max<A_long>(0, info.outer_edge_fade - 1);
 		const A_long inner_fade_span = std::max<A_long>(0, info.inner_edge_fade - 1);
 		const std::vector<float> outer_fade_weights = outer_fade_span > 1
-			? ZoomGaussianWeights(outer_fade_span) : std::vector<float>{1.0f};
+			? RotationFadeGaussianWeights(outer_fade_span) : std::vector<float>{1.0f};
 		const std::vector<float> inner_fade_weights = inner_fade_span > 1
-			? ZoomGaussianWeights(inner_fade_span) : std::vector<float>{1.0f};
+			? RotationFadeGaussianWeights(inner_fade_span) : std::vector<float>{1.0f};
 		auto polar_alpha_linear = [&](long long linear_cell) -> float {
 			if (linear_cell < 0) return 0.0f;
 			if (linear_cell >= (long long)radius_count * angular_count) {

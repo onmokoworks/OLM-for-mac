@@ -1802,11 +1802,55 @@ Edge/Inner EdgeとSize100+Noiseの自然scalar/fade、Zoom Inner Edge/topology�
 追う。追加半径行、負位相/任意Noise/Quality、native Windows CPU/UCRT/両AE、通常UI/保存、
 ROI/downsample、全10本完全互換は未完。Goalはactive。
 
+## RB-ROTATION-FADE-030 — Edge/Inner Edgeの4語SIMDとscalar端数を分離
+
+前回bed824a7の本番559 exactはprogress。残るRotation Edge/Inner EdgeのPF32自然20×14
+opaque入力を元public AEXで取得し、6planeを比較した。polar/scalar/spanは旧本番と全一致。
+Edgeはaccum5522/max1249/normalized3643語、Inner Edgeはaccum7236/max2327/normalized5851語が
+異なった。元B680の自然呼出しは、共通Gaussian30000表2回に続きfade49/0又は0/36を生成。
+RDXは長さの整数引数であり、pointer-watchのaddress値を長さ確認に利用しただけで、そこから
+有効なtable bytesを読めたとは扱わない。今回公開probeはRCXの本物の生成tableだけを採る。
+
+FACT: 元B680はlengthを4の倍数までSIMDへ渡し、1d0e0→埋込み1ebc0の指数近似を実行。
+残り0–3語はDIVSSの逆数とimported expfを使用する。SIMD逆数はRCPPS後に別々のFLOAT32
+2*r - (r*r)*denominatorでrefineする。controlled interpreterのRCPPS seedはFLOAT32 division。
+length20/60/70などではdivisionとrefined値が1ULP異なるため、Newton演算順を省略しない。
+本番は既存ZoomGaussianWeightsのscalar policyを保持し、Rotation fadeの4語prefixだけを
+同じSIMD多項式へ置き換える。ZoomとRotationの共通30000表は変更しない。
+
+本番sourceは82800c32473afbc69db4e67f2f973c527f3f76211f01104e3a88221d038584b6。
+自然2caseで6plane計706160語と最終rawが全一致。native owned radius14行に比較を限定し、
+Macの15行目は未解決に残す。Edge/Inner Edgeの3深度各1caseが追加exactとなり、694条件は
+565 exact・45差分・84拒否、raw変更6・lost0。getters30は27 exact・3差分、typed28と独立384は
+全exact。残る45差分はRotation Size100+Noise36、Zoom Inner Edge3とtopology6。
+
+Edge UI2–100で実際に生成されるlength1–99を、元public AEXのresident typed出力と
+read-only B680 traceの同じraw hashへ接続して取得。4語prefix計4800語は本番modelと全一致。
+scalar150語にはlength10/index8、length19/index17、length51/index50の3語で1ULP差が残る。
+元workerのhost expfと既存Mac DOUBLE exp→FLOAT32 policyの差であり、native Windows UCRT
+による一般判定は未取得。差を消すためのreference変更やscalar policy変更を行わない。
+元の長さ別table全量/trace/PNGはprivateに保持し、hash/countと各8語以下のscalar差だけ公開。
+追加99 opaque画像の最終rawは両cmdで全一致するが、丸めや合成がtable差を隠すため、これを
+scalar150語の完全互換の証明とは扱わない。
+
+本番O2/strict ASan/UBSanの両cmdで694条件2776と追加99条件396を再生。追加exact6を元AEXから
+再取得し、2自然fieldと全99 tableも再取得。実SDK fade helperはO2/sanitizerの198回でmodelを
+再現。新2 test、既存25 unittestと7gateはPASS。既存のGaussian30000引数/SDK60000・length30、
+PF8 writer2196、Angle/Offset reader352、noise grid96、微小alpha leaf36/SDK72、公開追加2452を
+維持。過去のrestoration/PF8 full694の重複だけは省いた。epoch bindingを変更したneutral testは本番2776と4自然fieldを実際に再生しPASS。過去報告とsource bindingは保持した。
+実SDK arm64/x86_64 O2 build成功、installedは変更しない。元AEX・固定/controlled worker、
+parent440 sourceとSDK90入力の不変を確認。
+
+reports/radialblur_rotation_fade_public_20261001.jsonとfade_validation、probe/SDK harness/testに
+記録。次はRotation Size100+Noiseの自然field、Zoom Inner Edge/topology、Size25制限を追う。
+native CPUのRCPPS/ISA、一般UCRT、任意入力・設定、両AE/UI/保存/ROI/downsample、全10本は未完。
+Goalはactive。
+
 ## 次の順序
 
 1. Smoother2のHDR/Gamma合成と色境界の今回の有限集合は検証済み。公開builderのLUT構築とnative依存先を分け、未測定scan長・任意float・独立paletteの最初の差を復元する。
 2. ColorKeyの未検証geometry/任意float/paletteとThin/Blur合成を拡張する。今回の境界・overflow比較を全入力の証明とは扱わず、固定workerとcontrolled Lab94参照を分け、native Windows UCRTとの比較を残す。
 3. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
-4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはAngle/Edge/PointとNoise OffsetのFLOAT32接続を復元した。参照atan2f非軸差は保存Windows scalarの有限集合へ校正済み。Zoom PF8の共通writerは復元済み。Rotationの自然field/scatterは代表全量でGaussian差を分離し、別コピーのinverse復元で代表rawが一致した。generic two-stageのGaussian/finalを本番へ復元し、694条件505 exact、独立384全exactを確認。no-noise/neutral/Angleと微小alphaも本番へ復元し、559 exact、typed28と独立384全exactを確認。次はRotation Edge/Inner EdgeとSize100+Noise、Zoom Inner Edge/topologyを自然fieldから閉じる。負位相のnative契約・Size25の面積制限・端/穴/島へ進み、その後KiraKira一般入力を比較する。
+4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはAngle/Edge/PointとNoise OffsetのFLOAT32接続を復元した。参照atan2f非軸差は保存Windows scalarの有限集合へ校正済み。Zoom PF8の共通writerは復元済み。Rotationの自然field/scatterは代表全量でGaussian差を分離し、別コピーのinverse復元で代表rawが一致した。generic two-stageのGaussian/finalを本番へ復元し、694条件505 exact、独立384全exactを確認。no-noise/neutral/Angleと微小alphaも本番へ復元し、559 exact、typed28と独立384全exactを確認。Rotation Edge/Inner Edgeも本番へ復元し、565 exact・45差分・84拒否。次はSize100+Noise36、Zoom Inner Edge/topology9とSize25制限を自然fieldから閉じる。scalar fade3語、native RCPPS/ISA/UCRTを未解決に保持。負位相のnative契約・Size25の面積制限・端/穴/島へ進み、その後KiraKira一般入力を比較する。
 
 既存の作業ツリー変更は今回のcommitに混ぜない。第三者AEXとnative raw出力をPushしない。
