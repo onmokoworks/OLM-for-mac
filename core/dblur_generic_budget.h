@@ -253,7 +253,7 @@ inline bool EstimateRender(int width, int height, short bitdepth,
 inline bool EstimateGeneralDeepRender(int width, int height, short depth,
     int front, int back, int front_fade, int back_fade, bool component,
     bool noise, float thickness, std::size_t smart_bytes,
-    RenderEstimate *result) noexcept
+    RenderEstimate *result, bool layer = false) noexcept
 {
     if (!result || (depth != 16 && depth != 32) || front_fade < 0 ||
         front_fade > 100 || back_fade < 0 || back_fade > 100 ||
@@ -261,8 +261,13 @@ inline bool EstimateGeneralDeepRender(int width, int height, short depth,
     RenderEstimate estimate = {};
     if (!EstimateRender(width, height, depth, front, back, smart_bytes, &estimate)) return false;
     std::size_t component_bytes = 0, noise_bytes = 0, fade_bytes = 0;
+    std::size_t layer_bytes = 0, layer_staging_bytes = 0;
     std::uint64_t noise_pixels = 0, extra_units = 0, gather_units = 0;
     if (component && !olm::allocation::checked_mul(estimate.work.pixels, 24u, &component_bytes)) return false;
+    if (layer && (!olm::allocation::checked_mul(estimate.work.pixels,
+            2u * sizeof(float), &layer_bytes) ||
+        !olm::allocation::image_bytes(width, height, 4, depth == 16 ? 2u : 4u,
+            &layer_staging_bytes))) return false;
     if (noise) {
         const int nw = static_cast<int>(static_cast<float>(estimate.work.width) / thickness + 3.0f);
         const int nh = static_cast<int>(static_cast<float>(estimate.work.height) / thickness + 3.0f);
@@ -273,7 +278,7 @@ inline bool EstimateGeneralDeepRender(int width, int height, short depth,
     if (!olm::allocation::checked_mul(static_cast<std::size_t>(std::max(front_fade, 1) +
             std::max(back_fade, 1)), sizeof(float), &fade_bytes) ||
         !CheckedMulU64(estimate.work.pixels, 4u * (front_fade + back_fade) +
-            (component ? 12u : 0u), &gather_units) ||
+            (component ? 12u : 0u) + (layer ? 32u : 0u), &gather_units) ||
         !CheckedMulU64(noise_pixels, 64u, &extra_units) ||
         !CheckedAddU64(extra_units, gather_units, &extra_units) ||
         !CheckedAddU64(estimate.operation_units, extra_units, &estimate.operation_units) ||
@@ -282,10 +287,15 @@ inline bool EstimateGeneralDeepRender(int width, int height, short depth,
     if (!budget.reserve_bytes(estimate.plugin_owned_live_bytes) ||
         !budget.reserve_bytes(component_bytes) || !budget.reserve_bytes(noise_bytes) ||
         !budget.reserve_bytes(fade_bytes) ||
+        !budget.reserve_bytes(layer_bytes) || !budget.reserve_bytes(layer_staging_bytes) ||
         !olm::allocation::checked_add(estimate.core_workspace_bytes, component_bytes,
             &estimate.core_workspace_bytes) ||
         !olm::allocation::checked_add(estimate.core_workspace_bytes, noise_bytes,
             &estimate.core_workspace_bytes) ||
+        !olm::allocation::checked_add(estimate.core_workspace_bytes, layer_bytes,
+            &estimate.core_workspace_bytes) ||
+        !olm::allocation::checked_add(estimate.wrapper_bytes, layer_staging_bytes,
+            &estimate.wrapper_bytes) ||
         !olm::allocation::checked_add(estimate.weight_bytes, fade_bytes, &estimate.weight_bytes)) return false;
     estimate.plugin_owned_live_bytes = budget.used_bytes();
     *result = estimate;

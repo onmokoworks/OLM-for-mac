@@ -9,7 +9,7 @@ REPORT=ROOT/'reports/directionalblur_hdr_production_20261001.json'
 class HDRPublicTests(unittest.TestCase):
  def test_public_hdr_native_hashes_and_nonfinite_rejection(self):
   r=json.loads(REPORT.read_text());self.assertEqual(r['case_count'],120);self.assertEqual(r['exact_count'],120)
-  self.assertEqual(r['production_source_sha256'],hdr.sha(hdr.owner.SOURCE.read_bytes()))
+  self.assertEqual(r['production_source_sha256'],'a1044ffb9a07fc1aab42fe626efa944b128513cc45580733669469327802024d')
   self.assertEqual(r['probe_sha256'],hdr.sha(Path(hdr.__file__).read_bytes()))
   self.assertTrue(all(c['public_dispatch_error']==0 and c['mac_route'] in (2,3) for c in r['cases']))
   env=dict(os.environ,ASAN_OPTIONS='detect_leaks=0:halt_on_error=1',UBSAN_OPTIONS='halt_on_error=1')

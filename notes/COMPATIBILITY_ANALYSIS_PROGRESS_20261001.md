@@ -541,6 +541,55 @@ admission/Smart checkoutと追加2 field plane/Layer staging予算を復元し�
 原点、HDR Layer、欠落Layer、ROI/downsampleを検証する。Window/Mac共通の宣言範囲と
 枝の到達性を別に保持し、完全互換Goalはactive。native AE/UCRT/installedも未完。
 
+## DB-LAYER-PUBLIC-014: 独立Layerを深度16/32の一般公開経路へ復元
+
+013の72条件を9×7/16×16/37×29へ拡張。各geometry・独立Layer2種類・両depthで
+Front/Back/DualのNoise/components/Fade+Gainに加え、旧guard tuple
+Angle45/Front8/Sharp50/Noise100も再検証する計120条件。修正前は120/120が解析core
+bypassでexact、公開dispatcherは全拒否。同一source/設定のLayer入替60組すべてnative
+hashが変わり、Layerを実際に使うことを確認した。入力は独自生成、nativeはローカル
+AEX workerの公開Smart entry。raw worldは一時保存のみ。
+
+最初の差はcore演算でなくType3を排除する公開admissionと旧16×16 hash guardだった。
+PF16/PF32のType3をgeneral featuresへ通し、同寸法・原点0・分離payload・行幅・depthを
+検査する。PF16はsource/Layerとも32768上限、PF32は両方の全channel finiteを検査。
+Layerをpacked bufferへmemcpyでstageし、core field生成のunaligned typed loadを避ける。
+ClassicはWorldSuiteでLayer形式を確認。SmartはLayer checkout/format検査を含め、全ての
+parameter/Layer checkin成功後にのみ出力をcommitする。PF8の旧Layer契約は保持する。
+
+追加予算は2 float field planeと1 packed Layer buffer。field生成/回転の演算量も
+32 units/work pixelを保守的に加算し、Smart atomic stagingを含めてallocate/read前に
+検査する。Layer Type3は生成Noise planeを使わないため生成用Thickness/Seed/Offset
+見積もりを混ぜない。既存checked overflow/3 GiB/350M限度と失敗時estimate不変を維持。
+この限度による大画像・強設定の拒否は、完全互換の終了条件ではない。
+
+変更後の公開AEX再captureは120/120 bit exact、全件public_dispatch_error=0・route3。
+実SDK・production test seamなしのfake AE hostでClassic/Smart EffectMainを両build
+（O2、O1 ASan/UBSan）で再生し計480成功render、native raw hash全一致。source rowbytes
++5、output+11、Layer+7の奇数strideでもinput/Layerとpadding不変を確認した。
+Smartは21 parameterと2 Layerのcheckin、suite releaseを確認。
+
+欠落Layer、異寸法、短いrowbytes、原点、形式違い/形式callback失敗、alias、partial ROI、
+parameter checkout/checkin失敗、Layer checkin失敗、output checkout失敗、演算量超過、
+Smart stagingメモリ超過の24状態×両depth×両buildで96 failure render。PF16各channelの
+32769、PF32各channelのNaN/+Inf/−Infは両cmd/両buildで64 failure render。
+計160失敗すべてで出力を変更しなかった。予算拒否では未読可能source/Layer pointerを
+渡しても先に拒否。Layer formatのClassic検証でfake callbackがparams内worldのcopyを
+識別せず一度失敗したが、host callbackのworld識別を修正し全検証を再実行した。
+
+旧独立Layer72条件も現行公開route3でO2/ASan/UBSan再生し144 exact、実ParamsSetupの
+choices2/labels3は維持。生成Noise等180条件の両cmd（720成功/40失敗）とHDR120条件の
+両cmd（480成功/96失敗）、budget19条件、既存Back/Dual EffectMainと直接Smart cleanup
+17状態もPASS。旧capture source hashは付け替えず、新しいlive再生を別validationへbind。
+古いtests/test_olmdirectionalblur_smart_cleanup_candidate_20260813.pyはhandoff内の
+external validator欠落で実行不能だった。数値差と分類せず、直接source cleanup検証の
+成功と分けて記録する。全repository gateは再実行していない。
+
+値3は依然として元AEXの宣言上限2の外であり、通常UI合法入力またはAE project
+保存/復元の到達性を証明しない。Macだけchoicesを3へ変更しない。異寸法/原点Layerを
+対応済みとせず、HDR Layer、任意float、PF16非SDR、downsample、全設定/素材、元AEX
+不正Offset、native AE/UCRT/installedを残件として保持。完全互換Goalはactive。
+
 ## 次の順序
 
 1. ColorKeyの他Blur設定を公開ownerで再検証し、旧import stub依存の分岐を復元。

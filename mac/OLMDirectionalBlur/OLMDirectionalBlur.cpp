@@ -1078,10 +1078,24 @@ static bool GenericDeepWorldsSafe(const PF_EffectWorld *input,
 			effective_front_strength, effective_back_strength, 0, &estimate);
 }
 
+template <typename WorldT>
+static auto DirectionalWorldHasZeroOrigin(const WorldT *world, int)
+	-> decltype(world->origin_x, world->origin_y, bool())
+{
+	return world->origin_x == 0 && world->origin_y == 0;
+}
+
+// Compatibility for the oldest reduced-header source-included harness. Real
+// SDK worlds always select the origin_x/origin_y overload above.
+static bool DirectionalWorldHasZeroOrigin(const void *, long)
+{
+	return true;
+}
+
 static bool IsGenericDeepFeatureShape(const OLMDirectionalBlurInfo &info)
 {
     return (info.front_strength != 0 || info.back_strength != 0) &&
-        !IsGenericNeutralShape(info) && !(info.noise_variation > 0.0 && info.noise_type == 3);
+        !IsGenericNeutralShape(info);
 }
 
 static OLMDirectionalBlurInfo NeutralStrengthView(const OLMDirectionalBlurInfo &info)
@@ -1105,13 +1119,16 @@ static bool GenericDeepFeatureEstimate(const OLMDirectionalBlurInfo &info,
         !percent(info.front_sharp_tail) || !percent(info.back_sharp_tail) ||
         !percent(info.noise_variation) || info.front_alpha_fade < 0 ||
         info.front_alpha_fade > 100 || info.back_alpha_fade < 0 || info.back_alpha_fade > 100 ||
-        (info.noise_variation > 0.0 && ((info.noise_type != 1 && info.noise_type != 2) ||
-            info.seed < 1 || info.seed > 1000 || info.noise_offset < -32768 || info.noise_offset > 32767)) ||
+        (info.noise_variation > 0.0 && ((info.noise_type < 1 || info.noise_type > 3) ||
+            (info.noise_type != 3 && (info.seed < 1 || info.seed > 1000 ||
+                info.noise_offset < -32768 || info.noise_offset > 32767)))) ||
         !GenericEffectiveStrengths(NeutralStrengthView(info), true, &front, &back)) return false;
     return olm::dblur::generic::EstimateGeneralDeepRender(width, height, depth, front, back,
         static_cast<int>(info.front_alpha_fade), static_cast<int>(info.back_alpha_fade),
         info.size_variation != 0.0 || info.front_sharp_tail != 0.0 || info.back_sharp_tail != 0.0,
-        info.noise_variation > 0.0, static_cast<float>(info.thickness), staging_bytes, estimate);
+        info.noise_variation > 0.0 && info.noise_type != 3,
+        static_cast<float>(info.thickness), staging_bytes, estimate,
+        info.noise_variation > 0.0 && info.noise_type == 3);
 }
 
 template <typename PixelT>
@@ -1407,27 +1424,51 @@ static PF_Err RenderGenericNeutral32(PF_EffectWorld *input, PF_EffectWorld *outp
 	return PF_Err_NONE;
 }
 
-static PF_Err RenderGenericDeepFeatures(PF_EffectWorld *input, PF_EffectWorld *output,
-    const OLMDirectionalBlurInfo &info, short depth)
+template <typename PixelT>
+static bool GenericDeepLayerWorldSafe(const PF_EffectWorld *input,
+    const PF_EffectWorld *output, const PF_EffectWorld *layer,
+    const OLMDirectionalBlurInfo &info)
 {
+    if (info.noise_variation <= 0.0 || info.noise_type != 3) return true;
+    std::uintptr_t begin = 0, end = 0;
+    return input && output && layer && layer->data &&
+        layer->width == input->width && layer->height == input->height &&
+        DirectionalWorldHasZeroOrigin(input, 0) && DirectionalWorldHasZeroOrigin(output, 0) &&
+        DirectionalWorldHasZeroOrigin(layer, 0) &&
+        layer->rowbytes > 0 && static_cast<std::size_t>(layer->rowbytes) >=
+            static_cast<std::size_t>(input->width) * sizeof(PixelT) &&
+        PayloadSpan(layer, &begin, &end) && DisjointPayloads(input, layer) &&
+        DisjointPayloads(output, layer);
+}
+
+static PF_Err RenderGenericDeepFeatures(PF_EffectWorld *input, PF_EffectWorld *output,
+    const OLMDirectionalBlurInfo &info, short depth, PF_EffectWorld *noise_layer)
+{
+    const bool use_layer = info.noise_variation > 0.0 && info.noise_type == 3;
     int result;
     if (depth == 16) {
-        std::vector<std::uint16_t> source, destination;
+        std::vector<std::uint16_t> source, destination, layer;
+        if (use_layer) StageDirectionalWorld<PF_Pixel16>(noise_layer, &layer);
         StageDirectionalWorld<PF_Pixel16>(input, &source); destination.resize(source.size());
         result = olm_dblur_full_argb16(source.data(), destination.data(), input->width, input->height,
             info.front_strength, info.front_alpha_fade, info.front_sharp_tail,
             info.back_strength, info.back_alpha_fade, info.back_sharp_tail,
             info.size_variation, info.brightness_gain, info.angle_deg, info.noise_variation,
-            info.noise_type, info.seed, info.noise_offset, info.thickness, nullptr, 0, 1);
+            info.noise_type, info.seed, info.noise_offset, info.thickness,
+            use_layer ? layer.data() : nullptr,
+            use_layer ? input->width * (depth == 16 ? 8 : 16) : 0, 1);
         if (!result) UnstageDirectionalWorld<PF_Pixel16>(destination, output);
     } else {
-        std::vector<float> source, destination;
+        std::vector<float> source, destination, layer;
+        if (use_layer) StageDirectionalWorld<PF_PixelFloat>(noise_layer, &layer);
         StageDirectionalWorld<PF_PixelFloat>(input, &source); destination.resize(source.size());
         result = olm_dblur_full_argb32(source.data(), destination.data(), input->width, input->height,
             info.front_strength, info.front_alpha_fade, info.front_sharp_tail,
             info.back_strength, info.back_alpha_fade, info.back_sharp_tail,
             info.size_variation, info.angle_deg, info.brightness_gain, info.noise_variation,
-            info.noise_type, info.seed, info.noise_offset, info.thickness, nullptr, 0, 1);
+            info.noise_type, info.seed, info.noise_offset, info.thickness,
+            use_layer ? layer.data() : nullptr,
+            use_layer ? input->width * (depth == 16 ? 8 : 16) : 0, 1);
         if (!result) UnstageDirectionalWorld<PF_PixelFloat>(destination, output);
     }
     return result == 0 ? PF_Err_NONE : result == -5 ? PF_Err_OUT_OF_MEMORY : PF_Err_INTERNAL_STRUCT_DAMAGED;
@@ -1460,10 +1501,9 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		// exported Smart route is independently raw-exact to the Mac public path.
 		return PF_Err_BAD_CALLBACK_PARAM;
 	}
-	if (PublicType3Layer16Tuple(info)) {
-		// The exported Windows Smart entry is exact for this same-source Layer
-		// tuple at PF8/PF16/PF32. Keep admission pinned to the exact source,
-		// Layer, layout, geometry, and tuple contract.
+	if (bitdepth == 8 && PublicType3Layer16Tuple(info)) {
+		// PF8 retains the exported same-source Layer tuple contract. PF16/PF32
+		// use the general deep Layer path witnessed with independent fields.
 		if (!PublicType3Layer16WorldsExact(input, output, noise_layer, bitdepth)) {
 			return PF_Err_BAD_CALLBACK_PARAM;
 		}
@@ -1544,9 +1584,12 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		}
         if (!retained_exact && IsGenericDeepFeatureShape(info)) {
             if (!GenericDeepFeatureWorldsSafe<PF_Pixel16>(input, output, info) ||
-                !GenericPF16SDRInput(input)) return PF_Err_BAD_CALLBACK_PARAM;
+                !GenericDeepLayerWorldSafe<PF_Pixel16>(input, output, noise_layer, info) ||
+                !GenericPF16SDRInput(input) ||
+                (info.noise_variation > 0.0 && info.noise_type == 3 &&
+                    !GenericPF16SDRInput(noise_layer))) return PF_Err_BAD_CALLBACK_PARAM;
             ObserveDirectionalRenderRoute(observed_route, kDirectionalRouteGenericDeepFeatures);
-            return RenderGenericDeepFeatures(input, output, info, 16);
+            return RenderGenericDeepFeatures(input, output, info, 16, noise_layer);
         }
 		if (!retained_exact &&
 			IsGenericNeutralDeepParameters(info) &&
@@ -1768,9 +1811,12 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		}
         if (!retained_exact && IsGenericDeepFeatureShape(info)) {
             if (!GenericDeepFeatureWorldsSafe<PF_PixelFloat>(input, output, info) ||
-                !GenericPF32FiniteInput(input)) return PF_Err_BAD_CALLBACK_PARAM;
+                !GenericDeepLayerWorldSafe<PF_PixelFloat>(input, output, noise_layer, info) ||
+                !GenericPF32FiniteInput(input) ||
+                (info.noise_variation > 0.0 && info.noise_type == 3 &&
+                    !GenericPF32FiniteInput(noise_layer))) return PF_Err_BAD_CALLBACK_PARAM;
             ObserveDirectionalRenderRoute(observed_route, kDirectionalRouteGenericDeepFeatures);
-            return RenderGenericDeepFeatures(input, output, info, 32);
+            return RenderGenericDeepFeatures(input, output, info, 32, noise_layer);
         }
 		if (!retained_exact &&
 			IsGenericNeutralDeepParameters(info) &&
@@ -2216,6 +2262,13 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	}
 	PF_EffectWorld *noise_layer = params[OLMDIRECTIONALBLUR_NOISE_LAYER]
 		? &params[OLMDIRECTIONALBLUR_NOISE_LAYER]->u.ld : NULL;
+	if (bitdepth != 8 && info.noise_variation > 0.0 && info.noise_type == 3) {
+		PF_PixelFormat layer_format = PF_PixelFormat_INVALID;
+		if (!noise_layer || !noise_layer->data) return PF_Err_BAD_CALLBACK_PARAM;
+		err = world_suite->PF_GetPixelFormat(noise_layer, &layer_format);
+		if (err) return err;
+		if (layer_format != format) return PF_Err_BAD_CALLBACK_PARAM;
+	}
 	return RenderWorld(input, output, noise_layer, info, bitdepth);
 }
 
@@ -2319,20 +2372,6 @@ SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 static PF_Err CheckinDirectionalParam(PF_InData *in_data, PF_ParamDef *param)
 {
 	return PF_CHECKIN_PARAM(in_data, param);
-}
-
-template <typename WorldT>
-static auto DirectionalWorldHasZeroOrigin(const WorldT *world, int)
-	-> decltype(world->origin_x, world->origin_y, bool())
-{
-	return world->origin_x == 0 && world->origin_y == 0;
-}
-
-// Compatibility for the oldest reduced-header source-included harness. Real
-// SDK worlds always select the origin_x/origin_y overload above.
-static bool DirectionalWorldHasZeroOrigin(const void *, long)
-{
-	return true;
 }
 
 static bool DirectionalGenericWorldIsFullFrame(const PF_EffectWorld *world,
@@ -2558,6 +2597,20 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 			}
 			OLMDirectionalBlurInfo info = InfoFromParams(
 				param_ptrs, render_scale_x, render_scale_y);
+			if ((extra->input->bitdepth == 16 || extra->input->bitdepth == 32) &&
+				info.noise_variation > 0.0 && info.noise_type == 3) {
+				PF_PixelFormat source_format = PF_PixelFormat_INVALID;
+				PF_PixelFormat layer_format = PF_PixelFormat_INVALID;
+				const bool safe = extra->input->bitdepth == 16
+					? GenericDeepLayerWorldSafe<PF_Pixel16>(input_world, output_world, noise_world, info)
+					: GenericDeepLayerWorldSafe<PF_PixelFloat>(input_world, output_world, noise_world, info);
+				if (!safe) err = PF_Err_BAD_CALLBACK_PARAM;
+				else {
+					err = GetDirectionalPixelFormats(in_data, input_world, noise_world,
+						&source_format, &layer_format);
+					if (!err && source_format != layer_format) err = PF_Err_BAD_CALLBACK_PARAM;
+				}
+			}
 			std::uintptr_t output_begin = 0, output_end = 0;
 			if (!PayloadSpan(output_world, &output_begin, &output_end) ||
 				!DirectionalActiveRowBytes(extra->input->bitdepth, output_world->width,

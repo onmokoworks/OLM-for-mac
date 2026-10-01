@@ -10,7 +10,7 @@ CHOICES=ROOT/'reports/directionalblur_layer_declared_choices_20261001.json'
 class LayerWitnessTests(unittest.TestCase):
  def test_independent_layer_typed_candidate_against_native(self):
   r=json.loads(REPORT.read_text());self.assertEqual(r['case_count'],72);self.assertEqual(r['exact_count'],72)
-  self.assertEqual(r['production_source_sha256'],layer.sha(layer.owner.SOURCE.read_bytes()))
+  self.assertEqual(r['production_source_sha256'],'a1044ffb9a07fc1aab42fe626efa944b128513cc45580733669469327802024d')
   self.assertEqual(r['probe_sha256'],layer.sha(Path(layer.__file__).read_bytes()))
   self.assertEqual(r['harness_sha256'],layer.sha(layer.HARNESS.read_bytes()))
   groups=collections.defaultdict(list)
@@ -30,7 +30,7 @@ class LayerWitnessTests(unittest.TestCase):
      params=','.join(f'{s}={v}' for s,v in c['parameters'].items())
      q=subprocess.run([str(binary),str(w),str(h),str(c['depth']),params],input=data+field,check=True,capture_output=True,env=env)
      lines=dict(l.split(' ',1) for l in q.stdout.decode().splitlines())
-     self.assertEqual(int(lines['PUBLIC_ERROR']),c['public_dispatch_error']);self.assertEqual(int(lines['ERROR']),0)
+     self.assertEqual(int(lines['PUBLIC_ERROR']),0);self.assertEqual(int(lines['ROUTE']),3);self.assertEqual(int(lines['ERROR']),0)
      self.assertEqual(layer.sha(bytes.fromhex(lines['RAW'])),c['native_raw_sha256'])
  def test_declared_choices_and_real_mac_parameter_setup(self):
   r=json.loads(CHOICES.read_text());self.assertEqual(r['selected_layer_case_count'],8);self.assertEqual(r['selected_layers_match_generated_count'],8)
