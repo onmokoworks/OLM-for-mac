@@ -44,9 +44,9 @@ class LayerPublicTests(unittest.TestCase):
       lines=dict(l.split(' ',1) for l in q.stdout.decode().splitlines());self.assertNotEqual(int(lines['ERROR']),0,mode);self.assertEqual(lines['RAW'],'')
       counts=[int(x) for x in lines['COUNTS'].split()];self.assertEqual(counts[3],counts[4])
       if mode=='layercheckin':self.assertEqual(counts[:3],[21,21,2])
-     # Every Layer channel is checked before processing, using unaligned rows.
+     # PF32 nonfinite Layer channels remain rejected, using unaligned rows.
      for channel in range(4):
-      for value in ([32769] if depth==16 else [float('nan'),float('inf'),float('-inf')]):
+      for value in ([] if depth==16 else [float('nan'),float('inf'),float('-inf')]):
        bad=bytearray(field);struct.pack_into('<H' if depth==16 else '<f',bad,channel*(2 if depth==16 else 4),value)
        for mode in ('classic','smart'):
         q=subprocess.run([str(binary),'9','7',str(depth),'5=7,10=11,3=37.75',mode],input=data+bad,check=True,capture_output=True,env=env)

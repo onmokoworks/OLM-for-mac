@@ -261,10 +261,10 @@ inline bool EstimateGeneralDeepRender(int width, int height, short depth,
         (noise && (!std::isfinite(thickness) || thickness < 1.0f || thickness > 100.0f))) return false;
     RenderEstimate estimate = {};
     if (!EstimateRender(width, height, depth, front, back, smart_bytes, &estimate)) return false;
-    // Unknown PF32 Layer values need a full-row bound. After the allocation
+    // Unknown deep Layer values need a full-row bound. After the allocation
     // preflight and finite-pixel scan, the caller can supply a tighter bound
     // which already includes float rounding through the final span multiply.
-    if (layer && depth == 32) {
+    if (layer) {
         if (std::isnan(layer_coefficient_bound) || layer_coefficient_bound < 1.0) return false;
         const auto span = [&](int strength) {
             if (strength == 0) return 0;

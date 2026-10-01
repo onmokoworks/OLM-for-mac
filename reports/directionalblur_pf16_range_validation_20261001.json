@@ -1,0 +1,159 @@
+{
+  "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+  "backonly_effectmain_builds": [
+    "O2",
+    "O1 ASan UBSan"
+  ],
+  "baseline_context_commit": "6a3f7d77f1a545142ad6e2d4e2938b916cbe37d0",
+  "baseline_public_rejection_count": 144,
+  "budget_checked_conditions": 31,
+  "budget_sha256": "63b03db92522c2222a73472681c3429b0b6768b9ea21b23e9db1c3e3f6267fd7",
+  "checks": [
+    {
+      "exit_code": 0,
+      "test": "tests/test_directionalblur_pf16_range_20261001.py"
+    },
+    {
+      "exit_code": 0,
+      "test": "tests/test_directionalblur_general_feature_budget_20261001.py"
+    },
+    {
+      "exit_code": 0,
+      "test": "tests/test_directionalblur_layer_span_budget_20261001.py"
+    },
+    {
+      "exit_code": 0,
+      "test": "tests/test_directionalblur_layer_general_effectmain_20261001.py"
+    },
+    {
+      "exit_code": 0,
+      "test": "tests/test_directionalblur_hdr_layer_effectmain_20261001.py"
+    },
+    {
+      "exit_code": 0,
+      "test": "tests/test_directionalblur_layer_geometry_effectmain_20261001.py"
+    },
+    {
+      "exit_code": 0,
+      "test": "tests/test_directionalblur_general_features_effectmain_20261001.py"
+    },
+    {
+      "exit_code": 0,
+      "test": "tests/test_directionalblur_hdr_effectmain_20261001.py"
+    },
+    {
+      "exit_code": 0,
+      "test": "tools/emulation/test_dblur_generic_admission_budget_20260821.py"
+    },
+    {
+      "exit_code": 0,
+      "test": "tools/emulation/test_olmdirectionalblur_smart_cleanup_atomic_20260813.py"
+    },
+    {
+      "exit_code": 0,
+      "test": "tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py"
+    }
+  ],
+  "claims_not_made": [
+    "No full ten-plugin compatibility completion",
+    "No normal AE UI production of non-SDR PF16 worlds proved",
+    "No fully neutral non-SDR PF16 admission restored",
+    "No Windows AE/native UCRT/installed completion",
+    "No arbitrary input/settings/geometry/ROI/downsample completion",
+    "No full beta gate rerun or old performance invocation binding update"
+  ],
+  "dependencies": {
+    "Util/AEGP_SuiteHandler.cpp": "7c054c7b0778b1b26463d6bf31cd57ee1d971946e8da22fb174e9f088741606f",
+    "Util/MissingSuiteError.cpp": "8c0cc22b898c94c73556778f5cef1ccf9cded81ee590bd04feb49028ff4f44d9",
+    "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+    "core/dblur_frontonly.cpp": "488834530c422a785958b6ffebd521da73092b6419df385b9eade68d0b750349",
+    "core/dblur_generic_budget.h": "63b03db92522c2222a73472681c3429b0b6768b9ea21b23e9db1c3e3f6267fd7",
+    "core/dblur_noise.h": "9e8841d9d59bfe0fbf39f8792b09ba3daed0a2232a0d9df7d76e26e0f7b26477",
+    "core/dblur_rotate.cpp": "5b02748d421befb1ecda0fd36ff34c5b225ebee5e928e0460e1c14d174c101d7",
+    "core/dblur_rowdriver.cpp": "a6fff9d9fdb1ce3d582b24123d858d2c6b9f801ff18bc2994241ba5479f724a9",
+    "decomp/OLMDirectionalBlur.aex.c.txt": "44a1249d444dca20a31dd9e68fde2b6568779a741f7ab85586048c7fd73cbc79",
+    "disasm/OLMDirectionalBlur.aex.asm.txt": "0aaa8c16f3ff48b27c8b3442746a376bba4cc5e9be416450b7c0af0099b03a6a",
+    "docs/COMPATIBILITY_ANALYSIS_PLAN_JA.md": "4028a247e55359a02864f49363c36153998d342e870d8a7ffb8fc349eaaf4b47",
+    "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "3c91c7af8c3bc0c0abe2bcbd9a1806b2cab95cc55ac41823ead5a79269313638",
+    "mac/OLMDirectionalBlur/OLMDirectionalBlur_Strings.cpp": "a9898e0e2cdd9d9c4e6f234c680081f68bb229772254a10ab1c1810fbf348daf",
+    "notes/COMPATIBILITY_ANALYSIS_PROGRESS_20261001.md": "8ab638378f0ab0e1cba446fb7383ab453b4854561eb5599678659617b65aed31",
+    "reports/directionalblur_hdr_layer_baseline_20261001.json": "ea5ff384495be33caf5a2e4aecb490da236bcdec51038f1da4322041917b59eb",
+    "reports/directionalblur_hdr_layer_production_20261001.json": "4ff2cd571799da87366ef93ac9d97ea9f97beae9638b3c15884f28fd87fe2578",
+    "reports/directionalblur_layer_baseline_20261001.json": "9539acf77d44ea9121cddbfec1464b9115511e93ebed3bbc88cc1c305bf529fa",
+    "reports/directionalblur_layer_declared_choices_20261001.json": "59b71e22a34d69ee30efa75ef4f592f303c0c40c37b3730a5d5820d656450965",
+    "reports/directionalblur_layer_general_baseline_20261001.json": "97dc85e40afbdac45946d411f359aa548dbcbb8b77ceca63d146be3190dd2be0",
+    "reports/directionalblur_layer_general_production_20261001.json": "119fa43067eb28fb3a67fdb9b878d188542f0caec691399247fb27ae5e949046",
+    "reports/directionalblur_layer_geometry_baseline_20261001.json": "d2552dba06d8d3b406330c1bc03f013b0df57a3a5501dbd86ab9f74091d58cc4",
+    "reports/directionalblur_layer_geometry_disabled_baseline_20261001.json": "fdcd129f437a8d0d489b8edebb8ff82a05f66d0e0e95cec3b29bdad25f00422a",
+    "reports/directionalblur_layer_geometry_production_20261001.json": "de827797cd96f586ab4d0228f902c99a9cd1d9eff5001f64513e5e3d3a37e2ce",
+    "reports/directionalblur_layer_none_20261001.json": "99aacbbce95a2e452f1264f3f41faa83f6e262bb92cf9a12edd62ec20d0010ae",
+    "reports/directionalblur_layer_span_budget_baseline_20261001.json": "7116f0f344ffbc766f20bfa55e03f79294882b5b89e3437cb6609c22df04c386",
+    "reports/directionalblur_layer_span_budget_production_20261001.json": "f762bf876c95b8a4e719cc7331cd872d15156602307458d22e339815b9937d2d",
+    "reports/directionalblur_pf16_range_baseline_20261001.json": "889bd63ee1d097ca84abfb74643c0623238643b2cba429c95a2014fd7d59df76",
+    "reports/directionalblur_pf16_range_production_20261001.json": "da392e5b249b57af81ab2672ab8aa9c1ee10ac4b72e1497fc356009815bf9d2b",
+    "reports/directionalblur_pf16_source_features_production_20261001.json": "2f9abc5293b9fe487d2b401f8cfee7962e70538e487ada5fbeedf71ce5ae0b68",
+    "reports/directionalblur_sse_conversion_20261001.json": "ff06afe434c0ebbd7507e0a3dfe6b7c3ad05bfd147c7f400082b1c2fa1110def",
+    "reports/native_windows_access_20261001.json": "5f80bd2f3c847ec931d6eb16a6d1a997a1158a954857f2584e56380bb2a57902",
+    "tests/test_directionalblur_general_feature_budget_20261001.py": "a9872e288b120ad364bc36029dc035b4a82d4f2b74d74fbb2bea715a4e53fa1a",
+    "tests/test_directionalblur_general_features_effectmain_20261001.py": "6a94ad86fd7ce775ba13a1e1556d81374596a6e865f0dcdd4aaa9ee004bd3498",
+    "tests/test_directionalblur_hdr_effectmain_20261001.py": "ffbf3f255e24c3f36c78c1762451189859de7b714735d02d4cf4325c5db1b9ff",
+    "tests/test_directionalblur_hdr_layer_effectmain_20261001.py": "d1381f2b4f3b8ee759f3aeeb8ccbefd003e08d36e7bdbb177d9e05298552ebbb",
+    "tests/test_directionalblur_independent_layer_20261001.py": "062c539a3b06de0dd15fefcefbcafcf38138ac21d6ece2c3c3ab4603eabe270f",
+    "tests/test_directionalblur_layer_general_effectmain_20261001.py": "fab81fbebb3930064b526c062dfa4d8cf0ad96eb1402ab31b592e18b3b07d945",
+    "tests/test_directionalblur_layer_geometry_effectmain_20261001.py": "d87b393c61b9da1373013d310146efbdc8b0a3e7a40df9a37e833b8792ac01ca",
+    "tests/test_directionalblur_layer_span_budget_20261001.py": "563411821d4715e7095469b5caa127093b7b9747c1cc1b27225b13b512ea88b1",
+    "tests/test_directionalblur_pf16_range_20261001.py": "d94e105852679d0b61049c3a6bc0923248495da1718b14faea080de0715adb58",
+    "tests/test_directionalblur_sse_conversion_20261001.py": "6f68e6f3b9102d6ebafe5d46ad10624b2e5fdbbf17fff939a6a1f672dc4e710f",
+    "tools/emulation/aex_loader.py": "f277dbecd70c4c495aa05e6495d80fdc5ce07c5df51b9076be331c232e26c9ab",
+    "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab",
+    "tools/emulation/directionalblur_layer_general_effectmain_harness_20261001.cpp": "104c88c075965123bc244c7a6971052df8da5e1502a9e43b0b47a12869b212fa",
+    "tools/emulation/directionalblur_layer_geometry_disabled_harness_20261001.cpp": "67017e937f8d5739e406c55326999796f004778942d38c5b6a07ea03dd24854d",
+    "tools/emulation/directionalblur_layer_geometry_effectmain_harness_20261001.cpp": "5ba5d299f7ee12c71759c6eb349b6f1ab4fa5e2492fe7e5b56d48e07ca21008d",
+    "tools/emulation/directionalblur_layer_geometry_harness_20261001.cpp": "3766a76be9c106931d1519267be6de9bf471e2973c17b89d6c640962f862f675",
+    "tools/emulation/directionalblur_layer_harness_20261001.cpp": "e0d3471e9b6aa228afa197e911381a892d73d3070fb400be2a9953706d11d244",
+    "tools/emulation/directionalblur_layer_params_harness_20261001.cpp": "d77d977d040d867247052141fbda3096f079fb7efcf81be902566629038c077d",
+    "tools/emulation/directionalblur_layer_span_budget_effectmain_harness_20261001.cpp": "1a3efac88bc69273ff7b50f0b76fa7e49f8ae4cae35c5a28c5de89492646530d",
+    "tools/emulation/directionalblur_pf16_range_effectmain_harness_20261001.cpp": "a98dc71f5f67da3ba0fb9c38800e05fa1f1d8e59b3842728125aeebcae4cf243",
+    "tools/emulation/probe_directionalblur_fixed_getter_20261001.py": "15828cb5ad38e2fb6b9a8e9b9dbc76e63a63bad58c95afffac5ffec44b50558a",
+    "tools/emulation/probe_directionalblur_general_features_20261001.py": "810d0fcdcf1f874f6056edee9dfeb126e387309a735a5779cda29cba207f27d2",
+    "tools/emulation/probe_directionalblur_general_input_20261001.py": "8d317b2d633dee8322ee8e4ab25d67c74c01608be3c5a34e94901c2b21255e28",
+    "tools/emulation/probe_directionalblur_hdr_20261001.py": "2dee6f63d8ec19e6138cc8fc6ec9e98eeffcf001876d905edfedd6abdf7f0b83",
+    "tools/emulation/probe_directionalblur_hdr_layer_20261001.py": "05dac80e5d8c982bdb3a2c2d723a5d81dc0f07160f84b106a9feddd1405e40d2",
+    "tools/emulation/probe_directionalblur_layer_20261001.py": "68b55493f6573932cc5e9324e85b7dd771da78c7e6fbd8a5b59f299a4fc51740",
+    "tools/emulation/probe_directionalblur_layer_declared_choices_20261001.py": "88ef73bb0630f39210a4e951d32960eaa13ea8d96e5bc1f7bc7886a2fa35815c",
+    "tools/emulation/probe_directionalblur_layer_general_20261001.py": "909ae008c8d489de8af689db91d16fc5acd29faa80f116ede869d24e360bff4a",
+    "tools/emulation/probe_directionalblur_layer_geometry_20261001.py": "0c7cbad8edb8abf3b38cff9361a4320afdab35220372aa4c7e76f5bc807b22f8",
+    "tools/emulation/probe_directionalblur_layer_geometry_disabled_20261001.py": "fe8cb9f85fe15a8455ee49eff3d1d1a5aa38558cbd3438997b553df61e68264c",
+    "tools/emulation/probe_directionalblur_layer_none_20261001.py": "fc1f3e30f35c85fcb3d1da4b4dc755f68746275226da8cf5c15b4a52f2003225",
+    "tools/emulation/probe_directionalblur_layer_span_budget_20261001.py": "d250daf9064a95b2853bbeba5aa1dd8e41031fa1b9c3758202bb54ced46d353c",
+    "tools/emulation/probe_directionalblur_pf16_range_20261001.py": "8e4586a64b3c532ca8ce2289b45d6187893d93a23478859da94c213797e0ea62",
+    "tools/emulation/probe_directionalblur_pf16_source_features_20261001.py": "10583c279ced92f733ce787c83f461eee622765f2ae76a8b90ab3af2bd581b27",
+    "tools/emulation/probe_directionalblur_sse_conversion_20261001.py": "fa531ce671e6d102bbfc1ef67e6fde017c9b2c2879fb95f75472de87c0f0bcd0",
+    "tools/emulation/test_dblur_generic_admission_budget_20260821.py": "032cd4dc2918686dde603bf6b8c83c991a2a89df3078c90e0b3f80543034333d",
+    "tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py": "c638b98b1a186de013c307cb01c6074d77ab2fcf9536d5d59d18e149cd774f1f",
+    "tools/emulation/test_olmdirectionalblur_smart_cleanup_atomic_20260813.py": "89676db69605259dec6fba5d7de44a3069a010ab595044d03416644922952aa5"
+  },
+  "native_layer_case_count": 144,
+  "native_original_hashes_unchanged": true,
+  "native_source_generated_noise_case_count": 72,
+  "production_source_sha256": "3c91c7af8c3bc0c0abe2bcbd9a1806b2cab95cc55ac41823ead5a79269313638",
+  "public_range_validation": {
+    "actual_layer_field_rotator_span_bound_replay_count": 216,
+    "actual_layer_field_rotator_span_bound_state_count": 108,
+    "builds": [
+      "O2",
+      "O1 ASan UBSan"
+    ],
+    "commands": [
+      "Classic",
+      "Smart"
+    ],
+    "final_estimate_unreadable_source_atomic_failure_render_count": 4,
+    "smart_layer_checkin_count": 2,
+    "smart_parameter_checkin_count": 21,
+    "successful_render_count": 864
+  },
+  "schema": "directionalblur.pf16-range-validation/1",
+  "verdict": "PASS_LOCAL_AEX_AND_REAL_SDK_FAKE_HOST",
+  "worker_sha256": "0eb2f7705598f7b5f53563b9d920274ba094c835ff3dbaaf5f6fb214ec0cfd61"
+}

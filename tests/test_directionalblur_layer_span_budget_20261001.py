@@ -13,7 +13,7 @@ class LayerSpanBudgetTests(unittest.TestCase):
   original=(ROOT/'tools/emulation/directionalblur_layer_general_effectmain_harness_20261001.cpp').read_text().replace('w>64||h>64','w>1024||h>1024')
   self.assertEqual(before['harness_sha256'],span.sha(original.encode()))
   r=json.loads(REPORT.read_text());self.assertEqual(r['case_count'],3);self.assertEqual(r['exact_count'],3)
-  self.assertEqual(r['production_source_sha256'],span.sha(span.owner.SOURCE.read_bytes()));self.assertEqual(r['budget_sha256'],span.sha((ROOT/'core/dblur_generic_budget.h').read_bytes()))
+  self.assertEqual(r['production_source_sha256'],'04b74f69c77f44206c1d230b35f25ee8b9ffbda8cfb2f198fc40f56d8606b1ee');self.assertEqual(r['budget_sha256'],'ea22a8b4f3d2ec189b1af3442178e80beb6cc73dec455d66796033ab55c1a6e3')
   self.assertEqual(r['probe_sha256'],span.sha(Path(span.__file__).read_bytes()));self.assertEqual(r['harness_sha256'],span.sha(span.HARNESS.read_bytes()))
   self.assertEqual([c['native_raw_sha256'] for c in r['cases']],[c['native_raw_sha256'] for c in before['cases']]);self.assertTrue(all(c['native_layer_changes_output'] for c in r['cases']))
   env=dict(os.environ,ASAN_OPTIONS='detect_leaks=0:halt_on_error=1',UBSAN_OPTIONS='halt_on_error=1')

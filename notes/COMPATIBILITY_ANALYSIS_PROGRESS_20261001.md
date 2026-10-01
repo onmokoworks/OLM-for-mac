@@ -732,6 +732,48 @@ span等をすべて使ったtight boundではなく、依然として必要以�
 非SDR、任意float/near-INT32散布、全素材/設定、実UI/project保存、native AE/UCRT/
 installedの全互換は未完。Goalはactive。
 
+
+## DB-PF16-RANGE-018 — 一般機能のraw uint16入力範囲
+
+未閉鎖だったPF16非SDR境界を、sourceと独立Layerを分けて調べた。typed guest workerの
+validate_bytesはbyte数だけを検査し、ARGB uint16 channelを32768でclampしない。
+これは元AEXへの入力の証拠であり、通常AE UIが非SDR PF16 worldを生成する証明ではない。
+
+自作profileはRGBのみ拡張、alphaのみ拡張、全channel拡張、32767/32768/32769/
+65534/65535境界。2 geometry（9×7、37×29）、source/Layer/両方の3配置、Front/Back/
+Dual、Layerのみ/Size・Fade・Sharp併用で144条件。変更前は公開経路144拒否、分析専用の
+既存full typed coreは144/144 native raw exactだった。履歴baselineはhashを保持する。
+
+PF16一般機能のsource/Layer SDR検査だけを解除した。完全neutralの別経路は変更しない。
+Layer値は65535/32768まで、alphaとの積は約4まで増えるので、SDR時のspan≤Strengthを
+流用しない。既存PF32係数上限処理をtyped helperへ共通化し、PF16では各channelを
+1/32768で正規化したdouble積を使用。最大absolute premultiplied積、Noise mix、32 float
+epsilonの丸め余裕から最終散布上限を計算する。メモリ/UI/geometry等の初期検査後に
+Layerを読み、増幅後予算を検査してからsource staging/render。Classic/Smartで同じ規則。
+入力値/field/出力のclampや補正、pixel kernelの変更はしていない。
+
+変更後144/144が公開route3でnative raw exact。さらに同じ4 profile、2 geometry、3方向、
+Layerなし/生成Noise1/生成Noise2（全てSize/Fade/Sharp併用）の72条件も公開経路でexact。
+実SDKのproduction seamなしClassic/SmartをO2、O1 ASan/UBSanで再生し、216条件×4=
+864成功renderがnative hash一致。odd stride、padding、source/Layer不変、Smart parameter
+21とLayer2のcheckin、suite releaseを確認（未使用Layerもこのfake hostではcheckoutされる）。
+
+実Layer fieldとscalar rotatorを使う上限検査は4 profile×3 geometry×3角度×3 Noise量の
+108状態を両buildで再生。Strength7/11/4000のspan全てが見積もり内（216検査）。
+720×480、最大uint16全channel Layer、Noise100、Front/Back各80では初期Strength予算は
+通るが約4倍の最終予算は拒否。unreadable source pointerを渡したClassic/Smart両buildで
+source読取り前に拒否し出力不変（4失敗render）。checked budgetは31条件に拡張。
+
+既存PF32の上限・大画像Layer、独立Layer120、HDR Layer180、異寸法/None、生成Noise、
+source HDR、Back/Dual・1280×720、admission budget、Smart cleanupの回帰も現行sourceで
+PASS。過去span budget reportのsource/budget bindingは履歴として固定し、live再検証の
+bindingは今回のvalidationへ記録。過去native出力hashを現在sourceへ付け替えない。
+
+今回の証拠はlocal exported AEXと実SDK fake host。実Windows AE/UCRT/installed、全素材/
+設定、ROI/downsample、旧個別owner契約、完全neutral等のPF16非SDR、任意float/
+near-INT32散布、大画像/強設定と保守的予算の拒否は残る。216件の一致を全10本の
+完成へ一般化せず、Goalはactiveのまま。
+
 ## 次の順序
 
 1. ColorKeyの他Blur設定を公開ownerで再検証し、旧import stub依存の分岐を復元。
