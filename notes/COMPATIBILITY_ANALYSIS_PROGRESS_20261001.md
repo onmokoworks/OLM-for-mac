@@ -683,6 +683,55 @@ HDR120、既存Back/Dual EffectMain、Smart cleanup17も現行sourceで再検証
 PF16非SDR、任意float/near-INT32散布、PF32 Layerの保守的な大画像予算、実host UIと
 project保存/復元、native AE/UCRT/installedの完了証拠は残る。完全互換Goalはactive。
 
+## DB-LAYER-BUDGET-017: 実Layer値の上限で大画像の不要な拒否を解消
+
+015のPF32 full-row散布上限は安全側だが、SDR Layerでも全work幅を仮定していた。
+720×480、独自の疎なmixed-alpha source、Front7+Back11、Angle17.25、Layer Noise73.75
+で、SDR inverse・positive HDR・signed RGBの3 Layerを元AEXの公開Smart ownerへ渡す。
+nativeは3件ともguard付きで正常終了し、Noise無効の対照とはすべて出力hashが異なる。
+旧Mac Classicは3件とも予算拒否（516）。Layer未使用での疑似一致ではない。
+
+一般規則: 各Layer pixelのabs(alpha) × max(abs(R),abs(G),abs(B))の最大値をdoubleで
+走査する。premultiplied luminanceの正の係数和とscalar bilinearの非負weight和は1。
+この絶対値上限をNoise opacityと混合し、少なくとも1とする。luminance、補間、Noise
+混合、最後のStrength乗算の丸めを覆うため32 float epsilonの余裕を加える。
+この値は予算用であり、入力やfield、出力のclamp/補正ではない。
+
+順序は二段階。まず既存のUI/geometry/rowbytes/format/aliasと全workspace/Smart staging
+メモリ、unamplified Strengthの予算を検査する。次にfinite Layer scanで上限を取り、
+増幅後のspanをwork幅でcapして散布量を見積もる。final estimate成功後にsource finite
+検査とpacked staging/renderを行う。Smartもoutput staging前に同じLayer estimateを使う。
+未知のLayer上限を呼ぶ内部APIは引き続きfull-rowの既定値を使える。PF16 SDR経路、
+生成Noise、pixel kernelは変更しない。UI Strength4000上限はentryで保持し、内部の増幅
+spanだけは4000以上も数えられるようにする。
+
+修正後3/3が公開Classicでnative raw bit exact。nativeの元hashは全保持。
+実SDK・production seamなしのClassic/SmartをO2とASan/UBSanで再生し12成功render、
+全native hash一致。odd stride/padding/input/Layer不変、Smart21 parameter/2 Layerの
+checkin、suite releaseも確認した。実fieldとscalar rotatorの出力からspanを計算し、
+6 profile（既存HDR5と全float max）、3 geometry、3角度、3 Noise量の162状態を両build
+で確認。Strength7/11/4000で全有効spanが見積もり上限内（計324検査）。非有限spanは
+015で確認したSSE sentinelで散布しない範囲として区別する。
+
+720×480の高輝度Layer（alpha1/RGB80）ではfinal estimateを超過させ、unreadable source
+pointerを渡したClassic/Smartを両buildで確認。4失敗render全てinputを読まず、出力を
+変えずに拒否。初期メモリ/演算量でのpoison pointer拒否は既存Layer回帰に含む。
+checked budget27条件、既存admission budget、Layer120の480成功/140失敗、HDR Layer
+180の720成功、異寸法/Noneの1384成功/72失敗、生成Noise180、source HDR120も現行
+sourceで再検証してPASS。履歴reportのbindingを付け替えず、live validationを別に保存。
+
+native host確認も着手した。mac-windows-ssh skillの既存r5900x aliasへBatchModeと
+ConnectTimeout8秒でread-only PowerShell（AE process/install path照会）を送ったが、SSH
+exit255、接続timeout。tailscale statusのlocal backendはStopped。cached Windows peerの
+Online表示をlive接続の証拠にしない。AE processやインストール状態は取得できていない。
+ネットワーク/鍵/設定は変更しなかった。local AEX emulationと実Windows AEを区別する。
+
+この上限は実行回数を数える最適予算ではない。source alphaによるskipや相殺、SSE無効
+span等をすべて使ったtight boundではなく、依然として必要以上の拒否が残り得る。
+3 GiB/350Mという実装限度自体、大画像/強設定、非zero origin/ROI/downsample、PF16
+非SDR、任意float/near-INT32散布、全素材/設定、実UI/project保存、native AE/UCRT/
+installedの全互換は未完。Goalはactive。
+
 ## 次の順序
 
 1. ColorKeyの他Blur設定を公開ownerで再検証し、旧import stub依存の分岐を復元。

@@ -1,0 +1,27 @@
+{
+  "batch_mode": true,
+  "cached_peer_is_live_verification": false,
+  "cached_peer_online": true,
+  "cached_peer_present": true,
+  "claims_not_made": [
+    "No Windows AE process/install state verification",
+    "Cached peer state does not prove live host connectivity",
+    "No native AE/UCRT render comparison"
+  ],
+  "classification": "Native Windows verification unavailable; local algorithm work remains available",
+  "connect_timeout_seconds": 8,
+  "local_backend_state": "Stopped",
+  "network_key_configuration_modified": false,
+  "remote_read_intent": [
+    "AE process list",
+    "Adobe installation directory names",
+    "work directory names"
+  ],
+  "remote_state_obtained": false,
+  "schema": "compatibility.native-windows-access-audit/1",
+  "skill": "mac-windows-ssh",
+  "ssh_alias": "r5900x",
+  "ssh_exit_code": 255,
+  "ssh_failure": "connection timeout",
+  "tailscale_status_exit_code": 0
+}

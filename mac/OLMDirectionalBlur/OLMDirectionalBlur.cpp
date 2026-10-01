@@ -1125,7 +1125,8 @@ static OLMDirectionalBlurInfo NeutralStrengthView(const OLMDirectionalBlurInfo &
 
 static bool GenericDeepFeatureEstimate(const OLMDirectionalBlurInfo &info,
     A_long width, A_long height, short depth, std::size_t staging_bytes,
-    olm::dblur::generic::RenderEstimate *estimate)
+    olm::dblur::generic::RenderEstimate *estimate,
+    double layer_coefficient_bound = std::numeric_limits<double>::infinity())
 {
     int front = 0, back = 0;
     const auto percent = [](PF_FpLong value) {
@@ -1144,17 +1145,19 @@ static bool GenericDeepFeatureEstimate(const OLMDirectionalBlurInfo &info,
         info.size_variation != 0.0 || info.front_sharp_tail != 0.0 || info.back_sharp_tail != 0.0,
         info.noise_variation > 0.0 && info.noise_type != 3,
         static_cast<float>(info.thickness), staging_bytes, estimate,
-        info.noise_variation > 0.0 && info.noise_type == 3);
+        info.noise_variation > 0.0 && info.noise_type == 3, layer_coefficient_bound);
 }
 
 template <typename PixelT>
 static bool GenericDeepFeatureWorldsSafe(const PF_EffectWorld *input,
-    const PF_EffectWorld *output, const OLMDirectionalBlurInfo &info, std::size_t staging_bytes = 0)
+    const PF_EffectWorld *output, const OLMDirectionalBlurInfo &info, std::size_t staging_bytes = 0,
+    double layer_coefficient_bound = std::numeric_limits<double>::infinity())
 {
     constexpr short depth = sizeof(PixelT) == 8 ? 16 : 32;
     olm::dblur::generic::RenderEstimate estimate = {};
     return GenericDeepWorldsSafe<PixelT>(input, output, NeutralStrengthView(info)) &&
-        GenericDeepFeatureEstimate(info, input->width, input->height, depth, staging_bytes, &estimate);
+        GenericDeepFeatureEstimate(info, input->width, input->height, depth, staging_bytes,
+            &estimate, layer_coefficient_bound);
 }
 
 static bool GenericPF16SDRInput(const PF_EffectWorld *input)
@@ -1187,6 +1190,34 @@ static bool GenericPF32FiniteInput(const PF_EffectWorld *input)
 		}
 	}
 	return true;
+}
+
+static bool GenericPF32LayerCoefficientBound(const PF_EffectWorld *layer,
+    const OLMDirectionalBlurInfo &info, double *bound)
+{
+    if (!layer || !bound) return false;
+    double maximum_product = 0.0;
+    for (A_long y = 0; y < layer->height; ++y) {
+        const auto *row = reinterpret_cast<const std::uint8_t *>(layer->data) +
+            static_cast<std::size_t>(y) * static_cast<std::size_t>(layer->rowbytes);
+        for (A_long x = 0; x < layer->width; ++x) {
+            PF_PixelFloat pixel = {};
+            std::memcpy(&pixel, row + static_cast<std::size_t>(x) * sizeof(pixel), sizeof(pixel));
+            const float channels[] = {pixel.alpha, pixel.red, pixel.green, pixel.blue};
+            for (float value : channels) if (!std::isfinite(value)) return false;
+            const double rgb = std::max({std::abs(static_cast<double>(pixel.red)),
+                std::abs(static_cast<double>(pixel.green)), std::abs(static_cast<double>(pixel.blue))});
+            maximum_product = std::max(maximum_product, std::abs(static_cast<double>(pixel.alpha)) * rgb);
+        }
+    }
+    // Premultiplied luminance and scalar bilinear interpolation have nonnegative
+    // weights summing to one. This absolute-product bound covers signed inputs.
+    // Inflate by 32 float epsilons for their rounding, the Noise mix, and the
+    // final Strength multiply. This affects admission only, never pixel math.
+    const double opacity = info.noise_variation / 100.0;
+    *bound = std::max(1.0, maximum_product * opacity + (1.0 - opacity)) *
+        (1.0 + 32.0 * std::numeric_limits<float>::epsilon());
+    return true;
 }
 
 static bool NoisePublicPairwiseTuple(const OLMDirectionalBlurInfo &info,
@@ -1827,11 +1858,17 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 				observed_route, kDirectionalRouteRetainedNeutralBackExact);
 		}
         if (!retained_exact && IsGenericDeepFeatureShape(info)) {
-            if (!GenericDeepFeatureWorldsSafe<PF_PixelFloat>(input, output, info) ||
-                !GenericDeepLayerWorldSafe<PF_PixelFloat>(input, output, noise_layer, info) ||
-                !GenericPF32FiniteInput(input) ||
-                (info.noise_variation > 0.0 && info.noise_type == 3 &&
-                    !GenericPF32FiniteInput(noise_layer))) return PF_Err_BAD_CALLBACK_PARAM;
+            // First reserve the complete workspace using unamplified Strength,
+            // before reading even a potentially invalid Layer payload.
+            if (!GenericDeepFeatureWorldsSafe<PF_PixelFloat>(input, output, info, 0, 1.0) ||
+                !GenericDeepLayerWorldSafe<PF_PixelFloat>(input, output, noise_layer, info)) return PF_Err_BAD_CALLBACK_PARAM;
+            double layer_bound = std::numeric_limits<double>::infinity();
+            if (info.noise_variation > 0.0 && info.noise_type == 3 &&
+                (!GenericPF32LayerCoefficientBound(noise_layer, info, &layer_bound) ||
+                 !GenericDeepFeatureWorldsSafe<PF_PixelFloat>(input, output, info, 0, layer_bound))) {
+                return PF_Err_BAD_CALLBACK_PARAM;
+            }
+            if (!GenericPF32FiniteInput(input)) return PF_Err_BAD_CALLBACK_PARAM;
             ObserveDirectionalRenderRoute(observed_route, kDirectionalRouteGenericDeepFeatures);
             return RenderGenericDeepFeatures(input, output, info, 32, noise_layer);
         }
@@ -2659,12 +2696,19 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 						: (extra->input->bitdepth == 32 &&
 							GenericDeepWorldsSafe<PF_PixelFloat>(input_world, output_world, strength_info)));
 				olm::dblur::generic::RenderEstimate smart_estimate = {};
-				const bool estimate_safe = generic_features
+				bool estimate_safe = generic_features
 					? GenericDeepFeatureEstimate(info, input_world->width, input_world->height,
-						extra->input->bitdepth, output_end - output_begin, &smart_estimate)
+						extra->input->bitdepth, output_end - output_begin, &smart_estimate, 1.0)
 					: olm::dblur::generic::EstimateRender(input_world->width, input_world->height,
 						extra->input->bitdepth, effective_front_strength, effective_back_strength,
 						output_end - output_begin, &smart_estimate);
+                if (parameters_safe && worlds_safe && estimate_safe && generic_features &&
+                    extra->input->bitdepth == 32 && info.noise_variation > 0.0 && info.noise_type == 3) {
+                    double layer_bound = std::numeric_limits<double>::infinity();
+                    estimate_safe = GenericPF32LayerCoefficientBound(noise_world, info, &layer_bound) &&
+                        GenericDeepFeatureEstimate(info, input_world->width, input_world->height,
+                            32, output_end - output_begin, &smart_estimate, layer_bound);
+                }
 				if (!parameters_safe || !worlds_safe || !estimate_safe ||
 					(pre && pre->full_width > 0 && pre->full_height > 0 &&
 						(!pre->request_contains_full_frame ||

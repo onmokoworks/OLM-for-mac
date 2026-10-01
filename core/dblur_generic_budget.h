@@ -130,8 +130,8 @@ inline bool CheckedAddU64(std::uint64_t left, std::uint64_t right,
 inline bool EstimateScatterPerRow(std::uint64_t width, int effective_strength,
 	                              std::uint64_t *scatter_per_row) noexcept
 {
-	if (!scatter_per_row || width <= 2 || effective_strength < 0 ||
-		effective_strength > 4000) {
+	// The caller validates UI Strength. A Layer-amplified span can exceed it.
+	if (!scatter_per_row || width <= 2 || effective_strength < 0) {
 		return false;
 	}
 	if (effective_strength == 0) {
@@ -253,19 +253,27 @@ inline bool EstimateRender(int width, int height, short bitdepth,
 inline bool EstimateGeneralDeepRender(int width, int height, short depth,
     int front, int back, int front_fade, int back_fade, bool component,
     bool noise, float thickness, std::size_t smart_bytes,
-    RenderEstimate *result, bool layer = false) noexcept
+    RenderEstimate *result, bool layer = false,
+    double layer_coefficient_bound = std::numeric_limits<double>::infinity()) noexcept
 {
     if (!result || (depth != 16 && depth != 32) || front_fade < 0 ||
         front_fade > 100 || back_fade < 0 || back_fade > 100 ||
         (noise && (!std::isfinite(thickness) || thickness < 1.0f || thickness > 100.0f))) return false;
     RenderEstimate estimate = {};
     if (!EstimateRender(width, height, depth, front, back, smart_bytes, &estimate)) return false;
-    // A finite PF32 Layer can amplify the scatter span beyond Strength.
-    // Before reading any pixels, bound each enabled side by the complete row.
-    // PF16's validated SDR Layer keeps its coefficient at or below one.
-    if (layer && depth == 32 &&
-        !EstimateOperationUnits(estimate.work, front > 0 ? estimate.work.width : 0,
-            back > 0 ? estimate.work.width : 0, &estimate.operation_units)) return false;
+    // Unknown PF32 Layer values need a full-row bound. After the allocation
+    // preflight and finite-pixel scan, the caller can supply a tighter bound
+    // which already includes float rounding through the final span multiply.
+    if (layer && depth == 32) {
+        if (std::isnan(layer_coefficient_bound) || layer_coefficient_bound < 1.0) return false;
+        const auto span = [&](int strength) {
+            if (strength == 0) return 0;
+            const double scaled = strength * layer_coefficient_bound;
+            return scaled >= estimate.work.width ? estimate.work.width : static_cast<int>(scaled);
+        };
+        if (!EstimateOperationUnits(estimate.work, span(front), span(back),
+                &estimate.operation_units)) return false;
+    }
     std::size_t component_bytes = 0, noise_bytes = 0, fade_bytes = 0;
     std::size_t layer_bytes = 0, layer_staging_bytes = 0;
     std::uint64_t noise_pixels = 0, extra_units = 0, gather_units = 0;

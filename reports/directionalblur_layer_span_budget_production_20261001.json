@@ -1,0 +1,187 @@
+{
+  "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+  "budget_sha256": "ea22a8b4f3d2ec189b1af3442178e80beb6cc73dec455d66796033ab55c1a6e3",
+  "case_count": 3,
+  "cases": [
+    {
+      "depth": 32,
+      "exact": true,
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "59526dec9bd056e0b9bab6b197659d15af9d79312eae8a335c01e341975644b7",
+          "guards_intact": true,
+          "height": 480,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 11520,
+          "width": 720
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        720,
+        480
+      ],
+      "input_sha256": "079da364bd61a811b4a283ca065370e61c5518f90e7d4a0ac57234d8130d1066",
+      "layer_profile": "sdr",
+      "layer_sha256": "4919285022b8dcb107cb9a309e3a951dd49a6dc8d2dbf64aa097d29d3e5f75b8",
+      "mac_error": 0,
+      "mac_raw_sha256": "59526dec9bd056e0b9bab6b197659d15af9d79312eae8a335c01e341975644b7",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "fcba736c4a7e8f0038677243c6e8559b8009d78e4a93713744655aaddca1d1ae",
+          "guards_intact": true,
+          "height": 480,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 11520,
+          "width": 720
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "fcba736c4a7e8f0038677243c6e8559b8009d78e4a93713744655aaddca1d1ae",
+      "native_layer_changes_output": true,
+      "native_raw_sha256": "59526dec9bd056e0b9bab6b197659d15af9d79312eae8a335c01e341975644b7",
+      "parameter_payload": "v4|param_1@1:angle=17.25;param_2@2:f64=1;param_3@3:f64=0;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=0;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=0;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 17.25,
+        "5": 7,
+        "10": 11
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "99a1269ed5d792ca5ed9b32f445125577bfb9e92476ac464d0184d063b12cb62",
+          "guards_intact": true,
+          "height": 480,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 11520,
+          "width": 720
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        720,
+        480
+      ],
+      "input_sha256": "079da364bd61a811b4a283ca065370e61c5518f90e7d4a0ac57234d8130d1066",
+      "layer_profile": "positive_hdr",
+      "layer_sha256": "ac7980fcf9b83ff1188c8265e0655ace26bf740c7d687691208c5a8be5cba4c4",
+      "mac_error": 0,
+      "mac_raw_sha256": "99a1269ed5d792ca5ed9b32f445125577bfb9e92476ac464d0184d063b12cb62",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "fcba736c4a7e8f0038677243c6e8559b8009d78e4a93713744655aaddca1d1ae",
+          "guards_intact": true,
+          "height": 480,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 11520,
+          "width": 720
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "fcba736c4a7e8f0038677243c6e8559b8009d78e4a93713744655aaddca1d1ae",
+      "native_layer_changes_output": true,
+      "native_raw_sha256": "99a1269ed5d792ca5ed9b32f445125577bfb9e92476ac464d0184d063b12cb62",
+      "parameter_payload": "v4|param_1@1:angle=17.25;param_2@2:f64=1;param_3@3:f64=0;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=0;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=0;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 17.25,
+        "5": 7,
+        "10": 11
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "f1548fcd36b641b879491911b22887ad07db278e7950e341c03ee15b709f6f67",
+          "guards_intact": true,
+          "height": 480,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 11520,
+          "width": 720
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        720,
+        480
+      ],
+      "input_sha256": "079da364bd61a811b4a283ca065370e61c5518f90e7d4a0ac57234d8130d1066",
+      "layer_profile": "signed_rgb",
+      "layer_sha256": "e71e9a12102e4cc852127e682f7c8f094388ec3c6bed93e2d26d9d56afef5ee0",
+      "mac_error": 0,
+      "mac_raw_sha256": "f1548fcd36b641b879491911b22887ad07db278e7950e341c03ee15b709f6f67",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "fcba736c4a7e8f0038677243c6e8559b8009d78e4a93713744655aaddca1d1ae",
+          "guards_intact": true,
+          "height": 480,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 11520,
+          "width": 720
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "fcba736c4a7e8f0038677243c6e8559b8009d78e4a93713744655aaddca1d1ae",
+      "native_layer_changes_output": true,
+      "native_raw_sha256": "f1548fcd36b641b879491911b22887ad07db278e7950e341c03ee15b709f6f67",
+      "parameter_payload": "v4|param_1@1:angle=17.25;param_2@2:f64=1;param_3@3:f64=0;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=0;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=0;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 17.25,
+        "5": 7,
+        "10": 11
+      }
+    }
+  ],
+  "claims_not_made": [
+    "No actual Windows AE/native UCRT or installed bundle verification",
+    "No arbitrary finite float/overflow or all images completion",
+    "Type 3 exceeds native declared popup range; no normal UI proof"
+  ],
+  "exact_count": 3,
+  "harness_sha256": "1a3efac88bc69273ff7b50f0b76fa7e49f8ae4cae35c5a28c5de89492646530d",
+  "probe_sha256": "d250daf9064a95b2853bbeba5aa1dd8e41031fa1b9c3758202bb54ced46d353c",
+  "production_source_sha256": "04b74f69c77f44206c1d230b35f25ee8b9ffbda8cfb2f198fc40f56d8606b1ee",
+  "rowdriver_sha256": "a6fff9d9fdb1ce3d582b24123d858d2c6b9f801ff18bc2994241ba5479f724a9",
+  "schema": "directionalblur.layer-coefficient-budget-owner/1",
+  "worker_sha256": "0eb2f7705598f7b5f53563b9d920274ba094c835ff3dbaaf5f6fb214ec0cfd61"
+}

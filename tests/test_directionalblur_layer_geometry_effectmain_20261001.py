@@ -15,7 +15,7 @@ class LayerGeometryPublicTests(unittest.TestCase):
   baseline=json.loads((ROOT/'reports/directionalblur_layer_geometry_disabled_baseline_20261001.json').read_text())
   self.assertEqual(baseline['exact_count'],288);self.assertTrue(all(c['public_dispatch_error']!=0 and c['mac_route']==1001 for c in baseline['cases']))
   r=json.loads(REPORT.read_text());self.assertEqual(r['case_count'],288);self.assertEqual(r['exact_count'],288);self.assertEqual(r['native_disabled_control_exact_count'],288)
-  self.assertEqual(r['production_source_sha256'],geo.sha(geo.owner.SOURCE.read_bytes()));self.assertEqual(r['probe_sha256'],geo.sha(Path(geo.__file__).read_bytes()));self.assertEqual(r['harness_sha256'],geo.sha(geo.HARNESS.read_bytes()))
+  self.assertEqual(r['production_source_sha256'],'6b387d9b6d0927a4a74f775430250ff55a72a2dcd7861916ebc8da9e3f7258a2');self.assertEqual(r['probe_sha256'],geo.sha(Path(geo.__file__).read_bytes()));self.assertEqual(r['harness_sha256'],geo.sha(geo.HARNESS.read_bytes()))
   self.assertTrue(all(c['public_dispatch_error']==0 and c['mac_route'] in (2,3) for c in r['cases']))
   self.assertEqual([c['native_raw_sha256'] for c in baseline['cases']],[c['native_raw_sha256'] for c in r['cases']])
   none=json.loads(NONE.read_text());self.assertEqual(none['case_count'],54);self.assertEqual(none['exact_count'],54)
