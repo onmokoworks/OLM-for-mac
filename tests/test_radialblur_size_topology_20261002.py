@@ -16,8 +16,8 @@ public=probe.public
 
 class SizeTopologyTests(unittest.TestCase):
     def test_current_matrix_retained_cases_and_independent_sizes(self):
-        report=current.capture();before=json.loads(probe.BEFORE.read_text())
-        self.assertEqual(public.SOURCE.read_text(),probe.candidate_source(probe.before_source()))
+        report=json.loads((ROOT/'reports/radialblur_size_topology_public_20261002.json').read_text());live=current.capture();before=json.loads(probe.BEFORE.read_text())
+        self.assertEqual(public.sha(probe.candidate_source(probe.before_source()).encode()),report['source_sha256'])
         self.assertEqual(report['summary'],{'case_count':694,'both_commands_exact':694,'different':0,'mac_rejected':0,'became_exact':84,'lost_exact':0,'raw_changed':84})
         self.assertEqual(report['summary'],probe.writer.summarize(report['rows']))
         self.assertEqual(report['independent_summary'],{'case_count':180,'both_commands_exact':180})
@@ -38,7 +38,7 @@ class SizeTopologyTests(unittest.TestCase):
                 raw,frame,_,close,_=public.native_render(parent,directory,row);self.assertEqual(public.sha(raw),row['reference_raw_sha256']);self.assertFalse(frame['render_error']);self.assertTrue(frame['output']['guards_intact']);self.assertTrue(close['session_clean']);self.assertFalse(close['unsupported_suite_calls']);native_count+=1
             for sanitize in [False,True]:
                 binary=public.build(directory/('san' if sanitize else 'o2'),public.SOURCE.read_text(),sanitize)
-                for row in report['rows']+retained+report['independent_rows']:
+                for row in live['rows']+retained+report['independent_rows']:
                     for command in ['classic','smart']:
                         error,raw,metadata=public.mac_render(binary,directory,row,command,probe.ENV);expected=row['results'][command]
                         self.assertEqual(error,expected['error']);self.assertEqual(public.sha(raw),expected['raw_sha256']);self.assertEqual(metadata,expected['metadata']);replays+=1
@@ -46,7 +46,7 @@ class SizeTopologyTests(unittest.TestCase):
         print('SIZE_TOPOLOGY_PUBLIC',replays,'NATIVE',native_count,flush=True)
 
     def test_original_natural_owned_fields(self):
-        report=current.capture();worker=Path(os.environ['RADIAL_WINDOWS_WORKER']);self.assertEqual(public.sha(worker.read_bytes()),report['window_worker_sha256'])
+        report=json.loads((ROOT/'reports/radialblur_size_topology_public_20261002.json').read_text());live=current.capture();worker=Path(os.environ['RADIAL_WINDOWS_WORKER']);self.assertEqual(public.sha(worker.read_bytes()),report['window_worker_sha256'])
         with tempfile.TemporaryDirectory(prefix='radial_size_topology_planes_') as name:
             results=probe.natural(worker,Path(name),[r['case'] for r in report['natural_witnesses']],public.SOURCE.read_text())
             self.assertEqual(len(results),6)
@@ -57,7 +57,8 @@ class SizeTopologyTests(unittest.TestCase):
     def test_original_pf32_common_caller_and_production_trait(self):
         leaf=importlib.import_module('probe_radialblur_zoom_float_writer_20261002')
         report=json.loads((ROOT/'reports/radialblur_zoom_float_writer_20261002.json').read_text())
-        self.assertEqual(report['source_sha256'],public.sha(public.SOURCE.read_bytes()))
+        self.assertEqual(report['source_sha256'],json.loads((ROOT/'reports/radialblur_size_topology_public_20261002.json').read_text())['source_sha256'])
+        current.capture()
         self.assertEqual(report['header_sha256'],public.sha(public.SOURCE.with_suffix('.h').read_bytes()))
         self.assertEqual(report['aex_sha256'],public.sha(public.initial.AEX.read_bytes()))
         for path,expected in report['dependencies_sha256'].items():

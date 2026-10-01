@@ -4,7 +4,7 @@ from pathlib import Path
 
 import probe_radialblur_public_aligned_20261001 as public
 
-PATH = public.ROOT/'reports/radialblur_size_topology_public_20261002.json'
+PATH = public.ROOT/'reports/radialblur_size_enabled_public_20261002.json'
 
 
 def capture():

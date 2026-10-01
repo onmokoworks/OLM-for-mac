@@ -2048,6 +2048,65 @@ Sizeの他の合法値・fractional設定・任意geometry/入力、scalar fade1
 RCPPS/ISA/一般UCRT、mask末尾allocator、Rotation追加半径行、native両AE/UI/保存/ROI/downsampleと
 全10本完全互換は未完。次は残る合法Size・複合設定の最初の差を同じownerから測る。Goalはactive。
 
+## RB-SIZE-RANGE-ENABLED-035 — 合法Size値域、合成と微小値の有効判定を復元
+
+前回ea3a16c5の一般領域factor・Zoom最大alpha/caller writerはPush済み。
+固定Size1/25/100だけで完全互換とは扱わず、元builderの合法0–100と複合設定を測る。
+元AEX、固定/controlled worker、元SDK、installed bundleは保持する。
+
+FACT: baselineのSize列挙制限と非zero Size時のFade/Inner/Offset/Noise拒否には、
+元の一般処理に対応する根拠がなかった。有限0–100へ受入を広げ、既存の領域factorへ接続。
+元はNoiseとSizeのfactorを乗算し、FadeにはNoiseを混ぜていないSize factorを渡す。
+候補595553088ef7b2baef0e4a2960b17d263c0eb3cb741be361499ab21b2d6205e7で、
+整数Size1–100、小数とSize/Noise/Fade/Seed/楕円の独立560条件が全exact（旧542拒否）。
+694公開条件と独立575条件も保持し、7316公開再生が一致。size_range_publicはこの中間epochを
+保持する。本番へ最終採用したsourceとは区別し、後のhashへ書き換えない。
+
+FACT: Size=0近傍を追加した36条件では、中間候補に24差分を得た。
+元8851はgetterのFLOAT32をloadし、885a MULSSで0.01fを乗算、886eで+40へ保存する。
+8873 CVTPS2PDと8876 COMISDはDOUBLE 0.0001と比較し、887e SETA/8881が+44のenabledを保存。
+817f/8183はこのflagで8930領域スキャナの有無を決め、disabledの822b–8248は1.0fで埋める。
+UI値が単に非zeroなら有効という旧判定を、FLOAT32丸め・乗算→DOUBLE比較へ復元した。
+0.0099999997764825821はdisabled、次のFLOAT32 0.010000000707805157はenabled。
+両者の中間DOUBLEとその隣接DOUBLEも測り、getterのtie roundingを保持する。
+ゼロ、subnormal、閾値前後の20値を元8851–8884へimport-freeで直接渡し、guardを保った
+正規化語とflagを実SDK O2/strict sanitizer40回で全bit一致確認した。
+
+本番最終sourceは231239e0002bfb53c19bfa709f78a9109dd9b4880401f3cb0041ad471d2beec4。
+要求されたSize値は保持したまま、disabled時は領域factorを1にし、Fade用Size係数と
+Zoom zero-seed/noise接続、Rotation Fade prepassの有効判定へ同じflag規則を渡す。
+Zoom/Rotation、opaque/diagonal、3深度、両FadeとNoise Type1/Seed2・Type2の独立720条件が
+全exact。中間候補の381差分を解消し、拒否0。従来694＋独立575＋新しい560を保持し、
+候補10196公開再生が一致した。本番テストでも560＋720を元AEXから再取得し、
+7316＋2880公開再生をO2/strict sanitizerのClassic/Smartで全exact確認した。
+
+disabledのempty/opaque/mixed_edges/two_floating_runs、7×5の20 mapを元自然ownerで観測。
+8930 watchは全件未到達、6aa0のwork+44は0、+88のfactor700語は全て1.0f。
+実SDKのtyped helper120回も全語一致した。初回のhelper試験は中間DOUBLEの文字列を
+strtofへ直接渡し、getterのDOUBLE→FLOAT32を省略したため1 mapで不一致になった。
+この比較adapterをgetter値の先行materializationへ訂正し、全20 mapを新規再測定した。
+production public720条件の経路はこの省略を含まない。入力値別の数値補正は加えていない。
+
+自然Size37.5のZoom3画像の元所有field1641600語と複合Zoom/Rotation2画像925499語は一致。
+別のInner Fade19 diagonalには、既知のlength19/index17のcontrolled expf 1語差から
+normalized27語の差が残る。private host-exp counterfactualなら全fieldが一致するが、
+Windows UCRTの証明にはならないため本番のscalar policyは変えない。最終rawは一致する。
+旧topologyの自然6画像2479347語も本番で保持。activeな小数Size12 map/420語・SDK72回、
+元PF32 caller18/SDK36回を再検証した。
+
+新6 testと既存32 unittest/7 generic gate（ROIの1 testはgate経由）はPASS。履歴sourceのbindingを保持しながら、
+本番5076 topology、3956 Zoom Fade、400 Outer Fadeの公開再生と元264/302条件を再確認。
+Gaussian60000 exp/30長さ、PF8 quantizer2196、Angle/Offset352、Noise grid96、
+Rotation sampler72を保持。実SDK arm64/x86_64 O2 buildも成功し、build前後のsource/headerを
+照合。元AEX・3 worker・controlled parent440 source・SDK90入力は不変、installedは変更しない。
+最初のSize range probeはsource_start変数のshadowingで最終assertだけ失敗したため、
+V2で全取得・再生をやり直して記録した。実sourceが途中変更されたという意味ではない。
+
+legal Sizeの有限witnessと復元した一般分岐を、全入力exactとは扱わない。
+scalar Fade3語・Windows RCPPS/ISA/一般UCRT、allocator末尾、Rotation追加半径行、
+他のQuality/Noise/Layer/Brightness、任意geometry/入力と複合設定、native両AE/UI/保存/
+ROI/downsample、全10本完全互換は未完。次は未対応の合法control値域・分岐を測る。Goalはactive。
+
 ## 次の順序
 
 1. Smoother2のHDR/Gamma合成と色境界の今回の有限集合は検証済み。公開builderのLUT構築とnative依存先を分け、未測定scan長・任意float・独立paletteの最初の差を復元する。

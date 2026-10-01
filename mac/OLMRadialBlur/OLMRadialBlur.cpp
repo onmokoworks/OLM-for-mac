@@ -903,13 +903,7 @@ static bool IsGenericBaselineControlProfile(const OLMRadialBlurInfo &info)
 		info.angle_deg >= -360.0 && info.angle_deg <= 360.0 &&
 		std::isfinite(info.quality) && info.quality >= 1.0 && info.quality <= 5.0 &&
 		info.brightness_gain == 1.0 &&
-		(info.size_variation == 0.0 || info.size_variation == 1.0 ||
-		 info.size_variation == 25.0 || info.size_variation == 100.0) &&
-		(info.size_variation == 0.0 ||
-		 (info.noise_variation == 0.0 && info.noise_type == 1 &&
-		  info.inner_strength == 0 && info.outer_edge_fade == 0 && info.inner_edge_fade == 0 &&
-		  info.outer_offset_mode == 1 && info.outer_offset == 0 &&
-		  info.inner_offset_mode == 1 && info.inner_offset == 0)) &&
+		(std::isfinite(info.size_variation) && info.size_variation >= 0.0 && info.size_variation <= 100.0) &&
 		info.noise_layer == 0 && IsGenericProceduralNoiseProfile(info);
 }
 
@@ -923,7 +917,7 @@ static bool IsGenericSizeNoiseControlProfile(const OLMRadialBlurInfo &info)
 		info.inner_offset_mode == 1 && info.inner_offset == 0 &&
 		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
 		info.quality == 5.0 && info.brightness_gain == 1.0 &&
-		(info.size_variation == 25.0 || info.size_variation == 100.0) &&
+		(std::isfinite(info.size_variation) && info.size_variation > 0.0 && info.size_variation <= 100.0) &&
 		(info.noise_variation == 25.0 || info.noise_variation == 100.0) &&
 		(info.noise_type == 1 || info.noise_type == 2) && info.noise_layer == 0 &&
 		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0;
@@ -1584,6 +1578,13 @@ struct RadialZoomPixelTraits<PF_PixelFloat> {
 	}
 };
 
+// Original 885a MULSS, 8873 CVTPS2PD and 8876 COMISD set this flag.
+static bool RadialSizeVariationEnabled(PF_FpLong percentage)
+{
+    const float normalized = RadialF32Mul((float)percentage, 0.01f);
+    return (double)normalized > 0.0001;
+}
+
 template <typename PixelT>
 static bool BuildRadialSizeFactorPlaneAEX(
 	const PF_EffectWorld *input,
@@ -1599,6 +1600,13 @@ static bool BuildRadialSizeFactorPlaneAEX(
 	const A_long w = input->width;
 	const A_long h = input->height;
 	const size_t count = (size_t)w * h;
+    if (std::isfinite(size_variation_percent) && size_variation_percent >= 0.0f &&
+        !RadialSizeVariationEnabled(size_variation_percent)) {
+        factor_plane->assign(count + 1, 1.0f);
+        factor_plane->back() = 0.0f;
+        component_areas->clear();
+        return true;
+    }
 	std::vector<A_u_char> mask(count, 0);
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
@@ -3059,6 +3067,8 @@ static PF_Err RenderZoomTyped(
 	std::vector<float> span_plane;
 	std::vector<float> source_factor_with_guard;
 	std::vector<float> fade_factor_with_guard;
+	const bool use_generic_size_fade = use_generic_baseline && RadialSizeVariationEnabled(info.size_variation) &&
+		(info.outer_edge_fade != 0 || info.inner_edge_fade != 0);
 	std::vector<float> fade_factor_plane;
 	std::vector<float> source_scalar_plane;
 	if (use_aex_outer_only) {
@@ -3081,7 +3091,7 @@ static PF_Err RenderZoomTyped(
 			(source_components_1_4_9 || (use_generic_baseline && source_general_topology) ||
 			 use_generic_size_noise)) {
 			source_factor_with_guard = component_size_factor;
-			if (use_aex_typed_zoom_any_size_edge_noise_components_32x18) {
+			if (use_generic_size_fade || use_aex_typed_zoom_any_size_edge_noise_components_32x18) {
 				fade_factor_with_guard = component_size_factor;
 				fade_factor_plane.resize((size_t)angular_count * radius_count);
 			}
@@ -3122,7 +3132,7 @@ static PF_Err RenderZoomTyped(
 					const float mixed =
 						RadialF32Add(RadialF32Mul(nv, noise), RadialF32Sub(1.0f, nv));
 					source_factor_with_guard[source_cell] =
-						(use_generic_size_noise ||
+						((use_generic_baseline && info.size_variation != 0.0) || use_generic_size_noise ||
 						 (use_aex_typed_zoom_dual_size_components_32x18 && info.noise_variation != 0.0) ||
 						 use_aex_typed_zoom_size_noise_components_32x18 ||
 						 use_aex_typed_zoom_any_size_edge_noise_components_32x18)
@@ -3173,7 +3183,7 @@ static PF_Err RenderZoomTyped(
 							? SampleScalarAEXNoRepeat(source_factor_with_guard, w, h, sx, sy)
 							: SampleScalarAEXRepeat(source_factor_with_guard, w, h, sx, sy));
 				source_scalar_plane[(size_t)ai * radius_count + ri] = sampled.rgba[3];
-				if (use_aex_typed_zoom_any_size_edge_noise_components_32x18) {
+				if (use_generic_size_fade || use_aex_typed_zoom_any_size_edge_noise_components_32x18) {
 					fade_factor_plane[(size_t)ai * radius_count + ri] =
 						SampleScalarAEXRepeat(fade_factor_with_guard, w, h, sx, sy);
 				}
@@ -3259,11 +3269,11 @@ static PF_Err RenderZoomTyped(
 			use_aex_zoom_inner ? info.inner_strength : 0,
 			outer_fade_span > 0 ? &outer_fade_weights : nullptr, outer_fade_span,
 			inner_fade_span > 0 ? &inner_fade_weights : nullptr, inner_fade_span,
-			info.noise_variation != 0.0 && info.size_variation == 0.0,
-			(use_aex_typed_zoom_dual_size_components_32x18 ||
+			info.noise_variation != 0.0 && !RadialSizeVariationEnabled(info.size_variation),
+			(use_generic_size_fade || use_aex_typed_zoom_dual_size_components_32x18 ||
 			 use_aex_typed_zoom_size_edge_components_32x18 ||
 			 use_aex_typed_zoom_any_size_edge_noise_components_32x18),
-			use_aex_typed_zoom_any_size_edge_noise_components_32x18 ? &fade_factor_plane : nullptr);
+			(use_generic_size_fade || use_aex_typed_zoom_any_size_edge_noise_components_32x18) ? &fade_factor_plane : nullptr);
 	} else {
 		blurred = BuildZoomBlurredPolar(polar, info, debug, &use_fft_convolution);
 	}
@@ -4333,6 +4343,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	std::vector<float> rotation_source_scalar((size_t)radius_count * angular_count, 1.0f);
 	std::vector<float> rotation_fade_factor((size_t)radius_count * angular_count, 1.0f);
 	std::vector<float> rotation_scalar_source_with_guard((size_t)w * h + 1, 1.0f);
+	const bool use_generic_size_fade = use_generic_baseline && RadialSizeVariationEnabled(info.size_variation) &&
+		(info.outer_edge_fade != 0 || info.inner_edge_fade != 0);
 	std::vector<float> rotation_fade_source_with_guard;
 	rotation_scalar_source_with_guard.back() = 0.0f;
 	if (((use_generic_baseline && info.size_variation != 0.0) || use_generic_size_noise ||
@@ -4346,7 +4358,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		(source_components_1_4_9 || (use_generic_baseline && source_general_topology) ||
 		 use_generic_size_noise)) {
 		rotation_scalar_source_with_guard = component_size_factor;
-		if (use_aex_typed_rotation_any_size_edge_noise_components_32x18) {
+		if (use_generic_size_fade || use_aex_typed_rotation_any_size_edge_noise_components_32x18) {
 			rotation_fade_source_with_guard = component_size_factor;
 		}
 	}
@@ -4403,7 +4415,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				const float mixed =
 					RadialF32Add(RadialF32Mul(nv, noise), RadialF32Sub(1.0f, nv));
 				rotation_scalar_source_with_guard[source_cell] =
-					(use_generic_size_noise || use_aex_typed_rotation_dual_size_noise_offset_components_32x18 ||
+					((use_generic_baseline && info.size_variation != 0.0) || use_generic_size_noise || use_aex_typed_rotation_dual_size_noise_offset_components_32x18 ||
 					 (use_aex_typed_rotation_dual_strength_32x18 && info.size_variation != 0.0 &&
 					  info.noise_variation != 0.0) ||
 					 use_aex_typed_rotation_size_noise_components_32x18 ||
@@ -4461,7 +4473,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 						: (rotation_quality_repeat_noise_tuple
 							? SampleScalarAEXNoRepeat(rotation_scalar_source_with_guard, w, h, sx, sy)
 							: SampleScalarAEXRepeat(rotation_scalar_source_with_guard, w, h, sx, sy));
-				if (use_aex_typed_rotation_any_size_edge_noise_components_32x18) {
+				if (use_generic_size_fade || use_aex_typed_rotation_any_size_edge_noise_components_32x18) {
 					rotation_fade_factor[cell] = SampleScalarAEXRepeat(
 						rotation_fade_source_with_guard, w, h, sx, sy);
 				}
@@ -4513,8 +4525,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				// FUN_180002780 receives worker +0x14 (sampled size factor), not
 				// +0x10 (noise-composed scatter span).  The admitted opaque/SV0
 				// intersection fixtures have an exact size factor of one.
-				const float fade_factor = info.size_variation != 0.0
-					? (use_aex_typed_rotation_any_size_edge_noise_components_32x18
+				const float fade_factor = RadialSizeVariationEnabled(info.size_variation)
+					? ((use_generic_size_fade || use_aex_typed_rotation_any_size_edge_noise_components_32x18)
 						? rotation_fade_factor[cell] : rotation_source_scalar[cell]) : 1.0f;
 				const float inverse_fade_factor = RadialF32Div(1.0f, fade_factor);
 				const A_long effective_outer_fade_span = (A_long)RadialF32Mul(
