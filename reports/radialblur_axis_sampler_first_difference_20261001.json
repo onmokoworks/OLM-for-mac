@@ -1,0 +1,191 @@
+{
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "call_occurrence": 86,
+  "case": {
+    "depth": 32,
+    "family": 1,
+    "geometry": [
+      17,
+      11
+    ],
+    "input_sha256": "f30c3b8966984461ffbf42e708c22be0326034921dad53370678f070869a4434",
+    "matrix": "topology",
+    "parameters": [
+      {
+        "kind": "u",
+        "slot": 1,
+        "value": 1
+      },
+      {
+        "kind": "p",
+        "slot": 2,
+        "value": [
+          8,
+          5
+        ]
+      },
+      {
+        "kind": "i",
+        "slot": 4,
+        "value": 4
+      },
+      {
+        "kind": "u",
+        "slot": 5,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 7,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 0
+      },
+      {
+        "kind": "u",
+        "slot": 11,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 12,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 13,
+        "value": 0
+      },
+      {
+        "kind": "b",
+        "slot": 15,
+        "value": 1
+      },
+      {
+        "kind": "s",
+        "slot": 17,
+        "value": 1
+      },
+      {
+        "kind": "a",
+        "slot": 18,
+        "value": 0
+      },
+      {
+        "kind": "s",
+        "slot": 20,
+        "value": 5
+      },
+      {
+        "kind": "s",
+        "slot": 21,
+        "value": 1
+      },
+      {
+        "kind": "s",
+        "slot": 22,
+        "value": 0
+      },
+      {
+        "kind": "s",
+        "slot": 24,
+        "value": 0
+      },
+      {
+        "kind": "u",
+        "slot": 25,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 27,
+        "value": 1
+      },
+      {
+        "kind": "a",
+        "slot": 28,
+        "value": 0
+      },
+      {
+        "kind": "s",
+        "slot": 29,
+        "value": 10
+      }
+    ],
+    "pattern": "opaque",
+    "row_index": 114,
+    "state": "neutral"
+  },
+  "claims_not_made": [
+    "Only the captured scalar axis is bound to retained native Windows evidence",
+    "Controlled public render is not native Windows AE",
+    "No private trace addresses, raw frames, PNGs or original AEX published"
+  ],
+  "corrected_trace_and_mac_full_raw_exact": true,
+  "corrected_trace_matches_typed_resident": true,
+  "dependencies_sha256": {
+    "mac/OLMRadialBlur/OLMRadialBlur.cpp": "63eb0e3b02d7d299dcd6ba3e73e4d616edece1aec2e8245f84cec785072d0198",
+    "reports/radialblur_axis_reference_public_20261001.json": "33aee429324e9af178d84a823d1778da33b6bb18174dae9246babf3f66d6ec06",
+    "tools/emulation/probe_radialblur_axis_sampler_20261001.py": "40ff5f076f531cb44bcf249a043f763a6191f658269b16b75ec89685ed9a429f",
+    "tools/emulation/probe_radialblur_public_aligned_20261001.py": "002e24e68da244655ac800e902ef87543be36b0fcfb74864efa27e132bee633f",
+    "tools/emulation/probe_radialblur_topology_20261001.py": "50992ac32fdee5313ab15d3c78ca9199d19b6103dd1c4f57923b194dd32fe8f5",
+    "tools/emulation/radialblur_topology_effectmain_harness_20261001.cpp": "079dfaa39b055c34e4bd9422c5382b29e2eaf6c40929ea7b80a7f232fd922a41"
+  },
+  "mac_metadata": {
+    "angle": 0.0,
+    "callbacks": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1
+    ],
+    "inner_edge": 0,
+    "noise_offset": 0,
+    "outer_edge": 0
+  },
+  "mac_raw_sha256": "3de3223f730da49aad23ad76dab9404e6ef48a2e679a217b80bd4d1650a2c856",
+  "mac_sample_rgba_f32_le_hex": "e60ba73ef6b24e3f4df0ef3e0000803f",
+  "parent_worker_sha256": "44677dbd999e60fc976ac7604710fd3b5a8e448f298ce73a27acf2289c88cd61",
+  "public_coordinate": [
+    0,
+    5
+  ],
+  "relative_coordinate": [
+    -8,
+    0
+  ],
+  "schema": "radialblur.axis-sampler-first-difference/1",
+  "source_sha256": "63eb0e3b02d7d299dcd6ba3e73e4d616edece1aec2e8245f84cec785072d0198",
+  "traces": {
+    "corrected": {
+      "angle_f32_le_hex": "db0f4940",
+      "guards_intact": true,
+      "local_trace_sha256": "a9828d0d98363978be13ffc9aa1fbfb748a9dc5d024d896e776c22bbf0d158f5",
+      "radius_f32_le_hex": "00000041",
+      "raw_sha256": "3de3223f730da49aad23ad76dab9404e6ef48a2e679a217b80bd4d1650a2c856",
+      "sample_rgba_f32_le_hex": "e60ba73ef6b24e3f4df0ef3e0000803f",
+      "unsupported_suite_calls": []
+    },
+    "parent": {
+      "angle_f32_le_hex": "da0f4940",
+      "guards_intact": true,
+      "local_trace_sha256": "bf7a2df624476dbcc0e27f2a1b08aaf57088a1125127060c9f4846244f87866a",
+      "radius_f32_le_hex": "00000041",
+      "raw_sha256": "f2832217a8feb67c2b798a136ec51cb13d03d236bdd0a3a9e68765dd28934aa6",
+      "sample_rgba_f32_le_hex": "e90ba73efab24e3f55f0ef3e0000803f",
+      "unsupported_suite_calls": []
+    }
+  },
+  "worker_sha256": "a47872674412dfd8f51052c678405cade701a5c80a5062b6038199dd76fd9c6b"
+}

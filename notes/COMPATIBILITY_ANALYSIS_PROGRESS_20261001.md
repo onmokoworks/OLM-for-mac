@@ -1457,11 +1457,54 @@ budget・SizeNoise EffectMain・ROIの6回帰がPASS。arm64/x86_64 O2実SDK bui
 Noise OffsetのFLOAT32化、Rotation/Zoom PF32・一般topology、Size25の面積制限、native両AE/
 UCRT、installed、通常UI/保存、ROI/downsample、全10本の完全互換は未完。Goalはactive。
 
+## RB-REFERENCE-AXIS-023 — 最初のZoom sampler差は比較workerの数学関数
+
+前回のstatus確認では保存Windows scalar記録の正ゼロ/負x軸がMacと一致し、次の参照修正を
+決める証拠が得られた。今回はその境界だけを変更したcontrolled workerを別コピーでbuild。
+元のtyped source/worker、frozen workerとAEX、本番Mac sourceは変更しない。
+
+FACT: 自然公開Zoom、17×11 opaque、PF32、Center(8,5)、neutralの画素(0,5)で、a850の
+radiusは両者8（0x41000000）、angleは参照0x40490fda、Mac0x40490fdbだった。保存済み
+Windows UCRT 10.0.26100.8875のatan2f(+0,-8)は0x40490fdb。native_rows全577行の既知hash
+52bf76720eef963c77db0a9325f3902bbc9986ad9ce853930ca6f7ad0854d2bdを確認した。元return ZIPは
+現在のshareに不在で、新しいWindows実行・原ZIPの再検証を行ったという主張はしない。
+
+保存576 atan2f組を動的Rust host関数と比較し、host FLOAT32は556組、double atan2→FLOAT32
+は576組で保存Windows scalar値と一致した。正ゼロ/負x軸の16組は全てhost0x40490fda、
+Windows0x40490fdb。controlled importはy bits=0かつ有限x<0のときnearest FLOAT32 πを返す
+数学上の軸規則へ変更した。xの固定key表や画素座標の補正を使わない。それ以外560組は
+旧host関数を保持し、4組の非軸差も消したとは扱わない。負ゼロ・非有限値も変更しない。
+INFERENCE: この軸規則は有限の負xへ一般化できるが、任意引数のWindows UCRT実装や
+本番Macのdouble-cast全入力一致を証明したものではない。
+
+FACT: 同じ自然公開AEX traceの86回目でangleが0x40490fdbへ変わり、9d80のnormalized RGBA
+sampleもMac画素と一致した。旧controlled全raw hashはf2832217a8feb67c2b798a136ec51cb13d03d236bdd0a3a9e68765dd28934aa6、新参照とMacは3de3223f730da49aad23ad76dab9404e6ef48a2e679a217b80bd4d1650a2c856。PNG traceのraw hashは同じ設定のtyped resident出力と一致。
+この入力の差は移植kernelの修正対象ではなく、比較器・参照の問題へ分類する。private
+trace/context、PNG、raw pixelsは公開せず、選んだscalar bitsとhashを保持する。
+
+FACT: getters30＋topology252＋typed28の310条件を旧参照と新参照で計620回再取得した。
+旧参照の310 raw hashは保存済み全行と一致。新参照では97条件のrawが変わり、26条件が
+Macと追加でexactになった。既存exactを失った条件は0。gettersは5→7 exact、19→17差分、
+6拒否。topologyは52→76 exact、116→92差分、84拒否。typed28は11 exact・13差分・4拒否
+のまま。本番Macの全310行のraw/errorは修正前記録から変わっていない。新exactはZoomの
+PF16/PF32で、独立geometryと島/ring/diagonal/opaque、neutral/Size100+Noiseも含む。
+本番両cmdのO2/ASan/UBSan計1240再生で結果が一致。strict halt設定のsanitizer両cmdも
+追加620回再生し、原因と参照のbindingを検査する4本のunittestがPASSした。
+
+reports/radialblur_axis_reference_build_20261001.jsonに親不変とpatch/build identity、
+radialblur_atan2_axis_scalar_20261001.jsonに保存Windowsとの576 scalar比較、
+radialblur_axis_reference_public_20261001.jsonに310 public行、
+radialblur_axis_sampler_first_difference_20261001.jsonに最初の境界、
+radialblur_axis_reference_validation_20261001.jsonに実行と現行bindingを保存する。
+参照修正を本番修正として数えない。OffsetのFLOAT32化、Rotation・残るZoom field/sampler、
+Size25制限、一般UCRT/native両AE、installed、UI保存、ROI/downsample、全10本完全互換は
+未完。Goalはactive。
+
 ## 次の順序
 
 1. Smoother2のHDR/Gamma合成と色境界の今回の有限集合は検証済み。公開builderのLUT構築とnative依存先を分け、未測定scan長・任意float・独立paletteの最初の差を復元する。
 2. ColorKeyの未検証geometry/任意float/paletteとThin/Blur合成を拡張する。今回の境界・overflow比較を全入力の証明とは扱わず、固定workerとcontrolled Lab94参照を分け、native Windows UCRTとの比較を残す。
 3. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
-4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurは公開typed Angleの読み取り・整数化を復元した。次はOffsetのFLOAT32読取りと自然public field/samplerの最初の差を閉じ、Size25の面積制限・端/穴/島へ進む。その後KiraKira一般入力を比較する。
+4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはtyped Angleの読み取り・整数化と比較workerの正ゼロ/負x atan2f軸を復元し、旧参照由来の26不一致を切り分けた。次はOffsetのFLOAT32読取りと残る自然public field/samplerの最初の差を閉じ、Size25の面積制限・端/穴/島へ進む。その後KiraKira一般入力を比較する。
 
 既存の作業ツリー変更は今回のcommitに混ぜない。第三者AEXとnative raw出力をPushしない。

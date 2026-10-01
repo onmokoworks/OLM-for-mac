@@ -1,0 +1,95 @@
+{
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "aex_unchanged": true,
+  "claims_not_made": [
+    "No new Windows run or original return ZIP verification",
+    "No production numerical fix or general UCRT equivalence",
+    "No installed/native AE, all-input/settings/UI/save/ROI/downsample, or all-ten completion"
+  ],
+  "controlled_aex_reacquisition_count": 620,
+  "dependencies_sha256": {
+    "docs/COMPATIBILITY_ANALYSIS_PLAN_JA.md": "2b04c9b9ca5bd2fa0426bd5fab48686cb6f11eab9a70eb2344d5245c9160c269",
+    "notes/COMPATIBILITY_ANALYSIS_PROGRESS_20261001.md": "34c756157d2372e538367bb4ead54b77f3935bbbd55e9911aab62e8a3d7c823d",
+    "reports/radialblur_atan2_axis_scalar_20261001.json": "3ea59175a2400c83be820604df8f580325b1a39cb14371e5b04ae830454673a7",
+    "reports/radialblur_axis_reference_build_20261001.json": "57017d282f8922d61a54b4aec2e2c929874a7869a743cf5f22e973b14dfcd0a6",
+    "reports/radialblur_axis_reference_public_20261001.json": "33aee429324e9af178d84a823d1778da33b6bb18174dae9246babf3f66d6ec06",
+    "reports/radialblur_axis_sampler_first_difference_20261001.json": "f0cef2d0391d73e321caec55535f00416e64d4a2da064e237fe3aafa7db4538c",
+    "tests/test_radialblur_axis_reference_20261001.py": "a59e815e617637f7965834f06fbef037457d2bc439b1550791ada4338825ffe1",
+    "tools/emulation/aexcompat_radial_atan2_axis_20261001.patch": "2f40fd4b920a75c6f083c346131400b4204538cde76564343c5d50c8feb2f59e",
+    "tools/emulation/build_radialblur_axis_reference_20261001.py": "9662a7ae56e88b0025915191cacc587e7b1f5814153fdbe765e28e1723ac0bf3",
+    "tools/emulation/probe_radialblur_axis_reference_20261001.py": "475310a95b876892a664f525fe5498191f1182e63ccd9fceb41943ee291bc8af",
+    "tools/emulation/probe_radialblur_axis_sampler_20261001.py": "40ff5f076f531cb44bcf249a043f763a6191f658269b16b75ec89685ed9a429f",
+    "tools/emulation/radialblur_atan2_axis_harness_20261001.rs": "0521f4a5fab3ab176e119d3e60c3389d05355e33e62f15b67e6c348ac2238d8c"
+  },
+  "frozen_worker_sha256": "0eb2f7705598f7b5f53563b9d920274ba094c835ff3dbaaf5f6fb214ec0cfd61",
+  "frozen_worker_unchanged": true,
+  "matrix_summaries": {
+    "getters": {
+      "became_exact": 2,
+      "both_commands_exact": 7,
+      "case_count": 30,
+      "different": 17,
+      "lost_exact": 0,
+      "mac_rejected": 6,
+      "parent_both_commands_exact": 5,
+      "parent_reacquired_hash_exact": 30,
+      "reference_raw_changed": 8
+    },
+    "topology": {
+      "became_exact": 24,
+      "both_commands_exact": 76,
+      "case_count": 252,
+      "different": 92,
+      "lost_exact": 0,
+      "mac_rejected": 84,
+      "parent_both_commands_exact": 52,
+      "parent_reacquired_hash_exact": 252,
+      "reference_raw_changed": 89
+    },
+    "typed": {
+      "became_exact": 0,
+      "both_commands_exact": 11,
+      "case_count": 28,
+      "different": 13,
+      "lost_exact": 0,
+      "mac_rejected": 4,
+      "parent_both_commands_exact": 11,
+      "parent_reacquired_hash_exact": 28,
+      "reference_raw_changed": 0
+    }
+  },
+  "production_source_changed": false,
+  "production_source_matches_HEAD": true,
+  "production_source_sha256": "63eb0e3b02d7d299dcd6ba3e73e4d616edece1aec2e8245f84cec785072d0198",
+  "public_replay_count": 1860,
+  "public_summary": {
+    "became_exact": 26,
+    "both_commands_exact": 94,
+    "case_count": 310,
+    "different": 122,
+    "lost_exact": 0,
+    "mac_rejected": 94,
+    "parent_both_commands_exact": 68,
+    "parent_reacquired_hash_exact": 310,
+    "reference_raw_changed": 97
+  },
+  "scalar_summary": {
+    "corrected_axis_count": 16,
+    "corrected_axis_native_exact": 16,
+    "corrected_reference_exact": 572,
+    "double_cast_exact": 576,
+    "host_f32_exact": 556,
+    "nonaxis_unchanged": 560,
+    "vector_count": 576
+  },
+  "schema": "radialblur.axis-reference-validation/1",
+  "status": "PASS_REFERENCE_RECLASSIFICATION_FULL_COMPATIBILITY_INCOMPLETE",
+  "strict_sanitizer_public_replay_count": 620,
+  "unit_tests": {
+    "command": "python3 -m unittest discover -s tests -p test_radialblur_axis_reference_20261001.py -v",
+    "elapsed_seconds": 47.475,
+    "exit_code": 0,
+    "log_sha256": "788f17ad878f0da438552f84b30cb21634a4fc73549b87950249549791f9c3e5",
+    "tests_run": 4
+  }
+}
