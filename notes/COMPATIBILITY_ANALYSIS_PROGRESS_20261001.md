@@ -929,9 +929,77 @@ commit/Pushしない。公開するのは復元source、独自入力生成器、
 Mac installed、全color/threshold/25 keys/HDR、任意geometry/全状態、ROI/downsample、
 UI/project保存は未完。全10本の完全互換を達成とは扱わず、Goalはactive。
 
+## CK-TYPED-HDR-008 — typed HDRと初期matteの負ゼロを復元
+
+PNG経由の色変換・channel制限を避け、独自ARGB8/uint16/FLOAT32 bytesをresident exported
+Smart ownerへ渡す新しいprobeを作った。設定はslot/type付きv4 payloadを実AEX builderへ
+渡す。Macは同じ全scalar/color recordを実SDK PF_ParamDefへ読み、production EffectMain
+Classic/Smartで取得する。設定漏れ・重複・不正typeをharnessで拒否する。resident APIは
+frameごとのparameter readbackを返さないため、その証拠があるとは主張しない。
+
+初期9×7 mixed-alphaの352条件: SDR、PF16 RGB/alpha/両方のraw高値（最大65535）、PF32
+RGB HDR/負RGB/alpha HDR/負alpha/両方を使用。Keep/Premultiplied/Replaceの4 toggle、
+pixel-local、Thin正負、3方向Blur、Thin+Inside/Outsideを同じbytesで比較。変更前は
+328exact/24差分、公開拒否なし。24差分はPF32 combinedにある負ゼロalphaの符号のみ。
+通常HDRや負の非zero alphaに対するこの集合の出力差ではなかった。
+
+静的事実: float classifier FUN_1800035d0はmatched時にalpha wordをsourceからそのまま
+コピーし、nonmatched時だけ0をstoreする。FUN_180009960の負Thinはmatte alpha!=0を
+条件に消去し、負ゼロを消さない。正Thinはalpha==0かつdistance<=amountでsource RGBAを
+FUN_180011670/115f0でコピーする。Blurはmatte alphaが0でweight!=0の場合だけsource
+alphaを使い、他はmatte alpha*weight。Keep-offはその後のsource-minus-matteである。
+
+Macはdistance seedからzero alphaを外すとき、出力matteのalphaも常に+0へしていた。
+seedのboolとmatteのFLOAT32表現を混同していた。初期matte構築時、元のcolor matchまたは
+正Thinのsource copyがあるzero-alpha pixelはsource alphaを保持する。型がPF32で、matched
+matteを作るThin/復元済みBlurだけに適用する。bool maskやdistanceを変更せず、最終出力の
+符号bitを補正しない。保持した−0へ元のBlur演算と最終減算を適用する。
+
+一時案で初期352条件の両公開cmdが704render exact。O1 ASan/UBSanも704exact。
+別1×1/1×9/9×1/17×15の1408条件を元AEXで取得すると一時案も全exact。本番へ反映後、
+初期352条件を新規native取得して両cmd全exact。同じinput/parameter/native raw hashを保持。
+1760 HDR/符号条件に、下記palette216と既知一致space288を加えた2264 capture rowsを
+O2で両cmd4528render再生。HDR1760とcount25 palette36をsanitizerで3592render再生し、
+合計8120成功renderが全raw hash一致。これは集合間の重複を排除した2264 unique入力の
+主張ではない。範囲外Thin/Blurの48失敗renderは全出力を変えずに拒否した。
+source/padding不変、suite acquire/release各2、world format照会2、color照会2*count、
+Smart17+8*count parameter（25色では217）と1 Layerのcheckout/checkinを確認した。
+
+RGB palette count1/2/4/5/24/25、通常交互key/最後の色だけ有効/重複色、Per Color off/on、
+Threshold0.1、Replace on、Keep off/on、3深度の216条件は変更前から両cmd exact。
+最大countの実builder・public checkoutと末尾color/先頭replacement優先の根拠として保持。
+色数が25まで通ることと全palette/thresholdの一致は区別する。
+
+color space6種×Force Lower Precision3種×Per Component2×Threshold0/0.1×3深度×Keep2の
+432条件も比較した。最初の2実行は216条件目の後、Lab94 scalarが未実装Win64 import
+api-ms-win-crt-math-l1-1-0.dll!atan2fでworker exit1となり、出力oracleを得られなかった。
+失敗を差分として数えず、専用diagnostic runnerで全条件を測定/参照失敗に分離して取得。
+396条件が測定でき、RGB/HSV/YUV/YCrCbの288条件は両cmd exact。Lab76の72とLab94
+Per Componentの36は108出力差分。Lab94 scalarの36は参照import失敗（render_error−40）。
+元Windowsプラグインがその状態を拒否する証拠ではない。別repoのworkerは変更しない。
+
+最初のLab差は第2keyのgreen側であった。既存の単独cell専用Lab76 offset復元は、一般
+inputに適用されていなかった。元comparatorはkeyと比較tripleのa/bへoffsetをin-placeに
+加え、failed keyの比較tripleを次のkeyへ再利用する。Lab76はscalar/per-component、
+Lab94はper-componentでこの状態を持つ。一時案はこの規則とLab76 scalarのFLOAT32
+Euclidean thresholdを一般化し、測定済み396条件のClassic/SmartをO2とASan/UBSanで
+計1584render exactにした（colorkey_lab_mutation_candidate_replay）。これは本番変更では
+ない。color順序/disabled keys/しきい値境界/precision変換/他geometryを追加して検証し、
+旧exactセルの参照経路も監査してから一般化する。Lab94 scalarの依存先不足は別に残す。
+
+本番変更後、Around range13530（30360成功/48 atomic失敗）、Inside/Outside11232
+（29088成功/96 atomic失敗）、Thin公開216、従来公開126＋callback13、generic pairwise
+36＋sanitizer22、pixel-localとROI/tileの回帰がPASS。source/新harness/設定生成器/参照report
+の依存hashはtyped_controls_validationへ記録。旧captureのsource/native hashを付け替えず、
+full generic gate/性能、installed/native AEを再実行したという主張はしない。
+
+全色空間/25色全palette/threshold/HDR/任意float/geometry/設定、native Windows UCRT/AE、
+Mac installed、ROI/downsample、UIとproject保存は未完。Labの復元案と数値差、未実装参照
+関数を別項目として次へ渡す。全10本の完全互換Goalはactive。
+
 ## 次の順序
 
-1. ColorKeyの全color/thresholdとHDRをtyped public ownerで比較し、最初の不一致を分類・復元。
+1. ColorKey Lab76/94のin-place比較状態を色順序・disabled keys・threshold境界・precision変換へ拡張し、本番を一般化。Lab94 scalarのatan2f/fmodf依存先も分離して復元。
 2. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
 3. Smoother2の分類到達は今回の集合で確認済み。色・alpha・scan/weightの状態と
    public owner/native hostの比較は残る。計画に沿いDirectionalBlur Dual等の一般入力も進める。

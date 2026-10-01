@@ -1,0 +1,11 @@
+{
+  "candidate_source_sha256": "68a0538942599de852988c83505dbff9d30ede821d39c73ab4d1f6348d62d94c",
+  "candidate_tool_sha256": "d9f680a01ad0b89ae5a716d23a9b4373bb07975c2a43900b5fea9d423a014f6b",
+  "native_case_report_sha256": "2ebda30bef7323adb549febfb46da4f159954722f22a39cb49478a31c0df6e1c",
+  "schema": "olmcolorkey.signed-zero-candidate-replay/1",
+  "source_sha256": "e29ef41ebbc9aea49ad323dbec0f67f3f31645ace601d5429610918cc18b0d0b",
+  "successful_render_counts": {
+    "o2": 704,
+    "sanitized": 704
+  }
+}
