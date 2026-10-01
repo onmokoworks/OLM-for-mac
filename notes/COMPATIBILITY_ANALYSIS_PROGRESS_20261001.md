@@ -997,9 +997,62 @@ full generic gate/性能、installed/native AEを再実行したという主張�
 Mac installed、ROI/downsample、UIとproject保存は未完。Labの復元案と数値差、未実装参照
 関数を別項目として次へ渡す。全10本の完全互換Goalはactive。
 
+## CK-LAB-009 — Lab76/94成分別の比較状態とFLOAT32境界を一般復元
+
+前ターンの単純in-place offset案を独立入力で拡張した。独自13×3 color stripはblack、
+green、blue、white、gray、redish、cyan、近傍色を含み、alphaは255/128/0/64。PF16は
+各channelをfloor(v*32768/255)で作り、PF32はfloat(v/255)。同じtyped packed bytesを
+公開AEXへ渡し、Macはpadding付き同じ入力を実SDK Classic/Smartへ渡す。
+
+Lab76 scalar/成分別とLab94成分別、Force Lower Precision 1/2/3、3深度、Keep off/on、
+key順序/逆順/単色/先頭無効/途中無効/重複/全無効/25色の末尾だけ有効で432条件。
+Per Color、Premultiplied、Threshold、Replaceも記録した組合せで変えた。これはそれら
+全組合せの直積ではない。変更前の本番は196/432一致、単純offset案は422/432一致。
+残る10条件はLab76成分別の許容幅であり、符号や最終writerの差ではなかった。
+
+別のopaque 1×1 source(44,75,119)とcyan keyを使い、同じ3比較mode×3precision×3深度の
+27族について元AEXの最初のmatchをFLOAT32 bit順で探索した。各探索はmatch/nonmatchを
+観測し、最後のnonmatchと最初のmatchは隣接bitsである。その境界の前後6値ずつ162条件を
+nativeで取得した。変更前本番105/162、単純offset案131/162。Lab76 scalarにも1条件、
+Lab94成分別にも各族の境界1条件が残り、offset復元だけでは一般化できなかった。
+
+FACT: 同じSHA固定AEXの0x1800043a0を読んだ。Lab76はkey/cmpのa/bにそれぞれ
+133.03700256347656f/163.48800659179688fを加え、failed keyのcmpを次へ残す。
+成分別の許容幅はFLOAT32で、L: thresholdL*151.30099487304688f + epsilon*2709.929931640625f、
+a: thresholdA*264.36700439453125f + epsilon*578.7139892578125f、
+b: thresholdB*295.572998046875f + epsilon*414.6759948730469fである。
+scalarはthreshold*424.4352722167969fとepsilon*同倍率を別々にMULSSしてからADDSSする。
+以前の(threshold+epsilon)*倍率は境界で別の結果になる。Lab94の0x180004510成分別は
+同じoffsetを加え、各FLOAT32 threshold+epsilonを先にADDSSしてから各成分倍率をMULSSする。
+Macのdouble thresholdを含む式ではこの境界がずれていた。Lab94 scalarにはこのoffsetを
+適用しない（そのbranchは今回の参照workerでは未測定）。
+
+この演算順とLab76成分別の許容幅を復元した一時案では、独立432＋境界162＋従来396の
+990 capture rowsが両cmd/O2/sanitizerで全exact（3960成功render）。本番へ同じ一般規則を
+反映した。入力色・サイズ・閾値でfixtureを識別して復元を選ぶ分岐を使わず、従来の
+限定Lab76判定をRenderTypedの演算選択から外した。既存限定判定は古いadmission経路の
+ため残す。本番も990行の同じ再生3960renderで全exactだった。
+
+元AEXを全432 space設定で再取得すると、測定できる396は本番両cmd全exact。
+以前の108不一致を解消した。同じ入力/設定/native output hashを全測定行で維持し、
+過去のcapture hashは書き換えていない。Lab94 scalar36は同じatan2f未実装失敗であり、
+Windows側非対応やMac数値一致として数えない。
+
+Thin/Blurへの接続も新規native取得した。1×1、1×9、9×1、17×11、3深度、同3比較mode、
+reverse/先頭無効/25色末尾/重複、異なる成分閾値、記録したKeep/Per Color/Premultiplied/
+Replace/precision、3方向BlurとThin正負の144条件が本番Classic/Smart全exact。
+この144行の再生も両cmd/O2/sanitizerで576render全exact。geometry/設定の全直積を主張しない。
+
+typed HDR/最大25色/既知spaceの従来8120再生と48 atomic失敗も本番変更後PASS。
+従来公開126 outputとcallback control13、generic pixel-local pairwise/一般beta、ROI/tileは
+本番変更後PASS。参照経路は固定local workerと独自PF_ParamDef hostであり、実Windows
+UCRT/AE、Mac installed/UI/保存state、全色/閾値/入力/geometry、Lab94 scalar、
+ROI/downsampleの完了を主張しない。source/report/tool/testのhashをLab validationへ保持し、
+全10本の完全互換Goalはactive。
+
 ## 次の順序
 
-1. ColorKey Lab76/94のin-place比較状態を色順序・disabled keys・threshold境界・precision変換へ拡張し、本番を一般化。Lab94 scalarのatan2f/fmodf依存先も分離して復元。
+1. ColorKey Lab94 scalarのatan2f/fmodf依存先を参照hostとの差として分離し、元comparatorの引数/演算順を復元。Lab76/94成分別は今回の一般復元を保持し、未検証HDR/任意float・thresholdと入力を比較する。
 2. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
 3. Smoother2の分類到達は今回の集合で確認済み。色・alpha・scan/weightの状態と
    public owner/native hostの比較は残る。計画に沿いDirectionalBlur Dual等の一般入力も進める。

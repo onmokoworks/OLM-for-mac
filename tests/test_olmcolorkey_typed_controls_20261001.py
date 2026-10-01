@@ -41,5 +41,5 @@ class TypedControlsTests(unittest.TestCase):
       c={'fixture':{'id':'atomic','width':9,'height':7,'alpha':'mixed','profile':'sdr'},'depth':depth,'parameters':owner.parameters(thin=thin,blur=blur),'label':'atomic'}
       for route in (0,1):
        err,raw=owner.mac_render(exe,temp,c,route,env);self.assertNotEqual(err,0);self.assertEqual(raw,b'');atomic+=1
-  LAST_VALIDATION.update(captured_case_rows_replayed=len(cases),successful_render_counts=counts,atomic_failure_render_count=atomic,source_sha256=owner.sha(owner.SOURCE.read_bytes()),unresolved_lab_counterexamples=108,reference_lab94_import_failures=36)
+  LAST_VALIDATION.update(captured_case_rows_replayed=len(cases),successful_render_counts=counts,atomic_failure_render_count=atomic,source_sha256=owner.sha(owner.SOURCE.read_bytes()),historical_lab_counterexamples=108,reference_lab94_import_failures=36)
 if __name__=='__main__':unittest.main()

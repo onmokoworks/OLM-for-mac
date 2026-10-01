@@ -922,7 +922,8 @@ static bool LabPerComponentHit(const float cmp[3], const float key[3], PF_FpLong
 
 static void Lab76ComparatorMutate(float value[3])
 {
-	// FUN_1800043a0 adds the Lab76 a/b offsets in place before both its
+	// FUN_1800043a0 (Lab76) and the per-component branch of FUN_180004510
+	// (Lab94) add the a/b offsets in place.  Lab76 does so before both its
 	// scalar and per-component predicates.  The pixel callback reuses the
 	// converted comparison triple across the key loop, so a failed key leaves
 	// these additions visible to the next key.  Each converted key is local to
@@ -935,7 +936,8 @@ static bool Lab76ScalarHit(const float cmp[3], const float key[3],
 	                       PF_FpLong threshold, float epsilon)
 {
 	// FUN_1800043a0 evaluates the three squared differences and threshold
-	// scale with scalar FLOAT32 instructions.  Keep the addition order visible
+	// scale with scalar FLOAT32 instructions.  It scales threshold and epsilon
+	// separately before their addition.  Keep the operation order visible
 	// so the Windows comparator remains the arithmetic owner.
 	const float d0 = key[0] - cmp[0];
 	const float d1 = key[1] - cmp[1];
@@ -944,9 +946,9 @@ static bool Lab76ScalarHit(const float cmp[3], const float key[3],
 	distance_squared += d1 * d1;
 	distance_squared += d2 * d2;
 	const float distance = std::sqrt(distance_squared);
-	float limit = (float)threshold;
-	limit += epsilon;
-	limit *= 424.4352722167969f;
+	float limit = (float)threshold * 424.4352722167969f;
+	const float epsilon_limit = epsilon * 424.4352722167969f;
+	limit = epsilon_limit + limit;
 	return distance <= limit;
 }
 
@@ -1809,11 +1811,6 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	} else if (info.force_lower_precision == 2 && key_epsilon < (1.0f / 65536.0f)) {
 		key_epsilon = 1.0f / 65536.0f;
 	}
-	const bool bounded_native_lab76 =
-	    IsBoundedLab76NativeTuple<PixelT>(input, output, info);
-	const bool use_binary_lab76_limits =
-	    (OLMCKPixelTraits<PixelT>::is_16bpc() || OLMCKPixelTraits<PixelT>::is_32bpc()) &&
-	    info.color_space == 3 && info.force_lower_precision == 3;
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
 			const PixelT *inP = PixelAtConst<PixelT>(
@@ -1881,7 +1878,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				} else if (info.color_space == 6) {
 					RGBToPluginYCrCb(key, key);
 				}
-				if (bounded_native_lab76) {
+				if (info.color_space == 3 || (info.color_space == 4 && info.per_component)) {
 					Lab76ComparatorMutate(key);
 					Lab76ComparatorMutate(cmp);
 				}
@@ -1912,9 +1909,15 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						PF_FpLong tr = info.per_color ? info.thresholds_r[i] : info.threshold_r;
 						PF_FpLong tg = info.per_color ? info.thresholds_g[i] : info.threshold_g;
 						PF_FpLong tb = info.per_color ? info.thresholds_b[i] : info.threshold_b;
-						hit = std::fabs(cmp[0] - key[0]) <= (key_epsilon + tr) * comp_scale[0]
-						    && std::fabs(cmp[1] - key[1]) <= (key_epsilon + tg) * comp_scale[1]
-						    && std::fabs(cmp[2] - key[2]) <= (key_epsilon + tb) * comp_scale[2];
+						float limit_l = key_epsilon + (float)tr;
+						float limit_a = key_epsilon + (float)tg;
+						float limit_b = key_epsilon + (float)tb;
+						limit_l *= comp_scale[0];
+						limit_a *= comp_scale[1];
+						limit_b *= comp_scale[2];
+						hit = std::fabs(cmp[0] - key[0]) <= limit_l
+						    && std::fabs(cmp[1] - key[1]) <= limit_a
+						    && std::fabs(cmp[2] - key[2]) <= limit_b;
 					} else {
 						PF_FpLong threshold = info.per_color ? info.thresholds[i] : info.threshold;
 						hit = Lab94Distance(key, cmp) <= (float)((double)(key_epsilon + threshold) * 352.978);
@@ -1937,14 +1940,14 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						float dist = std::sqrt(d0 * d0 + d1 * d1 + d2 * d2);
 						hit = dist <= std::sqrt(3.0f) * (key_epsilon + threshold);
 					}
-				} else if (bounded_native_lab76) {
+				} else if (info.color_space == 3 && !info.per_component) {
 					PF_FpLong threshold = info.per_color ? info.thresholds[i] : info.threshold;
 					hit = Lab76ScalarHit(cmp, key, threshold, key_epsilon);
 				} else if (info.per_component) {
 					PF_FpLong tr = info.per_color ? info.thresholds_r[i] : info.threshold_r;
 					PF_FpLong tg = info.per_color ? info.thresholds_g[i] : info.threshold_g;
 					PF_FpLong tb = info.per_color ? info.thresholds_b[i] : info.threshold_b;
-					if (use_binary_lab76_limits) {
+					if (info.color_space == 3) {
 						hit = LabPerComponentHit(cmp, key, tr, tg, tb, key_epsilon);
 					} else {
 						hit = std::fabs(cmp[0] - key[0]) <= key_epsilon + tr * comp_scale[0]

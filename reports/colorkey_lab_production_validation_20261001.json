@@ -1,0 +1,124 @@
+{
+  "claims_not_made": [
+    "No native Windows UCRT/AE or Mac installed completion",
+    "No all input/color/threshold/precision/geometry/state/HDR completion",
+    "No Lab94 scalar reference or production completion",
+    "No edge-space parameter Cartesian product coverage",
+    "No full generic gate/performance or all RGB Around/Inside/Outside campaigns rerun in this change",
+    "Capture rows and repeated renders are not unique condition counts",
+    "Resident parameter payload is slot/type bound; per-frame parameter readback unavailable",
+    "All 10 plugins full compatibility remains active"
+  ],
+  "dependencies_sha256": {
+    "mac/OLMColorKey/OLMColorKey.cpp": "57efab4e5907e17b56c2654e2d37bba8ed057ff0b3ec281a65c1dadd1138c947",
+    "reports/colorkey_lab_arithmetic_candidate_replay_20261001.json": "5163d60711db56eb31a195edec027c924f06bfd5f09e859e0ef421267609f5df",
+    "reports/colorkey_lab_edge_transfer_20261001.json": "b17bf9eac5ab2ad5f67f726e2704950a7f14b7c1c8fded1d6a3ccf2baa016179",
+    "reports/colorkey_lab_spaces_production_20261001.json": "eff54b4f6cca5db6888e2bef7f7dc82d73ef920895641eaeb4c67059af2c90ad",
+    "reports/colorkey_lab_state_baseline_20261001.json": "b6db74dd3fe4e44ebf34a104be6f0a671115b1561e0dcb48c5152ee95e763d4a",
+    "reports/colorkey_lab_threshold_boundary_20261001.json": "7d99ee3cdaa9bb02d68621eee885b4100fb21a1b84d53d76612fad76fb9a6961",
+    "tests/test_olmcolorkey_generic_pixel_local_beta.py": "8dfd9d71aa164de7c34af052b00e05761ad79ab9f3ac98524e7f2a4e0d746753",
+    "tests/test_olmcolorkey_generic_pixel_local_pairwise.py": "4acfb5fbeb55d86b331665bd7887efb3d838940b08d45f224fad0f1b430e6086",
+    "tests/test_olmcolorkey_generic_roi_tile.py": "dd073d342df4681a894beb0d02df5c3e545298cc935c44e273d1adddce0d4076",
+    "tests/test_olmcolorkey_lab_edge_transfer_20261001.py": "557b903e21615d9fac73620e18a152bc4e7364822777676c2b8a4f7bbdf6a4d8",
+    "tests/test_olmcolorkey_lab_state_boundary_20261001.py": "4dbb3670c6be0845c3d5091bd3a3f278ab0e065c35a66369413017ed50c13ca7",
+    "tests/test_olmcolorkey_public_entries_real_sdk_20260813.py": "73a11c8d969ac12838abff46af2bf4ff00c3bf3a4b50aad0c58a39bf3cf1c75d",
+    "tests/test_olmcolorkey_typed_controls_20261001.py": "9f7171cfddda958be97f0ec2a8ba6386fcc75d8cac03c54dd2bcde3feb7fbcb5",
+    "tools/emulation/colorkey_lab_arithmetic_candidate_20261001.py": "f9f93bada7e11108b0bf8284e3bbced34fc13f126b3eae4ca020d559a0f8a4c5",
+    "tools/emulation/colorkey_lab_mutation_candidate_20261001.py": "6e15d77e67492d4f3be8b96cc9a6aaaf75bd610b91fdf1279551c17466920574",
+    "tools/emulation/colorkey_thin_public_host_20261001.hpp": "eaaf87c7f53b0f1238a9ecce4c4b10476272a95d88634a329f94ebfc8f6bec5d",
+    "tools/emulation/colorkey_typed_controls_harness_20261001.cpp": "a6639f1a657e907ee86518a74ba90c06d20b7543d5f2e735c3473228f3183a66",
+    "tools/emulation/probe_olmcolorkey_lab_edge_transfer_20261001.py": "fa26c316f5d862fc8df587f7780f4cdf00a50e7bb85e76969b5d2606f5ae0176",
+    "tools/emulation/probe_olmcolorkey_lab_state_boundary_20261001.py": "439360da93d3e61c9af8eaf9c87509eedfebe3cd7ca2564f7ddbd9e98236b9a2",
+    "tools/emulation/probe_olmcolorkey_public_entries_real_sdk_20260813.cpp": "8193b267695107b42a8b32751e6fb016a50bb24e121d378159d2604bf4582372",
+    "tools/emulation/probe_olmcolorkey_spaces_diagnostics_20261001.py": "05623e89b77460547f9e63644a060138adaa5f4a6cf935c9e9423f86dfa34da1",
+    "tools/emulation/probe_olmcolorkey_typed_controls_20261001.py": "c89b82a6447440b3c7dd6945b74430dcb4cdf78ed28d6af6e68e0472e205a37e",
+    "tools/emulation/replay_olmcolorkey_lab_arithmetic_20261001.py": "70f9b3ff9f518d0f9e4e9332ffcb4122190c0e79c2c8d1e26ec867d864c52a78"
+  },
+  "generic_regressions": {
+    "full_gate_and_performance_rerun": false,
+    "test_files": [
+      {
+        "exit_code": 0,
+        "path": "tests/test_olmcolorkey_generic_pixel_local_pairwise.py",
+        "runner": "scripts/run_olm_generic_beta_gate.py --run-test-file"
+      },
+      {
+        "exit_code": 0,
+        "path": "tests/test_olmcolorkey_generic_pixel_local_beta.py",
+        "runner": "scripts/run_olm_generic_beta_gate.py --run-test-file"
+      },
+      {
+        "exit_code": 0,
+        "path": "tests/test_olmcolorkey_generic_roi_tile.py",
+        "runner": "scripts/run_olm_generic_beta_gate.py --run-test-file"
+      }
+    ]
+  },
+  "lab_edge_transfer_replay": {
+    "all_exact": true,
+    "asan_ubsan_render_count": 288,
+    "captured_case_rows": 144,
+    "elapsed_seconds": 30.289,
+    "o2_render_count": 288,
+    "test_exit_code": 0,
+    "test_file": "tests/test_olmcolorkey_lab_edge_transfer_20261001.py"
+  },
+  "lab_replay": {
+    "all_exact": true,
+    "asan_ubsan_render_count": 1980,
+    "captured_case_rows": 990,
+    "elapsed_seconds": 139.708,
+    "o2_render_count": 1980,
+    "test_exit_code": 0,
+    "test_file": "tests/test_olmcolorkey_lab_state_boundary_20261001.py"
+  },
+  "native_arithmetic_facts": {
+    "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+    "lab76_and_lab94_component_state": "In-place a/b offsets retained in comparison triple across failed enabled keys; disabled keys skip comparison",
+    "lab76_comparator_rva": "0x43a0",
+    "lab76_component_limits": [
+      "FLOAT32 thresholdL*151.30099487304688f + epsilon*2709.929931640625f",
+      "FLOAT32 thresholdA*264.36700439453125f + epsilon*578.7139892578125f",
+      "FLOAT32 thresholdB*295.572998046875f + epsilon*414.6759948730469f"
+    ],
+    "lab76_scalar_threshold_order": "FLOAT32 threshold*424.4352722167969f and epsilon*same scale evaluated separately, then sum",
+    "lab94_comparator_rva": "0x4510",
+    "lab94_component_threshold_order": "FLOAT32 threshold+epsilon, then component scale"
+  },
+  "native_case_report_sha256": {
+    "reports/colorkey_lab_edge_transfer_20261001.json": "b17bf9eac5ab2ad5f67f726e2704950a7f14b7c1c8fded1d6a3ccf2baa016179",
+    "reports/colorkey_lab_state_baseline_20261001.json": "b6db74dd3fe4e44ebf34a104be6f0a671115b1561e0dcb48c5152ee95e763d4a",
+    "reports/colorkey_lab_threshold_boundary_20261001.json": "7d99ee3cdaa9bb02d68621eee885b4100fb21a1b84d53d76612fad76fb9a6961",
+    "reports/colorkey_spaces_diagnostics_20261001.json": "af1068b59102a50b4745264cf08a02ef3347d1cd157e7a6d476ad7725d5a50cb"
+  },
+  "production_native_recapture": {
+    "classic_exact_count": 396,
+    "historical_lab_counterexamples_closed": 108,
+    "input_parameters_and_native_output_hashes_preserved": true,
+    "measured_case_count": 396,
+    "reference_failure_count": 36,
+    "reference_failure_reason": "Frozen reference worker lacks api-ms-win-crt-math-l1-1-0.dll!atan2f",
+    "report_sha256": "eff54b4f6cca5db6888e2bef7f7dc82d73ef920895641eaeb4c67059af2c90ad",
+    "smart_exact_count": 396
+  },
+  "schema": "olmcolorkey.lab-production-validation/1",
+  "sdk_regression": {
+    "all_expected_raw_hashes_exact": true,
+    "callback_control_count": 13,
+    "elapsed_seconds": 2.94,
+    "output_render_count": 126,
+    "test_exit_code": 0,
+    "test_file": "tests/test_olmcolorkey_public_entries_real_sdk_20260813.py"
+  },
+  "source_sha256": "57efab4e5907e17b56c2654e2d37bba8ed057ff0b3ec281a65c1dadd1138c947",
+  "typed_controls_regression": {
+    "all_successful_renders_exact": true,
+    "asan_ubsan_render_count": 3592,
+    "atomic_failure_render_count": 48,
+    "captured_case_rows": 2264,
+    "elapsed_seconds": 265.056,
+    "o2_render_count": 4528,
+    "test_exit_code": 0,
+    "test_file": "tests/test_olmcolorkey_typed_controls_20261001.py"
+  }
+}
