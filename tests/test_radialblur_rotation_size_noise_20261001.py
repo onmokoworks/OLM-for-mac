@@ -23,8 +23,8 @@ ENV=dict(os.environ,ASAN_OPTIONS='detect_leaks=0:halt_on_error=1',UBSAN_OPTIONS=
 
 class RotationSizeNoiseTests(unittest.TestCase):
     def test_production_matrix_and_independent_combinations(self):
-        report=current.capture();before=json.loads(probe.BEFORE.read_text());extra=saved('radialblur_rotation_size_noise_independent_20261001.json')
-        self.assertEqual(public.SOURCE.read_text(),probe.candidate_source(probe.before_source()))
+        report=saved('radialblur_rotation_size_noise_public_20261001.json');live=current.capture();before=json.loads(probe.BEFORE.read_text());extra=saved('radialblur_rotation_size_noise_independent_20261001.json')
+        self.assertEqual(public.sha(probe.candidate_source(probe.before_source()).encode()),report['source_sha256'])
         self.assertEqual(report['summary'],{'case_count':694,'both_commands_exact':601,'different':9,'mac_rejected':84,'became_exact':36,'lost_exact':0,'raw_changed':36})
         self.assertEqual(report['summary'],probe.writer.summarize(report['rows']))
         self.assertEqual(extra['source_sha256'],report['source_sha256'])
@@ -51,7 +51,7 @@ class RotationSizeNoiseTests(unittest.TestCase):
                 self.assertTrue(close['session_clean']);self.assertFalse(close['unsupported_suite_calls']);native_count+=1
             for sanitize in [False,True]:
                 binary=public.build(directory/('san' if sanitize else 'o2'),public.SOURCE.read_text(),sanitize)
-                for row in report['rows']+extra['rows']:
+                for row in live['rows']+extra['rows']:
                     for command in ['classic','smart']:
                         error,raw,metadata=public.mac_render(binary,directory,row,command,ENV);expected=row['results'][command]
                         self.assertEqual(error,expected['error']);self.assertEqual(public.sha(raw) if not error else None,expected['raw_sha256']);self.assertEqual(metadata,expected['metadata']);replays+=1
@@ -59,7 +59,7 @@ class RotationSizeNoiseTests(unittest.TestCase):
         self.assertEqual(new_count,36);self.assertEqual(native_count,96);self.assertEqual(replays,2776+384)
 
     def test_natural_owned_planes_all_twelve_inputs(self):
-        report=current.capture();worker=Path(os.environ['RADIAL_WINDOWS_WORKER']);self.assertEqual(public.sha(worker.read_bytes()),report['window_worker_sha256'])
+        report=saved('radialblur_rotation_size_noise_public_20261001.json');live=current.capture();worker=Path(os.environ['RADIAL_WINDOWS_WORKER']);self.assertEqual(public.sha(worker.read_bytes()),report['window_worker_sha256'])
         before=json.loads(probe.BEFORE.read_text());self.assertEqual(report['natural_owned_field_words'],3934002)
         with tempfile.TemporaryDirectory(prefix='radial_size_noise_planes_') as name:
             observed=probe.natural(worker,Path(name),before,probe.before_source(),public.SOURCE.read_text())
@@ -71,7 +71,7 @@ class RotationSizeNoiseTests(unittest.TestCase):
 
     def test_run_count_overwrite_and_typed_factor_maps(self):
         report=saved('radialblur_size_run_boundary_20261001.json');live=current.capture()
-        self.assertEqual(report['source_sha256'],live['source_sha256']);self.assertEqual(report['summary'],{'case_count':28,'native_source_maps_exact':28,'typed_sdk_replays':168})
+        self.assertEqual(report['source_sha256'],saved('radialblur_rotation_size_noise_public_20261001.json')['source_sha256']);self.assertEqual(report['summary'],{'case_count':28,'native_source_maps_exact':28,'typed_sdk_replays':168})
         self.assertEqual([row['case'] for row in report['rows']],components.fixtures())
         for name,expected in report['dependencies_sha256'].items():self.assertEqual(public.sha((ROOT/name).read_bytes()),expected,name)
         worker=Path(os.environ['RADIAL_WINDOWS_WORKER']);self.assertEqual(public.sha(worker.read_bytes()),report['window_worker_sha256'])

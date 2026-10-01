@@ -368,7 +368,8 @@ static RadialBlurOuterSampleState ComputeRadialBlurOuterSampleState(
 		alpha = RadialF32Add(alpha, a10);
 		state.alpha = RadialF32Add(alpha, a11);
 	} else {
-		state.alpha = RadialF32Add(RadialF32Add(RadialF32Add(a00, a10), a01), a11);
+		// Original Zoom 9d80 zeroes its output before accumulating 00,10,01,11.
+		state.alpha = RadialF32Add(RadialF32Add(RadialF32Add(RadialF32Add(0.0f, a00), a10), a01), a11);
 	}
 	if (aex_column_major_taps) {
 		state.validity_alpha = RadialF32Add(
@@ -386,8 +387,10 @@ static RadialBlurOuterSampleState ComputeRadialBlurOuterSampleState(
 			RadialF32Mul(sample_valid(x1, y1), w11));
 	}
 
-	if (strict_nonzero_alpha ? state.alpha != 0.0f : state.alpha > 1.0e-8f) {
-		const float reciprocal_alpha = RadialF32Div(1.0f, state.alpha);
+	// Zoom retains accumulated RGB when signed alpha cancels to zero;
+	// the original sampler then skips only the reciprocal normalization.
+	if (strict_nonzero_alpha ? (!aex_column_major_taps || state.alpha != 0.0f) : state.alpha > 1.0e-8f) {
+		const float reciprocal_alpha = state.alpha != 0.0f ? RadialF32Div(1.0f, state.alpha) : 1.0f;
 		for (int c = 0; c < 3; ++c) {
 			if (aex_column_major_taps) {
 				float accumulated = RadialF32Add(0.0f, RadialF32Mul(a00, sample(x0, y0, c)));
@@ -397,7 +400,7 @@ static RadialBlurOuterSampleState ComputeRadialBlurOuterSampleState(
 			} else {
 				state.accum_rgb[c] = RadialF32Add(
 					RadialF32Add(RadialF32Add(
-						RadialF32Mul(sample(x0, y0, c), a00),
+						RadialF32Add(0.0f, RadialF32Mul(sample(x0, y0, c), a00)),
 						RadialF32Mul(sample(x1, y0, c), a10)),
 					RadialF32Mul(sample(x0, y1, c), a01)),
 					RadialF32Mul(sample(x1, y1, c), a11));
@@ -1495,7 +1498,7 @@ struct RadialZoomPixelTraits<PF_Pixel8> {
 		return RadialF32Mul((float)values[channel], (float)(1.0 / 255.0));
 	}
 	static A_long Index(float value) { return (A_long)std::floor(value); }
-	static constexpr bool kStrictNonzeroAlpha = false;
+	static constexpr bool kStrictNonzeroAlpha = true;
 	static constexpr bool kClampRadius = true;
 	static void Write(PF_Pixel8 &pixel, const RadialBlurOuterSampleState &state, bool use_fft)
 	{
