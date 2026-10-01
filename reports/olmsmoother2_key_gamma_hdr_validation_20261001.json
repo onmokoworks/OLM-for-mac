@@ -1,0 +1,184 @@
+{
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "capture_source_sha256": "0e340c8fea9d79a0faba983f39e21662519a4fba5e74f063530ad69599774e18",
+  "claims_not_made": [
+    "Exported AEX resident CPU Smart uses emulated host imports, not Windows UCRT or AE",
+    "Mac numerical public tests use CLI shim; real SDK compilation is a separate build check",
+    "Resident payload is slot/type validated, with no per-frame native parameter readback",
+    "Isolated writer registers include non-finite/out-of-range diagnostics and are not full-frame or UI evidence",
+    "No normal AE UI production of HDR/raw uint16 worlds established",
+    "Gamma+HDR compositions, all float/geometry/scan-length/settings, native Windows/Mac AE and installed remain unproven",
+    "No full UI/save/ROI/downsample, 8192-limit removal, or all-ten compatibility completion"
+  ],
+  "control_capture": {
+    "baseline_gamma_colors_zero_count_rejections": 252,
+    "baseline_raw_exact": 1008,
+    "cases": 1260,
+    "depths": 3,
+    "full_parameter_cartesian_product": false,
+    "gamma_mode_count_states": 15,
+    "geometries": 7,
+    "input_settings_native_hashes_preserved": true,
+    "production_raw_exact": 1260,
+    "production_rejects": 0,
+    "source_patterns": 2,
+    "versions": 2
+  },
+  "dependencies_sha256": {
+    "cli/OLMSmoother2/shim/OLMSmoother2.h": "7fb3928ba44ed4336335080bc589ea00d34f59b461faa675811436bcb49a4fcf",
+    "docs/BETA_SUPPORT.md": "9c89b8d03e2014ea87144137f51bc88217463649ac7ab3b4939c2da670195869",
+    "docs/COMPATIBILITY_ANALYSIS_PLAN_JA.md": "983623f6dc2752a2b5eaa1c014efbbffb35c03e76a2675dcbeb8c7f0ab543c56",
+    "mac/OLMSmoother2/Mac/OLMSmoother2.xcodeproj/project.pbxproj": "8a5525814eb7917b4ee124c507caf6a085200decf6072b32d52779e38279b89a",
+    "mac/OLMSmoother2/Mac/OLMSmoother2_decode_lut_10000.h": "3f42b42800e4ea1542210f4a678e36777d8707132b13c9447213a18f2e9e3ba2",
+    "mac/OLMSmoother2/Mac/OLMSmoother2_encode_lut_10000.h": "8fd0f56cea32a719d1576a6d0788d0e3d2823a6cfd627588e9b3e7e9084ac2ac",
+    "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp": "d44b4e653077fa79a2a717be3f9fc809f2a4d66f3431dec4dad3c4f702d64d03",
+    "mac/OLMSmoother2/OLMSmoother2.h": "cca0ff9262d01201ed7ee98dc43f31c7824f7d0589ff896a824b4bc86677531d",
+    "notes/COMPATIBILITY_ANALYSIS_PROGRESS_20261001.md": "2aea8652cc21c06c0f5e884440ead25ca2735cf7dbd677df8fcb6d47fe0192b7",
+    "reports/olmsmoother2_color_scan_geometry_20261001.json": "21f280c9471de796c11bf34ce4bbb6b0c206fc384f61e88867714848f5d65700",
+    "reports/olmsmoother2_color_weight_actual_dispatch_20261001.json": "c6ceb3aeee6f653a9a863d4b7057a6205907374eb005bd86d87d6f874bf527e1",
+    "reports/olmsmoother2_color_weight_controls_20261001.json": "3ae3d3a6fdf5a754dc88ec06c7b8590d7d522c8a94eb6dfd070114dfa61f903c",
+    "reports/olmsmoother2_color_weight_dispatch_20261001.json": "45c2999ff2a802618b3104ccc4db6e66a5893eec38f60002abec30b174025cd4",
+    "reports/olmsmoother2_exported_color_weight_baseline_20261001.json": "afb7f1245928a6bc0a7cd4729899222ca8f416abeaffe4d2a47a41bd753e611f",
+    "reports/olmsmoother2_exported_color_weight_pack16_replay_20261001.json": "bdfdead8067fe99a737ad861519a4f66110496c247dab842be2a12ce7794151f",
+    "reports/olmsmoother2_pf16_pack_baseline_20261001.json": "0d1b91ca802542a944c958406cfa5d97f0a2a4ee2a1d90ee723b07a75b7c3995",
+    "reports/olmsmoother2_pf16_pack_production_20261001.json": "769a378552a3ec1b3f364b5377f7d0233f5f03444795d5defd63df5556d44714",
+    "reports/olmsmoother2_public_key_gamma_baseline_20261001.json": "005349c4b9a7d98f4da373f5f000252e45e8f1bf012694c1f6f8cea5d0b2fb96",
+    "reports/olmsmoother2_public_key_gamma_hdr_replay_20261001.json": "66e1e17401dbab4ce465193219de67f1c993c41553cf8d43686e4c760d57bd76",
+    "reports/olmsmoother2_public_key_gamma_production_20261001.json": "f19d2f71544b82da1a0b4d07377682ed28b83ff08b018a8b64d87857eef86f51",
+    "reports/olmsmoother2_public_typed_hdr_baseline_20261001.json": "109cc76a7ae82ab29be070db3d1086f391927e1e5213f7df376c2a7a5138a589",
+    "reports/olmsmoother2_public_typed_hdr_production_20261001.json": "b90a8c002239029e1bc54fe67f78265068d283940263dc8ad782b481b04bc002",
+    "tests/test_olmsmoother2_color_weight_20261001.py": "367f862e3028bb87d2650c0ac81b8ac112ec98c235dac42122a7ae02a6873b63",
+    "tests/test_olmsmoother2_default_beta_lane_20260820.py": "0ee3c0f9ca99d26c01867de642ac85017e03053b14c886f0b8615e7c005f933e",
+    "tests/test_olmsmoother2_gamma_colors_beta_20260820.py": "02f2fcd2a9add1190d58d98a9be8e4972f7f70fcb3c7d4606f4e7ffe63379c9d",
+    "tests/test_olmsmoother2_key_gamma_hdr_20261001.py": "8192a96f8cf1d1d3c95c012d856c3299395faf290f53720a1d9322b36881fe17",
+    "tests/test_olmsmoother2_roi_fullframe_contract_20260820.py": "0ffd60b4c7d186d0c86e94c40713efe3274e7f3f71fd70e041bfd175130539b0",
+    "tests/test_olmsmoother2_switch_reachability_20261001.py": "ebed6da50f395132e27a6445eec007530594c0872c6d991764db2b15b958e8b8",
+    "tools/emulation/aex_loader.py": "f277dbecd70c4c495aa05e6495d80fdc5ce07c5df51b9076be331c232e26c9ab",
+    "tools/emulation/olmsmoother2_color_weight_harness_20261001.cpp": "03354ba609cc137a951b9f2692a68ef256ad19670956034975cd77faa0d6d6ff",
+    "tools/emulation/olmsmoother2_dispatch_observer_20261001.py": "722ed1391e7e1bfccb9ecd278e1172c3b156aa4956e66cc1cdae8b4cb947c0d4",
+    "tools/emulation/olmsmoother2_public_color_weight_harness_20261001.cpp": "b537a93fe7e536876cc2336c396eb5584ff66920d2bb39a323ecb273383dc0e6",
+    "tools/emulation/olmsmoother2_public_guard_harness_20260812.cpp": "edac2186a3482128b3a47161efb755aaa372089f316c0d4b638611e28c2128e0",
+    "tools/emulation/olmsmoother2_public_key_gamma_harness_20261001.cpp": "22636eb61f2893fbc6b644b6326410a61a6b7eb6b0487e057d774cb3558fe3bc",
+    "tools/emulation/probe_olmcolorkey_typed_controls_20261001.py": "c89b82a6447440b3c7dd6945b74430dcb4cdf78ed28d6af6e68e0472e205a37e",
+    "tools/emulation/probe_olmsmoother2_color_scan_geometry_20261001.py": "461c2188e2c0dfe8c6ecd829d470a404536c254c9e4ba1c24aaf6aa161c3a32a",
+    "tools/emulation/probe_olmsmoother2_color_weight_20261001.py": "cafe50daa1cea33c38f3d4dbc43d8f2b9828d86676648128bc571c7b5348b19a",
+    "tools/emulation/probe_olmsmoother2_exported_color_weight_20261001.py": "f18be0cb716aa8fbef1a0bc98679826395f84626ff9c34adfa43fe5d1a2d492f",
+    "tools/emulation/probe_olmsmoother2_key_gamma_hdr_20261001.py": "807ee172cd3b87e73470bd27ee689058ab5e9796f25552dd52fd9beecd4c8a42",
+    "tools/emulation/probe_olmsmoother2_pf16_pack_20261001.py": "773e329c0e805d62ec25745b63098bb301cc37c4749a6aa8cb63068969e0deae",
+    "tools/emulation/probe_olmsmoother2_switch_reachability_20261001.py": "dbdc8560ea2be19ec19dd91f86c0edcc0254724556655a12e600a75fe4fd6228",
+    "tools/emulation/recapture_olmsmoother2_color_weight_dispatch_20261001.py": "84c9a320f43b1b3acac665388bac87a3e20d34c965a351aa9d5e9993dc991801",
+    "tools/emulation/recapture_olmsmoother2_pf16_pack_20261001.py": "aeff33e6ef00b18264f453a365a8186dbfdc09f65c86390831249d769ce3ea4b",
+    "tools/emulation/replay_olmsmoother2_exported_color_weight_20261001.py": "f448d3d9ec95c0c0bb29dfe58f19044c8b8c22dad418f2e899564bfc47d5518d",
+    "tools/emulation/replay_olmsmoother2_key_gamma_hdr_20261001.py": "e1aa9b0dbb4fe951f6b989932d664e52188877def68f3ea9434a7012d37b7286",
+    "tools/emulation/test_olmsmoother2_geometry_classifier_matrix_actual_aex_20260811.py": "ccfc573d1195f75cc730a2f62b78aaf00998a4494dc45ad3385846a677790347",
+    "tools/emulation/test_olmsmoother2_nonuniform_geometry_actual_aex_20260805.py": "31c488f62a3c970ce928704f6a3195098d44b1feca1b6e6946ccc96e66a6d113",
+    "tools/emulation/test_olmsmoother2_typed_writeback_20260717.py": "7334b688e090fc044f417160a224d2752b005f6420fa2149e36ce8007bffd2c8",
+    "tools/emulation/test_olmsmoother2_v2_nonuniform_actual_aex_20260805.py": "06a220a7296c6f851402120794d6b268cd056d3290f1ce4601fc7c23bfc25460"
+  },
+  "frozen_worker_sha256": "0eb2f7705598f7b5f53563b9d920274ba094c835ff3dbaaf5f6fb214ec0cfd61",
+  "isolated_writer": {
+    "baseline_exact_tuples": 0,
+    "baseline_mxcsr": 0,
+    "baseline_zero_exact_reason": "All tuples include blue=2.0; they are not 569 unique full-frame defects",
+    "cases": 569,
+    "fixed_blue_channel_bits": "0x40000000",
+    "instruction_bytes_sha256": "60cadf32ea5e71da392a8a069c6877df2adcc8f0c50439415e9360e101e58395",
+    "masked_recapture_mxcsr": 8064,
+    "mxcsr_is_explicit_emulation_choice": true,
+    "native_hashes_preserved_between_contexts": true,
+    "production_o2_exact": 569,
+    "production_sanitized_exact": 569,
+    "raw_outputs_not_published": true,
+    "render_count": 1138,
+    "start_rva": "0x3bdd",
+    "stop_rva": "0x3c2f"
+  },
+  "public_replay": {
+    "asan_ubsan_exact": 1692,
+    "o2_exact": 1692,
+    "render_count": 3384,
+    "temporary_candidate_exact_renders": 3384,
+    "temporary_candidate_report_sha256": "ad7cd6cec71aedd7861026227faefdce2588d6a313128fec81bd240bce1c6d7c",
+    "temporary_candidate_source_sha256": "52ce08412a1d6b6240faa5047b3aedaa2d36241a1776d54ff4d0288b970c384c",
+    "unique_case_count": 1692
+  },
+  "regressions": {
+    "color_scan_internal": {
+      "asan_ubsan_exact": 3344,
+      "exit_code": 0,
+      "o2_exact": 3344,
+      "render_count": 6688,
+      "unique_case_count": 3344
+    },
+    "default_beta": {
+      "exit_code": 0,
+      "unittest_count": 4
+    },
+    "gamma_colors": {
+      "exit_code": 0,
+      "unittest_count": 3
+    },
+    "new_pack_test": {
+      "exact_packs": 1138,
+      "exit_code": 0,
+      "unittest_count": 1
+    },
+    "previous_public": {
+      "case_count": 252,
+      "exact_renders": 504,
+      "exit_code": 0,
+      "render_count": 504
+    },
+    "retained_and_missing_classification": {
+      "exit_code": 0,
+      "missing_index_cases": 390,
+      "missing_o2_and_sanitizer_renders": 780,
+      "retained_cases": 114
+    },
+    "roi_fullframe": {
+      "exit_code": 0,
+      "unittest_count": 3
+    }
+  },
+  "restored_rules": {
+    "empty_gamma_colors": "count 0 is accepted; begin==end matches no candidates and bb10 apply remains false",
+    "nonfinite_and_signed64_overflow": "x86 integer indefinite INT64_MIN has low16 zero; guard before C++ cast",
+    "pf16_writer": "separate MULSS by32768 and ADDSS half; CVTTSS2SI signed64; store low16, without white-level saturation",
+    "pf8_pf32_writers_luts_scans_unchanged": true
+  },
+  "schema": "olmsmoother2.key-gamma-hdr-production-validation/1",
+  "sdk_build": {
+    "architectures": [
+      "arm64",
+      "x86_64"
+    ],
+    "binary_sha256": "b3017ee08d591c4e450789f242e302c306f3290b7927ee7a0972b609ca1b576f",
+    "build_log_sha256": "c0c3ad5466671009e9f80acfe4052fa6cdac7307ab95b3b73c98759b671a8bdd",
+    "code_signing_allowed": false,
+    "configuration": "Debug project with explicit GCC_OPTIMIZATION_LEVEL=2",
+    "deployment_target": "11.0",
+    "exit_code": 0,
+    "installed_or_native_ae_test": false
+  },
+  "source_sha256": "d44b4e653077fa79a2a717be3f9fc809f2a4d66f3431dec4dad3c4f702d64d03",
+  "typed_hdr_capture": {
+    "baseline_pf16_differences": 86,
+    "baseline_pf32_differences": 0,
+    "baseline_raw_exact": 346,
+    "cases": 432,
+    "difference_counts": {
+      "alpha_hdr_v1": 17,
+      "alpha_hdr_v2": 17,
+      "combined_v1": 20,
+      "combined_v2": 14,
+      "rgb_hdr_v1": 18
+    },
+    "gamma_mode": "None",
+    "input_settings_native_hashes_preserved": true,
+    "production_raw_exact": 432,
+    "profiles": [
+      "PF16: rgb_hdr, alpha_hdr, combined",
+      "PF32: rgb_hdr, rgb_signed, alpha_hdr, alpha_signed, combined, finite_float_bits"
+    ]
+  }
+}

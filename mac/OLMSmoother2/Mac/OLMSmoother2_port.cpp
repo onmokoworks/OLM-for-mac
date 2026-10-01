@@ -380,7 +380,18 @@ inline void diagnostic_premultiply_input<PF_Pixel16>(const PF_Pixel16 *p, float 
 }
 
 static inline u_char  clamp8 (float v) { v = v * K_255   + K_HALF; return v < 0 ? 0 : (v > 255.f   ? (u_char)255    : (u_char )v); }
-static inline u_short clamp16(float v) { v = v * K_32768 + K_HALF; return v < 0 ? 0 : (v > 32768.f ? (u_short)32768 : (u_short)v); }
+// FUN_180003990: MULSS/ADDSS, then CVTTSS2SI to signed 64-bit and store AX.
+// Despite the retained helper name, PF16 is not saturated at the AE white
+// level. Preserve raw uint16 high values and the conversion's low-word rule.
+static inline u_short clamp16(float v) {
+	volatile float scaled = v * K_32768;
+	const float rounded = scaled + K_HALF;
+	// x86's indefinite result is INT64_MIN, whose low 16 bits are zero.
+	// Check the range before the C++ cast so NaN/Inf/overflow cannot cause UB.
+	if (!std::isfinite(rounded) || (double)rounded >= 0x1p63 || (double)rounded < -0x1p63)
+		return 0;
+	return (u_short)(int64_t)rounded;
+}
 
 // ============================================================================
 // Helpers: absolute difference via sign-bit mask (mirrors Win bit-trick)
@@ -5119,7 +5130,7 @@ V2GenericBetaAdmission(const PF_ParamDef *const params[],
 	       ((gamma_mode == GAMMA_NONE || gamma_mode == GAMMA_ALL_COLORS) &&
 	        gamma_count >= 0 && gamma_count <= NUM_GAMMA_COLORS) ||
 	       (gamma_mode == GAMMA_COLORS_ONLY &&
-	        gamma_count >= 1 && gamma_count <= NUM_GAMMA_COLORS);
+	        gamma_count >= 0 && gamma_count <= NUM_GAMMA_COLORS);
 	return (enable_key == 0 || enable_key == 1) &&
 	       (invert_key == 0 || invert_key == 1) &&
 	       (version == SMOOTHER_V1 || version == SMOOTHER_V2) &&

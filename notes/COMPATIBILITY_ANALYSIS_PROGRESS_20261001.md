@@ -1232,9 +1232,61 @@ reports/olmsmoother2_color_weight_validation_20261001.jsonへ記録する。
 tiny geometryのKey/Gamma、任意float/HDR、未測定scan長、native Windows UCRTのLUT構築、
 native両AE、UI/project保存、ROI/downsampleと8192上限は未完。全10本の完全互換Goalはactive。
 
+## SM2-KEY-GAMMA-HDR-014 — 空Gamma paletteの受付とPF16書き込みを復元
+
+同じ固定resident workerで公開AEX builder/Smartを実行し、独立parameter-file harnessで
+Macの公開SmartPreRender→SmartRenderを比較した。7 geometry、diagonal/ramp_alpha、
+Key/Invert、Gamma None/All/Colors、値1.0/1.8/native default 2.4000000953674316、
+count0/1/2/3/5、色順・重複・不一致を含む独立15 state、両version・3深度の1260条件。
+15 stateの中ではSmoothness/Range/Extraも変更する。全parameterの直積ではない。
+変更前は1008 exactと252拒否。拒否はすべてGamma Colors count 0で、元AEXは成功した。
+
+FACT: a9c0はgamma paletteのbegin/endを比較し、count0では一致候補を返さない。
+bb10は中心とpolygon sampleに一致候補がなければapplyを0にする。現行Macの数値本体は
+同じ空palette規則を持つがgeneric admissionだけがcount>=1を要求していた。通常公開sliderの
+count0を受付へ戻す。gamma指数やpaletteのalpha/順序を補正しない。count6の拒否は保持。
+
+さらに4 geometry×2 pattern×3 Key state×両versionについて、PF16のrgb_hdr/alpha_hdr/
+combined、PF32のrgb_hdr/rgb_signed/alpha_hdr/alpha_signed/combined/float_bitsを取得した
+432条件。PF16はsource uint16を2倍して65535で上限、PF32は2倍または符号変更。
+float_bitsは有限subnormal、負ゼロ、1の隣接値、負値・2.0と独立alphaを含む。
+これらは著作したtyped worldであり、通常AE UIで生じることの証明ではない。
+GammaはNone、Smoothness/Range/Extraは49/2/50。変更前は346 exact、PF16だけ86差分。
+PF32の288条件は全exactで、PF16差分の内訳はrgb_hdr/v1=18、alpha_hdr/v1=17・v2=17、
+combined/v1=20・v2=14。1×1のv1赤channelでもMacは32768、元はそれを超えるraw word。
+
+FACT: PF16 worker3990の3bdd以降はMULSS（32768）→ADDSS（0.5）、3c02/11/1b/25の
+CVTTSS2SI RAX、3c0c/16/20/2aのMOV word AXでARGBを保存する。32768や65535への
+clampはない。旧clamp16を、別々のFLOAT32積と加算→signed64 truncation→下位16bitへ
+変更する。非有限・signed64範囲外のx86 indefinite値INT64_MINは下位16bitが0なので、
+C++の範囲外castを行う前に0を返す。上位/下位bitsを一般規則で扱い、画像別補正はしない。
+
+元AEXの3bdd–3c2f命令区間を、明示したXMM input/scale/halfとread-only停止hookで
+切り出して569 tupleを測定。丸め境界、負値、uint16 wrap、signed64境界、非有限と
+seed付き512 bit値を含むwriter-only診断であり、公開worldやAE UIの証拠にしない。
+全tupleに青2.0を置くため旧Macの全569 raw tupleは不一致だが、569個の独立frame不具合を
+意味しない。loader初期MXCSR0の診断を保持し、明示した0x1f80（nearest-even、例外mask）
+でも再取得。入力・native出力hashは全て保持された。0x1f80は選択したemulation環境であり、
+Windows AEの読出しとは宣言しない。公開保存物はhashとinput bitsのみで、native raw wordは
+保持したローカル診断から公開reportへ含めない。
+
+空paletteとwriterの2規則を適用した候補は公開1692条件をO2/ASan/UBSan3384 renderで
+全exact。writer-only569 tupleも両buildで全exact。同じ一般処理を本番へ反映し、公開3384
+再生と元AEX1692条件の再取得で全exact、baselineの入力・parameter payload・native hashを
+維持した。PF8/PF32 writer、LUT、scan/weightは変更しない。
+
+本番変更後、色/scan内部3344条件6688 render、以前の公開252条件504 render、retained114と
+65分類390行も回帰PASS。writer-only569 tupleもO2/ASan/UBSan1138再生全exact。
+Gamma Colors3、default beta4、ROI3のunittestとuniversal実SDK O2 buildがPASS。
+source/report/tool/test依存と実行結果は
+reports/olmsmoother2_key_gamma_hdr_validation_20261001.jsonへ記録する。
+
+HDRとGammaを同時に変える入力、全float/geometry/走査長、native Windows UCRT/AE、
+Mac installed、UI/project保存、ROI/downsampleと8192上限は未完。全10本Goalはactive。
+
 ## 次の順序
 
-1. Smoother2の公開builderでtiny geometryのKey/Invert・Gamma None/All/Colorsを比較し、内部captured LUTとの差を分離する。任意float/HDRとscan長の独立witnessも拡張し、最初の差を復元する。
+1. Smoother2の公開builderでHDRとGamma All/Colorsの合成、palette/tolerance境界を比較する。内部captured LUTとの差を分離し、未測定scan長と任意floatの最初の差を復元する。
 2. ColorKeyの未検証geometry/任意float/paletteとThin/Blur合成を拡張する。今回の境界・overflow比較を全入力の証明とは扱わず、固定workerとcontrolled Lab94参照を分け、native Windows UCRTとの比較を残す。
 3. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
 4. 計画に沿いDirectionalBlur Dual、RadialBlur topology、KiraKira等の一般入力も進める。

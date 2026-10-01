@@ -93,8 +93,9 @@ int main() {{
         for (int variant = 0; variant < 4; ++variant)
             for (int count : {{1,3,5}})
                 if (int e = gamma_case(depth, count, variant)) return e;
-    // An empty list has no portable Gamma Colors semantics; keep it closed.
-    if (gamma_case(8, 0, 0) == 0) return 90;
+    // Exported AEX accepts count zero: the empty list matches no candidates,
+    // so adaptive gamma stays off. The fixed five-slot storage bound remains.
+    if (gamma_case(8, 0, 0) != 0) return 90;
     if (gamma_case(8, 6, 0) == 0) return 91;
     return 0;
 }}
