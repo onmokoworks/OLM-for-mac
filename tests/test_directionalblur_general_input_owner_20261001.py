@@ -29,7 +29,7 @@ class DirectionalOwnerTests(unittest.TestCase):
                 self.assertEqual(r['production_source_sha256'],'ed8ea8baa8048f7988e0bd7b90fedba62f8ebc69cecce39d35cd94f221fcaeb5')
                 self.assertEqual(r['probe_sha256'],probe.sha(PROBE.read_bytes()))
                 self.assertEqual(r['harness_sha256'],probe.sha(probe.HARNESS.read_bytes()))
-                for core,digest in r['core_sha256'].items():self.assertEqual(digest,probe.sha((ROOT/'core'/core).read_bytes()))
+                self.assertEqual(r['core_sha256'],{'dblur_field.cpp': 'ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1', 'dblur_frontonly.cpp': '488834530c422a785958b6ffebd521da73092b6419df385b9eade68d0b750349', 'dblur_rotate.cpp': '5b02748d421befb1ecda0fd36ff34c5b225ebee5e928e0460e1c14d174c101d7', 'dblur_rowdriver.cpp': '9f271073adaf2746a5144cf4793f0ebe574f51787705f265421710215596481d'})
                 for c in r['cases']:
                     w,h=c['geometry'];data=probe.typed(probe.pixels(w,h,c['fixture']=='odd-mixed'),c['depth'])
                     self.assertEqual(probe.sha(data),c['input_sha256'])

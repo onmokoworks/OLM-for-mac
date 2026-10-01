@@ -774,6 +774,46 @@ bindingは今回のvalidationへ記録。過去native出力hashを現在source�
 near-INT32散布、大画像/強設定と保守的予算の拒否は残る。216件の一致を全10本の
 完成へ一般化せず、Goalはactiveのまま。
 
+
+## DB-PF16-NEUTRAL-019 — neutralのSDR拒否を解除
+
+018後に残ったPF16 neutralのSDR境界を、既存neutral kernelへの分析専用bypassで
+元AEXと比較した。raw uint16のRGB拡張、alpha拡張、全channel拡張、境界profileと
+SDR controlを3 geometry（9×7、16×16、37×29）で使用。Front7/Back11/Dual7+11の
+3方向、Gain0/1/2.25に加え、16×16 retained Back1/2/8・Angle45・Gain1を含む150条件。
+実AEXに渡す型・パラメーター・source hashを保持し、channel clampは行わない。
+
+変更前はneutral kernelで150/150 native raw exact、公開経路では42exact/108拒否。
+SDR control27とretained15は公開経路ですでに通る。残る108は汎用neutralのSDR scan
+だけで拒否されていた。GenericPF16SDRInputを除去し、既存のworld/UI/memory/work
+予算検査後にRenderGenericNeutral16へ進む。retained、kernel、行分割、pixel数値計算、
+既存PF32 nonfinite拒否、geometry/ROI/alias/atomic規則は変更しない。
+
+変更後150/150が公開route2（汎用135）/route1（retained15）でnative raw exact。
+取得時のbaseline hashは不変。実SDK・production seamなしClassic/SmartをO2と
+O1 ASan/UBSanで再生し、600renderがnative hash一致。odd stride、padding、source不変、
+Smart21 parameter/1 Layer checkinとsuite releaseを確認。高値PF16を使ったpartial、
+checkout/output/checkin失敗、memory/operation budgetの16失敗renderは出力を変えない。
+
+既存Back-onlyテストの「32769は不正」という期待を除き、PF16高値の受入れと既存の
+安全性を今回のtyped oracleで検証した。古いdirect Back-onlyテストに残っていたPF32
+1.01/−0.01の拒否期待も、既に復元済みのfinite PF32契約に合わせて成功へ修正。
+NaN/±Inf拒否を保持した。同テストの固定portable anchorはO2で一致、sanitizerでは
+既存仕様どおりanchorをskipする。Back/Dualの実SDK・1280×720/予算/atomicも両buildで
+PASS。汎用deep geometry、HDR source、018の216条件/上限検査も現行sourceで再検証。
+
+古い一般入力3campaign（各54条件）の回帰は、015のCVTTSS2SI修正前のcore hashを
+現在のcoreへ要求して停止した。取得時のcore hashを履歴として明示固定し、現在の
+productionは旧native outputをO2/ASan/UBSanで324再生して確認した。captureを書き換えず、
+live dependency bindingは今回のvalidationへ保存。018のproduction bindingも履歴で固定。
+BETA_SUPPORTのDirectionalBlur欄に残るdeep SDR制約を、PF16 raw uint16/ PF32 finiteの
+現行契約へ更新した。他プラグインの制限へ一般化しない。
+
+通常AE UIが非SDR PF16 worldを生成するか、実Windows AE/UCRT/installed、任意input/
+全設定・大画像/強設定、downsample/ROI/非zero Layer origin、旧個別owner契約、float
+整数境界・保守的予算の拒否は未閉鎖。150条件や汎用入力制限の解除で全互換とは
+扱わず、Goalはactive。
+
 ## 次の順序
 
 1. ColorKeyの他Blur設定を公開ownerで再検証し、旧import stub依存の分岐を復元。

@@ -1160,22 +1160,6 @@ static bool GenericDeepFeatureWorldsSafe(const PF_EffectWorld *input,
             &estimate, layer_coefficient_bound);
 }
 
-static bool GenericPF16SDRInput(const PF_EffectWorld *input)
-{
-	for (A_long y = 0; y < input->height; ++y) {
-		const std::uint8_t *row = reinterpret_cast<const std::uint8_t *>(input->data) +
-			static_cast<std::size_t>(y) * static_cast<std::size_t>(input->rowbytes);
-		for (A_long x = 0; x < input->width; ++x) {
-			PF_Pixel16 pixel = {};
-			std::memcpy(&pixel, row + static_cast<std::size_t>(x) * sizeof(pixel),
-				sizeof(pixel));
-			if (pixel.alpha > 32768 || pixel.red > 32768 ||
-				pixel.green > 32768 || pixel.blue > 32768) return false;
-		}
-	}
-	return true;
-}
-
 static bool GenericPF32FiniteInput(const PF_EffectWorld *input)
 {
 	for (A_long y = 0; y < input->height; ++y) {
@@ -1657,8 +1641,7 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			GenericDeepWorldsSafe<PF_Pixel16>(input, output, info)) {
 			ObserveDirectionalRenderRoute(
 				observed_route, kDirectionalRouteGenericNeutral);
-			return GenericPF16SDRInput(input)
-				? RenderGenericNeutral16(input, output, info) : PF_Err_BAD_CALLBACK_PARAM;
+			return RenderGenericNeutral16(input, output, info);
 		}
 		if (!retained_exact && IsGenericNeutralShape(info)) {
 			return PF_Err_BAD_CALLBACK_PARAM;

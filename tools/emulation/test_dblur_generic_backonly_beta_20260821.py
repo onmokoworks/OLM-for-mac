@@ -409,7 +409,7 @@ static int atomic_rejects(short depth) {
   return 0;
 }
 
-static int deep_sdr_rejects() {
+static int deep_range_policy() {
   {
     Storage<PF_Pixel16> storage(37, 23);
     PF_Pixel16 pixel{};
@@ -428,15 +428,8 @@ static int deep_sdr_rejects() {
     pixel.red = 32769;
     std::memcpy(storage.input.data(), &pixel, sizeof(pixel));
     storage.original = storage.input;
-    const auto before = storage.output;
-    int route = -1;
     auto info = Info(0, 2, 37.25);
-    REQUIRE(OLMDirectionalBlurTestRenderWorldRoute(
-                &storage.input_world, &storage.output_world, &info, 16, &route) ==
-                PF_Err_BAD_CALLBACK_PARAM,
-            250);
-    REQUIRE(route == kRouteGeneric && storage.output == before &&
-            storage.input_unchanged(), 251);
+    REQUIRE(render(storage, 16, info, kRouteGeneric) == 0, 250);
   }
   for (int poison = 0; poison < 5; ++poison) {
     Storage<PF_PixelFloat> storage(37, 23);
@@ -449,9 +442,13 @@ static int deep_sdr_rejects() {
                        -std::numeric_limits<float>::infinity())));
     std::memcpy(storage.input.data(), &pixel, sizeof(pixel));
     storage.original = storage.input;
+    auto info = Info(0, 2, 37.25);
+    if (poison < 2) {
+      REQUIRE(render(storage, 32, info, kRouteGeneric) == 0, 252 + poison);
+      continue;
+    }
     const auto before = storage.output;
     int route = -1;
-    auto info = Info(0, 2, 37.25);
     REQUIRE(OLMDirectionalBlurTestRenderWorldRoute(
                 &storage.input_world, &storage.output_world, &info, 32, &route) ==
                 PF_Err_BAD_CALLBACK_PARAM,
@@ -496,7 +493,7 @@ int main(int argc, char** argv) {
   REQUIRE(atomic_rejects<PF_Pixel8>(8) == 0, 7);
   REQUIRE(atomic_rejects<PF_Pixel16>(16) == 0, 8);
   REQUIRE(atomic_rejects<PF_PixelFloat>(32) == 0, 9);
-  REQUIRE(deep_sdr_rejects() == 0, 10);
+  REQUIRE(deep_range_policy() == 0, 10);
   if (argc == 3) REQUIRE(anchor(argv[1], argv[2]) == 0, 11);
   else REQUIRE(argc == 1, 12);
   std::puts("PASS_DBLUR_GENERIC_BACKONLY_BETA depths=8/16/32 odd=37x23 routes=retained/generic atomic=yes");
