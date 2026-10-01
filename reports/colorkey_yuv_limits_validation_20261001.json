@@ -1,0 +1,169 @@
+{
+  "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+  "claims_not_made": [
+    "No full source/palette/threshold/HDR/geometry/settings/state completion",
+    "Frozen exported AEX owner and real-SDK shim are not native Windows/Mac AE",
+    "48 Lab94 regression reference rows use controlled host f32 atan2f, not Windows UCRT",
+    "Negative third-threshold controls are outside normal UI; host saved-project reachability unverified",
+    "Finite extreme raw worlds are not proof that normal AE UI produces those values",
+    "No per-frame resident parameter readback",
+    "No new full generic gate, complete Thin/Blur composition campaigns, performance or Lab-only suites rerun",
+    "No UI/project save/color management/ROI/downsample completion",
+    "Capture and render counts are not deduplicated unique-condition counts",
+    "All 10 full compatibility Goal remains active"
+  ],
+  "dependencies_sha256": {
+    "mac/OLMColorKey/OLMColorKey.cpp": "4ec2b89db41ce06d7ba3fb998f32e40a5967aed3996f09f1d5a94fd63ef40700",
+    "reports/colorkey_finite_overflow_baseline_20261001.json": "7d0555240f4138d92e2d3d07efa0f9f8c12f8eb7895ccb7fc7ba49378b446383",
+    "reports/colorkey_rgb_hsv_yuv_boundary_baseline_20261001.json": "a3c209b3fbe403bc490607aa0c4379b55f4afeb32f9c6480a643c357a5add72e",
+    "reports/colorkey_yuv_limits_production_20261001.json": "31303e22f0051814096f1dff3f809fd83bb91e5af6d22c3aedd1096cb48ea191",
+    "reports/colorkey_yuv_third_limit_baseline_20261001.json": "6be693ad6081b6e7d0592728466098a9027f10425d648ed3f7956268f5334c3a",
+    "reports/colorkey_yuv_threshold_candidate_replay_20261001.json": "fa306af621684ffc5394568327ec361242c4d687cb3380f696fa04bc25ed4fca",
+    "scripts/run_olm_generic_beta_gate.py": "aacfded94ac9284fadeab11eafc1576b1da690ebf20badb131e255567872e785",
+    "tests/test_olmcolorkey_color_hdr_palette_20261001.py": "163ae47c2d4755c20f81c4e4b580128245f2b7edff8410f84bbd8255f68525bc",
+    "tests/test_olmcolorkey_generic_pixel_local_pairwise.py": "4acfb5fbeb55d86b331665bd7887efb3d838940b08d45f224fad0f1b430e6086",
+    "tests/test_olmcolorkey_generic_roi_tile.py": "dd073d342df4681a894beb0d02df5c3e545298cc935c44e273d1adddce0d4076",
+    "tests/test_olmcolorkey_public_entries_real_sdk_20260813.py": "73a11c8d969ac12838abff46af2bf4ff00c3bf3a4b50aad0c58a39bf3cf1c75d",
+    "tests/test_olmcolorkey_typed_controls_20261001.py": "9f7171cfddda958be97f0ec2a8ba6386fcc75d8cac03c54dd2bcde3feb7fbcb5",
+    "tests/test_olmcolorkey_yuv_limits_20261001.py": "df05ac56fb54b94e878aac72c97ffbd9d61db749078282535e1948db2486a201",
+    "tools/emulation/colorkey_typed_controls_harness_20261001.cpp": "a6639f1a657e907ee86518a74ba90c06d20b7543d5f2e735c3473228f3183a66",
+    "tools/emulation/colorkey_yuv_complete_limits_candidate_20261001.py": "cdda93ba21573094739981f3ed27b4b6680901b26da4bf06271fdf9d70517741",
+    "tools/emulation/colorkey_yuv_threshold_candidate_20261001.py": "a9f544915ddd658235761bdedd3a09e3081eb9e1224950d6e09f7b84a2a42c92",
+    "tools/emulation/probe_olmcolorkey_finite_overflow_20261001.py": "586ca6d0ba27dadce5ae319c615c1c4c92a03c412b9f6a0c4a63a9db3f8b055b",
+    "tools/emulation/probe_olmcolorkey_rgb_hsv_yuv_boundary_20261001.py": "fd117a1e8341685f34276c7ebe41dc281d9b497fc367fcd2dd6d2af5b305bf7d",
+    "tools/emulation/probe_olmcolorkey_yuv_third_limit_20261001.py": "9741675e0638762a50b2708100da377f489e6dace520b4d0175d03c07d2c3516",
+    "tools/emulation/recapture_olmcolorkey_yuv_limits_20261001.py": "03a8e330cb5832c8bf63d8ffa4c2e2f5f1dd21c5c1ddcbb5d3d641536da3e0de",
+    "tools/emulation/replay_olmcolorkey_yuv_threshold_candidate_20261001.py": "025b3270f9996e9ea0dda81d4c771f1fa5b133738bc6773c19a5cf5575891a5f"
+  },
+  "finite_overflow_campaign": {
+    "alpha_bits": [
+      "40000000",
+      "7f7fffff"
+    ],
+    "capture_rows": 512,
+    "depth": "PF32",
+    "historical_counterexamples": 64,
+    "old_exact_count": 448,
+    "precision": 1,
+    "rgb_extremes": [
+      "7f7fffff",
+      "ff7fffff"
+    ],
+    "source_channels_all_finite": true
+  },
+  "frozen_worker_sha256": "0eb2f7705598f7b5f53563b9d920274ba094c835ff3dbaaf5f6fb214ec0cfd61",
+  "native_boundary_campaign": {
+    "capture_rows": 1728,
+    "depths": [
+      "PF8",
+      "PF16",
+      "PF32"
+    ],
+    "endpoint_and_adjacent_bits_independently_measured": true,
+    "family_count": 144,
+    "historical_counterexamples": 192,
+    "old_classic_exact_count": 1536,
+    "old_smart_exact_count": 1536,
+    "per_color_alternates_between_samples": true,
+    "precision": [
+      1,
+      2,
+      3
+    ],
+    "source_profiles": [
+      "opaque blue",
+      "partial gray with Premultiplied on"
+    ],
+    "spaces": [
+      1,
+      2,
+      5,
+      6
+    ]
+  },
+  "native_facts": {
+    "YCrCb_comparator_rva": "0x4910",
+    "YCrCb_first_compare_rva": "0x4966",
+    "YCrCb_limit_add_rva": "0x4930",
+    "YCrCb_third_limit_compare_rva": "0x4980",
+    "YCrCb_third_limit_reject_rva": "0x4983",
+    "YUV_comparator_rva": "0x4850",
+    "YUV_first_compare_rva": "0x48a2",
+    "YUV_limit_add_rva": "0x4868",
+    "YUV_third_limit_compare_rva": "0x48f2",
+    "YUV_third_limit_reject_rva": "0x48f5",
+    "first_two_components": "COMISS + JA rejects greater values and accepts unordered results",
+    "third_component": "No color-distance comparison; COMISS limit against zero + JB rejects negative or unordered third limit",
+    "threshold_order": "Comparator loads FLOAT32 controls, MULSS scale, then ADDSS epsilon",
+    "unity_scale_evidence_kind": "Inference supported by measured YUV/YCrCb boundary and color/HDR campaigns; not a resident per-frame scale readback"
+  },
+  "production_native_recapture": {
+    "candidate_and_production_differ_only_by_comments": true,
+    "capture_rows": 280,
+    "classic_exact_count": 280,
+    "groups": {
+      "finite_overflow": 64,
+      "rgb_hsv_yuv_boundary": 192,
+      "yuv_third_limit": 24
+    },
+    "input_settings_and_native_hashes_preserved": true,
+    "smart_exact_count": 280
+  },
+  "production_replay": {
+    "all_exact": true,
+    "asan_ubsan_render_count": 4696,
+    "capture_rows": 2348,
+    "elapsed_seconds": 328.563,
+    "exit_code": 0,
+    "historical_counterexamples_closed": 280,
+    "o2_render_count": 4696,
+    "test_file": "tests/test_olmcolorkey_yuv_limits_20261001.py"
+  },
+  "regressions": {
+    "color_hdr_palette": {
+      "all_exact": true,
+      "asan_ubsan_render_count": 1152,
+      "capture_rows": 576,
+      "controlled_host_atan2f_rows": 48,
+      "elapsed_seconds": 85.967,
+      "exit_code": 0,
+      "frozen_reference_rows": 528,
+      "o2_render_count": 1152
+    },
+    "generic_pixel_local_pairwise": {
+      "asan_ubsan_cells": 22,
+      "exit_code": 0,
+      "o2_cells": 36,
+      "runner": "scripts/run_olm_generic_beta_gate.py --run-test-file"
+    },
+    "generic_roi_tile": {
+      "exit_code": 0,
+      "runner": "scripts/run_olm_generic_beta_gate.py --run-test-file"
+    },
+    "public_entries_real_sdk": {
+      "callback_control_count": 13,
+      "elapsed_seconds": 3.837,
+      "exit_code": 0,
+      "render_count": 126
+    },
+    "typed_controls": {
+      "all_successful_renders_exact": true,
+      "asan_ubsan_render_count": 3592,
+      "atomic_failure_render_count": 48,
+      "capture_rows": 2264,
+      "elapsed_seconds": 262.705,
+      "exit_code": 0,
+      "o2_render_count": 4528
+    }
+  },
+  "schema": "olmcolorkey.yuv-limits-production-validation/1",
+  "source_sha256": "4ec2b89db41ce06d7ba3fb998f32e40a5967aed3996f09f1d5a94fd63ef40700",
+  "third_limit_campaign": {
+    "all_old_differences_outside_ui_range": true,
+    "capture_rows": 108,
+    "historical_counterexamples": 24,
+    "negative_controls_outside_normal_ui_range": 60,
+    "old_exact_count": 84,
+    "within_ui_range_controls": 48
+  }
+}

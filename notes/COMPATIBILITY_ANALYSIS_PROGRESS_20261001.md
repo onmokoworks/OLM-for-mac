@@ -1140,11 +1140,56 @@ validationで今回のsource/tool/test/report依存hashと結果を保持する�
 全入力・palette・threshold・geometry・設定、native Windows UCRT/AE、Mac installed、
 UI/project保存、ROI/downsample・色管理は未完。全10本の完全互換Goalはactive。
 
+## CK-YUV-012 — YUV/YCrCbのFLOAT32しきい値とunordered判定を復元
+
+RGB/HSV/YUV/YCrCbのscalar/成分別、3precision、3深度、opaque blueとPremultiplied付き
+partial grayの144族を元AEXで測定した。単色cyan key、Keep on/Replace off、同じtyped
+1×1入力で、threshold0のnonmatchと1のmatchを確認してからFLOAT32 bit順で探索。
+各族の最後のnonmatchと最初のmatchは隣接bitsであり、両方を再測定した。周囲5個の
+FLOAT32値と間隔を1/16で横切る7個のDOUBLE値、計1728条件を公開ownerで取得した。
+Per Colorはsampleごとに交互に変える。全設定の直積や任意paletteの単調性は主張しない。
+
+変更前は1536/1728一致。RGB/HSVの864条件は一致し、YUV/YCrCbで192差分。
+FACT: YUV comparator 0x4850、YCrCb comparator 0x4910はFLOAT32 thresholdを読み、
+MULSS scale→ADDSS epsilonで許容幅を作る。旧MacのDOUBLE threshold+epsilonは異なる
+境界になる。両比較のCOMISS+JAはgreaterを拒否し、unorderedを許容する。しきい値を
+floatへ丸めてからfloat加算し、greater判定を復元した一時案は両cmd/O2/sanitizerの
+6912render全exact。現行復元のunity scaleは測定した境界・color/HDR campaignに支えられた
+推論として扱い、resident各frameのscale読出しを得たとは宣言しない。
+
+有限のPF32最大値±0x7f7fffff、alpha2/最大値、RGBの4符号pattern、Premultiplied off/on、
+Keep off/on、threshold0/1を同じ4空間・scalar/成分別で比較した512条件も取得。
+入力channelはすべて有限だが、積がoverflowし色変換内でInf−Inf等がNaNを作る。
+旧Macは448/512一致、YUV32とYCrCb32で64差分。一時案は512全exact。非有限入力を
+通した結果や、通常AE UIがこの極端なraw worldを生成する証拠とは混同しない。
+
+さらにFACT: 元比較は第3の色成分の距離を使わないが、第3の許容幅について
+YUV 0x48f2/0x48f5、YCrCb 0x4980/0x4983のCOMISS+JBで負値/unorderedを拒否する。
+正常UIの非負thresholdでは通る検査だが、元処理の復元から外さない。3深度、両空間、
+Global/Per Colorの第3thresholdを−epsilonの前後で変えた108条件を測定した。
+60条件は通常UI範囲外の負threshold、48条件は範囲内。旧Macの24差分は全て範囲外の
+診断であり、保存projectからの到達性やWindows UIの生成可能性は未検証。
+第3thresholdも選択・FLOAT32加算し、limit>=0を確認する案は108全exactだった。
+
+同じ一般処理を本番へ適用。画像やthresholdでfixtureを識別せず、最終byteを補正しない。
+境界1728＋finite-overflow512＋第3limit108の2348 capture rowsを両cmd/O2/sanitizerで
+9392render再生して全exact。歴史的280差分（通常境界192、極端有限値64、UI範囲外24）を
+元AEXから再取得し本番Classic/Smartで全一致、入力・設定payload・native hashを維持した。
+一時完全案と本番はコメントだけが異なることも確認した。
+
+従来color/HDR576行2304render、typed2264行の8120成功renderと48 atomic失敗、公開126
+output＋13 callback control、generic pairwise36＋sanitizer22、ROI/tileが本番変更後PASS。
+Lab-only/full Thin・Blur campaign、full generic gate/性能は今回再実行していない。
+source/report/tool/testの依存hashと参照境界を新しいYUV validationへ記録した。
+
+Windows UCRT/実AE、Mac installed、任意入力・palette・geometry・設定、UI/project保存、
+ROI/downsample・色管理は未完。全10本の完全互換Goalはactive。
+
 ## 次の順序
 
-1. ColorKeyの未検証threshold境界・任意float/paletteとThin/Blur合成を拡張する。今回の576条件を全入力の証明とは扱わず、固定workerとcontrolled Lab94参照の境界を分け、native Windows UCRTとの比較を残す。
-2. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
-3. Smoother2の分類到達は今回の集合で確認済み。色・alpha・scan/weightの状態と
-   public owner/native hostの比較は残る。計画に沿いDirectionalBlur Dual等の一般入力も進める。
+1. Smoother2の256分類到達witnessを維持し、独立した色・半透明入力とSmoothness/Range/Extraの境界でscan/weightの状態を比較する。captured LUTを用いたclassifier/worker証拠と公開builder/native host証拠を分け、最初の差を復元する。
+2. ColorKeyの未検証geometry/任意float/paletteとThin/Blur合成を拡張する。今回の境界・overflow比較を全入力の証明とは扱わず、固定workerとcontrolled Lab94参照を分け、native Windows UCRTとの比較を残す。
+3. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
+4. 計画に沿いDirectionalBlur Dual、RadialBlur topology、KiraKira等の一般入力も進める。
 
 既存の作業ツリー変更は今回のcommitに混ぜない。第三者AEXとnative raw出力をPushしない。

@@ -1884,24 +1884,38 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				if (info.color_space == 5) {
 					PF_FpLong t0 = info.per_component ? info.threshold_r : info.threshold;
 					PF_FpLong t1 = info.per_component ? info.threshold_g : info.threshold;
+					PF_FpLong t2 = info.per_component ? info.threshold_b : info.threshold;
 					if (info.per_color) {
 						t0 = info.per_component ? info.thresholds_r[i] : info.thresholds[i];
 						t1 = info.per_component ? info.thresholds_g[i] : info.thresholds[i];
+						t2 = info.per_component ? info.thresholds_b[i] : info.thresholds[i];
 					}
 					auto un = [](float u) {
 						return (float)((double)u * 1.146788990825688 + 0.5);
 					};
-					hit = std::fabs(cmp[0] - key[0]) <= t0 + key_epsilon
-					    && std::fabs(un(cmp[1]) - un(key[1])) <= t1 + key_epsilon;
+					// Native 0x4850/0x4910 materialize FLOAT32 limits; COMISS + JA accepts unordered.
+					const float limit0 = (float)t0 + key_epsilon;
+					const float limit1 = (float)t1 + key_epsilon;
+					const float limit2 = (float)t2 + key_epsilon;
+					hit = !(std::fabs(cmp[0] - key[0]) > limit0)
+					    && !(std::fabs(un(cmp[1]) - un(key[1])) > limit1)
+					    && limit2 >= 0.0f; // Third color component is ignored, but its limit is checked.
 				} else if (info.color_space == 6) {
 					PF_FpLong t0 = info.per_component ? info.threshold_r : info.threshold;
 					PF_FpLong t1 = info.per_component ? info.threshold_g : info.threshold;
+					PF_FpLong t2 = info.per_component ? info.threshold_b : info.threshold;
 					if (info.per_color) {
 						t0 = info.per_component ? info.thresholds_r[i] : info.thresholds[i];
 						t1 = info.per_component ? info.thresholds_g[i] : info.thresholds[i];
+						t2 = info.per_component ? info.thresholds_b[i] : info.thresholds[i];
 					}
-					hit = std::fabs(cmp[0] - key[0]) <= t0 + key_epsilon
-					    && std::fabs(cmp[1] - key[1]) <= t1 + key_epsilon;
+					// Native 0x4850/0x4910 materialize FLOAT32 limits; COMISS + JA accepts unordered.
+					const float limit0 = (float)t0 + key_epsilon;
+					const float limit1 = (float)t1 + key_epsilon;
+					const float limit2 = (float)t2 + key_epsilon;
+					hit = !(std::fabs(cmp[0] - key[0]) > limit0)
+					    && !(std::fabs(cmp[1] - key[1]) > limit1)
+					    && limit2 >= 0.0f; // Third color component is ignored, but its limit is checked.
 				} else if (info.color_space == 4) {
 					if (info.per_component) {
 						PF_FpLong tr = info.per_color ? info.thresholds_r[i] : info.threshold_r;
