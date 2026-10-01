@@ -1558,11 +1558,53 @@ noise_offset_validation_20261001.jsonへ根拠・反証・現行bindingを保存
 seed/thickness/noise量、Rotation/Zoom残差、参照の非軸4 scalar差、Size25制限、一般UCRT/
 native両AE、installed、UI保存、ROI/downsample、全10本完全互換は未完。Goalはactive。
 
+## RB-REFERENCE-NONAXIS-025 — 保存Windows scalarを根拠に参照の非軸差を分類
+
+前のNoise Offset復元とPushはprogress。直近の状況回答はstatus再掲のno progressだった。
+今回は未Pushだった参照校正を検証し、未知の角度を分けたcheckpointとして保存する。
+本番source/header、元AEX、旧参照と固定workerは変更しない。
+
+FACT: 31×19 opaque Zoom PF32の自然公開9d80 samplerとa850角度を採取した。
+画素(30,16)/(24,17)の相対(y,x)=(7,15)/(8,9)で、旧host f32角度は
+0x3edf8d99/0x3f3a053b、保存Windows UCRT scalarは0x3edf8d98/0x3f3a053cだった。
+MacのDOUBLE atan2→FLOAT32は後者と一致。旧参照rawとMacは2画素・5byteだけ相違し、
+参照を同じDOUBLE→FLOAT32へ変えると両画素の角度とsampler RGBA、全rawが一致した。
+これは移植kernelの修正とは分け、比較参照の差として分類する。
+
+FACT: 親axis参照を別コピーし、callbacks.rsのatan2f importをDOUBLE→FLOAT32へ変更した。
+診断上のtrace witness上限は256→1024へ増やした。この2ファイル以外の親source全manifest
+と親workerは不変。新worker hashは722255eed6de0246f3918a11837d21eae0cb6cd6286ed1ae2d49f823ee92f4ec。
+保存Windows scalar576組を再実行して全組一致。これは保存測定の有限集合に対する校正で、
+一般引数のUCRT実装復元や新規Windows実行とは扱わない。
+
+FACT: 23×13/31×19の自然公開Zoom角度299+589=888回を採取。actual builderの中心と基底を
+確認し、保存Windows scalarから元AEX定数DOUBLE 6.2831853で負角度をwrapした期待値と比較。
+857回はnative scalar測定済みで全bit一致。31×19の下端y=18の31回は相対y=+9で未測定。
+この31回の座標を明示し、他857回の一致を全角度のWindows証明へ一般化しない。
+両caseのtrace rawはtyped resident rawと一致。private全vector/context/raw/画像は公開しない。
+
+FACT: 既存310＋独立384の694条件を親/校正参照で1388回取得し、親全raw hashが前回記録と一致。
+本番MacのO2/strict ASan/UBSan両cmd計2776再生は全行の以前のraw/error/metadataを維持。
+参照校正で35条件が追加exact、旧exactを失った条件は0。694条件は228→263 exact、347差分、
+84拒否。getters30は12 exact・18差分、topology252は76 exact・92差分・84拒否、typed28は
+14 exact・14差分。独立384は161 exact・223差分・0拒否。Zoom PF16/PF32各64/64 exact、
+PF8は33/64 exact、Rotation各深度は0/64 exact。参照補正による一致を本番修正の件数に足さない。
+
+4 unittestでnative scalar再実行、全694行の設定・fixture・参照epoch・本番不変、857/31の
+既知/未知境界、selected samplerと全rawのbindingを検証しPASS。追加一致35条件と残差代表、
+拒否代表を含む47条件はO2/strict sanitizer両cmd188回再生しPASS。本番source/headerは前回
+Pushと同じためUniversal buildとgeneric回帰は前回検証をhash bindingで保持し、再実行しない。
+reports/radialblur_doublecast_reference_build_20261001.json、doublecast_reference_public_20261001.json、
+doublecast_sampler_native_coverage_20261001.json、doublecast_reference_validation_20261001.jsonへ保存。
+
+未完: Zoom PF8、Rotation、Size25制限、任意noise条件と負位相、未測定角度、一般UCRT、
+native両AE、installed、通常UI/保存、ROI/downsample、全10本完全互換。Goalはactive。
+
 ## 次の順序
 
 1. Smoother2のHDR/Gamma合成と色境界の今回の有限集合は検証済み。公開builderのLUT構築とnative依存先を分け、未測定scan長・任意float・独立paletteの最初の差を復元する。
 2. ColorKeyの未検証geometry/任意float/paletteとThin/Blur合成を拡張する。今回の境界・overflow比較を全入力の証明とは扱わず、固定workerとcontrolled Lab94参照を分け、native Windows UCRTとの比較を残す。
 3. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
-4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはAngle/Edge/PointとNoise OffsetのFLOAT32接続を復元した。まず31×19の残差に含まれる参照atan2f非軸4 scalar差を再監査し、残る自然public field/samplerの最初の差を閉じる。負位相のnative契約・Size25の面積制限・端/穴/島へ進み、その後KiraKira一般入力を比較する。
+4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはAngle/Edge/PointとNoise OffsetのFLOAT32接続を復元した。参照atan2f非軸差は保存Windows scalarの有限集合へ校正済み。まずZoom PF8のsampler/writer、Rotationの自然public field/scatterの最初の差を閉じる。負位相のnative契約・Size25の面積制限・端/穴/島へ進み、その後KiraKira一般入力を比較する。
 
 既存の作業ツリー変更は今回のcommitに混ぜない。第三者AEXとnative raw出力をPushしない。

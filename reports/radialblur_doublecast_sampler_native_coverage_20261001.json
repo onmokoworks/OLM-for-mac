@@ -1,0 +1,474 @@
+{
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "claims_not_made": [
+    "Uncovered y=+9 arguments have no retained native scalar evidence",
+    "No new Windows run or arbitrary-argument UCRT implementation proof",
+    "No full private angle vectors, contexts, raw frames, or original AEX published"
+  ],
+  "dependencies_sha256": {
+    "mac/OLMRadialBlur/OLMRadialBlur.cpp": "9a4e9eddec319185c01d2dd289d586aa41e3aafeca7aeefe23d1a86cd3243548",
+    "mac/OLMRadialBlur/OLMRadialBlur.h": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+    "refs/conformance/olmradialblur_strength290_native_ucrt_exported_public_boundary_20260815.json": "e750dfa207af86d1809b1cc087cc6837a97cd36ecd68597204695ed1ecd58285",
+    "reports/radialblur_noise_offset_counterfactual_20261001.json": "6fa73ca7dd24cf727a54bea78c72869f882623f69ab10ba9012e63bd75a1f609",
+    "tools/emulation/probe_radialblur_doublecast_sampler_20261001.py": "16537b1cb818e2ff822efa410cf08ac21f872166e6553ed3abc20de761b3a4a8",
+    "tools/emulation/probe_radialblur_public_aligned_20261001.py": "002e24e68da244655ac800e902ef87543be36b0fcfb74864efa27e132bee633f",
+    "tools/emulation/probe_radialblur_topology_20261001.py": "50992ac32fdee5313ab15d3c78ca9199d19b6103dd1c4f57923b194dd32fe8f5",
+    "tools/emulation/radialblur_topology_effectmain_harness_20261001.cpp": "079dfaa39b055c34e4bd9422c5382b29e2eaf6c40929ea7b80a7f232fd922a41"
+  },
+  "native_angle_wrap_f64_le_hex": "f1d4c853fb211940",
+  "native_rows_sha256": "52bf76720eef963c77db0a9325f3902bbc9986ad9ce853930ca6f7ad0854d2bd",
+  "parent_worker_sha256": "a47872674412dfd8f51052c678405cade701a5c80a5062b6038199dd76fd9c6b",
+  "rows": [
+    {
+      "angle_count": 299,
+      "basis_cos_sin_f32_le_hex": "0000803f00000000",
+      "center": [
+        11.0,
+        6.0
+      ],
+      "corrected_raw_sha256": "a2bbea0cfdd6bf10a88a5d7165907d50dd4c1296a7004bf1f01e291f8011a97f",
+      "corrected_reference_mac_raw_exact": true,
+      "corrected_trace_resident_exact": true,
+      "depth": 32,
+      "family": 1,
+      "geometry": [
+        23,
+        13
+      ],
+      "input_sha256": "e1a810e1bc751e3503d8fd3fae76f43acacdd5151eca4edb0bbb107db88c5540",
+      "local_trace_sha256": "fe3620408e8c92ef522ea2a3041b565363a6fb2374f9474589e7f89864aca7bb",
+      "mac_raw_sha256": "a2bbea0cfdd6bf10a88a5d7165907d50dd4c1296a7004bf1f01e291f8011a97f",
+      "native_covered_expected_angle_sha256": "3cbeaf2805bd9c15b572b1424994dfcc84e2e1a4bd2d552d3f81ce9dcead5505",
+      "native_covered_observed_angle_sha256": "3cbeaf2805bd9c15b572b1424994dfcc84e2e1a4bd2d552d3f81ce9dcead5505",
+      "native_scalar_covered": 299,
+      "native_scalar_uncovered": 0,
+      "parameters": [
+        {
+          "kind": "u",
+          "slot": 1,
+          "value": 1
+        },
+        {
+          "kind": "p",
+          "slot": 2,
+          "value": [
+            11,
+            6
+          ]
+        },
+        {
+          "kind": "i",
+          "slot": 4,
+          "value": 4
+        },
+        {
+          "kind": "u",
+          "slot": 5,
+          "value": 1
+        },
+        {
+          "kind": "i",
+          "slot": 6,
+          "value": 0
+        },
+        {
+          "kind": "i",
+          "slot": 7,
+          "value": 0
+        },
+        {
+          "kind": "i",
+          "slot": 10,
+          "value": 0
+        },
+        {
+          "kind": "u",
+          "slot": 11,
+          "value": 1
+        },
+        {
+          "kind": "i",
+          "slot": 12,
+          "value": 0
+        },
+        {
+          "kind": "i",
+          "slot": 13,
+          "value": 0
+        },
+        {
+          "kind": "b",
+          "slot": 15,
+          "value": 1
+        },
+        {
+          "kind": "s",
+          "slot": 17,
+          "value": 1
+        },
+        {
+          "kind": "a",
+          "slot": 18,
+          "value": 0
+        },
+        {
+          "kind": "s",
+          "slot": 20,
+          "value": 5
+        },
+        {
+          "kind": "s",
+          "slot": 21,
+          "value": 1
+        },
+        {
+          "kind": "s",
+          "slot": 22,
+          "value": 0
+        },
+        {
+          "kind": "s",
+          "slot": 24,
+          "value": 25
+        },
+        {
+          "kind": "u",
+          "slot": 25,
+          "value": 1
+        },
+        {
+          "kind": "i",
+          "slot": 27,
+          "value": 1
+        },
+        {
+          "kind": "a",
+          "slot": 28,
+          "value": 0.0
+        },
+        {
+          "kind": "s",
+          "slot": 29,
+          "value": 3.0
+        }
+      ],
+      "parent_different_bytes": 0,
+      "parent_raw_sha256": "a2bbea0cfdd6bf10a88a5d7165907d50dd4c1296a7004bf1f01e291f8011a97f",
+      "selected_points": [],
+      "uncovered_coordinates": []
+    },
+    {
+      "angle_count": 589,
+      "basis_cos_sin_f32_le_hex": "0000803f00000000",
+      "center": [
+        15.0,
+        9.0
+      ],
+      "corrected_raw_sha256": "1c161db2a0cc58d89f9a282b716d8b9d786c760811e9888364ea905d15a00e0a",
+      "corrected_reference_mac_raw_exact": true,
+      "corrected_trace_resident_exact": true,
+      "depth": 32,
+      "family": 1,
+      "geometry": [
+        31,
+        19
+      ],
+      "input_sha256": "5a95838e3f89aba6c19c6599d24baf9c76c61db3281c41504c79e440f908caa5",
+      "local_trace_sha256": "3b2d74ff6aed0f9f4997af49ba8bd6aa5ee73365fbce6cd1f18fe6a10936f3b8",
+      "mac_raw_sha256": "1c161db2a0cc58d89f9a282b716d8b9d786c760811e9888364ea905d15a00e0a",
+      "native_covered_expected_angle_sha256": "42b1b280ff22f08f22d395abfb9b2b8d4b808bbfb50ea4839b4beb14145dddcd",
+      "native_covered_observed_angle_sha256": "42b1b280ff22f08f22d395abfb9b2b8d4b808bbfb50ea4839b4beb14145dddcd",
+      "native_scalar_covered": 558,
+      "native_scalar_uncovered": 31,
+      "parameters": [
+        {
+          "kind": "u",
+          "slot": 1,
+          "value": 1
+        },
+        {
+          "kind": "p",
+          "slot": 2,
+          "value": [
+            15,
+            9
+          ]
+        },
+        {
+          "kind": "i",
+          "slot": 4,
+          "value": 4
+        },
+        {
+          "kind": "u",
+          "slot": 5,
+          "value": 1
+        },
+        {
+          "kind": "i",
+          "slot": 6,
+          "value": 0
+        },
+        {
+          "kind": "i",
+          "slot": 7,
+          "value": 0
+        },
+        {
+          "kind": "i",
+          "slot": 10,
+          "value": 0
+        },
+        {
+          "kind": "u",
+          "slot": 11,
+          "value": 1
+        },
+        {
+          "kind": "i",
+          "slot": 12,
+          "value": 0
+        },
+        {
+          "kind": "i",
+          "slot": 13,
+          "value": 0
+        },
+        {
+          "kind": "b",
+          "slot": 15,
+          "value": 1
+        },
+        {
+          "kind": "s",
+          "slot": 17,
+          "value": 1
+        },
+        {
+          "kind": "a",
+          "slot": 18,
+          "value": 0
+        },
+        {
+          "kind": "s",
+          "slot": 20,
+          "value": 5
+        },
+        {
+          "kind": "s",
+          "slot": 21,
+          "value": 1
+        },
+        {
+          "kind": "s",
+          "slot": 22,
+          "value": 0
+        },
+        {
+          "kind": "s",
+          "slot": 24,
+          "value": 25
+        },
+        {
+          "kind": "u",
+          "slot": 25,
+          "value": 1
+        },
+        {
+          "kind": "i",
+          "slot": 27,
+          "value": 1
+        },
+        {
+          "kind": "a",
+          "slot": 28,
+          "value": 0.0
+        },
+        {
+          "kind": "s",
+          "slot": 29,
+          "value": 3.0
+        }
+      ],
+      "parent_different_bytes": 5,
+      "parent_raw_sha256": "cfce66a5f210c509bd484088e9d7b01565beafbe84b8acd887fb21f6a3e42ab4",
+      "selected_points": [
+        {
+          "coordinate": [
+            30,
+            16
+          ],
+          "corrected_angle_f32_le_hex": "988ddf3e",
+          "corrected_sample_rgba_f32_le_hex": "9178ec3e35c7c03e4051b73e0000803f",
+          "mac_sample_rgba_f32_le_hex": "9178ec3e35c7c03e4051b73e0000803f",
+          "native_scalar_argument_bits_yx": [
+            "0x40e00000",
+            "0x41700000"
+          ],
+          "native_scalar_result_bits": "0x3edf8d98",
+          "parent_angle_f32_le_hex": "998ddf3e",
+          "parent_sample_rgba_f32_le_hex": "9078ec3e30c7c03e3c51b73e0000803f",
+          "relative_coordinate": [
+            15.0,
+            7.0
+          ]
+        },
+        {
+          "coordinate": [
+            24,
+            17
+          ],
+          "corrected_angle_f32_le_hex": "3c053a3f",
+          "corrected_sample_rgba_f32_le_hex": "bdc2493f929d513fcd690b3f0000803f",
+          "mac_sample_rgba_f32_le_hex": "bdc2493f929d513fcd690b3f0000803f",
+          "native_scalar_argument_bits_yx": [
+            "0x41000000",
+            "0x41100000"
+          ],
+          "native_scalar_result_bits": "0x3f3a053c",
+          "parent_angle_f32_le_hex": "3b053a3f",
+          "parent_sample_rgba_f32_le_hex": "bdc2493f939d513fce690b3f0000803f",
+          "relative_coordinate": [
+            9.0,
+            8.0
+          ]
+        }
+      ],
+      "uncovered_coordinates": [
+        [
+          0,
+          18
+        ],
+        [
+          1,
+          18
+        ],
+        [
+          2,
+          18
+        ],
+        [
+          3,
+          18
+        ],
+        [
+          4,
+          18
+        ],
+        [
+          5,
+          18
+        ],
+        [
+          6,
+          18
+        ],
+        [
+          7,
+          18
+        ],
+        [
+          8,
+          18
+        ],
+        [
+          9,
+          18
+        ],
+        [
+          10,
+          18
+        ],
+        [
+          11,
+          18
+        ],
+        [
+          12,
+          18
+        ],
+        [
+          13,
+          18
+        ],
+        [
+          14,
+          18
+        ],
+        [
+          15,
+          18
+        ],
+        [
+          16,
+          18
+        ],
+        [
+          17,
+          18
+        ],
+        [
+          18,
+          18
+        ],
+        [
+          19,
+          18
+        ],
+        [
+          20,
+          18
+        ],
+        [
+          21,
+          18
+        ],
+        [
+          22,
+          18
+        ],
+        [
+          23,
+          18
+        ],
+        [
+          24,
+          18
+        ],
+        [
+          25,
+          18
+        ],
+        [
+          26,
+          18
+        ],
+        [
+          27,
+          18
+        ],
+        [
+          28,
+          18
+        ],
+        [
+          29,
+          18
+        ],
+        [
+          30,
+          18
+        ]
+      ]
+    }
+  ],
+  "schema": "radialblur.doublecast-sampler-native-coverage/1",
+  "source_sha256": "9a4e9eddec319185c01d2dd289d586aa41e3aafeca7aeefe23d1a86cd3243548",
+  "summary": {
+    "angle_count": 888,
+    "corrected_reference_mac_raw_exact": 2,
+    "native_scalar_covered": 857,
+    "native_scalar_uncovered": 31
+  },
+  "worker_sha256": "722255eed6de0246f3918a11837d21eae0cb6cd6286ed1ae2d49f823ee92f4ec"
+}
