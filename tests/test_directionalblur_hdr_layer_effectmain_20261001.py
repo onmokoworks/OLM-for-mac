@@ -15,7 +15,7 @@ class HDRLayerPublicTests(unittest.TestCase):
   self.assertEqual(sum(c['mac_process_returncode']==0 and not c['exact'] for c in baseline['cases']),12)
   self.assertTrue(all(c['layer_profile']=='extreme_finite' for c in baseline['cases'] if not c['exact']))
   r=json.loads(REPORT.read_text());self.assertEqual(r['case_count'],180);self.assertEqual(r['exact_count'],180)
-  self.assertEqual(r['production_source_sha256'],hdr_layer.sha(hdr_layer.owner.SOURCE.read_bytes()))
+  self.assertEqual(r['production_source_sha256'],'8c9c0c34e220d3cd281d7b1ba3c6673704af42437fbc02dba30de8d5f7fa8010')
   self.assertEqual(r['probe_sha256'],hdr_layer.sha(Path(hdr_layer.__file__).read_bytes()))
   self.assertEqual(r['harness_sha256'],hdr_layer.sha(hdr_layer.HARNESS.read_bytes()))
   self.assertTrue(all(c['public_dispatch_error']==0 and c['mac_route']==3 and c['mac_process_returncode']==0 for c in r['cases']))

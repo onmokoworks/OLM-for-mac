@@ -1092,6 +1092,22 @@ static bool DirectionalWorldHasZeroOrigin(const void *, long)
 	return true;
 }
 
+static OLMDirectionalBlurInfo DirectionalDeepLayerInfo(
+    const OLMDirectionalBlurInfo &requested, const PF_EffectWorld *input,
+    const PF_EffectWorld *layer, short depth)
+{
+    OLMDirectionalBlurInfo result = requested;
+    // AEX full render allocates its Layer field only when the checked-out Layer
+    // matches the full-resolution render dimensions. With None/different size,
+    // the row driver sees a null field and uses the multiplicative identity.
+    if ((depth == 16 || depth == 32) && result.noise_variation > 0.0 &&
+        result.noise_type == 3 && (!input || !layer ||
+            layer->width != input->width || layer->height != input->height)) {
+        result.noise_variation = 0.0;
+    }
+    return result;
+}
+
 static bool IsGenericDeepFeatureShape(const OLMDirectionalBlurInfo &info)
 {
     return (info.front_strength != 0 || info.back_strength != 0) &&
@@ -1489,9 +1505,10 @@ static void ObserveDirectionalRenderRoute(int *observed_route,
 
 static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
                           PF_EffectWorld *noise_layer,
-                          const OLMDirectionalBlurInfo &info, short bitdepth,
+                          const OLMDirectionalBlurInfo &requested_info, short bitdepth,
                           int *observed_route = nullptr)
 {
+    const auto info = DirectionalDeepLayerInfo(requested_info, input, noise_layer, bitdepth);
 	ObserveDirectionalRenderRoute(observed_route, kDirectionalRouteOther);
 	const bool dual_side_higher_order = DualSideHigherOrderTuple(info, 32, 18);
 	if (dual_side_higher_order &&
@@ -2262,6 +2279,7 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	}
 	PF_EffectWorld *noise_layer = params[OLMDIRECTIONALBLUR_NOISE_LAYER]
 		? &params[OLMDIRECTIONALBLUR_NOISE_LAYER]->u.ld : NULL;
+	info = DirectionalDeepLayerInfo(info, input, noise_layer, bitdepth);
 	if (bitdepth != 8 && info.noise_variation > 0.0 && info.noise_type == 3) {
 		PF_PixelFormat layer_format = PF_PixelFormat_INVALID;
 		if (!noise_layer || !noise_layer->data) return PF_Err_BAD_CALLBACK_PARAM;
@@ -2559,8 +2577,9 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 		if (!err) err = extra->cb->checkout_output(in_data->effect_ref, &output_world);
 		if (!err && !output_world) err = PF_Err_BAD_CALLBACK_PARAM;
 		if (!err && (!DisjointPayloads(input_world, output_world) ||
-			(noise_world && (!DisjointPayloads(input_world, noise_world) ||
-			                 !DisjointPayloads(output_world, noise_world))))) {
+			(extra->input->bitdepth == 8 && noise_world &&
+                (!DisjointPayloads(input_world, noise_world) ||
+                 !DisjointPayloads(output_world, noise_world))))) {
 			err = PF_Err_BAD_CALLBACK_PARAM;
 		}
 		if (!err) {
@@ -2597,6 +2616,8 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 			}
 			OLMDirectionalBlurInfo info = InfoFromParams(
 				param_ptrs, render_scale_x, render_scale_y);
+            info = DirectionalDeepLayerInfo(info, input_world, noise_world,
+                extra->input->bitdepth);
 			if ((extra->input->bitdepth == 16 || extra->input->bitdepth == 32) &&
 				info.noise_variation > 0.0 && info.noise_type == 3) {
 				PF_PixelFormat source_format = PF_PixelFormat_INVALID;

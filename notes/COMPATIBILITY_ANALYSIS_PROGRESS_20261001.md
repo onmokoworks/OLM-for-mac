@@ -637,6 +637,52 @@ commit0e520eeaとcore hashで別validationへbindし、同じMac entry cpp hash�
 異寸法/原点、PF16非SDR、downsample、全設定/素材へ一般化しない。
 通常UIのchoices2/labels3と値3の宣言範囲外stateの区別も維持。完全互換Goalはactive。
 
+## DB-LAYER-DIM-016: 異寸法とNoneでfieldを生成しない規則を復元
+
+Layerをsourceより小さく/大きく/横長で低く/細くて高くする4形状で比較。
+source9×7/37×29、Layer profile2種類、Front/Back/Dual、Noise/components/Fade+Gain、
+PF16/PF32の計288条件。元AEXの公開Smart entryは正常終了したが、Macは同寸法制限で
+全拒否した。最初の仮説はLayerの左上intersectionを使い、外側をzeroにする処理。
+解析adapterによるMac出力も、nativeへcropped Layerを渡す対照も0/288 exact。
+この失敗を保存し、切抜きやresizeによる近似を本番へ入れない。
+
+静的根拠: FUN_1800057b0のLayer checkout後は、Layerのwidth/heightを
+ceil(PF_InData full width/height × render scale)と比較する。両方一致した場合だけ2つの
+field planeをallocateする。FUN_1800038d0はmode2でfield pointer+0x80b0がnullなら
+Noise係数を1に保ち、Noise opacityとの混合を行わない。fieldをzeroにしてopacity
+だけを残す動作とは違う。今回は既に扱っているfull-frame/unit-scale条件で比較する。
+
+反証後にNoise Variation=0の対照へ切替えると288/288でnative raw hashが同じ。
+Mac解析adapterも288/288 exact。default None LayerでType3を指定する別54条件
+（9×7/16×16/37×29、3方向、3機能、2深度）も、全件Noise無効のnative対照と一致。
+Type3の宣言範囲外stateとdescriptorのchoices2/labels3は引き続き区別する。
+
+本番はdeep Layerのdims gateをClassic/Smart/dispatcherで共用する。Noneまたは異寸法
+ならrender-localのNoise量を0に正規化して既存neutral/general機能へ渡す。
+公開parameter、Layer world、sourceには書き込まない。異寸法Layerをcrop/resizeせず、
+データや形式を参照しない。同寸法で実際に使うLayerには形式、rowbytes、origin、
+payload分離、PF16 SDR/PF32 finiteの検査を維持する。Smartのunused deep Layerには
+payloadのalias検査を適用しないが、checkout済みLayerのcheckinとatomic commitは維持。
+PF8の既存契約とcheckout/alias検査は変更しない。
+
+公開再capture288/288 exact、全件route2/3、解析adapterなし。元のnative hashも全保持。
+実SDK・production seamなしのfake AE hostで両公開cmdをO2/ASan/UBSanで再生し、
+異寸法1152、None216の成功renderで全native hashが一致した。使用しないLayerに未読可能
+pointer/rowbytes0/非zero origin/format callback失敗をまとめて渡す場合とsource aliasの
+16 renderもnative witnessと一致。fieldが無効なときの検査順を確認した。
+source+5/output+11/Layer+7のodd stride、input/Layer/padding不変、Smart21 parameter、
+2 Layer（Noneはinput1のみ）のcheckinとsuite releaseも確認。
+
+同寸法でfieldを使用する18失敗状態×両depth×両buildの72失敗renderは全てatomic拒否。
+Layer120の両cmd回帰は480成功と140失敗（旧160失敗のうち復元した異寸法/None状態は
+失敗として数えない）。HDR Layer180も720成功で全hash維持。生成Noise等180、source
+HDR120、既存Back/Dual EffectMain、Smart cleanup17も現行sourceで再検証しPASS。
+過去capture hashは付け替えず、新しいlive validationの依存hashへbindする。
+
+非zero原点、ROI/downsample/full-size referenceと実checkout worldの関係、全設定/素材、
+PF16非SDR、任意float/near-INT32散布、PF32 Layerの保守的な大画像予算、実host UIと
+project保存/復元、native AE/UCRT/installedの完了証拠は残る。完全互換Goalはactive。
+
 ## 次の順序
 
 1. ColorKeyの他Blur設定を公開ownerで再検証し、旧import stub依存の分岐を復元。

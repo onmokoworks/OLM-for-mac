@@ -1,0 +1,3147 @@
+{
+  "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+  "case_count": 54,
+  "cases": [
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "noise",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "5107c6832a7060d44cee4ba74d5d73e43542324c4b1b9629033552091c41427f",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 72,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        9,
+        7
+      ],
+      "input_sha256": "1517d3704915d860803b51667f48716347de5937c87b21ac7ae846a181e47078",
+      "mode": "front",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "5107c6832a7060d44cee4ba74d5d73e43542324c4b1b9629033552091c41427f",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 72,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "5107c6832a7060d44cee4ba74d5d73e43542324c4b1b9629033552091c41427f",
+      "native_raw_sha256": "5107c6832a7060d44cee4ba74d5d73e43542324c4b1b9629033552091c41427f",
+      "parameter_payload": "v4|param_1@1:angle=123.5;param_2@2:f64=1;param_3@3:f64=0;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=0;param_10@10:f64=0;param_11@11:f64=0;param_12@12:f64=0;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 123.5,
+        "5": 7,
+        "10": 0,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "noise",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "4ed414dc61e0bf5babac71f688e8cf049e3392584685919c1d6d4d15b67af65a",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 144,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        9,
+        7
+      ],
+      "input_sha256": "0ee1aa4947c0c390f198fea72a11b0695356158e08fb693c90649b5b8f706da0",
+      "mode": "front",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "4ed414dc61e0bf5babac71f688e8cf049e3392584685919c1d6d4d15b67af65a",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 144,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "4ed414dc61e0bf5babac71f688e8cf049e3392584685919c1d6d4d15b67af65a",
+      "native_raw_sha256": "4ed414dc61e0bf5babac71f688e8cf049e3392584685919c1d6d4d15b67af65a",
+      "parameter_payload": "v4|param_1@1:angle=123.5;param_2@2:f64=1;param_3@3:f64=0;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=0;param_10@10:f64=0;param_11@11:f64=0;param_12@12:f64=0;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 123.5,
+        "5": 7,
+        "10": 0,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "components",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "b7380b407e396e4412923d90062c37f01feb6bc7f30475802384d6fdccf1aa5c",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 72,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        9,
+        7
+      ],
+      "input_sha256": "1517d3704915d860803b51667f48716347de5937c87b21ac7ae846a181e47078",
+      "mode": "front",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "b7380b407e396e4412923d90062c37f01feb6bc7f30475802384d6fdccf1aa5c",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 72,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "b7380b407e396e4412923d90062c37f01feb6bc7f30475802384d6fdccf1aa5c",
+      "native_raw_sha256": "b7380b407e396e4412923d90062c37f01feb6bc7f30475802384d6fdccf1aa5c",
+      "parameter_payload": "v4|param_1@1:angle=123.5;param_2@2:f64=1;param_3@3:f64=37.75;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=31.75;param_10@10:f64=0;param_11@11:f64=0;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 123.5,
+        "3": 37.75,
+        "5": 7,
+        "7": 31.75,
+        "10": 0,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "components",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "ff7d84d3115fa2a878ae779811c50e0018a71f9d16aa633cfb0f131ebfc32f71",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 144,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        9,
+        7
+      ],
+      "input_sha256": "0ee1aa4947c0c390f198fea72a11b0695356158e08fb693c90649b5b8f706da0",
+      "mode": "front",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "ff7d84d3115fa2a878ae779811c50e0018a71f9d16aa633cfb0f131ebfc32f71",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 144,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "ff7d84d3115fa2a878ae779811c50e0018a71f9d16aa633cfb0f131ebfc32f71",
+      "native_raw_sha256": "ff7d84d3115fa2a878ae779811c50e0018a71f9d16aa633cfb0f131ebfc32f71",
+      "parameter_payload": "v4|param_1@1:angle=123.5;param_2@2:f64=1;param_3@3:f64=37.75;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=31.75;param_10@10:f64=0;param_11@11:f64=0;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 123.5,
+        "3": 37.75,
+        "5": 7,
+        "7": 31.75,
+        "10": 0,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "fade",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "dd9dddb394f36c27340d9220fce3fad743a8568b902cd7bbb556704f3a53318c",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 72,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        9,
+        7
+      ],
+      "input_sha256": "1517d3704915d860803b51667f48716347de5937c87b21ac7ae846a181e47078",
+      "mode": "front",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "dd9dddb394f36c27340d9220fce3fad743a8568b902cd7bbb556704f3a53318c",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 72,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "dd9dddb394f36c27340d9220fce3fad743a8568b902cd7bbb556704f3a53318c",
+      "native_raw_sha256": "dd9dddb394f36c27340d9220fce3fad743a8568b902cd7bbb556704f3a53318c",
+      "parameter_payload": "v4|param_1@1:angle=123.5;param_2@2:f64=2.25;param_3@3:f64=37.75;param_5@5:f64=7;param_6@6:f64=5;param_7@7:f64=31.75;param_10@10:f64=0;param_11@11:f64=7;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 123.5,
+        "2": 2.25,
+        "3": 37.75,
+        "5": 7,
+        "6": 5,
+        "7": 31.75,
+        "10": 0,
+        "11": 7,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "fade",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "07fb20176cacfa30a9878b978da427cc911f52c3dda0394a24e175ce47d5def5",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 144,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        9,
+        7
+      ],
+      "input_sha256": "0ee1aa4947c0c390f198fea72a11b0695356158e08fb693c90649b5b8f706da0",
+      "mode": "front",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "07fb20176cacfa30a9878b978da427cc911f52c3dda0394a24e175ce47d5def5",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 144,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "07fb20176cacfa30a9878b978da427cc911f52c3dda0394a24e175ce47d5def5",
+      "native_raw_sha256": "07fb20176cacfa30a9878b978da427cc911f52c3dda0394a24e175ce47d5def5",
+      "parameter_payload": "v4|param_1@1:angle=123.5;param_2@2:f64=2.25;param_3@3:f64=37.75;param_5@5:f64=7;param_6@6:f64=5;param_7@7:f64=31.75;param_10@10:f64=0;param_11@11:f64=7;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 123.5,
+        "2": 2.25,
+        "3": 37.75,
+        "5": 7,
+        "6": 5,
+        "7": 31.75,
+        "10": 0,
+        "11": 7,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "noise",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "761360bbf68afe0e9b53f0e3883ce857e53d2a324e282d944321eb704f60d1b0",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 72,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        9,
+        7
+      ],
+      "input_sha256": "1517d3704915d860803b51667f48716347de5937c87b21ac7ae846a181e47078",
+      "mode": "back",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "761360bbf68afe0e9b53f0e3883ce857e53d2a324e282d944321eb704f60d1b0",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 72,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "761360bbf68afe0e9b53f0e3883ce857e53d2a324e282d944321eb704f60d1b0",
+      "native_raw_sha256": "761360bbf68afe0e9b53f0e3883ce857e53d2a324e282d944321eb704f60d1b0",
+      "parameter_payload": "v4|param_1@1:angle=-17.25;param_2@2:f64=1;param_3@3:f64=0;param_5@5:f64=0;param_6@6:f64=0;param_7@7:f64=0;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=0;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": -17.25,
+        "5": 0,
+        "10": 11,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "noise",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "3d0296ca25d9ba6d4066a6e08adbac1b187dce5882f45996c7bf48820b90670f",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 144,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        9,
+        7
+      ],
+      "input_sha256": "0ee1aa4947c0c390f198fea72a11b0695356158e08fb693c90649b5b8f706da0",
+      "mode": "back",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "3d0296ca25d9ba6d4066a6e08adbac1b187dce5882f45996c7bf48820b90670f",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 144,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "3d0296ca25d9ba6d4066a6e08adbac1b187dce5882f45996c7bf48820b90670f",
+      "native_raw_sha256": "3d0296ca25d9ba6d4066a6e08adbac1b187dce5882f45996c7bf48820b90670f",
+      "parameter_payload": "v4|param_1@1:angle=-17.25;param_2@2:f64=1;param_3@3:f64=0;param_5@5:f64=0;param_6@6:f64=0;param_7@7:f64=0;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=0;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": -17.25,
+        "5": 0,
+        "10": 11,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "components",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "971d96fdf550abd14fa5c710c922a34e12fdda2a65ea26e69cc73463a6fa014f",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 72,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        9,
+        7
+      ],
+      "input_sha256": "1517d3704915d860803b51667f48716347de5937c87b21ac7ae846a181e47078",
+      "mode": "back",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "971d96fdf550abd14fa5c710c922a34e12fdda2a65ea26e69cc73463a6fa014f",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 72,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "971d96fdf550abd14fa5c710c922a34e12fdda2a65ea26e69cc73463a6fa014f",
+      "native_raw_sha256": "971d96fdf550abd14fa5c710c922a34e12fdda2a65ea26e69cc73463a6fa014f",
+      "parameter_payload": "v4|param_1@1:angle=-17.25;param_2@2:f64=1;param_3@3:f64=37.75;param_5@5:f64=0;param_6@6:f64=0;param_7@7:f64=31.75;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": -17.25,
+        "3": 37.75,
+        "5": 0,
+        "7": 31.75,
+        "10": 11,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "components",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "053e96e499c8296c46cacef8370c828b4d65de0464bf98a2729b75c3b29043c5",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 144,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        9,
+        7
+      ],
+      "input_sha256": "0ee1aa4947c0c390f198fea72a11b0695356158e08fb693c90649b5b8f706da0",
+      "mode": "back",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "053e96e499c8296c46cacef8370c828b4d65de0464bf98a2729b75c3b29043c5",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 144,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "053e96e499c8296c46cacef8370c828b4d65de0464bf98a2729b75c3b29043c5",
+      "native_raw_sha256": "053e96e499c8296c46cacef8370c828b4d65de0464bf98a2729b75c3b29043c5",
+      "parameter_payload": "v4|param_1@1:angle=-17.25;param_2@2:f64=1;param_3@3:f64=37.75;param_5@5:f64=0;param_6@6:f64=0;param_7@7:f64=31.75;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": -17.25,
+        "3": 37.75,
+        "5": 0,
+        "7": 31.75,
+        "10": 11,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "fade",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "37359a09a783d626dbb28cacb421cb6f88deeae353e51359930762fb0e628083",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 72,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        9,
+        7
+      ],
+      "input_sha256": "1517d3704915d860803b51667f48716347de5937c87b21ac7ae846a181e47078",
+      "mode": "back",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "37359a09a783d626dbb28cacb421cb6f88deeae353e51359930762fb0e628083",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 72,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "37359a09a783d626dbb28cacb421cb6f88deeae353e51359930762fb0e628083",
+      "native_raw_sha256": "37359a09a783d626dbb28cacb421cb6f88deeae353e51359930762fb0e628083",
+      "parameter_payload": "v4|param_1@1:angle=-17.25;param_2@2:f64=2.25;param_3@3:f64=37.75;param_5@5:f64=0;param_6@6:f64=5;param_7@7:f64=31.75;param_10@10:f64=11;param_11@11:f64=7;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": -17.25,
+        "2": 2.25,
+        "3": 37.75,
+        "5": 0,
+        "6": 5,
+        "7": 31.75,
+        "10": 11,
+        "11": 7,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "fade",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "9b94362f7003791167c51b261c6b677f0664cc199d3981df5315330b59d9249c",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 144,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        9,
+        7
+      ],
+      "input_sha256": "0ee1aa4947c0c390f198fea72a11b0695356158e08fb693c90649b5b8f706da0",
+      "mode": "back",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "9b94362f7003791167c51b261c6b677f0664cc199d3981df5315330b59d9249c",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 144,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "9b94362f7003791167c51b261c6b677f0664cc199d3981df5315330b59d9249c",
+      "native_raw_sha256": "9b94362f7003791167c51b261c6b677f0664cc199d3981df5315330b59d9249c",
+      "parameter_payload": "v4|param_1@1:angle=-17.25;param_2@2:f64=2.25;param_3@3:f64=37.75;param_5@5:f64=0;param_6@6:f64=5;param_7@7:f64=31.75;param_10@10:f64=11;param_11@11:f64=7;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": -17.25,
+        "2": 2.25,
+        "3": 37.75,
+        "5": 0,
+        "6": 5,
+        "7": 31.75,
+        "10": 11,
+        "11": 7,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "noise",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "5c69fd20dccf390b31e241f4a5add79191caeb21a08b8e26e09e36d67676085d",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 72,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        9,
+        7
+      ],
+      "input_sha256": "1517d3704915d860803b51667f48716347de5937c87b21ac7ae846a181e47078",
+      "mode": "dual",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "5c69fd20dccf390b31e241f4a5add79191caeb21a08b8e26e09e36d67676085d",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 72,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "5c69fd20dccf390b31e241f4a5add79191caeb21a08b8e26e09e36d67676085d",
+      "native_raw_sha256": "5c69fd20dccf390b31e241f4a5add79191caeb21a08b8e26e09e36d67676085d",
+      "parameter_payload": "v4|param_1@1:angle=17.25;param_2@2:f64=1;param_3@3:f64=0;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=0;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=0;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 17.25,
+        "5": 7,
+        "10": 11,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "noise",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "836715581888c12bfe8553a90c6a0172b9b299ee88a5301026d3f77756ab6659",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 144,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        9,
+        7
+      ],
+      "input_sha256": "0ee1aa4947c0c390f198fea72a11b0695356158e08fb693c90649b5b8f706da0",
+      "mode": "dual",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "836715581888c12bfe8553a90c6a0172b9b299ee88a5301026d3f77756ab6659",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 144,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "836715581888c12bfe8553a90c6a0172b9b299ee88a5301026d3f77756ab6659",
+      "native_raw_sha256": "836715581888c12bfe8553a90c6a0172b9b299ee88a5301026d3f77756ab6659",
+      "parameter_payload": "v4|param_1@1:angle=17.25;param_2@2:f64=1;param_3@3:f64=0;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=0;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=0;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 17.25,
+        "5": 7,
+        "10": 11,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "components",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "cecd85e0ff38e2513f6c960e45bd553bee3aee6f0e6da300c2b0ee8d5976c7db",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 72,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        9,
+        7
+      ],
+      "input_sha256": "1517d3704915d860803b51667f48716347de5937c87b21ac7ae846a181e47078",
+      "mode": "dual",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "cecd85e0ff38e2513f6c960e45bd553bee3aee6f0e6da300c2b0ee8d5976c7db",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 72,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "cecd85e0ff38e2513f6c960e45bd553bee3aee6f0e6da300c2b0ee8d5976c7db",
+      "native_raw_sha256": "cecd85e0ff38e2513f6c960e45bd553bee3aee6f0e6da300c2b0ee8d5976c7db",
+      "parameter_payload": "v4|param_1@1:angle=17.25;param_2@2:f64=1;param_3@3:f64=37.75;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=31.75;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 17.25,
+        "3": 37.75,
+        "5": 7,
+        "7": 31.75,
+        "10": 11,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "components",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "3a1dc322c7b3e2bb8697524e1998ea6ef45e3ac23c791e40d33d36946fb22920",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 144,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        9,
+        7
+      ],
+      "input_sha256": "0ee1aa4947c0c390f198fea72a11b0695356158e08fb693c90649b5b8f706da0",
+      "mode": "dual",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "3a1dc322c7b3e2bb8697524e1998ea6ef45e3ac23c791e40d33d36946fb22920",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 144,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "3a1dc322c7b3e2bb8697524e1998ea6ef45e3ac23c791e40d33d36946fb22920",
+      "native_raw_sha256": "3a1dc322c7b3e2bb8697524e1998ea6ef45e3ac23c791e40d33d36946fb22920",
+      "parameter_payload": "v4|param_1@1:angle=17.25;param_2@2:f64=1;param_3@3:f64=37.75;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=31.75;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 17.25,
+        "3": 37.75,
+        "5": 7,
+        "7": 31.75,
+        "10": 11,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "fade",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "ca2800de0e16ebe002c8dddb61ba944fcd4d64d646b97c778e45a6b86bf3f6b5",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 72,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        9,
+        7
+      ],
+      "input_sha256": "1517d3704915d860803b51667f48716347de5937c87b21ac7ae846a181e47078",
+      "mode": "dual",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "ca2800de0e16ebe002c8dddb61ba944fcd4d64d646b97c778e45a6b86bf3f6b5",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 72,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "ca2800de0e16ebe002c8dddb61ba944fcd4d64d646b97c778e45a6b86bf3f6b5",
+      "native_raw_sha256": "ca2800de0e16ebe002c8dddb61ba944fcd4d64d646b97c778e45a6b86bf3f6b5",
+      "parameter_payload": "v4|param_1@1:angle=17.25;param_2@2:f64=2.25;param_3@3:f64=37.75;param_5@5:f64=7;param_6@6:f64=5;param_7@7:f64=31.75;param_10@10:f64=11;param_11@11:f64=7;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 17.25,
+        "2": 2.25,
+        "3": 37.75,
+        "5": 7,
+        "6": 5,
+        "7": 31.75,
+        "10": 11,
+        "11": 7,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "fade",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "8639627c821d1d4567c94fad50ce21b3170e3c375fd6e089a38ea33db87100d5",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 144,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        9,
+        7
+      ],
+      "input_sha256": "0ee1aa4947c0c390f198fea72a11b0695356158e08fb693c90649b5b8f706da0",
+      "mode": "dual",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "8639627c821d1d4567c94fad50ce21b3170e3c375fd6e089a38ea33db87100d5",
+          "guards_intact": true,
+          "height": 7,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 144,
+          "width": 9
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "8639627c821d1d4567c94fad50ce21b3170e3c375fd6e089a38ea33db87100d5",
+      "native_raw_sha256": "8639627c821d1d4567c94fad50ce21b3170e3c375fd6e089a38ea33db87100d5",
+      "parameter_payload": "v4|param_1@1:angle=17.25;param_2@2:f64=2.25;param_3@3:f64=37.75;param_5@5:f64=7;param_6@6:f64=5;param_7@7:f64=31.75;param_10@10:f64=11;param_11@11:f64=7;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 17.25,
+        "2": 2.25,
+        "3": 37.75,
+        "5": 7,
+        "6": 5,
+        "7": 31.75,
+        "10": 11,
+        "11": 7,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "noise",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "377b66f99a47e87ed449b7e2fa741ae60e7cec4ded40dd471eff9c1325f4be51",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 128,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        16,
+        16
+      ],
+      "input_sha256": "f65fa805398e1555467a84f33235fee7bdf6e06c219a95b85d1e53183f7ecd77",
+      "mode": "front",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "377b66f99a47e87ed449b7e2fa741ae60e7cec4ded40dd471eff9c1325f4be51",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 128,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "377b66f99a47e87ed449b7e2fa741ae60e7cec4ded40dd471eff9c1325f4be51",
+      "native_raw_sha256": "377b66f99a47e87ed449b7e2fa741ae60e7cec4ded40dd471eff9c1325f4be51",
+      "parameter_payload": "v4|param_1@1:angle=123.5;param_2@2:f64=1;param_3@3:f64=0;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=0;param_10@10:f64=0;param_11@11:f64=0;param_12@12:f64=0;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 123.5,
+        "5": 7,
+        "10": 0,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "noise",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "2da4ce060e49201d996a89853968323b65e1855e44f9fa8035b3bdcff94b4167",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 256,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        16,
+        16
+      ],
+      "input_sha256": "9daea3821bc79791d3a16b799e8ecc8cd5b672623e81b060ed4bff4654eb0467",
+      "mode": "front",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "2da4ce060e49201d996a89853968323b65e1855e44f9fa8035b3bdcff94b4167",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 256,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "2da4ce060e49201d996a89853968323b65e1855e44f9fa8035b3bdcff94b4167",
+      "native_raw_sha256": "2da4ce060e49201d996a89853968323b65e1855e44f9fa8035b3bdcff94b4167",
+      "parameter_payload": "v4|param_1@1:angle=123.5;param_2@2:f64=1;param_3@3:f64=0;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=0;param_10@10:f64=0;param_11@11:f64=0;param_12@12:f64=0;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 123.5,
+        "5": 7,
+        "10": 0,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "components",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "723a107f038010976845d37e929d8b128763c27f38254515777c854605bacbac",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 128,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        16,
+        16
+      ],
+      "input_sha256": "f65fa805398e1555467a84f33235fee7bdf6e06c219a95b85d1e53183f7ecd77",
+      "mode": "front",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "723a107f038010976845d37e929d8b128763c27f38254515777c854605bacbac",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 128,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "723a107f038010976845d37e929d8b128763c27f38254515777c854605bacbac",
+      "native_raw_sha256": "723a107f038010976845d37e929d8b128763c27f38254515777c854605bacbac",
+      "parameter_payload": "v4|param_1@1:angle=123.5;param_2@2:f64=1;param_3@3:f64=37.75;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=31.75;param_10@10:f64=0;param_11@11:f64=0;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 123.5,
+        "3": 37.75,
+        "5": 7,
+        "7": 31.75,
+        "10": 0,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "components",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "b76858202d58dce0982aa765f338d339bf8d81091c8bcffdcf44e4b04ed17cdf",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 256,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        16,
+        16
+      ],
+      "input_sha256": "9daea3821bc79791d3a16b799e8ecc8cd5b672623e81b060ed4bff4654eb0467",
+      "mode": "front",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "b76858202d58dce0982aa765f338d339bf8d81091c8bcffdcf44e4b04ed17cdf",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 256,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "b76858202d58dce0982aa765f338d339bf8d81091c8bcffdcf44e4b04ed17cdf",
+      "native_raw_sha256": "b76858202d58dce0982aa765f338d339bf8d81091c8bcffdcf44e4b04ed17cdf",
+      "parameter_payload": "v4|param_1@1:angle=123.5;param_2@2:f64=1;param_3@3:f64=37.75;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=31.75;param_10@10:f64=0;param_11@11:f64=0;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 123.5,
+        "3": 37.75,
+        "5": 7,
+        "7": 31.75,
+        "10": 0,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "fade",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "31498e891ace40670d2c9f302cf9d954f5f184e1657316193a41168053f873de",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 128,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        16,
+        16
+      ],
+      "input_sha256": "f65fa805398e1555467a84f33235fee7bdf6e06c219a95b85d1e53183f7ecd77",
+      "mode": "front",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "31498e891ace40670d2c9f302cf9d954f5f184e1657316193a41168053f873de",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 128,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "31498e891ace40670d2c9f302cf9d954f5f184e1657316193a41168053f873de",
+      "native_raw_sha256": "31498e891ace40670d2c9f302cf9d954f5f184e1657316193a41168053f873de",
+      "parameter_payload": "v4|param_1@1:angle=123.5;param_2@2:f64=2.25;param_3@3:f64=37.75;param_5@5:f64=7;param_6@6:f64=5;param_7@7:f64=31.75;param_10@10:f64=0;param_11@11:f64=7;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 123.5,
+        "2": 2.25,
+        "3": 37.75,
+        "5": 7,
+        "6": 5,
+        "7": 31.75,
+        "10": 0,
+        "11": 7,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "fade",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "2e545eb530694e53dfbc8ff783421847114622b7fd125da95c1f1bb95314c27a",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 256,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        16,
+        16
+      ],
+      "input_sha256": "9daea3821bc79791d3a16b799e8ecc8cd5b672623e81b060ed4bff4654eb0467",
+      "mode": "front",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "2e545eb530694e53dfbc8ff783421847114622b7fd125da95c1f1bb95314c27a",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 256,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "2e545eb530694e53dfbc8ff783421847114622b7fd125da95c1f1bb95314c27a",
+      "native_raw_sha256": "2e545eb530694e53dfbc8ff783421847114622b7fd125da95c1f1bb95314c27a",
+      "parameter_payload": "v4|param_1@1:angle=123.5;param_2@2:f64=2.25;param_3@3:f64=37.75;param_5@5:f64=7;param_6@6:f64=5;param_7@7:f64=31.75;param_10@10:f64=0;param_11@11:f64=7;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 123.5,
+        "2": 2.25,
+        "3": 37.75,
+        "5": 7,
+        "6": 5,
+        "7": 31.75,
+        "10": 0,
+        "11": 7,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "noise",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "5e24ab7f00f2f0116ae28aea45384e91dd4a7ad514ff4969b3821b15d1655fea",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 128,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        16,
+        16
+      ],
+      "input_sha256": "f65fa805398e1555467a84f33235fee7bdf6e06c219a95b85d1e53183f7ecd77",
+      "mode": "back",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "5e24ab7f00f2f0116ae28aea45384e91dd4a7ad514ff4969b3821b15d1655fea",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 128,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "5e24ab7f00f2f0116ae28aea45384e91dd4a7ad514ff4969b3821b15d1655fea",
+      "native_raw_sha256": "5e24ab7f00f2f0116ae28aea45384e91dd4a7ad514ff4969b3821b15d1655fea",
+      "parameter_payload": "v4|param_1@1:angle=-17.25;param_2@2:f64=1;param_3@3:f64=0;param_5@5:f64=0;param_6@6:f64=0;param_7@7:f64=0;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=0;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": -17.25,
+        "5": 0,
+        "10": 11,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "noise",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "8fdebccc1b43c470c4062162e158409face63ddcf6fe3de461213e239fd43eca",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 256,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        16,
+        16
+      ],
+      "input_sha256": "9daea3821bc79791d3a16b799e8ecc8cd5b672623e81b060ed4bff4654eb0467",
+      "mode": "back",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "8fdebccc1b43c470c4062162e158409face63ddcf6fe3de461213e239fd43eca",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 256,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "8fdebccc1b43c470c4062162e158409face63ddcf6fe3de461213e239fd43eca",
+      "native_raw_sha256": "8fdebccc1b43c470c4062162e158409face63ddcf6fe3de461213e239fd43eca",
+      "parameter_payload": "v4|param_1@1:angle=-17.25;param_2@2:f64=1;param_3@3:f64=0;param_5@5:f64=0;param_6@6:f64=0;param_7@7:f64=0;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=0;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": -17.25,
+        "5": 0,
+        "10": 11,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "components",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "3498c7f26765bed465116593a40ee7309efc55c70f2b4fd3734e6714b6b9bcdc",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 128,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        16,
+        16
+      ],
+      "input_sha256": "f65fa805398e1555467a84f33235fee7bdf6e06c219a95b85d1e53183f7ecd77",
+      "mode": "back",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "3498c7f26765bed465116593a40ee7309efc55c70f2b4fd3734e6714b6b9bcdc",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 128,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "3498c7f26765bed465116593a40ee7309efc55c70f2b4fd3734e6714b6b9bcdc",
+      "native_raw_sha256": "3498c7f26765bed465116593a40ee7309efc55c70f2b4fd3734e6714b6b9bcdc",
+      "parameter_payload": "v4|param_1@1:angle=-17.25;param_2@2:f64=1;param_3@3:f64=37.75;param_5@5:f64=0;param_6@6:f64=0;param_7@7:f64=31.75;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": -17.25,
+        "3": 37.75,
+        "5": 0,
+        "7": 31.75,
+        "10": 11,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "components",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "e7fa26a01617439be602c093f447575e05865016215bb6f053bb920af2f855d0",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 256,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        16,
+        16
+      ],
+      "input_sha256": "9daea3821bc79791d3a16b799e8ecc8cd5b672623e81b060ed4bff4654eb0467",
+      "mode": "back",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "e7fa26a01617439be602c093f447575e05865016215bb6f053bb920af2f855d0",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 256,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "e7fa26a01617439be602c093f447575e05865016215bb6f053bb920af2f855d0",
+      "native_raw_sha256": "e7fa26a01617439be602c093f447575e05865016215bb6f053bb920af2f855d0",
+      "parameter_payload": "v4|param_1@1:angle=-17.25;param_2@2:f64=1;param_3@3:f64=37.75;param_5@5:f64=0;param_6@6:f64=0;param_7@7:f64=31.75;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": -17.25,
+        "3": 37.75,
+        "5": 0,
+        "7": 31.75,
+        "10": 11,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "fade",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "21ceee041471e72ee29cb369ca876ebf8708f1227f2209080a286318248933c6",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 128,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        16,
+        16
+      ],
+      "input_sha256": "f65fa805398e1555467a84f33235fee7bdf6e06c219a95b85d1e53183f7ecd77",
+      "mode": "back",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "21ceee041471e72ee29cb369ca876ebf8708f1227f2209080a286318248933c6",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 128,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "21ceee041471e72ee29cb369ca876ebf8708f1227f2209080a286318248933c6",
+      "native_raw_sha256": "21ceee041471e72ee29cb369ca876ebf8708f1227f2209080a286318248933c6",
+      "parameter_payload": "v4|param_1@1:angle=-17.25;param_2@2:f64=2.25;param_3@3:f64=37.75;param_5@5:f64=0;param_6@6:f64=5;param_7@7:f64=31.75;param_10@10:f64=11;param_11@11:f64=7;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": -17.25,
+        "2": 2.25,
+        "3": 37.75,
+        "5": 0,
+        "6": 5,
+        "7": 31.75,
+        "10": 11,
+        "11": 7,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "fade",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "6b2efb8498a739e582a235324e4f93098eabf061614e668005135706a0b8b448",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 256,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        16,
+        16
+      ],
+      "input_sha256": "9daea3821bc79791d3a16b799e8ecc8cd5b672623e81b060ed4bff4654eb0467",
+      "mode": "back",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "6b2efb8498a739e582a235324e4f93098eabf061614e668005135706a0b8b448",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 256,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "6b2efb8498a739e582a235324e4f93098eabf061614e668005135706a0b8b448",
+      "native_raw_sha256": "6b2efb8498a739e582a235324e4f93098eabf061614e668005135706a0b8b448",
+      "parameter_payload": "v4|param_1@1:angle=-17.25;param_2@2:f64=2.25;param_3@3:f64=37.75;param_5@5:f64=0;param_6@6:f64=5;param_7@7:f64=31.75;param_10@10:f64=11;param_11@11:f64=7;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": -17.25,
+        "2": 2.25,
+        "3": 37.75,
+        "5": 0,
+        "6": 5,
+        "7": 31.75,
+        "10": 11,
+        "11": 7,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "noise",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "3c23b99effd3a2f0764cbf7c83a51010b6bf14ba4faa1b4b2a1dc0fd87df36fd",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 128,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        16,
+        16
+      ],
+      "input_sha256": "f65fa805398e1555467a84f33235fee7bdf6e06c219a95b85d1e53183f7ecd77",
+      "mode": "dual",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "3c23b99effd3a2f0764cbf7c83a51010b6bf14ba4faa1b4b2a1dc0fd87df36fd",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 128,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "3c23b99effd3a2f0764cbf7c83a51010b6bf14ba4faa1b4b2a1dc0fd87df36fd",
+      "native_raw_sha256": "3c23b99effd3a2f0764cbf7c83a51010b6bf14ba4faa1b4b2a1dc0fd87df36fd",
+      "parameter_payload": "v4|param_1@1:angle=17.25;param_2@2:f64=1;param_3@3:f64=0;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=0;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=0;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 17.25,
+        "5": 7,
+        "10": 11,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "noise",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "ea23951261ec376f6725887f3ca54793a23b6538cecf34e61233574e7801f855",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 256,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        16,
+        16
+      ],
+      "input_sha256": "9daea3821bc79791d3a16b799e8ecc8cd5b672623e81b060ed4bff4654eb0467",
+      "mode": "dual",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "ea23951261ec376f6725887f3ca54793a23b6538cecf34e61233574e7801f855",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 256,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "ea23951261ec376f6725887f3ca54793a23b6538cecf34e61233574e7801f855",
+      "native_raw_sha256": "ea23951261ec376f6725887f3ca54793a23b6538cecf34e61233574e7801f855",
+      "parameter_payload": "v4|param_1@1:angle=17.25;param_2@2:f64=1;param_3@3:f64=0;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=0;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=0;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 17.25,
+        "5": 7,
+        "10": 11,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "components",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "5319d82d4880be083fe97bea54720e18266cc1995aa2d658d1fcacad733d28c7",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 128,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        16,
+        16
+      ],
+      "input_sha256": "f65fa805398e1555467a84f33235fee7bdf6e06c219a95b85d1e53183f7ecd77",
+      "mode": "dual",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "5319d82d4880be083fe97bea54720e18266cc1995aa2d658d1fcacad733d28c7",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 128,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "5319d82d4880be083fe97bea54720e18266cc1995aa2d658d1fcacad733d28c7",
+      "native_raw_sha256": "5319d82d4880be083fe97bea54720e18266cc1995aa2d658d1fcacad733d28c7",
+      "parameter_payload": "v4|param_1@1:angle=17.25;param_2@2:f64=1;param_3@3:f64=37.75;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=31.75;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 17.25,
+        "3": 37.75,
+        "5": 7,
+        "7": 31.75,
+        "10": 11,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "components",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "633599887e5799b505deb968c590b9e98cff8c7ffff8847e75e6dfd245331b0c",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 256,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        16,
+        16
+      ],
+      "input_sha256": "9daea3821bc79791d3a16b799e8ecc8cd5b672623e81b060ed4bff4654eb0467",
+      "mode": "dual",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "633599887e5799b505deb968c590b9e98cff8c7ffff8847e75e6dfd245331b0c",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 256,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "633599887e5799b505deb968c590b9e98cff8c7ffff8847e75e6dfd245331b0c",
+      "native_raw_sha256": "633599887e5799b505deb968c590b9e98cff8c7ffff8847e75e6dfd245331b0c",
+      "parameter_payload": "v4|param_1@1:angle=17.25;param_2@2:f64=1;param_3@3:f64=37.75;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=31.75;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 17.25,
+        "3": 37.75,
+        "5": 7,
+        "7": 31.75,
+        "10": 11,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "fade",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "7e15edd3a7ff276df1fcf8b768ee7181520ceebf5d19df9bb5c92677c7e4ed40",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 128,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        16,
+        16
+      ],
+      "input_sha256": "f65fa805398e1555467a84f33235fee7bdf6e06c219a95b85d1e53183f7ecd77",
+      "mode": "dual",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "7e15edd3a7ff276df1fcf8b768ee7181520ceebf5d19df9bb5c92677c7e4ed40",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 128,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "7e15edd3a7ff276df1fcf8b768ee7181520ceebf5d19df9bb5c92677c7e4ed40",
+      "native_raw_sha256": "7e15edd3a7ff276df1fcf8b768ee7181520ceebf5d19df9bb5c92677c7e4ed40",
+      "parameter_payload": "v4|param_1@1:angle=17.25;param_2@2:f64=2.25;param_3@3:f64=37.75;param_5@5:f64=7;param_6@6:f64=5;param_7@7:f64=31.75;param_10@10:f64=11;param_11@11:f64=7;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 17.25,
+        "2": 2.25,
+        "3": 37.75,
+        "5": 7,
+        "6": 5,
+        "7": 31.75,
+        "10": 11,
+        "11": 7,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "fade",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "e0da81cf6926438ef45863b370ae886b95693437da67fd3349e4e32ac49f4f14",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 256,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        16,
+        16
+      ],
+      "input_sha256": "9daea3821bc79791d3a16b799e8ecc8cd5b672623e81b060ed4bff4654eb0467",
+      "mode": "dual",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "e0da81cf6926438ef45863b370ae886b95693437da67fd3349e4e32ac49f4f14",
+          "guards_intact": true,
+          "height": 16,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 256,
+          "width": 16
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "e0da81cf6926438ef45863b370ae886b95693437da67fd3349e4e32ac49f4f14",
+      "native_raw_sha256": "e0da81cf6926438ef45863b370ae886b95693437da67fd3349e4e32ac49f4f14",
+      "parameter_payload": "v4|param_1@1:angle=17.25;param_2@2:f64=2.25;param_3@3:f64=37.75;param_5@5:f64=7;param_6@6:f64=5;param_7@7:f64=31.75;param_10@10:f64=11;param_11@11:f64=7;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 17.25,
+        "2": 2.25,
+        "3": 37.75,
+        "5": 7,
+        "6": 5,
+        "7": 31.75,
+        "10": 11,
+        "11": 7,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "noise",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "53184e473a2d8e1614a24acbb8fa69aeeb3070b3a185bba378897f71b5269240",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 296,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        37,
+        29
+      ],
+      "input_sha256": "b02599fd612dcc3e522f65a9647602dd41687b2b11467e21e95be7b0ebeab504",
+      "mode": "front",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "53184e473a2d8e1614a24acbb8fa69aeeb3070b3a185bba378897f71b5269240",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 296,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "53184e473a2d8e1614a24acbb8fa69aeeb3070b3a185bba378897f71b5269240",
+      "native_raw_sha256": "53184e473a2d8e1614a24acbb8fa69aeeb3070b3a185bba378897f71b5269240",
+      "parameter_payload": "v4|param_1@1:angle=123.5;param_2@2:f64=1;param_3@3:f64=0;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=0;param_10@10:f64=0;param_11@11:f64=0;param_12@12:f64=0;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 123.5,
+        "5": 7,
+        "10": 0,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "noise",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "2b290cd8772e48aab97efe102b6356f76475c87e283221e2bb038f4e40cc78b8",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 592,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        37,
+        29
+      ],
+      "input_sha256": "546418592fc0be3942106b333c7f6697d9f1c584e37f1801b7448726961f2120",
+      "mode": "front",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "2b290cd8772e48aab97efe102b6356f76475c87e283221e2bb038f4e40cc78b8",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 592,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "2b290cd8772e48aab97efe102b6356f76475c87e283221e2bb038f4e40cc78b8",
+      "native_raw_sha256": "2b290cd8772e48aab97efe102b6356f76475c87e283221e2bb038f4e40cc78b8",
+      "parameter_payload": "v4|param_1@1:angle=123.5;param_2@2:f64=1;param_3@3:f64=0;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=0;param_10@10:f64=0;param_11@11:f64=0;param_12@12:f64=0;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 123.5,
+        "5": 7,
+        "10": 0,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "components",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "ccb26fc24e12651e8ad6f393e7742fc138c97d572f4f9974dce1fd6840aa963f",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 296,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        37,
+        29
+      ],
+      "input_sha256": "b02599fd612dcc3e522f65a9647602dd41687b2b11467e21e95be7b0ebeab504",
+      "mode": "front",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "ccb26fc24e12651e8ad6f393e7742fc138c97d572f4f9974dce1fd6840aa963f",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 296,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "ccb26fc24e12651e8ad6f393e7742fc138c97d572f4f9974dce1fd6840aa963f",
+      "native_raw_sha256": "ccb26fc24e12651e8ad6f393e7742fc138c97d572f4f9974dce1fd6840aa963f",
+      "parameter_payload": "v4|param_1@1:angle=123.5;param_2@2:f64=1;param_3@3:f64=37.75;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=31.75;param_10@10:f64=0;param_11@11:f64=0;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 123.5,
+        "3": 37.75,
+        "5": 7,
+        "7": 31.75,
+        "10": 0,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "components",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "d7fe132709aa846c193b45537778dc46fdaf1889906169a7867e6d1c5913e1c9",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 592,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        37,
+        29
+      ],
+      "input_sha256": "546418592fc0be3942106b333c7f6697d9f1c584e37f1801b7448726961f2120",
+      "mode": "front",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "d7fe132709aa846c193b45537778dc46fdaf1889906169a7867e6d1c5913e1c9",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 592,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "d7fe132709aa846c193b45537778dc46fdaf1889906169a7867e6d1c5913e1c9",
+      "native_raw_sha256": "d7fe132709aa846c193b45537778dc46fdaf1889906169a7867e6d1c5913e1c9",
+      "parameter_payload": "v4|param_1@1:angle=123.5;param_2@2:f64=1;param_3@3:f64=37.75;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=31.75;param_10@10:f64=0;param_11@11:f64=0;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 123.5,
+        "3": 37.75,
+        "5": 7,
+        "7": 31.75,
+        "10": 0,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "fade",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "980276f5860af4b3740b2c677d4a0a1ca1d5dd3df1af29b8e5d172ca7e5a9bb2",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 296,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        37,
+        29
+      ],
+      "input_sha256": "b02599fd612dcc3e522f65a9647602dd41687b2b11467e21e95be7b0ebeab504",
+      "mode": "front",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "980276f5860af4b3740b2c677d4a0a1ca1d5dd3df1af29b8e5d172ca7e5a9bb2",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 296,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "980276f5860af4b3740b2c677d4a0a1ca1d5dd3df1af29b8e5d172ca7e5a9bb2",
+      "native_raw_sha256": "980276f5860af4b3740b2c677d4a0a1ca1d5dd3df1af29b8e5d172ca7e5a9bb2",
+      "parameter_payload": "v4|param_1@1:angle=123.5;param_2@2:f64=2.25;param_3@3:f64=37.75;param_5@5:f64=7;param_6@6:f64=5;param_7@7:f64=31.75;param_10@10:f64=0;param_11@11:f64=7;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 123.5,
+        "2": 2.25,
+        "3": 37.75,
+        "5": 7,
+        "6": 5,
+        "7": 31.75,
+        "10": 0,
+        "11": 7,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "fade",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "5d7232e58a4d730c887638223e331b91bd811190418dfb992b23f157f408bcd8",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 592,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        37,
+        29
+      ],
+      "input_sha256": "546418592fc0be3942106b333c7f6697d9f1c584e37f1801b7448726961f2120",
+      "mode": "front",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "5d7232e58a4d730c887638223e331b91bd811190418dfb992b23f157f408bcd8",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 592,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "5d7232e58a4d730c887638223e331b91bd811190418dfb992b23f157f408bcd8",
+      "native_raw_sha256": "5d7232e58a4d730c887638223e331b91bd811190418dfb992b23f157f408bcd8",
+      "parameter_payload": "v4|param_1@1:angle=123.5;param_2@2:f64=2.25;param_3@3:f64=37.75;param_5@5:f64=7;param_6@6:f64=5;param_7@7:f64=31.75;param_10@10:f64=0;param_11@11:f64=7;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 123.5,
+        "2": 2.25,
+        "3": 37.75,
+        "5": 7,
+        "6": 5,
+        "7": 31.75,
+        "10": 0,
+        "11": 7,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "noise",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "0ea125fe78dbf5016fe7a2368e5eb50e6d451e667022099b9f9a663dde1b858d",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 296,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        37,
+        29
+      ],
+      "input_sha256": "b02599fd612dcc3e522f65a9647602dd41687b2b11467e21e95be7b0ebeab504",
+      "mode": "back",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "0ea125fe78dbf5016fe7a2368e5eb50e6d451e667022099b9f9a663dde1b858d",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 296,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "0ea125fe78dbf5016fe7a2368e5eb50e6d451e667022099b9f9a663dde1b858d",
+      "native_raw_sha256": "0ea125fe78dbf5016fe7a2368e5eb50e6d451e667022099b9f9a663dde1b858d",
+      "parameter_payload": "v4|param_1@1:angle=-17.25;param_2@2:f64=1;param_3@3:f64=0;param_5@5:f64=0;param_6@6:f64=0;param_7@7:f64=0;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=0;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": -17.25,
+        "5": 0,
+        "10": 11,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "noise",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "ff30643f514c934110c67ea0ee6f2cdcce9d1509a2d15ad95eac5d62bb2b035c",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 592,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        37,
+        29
+      ],
+      "input_sha256": "546418592fc0be3942106b333c7f6697d9f1c584e37f1801b7448726961f2120",
+      "mode": "back",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "ff30643f514c934110c67ea0ee6f2cdcce9d1509a2d15ad95eac5d62bb2b035c",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 592,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "ff30643f514c934110c67ea0ee6f2cdcce9d1509a2d15ad95eac5d62bb2b035c",
+      "native_raw_sha256": "ff30643f514c934110c67ea0ee6f2cdcce9d1509a2d15ad95eac5d62bb2b035c",
+      "parameter_payload": "v4|param_1@1:angle=-17.25;param_2@2:f64=1;param_3@3:f64=0;param_5@5:f64=0;param_6@6:f64=0;param_7@7:f64=0;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=0;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": -17.25,
+        "5": 0,
+        "10": 11,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "components",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "a9b57ecdaf66082956e354b48fdba7b28abad639e4a25546aa638fcb5b0065eb",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 296,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        37,
+        29
+      ],
+      "input_sha256": "b02599fd612dcc3e522f65a9647602dd41687b2b11467e21e95be7b0ebeab504",
+      "mode": "back",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "a9b57ecdaf66082956e354b48fdba7b28abad639e4a25546aa638fcb5b0065eb",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 296,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "a9b57ecdaf66082956e354b48fdba7b28abad639e4a25546aa638fcb5b0065eb",
+      "native_raw_sha256": "a9b57ecdaf66082956e354b48fdba7b28abad639e4a25546aa638fcb5b0065eb",
+      "parameter_payload": "v4|param_1@1:angle=-17.25;param_2@2:f64=1;param_3@3:f64=37.75;param_5@5:f64=0;param_6@6:f64=0;param_7@7:f64=31.75;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": -17.25,
+        "3": 37.75,
+        "5": 0,
+        "7": 31.75,
+        "10": 11,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "components",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "56fa7d8f855be99d9c204c8f63d7a1ea7c2526311ab215549127a4af8e54ec0a",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 592,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        37,
+        29
+      ],
+      "input_sha256": "546418592fc0be3942106b333c7f6697d9f1c584e37f1801b7448726961f2120",
+      "mode": "back",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "56fa7d8f855be99d9c204c8f63d7a1ea7c2526311ab215549127a4af8e54ec0a",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 592,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "56fa7d8f855be99d9c204c8f63d7a1ea7c2526311ab215549127a4af8e54ec0a",
+      "native_raw_sha256": "56fa7d8f855be99d9c204c8f63d7a1ea7c2526311ab215549127a4af8e54ec0a",
+      "parameter_payload": "v4|param_1@1:angle=-17.25;param_2@2:f64=1;param_3@3:f64=37.75;param_5@5:f64=0;param_6@6:f64=0;param_7@7:f64=31.75;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": -17.25,
+        "3": 37.75,
+        "5": 0,
+        "7": 31.75,
+        "10": 11,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "fade",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "c5d2a58bbe09c01db803c575625c0dd2b9f07ef8b2ec3353262b38e2e5ffe0ea",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 296,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        37,
+        29
+      ],
+      "input_sha256": "b02599fd612dcc3e522f65a9647602dd41687b2b11467e21e95be7b0ebeab504",
+      "mode": "back",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "c5d2a58bbe09c01db803c575625c0dd2b9f07ef8b2ec3353262b38e2e5ffe0ea",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 296,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "c5d2a58bbe09c01db803c575625c0dd2b9f07ef8b2ec3353262b38e2e5ffe0ea",
+      "native_raw_sha256": "c5d2a58bbe09c01db803c575625c0dd2b9f07ef8b2ec3353262b38e2e5ffe0ea",
+      "parameter_payload": "v4|param_1@1:angle=-17.25;param_2@2:f64=2.25;param_3@3:f64=37.75;param_5@5:f64=0;param_6@6:f64=5;param_7@7:f64=31.75;param_10@10:f64=11;param_11@11:f64=7;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": -17.25,
+        "2": 2.25,
+        "3": 37.75,
+        "5": 0,
+        "6": 5,
+        "7": 31.75,
+        "10": 11,
+        "11": 7,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "fade",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "1ca2692a8a606eb4d6e284d5a44a76109a642fa31477622975051cb812e744c1",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 592,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        37,
+        29
+      ],
+      "input_sha256": "546418592fc0be3942106b333c7f6697d9f1c584e37f1801b7448726961f2120",
+      "mode": "back",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "1ca2692a8a606eb4d6e284d5a44a76109a642fa31477622975051cb812e744c1",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 592,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "1ca2692a8a606eb4d6e284d5a44a76109a642fa31477622975051cb812e744c1",
+      "native_raw_sha256": "1ca2692a8a606eb4d6e284d5a44a76109a642fa31477622975051cb812e744c1",
+      "parameter_payload": "v4|param_1@1:angle=-17.25;param_2@2:f64=2.25;param_3@3:f64=37.75;param_5@5:f64=0;param_6@6:f64=5;param_7@7:f64=31.75;param_10@10:f64=11;param_11@11:f64=7;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": -17.25,
+        "2": 2.25,
+        "3": 37.75,
+        "5": 0,
+        "6": 5,
+        "7": 31.75,
+        "10": 11,
+        "11": 7,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "noise",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "6cd82acac5972a5c811f764d28686934471617cadb026f1d2ee5d7379ef06841",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 296,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        37,
+        29
+      ],
+      "input_sha256": "b02599fd612dcc3e522f65a9647602dd41687b2b11467e21e95be7b0ebeab504",
+      "mode": "dual",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "6cd82acac5972a5c811f764d28686934471617cadb026f1d2ee5d7379ef06841",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 296,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "6cd82acac5972a5c811f764d28686934471617cadb026f1d2ee5d7379ef06841",
+      "native_raw_sha256": "6cd82acac5972a5c811f764d28686934471617cadb026f1d2ee5d7379ef06841",
+      "parameter_payload": "v4|param_1@1:angle=17.25;param_2@2:f64=1;param_3@3:f64=0;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=0;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=0;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 17.25,
+        "5": 7,
+        "10": 11,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "noise",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "d15178f3aabdcef417e9039834ff03b699132c7077baf000d5deab467779bc98",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 592,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        37,
+        29
+      ],
+      "input_sha256": "546418592fc0be3942106b333c7f6697d9f1c584e37f1801b7448726961f2120",
+      "mode": "dual",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "d15178f3aabdcef417e9039834ff03b699132c7077baf000d5deab467779bc98",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 592,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "d15178f3aabdcef417e9039834ff03b699132c7077baf000d5deab467779bc98",
+      "native_raw_sha256": "d15178f3aabdcef417e9039834ff03b699132c7077baf000d5deab467779bc98",
+      "parameter_payload": "v4|param_1@1:angle=17.25;param_2@2:f64=1;param_3@3:f64=0;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=0;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=0;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 17.25,
+        "5": 7,
+        "10": 11,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "components",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "fd94d09ab4d8b98de40899df7bb2cb954cf6bd012f90ebd49469e0e6784927e6",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 296,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        37,
+        29
+      ],
+      "input_sha256": "b02599fd612dcc3e522f65a9647602dd41687b2b11467e21e95be7b0ebeab504",
+      "mode": "dual",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "fd94d09ab4d8b98de40899df7bb2cb954cf6bd012f90ebd49469e0e6784927e6",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 296,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "fd94d09ab4d8b98de40899df7bb2cb954cf6bd012f90ebd49469e0e6784927e6",
+      "native_raw_sha256": "fd94d09ab4d8b98de40899df7bb2cb954cf6bd012f90ebd49469e0e6784927e6",
+      "parameter_payload": "v4|param_1@1:angle=17.25;param_2@2:f64=1;param_3@3:f64=37.75;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=31.75;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 17.25,
+        "3": 37.75,
+        "5": 7,
+        "7": 31.75,
+        "10": 11,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "components",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "8b2bfceb66120747cb330ff79cd079831447df52321fa412f36a8220365597e2",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 592,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        37,
+        29
+      ],
+      "input_sha256": "546418592fc0be3942106b333c7f6697d9f1c584e37f1801b7448726961f2120",
+      "mode": "dual",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "8b2bfceb66120747cb330ff79cd079831447df52321fa412f36a8220365597e2",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 592,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "8b2bfceb66120747cb330ff79cd079831447df52321fa412f36a8220365597e2",
+      "native_raw_sha256": "8b2bfceb66120747cb330ff79cd079831447df52321fa412f36a8220365597e2",
+      "parameter_payload": "v4|param_1@1:angle=17.25;param_2@2:f64=1;param_3@3:f64=37.75;param_5@5:f64=7;param_6@6:f64=0;param_7@7:f64=31.75;param_10@10:f64=11;param_11@11:f64=0;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 17.25,
+        "3": 37.75,
+        "5": 7,
+        "7": 31.75,
+        "10": 11,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 16,
+      "exact": true,
+      "feature": "fade",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "2ebb3e2b6b88545d40c9f94945b24b792f0c38020017df6f9d16585b80468710",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 296,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        37,
+        29
+      ],
+      "input_sha256": "b02599fd612dcc3e522f65a9647602dd41687b2b11467e21e95be7b0ebeab504",
+      "mode": "dual",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "2ebb3e2b6b88545d40c9f94945b24b792f0c38020017df6f9d16585b80468710",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb16",
+          "render_path": "smartfx",
+          "rowbytes": 296,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "2ebb3e2b6b88545d40c9f94945b24b792f0c38020017df6f9d16585b80468710",
+      "native_raw_sha256": "2ebb3e2b6b88545d40c9f94945b24b792f0c38020017df6f9d16585b80468710",
+      "parameter_payload": "v4|param_1@1:angle=17.25;param_2@2:f64=2.25;param_3@3:f64=37.75;param_5@5:f64=7;param_6@6:f64=5;param_7@7:f64=31.75;param_10@10:f64=11;param_11@11:f64=7;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 17.25,
+        "2": 2.25,
+        "3": 37.75,
+        "5": 7,
+        "6": 5,
+        "7": 31.75,
+        "10": 11,
+        "11": 7,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    },
+    {
+      "depth": 32,
+      "exact": true,
+      "feature": "fade",
+      "frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "67a7a3c01aeb8200e9b194be2a1db40b9319679adcff8792583984f12c167b32",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 592,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "geometry": [
+        37,
+        29
+      ],
+      "input_sha256": "546418592fc0be3942106b333c7f6697d9f1c584e37f1801b7448726961f2120",
+      "mode": "dual",
+      "native_disabled_control_frame_done": {
+        "frame_index": 0,
+        "generation": 1,
+        "output": {
+          "checksum": "67a7a3c01aeb8200e9b194be2a1db40b9319679adcff8792583984f12c167b32",
+          "guards_intact": true,
+          "height": 29,
+          "pixel_format": "argb32f",
+          "render_path": "smartfx",
+          "rowbytes": 592,
+          "width": 37
+        },
+        "render_error": 0,
+        "status": "ok",
+        "type": "frame_done",
+        "v": 1
+      },
+      "native_disabled_control_raw_sha256": "67a7a3c01aeb8200e9b194be2a1db40b9319679adcff8792583984f12c167b32",
+      "native_raw_sha256": "67a7a3c01aeb8200e9b194be2a1db40b9319679adcff8792583984f12c167b32",
+      "parameter_payload": "v4|param_1@1:angle=17.25;param_2@2:f64=2.25;param_3@3:f64=37.75;param_5@5:f64=7;param_6@6:f64=5;param_7@7:f64=31.75;param_10@10:f64=11;param_11@11:f64=7;param_12@12:f64=63.75;param_15@15:f64=73.75;param_16@16:f64=3;param_18@18:f64=1;param_19@19:angle=0;param_20@20:f64=3",
+      "parameters": {
+        "1": 17.25,
+        "2": 2.25,
+        "3": 37.75,
+        "5": 7,
+        "6": 5,
+        "7": 31.75,
+        "10": 11,
+        "11": 7,
+        "12": 63.75,
+        "15": 73.75,
+        "16": 3
+      }
+    }
+  ],
+  "claims_not_made": [
+    "Type 3 exceeds declared popup range; no legal normal UI proof",
+    "No arbitrary selected-Layer host callback failure completion",
+    "No actual AE/native UCRT/installed verification"
+  ],
+  "exact_count": 54,
+  "probe_sha256": "fc1f3e30f35c85fcb3d1da4b4dc755f68746275226da8cf5c15b4a52f2003225",
+  "schema": "directionalblur.none-layer-native-owner/1",
+  "worker_sha256": "0eb2f7705598f7b5f53563b9d920274ba094c835ff3dbaaf5f6fb214ec0cfd61"
+}

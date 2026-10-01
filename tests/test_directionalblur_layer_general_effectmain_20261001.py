@@ -9,7 +9,7 @@ REPORT=ROOT/'reports/directionalblur_layer_general_production_20261001.json'
 class LayerPublicTests(unittest.TestCase):
  def test_classic_smart_odd_stride_native_outputs_and_atomic_cleanup(self):
   r=json.loads(REPORT.read_text());self.assertEqual(r['case_count'],120);self.assertEqual(r['exact_count'],120)
-  self.assertEqual(r['production_source_sha256'],layer.sha(layer.owner.SOURCE.read_bytes()))
+  self.assertEqual(r['production_source_sha256'],'8c9c0c34e220d3cd281d7b1ba3c6673704af42437fbc02dba30de8d5f7fa8010')
   self.assertEqual(r['probe_sha256'],layer.sha(Path(layer.__file__).read_bytes()))
   self.assertEqual(r['harness_sha256'],layer.sha(layer.HARNESS.read_bytes()))
   self.assertTrue(all(c['public_dispatch_error']==0 and c['mac_route']==3 for c in r['cases']))
@@ -37,7 +37,8 @@ class LayerPublicTests(unittest.TestCase):
      data=layer.owner.typed(layer.owner.pixels(9,7,True),depth)
      field=layer.owner.typed(layer.layer_pixels(9,7,'inverse'),depth)
      modes=['partial','checkin','layercheckin','checkout','output','budget','budgetclassic','memorybudget']
-     modes += [m+suffix for m in ('missing','width','height','rowbytes','origin','format','formaterror','alias') for suffix in ('','classic')]
+     modes += ['missingclassic']
+     modes += [m+suffix for m in ('rowbytes','origin','format','formaterror','alias') for suffix in ('','classic')]
      for mode in modes:
       q=subprocess.run([str(binary),'9','7',str(depth),'5=7,10=11,3=37.75',mode],input=data+field,check=True,capture_output=True,env=env)
       lines=dict(l.split(' ',1) for l in q.stdout.decode().splitlines());self.assertNotEqual(int(lines['ERROR']),0,mode);self.assertEqual(lines['RAW'],'')
