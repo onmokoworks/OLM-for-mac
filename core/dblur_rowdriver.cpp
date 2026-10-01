@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <cmath>
+#include <limits>
 
 namespace {
 
@@ -26,6 +27,13 @@ __attribute__((always_inline)) inline float int_scale(int value, float scale) {
     return r;
 }
 __attribute__((always_inline)) inline int trunc_i(float value) {
+    // AEX scatter/prepass and weight lookup use scalar SSE CVTTSS2SI.
+    // Its masked invalid result is INT32_MIN for NaN/infinity/out-of-range.
+    // A C++ float-to-int cast is undefined there, and ARM64 can produce a
+    // positive saturated span that subsequently overflows the row boundary.
+    if (!(value >= -2147483648.0f && value < 2147483648.0f)) {
+        return std::numeric_limits<std::int32_t>::min();
+    }
     return static_cast<int>(value);
 }
 

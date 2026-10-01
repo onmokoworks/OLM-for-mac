@@ -590,6 +590,53 @@ external validator欠落で実行不能だった。数値差と分類せず、�
 対応済みとせず、HDR Layer、任意float、PF16非SDR、downsample、全設定/素材、元AEX
 不正Offset、native AE/UCRT/installedを残件として保持。完全互換Goalはactive。
 
+## DB-LAYER-HDR-015: float→整数のSSE sentinelを復元
+
+014の公開Layer経路へ、RGB約0.125..8.1、signed RGB、alpha−0.5..2、RGB約10^28、
+float境界（負zero/1直上/正負最小subnormal/1直下）のLayer5種類を渡す。
+sourceはSDRと同じHDR profile、9×7/37×29、Front/Back/Dual、Noise/components/Fade
++Gainの計180条件。ローカルAEXの公開Smart ownerは全件guard付きで正常終了した。
+Mac公開dispatcherは144 exact、巨大finite Layerの12条件が数値不一致、24条件が
+SIGSEGVとなった。旧reportはそのまま保存し、全native出力hashを変更後にも再確認した。
+
+最初の差はfield算術ではなく散布距離のfloat→整数変換。AEXのFUN_1800013e0は
+0x180001450のCVTTSS2SI R9D,XMM0（f3440f2cc8）でspanを整数化し、1未満なら
+散布を行わない。範囲外/NaN/Infのmasked invalid resultはINT32_MIN。
+元Macのstatic_cast<int>(float)は範囲外で未定義。ARM64で大きな正整数となり、前方では
+誤った散布、後方ではrow境界計算のoverflowを起こしていた。
+
+実AEX bytesの同じ1命令をUnicornで実行し、±zero、±1/1.5、subnormal、INT32上下境界
+と近傍、±最大finite/Inf/NaNの20 bit patternで結果を確認。trunc_iに明示的な
+[-2^31,2^31)判定とINT32_MIN sentinelを復元する。有効範囲は従来どおりzero方向の
+truncation。画素のclamp、sample別の書換え、span最大値への飽和は加えない。
+同じhelperを使うprepass/table lookupにも命令の変換仕様が適用される。
+旧commitのtrunc_iをfloat-cast-overflow sanitizerで1e28fへ適用すると範囲外castの
+runtime errorで停止することも確認した（expected diagnostic、exit −6）。
+
+巨大finite入力から正規のspanを作る場合もLayerはStrength以上に散布を広げられるため、
+PF32 Layerの予算は読取り前に各有効sideを全work row幅で保守的に見積もる。PF16は
+検査済みSDR Layerなので従来のStrengthを使う。field/packed bufferのメモリ見積もりは
+014を維持する。PF32 Layerの大画像には、この保守的予算による追加拒否が残る。
+有限Layerの範囲を調べて上限を絞る改善は今後の課題であり、全互換を達成した扱いに
+しない。350M単位の限度自体も完成定義ではない。
+
+修正後180/180が公開route3でraw bit exact（bypassなし）、native hashは修正前と全一致。
+実SDK・production seamなしのClassic/Smart EffectMainをO2とASan/UBSanで再生し
+計720成功render。input/Layer不変、奇数stride/padding、Smart21 parameterと2 Layerの
+checkin、suite releaseも確認した。整数変換20状態と巨大係数のscatter不変検査をO2と
+ASan/UBSan/float-cast-overflowで確認し、checked budget21条件もPASS。
+
+既存general features180（720成功/40失敗）、source HDR120（480成功/96失敗）、
+Layer120（480成功/160失敗）もO2/ASan/UBSanで再生しnative hashとatomic failureを
+維持。Layer120とHDR Layer180は予算変更後にも再実行し全一致。kernelの変更前状態は
+commit0e520eeaとcore hashで別validationへbindし、同じMac entry cpp hashをkernel
+全体の不変証明に使わない。旧captureや前項validationのhashを付け替えない。
+
+この比較はローカルAEX emulationとfake AE hostでありnative AE/UCRT・installedでは
+ない。巨大Layer180条件の一致を任意finite/overflow/非有限値、near-INT32境界の全散布、
+異寸法/原点、PF16非SDR、downsample、全設定/素材へ一般化しない。
+通常UIのchoices2/labels3と値3の宣言範囲外stateの区別も維持。完全互換Goalはactive。
+
 ## 次の順序
 
 1. ColorKeyの他Blur設定を公開ownerで再検証し、旧import stub依存の分岐を復元。

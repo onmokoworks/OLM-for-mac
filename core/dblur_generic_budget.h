@@ -260,6 +260,12 @@ inline bool EstimateGeneralDeepRender(int width, int height, short depth,
         (noise && (!std::isfinite(thickness) || thickness < 1.0f || thickness > 100.0f))) return false;
     RenderEstimate estimate = {};
     if (!EstimateRender(width, height, depth, front, back, smart_bytes, &estimate)) return false;
+    // A finite PF32 Layer can amplify the scatter span beyond Strength.
+    // Before reading any pixels, bound each enabled side by the complete row.
+    // PF16's validated SDR Layer keeps its coefficient at or below one.
+    if (layer && depth == 32 &&
+        !EstimateOperationUnits(estimate.work, front > 0 ? estimate.work.width : 0,
+            back > 0 ? estimate.work.width : 0, &estimate.operation_units)) return false;
     std::size_t component_bytes = 0, noise_bytes = 0, fade_bytes = 0;
     std::size_t layer_bytes = 0, layer_staging_bytes = 0;
     std::uint64_t noise_pixels = 0, extra_units = 0, gather_units = 0;

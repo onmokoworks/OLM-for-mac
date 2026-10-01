@@ -22,14 +22,18 @@ int main(){
  if(features.core_workspace_bytes!=neutral.core_workspace_bytes||features.operation_units!=neutral.operation_units)return 13;
  RenderEstimate layer{},layer16{};
  if(!EstimateGeneralDeepRender(37,29,32,7,11,0,0,false,false,0,0,&layer,true))return 14;
+ std::uint64_t full_row_units=0;
+ if(!EstimateOperationUnits(neutral.work,neutral.work.width,neutral.work.width,&full_row_units))return 20;
  if(layer.core_workspace_bytes!=neutral.core_workspace_bytes+neutral.work.pixels*8u ||
     layer.wrapper_bytes!=neutral.wrapper_bytes+37u*29u*16u ||
-    layer.operation_units!=neutral.operation_units+neutral.work.pixels*32u)return 15;
+    layer.operation_units!=full_row_units+neutral.work.pixels*32u)return 15;
  if(layer.plugin_owned_live_bytes!=neutral.plugin_owned_live_bytes+neutral.work.pixels*8u+37u*29u*16u+8u)return 16;
  if(!EstimateGeneralDeepRender(37,29,16,7,11,0,0,false,false,0,0,&layer16,true))return 17;
  if(layer16.core_workspace_bytes!=layer.core_workspace_bytes ||
     layer16.wrapper_bytes*2u!=layer.wrapper_bytes)return 18;
  if(EstimateGeneralDeepRender(4096,2160,32,4000,4000,100,100,true,false,0,0,&rejected,true)||rejected.plugin_owned_live_bytes!=123)return 19;
+ if(!EstimateGeneralDeepRender(720,480,16,7,11,0,0,false,false,0,0,&layer16,true) ||
+    EstimateGeneralDeepRender(720,480,32,7,11,0,0,false,false,0,0,&rejected,true))return 21;
  return 0;
 }
 '''

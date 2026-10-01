@@ -1,0 +1,150 @@
+{
+  "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+  "baseline_capture_binding": {
+    "context_commit": "0e520eeaeda45db8f6913bba0751e1af14c85f32",
+    "core_budget_sha256": "1e3a7ebbe13e9a7705080ce2eadb3d09e24bc50693023d3a929c107da7e1d545",
+    "core_rowdriver_sha256": "9f271073adaf2746a5144cf4793f0ebe574f51787705f265421710215596481d",
+    "crash_case_count": 24,
+    "exact_case_count": 144,
+    "incorrect_output_case_count": 12,
+    "native_case_count": 180,
+    "public_entry_sha256": "8c9c0c34e220d3cd281d7b1ba3c6673704af42437fbc02dba30de8d5f7fa8010"
+  },
+  "checks": [
+    {
+      "actual_aex_instruction_address": "180001450",
+      "exact_count": 20,
+      "exit_code": 0,
+      "instruction_hex": "f3440f2cc8",
+      "native_boundary_case_count": 20,
+      "test": "tools/emulation/probe_directionalblur_sse_conversion_20261001.py"
+    },
+    {
+      "builds": [
+        "O2",
+        "O1 ASan UBSan float-cast-overflow"
+      ],
+      "conversion_case_count": 20,
+      "exit_code": 0,
+      "large_nonfinite_scatter_no_mutation": true,
+      "test": "tests/test_directionalblur_sse_conversion_20261001.py"
+    },
+    {
+      "check": "historical_commit_conversion_runtime_diagnostic",
+      "context_commit": "0e520eea",
+      "diagnostic_classification": "float cast outside representable integer range",
+      "expected_nonzero": true,
+      "input": "1e28f",
+      "observed_exit_code": -6,
+      "sanitizer": "UBSan float-cast-overflow"
+    },
+    {
+      "builds": [
+        "O2",
+        "O1 ASan UBSan"
+      ],
+      "exit_code": 0,
+      "input_layer_padding_unchanged": true,
+      "parameter_layer_suite_cleanup": true,
+      "post_budget_change_replay": true,
+      "public_commands": [
+        "Classic",
+        "Smart"
+      ],
+      "successful_render_count": 720,
+      "test": "tests/test_directionalblur_hdr_layer_effectmain_20261001.py"
+    },
+    {
+      "atomic_failure_render_count": 160,
+      "exit_code": 0,
+      "post_budget_change_replay": true,
+      "successful_render_count": 480,
+      "test": "tests/test_directionalblur_layer_general_effectmain_20261001.py"
+    },
+    {
+      "atomic_failure_render_count": 40,
+      "exit_code": 0,
+      "successful_render_count": 720,
+      "test": "tests/test_directionalblur_general_features_effectmain_20261001.py"
+    },
+    {
+      "atomic_failure_render_count": 96,
+      "exit_code": 0,
+      "successful_render_count": 480,
+      "test": "tests/test_directionalblur_hdr_effectmain_20261001.py"
+    },
+    {
+      "checked_conditions": 21,
+      "exit_code": 0,
+      "test": "tests/test_directionalblur_general_feature_budget_20261001.py"
+    }
+  ],
+  "claims_not_made": [
+    "Type 3 still exceeds native declared popup range; no normal UI or saved project reachability proof",
+    "No arbitrary finite float, overflow, nonfinite or every near-INT32 scatter state completion",
+    "No different Layer geometry/origin, PF16 non-SDR, downsample or whole setting/media completion",
+    "PF32 Layer conservative full-row budget can reject larger images; not a completion condition",
+    "No actual AE/native UCRT or installed bundle verification",
+    "No full repository gate rerun or full compatibility/source recovery completion"
+  ],
+  "dependencies": {
+    "Util/AEGP_SuiteHandler.cpp": "7c054c7b0778b1b26463d6bf31cd57ee1d971946e8da22fb174e9f088741606f",
+    "Util/MissingSuiteError.cpp": "8c0cc22b898c94c73556778f5cef1ccf9cded81ee590bd04feb49028ff4f44d9",
+    "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+    "core/dblur_frontonly.cpp": "488834530c422a785958b6ffebd521da73092b6419df385b9eade68d0b750349",
+    "core/dblur_generic_budget.h": "3d0b990b2b0d6bcbe6f0ff3d9c28f14629990b9671bf5ca742a3c04085747fb6",
+    "core/dblur_noise.h": "9e8841d9d59bfe0fbf39f8792b09ba3daed0a2232a0d9df7d76e26e0f7b26477",
+    "core/dblur_rotate.cpp": "5b02748d421befb1ecda0fd36ff34c5b225ebee5e928e0460e1c14d174c101d7",
+    "core/dblur_rowdriver.cpp": "a6fff9d9fdb1ce3d582b24123d858d2c6b9f801ff18bc2994241ba5479f724a9",
+    "docs/COMPATIBILITY_ANALYSIS_PLAN_JA.md": "78159670cc8babc7bc5dbd17065788cff07d50e886d463800d9fa789ccb90fc5",
+    "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "8c9c0c34e220d3cd281d7b1ba3c6673704af42437fbc02dba30de8d5f7fa8010",
+    "mac/OLMDirectionalBlur/OLMDirectionalBlur_Strings.cpp": "a9898e0e2cdd9d9c4e6f234c680081f68bb229772254a10ab1c1810fbf348daf",
+    "notes/COMPATIBILITY_ANALYSIS_PROGRESS_20261001.md": "3673bec8a788a3efa9f0b475df90c7ae6856616e8e856606612f2e3db5b2bfcb",
+    "reports/directionalblur_hdr_layer_baseline_20261001.json": "ea5ff384495be33caf5a2e4aecb490da236bcdec51038f1da4322041917b59eb",
+    "reports/directionalblur_hdr_layer_production_20261001.json": "4ff2cd571799da87366ef93ac9d97ea9f97beae9638b3c15884f28fd87fe2578",
+    "reports/directionalblur_layer_baseline_20261001.json": "9539acf77d44ea9121cddbfec1464b9115511e93ebed3bbc88cc1c305bf529fa",
+    "reports/directionalblur_layer_declared_choices_20261001.json": "59b71e22a34d69ee30efa75ef4f592f303c0c40c37b3730a5d5820d656450965",
+    "reports/directionalblur_layer_general_baseline_20261001.json": "97dc85e40afbdac45946d411f359aa548dbcbb8b77ceca63d146be3190dd2be0",
+    "reports/directionalblur_layer_general_production_20261001.json": "119fa43067eb28fb3a67fdb9b878d188542f0caec691399247fb27ae5e949046",
+    "reports/directionalblur_sse_conversion_20261001.json": "ff06afe434c0ebbd7507e0a3dfe6b7c3ad05bfd147c7f400082b1c2fa1110def",
+    "tests/test_directionalblur_general_feature_budget_20261001.py": "e7ce172f19153680746f8ad48233d65a84eb2e4255a609c5fe1fbcf5d3c2ba50",
+    "tests/test_directionalblur_general_features_effectmain_20261001.py": "6a94ad86fd7ce775ba13a1e1556d81374596a6e865f0dcdd4aaa9ee004bd3498",
+    "tests/test_directionalblur_hdr_effectmain_20261001.py": "ffbf3f255e24c3f36c78c1762451189859de7b714735d02d4cf4325c5db1b9ff",
+    "tests/test_directionalblur_hdr_layer_effectmain_20261001.py": "97c28c8a0213891eb237e9b6743e5386c035710aa2bb109fa267ebcd3ae01add",
+    "tests/test_directionalblur_independent_layer_20261001.py": "062c539a3b06de0dd15fefcefbcafcf38138ac21d6ece2c3c3ab4603eabe270f",
+    "tests/test_directionalblur_layer_general_effectmain_20261001.py": "887f0454293c867f52ddd985d7d71e0124b07b4101befc6c9c8df54b95880a91",
+    "tests/test_directionalblur_sse_conversion_20261001.py": "6f68e6f3b9102d6ebafe5d46ad10624b2e5fdbbf17fff939a6a1f672dc4e710f",
+    "tools/emulation/aex_loader.py": "f277dbecd70c4c495aa05e6495d80fdc5ce07c5df51b9076be331c232e26c9ab",
+    "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab",
+    "tools/emulation/directionalblur_layer_general_effectmain_harness_20261001.cpp": "104c88c075965123bc244c7a6971052df8da5e1502a9e43b0b47a12869b212fa",
+    "tools/emulation/directionalblur_layer_harness_20261001.cpp": "e0d3471e9b6aa228afa197e911381a892d73d3070fb400be2a9953706d11d244",
+    "tools/emulation/directionalblur_layer_params_harness_20261001.cpp": "d77d977d040d867247052141fbda3096f079fb7efcf81be902566629038c077d",
+    "tools/emulation/probe_directionalblur_fixed_getter_20261001.py": "15828cb5ad38e2fb6b9a8e9b9dbc76e63a63bad58c95afffac5ffec44b50558a",
+    "tools/emulation/probe_directionalblur_general_features_20261001.py": "810d0fcdcf1f874f6056edee9dfeb126e387309a735a5779cda29cba207f27d2",
+    "tools/emulation/probe_directionalblur_general_input_20261001.py": "8d317b2d633dee8322ee8e4ab25d67c74c01608be3c5a34e94901c2b21255e28",
+    "tools/emulation/probe_directionalblur_hdr_20261001.py": "2dee6f63d8ec19e6138cc8fc6ec9e98eeffcf001876d905edfedd6abdf7f0b83",
+    "tools/emulation/probe_directionalblur_hdr_layer_20261001.py": "05dac80e5d8c982bdb3a2c2d723a5d81dc0f07160f84b106a9feddd1405e40d2",
+    "tools/emulation/probe_directionalblur_layer_20261001.py": "68b55493f6573932cc5e9324e85b7dd771da78c7e6fbd8a5b59f299a4fc51740",
+    "tools/emulation/probe_directionalblur_layer_declared_choices_20261001.py": "88ef73bb0630f39210a4e951d32960eaa13ea8d96e5bc1f7bc7886a2fa35815c",
+    "tools/emulation/probe_directionalblur_layer_general_20261001.py": "909ae008c8d489de8af689db91d16fc5acd29faa80f116ede869d24e360bff4a",
+    "tools/emulation/probe_directionalblur_sse_conversion_20261001.py": "fa531ce671e6d102bbfc1ef67e6fde017c9b2c2879fb95f75472de87c0f0bcd0",
+    "tools/emulation/test_dblur_generic_backonly_effectmain_20260821.py": "c638b98b1a186de013c307cb01c6074d77ab2fcf9536d5d59d18e149cd774f1f",
+    "tools/emulation/test_olmdirectionalblur_smart_cleanup_atomic_20260813.py": "89676db69605259dec6fba5d7de44a3069a010ab595044d03416644922952aa5"
+  },
+  "live_validation_binding": {
+    "core_budget_sha256": "3d0b990b2b0d6bcbe6f0ff3d9c28f14629990b9671bf5ca742a3c04085747fb6",
+    "core_rowdriver_sha256": "a6fff9d9fdb1ce3d582b24123d858d2c6b9f801ff18bc2994241ba5479f724a9",
+    "public_entry_sha256": "8c9c0c34e220d3cd281d7b1ba3c6673704af42437fbc02dba30de8d5f7fa8010"
+  },
+  "production_capture_binding": {
+    "capture_before_conservative_pf32_layer_budget": true,
+    "core_budget_sha256": "1e3a7ebbe13e9a7705080ce2eadb3d09e24bc50693023d3a929c107da7e1d545",
+    "core_rowdriver_sha256": "a6fff9d9fdb1ce3d582b24123d858d2c6b9f801ff18bc2994241ba5479f724a9",
+    "native_output_hashes_unchanged_count": 180,
+    "public_entry_sha256": "8c9c0c34e220d3cd281d7b1ba3c6673704af42437fbc02dba30de8d5f7fa8010",
+    "public_exact_case_count": 180
+  },
+  "schema": "directionalblur.hdr-layer-sse-validation/1",
+  "verdict": "PASS_HDR_LAYER_SSE_CONVERSION_RESTORED_LOCAL_AEX",
+  "worker_sha256": "0eb2f7705598f7b5f53563b9d920274ba094c835ff3dbaaf5f6fb214ec0cfd61"
+}

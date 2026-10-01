@@ -1,0 +1,136 @@
+{
+  "address": "180001450",
+  "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+  "case_count": 20,
+  "cases": [
+    {
+      "exact": true,
+      "expected_i32": 0,
+      "input_f32_bits": "00000000",
+      "native_i32": 0
+    },
+    {
+      "exact": true,
+      "expected_i32": 0,
+      "input_f32_bits": "80000000",
+      "native_i32": 0
+    },
+    {
+      "exact": true,
+      "expected_i32": 1,
+      "input_f32_bits": "3f800000",
+      "native_i32": 1
+    },
+    {
+      "exact": true,
+      "expected_i32": -1,
+      "input_f32_bits": "bf800000",
+      "native_i32": -1
+    },
+    {
+      "exact": true,
+      "expected_i32": 1,
+      "input_f32_bits": "3fc00000",
+      "native_i32": 1
+    },
+    {
+      "exact": true,
+      "expected_i32": -1,
+      "input_f32_bits": "bfc00000",
+      "native_i32": -1
+    },
+    {
+      "exact": true,
+      "expected_i32": 0,
+      "input_f32_bits": "00000001",
+      "native_i32": 0
+    },
+    {
+      "exact": true,
+      "expected_i32": 0,
+      "input_f32_bits": "80000001",
+      "native_i32": 0
+    },
+    {
+      "exact": true,
+      "expected_i32": 2147483520,
+      "input_f32_bits": "4effffff",
+      "native_i32": 2147483520
+    },
+    {
+      "exact": true,
+      "expected_i32": -2147483648,
+      "input_f32_bits": "4f000000",
+      "native_i32": -2147483648
+    },
+    {
+      "exact": true,
+      "expected_i32": -2147483648,
+      "input_f32_bits": "4f000001",
+      "native_i32": -2147483648
+    },
+    {
+      "exact": true,
+      "expected_i32": -2147483520,
+      "input_f32_bits": "ceffffff",
+      "native_i32": -2147483520
+    },
+    {
+      "exact": true,
+      "expected_i32": -2147483648,
+      "input_f32_bits": "cf000000",
+      "native_i32": -2147483648
+    },
+    {
+      "exact": true,
+      "expected_i32": -2147483648,
+      "input_f32_bits": "cf000001",
+      "native_i32": -2147483648
+    },
+    {
+      "exact": true,
+      "expected_i32": -2147483648,
+      "input_f32_bits": "7f7fffff",
+      "native_i32": -2147483648
+    },
+    {
+      "exact": true,
+      "expected_i32": -2147483648,
+      "input_f32_bits": "ff7fffff",
+      "native_i32": -2147483648
+    },
+    {
+      "exact": true,
+      "expected_i32": -2147483648,
+      "input_f32_bits": "7f800000",
+      "native_i32": -2147483648
+    },
+    {
+      "exact": true,
+      "expected_i32": -2147483648,
+      "input_f32_bits": "ff800000",
+      "native_i32": -2147483648
+    },
+    {
+      "exact": true,
+      "expected_i32": -2147483648,
+      "input_f32_bits": "7fc00000",
+      "native_i32": -2147483648
+    },
+    {
+      "exact": true,
+      "expected_i32": -2147483648,
+      "input_f32_bits": "ffc00000",
+      "native_i32": -2147483648
+    }
+  ],
+  "claims_not_made": [
+    "Local instruction emulation is not native AE/UCRT verification",
+    "No whole render or arbitrary input completion"
+  ],
+  "exact_count": 20,
+  "instruction": "CVTTSS2SI R9D,XMM0",
+  "instruction_hex": "f3440f2cc8",
+  "probe_sha256": "fa531ce671e6d102bbfc1ef67e6fde017c9b2c2879fb95f75472de87c0f0bcd0",
+  "schema": "directionalblur.scatter-sse-conversion/1"
+}
