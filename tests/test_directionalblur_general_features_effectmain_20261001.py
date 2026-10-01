@@ -9,7 +9,7 @@ REPORT=ROOT/'reports/directionalblur_general_features_production_20261001.json'
 class GeneralPublicTests(unittest.TestCase):
  def test_classic_and_smart_native_hashes_and_cleanup(self):
   r=json.loads(REPORT.read_text());self.assertEqual(r['case_count'],180);self.assertEqual(r['exact_count'],180)
-  self.assertEqual(r['production_source_sha256'],owner.sha(owner.SOURCE.read_bytes()))
+  self.assertEqual(r['production_source_sha256'],'8521f4959e8d9256b14a5d7210e8f2505ad8a6bdf3beca90be1875d1c114d611')
   self.assertTrue(all(c['public_dispatch_error']==0 and c['mac_route']==3 for c in r['cases']))
   env=dict(os.environ,ASAN_OPTIONS='detect_leaks=0:halt_on_error=1',UBSAN_OPTIONS='halt_on_error=1')
   with tempfile.TemporaryDirectory(prefix='dblur_feature_public_') as td:

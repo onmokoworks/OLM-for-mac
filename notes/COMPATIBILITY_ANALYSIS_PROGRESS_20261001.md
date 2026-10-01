@@ -476,6 +476,37 @@ Fade/Thickness、reserveの保持と追加workspace/operationの検査もPASS。
 公開360 renderの一致を任意画像/HDR/Layer Noise/downsample/全設定へ一般化しない。
 予算で拒否される大画像・強設定、元AEX不正Offsetの状態依存出力も残る。Goalはactive。
 
+## DB-HDR-012: PF32 finite HDR/signed入力の公開拒否を解消
+
+前項のgeneral inputはSDRのみだった。独自ARGB float入力にRGB約0.125..8.1、signed RGB、
+alpha−0.5..2、RGB約10^28、負のzero/1の直上/正負最小subnormal/1の直下を作る。
+9×7・37×29、Front7/Back11/Dual7+11、角度123.5/−17.25/17.25、neutral/components/
+Noise Type2/Size+Sharp+Noise+Fade+Gain2.25の4状態を5 profileへ渡す計120条件。
+同一typed raw bytesをWindows公開Smart ownerとMacへ渡した。
+
+SDR gateでは120件とも本番dispatcher拒否。明示的core bypassでは120/120 bit exact。
+拒否の原因は画像演算ではなく、GenericPF32SDRInputのchannel0..1条件だった。
+Windowsと一致する既存float演算を保持し、PF32入力をfinite検査へ変更する。
+alpha/RGBの0..1へのinput clampは追加しない。最終writerのWindows由来の上限演算は
+変更しない。PF16の32768上限検査、parameter/world/予算/Smart staging検査も維持する。
+
+変更後は120/120が本番dispatcher route2/3でexact、bypassなし。実SDK・production test
+seamなしのfake AE hostでClassicとSmart EffectMainの両方をO2/ASan/UBSanで再生し、
+計480成功renderで全native raw hashが一致。input不変、input rowbytes+5/output+11の
+padding保持、Smart21 parameter checkout/checkinとlayer/suite cleanupを確認。
+各ARGB channelへNaN/+Inf/−Infを入れた12状態をneutral/feature、両公開cmd・両buildで
+計96失敗renderとして検証。全て出力を変更せず拒否した。
+
+既存general180のClassic/Smart再生（720成功、40失敗）も両buildでPASS。
+既存Back/Dual EffectMainとdeep geometryもPASS。Back/Dualの旧PF32 red1.25拒否検査は
+新しいHDR受付と矛盾するため、PF32 red=Infのatomic拒否へ変更。PF16 red32769拒否は
+維持。旧production capture hashは付け替えず、現在の再生を別validationへbindする。
+
+出力の120条件一致は任意の有限float、overflow、NaN/Infや実host FP環境の完成証明では
+ない。Mac fake AE hostとローカルAEX emulationの比較でありnative AE/UCRT・installed
+bundle未完。PF16非SDR、Layer Noise、downsample、旧個別owner契約、大画像/強設定の
+予算拒否と全設定/素材は残る。完全互換Goalはactive。
+
 ## 次の順序
 
 1. ColorKeyの他Blur設定を公開ownerで再検証し、旧import stub依存の分岐を復元。
