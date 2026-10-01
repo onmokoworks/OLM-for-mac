@@ -1,0 +1,257 @@
+{
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "cases": [
+    {
+      "aex_render_equivalence_proved": false,
+      "depth": 8,
+      "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: unsupported Win64 import: api-ms-win-crt-math-l1-1-0.dll!log2f",
+      "family": 1,
+      "geometry": [
+        20,
+        14
+      ],
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_api_parameters": [
+        {
+          "kind": "u",
+          "slot": 1,
+          "value": 1
+        },
+        {
+          "kind": "p",
+          "slot": 2,
+          "value": [
+            50.0,
+            50.0
+          ]
+        },
+        {
+          "kind": "i",
+          "slot": 4,
+          "value": 4
+        },
+        {
+          "kind": "u",
+          "slot": 5,
+          "value": 1
+        },
+        {
+          "kind": "i",
+          "slot": 6,
+          "value": 0
+        },
+        {
+          "kind": "i",
+          "slot": 7,
+          "value": 0
+        },
+        {
+          "kind": "i",
+          "slot": 10,
+          "value": 0
+        },
+        {
+          "kind": "u",
+          "slot": 11,
+          "value": 1
+        },
+        {
+          "kind": "i",
+          "slot": 12,
+          "value": 0
+        },
+        {
+          "kind": "i",
+          "slot": 13,
+          "value": 0
+        },
+        {
+          "kind": "b",
+          "slot": 15,
+          "value": 1
+        },
+        {
+          "kind": "s",
+          "slot": 17,
+          "value": 1
+        },
+        {
+          "kind": "a",
+          "slot": 18,
+          "value": 0
+        },
+        {
+          "kind": "s",
+          "slot": 20,
+          "value": 5
+        },
+        {
+          "kind": "s",
+          "slot": 21,
+          "value": 1
+        },
+        {
+          "kind": "s",
+          "slot": 22,
+          "value": 0
+        },
+        {
+          "kind": "s",
+          "slot": 24,
+          "value": 0
+        },
+        {
+          "kind": "u",
+          "slot": 25,
+          "value": 1
+        },
+        {
+          "kind": "i",
+          "slot": 27,
+          "value": 1
+        },
+        {
+          "kind": "a",
+          "slot": 28,
+          "value": 0
+        },
+        {
+          "kind": "s",
+          "slot": 29,
+          "value": 10
+        }
+      ],
+      "state": "neutral",
+      "worker_failed": true
+    },
+    {
+      "aex_render_equivalence_proved": false,
+      "depth": 8,
+      "diagnostic": "aex_guest_error: selector SMART_RENDER failed in guest: unsupported Win64 import: api-ms-win-crt-math-l1-1-0.dll!log2f",
+      "family": 2,
+      "geometry": [
+        20,
+        14
+      ],
+      "input_sha256": "fe63f7ff532bdd6e05e0b5ca613bb9d67aa75d07941ac9888d11e205d4536a75",
+      "native_api_parameters": [
+        {
+          "kind": "u",
+          "slot": 1,
+          "value": 2
+        },
+        {
+          "kind": "p",
+          "slot": 2,
+          "value": [
+            50.0,
+            50.0
+          ]
+        },
+        {
+          "kind": "i",
+          "slot": 4,
+          "value": 4
+        },
+        {
+          "kind": "u",
+          "slot": 5,
+          "value": 1
+        },
+        {
+          "kind": "i",
+          "slot": 6,
+          "value": 0
+        },
+        {
+          "kind": "i",
+          "slot": 7,
+          "value": 0
+        },
+        {
+          "kind": "i",
+          "slot": 10,
+          "value": 0
+        },
+        {
+          "kind": "u",
+          "slot": 11,
+          "value": 1
+        },
+        {
+          "kind": "i",
+          "slot": 12,
+          "value": 0
+        },
+        {
+          "kind": "i",
+          "slot": 13,
+          "value": 0
+        },
+        {
+          "kind": "b",
+          "slot": 15,
+          "value": 1
+        },
+        {
+          "kind": "s",
+          "slot": 17,
+          "value": 1
+        },
+        {
+          "kind": "a",
+          "slot": 18,
+          "value": 0
+        },
+        {
+          "kind": "s",
+          "slot": 20,
+          "value": 5
+        },
+        {
+          "kind": "s",
+          "slot": 21,
+          "value": 1
+        },
+        {
+          "kind": "s",
+          "slot": 22,
+          "value": 0
+        },
+        {
+          "kind": "s",
+          "slot": 24,
+          "value": 0
+        },
+        {
+          "kind": "u",
+          "slot": 25,
+          "value": 1
+        },
+        {
+          "kind": "i",
+          "slot": 27,
+          "value": 1
+        },
+        {
+          "kind": "a",
+          "slot": 28,
+          "value": 0
+        },
+        {
+          "kind": "s",
+          "slot": 29,
+          "value": 10
+        }
+      ],
+      "state": "neutral",
+      "worker_failed": true
+    }
+  ],
+  "claims_not_made": [
+    "Fixture host missing import is not AEX unsupported setting or numerical mismatch",
+    "No native Windows UCRT/AE restoration"
+  ],
+  "frozen_worker_sha256": "0eb2f7705598f7b5f53563b9d920274ba094c835ff3dbaaf5f6fb214ec0cfd61",
+  "schema": "radialblur.frozen-import-boundary/1"
+}

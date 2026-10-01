@@ -1,0 +1,806 @@
+{
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "claims_not_made": [
+    "Angle fragment is not a complete builder/exported render",
+    "Nonzero public Angle/Noise Offset were not traced by CLI",
+    "Original binary consumes converted Angle integer directly in cos/sin; no degree correction inferred",
+    "No native Windows UCRT/AE or complete compatibility proof"
+  ],
+  "constants": {
+    "0x1800212d8": {
+      "f64": 0.017453292500000002,
+      "hex": "12e7faa146df913f"
+    },
+    "0x180025550": {
+      "f64": 2.663161090079238e-07,
+      "hex": "399d52a246df913e"
+    }
+  },
+  "controlled_build_sha256": "749d15debe26d8ec0dd84e10de476ab014227848809f0706a18d6c84b098b294",
+  "controlled_worker_sha256": "2db82335a6113c65b507b7db966ee8738c75dae4e459125b69da6b82d5fc1d50",
+  "dependencies_sha256": {
+    "decomp/OLMRadialBlur.aex.c.txt": "6d3f0cfc60883762d129940de2a717b8c6dd1efea7e06c254da259fef6b0e2f1",
+    "disasm/OLMRadialBlur.aex.asm.txt": "feaf9366c4cff7fc726bea62af94f8b6a638d08fb597844463e3a6274c0b3971",
+    "tools/emulation/aex_loader.py": "f277dbecd70c4c495aa05e6495d80fdc5ce07c5df51b9076be331c232e26c9ab",
+    "tools/emulation/probe_radialblur_parameter_units_20261001.py": "34921d59b0f3dfe881dad704dd157954c6c50df322d5eb815f5630f81ceb15f7",
+    "tools/emulation/probe_radialblur_public_aligned_20261001.py": "002e24e68da244655ac800e902ef87543be36b0fcfb74864efa27e132bee633f",
+    "tools/emulation/probe_radialblur_topology_20261001.py": "50992ac32fdee5313ab15d3c78ca9199d19b6103dd1c4f57923b194dd32fe8f5"
+  },
+  "exported_builder_rows": [
+    {
+      "default_leaves": {
+        "angle_default_raw": [
+          "00000000"
+        ],
+        "noise_default_radians": [
+          "00000000"
+        ]
+      },
+      "family": 1,
+      "fields": {
+        "angle": {
+          "format": "i",
+          "offset": 124,
+          "value": 0
+        },
+        "center_x": {
+          "format": "d",
+          "offset": 40,
+          "value": 10.0
+        },
+        "center_y": {
+          "format": "d",
+          "offset": 48,
+          "value": 7.0
+        },
+        "inner_edge": {
+          "format": "i",
+          "offset": 112,
+          "value": 37
+        },
+        "noise_offset": {
+          "format": "f",
+          "offset": 256,
+          "value": 0.0
+        },
+        "outer_edge": {
+          "format": "i",
+          "offset": 108,
+          "value": 50
+        },
+        "quality_step": {
+          "format": "f",
+          "offset": 128,
+          "value": 0.20000000298023224
+        }
+      },
+      "geometry": [
+        20,
+        14
+      ],
+      "guards_intact": true,
+      "input_png_sha256": "e53883cb844d8dc2a874c3534f6d122af23b7d536650977d795a44ef4616fd02",
+      "local_trace_sha256": "2977569a20cbfd68006954429978b1118a7d488aee8d15762f5d39ee5ac5bc3d",
+      "parameter_values": [
+        {
+          "name": "Blur Type",
+          "slot": 1,
+          "value": 1.0
+        },
+        {
+          "name": "Center",
+          "point": [
+            50.0,
+            50.0
+          ],
+          "slot": 2
+        },
+        {
+          "name": "Strength",
+          "slot": 4,
+          "value": 4.0
+        },
+        {
+          "name": "Offset Mode",
+          "slot": 5,
+          "value": 1.0
+        },
+        {
+          "name": "Offset",
+          "slot": 6,
+          "value": 0.0
+        },
+        {
+          "name": "Edge Fade",
+          "slot": 7,
+          "value": 50.0
+        },
+        {
+          "name": "Strength",
+          "slot": 10,
+          "value": 0.0
+        },
+        {
+          "name": "Offset Mode",
+          "slot": 11,
+          "value": 1.0
+        },
+        {
+          "name": "Offset",
+          "slot": 12,
+          "value": 0.0
+        },
+        {
+          "name": "Edge Fade",
+          "slot": 13,
+          "value": 37.0
+        },
+        {
+          "name": "Repeat Border",
+          "slot": 15,
+          "value": 1.0
+        },
+        {
+          "name": "Ratio",
+          "slot": 17,
+          "value": 1.0
+        },
+        {
+          "name": "Quality",
+          "slot": 20,
+          "value": 5.0
+        },
+        {
+          "name": "Brightness Gain",
+          "slot": 21,
+          "value": 1.0
+        },
+        {
+          "name": "Size Variation",
+          "slot": 22,
+          "value": 0.0
+        },
+        {
+          "name": "Noise Variation",
+          "slot": 24,
+          "value": 0.0
+        },
+        {
+          "name": "Noise Type",
+          "slot": 25,
+          "value": 1.0
+        },
+        {
+          "name": "Seed",
+          "slot": 27,
+          "value": 1.0
+        },
+        {
+          "name": "Thickness",
+          "slot": 29,
+          "value": 10.0
+        }
+      ],
+      "raw_output_sha256": "0649bde75950d9f7e16bdc561402d86e3d8d9de629dccc5deb9550654d627ca0",
+      "render_mode": "smart-cpu",
+      "unsupported_suite_calls": []
+    },
+    {
+      "default_leaves": {
+        "angle_default_raw": [
+          "00000000"
+        ],
+        "noise_default_radians": [
+          "00000000"
+        ]
+      },
+      "family": 2,
+      "fields": {
+        "angle": {
+          "format": "i",
+          "offset": 124,
+          "value": 0
+        },
+        "center_x": {
+          "format": "d",
+          "offset": 40,
+          "value": 10.0
+        },
+        "center_y": {
+          "format": "d",
+          "offset": 48,
+          "value": 7.0
+        },
+        "inner_edge": {
+          "format": "i",
+          "offset": 112,
+          "value": 37
+        },
+        "noise_offset": {
+          "format": "f",
+          "offset": 256,
+          "value": 0.0
+        },
+        "outer_edge": {
+          "format": "i",
+          "offset": 108,
+          "value": 50
+        },
+        "quality_step": {
+          "format": "f",
+          "offset": 128,
+          "value": 0.20000000298023224
+        }
+      },
+      "geometry": [
+        20,
+        14
+      ],
+      "guards_intact": true,
+      "input_png_sha256": "e53883cb844d8dc2a874c3534f6d122af23b7d536650977d795a44ef4616fd02",
+      "local_trace_sha256": "e2c25f7b8bb3a9d0e80e7426d0da29231b0b02158d550ffe54a2ce9fcd3e50b1",
+      "parameter_values": [
+        {
+          "name": "Blur Type",
+          "slot": 1,
+          "value": 2.0
+        },
+        {
+          "name": "Center",
+          "point": [
+            50.0,
+            50.0
+          ],
+          "slot": 2
+        },
+        {
+          "name": "Strength",
+          "slot": 4,
+          "value": 4.0
+        },
+        {
+          "name": "Offset Mode",
+          "slot": 5,
+          "value": 1.0
+        },
+        {
+          "name": "Offset",
+          "slot": 6,
+          "value": 0.0
+        },
+        {
+          "name": "Edge Fade",
+          "slot": 7,
+          "value": 50.0
+        },
+        {
+          "name": "Strength",
+          "slot": 10,
+          "value": 0.0
+        },
+        {
+          "name": "Offset Mode",
+          "slot": 11,
+          "value": 1.0
+        },
+        {
+          "name": "Offset",
+          "slot": 12,
+          "value": 0.0
+        },
+        {
+          "name": "Edge Fade",
+          "slot": 13,
+          "value": 37.0
+        },
+        {
+          "name": "Repeat Border",
+          "slot": 15,
+          "value": 1.0
+        },
+        {
+          "name": "Ratio",
+          "slot": 17,
+          "value": 1.0
+        },
+        {
+          "name": "Quality",
+          "slot": 20,
+          "value": 5.0
+        },
+        {
+          "name": "Brightness Gain",
+          "slot": 21,
+          "value": 1.0
+        },
+        {
+          "name": "Size Variation",
+          "slot": 22,
+          "value": 0.0
+        },
+        {
+          "name": "Noise Variation",
+          "slot": 24,
+          "value": 0.0
+        },
+        {
+          "name": "Noise Type",
+          "slot": 25,
+          "value": 1.0
+        },
+        {
+          "name": "Seed",
+          "slot": 27,
+          "value": 1.0
+        },
+        {
+          "name": "Thickness",
+          "slot": 29,
+          "value": 10.0
+        }
+      ],
+      "raw_output_sha256": "3c5260223fb45ebacdd1955f17394f0108796803b0bf2d9eff0ebfbee2aba1a6",
+      "render_mode": "smart-cpu",
+      "unsupported_suite_calls": []
+    }
+  ],
+  "leaf_rows": [
+    {
+      "angle_fragment_instructions": 10,
+      "angle_instruction_fragment_i32": -37480660,
+      "degrees_if_sdk_angle": -32768.0,
+      "leaves": {
+        "angle": {
+          "hex": "00000080",
+          "i32": -2147483648,
+          "instructions": 3
+        },
+        "noise_offset": {
+          "f32": -571.9094848632812,
+          "hex": "35fa0ec4",
+          "i32": -1005651403,
+          "instructions": 6
+        },
+        "slider": {
+          "hex": "00000080",
+          "i32": -2147483648,
+          "instructions": 3
+        }
+      },
+      "raw_fixed": -2147483648
+    },
+    {
+      "angle_fragment_instructions": 10,
+      "angle_instruction_fragment_i32": -411774,
+      "degrees_if_sdk_angle": -360.0,
+      "leaves": {
+        "angle": {
+          "hex": "000098fe",
+          "i32": -23592960,
+          "instructions": 3
+        },
+        "noise_offset": {
+          "f32": -6.2831854820251465,
+          "hex": "db0fc9c0",
+          "i32": -1060565029,
+          "instructions": 6
+        },
+        "slider": {
+          "hex": "000098fe",
+          "i32": -23592960,
+          "instructions": 3
+        }
+      },
+      "raw_fixed": -23592960
+    },
+    {
+      "angle_fragment_instructions": 10,
+      "angle_instruction_fragment_i32": -102943,
+      "degrees_if_sdk_angle": -90.0,
+      "leaves": {
+        "angle": {
+          "hex": "0000a6ff",
+          "i32": -5898240,
+          "instructions": 3
+        },
+        "noise_offset": {
+          "f32": -1.5707963705062866,
+          "hex": "db0fc9bf",
+          "i32": -1077342245,
+          "instructions": 6
+        },
+        "slider": {
+          "hex": "0000a6ff",
+          "i32": -5898240,
+          "instructions": 3
+        }
+      },
+      "raw_fixed": -5898240
+    },
+    {
+      "angle_fragment_instructions": 10,
+      "angle_instruction_fragment_i32": -1143,
+      "degrees_if_sdk_angle": -1.0,
+      "leaves": {
+        "angle": {
+          "hex": "0000ffff",
+          "i32": -65536,
+          "instructions": 3
+        },
+        "noise_offset": {
+          "f32": -0.01745329238474369,
+          "hex": "35fa8ebc",
+          "i32": -1131480523,
+          "instructions": 6
+        },
+        "slider": {
+          "hex": "0000ffff",
+          "i32": -65536,
+          "instructions": 3
+        }
+      },
+      "raw_fixed": -65536
+    },
+    {
+      "angle_fragment_instructions": 10,
+      "angle_instruction_fragment_i32": -285,
+      "degrees_if_sdk_angle": -0.25,
+      "leaves": {
+        "angle": {
+          "hex": "00c0ffff",
+          "i32": -16384,
+          "instructions": 3
+        },
+        "noise_offset": {
+          "f32": -0.004363323096185923,
+          "hex": "35fa8ebb",
+          "i32": -1148257739,
+          "instructions": 6
+        },
+        "slider": {
+          "hex": "00c0ffff",
+          "i32": -16384,
+          "instructions": 3
+        }
+      },
+      "raw_fixed": -16384
+    },
+    {
+      "angle_fragment_instructions": 10,
+      "angle_instruction_fragment_i32": 0,
+      "degrees_if_sdk_angle": -1.52587890625e-05,
+      "leaves": {
+        "angle": {
+          "hex": "ffffffff",
+          "i32": -1,
+          "instructions": 3
+        },
+        "noise_offset": {
+          "f32": -2.6631610694494157e-07,
+          "hex": "35fa8eb4",
+          "i32": -1265698251,
+          "instructions": 6
+        },
+        "slider": {
+          "hex": "ffffffff",
+          "i32": -1,
+          "instructions": 3
+        }
+      },
+      "raw_fixed": -1
+    },
+    {
+      "angle_fragment_instructions": 10,
+      "angle_instruction_fragment_i32": 0,
+      "degrees_if_sdk_angle": 0.0,
+      "leaves": {
+        "angle": {
+          "hex": "00000000",
+          "i32": 0,
+          "instructions": 3
+        },
+        "noise_offset": {
+          "f32": 0.0,
+          "hex": "00000000",
+          "i32": 0,
+          "instructions": 6
+        },
+        "slider": {
+          "hex": "00000000",
+          "i32": 0,
+          "instructions": 3
+        }
+      },
+      "raw_fixed": 0
+    },
+    {
+      "angle_fragment_instructions": 10,
+      "angle_instruction_fragment_i32": 0,
+      "degrees_if_sdk_angle": 1.52587890625e-05,
+      "leaves": {
+        "angle": {
+          "hex": "01000000",
+          "i32": 1,
+          "instructions": 3
+        },
+        "noise_offset": {
+          "f32": 2.6631610694494157e-07,
+          "hex": "35fa8e34",
+          "i32": 881785397,
+          "instructions": 6
+        },
+        "slider": {
+          "hex": "01000000",
+          "i32": 1,
+          "instructions": 3
+        }
+      },
+      "raw_fixed": 1
+    },
+    {
+      "angle_fragment_instructions": 10,
+      "angle_instruction_fragment_i32": 285,
+      "degrees_if_sdk_angle": 0.25,
+      "leaves": {
+        "angle": {
+          "hex": "00400000",
+          "i32": 16384,
+          "instructions": 3
+        },
+        "noise_offset": {
+          "f32": 0.004363323096185923,
+          "hex": "35fa8e3b",
+          "i32": 999225909,
+          "instructions": 6
+        },
+        "slider": {
+          "hex": "00400000",
+          "i32": 16384,
+          "instructions": 3
+        }
+      },
+      "raw_fixed": 16384
+    },
+    {
+      "angle_fragment_instructions": 10,
+      "angle_instruction_fragment_i32": 1143,
+      "degrees_if_sdk_angle": 0.9999847412109375,
+      "leaves": {
+        "angle": {
+          "hex": "ffff0000",
+          "i32": 65535,
+          "instructions": 3
+        },
+        "noise_offset": {
+          "f32": 0.01745302602648735,
+          "hex": "a6f98e3c",
+          "i32": 1016002982,
+          "instructions": 6
+        },
+        "slider": {
+          "hex": "ffff0000",
+          "i32": 65535,
+          "instructions": 3
+        }
+      },
+      "raw_fixed": 65535
+    },
+    {
+      "angle_fragment_instructions": 10,
+      "angle_instruction_fragment_i32": 1143,
+      "degrees_if_sdk_angle": 1.0,
+      "leaves": {
+        "angle": {
+          "hex": "00000100",
+          "i32": 65536,
+          "instructions": 3
+        },
+        "noise_offset": {
+          "f32": 0.01745329238474369,
+          "hex": "35fa8e3c",
+          "i32": 1016003125,
+          "instructions": 6
+        },
+        "slider": {
+          "hex": "00000100",
+          "i32": 65536,
+          "instructions": 3
+        }
+      },
+      "raw_fixed": 65536
+    },
+    {
+      "angle_fragment_instructions": 10,
+      "angle_instruction_fragment_i32": 1143,
+      "degrees_if_sdk_angle": 1.0000152587890625,
+      "leaves": {
+        "angle": {
+          "hex": "01000100",
+          "i32": 65537,
+          "instructions": 3
+        },
+        "noise_offset": {
+          "f32": 0.01745355874300003,
+          "hex": "c4fa8e3c",
+          "i32": 1016003268,
+          "instructions": 6
+        },
+        "slider": {
+          "hex": "01000100",
+          "i32": 65537,
+          "instructions": 3
+        }
+      },
+      "raw_fixed": 65537
+    },
+    {
+      "angle_fragment_instructions": 10,
+      "angle_instruction_fragment_i32": 1715,
+      "degrees_if_sdk_angle": 1.5,
+      "leaves": {
+        "angle": {
+          "hex": "00800100",
+          "i32": 98304,
+          "instructions": 3
+        },
+        "noise_offset": {
+          "f32": 0.02617993950843811,
+          "hex": "5077d63c",
+          "i32": 1020688208,
+          "instructions": 6
+        },
+        "slider": {
+          "hex": "00800100",
+          "i32": 98304,
+          "instructions": 3
+        }
+      },
+      "raw_fixed": 98304
+    },
+    {
+      "angle_fragment_instructions": 10,
+      "angle_instruction_fragment_i32": 42321,
+      "degrees_if_sdk_angle": 37.0,
+      "leaves": {
+        "angle": {
+          "hex": "00002500",
+          "i32": 2424832,
+          "instructions": 3
+        },
+        "noise_offset": {
+          "f32": 0.6457718014717102,
+          "hex": "4d51253f",
+          "i32": 1059410253,
+          "instructions": 6
+        },
+        "slider": {
+          "hex": "00002500",
+          "i32": 2424832,
+          "instructions": 3
+        }
+      },
+      "raw_fixed": 2424832
+    },
+    {
+      "angle_fragment_instructions": 10,
+      "angle_instruction_fragment_i32": 51471,
+      "degrees_if_sdk_angle": 45.0,
+      "leaves": {
+        "angle": {
+          "hex": "00002d00",
+          "i32": 2949120,
+          "instructions": 3
+        },
+        "noise_offset": {
+          "f32": 0.7853981852531433,
+          "hex": "db0f493f",
+          "i32": 1061752795,
+          "instructions": 6
+        },
+        "slider": {
+          "hex": "00002d00",
+          "i32": 2949120,
+          "instructions": 3
+        }
+      },
+      "raw_fixed": 2949120
+    },
+    {
+      "angle_fragment_instructions": 10,
+      "angle_instruction_fragment_i32": 102943,
+      "degrees_if_sdk_angle": 90.0,
+      "leaves": {
+        "angle": {
+          "hex": "00005a00",
+          "i32": 5898240,
+          "instructions": 3
+        },
+        "noise_offset": {
+          "f32": 1.5707963705062866,
+          "hex": "db0fc93f",
+          "i32": 1070141403,
+          "instructions": 6
+        },
+        "slider": {
+          "hex": "00005a00",
+          "i32": 5898240,
+          "instructions": 3
+        }
+      },
+      "raw_fixed": 5898240
+    },
+    {
+      "angle_fragment_instructions": 10,
+      "angle_instruction_fragment_i32": 114381,
+      "degrees_if_sdk_angle": 100.0,
+      "leaves": {
+        "angle": {
+          "hex": "00006400",
+          "i32": 6553600,
+          "instructions": 3
+        },
+        "noise_offset": {
+          "f32": 1.7453292608261108,
+          "hex": "f366df3f",
+          "i32": 1071605491,
+          "instructions": 6
+        },
+        "slider": {
+          "hex": "00006400",
+          "i32": 6553600,
+          "instructions": 3
+        }
+      },
+      "raw_fixed": 6553600
+    },
+    {
+      "angle_fragment_instructions": 10,
+      "angle_instruction_fragment_i32": 411774,
+      "degrees_if_sdk_angle": 360.0,
+      "leaves": {
+        "angle": {
+          "hex": "00006801",
+          "i32": 23592960,
+          "instructions": 3
+        },
+        "noise_offset": {
+          "f32": 6.2831854820251465,
+          "hex": "db0fc940",
+          "i32": 1086918619,
+          "instructions": 6
+        },
+        "slider": {
+          "hex": "00006801",
+          "i32": 23592960,
+          "instructions": 3
+        }
+      },
+      "raw_fixed": 23592960
+    },
+    {
+      "angle_fragment_instructions": 10,
+      "angle_instruction_fragment_i32": 37480660,
+      "degrees_if_sdk_angle": 32767.99998474121,
+      "leaves": {
+        "angle": {
+          "hex": "ffffff7f",
+          "i32": 2147483647,
+          "instructions": 3
+        },
+        "noise_offset": {
+          "f32": 571.9094848632812,
+          "hex": "35fa0e44",
+          "i32": 1141832245,
+          "instructions": 6
+        },
+        "slider": {
+          "hex": "ffffff7f",
+          "i32": 2147483647,
+          "instructions": 3
+        }
+      },
+      "raw_fixed": 2147483647
+    }
+  ],
+  "schema": "radialblur.parameter-units/1"
+}

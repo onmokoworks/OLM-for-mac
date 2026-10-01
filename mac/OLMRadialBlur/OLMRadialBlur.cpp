@@ -5445,11 +5445,12 @@ static OLMRadialBlurInfo InfoFromParams(PF_ParamDef *params[], PF_FpLong comp_wi
 	info.center_x = (PF_FpLong)params[OLMRADIALBLUR_CENTER]->u.td.x_value / 65536.0;
 	info.center_y = (PF_FpLong)params[OLMRADIALBLUR_CENTER]->u.td.y_value / 65536.0;
 	info.outer_strength = params[OLMRADIALBLUR_OUTER_STRENGTH]->u.sd.value;
-	info.outer_edge_fade = (A_long)params[OLMRADIALBLUR_OUTER_EDGE_FADE]->u.fs_d.value;
+	// ParamsSetup declares integer sliders; native e270 preserves their i32 values.
+	info.outer_edge_fade = params[OLMRADIALBLUR_OUTER_EDGE_FADE]->u.sd.value;
 	info.outer_offset_mode = params[OLMRADIALBLUR_OUTER_OFFSET_MODE]->u.pd.value;
 	info.outer_offset = params[OLMRADIALBLUR_OUTER_OFFSET]->u.sd.value;
 	info.inner_strength = params[OLMRADIALBLUR_INNER_STRENGTH]->u.sd.value;
-	info.inner_edge_fade = (A_long)params[OLMRADIALBLUR_INNER_EDGE_FADE]->u.fs_d.value;
+	info.inner_edge_fade = params[OLMRADIALBLUR_INNER_EDGE_FADE]->u.sd.value;
 	info.inner_offset_mode = params[OLMRADIALBLUR_INNER_OFFSET_MODE]->u.pd.value;
 	info.inner_offset = params[OLMRADIALBLUR_INNER_OFFSET]->u.sd.value;
 	info.repeat_border = params[OLMRADIALBLUR_REPEAT_BORDER]->u.bd.value;

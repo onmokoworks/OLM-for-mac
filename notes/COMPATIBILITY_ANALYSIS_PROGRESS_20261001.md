@@ -1357,11 +1357,63 @@ reports/directionalblur_dual_independent_validation_20261001.jsonへ記録する
 非zero Layer原点、native Windows UCRT/AE・installed、通常UI/保存、ROI/downsample、
 全入力/全設定/巨大画像と全10本の完全互換は未完。Goalはactive。
 
+## RB-SDK-PARAMETERS-021 — Point比較条件とEdge Fade整数getterを復元
+
+最初の公開getters30条件とtopology252条件は、MacのPointをpixelとして作りながら、
+同じ数値をAEXCompatのPoint APIへ送っていた。このAPIは百分率をframe extentへ掛ける。
+例えば20×14の(10,7)指定はnative configでは(2,0.9799957275390625)になり、Macの(10,7)と
+揃っていない。旧captureとprobeを変更せず保持し、その0/30・24/252という一致件数を
+移植本体の差分数や互換進捗として扱わない。これは参照・設定の不一致だった。
+
+FACT: 新しいaligned probeはnative指定だけ100*pixel/extentへ変換する。公開Smartの
+read-only 8690 returnを2 familyで採り、両側のCenterが(10,7)となることを確認した。
+同時にOuter/Inner Edge Fade 50/37がnative config+0x6c/+0x70へi32で入ることを観測した。
+PF_ADD_SLIDERと実SDKのu.sd.valueに対して旧Macはu.fs_d.valueを読んでおり、50/37が0へ
+変わっていた。本番はこの2 getterだけをu.sd.valueへ修正し、数値kernelは変更していない。
+公開gettersのaligned修正前2/30から修正後4/30へexactが増えた。4条件はZoomの標準と
+Outer Fade50、それぞれPF8/PF16。残る20条件は画素差、6条件はOffset設定のMac拒否。
+
+FACT: Angleのimport-free a2a0はADのraw i32を保存する。元8690の87c9..87f4だけを
+実行する限定fragmentはraw*DOUBLE 0.017453292500000002をCVTTSD2SIで切り捨てる。
+SDK Angle45のraw2949120は51471となる。Zoom4640/Rotation56f0の命令はその整数を
+直接DOUBLEへ変換してcos/sinへ渡し、ここには65536除算がない。普通の度→ラジアンへ
+「修正」しない。a2b0のOffsetはraw*DOUBLE 2.663161090079238e-07をFLOAT32へ丸める。
+SDK Offset1のraw65536はFLOAT32 0x3c8efa35だが、旧Macは整数65536を読んで拒否する。
+19 raw値の実leafと限定fragmentを保持し、full builder/exported traceとは区別する。
+CLIは非zero typed Angle指定を表せないため、今回の公開traceではAngle/Offsetを省略した。
+そのnative defaultのleaf値を記録し、明示的な0指定をtraceしたとは扱わない。
+Angle/Offsetの本番修正と非zero公開中間値の採取は次の残件。
+
+固定workerはaligned neutralの両familyでもlog2f未実装で終了する。元workerと外部sourceを
+保持した一時コピーを作り、正のFLOAT32の2の冪だけのexact log2とhost FLOAT32 atan2を追加した。
+他log2引数は明示的に拒否する。小さいMPL-2.0参照overlayとbuilder/hash manifestを保存し、
+元AEX/worker/private trace/PNG/raw frameを公開しない。controlled importをWindows UCRTや
+実AEと同一とは呼ばない。frozen worker missing importをAEXの設定非対応とも呼ばない。
+
+FACT: 正しい中心でtopology252条件を再測定すると52 exact、116画素差、84 Mac拒否だった。
+2 geometry・7 alpha/RGB pattern・2 family・3 depth・3 stateを使い、alpha0のRGBも残す。
+84拒否は全てSize25/Noise0で、fixture component面積の許容集合が残る。標準Size0でも
+差があるため、最初から全てを右端component処理の誤りへ帰属させない。gettersのZoom PF32
+標準は27 byte差、Rotation標準はPF8 34／PF16 136／PF32 894 byte差があり、最初の
+field/sampler値を採る必要がある。座標別の補正やnative出力の書換えは行わない。
+
+本番の282条件をO2/ASan/UBSanのClassic/Smartで1128回再生し、保存した結果と一致した。
+この再生には未解決の画素差と拒否が含まれ、1128回全てがAEX exactという意味ではない。
+各buildの両cmd合計は112 exact・272画素差・180拒否。さらにSDKの合法整数Edge Fade
+0..100を両getter・両cmd・両buildで404回検査し、設定値・input/padding不変・拒否時atomic・
+checkout/checkinとsuite balanceを確認した。新しいunittest3本がPASS、既存generic baseline、
+baseline sanitizer、Type3 sanitizer、budget、SizeNoise EffectMain、ROI contractの6本もPASS。
+旧UI parity test1本のThickness文字列assertは変更前HEADでも同じFAILで、getter修正による
+新しい失敗ではない。arm64/x86_64 O2実SDK buildは成功し、installed bundleは変更していない。
+reports/radialblur_public_parameter_validation_20261001.jsonに実行結果と依存hashを保持する。
+全設定・任意topology・native両AE/UCRT・UI保存・ROI/downsample・全10本の完全互換は未完。
+Goalはactive。
+
 ## 次の順序
 
 1. Smoother2のHDR/Gamma合成と色境界の今回の有限集合は検証済み。公開builderのLUT構築とnative依存先を分け、未測定scan長・任意float・独立paletteの最初の差を復元する。
 2. ColorKeyの未検証geometry/任意float/paletteとThin/Blur合成を拡張する。今回の境界・overflow比較を全入力の証明とは扱わず、固定workerとcontrolled Lab94参照を分け、native Windows UCRTとの比較を残す。
 3. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
-4. DirectionalBlurの独立216条件は公開比較済み。次はRadialBlurの画像端に接する成分・穴・離れた島を公開比較し、その後KiraKira一般入力へ進む。
+4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはPointを揃えた282条件に残るAngle/Offsetの読み取りと標準field/sampler差を閉じ、Size25の面積制限・端/穴/島へ進む。その後KiraKira一般入力を比較する。
 
 既存の作業ツリー変更は今回のcommitに混ぜない。第三者AEXとnative raw出力をPushしない。

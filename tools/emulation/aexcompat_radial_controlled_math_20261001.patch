@@ -1,0 +1,138 @@
+--- a/crates/aex-guest-worker/src/x64/imports.rs
++++ b/crates/aex-guest-worker/src/x64/imports.rs
+@@ -214,11 +214,13 @@
+     Floor,
+     FloorF,
+     FmodF,
++    RadialHostAtan2F,
+     FdClass,
+     DClass,
+     LRound,
+     LRoundF,
+     Log,
++    RadialLog2PowerOfTwo,
+     Round,
+     RoundF,
+     PowF,
+@@ -1116,6 +1118,8 @@
+         ("api-ms-win-crt-math-l1-1-0.dll" | "ucrtbase.dll", "floor") => LegacyWin64Import::Floor,
+         (_, "floor") => return Win64ImportDispatch::UnsupportedLegacyImport,
+         ("api-ms-win-crt-math-l1-1-0.dll", "fmodf") => LegacyWin64Import::FmodF,
++        ("api-ms-win-crt-math-l1-1-0.dll", "atan2f") => LegacyWin64Import::RadialHostAtan2F,
++        (_, "atan2f") => return Win64ImportDispatch::UnsupportedLegacyImport,
+         (_, "fmodf") => return Win64ImportDispatch::UnsupportedLegacyImport,
+         ("api-ms-win-crt-math-l1-1-0.dll" | "ucrtbase.dll", "_fdclass") => {
+             LegacyWin64Import::FdClass
+@@ -1131,6 +1135,8 @@
+         (_, "lroundf") => return Win64ImportDispatch::UnsupportedLegacyImport,
+         ("api-ms-win-crt-math-l1-1-0.dll" | "ucrtbase.dll", "log") => LegacyWin64Import::Log,
+         (_, "log") => return Win64ImportDispatch::UnsupportedLegacyImport,
++        ("api-ms-win-crt-math-l1-1-0.dll", "log2f") => LegacyWin64Import::RadialLog2PowerOfTwo,
++        (_, "log2f") => return Win64ImportDispatch::UnsupportedLegacyImport,
+         ("api-ms-win-crt-math-l1-1-0.dll" | "ucrtbase.dll", "round") => LegacyWin64Import::Round,
+         (_, "round") => return Win64ImportDispatch::UnsupportedLegacyImport,
+         ("api-ms-win-crt-math-l1-1-0.dll" | "ucrtbase.dll", "roundf") => LegacyWin64Import::RoundF,
+@@ -2650,6 +2656,9 @@
+                 LegacyWin64Import::FmodF => {
+                     install_fmodf_import(unicorn, stub)?;
+                 }
++                LegacyWin64Import::RadialHostAtan2F => {
++                    install_radial_host_atan2f_import(unicorn, stub)?;
++                }
+                 LegacyWin64Import::FdClass => {
+                     uc("write _fdclass return", unicorn.mem_write(stub, &[0xc3]))?;
+                     uc(
+@@ -2673,6 +2682,9 @@
+                 }
+                 LegacyWin64Import::LRoundF => {
+                     install_lroundf_import(unicorn, stub)?;
++                }
++                LegacyWin64Import::RadialLog2PowerOfTwo => {
++                    install_radial_log2_power_of_two(unicorn, stub)?;
+                 }
+                 LegacyWin64Import::Log => {
+                     install_double_import(unicorn, stub, "log", f64::ln)?;
+--- a/crates/aex-guest-worker/src/x64/callbacks.rs
++++ b/crates/aex-guest-worker/src/x64/callbacks.rs
+@@ -668,6 +668,81 @@
+         }),
+     )
+     .map(|_| ())
++}
++
++// Controlled Radial reference import. This is host f32 atan2,
++// not a claim that native Windows UCRT has the same implementation.
++fn install_radial_host_atan2f_import(
++    unicorn: &mut Unicorn<'static, GuestState>,
++    address: u64,
++) -> Result<(), GuestError> {
++    uc(
++        "install controlled Radial atan2f import",
++        unicorn.add_code_hook(address, address, |unicorn, _, _| {
++            let result = (|| -> Result<(), String> {
++                let mut xmm0 = unicorn.reg_read_long(RegisterX86::XMM0)
++                    .map_err(|error| format!("atan2f XMM0: {error}"))?;
++                let xmm1 = unicorn.reg_read_long(RegisterX86::XMM1)
++                    .map_err(|error| format!("atan2f XMM1: {error}"))?;
++                let y = f32::from_le_bytes(xmm0[..4].try_into().unwrap());
++                let x = f32::from_le_bytes(xmm1[..4].try_into().unwrap());
++                let output = y.atan2(x);
++                if unicorn.get_data().math_calls.len() < 32 {
++                    unicorn.get_data_mut().math_calls.push(format!(
++                        "atan2f(y_bits={:08x},x_bits={:08x})={:08x}",
++                        y.to_bits(), x.to_bits(), output.to_bits()
++                    ));
++                }
++                xmm0[..4].copy_from_slice(&output.to_le_bytes());
++                unicorn.reg_write_long(RegisterX86::XMM0, &xmm0)
++                    .map_err(|error| format!("atan2f result: {error}"))?;
++                Ok(())
++            })();
++            if let Err(error) = result {
++                if unicorn.get_data().callback_error.is_none() {
++                    unicorn.get_data_mut().callback_error = Some(error);
++                }
++                let _ = unicorn.emu_stop();
++            }
++        }),
++    ).map(|_| ())
++}
++
++// Controlled Radial FFT reference: exact log2 for positive FLOAT32 powers of two.
++// Reject other arguments rather than guessing native Windows UCRT semantics.
++fn install_radial_log2_power_of_two(
++    unicorn: &mut Unicorn<'static, GuestState>, address: u64,
++) -> Result<(), GuestError> {
++    uc("install controlled Radial power-of-two log2f", unicorn.add_code_hook(address, address, |unicorn, _, _| {
++        let result = (|| -> Result<(), String> {
++            let mut xmm0 = unicorn.reg_read_long(RegisterX86::XMM0)
++                .map_err(|e| format!("log2f XMM0: {e}"))?;
++            let bits = u32::from_le_bytes(xmm0[..4].try_into().unwrap());
++            let encoded = (bits >> 23) & 0xff;
++            let mantissa = bits & 0x007fffff;
++            if bits >> 31 != 0 || encoded == 255 || bits == 0 ||
++               (encoded != 0 && mantissa != 0) ||
++               (encoded == 0 && !mantissa.is_power_of_two()) {
++                return Err(format!("controlled log2f needs positive power of two, bits={bits:08x}"));
++            }
++            let exponent = if encoded == 0 { mantissa.trailing_zeros() as i32 - 149 }
++                           else { encoded as i32 - 127 };
++            let output = exponent as f32;
++            if unicorn.get_data().math_calls.len() < 32 {
++                unicorn.get_data_mut().math_calls.push(format!("log2f_power2(bits={bits:08x})={:08x}", output.to_bits()));
++            }
++            xmm0[..4].copy_from_slice(&output.to_le_bytes());
++            unicorn.reg_write_long(RegisterX86::XMM0, &xmm0)
++                .map_err(|e| format!("log2f result: {e}"))?;
++            Ok(())
++        })();
++        if let Err(error) = result {
++            if unicorn.get_data().callback_error.is_none() {
++                unicorn.get_data_mut().callback_error = Some(error);
++            }
++            let _ = unicorn.emu_stop();
++        }
++    })).map(|_| ())
+ }
+ 
+ fn normalized_f32_significand(bits: u32) -> (u32, i32) {

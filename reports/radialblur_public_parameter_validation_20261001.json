@@ -1,0 +1,211 @@
+{
+  "dependencies_sha256": {
+    "mac/OLMRadialBlur/OLMRadialBlur.cpp": "f9bdfd15487b04bd0a73b8df174697ada9ba1912f4c93c706cf8b691dcaca3d9",
+    "reports/radialblur_controlled_reference_build_20261001.json": "749d15debe26d8ec0dd84e10de476ab014227848809f0706a18d6c84b098b294",
+    "reports/radialblur_frozen_import_boundary_20261001.json": "cab790b244f61d2619be67c9f04b8bbfeac36dec12505b67985a4f5d9f0fce6d",
+    "reports/radialblur_parameter_units_20261001.json": "771b022c6bd34ca6c75c72f60c25f3950e0d88f03dbb291d18b910704e269099",
+    "reports/radialblur_public_getters_aligned_20261001.json": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
+    "reports/radialblur_public_getters_edge_fixed_20261001.json": "602fa94a2bf867028f981baae524da72985a032dda69a18e49024b43b9af0ff3",
+    "reports/radialblur_public_topology_aligned_20261001.json": "5dcbd4c77ae87354290b89ed299cfbaa81c0f00aa5170916441ae74d88572257",
+    "tests/test_radialblur_public_parameters_20261001.py": "ba2817b1f9c9a0f436584101829c9baf928348b14b22ff313fe7bb93257db342",
+    "tools/emulation/aexcompat_radial_controlled_math_20261001.patch": "931d9011a485af91cbc15736b86db70bc94e012cdad642df5055b3d8cbb9f446",
+    "tools/emulation/build_radialblur_controlled_math_worker_20261001.py": "d85866b78e1a9d46a26789c7ee01fa725cf5666a4c380fecb68e035164a5b659",
+    "tools/emulation/probe_radialblur_parameter_units_20261001.py": "34921d59b0f3dfe881dad704dd157954c6c50df322d5eb815f5630f81ceb15f7",
+    "tools/emulation/probe_radialblur_public_aligned_20261001.py": "002e24e68da244655ac800e902ef87543be36b0fcfb74864efa27e132bee633f",
+    "tools/emulation/probe_radialblur_topology_20261001.py": "50992ac32fdee5313ab15d3c78ca9199d19b6103dd1c4f57923b194dd32fe8f5",
+    "tools/emulation/radialblur_topology_effectmain_harness_20261001.cpp": "079dfaa39b055c34e4bd9422c5382b29e2eaf6c40929ea7b80a7f232fd922a41"
+  },
+  "live_replay": {
+    "captured_cases": 282,
+    "captured_public_renders": 1128,
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_radialblur_public_parameters_20261001.py"
+    ],
+    "different_per_build_both_commands": 272,
+    "legal_edge_metadata_renders": 404,
+    "legal_integer_edge_values_checked": 101,
+    "o2_and_asan_ubsan": true,
+    "raw_exact_per_build_both_commands": 112,
+    "rejected_per_build_both_commands": 180,
+    "return_code": 0,
+    "test_success_is_not_full_raw_equivalence": true,
+    "tests": 3,
+    "total_renders": 1532
+  },
+  "old_ui_assertion_baseline": [
+    {
+      "result": "FAIL",
+      "source_state": "head",
+      "test": "test_windows_control_types_and_ui_ranges_are_preserved"
+    },
+    {
+      "result": "PASS",
+      "source_state": "head",
+      "test": "test_windows_group_controls_are_real_ae_topics"
+    },
+    {
+      "result": "PASS",
+      "source_state": "head",
+      "test": "test_windows_visible_names_and_popup_labels_are_preserved"
+    },
+    {
+      "result": "FAIL",
+      "source_state": "current",
+      "test": "test_windows_control_types_and_ui_ranges_are_preserved"
+    },
+    {
+      "result": "PASS",
+      "source_state": "current",
+      "test": "test_windows_group_controls_are_real_ae_topics"
+    },
+    {
+      "result": "PASS",
+      "source_state": "current",
+      "test": "test_windows_visible_names_and_popup_labels_are_preserved"
+    }
+  ],
+  "production_change": "Read both PF_ADD_SLIDER Edge Fade values from SDK u.sd.value; no numerical core change",
+  "public_comparison_summaries": [
+    {
+      "both_commands_exact": 2,
+      "case_count": 30,
+      "different": 22,
+      "mac_rejected": 6,
+      "report": "radialblur_public_getters_aligned_20261001.json"
+    },
+    {
+      "both_commands_exact": 52,
+      "case_count": 252,
+      "different": 116,
+      "mac_rejected": 84,
+      "report": "radialblur_public_topology_aligned_20261001.json"
+    },
+    {
+      "both_commands_exact": 4,
+      "case_count": 30,
+      "different": 20,
+      "mac_rejected": 6,
+      "report": "radialblur_public_getters_edge_fixed_20261001.json"
+    }
+  ],
+  "regressions": [
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_generic_baseline_20260820.py"
+      ],
+      "return_code": 0,
+      "seconds": 4.322,
+      "test_file": "tests/test_olmradialblur_generic_baseline_20260820.py"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_generic_baseline_sanitizers_20260820.py"
+      ],
+      "return_code": 0,
+      "seconds": 32.219,
+      "test_file": "tests/test_olmradialblur_generic_baseline_sanitizers_20260820.py"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_generic_type3_sanitizers_20260820.py"
+      ],
+      "return_code": 0,
+      "seconds": 17.796,
+      "test_file": "tests/test_olmradialblur_generic_type3_sanitizers_20260820.py"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_generic_budget_20260821.py"
+      ],
+      "return_code": 0,
+      "seconds": 4.492,
+      "test_file": "tests/test_olmradialblur_generic_budget_20260821.py"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_size_noise_effectmain_20260821.py"
+      ],
+      "return_code": 0,
+      "seconds": 4.831,
+      "test_file": "tests/test_olmradialblur_size_noise_effectmain_20260821.py"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_global_polar_smart_contract_20260820.py"
+      ],
+      "return_code": 0,
+      "seconds": 3.591,
+      "test_file": "tests/test_olmradialblur_global_polar_smart_contract_20260820.py"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_parameter_ui_parity_20260806.py"
+      ],
+      "return_code": 1,
+      "seconds": 0.066,
+      "test_file": "tests/test_olmradialblur_parameter_ui_parity_20260806.py"
+    }
+  ],
+  "remaining": [
+    "Nonzero Angle AD read and native integer conversion/direct cosine-sine argument remain unrestored",
+    "Noise Offset AD to FLOAT32 conversion remains unrestored",
+    "Zoom PF32 neutral and Rotation neutral residuals need intermediate field/sampler comparison",
+    "Size25 without Noise rejects all 84 independent topology inputs; fixture area admission remains",
+    "General component topology/edge behavior not closed by this getter fix",
+    "Controlled host atan2f/log2f are not native Windows UCRT/AE proof",
+    "UI/save/ROI/downsample/installed/all-ten compatibility remains incomplete"
+  ],
+  "schema": "radialblur.sdk-edge-validation/1",
+  "source_sha256": "f9bdfd15487b04bd0a73b8df174697ada9ba1912f4c93c706cf8b691dcaca3d9",
+  "universal_sdk_build": {
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "command": [
+      "xcodebuild",
+      "-project",
+      "mac/OLMRadialBlur/Mac/OLMRadialBlur.xcodeproj",
+      "-configuration",
+      "Debug",
+      "ARCHS=arm64 x86_64",
+      "ONLY_ACTIVE_ARCH=NO",
+      "GCC_OPTIMIZATION_LEVEL=2",
+      "MACOSX_DEPLOYMENT_TARGET=11.0",
+      "OBJROOT=<private disposable directory>",
+      "SHARED_PRECOMPS_DIR=<private disposable directory>",
+      "CONFIGURATION_BUILD_DIR=<private disposable directory>",
+      "build"
+    ],
+    "installed": false,
+    "return_code": 0
+  }
+}
