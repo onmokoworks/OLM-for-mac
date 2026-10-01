@@ -2107,6 +2107,54 @@ scalar Fade3語・Windows RCPPS/ISA/一般UCRT、allocator末尾、Rotation追�
 他のQuality/Noise/Layer/Brightness、任意geometry/入力と複合設定、native両AE/UI/保存/
 ROI/downsample、全10本完全互換は未完。次は未対応の合法control値域・分岐を測る。Goalはactive。
 
+## RB-NOISE-RANGE-ZERO-TYPE2-036 — Noise合法値域とゼロ時Type2を接続
+
+前回a4cfa436のSize値域/合成/enabledはPush済み。現在のNoise Variationは元builderの
+合法0–100に対して25/100だけに制限されていた。元AEX・固定/controlled worker・SDKを保持し、
+先に元ownerの数値と拒否理由を確認する。
+
+FACT: 元8892 MULSSはgetterのFLOAT32へ0.01fを乗算し、88a6でwork+3cへ保存する。
+元6ca9–6ccfはNVを読み、別々のFLOAT32演算でnoise*NV+(1-NV)を作り、Size factorを乗算する。
+Type1/Type2は6ca4のsamplerへ渡すwork+f8のsmooth flagを切り替える。
+NV=0でも元6aa0はこの一般式を使う。25/100に限定する分岐はない。
+Macのこの正規化・合成式と乱数生成は既に共通処理にあり、数値演算の変更は不要だった。
+候補はprocedural/Size-NoiseのNV制限だけを有限0–100へ広げる。
+
+最初の候補f56dac7fa2a55eb21ac28599d738ef585c0588b6013ca7124327a637a5f7b401で、
+整数1–100、小数・subnormalと両Fade/Sizeの952条件は940 exact・12拒否だった。
+12拒否はNV=0/Type2のbaseline受入条件に由来し、数値差ではない。
+ゼロ時にType2も受け付ける候補では952条件すべてexact。要求値やpopupを別値へ置き換えず、
+元が使う同じ一般処理へ渡す。全SDK modifier/乱数generatorとscalar exp policyは保持する。
+
+本番最終sourceは4eb37f9d18110a87bc1b60e9d723b3e14e029128f98130e2d7249a520a61aa0c。
+17×15 diagonalのZoom/Rotation・Type1/2、PF32整数1–100の400条件と、
+23値の小数/極小/隣接FLOAT32/DOUBLE値×Size0/37.5×3深度×両family/typeの552条件を比較。
+後者は両Fade37・Inner Strength3を含む。元AEX952条件を取得し、全exact（旧932拒否、旧20exact）。
+従来694と独立1855（575＋Size range560＋Size enabled720）を保持し、候補14004公開再生が一致。
+本番の新2 testでも元952条件を再取得し、O2/strict sanitizer Classic/Smart14004再生を確認した。
+
+自然16条件では、元6aa0のwork+3c/50/f8をreadonlyで取得し、+88のSize面と
++90のNoise合成後の面をprivate SDK観測と比較。各面4080 FLOAT32語は全一致。
+NV0、DOUBLE tie、33.3、100直前のFLOAT32をType1/2とSize0/37.5で照合した。
+初回の観測用source生成ではtemplate宣言の直後へhelperを挿入してしまい、観測用compileが失敗。
+公開14004再生はその前に完了し、952行のcheckpointを保持していた。
+compiled production copies/harness/全caseの設定・input hash・resultsを検証し、template挿入位置を
+訂正したobserverの16条件だけを再測定した。本番の新testはcheckpointを使わず全て新規実行する。
+
+新2＋既存38 unittest（ROIの1 testはgate経由）と7 generic gateはPASS。
+Size enabledの履歴bindingを旧231239e0 epochとして保持し、実SDK20 threshold/40回、
+disabled factor20 map/700語/120回と本番720条件2880再生を検証した。
+Size range560/7316再生と自然6画像・active factor12 map/72回、topology5076再生、
+Zoom Fade3956＋Outer400再生、Gaussian60000 exp/30長さ、PF8 quantizer2196、
+Angle/Offset352、Noise grid96、Rotation sampler72も本番で保持する。
+実SDK arm64/x86_64 O2 build成功、build前後のsource/header一致。
+元AEX・3 worker・controlled parent440 source・SDK90入力は不変。installedは変更していない。
+
+Noiseの有限割合と既存seed/thickness/quality/offset profileの復元であり、Noise全controlの
+完成ではない。未列挙Seed/Thickness/Quality/Offset、Layer、Brightnessと任意入力/設定、
+scalar Fade3語・Windows RCPPS/ISA/UCRT、allocator末尾、Rotation追加半径行、
+native両AE/UI/保存/ROI/downsample、全10本の完全互換は未完。Goalはactive。
+
 ## 次の順序
 
 1. Smoother2のHDR/Gamma合成と色境界の今回の有限集合は検証済み。公開builderのLUT構築とnative依存先を分け、未測定scan長・任意float・独立paletteの最初の差を復元する。

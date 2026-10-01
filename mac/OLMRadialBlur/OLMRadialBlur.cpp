@@ -865,8 +865,8 @@ static bool CheckedCellProduct(A_long width, A_long height, size_t channels, siz
 
 static bool IsGenericProceduralNoiseProfile(const OLMRadialBlurInfo &info)
 {
-	if (info.noise_variation == 0.0) return info.noise_type == 1;
-	if (info.noise_variation != 25.0 && info.noise_variation != 100.0) return false;
+	if (info.noise_variation == 0.0) return info.noise_type == 1 || info.noise_type == 2;
+	if (!std::isfinite(info.noise_variation) || info.noise_variation < 0.0 || info.noise_variation > 100.0) return false;
 	// Nonnegative phases from the full signed AD range keep table indices valid.
 	// Negative phases can address before the native random table; still unverified.
 	if (!std::isfinite(info.noise_offset) || info.noise_offset < 0.0f ||
@@ -918,7 +918,7 @@ static bool IsGenericSizeNoiseControlProfile(const OLMRadialBlurInfo &info)
 		info.repeat_border != FALSE && info.ratio == 1.0 && info.angle_deg == 0.0 &&
 		info.quality == 5.0 && info.brightness_gain == 1.0 &&
 		(std::isfinite(info.size_variation) && info.size_variation > 0.0 && info.size_variation <= 100.0) &&
-		(info.noise_variation == 25.0 || info.noise_variation == 100.0) &&
+		(std::isfinite(info.noise_variation) && info.noise_variation >= 0.0 && info.noise_variation <= 100.0) &&
 		(info.noise_type == 1 || info.noise_type == 2) && info.noise_layer == 0 &&
 		info.seed == 1 && info.noise_offset == 0 && info.thickness == 10.0;
 }

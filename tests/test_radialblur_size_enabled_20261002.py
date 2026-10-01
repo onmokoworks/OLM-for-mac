@@ -16,8 +16,8 @@ public=probe.public
 
 class SizeEnabledTests(unittest.TestCase):
     def test_original_enabled_block_and_actual_sdk_helper(self):
-        report=current.capture()
-        self.assertEqual(public.SOURCE.read_text(),probe.candidate_source(probe.before_source()))
+        report=json.loads((ROOT/'reports/radialblur_size_enabled_public_20261002.json').read_text());current.capture()
+        self.assertEqual(public.sha(probe.candidate_source(probe.before_source()).encode()),report['source_sha256'])
         self.assertEqual(probe.native_rows(),report['native_enabled_rows'])
         self.assertEqual(len(report['native_enabled_rows']),20)
         for path,expected in report['dependencies_sha256'].items():
@@ -27,7 +27,7 @@ class SizeEnabledTests(unittest.TestCase):
         print('SIZE_ENABLED_ORIGINAL_BLOCK',20,'SDK',40,flush=True)
 
     def test_production_public_threshold_noise_and_fade(self):
-        report=current.capture();parent=Path(os.environ['RADIAL_PARENT_WORKER'])
+        report=json.loads((ROOT/'reports/radialblur_size_enabled_public_20261002.json').read_text());current.capture();parent=Path(os.environ['RADIAL_PARENT_WORKER'])
         self.assertEqual(public.sha(parent.read_bytes()),report['controlled_worker_sha256'])
         self.assertEqual(public.sha(public.initial.AEX.read_bytes()),report['aex_sha256'])
         cases=probe.independent_cases()
@@ -55,7 +55,7 @@ class SizeEnabledTests(unittest.TestCase):
     def test_original_disabled_factors_and_typed_sdk_worlds(self):
         current.capture();factors=importlib.import_module('probe_radialblur_size_disabled_factor_20261002')
         report=json.loads((ROOT/'reports/radialblur_size_disabled_factor_20261002.json').read_text())
-        self.assertEqual(public.sha(public.SOURCE.read_bytes()),report['source_sha256'])
+        self.assertEqual(json.loads((ROOT/'reports/radialblur_size_enabled_public_20261002.json').read_text())['source_sha256'],report['source_sha256'])
         worker=Path(os.environ['RADIAL_WINDOWS_WORKER'])
         self.assertEqual(public.sha(worker.read_bytes()),report['window_worker_sha256'])
         for path,expected in report['dependencies_sha256'].items():
