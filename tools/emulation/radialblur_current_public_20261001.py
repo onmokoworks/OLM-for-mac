@@ -5,7 +5,7 @@ import subprocess
 
 import probe_radialblur_public_aligned_20261001 as public
 
-PATH = public.ROOT/'reports/radialblur_gain_public_20261002.json'
+PATH = public.ROOT/'reports/radialblur_strength_public_20261002.json'
 
 
 def capture():

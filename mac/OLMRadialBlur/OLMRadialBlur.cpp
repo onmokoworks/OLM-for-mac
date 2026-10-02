@@ -890,9 +890,9 @@ static bool IsGenericBaselineControlProfile(const OLMRadialBlurInfo &info)
 		 (info.inner_offset == 2 || info.inner_offset == 4));
 	return (info.blur_type == 1 || info.blur_type == 2) &&
 		std::isfinite(info.center_x) && std::isfinite(info.center_y) &&
-		info.outer_strength >= 0 && info.outer_strength <= 64 &&
+		info.outer_strength >= 0 && info.outer_strength <= 2000 &&
 		info.outer_edge_fade >= 0 && info.outer_edge_fade <= 100 && outer_offset_supported &&
-		info.inner_strength >= 0 && info.inner_strength <= 64 &&
+		info.inner_strength >= 0 && info.inner_strength <= 2000 &&
 		info.inner_edge_fade >= 0 && info.inner_edge_fade <= 100 && inner_offset_supported &&
 		info.repeat_border != FALSE && std::isfinite(info.ratio) &&
 		info.ratio >= 1.0 && info.ratio <= 5.0 && std::isfinite(info.angle_deg) &&
@@ -3251,7 +3251,7 @@ static PF_Err RenderZoomTyped(
 			use_aex_typed_zoom_inner_offset_pairwise ||
 			use_aex_typed_zoom_inner_size_edge_noise_components_32x18;
 		const std::vector<float> inner_weights = use_aex_zoom_inner
-			? ZoomGaussianWeights(info.inner_strength)
+			? (use_native_quality_setup ? RotationFadeGaussianWeights(info.inner_strength) : ZoomGaussianWeights(info.inner_strength))
 			: std::vector<float>();
 		const A_long outer_fade_span = ((use_generic_baseline && info.outer_edge_fade != 0) ||
 			use_aex_typed_zoom_edge_fade_32x18 ||
@@ -3268,7 +3268,7 @@ static PF_Err RenderZoomTyped(
 		const std::vector<float> inner_fade_weights = inner_fade_span > 0
 			? RotationFadeGaussianWeights(inner_fade_span) : std::vector<float>();
 		blurred = BuildZoomAEXOuterOnlyPolar(
-			polar, ZoomGaussianWeights(use_native_quality_setup ? info.outer_strength : ZoomEffectiveLength(worker_info)), polar_valid,
+			polar, (use_native_quality_setup ? RotationFadeGaussianWeights(info.outer_strength) : ZoomGaussianWeights(ZoomEffectiveLength(worker_info))), polar_valid,
 			span_plane, source_scalar_plane, worker_info.outer_strength,
 			use_aex_zoom_inner ? &inner_weights : nullptr,
 			use_aex_zoom_inner ? info.inner_strength : 0,
@@ -4651,8 +4651,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				const float seed_alpha = prepass_alpha[source_cell];
 				const float span_factor = rotation_source_scalar[source_cell];
 				if (!polar_valid[source_cell] || seed_alpha == 0.0f || span_factor == 0.0f) continue;
-				const A_long effective_span = std::max<A_long>(0, std::min<A_long>(
-					(A_long)((float)outer_span * span_factor), 3000));
+				const A_long effective_span = std::max<A_long>(0,
+					(A_long)RadialF32Mul((float)std::min<A_long>(outer_span, 3000), span_factor));
 				if (effective_span > 1) {
 				auto weight_it = weight_cache.find(effective_span);
 				if (weight_it == weight_cache.end()) {
@@ -4675,8 +4675,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 					}
 				}
 				}
-				const A_long effective_inner_span = std::max<A_long>(0, std::min<A_long>(
-					(A_long)((float)inner_span * span_factor), 3000));
+				const A_long effective_inner_span = std::max<A_long>(0,
+					(A_long)RadialF32Mul((float)std::min<A_long>(inner_span, 3000), span_factor));
 				if (effective_inner_span > 1) {
 					auto inner_weights_it = weight_cache.find(effective_inner_span);
 					if (inner_weights_it == weight_cache.end()) {
@@ -5208,6 +5208,20 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			GenericRadialInputIsSDR<PF_PixelFloat>(input);
 		else return PF_Err_BAD_CALLBACK_PARAM;
 		if (!admitted) return PF_Err_BAD_CALLBACK_PARAM;
+		// Original typed callers copy the world first and stop when all six
+		// Strength, Offset and Fade integers are zero, regardless of Gain/Noise.
+		if (info.outer_strength == 0 && info.inner_strength == 0 &&
+			info.outer_offset == 0 && info.inner_offset == 0 &&
+			info.outer_edge_fade == 0 && info.inner_edge_fade == 0) {
+			const size_t pixel_bytes = bitdepth == 8 ? sizeof(PF_Pixel8) :
+				bitdepth == 16 ? sizeof(PF_Pixel16) : sizeof(PF_PixelFloat);
+			for (A_long y = 0; y < input->height; ++y) {
+				std::memcpy(reinterpret_cast<A_u_char *>(output->data) + (size_t)y * output->rowbytes,
+					reinterpret_cast<const A_u_char *>(input->data) + (size_t)y * input->rowbytes,
+					(size_t)input->width * pixel_bytes);
+			}
+			return PF_Err_NONE;
+		}
 		if (!CheckedRadialGenericBudget(input->width, input->height, bitdepth, info, false))
 			return PF_Err_OUT_OF_MEMORY;
 	}

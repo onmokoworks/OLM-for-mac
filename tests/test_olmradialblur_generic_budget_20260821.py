@@ -39,6 +39,18 @@ int main(){{size_t classic=0,smart=0;uint64_t work=0;
  size_t quality_bytes=0;uint64_t quality_work=0;
  if(CheckedRadialGenericBudget(1024,1024,32,q,true,&quality_bytes,&quality_work))return 11;
  if(!(quality_bytes<(UINT64_C(1)<<30)&&quality_work>UINT64_C(350000000)))return 12;
+ // Legal Strength2000 fits a small frame in both families. Quality50 with
+ // two such Rotation spans exceeds the retained work budget independently
+ // of its memory estimate; admission is not a whole-range completion claim.
+ for(int type: {{1,2}}){{
+  q=profile(9,7,2000);q.inner_strength=2000;q.blur_type=type;
+  if(!CheckedRadialGenericBudget(9,7,32,q,true))return 13;
+  q.outer_strength=2001;if(CheckedRadialGenericBudget(9,7,32,q,true))return 14;
+ }}
+ q=profile(9,7,2000);q.inner_strength=2000;q.blur_type=2;q.quality=50;
+ size_t strength_bytes=0;uint64_t strength_work=0;
+ if(CheckedRadialGenericBudget(9,7,32,q,true,&strength_bytes,&strength_work))return 15;
+ if(!(strength_bytes<(UINT64_C(1)<<30)&&strength_work>UINT64_C(350000000)))return 16;
  std::printf("dci_classic=%zu dci_smart=%zu work=%llu\\n",classic,smart,(unsigned long long)work);
  return 0;}}
 ''')

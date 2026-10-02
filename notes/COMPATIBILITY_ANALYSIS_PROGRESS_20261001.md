@@ -2311,11 +2311,92 @@ normalized95578語の差も全解消した。これは次段の候補と根拠�
 Strength候補を混ぜていない。全Strength/Quality/Noise/Fade/Inner、budgetとISA/UCRTの
 回帰・本番接続を続け、36＋144だけでStrength全域や全Goalの完成とは扱わない。
 
+## RB-STRENGTH-TABLE-CAP-ZERO-COPY-040 — 合法Strength、Zoom B680表、Rotation打切り順と全0入力コピーを復元
+
+前回Gain復元47b8632aはPush済み。元のStrength公開slot4/10は整数0–2000、
+sliderも0–2000、default0。既存generic上限64による合法値の拒否を解消する。
+最初のprivate受入だけの36条件は32 exact、Zoom65/100の4条件に差があった。
+FACT: 元Zoom57a4–5835はraw StrengthをB680へ渡し、B680は4語vector＋scalar-tailで
+Gaussian表を生成する。旧common Zoom表は全scalar。outer表を元の方法へ接続すると
+36/36 exact。複合144条件ではinner表とRotationのcap順に17差分があり、両方を
+元の処理へ戻すと144/144 exact。係数や座標別の補正は追加しない。
+
+FACT: 元Rotation1c90の1cfb–1d03はraw resolved spanを3000へ打切り、その後1d0f
+MULSSでsource scalarを掛け、1d18 CVTTSS2SIでeffective spanを得る。
+旧sourceの係数乗算後のcapを、元の乗算前のcapへ戻す。capそのものは保持する。
+自然Rotationのpolar/scalar/spanは元から一致し、旧accum98876語・max23415語・
+normalized95578語の差が全解消。自然Zoomもpolar/eligible/span/preaccum/premaxが
+一致し、旧accum9140語・max2504語・normalized7197語の差が全解消した。
+これは自然入力の最初の差からの復元であり、最終byteだけの調整ではない。
+
+より広い984条件の試作は978 exact、残る6差分は両family×3深度の両Strength0。
+FACT: 元typed callersはworldを先にcopyし、config+64/+68（Strength）、+58/+60
+（Offset）、+6c/+70（Fade）が全0なら以降を実行しない。Gain、Size、Noise、
+Quality等を変えてもこのcopyを保持する。元8/16/32 bpc分岐6e45/7655/7e65を記録。
+SDK common経路に同じcopyを復元すると、新しいGain0/10・Quality1/3.4/50・
+Size/Noise/楕円・2geometry・3深度の144条件もinput rawそのものへ全一致した。
+world/layoutの受入検証はcopy前に保持する。SDR scanとSmartの保守的予算による
+別の拒否は残件であり、全no-op入力の完成とは扱わない。
+
+全Strength1–2000のB680をlocal interpreterで実行し、2001000語をSDK strictO2と
+ASan/UBSanへ比較、全exact。全scalar旧表では1024636語が異なる。
+ISA field2を一時mapped memoryで選び、RCPPSはinterpreterのFLOAT32除算seed、
+scalar3000 importはDOUBLE exp→FLOAT32。元AEX diskは不変。native Windowsの
+RCPPS/ISAや一般UCRTをこの比較から証明したとは扱わない。
+元builder/constructorはStrength64/65/66/67/290/1499/1500/1501/1999/2000、
+Quality1/3.4/5/10の両family80条件でraw整数とQuality換算をreadonly照合した。
+
+過去Strength290の同一32×18 PF32入力SHA187a7caf…cf1f、同一設定を本番SDKの
+Classic/Smart×3buildで再生し、保存されたnative-UCRT rawSHA5c70fe26…351f28へ
+6/6 exact。過去の80語差はこのセルで解消した。577 unique math key/725 callの
+古い検証reportをhashでbindし、書換えない。新しいWindows/AE実行は行っていない。
+この1セルの一致を全Strength/任意float/native UCRTへ昇格しない。
+
+本番source ed7f82cc0691e7061ec1ff749899d47940f2cbaa53b99cef5cdd58e71e823e65、header/coreは前回と同じ。
+新規1128条件は元公開AEXのcontrolled parentから全raw exact。旧本番は
+732拒否・197差分。
+従来8435（canonical694＋独立7741）を保持し、候補と最終実sourceの両公開cmd・
+strictO2/ASan/UBSan/通常O2で各57378再生が一致。本番testはnative1128を再取得、
+元設定80、全2000表、自然2画像、保存native-UCRT hash6経路も再実行した。
+新5＋既存46 unittest（ROI gate内1を含む）、7generic gate invocation、実SDK arm64/x86_64 O2 buildがPASS。
+Strength65/2000の受入と2001の拒否、9×7の両Strength2000受入、Quality50の
+work予算拒否を確認した。Fade/動的Offsetの詳細なcostと保守的予算の拒否は残る。
+Gain captureは不変、旧source epochへbindし、実sourceでgetter64とNoise leaf1936も
+再実行して一致。元Quality fields60、Seed格子20/2080語、shared Directionalも回帰。
+元AEX・3worker・controlled parent440source・SDK90入力は不変。installedは不変。
+raw/planes/contexts/tracesはprivate。publicはhash/count/構成した設定と少数scalar。
+
+次の探索（本番未反映）: 全6control0でPF16 high/max、PF32 HDR/signed/負ゼロ/
+subnormal/Inf/NaN payloadを含む16条件を元AEXへ渡すと、input rawをそのままcopy。
+今回Strength候補ではSDR scanによる拒否が残る。privateでcopy経路だけscanを
+bypassすると16条件が全exact。一般Blurの非SDR/非有限域へは昇格しない。
+追加のprivate探索では、Borderオフ・画像外中心・Offset mode2/3の全0・720度の
+角度・Noise負位相・複合controls42条件が元AEX inputそのものへ全一致。旧sourceは
+38拒否・2出力差分、コピー候補のstrictO2＋ASan/UBSan/両cmdは168再生exact。
+HD3深度の6条件は凍結workerでもコピーを確認。寸法上限だけ広げた別workerでは
+HD/UHD PF8/幅4097の14条件がcopy exactで、旧Smartは14拒否だった。
+UHD16/32 bpc高値・負ゼロ・Inf/NaN payload4条件も、private host入力/output領域を
+64MiBから288MiBへ広げた別workerでcopy exact。データmappingはstub先頭と重ならない
+512MiBを使用。拡張で最初に起きたguest data arena exhaustedとUC_ERR_MAPはprivateに
+保持し、元AEX・元worker・Math/copy callbackは変更しない。全0copy専用候補は
+行strideをpixel sizeの倍数でないbyte余白へ変えた76条件304公開再生も全exact。
+全uint8/uint16値、float全exponent/両sign/境界mantissaとseed固定random bitの
+6条件も元AEX copyへ24公開再生exact。合計82条件328再生。コピー専用の不正world
+検査84条件はstrictO2/ASan/UBSanともPASS、入力・行余白・不正時出力が不変。
+従来9563条件のstrictO2/両cmd19126再生も候補でexact。
+これらは次段階の根拠で、本番未反映。Layer Type3-zeroは元公開経路のパラメータ
+受渡し付近でUC_ERR_WRITE_UNMAPPEDが起き、出力は未取得。Noise Type3が合法choiceで
+あることはParamsSetupで確認した。渡されたworld出力先がwidth/heightを詰めた
+0x700000009だった事実を記録し、ABI原因を未確定として数値不一致と区別する。
+全0copyのSmart polar予算、Type3/通常UIや保存state、Layer/Offset未対応域、
+任意入力/全設定、scalar Fade3語・Windows RCPPS/ISA/UCRT、allocator末尾、Rotation
+追加半径行、native両AE/ROI/downsampleと全10本完全互換は未完。Goalはactive。
+
 ## 次の順序
 
 1. Smoother2のHDR/Gamma合成と色境界の今回の有限集合は検証済み。公開builderのLUT構築とnative依存先を分け、未測定scan長・任意float・独立paletteの最初の差を復元する。
 2. ColorKeyの未検証geometry/任意float/paletteとThin/Blur合成を拡張する。今回の境界・overflow比較を全入力の証明とは扱わず、固定workerとcontrolled Lab94参照を分け、native Windows UCRTとの比較を残す。
 3. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
-4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはAngle/Edge/PointとNoise OffsetのFLOAT32接続を復元した。参照atan2f非軸差は保存Windows scalarの有限集合へ校正済み。Zoom PF8の共通writerは復元済み。Rotationの自然field/scatterは代表全量でGaussian差を分離し、別コピーのinverse復元で代表rawが一致した。generic two-stageのGaussian/finalを本番へ復元し、694条件505 exact、独立384全exactを確認。no-noise/neutral/Angleと微小alphaも本番へ復元し、559 exact、typed28と独立384全exactを確認。Rotation Edge/Inner Edgeも本番へ復元し、565 exact・45差分・84拒否。Size100+Noiseも共通経路と行境界area規則を復元し、本番601 exact・9差分・84拒否。独立96も全exact。Zoomの正負alphaとゼロseed加算も復元し、本番607 exact・3差分・84拒否。Zoomの両fadeもB680へ接続し、本番610 exact・差分0・84拒否。Size25は一般領域factorへ接続し、Zoom最大alpha判定と共通PF32 callerのMINSS上限も復元した。最新694条件は全exact・拒否0、独立180も全exact。scalar fade3語、native RCPPS/ISA/UCRTを未解決に保持。Size/Noiseの合法割合、Seed/Thickness、Quality1–50を共通処理へ復元した。Gain有限0–10とRotation Noise座標も元の一般処理へ復元した。未列挙Strength/Layer/Offset・複合設定・任意入力を測り、その後KiraKira一般入力を比較する。
+4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはAngle/Edge/PointとNoise OffsetのFLOAT32接続を復元した。参照atan2f非軸差は保存Windows scalarの有限集合へ校正済み。Zoom PF8の共通writerは復元済み。Rotationの自然field/scatterは代表全量でGaussian差を分離し、別コピーのinverse復元で代表rawが一致した。generic two-stageのGaussian/finalを本番へ復元し、694条件505 exact、独立384全exactを確認。no-noise/neutral/Angleと微小alphaも本番へ復元し、559 exact、typed28と独立384全exactを確認。Rotation Edge/Inner Edgeも本番へ復元し、565 exact・45差分・84拒否。Size100+Noiseも共通経路と行境界area規則を復元し、本番601 exact・9差分・84拒否。独立96も全exact。Zoomの正負alphaとゼロseed加算も復元し、本番607 exact・3差分・84拒否。Zoomの両fadeもB680へ接続し、本番610 exact・差分0・84拒否。Size25は一般領域factorへ接続し、Zoom最大alpha判定と共通PF32 callerのMINSS上限も復元した。最新694条件は全exact・拒否0、独立180も全exact。scalar fade3語、native RCPPS/ISA/UCRTを未解決に保持。Size/Noiseの合法割合、Seed/Thickness、Quality1–50を共通処理へ復元した。Gain有限0–10とRotation Noise座標も元の一般処理へ復元した。合法Strength0–2000と元B680表/cap順/全0copyを復元した。全0copyの非SDR/非有限入力、未列挙Layer/Offset・複合設定・任意入力を測り、その後KiraKira一般入力を比較する。
 
 既存の作業ツリー変更は今回のcommitに混ぜない。第三者AEXとnative raw出力をPushしない。

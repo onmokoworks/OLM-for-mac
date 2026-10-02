@@ -16,8 +16,10 @@ public = probe.public
 
 class GainTests(unittest.TestCase):
     def test_actual_public_gain_and_retained_cases(self):
-        report = current.capture()
-        self.assertEqual(public.SOURCE.read_text(), probe.candidate_source(probe.before_source()))
+        live = current.capture()
+        report = json.loads((ROOT/'reports/radialblur_gain_public_20261002.json').read_text())
+        self.assertEqual(public.sha(probe.candidate_source(probe.before_source()).encode()), report['source_sha256'])
+        self.assertEqual(live['summary'], report['summary'])
         self.assertEqual(report['summary'], json.loads(probe.BEFORE.read_text())['summary'])
         generated = probe.independent_cases()
         self.assertEqual(generated, [{k: r[k] for k in generated[0]} for r in report['independent_rows']])
@@ -54,7 +56,9 @@ class GainTests(unittest.TestCase):
         print('GAIN_PRODUCTION', replays, 'NATIVE', native_count, flush=True)
 
     def test_original_gain_getter_and_declaration(self):
-        report = current.capture(); worker = Path(os.environ['RADIAL_WINDOWS_WORKER'])
+        current.capture()
+        report = json.loads((ROOT/'reports/radialblur_gain_public_20261002.json').read_text())
+        worker = Path(os.environ['RADIAL_WINDOWS_WORKER'])
         self.assertEqual(public.sha(worker.read_bytes()), report['window_worker_sha256'])
         self.assertEqual(public.sha(public.initial.AEX.read_bytes()), report['aex_sha256'])
         self.assertEqual(probe.original_rule(), report['original_gain_rule'])
@@ -73,7 +77,9 @@ class GainTests(unittest.TestCase):
     def test_rotation_noise_sampler_against_original_leaf(self):
         live = current.capture()
         report = json.loads((ROOT/'reports/radialblur_gain_sampler_20261002.json').read_text())
-        self.assertEqual(live['source_sha256'], report['source_sha256'])
+        archived = json.loads((ROOT/'reports/radialblur_gain_public_20261002.json').read_text())
+        self.assertEqual(archived['source_sha256'], report['source_sha256'])
+        self.assertEqual(live['summary'], archived['summary'])
         self.assertEqual(public.sha(public.initial.AEX.read_bytes()), report['aex_sha256'])
         for rel, expected in report['dependencies_sha256'].items():
             self.assertEqual(public.sha((ROOT/rel).read_bytes()), expected, rel)
