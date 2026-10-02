@@ -16,9 +16,15 @@ witness = importlib.import_module('probe_radialblur_strength_witnesses_20261002'
 
 
 class StrengthTests(unittest.TestCase):
+    def report(self):
+        live = current.capture()
+        archived = json.loads(probe.public.ROOT.joinpath('reports/radialblur_strength_public_20261002.json').read_text())
+        self.assertEqual(public.sha(probe.candidate_source(probe.before_source()).encode()), archived['source_sha256'])
+        self.assertEqual(live['summary'], archived['summary'])
+        return archived
+
     def test_actual_public_strength_and_retained_cases(self):
-        report = current.capture()
-        self.assertEqual(public.SOURCE.read_text(), probe.candidate_source(probe.before_source()))
+        report = self.report()
         self.assertFalse(report['pilot'])
         self.assertEqual(report['summary'], json.loads(probe.BEFORE.read_text())['summary'])
         generated = probe.independent_cases()
@@ -57,7 +63,7 @@ class StrengthTests(unittest.TestCase):
         print('STRENGTH_PRODUCTION', replays, 'NATIVE', native_count, flush=True)
 
     def test_original_strength_getters_and_quality_scaling(self):
-        report = current.capture(); saved = report['native_setup_fields']
+        report = self.report(); saved = report['native_setup_fields']
         worker = Path(os.environ['RADIAL_WINDOWS_WORKER'])
         self.assertEqual(public.sha(worker.read_bytes()), report['window_worker_sha256'])
         self.assertEqual(probe.original_rule(), report['original_strength_rule'])
@@ -73,7 +79,7 @@ class StrengthTests(unittest.TestCase):
         print('STRENGTH_NATIVE_FIELDS 80 RAW_INTEGER_AND_SCALED_CONTROLS', flush=True)
 
     def test_all_legal_positive_strength_weight_tables(self):
-        report = current.capture(); saved = report['strength_tables']
+        report = self.report(); saved = report['strength_tables']
         tables = importlib.import_module('probe_radialblur_strength_tables_20261002')
         with tempfile.TemporaryDirectory(prefix='radial_strength_tables_actual_') as name:
             actual = tables.probe(Path(name)/'tables', public.SOURCE.read_text())
@@ -83,7 +89,7 @@ class StrengthTests(unittest.TestCase):
         print('STRENGTH_TABLES 2000 LENGTHS 2001000 WORDS ORIGINAL_EXACT', flush=True)
 
     def test_historical_native_ucrt_strength290_public_hash(self):
-        report = current.capture()
+        report = self.report()
         with tempfile.TemporaryDirectory(prefix='radial_strength290_actual_') as name:
             actual = witness.historical_replay(Path(name)/'historical', public.SOURCE.read_text())
         self.assertEqual(actual, report['historical_native_ucrt_replay'])
@@ -92,7 +98,7 @@ class StrengthTests(unittest.TestCase):
         print('STRENGTH290 RETAINED_NATIVE_UCRT_HASH 6 PUBLIC_EXACT', flush=True)
 
     def test_natural_strength_table_and_rotation_cap_planes(self):
-        report = current.capture()
+        report = self.report()
         planes = importlib.import_module('probe_radialblur_strength_planes_20261002')
         worker = Path(os.environ['RADIAL_WINDOWS_WORKER'])
         parent = Path(os.environ['RADIAL_PARENT_WORKER'])
@@ -102,8 +108,9 @@ class StrengthTests(unittest.TestCase):
             actual = planes.probe(worker, parent, Path(name)/'planes', public.SOURCE.read_text())
         for row, expected in zip(actual, report['natural_strength_witnesses']):
             for key in ['case', 'comparisons', 'raw_sha256', 'counterfactual_source_sha256',
-                        'candidate_source_sha256', 'native_gaussian_sha256']:
+                        'native_gaussian_sha256']:
                 self.assertEqual(row[key], expected[key], key)
+            self.assertEqual(row['candidate_source_sha256'], current.capture()['source_sha256'])
         self.assertEqual(len(actual), 2)
         print('STRENGTH_NATURAL 2 ALL_OWNED_PLANES_AND_RAW_EXACT', flush=True)
 

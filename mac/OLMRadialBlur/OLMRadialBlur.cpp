@@ -5170,9 +5170,44 @@ extern "C" PF_Err OLMRadialBlurTestComposeType3LayerSpan(
 }
 #endif
 
+// Original typed callers return their initial world copy when these six controls
+// are zero. Type3's public checkout remains a separate unverified boundary.
+static bool IsRadialNoOpControlProfile(const OLMRadialBlurInfo &info)
+{
+	return (info.blur_type == 1 || info.blur_type == 2) &&
+		(info.noise_type == 1 || info.noise_type == 2) &&
+		info.outer_strength == 0 && info.inner_strength == 0 &&
+		info.outer_offset == 0 && info.inner_offset == 0 &&
+		info.outer_edge_fade == 0 && info.inner_edge_fade == 0;
+}
+
+static bool RadialActiveRowBytes(short bitdepth, A_long width, std::size_t *bytes);
+
+static PF_Err RenderRadialNoOpCopy(PF_EffectWorld *input, PF_EffectWorld *output,
+	const OLMRadialBlurInfo &info, short bitdepth)
+{
+	std::size_t active = 0;
+	if (!input || !output || input->width <= 0 || input->height <= 0 ||
+		input->width != output->width || input->height != output->height ||
+		info.comp_width != (PF_FpLong)input->width ||
+		info.comp_height != (PF_FpLong)input->height ||
+		!RadialActiveRowBytes(bitdepth, input->width, &active) ||
+		input->rowbytes <= 0 || output->rowbytes <= 0 ||
+		active > static_cast<std::size_t>(input->rowbytes) ||
+		active > static_cast<std::size_t>(output->rowbytes) ||
+		!RadialPayloadsDisjoint(input, output)) return PF_Err_BAD_CALLBACK_PARAM;
+	// Copy bytes to preserve high-depth values, signed zero and NaN payloads.
+	// No polar planes, float arithmetic, alignment or Blur work budget is used.
+	for (A_long y = 0; y < input->height; ++y)
+		std::memcpy(reinterpret_cast<A_u_char *>(output->data) + (size_t)y * output->rowbytes,
+			reinterpret_cast<const A_u_char *>(input->data) + (size_t)y * input->rowbytes, active);
+	return PF_Err_NONE;
+}
+
 static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 	PF_EffectWorld *noise_world, const OLMRadialBlurInfo &info, short bitdepth)
 {
+	if (IsRadialNoOpControlProfile(info)) return RenderRadialNoOpCopy(input, output, info, bitdepth);
 	if (info.noise_type == 3 && !RequiresNoiseLayer(info)) {
 		// A zero/negative Type-3 amount does not belong to the sole admitted
 		// NV25 layer tuple; do not let it fall through a generic neutral lane.
@@ -6009,7 +6044,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 					input_format != expected_format || output_format != expected_format ||
 					(noise_world && noise_format != expected_format))) err = PF_Err_BAD_CALLBACK_PARAM;
 			}
-			if (!err && IsGenericRadialControlProfile(info) &&
+			if (!err && !IsRadialNoOpControlProfile(info) && IsGenericRadialControlProfile(info) &&
 				!CheckedRadialGenericBudget(input_world->width, input_world->height,
 					extra->input->bitdepth, info, true)) {
 				err = PF_Err_OUT_OF_MEMORY;

@@ -1,0 +1,552 @@
+{
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "before_commit": "b07f5c008c2c74ba4112ff851aff959dda71f0d9",
+  "bound_copy_reference_validation": {
+    "all_original_copy_exact": true,
+    "case_count": 82,
+    "claims_not_made": [
+      "The two copy workers agree for these 82 cases only; no general worker equivalence claim."
+    ],
+    "report_sha256": "08967bb5fcd64d4632f5ba76efcb995336aef52f3b1ee441ebd2c15ba53e4ba7",
+    "same_input_and_reference_hashes_as_candidate": true
+  },
+  "candidate_public_replay_count": 57870,
+  "claims_not_made": [
+    "The known length19/index17 controlled expf tail mismatch remains open; private host expf changes are diagnostic only and never production.",
+    "Legal Size admission and finite composite settings do not prove arbitrary input/settings or all-ten completion.",
+    "Native Windows ISA/RCPPS/UCRT, allocator end guard, Rotation extra row and native AE/UI/save/ROI/downsample remain open.",
+    "Finite Size threshold cases do not prove all UI/settings/input combinations.",
+    "Legal Noise percentage and the finite existing seed/thickness/offset profiles do not prove arbitrary Noise controls, Layer, all parameter combinations or native AE.",
+    "Seed/thickness finite witnesses and original reciprocal rule do not prove all input/settings, negative phases, native Windows ISA/UCRT/AE or all-ten completion.",
+    "Quality witnesses and native setup do not prove all controls/inputs, host UI/save/ROI/downsample, native Windows ISA/UCRT/AE or all-ten completion.",
+    "Gain witnesses and native getter do not prove all controls/inputs, host UI/save/ROI/downsample, native Windows ISA/UCRT/AE or all-ten completion.",
+    "Strength witnesses do not prove all controls/inputs, host UI/save/ROI/downsample, native Windows ISA/UCRT/AE or all-ten completion.",
+    "Type3 checkout, partial ROI/downsample, native AE and all-ten completion remain unproven. Host memory/dimension envelopes do not prove native Windows hosting."
+  ],
+  "controlled_worker_sha256": "722255eed6de0246f3918a11837d21eae0cb6cd6286ed1ae2d49f823ee92f4ec",
+  "copy_reference_build_sha256": "0424496d10ae7c25014efce859508966f81a0c68f376eb0f73fc62f3efdf141e",
+  "copy_worker_sha256": "8c56f1aa411c18cfd92fb101c053bc6468e15c0907a4c0f311c19359f31aef47",
+  "core_sha256": "5098f0acafc9d7a76136d306bd15193ca0c987fd3610e9340b311e6646001bee",
+  "dependencies_sha256": {
+    "docs/BETA_SUPPORT.md": "ad95fa1e21b765b5c700c90b6b76dc9f7ed6b4e44bc8d8736fe6360ee26ca092",
+    "docs/COMPATIBILITY_ANALYSIS_PLAN_JA.md": "c06ee685b434d83ee4ff8a992987f1c2a39725b072679c59d5c5ce00c868a25e",
+    "mac/OLMRadialBlur/OLMRadialBlur.cpp": "344f79b0e1064839d26ad5df341aa664ae513e05a9934b5c06405b6b8eb89cc0",
+    "notes/COMPATIBILITY_ANALYSIS_PROGRESS_20261001.md": "73489ecad16e2749147e8430fd4f11f0d75b36ff7dd490269728b3f3940210ba",
+    "reports/radialblur_noop_public_20261002.json": "49757d2548d35fbd9ec7c02913c517416cb44bc8bc94a153cd5f865e2e7a7aa1",
+    "tests/test_radialblur_noop_20261002.py": "6195eb7dcea8717ddb82ca0bfbc31c6861491b49aa862981bf6dee2dd8db6fd7",
+    "tests/test_radialblur_strength_20261002.py": "b6a7fe8dd96ac039fbd5e5b9d66275ba93dbdb480da4caeda7cf6fb78630b222",
+    "tools/emulation/build_radialblur_noop_reference_20261002.py": "833e36a24638d003416ba10968784781e2ceeb1b93372398be3828c6521e0aae",
+    "tools/emulation/probe_radialblur_noop_20261002.py": "15bf04bed771c6844a3954b9edc598ca6d8e9cb20ed17494d01487443abb1e00",
+    "tools/emulation/radialblur_current_public_20261001.py": "fc243446b322ce15bbe9fcb0e64b8024b2d2aefa577b5352b970ab006184d2de",
+    "tools/emulation/radialblur_noop_world_contract_harness_20261002.cpp": "1e99ee154214b825defee609aff0afcf995a305f891f2cd06c77ca1dafa1ea0a"
+  },
+  "existing_checks": [
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_public_parameters_20261001.py",
+        "-v"
+      ],
+      "elapsed_seconds": 92.542,
+      "exit_code": 0,
+      "log_sha256": "6bc0a387347d64dc38f5313550135ee03e181405a9acd23fa99bef27becd723c",
+      "name": "public_parameters"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_typed_angle_20261001.py",
+        "-v"
+      ],
+      "elapsed_seconds": 50.8,
+      "exit_code": 0,
+      "log_sha256": "2ad06c3cda3a99e2b97cd51226cf53e2d8df93c6f2ce9ae622047c87dbdd3920",
+      "name": "typed_angle"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_axis_reference_20261001.py",
+        "-v"
+      ],
+      "elapsed_seconds": 66.144,
+      "exit_code": 0,
+      "log_sha256": "16f256a637441598b3a6d5c818d1d80579eabdab405572a5e480c442a09c68fe",
+      "name": "axis_reference"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_doublecast_reference_20261001.py",
+        "-v"
+      ],
+      "elapsed_seconds": 32.08,
+      "exit_code": 0,
+      "log_sha256": "fc45119f0e963547abc31478dbeaf2b00233f001f07e6b39fb9f1670afd4d27b",
+      "name": "doublecast_reference"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_noise_offset_20261001.py",
+        "NoiseOffsetTests.test_sdk_phase_against_import_free_native_leaf",
+        "NoiseOffsetTests.test_initialized_native_grid_and_production_bindings",
+        "-v"
+      ],
+      "elapsed_seconds": 39.673,
+      "exit_code": 0,
+      "log_sha256": "0192ee033cd7ffdf3a605949518fd6802314b49176171f9e76b07e97c06b3cf7",
+      "name": "noise_offset"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_generic_baseline_20260820.py"
+      ],
+      "elapsed_seconds": 5.068,
+      "exit_code": 0,
+      "log_sha256": "e70fec2825d9bf206d27463a792768195039599cb39bcca66339f47283f84cce",
+      "name": "test_olmradialblur_generic_baseline_20260820"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_generic_baseline_sanitizers_20260820.py"
+      ],
+      "elapsed_seconds": 41.681,
+      "exit_code": 0,
+      "log_sha256": "e70fec2825d9bf206d27463a792768195039599cb39bcca66339f47283f84cce",
+      "name": "test_olmradialblur_generic_baseline_sanitizers_20260820"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_generic_type3_sanitizers_20260820.py"
+      ],
+      "elapsed_seconds": 19.573,
+      "exit_code": 0,
+      "log_sha256": "e70fec2825d9bf206d27463a792768195039599cb39bcca66339f47283f84cce",
+      "name": "test_olmradialblur_generic_type3_sanitizers_20260820"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_generic_budget_20260821.py"
+      ],
+      "elapsed_seconds": 4.172,
+      "exit_code": 0,
+      "log_sha256": "e70fec2825d9bf206d27463a792768195039599cb39bcca66339f47283f84cce",
+      "name": "test_olmradialblur_generic_budget_20260821"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_size_noise_effectmain_20260821.py"
+      ],
+      "elapsed_seconds": 5.535,
+      "exit_code": 0,
+      "log_sha256": "e70fec2825d9bf206d27463a792768195039599cb39bcca66339f47283f84cce",
+      "name": "test_olmradialblur_size_noise_effectmain_20260821"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olmradialblur_global_polar_smart_contract_20260820.py"
+      ],
+      "elapsed_seconds": 4.209,
+      "exit_code": 0,
+      "log_sha256": "e70fec2825d9bf206d27463a792768195039599cb39bcca66339f47283f84cce",
+      "name": "test_olmradialblur_global_polar_smart_contract_20260820"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/run_olm_generic_beta_gate.py",
+        "--run-test-file",
+        "tests/test_olm_roi_contract.py"
+      ],
+      "elapsed_seconds": 0.355,
+      "exit_code": 0,
+      "log_sha256": "6ed034471655811f8e45f3b6e7c4886431ea984f1a69519e2116adefdc1734dd",
+      "name": "test_olm_roi_contract"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_rotation_restoration_20261001.py",
+        "RotationRestorationTests.test_original_vector_leaf_and_production_gaussian_weights",
+        "-v"
+      ],
+      "elapsed_seconds": 23.103,
+      "exit_code": 0,
+      "log_sha256": "69fc7baa4aef0dd9b6e7d61e8161d8da2d24e480f2aa5071a12dc1e53184be3a",
+      "name": "rotation_gaussian_live"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_pf8_writer_20261001.py",
+        "PF8WriterTests.test_native_quantizer_integer_boundaries_and_indefinite_values",
+        "PF8WriterTests.test_natural_sampler_and_writer_witness_bindings",
+        "-v"
+      ],
+      "elapsed_seconds": 22.145,
+      "exit_code": 0,
+      "log_sha256": "cf703e9de05fa241e4f071b8bafd19ab81884b318f1bbaad9554e08ab1366432",
+      "name": "pf8_scalar_and_historical"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_rotation_fields_20261001.py",
+        "-v"
+      ],
+      "elapsed_seconds": 47.274,
+      "exit_code": 0,
+      "log_sha256": "184734f32f26d9de52bfe74e17f980202945866a54a4264d61d3736faa663adb",
+      "name": "rotation_fields_history"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_rotation_neutral_alpha_20261001.py",
+        "NeutralAlphaTests.test_sampler_original_leaf_and_real_sdk_boundaries",
+        "-v"
+      ],
+      "elapsed_seconds": 21.35,
+      "exit_code": 0,
+      "log_sha256": "72ef2955055977e707365c4998e7939c3cb1c2582a9544cfa1ccf053f50c8f0a",
+      "name": "neutral_alpha_sampler"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_zoom_fade_20261002.py",
+        "-v"
+      ],
+      "elapsed_seconds": 212.117,
+      "exit_code": 0,
+      "log_sha256": "1f1f0a999bdc577d3aca227f0d64c9eb252efca8d8baa5fb723496ef8274271d",
+      "name": "zoom_fade_history_current_binding"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_zoom_fade_outer_20261002.py",
+        "-v"
+      ],
+      "elapsed_seconds": 43.556,
+      "exit_code": 0,
+      "log_sha256": "fc162433a5e9e31ac8f93f8b387c30ec2a26c115118ae685f0eda320d92cbf34",
+      "name": "zoom_outer_fade_history_current_binding"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_size_topology_20261002.py",
+        "-v"
+      ],
+      "elapsed_seconds": 291.256,
+      "exit_code": 0,
+      "log_sha256": "0c72fb5f1d275393210e2f5d9367ec82ead4ba2c3428e580af0798eeef289d41",
+      "name": "size_topology_history_current_binding"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_size_range_20261002.py",
+        "-v"
+      ],
+      "elapsed_seconds": 424.002,
+      "exit_code": 0,
+      "log_sha256": "fc813619087d8c3d409c745f4d537108575c23466a851ab82044b6f087afae14",
+      "name": "size_range_production_current_binding"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_size_enabled_20261002.py",
+        "-v"
+      ],
+      "elapsed_seconds": 275.003,
+      "exit_code": 0,
+      "log_sha256": "2c501ece633d6af60404dcc117544202dc012a03e5008d1b7ec040c7ad2ca7f9",
+      "name": "size_enabled_production"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_noise_range_20261002.py",
+        "-v"
+      ],
+      "elapsed_seconds": 682.985,
+      "exit_code": 0,
+      "log_sha256": "c5b5fd61f7975567806527d4d197bba635ab4b1894a629ede6311b276726ee1b",
+      "name": "noise_range_production"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_beta_support_documentation.py",
+        "BetaSupportDocumentationContract.test_table_has_exactly_the_ten_shipped_plugins",
+        "-v"
+      ],
+      "elapsed_seconds": 0.096,
+      "exit_code": 0,
+      "log_sha256": "4d76887615816084b257490bf3dceaada10a8eea0c8418fb4010b91b4c4578b3",
+      "name": "capability_doc_ten_plugins"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_directionalblur_general_features_20261001.py",
+        "-v"
+      ],
+      "elapsed_seconds": 20.516,
+      "exit_code": 0,
+      "log_sha256": "96a5b64dbe8f531b272589688760c2420d881d223bb7333f0ef6d927b008fd0e",
+      "name": "shared_directional_noise_regression"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_gain_20261002.py",
+        "GainTests.test_original_gain_getter_and_declaration",
+        "GainTests.test_rotation_noise_sampler_against_original_leaf",
+        "-v"
+      ],
+      "elapsed_seconds": 29.379,
+      "exit_code": 0,
+      "log_sha256": "8ceb6f1becfca894a00dcc90fe55f24576a097df4ece7b3c132b1a48d614f21b",
+      "name": "gain_native_getter_and_noise_sampler"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_quality_20261002.py",
+        "QualityTests.test_original_builder_constructor_and_control_fields",
+        "-v"
+      ],
+      "elapsed_seconds": 12.694,
+      "exit_code": 0,
+      "log_sha256": "3aedffdfb7dd17808d4e27809089a923979faa9b5ebdceb14bbeb87e0525a6f9",
+      "name": "quality_native_fields"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_seed_thickness_20261002.py",
+        "SeedThicknessTests.test_original_initialized_grid_against_actual_core",
+        "SeedThicknessTests.test_core_change_is_isolated_to_radial_dimensions_and_contract",
+        "-v"
+      ],
+      "elapsed_seconds": 4.888,
+      "exit_code": 0,
+      "log_sha256": "b39033fb2d6641ef0ad66bc4249662a7d2fa5297b670c9692dd571d06f8304ab",
+      "name": "seed_thickness_grid_and_core"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_noop_20261002.py",
+        "-v"
+      ],
+      "elapsed_seconds": 2213.587,
+      "exit_code": 0,
+      "log_sha256": "0a46974a5b7b53a47ea75290abe77a42bc3d6d56799dc223454f2df9775fdca0",
+      "name": "noop_production"
+    },
+    {
+      "command": [
+        "python3",
+        "tests/test_radialblur_strength_20261002.py",
+        "StrengthTests.test_original_strength_getters_and_quality_scaling",
+        "StrengthTests.test_all_legal_positive_strength_weight_tables",
+        "StrengthTests.test_historical_native_ucrt_strength290_public_hash",
+        "StrengthTests.test_natural_strength_table_and_rotation_cap_planes",
+        "-v"
+      ],
+      "elapsed_seconds": 144.03,
+      "exit_code": 0,
+      "log_sha256": "1882efe8441f930f7fa123b19893030e5e2fa50fcaba79e76bff941ab12fdf23",
+      "name": "strength_supplemental"
+    }
+  ],
+  "existing_unittest_count": 50,
+  "external_sdk_dependencies_sha256": {
+    "Headers/A.h": "994bd510d18d9e4120dcb51ab2198cf55f80ea73eae0dc76a0e38015cbf8ac7d",
+    "Headers/AEConfig.h": "39c764a37cd77118af47de55f917e0b1eda4d51e19d8700fe62b027d0c5a30e6",
+    "Headers/AEFX_SuiteHandlerTemplate.h": "8c5816260b7e9c6dde8e9ef4201af2645db950ec4a64a6398daf55cd1a259db7",
+    "Headers/AE_AdvEffectSuites.h": "17ad1ba44f9c9f4a68d1b027393e5700d06dcda06bd36a7bcb83f0843c462240",
+    "Headers/AE_CacheOnLoadSuite.h": "e72dd815e7d36e9e3a8ccc0792ced44649ef60b59bab8132fc4045ee73ec315b",
+    "Headers/AE_ChannelSuites.h": "4d46ea52742d1422a607e2477eed05f1024b0cd6c6ed3aa26b5bc77bea719f45",
+    "Headers/AE_ComputeCacheSuite.h": "40e2bc8df1a4e994c7c36724d746e44e1894f254f6fac46e3b500ff9655893cc",
+    "Headers/AE_CreatorInfo.h": "3b49735fc7f28ef2e31bdf31606e4e54df75c4cd60e2f41041fbfd3523f155b0",
+    "Headers/AE_Effect.h": "a6d5cdeba53f6934a9bac19c2c1b46b1478266f39995795c59244e3d9a355a0d",
+    "Headers/AE_EffectCB.h": "1b380add9dd0b67f42ecff6438ce2424e7f4af335d1793af27910e285997a178",
+    "Headers/AE_EffectCBSuites.h": "e866395d6ee4187b476b08784297454ec9e367476862e0dd8ebcca67d6faba3b",
+    "Headers/AE_EffectGPUSuites.h": "8c9207c2b5186c92b0bb4460ebf2ee78de5b7c87ba070c587e0cefed2c2d9e48",
+    "Headers/AE_EffectPixelFormat.h": "af63f900d3c602e94e48aa897a64b983f523734f057f662019f0939c9d2ac63f",
+    "Headers/AE_EffectSuites.h": "592190334b7164f0196bb06e5ca1d5687fad068868e48d1d49aa89abdc2976ed",
+    "Headers/AE_EffectSuitesHelper.h": "51531dcfea0d1a314d826b29426b03965beebce0d40606082c723e45c6437e20",
+    "Headers/AE_EffectSuitesOld.h": "e1de2a7c7a88bf10a711b0c07b5c90115dbae59361838c1f93b704e7e464fd4e",
+    "Headers/AE_EffectUI.h": "173af476556623a884516597a70674fbf2445e3a7c6eb85cde3bca7117724db2",
+    "Headers/AE_EffectVers.h": "fcecc7038ac2634aca643429c0e1648dd6045cc5bb5fb39850e2dc80cf5856ec",
+    "Headers/AE_GeneralPlug.h": "dc0c94c7bded3a4052cb4f7621bd5947af8f30f3307929b0321a3f2df10c8c2c",
+    "Headers/AE_GeneralPlugOld.h": "9891e732dcd2968123e39c4bd9be458675c9734e16989d771d55b6faa3470773",
+    "Headers/AE_GeneralPlugPanels.h": "c10d148e2aa0cd3cfb29ef6484d9b92b5036264ce4490cff6f42eacb8a800a25",
+    "Headers/AE_GeneralPlugPost.h": "bb52ae8c474253b355cb4b16045cc154d2ee2b9e760ff4c473720bedd31a3800",
+    "Headers/AE_GeneralPlugPre.h": "fb0d3114589113300761af6c9cb75873b97b8f937fadae74083c42c8387023dd",
+    "Headers/AE_HashSuite.h": "6eb036d72124d4fd40178e2d2319748d5c95b18ef39a4e9091fddeae40426d7e",
+    "Headers/AE_Hook.h": "8e8af18a1eac85a3d53aac4e94e27549da4c46f286213405fd3d104977fbfcfc",
+    "Headers/AE_IO.h": "acbd86f89bc31f6d54f916a5949c30e8712bce4f1d23f46f6f8f544abd2d4449",
+    "Headers/AE_IO_FileExt.h": "7708e1124cbe9104552d732387427c1314ad5eac8c4ecd32e18494475bf11d23",
+    "Headers/AE_Macros.h": "d51b007444cec1fd404fd076f88e3e1290349159b8d0152e3dba3a2d1f773c46",
+    "Headers/AE_PluginData.h": "60e8ca5ec8deec48f5dbacdff76dd18923112c10939025b261a51d3dd47cb865",
+    "Headers/FIEL_Public.h": "9d467ce24bbfbe65cb5bef8aa4ff02684796d60ba92cce20019e1293154333f1",
+    "Headers/Mach-O_prefix.h": "ee3fb8a2cab1831f870d1bd676389cb17d3f63af364809993d105318bddee4af",
+    "Headers/PF_Masks.h": "762f05c08d062b18bf3ab45cd0064335268e636fe905ba9374960300ae4e4234",
+    "Headers/PR_Public.h": "27f794d12ae0fed69c8a6fe79ed5d257c95a14534a8d6379aa8d2486321721e7",
+    "Headers/PT_Public.h": "06a93beaff7d384bd9016c9ec008e0eefe3db423bc6b9369ea7e44aa38c392c8",
+    "Headers/PrSDKAESupport.h": "e3f0846074fedbbd560fa6b8f45e3733195c96f0c3e38f1ae31ffa815f9d79c3",
+    "Headers/PrSDKPixelFormat.h": "4e57a50103e5cc153914aa2851b6284ddf847b0bc500f1c1b7220b87579bad3a",
+    "Headers/SP/PSIntTypes.h": "5cf96c2dcbfb1c095be4250d72c6ce5357f441710c1dc897b3731c72cf4c95d8",
+    "Headers/SP/SPAccess.h": "809e8f8e67e0f5f0321cfb77529446919ab106f0d7bae7cb405a40e4f5b5b3a3",
+    "Headers/SP/SPAdapts.h": "ec71783a0224131aed10434e791bb886a1299a6547997975c37855d598d2350b",
+    "Headers/SP/SPBasic.h": "8d3cb86910d3f4cccb9a7336a8779870ae4156454f4d705ba00b94d9b3c02293",
+    "Headers/SP/SPBckDbg.h": "f6823f78440a474d8739643215daca29be0e6d7990092e0e4e20bb2e30797bb1",
+    "Headers/SP/SPBlocks.h": "f8307e1d3c0383ceb0c934bc98ea6b40db5f20d2842abd332705819a0a5fb397",
+    "Headers/SP/SPCOM.h": "fb3557270b55c9c7234119f98d5f1a9806641b3d82b8397cc7d608e56feeba00",
+    "Headers/SP/SPCaches.h": "7e9c1c00df303cb5fed5b2a299494d13731991502b9224aa75a653605fb3600a",
+    "Headers/SP/SPConfig.h": "18de4580a578afb259111e86444d181683951a9fa7ca04c22e1e93f81b3b2531",
+    "Headers/SP/SPEDebug.c": "65a2952941792a98e0c1c5812373fa216a52af88342c23e849cdc2d9638c0941",
+    "Headers/SP/SPErrorCodes.h": "59d3eb25efe60209efc91442124a570392170b5ab28b68b475ac675065707ee5",
+    "Headers/SP/SPErrors.h": "7676199d698c8f2aeb7652095258012e0e75fed745bdb9226eaaaf23615fcb3d",
+    "Headers/SP/SPFiles.h": "6f8fdb97ba1637691495bd00b8ea03c7f3ad6c62e90f0466f9324199d8e860ca",
+    "Headers/SP/SPHost.h": "2e37151d857fbf24bd907093ca280435100e6da22c6b8c9dc38fa3cb44089519",
+    "Headers/SP/SPInterf.h": "589159f263f96511f7fec17efbe3c5f4aaf8b4854f1ab069ad9d2414b0266ee5",
+    "Headers/SP/SPMData.h": "7fdf899b86687e2aad94d3086845ba663dce347d0bce1485f99dbd9899efd6d3",
+    "Headers/SP/SPObject.h": "b492433253d765c268b8a274bb235ef3824737d5facc52d38f0ff1bf6f25b275",
+    "Headers/SP/SPPiPL.h": "beda525cdbc1533c6e849bd193195944c370f884d6ca7aa6ccf6e9d6dd3dbbba",
+    "Headers/SP/SPPlugs.h": "6933ccaabac3b020577bbc4a3621af8aa650f2775031b2943eb1e529f78e8e3a",
+    "Headers/SP/SPProps.h": "a65fb4e08c7f62b466bba9d6e2637ccbaa3f0fc35a68227bc3aedc2a298e6cc8",
+    "Headers/SP/SPRuntme.h": "da9fa7c8057286623573920e3ec2f8e8e1637e4434fe4d041cdd935e90f3930e",
+    "Headers/SP/SPSTSPrp.h": "ea9e82bf1ff4cc3ce02dec01d742f8839b372e012871b1f7bff6807119febf67",
+    "Headers/SP/SPStrngs.h": "62077cc7634a8cb3681225edfb632b3dbc488610f75afb5380a857413c1e370e",
+    "Headers/SP/SPSuites.h": "25f6e0f52436b46589f875206342d79c9b2ea5ddc1519ea5cf226d276f8da5db",
+    "Headers/SP/SPTypes.h": "a4cef624073275ed191a3a5ce407a398f50e9dee118848dd93f04aebb8d43ab3",
+    "Headers/SP/artemis/config/platform.hpp": "a96301b3bab0b3c551b32efffb836cfe1a86ef0dcb93229b11a2e6caac160968",
+    "Headers/SP/photoshop/config/platform.hpp": "9002dfd37abc63ea62c506e14724a06f8c6c7ebc31bf247fd666958173f07512",
+    "Headers/SuiteHelper.h": "09a48dd94145deb9521433a87a47c320df617a8684a51b7b6283c23f6a3a33fe",
+    "Headers/adobesdk/DrawbotSuite.h": "6dbd8be70d6112581cd68057aba12823e547ef9f48d58038d10ba2ef0d87ad35",
+    "Headers/adobesdk/config/AdobesdkTypes.h": "80e5c991f64997f41bb0fecfe01a1862a26d2e8dbc420d621a756e984b367872",
+    "Headers/adobesdk/config/PostConfig.h": "d8498d3669469dca2439f7cac36093226ea7f191eda9d9928a8f77a7b40bce2e",
+    "Headers/adobesdk/config/PreConfig.h": "078079dc305335cbe7866030e61ef1a937172019ad95103aa5b93bca27a3c35b",
+    "Headers/adobesdk/drawbotsuite/DrawbotSuiteTypes.h": "0cc545ac1ff4fa8fa4d108abee29bd64b9e0459fca135557a75902b7ae2a881a",
+    "Resources/AE_General.r": "7ff870f2b64405a6c20d2d6b8c8c3c13dca13b04bb08c3a3b221821d53866ced",
+    "Resources/Mach-O_prefix.h": "ee3fb8a2cab1831f870d1bd676389cb17d3f63af364809993d105318bddee4af",
+    "Util/AEFX_ArbParseHelper.c": "47685e506fa8cd4d87e453a9f00a2606cdebce3b00a4569c44b60f91c6c1b59d",
+    "Util/AEFX_ArbParseHelper.h": "9bccc77c38c2f89b322373f6e4d2c5bc79c16efa5e6bbd14a4d8ee7d23ba21fb",
+    "Util/AEFX_ChannelDepthTpl.h": "5bfacde03ab8691c6bb9a1b2f9a4aa2b017d71e7dd8a5151e96a6470c3f0925e",
+    "Util/AEFX_SuiteHelper.c": "d786edee3bcf7e0c6d458d6508425fafa89a94feec0ee0eeaccf5b3d154c5bea",
+    "Util/AEFX_SuiteHelper.h": "c8773e1eea64a4273bc8744e805324d4dd2f122c87c54c105529a3c61b46a513",
+    "Util/AEGP_SuiteHandler.cpp": "7c054c7b0778b1b26463d6bf31cd57ee1d971946e8da22fb174e9f088741606f",
+    "Util/AEGP_SuiteHandler.h": "36e1acf66a90979bd541bfb260e4dbf58dab2d00afec7d749dfcffc43a6843f7",
+    "Util/AEGP_Utils.cpp": "4e503ec7c0e0df31fb85283408a6e84c5b2b0a887a33f53f72e2a698e4b597b5",
+    "Util/AEGP_Utils.h": "4a95b29c48ca919585abd7cdff322c75c43736c78732491ef32440cc9069130c",
+    "Util/DirectXUtils.cpp": "eed954fb595513fb6ab0261680d63917484701d9a1ad163d1df91c0909aa1457",
+    "Util/DirectXUtils.h": "c684d2fc0fca4ff69070c9fcbd6e95c8dd48ad28ee059e100de0ca5785b67677",
+    "Util/DuckSuite.h": "544f9048a2c9dbdbf034ee203b6524469d7fba090c981f8aeaf3de92155408d5",
+    "Util/MissingSuiteError.cpp": "8c0cc22b898c94c73556778f5cef1ccf9cded81ee590bd04feb49028ff4f44d9",
+    "Util/Param_Utils.h": "f6ab665ea85a208c2c8f68c1d233f2135b7b3871d73fe3a7ebc131054627c978",
+    "Util/Smart_Utils.cpp": "860aaaa6b9fd6448ea3bf9b5b6a1c687519cfe66150715fa0fd8da7ad0990c8c",
+    "Util/Smart_Utils.h": "7b6f64457c7b0763ef79a662bdb3fc323652db5522a30d62d4d19a2f9c091bb6",
+    "Util/String_Utils.c": "50c9398fda8afd93d78fc3e3dc33af2b2b432ed7b04b051b9494e33ee5597050",
+    "Util/String_Utils.h": "b0f9c18777e2085c2f0fbb0828452550aeef11e6f5b18916e28c4efa3749ceff",
+    "Util/entry.h": "a688efa8ac191ca98f9b7bf93f0dc58ece9444c69e49f07c0ed37c97faa74e1f"
+  },
+  "generic_gate_invocation_count": 7,
+  "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+  "independent_summary": {
+    "before_different": 2,
+    "before_rejected": 62,
+    "before_smart_rejected": 76,
+    "both_commands_exact": 82,
+    "case_count": 82
+  },
+  "installed_changed": false,
+  "new_unittest_count": 4,
+  "production_native_reacquired_count": 82,
+  "production_odd_byte_replay_count": 492,
+  "production_public_replay_count": 57870,
+  "retained_case_count": 9563,
+  "schema": "radialblur.noop-validation/1",
+  "source_sha256": "344f79b0e1064839d26ad5df341aa664ae513e05a9934b5c06405b6b8eb89cc0",
+  "status": "PASS_BOUNDED_ORIGINAL_ZERO_CONTROL_RAW_COPY",
+  "type3_boundary": {
+    "abi_sizes_match": {
+      "PF_LayerDef": 120,
+      "PF_ParamDef": 176,
+      "union_offset": 56
+    },
+    "additional_fact": "Builder 8690 reads configuration+0xa8 as the destination PF_LayerDef pointer at88b6, passes it to d9d0 at88c9. d9d0 calls19f20 to copy PF_ParamDef.u into that destination. Pointer initialization and native AE behavior remain unproven.",
+    "classification": "Original exported materializer boundary; no ABI size mismatch, no numeric oracle and no new native Windows execution",
+    "diagnostic_sha256": "a833964a327c209d56ff550cf773edb4317a2984caaafc97e1c9e43565680087",
+    "do_not_promote": "No successful original Type3-zero public output, no generic Type3 compatibility claim",
+    "historical_static_boundary_sha256": "c4819a87c623def2693cd51ed9040301abf5ffd33857c45471e4232592a8018e",
+    "historical_static_boundary_untracked_and_not_to_be_staged": true,
+    "reason": "UC_ERR_WRITE_UNMAPPED at caller return RVA da65, copying checked-out PF_ParamDef.u to destination pointer 0x700000009 (width9 height7 packed); exact ABI cause not yet established",
+    "status": "ORIGINAL_EXPORTED_TYPE3_UNINITIALIZED_DESTINATION_RECONFIRMED",
+    "unresolved": "Native Windows AE behavior and general Type3 hosting remain unproven"
+  },
+  "unchanged_original_aex_and_three_workers": true,
+  "unchanged_sdk": true,
+  "unittest_count_includes_one_roi_gate_test": true,
+  "universal_build": {
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "command": [
+      "xcodebuild",
+      "-project",
+      "mac/OLMRadialBlur/Mac/OLMRadialBlur.xcodeproj",
+      "-scheme",
+      "OLMRadialBlur",
+      "-configuration",
+      "Debug",
+      "-sdk",
+      "macosx",
+      "-derivedDataPath",
+      "/tmp/radial_noop_universal_build_20261002",
+      "ARCHS=arm64 x86_64",
+      "ONLY_ACTIVE_ARCH=NO",
+      "GCC_OPTIMIZATION_LEVEL=2",
+      "CODE_SIGNING_ALLOWED=NO",
+      "build"
+    ],
+    "core_sha256": "5098f0acafc9d7a76136d306bd15193ca0c987fd3610e9340b311e6646001bee",
+    "exit_code": 0,
+    "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+    "installed": false,
+    "log_sha256": "6af54fcf1613b3711a9b57ad334a523f1c30d51f6a3c6ef11a2fa2346c66cbe0",
+    "optimization": "O2",
+    "product_sha256": "0ac44eb3e1534ff9d3728464c20b2d943cf040bdadd79f9af1c5c0de6804fca4",
+    "source_header_and_core_unchanged_during_build": true,
+    "source_sha256": "344f79b0e1064839d26ad5df341aa664ae513e05a9934b5c06405b6b8eb89cc0"
+  },
+  "window_worker_sha256": "cebdd7d5d88885ce3bba8768c4680e9e7a27e8fcbeb396d1230f724b8d064eca",
+  "world_contract_case_count": 84
+}

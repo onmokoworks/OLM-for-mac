@@ -2392,11 +2392,72 @@ UHD16/32 bpc高値・負ゼロ・Inf/NaN payload4条件も、private host入力/
 任意入力/全設定、scalar Fade3語・Windows RCPPS/ISA/UCRT、allocator末尾、Rotation
 追加半径行、native両AE/ROI/downsampleと全10本完全互換は未完。Goalはactive。
 
+## RB-NOOP-RAW-COPY-041 — 全0・Type1/2の元入力コピーをBlurの制限から分離
+
+Strength復元b07f5c00はPush済み。FACT: 元typed caller8/16/32 bpcの
+全6control0（両Strength・両Offset・両Fade）分岐は、先頭でcopyした入力をそのまま
+返す。コピーにpolar演算や画素のSDR/finite判定は不要。前回sourceのSDR scan、
+共通control制限、Smart Blur budgetによる拒否・差分をコピー専用一般処理で解消した。
+Noise Type1/2・Zoom/Rotationの全0判定をRenderWorldのBlur受入より前へ接続する。
+正の同寸法full-frame、comp dimensions、active row bytes、payload独立性とoverflow
+検査は保持。byte memcpyでPF16高値、PF32 signed zero/subnormal/Inf/NaN payloadを
+保持する。Blurの非zero処理・Type3・ROI/downsampleをこの変更から昇格しない。
+
+独立82条件はcontrol42、geometry14、HDR/nonfinite16、UHD高深度4、全bit族6。
+元AEX公開Smartのinputそのものへ全raw exact。旧sourceはClassic
+62拒否・2差分、Smart76拒否。
+元の凍結workerでもHD3深度6条件を確認し、UHD16/32と幅4097には別コピーの
+fixture dimensionsを8192×4096、guest input/output arenaを288MiBへ広げた。
+元AEX・ABI・Math/copy callbackは不変。data mapping512MiBはstub先頭と重ならず、
+handle arena224MiB。初期のarena不足とmapping重複の失敗はprivateに保持する。
+再現可能なbuilderはreadonly parent441source/workerを保持し2sourceだけ変更する。
+候補worker67c751a5と再現builder worker8c56f1aaは82条件の入力/出力hashが一致。
+この一致を他の設定のworker全体同等性へ一般化しない。候補reportはprivateに保存、
+公開captureには元hashと別buildによる再取得のbindを両方残す。
+
+候補・最終実sourceの両cmd/strictO2・ASan/UBSan・通常O2で各57870再生が一致。
+既存9563条件を保持し、新しい82条件も最終sourceで元AEXから再取得した。
+odd byte row strideは82条件492再生がexact。misaligned byte pointer、行余白保全、
+null/寸法/rowbytes/bitdepth不正の84検査はstrictO2/sanitizerでPASS、入力と不正時
+出力は不変。非zero Blurのaligned/SDR契約を保持する。
+Strengthの旧captureは不変。テストは旧epochの生成sourceを検証し、実sourceで
+元setup80、全Strength表2001000語、自然2画像の所有面、保存native-UCRT hash6経路を
+再実行した。新4＋既存50 unittest（ROI gate内1を含む）、7generic gate invocation、
+実SDK arm64/x86_64 O2 buildがPASS。installedは変更していない。
+
+Type3についての補足: 前回の「ABI原因未確定」は探索当時の記録として保持する。
+今回はParamsSetupのchoices3とPF_ParamDef176/union+56/PF_LayerDef120が元と整合。
+FACT: 元Smart caller40f0はRSP+40のinfo+0xa8を初期化せず、builder8690の88b6が
+それをdestinationとして取得、d9d0→19f20で120byteをcopyする。幅9/高7を詰めた
+0x700000009へのcopyでUC_ERR_WRITE_UNMAPPEDになった。8月14日のledger/static
+reportと同じ元AEX境界を再確認したもので、ABIサイズ不一致の仮説は退けた。
+元公開Type3の数値oracleは得ていない。45行のtyped owner証拠と公開入口の問題を
+分け、native Windows AE上の挙動は未証明に保持する。参照失敗へMac出力を寄せない。
+
+本番source 344f79b0e1064839d26ad5df341aa664ae513e05a9934b5c06405b6b8eb89cc0、header/coreはStrengthと同じ。
+元AEX・3既存worker・controlled parent440source・readonly441source・SDK90入力は不変。
+raw/planes/contexts/tracesはprivate。公開は構成した入力設定・hash/count・分岐根拠。
+非zero Blurの任意HDR/非有限/大画像・未列挙Layer/Offset合成、scalar Fade3語、
+controlled expf tail、Windows ISA/RCPPS/UCRT、allocator末尾、Rotation追加半径行、
+native両AE/UI/保存/ROI/downsampleと全10本完全互換は未完。Goalはactive。
+
+次の探索（本番未反映）: Offsetの元UI slot6/12は整数0–500、ModeはAdd/Max/Override。
+非負Offset/inner Zoomの受入だけ広げたprivate48条件は42 exact、6差分はRotationの
+outer/inner Add（両方向×3深度）。元1c90のmode1はbase Strengthに半径依存Offsetを
+加えるが、現行generic Quality経路はmode1でStrengthだけを返していた。
+同じ半径依存Offsetを加えるprivate候補ではstrictO2/sanitizer両cmd192再生が全exact。
+自然PF32のouter/inner2画像はpolar/scalar/spanが元から一致。旧accum16519/16472語、
+max300/157語、normalized9013/8927語の差が全解消し、rawも一致した。
+これは次段の根拠であり本番に混ぜない。試作用受入上限2000はUI合法範囲の根拠では
+なく、正式復元は元0–500と原設定getter/半径換算/budgetを照合して進める。
+追加の原prefix24c0/1c90と共有helperの72144条件では、旧DOUBLE割算に120のraw span差（effective spanも23差）があった。元のFLOAT32逆数×積を復元したprivate候補はstrictO2/sanitizerとも差分0。前記48条件だけではこの換算差を検出できず、合法範囲の一般化には元の演算順も必要だった。
+追加の1行geometry125/123の18条件は候補72再生がraw exact。123×1のPF32・3 modeは旧DOUBLE換算から各6byteの差があり、候補で解消。outer Add/Overrideの2画像はpolar/scalar/span/maxが元から一致し、旧accum272語・normalized204語の差も全解消した。参照の20秒deadlineだけ120秒へ広げた別buildは48元入力でraw hashを校正し、残る6 setupを取得して元の整数0–500設定と換算を合計48条件で確認した。元workerは保持し、初期batchのexit1原因はstderrが残っていないため確定しない。Macテストの最初の125幅拒否はharness上限64のためで、上限だけ広げた再測定を使用する。動的Offsetのwork見積り、追加geometry/control交差、全回帰は次段の残件。
+
 ## 次の順序
 
 1. Smoother2のHDR/Gamma合成と色境界の今回の有限集合は検証済み。公開builderのLUT構築とnative依存先を分け、未測定scan長・任意float・独立paletteの最初の差を復元する。
 2. ColorKeyの未検証geometry/任意float/paletteとThin/Blur合成を拡張する。今回の境界・overflow比較を全入力の証明とは扱わず、固定workerとcontrolled Lab94参照を分け、native Windows UCRTとの比較を残す。
 3. native host/ROI/downsample・通常UI/保存stateと各深度のworld契約を拡張検証。
-4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはAngle/Edge/PointとNoise OffsetのFLOAT32接続を復元した。参照atan2f非軸差は保存Windows scalarの有限集合へ校正済み。Zoom PF8の共通writerは復元済み。Rotationの自然field/scatterは代表全量でGaussian差を分離し、別コピーのinverse復元で代表rawが一致した。generic two-stageのGaussian/finalを本番へ復元し、694条件505 exact、独立384全exactを確認。no-noise/neutral/Angleと微小alphaも本番へ復元し、559 exact、typed28と独立384全exactを確認。Rotation Edge/Inner Edgeも本番へ復元し、565 exact・45差分・84拒否。Size100+Noiseも共通経路と行境界area規則を復元し、本番601 exact・9差分・84拒否。独立96も全exact。Zoomの正負alphaとゼロseed加算も復元し、本番607 exact・3差分・84拒否。Zoomの両fadeもB680へ接続し、本番610 exact・差分0・84拒否。Size25は一般領域factorへ接続し、Zoom最大alpha判定と共通PF32 callerのMINSS上限も復元した。最新694条件は全exact・拒否0、独立180も全exact。scalar fade3語、native RCPPS/ISA/UCRTを未解決に保持。Size/Noiseの合法割合、Seed/Thickness、Quality1–50を共通処理へ復元した。Gain有限0–10とRotation Noise座標も元の一般処理へ復元した。合法Strength0–2000と元B680表/cap順/全0copyを復元した。全0copyの非SDR/非有限入力、未列挙Layer/Offset・複合設定・任意入力を測り、その後KiraKira一般入力を比較する。
+4. DirectionalBlurの独立216条件は公開比較済み。RadialBlurはAngle/Edge/PointとNoise OffsetのFLOAT32接続を復元した。参照atan2f非軸差は保存Windows scalarの有限集合へ校正済み。Zoom PF8の共通writerは復元済み。Rotationの自然field/scatterは代表全量でGaussian差を分離し、別コピーのinverse復元で代表rawが一致した。generic two-stageのGaussian/finalを本番へ復元し、694条件505 exact、独立384全exactを確認。no-noise/neutral/Angleと微小alphaも本番へ復元し、559 exact、typed28と独立384全exactを確認。Rotation Edge/Inner Edgeも本番へ復元し、565 exact・45差分・84拒否。Size100+Noiseも共通経路と行境界area規則を復元し、本番601 exact・9差分・84拒否。独立96も全exact。Zoomの正負alphaとゼロseed加算も復元し、本番607 exact・3差分・84拒否。Zoomの両fadeもB680へ接続し、本番610 exact・差分0・84拒否。Size25は一般領域factorへ接続し、Zoom最大alpha判定と共通PF32 callerのMINSS上限も復元した。最新694条件は全exact・拒否0、独立180も全exact。scalar fade3語、native RCPPS/ISA/UCRTを未解決に保持。Size/Noiseの合法割合、Seed/Thickness、Quality1–50を共通処理へ復元した。Gain有限0–10とRotation Noise座標も元の一般処理へ復元した。合法Strength0–2000と元B680表/cap順/全0copyを復元した。全0・Type1/2コピーの非SDR/非有限入力とSmart Blur予算拒否を解消した。未列挙Layer/Offset・複合設定・任意入力を測り、その後KiraKira一般入力を比較する。
 
 既存の作業ツリー変更は今回のcommitに混ぜない。第三者AEXとnative raw出力をPushしない。
