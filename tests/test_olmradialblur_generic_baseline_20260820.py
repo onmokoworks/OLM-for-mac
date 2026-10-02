@@ -78,6 +78,15 @@ template <typename P> int run(short depth, int blur_type) {{
   i.angle_deg=360.01;if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,depth)!=PF_Err_BAD_CALLBACK_PARAM)return 9;
 	i.angle_deg=0;i.noise_variation=.01;if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,depth)!=PF_Err_NONE)return 16;
 	i.seed=0;if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,depth)!=PF_Err_BAD_CALLBACK_PARAM)return 10;
+	i.seed=1;
+  for(double gain: {{0.0, .1, 2.25, 10.0}}) {{
+    i.brightness_gain=gain;
+    if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,depth)!=PF_Err_NONE)return 17;
+  }}
+  for(double gain: {{-.01, 10.01, std::numeric_limits<double>::infinity(), std::numeric_limits<double>::quiet_NaN()}}) {{
+    i.brightness_gain=gain;
+    if(OLMRadialBlurTestRenderWorld(&iw,&ow,&i,depth)!=PF_Err_BAD_CALLBACK_PARAM)return 18;
+  }}
   return 0;
 }}
 template <typename P> int malformed(short depth) {{

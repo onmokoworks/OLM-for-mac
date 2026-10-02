@@ -1,0 +1,68 @@
+{
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "case_count": 1936,
+  "claims_not_made": [
+    "Constructed sampler inputs do not prove arbitrary complete renders, native Windows ISA/UCRT/AE, host UI/save/ROI/downsample or all-ten compatibility."
+  ],
+  "comparisons": {
+    "before": {
+      "case_count": 1936,
+      "different_words": 249,
+      "raw_sha256": "e73ece9f0857eb6962078fab5e472a8866f0c2699655f132b23caf38ff5f5d32"
+    },
+    "o2": {
+      "case_count": 1936,
+      "different_words": 0,
+      "raw_sha256": "baae594c1d4b710656d0b017f932f77d542656a334f8626263f80d07669cf0f4"
+    },
+    "san": {
+      "case_count": 1936,
+      "different_words": 0,
+      "raw_sha256": "baae594c1d4b710656d0b017f932f77d542656a334f8626263f80d07669cf0f4"
+    }
+  },
+  "constructed_grid_sha256": "4c67f066b42193e4bca1ddf441009a05990bfe4fd8f274103572257cea674c6d",
+  "core_sha256": "5098f0acafc9d7a76136d306bd15193ca0c987fd3610e9340b311e6646001bee",
+  "dependencies_sha256": {
+    "core/dblur_noise.h": "5098f0acafc9d7a76136d306bd15193ca0c987fd3610e9340b311e6646001bee",
+    "mac/OLMRadialBlur/OLMRadialBlur.h": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+    "tools/emulation/probe_radialblur_gain_20261002.py": "99226bf4e64fd364edde917a3322881826776b9abb2030a8afce1f6ac39a1f6c",
+    "tools/emulation/probe_radialblur_gain_sampler_20261002.py": "06d96b9a9070e317ce1a013295676652377cc632d8c26f8b9ab950dbae727bc6"
+  },
+  "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+  "imports": 0,
+  "native_output_sha256": "baae594c1d4b710656d0b017f932f77d542656a334f8626263f80d07669cf0f4",
+  "native_windows_isa_or_host_claimed": false,
+  "original_plane_unchanged": true,
+  "original_rule": {
+    "config_gain_offset": 56,
+    "float_getter_conversion_code_sha256": "58674d4383f5658e893abe0c3034fa6df582c198d891ff00a67a11a6d957ba80",
+    "getter_code_sha256": "0319053a81c977c01deeedd058751b3202f3998e6b95a959cfb18563c70a004f",
+    "internal_parameter_id": 16,
+    "noise_sampler_code_sha256": "916a5f4694df42bce4d5b31a0f3bde5faad4bbf99319e986f7385cbc8c61eaf4",
+    "pf16_gain_writer_code_sha256": "d370a40b39780ec48de7e87259893d553558870d07a217cb4c71b90b5ca4cd72",
+    "pf32_gain_writer_code_sha256": "0c68cf36a39cbce88b65a94653f764cd7829e6ec7b4dd4798afc3564e6eb6d98",
+    "pf8_gain_writer_code_sha256": "7977eeb6b3656081eb82909d8de153e310d23be00c7920a60ccb2d5174e152f5",
+    "rule": "Builder e430 stores FLOAT32 Gain at config+0x38. Typed callers load it with MOVSS and multiply RGB with MULSS; alpha is unchanged. Caller MINSS and the depth-specific writer follow."
+  },
+  "original_sampler_rva": "0x9680",
+  "scalar_witnesses": [
+    {
+      "native_word": "3d9b8000",
+      "smooth": 0,
+      "thickness": 3.4,
+      "x": 17,
+      "y": 0
+    },
+    {
+      "native_word": "3dc00000",
+      "smooth": 1,
+      "thickness": 3.4,
+      "x": 17,
+      "y": 0
+    }
+  ],
+  "schema": "radialblur.rotation-noise-sampler/1",
+  "source_before_sha256": "ddf2786c2693246970b48deb10267a39354e89a33be98aef4df5ca2af5c4f79c",
+  "source_sha256": "7c1509c6e2913c1fb0037998288d7f9fae440a433a42af06ccf25c3a6794336e"
+}

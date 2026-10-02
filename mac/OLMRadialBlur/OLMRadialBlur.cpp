@@ -81,8 +81,9 @@ static float RadialF32Sub(float lhs, float rhs)
 static float SampleRadialNoisePlaneAEX(
 	const float *samples, A_long stride, float cell_size, A_long x, A_long y)
 {
-	const float sample_x = RadialF32Div((float)x, cell_size);
-	const float sample_y = RadialF32Div((float)y, cell_size);
+	const float inverse_cell_size = RadialF32Div(1.0f, cell_size);
+	const float sample_x = RadialF32Mul((float)x, inverse_cell_size);
+	const float sample_y = RadialF32Mul((float)y, inverse_cell_size);
 	const A_long ix = (A_long)sample_x;
 	const A_long iy = (A_long)sample_y;
 	const float fraction_x = RadialF32Sub(sample_x, (float)ix);
@@ -113,8 +114,9 @@ static float SampleRadialNoisePlaneAEX(
 static float SampleRadialBlockNoisePlaneAEX(
 	const float *samples, A_long stride, float cell_size, A_long x, A_long y)
 {
-	const float sample_x = RadialF32Div((float)x, cell_size);
-	const float sample_y = RadialF32Div((float)y, cell_size);
+	const float inverse_cell_size = RadialF32Div(1.0f, cell_size);
+	const float sample_x = RadialF32Mul((float)x, inverse_cell_size);
+	const float sample_y = RadialF32Mul((float)y, inverse_cell_size);
 	return samples[(size_t)(A_long)sample_y * stride + (A_long)sample_x];
 }
 
@@ -896,7 +898,7 @@ static bool IsGenericBaselineControlProfile(const OLMRadialBlurInfo &info)
 		info.ratio >= 1.0 && info.ratio <= 5.0 && std::isfinite(info.angle_deg) &&
 		info.angle_deg >= -360.0 && info.angle_deg <= 360.0 &&
 		std::isfinite(info.quality) && info.quality >= 1.0 && info.quality <= 50.0 &&
-		info.brightness_gain == 1.0 &&
+		std::isfinite(info.brightness_gain) && info.brightness_gain >= 0.0 && info.brightness_gain <= 10.0 &&
 		(std::isfinite(info.size_variation) && info.size_variation >= 0.0 && info.size_variation <= 100.0) &&
 		info.noise_layer == 0 && IsGenericProceduralNoiseProfile(info);
 }
