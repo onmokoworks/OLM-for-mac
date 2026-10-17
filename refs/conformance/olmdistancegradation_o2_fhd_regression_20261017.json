@@ -1,0 +1,290 @@
+{
+  "date": "2026-10-17",
+  "change": "OLMDistanceGradation O0 to O2, preserving original floating-point defaults and source-local pragmas",
+  "geometry": [
+    1920,
+    1080
+  ],
+  "scope": {
+    "in_out": "Inside",
+    "invert": true,
+    "interpolation": "Linear",
+    "threshold": 4,
+    "render_mode": "RGB",
+    "background": false,
+    "blur_size": 10
+  },
+  "status": "PASS_NO_OPTIMIZATION_REGRESSION_IN_18_FHD_BINARY_COMPARISONS",
+  "checks": {
+    "actual_installed_and_candidate_binaries": true,
+    "arm64_and_x86_64": true,
+    "native_windows_AE": false,
+    "AEXCompat_backend": "unicorn-x86_64",
+    "all_mac_errors_zero": true,
+    "all_guards_intact": true,
+    "all_inputs_unchanged": true,
+    "all_parameter_and_layer_checkouts_balanced": true
+  },
+  "binary_sha256": {
+    "worker": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
+    "aex": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+    "before": "ce48b9ebf92bb1b66db9e3da1c0c17f4b176553a4f5097fed0b5f5630d6cb1e5",
+    "after": "882f293ed2e280284e63a36761918f2dfd1738f759e6fea4a719ecd131b287c4"
+  },
+  "aex_comparisons": [
+    {
+      "case": "8bpc-blur1",
+      "arch": "arm64",
+      "before_after_different_bytes": 0,
+      "same": true,
+      "different_bytes": 0,
+      "different_channels": 0,
+      "different_pixels": 0,
+      "max_abs_channel_delta": 0.0
+    },
+    {
+      "case": "8bpc-blur1",
+      "arch": "x86_64",
+      "before_after_different_bytes": 0,
+      "same": true,
+      "different_bytes": 0,
+      "different_channels": 0,
+      "different_pixels": 0,
+      "max_abs_channel_delta": 0.0
+    },
+    {
+      "case": "8bpc-blur2",
+      "arch": "arm64",
+      "before_after_different_bytes": 0,
+      "same": true,
+      "different_bytes": 0,
+      "different_channels": 0,
+      "different_pixels": 0,
+      "max_abs_channel_delta": 0.0
+    },
+    {
+      "case": "8bpc-blur2",
+      "arch": "x86_64",
+      "before_after_different_bytes": 0,
+      "same": true,
+      "different_bytes": 0,
+      "different_channels": 0,
+      "different_pixels": 0,
+      "max_abs_channel_delta": 0.0
+    },
+    {
+      "case": "8bpc-blur3",
+      "arch": "arm64",
+      "before_after_different_bytes": 0,
+      "same": false,
+      "different_bytes": 94,
+      "different_channels": 94,
+      "different_pixels": 94,
+      "max_abs_channel_delta": 1.0
+    },
+    {
+      "case": "8bpc-blur3",
+      "arch": "x86_64",
+      "before_after_different_bytes": 0,
+      "same": false,
+      "different_bytes": 94,
+      "different_channels": 94,
+      "different_pixels": 94,
+      "max_abs_channel_delta": 1.0
+    },
+    {
+      "case": "16bpc-blur1",
+      "arch": "arm64",
+      "before_after_different_bytes": 0,
+      "same": true,
+      "different_bytes": 0,
+      "different_channels": 0,
+      "different_pixels": 0,
+      "max_abs_channel_delta": 0.0
+    },
+    {
+      "case": "16bpc-blur1",
+      "arch": "x86_64",
+      "before_after_different_bytes": 0,
+      "same": true,
+      "different_bytes": 0,
+      "different_channels": 0,
+      "different_pixels": 0,
+      "max_abs_channel_delta": 0.0
+    },
+    {
+      "case": "16bpc-blur2",
+      "arch": "arm64",
+      "before_after_different_bytes": 0,
+      "same": true,
+      "different_bytes": 0,
+      "different_channels": 0,
+      "different_pixels": 0,
+      "max_abs_channel_delta": 0.0
+    },
+    {
+      "case": "16bpc-blur2",
+      "arch": "x86_64",
+      "before_after_different_bytes": 0,
+      "same": true,
+      "different_bytes": 0,
+      "different_channels": 0,
+      "different_pixels": 0,
+      "max_abs_channel_delta": 0.0
+    },
+    {
+      "case": "16bpc-blur3",
+      "arch": "arm64",
+      "before_after_different_bytes": 0,
+      "same": false,
+      "different_bytes": 54,
+      "different_channels": 54,
+      "different_pixels": 54,
+      "max_abs_channel_delta": 1.0
+    },
+    {
+      "case": "16bpc-blur3",
+      "arch": "x86_64",
+      "before_after_different_bytes": 0,
+      "same": false,
+      "different_bytes": 61,
+      "different_channels": 61,
+      "different_pixels": 61,
+      "max_abs_channel_delta": 1.0
+    },
+    {
+      "case": "32bpc-blur1",
+      "arch": "arm64",
+      "before_after_different_bytes": 0,
+      "same": true,
+      "different_bytes": 0,
+      "different_channels": 0,
+      "different_pixels": 0,
+      "max_abs_channel_delta": 0.0
+    },
+    {
+      "case": "32bpc-blur1",
+      "arch": "x86_64",
+      "before_after_different_bytes": 0,
+      "same": true,
+      "different_bytes": 0,
+      "different_channels": 0,
+      "different_pixels": 0,
+      "max_abs_channel_delta": 0.0
+    },
+    {
+      "case": "32bpc-blur2",
+      "arch": "arm64",
+      "before_after_different_bytes": 0,
+      "same": true,
+      "different_bytes": 0,
+      "different_channels": 0,
+      "different_pixels": 0,
+      "max_abs_channel_delta": 0.0
+    },
+    {
+      "case": "32bpc-blur2",
+      "arch": "x86_64",
+      "before_after_different_bytes": 0,
+      "same": true,
+      "different_bytes": 0,
+      "different_channels": 0,
+      "different_pixels": 0,
+      "max_abs_channel_delta": 0.0
+    },
+    {
+      "case": "32bpc-blur3",
+      "arch": "arm64",
+      "before_after_different_bytes": 0,
+      "same": false,
+      "different_bytes": 71807,
+      "different_channels": 71548,
+      "different_pixels": 50551,
+      "max_abs_channel_delta": 2.980232238769531e-07
+    },
+    {
+      "case": "32bpc-blur3",
+      "arch": "x86_64",
+      "before_after_different_bytes": 0,
+      "same": false,
+      "different_bytes": 68550,
+      "different_channels": 68306,
+      "different_pixels": 48454,
+      "max_abs_channel_delta": 2.980232238769531e-07
+    }
+  ],
+  "timing_scope": "arm64 production RenderBits with SDK shim, classic path, 1920x1080, Both/Linear/RGB/no background; median of 3 samples; not native AE timing",
+  "timings": [
+    {
+      "bpc": 8,
+      "blur": "none",
+      "O0_ms": 532.546,
+      "O2_ms": 69.942,
+      "speedup": 7.614108833033086
+    },
+    {
+      "bpc": 16,
+      "blur": "none",
+      "O0_ms": 511.71,
+      "O2_ms": 67.56,
+      "speedup": 7.574156305506216
+    },
+    {
+      "bpc": 32,
+      "blur": "none",
+      "O0_ms": 466.217,
+      "O2_ms": 63.935,
+      "speedup": 7.292046609838116
+    },
+    {
+      "bpc": 8,
+      "blur": "box size10",
+      "O0_ms": 3720.195,
+      "O2_ms": 856.636,
+      "speedup": 4.3427955397625135
+    },
+    {
+      "bpc": 16,
+      "blur": "box size10",
+      "O0_ms": 3700.053,
+      "O2_ms": 851.516,
+      "speedup": 4.345253641740143
+    },
+    {
+      "bpc": 32,
+      "blur": "box size10",
+      "O0_ms": 3652.872,
+      "O2_ms": 845.61,
+      "speedup": 4.319807003228439
+    },
+    {
+      "bpc": 8,
+      "blur": "gaussian size10",
+      "O0_ms": 854.269,
+      "O2_ms": 116.099,
+      "speedup": 7.358108166306342
+    },
+    {
+      "bpc": 16,
+      "blur": "gaussian size10",
+      "O0_ms": 843.922,
+      "O2_ms": 112.879,
+      "speedup": 7.476341923652761
+    },
+    {
+      "bpc": 32,
+      "blur": "gaussian size10",
+      "O0_ms": 794.481,
+      "O2_ms": 108.235,
+      "speedup": 7.340333533515037
+    }
+  ],
+  "limitations": [
+    "Nine parameter tuples at FHD, on each of arm64 and x86_64. Not exhaustive parameter coverage.",
+    "AEX executed through AEXCompat Unicorn CPU backend, not native Windows After Effects.",
+    "Mac binaries loaded through an AE SDK host harness, not native After Effects.",
+    "Gaussian Size10 has unchanged pre-existing AEX differences; no Windows-exact claim for that mode.",
+    "The installed plugin has not been replaced."
+  ],
+  "local_reproduction_directory": "/Users/onmk/Documents/Codex/2026-10-17/distance-gradation-finder-olmformac/aexcompat-comparison"
+}

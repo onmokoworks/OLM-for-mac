@@ -49,6 +49,13 @@ plugins=(
 )
 
 for plugin in "${plugins[@]}"; do
+  plugin_optimization_flags=("${optimization_flags[@]}")
+  if [[ "$plugin" == OLMDistanceGradation ]]; then
+    # FHD installed-vs-candidate replay verified O2 with the original FP defaults.
+    # Keep both configurations on the tested level; do not introduce fast-math
+    # or globally disable contraction (the latter changes existing output).
+    plugin_optimization_flags[0]=GCC_OPTIMIZATION_LEVEL=2
+  fi
   project="$ROOT/mac/$plugin/Mac/$plugin.xcodeproj"
   binary="$ROOT/mac/$plugin/Mac/build/$CONFIGURATION/$plugin.plugin/Contents/MacOS/$plugin"
 
@@ -67,7 +74,7 @@ for plugin in "${plugins[@]}"; do
     OBJROOT="$derived_data/$plugin/Intermediates" \
     SHARED_PRECOMPS_DIR="$derived_data/$plugin/PrecompiledHeaders" \
     CONFIGURATION_BUILD_DIR="$ROOT/mac/$plugin/Mac/build/$CONFIGURATION" \
-    "${optimization_flags[@]}" \
+    "${plugin_optimization_flags[@]}" \
     build
 
   if [[ ! -f "$binary" ]]; then
