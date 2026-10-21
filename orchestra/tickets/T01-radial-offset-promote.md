@@ -52,3 +52,13 @@ editing expectations — report the first mismatch and stop (status: blocked).
 - After promotion also rebaseline `tests/fuzz_corpus/radialblur` with
   `tools/fuzz/rebaseline_corpus.py` ONLY if every changed route moves toward exact
   (report the before/after table). F08 already moved 6 cases mismatch->exact that are not yet rebaselined.
+
+## Round 3 (orchestrator)
+Your stop on the Classic mismatch->refusal(516) corpus change was correct. Now:
+1. Attribute that refusal with `OLM_REFUSAL_TRACE` (guard id). If it is ONLY the new work-budget
+   estimate (the candidate's budget), record the estimated work vs cap and the AEX outcome, and
+   continue — a budget refusal of a previously-mismatching case is not a correctness regression;
+   list it under "policy" in the report. Any other guard, or any exact->non-exact change: stop.
+2. Run the remaining Offset gates to completion (390 conditions, then the 9,645 regression),
+   in background with logs, `--jobs 2`.
+3. Report a single table: before/after per suite and per fuzz route (seed 1 n 500).
