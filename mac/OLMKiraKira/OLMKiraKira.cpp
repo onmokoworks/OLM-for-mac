@@ -1223,6 +1223,15 @@ static bool IsGenericBetaFullFrameDimensions(A_long width, A_long height)
 			kMaxGenericPixels;
 }
 
+static bool IsSmartOwnerFullFrameDimensions(A_long width, A_long height)
+{
+	// C04: full-frame ownership is independent of numerical tuple admission.
+	// Tiny frames are admitted below only for separately proven branches.
+	constexpr int64_t kMaxGenericPixels = INT64_C(4096) * INT64_C(2160);
+	return width >= 1 && height >= 1 && width <= 4096 && height <= 4096 &&
+		static_cast<int64_t>(width) * static_cast<int64_t>(height) <= kMaxGenericPixels;
+}
+
 // Generic beta lane: retain the parameter tuples already closed against the
 // Windows owners, but allow their Mode 1-4 algorithms to consume arbitrary
 // full-frame source pixels and ordinary host layouts. Keeping this separate
@@ -2144,7 +2153,7 @@ static bool GenericBetaRenderDimensions(
 		in_data->downsample_y.num != in_data->downsample_y.den) {
 		return false;
 	}
-	if (!IsGenericBetaFullFrameDimensions(in_data->width, in_data->height)) {
+	if (!IsSmartOwnerFullFrameDimensions(in_data->width, in_data->height)) {
 		return false;
 	}
 	*width = in_data->width;
@@ -2215,7 +2224,7 @@ static bool SmartGenericBetaWorldPairIsFullFrame(
 	A_long height)
 {
 	return input && output &&
-		IsGenericBetaFullFrameDimensions(width, height) &&
+		IsSmartOwnerFullFrameDimensions(width, height) &&
 		input->width == width && input->height == height &&
 		output->width == width && output->height == height &&
 		input->origin_x == 0 && input->origin_y == 0 &&
@@ -2293,7 +2302,6 @@ static PF_Err SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra
 	AEFX_CLR_STRUCT(in_result);
 
 	const bool generic_beta_request =
-		!RectIsFullSmartClosure(requested_rect) &&
 		request_contains_generic_full_frame;
 	const PF_LRect full_rect = generic_beta_request
 		? PF_LRect{0, 0, generic_render_width, generic_render_height}
@@ -2422,7 +2430,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 			pre->comp_height == kMode3SmartClosureHeight;
 		const bool pre_is_generic_beta = pre &&
 			pre->generic_full_frame_request &&
-			IsGenericBetaFullFrameDimensions(
+			IsSmartOwnerFullFrameDimensions(
 				static_cast<A_long>(pre->comp_width),
 				static_cast<A_long>(pre->comp_height));
 		const bool exact_world_layout =
@@ -2469,7 +2477,8 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				generic_world_layout && pre_is_generic_beta &&
 				(IsGenericBetaTupleForGeometry(
 					info, input_world->width, input_world->height) ||
-				 IsAlphaBoxTuple(info, format)) &&
+				 IsAlphaBoxTuple(info, format) ||
+				 IsZeroRayTuple(info)) &&
 				GenericBetaInputIsFiniteSDR(input_world, format);
 			KiraDiagnosticLog(
 				"smart admission family=%d exact_tuple=%d exact=%d generic=%d",
