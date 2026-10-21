@@ -188,6 +188,10 @@ int main() {{
     if (!exercise<PF_Pixel16>(1920, 1080, 32, 64, 9, 16, ColorKeep16Func)) return 12;
     if (!exercise<PF_PixelFloat>(3840, 2160, 64, 16, 13, 32, ColorKeepFloatFunc)) return 13;
     if (!exercise<PF_Pixel8>(127, 73, 4, 28, 100, 8, ColorKeep8Func)) return 14;
+    // Row zero is aligned, but subsequent rows reach the callback at byte
+    // offsets that are not aligned for the SDK pixel type (F19 fuzz witnesses).
+    if (!exercise<PF_Pixel16>(17, 11, 1, 11, 5, 16, ColorKeep16Func)) return 40;
+    if (!exercise<PF_PixelFloat>(10, 19, 7, 5, 1, 32, ColorKeepFloatFunc)) return 41;
 
     alignas(PF_Pixel8) unsigned char malformed_in[32] = {{0}}, malformed_out[32] = {{0}};
     PF_EffectWorld bad_in = {{}}, bad_out = {{}};

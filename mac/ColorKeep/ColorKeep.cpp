@@ -251,18 +251,22 @@ static PF_Err
 ColorKeep8Func(void *refcon, A_long, A_long, PF_Pixel8 *inP, PF_Pixel8 *outP)
 {
 	ColorKeepInfo *info = (ColorKeepInfo*)refcon;
+	// Iterate may supply pixels on odd byte strides. Only dereference an
+	// aligned local; copying the representation also preserves float NaN bits.
+	PF_Pixel8 pixel;
+	memcpy(&pixel, reinterpret_cast<const uint8_t *>(inP), sizeof(pixel));
 	bool match = false;
 	for (A_long i = 0; i < info->count; ++i) {
 		const PF_PixelFloat &c = info->colors[i];
-		if (inP->red == ColorKeepQuantize8(c.red) &&
-		    inP->green == ColorKeepQuantize8(c.green) &&
-		    inP->blue == ColorKeepQuantize8(c.blue) &&
-		    inP->alpha == ColorKeepQuantize8(c.alpha)) {
+		if (pixel.red == ColorKeepQuantize8(c.red) &&
+		    pixel.green == ColorKeepQuantize8(c.green) &&
+		    pixel.blue == ColorKeepQuantize8(c.blue) &&
+		    pixel.alpha == ColorKeepQuantize8(c.alpha)) {
 			match = true; break;
 		}
 	}
-	outP->red = inP->red; outP->green = inP->green; outP->blue = inP->blue;
-	outP->alpha = match ? inP->alpha : 0;
+	if (!match) pixel.alpha = 0;
+	memcpy(reinterpret_cast<uint8_t *>(outP), &pixel, sizeof(pixel));
 	return PF_Err_NONE;
 }
 
@@ -270,18 +274,22 @@ static PF_Err
 ColorKeep16Func(void *refcon, A_long, A_long, PF_Pixel16 *inP, PF_Pixel16 *outP)
 {
 	ColorKeepInfo *info = (ColorKeepInfo*)refcon;
+	// Iterate may supply pixels on odd byte strides. Only dereference an
+	// aligned local; copying the representation also preserves float NaN bits.
+	PF_Pixel16 pixel;
+	memcpy(&pixel, reinterpret_cast<const uint8_t *>(inP), sizeof(pixel));
 	bool match = false;
 	for (A_long i = 0; i < info->count; ++i) {
 		const PF_PixelFloat &c = info->colors[i];
-		if (inP->red == ColorKeepQuantize16(c.red) &&
-		    inP->green == ColorKeepQuantize16(c.green) &&
-		    inP->blue == ColorKeepQuantize16(c.blue) &&
-		    inP->alpha == ColorKeepQuantize16(c.alpha)) {
+		if (pixel.red == ColorKeepQuantize16(c.red) &&
+		    pixel.green == ColorKeepQuantize16(c.green) &&
+		    pixel.blue == ColorKeepQuantize16(c.blue) &&
+		    pixel.alpha == ColorKeepQuantize16(c.alpha)) {
 			match = true; break;
 		}
 	}
-	outP->red = inP->red; outP->green = inP->green; outP->blue = inP->blue;
-	outP->alpha = match ? inP->alpha : 0;
+	if (!match) pixel.alpha = 0;
+	memcpy(reinterpret_cast<uint8_t *>(outP), &pixel, sizeof(pixel));
 	return PF_Err_NONE;
 }
 
@@ -289,21 +297,25 @@ static PF_Err
 ColorKeepFloatFunc(void *refcon, A_long, A_long, PF_PixelFloat *inP, PF_PixelFloat *outP)
 {
 	ColorKeepInfo *info = (ColorKeepInfo*)refcon;
+	// Iterate may supply pixels on odd byte strides. Only dereference an
+	// aligned local; copying the representation also preserves float NaN bits.
+	PF_PixelFloat pixel;
+	memcpy(&pixel, reinterpret_cast<const uint8_t *>(inP), sizeof(pixel));
 	bool match = false;
 	for (A_long i = 0; i < info->count; ++i) {
 		const PF_PixelFloat &c = info->colors[i];
 		// Windows 2025 uses COMISS followed by JA for every absolute
 		// difference. Express the same ordered-greater-than rejection so
 		// an unordered (NaN) comparison follows the native fall-through.
-		if (!(fabsf(inP->red - c.red) > kColorKeepFloatTolerance) &&
-		    !(fabsf(inP->green - c.green) > kColorKeepFloatTolerance) &&
-		    !(fabsf(inP->blue - c.blue) > kColorKeepFloatTolerance) &&
-		    !(fabsf(inP->alpha - c.alpha) > kColorKeepFloatTolerance)) {
+		if (!(fabsf(pixel.red - c.red) > kColorKeepFloatTolerance) &&
+		    !(fabsf(pixel.green - c.green) > kColorKeepFloatTolerance) &&
+		    !(fabsf(pixel.blue - c.blue) > kColorKeepFloatTolerance) &&
+		    !(fabsf(pixel.alpha - c.alpha) > kColorKeepFloatTolerance)) {
 			match = true; break;
 		}
 	}
-	outP->red = inP->red; outP->green = inP->green; outP->blue = inP->blue;
-	outP->alpha = match ? inP->alpha : 0.0f;
+	if (!match) pixel.alpha = 0.0f;
+	memcpy(reinterpret_cast<uint8_t *>(outP), &pixel, sizeof(pixel));
 	return PF_Err_NONE;
 }
 
@@ -316,15 +328,14 @@ static PF_Err ColorKeepRenderRows(PF_EffectWorld *input,
 	const A_long offset_x = output->origin_x - input->origin_x;
 	const A_long offset_y = output->origin_y - input->origin_y;
 	for (A_long y = 0; y < output->height; ++y) {
-		PixelT *in_row = reinterpret_cast<PixelT *>(
-			reinterpret_cast<uint8_t *>(input->data) +
-			(size_t)(y + offset_y) * (size_t)input->rowbytes);
-		PixelT *out_row = reinterpret_cast<PixelT *>(
-			reinterpret_cast<uint8_t *>(output->data) +
-			(size_t)y * (size_t)output->rowbytes);
+		uint8_t *in_row = reinterpret_cast<uint8_t *>(input->data) +
+			(size_t)(y + offset_y) * (size_t)input->rowbytes;
+		uint8_t *out_row = reinterpret_cast<uint8_t *>(output->data) +
+			(size_t)y * (size_t)output->rowbytes;
 		for (A_long x = 0; x < output->width; ++x) {
 			const PF_Err err = pixel_func((void *)info, x, y,
-			                              in_row + x + offset_x, out_row + x);
+			                              reinterpret_cast<PixelT *>(in_row + (size_t)(x + offset_x) * sizeof(PixelT)),
+			                              reinterpret_cast<PixelT *>(out_row + (size_t)x * sizeof(PixelT)));
 			if (err) return err;
 		}
 	}

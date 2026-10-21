@@ -9,7 +9,7 @@ int main(int argc,char **argv) {
     if(getchar()!=EOF)return 65;const auto before=input,output_before=outbuf;
     if(!fuzz_parameters(argv[5],fuzz_defs,102))return 66;
     PF_EffectWorld iw{},ow{};iw.data=(PF_PixelPtr)input.data();iw.rowbytes=irb;iw.width=w;iw.height=h;
-    iw.extent_hint={0,0,w,h};iw.world_flags=depth==8?0:PF_WorldFlag_DEEP;
+    iw.extent_hint={0,0,w,h};iw.world_flags=depth==16?PF_WorldFlag_DEEP:0;
     ow=iw;ow.data=(PF_PixelPtr)outbuf.data();ow.rowbytes=orb;
     fuzz_defs[0].u.ld=iw;gin=&fuzz_defs[0].u.ld;gout=&ow;gdepth=depth;
     s8.iterate=i8;s16.iterate=i16;sf.iterate=iff;sc.PF_GetFloatingPointColorFromColorDef=color;sw.PF_GetPixelFormat=worldfmt;

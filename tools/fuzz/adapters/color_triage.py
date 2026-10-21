@@ -10,12 +10,13 @@ class ColorTriage:
         if os.environ.get('OLM_COLOR_TRIAGE_BYPASS') == '1':
             macro = 'COLORKEEP' if self.name == 'colorkeep' else 'COLORKEY'
             body = f'#define OLM_{macro}_EXPERIMENT_BYPASS 1\n' + body
-        # Independent host-side control for the suspected float-world flag bug.
+        # Retain the T12 host-only control; F19 makes its correction the default.
         if self.name == 'colorkeep' and os.environ.get('OLM_COLOR_TRIAGE_HOST_FLAGS') == '1':
             old = 'iw.world_flags=depth==8?0:PF_WorldFlag_DEEP;'
-            if body.count(old) != 1:
+            corrected = 'iw.world_flags=depth==16?PF_WorldFlag_DEEP:0;'
+            if body.count(old) + body.count(corrected) != 1:
                 raise ValueError('ColorKeep host flag anchor drift')
-            body = body.replace(old, 'iw.world_flags=depth==16?PF_WorldFlag_DEEP:0;')
+            body = body.replace(old, corrected)
         return super().compile_sdk(scratch, body, source, deadline, cores)
 
     def compile(self, argv, deadline):
