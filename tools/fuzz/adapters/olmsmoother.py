@@ -1,4 +1,5 @@
 """Smoother v1: retained public admission host and original three controls."""
+from core import command
 from .public import PublicAdapter, ROOT, replace_once
 
 HOST = ROOT/'tools/emulation/olmsmoother_v1_public_guard_harness_20260812.cpp'
@@ -33,3 +34,34 @@ class Adapter(PublicAdapter):
         config = directory/'params.txt'
         config.write_text(''.join(f"{p['slot']} {p['kind']} "+(' '.join(map(str,p['value'])) if isinstance(p['value'],list) else str(p['value']))+'\n' for p in case['parameters']))
         return [self.binary,*case['geometry'],case['depth'],route,config,case['input_padding']],case['pixels']
+
+    def candidate(self, case, directory, route, deadline):
+        argv, data = self.candidate_command(case, directory, route)
+        trace = directory/f'refusal_trace_{route}.txt'
+        trace.unlink(missing_ok=True)
+        env = dict(self.env, OLM_REFUSAL_TRACE=str(trace))
+        status, raw, err = command(argv, data=data, timeout=self.timeout,
+                                   deadline=deadline, env=env)
+        # Optional attribution: the candidate binary appends "function:tag@line"
+        # only when an admission guard refuses. The guards are returned outside
+        # the compared result; status and bytes are unchanged without a trace.
+        guards = []
+        try:
+            if trace.is_file():
+                guards = [line.strip() for line in trace.read_text().splitlines() if line.strip()]
+        except OSError:
+            guards = []
+        finally:
+            trace.unlink(missing_ok=True)
+        if status['status'] != 'ok':
+            return dict(status, diagnostic=err.decode(errors='replace')[-1600:]), b'', guards
+        try:
+            metadata = dict(line.split(' ', 1) for line in err.decode().splitlines())
+            error = int(metadata['ERROR'])
+            if error:
+                return {'status':'refusal', 'error':error, 'metadata':metadata}, b'', guards
+            if len(raw) != len(case['pixels']):
+                return {'status':'harness_error','diagnostic':'output size'}, b'', guards
+            return {'status':'ok','error':0,'metadata':metadata}, raw, guards
+        except (ValueError, KeyError) as exc:
+            return {'status':'harness_error','diagnostic':repr(exc)}, b'', guards

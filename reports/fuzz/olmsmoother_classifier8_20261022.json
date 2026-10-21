@@ -1,0 +1,1150 @@
+{
+  "aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+  "candidate_sha256": "5b0b45966efad9daf67dd26b125608d1b4be74e3f03a9115c439801f681c20a7",
+  "cases": [
+    {
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000006_92552f06afe6.json",
+      "geometry": [
+        1,
+        3
+      ],
+      "input_sha256": "accdad4513426a9e3e0d0dfece0b6c6afe5a0b83c4afe6aa7509f1d007957511",
+      "matched": 3,
+      "mismatches": [],
+      "pixels": 3
+    },
+    {
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000000_eaba52d5eacc.json",
+      "geometry": [
+        1,
+        19
+      ],
+      "input_sha256": "c99c972edaa2a11e8fcfafd96b48a6bf46505377d5f3cd5aeea523cd05b092ae",
+      "matched": 19,
+      "mismatches": [],
+      "pixels": 19
+    }
+  ],
+  "directions": [
+    5,
+    3,
+    1,
+    7
+  ],
+  "entry": "0x180008060",
+  "jobs": 2,
+  "mac_trace": "[cls8] emitted by ScanlinePixel8_Main",
+  "owner_cases": [
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 19,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000000_eaba52d5eacc.json",
+      "direct_mac_diff": {
+        "actual_bytes": 76,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 76,
+        "expected_word_hex": "",
+        "first_byte": 76,
+        "first_word": 76
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "e4f44ecd351477f9861716f65c27796d24403ed225a363f1f6e4db89d880db3c",
+      "direct_worker_diff": {
+        "actual_bytes": 76,
+        "actual_word_hex": "41",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 76,
+        "expected_word_hex": "00",
+        "first_byte": 64,
+        "first_word": 64
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "c99c972edaa2a11e8fcfafd96b48a6bf46505377d5f3cd5aeea523cd05b092ae",
+      "mac_sha256": "e4f44ecd351477f9861716f65c27796d24403ed225a363f1f6e4db89d880db3c",
+      "worker_sha256": "f08a7d4dc586eee162a6bc89d8a3a7e8b9762628c8ee9b9166ae9e051d90d39a"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 105,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000004_eaba52d5eacc.json",
+      "direct_mac_diff": {
+        "actual_bytes": 420,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 420,
+        "expected_word_hex": "",
+        "first_byte": 420,
+        "first_word": 420
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "1453ffd94ea7e9d1ef70bb38c3031bb3a53907e14dd9433137217e5e93bd8cf5",
+      "direct_worker_diff": {
+        "actual_bytes": 420,
+        "actual_word_hex": "06",
+        "different_bytes": 3,
+        "different_words": 3,
+        "expected_bytes": 420,
+        "expected_word_hex": "20",
+        "first_byte": 325,
+        "first_word": 325
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "7a82201c3e36df7fd6f179b89beeb914d87e26b1bf2a4d888b27cc44b498722e",
+      "mac_sha256": "1453ffd94ea7e9d1ef70bb38c3031bb3a53907e14dd9433137217e5e93bd8cf5",
+      "worker_sha256": "3151afde6d769280f716ddff53c1fa1efd5e552c5e080ac720e66e128d5a1deb"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 3,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000006_92552f06afe6.json",
+      "direct_mac_diff": {
+        "actual_bytes": 12,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 12,
+        "expected_word_hex": "",
+        "first_byte": 12,
+        "first_word": 12
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "490b976bf36201c4ba4731b7550a741f9974a17354ddee7f9eca79860da1a998",
+      "direct_worker_diff": {
+        "actual_bytes": 12,
+        "actual_word_hex": "c6",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 12,
+        "expected_word_hex": "ce",
+        "first_byte": 0,
+        "first_word": 0
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "accdad4513426a9e3e0d0dfece0b6c6afe5a0b83c4afe6aa7509f1d007957511",
+      "mac_sha256": "490b976bf36201c4ba4731b7550a741f9974a17354ddee7f9eca79860da1a998",
+      "worker_sha256": "71a368f23d17753295e7423d46a50325de390846956a8d24fbc40e387ac0cb6f"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 56,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000035_92552f06afe6.json",
+      "direct_mac_diff": {
+        "actual_bytes": 224,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 224,
+        "expected_word_hex": "",
+        "first_byte": 224,
+        "first_word": 224
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "3121c8d2cc30b9c9340b08976ca1cfc3fef7634944b22ef9095f16b5815780a4",
+      "direct_worker_diff": {
+        "actual_bytes": 224,
+        "actual_word_hex": "ff",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 224,
+        "expected_word_hex": "99",
+        "first_byte": 112,
+        "first_word": 112
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "300109b898d042c3be65f3e707cf2d17be6d1367523c7ab4cf2b4cd8c9338e6c",
+      "mac_sha256": "3121c8d2cc30b9c9340b08976ca1cfc3fef7634944b22ef9095f16b5815780a4",
+      "worker_sha256": "cfc891822fc0c2557bccc292f2b8d7c196347b2933a7dbdebb1c6f5062bfdf5e"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 113,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000056_eaba52d5eacc.json",
+      "direct_mac_diff": {
+        "actual_bytes": 452,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 452,
+        "expected_word_hex": "",
+        "first_byte": 452,
+        "first_word": 452
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "ecefea59c4da92e5a1a38dc8dcd62b7bf810f156be114b0658a11f0e85f955a4",
+      "direct_worker_diff": {
+        "actual_bytes": 452,
+        "actual_word_hex": "c4",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 452,
+        "expected_word_hex": "cb",
+        "first_byte": 344,
+        "first_word": 344
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "fd8e782466b3f68885d7f8c570b5fa9a61c1770f6fb874fd73e7f995161d1e96",
+      "mac_sha256": "ecefea59c4da92e5a1a38dc8dcd62b7bf810f156be114b0658a11f0e85f955a4",
+      "worker_sha256": "2392829333b4aca12b8841eb3d5ad5d68dca18590e771962b4241bd8e44188d7"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 152,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000078_92552f06afe6.json",
+      "direct_mac_diff": {
+        "actual_bytes": 608,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 608,
+        "expected_word_hex": "",
+        "first_byte": 608,
+        "first_word": 608
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "f8b580cd3a14c8e7dc21b8ac5a1a4b5b884b33a6df89d53f339c649df3a8853a",
+      "direct_worker_diff": {
+        "actual_bytes": 608,
+        "actual_word_hex": "ae",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 608,
+        "expected_word_hex": "a6",
+        "first_byte": 600,
+        "first_word": 600
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "d6a22fbdbbd412993f883b8bde625dc12cdb256f7988042d7351519c42c45b65",
+      "mac_sha256": "f8b580cd3a14c8e7dc21b8ac5a1a4b5b884b33a6df89d53f339c649df3a8853a",
+      "worker_sha256": "acca2aca212fa8d86109ed50d4b495b5862eb6cf991f22844cd1e0ce94644459"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 120,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000104_92552f06afe6.json",
+      "direct_mac_diff": {
+        "actual_bytes": 480,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 480,
+        "expected_word_hex": "",
+        "first_byte": 480,
+        "first_word": 480
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "e6fd626d5c7867190989c9ec26022bac47c6030d3eacabac85d004c32b43d499",
+      "direct_worker_diff": {
+        "actual_bytes": 480,
+        "actual_word_hex": "28",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 480,
+        "expected_word_hex": "1b",
+        "first_byte": 80,
+        "first_word": 80
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "989a467264243033e400530645326f1286ae5470515bab706ab5bbb6a301438f",
+      "mac_sha256": "e6fd626d5c7867190989c9ec26022bac47c6030d3eacabac85d004c32b43d499",
+      "worker_sha256": "0559d6db008cfdeea2396208149ac72790b4216db8dda895499a846293af3a64"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 117,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000105_92552f06afe6.json",
+      "direct_mac_diff": {
+        "actual_bytes": 468,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 468,
+        "expected_word_hex": "",
+        "first_byte": 468,
+        "first_word": 468
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "216b0c3171b8fcaec3ed6d494d672b22a1452a4be01b8d09f350b492d2bddcb5",
+      "direct_worker_diff": {
+        "actual_bytes": 468,
+        "actual_word_hex": "ff",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 468,
+        "expected_word_hex": "c6",
+        "first_byte": 300,
+        "first_word": 300
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "4d7a0726515bcf9a05da2eb9e4f41368b762222b9e5809eedda592acc67c03e3",
+      "mac_sha256": "216b0c3171b8fcaec3ed6d494d672b22a1452a4be01b8d09f350b492d2bddcb5",
+      "worker_sha256": "eb6caef101d8086754eb40123d97607dd6fd825fd0dc4da10d78ee07b12e6e11"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 161,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000110_92552f06afe6.json",
+      "direct_mac_diff": {
+        "actual_bytes": 644,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 644,
+        "expected_word_hex": "",
+        "first_byte": 644,
+        "first_word": 644
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "80b7cf58ed58366b2dcde12028625983d26f92eff46dd832d5a31016c6eb98d7",
+      "direct_worker_diff": {
+        "actual_bytes": 644,
+        "actual_word_hex": "ff",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 644,
+        "expected_word_hex": "95",
+        "first_byte": 360,
+        "first_word": 360
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "de1fa97c8e5936c43d1a62a0d2e91d6c28cb342c8d1c35d021062a3474f27137",
+      "mac_sha256": "80b7cf58ed58366b2dcde12028625983d26f92eff46dd832d5a31016c6eb98d7",
+      "worker_sha256": "5195eed15ad2ba7a2e9bbdefdac7deecf6b525da9def151fa1f9abed7854b943"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 270,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000129_92552f06afe6.json",
+      "direct_mac_diff": {
+        "actual_bytes": 1080,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 1080,
+        "expected_word_hex": "",
+        "first_byte": 1080,
+        "first_word": 1080
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "5890e4fad2585ebd9b6a38334cd805fce42bbf9831f0fe4e53aab02279bc468f",
+      "direct_worker_diff": {
+        "actual_bytes": 1080,
+        "actual_word_hex": "ff",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 1080,
+        "expected_word_hex": "cf",
+        "first_byte": 708,
+        "first_word": 708
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "47eeb881f1789d4aa9170218c006a47979cbddc8b4188a2e4993dc375c01b1bf",
+      "mac_sha256": "5890e4fad2585ebd9b6a38334cd805fce42bbf9831f0fe4e53aab02279bc468f",
+      "worker_sha256": "383df768f440604d3861956bd8c457e99810b21f0a09dfb65415c12d6fe30a72"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 7,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000132_92552f06afe6.json",
+      "direct_mac_diff": {
+        "actual_bytes": 28,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 28,
+        "expected_word_hex": "",
+        "first_byte": 28,
+        "first_word": 28
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "1b6e6b50a8b65665279d6a93de0f8adce240c5e160cecd73e2d8266294222d96",
+      "direct_worker_diff": {
+        "actual_bytes": 28,
+        "actual_word_hex": "ff",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 28,
+        "expected_word_hex": "d6",
+        "first_byte": 20,
+        "first_word": 20
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "ff81b34ffff2947b58e73d28739c1975b8b561ece9fc39d359b0595c979504ac",
+      "mac_sha256": "1b6e6b50a8b65665279d6a93de0f8adce240c5e160cecd73e2d8266294222d96",
+      "worker_sha256": "2c3542f98e2253a078ca954c618f8824650cd7be313d3be8e72709a3f1ac759f"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 144,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000135_eaba52d5eacc.json",
+      "direct_mac_diff": {
+        "actual_bytes": 576,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 576,
+        "expected_word_hex": "",
+        "first_byte": 576,
+        "first_word": 576
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "5b421e5f646b9f4b2f5daed9d13223560253d1614c2cd7d87f006ffec3b95e63",
+      "direct_worker_diff": {
+        "actual_bytes": 576,
+        "actual_word_hex": "f3",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 576,
+        "expected_word_hex": "ff",
+        "first_byte": 232,
+        "first_word": 232
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "16b14fe159c6c3d70aaa32d1a364554bb9e2b84693d20011a2e8aef486f89d5c",
+      "mac_sha256": "5b421e5f646b9f4b2f5daed9d13223560253d1614c2cd7d87f006ffec3b95e63",
+      "worker_sha256": "6d3747413a5afd3e5ff6962c3520e766fd61ef35047b591e3b1edcf41e6d5ccf"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 11,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000139_92552f06afe6.json",
+      "direct_mac_diff": {
+        "actual_bytes": 44,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 44,
+        "expected_word_hex": "",
+        "first_byte": 44,
+        "first_word": 44
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "1480f3c554bb1746aadb7c047a62bc9fa7c4d9b00cb05137ea9c6215f71d96be",
+      "direct_worker_diff": {
+        "actual_bytes": 44,
+        "actual_word_hex": "ff",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 44,
+        "expected_word_hex": "e5",
+        "first_byte": 36,
+        "first_word": 36
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "5f99ba1d46d283d74718922dc0615b218dbfedd292d7399b0f5b685573ba6457",
+      "mac_sha256": "1480f3c554bb1746aadb7c047a62bc9fa7c4d9b00cb05137ea9c6215f71d96be",
+      "worker_sha256": "c59a39afdb429b89c4f21b886f26495ee27a17f404b10fb6610f70bd49944235"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 112,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000159_92552f06afe6.json",
+      "direct_mac_diff": {
+        "actual_bytes": 448,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 448,
+        "expected_word_hex": "",
+        "first_byte": 448,
+        "first_word": 448
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "ad1700236c3ff4aaea26d981b4ceb86dd96e9d60208b969156fef3b28e918255",
+      "direct_worker_diff": {
+        "actual_bytes": 448,
+        "actual_word_hex": "39",
+        "different_bytes": 8,
+        "different_words": 8,
+        "expected_bytes": 448,
+        "expected_word_hex": "5e",
+        "first_byte": 256,
+        "first_word": 256
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "4bd25ca7a86c7804c1bc818518e8902f270cc0c67291ffb6d92230990161bf14",
+      "mac_sha256": "ad1700236c3ff4aaea26d981b4ceb86dd96e9d60208b969156fef3b28e918255",
+      "worker_sha256": "85be28db951c05c3f8793f94e99049d401955b90e2f16a8884df0d9ad61941fc"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 21,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000160_92552f06afe6.json",
+      "direct_mac_diff": {
+        "actual_bytes": 84,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 84,
+        "expected_word_hex": "",
+        "first_byte": 84,
+        "first_word": 84
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "062db4e1eecc92f832957bdc91588f20823b1a22e504d98d8f03e1cc6bb5e0ee",
+      "direct_worker_diff": {
+        "actual_bytes": 84,
+        "actual_word_hex": "79",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 84,
+        "expected_word_hex": "64",
+        "first_byte": 68,
+        "first_word": 68
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "015d1eafd703ce62233a5253717bee0cb04c0d5aa383bd1d6062da1fd3145453",
+      "mac_sha256": "062db4e1eecc92f832957bdc91588f20823b1a22e504d98d8f03e1cc6bb5e0ee",
+      "worker_sha256": "e70d2ee8fa8d1ef66fd33b5827f34b30e8d0e239fffd32b35cdb99298f11d6ed"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 120,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000164_92552f06afe6.json",
+      "direct_mac_diff": {
+        "actual_bytes": 480,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 480,
+        "expected_word_hex": "",
+        "first_byte": 480,
+        "first_word": 480
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "e8f6b30e04f203c048e8e75583e3991f0e8cb49a23bdc6d6af3e97a96a5c41d8",
+      "direct_worker_diff": {
+        "actual_bytes": 480,
+        "actual_word_hex": "af",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 480,
+        "expected_word_hex": "a7",
+        "first_byte": 244,
+        "first_word": 244
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "1bc7e0b4ad846b91b58fb0f1c12c631a1e278e8a2c3ab779f86c7909597869ae",
+      "mac_sha256": "e8f6b30e04f203c048e8e75583e3991f0e8cb49a23bdc6d6af3e97a96a5c41d8",
+      "worker_sha256": "85cb0fe7c378a878ade41cedd01b2076f8a2185e8bfe47172b0ba9767051508c"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 240,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000175_92552f06afe6.json",
+      "direct_mac_diff": {
+        "actual_bytes": 960,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 960,
+        "expected_word_hex": "",
+        "first_byte": 960,
+        "first_word": 960
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "3b4e2eea5a84b44868e1afc31c8878c2f34643a00dd969f2eb743973775cc75d",
+      "direct_worker_diff": {
+        "actual_bytes": 960,
+        "actual_word_hex": "ff",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 960,
+        "expected_word_hex": "9f",
+        "first_byte": 472,
+        "first_word": 472
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "f895ad0b9cb4144d3d70680f7ee8d35e173ee5b19b678407070265c1ddbbf51d",
+      "mac_sha256": "3b4e2eea5a84b44868e1afc31c8878c2f34643a00dd969f2eb743973775cc75d",
+      "worker_sha256": "db8c269fb22502c2652c3913682609222160094584f28d64cf090a304d5b19b9"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 3,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000176_92552f06afe6.json",
+      "direct_mac_diff": {
+        "actual_bytes": 12,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 12,
+        "expected_word_hex": "",
+        "first_byte": 12,
+        "first_word": 12
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "12c1d960f6fb6b09b5ce852307f4406b46ffb1e078e7637d15dc15a361d186d1",
+      "direct_worker_diff": {
+        "actual_bytes": 12,
+        "actual_word_hex": "b5",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 12,
+        "expected_word_hex": "bc",
+        "first_byte": 4,
+        "first_word": 4
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "5d57dcd5d79c3eaabe444fd22ba78867835168dc78ce1e65e304897d522b6ad8",
+      "mac_sha256": "12c1d960f6fb6b09b5ce852307f4406b46ffb1e078e7637d15dc15a361d186d1",
+      "worker_sha256": "359afc4c3fbff75c7e5a91348dafc96957045554ac7994dfd2ee08b0c5317d7a"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 49,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000177_92552f06afe6.json",
+      "direct_mac_diff": {
+        "actual_bytes": 196,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 196,
+        "expected_word_hex": "",
+        "first_byte": 196,
+        "first_word": 196
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "9f243ac91729f952f503b507911a8a53d3cfa1bf1edc02af8c5cb69a3d6c4c86",
+      "direct_worker_diff": {
+        "actual_bytes": 196,
+        "actual_word_hex": "ff",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 196,
+        "expected_word_hex": "9d",
+        "first_byte": 120,
+        "first_word": 120
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "df1ac1edde3938d810613cbee63d277abc155496be26a0baf33c1288e621d5ee",
+      "mac_sha256": "9f243ac91729f952f503b507911a8a53d3cfa1bf1edc02af8c5cb69a3d6c4c86",
+      "worker_sha256": "6b99bbde4bbdf628adf940d8298301d0340063e5a2362bf73ccdb638fe2d4dde"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 240,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000195_92552f06afe6.json",
+      "direct_mac_diff": {
+        "actual_bytes": 960,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 960,
+        "expected_word_hex": "",
+        "first_byte": 960,
+        "first_word": 960
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "72c657b83eec74f265bd7c314b0335a49d42bac05d65e61e51bfaee70c164abb",
+      "direct_worker_diff": {
+        "actual_bytes": 960,
+        "actual_word_hex": "ff",
+        "different_bytes": 8,
+        "different_words": 8,
+        "expected_bytes": 960,
+        "expected_word_hex": "93",
+        "first_byte": 144,
+        "first_word": 144
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "6155893af1777804953deeb73111f39bc8629973dac6455b53e1cf4f55baf55d",
+      "mac_sha256": "72c657b83eec74f265bd7c314b0335a49d42bac05d65e61e51bfaee70c164abb",
+      "worker_sha256": "ffcda2df05d2f18149ab8a0fb44409dec2294e85694fabc3126fe226e4c5eeaa"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 70,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000198_92552f06afe6.json",
+      "direct_mac_diff": {
+        "actual_bytes": 280,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 280,
+        "expected_word_hex": "",
+        "first_byte": 280,
+        "first_word": 280
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "03d47ee82b8854c84028b05282ca01afac0deecdb79dc839b101a31cd3f06017",
+      "direct_worker_diff": {
+        "actual_bytes": 280,
+        "actual_word_hex": "94",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 280,
+        "expected_word_hex": "7c",
+        "first_byte": 28,
+        "first_word": 28
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "6f14639446248b82919b243630d2e89877e169f180aec04709748371242902f9",
+      "mac_sha256": "03d47ee82b8854c84028b05282ca01afac0deecdb79dc839b101a31cd3f06017",
+      "worker_sha256": "762552535637efb9ec9ad9d61653a38a26778e18063d022e121cdae3012ffb74"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 119,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000200_92552f06afe6.json",
+      "direct_mac_diff": {
+        "actual_bytes": 476,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 476,
+        "expected_word_hex": "",
+        "first_byte": 476,
+        "first_word": 476
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "5ee760e5d2f24178befadbd5e161c8223e4a5f854e6097ec1d6e93b5c085ec5e",
+      "direct_worker_diff": {
+        "actual_bytes": 476,
+        "actual_word_hex": "ff",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 476,
+        "expected_word_hex": "ba",
+        "first_byte": 256,
+        "first_word": 256
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "9b1ac733a9af16570805ad04bba29bf84b573deb554d8901199612b91351dca1",
+      "mac_sha256": "5ee760e5d2f24178befadbd5e161c8223e4a5f854e6097ec1d6e93b5c085ec5e",
+      "worker_sha256": "c682c52f0bd50226a7c021d60dd6ad8248271be077e05d85db140cd70369b363"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 19,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000204_92552f06afe6.json",
+      "direct_mac_diff": {
+        "actual_bytes": 76,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 76,
+        "expected_word_hex": "",
+        "first_byte": 76,
+        "first_word": 76
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "a2f54353642cf2f5b19fda399ffdbfb29891e95d01d73df94c5121d260dfe32f",
+      "direct_worker_diff": {
+        "actual_bytes": 76,
+        "actual_word_hex": "ff",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 76,
+        "expected_word_hex": "f6",
+        "first_byte": 36,
+        "first_word": 36
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "632d086bc8bc12d3990afb0c79ec558b4f7f1ebdf6c470c519df90bd54b74921",
+      "mac_sha256": "a2f54353642cf2f5b19fda399ffdbfb29891e95d01d73df94c5121d260dfe32f",
+      "worker_sha256": "17cb289771ac7338390accc730e514d4145311ede273c577bf986154a9a072de"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 16,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000209_92552f06afe6.json",
+      "direct_mac_diff": {
+        "actual_bytes": 64,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 64,
+        "expected_word_hex": "",
+        "first_byte": 64,
+        "first_word": 64
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "7b3b3b4e64c0faf00d7c8f14e3d4fa2d6635ff15fe372e4156664255acc8bce7",
+      "direct_worker_diff": {
+        "actual_bytes": 64,
+        "actual_word_hex": "0e",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 64,
+        "expected_word_hex": "10",
+        "first_byte": 32,
+        "first_word": 32
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "0b4e6c3d817b41514ad6f3d689d8ad562796743acf21c3f19017484100096946",
+      "mac_sha256": "7b3b3b4e64c0faf00d7c8f14e3d4fa2d6635ff15fe372e4156664255acc8bce7",
+      "worker_sha256": "c76682972549ff754bb89216d8c8633bf3b91454ed97ad49c6e2cf9951a8d384"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 7,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000221_92552f06afe6.json",
+      "direct_mac_diff": {
+        "actual_bytes": 28,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 28,
+        "expected_word_hex": "",
+        "first_byte": 28,
+        "first_word": 28
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "62f19f60d220dab4449c05d228f0eaa1159ab7f8a889c9847f397a85438cab4a",
+      "direct_worker_diff": {
+        "actual_bytes": 28,
+        "actual_word_hex": "9c",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 28,
+        "expected_word_hex": "b8",
+        "first_byte": 16,
+        "first_word": 16
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "f24777cdd647a2487df48a1600adaa4dbc5766e666b758e0348066c9bd4747b9",
+      "mac_sha256": "62f19f60d220dab4449c05d228f0eaa1159ab7f8a889c9847f397a85438cab4a",
+      "worker_sha256": "a2b89884b8f4adbdad5fd03ea7ed46219091b3f98436f74d03347f4216c786ae"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 80,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000236_92552f06afe6.json",
+      "direct_mac_diff": {
+        "actual_bytes": 320,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 320,
+        "expected_word_hex": "",
+        "first_byte": 320,
+        "first_word": 320
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "493e5005e035184f7d512db32c46f4d85dd755ff84a1082ea479298dde55e71d",
+      "direct_worker_diff": {
+        "actual_bytes": 320,
+        "actual_word_hex": "ff",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 320,
+        "expected_word_hex": "c8",
+        "first_byte": 124,
+        "first_word": 124
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "5747085df46151c71c29128c109461caeae09bad079b25864e5d1be0ef5bb66b",
+      "mac_sha256": "493e5005e035184f7d512db32c46f4d85dd755ff84a1082ea479298dde55e71d",
+      "worker_sha256": "c5878efc393d94b14cdabbdef77219d240332ccd9438b8210b742a40406245a1"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 484,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000242_eaba52d5eacc.json",
+      "direct_mac_diff": {
+        "actual_bytes": 1936,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 1936,
+        "expected_word_hex": "",
+        "first_byte": 1936,
+        "first_word": 1936
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "217d67ddfbd11350ad5faae21e525d4d82586eaa2a4be96a4c0ccc0af5f988b5",
+      "direct_worker_diff": {
+        "actual_bytes": 1936,
+        "actual_word_hex": "e4",
+        "different_bytes": 7,
+        "different_words": 7,
+        "expected_bytes": 1936,
+        "expected_word_hex": "f1",
+        "first_byte": 1784,
+        "first_word": 1784
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "b603699bf0cc664753e92cd14fa6fbb6dca05240856c4134494fbd604f6af84a",
+      "mac_sha256": "217d67ddfbd11350ad5faae21e525d4d82586eaa2a4be96a4c0ccc0af5f988b5",
+      "worker_sha256": "3a091137bfc7ed249022fdc4957d7e495b676bb996e47a9f7e9ffbfdd600c3d5"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 342,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000253_eaba52d5eacc.json",
+      "direct_mac_diff": {
+        "actual_bytes": 1368,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 1368,
+        "expected_word_hex": "",
+        "first_byte": 1368,
+        "first_word": 1368
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "64301eaf4f2aad849c070966f963aafeb84146ef89149d99c229995ca0af81a9",
+      "direct_worker_diff": {
+        "actual_bytes": 1368,
+        "actual_word_hex": "f7",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 1368,
+        "expected_word_hex": "f0",
+        "first_byte": 612,
+        "first_word": 612
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "7b1428270716c35ae4f14f14d516ae5e2527746834077598c98a6527d47f168b",
+      "mac_sha256": "64301eaf4f2aad849c070966f963aafeb84146ef89149d99c229995ca0af81a9",
+      "worker_sha256": "2ca35b1457d9781d593c5109402f232a0d39b33b0e38e851916f356f00d4882b"
+    },
+    {
+      "callback_counts": {
+        "acquire": 1,
+        "copy": 2,
+        "dispose": 1,
+        "main": 176,
+        "new_world": 1,
+        "release": 1
+      },
+      "corpus": "tests/fuzz_corpus/olmsmoother/seed1_case000256_92552f06afe6.json",
+      "direct_mac_diff": {
+        "actual_bytes": 704,
+        "actual_word_hex": "",
+        "different_bytes": 0,
+        "different_words": 0,
+        "expected_bytes": 704,
+        "expected_word_hex": "",
+        "first_byte": 704,
+        "first_word": 704
+      },
+      "direct_mac_equal": true,
+      "direct_sha256": "491d3d471adf602c75cb87e256c854baadcd919e5f324a56ac319cddf88884ac",
+      "direct_worker_diff": {
+        "actual_bytes": 704,
+        "actual_word_hex": "ff",
+        "different_bytes": 4,
+        "different_words": 4,
+        "expected_bytes": 704,
+        "expected_word_hex": "a9",
+        "first_byte": 508,
+        "first_word": 508
+      },
+      "direct_worker_equal": false,
+      "input_sha256": "da04c903a8f7d77a4ee58e01bd66892a305f6d25ebde5cf157622cb0f7e3fe01",
+      "mac_sha256": "491d3d471adf602c75cb87e256c854baadcd919e5f324a56ac319cddf88884ac",
+      "worker_sha256": "7fab3b006f8d98c3f1a24c57859e2f52bf3eaab7895e2807dedf596b31db0b50"
+    }
+  ],
+  "owner_helper_sha256": "ebe672ce665b9f8d89a15f22b7cd1258464ef7769c526b5e54877ba2bc3ff13d",
+  "owner_scope": "Original PF_Cmd_RENDER through the retained Python host, with zero-initialized InData and hand-materialized parameter unions. Its existing serial guest iterate and copy/new-world providers are unchanged. This cross-host diagnostic does not replace the frozen worker or prove native AE behavior.",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMSmoother.aex",
+    "aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+    "candidate_sha256": "5b0b45966efad9daf67dd26b125608d1b4be74e3f03a9115c439801f681c20a7",
+    "declarations_sha256": "d11a2e2843d706ce086ce7ec13d07bd95aa07e82cf033e8a3d860a157998ce65",
+    "dependencies_sha256": {
+      "cli/OLMSmoother/shim/AEFX_SuiteHandlerTemplate.h": "43cfe2434c1571641acd0d077b688437fc016da7f829f541436955ac23acf9e4",
+      "cli/OLMSmoother/shim/OLMSmoother.h": "0bc74f0961357db7c3c9ecb6f84df5d0823de31fa442ca7a218438ce46a2380c",
+      "mac/OLMSmoother/Mac/OLMSmoother_port.cpp": "90bec42cbcfc859d4d27756979679d39c71ea89b6151c3142177289f19d430c7",
+      "tools/emulation/olmsmoother_v1_public_guard_harness_20260812.cpp": "115447f45660370427072e5642adb8c33816993dd0db5e938baa1c32bf82e672",
+      "tools/fuzz/harnesses/smoother_main.cpp": "ad614886e338ff2dd5625dfa9340437be425a31858b3f6a47cd9056d75701a7e"
+    },
+    "depth_limit": "PF32 is probed and retained as refusal/rejection, not promoted to supported",
+    "host": "Original AEX Unicorn CPU classic; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "mac_host": "existing v1 public guard CLI SDK shim; exactly the three v1 controls",
+    "mac_stride": "shared randomly padded input/output stride",
+    "oracle_owner": "original exported PF_Cmd_RENDER, as in the v1 key/tolerance public replay helper; original has no Smart advertisement",
+    "oracle_render_path": "classic",
+    "out_of_range_builder_defaults": [],
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/radial_frozen_reference_bd878da/target/release/aex-guest-worker",
+    "worker_sha256": "544ff209d11b11071c9665aba9927c2d5f31157e0f80bf408470925fc080b8d2",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "schema": "olm-smoother-classifier8-compare/1",
+  "script_sha256": "e7d7e04ddff44668c296b7392526b98c59d4a44a4da34b33fa7a6a7593522687",
+  "total_mismatches": 0,
+  "total_pixels": 22
+}
