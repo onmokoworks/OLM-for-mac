@@ -4,7 +4,7 @@
   "cases": [
     {
       "depth": 8,
-      "elapsed_seconds": 1.0532,
+      "elapsed_seconds": 0.5655,
       "geometry": [
         21,
         19
@@ -37,7 +37,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -198,7 +198,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 1.0519,
+      "elapsed_seconds": 0.6006,
       "geometry": [
         1,
         1
@@ -231,7 +231,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -364,7 +364,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "16c3ab69555844da56e29d30edf2d8b571a7eec10d9146234aa8bcfc7980e658",
+          "raw_sha256": "c017c95da10b7e7ee3b2b1708022513c3d537a168094445298ef799e5ffa1cc1",
           "session_clean": true,
           "status": "ok"
         },
@@ -392,7 +392,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 1.1206,
+      "elapsed_seconds": 0.5482,
       "geometry": [
         10,
         19
@@ -425,7 +425,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -558,7 +558,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "cf3aa435cfe62ebf5ab3e282b6076071b69934a926ac579316ea4b4229e792a2",
+          "raw_sha256": "2492c35739b1ea797c16a53870fbe8ee15438dbdf8ae709ffefeb4dd9ad1c60b",
           "session_clean": true,
           "status": "ok"
         },
@@ -586,7 +586,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 1.08,
+      "elapsed_seconds": 0.5835,
       "geometry": [
         39,
         45
@@ -619,7 +619,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -752,7 +752,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "cd5bf5edabc11836c668b7bb3c12e1a5dbd984ba0cbd9ce3aa43f4ac7b7b32a5",
+          "raw_sha256": "4ba7ff962215656f13e77538c39b743747cae3718284184c984da77ebd60a575",
           "session_clean": true,
           "status": "ok"
         },
@@ -780,7 +780,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 1.3613,
+      "elapsed_seconds": 0.9064,
       "geometry": [
         117,
         244
@@ -813,7 +813,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -946,7 +946,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "4863f92ec331ef524c77ba6d8a599a5756a3599e5e9712c5b1966526c2b5a250",
+          "raw_sha256": "1d59e9a665350a7340d8eeacd3a3c1caf402968a3ec57ba80802fbf9a80c81fc",
           "session_clean": true,
           "status": "ok"
         },
@@ -974,7 +974,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.8055,
+      "elapsed_seconds": 0.6309,
       "geometry": [
         16,
         67
@@ -1007,7 +1007,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -1140,7 +1140,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "72686dcee5080f8e9344646645399cd39ac2ed34ed03f8b8585786980dc3380e",
+          "raw_sha256": "69adc51db78885a508d79729b636cb898662163bf3047c7840d0207beeb868e6",
           "session_clean": true,
           "status": "ok"
         },
@@ -1168,7 +1168,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.6897,
+      "elapsed_seconds": 0.6029,
       "geometry": [
         33,
         61
@@ -1201,7 +1201,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -1334,7 +1334,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "9805026c6944d6f3010e4aa6a40e0e99b5df3d98737ad8970d0d430252cf182d",
+          "raw_sha256": "f2d7a0bde2732957b032efa89342f83e9b51db19aba3a5c0b23e7d0e0ac913e3",
           "session_clean": true,
           "status": "ok"
         },
@@ -1362,7 +1362,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.9323,
+      "elapsed_seconds": 0.5893,
       "geometry": [
         23,
         24
@@ -1556,7 +1556,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.5406,
+      "elapsed_seconds": 0.2982,
       "geometry": [
         10,
         2
@@ -1589,7 +1589,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -1722,7 +1722,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "42d63041e90df2c45bc53fdf714aa66e6ee1437ad1be1b6763b0e751f425e7ec",
+          "raw_sha256": "c9756ce9c0788c621582829142ee12038dbc71a632a0e3517fc53b09bdb0fbe5",
           "session_clean": true,
           "status": "ok"
         },
@@ -1750,7 +1750,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.5776,
+      "elapsed_seconds": 0.2974,
       "geometry": [
         24,
         5
@@ -1783,7 +1783,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -1916,7 +1916,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "4ad6f24eae6b6d673a5536499aa08c0559f4d8198043637f886f8c2981ac7310",
+          "raw_sha256": "6fa13792881266ef1ce4acab65c699f8d568c273eaa8da9d17654a08fbd7304a",
           "session_clean": true,
           "status": "ok"
         },
@@ -1944,7 +1944,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.6448,
+      "elapsed_seconds": 0.2829,
       "geometry": [
         6,
         38
@@ -1977,7 +1977,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -2138,7 +2138,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.7656,
+      "elapsed_seconds": 0.2973,
       "geometry": [
         37,
         46
@@ -2171,7 +2171,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -2304,7 +2304,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "8bcb28b8bd5faceee03894ec1ea98de886e740e8c0ff8a0074c390b912a5cfa5",
+          "raw_sha256": "a3b4c70a48a3e2ee0933321dee625cdb7b81a4f32846862bb5d544e41e7de05b",
           "session_clean": true,
           "status": "ok"
         },
@@ -2332,7 +2332,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.7254,
+      "elapsed_seconds": 0.3075,
       "geometry": [
         2,
         18
@@ -2526,7 +2526,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.6794,
+      "elapsed_seconds": 0.3086,
       "geometry": [
         24,
         17
@@ -2559,7 +2559,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -2692,7 +2692,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "d98ba9b2ac6d64fe959e6ed03e8eb19f7b710bd9d3df00c63ba9dd965dee39ee",
+          "raw_sha256": "9236a74dcdefaf756081f9868365caca1b51f9cc74cec3f7d389fa03ed4c7ebc",
           "session_clean": true,
           "status": "ok"
         },
@@ -2720,7 +2720,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.6629,
+      "elapsed_seconds": 0.3037,
       "geometry": [
         18,
         1
@@ -2753,7 +2753,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -2886,7 +2886,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "818bccd98109b4530626c29db84f1c3283a3542f7f52fa87e144ff7a861d469f",
+          "raw_sha256": "8c7d781324489a800b6fbcf2ee912b21313a7663c5e4519efb592654d7833fed",
           "session_clean": true,
           "status": "ok"
         },
@@ -2914,7 +2914,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.6601,
+      "elapsed_seconds": 0.2957,
       "geometry": [
         9,
         19
@@ -2947,7 +2947,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -3080,7 +3080,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "0016144911d36b399a5423c221edd765fde1382355caeb3187b33ac400a94691",
+          "raw_sha256": "f93c238df6f568668dee116bf6b32a8de3ab077bbc97a58ed1d672d0148c6d35",
           "session_clean": true,
           "status": "ok"
         },
@@ -3108,7 +3108,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.6941,
+      "elapsed_seconds": 0.2979,
       "geometry": [
         4,
         22
@@ -3141,7 +3141,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -3274,7 +3274,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "f36d3eaf80b23797bcd2d7b50830ed583b19cddcef5ce0d4eda0435de26ddb1d",
+          "raw_sha256": "d01c07b8a2559a631314d580589f31e2d53afaf36b9307f5c425982a6b35b6c4",
           "session_clean": true,
           "status": "ok"
         },
@@ -3302,7 +3302,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.7245,
+      "elapsed_seconds": 0.2997,
       "geometry": [
         19,
         158
@@ -3335,7 +3335,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -3496,7 +3496,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.8046,
+      "elapsed_seconds": 0.2969,
       "geometry": [
         1,
         39
@@ -3529,7 +3529,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -3662,7 +3662,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "976e6a6751f6b0b4905c302c1552562a439212af8fef2c73dd1f3527525d071e",
+          "raw_sha256": "8b638a65454d865217b1aab6b56922d1073e430dfca1e8d03073705e6662a7f0",
           "session_clean": true,
           "status": "ok"
         },
@@ -3690,7 +3690,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.8533,
+      "elapsed_seconds": 0.3058,
       "geometry": [
         8,
         21
@@ -3723,7 +3723,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -3856,7 +3856,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "a6ace6654eac500f4a0732db0e72e1202092a9b3c6c5199aed3aa680ae033bd0",
+          "raw_sha256": "f2f59144999ce1bcda5f8241c0a5a1ffca2131a47344806ecb40f89b67bdb612",
           "session_clean": true,
           "status": "ok"
         },
@@ -3884,7 +3884,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.8085,
+      "elapsed_seconds": 0.2918,
       "geometry": [
         10,
         22
@@ -3917,7 +3917,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -4078,7 +4078,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.62,
+      "elapsed_seconds": 0.3014,
       "geometry": [
         1,
         34
@@ -4111,7 +4111,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -4244,7 +4244,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "6806f8993912bb271319cb42220d17a8d336f9f47959ab0b52ad4cfaeb680977",
+          "raw_sha256": "b395d58d834c97a5a8c81844ef3c47925e6321f9c18f7d10e7bdadfa18a10a8c",
           "session_clean": true,
           "status": "ok"
         },
@@ -4272,7 +4272,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.744,
+      "elapsed_seconds": 0.3061,
       "geometry": [
         4,
         4
@@ -4305,7 +4305,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -4438,7 +4438,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "4af086eab6fe541293fdfe203179cf68faab660e2a8c7f9fcacd6df36da4e7a1",
+          "raw_sha256": "3591b6db5419934a2b3b8b99027317f93ad9a5d23f4b37e24c725f39f1148295",
           "session_clean": true,
           "status": "ok"
         },
@@ -4466,7 +4466,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.6038,
+      "elapsed_seconds": 0.3396,
       "geometry": [
         1,
         1
@@ -4499,7 +4499,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -4632,7 +4632,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "904e105455c54444e4e326195019a5c86a0854e6cbd2d57952f4bff411955601",
+          "raw_sha256": "f27017a166ba2fe46d820fe93d735ba0f3013f8fb2d1d9da5248440de4f02d98",
           "session_clean": true,
           "status": "ok"
         },
@@ -4660,7 +4660,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.5973,
+      "elapsed_seconds": 0.3271,
       "geometry": [
         50,
         34
@@ -4693,7 +4693,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -4826,7 +4826,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "b447bd553d17a849b716c0ecedf6a7fe4c8069df1ca444cb5938804645984a95",
+          "raw_sha256": "2e651483caf656d75f11c9a6844e886b5663925657ba0898af48434a5d47adfc",
           "session_clean": true,
           "status": "ok"
         },
@@ -4854,7 +4854,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.5994,
+      "elapsed_seconds": 0.3103,
       "geometry": [
         1,
         91
@@ -4887,7 +4887,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -5048,7 +5048,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.6284,
+      "elapsed_seconds": 0.3157,
       "geometry": [
         7,
         22
@@ -5081,7 +5081,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -5214,7 +5214,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "da185fa0f17ce6ebcb342fc90776244daed43067bcc81647b26448943d3031e6",
+          "raw_sha256": "7c0d025b6b951c2825be0a032be0cdc027a74e664c22b6fa2f03d8fa66d7670a",
           "session_clean": true,
           "status": "ok"
         },
@@ -5242,7 +5242,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.6144,
+      "elapsed_seconds": 0.3042,
       "geometry": [
         5,
         10
@@ -5275,7 +5275,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -5408,7 +5408,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "35d3bb6759f0b292a24cb7c0cc18f45425da31d30e1ef767f9e5c1c5f8da631b",
+          "raw_sha256": "b97189e7ff2b769ad166b7807cfb2009425695b2d11dab7c52b6f41b2b60ea54",
           "session_clean": true,
           "status": "ok"
         },
@@ -5436,7 +5436,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.5231,
+      "elapsed_seconds": 0.2812,
       "geometry": [
         1,
         1
@@ -5629,7 +5629,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.5447,
+      "elapsed_seconds": 0.2959,
       "geometry": [
         22,
         42
@@ -5662,7 +5662,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -5795,7 +5795,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "4d29a7593c4de36dc3542f8c096c3f21100bb0a17ac5035df86f4480cbea29e6",
+          "raw_sha256": "02bc95cdc0ca63a8a9d79ee2eabe37572a56eb9522abf7ee4e8e6821a80041ab",
           "session_clean": true,
           "status": "ok"
         },
@@ -5823,7 +5823,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.6178,
+      "elapsed_seconds": 0.2862,
       "geometry": [
         23,
         1
@@ -6017,7 +6017,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.5477,
+      "elapsed_seconds": 0.2991,
       "geometry": [
         5,
         12
@@ -6211,7 +6211,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.6701,
+      "elapsed_seconds": 0.2795,
       "geometry": [
         14,
         2
@@ -6244,7 +6244,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -6377,7 +6377,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "b6fe45c63201052c944794114d8e571c1213de5bb9fdbb2c8d6ea8943436a63d",
+          "raw_sha256": "54c8e0acbf30494d7ecda7fe7462dabb4d68b22027ae8ed145c0d0a83c5fd58a",
           "session_clean": true,
           "status": "ok"
         },
@@ -6405,7 +6405,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.6852,
+      "elapsed_seconds": 0.2841,
       "geometry": [
         1,
         12
@@ -6599,7 +6599,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.6159,
+      "elapsed_seconds": 0.2907,
       "geometry": [
         19,
         7
@@ -6632,7 +6632,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -6765,7 +6765,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "e496aca7fd2daa1e6ddf4d5763812938629526abc664099d994e45b58a3d13e0",
+          "raw_sha256": "83b74f9567dbdde52a8594459132dbbc309d97cc659aedba7b89b63eef365542",
           "session_clean": true,
           "status": "ok"
         },
@@ -6793,7 +6793,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.5568,
+      "elapsed_seconds": 0.2904,
       "geometry": [
         16,
         56
@@ -6826,7 +6826,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -6959,7 +6959,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "54e4d65753cfcbb19c688d98881b8a8ab0af7e402aa16b651acff7dbe8552bda",
+          "raw_sha256": "73b1090cd7e63a0d79566c98e55fcc3d23f328718e773f706099149e00f6734d",
           "session_clean": true,
           "status": "ok"
         },
@@ -6987,7 +6987,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.6833,
+      "elapsed_seconds": 0.2852,
       "geometry": [
         10,
         38
@@ -7020,7 +7020,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -7153,7 +7153,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "69a651fa8e9418a616a0524391b62e90448c0ab275dd0e9bd1e4d1931223835c",
+          "raw_sha256": "0e6b4ea3b4e21b615bf20f4d0a8fbef33d94219481d40e8b4d429d5178f8caa2",
           "session_clean": true,
           "status": "ok"
         },
@@ -7181,7 +7181,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.7176,
+      "elapsed_seconds": 0.3112,
       "geometry": [
         13,
         9
@@ -7214,7 +7214,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -7347,7 +7347,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "2061c34c2e107582b9e1eb60f3e7a470c435f107aaffd5f9cc1678d3519f0b82",
+          "raw_sha256": "7483e1724efb528c8c2ef955556c12d70d5ec60783a7489a7ffc3377d48233f6",
           "session_clean": true,
           "status": "ok"
         },
@@ -7375,7 +7375,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.7212,
+      "elapsed_seconds": 0.3012,
       "geometry": [
         10,
         7
@@ -7408,7 +7408,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -7569,7 +7569,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.5903,
+      "elapsed_seconds": 0.2803,
       "geometry": [
         21,
         6
@@ -7763,7 +7763,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.8191,
+      "elapsed_seconds": 0.373,
       "geometry": [
         147,
         169
@@ -7796,7 +7796,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -7929,7 +7929,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "868fe38f42188b3704be66c5bcdc318714834c233e17f939efee58a0d3b5d1d9",
+          "raw_sha256": "66b444d21f05bc124af1b14766388d0c3ecb441841b4f0ca11d27d5a067f3ba1",
           "session_clean": true,
           "status": "ok"
         },
@@ -7957,7 +7957,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.5519,
+      "elapsed_seconds": 0.2783,
       "geometry": [
         20,
         15
@@ -7990,7 +7990,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -8123,7 +8123,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "eba9adfa45b1fe50f09ff9fe392285a6c244b8c7782eaa40fc6c95b212766abd",
+          "raw_sha256": "ea837e866bfb945fb21b3c3010d16eaed819a867cedf49dc4359d80a785c2f21",
           "session_clean": true,
           "status": "ok"
         },
@@ -8151,7 +8151,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.749,
+      "elapsed_seconds": 0.2803,
       "geometry": [
         8,
         16
@@ -8184,7 +8184,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -8317,7 +8317,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "f1cec868dd546222928b765808c341de255f77b4574afb1f38c77f1cc49c351d",
+          "raw_sha256": "16ec711ac0058ba9d4e15b73a09f4b8aff8720f3623a7058afa6df06f603141a",
           "session_clean": true,
           "status": "ok"
         },
@@ -8345,7 +8345,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.7302,
+      "elapsed_seconds": 0.2806,
       "geometry": [
         5,
         14
@@ -8378,7 +8378,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -8511,7 +8511,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "f308e8200acd09bc737d936b30d5ed9a893134a60f4a544e5f1689f7401cfc22",
+          "raw_sha256": "bc06ced6353ed22e921f39d59319dc49a4a801d6ba53df803dcd99feb41181f4",
           "session_clean": true,
           "status": "ok"
         },
@@ -8539,7 +8539,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.695,
+      "elapsed_seconds": 0.2783,
       "geometry": [
         49,
         6
@@ -8572,7 +8572,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -8705,7 +8705,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "e2111332538d641bf0d654d604fb5ac4eb316b6eae3c67b0af77d2419544087d",
+          "raw_sha256": "8f302596f90a5e7fa52f15b154e736b23d980153848fc8b93251189cb89ff0f0",
           "session_clean": true,
           "status": "ok"
         },
@@ -8733,7 +8733,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.6318,
+      "elapsed_seconds": 0.2845,
       "geometry": [
         14,
         20
@@ -8927,7 +8927,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.6302,
+      "elapsed_seconds": 0.2801,
       "geometry": [
         2,
         20
@@ -8960,7 +8960,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -9093,7 +9093,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "dd5908477b6f811d07d465385934cee28e3b04503acc3b8c3aaffc138c3be77a",
+          "raw_sha256": "045b74a83f963853dffb08ad7d711867e6eb3b0a0bb47ea98e6a1827306ce715",
           "session_clean": true,
           "status": "ok"
         },
@@ -9121,7 +9121,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.7293,
+      "elapsed_seconds": 0.3266,
       "geometry": [
         22,
         134
@@ -9154,7 +9154,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -9287,7 +9287,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "52c67e9a35d7e07418dccb409abe9dfdd2bc339b0f81e4365eb84c627a6ec4db",
+          "raw_sha256": "4e4131ec5dbb83b6dd8f7b14ed0888447a9319b447fe2cecec475c2bbb856bb0",
           "session_clean": true,
           "status": "ok"
         },
@@ -9315,7 +9315,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.7445,
+      "elapsed_seconds": 0.3362,
       "geometry": [
         1,
         65
@@ -9509,7 +9509,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.6132,
+      "elapsed_seconds": 0.3015,
       "geometry": [
         9,
         8
@@ -9542,7 +9542,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -9675,7 +9675,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "8293032c977251c3d6432b8655f75f1f85113c9df9e1a090a67fdfe1eaf91332",
+          "raw_sha256": "cbc9af28aebe0abefb610c2dc2d9289d81acf990e4090ea40ba804bd354bf9b1",
           "session_clean": true,
           "status": "ok"
         },
@@ -9703,7 +9703,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.5773,
+      "elapsed_seconds": 0.2963,
       "geometry": [
         16,
         5
@@ -9736,7 +9736,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -9869,7 +9869,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "e6fc5c7176c243f4f3ee00a8fed399a26783088159fadbaca0ce7c8724d35eb1",
+          "raw_sha256": "c5b5c251c6ae13c46ce3c78efca425cb6cfe4170166895894a929427cbdcd647",
           "session_clean": true,
           "status": "ok"
         },
@@ -9897,7 +9897,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.6025,
+      "elapsed_seconds": 0.272,
       "geometry": [
         51,
         23
@@ -9930,7 +9930,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -10091,7 +10091,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.5825,
+      "elapsed_seconds": 0.2857,
       "geometry": [
         3,
         21
@@ -10285,7 +10285,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.5981,
+      "elapsed_seconds": 0.272,
       "geometry": [
         5,
         18
@@ -10318,7 +10318,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -10479,7 +10479,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.5307,
+      "elapsed_seconds": 0.2805,
       "geometry": [
         14,
         1
@@ -10512,7 +10512,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -10645,7 +10645,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "7a9b6c244f1a2f463f8d1e7e1e14654aa182bb4b8f8af80f91cc517cee8119a3",
+          "raw_sha256": "a07eea08155262a0b7b3e3d68bd5071a504513561349a45c734f23fb3f0bd2a7",
           "session_clean": true,
           "status": "ok"
         },
@@ -10673,7 +10673,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.5387,
+      "elapsed_seconds": 0.3078,
       "geometry": [
         2,
         53
@@ -10867,7 +10867,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.5627,
+      "elapsed_seconds": 0.2978,
       "geometry": [
         1,
         113
@@ -10900,7 +10900,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -11060,7 +11060,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.5839,
+      "elapsed_seconds": 0.3062,
       "geometry": [
         3,
         35
@@ -11253,7 +11253,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.6207,
+      "elapsed_seconds": 0.308,
       "geometry": [
         1,
         140
@@ -11286,7 +11286,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -11419,7 +11419,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "37e17b3cdb184274f81a01acd4c964225d46d0fe48ddf902c7052c8ab7819109",
+          "raw_sha256": "a20e1f0ad743babebe244a1096222e223f17181626e5e7824a750c801ae3a73d",
           "session_clean": true,
           "status": "ok"
         },
@@ -11447,7 +11447,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.5874,
+      "elapsed_seconds": 0.3005,
       "geometry": [
         8,
         13
@@ -11480,7 +11480,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -11613,7 +11613,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "16594439e42d1d6923ebd1fd0ea7f4d1b1d9e669d89b49a3475a636e74c579d3",
+          "raw_sha256": "20a5b67e2ed70e1f5ad03257c4a3904fa245c2734e368070107e6a62290d8186",
           "session_clean": true,
           "status": "ok"
         },
@@ -11641,7 +11641,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.599,
+      "elapsed_seconds": 0.3081,
       "geometry": [
         13,
         23
@@ -11674,7 +11674,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -11807,7 +11807,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "9775c09c5dc48d6e72b94c3f6c2cfd8c7ab74d17cb69cc3966287df5915ae404",
+          "raw_sha256": "0f707b24e29485a1c7904df57fe664b261a09557fe699b9d3cf859fdddbe6a18",
           "session_clean": true,
           "status": "ok"
         },
@@ -11835,7 +11835,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.5527,
+      "elapsed_seconds": 0.2991,
       "geometry": [
         1,
         1
@@ -12029,7 +12029,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.612,
+      "elapsed_seconds": 0.2995,
       "geometry": [
         7,
         7
@@ -12223,7 +12223,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.6804,
+      "elapsed_seconds": 0.34,
       "geometry": [
         12,
         21
@@ -12256,7 +12256,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -12389,7 +12389,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "3f6031c6a1d5c739b00011121935b8227f3701c2d0cebcff08da6766a2d72f7b",
+          "raw_sha256": "a04ee63373e2a76055999c2dbef1763f2b1b2fa9d9c788f2edd7f6691cf7d965",
           "session_clean": true,
           "status": "ok"
         },
@@ -12417,7 +12417,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.4856,
+      "elapsed_seconds": 0.3302,
       "geometry": [
         12,
         3
@@ -12611,7 +12611,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.6148,
+      "elapsed_seconds": 0.3264,
       "geometry": [
         23,
         6
@@ -12644,7 +12644,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -12777,7 +12777,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "c3bfb32c1680b16cc2bf12315a23a47e0e962cc615229d03391e3c69e568f619",
+          "raw_sha256": "acd86b5456f3d37a48e3964c75510fd6ee79ddea349aaf6edcf731bd0ea14451",
           "session_clean": true,
           "status": "ok"
         },
@@ -12805,7 +12805,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.7241,
+      "elapsed_seconds": 0.3391,
       "geometry": [
         5,
         3
@@ -12838,7 +12838,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -12971,7 +12971,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "a2b0e591045a9486be356f923bc1fc1b67acdb7ba328b37798e879fd618190ab",
+          "raw_sha256": "7ace09d0671a96af8bebdfdd9bc6a7920358e71195294c699ee5dddab977bf16",
           "session_clean": true,
           "status": "ok"
         },
@@ -12999,7 +12999,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.6375,
+      "elapsed_seconds": 0.3481,
       "geometry": [
         11,
         8
@@ -13193,7 +13193,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.6389,
+      "elapsed_seconds": 0.3197,
       "geometry": [
         80,
         1
@@ -13226,7 +13226,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -13387,7 +13387,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.6443,
+      "elapsed_seconds": 0.3283,
       "geometry": [
         8,
         14
@@ -13420,7 +13420,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -13581,7 +13581,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.6877,
+      "elapsed_seconds": 0.3208,
       "geometry": [
         6,
         17
@@ -13614,7 +13614,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -13747,7 +13747,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "fe89b283771141fb68d7173ed5b8bae47b09b111f55b4de9f1628b369313b9be",
+          "raw_sha256": "38bc436ce6a322816548b38d404060407f2596288ccad54ec0f16ee420b5bf4e",
           "session_clean": true,
           "status": "ok"
         },
@@ -13775,7 +13775,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.822,
+      "elapsed_seconds": 0.2944,
       "geometry": [
         17,
         8
@@ -13808,7 +13808,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -13941,7 +13941,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "ca21a5895c83b214c07716f92a25149c6cb56a3ba90628d4f845f0153ee26f5e",
+          "raw_sha256": "54be04589c58235098cf591f0019e102c9da77ed7775f7829ec15bc06890922c",
           "session_clean": true,
           "status": "ok"
         },
@@ -13969,7 +13969,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.5555,
+      "elapsed_seconds": 0.2928,
       "geometry": [
         22,
         19
@@ -14002,7 +14002,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -14163,7 +14163,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.6956,
+      "elapsed_seconds": 0.3032,
       "geometry": [
         12,
         6
@@ -14357,7 +14357,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.644,
+      "elapsed_seconds": 0.3317,
       "geometry": [
         223,
         1
@@ -14390,7 +14390,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -14523,7 +14523,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "0fc3a4dbacf4609d0971ed77fa7842403f672ea01234de6a3f751996d9c9e42f",
+          "raw_sha256": "75abae7df10371c67335c5477f56f33e979aab9706a1927f7be0aad3cc49ae07",
           "session_clean": true,
           "status": "ok"
         },
@@ -14551,7 +14551,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.6387,
+      "elapsed_seconds": 0.2906,
       "geometry": [
         6,
         28
@@ -14584,7 +14584,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -14717,7 +14717,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "912f4250a05a9219c76dca1797a4fc4fcd9b679ecf17491b5bd26ea3b9bafee3",
+          "raw_sha256": "8d5427da8c843321507b8352d44c660d733c3bf550031bc0d5329a9a407f65f9",
           "session_clean": true,
           "status": "ok"
         },
@@ -14745,7 +14745,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.6774,
+      "elapsed_seconds": 0.2906,
       "geometry": [
         6,
         12
@@ -14939,7 +14939,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.6478,
+      "elapsed_seconds": 0.2972,
       "geometry": [
         18,
         18
@@ -15133,7 +15133,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.7668,
+      "elapsed_seconds": 0.2916,
       "geometry": [
         8,
         19
@@ -15327,7 +15327,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.5181,
+      "elapsed_seconds": 0.2778,
       "geometry": [
         10,
         4
@@ -15360,7 +15360,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -15521,7 +15521,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.7376,
+      "elapsed_seconds": 0.2841,
       "geometry": [
         33,
         59
@@ -15554,7 +15554,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -15715,7 +15715,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.654,
+      "elapsed_seconds": 0.2852,
       "geometry": [
         14,
         14
@@ -15748,7 +15748,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -15881,7 +15881,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "992fc19ae3d3679264bc39aaf5b982e48c11de000ca69ce4cba3e2eefde91783",
+          "raw_sha256": "dfed3a16bff8b862691071c74275777935d7fe308c22c0d79438094387bde842",
           "session_clean": true,
           "status": "ok"
         },
@@ -15909,7 +15909,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.7364,
+      "elapsed_seconds": 0.2933,
       "geometry": [
         22,
         13
@@ -15942,7 +15942,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -16075,7 +16075,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "fcad7392ef2bd93980227a0ea9a98265de8414d5ab9eeb2776a625044ec04bda",
+          "raw_sha256": "dad3d0d566fc4116fea303d73c81eb21f16dda66e6c77a2745f83e435a5d2e4d",
           "session_clean": true,
           "status": "ok"
         },
@@ -16103,7 +16103,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.6865,
+      "elapsed_seconds": 0.2766,
       "geometry": [
         6,
         9
@@ -16136,7 +16136,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -16269,7 +16269,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "ae2aaf286f7c041974cfe3cb0d9807838315578ba4f74537686800d310a7a9c1",
+          "raw_sha256": "3452c7ddc6ba251765d721d23bc558cafdf3d76bcd042c121d447b7435604e3c",
           "session_clean": true,
           "status": "ok"
         },
@@ -16297,7 +16297,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.6517,
+      "elapsed_seconds": 0.286,
       "geometry": [
         19,
         36
@@ -16491,7 +16491,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.6078,
+      "elapsed_seconds": 0.2886,
       "geometry": [
         16,
         3
@@ -16524,7 +16524,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -16657,7 +16657,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "71d25625ef438c74936ee4f9a91a9021d8545eead9fc2e66cc205976d2dffc5e",
+          "raw_sha256": "881c5aec9e368d11cc0525f3cf1e0edb566f42d28cd4fe49c0d50ddc7c8d0bba",
           "session_clean": true,
           "status": "ok"
         },
@@ -16685,7 +16685,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.5525,
+      "elapsed_seconds": 0.2806,
       "geometry": [
         31,
         5
@@ -16879,7 +16879,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.5975,
+      "elapsed_seconds": 0.2734,
       "geometry": [
         22,
         5
@@ -16912,7 +16912,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -17073,7 +17073,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.6594,
+      "elapsed_seconds": 0.2742,
       "geometry": [
         4,
         14
@@ -17106,7 +17106,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -17267,7 +17267,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.7059,
+      "elapsed_seconds": 0.2923,
       "geometry": [
         17,
         21
@@ -17461,7 +17461,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.6654,
+      "elapsed_seconds": 0.2839,
       "geometry": [
         22,
         9
@@ -17494,7 +17494,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -17627,7 +17627,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "c601f6d8e011d74e93493a3f07966d075bbb8548987678e7362691ddc2ef2c30",
+          "raw_sha256": "9a95b8f3e42acbdbe2ae9b13b9cf8012e2eb205120e894fe73a0867e2d2dd5b9",
           "session_clean": true,
           "status": "ok"
         },
@@ -17655,7 +17655,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.7994,
+      "elapsed_seconds": 0.2851,
       "geometry": [
         8,
         4
@@ -17849,7 +17849,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 1.0094,
+      "elapsed_seconds": 0.2798,
       "geometry": [
         56,
         44
@@ -17882,7 +17882,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -18043,7 +18043,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.9801,
+      "elapsed_seconds": 0.2734,
       "geometry": [
         72,
         1
@@ -18076,7 +18076,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -18237,7 +18237,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.9934,
+      "elapsed_seconds": 0.3137,
       "geometry": [
         51,
         132
@@ -18270,7 +18270,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -18403,7 +18403,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "5284fa8baa35399c7a4b825bd26e1bba86f3088517092155658db2b92aa10349",
+          "raw_sha256": "6f3c276d53913919f72e11f6846f99fa1459cbd7ae95d71b784c439441686c48",
           "session_clean": true,
           "status": "ok"
         },
@@ -18431,7 +18431,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.9579,
+      "elapsed_seconds": 0.2805,
       "geometry": [
         3,
         3
@@ -18464,7 +18464,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -18597,7 +18597,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "0d627048ee76151d1cd2eda74b6d86fc3ddbb92f72d9d2885b849dccd7da3b14",
+          "raw_sha256": "8ccd421ca3cc082a87294c581cb32a68c56761212f7ce9030d8bb3fef5020c2d",
           "session_clean": true,
           "status": "ok"
         },
@@ -18625,7 +18625,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.5552,
+      "elapsed_seconds": 0.2791,
       "geometry": [
         104,
         1
@@ -18658,7 +18658,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -18819,7 +18819,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.8837,
+      "elapsed_seconds": 0.2816,
       "geometry": [
         13,
         22
@@ -18852,7 +18852,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -18985,7 +18985,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "e335105e6ef6cccacc73033a776dac7af9283d0544830df8c51a1a9cef95a042",
+          "raw_sha256": "a8518969712ba06fbb636188ef33f7151e6eb81403030057d80d9b7a723916d8",
           "session_clean": true,
           "status": "ok"
         },
@@ -19013,7 +19013,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.6496,
+      "elapsed_seconds": 0.2808,
       "geometry": [
         23,
         7
@@ -19046,7 +19046,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -19179,7 +19179,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "bca1604e038cf4896edf33cc38180838a6705a9c9f14258cde2b7a22011255d9",
+          "raw_sha256": "45f3f20c430f364332170a5c2f1ff98b0eddca63e2990a8e6418eb9724db00be",
           "session_clean": true,
           "status": "ok"
         },
@@ -19207,7 +19207,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.9993,
+      "elapsed_seconds": 0.3021,
       "geometry": [
         1,
         127
@@ -19240,7 +19240,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -19373,7 +19373,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "371a21decb8b7106ebe9a1f32b11244a458b00e25a60761d1a31a55c76be0b01",
+          "raw_sha256": "54c4d5f527d7f1170475a2fdb7b765f6e3a29927430a5c55b264e9a0bbce3232",
           "session_clean": true,
           "status": "ok"
         },
@@ -19401,7 +19401,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.8004,
+      "elapsed_seconds": 0.2745,
       "geometry": [
         1,
         1
@@ -19594,7 +19594,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 1.0358,
+      "elapsed_seconds": 0.3031,
       "geometry": [
         21,
         3
@@ -19788,7 +19788,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.9838,
+      "elapsed_seconds": 0.2832,
       "geometry": [
         16,
         19
@@ -19821,7 +19821,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -19954,7 +19954,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "c4dff3038e668f663f6fdaaa83e4d59b38031c8eb96d9033fc334b2a88324977",
+          "raw_sha256": "705e55cfd208aeb52c19f1041517a4630ddfa8191d1d41a55c0b6747d90b6736",
           "session_clean": true,
           "status": "ok"
         },
@@ -19982,7 +19982,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.9328,
+      "elapsed_seconds": 0.269,
       "geometry": [
         1,
         251
@@ -20175,7 +20175,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 1.182,
+      "elapsed_seconds": 0.3722,
       "geometry": [
         134,
         253
@@ -20208,7 +20208,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -20341,7 +20341,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "249bef3eaf72f7833cec0fae32ebe4a89ee13c723b567cf610a25b6b08b81922",
+          "raw_sha256": "95c341ba68a8ee8cd35888d088d777cd356848ce27e677ba205d894b598123fc",
           "session_clean": true,
           "status": "ok"
         },
@@ -20369,7 +20369,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 1.1365,
+      "elapsed_seconds": 0.2899,
       "geometry": [
         1,
         117
@@ -20402,7 +20402,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -20535,7 +20535,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "0746355547bca95e34fe64441121f3ea1d34f62e1fad18e53a7286d46eaa52b2",
+          "raw_sha256": "7962103f7e0fd056102636e49ee9a8b5b68b57a4ee1920ead7428f5988c628e5",
           "session_clean": true,
           "status": "ok"
         },
@@ -20563,7 +20563,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.9953,
+      "elapsed_seconds": 0.2815,
       "geometry": [
         20,
         8
@@ -20596,7 +20596,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -20729,7 +20729,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "93ac182bde6e3e0774739f9a8e50798e1680a9f2471ead6992789a42bb9447b7",
+          "raw_sha256": "63a91f51155088232fce49ba9fb93f50b419c9b47993f9f513f619d2ef6142cd",
           "session_clean": true,
           "status": "ok"
         },
@@ -20757,7 +20757,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.9401,
+      "elapsed_seconds": 0.28,
       "geometry": [
         65,
         1
@@ -20790,7 +20790,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -20951,7 +20951,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.9301,
+      "elapsed_seconds": 0.277,
       "geometry": [
         1,
         1
@@ -21145,7 +21145,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.6989,
+      "elapsed_seconds": 0.2803,
       "geometry": [
         24,
         11
@@ -21178,7 +21178,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -21339,7 +21339,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.718,
+      "elapsed_seconds": 0.2782,
       "geometry": [
         7,
         23
@@ -21372,7 +21372,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -21533,7 +21533,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.7334,
+      "elapsed_seconds": 0.2847,
       "geometry": [
         17,
         5
@@ -21566,7 +21566,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -21699,7 +21699,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "2653a3bba607b5073bd0bfea99c7a3bde265e35d7bc0ba71a733a7bc85ef8e17",
+          "raw_sha256": "ff52951886c2231671f39477c085d3b067aab6e164119a8e05aec28e4dffec99",
           "session_clean": true,
           "status": "ok"
         },
@@ -21727,7 +21727,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.7555,
+      "elapsed_seconds": 0.298,
       "geometry": [
         4,
         9
@@ -21760,7 +21760,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -21893,7 +21893,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "5868771ccd70ce83194398040b5c74d3bce8029ed3808fdf3bd6e03a930551e3",
+          "raw_sha256": "59d22a91af9b2b5b4027a368e902ea1700b4bf2ab318de67d3e4743d7a4119dd",
           "session_clean": true,
           "status": "ok"
         },
@@ -21921,7 +21921,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.7243,
+      "elapsed_seconds": 0.3001,
       "geometry": [
         21,
         7
@@ -21954,7 +21954,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -22087,7 +22087,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "8eb9d97b6199c91a00a17c880f14bad435b35f6bf1ed529327178a40a0d9c3c7",
+          "raw_sha256": "8eb5ac5fe3b3a699644ef1db127e9daecd2340386ab5eaa22479900919358f3e",
           "session_clean": true,
           "status": "ok"
         },
@@ -22115,7 +22115,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.5545,
+      "elapsed_seconds": 0.3008,
       "geometry": [
         19,
         23
@@ -22148,7 +22148,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -22281,7 +22281,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "f85a9e354172254a9d970919a2acef74afea14c1aad6fa28262105d41ed97376",
+          "raw_sha256": "4513acf55c0776ee7d833d3a7001860a455d5ef9ee0ff1a2e51dd4391aa1e76a",
           "session_clean": true,
           "status": "ok"
         },
@@ -22309,7 +22309,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.6512,
+      "elapsed_seconds": 0.2985,
       "geometry": [
         52,
         22
@@ -22342,7 +22342,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -22475,7 +22475,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "89c1d08d463100368bd671be573e7337d58f087c7a2e37307d801d2cd3f03f53",
+          "raw_sha256": "7db120f2e57374cbbda5ed2b874da7e17ee0ca6dde4bd24570290057b63567ed",
           "session_clean": true,
           "status": "ok"
         },
@@ -22503,7 +22503,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.5968,
+      "elapsed_seconds": 0.2922,
       "geometry": [
         7,
         6
@@ -22536,7 +22536,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -22669,7 +22669,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "c36dcf164ea6b4fbb6010af0cdecde92cf2844264980bccd918d222a415f49a5",
+          "raw_sha256": "96183dd038ff7464d51dcbdfbdd18cfc4a9e95a45f1b6f98efde53eccaa33a31",
           "session_clean": true,
           "status": "ok"
         },
@@ -22697,7 +22697,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.5924,
+      "elapsed_seconds": 0.3005,
       "geometry": [
         20,
         3
@@ -22890,7 +22890,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.5271,
+      "elapsed_seconds": 0.2761,
       "geometry": [
         7,
         19
@@ -22923,7 +22923,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -23084,7 +23084,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.5298,
+      "elapsed_seconds": 0.286,
       "geometry": [
         16,
         15
@@ -23117,7 +23117,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -23250,7 +23250,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "853ef21a8c1139e3db38b7983c83d0c3dd3f0c8a175a3566e8ff7cc6d008a24b",
+          "raw_sha256": "4abff22fc72b7820f07e01c4db7d77fdc8fd0ccee6cd532271e22cd28ea46769",
           "session_clean": true,
           "status": "ok"
         },
@@ -23278,7 +23278,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.5044,
+      "elapsed_seconds": 0.2896,
       "geometry": [
         53,
         7
@@ -23311,7 +23311,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -23472,7 +23472,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.4781,
+      "elapsed_seconds": 0.283,
       "geometry": [
         6,
         1
@@ -23505,7 +23505,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -23665,7 +23665,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.639,
+      "elapsed_seconds": 0.2999,
       "geometry": [
         11,
         23
@@ -23698,7 +23698,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -23831,7 +23831,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "fb9e34c9e5e2cab2a430d6c3d04d42a1b3c843525acf23bc9b401f8e558ca6a7",
+          "raw_sha256": "07534de12f689c9a07cf657a82ea13cfabd4081377ceb69092e75941241b9192",
           "session_clean": true,
           "status": "ok"
         },
@@ -23859,7 +23859,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.6113,
+      "elapsed_seconds": 0.3037,
       "geometry": [
         23,
         58
@@ -24053,7 +24053,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.5939,
+      "elapsed_seconds": 0.2829,
       "geometry": [
         29,
         1
@@ -24246,7 +24246,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.4982,
+      "elapsed_seconds": 0.2895,
       "geometry": [
         10,
         16
@@ -24440,7 +24440,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.473,
+      "elapsed_seconds": 0.3091,
       "geometry": [
         23,
         17
@@ -24473,7 +24473,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -24634,7 +24634,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.3751,
+      "elapsed_seconds": 0.2765,
       "geometry": [
         3,
         61
@@ -24828,7 +24828,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.325,
+      "elapsed_seconds": 0.2722,
       "geometry": [
         1,
         10
@@ -24861,7 +24861,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -25022,7 +25022,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.6282,
+      "elapsed_seconds": 0.4301,
       "geometry": [
         76,
         240
@@ -25055,7 +25055,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -25188,7 +25188,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "67894e015538f5d3a3b1defcb7698dac4a93a8fe071bdc8f095c28a121c162fe",
+          "raw_sha256": "9c9a8481484d3833fda95a96c02bbd781eb661867925dc92961b43d555ea67e7",
           "session_clean": true,
           "status": "ok"
         },
@@ -25216,7 +25216,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.4156,
+      "elapsed_seconds": 0.2853,
       "geometry": [
         19,
         4
@@ -25249,7 +25249,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -25382,7 +25382,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "2bc21c431e516386e0fe031b7acc965adf4538f33967ea58d6cc3e52dcb93571",
+          "raw_sha256": "117ef0d39cd488d3586fd77456dbdc832275910f7123310f3480582b3e571b29",
           "session_clean": true,
           "status": "ok"
         },
@@ -25410,7 +25410,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.391,
+      "elapsed_seconds": 0.2696,
       "geometry": [
         7,
         1
@@ -25443,7 +25443,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -25604,7 +25604,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.3728,
+      "elapsed_seconds": 0.2911,
       "geometry": [
         22,
         57
@@ -25637,7 +25637,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -25770,7 +25770,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "df937faadeb2b46afa50068c6640b332152b70832a6365a10bd1bc59b6b0004b",
+          "raw_sha256": "ad0216f4e92d93d08707e160722ad5704343e82e41c5170c18081a483f03368a",
           "session_clean": true,
           "status": "ok"
         },
@@ -25798,7 +25798,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.3201,
+      "elapsed_seconds": 0.2808,
       "geometry": [
         17,
         1
@@ -25831,7 +25831,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -25964,7 +25964,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "550e73c47b1da8396c7cb7e6abf6c180a18a51496044a4e27d09293d534f02ba",
+          "raw_sha256": "55bc139b3e928d56cb61381ea7c779e62f17950bbe15b40589e135ed17ff0c13",
           "session_clean": true,
           "status": "ok"
         },
@@ -25992,7 +25992,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.3199,
+      "elapsed_seconds": 0.2889,
       "geometry": [
         48,
         18
@@ -26025,7 +26025,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -26158,7 +26158,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "b522dfd8683026bba698912c53af1f9024eb136e4fcc8c9bd9a22f79402c6a0a",
+          "raw_sha256": "b69ff43e6e7459a6c95c3ef4a0818918045a0e3f7ebf4cd8baf7addf35c85cdf",
           "session_clean": true,
           "status": "ok"
         },
@@ -26186,7 +26186,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.3035,
+      "elapsed_seconds": 0.2909,
       "geometry": [
         24,
         24
@@ -26219,7 +26219,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -26352,7 +26352,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "a243b1bf8a0958407b35642612fea7db140b90b224f66ff2c2bc7cf44cd0e04f",
+          "raw_sha256": "88a254ca0bfcffb99cbf56e28636f46fdabf52b8b2af9862b987d571181c9107",
           "session_clean": true,
           "status": "ok"
         },
@@ -26380,7 +26380,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.3032,
+      "elapsed_seconds": 0.2835,
       "geometry": [
         7,
         20
@@ -26413,7 +26413,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -26546,7 +26546,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "ddad198594f3e899daca5021d9d164cdea8e128b6c690c876c0f2187ce27e50d",
+          "raw_sha256": "fb49eea648a83710ff7af033d4cd398de74255a57723185b582f67183bfe9e1b",
           "session_clean": true,
           "status": "ok"
         },
@@ -26574,7 +26574,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2801,
+      "elapsed_seconds": 0.2844,
       "geometry": [
         14,
         5
@@ -26607,7 +26607,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -26740,7 +26740,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "504a03fac1760ccb33115039a213aca093772ab6a15904d2619176bc510d879c",
+          "raw_sha256": "c9bf1052795664d35beff03e7ce5012669e5b296e15add0cd79f58d869686b48",
           "session_clean": true,
           "status": "ok"
         },
@@ -26768,7 +26768,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.282,
+      "elapsed_seconds": 0.3025,
       "geometry": [
         22,
         18
@@ -26801,7 +26801,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -26934,7 +26934,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "8d42f80154e1d085cc90a98c49e4af65ecc0be9e05cf2e63cd206f4d6898ff3c",
+          "raw_sha256": "dfda8b8d2243fa16470d6f4c0304a6dfc41b35f954da1cc6ecb708cc3542d242",
           "session_clean": true,
           "status": "ok"
         },
@@ -26962,7 +26962,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2712,
+      "elapsed_seconds": 0.2936,
       "geometry": [
         1,
         91
@@ -26995,7 +26995,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -27156,7 +27156,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2862,
+      "elapsed_seconds": 0.2911,
       "geometry": [
         48,
         18
@@ -27189,7 +27189,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -27322,7 +27322,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "3a777a40ee59e56e0f1e1556d2a3ed42d8864ef155ef73c3b51e41337b012d27",
+          "raw_sha256": "68b4536c592b315baf4bbc5c729d388d68374b958f4c60531d824c73be0f6249",
           "session_clean": true,
           "status": "ok"
         },
@@ -27350,7 +27350,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2799,
+      "elapsed_seconds": 0.2937,
       "geometry": [
         19,
         24
@@ -27383,7 +27383,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -27516,7 +27516,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "0d6d10e4a0b7384328a5814d795bebefb7f229f5799ae532397958729f6691b4",
+          "raw_sha256": "2feb3e7ab567b8c0ebd308f90bdcc7f301329dcbdcaaef84eccac2331345f04c",
           "session_clean": true,
           "status": "ok"
         },
@@ -27544,7 +27544,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.286,
+      "elapsed_seconds": 0.3022,
       "geometry": [
         20,
         62
@@ -27738,7 +27738,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2782,
+      "elapsed_seconds": 0.3063,
       "geometry": [
         23,
         3
@@ -27771,7 +27771,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -27904,7 +27904,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "0cbdf962f64c4c8e28d819dbf3b93910e79742fffedea6482de32eef42135ef0",
+          "raw_sha256": "9bbdf846a05ace94854cbdff16a8788e078564715530214c5057521d33a7ed7a",
           "session_clean": true,
           "status": "ok"
         },
@@ -27932,7 +27932,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2738,
+      "elapsed_seconds": 0.2923,
       "geometry": [
         1,
         1
@@ -27965,7 +27965,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -28098,7 +28098,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "0a5009285d77e0059e24e487967509ae5a383b0fbf8ce05a1532f30bf4c1d59d",
+          "raw_sha256": "24436355b047d40fb8ff69f39bece2ef0587e166e660940c1378f5089452e0d4",
           "session_clean": true,
           "status": "ok"
         },
@@ -28126,7 +28126,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2665,
+      "elapsed_seconds": 0.2836,
       "geometry": [
         1,
         1
@@ -28320,7 +28320,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2709,
+      "elapsed_seconds": 0.2894,
       "geometry": [
         1,
         47
@@ -28353,7 +28353,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -28486,7 +28486,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "1d2c7778f140c3b257517de956092d152a4de8b2f25b5c80f70e4d3da1bbd9cf",
+          "raw_sha256": "0b0b9b7041abe71923d13046bfbde936172d16cb4329000f4896acf74ca81323",
           "session_clean": true,
           "status": "ok"
         },
@@ -28514,7 +28514,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.277,
+      "elapsed_seconds": 0.3022,
       "geometry": [
         13,
         6
@@ -28547,7 +28547,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -28680,7 +28680,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "42af9b5d1e5e9f981aa179ee4abab64042bf4623d02a56637a09f5c68e510b13",
+          "raw_sha256": "2e8dadab50d63c85825c4af34a49928361a08f02769be74e7df72669ca7e36c9",
           "session_clean": true,
           "status": "ok"
         },
@@ -28708,7 +28708,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2751,
+      "elapsed_seconds": 0.3047,
       "geometry": [
         18,
         5
@@ -28902,7 +28902,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2753,
+      "elapsed_seconds": 0.2964,
       "geometry": [
         1,
         19
@@ -28935,7 +28935,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -29068,7 +29068,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "6bfe0931a3d4774867fd557bbdd5c6f445ea7716fae4c393e02ada0266d96183",
+          "raw_sha256": "7b2e7b57ab797bdd673d19bbc3dda29bf29da1f8a19d4621f0922fb9ddd1bf83",
           "session_clean": true,
           "status": "ok"
         },
@@ -29096,7 +29096,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2758,
+      "elapsed_seconds": 0.3117,
       "geometry": [
         1,
         1
@@ -29290,7 +29290,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2781,
+      "elapsed_seconds": 0.3065,
       "geometry": [
         10,
         21
@@ -29484,7 +29484,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.278,
+      "elapsed_seconds": 0.2947,
       "geometry": [
         18,
         14
@@ -29678,7 +29678,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2764,
+      "elapsed_seconds": 0.2983,
       "geometry": [
         4,
         24
@@ -29711,7 +29711,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -29844,7 +29844,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "5edec2e1ad022017538e831bfdc9f5c36101ffa97dc018e17e147c4281291f44",
+          "raw_sha256": "b4655bce0edc81986bf1d38ae2fad92bad30a393f32657d6aa761498e753d305",
           "session_clean": true,
           "status": "ok"
         },
@@ -29872,7 +29872,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2796,
+      "elapsed_seconds": 0.2944,
       "geometry": [
         9,
         7
@@ -29905,7 +29905,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -30038,7 +30038,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "f12c891dc9a82d62630e55cfb4f3817e6973e1b056227b9be04bbca924c9f882",
+          "raw_sha256": "b79a27d9c3e9cb2493a1747175f6c90906a0382b451c6a2d76575ac55c74a0be",
           "session_clean": true,
           "status": "ok"
         },
@@ -30066,7 +30066,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2763,
+      "elapsed_seconds": 0.2924,
       "geometry": [
         18,
         13
@@ -30099,7 +30099,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -30232,7 +30232,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "c870e12724e5f150a4af5af60e22d91c838a258875524dac8423e7e5ebd492f9",
+          "raw_sha256": "d89419ef0b234c880376c2c3dbfb28ed2bbaec631a117cfac04ae7060bb74b47",
           "session_clean": true,
           "status": "ok"
         },
@@ -30260,7 +30260,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2673,
+      "elapsed_seconds": 0.2785,
       "geometry": [
         102,
         1
@@ -30293,7 +30293,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -30454,7 +30454,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.3419,
+      "elapsed_seconds": 0.3759,
       "geometry": [
         1,
         238
@@ -30487,7 +30487,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -30620,7 +30620,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "e7c42355bad1d7df8bd960ff88e3af654879778bbf42205aad7161709c3689ec",
+          "raw_sha256": "98b9459b19fbb026f901bf76796e1e1874c3bccdaa2af55ce36840957bab2740",
           "session_clean": true,
           "status": "ok"
         },
@@ -30648,7 +30648,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2807,
+      "elapsed_seconds": 0.3288,
       "geometry": [
         4,
         11
@@ -30842,7 +30842,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2695,
+      "elapsed_seconds": 0.3065,
       "geometry": [
         7,
         16
@@ -30875,7 +30875,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -31036,7 +31036,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2825,
+      "elapsed_seconds": 0.3047,
       "geometry": [
         22,
         42
@@ -31069,7 +31069,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -31202,7 +31202,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "9e19a28d02f37eaad972e6f24087bfa00e29770b8ad90b2c58731e5ac5d102bc",
+          "raw_sha256": "06d81febc5ca10518fd80d2b0b8386e714c1e9e0e385be50243b725e715acca6",
           "session_clean": true,
           "status": "ok"
         },
@@ -31230,7 +31230,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2818,
+      "elapsed_seconds": 0.573,
       "geometry": [
         7,
         6
@@ -31263,7 +31263,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -31396,7 +31396,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "3122320e07f4937031f653f4cb7a78787e22617cbbc47ef6e2ad47df6f856d5a",
+          "raw_sha256": "fed4f2582cc0bdbae8d578267f4e485ec3cc7a2eb12c981233d6e9ea132122b6",
           "session_clean": true,
           "status": "ok"
         },
@@ -31424,7 +31424,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2762,
+      "elapsed_seconds": 0.51,
       "geometry": [
         2,
         21
@@ -31457,7 +31457,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -31618,7 +31618,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2782,
+      "elapsed_seconds": 0.5036,
       "geometry": [
         20,
         5
@@ -31651,7 +31651,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -31784,7 +31784,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "2abee4fe7b8be7404a020a8087803a68af2a4981bc19f7395b5d53e20e4ef7e9",
+          "raw_sha256": "76c92518c99a8ed0c0156825849edda212524f769c597b4fad73b417a9feb305",
           "session_clean": true,
           "status": "ok"
         },
@@ -31812,7 +31812,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2779,
+      "elapsed_seconds": 0.493,
       "geometry": [
         15,
         8
@@ -31845,7 +31845,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -31978,7 +31978,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "0c3a0cc13c99642ebe07e7170d578abc6ff3e97c6a4cfa64e3d0b52f408e8d18",
+          "raw_sha256": "7c693370012292b7f014d2c55f55d7f1feb73073f713039c4d58d1136ff59796",
           "session_clean": true,
           "status": "ok"
         },
@@ -32006,7 +32006,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2884,
+      "elapsed_seconds": 0.4962,
       "geometry": [
         1,
         1
@@ -32039,7 +32039,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -32172,7 +32172,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "2e63588748d1f9e31a8d0ec8fd8cbeb1741986e04e43821e87b2b302aa16741b",
+          "raw_sha256": "8b66d6a7240437e21582b1521c4bdf621bc8537d88c118db73bf19d8e5556852",
           "session_clean": true,
           "status": "ok"
         },
@@ -32200,7 +32200,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2847,
+      "elapsed_seconds": 0.4319,
       "geometry": [
         12,
         4
@@ -32233,7 +32233,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -32366,7 +32366,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "f0fb724ba73c8fdeaa402b1398bf8c4f70bbf18997aa53c4b4befbe961c56193",
+          "raw_sha256": "234425c9f0319faa120390025cc5a35e06e214410dadc50c41f89e0a1be6e030",
           "session_clean": true,
           "status": "ok"
         },
@@ -32394,7 +32394,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2777,
+      "elapsed_seconds": 0.5617,
       "geometry": [
         24,
         1
@@ -32588,7 +32588,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2763,
+      "elapsed_seconds": 0.44,
       "geometry": [
         22,
         4
@@ -32782,7 +32782,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2858,
+      "elapsed_seconds": 0.517,
       "geometry": [
         1,
         1
@@ -32815,7 +32815,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -32948,7 +32948,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "b15591ae2e1eace6c3b211778060e7a3d8bff2c6425b2eb68724a7d8dc7d050d",
+          "raw_sha256": "05838f5c6a3467de77b34513f253ba4930c4615eed44d31e84d3a4e9a696c6bd",
           "session_clean": true,
           "status": "ok"
         },
@@ -32976,7 +32976,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.29,
+      "elapsed_seconds": 0.5114,
       "geometry": [
         21,
         10
@@ -33009,7 +33009,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -33142,7 +33142,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "c8b9e78ba87171caf1d73e327f3be956865d4564e6f952393b385457c22e3815",
+          "raw_sha256": "106961081d1096cdc480a63bf3504bfa3d2c91c5fcb1c4d27acd5dfc076bf80c",
           "session_clean": true,
           "status": "ok"
         },
@@ -33170,7 +33170,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2748,
+      "elapsed_seconds": 0.4843,
       "geometry": [
         34,
         36
@@ -33203,7 +33203,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -33364,7 +33364,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2806,
+      "elapsed_seconds": 0.6165,
       "geometry": [
         10,
         3
@@ -33397,7 +33397,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -33530,7 +33530,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "63c7b357fae7e214001517ddc8b55dd2a80ce88b5244c68d74f737f20c7d2708",
+          "raw_sha256": "60fa295af8e210dec46a1b5f58be981ae5aff6ec47e9feacfae60c0845403bb2",
           "session_clean": true,
           "status": "ok"
         },
@@ -33558,7 +33558,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.3063,
+      "elapsed_seconds": 0.6517,
       "geometry": [
         15,
         7
@@ -33752,7 +33752,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.3089,
+      "elapsed_seconds": 0.5639,
       "geometry": [
         43,
         4
@@ -33946,7 +33946,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.3016,
+      "elapsed_seconds": 0.5925,
       "geometry": [
         15,
         16
@@ -34140,7 +34140,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2945,
+      "elapsed_seconds": 0.6386,
       "geometry": [
         52,
         43
@@ -34173,7 +34173,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -34334,7 +34334,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.3073,
+      "elapsed_seconds": 0.4751,
       "geometry": [
         60,
         57
@@ -34367,7 +34367,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -34500,7 +34500,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "87e2638ed04b95c45197492d70c73b33ebf62fd648781c99b9e0977625a904de",
+          "raw_sha256": "718686ee682b8f732875ec2ffa01a7d398d1d0d7ef25cab6a5bbdcf892795ac8",
           "session_clean": true,
           "status": "ok"
         },
@@ -34528,7 +34528,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2978,
+      "elapsed_seconds": 0.4323,
       "geometry": [
         228,
         1
@@ -34561,7 +34561,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -34694,7 +34694,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "f5a0eab2c08a4d489ac719a584722b247c13bf6596072e9f02e8ed8a45ae914e",
+          "raw_sha256": "92fe6c8dd7222833f890e33c864902e3828f6c34586f51a23f16ac91da459787",
           "session_clean": true,
           "status": "ok"
         },
@@ -34722,7 +34722,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.3423,
+      "elapsed_seconds": 0.4437,
       "geometry": [
         52,
         60
@@ -34755,7 +34755,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -34888,7 +34888,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "1219223f05de17da3f21427d5083e9e92c6679cc7126b083570e28e0adab9d7a",
+          "raw_sha256": "e7d6a350e42865026958abba77a26c7e5d689d564eae63e3a89556e82d23481f",
           "session_clean": true,
           "status": "ok"
         },
@@ -34916,7 +34916,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2912,
+      "elapsed_seconds": 0.3194,
       "geometry": [
         36,
         34
@@ -34949,7 +34949,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -35082,7 +35082,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "f17acda94b2b16537f7f5fecb75cb6f73178739f3145579a2227e80eb182f2d5",
+          "raw_sha256": "271c4c91ad6f055bb1bf70da23b282556e70a795629d928d3b0537f00acea58d",
           "session_clean": true,
           "status": "ok"
         },
@@ -35110,7 +35110,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2683,
+      "elapsed_seconds": 0.2736,
       "geometry": [
         16,
         14
@@ -35143,7 +35143,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -35304,7 +35304,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2845,
+      "elapsed_seconds": 0.2878,
       "geometry": [
         10,
         16
@@ -35337,7 +35337,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -35470,7 +35470,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "1fcd055efc4ee29d2ed6dd44743abb128c8b774a51d35218a02c35873616596b",
+          "raw_sha256": "6a3c4e46230f8e10f03c5fa11f19a302d0ed3ad0e1cf27e9af81edf9b1c764fe",
           "session_clean": true,
           "status": "ok"
         },
@@ -35498,7 +35498,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2852,
+      "elapsed_seconds": 0.3017,
       "geometry": [
         10,
         23
@@ -35692,7 +35692,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2775,
+      "elapsed_seconds": 0.2912,
       "geometry": [
         24,
         14
@@ -35725,7 +35725,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -35858,7 +35858,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "b696dc5b9a03439075eaf35570a42095d7bfd1799fb345192ef1a31020b1a45f",
+          "raw_sha256": "d8a73d9783dc4eb4376a104af9c565ee838ac38196e23fcac2cd2da13ffe0341",
           "session_clean": true,
           "status": "ok"
         },
@@ -35886,7 +35886,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2814,
+      "elapsed_seconds": 0.2886,
       "geometry": [
         1,
         1
@@ -35919,7 +35919,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -36080,7 +36080,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2706,
+      "elapsed_seconds": 0.2776,
       "geometry": [
         6,
         7
@@ -36274,7 +36274,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.28,
+      "elapsed_seconds": 0.2877,
       "geometry": [
         46,
         1
@@ -36468,7 +36468,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2772,
+      "elapsed_seconds": 0.2866,
       "geometry": [
         23,
         21
@@ -36501,7 +36501,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -36634,7 +36634,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "e5c0aaeebb427186740431d8c0c1b0819a9f1451e1c5ddeb5d54507db69a0f52",
+          "raw_sha256": "120042b393654e57ab1e34269fd06d332b7df48b3dab3fa45f264190ccdec359",
           "session_clean": true,
           "status": "ok"
         },
@@ -36662,7 +36662,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.284,
+      "elapsed_seconds": 0.3556,
       "geometry": [
         1,
         1
@@ -36695,7 +36695,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -36856,7 +36856,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2755,
+      "elapsed_seconds": 0.3501,
       "geometry": [
         1,
         1
@@ -36889,7 +36889,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -37022,7 +37022,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "65549451ec569d7487d86f2e7f70c748ef85093f8af8abcaa95ea13e38d589c3",
+          "raw_sha256": "dedbd4a46f4bee345c98d27f42bcc85b09c5c17132ac2eb687de058eef7e4765",
           "session_clean": true,
           "status": "ok"
         },
@@ -37050,7 +37050,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2842,
+      "elapsed_seconds": 0.3465,
       "geometry": [
         24,
         48
@@ -37083,7 +37083,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -37216,7 +37216,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "c9ae9a4365d0f4c99ea710f0f3c44d64a31095a4ac2a35fde9ead0e39a502ed1",
+          "raw_sha256": "ab82d5a0fa5eec0489aa2ff6b1ccf4a11f040d7c439a155c9019ada8a8dd30cb",
           "session_clean": true,
           "status": "ok"
         },
@@ -37244,7 +37244,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2812,
+      "elapsed_seconds": 0.3323,
       "geometry": [
         45,
         29
@@ -37277,7 +37277,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -37410,7 +37410,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "cd9c08f28180c985fb83fbd6120df89b520e868cdcda5a174c76c1363a5b3e21",
+          "raw_sha256": "8978913541faaa573f7574b8006b13d97ed3e65802ee501585aef812e7327e96",
           "session_clean": true,
           "status": "ok"
         },
@@ -37438,7 +37438,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2827,
+      "elapsed_seconds": 0.3203,
       "geometry": [
         12,
         8
@@ -37471,7 +37471,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -37632,7 +37632,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2881,
+      "elapsed_seconds": 0.317,
       "geometry": [
         10,
         5
@@ -37665,7 +37665,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -37798,7 +37798,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "27b8834b079a495978324bf8791e1071be1d991b805d70860eb89e88d3ac09da",
+          "raw_sha256": "45764a4505bb4f0c5b372ae28a266da91ac560037abd8eb6ee4cf21cf0704268",
           "session_clean": true,
           "status": "ok"
         },
@@ -37826,7 +37826,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2884,
+      "elapsed_seconds": 0.3309,
       "geometry": [
         24,
         10
@@ -37859,7 +37859,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -37992,7 +37992,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "c176c22c0319c30af8d5654ba08a7091984b0af0b8080495a1e2291daadbdd61",
+          "raw_sha256": "3a7f91a6f8a20d8bae3bc03d31122ecb4ae007625a58dc0bca678c7d290c0f7c",
           "session_clean": true,
           "status": "ok"
         },
@@ -38020,7 +38020,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2768,
+      "elapsed_seconds": 0.3057,
       "geometry": [
         4,
         46
@@ -38053,7 +38053,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -38186,7 +38186,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "0613a45ab4a695d33203f9eb760b15a4921b079a80e85774274903e95edb4c2a",
+          "raw_sha256": "084008ad5f7a36bedf72eb13ec76820ef3a53c12dc6e3bdec2f105d85f3591ea",
           "session_clean": true,
           "status": "ok"
         },
@@ -38214,7 +38214,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2876,
+      "elapsed_seconds": 0.2921,
       "geometry": [
         17,
         5
@@ -38247,7 +38247,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -38380,7 +38380,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "ba67639b279b2ee1c858694ec9fe5a5dd294961ed978a0bccd06fa5698c74bd9",
+          "raw_sha256": "3c674583ce5c4aa92c4adeabed015f9b5b876c57b7721565b336959ec2eb4819",
           "session_clean": true,
           "status": "ok"
         },
@@ -38408,7 +38408,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2897,
+      "elapsed_seconds": 0.2879,
       "geometry": [
         21,
         56
@@ -38441,7 +38441,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -38574,7 +38574,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "f037926fc2f638bf209b6b24c92426217adcd21e613cb95322a5c52d3dfdd1c9",
+          "raw_sha256": "fa40e1926714bcf2f7028a05eabea30bc2b46e497e7d24418fde0f389721b709",
           "session_clean": true,
           "status": "ok"
         },
@@ -38602,7 +38602,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2825,
+      "elapsed_seconds": 0.2892,
       "geometry": [
         15,
         19
@@ -38635,7 +38635,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -38768,7 +38768,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "b8536e828632bc771b070f9163697a3c7ace02758b377f9c0b0d3b4e7bdd1e06",
+          "raw_sha256": "769f4681a1d0284428322f8ac991ae5c474ceee23f289db23f2e061a6fcec15b",
           "session_clean": true,
           "status": "ok"
         },
@@ -38796,7 +38796,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.3147,
+      "elapsed_seconds": 0.3217,
       "geometry": [
         239,
         1
@@ -38829,7 +38829,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -38962,7 +38962,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "2d90392c55004902ce254c4e09b9b124546388627aaa1a2eaed1474a244dab26",
+          "raw_sha256": "41a00dfe71cf85821e65f5f8a47191cde85440839a68d08df79a05f007c106e4",
           "session_clean": true,
           "status": "ok"
         },
@@ -38990,7 +38990,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2876,
+      "elapsed_seconds": 0.2974,
       "geometry": [
         24,
         10
@@ -39023,7 +39023,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -39156,7 +39156,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "327538d6d92912220f8ac8ff2304b3d49c4b13bca4533fcad39319a502ceb246",
+          "raw_sha256": "d6948c992bf00df86810c4b0475141589e694e27b684bc7bbbbaf42d87f37648",
           "session_clean": true,
           "status": "ok"
         },
@@ -39184,7 +39184,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2868,
+      "elapsed_seconds": 0.3,
       "geometry": [
         13,
         16
@@ -39217,7 +39217,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -39350,7 +39350,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "232ada902f62087b353b721909ace529e6af14b77ea267e8d3d1431dd82a8491",
+          "raw_sha256": "ea06600338d3b673f8302ab5125a261f165c5844c72cefd14468d39cb4c3e03e",
           "session_clean": true,
           "status": "ok"
         },
@@ -39378,7 +39378,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2734,
+      "elapsed_seconds": 0.2809,
       "geometry": [
         15,
         20
@@ -39411,7 +39411,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -39572,7 +39572,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2812,
+      "elapsed_seconds": 0.282,
       "geometry": [
         19,
         17
@@ -39605,7 +39605,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -39766,7 +39766,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2916,
+      "elapsed_seconds": 0.2901,
       "geometry": [
         9,
         6
@@ -39799,7 +39799,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -39932,7 +39932,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "5653b026ba1ff879cca8335ab64fb45db43af008af15f13f40deb0597e8ebc51",
+          "raw_sha256": "1ae2a532715d2cfa490e7f20ad67c7bde96e0973632a4f73a613be32b41110d9",
           "session_clean": true,
           "status": "ok"
         },
@@ -39960,7 +39960,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2778,
+      "elapsed_seconds": 0.2799,
       "geometry": [
         1,
         142
@@ -39993,7 +39993,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -40153,7 +40153,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2823,
+      "elapsed_seconds": 0.2757,
       "geometry": [
         10,
         21
@@ -40186,7 +40186,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -40347,7 +40347,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2885,
+      "elapsed_seconds": 0.2878,
       "geometry": [
         14,
         19
@@ -40380,7 +40380,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -40513,7 +40513,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "75560905152d2827e11473f98594da62a29eaa45066c1301ad2f36e80a490e17",
+          "raw_sha256": "41d6757fe61d6ce0e166d615e29d810746655d05a5319e772d7ad1e1d10c2469",
           "session_clean": true,
           "status": "ok"
         },
@@ -40541,7 +40541,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2914,
+      "elapsed_seconds": 0.2851,
       "geometry": [
         12,
         16
@@ -40574,7 +40574,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -40707,7 +40707,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "07d859408308c72361737e71ad25946d7fb56b7208fc249386ad2ebb8bc53862",
+          "raw_sha256": "aaebf5cb3a951f459395e6e9535459b496cfc6a10bbd91075ade7079df114755",
           "session_clean": true,
           "status": "ok"
         },
@@ -40735,7 +40735,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2849,
+      "elapsed_seconds": 0.294,
       "geometry": [
         1,
         44
@@ -40768,7 +40768,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -40901,7 +40901,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "561bea4307506db684ea6ac79b9aeb46dd880dd62eb9724ba6052faec1d43b5a",
+          "raw_sha256": "d45f9f5b82b271a738c420c6ce7d0cdaa8abefdaab01d9fbd4d024d3c4eb14c9",
           "session_clean": true,
           "status": "ok"
         },
@@ -40929,7 +40929,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2882,
+      "elapsed_seconds": 0.2894,
       "geometry": [
         7,
         12
@@ -40962,7 +40962,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -41095,7 +41095,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "aeb34ec7e80a67964e9134299ab6cad9459a04bbf613f318365ce970b586dc1b",
+          "raw_sha256": "c9e151b25e2e29f5bfbc313cd70397c7141c21958d229fdb7fe0e9238b8379c0",
           "session_clean": true,
           "status": "ok"
         },
@@ -41123,7 +41123,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2728,
+      "elapsed_seconds": 0.2732,
       "geometry": [
         19,
         19
@@ -41156,7 +41156,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -41317,7 +41317,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2997,
+      "elapsed_seconds": 0.288,
       "geometry": [
         12,
         131
@@ -41350,7 +41350,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -41483,7 +41483,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "5af252dc4c160314ca30b7c966f6059be23dff1a4423e16fadcfd126f618e2e7",
+          "raw_sha256": "7bb54a56c283b19a0404758f59a4c8fa5a3cb1d0413427573f35033e14fe6bf6",
           "session_clean": true,
           "status": "ok"
         },
@@ -41511,7 +41511,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.3022,
+      "elapsed_seconds": 0.2993,
       "geometry": [
         34,
         23
@@ -41705,7 +41705,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.3081,
+      "elapsed_seconds": 0.2927,
       "geometry": [
         4,
         5
@@ -41899,7 +41899,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.3398,
+      "elapsed_seconds": 0.3168,
       "geometry": [
         60,
         252
@@ -41932,7 +41932,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -42093,7 +42093,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.3426,
+      "elapsed_seconds": 0.306,
       "geometry": [
         2,
         9
@@ -42126,7 +42126,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -42259,7 +42259,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "3248f04784403fe20a94a93f40226eb57e3c0186b2ba31865997aeaee553c85b",
+          "raw_sha256": "35f108f61d5cda118b07e8a8a8234dc41c1de1a5d87198dd2999343e1f9d47c7",
           "session_clean": true,
           "status": "ok"
         },
@@ -42287,7 +42287,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.4041,
+      "elapsed_seconds": 0.2964,
       "geometry": [
         12,
         20
@@ -42481,7 +42481,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.3862,
+      "elapsed_seconds": 0.2845,
       "geometry": [
         13,
         18
@@ -42514,7 +42514,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -42675,7 +42675,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.4067,
+      "elapsed_seconds": 0.2936,
       "geometry": [
         22,
         22
@@ -42869,7 +42869,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.739,
+      "elapsed_seconds": 0.2927,
       "geometry": [
         53,
         30
@@ -42902,7 +42902,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -43035,7 +43035,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "9104378677c771d2e56876442f12fdcb0d1cc2a2d419b21b6b9c29d180de99ad",
+          "raw_sha256": "d254566cc0cf477d0fc0704ba69808e13095972b233e185c844bc22881488575",
           "session_clean": true,
           "status": "ok"
         },
@@ -43063,7 +43063,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.6306,
+      "elapsed_seconds": 0.2827,
       "geometry": [
         24,
         4
@@ -43257,7 +43257,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.4765,
+      "elapsed_seconds": 0.2732,
       "geometry": [
         18,
         17
@@ -43451,7 +43451,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.5562,
+      "elapsed_seconds": 0.2824,
       "geometry": [
         24,
         14
@@ -43484,7 +43484,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -43617,7 +43617,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "ee4e5afdd1ad98b0be759df8fc50c2b5443f7c04c83cb43f8f50ab568c6e9c2e",
+          "raw_sha256": "6c9e9916a0c03a8b0c958203f926387178139e44eb021f9fcc851ceed434bbc7",
           "session_clean": true,
           "status": "ok"
         },
@@ -43645,7 +43645,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.4855,
+      "elapsed_seconds": 0.2821,
       "geometry": [
         58,
         18
@@ -43678,7 +43678,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -43811,7 +43811,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "7a6c7cbc8722bb2901407a3dea4c36ea386bbdb322ed0c80060acccfd26d5cfe",
+          "raw_sha256": "e49cc29e9f9c2e62d0d590f373385e04665c4cf646730d958abc949e44a3525c",
           "session_clean": true,
           "status": "ok"
         },
@@ -43839,7 +43839,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.4938,
+      "elapsed_seconds": 0.2757,
       "geometry": [
         7,
         15
@@ -43872,7 +43872,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -44033,7 +44033,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.5307,
+      "elapsed_seconds": 0.2803,
       "geometry": [
         1,
         1
@@ -44066,7 +44066,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -44227,7 +44227,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.577,
+      "elapsed_seconds": 0.2804,
       "geometry": [
         1,
         32
@@ -44260,7 +44260,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -44420,7 +44420,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.5035,
+      "elapsed_seconds": 0.3112,
       "geometry": [
         17,
         20
@@ -44453,7 +44453,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -44586,7 +44586,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "8190d487d0caef1a57f12b19a7d7526348f7c8dbd1efba1722a1e31bf05f7d85",
+          "raw_sha256": "84d7638261e9a0d85a0806b40a295fc8d228dadea916616c3ae5651f3a0f2a74",
           "session_clean": true,
           "status": "ok"
         },
@@ -44614,7 +44614,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.5076,
+      "elapsed_seconds": 0.3078,
       "geometry": [
         14,
         14
@@ -44647,7 +44647,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -44780,7 +44780,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "90bc9c5b4f72152f18e2b5586f0be537ddbc777e93649ced1de68cbf765f801e",
+          "raw_sha256": "eff5117ce6ae3c5051cc94e9598da85e409a383e3ba882c095ec4ee06fc486c1",
           "session_clean": true,
           "status": "ok"
         },
@@ -44808,7 +44808,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.5367,
+      "elapsed_seconds": 0.2995,
       "geometry": [
         5,
         17
@@ -44841,7 +44841,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -44974,7 +44974,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "e7f7376168c430e8b3d704379ba38a7d73ef604a4927911b219edac90c9d22d3",
+          "raw_sha256": "672026cdc1de0f0be48328a4c575f3389519c7ff194438622a867e0338f0e8c5",
           "session_clean": true,
           "status": "ok"
         },
@@ -45002,7 +45002,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.5739,
+      "elapsed_seconds": 0.3136,
       "geometry": [
         1,
         44
@@ -45035,7 +45035,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -45168,7 +45168,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "88d28f5c652f9ec802d4db2897c5ad1e21f152dd81617fd512801ddd84b7e069",
+          "raw_sha256": "3db1a0856f7b69eac4f923b7375d0c2612d54044780bacdc661e9e4e223ac7fe",
           "session_clean": true,
           "status": "ok"
         },
@@ -45196,7 +45196,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.4682,
+      "elapsed_seconds": 0.2952,
       "geometry": [
         1,
         1
@@ -45390,7 +45390,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.3874,
+      "elapsed_seconds": 0.2856,
       "geometry": [
         61,
         40
@@ -45423,7 +45423,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -45584,7 +45584,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.3619,
+      "elapsed_seconds": 0.2866,
       "geometry": [
         59,
         3
@@ -45778,7 +45778,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.3443,
+      "elapsed_seconds": 0.2878,
       "geometry": [
         8,
         40
@@ -45811,7 +45811,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -45944,7 +45944,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "634bb6210715e1e1744639866ca20babae44643f0410a7f7ec0e7207ee075c76",
+          "raw_sha256": "2420577f1e3bc1a53e19e445c7ccb6ab14084090f4f48bb93f1d4faece0b4d7c",
           "session_clean": true,
           "status": "ok"
         },
@@ -45972,7 +45972,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.3119,
+      "elapsed_seconds": 0.3013,
       "geometry": [
         21,
         2
@@ -46005,7 +46005,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -46138,7 +46138,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "db269d119554cb13da0feddd9074d457dfece6834038a7e78db2519bec363689",
+          "raw_sha256": "5554eaa1070ca4faff7abc52be41d05a3d08fd9f2c6a2f4e83c73b74a3d347e1",
           "session_clean": true,
           "status": "ok"
         },
@@ -46166,7 +46166,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2972,
+      "elapsed_seconds": 0.3229,
       "geometry": [
         1,
         239
@@ -46199,7 +46199,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -46332,7 +46332,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "a7f1c6f1a40d918036d67af08491f5ce3e1219ebd62d3dc88ea62477236531b4",
+          "raw_sha256": "faee7686726c388b216926a086d3926794d42630473be85d112a9978bd6acbae",
           "session_clean": true,
           "status": "ok"
         },
@@ -46360,7 +46360,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.301,
+      "elapsed_seconds": 0.3138,
       "geometry": [
         22,
         1
@@ -46393,7 +46393,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -46526,7 +46526,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "ad2b070e629925272b7d88a26273a8221f9b4b7e35794061498a3c8a0d5eff57",
+          "raw_sha256": "aaae7611895fc713890aaae915ece1087d90cad8f3cf99dbb68db3e7f8772cab",
           "session_clean": true,
           "status": "ok"
         },
@@ -46554,7 +46554,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2991,
+      "elapsed_seconds": 0.3064,
       "geometry": [
         7,
         8
@@ -46587,7 +46587,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -46720,7 +46720,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "cfc8d69c001ad545eec12c7c9fce90cfb59d95741efab6cfed7bf579dc295c00",
+          "raw_sha256": "ed723aa2f67c1533a39212b3734172c8d15ed891fd6a8d704b92bdb46f85c2e1",
           "session_clean": true,
           "status": "ok"
         },
@@ -46748,7 +46748,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2812,
+      "elapsed_seconds": 0.3057,
       "geometry": [
         17,
         23
@@ -46781,7 +46781,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -46914,7 +46914,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "148162476edc1e4a20d5c9b2d74395ea0941d102c6ec198a8eaf8d2210505e0a",
+          "raw_sha256": "4f34a870379ef69e6bb12433a2d323afaa8bfac23166a8d168b977054ca52cfd",
           "session_clean": true,
           "status": "ok"
         },
@@ -46942,7 +46942,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2816,
+      "elapsed_seconds": 0.3047,
       "geometry": [
         22,
         22
@@ -46975,7 +46975,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -47108,7 +47108,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "f9441bdb357dfe19a70c907de55310990f7dfa46fdfe6e8ba7c89f1d621fb2bc",
+          "raw_sha256": "621cbb865c3780fd74b530ccc77d818466680d47f0bfd0df1bf0e139f0122556",
           "session_clean": true,
           "status": "ok"
         },
@@ -47136,7 +47136,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2807,
+      "elapsed_seconds": 0.304,
       "geometry": [
         8,
         5
@@ -47169,7 +47169,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -47302,7 +47302,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "fb975bb5c7d0341498f0ed9304b1c81aeffb86b3b31fa35d22278e5eee6a7f42",
+          "raw_sha256": "aa58913d57874cf77f8b069cb219fb6c675d04c23a823e0813d4a4a29db07aa5",
           "session_clean": true,
           "status": "ok"
         },
@@ -47330,7 +47330,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.3112,
+      "elapsed_seconds": 0.3016,
       "geometry": [
         1,
         204
@@ -47363,7 +47363,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -47496,7 +47496,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "933449ce38aef91092e11eee2ac2c8d236d935d99976d8530333e06099fa70b6",
+          "raw_sha256": "f687911069394938b53ab0ccd0ab97d0f83bd2ffd11acedd92da4135534ba4f1",
           "session_clean": true,
           "status": "ok"
         },
@@ -47524,7 +47524,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.3002,
+      "elapsed_seconds": 0.3056,
       "geometry": [
         23,
         22
@@ -47557,7 +47557,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -47690,7 +47690,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "9ba9bb01ea78cd762e84c80f1048cbc174bb3719eca5b497c6cc1320f83fa91d",
+          "raw_sha256": "735d8bb84fd959f49251b0e27d1ba415480313b2f3c9b09cce9e70127f73966b",
           "session_clean": true,
           "status": "ok"
         },
@@ -47718,7 +47718,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2803,
+      "elapsed_seconds": 0.29,
       "geometry": [
         9,
         1
@@ -47911,7 +47911,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.3,
+      "elapsed_seconds": 0.317,
       "geometry": [
         9,
         55
@@ -47944,7 +47944,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -48077,7 +48077,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "5477bf521d1e77dfc110c1efff8bb17a7289d601344d218814c4cb75b3b7b1c7",
+          "raw_sha256": "bcb7f9194a5b2d6bcf1bb064cfa06d23b44cf16e1d57361692b0f6a717707da0",
           "session_clean": true,
           "status": "ok"
         },
@@ -48105,7 +48105,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.271,
+      "elapsed_seconds": 0.2889,
       "geometry": [
         44,
         1
@@ -48298,7 +48298,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2857,
+      "elapsed_seconds": 0.2897,
       "geometry": [
         7,
         22
@@ -48331,7 +48331,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -48464,7 +48464,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "45a2873eb7ac7f642c41b699f580ffc43b82ed8e56c013b364627498c3677fb6",
+          "raw_sha256": "2f2a7a9aad0614372ab57b0b1ab189b8a3ae81c89bc74d854994db66e851ca19",
           "session_clean": true,
           "status": "ok"
         },
@@ -48492,7 +48492,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2806,
+      "elapsed_seconds": 0.2843,
       "geometry": [
         1,
         1
@@ -48525,7 +48525,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -48658,7 +48658,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "beae68e4f1f4d0c6780840ae1549c44a052b33a163f1f1619e35da03f362fc5d",
+          "raw_sha256": "7c3bfdc831627e41a46cd3a32d6707190a561c0f101899e3a2499fc6cdf0e06a",
           "session_clean": true,
           "status": "ok"
         },
@@ -48686,7 +48686,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2709,
+      "elapsed_seconds": 0.281,
       "geometry": [
         45,
         1
@@ -48719,7 +48719,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -48880,7 +48880,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2847,
+      "elapsed_seconds": 0.2834,
       "geometry": [
         30,
         46
@@ -48913,7 +48913,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -49046,7 +49046,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "ccc50690148128bd430b6780927e177fca85511575bd76c9bbe70e365c810dc9",
+          "raw_sha256": "177cd9788f52976b705d7e08033066c2b807b01c01cec7096a6928c938170265",
           "session_clean": true,
           "status": "ok"
         },
@@ -49074,7 +49074,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2739,
+      "elapsed_seconds": 0.2837,
       "geometry": [
         36,
         38
@@ -49268,7 +49268,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2822,
+      "elapsed_seconds": 0.2826,
       "geometry": [
         24,
         13
@@ -49462,7 +49462,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2798,
+      "elapsed_seconds": 0.2796,
       "geometry": [
         1,
         1
@@ -49495,7 +49495,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -49628,7 +49628,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "258c3bbd3278a8b15a9f1f40484c678161d25afcc71a3c64fd46ed09d6f032a7",
+          "raw_sha256": "894b2150841341b72516cbdb14d730f58a1e20f65b719d3b280d51e0c687782e",
           "session_clean": true,
           "status": "ok"
         },
@@ -49656,7 +49656,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2809,
+      "elapsed_seconds": 0.2742,
       "geometry": [
         16,
         11
@@ -49689,7 +49689,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -49822,7 +49822,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "2315937adc236211d902bc14951a79053440643694c49c6e60a7ca199e2e9f7d",
+          "raw_sha256": "d00da9e6f73a6e9db45192adf2892831177d33e3c932a3d9de2ca6736f82bc26",
           "session_clean": true,
           "status": "ok"
         },
@@ -49850,7 +49850,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.4089,
+      "elapsed_seconds": 0.3685,
       "geometry": [
         1,
         251
@@ -49883,7 +49883,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -50016,7 +50016,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "fc679ae3253d83acc91d29fe2a2b8d034ec4293e87118847d6f40cdf037987e0",
+          "raw_sha256": "da09174c90ed5e0c413d6a496fd26f18516b99dc0ae79eec27440377a227db71",
           "session_clean": true,
           "status": "ok"
         },
@@ -50044,7 +50044,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2787,
+      "elapsed_seconds": 0.2815,
       "geometry": [
         9,
         12
@@ -50077,7 +50077,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -50210,7 +50210,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "e7c564bf6b9dfa076d52f385412a7ea6f4029c3e8f9ca559691589ae818ad258",
+          "raw_sha256": "5664c4366c92aa2db9c683a41112fca25bab9c154e9ff65a10bd3d21ab684ed5",
           "session_clean": true,
           "status": "ok"
         },
@@ -50238,7 +50238,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2868,
+      "elapsed_seconds": 0.3411,
       "geometry": [
         3,
         13
@@ -50271,7 +50271,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -50404,7 +50404,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "8c5cb3835ede606306f5872173c3dab9165a3114514a85fd074449b293753c8a",
+          "raw_sha256": "2a43e487bb8b548eb199698319ae2537732f8fd313f4269e2eba3989f5e6b217",
           "session_clean": true,
           "status": "ok"
         },
@@ -50432,7 +50432,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2827,
+      "elapsed_seconds": 0.2828,
       "geometry": [
         33,
         53
@@ -50465,7 +50465,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -50598,7 +50598,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "06039b2e62e15b1f8e8b37ed2dca1e20632010b2ab3fc056cbed4ac4f2c0c5aa",
+          "raw_sha256": "efc41dc5f047c9fb4e83fe20196bbd9d1f02d2667622cbeb202a6619c5f4fddb",
           "session_clean": true,
           "status": "ok"
         },
@@ -50626,7 +50626,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.4311,
+      "elapsed_seconds": 0.4378,
       "geometry": [
         231,
         200
@@ -50659,7 +50659,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -50792,7 +50792,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "b96e0f28fb0475287a200a52fd5c7806d5910a1d6b7745f3d5479a98eb7fc136",
+          "raw_sha256": "fa695409eac9b0e3ebd9bc9b552028583eb1b836eac810d8a831b99c22317d70",
           "session_clean": true,
           "status": "ok"
         },
@@ -50820,7 +50820,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2712,
+      "elapsed_seconds": 0.2736,
       "geometry": [
         5,
         17
@@ -50853,7 +50853,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -50986,7 +50986,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "8f65b33da6e29fd05bec9b37fe816de112ecaf67ce53da947191babeb1c2f404",
+          "raw_sha256": "dd0427f3c50e91667909eeeee457e68b4db58c8aee89149dc109a8464dee5be6",
           "session_clean": true,
           "status": "ok"
         },
@@ -51014,7 +51014,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2886,
+      "elapsed_seconds": 0.2899,
       "geometry": [
         24,
         1
@@ -51047,7 +51047,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -51180,7 +51180,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "d017b687715c695e702bd8d6830bea05e3c62ed194e799bcd68c2bfd0c37239a",
+          "raw_sha256": "ea1add48f59b5dc3bfcaf99fcfbb90a6519d166c098239fb6e7e71fcb4ca16ce",
           "session_clean": true,
           "status": "ok"
         },
@@ -51208,7 +51208,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2711,
+      "elapsed_seconds": 0.2781,
       "geometry": [
         1,
         1
@@ -51241,7 +51241,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -51374,7 +51374,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "2c9447fc2e183871d1e6bb4c3ad91dceb0419b3221a65eff481a5b5345bb5a99",
+          "raw_sha256": "73b785a158f75aef7b24a70c4633f7f1051a6c5508e8262b8c9341bd0982f32d",
           "session_clean": true,
           "status": "ok"
         },
@@ -51402,7 +51402,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2684,
+      "elapsed_seconds": 0.2766,
       "geometry": [
         24,
         12
@@ -51435,7 +51435,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -51596,7 +51596,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.3079,
+      "elapsed_seconds": 0.3126,
       "geometry": [
         202,
         1
@@ -51629,7 +51629,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -51762,7 +51762,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "c45c7ae140b2cdf27819ed8c30535a08bb6aa88cb341d9f72baeeb186525180a",
+          "raw_sha256": "2e4bf1addbabc6d8eb83f4e95a626e530f3547734024915c4bc189f5492deea9",
           "session_clean": true,
           "status": "ok"
         },
@@ -51790,7 +51790,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.3312,
+      "elapsed_seconds": 0.3487,
       "geometry": [
         1,
         208
@@ -51823,7 +51823,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -51956,7 +51956,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "fc76b0e220c5a8a48a201f9bd3d7dc25a2cf60ac2ee49d187fe5d235ccc2fb0d",
+          "raw_sha256": "090b49a9d55ca5105820e21f1d94c66e601a10fbcb85f7524062c09422626fec",
           "session_clean": true,
           "status": "ok"
         },
@@ -51984,7 +51984,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2917,
+      "elapsed_seconds": 0.3002,
       "geometry": [
         64,
         58
@@ -52017,7 +52017,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -52150,7 +52150,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "33124d04293e1950b7658d76099e29de2b0194975d5063b9879131a4c460a9e4",
+          "raw_sha256": "f6a996cddad3356cf2572b21b76094baed5f9fb9ea61ffe36df0bb3d336c7a57",
           "session_clean": true,
           "status": "ok"
         },
@@ -52178,7 +52178,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2767,
+      "elapsed_seconds": 0.2948,
       "geometry": [
         6,
         17
@@ -52211,7 +52211,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -52344,7 +52344,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "62d4c5ae67da3cd67585402d4dfdf9da8a3bb02e50a2e7a3e252a6b211830295",
+          "raw_sha256": "3a448c96412c436755fb5725fd4a422e8fbe88a0176ce449368625a00e062dc2",
           "session_clean": true,
           "status": "ok"
         },
@@ -52372,7 +52372,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2651,
+      "elapsed_seconds": 0.2798,
       "geometry": [
         57,
         1
@@ -52405,7 +52405,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -52565,7 +52565,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.269,
+      "elapsed_seconds": 0.2996,
       "geometry": [
         4,
         1
@@ -52598,7 +52598,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -52759,7 +52759,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.293,
+      "elapsed_seconds": 0.3054,
       "geometry": [
         65,
         126
@@ -52792,7 +52792,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -52953,7 +52953,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.285,
+      "elapsed_seconds": 0.2778,
       "geometry": [
         17,
         3
@@ -52986,7 +52986,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -53119,7 +53119,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "ecc2db871e7fb10a087ba991e6e494f49f44509121f1de6d278c56b04c043ecb",
+          "raw_sha256": "8e7b4e3fab68c2993f3f86be2fed65d8057b7b1a103f6ab9c7d77431de2f3255",
           "session_clean": true,
           "status": "ok"
         },
@@ -53147,7 +53147,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.3467,
+      "elapsed_seconds": 0.3561,
       "geometry": [
         139,
         240
@@ -53180,7 +53180,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -53341,7 +53341,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.276,
+      "elapsed_seconds": 0.2809,
       "geometry": [
         19,
         13
@@ -53374,7 +53374,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -53535,7 +53535,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2767,
+      "elapsed_seconds": 0.2871,
       "geometry": [
         59,
         1
@@ -53568,7 +53568,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -53701,7 +53701,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "a241cc169862190c818d4fb1955ba77bc1f3763356ba115a70b61431b19c2758",
+          "raw_sha256": "a0050756d6f0f42ee7714611e1bc9b018028819882d9e5b474fa1ecfe77c00b5",
           "session_clean": true,
           "status": "ok"
         },
@@ -53729,7 +53729,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2776,
+      "elapsed_seconds": 0.2811,
       "geometry": [
         20,
         12
@@ -53923,7 +53923,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2765,
+      "elapsed_seconds": 0.2796,
       "geometry": [
         1,
         57
@@ -53956,7 +53956,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -54089,7 +54089,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "6b873438dc2b371e7998e0f1d4f66cdbd9d8f021b7850aa8975a9fff4503008c",
+          "raw_sha256": "ee0e777bef3fc02e9a45f4fae2ba1986be811bfbdb4af5e846c887b5f802c489",
           "session_clean": true,
           "status": "ok"
         },
@@ -54117,7 +54117,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2779,
+      "elapsed_seconds": 0.2861,
       "geometry": [
         21,
         13
@@ -54150,7 +54150,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -54283,7 +54283,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "39b30de09e1b3e30876bf0ffc457844c8f7e7d278979e94b7497bda64d4b03c1",
+          "raw_sha256": "a7433eecceaa22e6771bed47306d522c3206ba77503415db4817a27a8e6746a6",
           "session_clean": true,
           "status": "ok"
         },
@@ -54311,7 +54311,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2915,
+      "elapsed_seconds": 0.302,
       "geometry": [
         248,
         1
@@ -54505,7 +54505,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2773,
+      "elapsed_seconds": 0.2763,
       "geometry": [
         1,
         7
@@ -54538,7 +54538,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -54671,7 +54671,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "05a67ff4f42cdb4890eb5c3227d75bc649b75f4091b6e47d2c8d370f2b419a55",
+          "raw_sha256": "c8aa4896cb31d70c2ba6b2f44c7cd0122a7f65d31dcdda928855747ee6d54080",
           "session_clean": true,
           "status": "ok"
         },
@@ -54699,7 +54699,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2817,
+      "elapsed_seconds": 0.2922,
       "geometry": [
         19,
         23
@@ -54893,7 +54893,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.2835,
+      "elapsed_seconds": 0.2865,
       "geometry": [
         21,
         36
@@ -54926,7 +54926,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -55059,7 +55059,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "44a51cf747a2dc9561feabf82383b7ff8f4c9e81f1c58dfe73504c7efde94446",
+          "raw_sha256": "6993e54b85537960dc93e54cf268d1c28d714b11f0902053ec226f42e2a7d64f",
           "session_clean": true,
           "status": "ok"
         },
@@ -55087,7 +55087,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2666,
+      "elapsed_seconds": 0.278,
       "geometry": [
         21,
         11
@@ -55120,7 +55120,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -55281,7 +55281,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2684,
+      "elapsed_seconds": 0.2731,
       "geometry": [
         4,
         10
@@ -55314,7 +55314,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -55475,7 +55475,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.2872,
+      "elapsed_seconds": 0.3095,
       "geometry": [
         1,
         1
@@ -55669,7 +55669,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2862,
+      "elapsed_seconds": 0.303,
       "geometry": [
         14,
         6
@@ -55863,7 +55863,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.2827,
+      "elapsed_seconds": 0.2949,
       "geometry": [
         18,
         17
@@ -55896,7 +55896,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -56029,7 +56029,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "50a277924568b166ea5016d288f920429769c1fad0ca9312b6ca5129ef5954c8",
+          "raw_sha256": "e960c026c8ff10e8bb738e20a88ef15e4d083ade7102d9e001efa46c30d71ec3",
           "session_clean": true,
           "status": "ok"
         },
@@ -56057,7 +56057,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.6316,
+      "elapsed_seconds": 0.6245,
       "geometry": [
         238,
         251
@@ -56090,7 +56090,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -56223,7 +56223,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "17867522c1dec0879ecb573373a9da239ad7f8f26f4a99950808960faed041af",
+          "raw_sha256": "e94726baa125172490d3a4e2cecc042a1e5ac24da2971d9e364ef062f53ba9d2",
           "session_clean": true,
           "status": "ok"
         },
@@ -56251,7 +56251,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.3367,
+      "elapsed_seconds": 0.3768,
       "geometry": [
         11,
         11
@@ -56284,7 +56284,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -56445,7 +56445,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.35,
+      "elapsed_seconds": 0.3897,
       "geometry": [
         13,
         7
@@ -56478,7 +56478,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -56611,7 +56611,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "908d998c3839937585ea76f7f8e53382428f1650ad6955987f2114fa7e25e940",
+          "raw_sha256": "8854ef62786590f7b1bdf7367bc2a510414800d57410ccacf9569f7eb6b2f165",
           "session_clean": true,
           "status": "ok"
         },
@@ -56639,7 +56639,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.42,
+      "elapsed_seconds": 0.352,
       "geometry": [
         1,
         1
@@ -56672,7 +56672,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -56833,7 +56833,7 @@
     },
     {
       "depth": 8,
-      "elapsed_seconds": 0.5641,
+      "elapsed_seconds": 0.3131,
       "geometry": [
         59,
         1
@@ -57027,7 +57027,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.6044,
+      "elapsed_seconds": 0.3169,
       "geometry": [
         21,
         11
@@ -57060,7 +57060,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -57193,7 +57193,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "c8a5ad0fb98a7f41904c56c2bd5849e1b2233d8d187d212f17ea77fcc09ca45a",
+          "raw_sha256": "dd915c1c6fafd5fd9170114aa69f2fb112599081b79a75a5b3dbe64d1d7a4bf9",
           "session_clean": true,
           "status": "ok"
         },
@@ -57221,7 +57221,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.4351,
+      "elapsed_seconds": 0.3471,
       "geometry": [
         1,
         187
@@ -57254,7 +57254,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -57415,7 +57415,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.5179,
+      "elapsed_seconds": 0.3294,
       "geometry": [
         24,
         6
@@ -57448,7 +57448,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -57581,7 +57581,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "47b115fc0a102bcb6191e1317e05fe8a157bb553de099c42a8fba83a7362f80f",
+          "raw_sha256": "a52918c949e8aa71ae186517ce253ad007e47053ea641bcbc9931c63b87e7170",
           "session_clean": true,
           "status": "ok"
         },
@@ -57609,7 +57609,7 @@
     },
     {
       "depth": 16,
-      "elapsed_seconds": 0.4032,
+      "elapsed_seconds": 0.2805,
       "geometry": [
         1,
         1
@@ -57642,7 +57642,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -57803,7 +57803,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.5845,
+      "elapsed_seconds": 0.3724,
       "geometry": [
         120,
         207
@@ -57836,7 +57836,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -57969,7 +57969,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "1620caf3ef4e9a5a54248e10f0b2042a9e0932608c5856854ea2306b3a3a043e",
+          "raw_sha256": "50f7dd2f7f8d1f97e9db1467430d468cc0b931b65ec4026e1201779c5dffa38e",
           "session_clean": true,
           "status": "ok"
         },
@@ -57997,7 +57997,7 @@
     },
     {
       "depth": 32,
-      "elapsed_seconds": 0.4013,
+      "elapsed_seconds": 0.2798,
       "geometry": [
         14,
         14
@@ -58030,7 +58030,7 @@
         {
           "kind": "s",
           "slot": 5,
-          "value": 0.10000000149011612
+          "value": 1.0
         },
         {
           "kind": "i",
@@ -58163,7 +58163,7 @@
         "first_mismatching_stage": null,
         "oracle": {
           "guards_intact": true,
-          "raw_sha256": "50908686ba0f25c8f54135b6007cefb9810477964f11e7305d50a59d09d6b3ec",
+          "raw_sha256": "fdaaa90f3b4ad489581791d660595a14a33f8761473609d638ada286f7831bc9",
           "session_clean": true,
           "status": "ok"
         },
@@ -58201,14 +58201,16 @@
   "completed": 300,
   "corpus_max_bytes": 2000000,
   "deadline_reached": false,
-  "elapsed_seconds": 41.4841,
+  "elapsed_seconds": 26.9077,
   "framework_sha256": {
     "tools/fuzz/adapters/__init__.py": "872b5caf08c225f78a57a12ae35dabd133c4a40586446a26a9961f12a22926de",
+    "tools/fuzz/adapters/colorkeep.py": "8905fb46fb5efe366ad50a28be52a7d7c10712b94800515e58640405c03660c1",
+    "tools/fuzz/adapters/olmblur.py": "b8e167d77b51016159184db5b59f7ff5044670676f1c029730c127e195e6c9b2",
     "tools/fuzz/adapters/olmcolorkey.py": "ad5ade6755c69a33142ebe8a7df3154435d77893119ca5eb1269daaf92ecafac",
     "tools/fuzz/adapters/olmdirectionalblur.py": "9a3152335398109c3135526ad77204eb5df119e5115bb0541ed0d55e15e24c03",
-    "tools/fuzz/adapters/olmkirakira.py": "340e5d3cc24dfb1862d577bdb255604f348358b7b9a2ca2f063452991ae21c4e",
+    "tools/fuzz/adapters/olmkirakira.py": "320194526c89956e7f91c750cc0be0810baa83fdfb854547d127b0fd15d5ae08",
     "tools/fuzz/adapters/olmsmoother2.py": "d0dc7494912ae86e7eda08e66a1d13103750f49f46005e081ec4396d720ed9e2",
-    "tools/fuzz/adapters/public.py": "9d80858c8d653bb62f47b67ee06eecd5665d54ad9e901d187a967caec6055d82",
+    "tools/fuzz/adapters/public.py": "d0c6cf6cc0c726932b19f37ef8e8685a8a9621b96841ffb8f7fc6575b6ef0f01",
     "tools/fuzz/adapters/radialblur.py": "3e041a8f988062e506751ba5d9b20ee52f6da56b16b488d9c4822eecf9c051b4",
     "tools/fuzz/capture_declarations.py": "1c6a013fc157c76785a8214b92e1769f4bf471fa5122fc460979f5c811d13f0b",
     "tools/fuzz/core.py": "e194eaa195e4517993ca527fe4ce9730a86667f222862592ff16303d52122e44",
@@ -58222,7 +58224,7 @@
   "provenance": {
     "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMKiraKira.aex",
     "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
-    "builder_anomalies": "Brightness Gain default 0.10000000149011612 is below declared min 1; default retained. Blur Mode samples declared 1..3 only.",
+    "builder_anomalies": "Brightness Gain default 0.10000000149011612 is below declared min 1; sampling/shrinking default clamped to legal 1. Blur Mode samples declared 1..3 only.",
     "candidate_sha256": "4a5848030c6a6345a36f79d09097b9d120754688c8fe0a875d19ca4111f676d2",
     "declarations_sha256": "b1e500a914d04b30c4fcd581cbbb9caaa974e55cf683e9554c7d5d6e391a7731",
     "dependencies_sha256": {
@@ -58234,6 +58236,13 @@
     },
     "host": "Original AEX Unicorn CPU Smart; production Mac EffectMain Classic + Smart fake host",
     "layer": "None; independent layer worlds outside this adapter",
+    "out_of_range_builder_defaults": [
+      {
+        "builder_default": 0.10000000149011612,
+        "sampled_default": 1.0,
+        "slot": 5
+      }
+    ],
     "ramps": "Existing default three-stop handles only; custom arbitrary ramps outside this adapter",
     "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
     "rotation": "Original ANGLE raw fixed integer consumed as degrees; Mac float degree value follows retained exported-owner helper",
@@ -58250,11 +58259,11 @@
   },
   "requested": 300,
   "schema": "olm-fuzz-report/1",
-  "scratch_bytes_before_cleanup": 712400,
+  "scratch_bytes_before_cleanup": 960305,
   "seed": 1,
   "shrink_attempts": 32,
   "shrink_seconds": 10,
-  "started_utc": "2026-10-21T14:20:49.189527+00:00",
+  "started_utc": "2026-10-21T14:27:32.832943+00:00",
   "status": "complete",
   "summary": {
     "aex_ok": 287,

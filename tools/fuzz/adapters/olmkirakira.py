@@ -43,7 +43,7 @@ class Adapter(PublicAdapter):
     def scope(self):
         return {'rotation':'Original ANGLE raw fixed integer consumed as degrees; Mac float degree value follows retained exported-owner helper',
                 'ramps':'Existing default three-stop handles only; custom arbitrary ramps outside this adapter',
-                'builder_anomalies':'Brightness Gain default 0.10000000149011612 is below declared min 1; default retained. Blur Mode samples declared 1..3 only.'}
+                'builder_anomalies':'Brightness Gain default 0.10000000149011612 is below declared min 1; sampling/shrinking default clamped to legal 1. Blur Mode samples declared 1..3 only.'}
 
     def candidate_command(self, case, directory, route):
         config = directory/'params.txt';lines = []

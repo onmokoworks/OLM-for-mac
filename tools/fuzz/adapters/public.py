@@ -71,6 +71,12 @@ class PublicAdapter:
                 value = list(d['default_color'])
             elif kind in ('i','u','b'):
                 value = int(value)
+            # Some original builders declare an out-of-range default (Kira gain,
+            # DistanceGradation In/Out). Keep the snapshot, sample legal bounds.
+            if kind not in ('a','p','c'):
+                value = max(d['valid_min'], min(d['valid_max'], value))
+                if kind in ('i','u','b'):
+                    value = int(value)
             result.append({'slot':d['slot'], 'kind':kind, 'value':value})
         return result
 
@@ -144,6 +150,9 @@ class PublicAdapter:
                 'candidate_sha256':sha(self.binary.read_bytes()),
                 'dependencies_sha256':{str(p.relative_to(ROOT)):sha(p.read_bytes()) for p in dependencies},
                 'declarations_sha256':sha(self.declaration_path.read_bytes()),
+                'out_of_range_builder_defaults':[{'slot':d['slot'],'builder_default':d['default_value'],
+                    'sampled_default':p['value']} for d,p in zip(self.controls,self.defaults(1,1))
+                    if p['kind'] not in ('a','p','c') and p['value']!=d['default_value']],
                 'host':'Original AEX Unicorn CPU Smart; production Mac EffectMain Classic + Smart fake host',
                 'time':{'value':0,'scale':24,'step':1,'total':1},
                 'world':'full frame, origin 0, downsample 1:1, raw ARGB, no conversion',
