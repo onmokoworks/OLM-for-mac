@@ -143,13 +143,26 @@ class Adapter:
             body = body.replace(old, new)
         harness = scratch/'fuzz_harness.cpp'
         harness.write_text(body)
+        # Optional measurement switches, both off by default. Bypass names
+        # admission-guard tags compiled into the candidate source; sanitize
+        # selects the existing probe build's ASan/UBSan flags.
+        bypass = os.environ.get('OLM_RADIAL_CANDIDATE_BYPASS', '').strip()
+        sanitize = os.environ.get('OLM_RADIAL_CANDIDATE_SANITIZE', '').strip() not in ('', '0')
+        source = public.SOURCE.read_text()
+        if bypass:
+            source = f'#define OLM_RADIAL_EXPERIMENT_BYPASS "{bypass}"\n' + source
+        candidate_source = scratch/'candidate_source.cpp'
+        candidate_source.write_text(source)
+        if bypass:
+            self.env['OLM_RADIAL_CANDIDATE_BYPASS'] = bypass
         code = ("import sys; from pathlib import Path; "
                 "sys.path.insert(0, sys.argv[1]); "
                 "import probe_radialblur_topology_20261001 as p; "
                 "p.HARNESS=Path(sys.argv[2]); p.ROOT=Path(sys.argv[4]); "
-                "p.build(Path(sys.argv[3]), p.SOURCE.read_text())")
+                "p.build(Path(sys.argv[3]), Path(sys.argv[5]).read_text(), sanitize=(sys.argv[6]=='1'))")
         status, out, err = command([sys.executable, '-c', code, ROOT/'tools/emulation',
-                                    harness, scratch/'build', self.main], timeout=max(0, deadline-time.monotonic()),
+                                    harness, scratch/'build', self.main, candidate_source,
+                                    '1' if sanitize else '0'], timeout=max(0, deadline-time.monotonic()),
                                    deadline=deadline, env=self.env)
         if status['status'] != 'ok':
             raise RuntimeError('Candidate build failed: '+repr(status)+' '+err.decode(errors='replace')[-2000:])
@@ -159,6 +172,9 @@ class Adapter:
             'worker_path': str(self.worker), 'worker_sha256': sha(self.worker.read_bytes()),
             'candidate_sha256': sha(self.binary.read_bytes()),
             'source_sha256': sha(public.SOURCE.read_bytes()),
+            'candidate_source_sha256': sha(source.encode()),
+            'candidate_bypass': bypass,
+            'candidate_sanitize': sanitize,
             'header_sha256': sha(public.SOURCE.with_suffix('.h').read_bytes()),
             'core_sha256': sha((ROOT/'core/dblur_noise.h').read_bytes()),
             'declarations_sha256': sha(DECLARATIONS.read_bytes()),
@@ -274,18 +290,36 @@ class Adapter:
             guards = []
         finally:
             trace.unlink(missing_ok=True)
+        stderr = err.decode(errors='replace')
+        # Sanitizer builds prepend reports and stack traces (including blank
+        # lines) to the harness metadata; keep those reports as evidence and
+        # parse only the "KEY value" metadata lines.
+        sanitizer = [line for line in stderr.splitlines()
+                     if ('AddressSanitizer' in line or 'UndefinedBehaviorSanitizer' in line
+                         or 'LeakSanitizer' in line or 'runtime error:' in line)]
         if status['status'] != 'ok':
-            return dict(status, diagnostic=err.decode(errors='replace')[-1600:]), b'', guards
+            return dict(status, diagnostic=stderr[-1600:], sanitizer=sanitizer), b'', guards
         try:
-            metadata = dict(line.split(' ',1) for line in err.decode().splitlines())
+            metadata = {}
+            for line in stderr.splitlines():
+                if ' ' in line:
+                    key, value = line.split(' ', 1)
+                    metadata[key] = value
             error = int(metadata['ERROR'])
             if error:
-                return {'status':'refusal', 'error':error, 'metadata':metadata}, b'', guards
+                result = {'status':'refusal', 'error':error, 'metadata':metadata}
+                if sanitizer:
+                    result['sanitizer'] = sanitizer
+                return result, b'', guards
             if len(raw) != len(case['pixels']):
                 return {'status':'harness_error','diagnostic':'output length'}, b'', guards
-            return {'status':'ok','error':0,'metadata':metadata}, raw, guards
+            result = {'status':'ok','error':0,'metadata':metadata}
+            if sanitizer:
+                result['sanitizer'] = sanitizer
+            return result, raw, guards
         except (ValueError,KeyError) as exc:
-            return {'status':'harness_error','diagnostic':repr(exc)}, b'', guards
+            return {'status':'harness_error','diagnostic':repr(exc),
+                    'stderr':stderr[-1000:], 'sanitizer':sanitizer}, b'', guards
 
     def first_stage(self, case, directory, results, deadline):
         return None

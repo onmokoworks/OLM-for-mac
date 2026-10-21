@@ -66,6 +66,22 @@ Each replay uses a fresh disposable directory, including the worker's exclusive
 sidecars. Build outputs and case worlds are deleted on completion. Admission rejects
 scratch already above 4 GiB; at most 32 bounded 256x256 cases are live at once.
 
+## RadialBlur measurement switches
+
+Both are off by default and change only the candidate build; the AEX oracle and
+the generated cases are unchanged.
+
+- `OLM_RADIAL_CANDIDATE_BYPASS="tag1,tag2"` prepends a compile-time
+  `OLM_RADIAL_EXPERIMENT_BYPASS` definition so the named admission guards fall
+  through instead of returning. Tags are the bare `OLM_RADIAL_REFUSAL` tags,
+  for example `unadmitted-zoom-profile`.
+- `OLM_RADIAL_CANDIDATE_SANITIZE=1` builds the candidate with the probe's
+  existing `-fsanitize=address,undefined` flags and records sanitizer reports in
+  each route result under `sanitizer`.
+
+The default build (no variables) is the production behavior; replay the saved
+corpus after touching the switch.
+
 ## Add a plugin
 
 Write only `tools/fuzz/adapters/NAME.py` exporting `Adapter(options)`. Implement
