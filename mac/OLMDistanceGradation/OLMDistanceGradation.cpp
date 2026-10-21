@@ -10,6 +10,37 @@
 #include <algorithm>
 #include <limits>
 #include <new>
+#include <fcntl.h>
+#include <unistd.h>
+#include <cstdlib>
+#include <cstdio>
+
+// Refusal attribution for the fuzz campaign. When OLM_REFUSAL_TRACE names a
+// file, each failing admission guard appends "function:tag". The file is only
+// opened on a refusal, and the returned error code and all output bytes are
+// identical whether or not tracing is enabled.
+static PF_Err DistanceRefusal(const char *function, const char *tag, int line, PF_Err err)
+{
+	const char *path = std::getenv("OLM_REFUSAL_TRACE");
+	if (path && path[0]) {
+		const int handle = ::open(path, O_WRONLY | O_CREAT | O_APPEND, 0666);
+		if (handle >= 0) {
+			char entry[384];
+			const int length = std::snprintf(entry, sizeof(entry), "%s:%s@%d\n", function, tag, line);
+			if (length > 0) {
+				const ssize_t written = ::write(handle, entry, (std::size_t)length);
+				(void)written;
+			}
+			::close(handle);
+		}
+	}
+	return err;
+}
+
+#define OLM_DG_REFUSAL(tag) DistanceRefusal(__func__, tag, __LINE__, PF_Err_BAD_CALLBACK_PARAM)
+#define OLM_DG_ERROR(tag, code) DistanceRefusal(__func__, tag, __LINE__, code)
+
+
 
 static PF_Err
 About(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
@@ -229,7 +260,7 @@ FetchParams(PF_InData *in_data, PF_ParamDef *params[], DGParams *p)
 	p->blur_size         = params[DG_BLUR_SIZE]->u.sd.value;
 
 	PF_ColorParamSuite1 *cps = suites.ColorParamSuite1();
-	if (!cps || !cps->PF_GetFloatingPointColorFromColorDef) return PF_Err_BAD_CALLBACK_PARAM;
+	if (!cps || !cps->PF_GetFloatingPointColorFromColorDef) return OLM_DG_REFUSAL("color-suite-missing");
 	ERR(cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref,
 		params[DG_GRAD_COLOR], &p->grad_color));
 	ERR(cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref,
@@ -1459,7 +1490,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	    input->width > std::numeric_limits<A_long>::max() / (A_long)sizeof(P) ||
 	    input->rowbytes < input->width * (A_long)sizeof(P) ||
 	    output->rowbytes < output->width * (A_long)sizeof(P)) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_DG_REFUSAL("world-layout");
 	}
 
 	DGParams p; AEFX_CLR_STRUCT(p);
@@ -1468,13 +1499,13 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	long w = output->width;
 	long h = output->height;
 	size_t pixel_count = 0;
-	if (!checked_pixel_count(w, h, &pixel_count)) return PF_Err_BAD_CALLBACK_PARAM;
+	if (!checked_pixel_count(w, h, &pixel_count)) return OLM_DG_REFUSAL("pixel-count");
 	p.w = w; p.h = h;
 	p.pixel_size = sizeof(P);
 	p.smart_owner = smart_owner;
 	if (smart_owner && sizeof(P) == sizeof(PF_PixelFloat) &&
 	    !pf32_smart_worlds_are_bounded_sdr(input, output)) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_DG_REFUSAL("pf32-smart-bounded-sdr");
 	}
 
 	// Extract normalized alpha for DT
@@ -1501,7 +1532,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 			is_admitted_pf32_smart_oracle_profile(p);
 		if (!p.pf32_smart_matrix_admitted && !unblurred_beta && !blurred_beta &&
 		    !p.pf32_smart_oracle_profile_admitted) {
-			return PF_Err_BAD_CALLBACK_PARAM;
+			return OLM_DG_REFUSAL("pf32-smart-profile");
 		}
 	}
 
@@ -1531,10 +1562,10 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	if (!in_data || !out_data || !params || !output ||
 	    in_data->output_origin_x != 0 || in_data->output_origin_y != 0 ||
 	    in_data->pre_effect_source_origin_x != 0 || in_data->pre_effect_source_origin_y != 0) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_DG_REFUSAL("render-arguments-origin");
 	}
 	for (A_long i = 0; i < DG_NUM_PARAMS; ++i) {
-		if (!params[i]) return PF_Err_BAD_CALLBACK_PARAM;
+		if (!params[i]) return OLM_DG_REFUSAL("render-param-null");
 	}
 	PF_LayerDef *input = &params[DG_INPUT]->u.ld;
 	PF_PixelFormat input_format = PF_PixelFormat_INVALID;
@@ -1544,7 +1575,7 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	ERR(world_suite->PF_GetPixelFormat(input, &input_format));
 	ERR(world_suite->PF_GetPixelFormat(output, &output_format));
 	if (err) return err;
-	if (input_format != output_format) return PF_Err_BAD_CALLBACK_PARAM;
+	if (input_format != output_format) return OLM_DG_REFUSAL("render-format-mismatch");
 
 	switch (input_format) {
 	case PF_PixelFormat_ARGB32:
@@ -1554,7 +1585,7 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	case PF_PixelFormat_ARGB128:
 		return RenderBits<PF_PixelFloat>(in_data, params, input, output);
 	default:
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_DG_REFUSAL("render-format-unsupported");
 	}
 }
 
@@ -1590,7 +1621,7 @@ SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extr
 	    !extra->cb->checkout_layer ||
 	    (extra->input->bitdepth != 8 && extra->input->bitdepth != 16 &&
 	     extra->input->bitdepth != 32)) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_DG_REFUSAL("prerender-arguments-depth");
 	}
 	PF_Err err = PF_Err_NONE;
 	if (in_data->width <= 0 || in_data->height <= 0 ||
@@ -1598,7 +1629,7 @@ SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extr
 	    in_data->downsample_y.num <= 0 || in_data->downsample_y.den <= 0 ||
 	    in_data->downsample_x.num != in_data->downsample_x.den ||
 	    in_data->downsample_y.num != in_data->downsample_y.den) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_DG_REFUSAL("prerender-size-downsample");
 	}
 	PF_RenderRequest req = extra->input->output_request;
 	const PF_LRect full_rect = {0, 0, in_data->width, in_data->height};
@@ -1616,7 +1647,7 @@ SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extr
 	// frames, so they must not be used to reject a full-frame checkout.
 	if (!err && (in_result.ref_width != in_data->width ||
 	             in_result.ref_height != in_data->height)) {
-		err = PF_Err_BAD_CALLBACK_PARAM;
+		err = OLM_DG_REFUSAL("prerender-reference-size");
 	}
 	if (!err) {
 		DGPreRenderData *pre = new (std::nothrow) DGPreRenderData{in_data->width, in_data->height};
@@ -1646,7 +1677,7 @@ RenderSmartPF16PreseededField(const PF_EffectWorld *input_world,
 	    input_world->width < 0 || input_world->height < 0 ||
 	    input_world->rowbytes < input_world->width * (A_long)sizeof(PF_Pixel16) ||
 	    output_world->rowbytes < output_world->width * (A_long)sizeof(PF_Pixel16)) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_DG_REFUSAL("smart-pf16-preseed-layout");
 	}
 	for (A_long y = 0; y < input_world->height; ++y) {
 		const PF_Pixel16 *src = reinterpret_cast<const PF_Pixel16 *>(
@@ -1675,7 +1706,7 @@ RenderSmartPF8PreseededField(const PF_EffectWorld *input_world,
 	    input_world->width < 0 || input_world->height < 0 ||
 	    input_world->rowbytes < input_world->width * (A_long)sizeof(PF_Pixel8) ||
 	    output_world->rowbytes < output_world->width * (A_long)sizeof(PF_Pixel8)) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_DG_REFUSAL("smart-pf8-preseed-layout");
 	}
 	for (A_long y = 0; y < input_world->height; ++y) {
 		const PF_Pixel8 *src = reinterpret_cast<const PF_Pixel8 *>(
@@ -1706,7 +1737,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	    !extra->cb->checkout_output ||
 	    (extra->input->bitdepth != 8 && extra->input->bitdepth != 16 &&
 	     extra->input->bitdepth != 32)) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_DG_REFUSAL("smart-arguments-depth");
 	}
 	PF_Err err = PF_Err_NONE;
 	AEFX_SuiteScoper<PF_WorldSuite2> world_suite = AEFX_SuiteScoper<PF_WorldSuite2>(
@@ -1740,7 +1771,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 		for (A_long i = 1; i < DG_NUM_PARAMS; ++i) params[i] = &param_list[i];
 
 			if (!err && (!input_world || !output_world || !input_world->data || !output_world->data)) {
-			err = PF_Err_BAD_CALLBACK_PARAM;
+			err = OLM_DG_REFUSAL("smart-world-null");
 		}
 		PF_PixelFormat input_format = PF_PixelFormat_INVALID;
 		PF_PixelFormat output_format = PF_PixelFormat_INVALID;
@@ -1751,7 +1782,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 			: depth == 16 ? PF_PixelFormat_ARGB64 : PF_PixelFormat_ARGB128;
 		if (!err && (input_format != expected_format || output_format != expected_format ||
 		             input_format != output_format)) {
-			err = PF_Err_BAD_CALLBACK_PARAM;
+			err = OLM_DG_REFUSAL("smart-format-mismatch");
 		}
 
 		if (!err) {
@@ -1759,7 +1790,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 				extra->input->pre_render_data);
 			if (pre && (input_world->width != pre->width || input_world->height != pre->height ||
 			            output_world->width != pre->width || output_world->height != pre->height)) {
-				err = PF_Err_BAD_CALLBACK_PARAM;
+				err = OLM_DG_REFUSAL("smart-predata-size");
 			}
 		}
 		if (!err) {
@@ -1823,7 +1854,7 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 	}
 	if (!err && render_complete &&
 		staging.commit() != olm::world_safety::Status::ok) {
-		err = PF_Err_BAD_CALLBACK_PARAM;
+		err = OLM_DG_REFUSAL("smart-commit");
 	}
 	return err;
 }

@@ -1,4 +1,6 @@
 """DistanceGradation public owner contract host; no field/helper bypass."""
+import copy
+
 from .public import PublicAdapter, ROOT, replace_once
 
 HOST = ROOT/'tools/emulation/dg_public_smart_owner_contract_harness_20260812.cpp'
@@ -36,3 +38,16 @@ class Adapter(PublicAdapter):
         config.write_text(''.join(f"{p['slot']} {p['kind']} "+(' '.join(map(str,p['value'])) if isinstance(p['value'],list) else str(p['value']))+'\n' for p in case['parameters']))
         return [self.binary,*case['geometry'],case['depth'],route,config,
                 case['input_padding'],case['output_padding']],case['pixels']
+
+    def candidate(self, case, directory, route, deadline):
+        # Keep attribution outside the compared result, as in RadialBlur.
+        trace = directory/f'refusal_trace_{route}.txt'
+        trace.unlink(missing_ok=True)
+        local = copy.copy(self)
+        local.env = dict(self.env, OLM_REFUSAL_TRACE=str(trace))
+        try:
+            result, raw = PublicAdapter.candidate(local, case, directory, route, deadline)
+            guards = trace.read_text().splitlines() if trace.is_file() else []
+            return result, raw, guards
+        finally:
+            trace.unlink(missing_ok=True)
