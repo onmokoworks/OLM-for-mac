@@ -24,3 +24,4 @@ T11-triage-smoother
 F21-toondilate-pf32-seed
 F19-colorkeep-host-flags-and-byte-safe
 F20-colorkey-zero-color-and-byte-safe
+F22-smoother-classifier-stack-ub
