@@ -990,10 +990,12 @@ static bool IsRetainedNeutralExact(const PF_EffectWorld *input,
 static bool GenericEffectiveStrengths(const OLMDirectionalBlurInfo &info,
 	                                  bool require_unit_scale,
 	                                  int *effective_front_strength,
-	                                  int *effective_back_strength)
+	                                  int *effective_back_strength,
+	                                  bool allow_zero_strength = false)
 {
 	if (!effective_front_strength || !effective_back_strength ||
-		!IsGenericNeutralShape(info)) return false;
+		!(IsGenericNeutralShape(info) || (allow_zero_strength &&
+            info.front_strength == 0 && info.back_strength == 0))) return false;
 	// PF_ADD_ANGLE stores signed 16.16 degrees; the other bounds mirror the
 	// visible generic controls.  Recheck the actual float values consumed by the
 	// core after narrowing, rather than relying only on PF_FpLong finiteness.
@@ -1024,7 +1026,7 @@ static bool GenericEffectiveStrengths(const OLMDirectionalBlurInfo &info,
 		if (info.render_scale_x != 1.0 || info.render_scale_y != 1.0) return false;
 		*effective_front_strength = static_cast<int>(info.front_strength);
 		*effective_back_strength = static_cast<int>(info.back_strength);
-		return *effective_front_strength > 0 || *effective_back_strength > 0;
+		return allow_zero_strength || *effective_front_strength > 0 || *effective_back_strength > 0;
 	}
 	const double radians = -info.angle_deg * kPi / 180.0;
 	const double vx = std::cos(radians);
@@ -1093,14 +1095,15 @@ static bool CanUseGenericNeutral8(const PF_EffectWorld *input,
 template <typename PixelT>
 static bool GenericDeepWorldsSafe(const PF_EffectWorld *input,
 	                              const PF_EffectWorld *output,
-	                              const OLMDirectionalBlurInfo &info)
+	                              const OLMDirectionalBlurInfo &info,
+	                              bool allow_zero_strength = false)
 {
 	int effective_front_strength = 0, effective_back_strength = 0;
 	if (!input || !output || !input->data || !output->data || input->width <= 0 ||
 		input->height <= 0 || input->width != output->width ||
 		input->height != output->height ||
 		!GenericEffectiveStrengths(info, true, &effective_front_strength,
-			&effective_back_strength)) {
+			&effective_back_strength, allow_zero_strength)) {
 		return false;
 	}
 	const std::size_t width = static_cast<std::size_t>(input->width);
@@ -1112,7 +1115,7 @@ static bool GenericDeepWorldsSafe(const PF_EffectWorld *input,
 	olm::dblur::generic::RenderEstimate estimate = {};
 	return input->rowbytes >= active && output->rowbytes >= active &&
 		olm::dblur::generic::EstimateRender(input->width, input->height, depth,
-			effective_front_strength, effective_back_strength, 0, &estimate);
+			effective_front_strength, effective_back_strength, 0, &estimate, allow_zero_strength);
 }
 
 template <typename WorldT>
@@ -1147,7 +1150,10 @@ static OLMDirectionalBlurInfo DirectionalDeepLayerInfo(
 
 static bool IsGenericDeepFeatureShape(const OLMDirectionalBlurInfo &info)
 {
-    return (info.front_strength != 0 || info.back_strength != 0) &&
+    // The AEX's work predicate includes the two Fade counts even when no
+    // scatter side is enabled; all-four-zero is a separate copy branch.
+    return (info.front_strength != 0 || info.back_strength != 0 ||
+        info.front_alpha_fade != 0 || info.back_alpha_fade != 0) &&
         !IsGenericNeutralShape(info);
 }
 
@@ -1176,7 +1182,7 @@ static bool GenericDeepFeatureEstimate(const OLMDirectionalBlurInfo &info,
         (info.noise_variation > 0.0 && ((info.noise_type < 1 || info.noise_type > 3) ||
             (info.noise_type != 3 && (info.seed < 1 || info.seed > 1000 ||
                 info.noise_offset < -32768 || info.noise_offset > 32767)))) ||
-        !GenericEffectiveStrengths(NeutralStrengthView(info), true, &front, &back)) return false;
+        !GenericEffectiveStrengths(NeutralStrengthView(info), true, &front, &back, true)) return false;
     return olm::dblur::generic::EstimateGeneralDeepRender(width, height, depth, front, back,
         static_cast<int>(info.front_alpha_fade), static_cast<int>(info.back_alpha_fade),
         info.size_variation != 0.0 || info.front_sharp_tail != 0.0 || info.back_sharp_tail != 0.0,
@@ -1192,7 +1198,7 @@ static bool GenericDeepFeatureWorldsSafe(const PF_EffectWorld *input,
 {
     constexpr short depth = sizeof(PixelT) == 8 ? 16 : 32;
     olm::dblur::generic::RenderEstimate estimate = {};
-    return GenericDeepWorldsSafe<PixelT>(input, output, NeutralStrengthView(info)) &&
+    return GenericDeepWorldsSafe<PixelT>(input, output, NeutralStrengthView(info), true) &&
         GenericDeepFeatureEstimate(info, input->width, input->height, depth, staging_bytes,
             &estimate, layer_coefficient_bound);
 }
@@ -1586,7 +1592,25 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			return OLM_DIRECTIONAL_REFUSAL("pf8-type3-unadmitted-world");
 		}
 	}
-	const bool default_no_op = input && output && input->data && output->data &&
+	// AEX PF16 0x180003c90 / PF32 0x1800057b0 copy the input first,
+    // then return when both Strengths and both Alpha Fades are zero.
+    // Gain, angle, tails, size and noise do not participate in that test.
+    if ((bitdepth == 16 || bitdepth == 32) &&
+        info.front_strength == 0 && info.back_strength == 0 &&
+        info.front_alpha_fade == 0 && info.back_alpha_fade == 0) {
+        std::uintptr_t begin = 0, end = 0;
+        const std::size_t pixel_size = bitdepth == 16 ? sizeof(PF_Pixel16) : sizeof(PF_PixelFloat);
+        if (!input || !output || input->width <= 0 || input->height <= 0 ||
+            input->width != output->width || input->height != output->height ||
+            !PayloadSpan(input, &begin, &end) || !PayloadSpan(output, &begin, &end) ||
+            static_cast<std::size_t>(input->width) * pixel_size > static_cast<std::size_t>(input->rowbytes) ||
+            static_cast<std::size_t>(output->width) * pixel_size > static_cast<std::size_t>(output->rowbytes))
+            return OLM_DIRECTIONAL_REFUSAL("deep-copy-world");
+        if (bitdepth == 16) CopyWorld<PF_Pixel16>(input, output);
+        else CopyWorld<PF_PixelFloat>(input, output);
+        return PF_Err_NONE;
+    }
+    const bool default_no_op = input && output && input->data && output->data &&
 		input->width == output->width && input->height == output->height &&
 		info.angle_deg == 0.0 && info.brightness_gain == 1.0 &&
 		info.size_variation == 0.0 &&
@@ -2721,13 +2745,13 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 				const auto strength_info = generic_features ? NeutralStrengthView(info) : info;
 				const bool parameters_safe = GenericEffectiveStrengths(
 					strength_info, extra->input->bitdepth != 8, &effective_front_strength,
-					&effective_back_strength);
+					&effective_back_strength, generic_features);
 				const bool worlds_safe = extra->input->bitdepth == 8
 					? CanUseGenericNeutral8(input_world, output_world, info)
 					: (extra->input->bitdepth == 16
-						? GenericDeepWorldsSafe<PF_Pixel16>(input_world, output_world, strength_info)
+						? GenericDeepWorldsSafe<PF_Pixel16>(input_world, output_world, strength_info, generic_features)
 						: (extra->input->bitdepth == 32 &&
-							GenericDeepWorldsSafe<PF_PixelFloat>(input_world, output_world, strength_info)));
+							GenericDeepWorldsSafe<PF_PixelFloat>(input_world, output_world, strength_info, generic_features)));
 				olm::dblur::generic::RenderEstimate smart_estimate = {};
 				bool estimate_safe = generic_features
 					? GenericDeepFeatureEstimate(info, input_world->width, input_world->height,
