@@ -82,7 +82,7 @@ OFFSET_PROMOTE_RETAINED 5760
 OFFSET_PROMOTE_RETAINED 5952
 OFFSET_PROMOTE_RETAINED 6144
 OFFSET_PROMOTE_RETAINED 6336
-concurrent.futures.process._RemoteTraceback: 
+concurrent.futures.process._RemoteTraceback:
 """
 Traceback (most recent call last):
   File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/process.py", line 254, in _process_worker

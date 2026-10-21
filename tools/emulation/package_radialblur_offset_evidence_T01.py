@@ -26,7 +26,7 @@ def dump(path,obj):path.write_text(json.dumps(obj,sort_keys=True,indent=2)+'\n')
 files={name: 'T01-round4-'+name for name in ['fuzz-base.json','fuzz-after.json','corpus-base.json','corpus-after.json','tests.json']}
 for src,dst in files.items():shutil.copyfile(scratch/src,reports/dst)
 for src,dst in [('gates.log','T01-round4-gates-initial.log'),('gates-complete.log','T01-round4-gates-stopped.log'),('tests.log','T01-round4-tests.log')]:
- shutil.copyfile(scratch/src,reports/dst)
+ (reports/dst).write_text('\n'.join(line.rstrip() for line in (scratch/src).read_text().splitlines())+'\n')
 base=load('fuzz-base.json');after=load('fuzz-after.json');cb=load('corpus-base.json');ca=load('corpus-after.json')
 rows=[json.loads(line) for line in (scratch/'gates/independent.jsonl').read_text().splitlines()]
 source=promote.public.SOURCE.read_text()
