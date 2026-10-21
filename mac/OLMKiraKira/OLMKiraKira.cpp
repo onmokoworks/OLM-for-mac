@@ -771,10 +771,12 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	AddColoredUnion(glow, highlight, info.highlight_color, info.highlight_use_ramp, info.highlight_ramp, highlight_scale);
 	for (FloatRGBA &g : glow) {
 		if (g.a > 1.0e-6f) {
-			// FUN_18114fd90 computes one float reciprocal and multiplies
-			// all RGB lanes in the captured PF32 owner. Keep the proven
-			// integer-depth division boundary until those owners are traced.
-			if (bitdepth == 32) {
+			// FUN_18114fd90 uses one reciprocal and three multiplies.
+			// F09 extends the PF32 proof to PF16: C28 matches through
+			// the rays and first differs at these separate divisions.
+			// PF8 retains its existing boundary pending the independent
+			// seed/ray differences in its corpus (see the F09 report).
+			if (bitdepth != 8) {
 				const float inverse_alpha = 1.0f / g.a;
 				g.r *= inverse_alpha;
 				g.g *= inverse_alpha;
