@@ -31,11 +31,6 @@ static PF_Err ColorKeyRefusal(const char *function, const char *tag, int line)
 }
 #define OLM_COLORKEY_REFUSAL(tag) ColorKeyRefusal(__func__, tag, __LINE__)
 
-// T12 scratch experiment only. Default builds retain every guard.
-#ifndef OLM_COLORKEY_EXPERIMENT_BYPASS
-#define OLM_COLORKEY_EXPERIMENT_BYPASS 0
-#endif
-
 
 #include <algorithm>
 #include <cmath>
@@ -523,8 +518,7 @@ CheckoutInfo(PF_InData *in_data, PF_ParamDef *params[], OLMColorKeyInfo *info)
 	info->edge_blur_direction = params[OLMCOLORKEY_EDGE_BLUR_DIRECTION]->u.pd.value + 100;
 	info->number_of_colors = params[OLMCOLORKEY_NUMBER_OF_COLORS]->u.sd.value;
 	info->enable_replace = params[OLMCOLORKEY_ENABLE_REPLACE]->u.bd.value;
-	if ((info->number_of_colors < 1 &&
-	             !(OLM_COLORKEY_EXPERIMENT_BYPASS && info->number_of_colors == 0)) || info->number_of_colors > OLMCOLORKEY_MAX_COLORS)
+	if (info->number_of_colors < 0 || info->number_of_colors > OLMCOLORKEY_MAX_COLORS)
 		return OLM_COLORKEY_REFUSAL("color-count");
 	for (A_long i = 0; i < info->number_of_colors; ++i) {
 		for (int offset = 0; offset < COLOR_PARAM_STRIDE; ++offset) {
@@ -625,8 +619,7 @@ CheckoutSmartInfo(PF_InData *in_data, OLMColorKeyInfo *info)
 		get(OLMCOLORKEY_EDGE_BLUR_DIRECTION, [&](const PF_ParamDef &p){ info->edge_blur_direction = p.u.pd.value + 100; return PF_Err_NONE; });
 		get(OLMCOLORKEY_NUMBER_OF_COLORS, [&](const PF_ParamDef &p){ info->number_of_colors = p.u.sd.value; return PF_Err_NONE; });
 		get(OLMCOLORKEY_ENABLE_REPLACE, [&](const PF_ParamDef &p){ info->enable_replace = p.u.bd.value; return PF_Err_NONE; });
-		if (!err && ((info->number_of_colors < 1 &&
-	             !(OLM_COLORKEY_EXPERIMENT_BYPASS && info->number_of_colors == 0)) ||
+		if (!err && (info->number_of_colors < 0 ||
 		             info->number_of_colors > OLMCOLORKEY_MAX_COLORS))
 			err = OLM_COLORKEY_REFUSAL("color-count");
 		for (A_long i = 0; i < info->number_of_colors && !err; ++i) {
@@ -1773,16 +1766,22 @@ struct OLMCKPixelTraits<PF_PixelFloat> {
 	static void scale_alpha_unbounded(PF_PixelFloat &dst, float weight) { dst.alpha *= weight; }
 };
 
+// World rowbytes is a byte stride, not a guarantee of PixelT alignment.
+// Copy through aligned values so odd padding is valid at every depth.
 template <typename PixelT>
-static PixelT *PixelAt(PF_EffectWorld *world, A_long x, A_long y)
+static PixelT ReadPixel(const PF_EffectWorld *world, A_long x, A_long y)
 {
-	return reinterpret_cast<PixelT *>(reinterpret_cast<char *>(world->data) + y * world->rowbytes) + x;
+	PixelT pixel;
+	std::memcpy(&pixel, reinterpret_cast<const std::uint8_t *>(world->data) +
+	    (size_t)y * (size_t)world->rowbytes + (size_t)x * sizeof(PixelT), sizeof(pixel));
+	return pixel;
 }
 
 template <typename PixelT>
-static const PixelT *PixelAtConst(const PF_EffectWorld *world, A_long x, A_long y)
+static void WritePixel(PF_EffectWorld *world, A_long x, A_long y, const PixelT &pixel)
 {
-	return reinterpret_cast<const PixelT *>(reinterpret_cast<const char *>(world->data) + y * world->rowbytes) + x;
+	std::memcpy(reinterpret_cast<std::uint8_t *>(world->data) +
+	    (size_t)y * (size_t)world->rowbytes + (size_t)x * sizeof(PixelT), &pixel, sizeof(pixel));
 }
 
 static A_long WorldOriginX(const PF_EffectWorld *world)
@@ -1824,16 +1823,20 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	// Native PF8/PF16/PF32 final callbacks subtract the finished matched matte
 	// from source. Thin and the recovered public curves finish the matched matte
 	// before this subtraction. Complementing the mask first changes PF32 rounding.
-	if (!info.color_keep && (info.edge_thin_amount != 0.0 || IsRecoveredPublicBlur(info))) {
+	// FUN_180004170 also runs with zero Thin/Blur: source minus the matched
+	// matte is observable for signed zero, infinities, and signaling NaNs.
+	if (!info.color_keep && (info.edge_blur_amount == 0.0 ||
+	    info.edge_thin_amount != 0.0 || IsRecoveredPublicBlur(info))) {
 		OLMColorKeyInfo matte_info = info;
 		matte_info.color_keep = true;
 		matte_info.enable_replace = false;
 		PF_Err err = RenderTyped<PixelT>(input, output, matte_info);
 		if (err) return err;
 		for (A_long y = 0; y < h; ++y) for (A_long x = 0; x < w; ++x) {
-			const PixelT *inP = PixelAtConst<PixelT>(input, x + input_offset_x, y + input_offset_y);
-			PixelT *outP = PixelAt<PixelT>(output, x, y);
-			outP->alpha = inP->alpha - outP->alpha;
+			const PixelT source_pixel = ReadPixel<PixelT>(input, x + input_offset_x, y + input_offset_y);
+			PixelT output_pixel = ReadPixel<PixelT>(output, x, y);
+			output_pixel.alpha = source_pixel.alpha - output_pixel.alpha;
+			WritePixel(output, x, y, output_pixel);
 		}
 		return PF_Err_NONE;
 	}
@@ -1850,13 +1853,12 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	}
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
-			const PixelT *inP = PixelAtConst<PixelT>(
-			    input, x + input_offset_x, y + input_offset_y);
-			float alpha = OLMCKPixelTraits<PixelT>::a(*inP);
+			const PixelT source_pixel = ReadPixel<PixelT>(input, x + input_offset_x, y + input_offset_y);
+			float alpha = OLMCKPixelTraits<PixelT>::a(source_pixel);
 			float rgb[3] = {
-				OLMCKPixelTraits<PixelT>::r(*inP),
-				OLMCKPixelTraits<PixelT>::g(*inP),
-				OLMCKPixelTraits<PixelT>::b(*inP)
+				OLMCKPixelTraits<PixelT>::r(source_pixel),
+				OLMCKPixelTraits<PixelT>::g(source_pixel),
+				OLMCKPixelTraits<PixelT>::b(source_pixel)
 			};
 			auto classifier_component = [&](float value) {
 				if (!info.premultiplied) return value;
@@ -2004,9 +2006,12 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 					if (info.color_space == 3) {
 						hit = LabPerComponentHit(cmp, key, tr, tg, tb, key_epsilon);
 					} else {
-						hit = std::fabs(cmp[0] - key[0]) <= (float)(key_epsilon + (float)tr * comp_scale[0])
-						    && std::fabs(cmp[1] - key[1]) <= (float)(key_epsilon + (float)tg * comp_scale[1])
-						    && std::fabs(cmp[2] - key[2]) <= (float)(key_epsilon + (float)tb * comp_scale[2]);
+						// FUN_180004190: COMISS + JA rejects only ordered greater
+						// differences. Premultiplication can produce unordered RGB
+						// even when alpha is zero (for example, infinity * -0).
+						hit = !(std::fabs(cmp[0] - key[0]) > (float)(key_epsilon + (float)tr * comp_scale[0]))
+						    && !(std::fabs(cmp[1] - key[1]) > (float)(key_epsilon + (float)tg * comp_scale[1]))
+						    && !(std::fabs(cmp[2] - key[2]) > (float)(key_epsilon + (float)tb * comp_scale[2]));
 					}
 				} else {
 					PF_FpLong threshold = info.per_color ? info.thresholds[i] : info.threshold;
@@ -2030,7 +2035,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	}
 	if (info.color_keep && (info.edge_thin_amount != 0.0 || IsRecoveredPublicBlur(info))) {
 		for (A_long y = 0; y < h; ++y) for (A_long x = 0; x < w; ++x) {
-			if (OLMCKPixelTraits<PixelT>::a(*PixelAtConst<PixelT>(
+			if (OLMCKPixelTraits<PixelT>::a(ReadPixel<PixelT>(
 					input, x + input_offset_x, y + input_offset_y)) == 0.0f)
 				matched[(size_t)y * (size_t)w + (size_t)x] = 0;
 		}
@@ -2063,7 +2068,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 
 	if (info.color_keep && (info.edge_thin_amount != 0.0 || IsRecoveredPublicBlur(info))) {
 		for (A_long y = 0; y < h; ++y) for (A_long x = 0; x < w; ++x) {
-			if (OLMCKPixelTraits<PixelT>::a(*PixelAtConst<PixelT>(
+			if (OLMCKPixelTraits<PixelT>::a(ReadPixel<PixelT>(
 					input, x + input_offset_x, y + input_offset_y)) == 0.0f)
 				matched[(size_t)y * (size_t)w + (size_t)x] = 0;
 		}
@@ -2071,10 +2076,8 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	std::vector<u_char> keep_mask((size_t)w * (size_t)h, 0);
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
-			const PixelT *inP = PixelAtConst<PixelT>(
-			    input, x + input_offset_x, y + input_offset_y);
-			PixelT *outP = PixelAt<PixelT>(output, x, y);
-			*outP = *inP;
+			const PixelT source_pixel = ReadPixel<PixelT>(input, x + input_offset_x, y + input_offset_y);
+			PixelT output_pixel = source_pixel;
 			bool keep = info.color_keep ? matched[(size_t)y * (size_t)w + (size_t)x] != 0
 			                            : matched[(size_t)y * (size_t)w + (size_t)x] == 0;
 			keep_mask[(size_t)y * (size_t)w + (size_t)x] = keep ? 1 : 0;
@@ -2082,16 +2085,16 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				// Premultiplied changes the classifier input above, not ownership
 				// of the stored RGB.  The native writer always clears alpha only;
 				// hidden RGB therefore survives at alpha zero in both modes.
-				OLMCKPixelTraits<PixelT>::zero_alpha(*outP);
+				OLMCKPixelTraits<PixelT>::zero_alpha(output_pixel);
 				// FUN_1800035d0 copies the matched source alpha verbatim.
 				// Zero is not a distance seed, but its sign remains in the matte.
 				// Negative Thin skips zero alpha; positive Thin copies source RGBA.
 				const size_t matte_index = (size_t)y * (size_t)w + (size_t)x;
 				if (OLMCKPixelTraits<PixelT>::is_32bpc() && info.color_keep &&
 				    (info.edge_thin_amount != 0.0 || IsRecoveredPublicBlur(info)) &&
-				    OLMCKPixelTraits<PixelT>::a(*inP) == 0.0f &&
+				    OLMCKPixelTraits<PixelT>::a(source_pixel) == 0.0f &&
 				    (matched_index[matte_index] >= 0 || thin_expanded[matte_index]))
-					OLMCKPixelTraits<PixelT>::restore_alpha(*outP, *inP);
+					OLMCKPixelTraits<PixelT>::restore_alpha(output_pixel, source_pixel);
 			}
 			// Native replacement precedes Thin/Blur and survives alpha-only erosion.
 			// Positive Thin copies original RGBA into zero-matte pixels, overriding
@@ -2101,8 +2104,9 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			if (info.color_keep && info.enable_replace && key_index >= 0 &&
 			    key_index < OLMCOLORKEY_MAX_COLORS && info.use_replace_color[key_index] &&
 			    !thin_expanded[idx]) {
-				OLMCKPixelTraits<PixelT>::replace_rgb(*outP, info.replace_colors[key_index]);
+				OLMCKPixelTraits<PixelT>::replace_rgb(output_pixel, info.replace_colors[key_index]);
 			}
+			WritePixel(output, x, y, output_pixel);
 		}
 	}
 	if (info.edge_blur_amount != 0.0) {
@@ -2146,8 +2150,9 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						weight = EdgeBlurWeight(
 						    true, dist[idx], (float)info.edge_blur_amount, 1);
 					}
-					PixelT *outP = PixelAt<PixelT>(output, x, y);
-					OLMCKPixelTraits<PixelT>::scale_alpha_only(*outP, weight);
+					PixelT output_pixel = ReadPixel<PixelT>(output, x, y);
+					OLMCKPixelTraits<PixelT>::scale_alpha_only(output_pixel, weight);
+					WritePixel(output, x, y, output_pixel);
 				}
 			}
 			return PF_Err_NONE;
@@ -2181,15 +2186,15 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			for (A_long x = 0; x < w; ++x) {
 				size_t idx = (size_t)y * (size_t)w + (size_t)x;
 				bool keep = keep_mask[idx] != 0;
-				const PixelT *inP = PixelAtConst<PixelT>(
-				    input, x + input_offset_x, y + input_offset_y);
-				PixelT *outP = PixelAt<PixelT>(output, x, y);
+				const PixelT source_pixel = ReadPixel<PixelT>(input, x + input_offset_x, y + input_offset_y);
+				PixelT output_pixel = ReadPixel<PixelT>(output, x, y);
 				if (use_pf32_amount2_native_plane) {
 					float plane = 0.0f;
 					if (EdgeBlurPf32Amount2Plane(
 					        keep, dist[idx], edge_blur_direction,
 					        info.edge_blur_distance_type, &plane)) {
-						outP->alpha = inP->alpha - inP->alpha * plane;
+						output_pixel.alpha = source_pixel.alpha - source_pixel.alpha * plane;
+						WritePixel(output, x, y, output_pixel);
 						continue;
 					}
 				}
@@ -2198,7 +2203,8 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 					if (EdgeBlurPf32InternalAmount4Plane(
 					        keep, dist[idx], edge_blur_direction,
 					        info.edge_blur_distance_type, &plane)) {
-						outP->alpha = inP->alpha - inP->alpha * plane;
+						output_pixel.alpha = source_pixel.alpha - source_pixel.alpha * plane;
+						WritePixel(output, x, y, output_pixel);
 						continue;
 					}
 				}
@@ -2223,8 +2229,9 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						const double phase = 1.57079632679485 - (double)NativeBlurPhaseProduct(native_dist, ratio);
 						weight = (float)(std::sin(phase) + 1.0) * 0.5f;
 					}
-					if (!keep && weight != 0.0f) OLMCKPixelTraits<PixelT>::restore_alpha(*outP, *inP);
-					OLMCKPixelTraits<PixelT>::scale_alpha_unbounded(*outP, weight);
+					if (!keep && weight != 0.0f) OLMCKPixelTraits<PixelT>::restore_alpha(output_pixel, source_pixel);
+					OLMCKPixelTraits<PixelT>::scale_alpha_unbounded(output_pixel, weight);
+					WritePixel(output, x, y, output_pixel);
 					continue;
 				}
 				if (IsRecoveredPublicBlur(info)) {
@@ -2238,8 +2245,9 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 						float sine = std::sin(phase);
 						weight = (sine + 1.0f) * 0.5f;
 					}
-					if (!keep && weight != 0.0f) OLMCKPixelTraits<PixelT>::restore_alpha(*outP, *inP);
-					OLMCKPixelTraits<PixelT>::scale_alpha_unbounded(*outP, weight);
+					if (!keep && weight != 0.0f) OLMCKPixelTraits<PixelT>::restore_alpha(output_pixel, source_pixel);
+					OLMCKPixelTraits<PixelT>::scale_alpha_unbounded(output_pixel, weight);
+					WritePixel(output, x, y, output_pixel);
 					continue;
 				}
 				if (bounded_public_owner_lane && edge_blur_direction == 1) {
@@ -2317,7 +2325,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 				    edge_blur_direction != 3 &&
 				    !(edge_blur_direction == 4 && info.edge_blur_amount == 2.0) &&
 				    !(edge_blur_direction == 0 && info.edge_blur_amount == 2.0)) {
-					OLMCKPixelTraits<PixelT>::restore_alpha(*outP, *inP);
+					OLMCKPixelTraits<PixelT>::restore_alpha(output_pixel, source_pixel);
 				}
 				if (bounded_public_owner_lane && OLMCKPixelTraits<PixelT>::is_32bpc()) {
 					// The exported float owner stores a direction plane and applies it
@@ -2358,27 +2366,29 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 							plane = (float)(std::sin(phase) + 1.0) * 0.5f;
 						}
 					}
-					outP->alpha = inP->alpha - inP->alpha * plane;
+					output_pixel.alpha = source_pixel.alpha - source_pixel.alpha * plane;
 					if (!keep && exact_32x18_fixture_lane && edge_blur_direction == 1 &&
 					    info.edge_blur_distance_type == 3 &&
 					    info.edge_blur_amount == 4.0 && native_dist == 1.0f) {
-						outP->alpha = std::nextafter(outP->alpha, 0.0f);
+						output_pixel.alpha = std::nextafter(output_pixel.alpha, 0.0f);
 					}
+					WritePixel(output, x, y, output_pixel);
 					continue;
 				}
 				if (edge_blur_direction == 1 &&
 				    (info.edge_blur_amount == 1.0 || info.edge_blur_amount == 2.0 ||
 				     info.edge_blur_amount == 4.0) &&
 				    dist[idx] == 0.0f) {
-					OLMCKPixelTraits<PixelT>::scale_alpha_unbounded(*outP, weight);
+					OLMCKPixelTraits<PixelT>::scale_alpha_unbounded(output_pixel, weight);
 				} else if (info.color_keep && edge_blur_direction == 2 &&
 				           info.edge_blur_amount == 4.0) {
-					OLMCKPixelTraits<PixelT>::scale_alpha_unbounded(*outP, weight);
+					OLMCKPixelTraits<PixelT>::scale_alpha_unbounded(output_pixel, weight);
 				} else if (bounded_public_owner_lane) {
-					OLMCKPixelTraits<PixelT>::scale_alpha_public(*outP, weight);
+					OLMCKPixelTraits<PixelT>::scale_alpha_public(output_pixel, weight);
 				} else {
-					OLMCKPixelTraits<PixelT>::scale_alpha_only(*outP, weight);
+					OLMCKPixelTraits<PixelT>::scale_alpha_only(output_pixel, weight);
 				}
+				WritePixel(output, x, y, output_pixel);
 			}
 		}
 	}
