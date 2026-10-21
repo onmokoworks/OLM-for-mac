@@ -46,3 +46,6 @@ changed_files: list
 verify: exact command(s) the orchestrator should run to re-check, with expected result
 next: what remains / suggested follow-up ticket
 ```
+
+If any tool call is rejected (permissions) or you must stop for any reason, still
+write and commit the report with `status: blocked` before ending. Never end silently.
