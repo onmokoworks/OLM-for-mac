@@ -17,9 +17,38 @@
 #include <cstdlib>
 #include <cstring>
 #include <new>
+#include <fcntl.h>
+#include <unistd.h>
 #include <vector>
 
 namespace {
+
+// Refusal attribution for the fuzz campaign. When OLM_REFUSAL_TRACE names a
+// file, each failing admission guard appends "function:tag". The file is only
+// opened on a refusal, and the returned error code and all output bytes are
+// identical whether or not tracing is enabled.
+static PF_Err KiraRefusal(const char *function, const char *tag, int line, PF_Err err)
+{
+	const char *path = std::getenv("OLM_REFUSAL_TRACE");
+	if (path && path[0]) {
+		const int handle = ::open(path, O_WRONLY | O_CREAT | O_APPEND, 0666);
+		if (handle >= 0) {
+			char entry[384];
+			const int length = std::snprintf(entry, sizeof(entry), "%s:%s@%d\n", function, tag, line);
+			if (length > 0) {
+				const ssize_t written = ::write(handle, entry, (std::size_t)length);
+				(void)written;
+			}
+			::close(handle);
+		}
+	}
+	return err;
+}
+
+#define OLM_KIRA_REFUSAL(tag) KiraRefusal(__func__, tag, __LINE__, PF_Err_BAD_CALLBACK_PARAM)
+#define OLM_KIRA_ERROR(tag, code) KiraRefusal(__func__, tag, __LINE__, code)
+
+
 
 static void KiraDiagnosticLog(const char *format, ...)
 {
@@ -387,13 +416,13 @@ static PF_Err ValidateWorldPair(
 	PF_PixelFormat *format_out)
 {
 	if (!in_data || !out_data || !input || !output || !format_out)
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_KIRA_REFUSAL("world-null-argument");
 	PF_PixelFormat input_format = PF_PixelFormat_INVALID;
 	PF_PixelFormat output_format = PF_PixelFormat_INVALID;
 	PF_Err err = GetKiraPixelFormats(
 		in_data, input, output, &input_format, &output_format);
 	if (err) return err;
-	if (input_format != output_format) return PF_Err_BAD_CALLBACK_PARAM;
+	if (input_format != output_format) return OLM_KIRA_REFUSAL("world-format-mismatch");
 	const size_t pixel_size = PixelSizeForFormat(input_format);
 	const short format_bitdepth = BitDepthForFormat(input_format);
 	if (!pixel_size || !format_bitdepth ||
@@ -401,12 +430,12 @@ static PF_Err ValidateWorldPair(
 		input->width != output->width || input->height != output->height ||
 		!WorldLayoutIsSafe(input, pixel_size) ||
 		!WorldLayoutIsSafe(output, pixel_size)) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_KIRA_REFUSAL("world-layout-unsafe");
 	}
 	const uint64_t pixel_count = static_cast<uint64_t>(input->width) *
 		static_cast<uint64_t>(input->height);
 	if (pixel_count > static_cast<uint64_t>(SIZE_MAX / sizeof(FloatRGBA)))
-		return PF_Err_OUT_OF_MEMORY;
+		return OLM_KIRA_ERROR("world-allocation-overflow", PF_Err_OUT_OF_MEMORY);
 	*format_out = input_format;
 	return PF_Err_NONE;
 }
@@ -1958,10 +1987,10 @@ static PF_Err Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *para
 	PF_Err err = PF_Err_NONE;
 	if (!in_data || !in_data->pica_basicP || !out_data || !params || !output ||
 		!params[OLMKIRAKIRA_INPUT]) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_KIRA_REFUSAL("classic-callback-shape");
 	}
 	for (A_long index = 0; index < OLMKIRAKIRA_NUM_PARAMS; ++index) {
-		if (!params[index]) return PF_Err_BAD_CALLBACK_PARAM;
+		if (!params[index]) return OLM_KIRA_REFUSAL("classic-missing-param");
 	}
 	OLMKiraKiraInfo info;
 	ERR(ReadRenderInfo(in_data, params, &info));
@@ -1993,7 +2022,7 @@ static PF_Err Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *para
 		(int)exact_closure, (int)generic_beta, (int)source_family);
 	if (!exact_closure && !generic_beta) {
 		KiraDiagnosticLog("classic reject tuple_layout_source");
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_KIRA_REFUSAL("tuple-layout-source");
 	}
 	const short bitdepth = BitDepthForFormat(format);
 	ERR(RenderWorld(input, output, info, bitdepth));
@@ -2151,7 +2180,7 @@ static PF_Err SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra
 	if (!in_data || !extra || !extra->input || !extra->output || !extra->cb ||
 		!extra->cb->checkout_layer) {
 		KiraDiagnosticLog("pre reject callback_shape");
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_KIRA_REFUSAL("pre-callback-shape");
 	}
 	const PF_LRect &requested_rect = extra->input->output_request.rect;
 	A_long generic_render_width = 0;
@@ -2198,7 +2227,7 @@ static PF_Err SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra
 	if (!exact_request_matches_known_frame &&
 		!request_contains_generic_full_frame) {
 		KiraDiagnosticLog("pre reject request_not_admitted");
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_KIRA_REFUSAL("request-not-admitted");
 	}
 	PF_RenderRequest req = extra->input->output_request;
 	PF_CheckoutResult in_result;
@@ -2255,7 +2284,7 @@ static PF_Err SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra
 		(!generic_beta_request && !exact_checkout_rects_are_full)) {
 		KiraDiagnosticLog("pre reject checkout_geometry expected=%ldx%ld",
 			(long)expected_width, (long)expected_height);
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_KIRA_REFUSAL("checkout-geometry");
 	}
 
 	PreRenderData *pre = new (std::nothrow) PreRenderData;
@@ -2286,7 +2315,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 		!extra->input || !extra->cb ||
 		!extra->cb->checkout_layer_pixels || !extra->cb->checkout_output) {
 		KiraDiagnosticLog("smart reject callback_shape");
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_KIRA_REFUSAL("smart-callback-shape");
 	}
 	PF_Err err = PF_Err_NONE;
 	PF_EffectWorld *input_world  = NULL;
@@ -2356,7 +2385,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 			pre ? (double)pre->comp_width : -1.0,
 			pre ? (double)pre->comp_height : -1.0);
 		if (!err && !exact_world_layout && !generic_world_layout) {
-			err = PF_Err_BAD_CALLBACK_PARAM;
+			err = OLM_KIRA_REFUSAL("world-layout");
 			KiraDiagnosticLog("smart reject world_layout");
 		}
 		OLMKiraKiraInfo info;
@@ -2387,7 +2416,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				(int)source_family, (int)exact_tuple_is_admitted,
 				(int)exact_closure, (int)generic_beta);
 			if (!exact_closure && !generic_beta) {
-				err = PF_Err_BAD_CALLBACK_PARAM;
+				err = OLM_KIRA_REFUSAL("tuple-or-source");
 				KiraDiagnosticLog("smart reject tuple_or_source");
 			}
 		}

@@ -1,0 +1,280 @@
+{
+  "case": {
+    "depth": 16,
+    "geometry": [
+      24,
+      17
+    ],
+    "index": 13,
+    "input_padding": 7,
+    "output_padding": 0,
+    "parameters": [
+      {
+        "kind": "u",
+        "slot": 1,
+        "value": 1
+      },
+      {
+        "kind": "u",
+        "slot": 2,
+        "value": 2
+      },
+      {
+        "kind": "u",
+        "slot": 3,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 4,
+        "value": 0
+      },
+      {
+        "kind": "s",
+        "slot": 5,
+        "value": 1.0
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 100
+      },
+      {
+        "kind": "s",
+        "slot": 7,
+        "value": 0.0
+      },
+      {
+        "kind": "i",
+        "slot": 8,
+        "value": 100
+      },
+      {
+        "kind": "i",
+        "slot": 9,
+        "value": 100
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 9
+      },
+      {
+        "kind": "c",
+        "slot": 11,
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 13,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 16,
+        "value": 50
+      },
+      {
+        "kind": "c",
+        "slot": 17,
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 19,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 22,
+        "value": 50
+      },
+      {
+        "kind": "c",
+        "slot": 23,
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 25,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 28,
+        "value": 50
+      },
+      {
+        "kind": "c",
+        "slot": 29,
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 31,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 34,
+        "value": 5
+      },
+      {
+        "kind": "c",
+        "slot": 35,
+        "value": [
+          0,
+          30,
+          97,
+          167
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 37,
+        "value": 0
+      },
+      {
+        "kind": "a",
+        "slot": 40,
+        "value": 0.0
+      }
+    ],
+    "profile": "sdr",
+    "seed": 1
+  },
+  "generator_version": 1,
+  "index": 13,
+  "input_sha256": "e4069846066a95e77c28ab90c55a9314d3bd433645c2e033eef56d6be893c523",
+  "max_size": 256,
+  "operations": [],
+  "pixels_zlib_base64": "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",
+  "plugin": "olmkirakira",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMKiraKira.aex",
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "builder_anomalies": "Brightness Gain default 0.10000000149011612 is below declared min 1; sampling/shrinking default clamped to legal 1. Blur Mode samples declared 1..3 only.",
+    "candidate_sha256": "1ac1e99e6e802b828aefefb8ea2db5fcd912efe503d459e5286995de8dc1d2f3",
+    "declarations_sha256": "b1e500a914d04b30c4fcd581cbbb9caaa974e55cf683e9554c7d5d6e391a7731",
+    "dependencies_sha256": {
+      "mac/OLMKiraKira/OLMKiraKira.cpp": "5fd4818b4dec04fd14468fd986ded9498a765290923ddfec71e417faf7f52e14",
+      "mac/OLMKiraKira/OLMKiraKira.h": "26c5209a6fddebbde96190fe09e0749b6f7dd6bec1421815b7a6e5fa6f73d64d",
+      "tools/emulation/olmkirakira_public_smart_bounded_closure_harness_20260812.cpp": "49e5922fac66eaa53f57b45edf5ac06073bfb13dd3f24d85ddaae9c619877800",
+      "tools/fuzz/harnesses/kirakira_main.cpp": "14dee9cf51476808095c6dd1cb78b16310fbe09301b9dbc3f0d962f1a248346e",
+      "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c"
+    },
+    "host": "Original AEX Unicorn CPU smartfx; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "oracle_render_path": "smartfx",
+    "out_of_range_builder_defaults": [
+      {
+        "builder_default": 0.10000000149011612,
+        "sampled_default": 1.0,
+        "slot": 5
+      }
+    ],
+    "ramps": "Existing default three-stop handles only; custom arbitrary ramps outside this adapter",
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "rotation": "Original ANGLE raw fixed integer consumed as degrees; Mac float degree value follows retained exported-owner helper",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "triage": {
+      "experiment": "all",
+      "limitation": "Admission only; helper fallbacks, request normalization, world validation and arithmetic unchanged",
+      "sanitizers": false,
+      "scratch_source_sha256": "0edb71c3ab470e9a6f3c3960ee1e6d5bba435b7c9a6fc56f618e18db51016695",
+      "switch": "OLM_KIRA_TRIAGE_GATE_OFF=1"
+    },
+    "worker_path": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker",
+    "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "reduction": {
+    "accepted": [],
+    "attempts": 13,
+    "bounded": true,
+    "minimality_claimed": false,
+    "outcomes": {
+      "ok/exact,exact": 10,
+      "ok/exact,refusal": 1,
+      "ok/mismatch,refusal": 2
+    }
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "raw_sha256": "9236a74dcdefaf756081f9868365caca1b51f9cc74cec3f7d389fa03ed4c7ebc",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "routes": {
+      "classic": {
+        "diff": {
+          "actual_bytes": 3264,
+          "actual_word_hex": "f96f",
+          "different_bytes": 1,
+          "different_words": 1,
+          "expected_bytes": 3264,
+          "expected_word_hex": "fa6f",
+          "first_byte": 1698,
+          "first_word": 849
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "c605aeef0978ae6d76b87bdebb171662d3e4bf6c8e71b62a9108dbda72d97adc",
+        "status": "mismatch"
+      },
+      "smart": {
+        "diff": {
+          "actual_bytes": 3264,
+          "actual_word_hex": "f96f",
+          "different_bytes": 1,
+          "different_words": 1,
+          "expected_bytes": 3264,
+          "expected_word_hex": "fa6f",
+          "first_byte": 1698,
+          "first_word": 849
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 1 1 25 25",
+          "ERROR": "0"
+        },
+        "raw_sha256": "c605aeef0978ae6d76b87bdebb171662d3e4bf6c8e71b62a9108dbda72d97adc",
+        "status": "mismatch"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 1
+}
