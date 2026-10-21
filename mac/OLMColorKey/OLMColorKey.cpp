@@ -162,13 +162,11 @@ GlobalSetup(PF_InData *, PF_OutData *out_data, PF_ParamDef *[], PF_LayerDef *)
 {
 	out_data->my_version = PF_VERSION(MAJOR_VERSION, MINOR_VERSION, BUG_VERSION,
 	                                  STAGE_VERSION, BUILD_VERSION);
-	out_data->out_flags  = 0x02000040;
-#ifndef OLMCOLORKEY_HOSTLESS_RENDER_HARNESS
-	out_data->out_flags |= PF_OutFlag_SEND_UPDATE_PARAMS_UI;
-#endif
+	// Original 2025 AEX PiPL and GLOBAL_SETUP; see F18 route/flag audit.
+	out_data->out_flags  = 0x02000440;
 	out_data->out_flags2 = PF_OutFlag2_SUPPORTS_SMART_RENDER |
 	                      PF_OutFlag2_FLOAT_COLOR_AWARE |
-	                      PF_OutFlag2_SUPPORTS_GET_FLATTENED_SEQUENCE_DATA;
+	                      PF_OutFlag2_SUPPORTS_THREADED_RENDERING;
 	return PF_Err_NONE;
 }
 

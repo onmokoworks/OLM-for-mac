@@ -100,7 +100,8 @@ GlobalSetup(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *[], PF_LayerD
 	out_data->my_version = PF_VERSION(MAJOR_VERSION, MINOR_VERSION, BUG_VERSION,
 	                                  STAGE_VERSION, BUILD_VERSION);
 	out_data->out_flags  = 0x02000040;
-	out_data->out_flags2 = 0x08000000 | PF_OutFlag2_SUPPORTS_SMART_RENDER;
+	// Original v1 selects Classic in AE; the Smart wrapper is diagnostic only.
+	out_data->out_flags2 = 0x08000000;
 	return PF_Err_NONE;
 }
 

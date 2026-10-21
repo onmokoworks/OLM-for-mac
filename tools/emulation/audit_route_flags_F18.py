@@ -35,7 +35,7 @@ def sha(path):
 
 
 def import_summary(calls):
-    # Smoother2's setup alone calls exp 19,560 times. Preserve identity/counts,
+    # Smoother2's setup alone calls pow 19,561 times. Preserve identity/counts,
     # not a multi-megabyte per-call argument transcript in the committed report.
     return {'count': len(calls),
             'counts_by_import': dict(sorted(Counter(f'{c["dll"]}!{c["name"]}' for c in calls).items())),
@@ -131,6 +131,16 @@ def mac_pipls(path):
 
 def original_setup(path, entry, fill):
     loader = AexLoader(str(path), verbose=False, fast=True)
+    loader.register_libm_impls()
+    import_errors = []
+    for name, implementation in list(loader.import_impls.items()):
+        def checked(uc, args, name=name, implementation=implementation):
+            try:
+                return implementation(uc, args)
+            except Exception as error:
+                import_errors.append(f'{name}: {error}')
+                raise
+        loader.import_impls[name] = checked
     acquired, released, registrations, allocations, memories = [], [], [], {}, {}
     def q(addr, val):
         loader.write_bytes(addr, struct.pack('<Q', val))
@@ -197,10 +207,13 @@ def original_setup(path, entry, fill):
     result = loader.call_function(entry, [1, inp, out, 0, 0, 0], max_instructions=3_000_000)
     assert loader.uc.reg_read(UC_X86_REG_RIP) == RETURN_TRAMPOLINE, 'instruction budget exhausted'
     assert result['rax'] == 0
+    assert not import_errors, import_errors
+    assert all(call.name in loader.import_impls for call in loader.import_log), 'unimplemented import'
     values = [struct.unpack('<I', loader.read_bytes(out+off, 4))[0] for off in (0, 0x60, 0x190)]
     return {'return_code': result['rax'], 'my_version': values[0], 'out_flags': values[1],
             'out_flags2': values[2], 'initial_fill': fill, 'suite_acquisitions': acquired,
             'suite_releases': released, 'registrations': registrations,
+            'import_policy': 'registered loader memory/libm callbacks; no unimplemented imports or callback errors',
             'imports': import_summary([asdict(call) for call in loader.import_log])}
 
 
@@ -222,6 +235,8 @@ def main():
     parser.add_argument('--scratch', type=Path, default=ROOT/'orchestra/state/F18-route-target-per-plugin')
     parser.add_argument('--report', type=Path, required=True)
     parser.add_argument('--keep-builds', action='store_true')
+    parser.add_argument('--require-agreement', action='store_true',
+                        help='Exit nonzero unless all original/Mac resource/runtime flags agree')
     args = parser.parse_args()
     scratch = args.scratch.resolve()
     assert scratch.is_relative_to(ROOT/'orchestra/state/F18-route-target-per-plugin')
@@ -300,6 +315,8 @@ def main():
                          'smart': sum(x['original_smart'] for x in report['plugins'])}
     args.report.write_text(json.dumps(report, indent=2, sort_keys=True)+'\n')
     print(json.dumps(report['summary']), flush=True)
+    if args.require_agreement:
+        assert report['summary']['flags_agree'] == len(PLUGINS), 'capability disagreement'
 
 
 if __name__ == '__main__':
