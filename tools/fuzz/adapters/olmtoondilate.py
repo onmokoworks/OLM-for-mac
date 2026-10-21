@@ -33,3 +33,15 @@ class Adapter(PublicAdapter):
         config.write_text(''.join(f"{p['slot']} {p['kind']} {p['value']}\n" for p in case['parameters']))
         return [self.binary,*case['geometry'],case['depth'],route,config,
                 case['input_padding'],case['output_padding']],case['pixels']
+
+    def candidate(self, case, directory, route, deadline, env=None):
+        trace = directory / f'refusal_trace_{route}.txt'
+        trace.unlink(missing_ok=True)
+        try:
+            result, raw = super().candidate(
+                case, directory, route, deadline,
+                env=dict(self.env if env is None else env, OLM_REFUSAL_TRACE=str(trace)))
+            guards = trace.read_text().splitlines() if trace.is_file() else []
+            return result, raw, guards
+        finally:
+            trace.unlink(missing_ok=True)
