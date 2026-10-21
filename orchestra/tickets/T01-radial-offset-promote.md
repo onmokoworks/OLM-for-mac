@@ -79,3 +79,8 @@ Correct stop. Short round only:
    base estimate, and the AEX/Mac runtime of those cases. Then propose (do not apply) two options:
    (a) budget estimate fix that keeps them admitted with justification, (b) cap removal.
 3. If it is any other guard: find why the candidate routes them there and fix so they stay exact.
+
+## Round 6 (orchestrator)
+Round 5 fix accepted in principle. Now run the full acceptance under the Round 4 rule: 390 gate,
+9,645 retained gate, seed 1 n 500 fuzz (and seed 2 n 300 as a fresh check), then rebaseline the
+radialblur corpus if every change is allowed. Background + logs, --jobs 2. Stop only on a forbidden change.
