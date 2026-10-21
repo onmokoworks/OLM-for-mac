@@ -1,0 +1,3039 @@
+{
+  "abi_control": {
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "destination_bytes_checked": 16,
+    "entry": "0x180001000",
+    "passed": true,
+    "stack_argument_buffers_checked": 2
+  },
+  "flag_definitions": {
+    "PF_OutFlag2_AE13_5_THREADSAFE": 4194304,
+    "PF_OutFlag2_AUTOMATIC_WIDE_TIME_INPUT": 131072,
+    "PF_OutFlag2_CAN_COMBINE_WITH_DESTINATION": 32,
+    "PF_OutFlag2_CUSTOM_UI_ASYNC_MANAGER": 16777216,
+    "PF_OutFlag2_DEPENDS_ON_UNREFERENCED_MASKS": 524288,
+    "PF_OutFlag2_DOESNT_NEED_EMPTY_PIXELS": 64,
+    "PF_OutFlag2_FLOAT_COLOR_AWARE": 4096,
+    "PF_OutFlag2_I_AM_DEPRECATED": 16384,
+    "PF_OutFlag2_I_AM_THREADSAFE": 16,
+    "PF_OutFlag2_I_MIX_GUID_DEPENDENCIES": 2097152,
+    "PF_OutFlag2_I_USE_3D_CAMERA": 2,
+    "PF_OutFlag2_I_USE_3D_LIGHTS": 4,
+    "PF_OutFlag2_I_USE_COLORSPACE_ENUMERATION": 8192,
+    "PF_OutFlag2_I_USE_TIMECODE": 262144,
+    "PF_OutFlag2_MUTABLE_RENDER_SEQUENCE_DATA_SLOWER": 268435456,
+    "PF_OutFlag2_OUTPUT_IS_WATERMARKED": 1048576,
+    "PF_OutFlag2_PARAM_GROUP_START_COLLAPSED_FLAG": 8,
+    "PF_OutFlag2_PPRO_DO_NOT_CLONE_SEQUENCE_DATA_FOR_RENDER": 32768,
+    "PF_OutFlag2_PRESERVES_FULLY_OPAQUE_PIXELS": 256,
+    "PF_OutFlag2_RESERVED10": 65536,
+    "PF_OutFlag2_RESERVED12": 67108864,
+    "PF_OutFlag2_RESERVED9": 2048,
+    "PF_OutFlag2_REVEALS_ZERO_ALPHA": 128,
+    "PF_OutFlag2_SUPPORTS_DIRECTX_RENDERING": 536870912,
+    "PF_OutFlag2_SUPPORTS_GET_FLATTENED_SEQUENCE_DATA": 8388608,
+    "PF_OutFlag2_SUPPORTS_GPU_RENDER_F32": 33554432,
+    "PF_OutFlag2_SUPPORTS_QUERY_DYNAMIC_FLAGS": 1,
+    "PF_OutFlag2_SUPPORTS_SMART_RENDER": 1024,
+    "PF_OutFlag2_SUPPORTS_THREADED_RENDERING": 134217728,
+    "PF_OutFlag_AUDIO_EFFECT_ONLY": 2147483648,
+    "PF_OutFlag_AUDIO_EFFECT_TOO": 1073741824,
+    "PF_OutFlag_AUDIO_FLOAT_ONLY": 134217728,
+    "PF_OutFlag_AUDIO_IIR": 268435456,
+    "PF_OutFlag_CUSTOM_UI": 32768,
+    "PF_OutFlag_DEEP_COLOR_AWARE": 33554432,
+    "PF_OutFlag_DISPLAY_ERROR_MESSAGE": 256,
+    "PF_OutFlag_FORCE_RERENDER": 4194304,
+    "PF_OutFlag_I_AM_OBSOLETE": 2097152,
+    "PF_OutFlag_I_DO_DIALOG": 32,
+    "PF_OutFlag_I_EXPAND_BUFFER": 512,
+    "PF_OutFlag_I_HAVE_EXTERNAL_DEPENDENCIES": 16777216,
+    "PF_OutFlag_I_SHRINK_BUFFER": 4096,
+    "PF_OutFlag_I_SYNTHESIZE_AUDIO": 536870912,
+    "PF_OutFlag_I_USE_AUDIO": 1048576,
+    "PF_OutFlag_I_USE_SHUTTER_ANGLE": 524288,
+    "PF_OutFlag_I_WRITE_INPUT_BUFFER": 2048,
+    "PF_OutFlag_KEEP_RESOURCE_OPEN": 1,
+    "PF_OutFlag_NON_PARAM_VARY": 4,
+    "PF_OutFlag_NOP_RENDER": 262144,
+    "PF_OutFlag_PIX_INDEPENDENT": 1024,
+    "PF_OutFlag_PiPL_OVERRIDES_OUTDATA_OUTFLAGS": 8388608,
+    "PF_OutFlag_REFRESH_UI": 131072,
+    "PF_OutFlag_RESERVED6": 8,
+    "PF_OutFlag_RESERVED7": 65536,
+    "PF_OutFlag_RESERVED8": 16384,
+    "PF_OutFlag_SEND_DO_DIALOG": 128,
+    "PF_OutFlag_SEND_UPDATE_PARAMS_UI": 67108864,
+    "PF_OutFlag_SEQUENCE_DATA_NEEDS_FLATTENING": 16,
+    "PF_OutFlag_USE_OUTPUT_EXTENT": 64,
+    "PF_OutFlag_WIDE_TIME_INPUT": 2,
+    "PF_OutFlag_WORKS_IN_PLACE": 8192
+  },
+  "harness_sha256": "43fcaaed1a5859598f4aa66b2e6ebe263b303b0290c84dab4b4440339b7407c1",
+  "loader_sha256": "f277dbecd70c4c495aa05e6495d80fdc5ce07c5df51b9076be331c232e26c9ab",
+  "native_ae_trace": false,
+  "plugins": [
+    {
+      "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/ColorKeep.aex",
+      "aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+      "all_flags_agree": true,
+      "build_command": [
+        "xcodebuild",
+        "-project",
+        "mac/ColorKeep/Mac/ColorKeep.xcodeproj",
+        "-configuration",
+        "Debug",
+        "ARCHS=arm64 x86_64",
+        "ONLY_ACTIVE_ARCH=NO",
+        "GCC_OPTIMIZATION_LEVEL=2",
+        "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/ColorKeep/obj",
+        "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/ColorKeep/sym",
+        "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/ColorKeep/precomp",
+        "CONFIGURATION_BUILD_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/ColorKeep/products",
+        "build"
+      ],
+      "decoded_original_flags": [
+        "PF_OutFlag_USE_OUTPUT_EXTENT",
+        "PF_OutFlag_DEEP_COLOR_AWARE",
+        "PF_OutFlag2_SUPPORTS_SMART_RENDER",
+        "PF_OutFlag2_FLOAT_COLOR_AWARE",
+        "PF_OutFlag2_SUPPORTS_THREADED_RENDERING"
+      ],
+      "entry": "0x1800025c0",
+      "mac_binary_sha256": "21256501361eca1d83eaa64312cb4e1c3fc230d59b4148d151056c9b46e2b652",
+      "mac_global_setup": {
+        "arm64": [
+          {
+            "initial_fill": 0,
+            "my_version": 526336,
+            "out_flags": 33554496,
+            "out_flags2": 134222848,
+            "return_code": 0,
+            "suite_log": []
+          },
+          {
+            "initial_fill": 165,
+            "my_version": 526336,
+            "out_flags": 33554496,
+            "out_flags2": 134222848,
+            "return_code": 0,
+            "suite_log": []
+          }
+        ],
+        "x86_64": [
+          {
+            "initial_fill": 0,
+            "my_version": 526336,
+            "out_flags": 33554496,
+            "out_flags2": 134222848,
+            "return_code": 0,
+            "suite_log": []
+          },
+          {
+            "initial_fill": 165,
+            "my_version": 526336,
+            "out_flags": 33554496,
+            "out_flags2": 134222848,
+            "return_code": 0,
+            "suite_log": []
+          }
+        ]
+      },
+      "mac_pipl": [
+        {
+          "id": 16000,
+          "out_flags": 33554496,
+          "out_flags2": 134222848,
+          "properties": [
+            {
+              "hex": "65464b54",
+              "key": "kind",
+              "offset": 24
+            },
+            {
+              "hex": "0a436f6c6f72204b656570",
+              "key": "name",
+              "offset": 44
+            },
+            {
+              "hex": "0c4f4c4d20506c75672d696e73",
+              "key": "catg",
+              "offset": 72
+            },
+            {
+              "hex": "0a4566666563744d61696e",
+              "key": "mi64",
+              "offset": 104
+            },
+            {
+              "hex": "0a4566666563744d61696e",
+              "key": "ma64",
+              "offset": 132
+            },
+            {
+              "hex": "00020000",
+              "key": "ePVR",
+              "offset": 160
+            },
+            {
+              "hex": "000d001c",
+              "key": "eSVR",
+              "offset": 180
+            },
+            {
+              "hex": "00080800",
+              "key": "eVER",
+              "offset": 200
+            },
+            {
+              "hex": "0000",
+              "key": "eINF",
+              "offset": 220
+            },
+            {
+              "hex": "02000040",
+              "key": "eGLO",
+              "offset": 240
+            },
+            {
+              "hex": "08001400",
+              "key": "eGL2",
+              "offset": 260
+            },
+            {
+              "hex": "0e4f4c4d20436f6c6f72204b656570",
+              "key": "eMNA",
+              "offset": 280
+            },
+            {
+              "hex": "00000000",
+              "key": "aeFL",
+              "offset": 312
+            },
+            {
+              "hex": "1268747470733a2f2f6f6c6d2e636f2e6a702f",
+              "key": "eURL",
+              "offset": 332
+            }
+          ],
+          "raw_hex": "000000000000000e3842494d6b696e64000000000000000465464b543842494d6e616d65000000000000000b0a436f6c6f72204b656570003842494d63617467000000000000000d0c4f4c4d20506c75672d696e730000003842494d6d693634000000000000000b0a4566666563744d61696e003842494d6d613634000000000000000b0a4566666563744d61696e003842494d655056520000000000000004000200003842494d655356520000000000000004000d001c3842494d655645520000000000000004000808003842494d65494e460000000000000002000000003842494d65474c4f0000000000000004020000403842494d65474c320000000000000004080014003842494d654d4e41000000000000000f0e4f4c4d20436f6c6f72204b656570003842494d6165464c0000000000000004000000003842494d6555524c00000000000000131268747470733a2f2f6f6c6d2e636f2e6a702f00",
+          "sha256": "72515a6dce4e623dbee003edc5e51448f5b47ce3676e262673f4ba6e580f4372"
+        }
+      ],
+      "mac_pipl_source_sha256": "718f150419af2a34a43430e6c87eccc85ac62258b73282328af093ee1842ceaa",
+      "mac_rsrc_sha256": "e9511c081223d80eca16f2b66f5211723a26903f83bde19403fd1175b8aa0082",
+      "mac_source_sha256": "7d47836709f9a6dc76285ce249ed0de55a04329e0fa1900f7214553563a8301e",
+      "original_classic_used_by_ae": false,
+      "original_global_setup": [
+        {
+          "import_policy": "registered loader memory/libm callbacks; no unimplemented imports or callback errors",
+          "imports": {
+            "count": 1,
+            "counts_by_import": {
+              "VCRUNTIME140.dll!memset": 1
+            },
+            "transcript_sha256": "beab7b6ce607eb0a4cdc5cde93e2822f38933b70c420b2820906970ef2b0a8db"
+          },
+          "initial_fill": 0,
+          "my_version": 526336,
+          "out_flags": 33554496,
+          "out_flags2": 134222848,
+          "registrations": [
+            "Color Keep"
+          ],
+          "return_code": 0,
+          "suite_acquisitions": [
+            [
+              "AEGP Utility Suite",
+              7
+            ]
+          ],
+          "suite_releases": [
+            [
+              "AEGP Utility Suite",
+              7
+            ]
+          ]
+        },
+        {
+          "import_policy": "registered loader memory/libm callbacks; no unimplemented imports or callback errors",
+          "imports": {
+            "count": 1,
+            "counts_by_import": {
+              "VCRUNTIME140.dll!memset": 1
+            },
+            "transcript_sha256": "beab7b6ce607eb0a4cdc5cde93e2822f38933b70c420b2820906970ef2b0a8db"
+          },
+          "initial_fill": 165,
+          "my_version": 526336,
+          "out_flags": 33554496,
+          "out_flags2": 134222848,
+          "registrations": [
+            "Color Keep"
+          ],
+          "return_code": 0,
+          "suite_acquisitions": [
+            [
+              "AEGP Utility Suite",
+              7
+            ]
+          ],
+          "suite_releases": [
+            [
+              "AEGP Utility Suite",
+              7
+            ]
+          ]
+        }
+      ],
+      "original_pipl": [
+        {
+          "id": 16000,
+          "language": 1033,
+          "out_flags": 33554496,
+          "out_flags2": 134222848,
+          "properties": [
+            {
+              "hex": "544b4665",
+              "key": "kind",
+              "offset": 26
+            },
+            {
+              "hex": "0a436f6c6f72204b65657000",
+              "key": "name",
+              "offset": 46
+            },
+            {
+              "hex": "0c4f4c4d20506c75672d696e73000000",
+              "key": "catg",
+              "offset": 74
+            },
+            {
+              "hex": "656e747279506f696e7446756e630000",
+              "key": "8664",
+              "offset": 106
+            },
+            {
+              "hex": "02000000",
+              "key": "ePVR",
+              "offset": 138
+            },
+            {
+              "hex": "0d001c00",
+              "key": "eSVR",
+              "offset": 158
+            },
+            {
+              "hex": "00080800",
+              "key": "eVER",
+              "offset": 178
+            },
+            {
+              "hex": "0000",
+              "key": "eINF",
+              "offset": 198
+            },
+            {
+              "hex": "40000002",
+              "key": "eGLO",
+              "offset": 218
+            },
+            {
+              "hex": "00140008",
+              "key": "eGL2",
+              "offset": 238
+            },
+            {
+              "hex": "0e4f4c4d20436f6c6f72204b65657000",
+              "key": "eMNA",
+              "offset": 258
+            },
+            {
+              "hex": "00000000",
+              "key": "aeFL",
+              "offset": 290
+            }
+          ],
+          "raw_hex": "0100000000000c0000004d494238646e696b0000000004000000544b46654d494238656d616e000000000c0000000a436f6c6f72204b656570004d4942386774616300000000100000000c4f4c4d20506c75672d696e730000004d494238343636380000000010000000656e747279506f696e7446756e6300004d494238525650650000000004000000020000004d4942385256536500000000040000000d001c004d494238524556650000000004000000000808004d494238464e49650000000002000000000000004d4942384f4c47650000000004000000400000024d494238324c47650000000004000000001400084d494238414e4d6500000000100000000e4f4c4d20436f6c6f72204b656570004d4942384c466561000000000400000000000000",
+          "sha256": "81397edb97c3177d8e7c916c1f064c0ebf398ef4e36f28206c37e89b6bfc717f"
+        }
+      ],
+      "original_smart": true,
+      "plugin": "ColorKeep",
+      "target_route": "smart"
+    },
+    {
+      "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMBlur.aex",
+      "aex_sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b",
+      "all_flags_agree": true,
+      "build_command": [
+        "xcodebuild",
+        "-project",
+        "mac/OLMBlur/Mac/OLMBlur.xcodeproj",
+        "-configuration",
+        "Debug",
+        "ARCHS=arm64 x86_64",
+        "ONLY_ACTIVE_ARCH=NO",
+        "GCC_OPTIMIZATION_LEVEL=2",
+        "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMBlur/obj",
+        "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMBlur/sym",
+        "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMBlur/precomp",
+        "CONFIGURATION_BUILD_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMBlur/products",
+        "build"
+      ],
+      "decoded_original_flags": [
+        "PF_OutFlag_USE_OUTPUT_EXTENT",
+        "PF_OutFlag_DEEP_COLOR_AWARE",
+        "PF_OutFlag_SEND_UPDATE_PARAMS_UI",
+        "PF_OutFlag2_SUPPORTS_SMART_RENDER",
+        "PF_OutFlag2_FLOAT_COLOR_AWARE",
+        "PF_OutFlag2_SUPPORTS_THREADED_RENDERING"
+      ],
+      "entry": "0x18000a970",
+      "mac_binary_sha256": "7c39ac05ea3e4762dd14951fff5fe57cd9b18899155f3b9f2e8dfeaa353a4e2c",
+      "mac_global_setup": {
+        "arm64": [
+          {
+            "initial_fill": 0,
+            "my_version": 591872,
+            "out_flags": 100663360,
+            "out_flags2": 134222848,
+            "return_code": 0,
+            "suite_log": []
+          },
+          {
+            "initial_fill": 165,
+            "my_version": 591872,
+            "out_flags": 100663360,
+            "out_flags2": 134222848,
+            "return_code": 0,
+            "suite_log": []
+          }
+        ],
+        "x86_64": [
+          {
+            "initial_fill": 0,
+            "my_version": 591872,
+            "out_flags": 100663360,
+            "out_flags2": 134222848,
+            "return_code": 0,
+            "suite_log": []
+          },
+          {
+            "initial_fill": 165,
+            "my_version": 591872,
+            "out_flags": 100663360,
+            "out_flags2": 134222848,
+            "return_code": 0,
+            "suite_log": []
+          }
+        ]
+      },
+      "mac_pipl": [
+        {
+          "id": 16000,
+          "out_flags": 100663360,
+          "out_flags2": 134222848,
+          "properties": [
+            {
+              "hex": "65464b54",
+              "key": "kind",
+              "offset": 24
+            },
+            {
+              "hex": "084f4c4d20426c7572",
+              "key": "name",
+              "offset": 44
+            },
+            {
+              "hex": "0c4f4c4d20506c75672d696e73",
+              "key": "catg",
+              "offset": 72
+            },
+            {
+              "hex": "0a4566666563744d61696e",
+              "key": "mi64",
+              "offset": 104
+            },
+            {
+              "hex": "0a4566666563744d61696e",
+              "key": "ma64",
+              "offset": 132
+            },
+            {
+              "hex": "00020000",
+              "key": "ePVR",
+              "offset": 160
+            },
+            {
+              "hex": "000d001c",
+              "key": "eSVR",
+              "offset": 180
+            },
+            {
+              "hex": "00090800",
+              "key": "eVER",
+              "offset": 200
+            },
+            {
+              "hex": "0000",
+              "key": "eINF",
+              "offset": 220
+            },
+            {
+              "hex": "06000040",
+              "key": "eGLO",
+              "offset": 240
+            },
+            {
+              "hex": "08001400",
+              "key": "eGL2",
+              "offset": 260
+            },
+            {
+              "hex": "0c4f4c4d204f4c4d20426c7572",
+              "key": "eMNA",
+              "offset": 280
+            },
+            {
+              "hex": "00000000",
+              "key": "aeFL",
+              "offset": 312
+            },
+            {
+              "hex": "1268747470733a2f2f6f6c6d2e636f2e6a702f",
+              "key": "eURL",
+              "offset": 332
+            }
+          ],
+          "raw_hex": "000000000000000e3842494d6b696e64000000000000000465464b543842494d6e616d650000000000000009084f4c4d20426c75720000003842494d63617467000000000000000d0c4f4c4d20506c75672d696e730000003842494d6d693634000000000000000b0a4566666563744d61696e003842494d6d613634000000000000000b0a4566666563744d61696e003842494d655056520000000000000004000200003842494d655356520000000000000004000d001c3842494d655645520000000000000004000908003842494d65494e460000000000000002000000003842494d65474c4f0000000000000004060000403842494d65474c320000000000000004080014003842494d654d4e41000000000000000d0c4f4c4d204f4c4d20426c75720000003842494d6165464c0000000000000004000000003842494d6555524c00000000000000131268747470733a2f2f6f6c6d2e636f2e6a702f00",
+          "sha256": "873511a3179f961b4a5db05d25121255e4cc5923d27632bdc5746423dde30bd6"
+        }
+      ],
+      "mac_pipl_source_sha256": "57e5efb2d3248366445f4145c46647542d8f752431a4e257c0561f1f769806fe",
+      "mac_rsrc_sha256": "4bf9a756e70f3d0dea55f9fa86c749e5ec84410144323e71e671ae7e802e95c6",
+      "mac_source_sha256": "8512f063e79975dc2f20ab1349df71a05a0a397015f3150280fbbeb46b893241",
+      "original_classic_used_by_ae": false,
+      "original_global_setup": [
+        {
+          "import_policy": "registered loader memory/libm callbacks; no unimplemented imports or callback errors",
+          "imports": {
+            "count": 0,
+            "counts_by_import": {},
+            "transcript_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          "initial_fill": 0,
+          "my_version": 591872,
+          "out_flags": 100663360,
+          "out_flags2": 134222848,
+          "registrations": [],
+          "return_code": 0,
+          "suite_acquisitions": [],
+          "suite_releases": []
+        },
+        {
+          "import_policy": "registered loader memory/libm callbacks; no unimplemented imports or callback errors",
+          "imports": {
+            "count": 0,
+            "counts_by_import": {},
+            "transcript_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          "initial_fill": 165,
+          "my_version": 591872,
+          "out_flags": 100663360,
+          "out_flags2": 134222848,
+          "registrations": [],
+          "return_code": 0,
+          "suite_acquisitions": [],
+          "suite_releases": []
+        }
+      ],
+      "original_pipl": [
+        {
+          "id": 16000,
+          "language": 1033,
+          "out_flags": 100663360,
+          "out_flags2": 134222848,
+          "properties": [
+            {
+              "hex": "544b4665",
+              "key": "kind",
+              "offset": 26
+            },
+            {
+              "hex": "084f4c4d20426c7572000000",
+              "key": "name",
+              "offset": 46
+            },
+            {
+              "hex": "0c4f4c4d20506c75672d696e73000000",
+              "key": "catg",
+              "offset": 74
+            },
+            {
+              "hex": "656e747279506f696e7446756e630000",
+              "key": "8664",
+              "offset": 106
+            },
+            {
+              "hex": "02000000",
+              "key": "ePVR",
+              "offset": 138
+            },
+            {
+              "hex": "0d001c00",
+              "key": "eSVR",
+              "offset": 158
+            },
+            {
+              "hex": "00080900",
+              "key": "eVER",
+              "offset": 178
+            },
+            {
+              "hex": "0000",
+              "key": "eINF",
+              "offset": 198
+            },
+            {
+              "hex": "40000006",
+              "key": "eGLO",
+              "offset": 218
+            },
+            {
+              "hex": "00140008",
+              "key": "eGL2",
+              "offset": 238
+            },
+            {
+              "hex": "0c4f4c4d204f4c4d20426c7572000000",
+              "key": "eMNA",
+              "offset": 258
+            },
+            {
+              "hex": "00000000",
+              "key": "aeFL",
+              "offset": 290
+            }
+          ],
+          "raw_hex": "0100000000000c0000004d494238646e696b0000000004000000544b46654d494238656d616e000000000c000000084f4c4d20426c75720000004d4942386774616300000000100000000c4f4c4d20506c75672d696e730000004d494238343636380000000010000000656e747279506f696e7446756e6300004d494238525650650000000004000000020000004d4942385256536500000000040000000d001c004d494238524556650000000004000000000809004d494238464e49650000000002000000000000004d4942384f4c47650000000004000000400000064d494238324c47650000000004000000001400084d494238414e4d6500000000100000000c4f4c4d204f4c4d20426c75720000004d4942384c466561000000000400000000000000",
+          "sha256": "147f220be4bb05cb95d845c71699015a86deb41fe544fb55afa0a3fbe695f78e"
+        }
+      ],
+      "original_smart": true,
+      "plugin": "OLMBlur",
+      "target_route": "smart"
+    },
+    {
+      "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMColorKey.aex",
+      "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+      "all_flags_agree": true,
+      "build_command": [
+        "xcodebuild",
+        "-project",
+        "mac/OLMColorKey/Mac/OLMColorKey.xcodeproj",
+        "-configuration",
+        "Debug",
+        "ARCHS=arm64 x86_64",
+        "ONLY_ACTIVE_ARCH=NO",
+        "GCC_OPTIMIZATION_LEVEL=2",
+        "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMColorKey/obj",
+        "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMColorKey/sym",
+        "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMColorKey/precomp",
+        "CONFIGURATION_BUILD_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMColorKey/products",
+        "build"
+      ],
+      "decoded_original_flags": [
+        "PF_OutFlag_USE_OUTPUT_EXTENT",
+        "PF_OutFlag_PIX_INDEPENDENT",
+        "PF_OutFlag_DEEP_COLOR_AWARE",
+        "PF_OutFlag2_SUPPORTS_SMART_RENDER",
+        "PF_OutFlag2_FLOAT_COLOR_AWARE",
+        "PF_OutFlag2_SUPPORTS_THREADED_RENDERING"
+      ],
+      "entry": "0x18000ffb0",
+      "mac_binary_sha256": "10491c2ba89bfa16e991df3f80d8a3598e5046def8332ce848d2cbfc459790c2",
+      "mac_global_setup": {
+        "arm64": [
+          {
+            "initial_fill": 0,
+            "my_version": 1148928,
+            "out_flags": 33555520,
+            "out_flags2": 134222848,
+            "return_code": 0,
+            "suite_log": []
+          },
+          {
+            "initial_fill": 165,
+            "my_version": 1148928,
+            "out_flags": 33555520,
+            "out_flags2": 134222848,
+            "return_code": 0,
+            "suite_log": []
+          }
+        ],
+        "x86_64": [
+          {
+            "initial_fill": 0,
+            "my_version": 1148928,
+            "out_flags": 33555520,
+            "out_flags2": 134222848,
+            "return_code": 0,
+            "suite_log": []
+          },
+          {
+            "initial_fill": 165,
+            "my_version": 1148928,
+            "out_flags": 33555520,
+            "out_flags2": 134222848,
+            "return_code": 0,
+            "suite_log": []
+          }
+        ]
+      },
+      "mac_pipl": [
+        {
+          "id": 16000,
+          "out_flags": 33555520,
+          "out_flags2": 134222848,
+          "properties": [
+            {
+              "hex": "65464b54",
+              "key": "kind",
+              "offset": 24
+            },
+            {
+              "hex": "0d4f4c4d20436f6c6f72204b6579",
+              "key": "name",
+              "offset": 44
+            },
+            {
+              "hex": "0c4f4c4d20506c75672d696e73",
+              "key": "catg",
+              "offset": 76
+            },
+            {
+              "hex": "0a4566666563744d61696e",
+              "key": "mi64",
+              "offset": 108
+            },
+            {
+              "hex": "0a4566666563744d61696e",
+              "key": "ma64",
+              "offset": 136
+            },
+            {
+              "hex": "00020000",
+              "key": "ePVR",
+              "offset": 164
+            },
+            {
+              "hex": "000d001c",
+              "key": "eSVR",
+              "offset": 184
+            },
+            {
+              "hex": "00118800",
+              "key": "eVER",
+              "offset": 204
+            },
+            {
+              "hex": "0000",
+              "key": "eINF",
+              "offset": 224
+            },
+            {
+              "hex": "02000440",
+              "key": "eGLO",
+              "offset": 244
+            },
+            {
+              "hex": "08001400",
+              "key": "eGL2",
+              "offset": 264
+            },
+            {
+              "hex": "0d4f4c4d20436f6c6f72204b6579",
+              "key": "eMNA",
+              "offset": 284
+            },
+            {
+              "hex": "00000000",
+              "key": "aeFL",
+              "offset": 316
+            },
+            {
+              "hex": "1268747470733a2f2f6f6c6d2e636f2e6a702f",
+              "key": "eURL",
+              "offset": 336
+            }
+          ],
+          "raw_hex": "000000000000000e3842494d6b696e64000000000000000465464b543842494d6e616d65000000000000000e0d4f4c4d20436f6c6f72204b657900003842494d63617467000000000000000d0c4f4c4d20506c75672d696e730000003842494d6d693634000000000000000b0a4566666563744d61696e003842494d6d613634000000000000000b0a4566666563744d61696e003842494d655056520000000000000004000200003842494d655356520000000000000004000d001c3842494d655645520000000000000004001188003842494d65494e460000000000000002000000003842494d65474c4f0000000000000004020004403842494d65474c320000000000000004080014003842494d654d4e41000000000000000e0d4f4c4d20436f6c6f72204b657900003842494d6165464c0000000000000004000000003842494d6555524c00000000000000131268747470733a2f2f6f6c6d2e636f2e6a702f00",
+          "sha256": "37cffdb9f361c2afaca2581fbf3399e2c0360b125326d1f46a8699c1e54f1c98"
+        }
+      ],
+      "mac_pipl_source_sha256": "3d6906665679d35be5c28d1eef0bf836f409edaf6c4730f940185e98e21dba08",
+      "mac_rsrc_sha256": "6945d8679660ace722f2732e81d4644427c3388023ab63a33318590366ce78c8",
+      "mac_source_sha256": "d4e3e09f50147a2881fe150ad3b430d334f7719a82890898ff2df473a2c32a66",
+      "original_classic_used_by_ae": false,
+      "original_global_setup": [
+        {
+          "import_policy": "registered loader memory/libm callbacks; no unimplemented imports or callback errors",
+          "imports": {
+            "count": 2,
+            "counts_by_import": {
+              "VCRUNTIME140.dll!memset": 2
+            },
+            "transcript_sha256": "d94a7ea9118752e6892bd8dae87b06d032dd36fb256e19e757ac71426dff4808"
+          },
+          "initial_fill": 0,
+          "my_version": 1148928,
+          "out_flags": 33555520,
+          "out_flags2": 134222848,
+          "registrations": [
+            "OLM Color Key"
+          ],
+          "return_code": 0,
+          "suite_acquisitions": [
+            [
+              "PF Handle Suite",
+              2
+            ],
+            [
+              "AEGP Utility Suite",
+              13
+            ]
+          ],
+          "suite_releases": [
+            [
+              "AEGP Utility Suite",
+              13
+            ],
+            [
+              "PF Handle Suite",
+              2
+            ]
+          ]
+        },
+        {
+          "import_policy": "registered loader memory/libm callbacks; no unimplemented imports or callback errors",
+          "imports": {
+            "count": 2,
+            "counts_by_import": {
+              "VCRUNTIME140.dll!memset": 2
+            },
+            "transcript_sha256": "d94a7ea9118752e6892bd8dae87b06d032dd36fb256e19e757ac71426dff4808"
+          },
+          "initial_fill": 165,
+          "my_version": 1148928,
+          "out_flags": 33555520,
+          "out_flags2": 134222848,
+          "registrations": [
+            "OLM Color Key"
+          ],
+          "return_code": 0,
+          "suite_acquisitions": [
+            [
+              "PF Handle Suite",
+              2
+            ],
+            [
+              "AEGP Utility Suite",
+              13
+            ]
+          ],
+          "suite_releases": [
+            [
+              "AEGP Utility Suite",
+              13
+            ],
+            [
+              "PF Handle Suite",
+              2
+            ]
+          ]
+        }
+      ],
+      "original_pipl": [
+        {
+          "id": 16000,
+          "language": 1033,
+          "out_flags": 33555520,
+          "out_flags2": 134222848,
+          "properties": [
+            {
+              "hex": "544b4665",
+              "key": "kind",
+              "offset": 26
+            },
+            {
+              "hex": "0d4f4c4d20436f6c6f72204b65790000",
+              "key": "name",
+              "offset": 46
+            },
+            {
+              "hex": "0c4f4c4d20506c75672d696e73000000",
+              "key": "catg",
+              "offset": 78
+            },
+            {
+              "hex": "656e7472795f706f696e7400",
+              "key": "8664",
+              "offset": 110
+            },
+            {
+              "hex": "02000000",
+              "key": "ePVR",
+              "offset": 138
+            },
+            {
+              "hex": "0d001c00",
+              "key": "eSVR",
+              "offset": 158
+            },
+            {
+              "hex": "00881100",
+              "key": "eVER",
+              "offset": 178
+            },
+            {
+              "hex": "0000",
+              "key": "eINF",
+              "offset": 198
+            },
+            {
+              "hex": "40040002",
+              "key": "eGLO",
+              "offset": 218
+            },
+            {
+              "hex": "00140008",
+              "key": "eGL2",
+              "offset": 238
+            },
+            {
+              "hex": "0d4f4c4d20436f6c6f72204b65790000",
+              "key": "eMNA",
+              "offset": 258
+            },
+            {
+              "hex": "00000000",
+              "key": "aeFL",
+              "offset": 290
+            }
+          ],
+          "raw_hex": "0100000000000c0000004d494238646e696b0000000004000000544b46654d494238656d616e00000000100000000d4f4c4d20436f6c6f72204b657900004d4942386774616300000000100000000c4f4c4d20506c75672d696e730000004d49423834363638000000000c000000656e7472795f706f696e74004d494238525650650000000004000000020000004d4942385256536500000000040000000d001c004d494238524556650000000004000000008811004d494238464e49650000000002000000000000004d4942384f4c47650000000004000000400400024d494238324c47650000000004000000001400084d494238414e4d6500000000100000000d4f4c4d20436f6c6f72204b657900004d4942384c466561000000000400000000000000",
+          "sha256": "8811f9bdf93a59e444a698a4bfa6782a8aa7af45b84b31d35c786ab770c27f05"
+        }
+      ],
+      "original_smart": true,
+      "plugin": "OLMColorKey",
+      "target_route": "smart"
+    },
+    {
+      "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+      "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+      "all_flags_agree": true,
+      "build_command": [
+        "xcodebuild",
+        "-project",
+        "mac/OLMDirectionalBlur/Mac/OLMDirectionalBlur.xcodeproj",
+        "-configuration",
+        "Debug",
+        "ARCHS=arm64 x86_64",
+        "ONLY_ACTIVE_ARCH=NO",
+        "GCC_OPTIMIZATION_LEVEL=2",
+        "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMDirectionalBlur/obj",
+        "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMDirectionalBlur/sym",
+        "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMDirectionalBlur/precomp",
+        "CONFIGURATION_BUILD_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMDirectionalBlur/products",
+        "build"
+      ],
+      "decoded_original_flags": [
+        "PF_OutFlag_USE_OUTPUT_EXTENT",
+        "PF_OutFlag_DEEP_COLOR_AWARE",
+        "PF_OutFlag_SEND_UPDATE_PARAMS_UI",
+        "PF_OutFlag2_PARAM_GROUP_START_COLLAPSED_FLAG",
+        "PF_OutFlag2_SUPPORTS_SMART_RENDER",
+        "PF_OutFlag2_FLOAT_COLOR_AWARE",
+        "PF_OutFlag2_SUPPORTS_THREADED_RENDERING"
+      ],
+      "entry": "0x1800083f0",
+      "mac_binary_sha256": "ccbf4181d5dbe62f969845728592f93bcd30e0fb09211590bf3a5f5217cb827c",
+      "mac_global_setup": {
+        "arm64": [
+          {
+            "initial_fill": 0,
+            "my_version": 559104,
+            "out_flags": 100663360,
+            "out_flags2": 134222856,
+            "return_code": 0,
+            "suite_log": [
+              "AcquireSuite AEGP Utility Suite 13"
+            ]
+          },
+          {
+            "initial_fill": 165,
+            "my_version": 559104,
+            "out_flags": 100663360,
+            "out_flags2": 134222856,
+            "return_code": 0,
+            "suite_log": [
+              "AcquireSuite AEGP Utility Suite 13"
+            ]
+          }
+        ],
+        "x86_64": [
+          {
+            "initial_fill": 0,
+            "my_version": 559104,
+            "out_flags": 100663360,
+            "out_flags2": 134222856,
+            "return_code": 0,
+            "suite_log": [
+              "AcquireSuite AEGP Utility Suite 13"
+            ]
+          },
+          {
+            "initial_fill": 165,
+            "my_version": 559104,
+            "out_flags": 100663360,
+            "out_flags2": 134222856,
+            "return_code": 0,
+            "suite_log": [
+              "AcquireSuite AEGP Utility Suite 13"
+            ]
+          }
+        ]
+      },
+      "mac_pipl": [
+        {
+          "id": 16000,
+          "out_flags": 100663360,
+          "out_flags2": 134222856,
+          "properties": [
+            {
+              "hex": "65464b54",
+              "key": "kind",
+              "offset": 24
+            },
+            {
+              "hex": "134f4c4d20446972656374696f6e616c426c7572",
+              "key": "name",
+              "offset": 44
+            },
+            {
+              "hex": "0c4f4c4d20506c75672d696e73",
+              "key": "catg",
+              "offset": 80
+            },
+            {
+              "hex": "0a4566666563744d61696e",
+              "key": "mi64",
+              "offset": 112
+            },
+            {
+              "hex": "0a4566666563744d61696e",
+              "key": "ma64",
+              "offset": 140
+            },
+            {
+              "hex": "00020000",
+              "key": "ePVR",
+              "offset": 168
+            },
+            {
+              "hex": "000d001c",
+              "key": "eSVR",
+              "offset": 188
+            },
+            {
+              "hex": "00088800",
+              "key": "eVER",
+              "offset": 208
+            },
+            {
+              "hex": "0000",
+              "key": "eINF",
+              "offset": 228
+            },
+            {
+              "hex": "06000040",
+              "key": "eGLO",
+              "offset": 248
+            },
+            {
+              "hex": "08001408",
+              "key": "eGL2",
+              "offset": 268
+            },
+            {
+              "hex": "144f4c4d20446972656374696f6e616c20426c7572",
+              "key": "eMNA",
+              "offset": 288
+            },
+            {
+              "hex": "00000000",
+              "key": "aeFL",
+              "offset": 328
+            },
+            {
+              "hex": "1268747470733a2f2f6f6c6d2e636f2e6a702f",
+              "key": "eURL",
+              "offset": 348
+            }
+          ],
+          "raw_hex": "000000000000000e3842494d6b696e64000000000000000465464b543842494d6e616d650000000000000014134f4c4d20446972656374696f6e616c426c75723842494d63617467000000000000000d0c4f4c4d20506c75672d696e730000003842494d6d693634000000000000000b0a4566666563744d61696e003842494d6d613634000000000000000b0a4566666563744d61696e003842494d655056520000000000000004000200003842494d655356520000000000000004000d001c3842494d655645520000000000000004000888003842494d65494e460000000000000002000000003842494d65474c4f0000000000000004060000403842494d65474c320000000000000004080014083842494d654d4e410000000000000015144f4c4d20446972656374696f6e616c20426c75720000003842494d6165464c0000000000000004000000003842494d6555524c00000000000000131268747470733a2f2f6f6c6d2e636f2e6a702f00",
+          "sha256": "157c88873c7436dd4d5568f553776f6f720a20de3619aa8b5830a967ce2d6635"
+        }
+      ],
+      "mac_pipl_source_sha256": "e1ef2e3f585eab97e575b59b4f13af27aedd06504a31a3e469a3ed1e7b1927c2",
+      "mac_rsrc_sha256": "d4fe83ce9711fc298e2847b7941f7137da94ff2d651354db17a1fce90a9382e4",
+      "mac_source_sha256": "e02a2973a032a77c861a0c86bb8043da6a72f2820141b7a950460c436f9c9156",
+      "original_classic_used_by_ae": false,
+      "original_global_setup": [
+        {
+          "import_policy": "registered loader memory/libm callbacks; no unimplemented imports or callback errors",
+          "imports": {
+            "count": 1,
+            "counts_by_import": {
+              "VCRUNTIME140.dll!memset": 1
+            },
+            "transcript_sha256": "3b9600d6c7af95a98ffb703fee8d84e350a3d83c9850a7e84ce3a000bbfeee6e"
+          },
+          "initial_fill": 0,
+          "my_version": 559104,
+          "out_flags": 100663360,
+          "out_flags2": 134222856,
+          "registrations": [
+            "OLMDirectionalBlur"
+          ],
+          "return_code": 0,
+          "suite_acquisitions": [
+            [
+              "AEGP Utility Suite",
+              7
+            ]
+          ],
+          "suite_releases": [
+            [
+              "AEGP Utility Suite",
+              7
+            ]
+          ]
+        },
+        {
+          "import_policy": "registered loader memory/libm callbacks; no unimplemented imports or callback errors",
+          "imports": {
+            "count": 1,
+            "counts_by_import": {
+              "VCRUNTIME140.dll!memset": 1
+            },
+            "transcript_sha256": "3b9600d6c7af95a98ffb703fee8d84e350a3d83c9850a7e84ce3a000bbfeee6e"
+          },
+          "initial_fill": 165,
+          "my_version": 559104,
+          "out_flags": 100663360,
+          "out_flags2": 134222856,
+          "registrations": [
+            "OLMDirectionalBlur"
+          ],
+          "return_code": 0,
+          "suite_acquisitions": [
+            [
+              "AEGP Utility Suite",
+              7
+            ]
+          ],
+          "suite_releases": [
+            [
+              "AEGP Utility Suite",
+              7
+            ]
+          ]
+        }
+      ],
+      "original_pipl": [
+        {
+          "id": 16000,
+          "language": 1033,
+          "out_flags": 100663360,
+          "out_flags2": 134222856,
+          "properties": [
+            {
+              "hex": "544b4665",
+              "key": "kind",
+              "offset": 26
+            },
+            {
+              "hex": "134f4c4d20446972656374696f6e616c426c7572",
+              "key": "name",
+              "offset": 46
+            },
+            {
+              "hex": "0c4f4c4d20506c75672d696e73000000",
+              "key": "catg",
+              "offset": 82
+            },
+            {
+              "hex": "656e747279506f696e7446756e630000",
+              "key": "8664",
+              "offset": 114
+            },
+            {
+              "hex": "02000000",
+              "key": "ePVR",
+              "offset": 146
+            },
+            {
+              "hex": "0d001c00",
+              "key": "eSVR",
+              "offset": 166
+            },
+            {
+              "hex": "00880800",
+              "key": "eVER",
+              "offset": 186
+            },
+            {
+              "hex": "0000",
+              "key": "eINF",
+              "offset": 206
+            },
+            {
+              "hex": "40000006",
+              "key": "eGLO",
+              "offset": 226
+            },
+            {
+              "hex": "08140008",
+              "key": "eGL2",
+              "offset": 246
+            },
+            {
+              "hex": "144f4c4d20446972656374696f6e616c20426c7572000000",
+              "key": "eMNA",
+              "offset": 266
+            },
+            {
+              "hex": "00000000",
+              "key": "aeFL",
+              "offset": 306
+            }
+          ],
+          "raw_hex": "0100000000000c0000004d494238646e696b0000000004000000544b46654d494238656d616e0000000014000000134f4c4d20446972656374696f6e616c426c75724d4942386774616300000000100000000c4f4c4d20506c75672d696e730000004d494238343636380000000010000000656e747279506f696e7446756e6300004d494238525650650000000004000000020000004d4942385256536500000000040000000d001c004d494238524556650000000004000000008808004d494238464e49650000000002000000000000004d4942384f4c47650000000004000000400000064d494238324c47650000000004000000081400084d494238414e4d650000000018000000144f4c4d20446972656374696f6e616c20426c75720000004d4942384c466561000000000400000000000000",
+          "sha256": "3bdc27c22e780cb5c14f9edefce91340f4a8b82005b59854bf573fef0774f89d"
+        }
+      ],
+      "original_smart": true,
+      "plugin": "OLMDirectionalBlur",
+      "target_route": "smart"
+    },
+    {
+      "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/DistanceGradation.aex",
+      "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+      "all_flags_agree": true,
+      "build_command": [
+        "xcodebuild",
+        "-project",
+        "mac/OLMDistanceGradation/Mac/OLMDistanceGradation.xcodeproj",
+        "-configuration",
+        "Debug",
+        "ARCHS=arm64 x86_64",
+        "ONLY_ACTIVE_ARCH=NO",
+        "GCC_OPTIMIZATION_LEVEL=2",
+        "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMDistanceGradation/obj",
+        "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMDistanceGradation/sym",
+        "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMDistanceGradation/precomp",
+        "CONFIGURATION_BUILD_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMDistanceGradation/products",
+        "build"
+      ],
+      "decoded_original_flags": [
+        "PF_OutFlag_USE_OUTPUT_EXTENT",
+        "PF_OutFlag_DEEP_COLOR_AWARE",
+        "PF_OutFlag_SEND_UPDATE_PARAMS_UI",
+        "PF_OutFlag2_SUPPORTS_SMART_RENDER",
+        "PF_OutFlag2_FLOAT_COLOR_AWARE",
+        "PF_OutFlag2_SUPPORTS_THREADED_RENDERING"
+      ],
+      "entry": "0x181174bd0",
+      "mac_binary_sha256": "b80f712ed4dbe40da93e9e04a96cd90d8f28ec5055581fe71a428e6f67187aba",
+      "mac_global_setup": {
+        "arm64": [
+          {
+            "initial_fill": 0,
+            "my_version": 266752,
+            "out_flags": 100663360,
+            "out_flags2": 134222848,
+            "return_code": 0,
+            "suite_log": []
+          },
+          {
+            "initial_fill": 165,
+            "my_version": 266752,
+            "out_flags": 100663360,
+            "out_flags2": 134222848,
+            "return_code": 0,
+            "suite_log": []
+          }
+        ],
+        "x86_64": [
+          {
+            "initial_fill": 0,
+            "my_version": 266752,
+            "out_flags": 100663360,
+            "out_flags2": 134222848,
+            "return_code": 0,
+            "suite_log": []
+          },
+          {
+            "initial_fill": 165,
+            "my_version": 266752,
+            "out_flags": 100663360,
+            "out_flags2": 134222848,
+            "return_code": 0,
+            "suite_log": []
+          }
+        ]
+      },
+      "mac_pipl": [
+        {
+          "id": 16000,
+          "out_flags": 100663360,
+          "out_flags2": 134222848,
+          "properties": [
+            {
+              "hex": "65464b54",
+              "key": "kind",
+              "offset": 24
+            },
+            {
+              "hex": "1244697374616e636520477261646174696f6e",
+              "key": "name",
+              "offset": 44
+            },
+            {
+              "hex": "0c4f4c4d20506c75672d696e73",
+              "key": "catg",
+              "offset": 80
+            },
+            {
+              "hex": "0a4566666563744d61696e",
+              "key": "mi64",
+              "offset": 112
+            },
+            {
+              "hex": "0a4566666563744d61696e",
+              "key": "ma64",
+              "offset": 140
+            },
+            {
+              "hex": "00020000",
+              "key": "ePVR",
+              "offset": 168
+            },
+            {
+              "hex": "000d001c",
+              "key": "eSVR",
+              "offset": 188
+            },
+            {
+              "hex": "00041200",
+              "key": "eVER",
+              "offset": 208
+            },
+            {
+              "hex": "0000",
+              "key": "eINF",
+              "offset": 228
+            },
+            {
+              "hex": "06000040",
+              "key": "eGLO",
+              "offset": 248
+            },
+            {
+              "hex": "08001400",
+              "key": "eGL2",
+              "offset": 268
+            },
+            {
+              "hex": "164f4c4d2044697374616e636520477261646174696f6e",
+              "key": "eMNA",
+              "offset": 288
+            },
+            {
+              "hex": "00000000",
+              "key": "aeFL",
+              "offset": 328
+            },
+            {
+              "hex": "1268747470733a2f2f6f6c6d2e636f2e6a702f",
+              "key": "eURL",
+              "offset": 348
+            }
+          ],
+          "raw_hex": "000000000000000e3842494d6b696e64000000000000000465464b543842494d6e616d6500000000000000131244697374616e636520477261646174696f6e003842494d63617467000000000000000d0c4f4c4d20506c75672d696e730000003842494d6d693634000000000000000b0a4566666563744d61696e003842494d6d613634000000000000000b0a4566666563744d61696e003842494d655056520000000000000004000200003842494d655356520000000000000004000d001c3842494d655645520000000000000004000412003842494d65494e460000000000000002000000003842494d65474c4f0000000000000004060000403842494d65474c320000000000000004080014003842494d654d4e410000000000000017164f4c4d2044697374616e636520477261646174696f6e003842494d6165464c0000000000000004000000003842494d6555524c00000000000000131268747470733a2f2f6f6c6d2e636f2e6a702f00",
+          "sha256": "db59a35ea882909fd5d1cab529dd3dc8456d41bceef69e2c8d2c6a8e2162611b"
+        }
+      ],
+      "mac_pipl_source_sha256": "13c116f5fec84df0209bfdc2864fb55d257169a5293fa043fccf6fb083276d18",
+      "mac_rsrc_sha256": "91b8673899695b2d7784dbb714a80a79ba8c7ee2ebaf5d6c69c0ccd5848c202d",
+      "mac_source_sha256": "59825c5a0c2531c50c89856d67847cc6a55c258eb419b432aef8b1b52bb26d4a",
+      "original_classic_used_by_ae": false,
+      "original_global_setup": [
+        {
+          "import_policy": "registered loader memory/libm callbacks; no unimplemented imports or callback errors",
+          "imports": {
+            "count": 1,
+            "counts_by_import": {
+              "VCRUNTIME140.dll!memset": 1
+            },
+            "transcript_sha256": "807ec41c2f07c8fa792ee93306233e26064fb085cbf3c39be4460ddbb332a827"
+          },
+          "initial_fill": 0,
+          "my_version": 266752,
+          "out_flags": 100663360,
+          "out_flags2": 134222848,
+          "registrations": [
+            "DistanceGradation"
+          ],
+          "return_code": 0,
+          "suite_acquisitions": [
+            [
+              "AEGP Utility Suite",
+              7
+            ]
+          ],
+          "suite_releases": [
+            [
+              "AEGP Utility Suite",
+              7
+            ]
+          ]
+        },
+        {
+          "import_policy": "registered loader memory/libm callbacks; no unimplemented imports or callback errors",
+          "imports": {
+            "count": 1,
+            "counts_by_import": {
+              "VCRUNTIME140.dll!memset": 1
+            },
+            "transcript_sha256": "807ec41c2f07c8fa792ee93306233e26064fb085cbf3c39be4460ddbb332a827"
+          },
+          "initial_fill": 165,
+          "my_version": 266752,
+          "out_flags": 100663360,
+          "out_flags2": 134222848,
+          "registrations": [
+            "DistanceGradation"
+          ],
+          "return_code": 0,
+          "suite_acquisitions": [
+            [
+              "AEGP Utility Suite",
+              7
+            ]
+          ],
+          "suite_releases": [
+            [
+              "AEGP Utility Suite",
+              7
+            ]
+          ]
+        }
+      ],
+      "original_pipl": [
+        {
+          "id": 16000,
+          "language": 1033,
+          "out_flags": 100663360,
+          "out_flags2": 134222848,
+          "properties": [
+            {
+              "hex": "544b4665",
+              "key": "kind",
+              "offset": 26
+            },
+            {
+              "hex": "1244697374616e636520477261646174696f6e00",
+              "key": "name",
+              "offset": 46
+            },
+            {
+              "hex": "0c4f4c4d20506c75672d696e73000000",
+              "key": "catg",
+              "offset": 82
+            },
+            {
+              "hex": "656e747279506f696e7446756e630000",
+              "key": "8664",
+              "offset": 114
+            },
+            {
+              "hex": "02000000",
+              "key": "ePVR",
+              "offset": 146
+            },
+            {
+              "hex": "0d001c00",
+              "key": "eSVR",
+              "offset": 166
+            },
+            {
+              "hex": "00120400",
+              "key": "eVER",
+              "offset": 186
+            },
+            {
+              "hex": "0000",
+              "key": "eINF",
+              "offset": 206
+            },
+            {
+              "hex": "40000006",
+              "key": "eGLO",
+              "offset": 226
+            },
+            {
+              "hex": "00140008",
+              "key": "eGL2",
+              "offset": 246
+            },
+            {
+              "hex": "164f4c4d2044697374616e636520477261646174696f6e00",
+              "key": "eMNA",
+              "offset": 266
+            },
+            {
+              "hex": "00000000",
+              "key": "aeFL",
+              "offset": 306
+            }
+          ],
+          "raw_hex": "0100000000000c0000004d494238646e696b0000000004000000544b46654d494238656d616e00000000140000001244697374616e636520477261646174696f6e004d4942386774616300000000100000000c4f4c4d20506c75672d696e730000004d494238343636380000000010000000656e747279506f696e7446756e6300004d494238525650650000000004000000020000004d4942385256536500000000040000000d001c004d494238524556650000000004000000001204004d494238464e49650000000002000000000000004d4942384f4c47650000000004000000400000064d494238324c47650000000004000000001400084d494238414e4d650000000018000000164f4c4d2044697374616e636520477261646174696f6e004d4942384c466561000000000400000000000000",
+          "sha256": "a1391e693b370c6ae69295a72cf70bf7d67b57fbaf6ab50220c462f14d729982"
+        }
+      ],
+      "original_smart": true,
+      "plugin": "OLMDistanceGradation",
+      "target_route": "smart"
+    },
+    {
+      "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMKiraKira.aex",
+      "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+      "all_flags_agree": true,
+      "build_command": [
+        "xcodebuild",
+        "-project",
+        "mac/OLMKiraKira/Mac/OLMKiraKira.xcodeproj",
+        "-configuration",
+        "Debug",
+        "ARCHS=arm64 x86_64",
+        "ONLY_ACTIVE_ARCH=NO",
+        "GCC_OPTIMIZATION_LEVEL=2",
+        "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMKiraKira/obj",
+        "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMKiraKira/sym",
+        "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMKiraKira/precomp",
+        "CONFIGURATION_BUILD_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMKiraKira/products",
+        "build"
+      ],
+      "decoded_original_flags": [
+        "PF_OutFlag_USE_OUTPUT_EXTENT",
+        "PF_OutFlag_CUSTOM_UI",
+        "PF_OutFlag_DEEP_COLOR_AWARE",
+        "PF_OutFlag2_SUPPORTS_SMART_RENDER",
+        "PF_OutFlag2_FLOAT_COLOR_AWARE",
+        "PF_OutFlag2_SUPPORTS_THREADED_RENDERING"
+      ],
+      "entry": "0x181155f20",
+      "mac_binary_sha256": "ec4d5401a9bc3b5547e8db13c6472708ab229b5e9d1384360b8271ee289efdb7",
+      "mac_global_setup": {
+        "arm64": [
+          {
+            "initial_fill": 0,
+            "my_version": 1638400,
+            "out_flags": 33587264,
+            "out_flags2": 134222848,
+            "return_code": 0,
+            "suite_log": [
+              "AcquireSuite AEGP Utility Suite 13"
+            ]
+          },
+          {
+            "initial_fill": 165,
+            "my_version": 1638400,
+            "out_flags": 33587264,
+            "out_flags2": 134222848,
+            "return_code": 0,
+            "suite_log": [
+              "AcquireSuite AEGP Utility Suite 13"
+            ]
+          }
+        ],
+        "x86_64": [
+          {
+            "initial_fill": 0,
+            "my_version": 1638400,
+            "out_flags": 33587264,
+            "out_flags2": 134222848,
+            "return_code": 0,
+            "suite_log": [
+              "AcquireSuite AEGP Utility Suite 13"
+            ]
+          },
+          {
+            "initial_fill": 165,
+            "my_version": 1638400,
+            "out_flags": 33587264,
+            "out_flags2": 134222848,
+            "return_code": 0,
+            "suite_log": [
+              "AcquireSuite AEGP Utility Suite 13"
+            ]
+          }
+        ]
+      },
+      "mac_pipl": [
+        {
+          "id": 16000,
+          "out_flags": 33587264,
+          "out_flags2": 134222848,
+          "properties": [
+            {
+              "hex": "65464b54",
+              "key": "kind",
+              "offset": 24
+            },
+            {
+              "hex": "0d4f4c4d204b697261204b697261",
+              "key": "name",
+              "offset": 44
+            },
+            {
+              "hex": "0c4f4c4d20506c75672d696e73",
+              "key": "catg",
+              "offset": 76
+            },
+            {
+              "hex": "0a4566666563744d61696e",
+              "key": "mi64",
+              "offset": 108
+            },
+            {
+              "hex": "0a4566666563744d61696e",
+              "key": "ma64",
+              "offset": 136
+            },
+            {
+              "hex": "00020000",
+              "key": "ePVR",
+              "offset": 164
+            },
+            {
+              "hex": "000d001c",
+              "key": "eSVR",
+              "offset": 184
+            },
+            {
+              "hex": "00190000",
+              "key": "eVER",
+              "offset": 204
+            },
+            {
+              "hex": "0000",
+              "key": "eINF",
+              "offset": 224
+            },
+            {
+              "hex": "02008040",
+              "key": "eGLO",
+              "offset": 244
+            },
+            {
+              "hex": "08001400",
+              "key": "eGL2",
+              "offset": 264
+            },
+            {
+              "hex": "114f4c4d204f4c4d204b697261204b697261",
+              "key": "eMNA",
+              "offset": 284
+            },
+            {
+              "hex": "00000000",
+              "key": "aeFL",
+              "offset": 320
+            },
+            {
+              "hex": "1268747470733a2f2f6f6c6d2e636f2e6a702f",
+              "key": "eURL",
+              "offset": 340
+            }
+          ],
+          "raw_hex": "000000000000000e3842494d6b696e64000000000000000465464b543842494d6e616d65000000000000000e0d4f4c4d204b697261204b69726100003842494d63617467000000000000000d0c4f4c4d20506c75672d696e730000003842494d6d693634000000000000000b0a4566666563744d61696e003842494d6d613634000000000000000b0a4566666563744d61696e003842494d655056520000000000000004000200003842494d655356520000000000000004000d001c3842494d655645520000000000000004001900003842494d65494e460000000000000002000000003842494d65474c4f0000000000000004020080403842494d65474c320000000000000004080014003842494d654d4e410000000000000012114f4c4d204f4c4d204b697261204b69726100003842494d6165464c0000000000000004000000003842494d6555524c00000000000000131268747470733a2f2f6f6c6d2e636f2e6a702f00",
+          "sha256": "5a6974658c0244fb58db432c75ed02c4fbe34dcde58a4c86de04f3d84a389f98"
+        }
+      ],
+      "mac_pipl_source_sha256": "b98e192f75894bc7c795e9745335da27b7f22cd724b57d85d2c9db95917e831d",
+      "mac_rsrc_sha256": "86fd6aa0b6e9992d52e81f5ff8e49efd1a16b44bbb34527661771921dc85ff49",
+      "mac_source_sha256": "a9458db90110ece9d7ca67783b7bd5dda0e339c8e2b10d0069e34f3c89dc92f2",
+      "original_classic_used_by_ae": false,
+      "original_global_setup": [
+        {
+          "import_policy": "registered loader memory/libm callbacks; no unimplemented imports or callback errors",
+          "imports": {
+            "count": 2,
+            "counts_by_import": {
+              "VCRUNTIME140.dll!memset": 2
+            },
+            "transcript_sha256": "cef06b955666e42be37751d96ff64a9fc3e7de7f36a4ce4ce9e98a26b2808d07"
+          },
+          "initial_fill": 0,
+          "my_version": 1638400,
+          "out_flags": 33587264,
+          "out_flags2": 134222848,
+          "registrations": [
+            "OLM Kira Kira"
+          ],
+          "return_code": 0,
+          "suite_acquisitions": [
+            [
+              "PF Handle Suite",
+              2
+            ],
+            [
+              "AEGP Utility Suite",
+              13
+            ]
+          ],
+          "suite_releases": [
+            [
+              "AEGP Utility Suite",
+              13
+            ],
+            [
+              "PF Handle Suite",
+              2
+            ]
+          ]
+        },
+        {
+          "import_policy": "registered loader memory/libm callbacks; no unimplemented imports or callback errors",
+          "imports": {
+            "count": 2,
+            "counts_by_import": {
+              "VCRUNTIME140.dll!memset": 2
+            },
+            "transcript_sha256": "cef06b955666e42be37751d96ff64a9fc3e7de7f36a4ce4ce9e98a26b2808d07"
+          },
+          "initial_fill": 165,
+          "my_version": 1638400,
+          "out_flags": 33587264,
+          "out_flags2": 134222848,
+          "registrations": [
+            "OLM Kira Kira"
+          ],
+          "return_code": 0,
+          "suite_acquisitions": [
+            [
+              "PF Handle Suite",
+              2
+            ],
+            [
+              "AEGP Utility Suite",
+              13
+            ]
+          ],
+          "suite_releases": [
+            [
+              "AEGP Utility Suite",
+              13
+            ],
+            [
+              "PF Handle Suite",
+              2
+            ]
+          ]
+        }
+      ],
+      "original_pipl": [
+        {
+          "id": 16000,
+          "language": 1033,
+          "out_flags": 33587264,
+          "out_flags2": 134222848,
+          "properties": [
+            {
+              "hex": "544b4665",
+              "key": "kind",
+              "offset": 26
+            },
+            {
+              "hex": "0d4f4c4d204b697261204b6972610000",
+              "key": "name",
+              "offset": 46
+            },
+            {
+              "hex": "0c4f4c4d20506c75672d696e73000000",
+              "key": "catg",
+              "offset": 78
+            },
+            {
+              "hex": "656e7472795f706f696e7400",
+              "key": "8664",
+              "offset": 110
+            },
+            {
+              "hex": "02000000",
+              "key": "ePVR",
+              "offset": 138
+            },
+            {
+              "hex": "0d001c00",
+              "key": "eSVR",
+              "offset": 158
+            },
+            {
+              "hex": "00001900",
+              "key": "eVER",
+              "offset": 178
+            },
+            {
+              "hex": "0000",
+              "key": "eINF",
+              "offset": 198
+            },
+            {
+              "hex": "40800002",
+              "key": "eGLO",
+              "offset": 218
+            },
+            {
+              "hex": "00140008",
+              "key": "eGL2",
+              "offset": 238
+            },
+            {
+              "hex": "114f4c4d204f4c4d204b697261204b6972610000",
+              "key": "eMNA",
+              "offset": 258
+            },
+            {
+              "hex": "00000000",
+              "key": "aeFL",
+              "offset": 294
+            }
+          ],
+          "raw_hex": "0100000000000c0000004d494238646e696b0000000004000000544b46654d494238656d616e00000000100000000d4f4c4d204b697261204b69726100004d4942386774616300000000100000000c4f4c4d20506c75672d696e730000004d49423834363638000000000c000000656e7472795f706f696e74004d494238525650650000000004000000020000004d4942385256536500000000040000000d001c004d494238524556650000000004000000000019004d494238464e49650000000002000000000000004d4942384f4c47650000000004000000408000024d494238324c47650000000004000000001400084d494238414e4d650000000014000000114f4c4d204f4c4d204b697261204b69726100004d4942384c466561000000000400000000000000",
+          "sha256": "1d3ffb7c9189da6d6a14ae253ff82821f239f3c902456157cba2595cb492b97f"
+        }
+      ],
+      "original_smart": true,
+      "plugin": "OLMKiraKira",
+      "target_route": "smart"
+    },
+    {
+      "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMRadialBlur.aex",
+      "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+      "all_flags_agree": true,
+      "build_command": [
+        "xcodebuild",
+        "-project",
+        "mac/OLMRadialBlur/Mac/OLMRadialBlur.xcodeproj",
+        "-configuration",
+        "Debug",
+        "ARCHS=arm64 x86_64",
+        "ONLY_ACTIVE_ARCH=NO",
+        "GCC_OPTIMIZATION_LEVEL=2",
+        "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMRadialBlur/obj",
+        "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMRadialBlur/sym",
+        "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMRadialBlur/precomp",
+        "CONFIGURATION_BUILD_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMRadialBlur/products",
+        "build"
+      ],
+      "decoded_original_flags": [
+        "PF_OutFlag_USE_OUTPUT_EXTENT",
+        "PF_OutFlag_CUSTOM_UI",
+        "PF_OutFlag_DEEP_COLOR_AWARE",
+        "PF_OutFlag_SEND_UPDATE_PARAMS_UI",
+        "PF_OutFlag2_PARAM_GROUP_START_COLLAPSED_FLAG",
+        "PF_OutFlag2_SUPPORTS_SMART_RENDER",
+        "PF_OutFlag2_FLOAT_COLOR_AWARE",
+        "PF_OutFlag2_SUPPORTS_THREADED_RENDERING"
+      ],
+      "entry": "0x180010540",
+      "mac_binary_sha256": "740b9210f369f65224b3a0c8c518642833e6f83a71f4ea2d73b491b50a391383",
+      "mac_global_setup": {
+        "arm64": [
+          {
+            "initial_fill": 0,
+            "my_version": 622592,
+            "out_flags": 100696128,
+            "out_flags2": 134222856,
+            "return_code": 0,
+            "suite_log": []
+          },
+          {
+            "initial_fill": 165,
+            "my_version": 622592,
+            "out_flags": 100696128,
+            "out_flags2": 134222856,
+            "return_code": 0,
+            "suite_log": []
+          }
+        ],
+        "x86_64": [
+          {
+            "initial_fill": 0,
+            "my_version": 622592,
+            "out_flags": 100696128,
+            "out_flags2": 134222856,
+            "return_code": 0,
+            "suite_log": []
+          },
+          {
+            "initial_fill": 165,
+            "my_version": 622592,
+            "out_flags": 100696128,
+            "out_flags2": 134222856,
+            "return_code": 0,
+            "suite_log": []
+          }
+        ]
+      },
+      "mac_pipl": [
+        {
+          "id": 16000,
+          "out_flags": 100696128,
+          "out_flags2": 134222856,
+          "properties": [
+            {
+              "hex": "65464b54",
+              "key": "kind",
+              "offset": 24
+            },
+            {
+              "hex": "0e4f4c4d2052616469616c426c7572",
+              "key": "name",
+              "offset": 44
+            },
+            {
+              "hex": "0c4f4c4d20506c75672d696e73",
+              "key": "catg",
+              "offset": 76
+            },
+            {
+              "hex": "0a4566666563744d61696e",
+              "key": "mi64",
+              "offset": 108
+            },
+            {
+              "hex": "0a4566666563744d61696e",
+              "key": "ma64",
+              "offset": 136
+            },
+            {
+              "hex": "00020000",
+              "key": "ePVR",
+              "offset": 164
+            },
+            {
+              "hex": "000d001c",
+              "key": "eSVR",
+              "offset": 184
+            },
+            {
+              "hex": "00098000",
+              "key": "eVER",
+              "offset": 204
+            },
+            {
+              "hex": "0000",
+              "key": "eINF",
+              "offset": 224
+            },
+            {
+              "hex": "06008040",
+              "key": "eGLO",
+              "offset": 244
+            },
+            {
+              "hex": "08001408",
+              "key": "eGL2",
+              "offset": 264
+            },
+            {
+              "hex": "0e4f4c4d2052616469616c426c7572",
+              "key": "eMNA",
+              "offset": 284
+            },
+            {
+              "hex": "00000000",
+              "key": "aeFL",
+              "offset": 316
+            },
+            {
+              "hex": "1268747470733a2f2f6f6c6d2e636f2e6a702f",
+              "key": "eURL",
+              "offset": 336
+            }
+          ],
+          "raw_hex": "000000000000000e3842494d6b696e64000000000000000465464b543842494d6e616d65000000000000000f0e4f4c4d2052616469616c426c7572003842494d63617467000000000000000d0c4f4c4d20506c75672d696e730000003842494d6d693634000000000000000b0a4566666563744d61696e003842494d6d613634000000000000000b0a4566666563744d61696e003842494d655056520000000000000004000200003842494d655356520000000000000004000d001c3842494d655645520000000000000004000980003842494d65494e460000000000000002000000003842494d65474c4f0000000000000004060080403842494d65474c320000000000000004080014083842494d654d4e41000000000000000f0e4f4c4d2052616469616c426c7572003842494d6165464c0000000000000004000000003842494d6555524c00000000000000131268747470733a2f2f6f6c6d2e636f2e6a702f00",
+          "sha256": "b53183f52a3cbd5e7450025496b8a7549ab2387d509107c6e068209ccaeb2951"
+        }
+      ],
+      "mac_pipl_source_sha256": "b7343b49ef1622bea459537f83ea318145d5cfefd2b4446d26d94e857335359f",
+      "mac_rsrc_sha256": "97e9e48a95fffd3602c3926c1532ace3c977309c35e5c6498d1287673ad48fe4",
+      "mac_source_sha256": "347c9fd41c3ca6fcc9146efd5b60b5985e86c0c34b31d0309ef488847f01e2db",
+      "original_classic_used_by_ae": false,
+      "original_global_setup": [
+        {
+          "import_policy": "registered loader memory/libm callbacks; no unimplemented imports or callback errors",
+          "imports": {
+            "count": 2,
+            "counts_by_import": {
+              "VCRUNTIME140.dll!memset": 2
+            },
+            "transcript_sha256": "8e6678524f9307a4cbb9a4d147557e2e0c6181a60dab9f7be9c973516680e017"
+          },
+          "initial_fill": 0,
+          "my_version": 622592,
+          "out_flags": 100696128,
+          "out_flags2": 134222856,
+          "registrations": [
+            "OLM RadialBlur"
+          ],
+          "return_code": 0,
+          "suite_acquisitions": [
+            [
+              "PF Handle Suite",
+              2
+            ],
+            [
+              "AEGP Utility Suite",
+              13
+            ]
+          ],
+          "suite_releases": [
+            [
+              "AEGP Utility Suite",
+              13
+            ],
+            [
+              "PF Handle Suite",
+              2
+            ]
+          ]
+        },
+        {
+          "import_policy": "registered loader memory/libm callbacks; no unimplemented imports or callback errors",
+          "imports": {
+            "count": 2,
+            "counts_by_import": {
+              "VCRUNTIME140.dll!memset": 2
+            },
+            "transcript_sha256": "8e6678524f9307a4cbb9a4d147557e2e0c6181a60dab9f7be9c973516680e017"
+          },
+          "initial_fill": 165,
+          "my_version": 622592,
+          "out_flags": 100696128,
+          "out_flags2": 134222856,
+          "registrations": [
+            "OLM RadialBlur"
+          ],
+          "return_code": 0,
+          "suite_acquisitions": [
+            [
+              "PF Handle Suite",
+              2
+            ],
+            [
+              "AEGP Utility Suite",
+              13
+            ]
+          ],
+          "suite_releases": [
+            [
+              "AEGP Utility Suite",
+              13
+            ],
+            [
+              "PF Handle Suite",
+              2
+            ]
+          ]
+        }
+      ],
+      "original_pipl": [
+        {
+          "id": 16000,
+          "language": 1033,
+          "out_flags": 100696128,
+          "out_flags2": 134222856,
+          "properties": [
+            {
+              "hex": "544b4665",
+              "key": "kind",
+              "offset": 26
+            },
+            {
+              "hex": "0e4f4c4d2052616469616c426c757200",
+              "key": "name",
+              "offset": 46
+            },
+            {
+              "hex": "0c4f4c4d20506c75672d696e73000000",
+              "key": "catg",
+              "offset": 78
+            },
+            {
+              "hex": "656e7472795f706f696e7400",
+              "key": "8664",
+              "offset": 110
+            },
+            {
+              "hex": "02000000",
+              "key": "ePVR",
+              "offset": 138
+            },
+            {
+              "hex": "0d001c00",
+              "key": "eSVR",
+              "offset": 158
+            },
+            {
+              "hex": "00800900",
+              "key": "eVER",
+              "offset": 178
+            },
+            {
+              "hex": "0000",
+              "key": "eINF",
+              "offset": 198
+            },
+            {
+              "hex": "40800006",
+              "key": "eGLO",
+              "offset": 218
+            },
+            {
+              "hex": "08140008",
+              "key": "eGL2",
+              "offset": 238
+            },
+            {
+              "hex": "0e4f4c4d2052616469616c426c757200",
+              "key": "eMNA",
+              "offset": 258
+            },
+            {
+              "hex": "00000000",
+              "key": "aeFL",
+              "offset": 290
+            }
+          ],
+          "raw_hex": "0100000000000c0000004d494238646e696b0000000004000000544b46654d494238656d616e00000000100000000e4f4c4d2052616469616c426c7572004d4942386774616300000000100000000c4f4c4d20506c75672d696e730000004d49423834363638000000000c000000656e7472795f706f696e74004d494238525650650000000004000000020000004d4942385256536500000000040000000d001c004d494238524556650000000004000000008009004d494238464e49650000000002000000000000004d4942384f4c47650000000004000000408000064d494238324c47650000000004000000081400084d494238414e4d6500000000100000000e4f4c4d2052616469616c426c7572004d4942384c466561000000000400000000000000",
+          "sha256": "ca613a0dbdb5df801cfdac8896b544c7a2f146dc8bde953dba6cfa01723ed7b0"
+        }
+      ],
+      "original_smart": true,
+      "plugin": "OLMRadialBlur",
+      "target_route": "smart"
+    },
+    {
+      "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMSmoother.aex",
+      "aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+      "all_flags_agree": true,
+      "build_command": [
+        "xcodebuild",
+        "-project",
+        "mac/OLMSmoother/Mac/OLMSmoother.xcodeproj",
+        "-configuration",
+        "Debug",
+        "ARCHS=arm64 x86_64",
+        "ONLY_ACTIVE_ARCH=NO",
+        "GCC_OPTIMIZATION_LEVEL=2",
+        "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMSmoother/obj",
+        "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMSmoother/sym",
+        "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMSmoother/precomp",
+        "CONFIGURATION_BUILD_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMSmoother/products",
+        "build"
+      ],
+      "decoded_original_flags": [
+        "PF_OutFlag_USE_OUTPUT_EXTENT",
+        "PF_OutFlag_DEEP_COLOR_AWARE",
+        "PF_OutFlag2_SUPPORTS_THREADED_RENDERING"
+      ],
+      "entry": "0x18000a2c0",
+      "mac_binary_sha256": "12aa345bca4d55f123c2fd8f1b6d5b5cbf558c67570f734580124788e6ef206e",
+      "mac_global_setup": {
+        "arm64": [
+          {
+            "initial_fill": 0,
+            "my_version": 591872,
+            "out_flags": 33554496,
+            "out_flags2": 134217728,
+            "return_code": 0,
+            "suite_log": []
+          },
+          {
+            "initial_fill": 165,
+            "my_version": 591872,
+            "out_flags": 33554496,
+            "out_flags2": 134217728,
+            "return_code": 0,
+            "suite_log": []
+          }
+        ],
+        "x86_64": [
+          {
+            "initial_fill": 0,
+            "my_version": 591872,
+            "out_flags": 33554496,
+            "out_flags2": 134217728,
+            "return_code": 0,
+            "suite_log": []
+          },
+          {
+            "initial_fill": 165,
+            "my_version": 591872,
+            "out_flags": 33554496,
+            "out_flags2": 134217728,
+            "return_code": 0,
+            "suite_log": []
+          }
+        ]
+      },
+      "mac_pipl": [
+        {
+          "id": 16000,
+          "out_flags": 33554496,
+          "out_flags2": 134217728,
+          "properties": [
+            {
+              "hex": "65464b54",
+              "key": "kind",
+              "offset": 24
+            },
+            {
+              "hex": "0c4f4c4d20536d6f6f74686572",
+              "key": "name",
+              "offset": 44
+            },
+            {
+              "hex": "0c4f4c4d20506c75672d696e73",
+              "key": "catg",
+              "offset": 76
+            },
+            {
+              "hex": "0a4566666563744d61696e",
+              "key": "mi64",
+              "offset": 108
+            },
+            {
+              "hex": "0a4566666563744d61696e",
+              "key": "ma64",
+              "offset": 136
+            },
+            {
+              "hex": "00020000",
+              "key": "ePVR",
+              "offset": 164
+            },
+            {
+              "hex": "000d001c",
+              "key": "eSVR",
+              "offset": 184
+            },
+            {
+              "hex": "00090800",
+              "key": "eVER",
+              "offset": 204
+            },
+            {
+              "hex": "0002",
+              "key": "eINF",
+              "offset": 224
+            },
+            {
+              "hex": "02000040",
+              "key": "eGLO",
+              "offset": 244
+            },
+            {
+              "hex": "08000000",
+              "key": "eGL2",
+              "offset": 264
+            },
+            {
+              "hex": "0c4f4c4d20536d6f6f74686572",
+              "key": "eMNA",
+              "offset": 284
+            },
+            {
+              "hex": "00000000",
+              "key": "aeFL",
+              "offset": 316
+            },
+            {
+              "hex": "1268747470733a2f2f6f6c6d2e636f2e6a702f",
+              "key": "eURL",
+              "offset": 336
+            }
+          ],
+          "raw_hex": "000000000000000e3842494d6b696e64000000000000000465464b543842494d6e616d65000000000000000d0c4f4c4d20536d6f6f746865720000003842494d63617467000000000000000d0c4f4c4d20506c75672d696e730000003842494d6d693634000000000000000b0a4566666563744d61696e003842494d6d613634000000000000000b0a4566666563744d61696e003842494d655056520000000000000004000200003842494d655356520000000000000004000d001c3842494d655645520000000000000004000908003842494d65494e460000000000000002000200003842494d65474c4f0000000000000004020000403842494d65474c320000000000000004080000003842494d654d4e41000000000000000d0c4f4c4d20536d6f6f746865720000003842494d6165464c0000000000000004000000003842494d6555524c00000000000000131268747470733a2f2f6f6c6d2e636f2e6a702f00",
+          "sha256": "63f884e7a6b972e52b1a1e1ce4244ca2ad0979dd142e12a9baf0164d7d80f8c4"
+        }
+      ],
+      "mac_pipl_source_sha256": "cf6c47d755fd89b8bd46ab5d102c353d9093e213e119edb6ea2ae9a6cdb571ea",
+      "mac_rsrc_sha256": "4ba8a25da8f81cb4e1201d26bc04f32884c9023b6b3c804a43ac9ec756d7cfa8",
+      "mac_source_sha256": "d367f38f9ed9918b47977ea6612d3b4ebc90858c5c5c8adfa4c76d291f35c727",
+      "original_classic_used_by_ae": true,
+      "original_global_setup": [
+        {
+          "import_policy": "registered loader memory/libm callbacks; no unimplemented imports or callback errors",
+          "imports": {
+            "count": 0,
+            "counts_by_import": {},
+            "transcript_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          "initial_fill": 0,
+          "my_version": 591872,
+          "out_flags": 33554496,
+          "out_flags2": 134217728,
+          "registrations": [],
+          "return_code": 0,
+          "suite_acquisitions": [],
+          "suite_releases": []
+        },
+        {
+          "import_policy": "registered loader memory/libm callbacks; no unimplemented imports or callback errors",
+          "imports": {
+            "count": 0,
+            "counts_by_import": {},
+            "transcript_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          "initial_fill": 165,
+          "my_version": 591872,
+          "out_flags": 33554496,
+          "out_flags2": 134217728,
+          "registrations": [],
+          "return_code": 0,
+          "suite_acquisitions": [],
+          "suite_releases": []
+        }
+      ],
+      "original_pipl": [
+        {
+          "id": 16000,
+          "language": 1033,
+          "out_flags": 33554496,
+          "out_flags2": 134217728,
+          "properties": [
+            {
+              "hex": "544b4665",
+              "key": "kind",
+              "offset": 26
+            },
+            {
+              "hex": "0c4f4c4d20536d6f6f74686572000000",
+              "key": "name",
+              "offset": 46
+            },
+            {
+              "hex": "0c4f4c4d20506c75672d696e73000000",
+              "key": "catg",
+              "offset": 78
+            },
+            {
+              "hex": "656e747279506f696e7446756e630000",
+              "key": "8664",
+              "offset": 110
+            },
+            {
+              "hex": "02000000",
+              "key": "ePVR",
+              "offset": 142
+            },
+            {
+              "hex": "0d001c00",
+              "key": "eSVR",
+              "offset": 162
+            },
+            {
+              "hex": "00080900",
+              "key": "eVER",
+              "offset": 182
+            },
+            {
+              "hex": "0000",
+              "key": "eINF",
+              "offset": 202
+            },
+            {
+              "hex": "40000002",
+              "key": "eGLO",
+              "offset": 222
+            },
+            {
+              "hex": "00000008",
+              "key": "eGL2",
+              "offset": 242
+            },
+            {
+              "hex": "0c4f4c4d20536d6f6f74686572000000",
+              "key": "eMNA",
+              "offset": 262
+            },
+            {
+              "hex": "00000000",
+              "key": "aeFL",
+              "offset": 294
+            }
+          ],
+          "raw_hex": "0100000000000c0000004d494238646e696b0000000004000000544b46654d494238656d616e00000000100000000c4f4c4d20536d6f6f746865720000004d4942386774616300000000100000000c4f4c4d20506c75672d696e730000004d494238343636380000000010000000656e747279506f696e7446756e6300004d494238525650650000000004000000020000004d4942385256536500000000040000000d001c004d494238524556650000000004000000000809004d494238464e49650000000002000000000000004d4942384f4c47650000000004000000400000024d494238324c47650000000004000000000000084d494238414e4d6500000000100000000c4f4c4d20536d6f6f746865720000004d4942384c466561000000000400000000000000",
+          "sha256": "652dd1cccef7ea16acdf236d5ecad626e08729fe16357bca67050e3798928abd"
+        }
+      ],
+      "original_smart": false,
+      "plugin": "OLMSmoother",
+      "target_route": "classic"
+    },
+    {
+      "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMSmoother2.aex",
+      "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+      "all_flags_agree": true,
+      "build_command": [
+        "xcodebuild",
+        "-project",
+        "mac/OLMSmoother2/Mac/OLMSmoother2.xcodeproj",
+        "-configuration",
+        "Debug",
+        "ARCHS=arm64 x86_64",
+        "ONLY_ACTIVE_ARCH=NO",
+        "GCC_OPTIMIZATION_LEVEL=2",
+        "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMSmoother2/obj",
+        "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMSmoother2/sym",
+        "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMSmoother2/precomp",
+        "CONFIGURATION_BUILD_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMSmoother2/products",
+        "build"
+      ],
+      "decoded_original_flags": [
+        "PF_OutFlag_USE_OUTPUT_EXTENT",
+        "PF_OutFlag_PIX_INDEPENDENT",
+        "PF_OutFlag_DEEP_COLOR_AWARE",
+        "PF_OutFlag2_SUPPORTS_SMART_RENDER",
+        "PF_OutFlag2_FLOAT_COLOR_AWARE",
+        "PF_OutFlag2_SUPPORTS_THREADED_RENDERING"
+      ],
+      "entry": "0x180009e60",
+      "mac_binary_sha256": "00594edd91171a7be7c8355cd94b8fa4b76c54a9b5f45610b6a575d87f68a21f",
+      "mac_global_setup": {
+        "arm64": [
+          {
+            "initial_fill": 0,
+            "my_version": 1081344,
+            "out_flags": 33555520,
+            "out_flags2": 134222848,
+            "return_code": 0,
+            "suite_log": []
+          },
+          {
+            "initial_fill": 165,
+            "my_version": 1081344,
+            "out_flags": 33555520,
+            "out_flags2": 134222848,
+            "return_code": 0,
+            "suite_log": []
+          }
+        ],
+        "x86_64": [
+          {
+            "initial_fill": 0,
+            "my_version": 1081344,
+            "out_flags": 33555520,
+            "out_flags2": 134222848,
+            "return_code": 0,
+            "suite_log": []
+          },
+          {
+            "initial_fill": 165,
+            "my_version": 1081344,
+            "out_flags": 33555520,
+            "out_flags2": 134222848,
+            "return_code": 0,
+            "suite_log": []
+          }
+        ]
+      },
+      "mac_pipl": [
+        {
+          "id": 16000,
+          "out_flags": 33555520,
+          "out_flags2": 134222848,
+          "properties": [
+            {
+              "hex": "65464b54",
+              "key": "kind",
+              "offset": 24
+            },
+            {
+              "hex": "0f4f4c4d20536d6f6f74686572207632",
+              "key": "name",
+              "offset": 44
+            },
+            {
+              "hex": "0c4f4c4d20506c75672d696e73",
+              "key": "catg",
+              "offset": 76
+            },
+            {
+              "hex": "0a4566666563744d61696e",
+              "key": "mi64",
+              "offset": 108
+            },
+            {
+              "hex": "0a4566666563744d61696e",
+              "key": "ma64",
+              "offset": 136
+            },
+            {
+              "hex": "00020000",
+              "key": "ePVR",
+              "offset": 164
+            },
+            {
+              "hex": "000d001c",
+              "key": "eSVR",
+              "offset": 184
+            },
+            {
+              "hex": "00108000",
+              "key": "eVER",
+              "offset": 204
+            },
+            {
+              "hex": "0000",
+              "key": "eINF",
+              "offset": 224
+            },
+            {
+              "hex": "02000440",
+              "key": "eGLO",
+              "offset": 244
+            },
+            {
+              "hex": "08001400",
+              "key": "eGL2",
+              "offset": 264
+            },
+            {
+              "hex": "0f4f4c4d20536d6f6f74686572207632",
+              "key": "eMNA",
+              "offset": 284
+            },
+            {
+              "hex": "00000000",
+              "key": "aeFL",
+              "offset": 316
+            },
+            {
+              "hex": "1268747470733a2f2f6f6c6d2e636f2e6a702f",
+              "key": "eURL",
+              "offset": 336
+            }
+          ],
+          "raw_hex": "000000000000000e3842494d6b696e64000000000000000465464b543842494d6e616d6500000000000000100f4f4c4d20536d6f6f746865722076323842494d63617467000000000000000d0c4f4c4d20506c75672d696e730000003842494d6d693634000000000000000b0a4566666563744d61696e003842494d6d613634000000000000000b0a4566666563744d61696e003842494d655056520000000000000004000200003842494d655356520000000000000004000d001c3842494d655645520000000000000004001080003842494d65494e460000000000000002000000003842494d65474c4f0000000000000004020004403842494d65474c320000000000000004080014003842494d654d4e4100000000000000100f4f4c4d20536d6f6f746865722076323842494d6165464c0000000000000004000000003842494d6555524c00000000000000131268747470733a2f2f6f6c6d2e636f2e6a702f00",
+          "sha256": "f9c53aeb864073f6e712f03e3d0fbb1b546704242aad6bbc12bf2c23a8507d61"
+        }
+      ],
+      "mac_pipl_source_sha256": "3a59700416081950bc46998b757fb2bedbbe1748c394880165b6a5f4cd65b117",
+      "mac_rsrc_sha256": "749e5c5f9b9eeea9bc3ef46d8169dc32be4905e72e715e208f5afd062b9686c6",
+      "mac_source_sha256": "123e17476796170e1e1f0ba9dce4e05734e80ae9b0be29ad1283eee8cec4ec4c",
+      "original_classic_used_by_ae": false,
+      "original_global_setup": [
+        {
+          "import_policy": "registered loader memory/libm callbacks; no unimplemented imports or callback errors",
+          "imports": {
+            "count": 19562,
+            "counts_by_import": {
+              "VCRUNTIME140.dll!memset": 1,
+              "api-ms-win-crt-math-l1-1-0.dll!pow": 19561
+            },
+            "transcript_sha256": "d26f0519fb646f0900535ba4bbdf9094c9f09312fe04b15d1e6e1ab439adf17c"
+          },
+          "initial_fill": 0,
+          "my_version": 1081344,
+          "out_flags": 33555520,
+          "out_flags2": 134222848,
+          "registrations": [
+            "OLM Smoother v2"
+          ],
+          "return_code": 0,
+          "suite_acquisitions": [
+            [
+              "PF Handle Suite",
+              2
+            ],
+            [
+              "AEGP Utility Suite",
+              13
+            ],
+            [
+              "AEGP Memory Suite",
+              1
+            ]
+          ],
+          "suite_releases": [
+            [
+              "AEGP Memory Suite",
+              1
+            ],
+            [
+              "AEGP Utility Suite",
+              13
+            ],
+            [
+              "PF Handle Suite",
+              2
+            ]
+          ]
+        },
+        {
+          "import_policy": "registered loader memory/libm callbacks; no unimplemented imports or callback errors",
+          "imports": {
+            "count": 19562,
+            "counts_by_import": {
+              "VCRUNTIME140.dll!memset": 1,
+              "api-ms-win-crt-math-l1-1-0.dll!pow": 19561
+            },
+            "transcript_sha256": "d26f0519fb646f0900535ba4bbdf9094c9f09312fe04b15d1e6e1ab439adf17c"
+          },
+          "initial_fill": 165,
+          "my_version": 1081344,
+          "out_flags": 33555520,
+          "out_flags2": 134222848,
+          "registrations": [
+            "OLM Smoother v2"
+          ],
+          "return_code": 0,
+          "suite_acquisitions": [
+            [
+              "PF Handle Suite",
+              2
+            ],
+            [
+              "AEGP Utility Suite",
+              13
+            ],
+            [
+              "AEGP Memory Suite",
+              1
+            ]
+          ],
+          "suite_releases": [
+            [
+              "AEGP Memory Suite",
+              1
+            ],
+            [
+              "AEGP Utility Suite",
+              13
+            ],
+            [
+              "PF Handle Suite",
+              2
+            ]
+          ]
+        }
+      ],
+      "original_pipl": [
+        {
+          "id": 16000,
+          "language": 1033,
+          "out_flags": 33555520,
+          "out_flags2": 134222848,
+          "properties": [
+            {
+              "hex": "544b4665",
+              "key": "kind",
+              "offset": 26
+            },
+            {
+              "hex": "0f4f4c4d20536d6f6f74686572207632",
+              "key": "name",
+              "offset": 46
+            },
+            {
+              "hex": "0c4f4c4d20506c75672d696e73000000",
+              "key": "catg",
+              "offset": 78
+            },
+            {
+              "hex": "656e7472795f706f696e7400",
+              "key": "8664",
+              "offset": 110
+            },
+            {
+              "hex": "02000000",
+              "key": "ePVR",
+              "offset": 138
+            },
+            {
+              "hex": "0d001c00",
+              "key": "eSVR",
+              "offset": 158
+            },
+            {
+              "hex": "00801000",
+              "key": "eVER",
+              "offset": 178
+            },
+            {
+              "hex": "0000",
+              "key": "eINF",
+              "offset": 198
+            },
+            {
+              "hex": "40040002",
+              "key": "eGLO",
+              "offset": 218
+            },
+            {
+              "hex": "00140008",
+              "key": "eGL2",
+              "offset": 238
+            },
+            {
+              "hex": "0f4f4c4d20536d6f6f74686572207632",
+              "key": "eMNA",
+              "offset": 258
+            },
+            {
+              "hex": "00000000",
+              "key": "aeFL",
+              "offset": 290
+            }
+          ],
+          "raw_hex": "0100000000000c0000004d494238646e696b0000000004000000544b46654d494238656d616e00000000100000000f4f4c4d20536d6f6f746865722076324d4942386774616300000000100000000c4f4c4d20506c75672d696e730000004d49423834363638000000000c000000656e7472795f706f696e74004d494238525650650000000004000000020000004d4942385256536500000000040000000d001c004d494238524556650000000004000000008010004d494238464e49650000000002000000000000004d4942384f4c47650000000004000000400400024d494238324c47650000000004000000001400084d494238414e4d6500000000100000000f4f4c4d20536d6f6f746865722076324d4942384c466561000000000400000000000000",
+          "sha256": "4ab26c40f28c85755ee585a1d4c62e1af9b7c7bde24dd7d1bec6149b285b5fc7"
+        }
+      ],
+      "original_smart": true,
+      "plugin": "OLMSmoother2",
+      "target_route": "smart"
+    },
+    {
+      "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMToonDilate.aex",
+      "aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+      "all_flags_agree": true,
+      "build_command": [
+        "xcodebuild",
+        "-project",
+        "mac/OLMToonDilate/Mac/OLMToonDilate.xcodeproj",
+        "-configuration",
+        "Debug",
+        "ARCHS=arm64 x86_64",
+        "ONLY_ACTIVE_ARCH=NO",
+        "GCC_OPTIMIZATION_LEVEL=2",
+        "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMToonDilate/obj",
+        "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMToonDilate/sym",
+        "SHARED_PRECOMPS_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMToonDilate/precomp",
+        "CONFIGURATION_BUILD_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F18-route-target-per-plugin/orchestra/state/F18-route-target-per-plugin/build/OLMToonDilate/products",
+        "build"
+      ],
+      "decoded_original_flags": [
+        "PF_OutFlag_NON_PARAM_VARY",
+        "PF_OutFlag_USE_OUTPUT_EXTENT",
+        "PF_OutFlag_DEEP_COLOR_AWARE",
+        "PF_OutFlag2_SUPPORTS_SMART_RENDER",
+        "PF_OutFlag2_FLOAT_COLOR_AWARE",
+        "PF_OutFlag2_AUTOMATIC_WIDE_TIME_INPUT",
+        "PF_OutFlag2_SUPPORTS_THREADED_RENDERING"
+      ],
+      "entry": "0x1801abc00",
+      "mac_binary_sha256": "c0a5c4e993276869d1d4c08e859227ca5392b461a1e539956a48927b1030ce24",
+      "mac_global_setup": {
+        "arm64": [
+          {
+            "initial_fill": 0,
+            "my_version": 559104,
+            "out_flags": 33554500,
+            "out_flags2": 134353920,
+            "return_code": 0,
+            "suite_log": []
+          },
+          {
+            "initial_fill": 165,
+            "my_version": 559104,
+            "out_flags": 33554500,
+            "out_flags2": 134353920,
+            "return_code": 0,
+            "suite_log": []
+          }
+        ],
+        "x86_64": [
+          {
+            "initial_fill": 0,
+            "my_version": 559104,
+            "out_flags": 33554500,
+            "out_flags2": 134353920,
+            "return_code": 0,
+            "suite_log": []
+          },
+          {
+            "initial_fill": 165,
+            "my_version": 559104,
+            "out_flags": 33554500,
+            "out_flags2": 134353920,
+            "return_code": 0,
+            "suite_log": []
+          }
+        ]
+      },
+      "mac_pipl": [
+        {
+          "id": 16000,
+          "out_flags": 33554500,
+          "out_flags2": 134353920,
+          "properties": [
+            {
+              "hex": "65464b54",
+              "key": "kind",
+              "offset": 24
+            },
+            {
+              "hex": "0f4f4c4d20546f6f6e2044696c617465",
+              "key": "name",
+              "offset": 44
+            },
+            {
+              "hex": "0c4f4c4d20506c75672d696e73",
+              "key": "catg",
+              "offset": 76
+            },
+            {
+              "hex": "0a4566666563744d61696e",
+              "key": "mi64",
+              "offset": 108
+            },
+            {
+              "hex": "0a4566666563744d61696e",
+              "key": "ma64",
+              "offset": 136
+            },
+            {
+              "hex": "00020000",
+              "key": "ePVR",
+              "offset": 164
+            },
+            {
+              "hex": "000d001c",
+              "key": "eSVR",
+              "offset": 184
+            },
+            {
+              "hex": "00088800",
+              "key": "eVER",
+              "offset": 204
+            },
+            {
+              "hex": "0000",
+              "key": "eINF",
+              "offset": 224
+            },
+            {
+              "hex": "02000044",
+              "key": "eGLO",
+              "offset": 244
+            },
+            {
+              "hex": "08021400",
+              "key": "eGL2",
+              "offset": 264
+            },
+            {
+              "hex": "1241444245204f4c4d546f6f6e44696c617465",
+              "key": "eMNA",
+              "offset": 284
+            },
+            {
+              "hex": "00000000",
+              "key": "aeFL",
+              "offset": 320
+            },
+            {
+              "hex": "1268747470733a2f2f6f6c6d2e636f2e6a702f",
+              "key": "eURL",
+              "offset": 340
+            }
+          ],
+          "raw_hex": "000000000000000e3842494d6b696e64000000000000000465464b543842494d6e616d6500000000000000100f4f4c4d20546f6f6e2044696c6174653842494d63617467000000000000000d0c4f4c4d20506c75672d696e730000003842494d6d693634000000000000000b0a4566666563744d61696e003842494d6d613634000000000000000b0a4566666563744d61696e003842494d655056520000000000000004000200003842494d655356520000000000000004000d001c3842494d655645520000000000000004000888003842494d65494e460000000000000002000000003842494d65474c4f0000000000000004020000443842494d65474c320000000000000004080214003842494d654d4e4100000000000000131241444245204f4c4d546f6f6e44696c617465003842494d6165464c0000000000000004000000003842494d6555524c00000000000000131268747470733a2f2f6f6c6d2e636f2e6a702f00",
+          "sha256": "aaafca30857d672d3813b300832c8dd5a30c7c19c370a226eef9060bef6a03c9"
+        }
+      ],
+      "mac_pipl_source_sha256": "48e01dc7e51c0c12a85cad2621a21a5dcefb7ac27e88f4977e0969524b8ee067",
+      "mac_rsrc_sha256": "265753c64c6a6317dbcffe071b37d957eed0ca87d26f0da66f44473ef3d6fbae",
+      "mac_source_sha256": "c49f86774d395f1bbb838f723b0fa830f819b291112fdaa14063d007081724e4",
+      "original_classic_used_by_ae": false,
+      "original_global_setup": [
+        {
+          "import_policy": "registered loader memory/libm callbacks; no unimplemented imports or callback errors",
+          "imports": {
+            "count": 0,
+            "counts_by_import": {},
+            "transcript_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          "initial_fill": 0,
+          "my_version": 559104,
+          "out_flags": 33554500,
+          "out_flags2": 134353920,
+          "registrations": [
+            "OLM Toon Dilate"
+          ],
+          "return_code": 0,
+          "suite_acquisitions": [
+            [
+              "PF Handle Suite",
+              2
+            ],
+            [
+              "AEGP Utility Suite",
+              13
+            ]
+          ],
+          "suite_releases": [
+            [
+              "AEGP Utility Suite",
+              13
+            ],
+            [
+              "PF Handle Suite",
+              2
+            ]
+          ]
+        },
+        {
+          "import_policy": "registered loader memory/libm callbacks; no unimplemented imports or callback errors",
+          "imports": {
+            "count": 0,
+            "counts_by_import": {},
+            "transcript_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          },
+          "initial_fill": 165,
+          "my_version": 559104,
+          "out_flags": 33554500,
+          "out_flags2": 134353920,
+          "registrations": [
+            "OLM Toon Dilate"
+          ],
+          "return_code": 0,
+          "suite_acquisitions": [
+            [
+              "PF Handle Suite",
+              2
+            ],
+            [
+              "AEGP Utility Suite",
+              13
+            ]
+          ],
+          "suite_releases": [
+            [
+              "AEGP Utility Suite",
+              13
+            ],
+            [
+              "PF Handle Suite",
+              2
+            ]
+          ]
+        }
+      ],
+      "original_pipl": [
+        {
+          "id": 16000,
+          "language": 1033,
+          "out_flags": 33554500,
+          "out_flags2": 134353920,
+          "properties": [
+            {
+              "hex": "544b4665",
+              "key": "kind",
+              "offset": 26
+            },
+            {
+              "hex": "0f4f4c4d20546f6f6e2044696c617465",
+              "key": "name",
+              "offset": 46
+            },
+            {
+              "hex": "0c4f4c4d20506c75672d696e73000000",
+              "key": "catg",
+              "offset": 78
+            },
+            {
+              "hex": "656e7472795f706f696e7400",
+              "key": "8664",
+              "offset": 110
+            },
+            {
+              "hex": "02000000",
+              "key": "ePVR",
+              "offset": 138
+            },
+            {
+              "hex": "0d001c00",
+              "key": "eSVR",
+              "offset": 158
+            },
+            {
+              "hex": "00880800",
+              "key": "eVER",
+              "offset": 178
+            },
+            {
+              "hex": "0000",
+              "key": "eINF",
+              "offset": 198
+            },
+            {
+              "hex": "44000002",
+              "key": "eGLO",
+              "offset": 218
+            },
+            {
+              "hex": "00140208",
+              "key": "eGL2",
+              "offset": 238
+            },
+            {
+              "hex": "1241444245204f4c4d546f6f6e44696c61746500",
+              "key": "eMNA",
+              "offset": 258
+            },
+            {
+              "hex": "00000000",
+              "key": "aeFL",
+              "offset": 294
+            }
+          ],
+          "raw_hex": "0100000000000c0000004d494238646e696b0000000004000000544b46654d494238656d616e00000000100000000f4f4c4d20546f6f6e2044696c6174654d4942386774616300000000100000000c4f4c4d20506c75672d696e730000004d49423834363638000000000c000000656e7472795f706f696e74004d494238525650650000000004000000020000004d4942385256536500000000040000000d001c004d494238524556650000000004000000008808004d494238464e49650000000002000000000000004d4942384f4c47650000000004000000440000024d494238324c47650000000004000000001402084d494238414e4d6500000000140000001241444245204f4c4d546f6f6e44696c617465004d4942384c466561000000000400000000000000",
+          "sha256": "6cc040b97eb8f54c6e70b3e285fa8829b635fc203579fc73ad3f0695b69f9462"
+        }
+      ],
+      "original_smart": true,
+      "plugin": "OLMToonDilate",
+      "target_route": "smart"
+    }
+  ],
+  "schema": "olm.route-flags.F18/1",
+  "sdk_header_sha256": "a6d5cdeba53f6934a9bac19c2c1b46b1478266f39995795c59244e3d9a355a0d",
+  "source_revision": "566d6ded28d0c5f07fd48e57e53a426ea4fff3e6",
+  "summary": {
+    "flags_agree": 10,
+    "plugin_count": 10,
+    "smart": 9
+  }
+}

@@ -142,7 +142,9 @@ int main(int argc,char**argv){
         if(want8)return parity<PF_Pixel8>(8,w,h,5,13,29,true,127)?0:20;
         return parity<PF_Pixel16>(16,w,h,10,26,42,true,127)?0:21;
     }
-    PF_InData id{};PF_OutData od{};if(EffectMain(PF_Cmd_GLOBAL_SETUP,&id,&od,nullptr,nullptr,nullptr)!=0||od.out_flags2!=0x08000400)return 1;
+    // The manually driven Smart wrapper remains testable, but AE must select
+    // Classic as the original v1 does (F18 original PiPL/GLOBAL_SETUP audit).
+    PF_InData id{};PF_OutData od{};if(EffectMain(PF_Cmd_GLOBAL_SETUP,&id,&od,nullptr,nullptr,nullptr)!=0||od.out_flags2!=0x08000000)return 1;
     if(!parity<PF_Pixel8>(8,67,43,5,13,29,false,0))return 2;
     if(!parity<PF_Pixel8>(8,67,43,7,15,31,true,255))return 3;
     if(!parity<PF_Pixel16>(16,65,41,10,26,42,false,37))return 4;

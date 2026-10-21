@@ -112,13 +112,15 @@ def main() -> int:
     assert hashlib.sha256(AEX.read_bytes()).hexdigest() == AEX_SHA
     source = (ROOT / "mac/OLMColorKey/OLMColorKey.cpp").read_text()
     required = (
-        "PF_OutFlag_SEND_UPDATE_PARAMS_UI", "case PF_Cmd_UPDATE_PARAMS_UI:",
+        "case PF_Cmd_UPDATE_PARAMS_UI:",
         "UpdateParameterUI(in_data, params)", "active && use_color",
         "active && use_color && replace_enabled && use_replace",
         "active && per_color && !per_component", "active && per_color && per_component",
     )
     assert all(token in source for token in required)
-    assert "AE_Effect_Global_OutFlags { 0x06000040 }" in PIPL.read_text()
+    # F18 measures original PiPL + GLOBAL_SETUP: a callable UI helper does not
+    # imply SEND_UPDATE_PARAMS_UI. Keep the original capability advertisement.
+    assert "AE_Effect_Global_OutFlags { 0x02000440 }" in PIPL.read_text()
     results = []
     for case in CASES:
         actual, wanted = run_actual(case), expected(case)
@@ -129,7 +131,7 @@ def main() -> int:
         "schema_version": 1, "status": "exact", "actual_aex_sha256": AEX_SHA,
         "actual_method": hex(UPDATE_METHOD), "cases": results,
         "contract": "Windows UPDATE_PARAMS_UI emits 279 deterministic UI operations: global threshold mode plus 25 eight-control color blocks, gated by count/use/replace/per-color/per-component.",
-        "production": "Mac advertises SEND_UPDATE_PARAMS_UI and handles PF_Cmd_UPDATE_PARAMS_UI with the same combined Effect Controls enabled state.",
+        "production": "Mac retains the original capability flags and handles manually delivered PF_Cmd_UPDATE_PARAMS_UI with the same combined Effect Controls enabled state; host notification scheduling is not proven by this helper test.",
         "boundary": "Actual AEX helper calls are executed under Unicorn; native AE redraw remains a host-level visual check.",
     }
     REPORT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
