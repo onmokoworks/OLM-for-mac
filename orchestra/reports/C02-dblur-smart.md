@@ -1,18 +1,17 @@
-status: partial
+status: done
 
 summary:
-- Cluster 1 closed: restore the original component-map row bounds; Smart seed 1 improves 235 → 257 exact, 23 → 1 mismatch.
-- All 235 baseline exact Smart outputs are unchanged; fresh seed 2 improves 243 → 265 exact with no exact regressions.
-- Ten T10 representative signatures now have exact rotated planes, component maps, divisors and final pixels; 17 saved Smart mismatches become exact.
-- 656 cases agree between O2 and ASan/UBSan on both Mac routes; two retained regression tests pass (684 renders).
-- Cluster 2 admits bounded generated Noise: Smart seed1 257 → 262 exact, seed2 265 → 269; no new mismatch or exact regression.
-- Size×Fade and the remaining mathematical-import boundary are retained for separate investigation.
+- Smart seed1 improves 235 → 262 exact, 23 → 1 mismatch, 40 → 35 refusals; all baseline exact outputs remain byte-identical.
+- One general component-map fix closes ten pre-existing T10 signature clusters; bounded generated-Noise admission closes five more seed1 refusals.
+- Fresh seed2 improves 243 → 269 exact; corpus improves 37 → 54 exact / 56, with 17 improvements and no Smart regressions.
+- Each production change passed 656-case O2/ASan/UBSan verification; ten paired rotated planes/maps/final outputs and two generated-Noise witnesses are exact.
+- Remaining expf and nonfinite NaN boundaries are documented; no Gaussian, writer, NaN-payload policy, or negative-Offset workaround was promoted.
 
 facts:
 
 Starting revision `ae083498` on `orch/C02-dblur-smart`. Read AGENT_GUIDE.md, GOTCHAS.md, the DirectionalBlur ledger rows/forbidden actions, compatibility plan, and T10/F05/F06/F16 reports. MAIN, original AEX, emulator source/workers, release gates and ledger were not modified. All scratch/compiler temporary paths are under this ticket's scratch; no push/history rewrite.
 
-**First divergent stage.** The paired probe executes the original parameter builder, typed populate/output callbacks, rotate, component-map and rowdriver instructions. Only host callbacks/imports are emulated; no rotate/rowdriver detours. It checks the stack ABI with an original prepass leaf. Original fixture final bytes equal cached Smart session bytes in all ten representatives. Original and Mac rotated planes agree exactly. Their first differing stage is the component map (2–6 float words, divisor exact). Example C02: work pixel (2,3) AEX record `[2,3,1,-1]`, Mac `[2,3,3,0]`; center word at byte offset 376 is `0000803f` vs `00004040` little endian.
+**First divergent stage.** The paired probe executes the original parameter builder, typed populate/output callbacks, rotate, component-map and rowdriver instructions. Only host callbacks/imports are emulated; no rotate/rowdriver detours. It checks the stack ABI with an original prepass leaf. Original fixture final bytes equal cached Smart session bytes in all ten representatives. Original and Mac rotated planes agree exactly. Their first differing image/map stage is the component map (2–6 float words, divisor exact). The initial C02 double-round fixture also differs in two of 561 weight words, without changing its final frame. A separate native-f32 import replay (`map-c02-native-before/after.json`) matches all 561 weights and the session reference, and confirms the component map is the first differing captured stage: four words before, zero after; final bytes 2 → 0. The other nine initial witnesses have exact captured weights. Example C02: work pixel (2,3) AEX record `[2,3,1,-1]`, Mac `[2,3,3,0]`; center word at byte offset 376 is `0000803f` vs `00004040` little endian.
 
 The original run graph seeds min=row and max=0. Assembly `0x18000284e..0x18000285a` updates min and max in mutually exclusive arms; the initial run does not set max. Thus a component confined to its first row retains max=0. The raster-first seed is the component's minimum row. The pixel traversal now preserves this general run-level rule. No coordinate, source, expected-value or quantization correction was introduced. Cross-row components keep their existing maximum.
 
@@ -128,3 +127,56 @@ python3 tools/fuzz/probe_directionalblur_c02_admission.py --baseline 08216d532f1
 ```
 
 Expected: verifier PASS 656, production Smart 262/1/35/2 (seed1) and 269/1/28/2 (seed2), gate 600 O2/sanitized matches with the two recorded Size×Fade mismatches, two generated-Noise stage/final pairs exact. Cluster1 historical counts remain tied to its commit; current campaign is 262 exact.
+
+
+## Remaining import and oracle boundaries (no production changes)
+
+facts:
+
+**Neutral PF16 index84 / T10 C15.** Original AEX with the fixture's `double-round` expf import produces exactly the Mac frame, SHA-256 `6bb98821691911721b0b1908a0082239a9aa7d29ca4f565b90721ed4299ce5f6`. Cached Smart worker instead produces `7eb2b5dc8155d28a5e26d42fe923fc5715bb44bacdb6730f41cd07ed9c1fe365`: the red PF16 word at (4,18) is `c04e` vs Mac `c14e`. The fixture and Mac rotated planes and 752 Gaussian words agree with double-round expf. Keeping every AEX instruction/input/host callback fixed and changing **only** the fixture import to host float32 expf reproduces the cached worker frame exactly. The 752 input arguments are identical; eight returned float words differ. First: table index3, argument LE `5e3196b8`, double-round `4ffb7f3f`, host expf `4efb7f3f`.
+
+**Size×Fade refusal index200 (seed1).** With the public guard bypassed only in scratch, Mac and the original double-round fixture have exactly equal rotated component inputs, maps, divisor, 22 Front weights, 80 Fade weights, rowdriver destination, denominator and alpha-max. Their final frames agree at SHA-256 `97fca2b1b95ac332d5fe0e2bff9d3d08aab5080c8ba20ecb8544de4d9213e8f4`; cached worker SHA-256 is `cc908bb5b2dc8a3bbccce8a35bacc47bae294083bcea7f3c6b25e004c4f28d33` (11 byte differences, first byte73 `31` → Mac `32`). Changing only powf to host float32 leaves all those stages/output unchanged. Changing only expf to host float32 makes the original AEX final output exactly match the worker. Of 102 expf calls, input arguments are all identical and exactly one result changes: Fade table index25 (combined call47), argument `0100e1be`, double-round `a9f6243f`, host expf `a8f6243f`. It propagates to 1459 row-output words, 381 denominator words and 54 alpha words. This directly isolates an imported-function boundary, not a final-byte issue. The fresh-seed Size×Fade mismatch remains independently unlocalized; it is not automatically assigned the same cause.
+
+The cached worker source's `imports.rs:2648` installs `f32::exp`; the local fixture explicitly offers double-round and native-f32 imports. Static sources and the unchanged accepted `core/dblur_gaussian.h` are hash-bound in `boundary-bindings.json`. Native Windows UCRT has not been executed here. The ledger-preserved double-exp-then-float model and proven writer remain unchanged; neither dependency experiment was promoted.
+
+**PF32 nonfinite indices109/299.** Scratch-only finite-input gate bypass, original typed callbacks and no rotate/rowdriver detours. Both original fixture outputs exactly match the cached session. Populated planes agree with Mac (0 differing words). First stage divergence is rotation: 440 / 310 float words, including AEX LE `0000c0ff` versus ARM `0000c07f`. Final differences remain 2942 / 2025 bytes. The second case also has 688 map-word differences and one divisor-word difference because unordered alpha comparisons differ. Full writer-entry planes were captured, with 1464 / 787 word differences; the production writer is not changed.
+
+A proposed first-NaN-operand arithmetic model was tested and withdrawn. Direct execution of **original AEX** ADDSS/SUBSS/MULSS/DIVSS/MINSS instruction bytes covers 12 raw input words × 12 × 5 = **720 conditions**. The same scalar instructions compiled into a local x86_64 executable and run under macOS Rosetta match **704**, differ **16** (4 each in add/sub/mul/div, 0 in min). Example `ADDSS 7fc12345, ffc12346`: Unicorn returns `ffc12346`, x86_64 execution returns `7fc12345`. The cached Unicorn vendor code describes its default selection as x87-style: quiet NaN preference, then larger significand, positive sign tie-break. This agrees with the observed emulator boundary. It is not a native Windows proof, nor sufficient grounds to bake that emulator selection into the port. All experimental arithmetic/map/writer changes were removed; final production hashes exactly match the already-sanitized generated-Noise verification manifest.
+
+The fixture initially sampled a PF32 writer during its own callback calibration, causing a plane-length assertion; the trace now waits for the real rowdriver/rotated stage. This was instrumentation setup, not a rendering hypothesis. No permissions were rejected. The two-refuted-hypotheses/no-new-boundary stop condition was not reached: the expf experiment captured exact new return words, and the NaN model test captured an independent instruction-level counterexample.
+
+inference:
+- The remaining neutral mismatch and the measured Size×Fade rejection depend on the reference host's expf implementation. Switching a proven Gaussian contract solely to satisfy that host would not establish Windows compatibility.
+- The nonfinite residual mixes actual port semantic differences (NaN sign, unordered map/writer behavior) with an oracle-specific NaN-selection boundary. Broad admission cannot be justified without separating those contracts. Production refusal is retained.
+- The requested bounded reduction is complete: more than three existing signature clusters closed (C02/C03/C08/C09/C10/C11/C12/C13/C14/C18) through a single general cause, and a separately committed admission expansion. Shared-cause signatures were committed together rather than splitting one operation into artificial case-specific changes. This is not an all-input or native AE-exact completion claim.
+
+changed_files (final evidence commit):
+- tools/emulation/probe_directionalblur_c02_stages.py — populated/rowdriver/writer stage capture and scratch-only nonfinite bypass
+- tools/emulation/probe_directionalblur_c02_sse.py — independent original-instruction vs x86_64 boundary probe
+- reports/fuzz/c02_dblur_smart/{neutral-double,neutral-native,sizefade-double,sizefade-nativepow,sizefade-nativeexp,nonfinite-boundary,sse-oracle-boundary,boundary-bindings}.json
+- orchestra/reports/C02-dblur-smart.md
+
+verify (dependency boundaries, same S/W/P environment as above):
+
+```sh
+"$P" tools/emulation/probe_directionalblur_c02_stages.py --worker "$W" --report "$S/neutral-double-recheck.json" --clusters 15 --allow-fixture-difference > "$S/neutral-double-recheck.log" 2>&1
+"$P" tools/emulation/probe_directionalblur_c02_stages.py --worker "$W" --report "$S/neutral-native-recheck.json" --clusters 15 --expf-leaf native-f32 > "$S/neutral-native-recheck.log" 2>&1
+"$P" tools/emulation/probe_directionalblur_c02_stages.py --worker "$W" --report "$S/sizefade-double-recheck.json" --indices 200 --gate-off --allow-fixture-difference > "$S/sizefade-double-recheck.log" 2>&1
+"$P" tools/emulation/probe_directionalblur_c02_stages.py --worker "$W" --report "$S/sizefade-native-recheck.json" --indices 200 --gate-off --expf-leaf native-f32 > "$S/sizefade-native-recheck.log" 2>&1
+"$P" tools/emulation/probe_directionalblur_c02_stages.py --worker "$W" --report "$S/nonfinite-recheck.json" --indices 109 299 --nonfinite-off > "$S/nonfinite-recheck.log" 2>&1
+"$P" tools/emulation/probe_directionalblur_c02_sse.py --report "$S/sse-boundary-recheck.json" > "$S/sse-boundary-recheck.log" 2>&1
+```
+
+Expected: neutral fixture/session 1 byte different with double-round, 0 with native-f32 (8 table words changed); Size×Fade fixture/session 11 bytes different with double-round, 0 with native-f32 (1 table word changed); nonfinite fixture/session both exact but Mac bypass mismatches 2942/2025 bytes; SSE probe 720 complete, 704 equal / 16 different. `--allow-fixture-difference` records this intentional reference disagreement rather than treating it as success against the session.
+
+**Final acceptance:** Smart seed1 **262 exact / 1 mismatch / 35 refusal / 2 uncompared**, +27 exact over the starting revision, zero base-exact changes. Fresh seed2 **269 / 1 / 28 / 2**, +26 exact. Corpus **54 exact / 2 mismatch**, 17 Smart improvements and 39 unchanged, replay 56/56. Two production commits each have 656 O2/sanitizer cases. No release gate/ledger/other-plugin/MAIN changes, no push or worker rebuild.
+
+next:
+- Follow-up: reconcile the reference expf import with existing accepted Gaussian evidence for the newly observed arguments, preserving previously accepted proofs; isolate fresh-seed Size×Fade index152 separately.
+- Follow-up: establish the intended PF32 NaN opcode/host contract independently of Unicorn's x87-style selection, then re-open nonfinite admission with paired stages.
+- Negative Noise Offset remains the previously proven native out-of-allocation-read boundary; no wrap/clamp emulation was added.
+- Two budget cases in each campaign remain uncompared. Larger instruction/time budgets are a separate coverage follow-up, not exact evidence here.
+
+
+Final review checks: `acceptance.json` composes the two production transitions and verifies all 235 original exact hashes, all 17 corpus improvements, final 56/56 replay, and exact current production hashes against the sanitizer manifest. The latest stage tool also rechecked C02/C03/C08; their rotated planes/maps/final bytes remain exact. C02's separate native-f32 replay aligns all 561 weights and removes the initial fixture-import confound. No incompatible numerical candidate remains in production. These final replay/stage/acceptance JSON files are also part of the evidence commit.
+Final scratch after removing regenerable corpora/builds: **12,093,034 bytes**, below 5 GiB. Temporary build contexts removed their binaries automatically.

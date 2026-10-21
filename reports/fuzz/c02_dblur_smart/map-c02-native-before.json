@@ -1,0 +1,2534 @@
+{
+  "cases": [
+    {
+      "cluster": 2,
+      "corpus": "tests/fuzz_corpus/olmdirectionalblur/seed1_case000149_dd2462acc10c.json",
+      "final": {
+        "a_sha256": "a37b1f74056f6906b537288c60b888a1000c6ae553fe6c0a8000433d3dc60998",
+        "b_sha256": "cbdd14195f215154065a863bc0fdbe29e159ff7f2e3e4e767a82e5d3b740c33e",
+        "different_units": 2,
+        "first": {
+          "a": "40",
+          "b": "80",
+          "byte_offset": 11
+        },
+        "unit_bytes": 1
+      },
+      "fixture_session": {
+        "a_sha256": "a37b1f74056f6906b537288c60b888a1000c6ae553fe6c0a8000433d3dc60998",
+        "b_sha256": "a37b1f74056f6906b537288c60b888a1000c6ae553fe6c0a8000433d3dc60998",
+        "different_units": 0,
+        "first": null,
+        "unit_bytes": 1
+      },
+      "generated": false,
+      "seed": 1,
+      "stages": {
+        "divisor": {
+          "a_sha256": "d88c86f15bbea365d658ad95a81d45367c465f7af6f7264fb077f01747ddc77d",
+          "aex_hex": "00000040",
+          "b_sha256": "d88c86f15bbea365d658ad95a81d45367c465f7af6f7264fb077f01747ddc77d",
+          "different_units": 0,
+          "first": null,
+          "mac_hex": "00000040",
+          "unit_bytes": 4
+        },
+        "map": {
+          "a_sha256": "de4bbe19e2dec0fb328c707ca11296265283ec849d3382fe1a1b33b3a298bf40",
+          "aex_hex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000040000040400000803f000080bf00000040000040400000803f000080bf0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+          "b_sha256": "5d4df22139cafd12ce434c4042d39a820aad1081ebea261983fefc7788ce0468",
+          "different_units": 4,
+          "first": {
+            "a": "0000803f",
+            "b": "00004040",
+            "byte_offset": 376
+          },
+          "mac_hex": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000040000040400000404000000000000000400000404000004040000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+          "unit_bytes": 4
+        },
+        "rotated": {
+          "a_sha256": "869dff4a3e12048ba7780fb6510653e4aca3ee66e97ecac6c6765fb598022ab6",
+          "aex_hex": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000803f000000000000803f0000803f00000000000000000000803f0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+          "b_sha256": "869dff4a3e12048ba7780fb6510653e4aca3ee66e97ecac6c6765fb598022ab6",
+          "different_units": 0,
+          "first": null,
+          "mac_hex": "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000803f000000000000803f0000803f00000000000000000000803f0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+          "unit_bytes": 4
+        },
+        "weights-561": {
+          "a_sha256": "a0a2622be47d33eaf309ba2c26941e96e1cdb263be83dcc43cde440e8566deb2",
+          "aex_hex": "0000803f10ff7f3f40fc7f3f91f77f3f02f17f3f94e87f3f46de7f3f1ad27f3f0ec47f3f24b47f3f5ca27f3fb78e7f3f34797f3fd4617f3f98487f3f802d7f3f8d107f3fc0f17e3f18d17e3f98ae7e3f3f8a7e3f0f647e3f083c7e3f2a127e3f79e67d3ff3b87d3f9a897d3f6f587d3f73257d3fa7f07c3f0dba7c3fa5817c3f71477c3f720b7c3faacd7b3f198e7b3fc14c7b3fa4097b3fc3c47a3f1f7e7a3fba357a3f96eb793fb39f793f1552793fbc02793faab1783fe15e783f630a783f31b4773f4e5c773fbb02773f7aa7763f8d4a763ff6eb753fb88b753fd329753f4bc6743f2261743f58fa733ff291733ff127733f57bc723f264f723f61e0713f0a70713f24fe703fb18a703fb315703f2d9f6f3f21276f3f92ad6e3f82326e3ff5b56d3feb376d3f69b86c3f71376c3f06b56b3f29316b3fdfab6a3f29256a3f0b9d693f8713693fa088683f5afc673fb66e673fb8df663f624f663fb9bd653fbe2a653f7496643fdf00643f026a633fe0d1623f7b38623fd89d613ff801613fdf64603f91c65f3f11275f3f60865e3f84e45d3f7f415d3f549d5c3f07f85b3f9a515b3f12aa5a3f71015a3fba57593ff2ac583f1b01583f3954573f4fa6563f60f7553f7047553f8396543f9be4533fbc31533fea7d523f28c9513f7913513fe15c503f63a54f3f03ed4e3fc4334e3faa794d3fb8be4c3ff2024c3f5b464b3ff7884a3fc9ca493fd50b493f1f4c483fa98b473f77ca463f8e08463fef45453fa082443fa3be433ffdf9423fb034423fc06e413f31a8403f06e13f3f43193f3feb503e3f01883d3f8bbe3c3f8af43b3f022a3b3ff85e3a3f6e93393f68c7383fe9fa373ff62d373f9060363fbd92353f80c4343fdbf5333fd326333f6b57323fa687313f89b7303f15e72f3f4f162f3f3a452e3fdb732d3f32a22c3f46d02b3f18fe2a3fac2b2a3f0659293f2986283f18b3273fd7df263f680c263fd038253f1265243f3091233f2ebd223f10e9213fd814213f8a40203f296c1f3fb9971e3f3bc31d3fb5ee1c3f281a1c3f98451b3f08711a3f7b9c193ff4c7183f77f3173f051f173fa44a163f5476153f1aa2143ff9cd133ff2f9123f0a26123f4252113fa07e103f24ab0f3fd1d70e3fac040e3fb6310d3ff25e0c3f648c0b3f0dba0a3ff0e7093f1216093f7344083f1773073fffa1063f30d1053fad00053f7530043f8e60033ff990023fb8c1013fcff2003f4024003f1aacfe3e7210fd3e8b75fb3e6cdbf93e1742f83e93a9f63ee511f53e107bf33e19e5f13e0350f03ed6bbee3e9428ed3e4096eb3ee204ea3e7b74e83e10e5e63ea756e53e42c9e33ee43ce23e95b1e03e5527df3e2a9edd3e1616dc3e1f8fda3e4909d93e9584d73e0801d63ea67ed43e72fdd23e707dd13ea3fecf3e0f81ce3eb604cd3e9c89cb3ec50fca3e3397c83ee91fc73eeca9c53e3c35c43edfc1c23ed74fc13e25dfbf3ece6fbe3ed501bd3e3a95bb3e022aba3e2fc0b83ec557b73ec4f0b53e2f8bb43e0a27b33e57c4b13e1663b03e4b03af3ef9a4ad3e2148ac3ec7ecaa3eea92a93e8f3aa83eb4e3a63e5f8ea53e913aa43e4ae8a23e8d97a13e5c48a03eb8fa9e3ea3ae9d3e1f649c3e2d1b9b3eced3993e058e983ed249973e3707963e34c6943ecd86933e0149923ed00c913e3fd28f3e4d998e3efa618d3e492c8c3e39f88a3eccc5893e0295883ede65873e5e38863e850c853e52e2833ec6b9823ee392813ea86d803e2d947e3e5c507c3ede0f7a3eb7d2773ee598753e6762733e412f713e72ff6e3efad26c3edca96a3e1484683ea461663e8e42643ed026623e690e603e5bf95d3ea5e75b3e47d9593e42ce573e92c6553e38c2533e36c1513e89c34f3e31c94d3e2bd24b3e7ade493e1cee473e0e01463e5117443ee430423ec34d403ef16d3e3e6b913c3e2fb83a3e3ce2383e910f373e2b40353e0c74333e2eab313e93e52f3e36232e3e18642c3e36a82a3e8fef283e203a273ee887253ee3d8233e122d223e7084203efcde1e3eb53c1d3e979d1b3ea0011a3ece68183e1fd3163e9040153e1eb1133ec824123e8b9b103e63150f3e4f920d3e4b120c3e55950a3e6a1b093e87a4073eac30063ed1bf043ef651033e1ae7013e357f003e9234fe3d9e70fb3d8eb2f83d5afaf53dfb47f33d6a9bf03d9df4ed3d9653eb3d4ab8e83db322e63dce92e33d8c08e13deb83de3de404dc3d748bd93d8d17d73d2ca9d43d4c40d23de4dccf3dea7ecd3d5c26cb3d31d3c83d5e85c63de33cc43db5f9c13dccbbbf3d2383bd3db04fbb3d6e21b93d57f8b63d5fd4b43d81b5b23db99bb03df886ae3d3c77ac3d7e6caa3db566a83dd665a63de069a43dc772a23d8680a03d10939e3d65aa9c3d79c69a3d45e7983dc20c973dea36953db065933d1099913d02d18f3d810d8e3d7f4e8c3dfb938a3de7dd883d412c873dfe7e853d16d6833d8431823d3e91803d7bea7d3df4ba7a3dd893773d1875743da45e713d6e506e3d654a6b3d7e4c683da356653dc868623de1825f3dd8a45c3da4ce593d3400573d7439543d5c7a513dd9c24e3dde124c3d566a493d3bc9463d792f443d059d413dc9113f3dbb8d3c3dca103a3de99a373d0b2c353d1dc4323d1463303ddd082e3d6fb52b3db668293da922273d36e3243d50aa223de777203dee4b1e3d54261c3d13071a3d14ee173d4cdb153daece133d2bc8113db7c70f3d41cd0d3dbcd80b3d1eea093d5401083d551e063d1141043d7969023d8397003d4296fd3c8908fa3cc185f63cd00df33c9da0ef3c0c3eec3c04e6e83c6c98e53c2d55e23c261cdf3c43eddb3c6dc8d83c84add53c779cd23c2895cf3c7d97cc3c63a3c93cbfb8c63c78d7c33c76ffc03ca030be3ce26abb3c25aeb83c4dfab53c444fb33cf3acb03c4413ae3c2282ab3c71f9a83c2079a63c1401a43c3b91a13c7a299f3cc0c99c3cf5719a3c0422983cd3d9953c5499933c6e60913c0c2f8f3c19058d3c82e28a3c30c7883c14b3863c12a6843c19a0823c15a1803ce6517d3c456f793c129a753c2dd2713c77176e3cbc696a3cddc8663cbc34633c25ad5f3c01325c3c1fc3583c6760553ca809523cccbe4e3ca97f4b3c154c483cfb23453c3107423c96f53e3c01ef3b3c5df3383c",
+          "b_sha256": "a0a2622be47d33eaf309ba2c26941e96e1cdb263be83dcc43cde440e8566deb2",
+          "different_units": 0,
+          "first": null,
+          "mac_hex": "0000803f10ff7f3f40fc7f3f91f77f3f02f17f3f94e87f3f46de7f3f1ad27f3f0ec47f3f24b47f3f5ca27f3fb78e7f3f34797f3fd4617f3f98487f3f802d7f3f8d107f3fc0f17e3f18d17e3f98ae7e3f3f8a7e3f0f647e3f083c7e3f2a127e3f79e67d3ff3b87d3f9a897d3f6f587d3f73257d3fa7f07c3f0dba7c3fa5817c3f71477c3f720b7c3faacd7b3f198e7b3fc14c7b3fa4097b3fc3c47a3f1f7e7a3fba357a3f96eb793fb39f793f1552793fbc02793faab1783fe15e783f630a783f31b4773f4e5c773fbb02773f7aa7763f8d4a763ff6eb753fb88b753fd329753f4bc6743f2261743f58fa733ff291733ff127733f57bc723f264f723f61e0713f0a70713f24fe703fb18a703fb315703f2d9f6f3f21276f3f92ad6e3f82326e3ff5b56d3feb376d3f69b86c3f71376c3f06b56b3f29316b3fdfab6a3f29256a3f0b9d693f8713693fa088683f5afc673fb66e673fb8df663f624f663fb9bd653fbe2a653f7496643fdf00643f026a633fe0d1623f7b38623fd89d613ff801613fdf64603f91c65f3f11275f3f60865e3f84e45d3f7f415d3f549d5c3f07f85b3f9a515b3f12aa5a3f71015a3fba57593ff2ac583f1b01583f3954573f4fa6563f60f7553f7047553f8396543f9be4533fbc31533fea7d523f28c9513f7913513fe15c503f63a54f3f03ed4e3fc4334e3faa794d3fb8be4c3ff2024c3f5b464b3ff7884a3fc9ca493fd50b493f1f4c483fa98b473f77ca463f8e08463fef45453fa082443fa3be433ffdf9423fb034423fc06e413f31a8403f06e13f3f43193f3feb503e3f01883d3f8bbe3c3f8af43b3f022a3b3ff85e3a3f6e93393f68c7383fe9fa373ff62d373f9060363fbd92353f80c4343fdbf5333fd326333f6b57323fa687313f89b7303f15e72f3f4f162f3f3a452e3fdb732d3f32a22c3f46d02b3f18fe2a3fac2b2a3f0659293f2986283f18b3273fd7df263f680c263fd038253f1265243f3091233f2ebd223f10e9213fd814213f8a40203f296c1f3fb9971e3f3bc31d3fb5ee1c3f281a1c3f98451b3f08711a3f7b9c193ff4c7183f77f3173f051f173fa44a163f5476153f1aa2143ff9cd133ff2f9123f0a26123f4252113fa07e103f24ab0f3fd1d70e3fac040e3fb6310d3ff25e0c3f648c0b3f0dba0a3ff0e7093f1216093f7344083f1773073fffa1063f30d1053fad00053f7530043f8e60033ff990023fb8c1013fcff2003f4024003f1aacfe3e7210fd3e8b75fb3e6cdbf93e1742f83e93a9f63ee511f53e107bf33e19e5f13e0350f03ed6bbee3e9428ed3e4096eb3ee204ea3e7b74e83e10e5e63ea756e53e42c9e33ee43ce23e95b1e03e5527df3e2a9edd3e1616dc3e1f8fda3e4909d93e9584d73e0801d63ea67ed43e72fdd23e707dd13ea3fecf3e0f81ce3eb604cd3e9c89cb3ec50fca3e3397c83ee91fc73eeca9c53e3c35c43edfc1c23ed74fc13e25dfbf3ece6fbe3ed501bd3e3a95bb3e022aba3e2fc0b83ec557b73ec4f0b53e2f8bb43e0a27b33e57c4b13e1663b03e4b03af3ef9a4ad3e2148ac3ec7ecaa3eea92a93e8f3aa83eb4e3a63e5f8ea53e913aa43e4ae8a23e8d97a13e5c48a03eb8fa9e3ea3ae9d3e1f649c3e2d1b9b3eced3993e058e983ed249973e3707963e34c6943ecd86933e0149923ed00c913e3fd28f3e4d998e3efa618d3e492c8c3e39f88a3eccc5893e0295883ede65873e5e38863e850c853e52e2833ec6b9823ee392813ea86d803e2d947e3e5c507c3ede0f7a3eb7d2773ee598753e6762733e412f713e72ff6e3efad26c3edca96a3e1484683ea461663e8e42643ed026623e690e603e5bf95d3ea5e75b3e47d9593e42ce573e92c6553e38c2533e36c1513e89c34f3e31c94d3e2bd24b3e7ade493e1cee473e0e01463e5117443ee430423ec34d403ef16d3e3e6b913c3e2fb83a3e3ce2383e910f373e2b40353e0c74333e2eab313e93e52f3e36232e3e18642c3e36a82a3e8fef283e203a273ee887253ee3d8233e122d223e7084203efcde1e3eb53c1d3e979d1b3ea0011a3ece68183e1fd3163e9040153e1eb1133ec824123e8b9b103e63150f3e4f920d3e4b120c3e55950a3e6a1b093e87a4073eac30063ed1bf043ef651033e1ae7013e357f003e9234fe3d9e70fb3d8eb2f83d5afaf53dfb47f33d6a9bf03d9df4ed3d9653eb3d4ab8e83db322e63dce92e33d8c08e13deb83de3de404dc3d748bd93d8d17d73d2ca9d43d4c40d23de4dccf3dea7ecd3d5c26cb3d31d3c83d5e85c63de33cc43db5f9c13dccbbbf3d2383bd3db04fbb3d6e21b93d57f8b63d5fd4b43d81b5b23db99bb03df886ae3d3c77ac3d7e6caa3db566a83dd665a63de069a43dc772a23d8680a03d10939e3d65aa9c3d79c69a3d45e7983dc20c973dea36953db065933d1099913d02d18f3d810d8e3d7f4e8c3dfb938a3de7dd883d412c873dfe7e853d16d6833d8431823d3e91803d7bea7d3df4ba7a3dd893773d1875743da45e713d6e506e3d654a6b3d7e4c683da356653dc868623de1825f3dd8a45c3da4ce593d3400573d7439543d5c7a513dd9c24e3dde124c3d566a493d3bc9463d792f443d059d413dc9113f3dbb8d3c3dca103a3de99a373d0b2c353d1dc4323d1463303ddd082e3d6fb52b3db668293da922273d36e3243d50aa223de777203dee4b1e3d54261c3d13071a3d14ee173d4cdb153daece133d2bc8113db7c70f3d41cd0d3dbcd80b3d1eea093d5401083d551e063d1141043d7969023d8397003d4296fd3c8908fa3cc185f63cd00df33c9da0ef3c0c3eec3c04e6e83c6c98e53c2d55e23c261cdf3c43eddb3c6dc8d83c84add53c779cd23c2895cf3c7d97cc3c63a3c93cbfb8c63c78d7c33c76ffc03ca030be3ce26abb3c25aeb83c4dfab53c444fb33cf3acb03c4413ae3c2282ab3c71f9a83c2079a63c1401a43c3b91a13c7a299f3cc0c99c3cf5719a3c0422983cd3d9953c5499933c6e60913c0c2f8f3c19058d3c82e28a3c30c7883c14b3863c12a6843c19a0823c15a1803ce6517d3c456f793c129a753c2dd2713c77176e3cbc696a3cddc8663cbc34633c25ad5f3c01325c3c1fc3583c6760553ca809523cccbe4e3ca97f4b3c154c483cfb23453c3107423c96f53e3c01ef3b3c5df3383c",
+          "unit_bytes": 4
+        }
+      },
+      "trace": {
+        "abi_leaf_instructions": 31,
+        "builder": {
+          "address": "0xf0f6e60",
+          "angle_radians": 1.5707963705062866,
+          "back_alpha_fade": 0,
+          "back_sharp_tail": 0.6700000166893005,
+          "back_strength": 561,
+          "brightness_gain": 1.0,
+          "front_alpha_fade": 0,
+          "front_sharp_tail": 0.0,
+          "front_strength": 0,
+          "internal_mode": 1,
+          "noise_offset": 0.0,
+          "noise_type": 1,
+          "noise_type_is_one": true,
+          "noise_variation": 0.0,
+          "seed": 1,
+          "size_variation_exponent": 0.0,
+          "thickness": 10.0
+        },
+        "expf_calls": [
+          {
+            "argument": "00000000",
+            "result": "0000803f"
+          },
+          {
+            "argument": "11e36fb7",
+            "result": "10ff7f3f"
+          },
+          {
+            "argument": "11e36fb8",
+            "result": "40fc7f3f"
+          },
+          {
+            "argument": "baef06b9",
+            "result": "91f77f3f"
+          },
+          {
+            "argument": "11e36fb9",
+            "result": "02f17f3f"
+          },
+          {
+            "argument": "6669bbb9",
+            "result": "94e87f3f"
+          },
+          {
+            "argument": "baef06ba",
+            "result": "46de7f3f"
+          },
+          {
+            "argument": "d9a937ba",
+            "result": "1ad27f3f"
+          },
+          {
+            "argument": "11e36fba",
+            "result": "0ec47f3f"
+          },
+          {
+            "argument": "b1cd97ba",
+            "result": "24b47f3f"
+          },
+          {
+            "argument": "6669bbba",
+            "result": "5ca27f3f"
+          },
+          {
+            "argument": "a7c4e2ba",
+            "result": "b78e7f3f"
+          },
+          {
+            "argument": "baef06bb",
+            "result": "34797f3f"
+          },
+          {
+            "argument": "e75c1ebb",
+            "result": "d4617f3f"
+          },
+          {
+            "argument": "d9a937bb",
+            "result": "98487f3f"
+          },
+          {
+            "argument": "92d652bb",
+            "result": "802d7f3f"
+          },
+          {
+            "argument": "11e36fbb",
+            "result": "8d107f3f"
+          },
+          {
+            "argument": "ab6787bb",
+            "result": "c0f17e3f"
+          },
+          {
+            "argument": "b1cd97bb",
+            "result": "18d17e3f"
+          },
+          {
+            "argument": "9a23a9bb",
+            "result": "98ae7e3f"
+          },
+          {
+            "argument": "6669bbbb",
+            "result": "3f8a7e3f"
+          },
+          {
+            "argument": "159fcebb",
+            "result": "0f647e3f"
+          },
+          {
+            "argument": "a7c4e2bb",
+            "result": "083c7e3f"
+          },
+          {
+            "argument": "1cdaf7bb",
+            "result": "2a127e3f"
+          },
+          {
+            "argument": "baef06bc",
+            "result": "79e67d3f"
+          },
+          {
+            "argument": "576a12bc",
+            "result": "f3b87d3f"
+          },
+          {
+            "argument": "e75c1ebc",
+            "result": "9a897d3f"
+          },
+          {
+            "argument": "67c72abc",
+            "result": "6f587d3f"
+          },
+          {
+            "argument": "d9a937bc",
+            "result": "73257d3f"
+          },
+          {
+            "argument": "3d0445bc",
+            "result": "a7f07c3f"
+          },
+          {
+            "argument": "92d652bc",
+            "result": "0dba7c3f"
+          },
+          {
+            "argument": "d92061bc",
+            "result": "a5817c3f"
+          },
+          {
+            "argument": "11e36fbc",
+            "result": "71477c3f"
+          },
+          {
+            "argument": "3b1d7fbc",
+            "result": "720b7c3f"
+          },
+          {
+            "argument": "ab6787bc",
+            "result": "aacd7b3f"
+          },
+          {
+            "argument": "b27c8fbc",
+            "result": "198e7b3f"
+          },
+          {
+            "argument": "b1cd97bc",
+            "result": "c14c7b3f"
+          },
+          {
+            "argument": "a95aa0bc",
+            "result": "a4097b3f"
+          },
+          {
+            "argument": "9a23a9bc",
+            "result": "c3c47a3f"
+          },
+          {
+            "argument": "8328b2bc",
+            "result": "1f7e7a3f"
+          },
+          {
+            "argument": "6669bbbc",
+            "result": "ba357a3f"
+          },
+          {
+            "argument": "41e6c4bc",
+            "result": "96eb793f"
+          },
+          {
+            "argument": "159fcebc",
+            "result": "b39f793f"
+          },
+          {
+            "argument": "e193d8bc",
+            "result": "1552793f"
+          },
+          {
+            "argument": "a7c4e2bc",
+            "result": "bc02793f"
+          },
+          {
+            "argument": "6531edbc",
+            "result": "aab1783f"
+          },
+          {
+            "argument": "1cdaf7bc",
+            "result": "e15e783f"
+          },
+          {
+            "argument": "665f01bd",
+            "result": "630a783f"
+          },
+          {
+            "argument": "baef06bd",
+            "result": "31b4773f"
+          },
+          {
+            "argument": "0a9e0cbd",
+            "result": "4e5c773f"
+          },
+          {
+            "argument": "576a12bd",
+            "result": "bb02773f"
+          },
+          {
+            "argument": "a15418bd",
+            "result": "7aa7763f"
+          },
+          {
+            "argument": "e75c1ebd",
+            "result": "8d4a763f"
+          },
+          {
+            "argument": "298324bd",
+            "result": "f6eb753f"
+          },
+          {
+            "argument": "67c72abd",
+            "result": "b88b753f"
+          },
+          {
+            "argument": "a22931bd",
+            "result": "d329753f"
+          },
+          {
+            "argument": "d9a937bd",
+            "result": "4bc6743f"
+          },
+          {
+            "argument": "0d483ebd",
+            "result": "2261743f"
+          },
+          {
+            "argument": "3d0445bd",
+            "result": "58fa733f"
+          },
+          {
+            "argument": "6ade4bbd",
+            "result": "f291733f"
+          },
+          {
+            "argument": "92d652bd",
+            "result": "f127733f"
+          },
+          {
+            "argument": "b8ec59bd",
+            "result": "57bc723f"
+          },
+          {
+            "argument": "d92061bd",
+            "result": "264f723f"
+          },
+          {
+            "argument": "f77268bd",
+            "result": "61e0713f"
+          },
+          {
+            "argument": "11e36fbd",
+            "result": "0a70713f"
+          },
+          {
+            "argument": "287177bd",
+            "result": "24fe703f"
+          },
+          {
+            "argument": "3b1d7fbd",
+            "result": "b18a703f"
+          },
+          {
+            "argument": "a57383bd",
+            "result": "b315703f"
+          },
+          {
+            "argument": "ab6787bd",
+            "result": "2d9f6f3f"
+          },
+          {
+            "argument": "b06a8bbd",
+            "result": "21276f3f"
+          },
+          {
+            "argument": "b27c8fbd",
+            "result": "92ad6e3f"
+          },
+          {
+            "argument": "b29d93bd",
+            "result": "82326e3f"
+          },
+          {
+            "argument": "b1cd97bd",
+            "result": "f5b56d3f"
+          },
+          {
+            "argument": "ae0c9cbd",
+            "result": "eb376d3f"
+          },
+          {
+            "argument": "a95aa0bd",
+            "result": "69b86c3f"
+          },
+          {
+            "argument": "a2b7a4bd",
+            "result": "71376c3f"
+          },
+          {
+            "argument": "9a23a9bd",
+            "result": "06b56b3f"
+          },
+          {
+            "argument": "909eadbd",
+            "result": "29316b3f"
+          },
+          {
+            "argument": "8328b2bd",
+            "result": "dfab6a3f"
+          },
+          {
+            "argument": "75c1b6bd",
+            "result": "29256a3f"
+          },
+          {
+            "argument": "6669bbbd",
+            "result": "0b9d693f"
+          },
+          {
+            "argument": "5420c0bd",
+            "result": "8713693f"
+          },
+          {
+            "argument": "41e6c4bd",
+            "result": "a088683f"
+          },
+          {
+            "argument": "2cbbc9bd",
+            "result": "5afc673f"
+          },
+          {
+            "argument": "159fcebd",
+            "result": "b66e673f"
+          },
+          {
+            "argument": "fc91d3bd",
+            "result": "b8df663f"
+          },
+          {
+            "argument": "e193d8bd",
+            "result": "624f663f"
+          },
+          {
+            "argument": "c5a4ddbd",
+            "result": "b9bd653f"
+          },
+          {
+            "argument": "a7c4e2bd",
+            "result": "be2a653f"
+          },
+          {
+            "argument": "87f3e7bd",
+            "result": "7496643f"
+          },
+          {
+            "argument": "6531edbd",
+            "result": "df00643f"
+          },
+          {
+            "argument": "417ef2bd",
+            "result": "026a633f"
+          },
+          {
+            "argument": "1cdaf7bd",
+            "result": "e0d1623f"
+          },
+          {
+            "argument": "f444fdbd",
+            "result": "7b38623f"
+          },
+          {
+            "argument": "665f01be",
+            "result": "d89d613f"
+          },
+          {
+            "argument": "d02304be",
+            "result": "f801613f"
+          },
+          {
+            "argument": "baef06be",
+            "result": "df64603f"
+          },
+          {
+            "argument": "23c309be",
+            "result": "91c65f3f"
+          },
+          {
+            "argument": "0a9e0cbe",
+            "result": "11275f3f"
+          },
+          {
+            "argument": "71800fbe",
+            "result": "60865e3f"
+          },
+          {
+            "argument": "576a12be",
+            "result": "84e45d3f"
+          },
+          {
+            "argument": "bd5b15be",
+            "result": "7f415d3f"
+          },
+          {
+            "argument": "a15418be",
+            "result": "549d5c3f"
+          },
+          {
+            "argument": "04551bbe",
+            "result": "07f85b3f"
+          },
+          {
+            "argument": "e75c1ebe",
+            "result": "9a515b3f"
+          },
+          {
+            "argument": "486c21be",
+            "result": "12aa5a3f"
+          },
+          {
+            "argument": "298324be",
+            "result": "71015a3f"
+          },
+          {
+            "argument": "88a127be",
+            "result": "ba57593f"
+          },
+          {
+            "argument": "67c72abe",
+            "result": "f2ac583f"
+          },
+          {
+            "argument": "c5f42dbe",
+            "result": "1b01583f"
+          },
+          {
+            "argument": "a22931be",
+            "result": "3954573f"
+          },
+          {
+            "argument": "fe6534be",
+            "result": "4fa6563f"
+          },
+          {
+            "argument": "d9a937be",
+            "result": "60f7553f"
+          },
+          {
+            "argument": "34f53abe",
+            "result": "7047553f"
+          },
+          {
+            "argument": "0d483ebe",
+            "result": "8396543f"
+          },
+          {
+            "argument": "66a241be",
+            "result": "9be4533f"
+          },
+          {
+            "argument": "3d0445be",
+            "result": "bc31533f"
+          },
+          {
+            "argument": "946d48be",
+            "result": "ea7d523f"
+          },
+          {
+            "argument": "6ade4bbe",
+            "result": "28c9513f"
+          },
+          {
+            "argument": "be564fbe",
+            "result": "7913513f"
+          },
+          {
+            "argument": "92d652be",
+            "result": "e15c503f"
+          },
+          {
+            "argument": "e55d56be",
+            "result": "63a54f3f"
+          },
+          {
+            "argument": "b8ec59be",
+            "result": "03ed4e3f"
+          },
+          {
+            "argument": "09835dbe",
+            "result": "c4334e3f"
+          },
+          {
+            "argument": "d92061be",
+            "result": "aa794d3f"
+          },
+          {
+            "argument": "29c664be",
+            "result": "b8be4c3f"
+          },
+          {
+            "argument": "f77268be",
+            "result": "f2024c3f"
+          },
+          {
+            "argument": "45276cbe",
+            "result": "5b464b3f"
+          },
+          {
+            "argument": "11e36fbe",
+            "result": "f7884a3f"
+          },
+          {
+            "argument": "5da673be",
+            "result": "c9ca493f"
+          },
+          {
+            "argument": "287177be",
+            "result": "d50b493f"
+          },
+          {
+            "argument": "72437bbe",
+            "result": "1f4c483f"
+          },
+          {
+            "argument": "3b1d7fbe",
+            "result": "a98b473f"
+          },
+          {
+            "argument": "427f81be",
+            "result": "77ca463f"
+          },
+          {
+            "argument": "a57383be",
+            "result": "8e08463f"
+          },
+          {
+            "argument": "c96b85be",
+            "result": "ef45453f"
+          },
+          {
+            "argument": "ab6787be",
+            "result": "a082443f"
+          },
+          {
+            "argument": "4e6789be",
+            "result": "a3be433f"
+          },
+          {
+            "argument": "b06a8bbe",
+            "result": "fdf9423f"
+          },
+          {
+            "argument": "d1718dbe",
+            "result": "b034423f"
+          },
+          {
+            "argument": "b27c8fbe",
+            "result": "c06e413f"
+          },
+          {
+            "argument": "528b91be",
+            "result": "31a8403f"
+          },
+          {
+            "argument": "b29d93be",
+            "result": "06e13f3f"
+          },
+          {
+            "argument": "d2b395be",
+            "result": "43193f3f"
+          },
+          {
+            "argument": "b1cd97be",
+            "result": "eb503e3f"
+          },
+          {
+            "argument": "50eb99be",
+            "result": "01883d3f"
+          },
+          {
+            "argument": "ae0c9cbe",
+            "result": "8bbe3c3f"
+          },
+          {
+            "argument": "cc319ebe",
+            "result": "8af43b3f"
+          },
+          {
+            "argument": "a95aa0be",
+            "result": "022a3b3f"
+          },
+          {
+            "argument": "4687a2be",
+            "result": "f85e3a3f"
+          },
+          {
+            "argument": "a2b7a4be",
+            "result": "6e93393f"
+          },
+          {
+            "argument": "beeba6be",
+            "result": "68c7383f"
+          },
+          {
+            "argument": "9a23a9be",
+            "result": "e9fa373f"
+          },
+          {
+            "argument": "355fabbe",
+            "result": "f62d373f"
+          },
+          {
+            "argument": "909eadbe",
+            "result": "9060363f"
+          },
+          {
+            "argument": "aae1afbe",
+            "result": "bd92353f"
+          },
+          {
+            "argument": "8328b2be",
+            "result": "80c4343f"
+          },
+          {
+            "argument": "1d73b4be",
+            "result": "dbf5333f"
+          },
+          {
+            "argument": "75c1b6be",
+            "result": "d326333f"
+          },
+          {
+            "argument": "8e13b9be",
+            "result": "6b57323f"
+          },
+          {
+            "argument": "6669bbbe",
+            "result": "a687313f"
+          },
+          {
+            "argument": "fdc2bdbe",
+            "result": "89b7303f"
+          },
+          {
+            "argument": "5420c0be",
+            "result": "15e72f3f"
+          },
+          {
+            "argument": "6b81c2be",
+            "result": "4f162f3f"
+          },
+          {
+            "argument": "41e6c4be",
+            "result": "3a452e3f"
+          },
+          {
+            "argument": "d64ec7be",
+            "result": "db732d3f"
+          },
+          {
+            "argument": "2cbbc9be",
+            "result": "32a22c3f"
+          },
+          {
+            "argument": "402bccbe",
+            "result": "46d02b3f"
+          },
+          {
+            "argument": "159fcebe",
+            "result": "18fe2a3f"
+          },
+          {
+            "argument": "a816d1be",
+            "result": "ac2b2a3f"
+          },
+          {
+            "argument": "fc91d3be",
+            "result": "0659293f"
+          },
+          {
+            "argument": "0f11d6be",
+            "result": "2986283f"
+          },
+          {
+            "argument": "e193d8be",
+            "result": "18b3273f"
+          },
+          {
+            "argument": "731adbbe",
+            "result": "d7df263f"
+          },
+          {
+            "argument": "c5a4ddbe",
+            "result": "680c263f"
+          },
+          {
+            "argument": "d632e0be",
+            "result": "d038253f"
+          },
+          {
+            "argument": "a7c4e2be",
+            "result": "1265243f"
+          },
+          {
+            "argument": "375ae5be",
+            "result": "3091233f"
+          },
+          {
+            "argument": "87f3e7be",
+            "result": "2ebd223f"
+          },
+          {
+            "argument": "9690eabe",
+            "result": "10e9213f"
+          },
+          {
+            "argument": "6531edbe",
+            "result": "d814213f"
+          },
+          {
+            "argument": "f3d5efbe",
+            "result": "8a40203f"
+          },
+          {
+            "argument": "417ef2be",
+            "result": "296c1f3f"
+          },
+          {
+            "argument": "4f2af5be",
+            "result": "b9971e3f"
+          },
+          {
+            "argument": "1cdaf7be",
+            "result": "3bc31d3f"
+          },
+          {
+            "argument": "a88dfabe",
+            "result": "b5ee1c3f"
+          },
+          {
+            "argument": "f444fdbe",
+            "result": "281a1c3f"
+          },
+          {
+            "argument": "000000bf",
+            "result": "98451b3f"
+          },
+          {
+            "argument": "665f01bf",
+            "result": "08711a3f"
+          },
+          {
+            "argument": "abc002bf",
+            "result": "7b9c193f"
+          },
+          {
+            "argument": "d02304bf",
+            "result": "f4c7183f"
+          },
+          {
+            "argument": "d58805bf",
+            "result": "77f3173f"
+          },
+          {
+            "argument": "baef06bf",
+            "result": "051f173f"
+          },
+          {
+            "argument": "7e5808bf",
+            "result": "a44a163f"
+          },
+          {
+            "argument": "23c309bf",
+            "result": "5476153f"
+          },
+          {
+            "argument": "a72f0bbf",
+            "result": "1aa2143f"
+          },
+          {
+            "argument": "0a9e0cbf",
+            "result": "f9cd133f"
+          },
+          {
+            "argument": "4e0e0ebf",
+            "result": "f2f9123f"
+          },
+          {
+            "argument": "71800fbf",
+            "result": "0a26123f"
+          },
+          {
+            "argument": "75f410bf",
+            "result": "4252113f"
+          },
+          {
+            "argument": "576a12bf",
+            "result": "a07e103f"
+          },
+          {
+            "argument": "1ae213bf",
+            "result": "24ab0f3f"
+          },
+          {
+            "argument": "bd5b15bf",
+            "result": "d1d70e3f"
+          },
+          {
+            "argument": "3fd716bf",
+            "result": "ac040e3f"
+          },
+          {
+            "argument": "a15418bf",
+            "result": "b6310d3f"
+          },
+          {
+            "argument": "e3d319bf",
+            "result": "f25e0c3f"
+          },
+          {
+            "argument": "04551bbf",
+            "result": "648c0b3f"
+          },
+          {
+            "argument": "05d81cbf",
+            "result": "0dba0a3f"
+          },
+          {
+            "argument": "e75c1ebf",
+            "result": "f0e7093f"
+          },
+          {
+            "argument": "a7e31fbf",
+            "result": "1216093f"
+          },
+          {
+            "argument": "486c21bf",
+            "result": "7344083f"
+          },
+          {
+            "argument": "c8f622bf",
+            "result": "1773073f"
+          },
+          {
+            "argument": "298324bf",
+            "result": "ffa1063f"
+          },
+          {
+            "argument": "691126bf",
+            "result": "30d1053f"
+          },
+          {
+            "argument": "88a127bf",
+            "result": "ad00053f"
+          },
+          {
+            "argument": "883329bf",
+            "result": "7530043f"
+          },
+          {
+            "argument": "67c72abf",
+            "result": "8e60033f"
+          },
+          {
+            "argument": "265d2cbf",
+            "result": "f990023f"
+          },
+          {
+            "argument": "c5f42dbf",
+            "result": "b8c1013f"
+          },
+          {
+            "argument": "448e2fbf",
+            "result": "cff2003f"
+          },
+          {
+            "argument": "a22931bf",
+            "result": "4024003f"
+          },
+          {
+            "argument": "e0c632bf",
+            "result": "1aacfe3e"
+          },
+          {
+            "argument": "fe6534bf",
+            "result": "7210fd3e"
+          },
+          {
+            "argument": "fc0636bf",
+            "result": "8b75fb3e"
+          },
+          {
+            "argument": "d9a937bf",
+            "result": "6cdbf93e"
+          },
+          {
+            "argument": "974e39bf",
+            "result": "1742f83e"
+          },
+          {
+            "argument": "34f53abf",
+            "result": "93a9f63e"
+          },
+          {
+            "argument": "b09d3cbf",
+            "result": "e511f53e"
+          },
+          {
+            "argument": "0d483ebf",
+            "result": "107bf33e"
+          },
+          {
+            "argument": "49f43fbf",
+            "result": "19e5f13e"
+          },
+          {
+            "argument": "66a241bf",
+            "result": "0350f03e"
+          },
+          {
+            "argument": "615243bf",
+            "result": "d6bbee3e"
+          },
+          {
+            "argument": "3d0445bf",
+            "result": "9428ed3e"
+          },
+          {
+            "argument": "f9b746bf",
+            "result": "4096eb3e"
+          },
+          {
+            "argument": "946d48bf",
+            "result": "e204ea3e"
+          },
+          {
+            "argument": "0f254abf",
+            "result": "7b74e83e"
+          },
+          {
+            "argument": "6ade4bbf",
+            "result": "10e5e63e"
+          },
+          {
+            "argument": "a4994dbf",
+            "result": "a756e53e"
+          },
+          {
+            "argument": "be564fbf",
+            "result": "42c9e33e"
+          },
+          {
+            "argument": "b91551bf",
+            "result": "e43ce23e"
+          },
+          {
+            "argument": "92d652bf",
+            "result": "95b1e03e"
+          },
+          {
+            "argument": "4c9954bf",
+            "result": "5527df3e"
+          },
+          {
+            "argument": "e55d56bf",
+            "result": "2a9edd3e"
+          },
+          {
+            "argument": "5f2458bf",
+            "result": "1616dc3e"
+          },
+          {
+            "argument": "b8ec59bf",
+            "result": "1f8fda3e"
+          },
+          {
+            "argument": "f0b65bbf",
+            "result": "4909d93e"
+          },
+          {
+            "argument": "09835dbf",
+            "result": "9584d73e"
+          },
+          {
+            "argument": "01515fbf",
+            "result": "0801d63e"
+          },
+          {
+            "argument": "d92061bf",
+            "result": "a67ed43e"
+          },
+          {
+            "argument": "91f262bf",
+            "result": "72fdd23e"
+          },
+          {
+            "argument": "29c664bf",
+            "result": "707dd13e"
+          },
+          {
+            "argument": "a09b66bf",
+            "result": "a3fecf3e"
+          },
+          {
+            "argument": "f77268bf",
+            "result": "0f81ce3e"
+          },
+          {
+            "argument": "2e4c6abf",
+            "result": "b604cd3e"
+          },
+          {
+            "argument": "45276cbf",
+            "result": "9c89cb3e"
+          },
+          {
+            "argument": "3b046ebf",
+            "result": "c50fca3e"
+          },
+          {
+            "argument": "11e36fbf",
+            "result": "3397c83e"
+          },
+          {
+            "argument": "c8c371bf",
+            "result": "e91fc73e"
+          },
+          {
+            "argument": "5da673bf",
+            "result": "eca9c53e"
+          },
+          {
+            "argument": "d38a75bf",
+            "result": "3c35c43e"
+          },
+          {
+            "argument": "287177bf",
+            "result": "dfc1c23e"
+          },
+          {
+            "argument": "5d5979bf",
+            "result": "d74fc13e"
+          },
+          {
+            "argument": "72437bbf",
+            "result": "25dfbf3e"
+          },
+          {
+            "argument": "672f7dbf",
+            "result": "ce6fbe3e"
+          },
+          {
+            "argument": "3b1d7fbf",
+            "result": "d501bd3e"
+          },
+          {
+            "argument": "788680bf",
+            "result": "3a95bb3e"
+          },
+          {
+            "argument": "427f81bf",
+            "result": "022aba3e"
+          },
+          {
+            "argument": "fc7882bf",
+            "result": "2fc0b83e"
+          },
+          {
+            "argument": "a57383bf",
+            "result": "c557b73e"
+          },
+          {
+            "argument": "3f6f84bf",
+            "result": "c4f0b53e"
+          },
+          {
+            "argument": "c96b85bf",
+            "result": "2f8bb43e"
+          },
+          {
+            "argument": "426986bf",
+            "result": "0a27b33e"
+          },
+          {
+            "argument": "ab6787bf",
+            "result": "57c4b13e"
+          },
+          {
+            "argument": "056788bf",
+            "result": "1663b03e"
+          },
+          {
+            "argument": "4e6789bf",
+            "result": "4b03af3e"
+          },
+          {
+            "argument": "87688abf",
+            "result": "f9a4ad3e"
+          },
+          {
+            "argument": "b06a8bbf",
+            "result": "2148ac3e"
+          },
+          {
+            "argument": "c86d8cbf",
+            "result": "c7ecaa3e"
+          },
+          {
+            "argument": "d1718dbf",
+            "result": "ea92a93e"
+          },
+          {
+            "argument": "c9768ebf",
+            "result": "8f3aa83e"
+          },
+          {
+            "argument": "b27c8fbf",
+            "result": "b4e3a63e"
+          },
+          {
+            "argument": "8a8390bf",
+            "result": "5f8ea53e"
+          },
+          {
+            "argument": "528b91bf",
+            "result": "913aa43e"
+          },
+          {
+            "argument": "0a9492bf",
+            "result": "4ae8a23e"
+          },
+          {
+            "argument": "b29d93bf",
+            "result": "8d97a13e"
+          },
+          {
+            "argument": "4aa894bf",
+            "result": "5c48a03e"
+          },
+          {
+            "argument": "d2b395bf",
+            "result": "b8fa9e3e"
+          },
+          {
+            "argument": "4ac096bf",
+            "result": "a3ae9d3e"
+          },
+          {
+            "argument": "b1cd97bf",
+            "result": "1f649c3e"
+          },
+          {
+            "argument": "08dc98bf",
+            "result": "2d1b9b3e"
+          },
+          {
+            "argument": "50eb99bf",
+            "result": "ced3993e"
+          },
+          {
+            "argument": "87fb9abf",
+            "result": "058e983e"
+          },
+          {
+            "argument": "ae0c9cbf",
+            "result": "d249973e"
+          },
+          {
+            "argument": "c51e9dbf",
+            "result": "3707963e"
+          },
+          {
+            "argument": "cc319ebf",
+            "result": "34c6943e"
+          },
+          {
+            "argument": "c2459fbf",
+            "result": "cd86933e"
+          },
+          {
+            "argument": "a95aa0bf",
+            "result": "0149923e"
+          },
+          {
+            "argument": "8070a1bf",
+            "result": "d00c913e"
+          },
+          {
+            "argument": "4687a2bf",
+            "result": "3fd28f3e"
+          },
+          {
+            "argument": "fc9ea3bf",
+            "result": "4d998e3e"
+          },
+          {
+            "argument": "a2b7a4bf",
+            "result": "fa618d3e"
+          },
+          {
+            "argument": "38d1a5bf",
+            "result": "492c8c3e"
+          },
+          {
+            "argument": "beeba6bf",
+            "result": "39f88a3e"
+          },
+          {
+            "argument": "3407a8bf",
+            "result": "ccc5893e"
+          },
+          {
+            "argument": "9a23a9bf",
+            "result": "0295883e"
+          },
+          {
+            "argument": "ef40aabf",
+            "result": "de65873e"
+          },
+          {
+            "argument": "355fabbf",
+            "result": "5e38863e"
+          },
+          {
+            "argument": "6a7eacbf",
+            "result": "850c853e"
+          },
+          {
+            "argument": "909eadbf",
+            "result": "52e2833e"
+          },
+          {
+            "argument": "a5bfaebf",
+            "result": "c6b9823e"
+          },
+          {
+            "argument": "aae1afbf",
+            "result": "e392813e"
+          },
+          {
+            "argument": "9f04b1bf",
+            "result": "a86d803e"
+          },
+          {
+            "argument": "8328b2bf",
+            "result": "2d947e3e"
+          },
+          {
+            "argument": "584db3bf",
+            "result": "5c507c3e"
+          },
+          {
+            "argument": "1d73b4bf",
+            "result": "de0f7a3e"
+          },
+          {
+            "argument": "d199b5bf",
+            "result": "b7d2773e"
+          },
+          {
+            "argument": "75c1b6bf",
+            "result": "e598753e"
+          },
+          {
+            "argument": "0aeab7bf",
+            "result": "6762733e"
+          },
+          {
+            "argument": "8e13b9bf",
+            "result": "412f713e"
+          },
+          {
+            "argument": "023ebabf",
+            "result": "72ff6e3e"
+          },
+          {
+            "argument": "6669bbbf",
+            "result": "fad26c3e"
+          },
+          {
+            "argument": "b995bcbf",
+            "result": "dca96a3e"
+          },
+          {
+            "argument": "fdc2bdbf",
+            "result": "1484683e"
+          },
+          {
+            "argument": "31f1bebf",
+            "result": "a461663e"
+          },
+          {
+            "argument": "5420c0bf",
+            "result": "8e42643e"
+          },
+          {
+            "argument": "6750c1bf",
+            "result": "d026623e"
+          },
+          {
+            "argument": "6b81c2bf",
+            "result": "690e603e"
+          },
+          {
+            "argument": "5eb3c3bf",
+            "result": "5bf95d3e"
+          },
+          {
+            "argument": "41e6c4bf",
+            "result": "a5e75b3e"
+          },
+          {
+            "argument": "141ac6bf",
+            "result": "47d9593e"
+          },
+          {
+            "argument": "d64ec7bf",
+            "result": "42ce573e"
+          },
+          {
+            "argument": "8984c8bf",
+            "result": "92c6553e"
+          },
+          {
+            "argument": "2cbbc9bf",
+            "result": "38c2533e"
+          },
+          {
+            "argument": "bef2cabf",
+            "result": "36c1513e"
+          },
+          {
+            "argument": "402bccbf",
+            "result": "89c34f3e"
+          },
+          {
+            "argument": "b264cdbf",
+            "result": "31c94d3e"
+          },
+          {
+            "argument": "159fcebf",
+            "result": "2bd24b3e"
+          },
+          {
+            "argument": "67dacfbf",
+            "result": "7ade493e"
+          },
+          {
+            "argument": "a816d1bf",
+            "result": "1cee473e"
+          },
+          {
+            "argument": "da53d2bf",
+            "result": "0e01463e"
+          },
+          {
+            "argument": "fc91d3bf",
+            "result": "5117443e"
+          },
+          {
+            "argument": "0dd1d4bf",
+            "result": "e430423e"
+          },
+          {
+            "argument": "0f11d6bf",
+            "result": "c34d403e"
+          },
+          {
+            "argument": "0052d7bf",
+            "result": "f16d3e3e"
+          },
+          {
+            "argument": "e193d8bf",
+            "result": "6b913c3e"
+          },
+          {
+            "argument": "b2d6d9bf",
+            "result": "2fb83a3e"
+          },
+          {
+            "argument": "731adbbf",
+            "result": "3ce2383e"
+          },
+          {
+            "argument": "245fdcbf",
+            "result": "910f373e"
+          },
+          {
+            "argument": "c5a4ddbf",
+            "result": "2b40353e"
+          },
+          {
+            "argument": "55ebdebf",
+            "result": "0c74333e"
+          },
+          {
+            "argument": "d632e0bf",
+            "result": "2eab313e"
+          },
+          {
+            "argument": "467be1bf",
+            "result": "93e52f3e"
+          },
+          {
+            "argument": "a7c4e2bf",
+            "result": "36232e3e"
+          },
+          {
+            "argument": "f70ee4bf",
+            "result": "18642c3e"
+          },
+          {
+            "argument": "375ae5bf",
+            "result": "36a82a3e"
+          },
+          {
+            "argument": "67a6e6bf",
+            "result": "8fef283e"
+          },
+          {
+            "argument": "87f3e7bf",
+            "result": "203a273e"
+          },
+          {
+            "argument": "9641e9bf",
+            "result": "e887253e"
+          },
+          {
+            "argument": "9690eabf",
+            "result": "e3d8233e"
+          },
+          {
+            "argument": "85e0ebbf",
+            "result": "122d223e"
+          },
+          {
+            "argument": "6531edbf",
+            "result": "7084203e"
+          },
+          {
+            "argument": "3483eebf",
+            "result": "fcde1e3e"
+          },
+          {
+            "argument": "f3d5efbf",
+            "result": "b53c1d3e"
+          },
+          {
+            "argument": "a229f1bf",
+            "result": "979d1b3e"
+          },
+          {
+            "argument": "417ef2bf",
+            "result": "a0011a3e"
+          },
+          {
+            "argument": "d0d3f3bf",
+            "result": "ce68183e"
+          },
+          {
+            "argument": "4f2af5bf",
+            "result": "1fd3163e"
+          },
+          {
+            "argument": "bd81f6bf",
+            "result": "9040153e"
+          },
+          {
+            "argument": "1cdaf7bf",
+            "result": "1eb1133e"
+          },
+          {
+            "argument": "6a33f9bf",
+            "result": "c824123e"
+          },
+          {
+            "argument": "a88dfabf",
+            "result": "8b9b103e"
+          },
+          {
+            "argument": "d6e8fbbf",
+            "result": "63150f3e"
+          },
+          {
+            "argument": "f444fdbf",
+            "result": "4f920d3e"
+          },
+          {
+            "argument": "02a2febf",
+            "result": "4b120c3e"
+          },
+          {
+            "argument": "000000c0",
+            "result": "55950a3e"
+          },
+          {
+            "argument": "77af00c0",
+            "result": "6a1b093e"
+          },
+          {
+            "argument": "665f01c0",
+            "result": "87a4073e"
+          },
+          {
+            "argument": "cc0f02c0",
+            "result": "ac30063e"
+          },
+          {
+            "argument": "abc002c0",
+            "result": "d1bf043e"
+          },
+          {
+            "argument": "027203c0",
+            "result": "f651033e"
+          },
+          {
+            "argument": "d02304c0",
+            "result": "1ae7013e"
+          },
+          {
+            "argument": "17d604c0",
+            "result": "357f003e"
+          },
+          {
+            "argument": "d58805c0",
+            "result": "9234fe3d"
+          },
+          {
+            "argument": "0c3c06c0",
+            "result": "9e70fb3d"
+          },
+          {
+            "argument": "baef06c0",
+            "result": "8eb2f83d"
+          },
+          {
+            "argument": "e0a307c0",
+            "result": "5afaf53d"
+          },
+          {
+            "argument": "7e5808c0",
+            "result": "fb47f33d"
+          },
+          {
+            "argument": "940d09c0",
+            "result": "6a9bf03d"
+          },
+          {
+            "argument": "23c309c0",
+            "result": "9df4ed3d"
+          },
+          {
+            "argument": "29790ac0",
+            "result": "9653eb3d"
+          },
+          {
+            "argument": "a72f0bc0",
+            "result": "4ab8e83d"
+          },
+          {
+            "argument": "9de60bc0",
+            "result": "b322e63d"
+          },
+          {
+            "argument": "0a9e0cc0",
+            "result": "ce92e33d"
+          },
+          {
+            "argument": "f0550dc0",
+            "result": "8c08e13d"
+          },
+          {
+            "argument": "4e0e0ec0",
+            "result": "eb83de3d"
+          },
+          {
+            "argument": "24c70ec0",
+            "result": "e404dc3d"
+          },
+          {
+            "argument": "71800fc0",
+            "result": "748bd93d"
+          },
+          {
+            "argument": "373a10c0",
+            "result": "8d17d73d"
+          },
+          {
+            "argument": "75f410c0",
+            "result": "2ca9d43d"
+          },
+          {
+            "argument": "2aaf11c0",
+            "result": "4c40d23d"
+          },
+          {
+            "argument": "576a12c0",
+            "result": "e4dccf3d"
+          },
+          {
+            "argument": "fd2513c0",
+            "result": "ea7ecd3d"
+          },
+          {
+            "argument": "1ae213c0",
+            "result": "5c26cb3d"
+          },
+          {
+            "argument": "af9e14c0",
+            "result": "31d3c83d"
+          },
+          {
+            "argument": "bd5b15c0",
+            "result": "5e85c63d"
+          },
+          {
+            "argument": "421916c0",
+            "result": "e33cc43d"
+          },
+          {
+            "argument": "3fd716c0",
+            "result": "b5f9c13d"
+          },
+          {
+            "argument": "b49517c0",
+            "result": "ccbbbf3d"
+          },
+          {
+            "argument": "a15418c0",
+            "result": "2383bd3d"
+          },
+          {
+            "argument": "061419c0",
+            "result": "b04fbb3d"
+          },
+          {
+            "argument": "e3d319c0",
+            "result": "6e21b93d"
+          },
+          {
+            "argument": "37941ac0",
+            "result": "57f8b63d"
+          },
+          {
+            "argument": "04551bc0",
+            "result": "5fd4b43d"
+          },
+          {
+            "argument": "49161cc0",
+            "result": "81b5b23d"
+          },
+          {
+            "argument": "05d81cc0",
+            "result": "b99bb03d"
+          },
+          {
+            "argument": "3a9a1dc0",
+            "result": "f886ae3d"
+          },
+          {
+            "argument": "e75c1ec0",
+            "result": "3c77ac3d"
+          },
+          {
+            "argument": "0b201fc0",
+            "result": "7e6caa3d"
+          },
+          {
+            "argument": "a7e31fc0",
+            "result": "b566a83d"
+          },
+          {
+            "argument": "bca720c0",
+            "result": "d665a63d"
+          },
+          {
+            "argument": "486c21c0",
+            "result": "e069a43d"
+          },
+          {
+            "argument": "4c3122c0",
+            "result": "c772a23d"
+          },
+          {
+            "argument": "c8f622c0",
+            "result": "8680a03d"
+          },
+          {
+            "argument": "bdbc23c0",
+            "result": "10939e3d"
+          },
+          {
+            "argument": "298324c0",
+            "result": "65aa9c3d"
+          },
+          {
+            "argument": "0d4a25c0",
+            "result": "79c69a3d"
+          },
+          {
+            "argument": "691126c0",
+            "result": "45e7983d"
+          },
+          {
+            "argument": "3dd926c0",
+            "result": "c20c973d"
+          },
+          {
+            "argument": "88a127c0",
+            "result": "ea36953d"
+          },
+          {
+            "argument": "4c6a28c0",
+            "result": "b065933d"
+          },
+          {
+            "argument": "883329c0",
+            "result": "1099913d"
+          },
+          {
+            "argument": "3cfd29c0",
+            "result": "02d18f3d"
+          },
+          {
+            "argument": "67c72ac0",
+            "result": "810d8e3d"
+          },
+          {
+            "argument": "0b922bc0",
+            "result": "7f4e8c3d"
+          },
+          {
+            "argument": "265d2cc0",
+            "result": "fb938a3d"
+          },
+          {
+            "argument": "ba282dc0",
+            "result": "e7dd883d"
+          },
+          {
+            "argument": "c5f42dc0",
+            "result": "412c873d"
+          },
+          {
+            "argument": "48c12ec0",
+            "result": "fe7e853d"
+          },
+          {
+            "argument": "448e2fc0",
+            "result": "16d6833d"
+          },
+          {
+            "argument": "b75b30c0",
+            "result": "8431823d"
+          },
+          {
+            "argument": "a22931c0",
+            "result": "3e91803d"
+          },
+          {
+            "argument": "05f831c0",
+            "result": "7bea7d3d"
+          },
+          {
+            "argument": "e0c632c0",
+            "result": "f4ba7a3d"
+          },
+          {
+            "argument": "339633c0",
+            "result": "d893773d"
+          },
+          {
+            "argument": "fe6534c0",
+            "result": "1875743d"
+          },
+          {
+            "argument": "413635c0",
+            "result": "a45e713d"
+          },
+          {
+            "argument": "fc0636c0",
+            "result": "6e506e3d"
+          },
+          {
+            "argument": "2fd836c0",
+            "result": "654a6b3d"
+          },
+          {
+            "argument": "d9a937c0",
+            "result": "7e4c683d"
+          },
+          {
+            "argument": "fc7b38c0",
+            "result": "a356653d"
+          },
+          {
+            "argument": "974e39c0",
+            "result": "c868623d"
+          },
+          {
+            "argument": "a9213ac0",
+            "result": "e1825f3d"
+          },
+          {
+            "argument": "34f53ac0",
+            "result": "d8a45c3d"
+          },
+          {
+            "argument": "36c93bc0",
+            "result": "a4ce593d"
+          },
+          {
+            "argument": "b09d3cc0",
+            "result": "3400573d"
+          },
+          {
+            "argument": "a3723dc0",
+            "result": "7439543d"
+          },
+          {
+            "argument": "0d483ec0",
+            "result": "5c7a513d"
+          },
+          {
+            "argument": "ef1d3fc0",
+            "result": "d9c24e3d"
+          },
+          {
+            "argument": "49f43fc0",
+            "result": "de124c3d"
+          },
+          {
+            "argument": "1ccb40c0",
+            "result": "566a493d"
+          },
+          {
+            "argument": "66a241c0",
+            "result": "3bc9463d"
+          },
+          {
+            "argument": "287a42c0",
+            "result": "792f443d"
+          },
+          {
+            "argument": "615243c0",
+            "result": "059d413d"
+          },
+          {
+            "argument": "132b44c0",
+            "result": "c9113f3d"
+          },
+          {
+            "argument": "3d0445c0",
+            "result": "bb8d3c3d"
+          },
+          {
+            "argument": "dfdd45c0",
+            "result": "ca103a3d"
+          },
+          {
+            "argument": "f9b746c0",
+            "result": "e99a373d"
+          },
+          {
+            "argument": "8a9247c0",
+            "result": "0b2c353d"
+          },
+          {
+            "argument": "946d48c0",
+            "result": "1dc4323d"
+          },
+          {
+            "argument": "154949c0",
+            "result": "1463303d"
+          },
+          {
+            "argument": "0f254ac0",
+            "result": "dd082e3d"
+          },
+          {
+            "argument": "80014bc0",
+            "result": "6fb52b3d"
+          },
+          {
+            "argument": "6ade4bc0",
+            "result": "b668293d"
+          },
+          {
+            "argument": "cbbb4cc0",
+            "result": "a922273d"
+          },
+          {
+            "argument": "a4994dc0",
+            "result": "36e3243d"
+          },
+          {
+            "argument": "f5774ec0",
+            "result": "50aa223d"
+          },
+          {
+            "argument": "be564fc0",
+            "result": "e777203d"
+          },
+          {
+            "argument": "ff3550c0",
+            "result": "ee4b1e3d"
+          },
+          {
+            "argument": "b91551c0",
+            "result": "54261c3d"
+          },
+          {
+            "argument": "e9f551c0",
+            "result": "13071a3d"
+          },
+          {
+            "argument": "92d652c0",
+            "result": "14ee173d"
+          },
+          {
+            "argument": "b3b753c0",
+            "result": "4cdb153d"
+          },
+          {
+            "argument": "4c9954c0",
+            "result": "aece133d"
+          },
+          {
+            "argument": "5d7b55c0",
+            "result": "2bc8113d"
+          },
+          {
+            "argument": "e55d56c0",
+            "result": "b7c70f3d"
+          },
+          {
+            "argument": "e64057c0",
+            "result": "41cd0d3d"
+          },
+          {
+            "argument": "5f2458c0",
+            "result": "bcd80b3d"
+          },
+          {
+            "argument": "4f0859c0",
+            "result": "1eea093d"
+          },
+          {
+            "argument": "b8ec59c0",
+            "result": "5401083d"
+          },
+          {
+            "argument": "98d15ac0",
+            "result": "551e063d"
+          },
+          {
+            "argument": "f0b65bc0",
+            "result": "1141043d"
+          },
+          {
+            "argument": "c19c5cc0",
+            "result": "7969023d"
+          },
+          {
+            "argument": "09835dc0",
+            "result": "8397003d"
+          },
+          {
+            "argument": "c9695ec0",
+            "result": "4296fd3c"
+          },
+          {
+            "argument": "01515fc0",
+            "result": "8908fa3c"
+          },
+          {
+            "argument": "b13860c0",
+            "result": "c185f63c"
+          },
+          {
+            "argument": "d92061c0",
+            "result": "d00df33c"
+          },
+          {
+            "argument": "790962c0",
+            "result": "9da0ef3c"
+          },
+          {
+            "argument": "91f262c0",
+            "result": "0c3eec3c"
+          },
+          {
+            "argument": "21dc63c0",
+            "result": "04e6e83c"
+          },
+          {
+            "argument": "29c664c0",
+            "result": "6c98e53c"
+          },
+          {
+            "argument": "a8b065c0",
+            "result": "2d55e23c"
+          },
+          {
+            "argument": "a09b66c0",
+            "result": "261cdf3c"
+          },
+          {
+            "argument": "108767c0",
+            "result": "43eddb3c"
+          },
+          {
+            "argument": "f77268c0",
+            "result": "6dc8d83c"
+          },
+          {
+            "argument": "575f69c0",
+            "result": "84add53c"
+          },
+          {
+            "argument": "2e4c6ac0",
+            "result": "779cd23c"
+          },
+          {
+            "argument": "7d396bc0",
+            "result": "2895cf3c"
+          },
+          {
+            "argument": "45276cc0",
+            "result": "7d97cc3c"
+          },
+          {
+            "argument": "84156dc0",
+            "result": "63a3c93c"
+          },
+          {
+            "argument": "3b046ec0",
+            "result": "bfb8c63c"
+          },
+          {
+            "argument": "6af36ec0",
+            "result": "78d7c33c"
+          },
+          {
+            "argument": "11e36fc0",
+            "result": "76ffc03c"
+          },
+          {
+            "argument": "31d370c0",
+            "result": "a030be3c"
+          },
+          {
+            "argument": "c8c371c0",
+            "result": "e26abb3c"
+          },
+          {
+            "argument": "d6b472c0",
+            "result": "25aeb83c"
+          },
+          {
+            "argument": "5da673c0",
+            "result": "4dfab53c"
+          },
+          {
+            "argument": "5c9874c0",
+            "result": "444fb33c"
+          },
+          {
+            "argument": "d38a75c0",
+            "result": "f3acb03c"
+          },
+          {
+            "argument": "c27d76c0",
+            "result": "4413ae3c"
+          },
+          {
+            "argument": "287177c0",
+            "result": "2282ab3c"
+          },
+          {
+            "argument": "076578c0",
+            "result": "71f9a83c"
+          },
+          {
+            "argument": "5d5979c0",
+            "result": "2079a63c"
+          },
+          {
+            "argument": "2c4e7ac0",
+            "result": "1401a43c"
+          },
+          {
+            "argument": "72437bc0",
+            "result": "3b91a13c"
+          },
+          {
+            "argument": "31397cc0",
+            "result": "7a299f3c"
+          },
+          {
+            "argument": "672f7dc0",
+            "result": "c0c99c3c"
+          },
+          {
+            "argument": "15267ec0",
+            "result": "f5719a3c"
+          },
+          {
+            "argument": "3b1d7fc0",
+            "result": "0422983c"
+          },
+          {
+            "argument": "6d0a80c0",
+            "result": "d3d9953c"
+          },
+          {
+            "argument": "788680c0",
+            "result": "5499933c"
+          },
+          {
+            "argument": "bf0281c0",
+            "result": "6e60913c"
+          },
+          {
+            "argument": "427f81c0",
+            "result": "0c2f8f3c"
+          },
+          {
+            "argument": "01fc81c0",
+            "result": "19058d3c"
+          },
+          {
+            "argument": "fc7882c0",
+            "result": "82e28a3c"
+          },
+          {
+            "argument": "33f682c0",
+            "result": "30c7883c"
+          },
+          {
+            "argument": "a57383c0",
+            "result": "14b3863c"
+          },
+          {
+            "argument": "54f183c0",
+            "result": "12a6843c"
+          },
+          {
+            "argument": "3f6f84c0",
+            "result": "19a0823c"
+          },
+          {
+            "argument": "66ed84c0",
+            "result": "15a1803c"
+          },
+          {
+            "argument": "c96b85c0",
+            "result": "e6517d3c"
+          },
+          {
+            "argument": "67ea85c0",
+            "result": "456f793c"
+          },
+          {
+            "argument": "426986c0",
+            "result": "129a753c"
+          },
+          {
+            "argument": "59e886c0",
+            "result": "2dd2713c"
+          },
+          {
+            "argument": "ab6787c0",
+            "result": "77176e3c"
+          },
+          {
+            "argument": "3ae787c0",
+            "result": "bc696a3c"
+          },
+          {
+            "argument": "056788c0",
+            "result": "ddc8663c"
+          },
+          {
+            "argument": "0be788c0",
+            "result": "bc34633c"
+          },
+          {
+            "argument": "4e6789c0",
+            "result": "25ad5f3c"
+          },
+          {
+            "argument": "cce789c0",
+            "result": "01325c3c"
+          },
+          {
+            "argument": "87688ac0",
+            "result": "1fc3583c"
+          },
+          {
+            "argument": "7de98ac0",
+            "result": "6760553c"
+          },
+          {
+            "argument": "b06a8bc0",
+            "result": "a809523c"
+          },
+          {
+            "argument": "1eec8bc0",
+            "result": "ccbe4e3c"
+          },
+          {
+            "argument": "c86d8cc0",
+            "result": "a97f4b3c"
+          },
+          {
+            "argument": "afef8cc0",
+            "result": "154c483c"
+          },
+          {
+            "argument": "d1718dc0",
+            "result": "fb23453c"
+          },
+          {
+            "argument": "2ff48dc0",
+            "result": "3107423c"
+          },
+          {
+            "argument": "c9768ec0",
+            "result": "96f53e3c"
+          },
+          {
+            "argument": "a0f98ec0",
+            "result": "01ef3b3c"
+          },
+          {
+            "argument": "b27c8fc0",
+            "result": "5df3383c"
+          }
+        ],
+        "rowdriver_calls": [
+          {
+            "back_edge_plus_0x44": 0.6700000166893005,
+            "counts": {
+              "prepass_back": 0,
+              "prepass_front": 0,
+              "scatter_back": 561,
+              "scatter_front": 0
+            },
+            "destination": "0x200003f8",
+            "destination_slot": "0xf0f5eb0",
+            "divisor_plus_0x38": 2.0,
+            "exponent_plus_0x30": 0.0,
+            "front_edge_plus_0x40": 0.0,
+            "mode_branch": "default",
+            "mode_plus_0x20": 1,
+            "opacity_plus_0x2c": 0.0,
+            "params": "0xf0f6e60",
+            "row_end": 1,
+            "row_start": 0,
+            "source": "0x20000158",
+            "source_slot": "0xf0f5eb8",
+            "unused_stack_30": "0x6",
+            "width": 7
+          },
+          {
+            "back_edge_plus_0x44": 0.6700000166893005,
+            "counts": {
+              "prepass_back": 0,
+              "prepass_front": 0,
+              "scatter_back": 561,
+              "scatter_front": 0
+            },
+            "destination": "0x200003f8",
+            "destination_slot": "0xf0f5eb0",
+            "divisor_plus_0x38": 2.0,
+            "exponent_plus_0x30": 0.0,
+            "front_edge_plus_0x40": 0.0,
+            "mode_branch": "default",
+            "mode_plus_0x20": 1,
+            "opacity_plus_0x2c": 0.0,
+            "params": "0xf0f6e60",
+            "row_end": 2,
+            "row_start": 1,
+            "source": "0x20000158",
+            "source_slot": "0xf0f5eb8",
+            "unused_stack_30": "0x6",
+            "width": 7
+          },
+          {
+            "back_edge_plus_0x44": 0.6700000166893005,
+            "counts": {
+              "prepass_back": 0,
+              "prepass_front": 0,
+              "scatter_back": 561,
+              "scatter_front": 0
+            },
+            "destination": "0x200003f8",
+            "destination_slot": "0xf0f5eb0",
+            "divisor_plus_0x38": 2.0,
+            "exponent_plus_0x30": 0.0,
+            "front_edge_plus_0x40": 0.0,
+            "mode_branch": "default",
+            "mode_plus_0x20": 1,
+            "opacity_plus_0x2c": 0.0,
+            "params": "0xf0f6e60",
+            "row_end": 3,
+            "row_start": 2,
+            "source": "0x20000158",
+            "source_slot": "0xf0f5eb8",
+            "unused_stack_30": "0x6",
+            "width": 7
+          },
+          {
+            "back_edge_plus_0x44": 0.6700000166893005,
+            "counts": {
+              "prepass_back": 0,
+              "prepass_front": 0,
+              "scatter_back": 561,
+              "scatter_front": 0
+            },
+            "destination": "0x200003f8",
+            "destination_slot": "0xf0f5eb0",
+            "divisor_plus_0x38": 2.0,
+            "exponent_plus_0x30": 0.0,
+            "front_edge_plus_0x40": 0.0,
+            "mode_branch": "default",
+            "mode_plus_0x20": 1,
+            "opacity_plus_0x2c": 0.0,
+            "params": "0xf0f6e60",
+            "row_end": 4,
+            "row_start": 3,
+            "source": "0x20000158",
+            "source_slot": "0xf0f5eb8",
+            "unused_stack_30": "0x6",
+            "width": 7
+          },
+          {
+            "back_edge_plus_0x44": 0.6700000166893005,
+            "counts": {
+              "prepass_back": 0,
+              "prepass_front": 0,
+              "scatter_back": 561,
+              "scatter_front": 0
+            },
+            "destination": "0x200003f8",
+            "destination_slot": "0xf0f5eb0",
+            "divisor_plus_0x38": 2.0,
+            "exponent_plus_0x30": 0.0,
+            "front_edge_plus_0x40": 0.0,
+            "mode_branch": "default",
+            "mode_plus_0x20": 1,
+            "opacity_plus_0x2c": 0.0,
+            "params": "0xf0f6e60",
+            "row_end": 5,
+            "row_start": 4,
+            "source": "0x20000158",
+            "source_slot": "0xf0f5eb8",
+            "unused_stack_30": "0x6",
+            "width": 7
+          },
+          {
+            "back_edge_plus_0x44": 0.6700000166893005,
+            "counts": {
+              "prepass_back": 0,
+              "prepass_front": 0,
+              "scatter_back": 561,
+              "scatter_front": 0
+            },
+            "destination": "0x200003f8",
+            "destination_slot": "0xf0f5eb0",
+            "divisor_plus_0x38": 2.0,
+            "exponent_plus_0x30": 0.0,
+            "front_edge_plus_0x40": 0.0,
+            "mode_branch": "default",
+            "mode_plus_0x20": 1,
+            "opacity_plus_0x2c": 0.0,
+            "params": "0xf0f6e60",
+            "row_end": 6,
+            "row_start": 5,
+            "source": "0x20000158",
+            "source_slot": "0xf0f5eb8",
+            "unused_stack_30": "0x6",
+            "width": 7
+          }
+        ],
+        "work_geometry": [
+          7,
+          6
+        ]
+      }
+    }
+  ],
+  "core_ref": "ae083498",
+  "expf_leaf": "native-f32",
+  "fixture_sha256": "f549e994f1d73e3bff5b5fc6c36946519299a7e2541fba33a785587c1c30fad5",
+  "gate_off": false,
+  "nonfinite_off": false,
+  "powf_leaf": "double-round",
+  "probe_sha256": "932b5051e130c5b3d9468853bf7d345d4a27691cb0b3761d8099f21e576d5426",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "candidate_sha256": "e0b26628c16118a65ea13cd4ed733d1253c1e5afb14100c6efa9540cb302105c",
+    "declarations_sha256": "392f028e806393c95fa5e44dc703daa9e7543cd59618292b4b6e7749998a5d72",
+    "dependencies_sha256": {
+      "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+      "core/dblur_frontonly.cpp": "08e9b0befaac1c736eec8dbb3b8608e5536d8e94e37c7a5759e230943fcc814b",
+      "core/dblur_rotate.cpp": "5b02748d421befb1ecda0fd36ff34c5b225ebee5e928e0460e1c14d174c101d7",
+      "core/dblur_rowdriver.cpp": "a6fff9d9fdb1ce3d582b24123d858d2c6b9f801ff18bc2994241ba5479f724a9",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp": "5047e50dee52b4f79d1c74f971496f228d62c6cff201c25c35d5a3ea9c2c74cd",
+      "mac/OLMDirectionalBlur/OLMDirectionalBlur.h": "2429cfab4d20b613ccdef47dec4af7a024043a7f064c523821cdc7694d3b697c",
+      "tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp": "34cc7b585ac4cd72a53ef190a6fa8014c6cd001618654b24d40512e2ca5817ab"
+    },
+    "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "oracle_render_path": "smartfx",
+    "oracle_routes": {
+      "classic": "classic",
+      "smart": "smart"
+    },
+    "original_routes": {
+      "classic": "render",
+      "smart": "render"
+    },
+    "out_of_range_builder_defaults": [],
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/radial_windows_reference_v2_20261001/target/release/aex-guest-worker",
+    "worker_sha256": "16ab2412c00b6ce5d61cadbf9d1cd3aa3c991f36bc66c6af8c2595c32d075e3c",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "traced_core_sha256": "82cf90b237ec0ea9e76dfb47f1fa4b80d2940e8d05b990fefab5a03a527df651"
+}
