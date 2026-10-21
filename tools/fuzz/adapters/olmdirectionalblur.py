@@ -1,4 +1,6 @@
 """DirectionalBlur: reuse the existing real-SDK public feature replay host."""
+import copy
+
 from .public import PublicAdapter, ROOT, replace_once
 
 HARNESS = ROOT/'tools/emulation/directionalblur_general_features_effectmain_harness_20261001.cpp'
@@ -35,3 +37,19 @@ class Adapter(PublicAdapter):
         parameters = ','.join(f"{p['slot']}={p['value']}" for p in case['parameters'])
         return [self.binary,*case['geometry'],case['depth'],parameters,route,
                 case['input_padding'],case['output_padding']],case['pixels']
+
+    def candidate(self, case, directory, route, deadline):
+        trace = directory/f'refusal_trace_{route}.txt'
+        trace.unlink(missing_ok=True)
+        # Per-call environment: the shared adapter is used by concurrent jobs.
+        traced = copy.copy(self)
+        traced.env = dict(self.env, OLM_REFUSAL_TRACE=str(trace))
+        try:
+            result, raw = PublicAdapter.candidate(traced, case, directory, route, deadline)
+            try:
+                guards = [line.strip() for line in trace.read_text().splitlines() if line.strip()]
+            except OSError:
+                guards = []
+            return result, raw, guards
+        finally:
+            trace.unlink(missing_ok=True)
