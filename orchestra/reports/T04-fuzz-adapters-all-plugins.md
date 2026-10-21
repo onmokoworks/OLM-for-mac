@@ -1,7 +1,7 @@
 status: partial
 
 summary:
-- Added typed public-path adapters and measured 6/9 requested 300-case seed-1 campaigns so far.
+- Added typed public-path adapters and measured 7/9 requested 300-case seed-1 campaigns so far.
 - Original AEX Smart via the retained worker; production Mac Classic and Smart via existing public replay hosts.
 - Raw comparisons, bounded shrinking, separate refusal/budget/error counters, and a 2,000,000-byte corpus cap.
 - No production plugin, release gate, ledger, MAIN, emulator source, or installed bundle changes.
@@ -20,7 +20,7 @@ facts:
 | olmkirakira | 287/13/0 | 0/0/300 | 0/0/300 | 0 | `3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261` |
 | olmblur | 300/0/0 | 0/13/287 | 76/26/198 | 13 | `3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261` |
 | colorkeep | 300/0/0 | 205/0/95 | 205/0/95 | 0 | `3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261` |
-| olmdistancegradation | pending | pending | pending | — | — |
+| olmdistancegradation | 290/8/2 | 145/145/0 | 0/0/300 | 12 | `3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261` |
 | olmsmoother | pending | pending | pending | — | — |
 | olmtoondilate | pending | pending | pending | — | — |
 
@@ -38,6 +38,9 @@ facts:
   First mismatch: seed 1, index 4, PF8, [117, 244], smart: `{"actual_bytes": 114192, "actual_word_hex": "80", "different_bytes": 2974, "different_words": 2974, "expected_bytes": 114192, "expected_word_hex": "81", "first_byte": 1, "first_word": 1}`.
   Corpus replay: 39/39 match saved statuses and raw hashes; replay_complete.
 - `colorkeep`: `complete`, 300/300 cases, 5.0488 s; corpus 0 files / 0 bytes. Full counters: `{"aex_ok": 300, "both_routes_exact": 205, "classic_exact": 205, "classic_refusal": 95, "pixel_mismatch_cases": 0, "smart_exact": 205, "smart_refusal": 95}`. Campaign SHA-256 `2c8e83f98adb1c38bd4f2a7eec434236da30c1a7b386244b144283ec7c34f8f1`; AEX `6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86`.
+- `olmdistancegradation`: `complete`, 300/300 cases, 117.3146 s; corpus 145 files / 1132045 bytes. Full counters: `{"aex_budget": 2, "aex_ok": 290, "aex_reject": 8, "both_routes_exact": 0, "classic_exact": 145, "classic_mismatch": 145, "classic_uncompared": 10, "pixel_mismatch_cases": 145, "smart_refusal": 300}`. Campaign SHA-256 `fb7297dc5e4b9aef6e185a5b5bfea6638111ff62702ef186fd3640fd50724b1e`; AEX `a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae`.
+  First mismatch: seed 1, index 0, PF8, [21, 19], classic: `{"actual_bytes": 1596, "actual_word_hex": "ee", "different_bytes": 1, "different_words": 1, "expected_bytes": 1596, "expected_word_hex": "b4", "first_byte": 232, "first_word": 232}`.
+  Corpus replay: 145/145 match saved statuses and raw hashes; replay_complete.
 
 inference:
 - These are finite CPU-emulation residuals, not native AE or Windows UCRT equivalence. Signature clusters are not proven causes; no numerical production changes were attempted.
@@ -66,8 +69,10 @@ python3 tools/fuzz/run.py --plugin olmkirakira --n 300 --seed 1 --scratch orches
 python3 tools/fuzz/run.py --plugin olmblur --n 300 --seed 1 --scratch orchestra/state/T04-fuzz-adapters-all-plugins --report orchestra/state/T04-fuzz-adapters-all-plugins/olmblur-verify.json --corpus orchestra/state/T04-fuzz-adapters-all-plugins/olmblur-verify-corpus
 python3 tools/fuzz/run.py --plugin olmblur --replay tests/fuzz_corpus/olmblur --budget-minutes 5 --scratch orchestra/state/T04-fuzz-adapters-all-plugins --report orchestra/state/T04-fuzz-adapters-all-plugins/olmblur-verify-replay.json
 python3 tools/fuzz/run.py --plugin colorkeep --n 300 --seed 1 --scratch orchestra/state/T04-fuzz-adapters-all-plugins --report orchestra/state/T04-fuzz-adapters-all-plugins/colorkeep-verify.json --corpus orchestra/state/T04-fuzz-adapters-all-plugins/colorkeep-verify-corpus
+python3 tools/fuzz/run.py --plugin olmdistancegradation --n 300 --seed 1 --scratch orchestra/state/T04-fuzz-adapters-all-plugins --report orchestra/state/T04-fuzz-adapters-all-plugins/olmdistancegradation-verify.json --corpus orchestra/state/T04-fuzz-adapters-all-plugins/olmdistancegradation-verify-corpus
+python3 tools/fuzz/run.py --plugin olmdistancegradation --replay tests/fuzz_corpus/olmdistancegradation --budget-minutes 5 --scratch orchestra/state/T04-fuzz-adapters-all-plugins --report orchestra/state/T04-fuzz-adapters-all-plugins/olmdistancegradation-verify-replay.json
 ```
 Expected: campaigns complete 300 cases with zero framework errors; retained corpus replay matches saved raw hashes/statuses. Keep the recorded worker/source hashes for comparable measurements. Read full counters for uncompared/error cells in addition to the compact summary table.
 
 next:
-- Continue in ticket order: olmdistancegradation, olmsmoother, olmtoondilate.
+- Continue in ticket order: olmsmoother, olmtoondilate.
