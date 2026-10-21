@@ -238,6 +238,7 @@ struct DGParams {
 	float         ds_y;
 	size_t        pixel_size;       // sizeof(render pixel P); selects the source-mask alpha rule
 	bool          smart_owner;      // exported Smart owner routing, distinct from legacy classic owner
+	bool          degenerate_mask;  // original owner refcon +0x90: zero or all mask pixels set
 	bool          pf32_smart_matrix_admitted;
 	bool          pf32_smart_oracle_profile_admitted;
 };
@@ -904,6 +905,16 @@ static inline void compose_pixel(
 	const DGParams &p,
 	float &out_a, float &out_r, float &out_g, float &out_b)
 {
+	// FUN_181170480/870/c90 test the owner's mask census before reading the
+	// distance field or selecting a foreground color. A uniform mask has no
+	// boundary: the callback emits background (opaque), or transparent black.
+	if (p.degenerate_mask) {
+		out_a = p.use_bg ? 1.0f : 0.0f;
+		out_r = p.use_bg ? p.bg_color.red : 0.0f;
+		out_g = p.use_bg ? p.bg_color.green : 0.0f;
+		out_b = p.use_bg ? p.bg_color.blue : 0.0f;
+		return;
+	}
 	// The classic PF32 owner bypasses the typed integer color callback for this
 	// branch and merges its raw float ownership field into all four channels.
 	// Consequently Sphere and invert do not transform the exported scalar.
@@ -1537,6 +1548,19 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	}
 
 	DistanceField df;
+	// FUN_1811749a0 converts alpha to uint8 with nearest-even rounding, then
+	// thresholds at 1. FUN_181183000 counts that mask; each typed owner sets
+	// refcon +0x90 when the count is zero or width*height. Keep the existing
+	// distance-field mask contract separate from this owner-level decision.
+	bool any_owned = false, any_unowned = false, bounded_alpha = true;
+	for (float a : alpha) {
+		if (!std::isfinite(a) || a < 0.0f || a > 1.0f) bounded_alpha = false;
+		const bool owned = a * 255.0f >= 1.5f;
+		any_owned |= owned;
+		any_unowned |= !owned;
+	}
+	// Extended float conversion semantics remain outside this restored lane.
+	p.degenerate_mask = bounded_alpha && (!any_owned || !any_unowned);
 	build_distance_field(alpha.data(), df, p, w, h);
 	debug_dump_distance_field(getenv("OLM_DG_DEBUG_DUMP_PATH"), alpha.data(), df, p, w, h, sizeof(P));
 
