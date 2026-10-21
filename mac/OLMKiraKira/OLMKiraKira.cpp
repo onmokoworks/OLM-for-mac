@@ -208,22 +208,28 @@ static A_long AexRotatedExtent(A_long major, A_long minor, double abs_major, dou
 	return std::max<A_long>(major + 4, (A_long)((double)major * abs_major + (double)minor * abs_minor + 4.0));
 }
 
+// PF worlds describe rows in bytes. Copy through an aligned local value:
+// the AEX address helpers (1812309f0/a20/a50) add y*rowbytes+x*sizeof(pixel),
+// and its readers/writers use unaligned scalar loads/stores. Host padding is
+// not a C++ PixelT array and need not preserve PixelT alignment.
 template <typename PixelT>
-static PixelT *PixelAt(PF_EffectWorld *world, A_long x, A_long y)
+static PixelT LoadWorldPixel(const PF_EffectWorld *world, A_long x, A_long y)
 {
-	const size_t row_offset = static_cast<size_t>(y) *
-		static_cast<size_t>(world->rowbytes);
-	return reinterpret_cast<PixelT *>(
-		reinterpret_cast<char *>(world->data) + row_offset) + x;
+	const size_t offset = static_cast<size_t>(y) *
+		static_cast<size_t>(world->rowbytes) + static_cast<size_t>(x) * sizeof(PixelT);
+	PixelT pixel;
+	std::memcpy(&pixel, reinterpret_cast<const unsigned char *>(world->data) + offset,
+		sizeof(pixel));
+	return pixel;
 }
 
 template <typename PixelT>
-static const PixelT *PixelAtConst(const PF_EffectWorld *world, A_long x, A_long y)
+static void StoreWorldPixel(PF_EffectWorld *world, A_long x, A_long y, const PixelT &pixel)
 {
-	const size_t row_offset = static_cast<size_t>(y) *
-		static_cast<size_t>(world->rowbytes);
-	return reinterpret_cast<const PixelT *>(
-		reinterpret_cast<const char *>(world->data) + row_offset) + x;
+	const size_t offset = static_cast<size_t>(y) *
+		static_cast<size_t>(world->rowbytes) + static_cast<size_t>(x) * sizeof(PixelT);
+	std::memcpy(reinterpret_cast<unsigned char *>(world->data) + offset, &pixel,
+		sizeof(pixel));
 }
 
 template <typename PixelT>
@@ -393,18 +399,14 @@ static bool WorldLayoutIsSafe(const PF_EffectWorld *world, size_t pixel_size)
 		active_rowbytes > static_cast<int64_t>(world->rowbytes)) {
 		return false;
 	}
-	size_t alignment = 1;
-	if (pixel_size == sizeof(PF_PixelFloat)) alignment = alignof(PF_PixelFloat);
-	else if (pixel_size == sizeof(PF_Pixel16)) alignment = alignof(PF_Pixel16);
-	else if (pixel_size == sizeof(PF_Pixel8)) alignment = alignof(PF_Pixel8);
-	if ((reinterpret_cast<uintptr_t>(world->data) % alignment) != 0 ||
-		(static_cast<size_t>(world->rowbytes) % alignment) != 0) {
-		return false;
-	}
+	// Byte copies admit unaligned bases and arbitrary positive byte strides.
 	const uint64_t last_row_offset =
 		static_cast<uint64_t>(world->height - 1) *
 		static_cast<uint64_t>(world->rowbytes);
-	return last_row_offset <= UINT64_MAX - static_cast<uint64_t>(active_rowbytes);
+	const uintptr_t begin = reinterpret_cast<uintptr_t>(world->data);
+	const uint64_t available = static_cast<uint64_t>(UINTPTR_MAX - begin);
+	return last_row_offset <= available &&
+		static_cast<uint64_t>(active_rowbytes) <= available - last_row_offset;
 }
 
 static PF_Err ValidateWorldPair(
@@ -628,7 +630,7 @@ static std::vector<FloatRGBA> ReadPixels(PF_EffectWorld *input)
 	std::vector<FloatRGBA> pixels((size_t)w * h);
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
-			pixels[(size_t)y * w + x] = PixelTraits<PixelT>::Read(*PixelAtConst<PixelT>(input, x, y));
+			pixels[(size_t)y * w + x] = PixelTraits<PixelT>::Read(LoadWorldPixel<PixelT>(input, x, y));
 		}
 	}
 	return pixels;
@@ -819,7 +821,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			KiraKiraDebugDumpPoint(debug, bitdepth, w, h, x, y, src, glow_normalized, glow_a, out);
 			// The actual integer-depth outer writers use CVTTSS2SI after
 			// clamp and scale for both merge modes.
-			*PixelAt<PixelT>(output, x, y) = PixelTraits<PixelT>::WriteAexTruncate(out);
+			StoreWorldPixel<PixelT>(output, x, y, PixelTraits<PixelT>::WriteAexTruncate(out));
 		}
 	}
 	return PF_Err_NONE;
@@ -1442,10 +1444,8 @@ static bool IsClassicClosureLayout(
 		output->origin_x != 0 || output->origin_y != 0) {
 		return false;
 	}
-	const int64_t closure_rowbytes =
-		5 * static_cast<int64_t>(pixel_size) + 12;
-	return input->rowbytes == closure_rowbytes &&
-		output->rowbytes == closure_rowbytes &&
+	return WorldLayoutIsSafe(input, pixel_size) &&
+		WorldLayoutIsSafe(output, pixel_size) &&
 		input->extent_hint.left == 0 && input->extent_hint.top == 0 &&
 		input->extent_hint.right == 5 && input->extent_hint.bottom == 3 &&
 		output->extent_hint.left == 0 && output->extent_hint.top == 0 &&
@@ -1465,10 +1465,8 @@ static bool IsMode3Closure32x18Layout(
 		output->origin_x != 0 || output->origin_y != 0) {
 		return false;
 	}
-	const int64_t closure_rowbytes =
-		32 * static_cast<int64_t>(pixel_size) + 12;
-	return input->rowbytes == closure_rowbytes &&
-		output->rowbytes == closure_rowbytes &&
+	return WorldLayoutIsSafe(input, pixel_size) &&
+		WorldLayoutIsSafe(output, pixel_size) &&
 		input->extent_hint.left == 0 && input->extent_hint.top == 0 &&
 		input->extent_hint.right == 32 && input->extent_hint.bottom == 18 &&
 		output->extent_hint.left == 0 && output->extent_hint.top == 0 &&
@@ -1510,13 +1508,13 @@ static bool ClassicClosureSourceMatches(
 				static_cast<A_u_char>(64 + index * 11);
 			switch (format) {
 				case PF_PixelFormat_ARGB32: {
-					const PF_Pixel8 &actual = *PixelAtConst<PF_Pixel8>(input, x, y);
+					const PF_Pixel8 actual = LoadWorldPixel<PF_Pixel8>(input, x, y);
 					if (actual.alpha != alpha || actual.red != red ||
 						actual.green != green || actual.blue != blue) return false;
 					break;
 				}
 				case PF_PixelFormat_ARGB64: {
-					const PF_Pixel16 &actual = *PixelAtConst<PF_Pixel16>(input, x, y);
+					const PF_Pixel16 actual = LoadWorldPixel<PF_Pixel16>(input, x, y);
 					if (actual.alpha != ClosureByteToPF16(alpha) ||
 						actual.red != ClosureByteToPF16(red) ||
 						actual.green != ClosureByteToPF16(green) ||
@@ -1524,8 +1522,8 @@ static bool ClassicClosureSourceMatches(
 					break;
 				}
 				case PF_PixelFormat_ARGB128: {
-					const PF_PixelFloat &actual =
-						*PixelAtConst<PF_PixelFloat>(input, x, y);
+					const PF_PixelFloat actual =
+						LoadWorldPixel<PF_PixelFloat>(input, x, y);
 					if (!ClosureFloatBitsEqual(actual.alpha,
 							static_cast<float>(alpha) / 255.0f) ||
 						!ClosureFloatBitsEqual(actual.red,
@@ -1553,14 +1551,14 @@ static bool GenericBetaInputIsFiniteSDR(
 	for (A_long y = 0; y < input->height; ++y) {
 		for (A_long x = 0; x < input->width; ++x) {
 			if (format == PF_PixelFormat_ARGB64) {
-				const PF_Pixel16 &pixel = *PixelAtConst<PF_Pixel16>(input, x, y);
+				const PF_Pixel16 pixel = LoadWorldPixel<PF_Pixel16>(input, x, y);
 				if (pixel.alpha > PF_MAX_CHAN16 || pixel.red > PF_MAX_CHAN16 ||
 					pixel.green > PF_MAX_CHAN16 || pixel.blue > PF_MAX_CHAN16) {
 					return false;
 				}
 			} else if (format == PF_PixelFormat_ARGB128) {
-				const PF_PixelFloat &pixel =
-					*PixelAtConst<PF_PixelFloat>(input, x, y);
+				const PF_PixelFloat pixel =
+					LoadWorldPixel<PF_PixelFloat>(input, x, y);
 				const float lanes[] = {
 					pixel.alpha, pixel.red, pixel.green, pixel.blue
 				};
@@ -2131,9 +2129,6 @@ static bool SmartClosureWorldPairIsSafeForDimensions(
 	const size_t pixel_size = PixelSizeForFormat(format);
 	const PF_WorldFlags expected_world_flags =
 		format == PF_PixelFormat_ARGB32 ? 0 : PF_WorldFlag_DEEP;
-	const int64_t expected_rowbytes =
-		static_cast<int64_t>(width) *
-		static_cast<int64_t>(pixel_size) + 12;
 	return pixel_size && input && output &&
 		input->width == width && input->height == height &&
 		output->width == width && output->height == height &&
@@ -2143,7 +2138,7 @@ static bool SmartClosureWorldPairIsSafeForDimensions(
 		input->extent_hint.right == width && input->extent_hint.bottom == height &&
 		output->extent_hint.left == 0 && output->extent_hint.top == 0 &&
 		output->extent_hint.right == width && output->extent_hint.bottom == height &&
-		input->rowbytes == expected_rowbytes && output->rowbytes == expected_rowbytes &&
+		WorldLayoutIsSafe(input, pixel_size) && WorldLayoutIsSafe(output, pixel_size) &&
 		input->world_flags == expected_world_flags &&
 		output->world_flags == expected_world_flags &&
 		WorldStorageRangesDoNotOverlap(input, output);
@@ -2399,9 +2394,9 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 			const bool exact_tuple_is_admitted =
 				(pre_is_classic && IsClassicClosureTuple(info)) ||
 				(pre_is_mode3_32x18 && IsMode3Closure32x18Tuple(info));
-			// The exact fixture remains isolated only when source and historical
-			// storage layout both match. Safe deviations are generic evidence and
-			// must satisfy its SDR, non-overlap, geometry, and budget checks.
+			// The exact fixture remains isolated by source, tuple, and full-frame
+			// geometry; byte stride and base alignment do not alter its pixels.
+			// Other sources still require the generic SDR and budget checks.
 			const bool exact_closure = exact_world_layout &&
 				exact_tuple_is_admitted &&
 				source_family != ClassicClosureSource_None &&
