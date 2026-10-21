@@ -1,5 +1,41 @@
 #include "OLMColorKey.h"
 #include "AEFX_SuiteHandlerTemplate.h"
+// Optional refusal attribution; errors and output bytes are unchanged.
+#include <cerrno>
+#include <cstdio>
+#include <cstdlib>
+#if !defined(AE_OS_WIN)
+#include <fcntl.h>
+#include <unistd.h>
+#endif
+static PF_Err ColorKeyRefusal(const char *function, const char *tag, int line)
+{
+#if !defined(AE_OS_WIN)
+    const int saved_errno = errno;
+    const char *path = std::getenv("OLM_REFUSAL_TRACE");
+    if (path && path[0]) {
+        const int fd = ::open(path, O_WRONLY | O_CREAT | O_APPEND, 0666);
+        if (fd >= 0) {
+            char entry[384];
+            const int n = std::snprintf(entry, sizeof(entry), "%s:%s@%d\n", function, tag, line);
+            if (n > 0 && static_cast<size_t>(n) < sizeof(entry)) {
+                const ssize_t written = ::write(fd, entry, static_cast<size_t>(n));
+                (void)written;
+            }
+            ::close(fd);
+        }
+    }
+    errno = saved_errno;
+#endif
+    return PF_Err_BAD_CALLBACK_PARAM;
+}
+#define OLM_COLORKEY_REFUSAL(tag) ColorKeyRefusal(__func__, tag, __LINE__)
+
+// T12 scratch experiment only. Default builds retain every guard.
+#ifndef OLM_COLORKEY_EXPERIMENT_BYPASS
+#define OLM_COLORKEY_EXPERIMENT_BYPASS 0
+#endif
+
 
 #include <algorithm>
 #include <cmath>
@@ -411,26 +447,26 @@ static PF_Err AcquireColorParamSuite(PF_InData *in_data,
 	                                 PF_ColorParamSuite1 **suite,
 	                                 bool *needs_release)
 {
-	if (!in_data || !suite || !needs_release) return PF_Err_BAD_CALLBACK_PARAM;
+	if (!in_data || !suite || !needs_release) return OLM_COLORKEY_REFUSAL("color-suite-inputs");
 	*suite = NULL;
 	*needs_release = false;
 #ifdef OLMCOLORKEY_HOSTLESS_RENDER_HARNESS
 	AEGP_SuiteHandler suites(in_data->pica_basicP);
 	*suite = suites.ColorParamSuite1();
 	return *suite && (*suite)->PF_GetFloatingPointColorFromColorDef
-	    ? PF_Err_NONE : PF_Err_BAD_CALLBACK_PARAM;
+	    ? PF_Err_NONE : OLM_COLORKEY_REFUSAL("color-suite-callback");
 #else
 	if (!in_data->pica_basicP || !in_data->pica_basicP->AcquireSuite ||
-	    !in_data->pica_basicP->ReleaseSuite) return PF_Err_BAD_CALLBACK_PARAM;
+	    !in_data->pica_basicP->ReleaseSuite) return OLM_COLORKEY_REFUSAL("color-suite-basic");
 	const void *raw_suite = NULL;
 	const SPErr acquire_err = in_data->pica_basicP->AcquireSuite(
 	    kPFColorParamSuite, kPFColorParamSuiteVersion1, &raw_suite);
 	if (acquire_err) return (PF_Err)acquire_err;
 	*needs_release = true;
-	if (!raw_suite) return PF_Err_BAD_CALLBACK_PARAM;
+	if (!raw_suite) return OLM_COLORKEY_REFUSAL("color-suite-null");
 	*suite = (PF_ColorParamSuite1 *)raw_suite;
 	return (*suite)->PF_GetFloatingPointColorFromColorDef
-	    ? PF_Err_NONE : PF_Err_BAD_CALLBACK_PARAM;
+	    ? PF_Err_NONE : OLM_COLORKEY_REFUSAL("color-suite-callback");
 #endif
 }
 
@@ -443,7 +479,7 @@ static PF_Err ReleaseColorParamSuite(PF_InData *in_data, bool needs_release)
 #else
 	if (!needs_release) return PF_Err_NONE;
 	if (!in_data || !in_data->pica_basicP || !in_data->pica_basicP->ReleaseSuite)
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_COLORKEY_REFUSAL("color-suite-release");
 	return (PF_Err)in_data->pica_basicP->ReleaseSuite(
 	    kPFColorParamSuite, kPFColorParamSuiteVersion1);
 #endif
@@ -452,7 +488,7 @@ static PF_Err ReleaseColorParamSuite(PF_InData *in_data, bool needs_release)
 static PF_Err
 CheckoutInfo(PF_InData *in_data, PF_ParamDef *params[], OLMColorKeyInfo *info)
 {
-	if (!in_data || !params || !info) return PF_Err_BAD_CALLBACK_PARAM;
+	if (!in_data || !params || !info) return OLM_COLORKEY_REFUSAL("checkout-inputs");
 	const A_long required[] = {
 		OLMCOLORKEY_COLOR_KEEP, OLMCOLORKEY_THRESHOLD, OLMCOLORKEY_PREMULTIPLIED,
 		OLMCOLORKEY_COLOR_SPACE, OLMCOLORKEY_FORCE_LOWER_PRECISION,
@@ -464,7 +500,7 @@ CheckoutInfo(PF_InData *in_data, PF_ParamDef *params[], OLMColorKeyInfo *info)
 		OLMCOLORKEY_ENABLE_REPLACE,
 	};
 	for (size_t i = 0; i < sizeof(required) / sizeof(required[0]); ++i) {
-		if (!params[required[i]]) return PF_Err_BAD_CALLBACK_PARAM;
+		if (!params[required[i]]) return OLM_COLORKEY_REFUSAL("param-null");
 	}
 	AEFX_CLR_STRUCT(*info);
 	info->color_keep = params[OLMCOLORKEY_COLOR_KEEP]->u.bd.value;
@@ -487,11 +523,12 @@ CheckoutInfo(PF_InData *in_data, PF_ParamDef *params[], OLMColorKeyInfo *info)
 	info->edge_blur_direction = params[OLMCOLORKEY_EDGE_BLUR_DIRECTION]->u.pd.value + 100;
 	info->number_of_colors = params[OLMCOLORKEY_NUMBER_OF_COLORS]->u.sd.value;
 	info->enable_replace = params[OLMCOLORKEY_ENABLE_REPLACE]->u.bd.value;
-	if (info->number_of_colors < 1 || info->number_of_colors > OLMCOLORKEY_MAX_COLORS)
-		return PF_Err_BAD_CALLBACK_PARAM;
+	if ((info->number_of_colors < 1 &&
+	             !(OLM_COLORKEY_EXPERIMENT_BYPASS && info->number_of_colors == 0)) || info->number_of_colors > OLMCOLORKEY_MAX_COLORS)
+		return OLM_COLORKEY_REFUSAL("color-count");
 	for (A_long i = 0; i < info->number_of_colors; ++i) {
 		for (int offset = 0; offset < COLOR_PARAM_STRIDE; ++offset) {
-			if (!params[ColorParamIndex(i, offset)]) return PF_Err_BAD_CALLBACK_PARAM;
+			if (!params[ColorParamIndex(i, offset)]) return OLM_COLORKEY_REFUSAL("palette-null");
 		}
 	}
 
@@ -534,10 +571,10 @@ CheckoutInfo(PF_InData *in_data, PF_ParamDef *params[], OLMColorKeyInfo *info)
 static PF_Err
 CheckoutSmartInfo(PF_InData *in_data, OLMColorKeyInfo *info)
 {
-	if (!in_data || !info) return PF_Err_BAD_CALLBACK_PARAM;
+	if (!in_data || !info) return OLM_COLORKEY_REFUSAL("smart-checkout-inputs");
 #ifndef OLMCOLORKEY_HOSTLESS_RENDER_HARNESS
 	if (!in_data->inter.checkout_param || !in_data->inter.checkin_param)
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_COLORKEY_REFUSAL("smart-checkout-callback");
 #endif
 	AEFX_CLR_STRUCT(*info);
 	PF_ColorParamSuite1 *cps = NULL;
@@ -588,9 +625,10 @@ CheckoutSmartInfo(PF_InData *in_data, OLMColorKeyInfo *info)
 		get(OLMCOLORKEY_EDGE_BLUR_DIRECTION, [&](const PF_ParamDef &p){ info->edge_blur_direction = p.u.pd.value + 100; return PF_Err_NONE; });
 		get(OLMCOLORKEY_NUMBER_OF_COLORS, [&](const PF_ParamDef &p){ info->number_of_colors = p.u.sd.value; return PF_Err_NONE; });
 		get(OLMCOLORKEY_ENABLE_REPLACE, [&](const PF_ParamDef &p){ info->enable_replace = p.u.bd.value; return PF_Err_NONE; });
-		if (!err && (info->number_of_colors < 1 ||
+		if (!err && ((info->number_of_colors < 1 &&
+	             !(OLM_COLORKEY_EXPERIMENT_BYPASS && info->number_of_colors == 0)) ||
 		             info->number_of_colors > OLMCOLORKEY_MAX_COLORS))
-			err = PF_Err_BAD_CALLBACK_PARAM;
+			err = OLM_COLORKEY_REFUSAL("color-count");
 		for (A_long i = 0; i < info->number_of_colors && !err; ++i) {
 			get(ColorParamIndex(i, COLOR_OFFSET_COLOR), [&](const PF_ParamDef &p){
 				info->colors8[i] = p.u.cd.value;
@@ -1781,7 +1819,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	    (size_t)w > std::numeric_limits<size_t>::max() / (size_t)h ||
 	    (size_t)w * (size_t)h >
 	        std::numeric_limits<size_t>::max() / sizeof(int)) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_COLORKEY_REFUSAL("typed-dimensions");
 	}
 	// Native PF8/PF16/PF32 final callbacks subtract the finished matched matte
 	// from source. Thin and the recovered public curves finish the matched matte
@@ -2358,7 +2396,7 @@ RenderWorldDirect(PF_EffectWorld *input, PF_EffectWorld *output,
 	} else if (bitdepth == 32) {
 		return RenderTyped<PF_PixelFloat>(input, output, info);
 	}
-	return PF_Err_BAD_CALLBACK_PARAM;
+	return OLM_COLORKEY_REFUSAL("render-bitdepth");
 }
 
 static bool CheckedPayloadBytes(const PF_EffectWorld *world, size_t *bytes)
@@ -2484,7 +2522,7 @@ PrepareRenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 	               const OLMColorKeyInfo &info, short bitdepth,
 	               ColorKeyPreparedRender *prepared)
 {
-	if (!prepared) return PF_Err_BAD_CALLBACK_PARAM;
+	if (!prepared) return OLM_COLORKEY_REFUSAL("prepared-null");
 	A_long pixel_bytes = 0;
 	bool admitted = false;
 	if (bitdepth == 8) {
@@ -2497,13 +2535,13 @@ PrepareRenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		pixel_bytes = (A_long)sizeof(PF_PixelFloat);
 		admitted = IsPublicAdmission<PF_PixelFloat>(input, output, info);
 	} else {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_COLORKEY_REFUSAL("prepared-bitdepth");
 	}
-	if (!admitted) return PF_Err_BAD_CALLBACK_PARAM;
+	if (!admitted) return OLM_COLORKEY_REFUSAL("public-admission");
 
 	size_t input_bytes = 0, output_bytes = 0;
 	if (!CheckedPayloadBytes(input, &input_bytes) ||
-	    !CheckedPayloadBytes(output, &output_bytes)) return PF_Err_BAD_CALLBACK_PARAM;
+	    !CheckedPayloadBytes(output, &output_bytes)) return OLM_COLORKEY_REFUSAL("prepared-span");
 	prepared->input_storage.resize(input_bytes);
 	prepared->output_storage.assign(output_bytes, 0);
 	prepared->active_row_bytes = (size_t)output->width * (size_t)pixel_bytes;
@@ -2548,7 +2586,7 @@ static PF_Err GetWorldDepths(PF_InData *in_data,
 	                         PF_EffectWorld *output,
 	                         short *depth)
 {
-	if (!in_data || !input || !output || !depth) return PF_Err_BAD_CALLBACK_PARAM;
+	if (!in_data || !input || !output || !depth) return OLM_COLORKEY_REFUSAL("depth-inputs");
 	PF_PixelFormat input_format = PF_PixelFormat_INVALID;
 	PF_PixelFormat output_format = PF_PixelFormat_INVALID;
 #ifdef OLMCOLORKEY_HOSTLESS_RENDER_HARNESS
@@ -2558,7 +2596,7 @@ static PF_Err GetWorldDepths(PF_InData *in_data,
 	if (!err) err = world_suite->PF_GetPixelFormat(output, &output_format);
 #else
 	if (!in_data->pica_basicP || !in_data->pica_basicP->AcquireSuite ||
-	    !in_data->pica_basicP->ReleaseSuite) return PF_Err_BAD_CALLBACK_PARAM;
+	    !in_data->pica_basicP->ReleaseSuite) return OLM_COLORKEY_REFUSAL("world-suite-basic");
 	const void *raw_suite = NULL;
 	const SPErr acquire_err = in_data->pica_basicP->AcquireSuite(
 	    kPFWorldSuite, kPFWorldSuiteVersion2, &raw_suite);
@@ -2566,9 +2604,9 @@ static PF_Err GetWorldDepths(PF_InData *in_data,
 	PF_Err err = PF_Err_NONE;
 	std::exception_ptr thrown;
 	try {
-		if (!raw_suite) err = PF_Err_BAD_CALLBACK_PARAM;
+		if (!raw_suite) err = OLM_COLORKEY_REFUSAL("world-suite-null");
 		PF_WorldSuite2 *world_suite = (PF_WorldSuite2 *)raw_suite;
-		if (!err && !world_suite->PF_GetPixelFormat) err = PF_Err_BAD_CALLBACK_PARAM;
+		if (!err && !world_suite->PF_GetPixelFormat) err = OLM_COLORKEY_REFUSAL("world-suite-callback");
 		if (!err) err = world_suite->PF_GetPixelFormat(input, &input_format);
 		if (!err) err = world_suite->PF_GetPixelFormat(output, &output_format);
 	} catch (...) {
@@ -2583,12 +2621,12 @@ static PF_Err GetWorldDepths(PF_InData *in_data,
 	}
 	if (thrown) std::rethrow_exception(thrown);
 #endif
-	if (err || input_format != output_format) return err ? err : PF_Err_BAD_CALLBACK_PARAM;
+	if (err || input_format != output_format) return err ? err : OLM_COLORKEY_REFUSAL("world-format-mismatch");
 	switch (input_format) {
 	case PF_PixelFormat_ARGB32: *depth = 8; return PF_Err_NONE;
 	case PF_PixelFormat_ARGB64: *depth = 16; return PF_Err_NONE;
 	case PF_PixelFormat_ARGB128: *depth = 32; return PF_Err_NONE;
-	default: return PF_Err_BAD_CALLBACK_PARAM;
+	default: return OLM_COLORKEY_REFUSAL("world-bitdepth");
 	}
 }
 
@@ -2620,7 +2658,7 @@ static PF_Err
 Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output)
 {
 	if (!in_data || !out_data || !params || !params[OLMCOLORKEY_INPUT] || !output) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_COLORKEY_REFUSAL("render-inputs");
 	}
 	PF_Err err = PF_Err_NONE;
 	OLMColorKeyInfo info;
@@ -2628,7 +2666,7 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	if (err) return err;
 	if (!BoundedInDataGeometry(
 	        in_data, info.edge_thin_amount != 0.0 || info.edge_blur_amount != 0.0))
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_COLORKEY_REFUSAL("render-geometry");
 	PF_EffectWorld *input = &params[OLMCOLORKEY_INPUT]->u.ld;
 	short bitdepth = 0;
 	(void)out_data;
@@ -2643,7 +2681,7 @@ SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra *extra)
 {
 	if (!in_data || !extra || !extra->input || !extra->output || !extra->cb ||
 	    !extra->cb->checkout_layer || !BoundedInDataGeometry(in_data, false))
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_COLORKEY_REFUSAL("prerender-inputs");
 	PF_Err err = PF_Err_NONE;
 	PF_RenderRequest req = extra->input->output_request;
 	PF_CheckoutResult in_result;
@@ -2667,7 +2705,7 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 	if (!in_data || !extra || !extra->input || !extra->cb ||
 	    !extra->cb->checkout_layer_pixels || !extra->cb->checkout_output ||
 	    !extra->cb->checkin_layer_pixels || !BoundedInDataGeometry(in_data, false))
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_COLORKEY_REFUSAL("smartrender-inputs");
 	PF_Err err = PF_Err_NONE;
 	PF_EffectWorld *input_world  = NULL;
 	PF_EffectWorld *output_world = NULL;
@@ -2684,12 +2722,12 @@ SmartRender(PF_InData *in_data, PF_OutData *, PF_SmartRenderExtra *extra)
 			err = CapturePixelFloatEntryIfRequested(input_world, extra->input->bitdepth);
 		}
 #endif
-		if (!err && !input_world) err = PF_Err_BAD_CALLBACK_PARAM;
+		if (!err && !input_world) err = OLM_COLORKEY_REFUSAL("smart-input-null");
 		if (!err) err = extra->cb->checkout_output(in_data->effect_ref, &output_world);
-		if (!err && !output_world) err = PF_Err_BAD_CALLBACK_PARAM;
+		if (!err && !output_world) err = OLM_COLORKEY_REFUSAL("smart-output-null");
 		short world_depth = 0;
 		if (!err) err = GetWorldDepths(in_data, input_world, output_world, &world_depth);
-		if (!err && world_depth != extra->input->bitdepth) err = PF_Err_BAD_CALLBACK_PARAM;
+		if (!err && world_depth != extra->input->bitdepth) err = OLM_COLORKEY_REFUSAL("smart-depth");
 		OLMColorKeyInfo info;
 		if (!err) err = CheckoutSmartInfo(in_data, &info);
 		if (!err) {

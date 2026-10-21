@@ -3,6 +3,7 @@ import random
 import struct
 from core import case_seed
 from .public import PublicAdapter, ROOT, replace_once
+from .color_triage import ColorTriage
 
 HOST = ROOT/'tools/emulation/test_colorkeep_installed_public_covering_matrix_20260812.py'
 MAIN = ROOT/'tools/fuzz/harnesses/colorkeep_main.cpp'
@@ -10,7 +11,7 @@ PARAMETERS = ROOT/'tools/fuzz/harnesses/parameters.hpp'
 SOURCE = ROOT/'mac/ColorKeep/ColorKeep.cpp'
 
 
-class Adapter(PublicAdapter):
+class Adapter(ColorTriage, PublicAdapter):
     name = 'colorkeep'
     aex_name = 'ColorKeep'
     output_format = 'raw'
@@ -51,8 +52,8 @@ class Adapter(PublicAdapter):
         return self.compile_sdk(scratch,body,SOURCE,deadline),[HOST,MAIN,PARAMETERS,SOURCE,SOURCE.with_suffix('.h')]
 
     def scope(self):
-        return {'palette':'all 100 public colors supplied; counts 1/4/5/99/100 and random 1..100; mixed palette-member pixels',
-                'mac_host':'retained real-SDK public covering host callbacks, linked to worktree production EffectMain'}
+        return dict(super().scope(), **{'palette':'all 100 public colors supplied; counts 1/4/5/99/100 and random 1..100; mixed palette-member pixels',
+                'mac_host':'retained real-SDK public covering host callbacks, linked to worktree production EffectMain'})
 
     def candidate_command(self, case, directory, route):
         config = directory/'params.txt'
