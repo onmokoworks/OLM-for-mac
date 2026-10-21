@@ -2,13 +2,18 @@
 """Promote the measured RadialBlur Offset restoration onto current production.
 
 The 2026-10-02 candidate was built from BEFORE_REVISION. Production later gained
-refusal-attribution instrumentation (T03), so this runner applies the same
-semantic candidate to the current source instead of overwriting newer work.
+refusal-attribution instrumentation (T03), and the F08/T05 changes. This runner validates the supplied production
+source without replacing any newer work.
 Before the candidate is trusted, the rebuilt reference worker is calibrated
 against native output hashes recorded by earlier probes.
 """
 import argparse
 import contextlib
+from concurrent.futures import ProcessPoolExecutor
+from collections import Counter, deque
+import multiprocessing
+import shutil
+import tempfile
 import json
 from pathlib import Path
 
@@ -73,6 +78,62 @@ def generated_calibration(worker, directory):
         worker_sha256=public.sha(worker.read_bytes()), rows=rows)
 
 
+def independent_task(task):
+    index, case, worker, directory, binaries, before_binary, recorded = task
+    resolve_aex()
+    # Each process owns its config/native sidecars. Process isolation also keeps
+    # the retained NoOp fixture_scope monkeypatch out of other cases.
+    with tempfile.TemporaryDirectory(prefix=f'independent_{index}_', dir=directory) as name:
+        temp = Path(name)
+        native, frame, _, close, _ = public.native_render(worker, temp, case)
+        assert not frame['render_error'] and frame['output']['guards_intact'] and close['session_clean']
+        assert not close['unsupported_suite_calls']
+        if case['group'] == 'offset_admission':
+            assert public.sha(native) == recorded['rows'][case['row_index']]['reference_raw_sha256']
+        old_error, old_raw, _ = public.mac_render(before_binary, temp, case, 'classic', ENV)
+        results = {}
+        for build, binary in binaries.items():
+            for route in ['classic', 'smart']:
+                error, raw, metadata = public.mac_render(binary, temp, case, route, ENV)
+                assert not error and raw == native, dict(case=case, build=build, route=route,
+                    error=error, expected_sha256=public.sha(native), actual_sha256=public.sha(raw),
+                    first_byte=next((i for i, (a, b) in enumerate(zip(native, raw)) if a != b), None))
+                result = dict(error=error, raw_sha256=public.sha(raw), raw_exact=True, metadata=metadata)
+                if build == 'o2': results[route] = result
+                else: assert result == results[route]
+        return dict(case, input_sha256=public.sha(public.fixture(case)),
+            reference_raw_sha256=public.sha(native), results=results,
+            before_error=old_error, before_raw_exact=not old_error and old_raw == native)
+
+
+def retained_task(task):
+    cases, directory, binaries = task
+    counts = Counter()
+    with tempfile.TemporaryDirectory(prefix='retained_', dir=directory) as name:
+        temp = Path(name)
+        for case in cases:
+            with noop.fixture_scope(case) if case.get('matrix') == 'noop' else contextlib.nullcontext():
+                for build, binary in binaries.items():
+                    for route in ['classic', 'smart']:
+                        error, raw, metadata = public.mac_render(binary, temp, case, route, ENV)
+                        expected = case['results'][route]
+                        assert error == expected['error'] and public.sha(raw) == expected['raw_sha256'] and metadata == expected['metadata'], dict(
+                            case=case, build=build, route=route, error=error,
+                            actual_sha256=public.sha(raw), actual_metadata=metadata)
+                        counts[(case.get('matrix', 'rotation_size_noise_independent'), build, route)] += 1
+    return counts
+
+
+def bounded_map(pool, function, tasks, jobs):
+    tasks = iter(tasks)
+    pending = deque(pool.submit(function, task) for task in [next(tasks, None) for _ in range(jobs)] if task is not None)
+    while pending:
+        yield pending.popleft().result()
+        task = next(tasks, None)
+        if task is not None:
+            pending.append(pool.submit(function, task))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--worker', type=Path, required=True)
@@ -81,8 +142,12 @@ def main():
     ap.add_argument('--output', type=Path, required=True)
     ap.add_argument('--report', type=Path, required=True)
     ap.add_argument('--pilot', action='store_true')
+    ap.add_argument('--jobs', type=int, default=2)
     ap.add_argument('--retained-limit', type=int, default=0)
     args = ap.parse_args()
+    if args.jobs < 1: ap.error('--jobs must be positive')
+    args.output = args.output.resolve()
+    assert args.output.is_relative_to(public.ROOT/'orchestra/state/T01-radial-offset-promote')
     args.output.mkdir(parents=True, exist_ok=False)
     resolve_aex()
     binding = json.loads(args.worker_build.read_text())
@@ -106,44 +171,31 @@ def main():
     binaries = {name: noop.build(args.output/name, source, name) for name in names}
     before_binary = noop.build(args.output/'before', offset.before_source())
     rows = []; replays = 0
-    for case in offset.independent_cases():
-        native, frame, _, close, _ = public.native_render(args.worker, args.output, case)
-        assert not frame['render_error'] and frame['output']['guards_intact'] and close['session_clean']
-        assert not close['unsupported_suite_calls']
-        if case['group'] == 'offset_admission':
-            assert public.sha(native) == recorded['rows'][case['row_index']]['reference_raw_sha256']
-        old_error, old_raw, _ = public.mac_render(before_binary, args.output, case, 'classic', ENV)
-        results = {}
-        for name, binary in binaries.items():
-            for route in ['classic', 'smart']:
-                error, raw, metadata = public.mac_render(binary, args.output, case, route, ENV)
-                assert not error and raw == native, (case, name, route, error)
-                result = dict(error=error, raw_sha256=public.sha(raw), raw_exact=True, metadata=metadata)
-                if name == 'o2': results[route] = result
-                else: assert result == results[route]
-                replays += 1
-        rows.append(dict(case, input_sha256=public.sha(public.fixture(case)),
-            reference_raw_sha256=public.sha(native), results=results,
-            before_error=old_error, before_raw_exact=not old_error and old_raw == native))
-        if len(rows) % 12 == 0: print('OFFSET_PROMOTE_INDEPENDENT', len(rows), 'REPLAYS', replays, flush=True)
-    assert len(rows) == 390
-
     retained = offset.retained_cases(); assert len(retained) == 9645
     if args.retained_limit: retained = retained[:args.retained_limit]
-    retained_replays = 0
-    if not args.pilot:
-        for name, binary in binaries.items():
-            for case in retained:
-                with noop.fixture_scope(case) if case.get('matrix') == 'noop' else contextlib.nullcontext():
-                    for route in ['classic', 'smart']:
-                        error, raw, metadata = public.mac_render(binary, args.output, case, route, ENV)
-                        expected = case['results'][route]
-                        assert error == expected['error'] and public.sha(raw) == expected['raw_sha256'] and metadata == expected['metadata'], (case, name, route)
-                        retained_replays += 1
-                if retained_replays % 1000 == 0:
-                    print('OFFSET_PROMOTE_RETAINED', name, retained_replays, flush=True)
+    retained_counts = Counter()
+    # Spawn avoids inheriting temporary fixture overrides. Only two independent
+    # case tasks are active with --jobs 2; no shared writable render directory.
+    with ProcessPoolExecutor(max_workers=args.jobs, mp_context=multiprocessing.get_context('spawn')) as pool:
+        tasks = [(index, case, args.worker, args.output, binaries, before_binary, recorded)
+                 for index, case in enumerate(offset.independent_cases())]
+        with (args.output/'independent.jsonl').open('w') as checkpoint:
+            for row in bounded_map(pool, independent_task, tasks, args.jobs):
+                rows.append(row); replays += 2 * len(binaries)
+                checkpoint.write(json.dumps(row, sort_keys=True)+'\n'); checkpoint.flush()
+                if len(rows) % 12 == 0 or len(rows) == 390:
+                    print('OFFSET_PROMOTE_INDEPENDENT', len(rows), 'REPLAYS', replays, flush=True)
+        assert len(rows) == 390
+        if not args.pilot:
+            tasks = [(retained[i:i+32], args.output, binaries) for i in range(0, len(retained), 32)]
+            for counts in bounded_map(pool, retained_task, tasks, args.jobs):
+                retained_counts.update(counts)
+                print('OFFSET_PROMOTE_RETAINED', sum(retained_counts.values()), flush=True)
+    retained_replays = sum(retained_counts.values())
     assert public.sha(public.SOURCE.read_bytes()) == initial_source and public.sha(core.read_bytes()) == initial_core
-    result = dict(schema='radialblur.offset-promote/1', pilot=args.pilot,
+    result = dict(schema='radialblur.offset-promote/2', pilot=args.pilot, jobs=args.jobs,
+        retained_suites=[dict(matrix=matrix, build=build, route=route, exact=count)
+                         for (matrix, build, route), count in sorted(retained_counts.items())],
         source_sha256=public.sha(source.encode()), production_source_sha256=initial_source,
         header_sha256=public.sha(public.SOURCE.with_suffix('.h').read_bytes()),
         core_sha256=initial_core, aex_sha256=public.sha(public.initial.AEX.read_bytes()),
@@ -162,6 +214,8 @@ def main():
             [Path(__file__), Path(offset.__file__), Path(noop.__file__), public.SOURCE.with_suffix('.h'), core, public.initial.HARNESS]},
         claims_not_made=['Legal Offset admission and bounded arithmetic witnesses do not close arbitrary inputs/settings, resource limits, Type3, native AE, ROI/downsample or all-ten completion.'])
     args.report.write_text(json.dumps(result, indent=2, sort_keys=True)+'\n')
+    for name in [*names, 'before']:
+        shutil.rmtree(args.output/name)
     print('OFFSET_PROMOTE_DONE', result['independent_summary'], 'RETAINED', retained_replays, flush=True)
 
 
