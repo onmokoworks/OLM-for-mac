@@ -92,3 +92,4 @@ Resources
 /orchestra/logs/
 /orchestra/state/
 /worktrees/
+.opencode/
