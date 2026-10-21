@@ -1,15 +1,28 @@
-status: partial
+status: done
 
 summary:
-- Closed Smart unblurred Layer source composition and the Smart source-mask quantization boundary in separate commits.
-- Seed 1 Smart: 177/65/51/7 -> 199/43/51/7 -> 216/26/51/7 (E/M/R/U); every prior exact output preserved.
-- Fresh seed 2: 168 -> 191 -> 208 exact; sanitized replays agree with ordinary output.
-- Independent Layer matrix now 324/324 exact across three depths; all 24 prior mask residuals are resolved.
-- Three retained corpus cases have improved to exact across the two fixes. Refusal guards remain unchanged.
+
+- Closed three Smart operations in separate commits: Layer source composition, alpha-to-mask quantization, and early ownership exit.
+- Seed 1 Smart improves 177 exact / 65 mismatch to 225 exact / 17 mismatch; 51 refusals and 7 uncompared remain.
+- Fresh seed 2 improves 168 -> 214 exact; every previously exact output is byte-identical at each step.
+- Sanitized replays agree; cluster 2 closes its Layer matrix at 324/324, and the final ownership-cutoff matrix is 432/432 exact.
+- Four corpus cases change only mismatch->exact; the other 141 are unchanged. Three-cluster stop condition reached.
 
 facts:
 
+Final campaign table (Smart E/M/R/U):
+
+| Source stage | Seed 1 | Fresh seed 2 |
+| --- | --- | --- |
+| Starting `1b656d41` | 177/65/51/7 | 168/62/62/8 |
+| Layer `9b7401f9` | 199/43/51/7 | 191/39/62/8 |
+| Mask `a3e9ef28` | 216/26/51/7 | 208/22/62/8 |
+| Ownership exit (this commit) | 225/17/51/7 | 214/16/62/8 |
+
+Seed 1 is a fresh complete `run.py` census at the final source. Seed 2 before/after counts are the 300-input verifier using its independently captured original-AEX references. Every base-exact result is preserved byte-for-byte at each transition. Current source SHA-256: `73142265f1616fa0dfec5000f0f425a303235c4f8d4d548ac8320dd10a815fc0`. Final seed-1 Classic result dictionaries are unchanged for 300/300 cases (10 exact / 290 mismatch against AEX Classic).
+
 Cluster 1 (commit `9b7401f9`, Layer source composition):
+
 - Starting HEAD: `1b656d418ba44543da2225097108796f0937d9cc`, branch `orch/C03-dg-smart`.
 - Read AGENT_GUIDE, GOTCHAS, the DG forbidden-action row, compatibility plan, T07, F01/F02 and F10/F12 methods. MAIN and emulator sources are read-only. Worker INDEX was inspected; the existing retained public worker remains `/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker`, SHA-256 `3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261`. No rebuild.
 - Original AEX SHA-256: `a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae`. All comparisons use original AEX Smart against production Mac public Smart, with typed raw bytes. Native AE/UCRT equivalence is not claimed.
@@ -29,6 +42,7 @@ Corpus rebaseline (fresh base/current Smart, Classic unchanged):
 | Other 144 | 139 exact / 5 mismatch | unchanged | none |
 
 Cluster 2 (Smart source-mask quantization; base `9b7401f9`):
+
 - `source_mask_owns_alpha` now accepts the owner. Smart uses FLOAT32 `alpha*255 >= 1.5`, matching nearest-even 8-bit conversion followed by threshold strictly above 1; Classic retains the original depth-dependent rule. The actual mask builder and logging use the same owner selection. No EDT/normalization/blur/writer operation changes.
 - Natural Smart source bytes `[0,1,255]` produce original mask `00 00 ff` (plus one padding byte); before Mac mask is `00 01 01`, after `00 00 01`. First differing mask sample is x=1, before field generation. Six original public/callback hashes remain bound; after the fix all six source, staged-field and final-output pairs agree. For Inside RGB the pre-fix first output difference is alpha at x=1, AEX `01`, Mac `00`.
 - Full seed-1 census exits 0, 300 complete: Smart 216 exact / 26 mismatch / 51 refusal / 7 uncompared, AEX 290 success / 8 reject / 2 budget, Classic unchanged at 10/290. `verify_distancegradation_smart_C03.py --before-ref 9b7401f9` verifies 199->216 exact on seed 1 and 191->208 on fresh seed 2, no exact changes; seed 2 final E/M/R/U is 208/22/62/8.
@@ -41,33 +55,55 @@ Cluster 2 (Smart source-mask quantization; base `9b7401f9`):
 | `seed1_case000091_92552f06afe6.json` | mismatch; `4de36cd696c423238792fc42f583878a3cf38bacda2fa2da6f1550811f8e3e3a` | exact; `b0570697ecf859f4e0f3768f0c7edb0fdc7e668cfd89be3f2a65d7afef5fa8ed` |
 | `seed1_case000139_92552f06afe6.json` | mismatch; `f6fc2d44ee3319c47476a7918d2e0d35cba8e801bebc910296dd4a6cfbb11a9f` | exact; `8007046ac31b84e8d5b2ecf91b30307308d01a0064779a9faf9ce3f109eea89a` |
 
+Cluster 3 (Smart early ownership exit; base `a3e9ef28`):
+
+- The typed original callbacks branch on ownership before interpolation and color/background selection. Smart now follows this ordering on the unblurred path: Inside uses source alpha, Outside uses `1-alpha`, Both uses 1; ownership below the captured FLOAT32 0.0001 exits with zero alpha and the staged field RGB. Degenerate-mask handling remains earlier. Blurred staging and Classic remain unchanged.
+- Paired natural public/callback traces for RGB/Layer x Inside/Outside/Both with background [16,160,48] show matching input normalization and staged field. Before the fix, Outside/full-source-alpha first differs at the missing early exit: AEX last pixel `00000000`; Mac RGB `00ff0000`, Layer `004080c0`. The RGB first mismatching byte is R at x=2 (byte 9); input and field are already equal. Afterward all six source/field/output pairs equal the original public AEX output.
+- `verify_distancegradation_smart_C03.py --before-ref a3e9ef28 --cutoff-matrix` completes 600 campaign inputs, 432 independent inputs and 145 corpus inputs, each through ordinary before/current and sanitized current Smart. All current sanitizer results and raw bytes equal ordinary current results; no diagnostic, crash or candidate timeout. Seed 1 gains 9 exact (216->225); seed 2 gains 6 (208->214); all prior exact bytes preserved.
+- Independent matrix: 288 prior exact preserved, 144 mismatch->exact, 432/432 final exact. It spans PF8/PF16/PF32, 5x1/1x5, both color modes, background off/on with nontrivial colors, all three In/Out modes, invert off/on, Constant/Linear/Sphere, odd strides. PF16 alpha codes 1/3/4 straddle the Inside cutoff; PF32 uses adjacent words `0x38d1b716`, `0x38d1b717`, `0x38d1b718`; Outside includes full-alpha rejection. These are actual public AEX outputs, not a scalar expected-value model.
+- Corpus: 142 previous exact preserved, one mismatch->exact, two mismatch unchanged. Only `seed1_case000243_1b02dcee2ac1.json` result/provenance is refreshed: `62541e2cbb91aefae079e29636c2a333033efc6a06740a3863587282a56ff512` -> AEX-exact `efcda238dbf31d77c42be02df3bfe13b66e2fc9b4b8623495950dd2426ecebf6`. Classic, original oracle hashes, source bytes, controls and reduction history are unchanged. The aggregate audit against starting HEAD finds exactly four changed corpus files, all Smart mismatch->exact and no other top-level changes beyond result/provenance.
+- Final production corpus replay exits 0: 145/145 `matches_saved`; 143 actual Smart exact cases and the two retained mismatch cases.
+- Final existing tests: 9 beta tests plus 2 transactional tests pass, including their sanitizer checks. Final `git diff --check` passes. Evidence: `olmdistancegradation_C03_cutoff.json`, `olmdistancegradation_C03_final_census.json` and the appended paired-stage captures.
+
 inference:
+
 - The Layer residual is caused by applying legacy Classic source-color heuristics to the Smart callback. The restored operation is limited to unblurred Layer/no-background, preserving Classic and blurred contracts.
 - The 24 first-commit matrix differences were caused by Smart inheriting the Classic PF8 inclusive mask. The second commit restores the public Smart owner boundary; it does not retune EDT or final-byte rounding.
 - Broad PF32 gate removal is unsafe on the measured inputs. Inactive Blur Modes 2–4 at size zero are a promising separate rule (7 exact gate-off cases on each seed), but no admission is claimed here.
 
 changed_files:
+
 - `mac/OLMDistanceGradation/OLMDistanceGradation.cpp`
 - `tools/emulation/trace_distancegradation_smart_C03.py`
 - `tools/fuzz/probe_distancegradation_smart_C03.py`
 - `tools/fuzz/verify_distancegradation_smart_C03.py`
-- `reports/fuzz/olmdistancegradation_C03_{layer,mask,stages,gates}.json`
-- `tests/fuzz_corpus/olmdistancegradation/seed1_case000135_12bacfc8ca6e.json` and the two mask cases listed above
+- `reports/fuzz/olmdistancegradation_C03_{layer,mask,cutoff,stages,gates,final_census}.json`
+- `tests/fuzz_corpus/olmdistancegradation/seed1_case000135_12bacfc8ca6e.json` and the two mask cases plus cutoff case 243 listed above
 - `orchestra/reports/C03-dg-smart.md`
 
 verify:
+
 ```sh
 s="$PWD/orchestra/state/C03-dg-smart"
 mkdir -p "$s"
 export TMPDIR="$s" TMP="$s" TEMP="$s" PYTHONDONTWRITEBYTECODE=1
 python3 tools/fuzz/run.py --plugin olmdistancegradation --n 300 --seed 1 --jobs 2 --shrink-attempts 0 --scratch "$s" --report "$s/verify-seed1.json" --corpus "$s/verify-corpus" > "$s/verify-seed1.log" 2>&1
 python3 tools/fuzz/run.py --plugin olmdistancegradation --n 300 --seed 2 --jobs 2 --shrink-attempts 0 --scratch "$s" --report "$s/verify-seed2.json" --corpus "$s/verify2-corpus" > "$s/verify-seed2.log" 2>&1
-python3 tools/fuzz/verify_distancegradation_smart_C03.py --scratch "$s/verify-layer" --report "$s/verify-layer.json" --campaign "$s/verify-seed1.json" --campaign "$s/verify-seed2.json" --matrix --corpus > "$s/verify-layer.log" 2>&1
+python3 tools/fuzz/verify_distancegradation_smart_C03.py --scratch "$s/verify-layer" --report "$s/verify-layer.json" --campaign "$s/verify-seed1.json" --campaign "$s/verify-seed2.json" --cutoff-matrix --corpus > "$s/verify-layer.log" 2>&1
 '/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python' tools/emulation/trace_distancegradation_smart_C03.py --scratch "$s/trace" --report "$s/verify-trace.json" > "$s/verify-trace.log" 2>&1
 python3 tools/fuzz/run.py --plugin olmdistancegradation --replay tests/fuzz_corpus/olmdistancegradation --jobs 2 --scratch "$s" --report "$s/replay.json" > "$s/replay.log" 2>&1
+'/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python' tools/emulation/trace_distancegradation_smart_C03.py --family mask --scratch "$s/trace" --report "$s/verify-mask-trace.json" > "$s/verify-mask-trace.log" 2>&1
+'/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python' tools/emulation/trace_distancegradation_smart_C03.py --background 1 --scratch "$s/trace" --report "$s/verify-cutoff-trace.json" > "$s/verify-cutoff-trace.log" 2>&1
+python3 -m unittest discover -s tests -p 'test_olmdistancegradation_*beta_20260820.py' > "$s/tests-beta.log" 2>&1
+python3 -m unittest discover -s tests -p 'test_olmdistancegradation_smart_transactional_20260822.py' > "$s/tests-transactional.log" 2>&1
+git diff --check
 ```
-Expected after cluster 2: seed 1 216/26/51/7; verifier base-exact preserved, 324/324 matrix rows exact, sanitizer equality for all rows, three corpus improvements versus starting source; six public/callback/paired traces; replay 145/145 matches_saved. Timeouts may vary under shared-machine load; compare explicit oracle statuses. Reproduce the gate-off experiment with `probe_distancegradation_smart_C03.py --experiment all --sanitized --smart-only` plus the same campaign arguments (diagnostic only).
+Expected final: seed 1 225/17/51/7; seed 2 214/16/62/8 with the same oracle completion set; verifier preserves every base-exact output, 432/432 cutoff matrix rows exact, sanitizer equality for all rows, four corpus improvements versus starting source; six public/callback/paired traces in each of the three trace commands; replay 145/145 matches_saved; 9+2 existing tests pass. Timeouts may vary under shared-machine load; compare explicit oracle statuses. Reproduce the gate-off experiment with `probe_distancegradation_smart_C03.py --experiment all --sanitized --smart-only` plus the same campaign arguments (diagnostic only).
 
 next:
-- Continue with the captured Smart early ownership exit: Outside/background at full source alpha currently writes foreground RGB after AEX has already exited. The six background-control captures are retained in the stages artifact.
+
+- Three independently committed root-cause operations are closed; stop here under the ticket's three-cluster condition. Overall plugin equivalence is still incomplete.
+- **DG-BLURRED-OWNER-COMPOSE**: 13 remaining seed-1 mismatches have positive blur size: PF32 RGB [39]; PF8 Layer [45,167,174,222], PF8 RGB [48,77,200]; PF16 Layer [62,133,173], PF16 RGB [186,214]. Their earliest divergent internal stage is not established by this ticket.
+- **DG-PF8-FIELD-STAGING**: four remaining no-positive-blur-size mismatches [58,146,156,293], all Linear. Retain each first mismatch from final census; e.g. case 58 R byte 213 AEX 2a vs Mac 29. Do not infer a final-byte rounding fix. Saved shrinks 58/236 remain the two nonexact corpus entries.
+- **DG-SMART-PF32-ADMISSION**: 51 seed-1 refusals remain (32 bounded-source, 19 profile). All-gates-off produced mismatches and one timeout, so no refusal was promoted. Zero-size Blur Modes 2–4 had 7 exact sampled gate-off cases on each seed; a follow-up needs its own general-rule/boundary matrix before promotion.
 - Keep HDR/signed/nonfinite, Power, effective blur and native dependency/host boundaries explicit. No release gate, ledger, MAIN, external worker, installed bundle or other plugin changed; no push or history rewrite.

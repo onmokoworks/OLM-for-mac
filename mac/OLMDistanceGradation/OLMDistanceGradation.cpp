@@ -920,6 +920,20 @@ static inline void compose_pixel(
 		out_b = p.use_bg ? p.bg_color.blue : 0.0f;
 		return;
 	}
+	// FUN_181170480/870/c90 test source ownership before interpolation and
+	// color selection. A rejected pixel keeps the staged field RGB and zero
+	// alpha, even with background enabled. Unblurred staging has X in all
+	// three color lanes; blurred staging remains a separate owner contract.
+	if (p.smart_owner && !(p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0)) {
+		float ownership = 1.0f;
+		if (p.in_out == IN_OUT_INSIDE) ownership = src_a;
+		else if (p.in_out == IN_OUT_OUTSIDE) ownership = 1.0f - src_a;
+		if (ownership < 0.0001f) {
+			out_a = 0.0f;
+			out_r = out_g = out_b = X;
+			return;
+		}
+	}
 	// The classic PF32 owner bypasses the typed integer color callback for this
 	// branch and merges its raw float ownership field into all four channels.
 	// Consequently Sphere and invert do not transform the exported scalar.
@@ -934,7 +948,6 @@ static inline void compose_pixel(
 		out_a = out_r = out_g = out_b = X;
 		return;
 	}
-	const float staged_x = X;
 	// Invert: default (OFF) flips X to 1 - X; checked (ON) keeps X as-is.
 	if (!p.invert) X = 1.0f - X;
 
@@ -990,18 +1003,12 @@ static inline void compose_pixel(
 	}
 	// The public Smart typed callbacks consume the source RGB directly for
 	// Layer/no-background. They do not unpremultiply it or multiply RGB by
-	// the new alpha. On the unblurred path all staged field lanes are X;
-	// ownership below 0.0001 exits before color selection, retaining those lanes.
-	// Keep Classic and blurred staging on their separate existing contracts.
+	// the new alpha. The early ownership exit above already handled unowned
+	// pixels. Keep Classic and blurred staging on their existing contracts.
 	if (p.smart_owner && p.render_mode == RENDER_MODE_LAYER && !p.use_bg &&
 	    !(p.blur_mode != BLUR_MODE_NONE && p.blur_size > 0)) {
-		if (d_alpha < 0.0001f) {
-			out_a = 0.0f;
-			out_r = out_g = out_b = staged_x;
-		} else {
-			out_a = d_alpha * X;
-			out_r = src_r; out_g = src_g; out_b = src_b;
-		}
+		out_a = d_alpha * X;
+		out_r = src_r; out_g = src_g; out_b = src_b;
 		return;
 	}
 	// RGB selection:
