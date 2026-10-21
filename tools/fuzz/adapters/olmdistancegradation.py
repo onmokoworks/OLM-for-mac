@@ -23,6 +23,8 @@ class Adapter(PublicAdapter):
         body = replace_once(body,'"dg_renderbits_real_harness_20260716_sdk_shim.h"','"'+str(SHIM)+'"')
         body = replace_once(body,'../../mac/OLMDistanceGradation/OLMDistanceGradation.cpp',str(SOURCE))
         body = replace_once(body,'constexpr int W = 17, H = 11, PAD = 16;','int W,H;')
+        body = replace_once(body,'result->max_result_rect = {0, 0, W, H};',
+                            'result->max_result_rect = {0, 0, W, H};\n\tresult->ref_width = W; result->ref_height = H;')
         body += '\n} // namespace\n#include "'+str(PARAMETERS)+'"\n'+MAIN.read_text()
         host = scratch/'host.cpp';host.write_text(body);binary = scratch/'mac'
         self.compile(['clang++','-std=c++17','-O2','-fno-fast-math','-ffp-contract=off',
@@ -31,6 +33,7 @@ class Adapter(PublicAdapter):
 
     def scope(self):
         return {'mac_host':'existing public owner contract SDK shim; O2 strict floating-point production EffectMain',
+                'host_checkout_reference':'fuzz scratch host fills checkout ref_width/ref_height from the layer geometry',
                 'builder_anomalies':'In/Out builder default 0 lies outside 1..3; sampling/shrinking default is legal 1'}
 
     def candidate_command(self, case, directory, route):
