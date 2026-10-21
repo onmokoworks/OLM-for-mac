@@ -171,43 +171,50 @@ def check_kirakira() -> dict:
     enum_names = [
         "OLMKIRAKIRA_INPUT", "OLMKIRAKIRA_CHANNEL", "OLMKIRAKIRA_BLUR_MODE", "OLMKIRAKIRA_MERGE_MODE", "OLMKIRAKIRA_APPROX_INPUT",
         "OLMKIRAKIRA_BRIGHTNESS_GAIN", "OLMKIRAKIRA_STRENGTH_MULTIPLIER", "OLMKIRAKIRA_FADE_OUT", "OLMKIRAKIRA_GLOW_OPACITY", "OLMKIRAKIRA_SOURCE_OPACITY",
-        "OLMKIRAKIRA_VERTICAL_LENGTH", "OLMKIRAKIRA_VERTICAL_COLOR", "OLMKIRAKIRA_VERTICAL_USE_RAMP", "OLMKIRAKIRA_HORIZONTAL_LENGTH", "OLMKIRAKIRA_HORIZONTAL_COLOR",
-        "OLMKIRAKIRA_HORIZONTAL_USE_RAMP", "OLMKIRAKIRA_DIAGONAL_LENGTH", "OLMKIRAKIRA_DIAGONAL_COLOR", "OLMKIRAKIRA_DIAGONAL_USE_RAMP", "OLMKIRAKIRA_DIAGONAL2_LENGTH",
-        "OLMKIRAKIRA_DIAGONAL2_COLOR", "OLMKIRAKIRA_DIAGONAL2_USE_RAMP", "OLMKIRAKIRA_HIGHLIGHT_RADIUS", "OLMKIRAKIRA_HIGHLIGHT_COLOR", "OLMKIRAKIRA_HIGHLIGHT_USE_RAMP", "OLMKIRAKIRA_GLOW_ROTATION",
+        "OLMKIRAKIRA_VERTICAL_LENGTH", "OLMKIRAKIRA_VERTICAL_COLOR", "OLMKIRAKIRA_VERTICAL_RAMP_GROUP", "OLMKIRAKIRA_VERTICAL_USE_RAMP", "OLMKIRAKIRA_VERTICAL_RAMP", "OLMKIRAKIRA_VERTICAL_RAMP_END",
+        "OLMKIRAKIRA_HORIZONTAL_LENGTH", "OLMKIRAKIRA_HORIZONTAL_COLOR", "OLMKIRAKIRA_HORIZONTAL_RAMP_GROUP", "OLMKIRAKIRA_HORIZONTAL_USE_RAMP", "OLMKIRAKIRA_HORIZONTAL_RAMP", "OLMKIRAKIRA_HORIZONTAL_RAMP_END",
+        "OLMKIRAKIRA_DIAGONAL_LENGTH", "OLMKIRAKIRA_DIAGONAL_COLOR", "OLMKIRAKIRA_DIAGONAL_RAMP_GROUP", "OLMKIRAKIRA_DIAGONAL_USE_RAMP", "OLMKIRAKIRA_DIAGONAL_RAMP", "OLMKIRAKIRA_DIAGONAL_RAMP_END",
+        "OLMKIRAKIRA_DIAGONAL2_LENGTH", "OLMKIRAKIRA_DIAGONAL2_COLOR", "OLMKIRAKIRA_DIAGONAL2_RAMP_GROUP", "OLMKIRAKIRA_DIAGONAL2_USE_RAMP", "OLMKIRAKIRA_DIAGONAL2_RAMP", "OLMKIRAKIRA_DIAGONAL2_RAMP_END",
+        "OLMKIRAKIRA_HIGHLIGHT_RADIUS", "OLMKIRAKIRA_HIGHLIGHT_COLOR", "OLMKIRAKIRA_HIGHLIGHT_RAMP_GROUP", "OLMKIRAKIRA_HIGHLIGHT_USE_RAMP", "OLMKIRAKIRA_HIGHLIGHT_RAMP", "OLMKIRAKIRA_HIGHLIGHT_RAMP_END", "OLMKIRAKIRA_GLOW_ROTATION",
     ]
     values = first_enum_values(header)
     assert [values[name] for name in enum_names] == list(range(len(enum_names))), "KiraKira enum/render indices drifted"
     registration = [
         "CHANNEL_DISK_ID", "BLUR_MODE_DISK_ID", "MERGE_MODE_DISK_ID", "APPROX_INPUT_DISK_ID", "BRIGHTNESS_GAIN_DISK_ID", "STRENGTH_MULTIPLIER_DISK_ID", "FADE_OUT_DISK_ID", "GLOW_OPACITY_DISK_ID", "SOURCE_OPACITY_DISK_ID",
-        "VERTICAL_LENGTH_DISK_ID", "VERTICAL_COLOR_DISK_ID", "VERTICAL_USE_RAMP_DISK_ID", "HORIZONTAL_LENGTH_DISK_ID", "HORIZONTAL_COLOR_DISK_ID", "HORIZONTAL_USE_RAMP_DISK_ID",
-        "DIAGONAL_LENGTH_DISK_ID", "DIAGONAL_COLOR_DISK_ID", "DIAGONAL_USE_RAMP_DISK_ID", "DIAGONAL2_LENGTH_DISK_ID", "DIAGONAL2_COLOR_DISK_ID", "DIAGONAL2_USE_RAMP_DISK_ID",
-        "HIGHLIGHT_RADIUS_DISK_ID", "HIGHLIGHT_COLOR_DISK_ID", "HIGHLIGHT_USE_RAMP_DISK_ID", "GLOW_ROTATION_DISK_ID",
+        "VERTICAL_LENGTH_DISK_ID", "VERTICAL_COLOR_DISK_ID", "VERTICAL_RAMP_GROUP_DISK_ID", "VERTICAL_USE_RAMP_DISK_ID", "VERTICAL_RAMP_SPACER_DISK_ID", "VERTICAL_RAMP_END_DISK_ID",
+        "HORIZONTAL_LENGTH_DISK_ID", "HORIZONTAL_COLOR_DISK_ID", "HORIZONTAL_RAMP_GROUP_DISK_ID", "HORIZONTAL_USE_RAMP_DISK_ID", "HORIZONTAL_RAMP_SPACER_DISK_ID", "HORIZONTAL_RAMP_END_DISK_ID",
+        "DIAGONAL_LENGTH_DISK_ID", "DIAGONAL_COLOR_DISK_ID", "DIAGONAL_RAMP_GROUP_DISK_ID", "DIAGONAL_USE_RAMP_DISK_ID", "DIAGONAL_RAMP_SPACER_DISK_ID", "DIAGONAL_RAMP_END_DISK_ID",
+        "DIAGONAL2_LENGTH_DISK_ID", "DIAGONAL2_COLOR_DISK_ID", "DIAGONAL2_RAMP_GROUP_DISK_ID", "DIAGONAL2_USE_RAMP_DISK_ID", "DIAGONAL2_RAMP_SPACER_DISK_ID", "DIAGONAL2_RAMP_END_DISK_ID",
+        "HIGHLIGHT_RADIUS_DISK_ID", "HIGHLIGHT_COLOR_DISK_ID", "HIGHLIGHT_RAMP_GROUP_DISK_ID", "HIGHLIGHT_USE_RAMP_DISK_ID", "HIGHLIGHT_RAMP_SPACER_DISK_ID", "HIGHLIGHT_RAMP_END_DISK_ID", "GLOW_ROTATION_DISK_ID",
     ]
     assert_registration_order(source, registration)
-    constants = header_constants(header, [
-        "CHANNEL_DISK_ID", "BLUR_MODE_DISK_ID", "MERGE_MODE_DISK_ID", "APPROX_INPUT_DISK_ID",
-        "BRIGHTNESS_GAIN_DISK_ID", "STRENGTH_MULTIPLIER_DISK_ID", "FADE_OUT_DISK_ID", "GLOW_OPACITY_DISK_ID",
-        "SOURCE_OPACITY_DISK_ID", "VERTICAL_LENGTH_DISK_ID", "VERTICAL_COLOR_DISK_ID", "VERTICAL_USE_RAMP_DISK_ID",
-        "HORIZONTAL_LENGTH_DISK_ID", "HORIZONTAL_COLOR_DISK_ID", "HORIZONTAL_USE_RAMP_DISK_ID", "DIAGONAL_LENGTH_DISK_ID",
-        "DIAGONAL_COLOR_DISK_ID", "DIAGONAL_USE_RAMP_DISK_ID", "DIAGONAL2_LENGTH_DISK_ID", "DIAGONAL2_COLOR_DISK_ID",
-        "DIAGONAL2_USE_RAMP_DISK_ID", "HIGHLIGHT_RADIUS_DISK_ID", "HIGHLIGHT_COLOR_DISK_ID", "HIGHLIGHT_USE_RAMP_DISK_ID",
-        "GLOW_ROTATION_DISK_ID",
-    ])
-    assert list(constants.values()) == expected_suffixes
-    required = set(enum_names)
+    constants = header_constants(header, registration)
+    assert list(constants.values()) == [
+        8, 9, 17, 10, 2, 11, 27, 7, 12,
+        3, 13, 29, 18, 19, 30,
+        4, 14, 31, 20, 21, 32,
+        5, 15, 33, 22, 23, 34,
+        26, 28, 37, 35, 36, 38,
+        6, 16, 39, 24, 25, 40, 1,
+    ]
+    structural = {name for name in enum_names if name.endswith(("_RAMP_GROUP", "_RAMP_END"))}
+    required = set(enum_names) - structural
     assert_reference_symbols(source, values, required)
     source_text = source.read_text(encoding="utf-8")
     referenced = set(re.findall(r"params\[([A-Z0-9_]+)\]", source_text))
-    assert set(enum_names) - referenced == set(), "KiraKira standard-render checkout surface changed"
+    assert required - referenced == set(), "KiraKira standard-render checkout surface changed"
     for symbol in ("OLMKIRAKIRA_APPROX_INPUT", "OLMKIRAKIRA_FADE_OUT", "OLMKIRAKIRA_HIGHLIGHT_RADIUS"):
         assert f"checkout({symbol}, &p)" in source_text, f"KiraKira SmartRender misses {symbol}"
-    assert "info.approximated_input" not in source_text, "Approximated Input must remain fail-closed until non-identity resize is grounded"
+    assert "info.approximated_input" in source_text, "KiraKira render paths must wire Approximated Input"
+    assert "ResizeNearestRGBA(source_pixels, w, h, work_w, work_h)" in source_text
+    assert "glow_full = ResizeNearestRGBA(glow, work_width, work_height, w, h)" in source_text
+    assert "output_pixels = ResizeNearestRGBA(composed, work_width, work_height, w, h)" in source_text
     return {
         "windows_rows": len(rows),
-        "mapped_rows": len(expected_suffixes),
-        "unmapped_ramp_and_separator_rows": len(rows) - len(expected_suffixes),
-        "registered_but_unchecked_out": [],
-        "checked_out_but_algorithm_blocked": ["OLMKIRAKIRA_APPROX_INPUT"],
+        "mapped_rows": len(rows),
+        "unmapped_ramp_and_separator_rows": 0,
+        "registered_but_unchecked_out": sorted(structural),
+        "checked_out_but_algorithm_blocked": [],
     }
 
 

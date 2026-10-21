@@ -15,7 +15,9 @@ from pathlib import Path
 
 from PIL import Image
 from unicorn import UC_HOOK_CODE
-from unicorn.x86_const import UC_X86_REG_R8, UC_X86_REG_R9, UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_RSP
+from unicorn.x86_const import (UC_X86_REG_R8, UC_X86_REG_R9, UC_X86_REG_RAX,
+                               UC_X86_REG_RCX, UC_X86_REG_RDX, UC_X86_REG_RIP,
+                               UC_X86_REG_RSP)
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).parent))
@@ -441,11 +443,28 @@ def main() -> int:
     parser.add_argument("--field-rotated-raw", type=Path,
                         help="write mode-2 rotated float32 field bytes")
     parser.add_argument("--slow-trace", action="store_true", help="enable image-text instruction tracing for ABI capture")
+    parser.add_argument(
+        "--actual-iterate-callbacks",
+        action="store_true",
+        help="execute the AEX pixel callback for every Iterate pixel instead of the checked model",
+    )
     parser.add_argument("--max-instructions", type=int, default=200_000_000)
     parser.add_argument("--downsample-num", type=int, default=1)
     parser.add_argument("--downsample-den", type=int, default=2)
     parser.add_argument("--angle", type=float, default=0.0)
     parser.add_argument("--brightness-gain", type=float, default=1.0)
+    parser.add_argument(
+        "--powf-leaf",
+        choices=("double-round", "native-f32"),
+        default="double-round",
+        help="select the imported powf emulation leaf; default preserves the historical fixture",
+    )
+    parser.add_argument(
+        "--expf-leaf",
+        choices=("double-round", "native-f32"),
+        default="double-round",
+        help="select the imported expf emulation leaf; default preserves the historical fixture",
+    )
     parser.add_argument("--size-variation", type=int, default=92)
     parser.add_argument("--front-strength", type=int, default=1690)
     parser.add_argument("--front-alpha-fade", type=int, default=0)
@@ -459,6 +478,12 @@ def main() -> int:
     parser.add_argument("--noise-offset", type=int, default=0)
     parser.add_argument("--thickness", type=float, default=10.0)
     parser.add_argument("--bitdepth", type=int, choices=(8, 16, 32), default=8)
+    parser.add_argument(
+        "--pf16-source-scale",
+        choices=("legacy-128", "sdk-32768"),
+        default="legacy-128",
+        help="PF16 PNG transport; sdk-32768 uses round(byte*32768/255)",
+    )
     parser.add_argument(
         "--world-area", nargs=4, type=int, metavar=("LEFT", "TOP", "RIGHT", "BOTTOM"),
         default=(0, 0, None, None),
@@ -501,9 +526,10 @@ def main() -> int:
         populate_callback = POPULATE32
         output_callback = OUTPUT32
     elif args.bitdepth == 16:
-        source = b"".join(
-            struct.pack("<H", value * 128) for value in source8
-        )
+        source = b"".join(struct.pack(
+            "<H", (value * 32768 + 127) // 255
+            if args.pf16_source_scale == "sdk-32768" else value * 128
+        ) for value in source8)
         pixel_size = 8
         populate_callback = POPULATE16
         output_callback = OUTPUT16
@@ -566,13 +592,30 @@ def main() -> int:
             return 0
         return impl
 
+    native_powf = ctypes.CDLL(None).powf
+    native_powf.argtypes = (ctypes.c_float, ctypes.c_float)
+    native_powf.restype = ctypes.c_float
+    native_expf = ctypes.CDLL(None).expf
+    native_expf.argtypes = (ctypes.c_float,)
+    native_expf.restype = ctypes.c_float
+
     def import_powf(_uc, _args):
-        loader.write_xmm_f32(0, math.pow(loader.read_xmm_f32(0), loader.read_xmm_f32(1)))
+        left, right = loader.read_xmm_f32(0), loader.read_xmm_f32(1)
+        result = (native_powf(left, right) if args.powf_leaf == "native-f32"
+                  else math.pow(left, right))
+        loader.write_xmm_f32(0, result)
+        return 0
+
+    def import_expf(_uc, _args):
+        value = loader.read_xmm_f32(0)
+        result = native_expf(value) if args.expf_leaf == "native-f32" else math.exp(value)
+        loader.write_xmm_f32(0, result)
         return 0
 
     import math
     for name, impl in {
         "powf": import_powf,
+        "expf": import_expf,
         "sqrtf": import_f1(math.sqrt),
         "ceilf": import_f1(math.ceil),
         "ceil": import_d1(math.ceil),
@@ -1122,7 +1165,55 @@ def main() -> int:
 
     loader.uc.hook_add(UC_HOOK_CODE, trace_iterate_wrapper, begin=0x180006700, end=0x1800067D0)
 
-    def iterate8(ld: AexLoader, args_: list[int]) -> int:
+    pending_actual_iterate: dict[str, int] = {}
+
+    def schedule_actual_iterate_pixel(ld: AexLoader) -> None:
+        state = pending_actual_iterate
+        x, y = state["x"], state["y"]
+        source_pointer = state["source_data"] + y * state["source_rowbytes"] + x * state["pixel_size"]
+        destination_pointer = state["destination_data"] + y * state["destination_rowbytes"] + x * state["pixel_size"]
+        callback_rsp = state["caller_rsp"] - 0x30
+        ld.write_bytes(callback_rsp, struct.pack("<Q", state["continuation"]))
+        ld.write_bytes(callback_rsp + 0x28, struct.pack("<Q", destination_pointer))
+        ld.uc.reg_write(UC_X86_REG_RSP, callback_rsp)
+        ld.uc.reg_write(UC_X86_REG_RCX, state["params"])
+        ld.uc.reg_write(UC_X86_REG_RDX, x)
+        ld.uc.reg_write(UC_X86_REG_R8, y)
+        ld.uc.reg_write(UC_X86_REG_R9, source_pointer)
+        ld.uc.reg_write(UC_X86_REG_RIP, state["callback"])
+
+    def continue_actual_iterate(ld: AexLoader, _args: list[int]) -> None:
+        state = pending_actual_iterate
+        callback_error = ld.uc.reg_read(UC_X86_REG_RAX) & 0xFFFFFFFF
+        if callback_error:
+            ld.uc.reg_write(UC_X86_REG_RSP, state["caller_rsp"] + 8)
+            ld.uc.reg_write(UC_X86_REG_RIP, state["return_address"])
+            ld.uc.reg_write(UC_X86_REG_RAX, callback_error)
+            state.clear()
+            return None
+        if state["callback"] in (OUTPUT, OUTPUT16, OUTPUT32):
+            x, y, size = state["x"], state["y"], state["pixel_size"]
+            destination = state["destination_data"] + y * state["destination_rowbytes"] + x * size
+            address = (y * width + x) * size
+            output_bytes[address:address + size] = ld.read_bytes(destination, size)
+        state["x"] += 1
+        if state["x"] >= state["right"]:
+            state["x"] = state["left"]
+            state["y"] += 1
+        if state["y"] >= state["bottom"]:
+            ld.uc.reg_write(UC_X86_REG_RSP, state["caller_rsp"] + 8)
+            ld.uc.reg_write(UC_X86_REG_RIP, state["return_address"])
+            ld.uc.reg_write(UC_X86_REG_RAX, 0)
+            state.clear()
+            return None
+        schedule_actual_iterate_pixel(ld)
+        return None
+
+    actual_iterate_continuation = loader.install_callback(
+        "PF_Iterate.actual_continue", continue_actual_iterate
+    )
+
+    def iterate8(ld: AexLoader, args_: list[int]) -> int | None:
         rsp = ld.uc.reg_read(UC_X86_REG_RSP)
         raw_stack = {hex(offset): hex(u64(ld, rsp + offset)) for offset in range(0x20, 0x61, 8)}
         # PF_Iterate8Suite1::iterate(in_data, start, end, src, rect, refcon,
@@ -1183,8 +1274,37 @@ def main() -> int:
                 ld, destination_data + (destination_height - 1) * destination_rowbytes,
                 "destination world final row", destination_width * callback_pixel_size,
             )
+        if args.actual_iterate_callbacks:
+            if pending_actual_iterate:
+                raise RuntimeError("nested actual Iterate callback state")
+            pending_actual_iterate.update({
+                "caller_rsp": rsp,
+                "return_address": u64(ld, rsp),
+                "continuation": actual_iterate_continuation,
+                "params": params,
+                "callback": callback,
+                "source_data": source_data,
+                "source_rowbytes": source_rowbytes,
+                "destination_data": destination_data,
+                "destination_rowbytes": destination_rowbytes,
+                "pixel_size": callback_pixel_size,
+                "left": left,
+                "right": right,
+                "bottom": bottom,
+                "x": left,
+                "y": top,
+            })
+            observed["iterate_calls"][-1]["callback_execution"] = "actual_aex_guest_state_machine"
+            if callback in (POPULATE, POPULATE16, POPULATE32) and "first_iterate" not in observed["checkpoints"]:
+                observed["checkpoints"]["first_iterate"] = {"callback": hex(callback), "area_words": area_words, "refcon": hex(params)}
+            if callback in (OUTPUT, OUTPUT16, OUTPUT32):
+                observed["checkpoints"]["final_host_output"] = {"callback": hex(callback), "area_words": area_words, "refcon": hex(params)}
+            schedule_actual_iterate_pixel(ld)
+            return None
         for y in range(top, bottom):
             for x in range(left, right):
+                source_pointer = source_data + y * source_rowbytes + x * callback_pixel_size
+                destination_pointer = destination_data + y * destination_rowbytes + x * callback_pixel_size
                 if source_world == input_world and source_rowbytes == width * callback_pixel_size:
                     pixel = source[(y * width + x) * callback_pixel_size:(y * width + x + 1) * callback_pixel_size]
                 else:

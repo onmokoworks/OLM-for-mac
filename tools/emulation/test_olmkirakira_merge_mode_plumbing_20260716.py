@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Source-contract regression for KiraKira Merge Mode parameter plumbing.
 
-This verifies normal and Smart parameter paths populate the same info field.
-Merge Mode execution remains guarded: RenderTyped is intentionally not changed
-by this test or by the plumbing patch.
+This verifies normal and Smart parameter paths populate the same info field,
+and that it selects only the outer composition branch. The exported Windows
+owner fixes its separate inner aggregation selector to FUN_18114fd90.
 """
 
 from __future__ import annotations
@@ -56,14 +56,23 @@ def main() -> int:
         )),
         "normal_model_preserves_value": assignment_model(normal, 1) == 1,
         "smart_model_preserves_value": assignment_model(smart, 2) == 2,
-        "render_typed_execution_remains_guarded": "merge_mode" not in typed,
+        "render_typed_selects_outer_compose": (
+            "if (info.merge_mode == 2)" in typed
+            and "out = ComposeMerge2Pixel(" in typed
+            and "out = ComposePremultiplyPixel(" in typed
+        ),
+        "inner_aggregation_is_owner_fixed": (
+            "both public merge choices use FUN_18114fd90" in typed
+            and typed.count("AddColoredUnion(glow,") == 5
+            and "AddColoredMerge2(glow," not in typed
+        ),
     }
     assert all(checks.values()), checks
     print(
         "PASS "
         f"normal_merge_mode=1 smart_merge_mode=2 "
         f"checks={sum(checks.values())}/{len(checks)} "
-        "execution=guarded"
+        "execution=outer-only"
     )
     return 0
 

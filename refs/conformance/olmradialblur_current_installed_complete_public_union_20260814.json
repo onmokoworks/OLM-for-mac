@@ -1,0 +1,36 @@
+{
+  "after_effects_processes": [],
+  "claim_boundary": "Both installed Universal slices reproduce the complete currently admitted Type1 and Type3 fixed-fixture public union through Classic and Smart: 106 Type1 cells plus 45 Type3 source/Layer pairs per slice. This aggregate adds no source, tuple, geometry or native-AE generalization.",
+  "closures": {
+    "type1": "refs/conformance/olmradialblur_current_installed_type1_complete_union_20260814.json",
+    "type3": "refs/conformance/olmradialblur_current_installed_type3_all_depth_closure_20260813.json"
+  },
+  "identities": {
+    "installed_binary_sha256": "9be59d18601dc2b031335f4fec8c8c6a1eb13a4888bf0f228efa65e2d5b676b5",
+    "production_source_sha256": "b74b3d2c7ea6724593b28f82d36615e071e18d813e5b99cc948e26a447fdb0d1",
+    "type1_report_sha256": "58f02746c8e6d364fc4bec2f60329cf73168be5f2309ba2d80cef4720bb1c444",
+    "type3_report_sha256": "2e06b303db9541789f2b9d88de38310968859e9d3d0e5bf03d5ce8c5c70e3c6f"
+  },
+  "schema": "olmradialblur.current-installed-complete-public-union/1",
+  "scope": {
+    "arbitrary_type1_or_type3": false,
+    "installed_arm64": true,
+    "installed_x86_64": true,
+    "native_after_effects": false,
+    "production_or_install_changed": false
+  },
+  "status": "PASS_OLMRADIALBLUR_CURRENT_INSTALLED_COMPLETE_TYPE1_TYPE3_PUBLIC_UNION_AE_FREE",
+  "summary": {
+    "classic_smart_padded_output_exact": true,
+    "exact_public_cells_per_slice": 151,
+    "exact_public_cells_total": 302,
+    "installed_architectures": [
+      "arm64",
+      "x86_64"
+    ],
+    "type1_cells_per_slice": 106,
+    "type1_mutation_rejects_per_slice": 57,
+    "type3_cells_per_slice": 45,
+    "type3_reject_control_sets_per_slice": 45
+  }
+}

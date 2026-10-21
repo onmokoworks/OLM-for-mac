@@ -38,7 +38,12 @@ def main() -> int:
     pending_path = ROOT / "refs" / "reports" / "pending_runtime_trace_packages.json"
     pending = json.loads(pending_path.read_text(encoding="utf-8"))
     rows = [row for row in pending.get("requests", []) if isinstance(row, dict) and row.get("status") == "pending"]
-    rows.sort(key=lambda row: (int(row.get("priority") or 999999), str(row.get("request_id") or "")))
+    rows.sort(
+        key=lambda row: (
+            int(row["priority"]) if isinstance(row.get("priority"), int) else 999999,
+            str(row.get("request_id") or ""),
+        )
+    )
     synthetic_row = {
         "request_id": "split_readme",
         "plugin_area": "Split README",

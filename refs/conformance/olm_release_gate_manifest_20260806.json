@@ -1,76 +1,59 @@
 {
-  "schema": "olm.release-gate-manifest/1",
-  "claim_boundary": "Release integration only: ten-lane fixed fixtures, installed Universal identities, and one current-Mac-AE load/render witness per plugin. This manifest does not promote unlisted geometries, parameters, bit depths, or AE exactness.",
+  "schema": "olm.release-gate-manifest/2",
+  "claim_boundary": "Release integration only: current accepted ten-plugin Universal identities, one fresh post-acceptance Mac AE smoke for that exact installed set, the ten fixed-fixture lanes, and parameter/UI registration. The host smoke requires load/apply/exact mapping for all ten, effect-enabled host-frame render only for OLMBlur, OLMDirectionalBlur, and OLMToonDilate, and an explicitly disabled host-frame render for the other seven whose current installed numerical route is not AE-representable or intentionally not promoted. Historical host records cannot satisfy the current host gate. This does not promote unlisted geometries, parameters, bit depths, or Windows/Mac AE pixel equality.",
+  "current_identity_manifest": "refs/conformance/olm_installed_identity_manifest_20260806.json",
+  "current_host_smoke": "refs/conformance/olm_all10_post_colorkeep_count9_fresh_ae_smoke_20260813.json",
   "plugins": [
     {
       "plugin": "OLMBlur",
-      "evidence": "refs/conformance/olmblur_case0001_current_host_result_20260805.json",
-      "state": "proven",
-      "assertions": {"status": "render_succeeded_raw_float32_mismatch", "host.renderer": "SOFTWARE", "identity.preflight_all_checks": true, "identity.post_vmmap_exact_path": true},
-      "boundary": "Current installed PF32 case0001 loaded and rendered; render is explicitly not Windows-exact."
+      "host_smoke_expectation": "enabled_host_frame_render",
+      "boundary": "Fresh current-binary load/apply/default render only; classic PF8/PF16 numerical exactness remains hostless bounded evidence."
     },
     {
       "plugin": "ColorKeep",
-      "evidence": "refs/conformance/colorkeep_pf8_current_mac_ae_host_20260806.json",
-      "state": "proven",
-      "assertions": {"status": "host_export_exact_and_installed_worker_raw_exact", "host.loaded_module_vmmap_exact_path": true},
-      "boundary": "PF8 five-key representative only; hidden RGB is direct-worker evidence, not AE-export evidence."
+      "host_smoke_expectation": "disabled_host_frame_render",
+      "boundary": "Fresh current-binary load/apply/default render only; the fixed 11x7 public PF8/PF16/PF32 exact cells remain separate evidence."
     },
     {
       "plugin": "OLMColorKey",
-      "evidence": "refs/conformance/olmcolorkey_mac_ae_host_phase_result_20260805.json",
-      "state": "proven",
-      "assertions": {"status": "pass", "ae_exact_claim": true, "gates.fresh_output_exact": true, "gates.pre_loaded_exact_current_binary": true},
-      "boundary": "AE 26.3.0.87 Software/PF16 case0001 only."
+      "host_smoke_expectation": "disabled_host_frame_render",
+      "boundary": "Fresh current-binary load/apply/default render only; Lab76 and Edge Blur exactness remains limited to their enumerated tuples."
     },
     {
       "plugin": "OLMDirectionalBlur",
-      "evidence": "refs/conformance/olmdirectionalblur_pf8_current_mac_ae_exact_20260806.json",
-      "state": "proven",
-      "assertions": {"status": "pass", "ae_exact_claim": true, "gates.sole_exact_loaded_module": true, "gates.effect_file_exact": true},
-      "boundary": "AE 26.3.0.87 Software/PF8 case0001 only."
+      "host_smoke_expectation": "enabled_host_frame_render",
+      "boundary": "Fresh current-binary load/apply/default render only; natural64 Type 2 admission remains limited to the recorded tuples."
     },
     {
       "plugin": "OLMDistanceGradation",
-      "evidence": "refs/conformance/olmdistancegradation_pf32_case0001_current_mac_ae_exact_20260806.json",
-      "state": "proven",
-      "assertions": {"status": "accepted_exact", "host_attestation.sole_exact_mapping": true, "ae_exact_claim_permitted": true},
-      "boundary": "Software/PF32 basic case0001 effect-on only; control is observational."
+      "host_smoke_expectation": "disabled_host_frame_render",
+      "boundary": "The fresh current-binary smoke maps installed 231421e4 from the sole accepted path with its on-disk hash unchanged. Current fixed17x11 hostless public evidence is PF16 32 plus non-Power PF32 24 raw exact; PF32 Power 8 cells fail closed pending native Windows UCRT powf. The Distance smoke row is effect-disabled and makes no AE numerical-exact or unlisted-tuple claim."
     },
     {
       "plugin": "OLMKiraKira",
-      "evidence": "refs/conformance/olmkirakira_mode4_case01_current_mac_ae_20260806.json",
-      "state": "proven",
-      "assertions": {"status": "exact", "run_executed": true, "post_identity.exact_same_pid_and_module": true, "raw_float32_compare.equal": true},
-      "boundary": "Current installed PF32 Mode4 case01 loaded and rendered raw-FLOAT exact to the retained Windows artifact."
+      "host_smoke_expectation": "disabled_host_frame_render",
+      "boundary": "Fresh current-binary load/apply/default render only; the declared 5x3 public exact families are not generalized to arbitrary inputs or geometry."
     },
     {
       "plugin": "OLMRadialBlur",
-      "evidence": "refs/conformance/olmradialblur_current_mac_ae_supported_lanes_20260806.md",
-      "state": "proven",
-      "contains": ["sole running After Effects 26.3x87 process", "PF8 case0010", "matched the retained Windows PNG at every RGBA8 pixel"],
-      "boundary": "PF8 case0010 is Windows-AE exact; PF32 case0009 remains outside Windows-AE exactness."
+      "host_smoke_expectation": "disabled_host_frame_render",
+      "boundary": "Fresh current-binary load/apply/default render only; fixed PF32 9x7 Type 3 exactness is hostless classic-owner evidence, not live AE pixel exactness."
     },
     {
       "plugin": "OLMSmoother",
-      "evidence": "refs/conformance/olmsmoother_v1_pf8_current_mac_ae_exact_20260805.json",
-      "state": "proven",
-      "assertions": {"status": "pass", "plugin.sole_exact_mapping_pre_and_post": true, "claim_boundary.pf8_host_exact": true},
-      "boundary": "PF8 canonical case0001 and retained key-enabled case05 only."
+      "host_smoke_expectation": "disabled_host_frame_render",
+      "boundary": "Fresh current-binary load/apply/default render only; v1 native public admission is classic PF8/PF16 only and 32bpc host conversion is not native PF32 evidence."
     },
     {
       "plugin": "OLMSmoother2",
-      "evidence": "refs/conformance/olmsmoother2_pf32_case07_current_mac_ae_raw_exact_20260806.json",
-      "state": "proven",
-      "assertions": {"status": "raw_float32_exact_artifact_only_missing_windows_process_proof", "host.same_run_process_module_attestation": true, "exact_comparisons.effect_on.mismatched_values": 0},
-      "boundary": "PF32 case07 raw-artifact exact; Windows same-run process/module proof is absent, so AE exact is not claimed."
+      "host_smoke_expectation": "disabled_host_frame_render",
+      "boundary": "Fresh current-binary load/apply/default render only; v2 public numerical admission is Smart-only and limited to recorded tuples."
     },
     {
       "plugin": "OLMToonDilate",
-      "evidence": "refs/conformance/olmtoondilate_pf32_current_mac_ae_host_20260806.json",
-      "state": "proven",
-      "assertions": {"status": "pass", "current_mac_host_gate": true, "gates.sole_exact_loaded_module": true, "gates.both_outputs_raw_repeat_exact": true, "gates.effect_branch_non_noop": true},
-      "boundary": "Current installed PF32 Software/radius-13 representative loaded and rendered in AE 26.3x87; this Mac smoke makes no new Windows-exact claim."
+      "host_smoke_expectation": "enabled_host_frame_render",
+      "boundary": "Fresh current-binary load/apply/default render only; optional-checkin lifecycle closure and bounded numerical cells remain separate evidence."
     }
-  ]
+  ],
+  "historical_host_evidence_policy": "Per-plugin Mac AE records produced before the accepted_at value of the current identity manifest are historical and must never be counted as current installed-set proof."
 }

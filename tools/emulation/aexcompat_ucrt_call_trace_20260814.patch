@@ -1,0 +1,41 @@
+diff --git a/guest/crates/aex-guest-worker/src/x64/callbacks.rs b/guest/crates/aex-guest-worker/src/x64/callbacks.rs
+index 8724e891..5865e333 100644
+--- a/guest/crates/aex-guest-worker/src/x64/callbacks.rs
++++ b/guest/crates/aex-guest-worker/src/x64/callbacks.rs
+@@ -362,6 +362,16 @@ fn olm_missing_native_ucrt_result(unicorn: &mut Unicorn<'_, GuestState>, name: &
+     let _ = unicorn.emu_stop();
+ }
+ 
++fn olm_trace_ucrt_call(kind: &str, left: u32, right: Option<u32>, result: u32) {
++    let Ok(path) = std::env::var("OLM_UCRT_CALL_TRACE") else { return };
++    use std::io::Write as _;
++    let Ok(mut output) = std::fs::OpenOptions::new().create(true).append(true).open(path) else { return };
++    match right {
++        None => { let _ = writeln!(output, "{kind},{left:08x},{result:08x}"); }
++        Some(value) => { let _ = writeln!(output, "{kind},{left:08x},{value:08x},{result:08x}"); }
++    }
++}
++
+ fn install_float_import(
+     unicorn: &mut Unicorn<'static, GuestState>,
+     address: u64,
+@@ -382,6 +392,9 @@ fn install_float_import(
+                 } else {
+                     operation(value)
+                 };
++                if name == "expf" {
++                    olm_trace_ucrt_call(name, bits as u32, None, output.to_bits());
++                }
+                 if unicorn.get_data().math_calls.len() < 32 {
+                     unicorn
+                         .get_data_mut()
+@@ -479,6 +492,9 @@ fn install_float_binary_import(
+                 } else {
+                     operation(f32::from_bits(left as u32), f32::from_bits(right as u32))
+                 };
++                if name == "powf" {
++                    olm_trace_ucrt_call(name, left as u32, Some(right as u32), value.to_bits());
++                }
+                 if unicorn.get_data().math_calls.len() < 32 {
+                     unicorn.get_data_mut().math_calls.push(format!(
+                         "{name}({},{})={value}",

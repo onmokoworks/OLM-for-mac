@@ -33,8 +33,10 @@ from verify_32bpc_float_return import (
 )
 
 
-CAMPAIGN_ID = "olm_windows_all_plugins_reference_campaign_20260731_r4"
-EXPECTED_LANE_ROWS = {
+R4_CAMPAIGN_ID = "olm_windows_all_plugins_reference_campaign_20260731_r4"
+R5_CAMPAIGN_ID = "olm_windows_all_plugins_reference_campaign_20260731_r5"
+CAMPAIGN_ID = R4_CAMPAIGN_ID
+R4_EXPECTED_LANE_ROWS = {
     "OLMDistanceGradation": 99,
     "OLMDirectionalBlur": 54,
     "OLMRadialBlur": 18,
@@ -42,8 +44,10 @@ EXPECTED_LANE_ROWS = {
     "OLMSmoother v1": 19,
     "ColorKeep": 9,
 }
+R5_EXPECTED_LANE_ROWS = {**R4_EXPECTED_LANE_ROWS, "OLMKiraKira": 60}
+EXPECTED_LANE_ROWS = R4_EXPECTED_LANE_ROWS
 EXPECTED_TOTAL_ROWS = sum(EXPECTED_LANE_ROWS.values())
-EXPECTED_SCHEMA_FILES = {
+R4_EXPECTED_SCHEMA_FILES = {
     "BATCH_MANIFEST.schema.json",
     "EVIDENCE_BINDING.schema.json",
     "RETURN_STATUS.schema.json",
@@ -53,7 +57,11 @@ EXPECTED_SCHEMA_FILES = {
     "OLMKIRAKIRA_PF32_TRACE.schema.json",
     "OLMKIRAKIRA_GAUSSIAN_KERNEL.schema.json",
 }
-EXPECTED_SCHEMA_SHA256 = {
+R5_EXPECTED_SCHEMA_FILES = R4_EXPECTED_SCHEMA_FILES | {
+    "EXECUTION_ROW.schema.json",
+}
+EXPECTED_SCHEMA_FILES = R4_EXPECTED_SCHEMA_FILES
+R4_EXPECTED_SCHEMA_SHA256 = {
     "BATCH_MANIFEST.schema.json": "e1c1c0da472de21687db303ce8aa17b7c4382754e276e95f771955b8f71c4e50",
     "EVIDENCE_BINDING.schema.json": "8d74613b654ba22d764ef0bd19ee0364559e0ba86aeaf7f14516f3a41436a1ed",
     "OLMKIRAKIRA_CROSS_ROW.schema.json": "23853809ad2075cceb7bf81f1a72c481b8ccab9815da6f71cddc9466edc96595",
@@ -63,6 +71,18 @@ EXPECTED_SCHEMA_SHA256 = {
     "OLMRADIALBLUR_WITNESS.schema.json": "2687d2054e9dabf77f3a2066129505d2ffb514c8a6845089da1fc039996ee4aa",
     "RETURN_STATUS.schema.json": "a51f97277ccf2792b9b86e03f7cdfd87de78f46c34f2632097890f9b967de57d",
 }
+R5_EXPECTED_SCHEMA_SHA256 = {
+    "BATCH_MANIFEST.schema.json": "eb1bcf4f2b53b560d4c8df4cef050001c216b6190ed8f7097c5f3de1db94de1c",
+    "EVIDENCE_BINDING.schema.json": "d5b1e45fb49b797121d3ac41f7e7b67d87f038fde262cf380cb2510e6ca74647",
+    "EXECUTION_ROW.schema.json": "c4af0c6f7e81d0cfdc458aabb8a0d7cda58b4746cb10fcc7de7b7c9ce6be3076",
+    "OLMKIRAKIRA_CROSS_ROW.schema.json": "f4113d407860dda3fea761a99ab62d2e1b5e2cb8f4ed6506f05c773be69dbb2a",
+    "OLMKIRAKIRA_GAUSSIAN_KERNEL.schema.json": "bc47e09be5271aafd8d24e130cb3f09af24b04a350022072d056a842734ad19b",
+    "OLMKIRAKIRA_PF32_TRACE.schema.json": "5180fb27b39886b7d3475f00bbec9fb49cf8f7d3819b35731b898772db46cda2",
+    "OLMKIRAKIRA_WRITER_TRACE.schema.json": "a57a0c5cd566754fbb137f50b56caea5740bb8d7a60fb552ea4ff2d28ec03e49",
+    "OLMRADIALBLUR_WITNESS.schema.json": "7280205dcc05df63376825c1171c229c406ae27765009ad940ba86c7e7508532",
+    "RETURN_STATUS.schema.json": "b5b2183c33bc70049cc686b90b1afbdc89410b969a5090f497cf98932d397d27",
+}
+EXPECTED_SCHEMA_SHA256 = R4_EXPECTED_SCHEMA_SHA256
 COMMON_STANDARD_OPTIONS = [
     {
         "match_name": "ADBE Effect Mask Opacity",
@@ -141,6 +161,321 @@ PF32_DIAGNOSTICS = {
         ),
     },
 }
+
+KIRA_AUTHORITATIVE_GROUP = "final_random_authoritative_10"
+KIRA_AUTHORITATIVE_DEFINITION = (
+    "case_definitions/olmkirakira_final_random_all30.json"
+)
+KIRA_PROPERTY_READBACK_FILE = "kirakira_property_readback.json"
+KIRA_LINEAGE_FILE = "kirakira_lineage.json"
+KIRA_MODE4_FILE = "kirakira_mode4.json"
+KIRA_AEX_SHA256 = (
+    "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+)
+KIRA_DEFAULT_RAMP_SHA256 = (
+    "80030de202298d2f868e07b027eab0fe647a411c4f050b9b95f91b32902c1ea3"
+)
+KIRA_RICH42_CAPTURE_TOOL = "tools/capture_olmkirakira_rich42.jsx"
+KIRA_RICH42_CAPTURE_TOOL_SHA256 = (
+    "a8b75a848ee988fda31dd4d56c94ae69ca750d9e6126b830122408c2768b9370"
+)
+KIRA_RICH42_SOURCE_MANIFEST = (
+    "refs/win_references/20260710_190500__ae26_3_32bpc_recap/"
+    "OLMKiraKira/reference_manifest.json"
+)
+KIRA_RICH42_SOURCE_MANIFEST_SHA256 = (
+    "638cb66a60a52f4f9877f0f74937a891d447dc85673c8cca48c0780acf3ec9e7"
+)
+KIRA_RICH42_CAPTURE_PHASE = (
+    "after_parameter_and_standard_option_writes_after_params_before_snapshot_"
+    "before_render"
+)
+KIRA_LAYER_NAMES = (
+    "vertical",
+    "horizontal",
+    "diagonal",
+    "diagonal2",
+    "highlight",
+)
+KIRA_RAMP_LAYERS_BY_CASE = {
+    "final_random10_olm_kira_kira_01": ("diagonal2", "highlight"),
+    "final_random10_olm_kira_kira_02": ("vertical", "diagonal", "highlight"),
+    "final_random10_olm_kira_kira_03": (),
+    "final_random10_olm_kira_kira_04": ("vertical", "diagonal2"),
+    "final_random10_olm_kira_kira_05": ("diagonal",),
+    "final_random10_olm_kira_kira_06": ("vertical",),
+    "final_random10_olm_kira_kira_07": ("diagonal2",),
+    "final_random10_olm_kira_kira_08": ("vertical", "diagonal", "diagonal2"),
+    "final_random10_olm_kira_kira_09": (),
+    "final_random10_olm_kira_kira_10": ("vertical", "diagonal"),
+}
+KIRA_MODE4_CASES = {
+    "final_random10_olm_kira_kira_01",
+    "final_random10_olm_kira_kira_04",
+}
+KIRA_MODE_METADATA = {
+    "final_random10_olm_kira_kira_01": (4, 2, 0),
+    "final_random10_olm_kira_kira_02": (1, 1, 0),
+    "final_random10_olm_kira_kira_03": (3, 1, 0),
+    "final_random10_olm_kira_kira_04": (4, 2, 1),
+    "final_random10_olm_kira_kira_05": (1, 2, 1),
+    "final_random10_olm_kira_kira_06": (2, 1, 0),
+    "final_random10_olm_kira_kira_07": (3, 2, 0),
+    "final_random10_olm_kira_kira_08": (1, 2, 1),
+    "final_random10_olm_kira_kira_09": (2, 1, 1),
+    "final_random10_olm_kira_kira_10": (3, 1, 1),
+}
+KIRA_AUTHORITATIVE_HASHES = {
+    "final_random10_olm_kira_kira_01": (
+        "8c1d418c7b853cc6f79087215ee86ab0b9eac423953c1a3409af3e120891a7f0",
+        "9baabc16de003ac9b8e1d407d812d2651e527d237b1da54cf5091577129dc440",
+    ),
+    "final_random10_olm_kira_kira_02": (
+        "e100cd998a5e6f093cf7233821a0ba67d866117ca2f1b300023d6672457e6954",
+        "be3664b249e030f2ce45337f2c6f1fcdc712797d35c5144267a1f8e36cd3e83c",
+    ),
+    "final_random10_olm_kira_kira_03": (
+        "8bdac36ca9a84569ce568781810283eb1bbcb326934c123d2daf38b16c80bc91",
+        "95bd69def5027340fde2520d8541490ee0996a1f26459734f370676f5ff92cb5",
+    ),
+    "final_random10_olm_kira_kira_04": (
+        "f004f56651793a586e94dfabd467eb0e0df9fcf5f8500db5d54e215e070bc267",
+        "22a2d8eb5b4eddf88c78bb676ac6a7e76eccd30da2bb62cad10354836e897e88",
+    ),
+    "final_random10_olm_kira_kira_05": (
+        "24b0782b49de384af3f46d613c0c69dd01a6bb02d38226a54a413950d58155d6",
+        "c261bf4deb3fc8d17dd1a8b85c6c386d7d4f7d37fd10228bfea8914e674669fa",
+    ),
+    "final_random10_olm_kira_kira_06": (
+        "27e55775eb4b6b038ac04f10b56e5800904efb658864ff4c1c64ed0728ae2676",
+        "cf30acd083b7a8836b54a7a7a0d3bee51ce4d181c94ee5b22d1cb82fdd982d5b",
+    ),
+    "final_random10_olm_kira_kira_07": (
+        "20962bb08aa7c5a5cdaa549fbff0356d240b91bed6c67b5ca4c6b6d325c9a356",
+        "244d2121750c31dd7b4c06577f2d89c942f8835c1b95a50ce796955cc54075c2",
+    ),
+    "final_random10_olm_kira_kira_08": (
+        "d9bfadc91935239a44deec0872d2dd24b15b26eeb8488cd34b06cde3121e20fc",
+        "452cd9b7c1d0246b42eebbaeb94a92c1e95f6b3a1c7dbee8aea323113d43432a",
+    ),
+    "final_random10_olm_kira_kira_09": (
+        "d32e20f429da453910c6fa2038bf133b29fae0df793acb9444c3af399fbc3729",
+        "ace4fd4afec942562600730e73cab1cb8bd0318d06407fe370c29fa52f21ff84",
+    ),
+    "final_random10_olm_kira_kira_10": (
+        "2cbad9f4d6afb88e285191728a4120c9e0b7691d64b52cfa4a77ce8127029d88",
+        "433d05f5135c31329a2f2f88dbd7acca4851a80c7ec71ec79274ca7a69e7dc91",
+    ),
+}
+KIRA_TYPED_ENTRIES = {
+    8: {
+        "owner": "FUN_18114d220",
+        "outer": "FUN_18114e110",
+        "writer": "FUN_181230b90",
+        "pixel_bytes": 4,
+        "stored_unit": "u8",
+        "scale": 255,
+    },
+    16: {
+        "owner": "FUN_18114cc50",
+        "outer": "FUN_18114ddc0",
+        "writer": "FUN_181230bd0",
+        "pixel_bytes": 8,
+        "stored_unit": "u16",
+        "scale": 32768,
+    },
+    32: {
+        "owner": "FUN_18114d7f0",
+        "outer": "FUN_18114e460",
+        "writer": "FUN_181230c20",
+        "pixel_bytes": 16,
+        "stored_unit": "f32_u32",
+        "scale": None,
+    },
+}
+
+
+def configure_campaign_contract(campaign_id: object) -> None:
+    global CAMPAIGN_ID, EXPECTED_LANE_ROWS, EXPECTED_TOTAL_ROWS
+    global EXPECTED_SCHEMA_FILES, EXPECTED_SCHEMA_SHA256
+    if campaign_id == R4_CAMPAIGN_ID:
+        CAMPAIGN_ID = R4_CAMPAIGN_ID
+        EXPECTED_LANE_ROWS = R4_EXPECTED_LANE_ROWS
+        EXPECTED_SCHEMA_FILES = R4_EXPECTED_SCHEMA_FILES
+        EXPECTED_SCHEMA_SHA256 = R4_EXPECTED_SCHEMA_SHA256
+    elif campaign_id == R5_CAMPAIGN_ID:
+        CAMPAIGN_ID = R5_CAMPAIGN_ID
+        EXPECTED_LANE_ROWS = R5_EXPECTED_LANE_ROWS
+        EXPECTED_SCHEMA_FILES = R5_EXPECTED_SCHEMA_FILES
+        EXPECTED_SCHEMA_SHA256 = R5_EXPECTED_SCHEMA_SHA256
+    else:
+        fail(f"unsupported campaign_id: {campaign_id!r}")
+    EXPECTED_TOTAL_ROWS = sum(EXPECTED_LANE_ROWS.values())
+
+
+def is_kira_authoritative_row(row: dict[str, Any]) -> bool:
+    return (
+        CAMPAIGN_ID == R5_CAMPAIGN_ID
+        and row.get("plugin") == "OLMKiraKira"
+        and row.get("group_id") == KIRA_AUTHORITATIVE_GROUP
+    )
+
+
+def verify_kira_rich42_preimage(
+    case: dict[str, Any],
+    label: str,
+) -> list[object]:
+    case_id = case.get("case_id")
+    hashes = KIRA_AUTHORITATIVE_HASHES.get(case_id)
+    if hashes is None:
+        fail(f"{label}: unknown authoritative KiraKira case")
+    expected_sha = hashes[1]
+    preimage = case.get("full_42_property_readback_preimage")
+    contract = case.get("full_42_property_readback_preimage_contract")
+    if (
+        not isinstance(preimage, list)
+        or len(preimage) != 42
+        or canonical_json_sha256(preimage) != expected_sha
+        or case.get("full_42_property_readback_sha256") != expected_sha
+        or not strict_equal(
+            contract,
+            {
+                "ordered_row_count": 42,
+                "canonical_json": {
+                    "encoding": "UTF-8",
+                    "ensure_ascii": True,
+                    "sort_keys": True,
+                    "separators": [",", ":"],
+                    "allow_nan": False,
+                    "bom": False,
+                    "trailing_newline": False,
+                },
+                "source_manifest_repository_path": KIRA_RICH42_SOURCE_MANIFEST,
+                "source_manifest_sha256": KIRA_RICH42_SOURCE_MANIFEST_SHA256,
+                "capture_tool_member": KIRA_RICH42_CAPTURE_TOOL,
+                "capture_tool_sha256": KIRA_RICH42_CAPTURE_TOOL_SHA256,
+                "capture_phase_id": KIRA_RICH42_CAPTURE_PHASE,
+                "evidence_capture_phase": {
+                    "after_parameter_and_standard_option_writes": True,
+                    "after_params_before_snapshot": True,
+                    "before_first_render": True,
+                    "params_before_values_sha256": (
+                        "<exact bound params_before.values_sha256>"
+                    ),
+                },
+                "capture_sequence": [
+                    "apply and read back all case parameter actions",
+                    "apply and read back both standard options",
+                    "write params_before.json from those live readbacks",
+                    "capture the ordered rich 42-property rows",
+                    "only then begin either render branch",
+                ],
+                "value_binding": {
+                    "writable_plugin_rows": (
+                        "must equal the same live values encoded in "
+                        "params_before.parameter_actions and row.parameter_writes"
+                    ),
+                    "standard_option_rows": (
+                        "must equal the same live values encoded in "
+                        "params_before.standard_options and row.standard_options"
+                    ),
+                    "params_before_values_sha256_required": True,
+                },
+                "params_setup_observed_surface_role": (
+                    "fresh pre-write surface identity/default gate only; never "
+                    "reuse it for case-specific rich-42 value equality"
+                ),
+                "required_ae_locale": "en_US",
+                "error_policy": (
+                    "retain exact English AE Error.toString() text; no "
+                    "translation, punctuation normalization, or projection"
+                ),
+            },
+        )
+    ):
+        fail(f"{label}: rich-42 preimage/capture contract mismatch")
+    return preimage
+
+
+def verify_kira_capture_phase(
+    capture_phase: object,
+    params_before_values_sha256: object,
+    label: str,
+) -> None:
+    expected_sha = require_sha(
+        params_before_values_sha256,
+        f"{label}.params_before_values_sha256",
+    )
+    if not strict_equal(
+        capture_phase,
+        {
+            "after_parameter_and_standard_option_writes": True,
+            "after_params_before_snapshot": True,
+            "before_first_render": True,
+            "params_before_values_sha256": expected_sha,
+        },
+    ):
+        fail(f"{label}: rich-42 capture phase/params-before binding mismatch")
+
+
+def verify_kira_rich42_writable_values(
+    properties: object,
+    parameter_actions: object,
+    standard_options: object,
+    label: str,
+) -> None:
+    if (
+        not isinstance(properties, list)
+        or not isinstance(parameter_actions, list)
+        or not isinstance(standard_options, list)
+    ):
+        fail(f"{label}: rich-42 writable binding inputs are malformed")
+    actions = {
+        action.get("match_name"): action
+        for action in parameter_actions
+        if isinstance(action, dict) and isinstance(action.get("match_name"), str)
+    }
+    options = {
+        option.get("match_name"): option
+        for option in standard_options
+        if isinstance(option, dict) and isinstance(option.get("match_name"), str)
+    }
+    observed_actions: set[str] = set()
+    observed_options: set[str] = set()
+    for index, record in enumerate(properties):
+        if not isinstance(record, dict):
+            fail(f"{label}: rich-42 row {index} is not an object")
+        match_name = record.get("match_name")
+        expected = actions.get(match_name)
+        if expected is not None:
+            observed_actions.add(match_name)
+        else:
+            expected = options.get(match_name)
+            if expected is not None:
+                observed_options.add(match_name)
+        if expected is not None:
+            comparison_mode = expected.get("comparison_mode")
+            if isinstance(comparison_mode, str) and comparison_mode.startswith(
+                "float32_u32_"
+            ):
+                values_match = strict_equal(
+                    float32_words(
+                        record.get("value"),
+                        f"{label}.rich42[{index}].value",
+                    ),
+                    float32_words(
+                        expected.get("value"),
+                        f"{label}.parameter_action[{index}].value",
+                    ),
+                )
+            else:
+                values_match = json_number_equal(
+                    record.get("value"), expected.get("value")
+                )
+            if not values_match:
+                fail(f"{label}: rich-42 writable value mismatch at row {index}")
+    if observed_actions != set(actions) or observed_options != set(options):
+        fail(f"{label}: rich-42 writable identity coverage mismatch")
 
 
 def targeted_png_member(row: dict[str, Any]) -> str | None:
@@ -1048,6 +1383,7 @@ def request_contract(request_root: Path) -> tuple[
         if required not in files:
             fail(f"request missing {required}")
     campaign = load_json(files["CAMPAIGN_MANIFEST.json"])
+    configure_campaign_contract(campaign.get("campaign_id"))
     inventory = load_json(files["ROW_INVENTORY.json"])
     execution = load_json(files["EXECUTION_ROWS.json"])
     return_contract = load_json(files["RETURN_CONTRACT.json"])
@@ -1195,6 +1531,8 @@ def request_contract(request_root: Path) -> tuple[
         "fresh_identity_contract",
         "execution_row_sha256",
     }
+    if CAMPAIGN_ID == R5_CAMPAIGN_ID:
+        execution_extra_keys.add("plugin_deployment_contract")
     expected_action_semantics = {
         "set": (
             "Resolve exactly one recursive leaf by exact match_name, set "
@@ -1393,43 +1731,68 @@ def request_contract(request_root: Path) -> tuple[
             )
         ):
             fail(f"project contract is under-bound: {row_id}")
+        expected_project_contract_keys = {
+            "ae_version",
+            "renderer",
+            "renderer_raw",
+            "bits_per_channel",
+            "working_space_normalized",
+            "working_space_raw_accepted",
+            "linear_blending",
+            "blend_colors_using_1_0_gamma",
+            "comp",
+            "input_interpretation",
+            "primary_output",
+        }
+        if CAMPAIGN_ID == R5_CAMPAIGN_ID:
+            expected_project_contract_keys.add("render_queue_observation_contract")
         require_exact_keys(
             project_contract,
-            {
-                "ae_version",
-                "renderer",
-                "renderer_raw",
-                "bits_per_channel",
-                "working_space_normalized",
-                "working_space_raw_accepted",
-                "linear_blending",
-                "blend_colors_using_1_0_gamma",
-                "comp",
-                "input_interpretation",
-                "primary_output",
-            },
+            expected_project_contract_keys,
             f"{row_id}.project_contract",
         )
+        expected_comp_keys = {
+            "width",
+            "height",
+            "pixel_aspect",
+            "frame_rate",
+            "frame",
+            "time_seconds",
+            "duration_seconds",
+            "render_time_span_start_seconds",
+            "render_time_span_duration_seconds",
+            "resolution_factor",
+            "source_layer_scale",
+            "source_layer_centered",
+            "source_layer_index",
+            "num_layers",
+        }
+        if CAMPAIGN_ID == R5_CAMPAIGN_ID:
+            expected_comp_keys.add("source_layer_timing")
         require_exact_keys(
             comp,
-            {
-                "width",
-                "height",
-                "pixel_aspect",
-                "frame_rate",
-                "frame",
-                "time_seconds",
-                "duration_seconds",
-                "render_time_span_start_seconds",
-                "render_time_span_duration_seconds",
-                "resolution_factor",
-                "source_layer_scale",
-                "source_layer_centered",
-                "source_layer_index",
-                "num_layers",
-            },
+            expected_comp_keys,
             f"{row_id}.comp",
         )
+        if CAMPAIGN_ID == R5_CAMPAIGN_ID:
+            global_contract = campaign.get("global_contract")
+            if not isinstance(global_contract, dict):
+                fail("r5 campaign global_contract missing")
+            default_frame = global_contract.get("default_frame")
+            default_time_seconds = global_contract.get("default_time_seconds")
+            if (
+                not is_exact_int(default_frame, 24)
+                or type(default_time_seconds) is not float
+                or default_time_seconds != 1.0
+            ):
+                fail("r5 campaign default frame/time contract drift")
+            expected_frame = definition_value.get("frame", default_frame)
+            expected_time_seconds = definition_value.get(
+                "time_seconds", default_time_seconds
+            )
+        else:
+            expected_frame = 24
+            expected_time_seconds = 1.0
         if (
             type(comp["width"]) is not int
             or comp["width"] <= 0
@@ -1440,13 +1803,13 @@ def request_contract(request_root: Path) -> tuple[
             or type(comp["frame_rate"]) is not int
             or comp["frame_rate"] != 24
             or type(comp["frame"]) is not int
-            or comp["frame"] != 24
+            or comp["frame"] != expected_frame
             or type(comp["time_seconds"]) is not float
-            or comp["time_seconds"] != 1.0
+            or comp["time_seconds"] != expected_time_seconds
             or type(comp["duration_seconds"]) is not float
             or comp["duration_seconds"] != 2.0
             or type(comp["render_time_span_start_seconds"]) is not float
-            or comp["render_time_span_start_seconds"] != 1.0
+            or comp["render_time_span_start_seconds"] != expected_time_seconds
             or type(comp["render_time_span_duration_seconds"]) is not float
             or comp["render_time_span_duration_seconds"] != 1.0 / 24.0
             or not strict_equal(comp["resolution_factor"], [1, 1])
@@ -1456,6 +1819,23 @@ def request_contract(request_root: Path) -> tuple[
             or comp["source_layer_index"] != 1
             or type(comp["num_layers"]) is not int
             or comp["num_layers"] != 1
+            or CAMPAIGN_ID == R5_CAMPAIGN_ID
+            and (
+                not is_exact_int(expected_frame, comp["frame"])
+                or type(expected_time_seconds) is not float
+                or expected_time_seconds != comp["time_seconds"]
+                or expected_time_seconds != expected_frame / 24.0
+                or not strict_equal(
+                    comp["source_layer_timing"],
+                    {
+                        "startTime": 0.0,
+                        "inPoint": 0.0,
+                        "outPoint": 2.0,
+                        "stretch": 100.0,
+                        "timeRemapEnabled": False,
+                    },
+                )
+            )
         ):
             fail(f"exact comp/timing contract drift: {row_id}")
         interpretation = project_contract.get("input_interpretation")
@@ -1479,25 +1859,179 @@ def request_contract(request_root: Path) -> tuple[
             is not True
         ):
             fail(f"input interpretation contract is under-bound: {row_id}")
+        expected_interpretation_keys = {
+            "method",
+            "replace_method",
+            "preserve_rgb",
+            "alpha_mode",
+            "premultiplied",
+            "template_member",
+            "template_sha256",
+            "footage_item_name",
+            "comp_item_name",
+            "comp_layer_index",
+            "expected_num_layers",
+            "source_identity_gate",
+            "effect_parade_must_be_empty_before_add",
+        }
+        if CAMPAIGN_ID == R5_CAMPAIGN_ID:
+            expected_interpretation_keys.add("project_item_name_type_cardinality")
         require_exact_keys(
             interpretation,
-            {
-                "method",
-                "replace_method",
-                "preserve_rgb",
-                "alpha_mode",
-                "premultiplied",
-                "template_member",
-                "template_sha256",
-                "footage_item_name",
-                "comp_item_name",
-                "comp_layer_index",
-                "expected_num_layers",
-                "source_identity_gate",
-                "effect_parade_must_be_empty_before_add",
-            },
+            expected_interpretation_keys,
             f"{row_id}.input_interpretation",
         )
+        if CAMPAIGN_ID == R5_CAMPAIGN_ID:
+            if not strict_equal(
+                interpretation["project_item_name_type_cardinality"],
+                {
+                    "OLM_COLOR_PROBE_INPUT": {
+                        "item_type": "FootageItem",
+                        "exact_count": 1,
+                    },
+                    "OLM_COLOR_PROBE_COMP": {
+                        "item_type": "CompItem",
+                        "exact_count": 1,
+                    },
+                },
+            ):
+                fail(f"project item cardinality contract drift: {row_id}")
+            rq_contract = project_contract["render_queue_observation_contract"]
+            if not strict_equal(
+                rq_contract,
+                {
+                    "branch_names": ["no_effect", "effect_on"],
+                    "required_live_fields": ["timeSpanStart", "timeSpanDuration"],
+                    "timeSpanStart": comp["render_time_span_start_seconds"],
+                    "timeSpanDuration": comp["render_time_span_duration_seconds"],
+                    "comparison_mode": "exact_live_numeric_readback",
+                },
+            ):
+                fail(f"render queue observation contract drift: {row_id}")
+            deployment = row["plugin_deployment_contract"]
+            expected_basename = str(row["aex_member"]).rsplit("/", 1)[-1]
+            deployment_campaign_root = (
+                "%APPDATA%\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore\\"
+                f"OLM_Codex_Isolated\\{CAMPAIGN_ID}"
+            )
+            deployed_runtime_expression = (
+                f"{deployment_campaign_root}\\{row['plugin']}\\{expected_basename}"
+            )
+            staging_campaign_root = (
+                f"%LOCALAPPDATA%\\OLM_Codex_Staging\\{CAMPAIGN_ID}"
+            )
+            isolated_staging_expression = (
+                f"{staging_campaign_root}\\{row['plugin']}\\{expected_basename}"
+            )
+            if not strict_equal(
+                deployment,
+                {
+                    "preflight_only_until_explicit_user_start": True,
+                    "declared_ae_26_3_plugin_root_ids": [
+                        "ae_application_plugins",
+                        "adobe_common_mediacore_machine",
+                        "adobe_common_mediacore_user",
+                    ],
+                    "target": {
+                        "aex_basename": expected_basename,
+                        "effect_display_name": row["effect"]["display_name"],
+                        "effect_match_name": row["effect"]["match_name"],
+                        "sha256": row["aex_sha256"],
+                    },
+                    "staging_campaign_root_path_expression": staging_campaign_root,
+                    "isolated_staging_path_expression": isolated_staging_expression,
+                    "deployment_campaign_root_path_expression": (
+                        deployment_campaign_root
+                    ),
+                    "deployed_runtime_path_expression": (
+                        deployed_runtime_expression
+                    ),
+                    "deployment_copy_contract": {
+                        "directory_method": "System.IO.Directory.CreateDirectory",
+                        "copy_method": (
+                            "System.IO.File.Copy(source, destination, false)"
+                        ),
+                        "source_sha256": row["aex_sha256"],
+                        "staging_sha256": row["aex_sha256"],
+                        "deployed_sha256": row["aex_sha256"],
+                        "overwrite_allowed": False,
+                        "copy_count_for_plugin": 1,
+                        "row_specific_copies_forbidden": True,
+                    },
+                    "campaign_root_cleanup_gate": {
+                        "scope_path_expression": deployment_campaign_root,
+                        "inventory_all_declared_roots_before_cleanup": True,
+                        "remove_only_exact_campaign_root": True,
+                        "reject_reparse_points_or_scope_escape": True,
+                        "require_nonexistent_or_empty_before_copy": True,
+                        "require_only_expected_per_plugin_files_after_copy": True,
+                        "begin_only_after_explicit_user_start": True,
+                        "complete_before_ae_project_or_aerender_start": True,
+                    },
+                    "staging_root_cleanup_gate": {
+                        "scope_path_expression": staging_campaign_root,
+                        "begin_only_after_explicit_user_start": True,
+                        "remove_only_exact_staging_campaign_root": True,
+                        "reject_reparse_points_or_scope_escape": True,
+                        "require_nonexistent_or_empty_before_copy": True,
+                        "post_deployment_remove_exact_staging_campaign_root": True,
+                        "post_cleanup_require_nonexistent": True,
+                        "complete_before_ae_project_or_aerender_start": True,
+                    },
+                    "deployed_runtime_path_binding": {
+                        "field": "deployed_runtime_path",
+                        "expected_path_expression": deployed_runtime_expression,
+                        "must_be_absolute_after_environment_expansion": True,
+                        "must_be_recorded_before_project_creation": True,
+                        "must_match_process_and_aex_load_evidence": True,
+                    },
+                    "effective_target_gate": {
+                        "external_same_basename_count_before_copy": 0,
+                        "external_same_effect_display_name_count_before_copy": 0,
+                        "external_same_effect_match_name_count_before_copy": 0,
+                        "effective_matching_basename_effect_hash_count_after_copy": 1,
+                        "same_basename_other_hash_count": 0,
+                        "same_effect_display_name_other_hash_count": 0,
+                        "same_effect_match_name_other_hash_count": 0,
+                    },
+                    "sequencing_contract": [
+                        "read-only verification and collision inventory before explicit user start",
+                        "external staging and MediaCore campaign cleanup after explicit user start",
+                        "copy and SHA-256 verification after cleanup",
+                        "external staging campaign cleanup after deployment",
+                        "AE project creation and aerender only after verified deployment",
+                    ],
+                    "request_tree_write_count": 0,
+                    "evidence_observation_contract": {
+                        "member": "evidence/<row_id>/process.json",
+                        "data_field": "plugin_deployment",
+                        "required_fields": [
+                            "localappdata_path",
+                            "declared_root_inventory",
+                            "external_collision_counts",
+                            "staging_campaign_root",
+                            "staging_precleanup_inventory",
+                            "staging_cleanup_performed",
+                            "staging_empty_before_copy",
+                            "isolated_staging_path",
+                            "isolated_staging_sha256",
+                            "deployment_campaign_root",
+                            "deployment_precleanup_inventory",
+                            "deployment_cleanup_performed",
+                            "deployment_empty_before_copy",
+                            "deployed_runtime_path",
+                            "deployed_runtime_sha256",
+                            "copy_count_for_plugin",
+                            "staging_postcleanup_nonexistent",
+                            "request_tree_write_count",
+                            "read_only_preflight_completed_before_explicit_user_start",
+                            "deployment_began_after_explicit_user_start",
+                            "ae_started_after_verified_deployment_and_staging_cleanup",
+                        ],
+                    },
+                },
+            ):
+                fail(f"plugin deployment contract drift: {row_id}")
         if (
             interpretation["source_identity_gate"]
             != "comp.layer(1).source.id == footage_item.id after replace"
@@ -1566,6 +2100,111 @@ def request_contract(request_root: Path) -> tuple[
                 "KiraKira pair invariant is not a one-control delta: "
                 f"{pair.get('pair_id')}"
             )
+    if CAMPAIGN_ID == R5_CAMPAIGN_ID:
+        authoritative_path = files.get(KIRA_AUTHORITATIVE_DEFINITION)
+        if authoritative_path is None:
+            fail("r5 request lacks the authoritative KiraKira all-30 definition")
+        authoritative = load_json(authoritative_path)
+        cases = authoritative.get("cases")
+        if not isinstance(cases, list) or len(cases) != 10:
+            fail("authoritative KiraKira definition must contain exactly ten cases")
+        case_ids = [
+            case.get("case_id") for case in cases if isinstance(case, dict)
+        ]
+        if (
+            len(case_ids) != 10
+            or len(set(case_ids)) != 10
+            or set(case_ids) != set(KIRA_RAMP_LAYERS_BY_CASE)
+        ):
+            fail("authoritative KiraKira case identity set mismatch")
+        authoritative_rows = [
+            row for row in rows if is_kira_authoritative_row(row)
+        ]
+        expected_authoritative_rows = {
+            (case_id, depth)
+            for case_id in KIRA_RAMP_LAYERS_BY_CASE
+            for depth in (8, 16, 32)
+        }
+        actual_authoritative_rows = {
+            (row.get("case_id"), row.get("depth"))
+            for row in authoritative_rows
+        }
+        if (
+            len(authoritative_rows) != 30
+            or actual_authoritative_rows != expected_authoritative_rows
+        ):
+            fail("authoritative KiraKira all-30 row matrix mismatch")
+        for case in cases:
+            if not isinstance(case, dict):
+                fail("authoritative KiraKira case is not an object")
+            expected_source_sha, expected_property_sha = (
+                KIRA_AUTHORITATIVE_HASHES[case["case_id"]]
+            )
+            verify_kira_rich42_preimage(
+                case,
+                f"authoritative KiraKira case {case.get('case_id')}",
+            )
+            case_number = int(case["case_id"][-2:])
+            if (
+                case.get("intentional_noop") is not False
+                or case.get("depths") != [8, 16, 32]
+                or type(case.get("mode")) is not int
+                or case["mode"] not in (1, 2, 3, 4)
+                or type(case.get("merge_mode")) is not int
+                or case["merge_mode"] not in (1, 2)
+                or type(case.get("approximated_input")) is not int
+                or case["approximated_input"] not in (0, 1)
+                or (
+                    case["mode"],
+                    case["merge_mode"],
+                    case["approximated_input"],
+                )
+                != KIRA_MODE_METADATA[case["case_id"]]
+                or not strict_equal(
+                    case.get("source"),
+                    {
+                        "member": (
+                            f"inputs/kirakira_final_random_{case_number:02d}.exr"
+                        ),
+                        "sha256": expected_source_sha,
+                    },
+                )
+                or case.get("full_42_property_readback_sha256")
+                != expected_property_sha
+            ):
+                fail(
+                    "authoritative KiraKira case mode/depth/no-op contract mismatch: "
+                    f"{case.get('case_id')}"
+                )
+            require_sha(
+                case.get("full_42_property_readback_sha256"),
+                f"{case.get('case_id')}.full_42_property_readback_sha256",
+            )
+        capture_tool = files.get(KIRA_RICH42_CAPTURE_TOOL)
+        if (
+            capture_tool is None
+            or sha256(capture_tool) != KIRA_RICH42_CAPTURE_TOOL_SHA256
+        ):
+            fail("authoritative KiraKira rich-42 capture tool binding mismatch")
+        authoritative_case_by_id = {case["case_id"]: case for case in cases}
+        for row in authoritative_rows:
+            expected_source_sha, _ = KIRA_AUTHORITATIVE_HASHES[row["case_id"]]
+            case_number = int(row["case_id"][-2:])
+            verify_kira_rich42_writable_values(
+                authoritative_case_by_id[row["case_id"]][
+                    "full_42_property_readback_preimage"
+                ],
+                row["parameter_writes"],
+                row["standard_options"],
+                row["row_id"],
+            )
+            if (
+                row["source_member"]
+                != f"inputs/kirakira_final_random_{case_number:02d}.exr"
+                or row["source_sha256"] != expected_source_sha
+                or row["aex_sha256"] != KIRA_AEX_SHA256
+            ):
+                fail(f"authoritative KiraKira row hash/member drift: {row['row_id']}")
     return files, campaign, inventory, execution
 
 
@@ -1626,18 +2265,21 @@ def verify_project_data(
         or data["observed_project_sha256"] != canonical_json_sha256(observed)
     ):
         fail(f"{label}: expected/observed project hash mismatch")
+    expected_observed_keys = {
+        "project_return_member",
+        "project_sha256",
+        "run_nonce",
+        "source",
+        "comp",
+        "source_layer",
+        "effect",
+        "render_queue_items",
+    }
+    if CAMPAIGN_ID == R5_CAMPAIGN_ID:
+        expected_observed_keys.add("project_item_inventory")
     require_exact_keys(
         observed,
-        {
-            "project_return_member",
-            "project_sha256",
-            "run_nonce",
-            "source",
-            "comp",
-            "source_layer",
-            "effect",
-            "render_queue_items",
-        },
+        expected_observed_keys,
         f"{label}.observed_project",
     )
     source = observed["source"]
@@ -1669,16 +2311,21 @@ def verify_project_data(
         {"item_name", "item_id", "contract", "num_layers"},
         f"{label}.comp",
     )
+    expected_source_layer_keys = {
+        "index",
+        "source_item_id",
+        "scale",
+        "centered",
+        "effect_parade_count_before_add",
+        "effect_parade_count_after_add",
+    }
+    if CAMPAIGN_ID == R5_CAMPAIGN_ID:
+        expected_source_layer_keys.update(
+            {"startTime", "inPoint", "outPoint", "stretch", "timeRemapEnabled"}
+        )
     require_exact_keys(
         source_layer,
-        {
-            "index",
-            "source_item_id",
-            "scale",
-            "centered",
-            "effect_parade_count_before_add",
-            "effect_parade_count_after_add",
-        },
+        expected_source_layer_keys,
         f"{label}.source_layer",
     )
     require_exact_keys(
@@ -1708,20 +2355,23 @@ def verify_project_data(
         record = render_queue[branch]
         if not isinstance(record, dict):
             fail(f"{label}: {branch} render-queue record is not an object")
+        expected_rq_keys = {
+            "id",
+            "queue_index",
+            "comp_item_id",
+            "effect_enabled",
+            "output_member",
+            "output_runtime_path",
+            "output_module_index",
+            "render_settings_capture_method",
+            "render_settings_serialization",
+            "render_settings_serialization_sha256",
+        }
+        if CAMPAIGN_ID == R5_CAMPAIGN_ID:
+            expected_rq_keys.update({"timeSpanStart", "timeSpanDuration"})
         require_exact_keys(
             record,
-            {
-                "id",
-                "queue_index",
-                "comp_item_id",
-                "effect_enabled",
-                "output_member",
-                "output_runtime_path",
-                "output_module_index",
-                "render_settings_capture_method",
-                "render_settings_serialization",
-                "render_settings_serialization_sha256",
-            },
+            expected_rq_keys,
             f"{label}.{branch}",
         )
         render_settings = parse_render_settings_serialization(
@@ -1752,6 +2402,15 @@ def verify_project_data(
             != hashlib.sha256(
                 record["render_settings_serialization"].encode("utf-8")
             ).hexdigest()
+            or CAMPAIGN_ID == R5_CAMPAIGN_ID
+            and (
+                type(record["timeSpanStart"]) is not float
+                or record["timeSpanStart"]
+                != row["comp"]["render_time_span_start_seconds"]
+                or type(record["timeSpanDuration"]) is not float
+                or record["timeSpanDuration"]
+                != row["comp"]["render_time_span_duration_seconds"]
+            )
         ):
             fail(f"{label}: {branch} render-queue observation mismatch")
     if (
@@ -1760,6 +2419,34 @@ def verify_project_data(
     ):
         fail(f"{label}: RQ material settings differ beyond Effects mode")
     interpretation = row["project_contract"]["input_interpretation"]
+    if CAMPAIGN_ID == R5_CAMPAIGN_ID:
+        project_items = observed["project_item_inventory"]
+        if (
+            not isinstance(project_items, list)
+            or len(project_items) != 2
+            or any(not isinstance(item, dict) for item in project_items)
+        ):
+            fail(f"{label}: project item inventory must contain exactly two items")
+        for item in project_items:
+            require_exact_keys(
+                item,
+                {"name", "item_type", "item_id"},
+                f"{label}.project_item_inventory",
+            )
+        expected_project_items = [
+            {
+                "name": interpretation["footage_item_name"],
+                "item_type": "FootageItem",
+                "item_id": source["footage_item_id"],
+            },
+            {
+                "name": interpretation["comp_item_name"],
+                "item_type": "CompItem",
+                "item_id": comp["item_id"],
+            },
+        ]
+        if not strict_equal(project_items, expected_project_items):
+            fail(f"{label}: named project item type/cardinality mismatch")
     if (
         observed["project_return_member"] != project_relative
         or observed["project_sha256"] != project_sha256
@@ -1796,6 +2483,17 @@ def verify_project_data(
         or source_layer["effect_parade_count_before_add"] != 0
         or type(source_layer["effect_parade_count_after_add"]) is not int
         or source_layer["effect_parade_count_after_add"] != 1
+        or CAMPAIGN_ID == R5_CAMPAIGN_ID
+        and not strict_equal(
+            {
+                "startTime": source_layer["startTime"],
+                "inPoint": source_layer["inPoint"],
+                "outPoint": source_layer["outPoint"],
+                "stretch": source_layer["stretch"],
+                "timeRemapEnabled": source_layer["timeRemapEnabled"],
+            },
+            row["comp"]["source_layer_timing"],
+        )
         or not strict_equal(
             {
                 "display_name": effect["display_name"],
@@ -2237,6 +2935,227 @@ def trace_control_value_matches(
     return type(value) is int and strict_equal(value, action.get("value"))
 
 
+def verify_plugin_deployment(
+    deployment: object,
+    row: dict[str, Any],
+    label: str,
+) -> str:
+    if not isinstance(deployment, dict):
+        fail(f"{label}: plugin_deployment must be an object")
+    require_exact_keys(
+        deployment,
+        {
+            "localappdata_path",
+            "declared_root_inventory",
+            "external_collision_counts",
+            "staging_campaign_root",
+            "staging_precleanup_inventory",
+            "staging_cleanup_performed",
+            "staging_empty_before_copy",
+            "isolated_staging_path",
+            "isolated_staging_sha256",
+            "deployment_campaign_root",
+            "deployment_precleanup_inventory",
+            "deployment_cleanup_performed",
+            "deployment_empty_before_copy",
+            "deployed_runtime_path",
+            "deployed_runtime_sha256",
+            "copy_count_for_plugin",
+            "staging_postcleanup_nonexistent",
+            "request_tree_write_count",
+            "read_only_preflight_completed_before_explicit_user_start",
+            "deployment_began_after_explicit_user_start",
+            "ae_started_after_verified_deployment_and_staging_cleanup",
+        },
+        f"{label}.plugin_deployment",
+    )
+    inventory = deployment["declared_root_inventory"]
+    root_ids = row["plugin_deployment_contract"][
+        "declared_ae_26_3_plugin_root_ids"
+    ]
+    if (
+        not isinstance(inventory, list)
+        or len(inventory) < len(root_ids)
+        or any(not isinstance(record, dict) for record in inventory)
+    ):
+        fail(f"{label}: declared-root inventory cardinality mismatch")
+    observed_root_ids = [record.get("root_id") for record in inventory]
+    if set(observed_root_ids) != set(root_ids):
+        fail(f"{label}: declared-root inventory coverage mismatch")
+    target = row["plugin_deployment_contract"]["target"]
+    external_basename = 0
+    external_display = 0
+    external_match = 0
+    for index, record in enumerate(inventory):
+        require_exact_keys(
+            record,
+            {
+                "root_id",
+                "declared_path_expression",
+                "resolved_absolute_path",
+                "exists",
+                "aex_basename",
+                "aex_absolute_path",
+                "sha256",
+                "effect_display_name",
+                "effect_match_name",
+            },
+            f"{label}.plugin_deployment.declared_root_inventory[{index}]",
+        )
+        if (
+            record["root_id"] not in root_ids
+            or not isinstance(record["declared_path_expression"], str)
+            or not record["declared_path_expression"]
+            or not isinstance(record["resolved_absolute_path"], str)
+            or re.match(
+                r"^(?:[A-Za-z]:[\\/]|\\\\)", record["resolved_absolute_path"]
+            )
+            is None
+            or type(record["exists"]) is not bool
+        ):
+            fail(f"{label}: malformed declared-root inventory row {index}")
+        candidate_fields = (
+            "aex_basename",
+            "aex_absolute_path",
+            "sha256",
+            "effect_display_name",
+            "effect_match_name",
+        )
+        values = [record[field] for field in candidate_fields]
+        if all(value is None for value in values):
+            continue
+        if (
+            any(not isinstance(value, str) or not value for value in values)
+            or re.match(r"^(?:[A-Za-z]:[\\/]|\\\\)", record["aex_absolute_path"])
+            is None
+        ):
+            fail(f"{label}: partial/malformed AEX inventory candidate {index}")
+        require_sha(record["sha256"], f"{label}.plugin_deployment.inventory[{index}]")
+        same_basename = record["aex_basename"].casefold() == target[
+            "aex_basename"
+        ].casefold()
+        same_display = record["effect_display_name"] == target["effect_display_name"]
+        same_match = record["effect_match_name"] == target["effect_match_name"]
+        external_basename += int(same_basename)
+        external_display += int(same_display)
+        external_match += int(same_match)
+    collision_counts = deployment["external_collision_counts"]
+    expected_gate = row["plugin_deployment_contract"]["effective_target_gate"]
+    if not isinstance(collision_counts, dict):
+        fail(f"{label}: external_collision_counts must be an object")
+    require_exact_keys(
+        collision_counts,
+        set(expected_gate),
+        f"{label}.plugin_deployment.external_collision_counts",
+    )
+    for field, observed in (
+        ("external_same_basename_count_before_copy", external_basename),
+        ("external_same_effect_display_name_count_before_copy", external_display),
+        ("external_same_effect_match_name_count_before_copy", external_match),
+    ):
+        if not is_exact_int(collision_counts[field], observed) or observed != 0:
+            fail(f"{label}: external pre-copy collision gate failed: {field}")
+    precleanup = deployment["deployment_precleanup_inventory"]
+    if not isinstance(precleanup, list):
+        fail(f"{label}: precleanup campaign-root inventory must be an array")
+    for index, record in enumerate(precleanup):
+        if not isinstance(record, dict):
+            fail(f"{label}: malformed precleanup inventory row {index}")
+        require_exact_keys(
+            record,
+            {"absolute_path", "sha256", "is_reparse_point"},
+            f"{label}.plugin_deployment.precleanup[{index}]",
+        )
+        if (
+            not isinstance(record["absolute_path"], str)
+            or re.match(r"^(?:[A-Za-z]:[\\/]|\\\\)", record["absolute_path"])
+            is None
+            or record["is_reparse_point"] is not False
+        ):
+            fail(f"{label}: unsafe precleanup campaign-root member")
+        require_sha(record["sha256"], f"{label}.plugin_deployment.precleanup[{index}]")
+    staging_precleanup = deployment["staging_precleanup_inventory"]
+    if not isinstance(staging_precleanup, list):
+        fail(f"{label}: staging_precleanup_inventory must be an array")
+    for index, record in enumerate(staging_precleanup):
+        if not isinstance(record, dict):
+            fail(f"{label}: malformed staging precleanup row {index}")
+        require_exact_keys(
+            record,
+            {"absolute_path", "sha256", "is_reparse_point"},
+            f"{label}.plugin_deployment.staging_precleanup[{index}]",
+        )
+        if (
+            not isinstance(record["absolute_path"], str)
+            or re.match(r"^(?:[A-Za-z]:[\/]|\\\\)", record["absolute_path"])
+            is None
+            or record["is_reparse_point"] is not False
+        ):
+            fail(f"{label}: unsafe staging precleanup member")
+        require_sha(
+            record["sha256"],
+            f"{label}.plugin_deployment.staging_precleanup[{index}]",
+        )
+    if (
+        deployment["deployment_cleanup_performed"] is not True
+        or deployment["deployment_empty_before_copy"] is not True
+        or deployment["staging_cleanup_performed"] is not True
+        or deployment["staging_empty_before_copy"] is not True
+        or deployment["staging_postcleanup_nonexistent"] is not True
+        or not is_exact_int(deployment["request_tree_write_count"], 0)
+        or deployment["read_only_preflight_completed_before_explicit_user_start"]
+        is not True
+        or deployment["deployment_began_after_explicit_user_start"] is not True
+        or deployment[
+            "ae_started_after_verified_deployment_and_staging_cleanup"
+        ]
+        is not True
+    ):
+        fail(f"{label}: cleanup/sequencing/request-read-only gate failed")
+    staging_path = deployment["isolated_staging_path"]
+    deployed_path = deployment["deployed_runtime_path"]
+    localappdata_path = deployment["localappdata_path"]
+    staging_root = deployment["staging_campaign_root"]
+    deployment_root = deployment["deployment_campaign_root"]
+    for field, value in (
+        ("isolated_staging_path", staging_path),
+        ("deployed_runtime_path", deployed_path),
+        ("localappdata_path", localappdata_path),
+        ("staging_campaign_root", staging_root),
+        ("deployment_campaign_root", deployment_root),
+    ):
+        if (
+            not isinstance(value, str)
+            or re.match(r"^(?:[A-Za-z]:[\\/]|\\\\)", value) is None
+        ):
+            fail(f"{label}: {field} must be an absolute Windows path")
+    if (
+        staging_root
+        != ntpath.join(
+            localappdata_path,
+            "OLM_Codex_Staging",
+            CAMPAIGN_ID,
+        )
+        or staging_path
+        != ntpath.join(staging_root, row["plugin"], target["aex_basename"])
+        or not deployment_root.replace("\\", "/").casefold().endswith(
+            (
+                "/adobe/common/plug-ins/7.0/mediacore/"
+                f"olm_codex_isolated/{CAMPAIGN_ID}"
+            ).casefold()
+        )
+        or deployed_path
+        != ntpath.join(deployment_root, row["plugin"], target["aex_basename"])
+        or deployment["isolated_staging_sha256"] != target["sha256"]
+        or deployment["deployed_runtime_sha256"] != target["sha256"]
+        or not is_exact_int(deployment["copy_count_for_plugin"], 1)
+    ):
+        fail(f"{label}: isolated plugin deployment path binding mismatch")
+    if not strict_equal(collision_counts, expected_gate):
+        fail(f"{label}: effective deployed target/collision counts mismatch")
+    return deployed_path
+
+
 def verify_process_data(data: dict[str, Any], row: dict[str, Any], label: str) -> None:
     required = {
         "ae_version",
@@ -2263,6 +3182,8 @@ def verify_process_data(data: dict[str, Any], row: dict[str, Any], label: str) -
         "process_start_unix_ns",
         "process_end_unix_ns",
     }
+    if CAMPAIGN_ID == R5_CAMPAIGN_ID:
+        required.add("plugin_deployment")
     require_exact_keys(data, required, f"{label}.process")
     if (
         data["ae_version"] != "26.3x87"
@@ -2288,6 +3209,11 @@ def verify_process_data(data: dict[str, Any], row: dict[str, Any], label: str) -
     aerender = data["aerender"]
     child = data["real_afterfx_child"]
     module = data["module"]
+    deployed_runtime_path = None
+    if CAMPAIGN_ID == R5_CAMPAIGN_ID:
+        deployed_runtime_path = verify_plugin_deployment(
+            data["plugin_deployment"], row, label
+        )
     project = data["project"]
     outputs = data["outputs"]
     diagnostic_outputs = data["diagnostic_outputs"]
@@ -2388,6 +3314,8 @@ def verify_process_data(data: dict[str, Any], row: dict[str, Any], label: str) -
         or not module["load_time_utc"]
         or not isinstance(module.get("unload_time_utc"), str)
         or not module["unload_time_utc"]
+        or CAMPAIGN_ID == R5_CAMPAIGN_ID
+        and module.get("path") != deployed_runtime_path
     ):
         fail(f"{label}: loaded module is not bound to the real AfterFX child")
     if child.get("parent_pid") != aerender["pid"]:
@@ -2664,6 +3592,997 @@ def verify_process_data(data: dict[str, Any], row: dict[str, Any], label: str) -
     require_sha(etw_export["tool_sha256"], f"{label}.etw_export.tool_sha256")
 
 
+def require_hex_word(value: object, label: str) -> int:
+    if (
+        not isinstance(value, str)
+        or re.fullmatch(r"0x[0-9a-f]{8}", value) is None
+    ):
+        fail(f"{label}: expected lowercase 0x-prefixed u32")
+    return int(value, 16)
+
+
+def require_pointer(value: object, label: str) -> int:
+    if (
+        not isinstance(value, str)
+        or re.fullmatch(r"0x[0-9a-f]{1,16}", value) is None
+        or int(value, 16) == 0
+    ):
+        fail(f"{label}: expected nonzero lowercase pointer")
+    return int(value, 16)
+
+
+def f32_from_word(word: int) -> float:
+    return struct.unpack("<f", struct.pack("<I", word))[0]
+
+
+def word_from_f32(value: float) -> int:
+    return struct.unpack("<I", struct.pack("<f", value))[0]
+
+
+def authoritative_kira_case(
+    files: dict[str, Path],
+    row: dict[str, Any],
+) -> dict[str, Any]:
+    definition_path = files.get(KIRA_AUTHORITATIVE_DEFINITION)
+    if definition_path is None:
+        fail(f"{row['row_id']}: authoritative KiraKira definition missing")
+    definition = load_json(definition_path)
+    matches = [
+        case
+        for case in definition.get("cases", [])
+        if isinstance(case, dict) and case.get("case_id") == row["case_id"]
+    ]
+    if len(matches) != 1:
+        fail(f"{row['row_id']}: authoritative KiraKira case is not unique")
+    return matches[0]
+
+
+def verify_kira_property_readback(
+    files: dict[str, Path],
+    row: dict[str, Any],
+    batch_sha: str,
+    params_before: dict[str, Any],
+) -> None:
+    row_id = row["row_id"]
+    relative = f"evidence/{row_id}/{KIRA_PROPERTY_READBACK_FILE}"
+    path = files.get(relative)
+    if path is None:
+        fail(f"{row_id}: authoritative 42-property readback missing")
+    data = require_binding(
+        path,
+        load_json(path),
+        "kirakira_property_readback",
+        row,
+        batch_sha,
+    )
+    require_exact_keys(
+        data,
+        {"properties", "canonical_sha256", "capture_phase"},
+        f"{row_id}.kirakira_property_readback.data",
+    )
+    params_before_values = params_before["values"]
+    params_before_sha = params_before["values_sha256"]
+    verify_kira_capture_phase(data["capture_phase"], params_before_sha, row_id)
+    properties = data["properties"]
+    case = authoritative_kira_case(files, row)
+    expected_sha = require_sha(
+        case.get("full_42_property_readback_sha256"),
+        f"{row_id}.full_42_property_readback_sha256",
+    )
+    expected_preimage = verify_kira_rich42_preimage(case, row_id)
+    verify_kira_rich42_writable_values(
+        properties,
+        params_before_values["parameter_actions"],
+        params_before_values["standard_options"],
+        row_id,
+    )
+    if (
+        not isinstance(properties, list)
+        or len(properties) != 42
+        or not strict_equal(properties, expected_preimage)
+        or data["canonical_sha256"] != canonical_json_sha256(properties)
+        or data["canonical_sha256"] != expected_sha
+    ):
+        fail(f"{row_id}: authoritative 42-property canonical hash/count mismatch")
+    required_fields = {
+        "path",
+        "path_full",
+        "name",
+        "match_name",
+        "property_index",
+        "property_type",
+        "property_value_type",
+        "is_time_varying",
+        "num_keys",
+        "can_set_expression",
+        "expression_enabled",
+        "enabled",
+        "active",
+        "value",
+        "value_read_method",
+        "range_metadata",
+    }
+    surface_rows = row["parameter_surface"]["exact_rows"]
+    plugin_surface = {
+        item["match_name"]: item
+        for item in surface_rows
+        if isinstance(item, dict) and isinstance(item.get("match_name"), str)
+    }
+    params_before_actions = {
+        action["match_name"]: action
+        for action in params_before_values["parameter_actions"]
+    }
+    params_before_options = {
+        option["match_name"]: option
+        for option in params_before_values["standard_options"]
+    }
+    expected_names = set(plugin_surface) | {
+        option["match_name"] for option in COMMON_STANDARD_OPTIONS
+    }
+    expected_order = [
+        item["match_name"] for item in surface_rows
+    ] + [option["match_name"] for option in COMMON_STANDARD_OPTIONS]
+    if [record.get("match_name") for record in properties] != expected_order:
+        fail(f"{row_id}: full 42-property order mismatch")
+    observed_names: set[str] = set()
+    for index, record in enumerate(properties):
+        if (
+            not isinstance(record, dict)
+            or not required_fields <= set(record)
+        ):
+            fail(f"{row_id}: malformed 42-property row {index}")
+        match_name = record["match_name"]
+        try:
+            ae_property_type = int(record["property_type"])
+            property_value_type = int(record["property_value_type"])
+        except (TypeError, ValueError):
+            fail(f"{row_id}: nonnumeric property type row {index}")
+        unreadable = property_value_type in (6412, 6419)
+        if (
+            not isinstance(record["path"], list)
+            or any(not isinstance(part, str) for part in record["path"])
+            or not isinstance(record["path_full"], list)
+            or any(not isinstance(part, str) for part in record["path_full"])
+            or not isinstance(record["name"], str)
+            or not isinstance(match_name, str)
+            or not match_name
+            or match_name in observed_names
+            or type(record["property_index"]) is not int
+            or record["property_index"] <= 0
+            or type(record["enabled"]) is not bool
+            or type(record["active"]) is not bool
+            or type(record["is_time_varying"]) is not bool
+            or type(record["num_keys"]) is not int
+            or record["num_keys"] < 0
+            or type(record["can_set_expression"]) is not bool
+            or type(record["expression_enabled"]) is not bool
+            or not isinstance(record["range_metadata"], dict)
+            or unreadable
+            and (
+                record["value"] is not None
+                or record["value_read_method"] is not None
+                or not isinstance(record.get("error"), str)
+                or not record["error"]
+            )
+            or not unreadable
+            and (
+                record["value_read_method"] != "value"
+                or "error" in record
+            )
+        ):
+            fail(f"{row_id}: invalid/duplicate 42-property row {index}")
+        observed_names.add(match_name)
+        surface = plugin_surface.get(match_name)
+        if surface is not None:
+            expected_action = params_before_actions.get(match_name)
+            if (
+                record["name"] != surface["display_name"]
+                or record["property_index"] != surface["property_index"]
+                or ae_property_type != 6212
+                or property_value_type != surface["property_type"]
+                or record["enabled"] is not surface["enabled"]
+                or record["active"] is not surface["active"]
+                or expected_action is not None
+                and not json_number_equal(
+                    record["value"], expected_action["value"]
+                )
+            ):
+                fail(f"{row_id}: plugin readback/surface mismatch row {index}")
+        else:
+            option = next(
+                (
+                    candidate
+                    for candidate in COMMON_STANDARD_OPTIONS
+                    if candidate["match_name"] == match_name
+                ),
+                None,
+            )
+            if (
+                option is None
+                or match_name not in params_before_options
+                or ae_property_type != 6212
+                or property_value_type != option["property_type"]
+                or not json_number_equal(
+                    record["value"],
+                    params_before_options[match_name]["value"],
+                )
+            ):
+                fail(f"{row_id}: standard-option readback mismatch row {index}")
+    if observed_names != expected_names:
+        fail(f"{row_id}: full 42-property identity set mismatch")
+
+
+def require_world(
+    value: object,
+    width: int,
+    height: int,
+    label: str,
+) -> tuple[int, int]:
+    if not isinstance(value, dict):
+        fail(f"{label}: world is not an object")
+    require_exact_keys(value, {"data", "rowbytes", "width", "height"}, label)
+    base = require_pointer(value["data"], f"{label}.data")
+    rowbytes = value["rowbytes"]
+    if (
+        type(rowbytes) is not int
+        or rowbytes <= 0
+        or value["width"] != width
+        or value["height"] != height
+    ):
+        fail(f"{label}: world geometry mismatch")
+    return base, rowbytes
+
+
+def verify_kira_writer(
+    writer: object,
+    row: dict[str, Any],
+    output_base: int,
+    output_rowbytes: int,
+    x: int,
+    y: int,
+    exported_words: list[int],
+    label: str,
+) -> None:
+    if not isinstance(writer, dict):
+        fail(f"{label}: writer is not an object")
+    require_exact_keys(
+        writer,
+        {
+            "entry",
+            "callsite_rva",
+            "return_seen",
+            "destination",
+            "pixel_bytes",
+            "xmm_f32_u32",
+            "stack_arg5_at_call",
+            "stack_arg5_at_entry",
+            "stored_argb",
+        },
+        label,
+    )
+    contract = KIRA_TYPED_ENTRIES[row["depth"]]
+    destination = require_pointer(writer["destination"], f"{label}.destination")
+    if (
+        writer["entry"] != contract["writer"]
+        or not isinstance(writer["callsite_rva"], str)
+        or re.fullmatch(r"0x[0-9a-f]+", writer["callsite_rva"]) is None
+        or writer["return_seen"] is not True
+        or writer["pixel_bytes"] != contract["pixel_bytes"]
+        or require_pointer(
+            writer["stack_arg5_at_call"],
+            f"{label}.stack_arg5_at_call",
+        )
+        != destination
+        or require_pointer(
+            writer["stack_arg5_at_entry"],
+            f"{label}.stack_arg5_at_entry",
+        )
+        != destination
+        or destination
+        != output_base + y * output_rowbytes + x * contract["pixel_bytes"]
+    ):
+        fail(f"{label}: typed writer identity/destination mismatch")
+    xmm = writer["xmm_f32_u32"]
+    if not isinstance(xmm, dict):
+        fail(f"{label}: XMM record is not an object")
+    require_exact_keys(
+        xmm,
+        {"xmm0_r", "xmm1_g", "xmm2_b", "xmm3_a"},
+        f"{label}.xmm_f32_u32",
+    )
+    rgba_words = [
+        require_hex_word(xmm[name], f"{label}.{name}")
+        for name in ("xmm0_r", "xmm1_g", "xmm2_b", "xmm3_a")
+    ]
+    rgba = [f32_from_word(word) for word in rgba_words]
+    if any(not math.isfinite(value) or not 0.0 <= value <= 1.0 for value in rgba):
+        fail(f"{label}: writer XMM value is not finite unit float32")
+    stored = writer["stored_argb"]
+    if not isinstance(stored, dict):
+        fail(f"{label}: stored_argb is not an object")
+    require_exact_keys(stored, {"unit", "values", "raw_hex"}, f"{label}.stored_argb")
+    if (
+        stored["unit"] != contract["stored_unit"]
+        or not isinstance(stored["values"], list)
+        or len(stored["values"]) != 4
+        or not isinstance(stored["raw_hex"], str)
+    ):
+        fail(f"{label}: stored ARGB shape mismatch")
+    argb_words = [rgba_words[3], rgba_words[0], rgba_words[1], rgba_words[2]]
+    if row["depth"] == 32:
+        expected_values: list[object] = [
+            f"0x{word:08x}" for word in argb_words
+        ]
+        expected_raw = struct.pack("<4I", *argb_words).hex()
+        expected_exported = rgba_words
+    else:
+        scale = int(contract["scale"])
+        expected_units = [math.trunc(f32_from_word(word) * scale) for word in argb_words]
+        expected_values = expected_units
+        if row["depth"] == 8:
+            if any(not 0 <= value <= 0xFF for value in expected_units):
+                fail(f"{label}: PF8 conversion is out of range")
+            expected_raw = bytes(expected_units).hex()
+        else:
+            if any(not 0 <= value <= 0xFFFF for value in expected_units):
+                fail(f"{label}: PF16 conversion is out of range")
+            expected_raw = struct.pack("<4H", *expected_units).hex()
+        expected_exported = [
+            word_from_f32(expected_units[channel] / scale)
+            for channel in (1, 2, 3, 0)
+        ]
+    if (
+        not strict_equal(stored["values"], expected_values)
+        or stored["raw_hex"] != expected_raw
+        or exported_words != expected_exported
+    ):
+        fail(f"{label}: typed writer store/export conversion mismatch")
+
+
+def verify_kira_ramp_record(
+    record: object,
+    expected_layer: str,
+    witness_id: str,
+    x: int,
+    y: int,
+    ray_word_by_layer: dict[str, int],
+    label: str,
+) -> None:
+    if not isinstance(record, dict):
+        fail(f"{label}: ramp record is not an object")
+    require_exact_keys(
+        record,
+        {
+            "layer_index",
+            "layer",
+            "use_ramp",
+            "block_pointer",
+            "raw_0x144_hex",
+            "raw_sha256",
+            "stop_count",
+            "stops",
+            "helper",
+        },
+        label,
+    )
+    layer_index = KIRA_LAYER_NAMES.index(expected_layer)
+    require_pointer(record["block_pointer"], f"{label}.block_pointer")
+    raw_hex = record["raw_0x144_hex"]
+    if (
+        record["layer_index"] != layer_index
+        or record["layer"] != expected_layer
+        or record["use_ramp"] is not True
+        or not isinstance(raw_hex, str)
+        or re.fullmatch(r"[0-9a-f]{648}", raw_hex) is None
+    ):
+        fail(f"{label}: ramp identity/raw block shape mismatch")
+    raw = bytes.fromhex(raw_hex)
+    if (
+        require_sha(record["raw_sha256"], f"{label}.raw_sha256")
+        != hashlib.sha256(raw).hexdigest()
+        or record["raw_sha256"] != KIRA_DEFAULT_RAMP_SHA256
+    ):
+        fail(f"{label}: ramp raw hash mismatch")
+    stop_count = struct.unpack_from("<i", raw, 0)[0]
+    stops = record["stops"]
+    if (
+        record["stop_count"] != stop_count
+        or not 0 <= stop_count <= 16
+        or not isinstance(stops, list)
+        or len(stops) != stop_count
+    ):
+        fail(f"{label}: ramp stop count mismatch")
+    stop_words: list[list[int]] = []
+    stop_keys = ("position_u32", "a_u32", "r_u32", "g_u32", "b_u32")
+    for index, stop in enumerate(stops):
+        if not isinstance(stop, dict):
+            fail(f"{label}: ramp stop {index} is not an object")
+        require_exact_keys(stop, set(stop_keys), f"{label}.stops[{index}]")
+        words = [
+            require_hex_word(stop[key], f"{label}.stops[{index}].{key}")
+            for key in stop_keys
+        ]
+        if words != list(struct.unpack_from("<5I", raw, 4 + index * 20)):
+            fail(f"{label}: decoded ramp stop {index} differs from raw block")
+        stop_words.append(words)
+    helper = record["helper"]
+    if not isinstance(helper, dict):
+        fail(f"{label}: ramp helper is not an object")
+    require_exact_keys(
+        helper,
+        {
+            "entry",
+            "entry_seen",
+            "return_seen",
+            "witness_id",
+            "xy",
+            "layer_index",
+            "block_pointer",
+            "raw_ray_input_u32",
+            "returned_argb_f32_u32",
+        },
+        f"{label}.helper",
+    )
+    xy = helper["xy"]
+    returned = helper["returned_argb_f32_u32"]
+    if (
+        helper["entry"] != "FUN_181232080"
+        or helper["entry_seen"] is not True
+        or helper["return_seen"] is not True
+        or helper["witness_id"] != witness_id
+        or not strict_equal(xy, {"x": x, "y": y})
+        or helper["layer_index"] != layer_index
+        or helper["block_pointer"] != record["block_pointer"]
+        or require_hex_word(
+            helper["raw_ray_input_u32"],
+            f"{label}.helper.raw_ray_input_u32",
+        )
+        != ray_word_by_layer[expected_layer]
+        or not isinstance(returned, list)
+        or len(returned) != 4
+        or any(
+            not isinstance(word, str)
+            or re.fullmatch(r"0x[0-9a-f]{8}", word) is None
+            for word in returned
+        )
+    ):
+        fail(f"{label}: ramp helper binding mismatch")
+    input_value = f32_from_word(ray_word_by_layer[expected_layer])
+    if not math.isfinite(input_value) or not stop_words:
+        fail(f"{label}: ramp helper input/stops cannot be evaluated")
+    decoded = [
+        [f32_from_word(word) for word in words]
+        for words in stop_words
+    ]
+    lower = None
+    upper = None
+    for stop in decoded:
+        if stop[0] <= input_value and (
+            lower is None or stop[0] >= lower[0]
+        ):
+            lower = stop
+        if stop[0] > input_value and (
+            upper is None or stop[0] < upper[0]
+        ):
+            upper = stop
+    if lower is None:
+        selected = upper
+        expected_return_words = [
+            word_from_f32(value) for value in selected[1:]
+        ]
+    elif upper is None:
+        expected_return_words = [
+            word_from_f32(value) for value in lower[1:]
+        ]
+    else:
+        span = f32_round(upper[0] - lower[0])
+        fraction = (
+            0.0
+            if abs(span) < f32_round(0.0001)
+            else f32_round(f32_round(input_value - lower[0]) / span)
+        )
+        expected_return_words = [
+            word_from_f32(
+                f32_round(
+                    lower[channel]
+                    + f32_round(
+                        fraction
+                        * f32_round(upper[channel] - lower[channel])
+                    )
+                )
+            )
+            for channel in range(1, 5)
+        ]
+    actual_return_words = [
+        require_hex_word(word, f"{label}.helper.returned_argb_f32_u32")
+        for word in returned
+    ]
+    if actual_return_words != expected_return_words:
+        fail(f"{label}: ramp helper result differs from decoded ramp interpolation")
+
+
+def verify_kira_lineage(
+    files: dict[str, Path],
+    row: dict[str, Any],
+    batch_sha: str,
+    process: dict[str, Any],
+) -> tuple[str, int, int, list[int]]:
+    row_id = row["row_id"]
+    relative = f"evidence/{row_id}/{KIRA_LINEAGE_FILE}"
+    path = files.get(relative)
+    if path is None:
+        fail(f"{row_id}: authoritative KiraKira lineage missing")
+    data = require_binding(
+        path,
+        load_json(path),
+        "kirakira_lineage",
+        row,
+        batch_sha,
+    )
+    require_exact_keys(
+        data,
+        {"identity", "witness", "ramp_records"},
+        f"{row_id}.kirakira_lineage.data",
+    )
+    case = authoritative_kira_case(files, row)
+    identity = data["identity"]
+    if not isinstance(identity, dict):
+        fail(f"{row_id}: lineage identity is not an object")
+    require_exact_keys(
+        identity,
+        {
+            "campaign_id",
+            "row_id",
+            "case_id",
+            "bits_per_channel",
+            "aerender_pid",
+            "afterfx_com_pid",
+            "module_base",
+            "aex_sha256",
+        },
+        f"{row_id}.lineage.identity",
+    )
+    if (
+        identity["campaign_id"] != CAMPAIGN_ID
+        or identity["row_id"] != row_id
+        or identity["case_id"] != row["case_id"]
+        or identity["bits_per_channel"] != row["depth"]
+        or identity["aerender_pid"] != process["aerender"]["pid"]
+        or identity["afterfx_com_pid"] != process["real_afterfx_child"]["pid"]
+        or require_pointer(identity["module_base"], f"{row_id}.module_base") <= 0
+        or identity["aex_sha256"] != KIRA_AEX_SHA256
+        or identity["aex_sha256"] != row["aex_sha256"]
+    ):
+        fail(f"{row_id}: lineage/process/module identity mismatch")
+    witness = data["witness"]
+    if not isinstance(witness, dict):
+        fail(f"{row_id}: lineage witness is not an object")
+    require_exact_keys(
+        witness,
+        {
+            "witness_id",
+            "output_xy",
+            "work_xy",
+            "owner",
+            "rays",
+            "inner",
+            "resize_bridge",
+            "owner_staging",
+            "outer",
+            "writer",
+            "exported_effect_on",
+        },
+        f"{row_id}.lineage.witness",
+    )
+    witness_id = witness["witness_id"]
+    output_xy = witness["output_xy"]
+    work_xy = witness["work_xy"]
+    if (
+        not isinstance(witness_id, str)
+        or not witness_id
+        or not isinstance(output_xy, dict)
+        or set(output_xy) != {"x", "y"}
+        or not isinstance(work_xy, dict)
+        or set(work_xy) != {"x", "y", "linear_index"}
+    ):
+        fail(f"{row_id}: witness ID/XY shape mismatch")
+    x = output_xy["x"]
+    y = output_xy["y"]
+    work_x = work_xy["x"]
+    work_y = work_xy["y"]
+    work_index = work_xy["linear_index"]
+    width = row["comp"]["width"]
+    height = row["comp"]["height"]
+    approximated = case["approximated_input"] == 1
+    work_width = int(width * 0.5) if approximated else width
+    work_height = int(height * 0.5) if approximated else height
+    if (
+        type(x) is not int
+        or type(y) is not int
+        or not 0 <= x < width
+        or not 0 <= y < height
+        or type(work_x) is not int
+        or type(work_y) is not int
+        or type(work_index) is not int
+        or not 0 <= work_x < work_width
+        or not 0 <= work_y < work_height
+        or work_index != work_y * work_width + work_x
+        or approximated
+        and (work_x != int(x * 0.5) or work_y != int(y * 0.5))
+        or not approximated
+        and (work_x != x or work_y != y)
+    ):
+        fail(f"{row_id}: witness XY is out of bounds")
+    owner = witness["owner"]
+    if not isinstance(owner, dict):
+        fail(f"{row_id}: owner is not an object")
+    require_exact_keys(
+        owner,
+        {
+            "entry",
+            "mode",
+            "merge_mode",
+            "approximated_input",
+            "source_world",
+            "output_world",
+        },
+        f"{row_id}.lineage.owner",
+    )
+    typed = KIRA_TYPED_ENTRIES[row["depth"]]
+    if (
+        owner["entry"] != typed["owner"]
+        or owner["mode"] != case["mode"]
+        or owner["merge_mode"] != case["merge_mode"]
+        or owner["approximated_input"] != case["approximated_input"]
+    ):
+        fail(f"{row_id}: owner mode/depth identity mismatch")
+    require_world(
+        owner["source_world"], width, height, f"{row_id}.owner.source_world"
+    )
+    output_base, output_rowbytes = require_world(
+        owner["output_world"], width, height, f"{row_id}.owner.output_world"
+    )
+    rays = witness["rays"]
+    if not isinstance(rays, list) or len(rays) != 5:
+        fail(f"{row_id}: lineage must contain exactly five ray records")
+    ray_word_by_layer: dict[str, int] = {}
+    for index, ray in enumerate(rays):
+        if not isinstance(ray, dict):
+            fail(f"{row_id}: ray {index} is not an object")
+        require_exact_keys(
+            ray,
+            {
+                "layer_index",
+                "layer",
+                "base",
+                "byte_offset",
+                "address",
+                "raw_f32_u32",
+            },
+            f"{row_id}.rays[{index}]",
+        )
+        base = require_pointer(ray["base"], f"{row_id}.rays[{index}].base")
+        address = require_pointer(
+            ray["address"], f"{row_id}.rays[{index}].address"
+        )
+        word = require_hex_word(
+            ray["raw_f32_u32"], f"{row_id}.rays[{index}].raw_f32_u32"
+        )
+        if (
+            ray["layer_index"] != index
+            or ray["layer"] != KIRA_LAYER_NAMES[index]
+            or ray["byte_offset"] != work_index * 4
+            or address != base + ray["byte_offset"]
+            or not math.isfinite(f32_from_word(word))
+        ):
+            fail(f"{row_id}: ray {index} pointer/value lineage mismatch")
+        ray_word_by_layer[ray["layer"]] = word
+    inner = witness["inner"]
+    if not isinstance(inner, dict):
+        fail(f"{row_id}: inner record is not an object")
+    require_exact_keys(
+        inner,
+        {
+            "slot",
+            "target",
+            "entry_seen",
+            "return_seen",
+            "output_base",
+            "byte_offset",
+            "address",
+            "rgba_f32_u32",
+        },
+        f"{row_id}.lineage.inner",
+    )
+    inner_base = require_pointer(inner["output_base"], f"{row_id}.inner.output_base")
+    inner_address = require_pointer(inner["address"], f"{row_id}.inner.address")
+    expected_slot = "+0x08" if case["merge_mode"] == 1 else "+0x10"
+    expected_target = (
+        "FUN_18114fd90" if case["merge_mode"] == 1 else "FUN_18114ffd0"
+    )
+    inner_words = inner["rgba_f32_u32"]
+    if (
+        inner["slot"] != expected_slot
+        or inner["target"] != expected_target
+        or inner["entry_seen"] is not True
+        or inner["return_seen"] is not True
+        or inner["byte_offset"] != work_index * 16
+        or inner_address != inner_base + inner["byte_offset"]
+        or not isinstance(inner_words, list)
+        or len(inner_words) != 4
+        or any(
+            not math.isfinite(
+                f32_from_word(require_hex_word(word, f"{row_id}.inner.rgba"))
+            )
+            for word in inner_words
+        )
+    ):
+        fail(f"{row_id}: inner aggregator pointer/return mismatch")
+    staging = witness["owner_staging"]
+    if not isinstance(staging, dict) or set(staging) != {"before", "after"}:
+        fail(f"{row_id}: owner staging shape mismatch")
+    before = staging["before"]
+    after = staging["after"]
+    if not isinstance(before, dict) or not isinstance(after, dict):
+        fail(f"{row_id}: owner staging records are not objects")
+    require_exact_keys(before, {"plus_0x78", "plus_0x140"}, f"{row_id}.staging.before")
+    require_exact_keys(after, {"plus_0x128", "plus_0x190"}, f"{row_id}.staging.after")
+    before_78 = require_pointer(before["plus_0x78"], f"{row_id}.staging.+78")
+    before_140 = require_pointer(before["plus_0x140"], f"{row_id}.staging.+140")
+    after_128 = require_pointer(after["plus_0x128"], f"{row_id}.staging.+128")
+    after_190 = require_pointer(after["plus_0x190"], f"{row_id}.staging.+190")
+    if before_78 != after_128 or before_140 != after_190:
+        fail(f"{row_id}: owner +0x128/+0x190 staging copy mismatch")
+    bridge = witness["resize_bridge"]
+    if case["approximated_input"] == 1:
+        if not isinstance(bridge, dict):
+            fail(f"{row_id}: approximated-input resize bridge missing")
+        require_exact_keys(
+            bridge,
+            {
+                "mapping",
+                "work_output_base",
+                "full_glow_base",
+                "work_xy",
+                "output_xy",
+            },
+            f"{row_id}.resize_bridge",
+        )
+        if (
+            bridge["mapping"] != "nearest"
+            or require_pointer(
+                bridge["work_output_base"], f"{row_id}.bridge.work_output_base"
+            )
+            != inner_base
+            or require_pointer(
+                bridge["full_glow_base"], f"{row_id}.bridge.full_glow_base"
+            )
+            != after_190
+            or not strict_equal(
+                bridge["work_xy"], {"x": work_x, "y": work_y}
+            )
+            or not strict_equal(bridge["output_xy"], {"x": x, "y": y})
+        ):
+            fail(f"{row_id}: approximated-input resize bridge mismatch")
+    elif bridge is not None or inner_base != after_190:
+        fail(f"{row_id}: unexpected/missing direct inner-to-staging pointer")
+    outer = witness["outer"]
+    if not isinstance(outer, dict):
+        fail(f"{row_id}: outer record is not an object")
+    require_exact_keys(
+        outer,
+        {
+            "entry",
+            "source_base",
+            "source_rowbytes",
+            "source_address",
+            "glow_base",
+            "glow_rowbytes",
+            "glow_address",
+        },
+        f"{row_id}.lineage.outer",
+    )
+    outer_source = require_pointer(outer["source_base"], f"{row_id}.outer.source_base")
+    outer_glow = require_pointer(outer["glow_base"], f"{row_id}.outer.glow_base")
+    if (
+        outer["entry"] != typed["outer"]
+        or outer_source != after_128
+        or outer_glow != after_190
+        or type(outer["source_rowbytes"]) is not int
+        or outer["source_rowbytes"] < width * 16
+        or type(outer["glow_rowbytes"]) is not int
+        or outer["glow_rowbytes"] < width * 16
+        or require_pointer(
+            outer["source_address"], f"{row_id}.outer.source_address"
+        )
+        != outer_source + y * outer["source_rowbytes"] + x * 16
+        or require_pointer(
+            outer["glow_address"], f"{row_id}.outer.glow_address"
+        )
+        != outer_glow + y * outer["glow_rowbytes"] + x * 16
+    ):
+        fail(f"{row_id}: outer source/glow XY lineage mismatch")
+    exported = witness["exported_effect_on"]
+    if not isinstance(exported, dict):
+        fail(f"{row_id}: exported pixel record is not an object")
+    require_exact_keys(
+        exported,
+        {"member", "xy", "semantic_rgba_f32_u32"},
+        f"{row_id}.exported_effect_on",
+    )
+    exported_words_raw = exported["semantic_rgba_f32_u32"]
+    if (
+        exported["member"] != f"outputs/{row_id}/effect_on.exr"
+        or not strict_equal(exported["xy"], {"x": x, "y": y})
+        or not isinstance(exported_words_raw, list)
+        or len(exported_words_raw) != 4
+    ):
+        fail(f"{row_id}: exported effect-on pixel binding mismatch")
+    exported_words = [
+        require_hex_word(word, f"{row_id}.exported_effect_on.rgba")
+        for word in exported_words_raw
+    ]
+    verify_kira_writer(
+        witness["writer"],
+        row,
+        output_base,
+        output_rowbytes,
+        x,
+        y,
+        exported_words,
+        f"{row_id}.writer",
+    )
+    ramp_records = data["ramp_records"]
+    expected_layers = KIRA_RAMP_LAYERS_BY_CASE[row["case_id"]]
+    if not isinstance(ramp_records, list) or len(ramp_records) != len(expected_layers):
+        fail(f"{row_id}: enabled-ramp record cardinality mismatch")
+    for index, (record, layer) in enumerate(
+        zip(ramp_records, expected_layers, strict=True)
+    ):
+        verify_kira_ramp_record(
+            record,
+            layer,
+            witness_id,
+            x,
+            y,
+            ray_word_by_layer,
+            f"{row_id}.ramp_records[{index}]",
+        )
+    return witness_id, x, y, exported_words
+
+
+def verify_kira_mode4(
+    files: dict[str, Path],
+    row: dict[str, Any],
+    batch_sha: str,
+    witness_id: str,
+    witness_x: int,
+    witness_y: int,
+) -> None:
+    row_id = row["row_id"]
+    relative = f"evidence/{row_id}/{KIRA_MODE4_FILE}"
+    path = files.get(relative)
+    if path is None:
+        fail(f"{row_id}: Mode4 full-caller trace missing")
+    data = require_binding(
+        path,
+        load_json(path),
+        "kirakira_mode4",
+        row,
+        batch_sha,
+    )
+    require_exact_keys(
+        data,
+        {
+            "witness_id",
+            "output_xy",
+            "layer_index",
+            "inline_entry",
+            "filter_calls",
+            "shared_tail",
+            "neighborhoods",
+            "full_caller_continuation",
+        },
+        f"{row_id}.kirakira_mode4.data",
+    )
+    calls = data["filter_calls"]
+    if (
+        data["witness_id"] != witness_id
+        or not strict_equal(
+            data["output_xy"],
+            {"x": witness_x, "y": witness_y},
+        )
+        or data["layer_index"] != 4
+        or data["inline_entry"] != "0x181150979"
+        or data["shared_tail"] != "0x181150f3d"
+        or data["full_caller_continuation"] is not True
+        or not isinstance(calls, list)
+        or len(calls) != 3
+    ):
+        fail(f"{row_id}: Mode4 entry/tail/call cardinality mismatch")
+    for index, call in enumerate(calls):
+        if not isinstance(call, dict):
+            fail(f"{row_id}: Mode4 call {index} is not an object")
+        require_exact_keys(
+            call,
+            {
+                "call_index",
+                "target",
+                "source_mat",
+                "destination_mat",
+                "gain_u32",
+            },
+            f"{row_id}.mode4.filter_calls[{index}]",
+        )
+        if (
+            call["call_index"] != index
+            or call["target"] != "FUN_181280bc0"
+            or require_pointer(
+                call["source_mat"], f"{row_id}.mode4.call[{index}].source"
+            )
+            <= 0
+            or require_pointer(
+                call["destination_mat"],
+                f"{row_id}.mode4.call[{index}].destination",
+            )
+            <= 0
+            or not math.isfinite(
+                f32_from_word(
+                    require_hex_word(
+                        call["gain_u32"],
+                        f"{row_id}.mode4.call[{index}].gain_u32",
+                    )
+                )
+            )
+        ):
+            fail(f"{row_id}: Mode4 filter call mismatch")
+    neighborhoods = data["neighborhoods"]
+    required_stages = {
+        "highlight_source",
+        "mode4_tail_r14",
+        "mode4_tail_r12",
+        "mode4_destination",
+    }
+    if not isinstance(neighborhoods, dict):
+        fail(f"{row_id}: Mode4 neighborhoods are not an object")
+    require_exact_keys(neighborhoods, required_stages, f"{row_id}.mode4.neighborhoods")
+    for stage in sorted(required_stages):
+        record = neighborhoods[stage]
+        if not isinstance(record, dict):
+            fail(f"{row_id}: Mode4 {stage} neighborhood is not an object")
+        require_exact_keys(
+            record,
+            {"shape", "unit", "words_u32", "packed_sha256"},
+            f"{row_id}.mode4.{stage}",
+        )
+        words = record["words_u32"]
+        if (
+            record["shape"] != [7, 9]
+            or record["unit"] != "le_f32_u32"
+            or not isinstance(words, list)
+            or len(words) != 63
+        ):
+            fail(f"{row_id}: Mode4 {stage} shape/word count mismatch")
+        packed = struct.pack(
+            "<63I",
+            *[
+                require_hex_word(
+                    word,
+                    f"{row_id}.mode4.{stage}.words_u32[{index}]",
+                )
+                for index, word in enumerate(words)
+            ],
+        )
+        if (
+            require_sha(
+                record["packed_sha256"],
+                f"{row_id}.mode4.{stage}.packed_sha256",
+            )
+            != hashlib.sha256(packed).hexdigest()
+        ):
+            fail(f"{row_id}: Mode4 {stage} packed hash mismatch")
+
+
 def verify_pass_row(
     files: dict[str, Path],
     row: dict[str, Any],
@@ -2782,6 +4701,30 @@ def verify_pass_row(
         fail(f"{row_id}: output-module observation changed across render")
     verify_process_data(evidence_data["process"], row, row_id)
     process = evidence_data["process"]
+    kira_exported_witness: tuple[str, int, int, list[int]] | None = None
+    if is_kira_authoritative_row(row):
+        verify_kira_property_readback(
+            files,
+            row,
+            batch_sha,
+            evidence_data["params_before"],
+        )
+        kira_exported_witness = verify_kira_lineage(
+            files,
+            row,
+            batch_sha,
+            process,
+        )
+        case = authoritative_kira_case(files, row)
+        if case["mode"] == 4:
+            verify_kira_mode4(
+                files,
+                row,
+                batch_sha,
+                kira_exported_witness[0],
+                kira_exported_witness[1],
+                kira_exported_witness[2],
+            )
     process_outputs = process["outputs"]
     for filename, log_name in (
         ("etw.etl", "etw_etl"),
@@ -2860,6 +4803,24 @@ def verify_pass_row(
     effect_on_info = inspect_float_rgba_exr(
         effect_on_path, (row["comp"]["width"], row["comp"]["height"])
     )
+    if kira_exported_witness is not None:
+        _, witness_x, witness_y, witness_words = kira_exported_witness
+        planes, exr_width, exr_height, _ = read_planes_with_layout(effect_on_path)
+        if (
+            exr_width != row["comp"]["width"]
+            or exr_height != row["comp"]["height"]
+        ):
+            fail(f"{row_id}: lineage effect-on EXR dimensions drifted")
+        offset = (witness_y * exr_width + witness_x) * 4
+        actual_rgba_words = [
+            struct.unpack(
+                "<I",
+                planes[channel][offset : offset + 4],
+            )[0]
+            for channel in ("R", "G", "B", "A")
+        ]
+        if actual_rgba_words != witness_words:
+            fail(f"{row_id}: lineage writer pixel differs from effect-on EXR")
     for kind, info in (
         ("exr_header_no_effect", no_effect_info),
         ("exr_header_effect_on", effect_on_info),
@@ -3912,6 +5873,17 @@ def expected_return_members(
                     ),
                 }
             )
+            if is_kira_authoritative_row(row):
+                evidence_root = f"evidence/{row_id}"
+                allowed.update(
+                    {
+                        f"{evidence_root}/{KIRA_PROPERTY_READBACK_FILE}",
+                        f"{evidence_root}/{KIRA_LINEAGE_FILE}",
+                    }
+                )
+                case = authoritative_kira_case(request_files, row)
+                if case["mode"] == 4:
+                    allowed.add(f"{evidence_root}/{KIRA_MODE4_FILE}")
         else:
             allowed.add(f"evidence/{row_id}/failure.json")
             allowed.update(fail_diagnostics[row_id])

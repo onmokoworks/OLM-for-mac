@@ -53,13 +53,13 @@ def main() -> int:
         "windows_raw_fixed": 1,
         "case_reports": reports,
         "rows": rows,
-        "boundary": "Three nondefault-rotation public-owner cases across PF8/PF16/PF32. The Windows AEX declares ANGLE but consumes its raw fixed integer as degrees; raw fixed 1 therefore corresponds to Mac rotation 1 degree. Mode2 also enables the default Ramp and Merge2. Actual exported SmartPreRender/SmartRender is compared to Mac public EffectMain active bytes with input, row padding, and output guards checked. Rotation 22 degrees remains a separate PF32 Merge2 rounding boundary.",
+        "boundary": "Three nondefault-rotation public-owner cases across PF8/PF16/PF32. The Windows AEX declares ANGLE but consumes its raw fixed integer as degrees; raw fixed 1 therefore corresponds to Mac rotation 1 degree. Mode2 also enables the default Ramp and Merge2. Actual exported SmartPreRender/SmartRender is compared to Mac public EffectMain active bytes with input, row padding, and output guards checked. Rotation 22 degrees is closed by the separate hash-bound owner-selector closure.",
     }
     REPORT.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     DOC.write_text(
         "# OLMKiraKira Mode 1〜3 nondefault Rotation gate（2026-08-12）\n\n"
         f"Status: **{report['status']}**\n\n"
-        "Windows raw fixed 1（実処理上1°）でMode 1、Mode 2（Ramp＋Merge2）、Mode 3（Gaussian Length 50）のactual exported Smart ownerとMac public EffectMainをPF8/PF16/PF32で比較する。Rotation 22°のMode2 PF32には別途丸め境界が残る。\n",
+        "Windows raw fixed 1（実処理上1°）でMode 1、Mode 2（Ramp＋Merge2）、Mode 3（Gaussian Length 50）のactual exported Smart ownerとMac public EffectMainをPF8/PF16/PF32で比較する。Rotation 22°は別のhash-bound owner-selector closureで3深度exactに閉じている。\n",
         encoding="utf-8",
     )
     print(json.dumps({"status": report["status"], "rows": len(rows)}))

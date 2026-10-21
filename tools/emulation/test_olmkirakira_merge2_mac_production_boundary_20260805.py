@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Focused AE-free gate for the bounded Mac Merge Mode 2 integration.
+"""Focused AE-free gate for the bounded Merge Mode 2 outer integration.
 
 The numeric oracle is independently binary-grounded in the checked-in AEX.
 This test also fail-closes on the production source shape.  It proves the
-no-ramp inner aggregator, outer scalar compose, and typed writer boundary; it
-does not prove ray production, host loading, or AE output.
+isolated FUN_18114ffd0 oracle, outer scalar compose, and typed writer boundary.
+The public owner uses FUN_18114fd90 for its inner aggregation, so this fixture
+does not claim that FUN_18114ffd0 is naturally dispatched.
 """
 
 from __future__ import annotations
@@ -36,20 +37,27 @@ def main() -> int:
     outer = load(OUTER, "kirakira_merge2_outer")
 
     anchors = {
-        "distinct_mode2_dispatch": "if (info.merge_mode == 2)" in source,
-        "five_mode2_layers": source.count("AddColoredMerge2(glow,") == 5,
-        "five_layer_order": source.index("AddColoredMerge2(glow, vertical")
-        < source.index("AddColoredMerge2(glow, horizontal")
-        < source.index("AddColoredMerge2(glow, diagonal,")
-        < source.index("AddColoredMerge2(glow, diagonal2")
-        < source.index("AddColoredMerge2(glow, highlight"),
+        "distinct_outer_mode2_dispatch": "if (info.merge_mode == 2)" in source,
+        "public_inner_is_fd90": (
+            source.count("AddColoredUnion(glow,") == 5
+            and "AddColoredMerge2(glow," not in source
+            and "both public merge choices use FUN_18114fd90" in source
+        ),
+        "five_layer_order": source.index("AddColoredUnion(glow, vertical")
+        < source.index("AddColoredUnion(glow, horizontal")
+        < source.index("AddColoredUnion(glow, diagonal,")
+        < source.index("AddColoredUnion(glow, diagonal2")
+        < source.index("AddColoredUnion(glow, highlight"),
         "gain_before_skip_and_ramp": (
             "const float scaled_amount = amount[i] * scale;" in core
             and "if (scaled_amount <= 0.001f)" in core
             and "sample_merge2_ramp(*ramp, scaled_amount)" in core
         ),
         "scaled_ray_alpha": "glow[i].a += scaled_amount;" in core,
-        "post_five_layer_clamp": all(f"g.{c} = Clamp01(g.{c});" in source for c in "rgba"),
+        "fd90_pf32_single_reciprocal": (
+            "const float inverse_alpha = 1.0f / g.a;" in source
+            and "if (bitdepth == 32)" in source
+        ),
         "outer_mode2_helper": "out = ComposeMerge2Pixel(" in source,
         "unscaled_alpha_zero_test": "raw_alpha_sum = glow.a + source.a;" in core,
         "source_then_glow_weighting": "red = source_r + glow_r;" in core,

@@ -1,0 +1,65 @@
+{
+  "after_effects_processes": [],
+  "authorities": {
+    "all10_authority": "94c6a1eff87e11705a65be638953cb134ff64bd0d919e8501338601aab333650",
+    "build_identity": "ddc9256d6ca78eec2f521335573589f7c626ae5827927a3399ea64d3a1934eff",
+    "field": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+    "fixture_png": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4",
+    "frontonly": "850e16884fb471ebcb313231a6d1c4593d33fc0d1cbebe18fa087166125ea2a5",
+    "install_identity": "237cb44594e15267e5d397c348b2ec4c8fefef06ad81eb8d0ed1db86da96f9fe",
+    "installed_binary": "856ab700df0881cfb039e9c9d0675bf46a7e92b56e8cb0e311d820fd719bc0de",
+    "missing_cpp": "8c0cc22b898c94c73556778f5cef1ccf9cded81ee590bd04feb49028ff4f44d9",
+    "probe": "da328189a619f9d245a4780b353a2d17d5559718a8b0c074a0d6c1eb05a7c377",
+    "rotate": "5b02748d421befb1ecda0fd36ff34c5b225ebee5e928e0460e1c14d174c101d7",
+    "rowdriver": "9f271073adaf2746a5144cf4793f0ebe574f51787705f265421710215596481d",
+    "sdk_header": "a6d5cdeba53f6934a9bac19c2c1b46b1478266f39995795c59244e3d9a355a0d",
+    "source": "494116880d037a0d44a48b0e0ebe0fc5358b4cd8892b90ca8c61ea8a7bb2e845",
+    "source_guard": "813013833b2a276de0513a567fb53d638a5ec2866868ba8c59a495550520a7b2",
+    "strings": "a9898e0e2cdd9d9c4e6f234c680081f68bb229772254a10ab1c1810fbf348daf",
+    "suite_cpp": "7c054c7b0778b1b26463d6bf31cd57ee1d971946e8da22fb174e9f088741606f",
+    "suite_h": "36e1acf66a90979bd541bfb260e4dbf58dab2d00afec7d749dfcffc43a6843f7"
+  },
+  "claim_boundary": "Both current installed Universal slices of DirectionalBlur match their source-built real-SDK SmartPreRender to SmartRender route for the fixed 32x18 dual-side Type2 tuple at PF8, PF16 and PF32, including 21 parameter checkout/checkin operations, input/noise optional lifecycle, padding and input immutability. Per-depth source-bit mutations fail closed with untouched output on each slice. The x86_64 route is executed under Rosetta. This is AE-free dlopen evidence and does not generalize the fixed actual-AEX source/tuple contract or claim native After Effects.",
+  "run_lines": [
+    "ARCH arm64",
+    "POS dual_side_type2_pf8 pass=1 source=0/0 installed=0/0",
+    "NEG source_bit_flip_pf8 pass=1 source=0/516 installed=0/516",
+    "POS dual_side_type2_pf16 pass=1 source=0/0 installed=0/0",
+    "NEG source_bit_flip_pf16 pass=1 source=0/516 installed=0/516",
+    "POS dual_side_type2_pf32 pass=1 source=0/0 installed=0/0",
+    "NEG source_bit_flip_pf32 pass=1 source=0/516 installed=0/516",
+    "SUMMARY pass=6 total=6",
+    "ARCH x86_64",
+    "POS dual_side_type2_pf8 pass=1 source=0/0 installed=0/0",
+    "NEG source_bit_flip_pf8 pass=1 source=0/516 installed=0/516",
+    "POS dual_side_type2_pf16 pass=1 source=0/0 installed=0/0",
+    "NEG source_bit_flip_pf16 pass=1 source=0/516 installed=0/516",
+    "POS dual_side_type2_pf32 pass=1 source=0/0 installed=0/0",
+    "NEG source_bit_flip_pf32 pass=1 source=0/516 installed=0/516",
+    "SUMMARY pass=6 total=6"
+  ],
+  "run_sha256": "3443333ffec2b2e40f8de2f152f20956c42678a65d65a058a663671432b33e0c",
+  "schema": "olmdirectionalblur.current-installed-dual-side/1",
+  "scope": {
+    "arbitrary_source_tuple_geometry": false,
+    "installed_arm64": true,
+    "installed_x86_64": true,
+    "native_after_effects": false
+  },
+  "status": "PASS_OLMDIRECTIONALBLUR_CURRENT_INSTALLED_DUAL_SIDE_TYPE2_ALL_DEPTHS_AE_FREE",
+  "summary": {
+    "architectures": [
+      "arm64",
+      "x86_64"
+    ],
+    "depths": [
+      8,
+      16,
+      32
+    ],
+    "positive_cells_per_slice": 3,
+    "positive_cells_total": 6,
+    "source_installed_byte_identical": true,
+    "source_mutation_rejects_per_slice": 3
+  }
+}

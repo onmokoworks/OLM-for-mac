@@ -37,16 +37,18 @@ def main() -> int:
         "make_ray(info.vertical_length, 90.0 + glow_rotation)",
         "make_ray(info.horizontal_length, glow_rotation)",
         "make_ray(info.diagonal_length, 45.0 + glow_rotation)",
-        "make_ray(info.diagonal2_length, -45.0 + glow_rotation)",
+        "make_ray(info.diagonal2_length, 135.0 + glow_rotation)",
     )
     assert all(route in source for route in ray_routes)
-    assert source.count("AddColoredUnion(glow,") >= 5
-    assert source.count("AddColoredMerge2(glow,") >= 5
+    assert source.count("AddColoredUnion(glow,") == 5
+    assert "AddColoredMerge2(glow," not in source
     assert "if (blur_mode == 3 && !mode3_admitted) return input;" in source
     assert "if (bitdepth == 8) return RenderTyped<PF_Pixel8>" in source
     assert "if (bitdepth == 16) return RenderTyped<PF_Pixel16>" in source
     assert "if (bitdepth == 32) return RenderTyped<PF_PixelFloat>" in source
-    for angle, expected_wh in ((0, (9, 7)), (45, (9, 9)), (-45, (9, 9)), (90, (9, 9))):
+    # The direct helper evidence keeps a -45 primitive case, while the public
+    # owner selects the bit-distinct +135 representative for Diagonal 2.
+    for angle, expected_wh in ((0, (9, 7)), (45, (9, 9)), (135, (9, 9)), (90, (9, 9))):
         assert (extent(5, 3, angle), extent(3, 5, angle)) == expected_wh
 
     with tempfile.TemporaryDirectory(prefix="kira_mode3_default50_") as td:

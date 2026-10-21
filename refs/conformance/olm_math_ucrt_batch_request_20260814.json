@@ -1,0 +1,75 @@
+{
+  "acceptance": {
+    "after_effects_required": false,
+    "all_1344_rows_required": true,
+    "one_amd64_process": true,
+    "same_system32_ucrt_identity_required": true
+  },
+  "boundary": {
+    "directional_six_remain_fail_closed": true,
+    "distance_power_eight_remain_fail_closed": true,
+    "native_windows_return_included": false,
+    "production_admission_changed": false,
+    "returned_words_alone_sufficient_for_promotion": false
+  },
+  "children": {
+    "directional": {
+      "files": {
+        "README.md": "e5de4d10dea896aa8f9c024db9435b7d4ab3703ce2e3eca87bdbae9626f24e09",
+        "UcrtExpfCapture.cs": "abba08ce55644ac7ace25bdca91aa938c4efc73e94290b046f99e60fec1f3515",
+        "expf_vectors.json": "f48aa088fe1040d3985a7b8eeb66211c082ff716b07ba1ac002129d7dd18b1a8",
+        "request_manifest.json": "2979fc4de8813b5838f966305c06c1af1b2cc050b5f1fa3641fa9f94c65b3c53",
+        "run_olmdirectionalblur_remaining6_ucrt_expf.ps1": "39f3b18674a73d83e1d8f1a968ba7359ee00c996c9c76e78cee483fc20a9fd3d"
+      },
+      "request_id": "olm_runtime_trace_olmdirectionalblur_remaining6_ucrt_expf_20260814",
+      "symbol": "expf",
+      "vectors": 494
+    },
+    "directional_powf": {
+      "files": {
+        "README.md": "dd25461847cce962091b2765b53256fe9a55770b9c92ffc3e9377e3721b95fc9",
+        "UcrtPowfCapture.cs": "86828ea99baded5fbde42269436290788dde0cad91cb592cd5cc3ec081005d03",
+        "powf_vectors.json": "1f090f4c2b640150cd555acba94d71548ae5e5598616a33dcf19360c30715894",
+        "request_manifest.json": "21c5927720116b95623971a54bb06264c81ef4b6a146d43da1c7cb3c02892faf",
+        "run_olmdirectionalblur_remaining6_ucrt_powf.ps1": "5ba2b6e889fcb18fabd9f8657ae8485ccc7fd14c23d417d3d1848765355d9f70"
+      },
+      "request_id": "olm_runtime_trace_olmdirectionalblur_remaining6_ucrt_powf_20260814",
+      "symbol": "powf",
+      "vectors": 787
+    },
+    "distance": {
+      "files": {
+        "README.md": "b2edf84165a85f4d0a7aa6e26483bd0463057c296aa343d264630295f70d6d5c",
+        "SHA256SUMS.txt": "d8f6275edfcd8c5f72ede238d3db1bf93ffc2add28b5c1f55b531a55590b03ed",
+        "UcrtPowfCapture.cs": "86828ea99baded5fbde42269436290788dde0cad91cb592cd5cc3ec081005d03",
+        "powf_vectors.json": "5fb5f5f7d6303e05bf1ed9219465901ae6f9f41f2a1f66ecb07d874eaff7432c",
+        "request_manifest.json": "bfb3353d74943e57747f737e57aa4222b7c8e92af73f4eef88cd6e6f072dbcb2",
+        "run_olmdistancegradation_pf32_power_ucrt_powf.ps1": "674c3c83c612a8926e0d3c93835b6712422dea033c96c52968894c7f42fe7b60"
+      },
+      "request_id": "olm_runtime_trace_olmdistancegradation_pf32_power_ucrt_powf_20260813",
+      "symbol": "powf",
+      "vectors": 63
+    }
+  },
+  "package": {
+    "files": {
+      "README.md": "8167018bc5f1d01320971440ab6c2ae71a0b5f952b30ac634c1263c8d000152a",
+      "request_manifest.json": "d7bff1ce9056949cd66d973727b0921460bf7192e47fd7be28e447446a11f2ce",
+      "run_olm_math_ucrt_batch.ps1": "1230dcd4a654c933e524424de9f1f630d1ed0d9f2a05877d7042d7f27cd708cd"
+    },
+    "path": "refs/runtime_trace_packages/olm_runtime_trace_olm_math_ucrt_batch_20260814",
+    "transfer_zip": "refs/runtime_trace_packages/olm_runtime_trace_olm_math_ucrt_batch_20260814.zip",
+    "transfer_zip_sha256": "3bb9f841ea7cb0585cc9855473ce9bb45a140eb838486fd7a9bb39646a666637"
+  },
+  "request_id": "olm_runtime_trace_olm_math_ucrt_batch_20260814",
+  "return_validation": {
+    "exact_child_manifests_and_vectors_required": true,
+    "exact_child_summary_hashes_required": true,
+    "path": "scripts/analyze_olm_math_ucrt_batch_return_20260814.py",
+    "same_ucrt_identity_required": true,
+    "sha256": "d5da42b05446d0dcd25790ce5bbcafb1d157bcae0db86b03588133fec895c91d",
+    "unknown_members_and_keys_rejected": true
+  },
+  "schema": "olm.math-ucrt-batch-request-closure/1",
+  "status": "ready_native_windows_ucrt_batch_ae_free"
+}

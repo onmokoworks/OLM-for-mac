@@ -1,0 +1,282 @@
+{
+  "after_effects_processes": [],
+  "authorities": {
+    "dual_probe": "da328189a619f9d245a4780b353a2d17d5559718a8b0c074a0d6c1eb05a7c377",
+    "dual_report": "c22568d5af1f851e6845ac3bb5a24ad8f97e09f9af7b936d5813385ce9c9453e",
+    "dual_tool": "e15da8d8825bfef6a9f74837f650abed88557a556a0f88e1d9e003bd85bba638",
+    "fixture": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4",
+    "installed_binary": "856ab700df0881cfb039e9c9d0675bf46a7e92b56e8cb0e311d820fd719bc0de",
+    "natural_report": "1a98a25bf6bbf4dadb340a122721a26965557c54f849c4881eda20a983e6eba3",
+    "natural_tool": "66aa80ae4a687a2c332b05570aa742e7477bd9d533ff74eeaa06f1fffcf6a587",
+    "production": "494116880d037a0d44a48b0e0ebe0fc5358b4cd8892b90ca8c61ea8a7bb2e845",
+    "type3_probe": "577a5dcc548b8b8a6e67b5c4bef86c88499f5544c42acc1751a2044ac831c710",
+    "type3_report": "cb15e04eb308dc5329eb5724f93b4d204f70b743a11dcda7e6ceccc79751de08",
+    "type3_tool": "2b869b1de1143c5d7029753d9474182d19a2972af1f3ef6545f9c2cb2a307fcd"
+  },
+  "claim_boundary": {
+    "not_proven": [
+      "complete production admission coverage",
+      "arbitrary source, tuple, geometry, layout, Layer, or renderer",
+      "the Natural64 closure's 64 internal-owner counterfactuals through the installed public entry",
+      "native or interactive After Effects numerical output"
+    ],
+    "proven": "The current installed arm64 and x86_64 slices execute 21 explicitly source-bound public cells each: dual-side Type2 at three depths, Type3 Layer at three depths, and Natural64 Type2 over five fixed sources at three depths. The installed real-SDK routes execute 72 negative controls per slice. x86_64 runs under Rosetta."
+  },
+  "schema": "olmdirectionalblur.current-installed-explicit-source-bound-union/1",
+  "scope": {
+    "complete_production_admission": false,
+    "installed_arm64": true,
+    "installed_x86_64": true,
+    "native_after_effects": false
+  },
+  "slices": [
+    {
+      "arch": "arm64",
+      "dual_side": {
+        "installed_negative_controls": 3,
+        "positive_cells": 3
+      },
+      "natural64": {
+        "installed_source_mutation_rejects": 15,
+        "positive_cell_count": 15,
+        "positive_cells": [
+          {
+            "installed_source_mutation_rejects": 3,
+            "name": "pinned_crop",
+            "output_sha256": {
+              "PF16": "7fad7744f5fa4fee9a92bfa953164a5d39ee6c6fffe9689b2df9f78629581c5f",
+              "PF32": "8ae8187087f4133b806ff7488ed47c9f2152e34a7fcc1bbe56f7c8f1e3a9d2cf",
+              "PF8": "777321d706587010a88f8e03a00bc6704ec9e7e3445aed5cd915192fe3f4f7f0"
+            },
+            "source_built_installed_public_equal": true,
+            "transcript_sha256": "014f3aee517dee8eb207ed9aae73106899d5e1ea9cf2ea0ecf6d6991ee53e0b8",
+            "typed_source_sha256": {
+              "PF16": "18f79acc8e254e7f1bf8c3753a0d82badcc9f9247f568ba0088b5caf74e5d450",
+              "PF32": "884631deb3be114d9a226566d537323fc1f634e83f58cdd30b73c98cacef708d",
+              "PF8": "0380a27194735f3eb5556bc005fe4be9cc2e1cccfe1a8987226c18d6a146fe03"
+            }
+          },
+          {
+            "installed_source_mutation_rejects": 3,
+            "name": "zero",
+            "output_sha256": {
+              "PF16": "f7b586904e3678145aa47e4232587c913139cef0102d6d8e9276fc80c35cbad3",
+              "PF32": "1c0273095382988333e2f2b5ae487cea460737ed9be65cbad9c5de537f95bf75",
+              "PF8": "2d07a41ae992770085117e9815300bfd0730745883e60b24aaad5e69dfc087ae"
+            },
+            "source_built_installed_public_equal": true,
+            "transcript_sha256": "014f3aee517dee8eb207ed9aae73106899d5e1ea9cf2ea0ecf6d6991ee53e0b8",
+            "typed_source_sha256": {
+              "PF16": "f7b586904e3678145aa47e4232587c913139cef0102d6d8e9276fc80c35cbad3",
+              "PF32": "1c0273095382988333e2f2b5ae487cea460737ed9be65cbad9c5de537f95bf75",
+              "PF8": "2d07a41ae992770085117e9815300bfd0730745883e60b24aaad5e69dfc087ae"
+            }
+          },
+          {
+            "installed_source_mutation_rejects": 3,
+            "name": "constant",
+            "output_sha256": {
+              "PF16": "aefe9f950d028ed3e239e016deab2b26049c543e577ba2292fd8a6c6df555212",
+              "PF32": "050900897e84afc77db8d6ff0278fec8a73f7c05e61d76efc813bd854c5d0d9c",
+              "PF8": "24cea1138c0c926dc39ba4a054e85bca5647a3eceeb0aa6f5f4dd6013b8724af"
+            },
+            "source_built_installed_public_equal": true,
+            "transcript_sha256": "014f3aee517dee8eb207ed9aae73106899d5e1ea9cf2ea0ecf6d6991ee53e0b8",
+            "typed_source_sha256": {
+              "PF16": "1d74d9033ea9ed570c92277cf848d4ae0f9f571a42e3a852e12e6110d914c928",
+              "PF32": "8293539fd0efb2fdded5aaed0d751dda3a4171b8020f6ff67e1f06b10dca5555",
+              "PF8": "784c27133912eb473bb88c560af00d1cadb2c841297bf05ccef648036a86e212"
+            }
+          },
+          {
+            "installed_source_mutation_rejects": 3,
+            "name": "impulse",
+            "output_sha256": {
+              "PF16": "789c56e5a8bab79857281f3677fae982b2ef09cf84d55f69a5e4e66b1aefe476",
+              "PF32": "42215de1b01db1917058ed6044d44c78f95437a7b7dffa85b2ba7c40606dcbdb",
+              "PF8": "8945c78df7e176c5cef2a2c72bd38a860f94e8faa7f38c73ab6a736cc6667ddd"
+            },
+            "source_built_installed_public_equal": true,
+            "transcript_sha256": "014f3aee517dee8eb207ed9aae73106899d5e1ea9cf2ea0ecf6d6991ee53e0b8",
+            "typed_source_sha256": {
+              "PF16": "0e20c1d480bb5e7f6dbc11c5cff6dd69aef2ec9e296cd3faa7b056e48590af8b",
+              "PF32": "5ea5755a117d89c33bfb0685d2ba2e9cf4153d816c2bb06e2d61606fba51611f",
+              "PF8": "c549e434122a54ed2d78b23249ba25bbe6a4c121469a9b1e195743848095cd10"
+            }
+          },
+          {
+            "installed_source_mutation_rejects": 3,
+            "name": "checker",
+            "output_sha256": {
+              "PF16": "b867e87b089a84e9ad7b5254a1de5c341a299eb2716a493e3aa971933f0319a8",
+              "PF32": "80cefedb74595b527f58c9ee83260f5384e4a59d8182e19e55f3a9e895e17d47",
+              "PF8": "4ccc45a12eec7d93ff139b9d28feb8483cf0d17353455d054a482f6a1fc3c90b"
+            },
+            "source_built_installed_public_equal": true,
+            "transcript_sha256": "014f3aee517dee8eb207ed9aae73106899d5e1ea9cf2ea0ecf6d6991ee53e0b8",
+            "typed_source_sha256": {
+              "PF16": "d15a4c5de71ad7cb3774f2a25919f822cfed943aa686480e9f533d05fec0262a",
+              "PF32": "501667f87211e6e20a3d878fb71ab4a29de27b01a7049b97a6b66aa63508cfa1",
+              "PF8": "b5274891a810ed4743b9b8b0816ed8fb6c5a9a1d5f777d71f32d2be010e02fa0"
+            }
+          }
+        ]
+      },
+      "type3_layer": {
+        "installed_negative_controls": 54,
+        "positive_cell_count": 3,
+        "positive_cells": [
+          {
+            "depth": 8,
+            "input_active_sha256": "ad840bf75281333fc389ba7083074e10ff82e7538583242e7a91880e6bbe1b83",
+            "layer_active_sha256": "ad840bf75281333fc389ba7083074e10ff82e7538583242e7a91880e6bbe1b83",
+            "output_active_sha256": "568e904dd9816cbe932cdb05dfc302f723f49aa0f1f88656f5bdcfb8d65ca3d7"
+          },
+          {
+            "depth": 16,
+            "input_active_sha256": "c8312808c3b40b8970d567234f944c71654cbf9d3363aabb1980421fb2597803",
+            "layer_active_sha256": "c8312808c3b40b8970d567234f944c71654cbf9d3363aabb1980421fb2597803",
+            "output_active_sha256": "be00533e86a8692472012223cbd67046affe0da724b26cf66a0659d369ae06e3"
+          },
+          {
+            "depth": 32,
+            "input_active_sha256": "d411e03242f4235a8ea803517db6d81e7e72764a97a4241d0bcea46a6edc7303",
+            "layer_active_sha256": "d411e03242f4235a8ea803517db6d81e7e72764a97a4241d0bcea46a6edc7303",
+            "output_active_sha256": "eb57f09d5bff511a8f0554e0d750fe5f3a10280c51bfce0f4d6d7feadba1d7b8"
+          }
+        ],
+        "transcript_sha256": "395c9f84e0aa17e1ca43303b740d7f8734115856b07244c51ac17762d5683058"
+      }
+    },
+    {
+      "arch": "x86_64",
+      "dual_side": {
+        "installed_negative_controls": 3,
+        "positive_cells": 3
+      },
+      "natural64": {
+        "installed_source_mutation_rejects": 15,
+        "positive_cell_count": 15,
+        "positive_cells": [
+          {
+            "installed_source_mutation_rejects": 3,
+            "name": "pinned_crop",
+            "output_sha256": {
+              "PF16": "7fad7744f5fa4fee9a92bfa953164a5d39ee6c6fffe9689b2df9f78629581c5f",
+              "PF32": "8ae8187087f4133b806ff7488ed47c9f2152e34a7fcc1bbe56f7c8f1e3a9d2cf",
+              "PF8": "777321d706587010a88f8e03a00bc6704ec9e7e3445aed5cd915192fe3f4f7f0"
+            },
+            "source_built_installed_public_equal": true,
+            "transcript_sha256": "014f3aee517dee8eb207ed9aae73106899d5e1ea9cf2ea0ecf6d6991ee53e0b8",
+            "typed_source_sha256": {
+              "PF16": "18f79acc8e254e7f1bf8c3753a0d82badcc9f9247f568ba0088b5caf74e5d450",
+              "PF32": "884631deb3be114d9a226566d537323fc1f634e83f58cdd30b73c98cacef708d",
+              "PF8": "0380a27194735f3eb5556bc005fe4be9cc2e1cccfe1a8987226c18d6a146fe03"
+            }
+          },
+          {
+            "installed_source_mutation_rejects": 3,
+            "name": "zero",
+            "output_sha256": {
+              "PF16": "f7b586904e3678145aa47e4232587c913139cef0102d6d8e9276fc80c35cbad3",
+              "PF32": "1c0273095382988333e2f2b5ae487cea460737ed9be65cbad9c5de537f95bf75",
+              "PF8": "2d07a41ae992770085117e9815300bfd0730745883e60b24aaad5e69dfc087ae"
+            },
+            "source_built_installed_public_equal": true,
+            "transcript_sha256": "014f3aee517dee8eb207ed9aae73106899d5e1ea9cf2ea0ecf6d6991ee53e0b8",
+            "typed_source_sha256": {
+              "PF16": "f7b586904e3678145aa47e4232587c913139cef0102d6d8e9276fc80c35cbad3",
+              "PF32": "1c0273095382988333e2f2b5ae487cea460737ed9be65cbad9c5de537f95bf75",
+              "PF8": "2d07a41ae992770085117e9815300bfd0730745883e60b24aaad5e69dfc087ae"
+            }
+          },
+          {
+            "installed_source_mutation_rejects": 3,
+            "name": "constant",
+            "output_sha256": {
+              "PF16": "aefe9f950d028ed3e239e016deab2b26049c543e577ba2292fd8a6c6df555212",
+              "PF32": "050900897e84afc77db8d6ff0278fec8a73f7c05e61d76efc813bd854c5d0d9c",
+              "PF8": "24cea1138c0c926dc39ba4a054e85bca5647a3eceeb0aa6f5f4dd6013b8724af"
+            },
+            "source_built_installed_public_equal": true,
+            "transcript_sha256": "014f3aee517dee8eb207ed9aae73106899d5e1ea9cf2ea0ecf6d6991ee53e0b8",
+            "typed_source_sha256": {
+              "PF16": "1d74d9033ea9ed570c92277cf848d4ae0f9f571a42e3a852e12e6110d914c928",
+              "PF32": "8293539fd0efb2fdded5aaed0d751dda3a4171b8020f6ff67e1f06b10dca5555",
+              "PF8": "784c27133912eb473bb88c560af00d1cadb2c841297bf05ccef648036a86e212"
+            }
+          },
+          {
+            "installed_source_mutation_rejects": 3,
+            "name": "impulse",
+            "output_sha256": {
+              "PF16": "789c56e5a8bab79857281f3677fae982b2ef09cf84d55f69a5e4e66b1aefe476",
+              "PF32": "42215de1b01db1917058ed6044d44c78f95437a7b7dffa85b2ba7c40606dcbdb",
+              "PF8": "8945c78df7e176c5cef2a2c72bd38a860f94e8faa7f38c73ab6a736cc6667ddd"
+            },
+            "source_built_installed_public_equal": true,
+            "transcript_sha256": "014f3aee517dee8eb207ed9aae73106899d5e1ea9cf2ea0ecf6d6991ee53e0b8",
+            "typed_source_sha256": {
+              "PF16": "0e20c1d480bb5e7f6dbc11c5cff6dd69aef2ec9e296cd3faa7b056e48590af8b",
+              "PF32": "5ea5755a117d89c33bfb0685d2ba2e9cf4153d816c2bb06e2d61606fba51611f",
+              "PF8": "c549e434122a54ed2d78b23249ba25bbe6a4c121469a9b1e195743848095cd10"
+            }
+          },
+          {
+            "installed_source_mutation_rejects": 3,
+            "name": "checker",
+            "output_sha256": {
+              "PF16": "b867e87b089a84e9ad7b5254a1de5c341a299eb2716a493e3aa971933f0319a8",
+              "PF32": "80cefedb74595b527f58c9ee83260f5384e4a59d8182e19e55f3a9e895e17d47",
+              "PF8": "4ccc45a12eec7d93ff139b9d28feb8483cf0d17353455d054a482f6a1fc3c90b"
+            },
+            "source_built_installed_public_equal": true,
+            "transcript_sha256": "014f3aee517dee8eb207ed9aae73106899d5e1ea9cf2ea0ecf6d6991ee53e0b8",
+            "typed_source_sha256": {
+              "PF16": "d15a4c5de71ad7cb3774f2a25919f822cfed943aa686480e9f533d05fec0262a",
+              "PF32": "501667f87211e6e20a3d878fb71ab4a29de27b01a7049b97a6b66aa63508cfa1",
+              "PF8": "b5274891a810ed4743b9b8b0816ed8fb6c5a9a1d5f777d71f32d2be010e02fa0"
+            }
+          }
+        ]
+      },
+      "type3_layer": {
+        "installed_negative_controls": 54,
+        "positive_cell_count": 3,
+        "positive_cells": [
+          {
+            "depth": 8,
+            "input_active_sha256": "ad840bf75281333fc389ba7083074e10ff82e7538583242e7a91880e6bbe1b83",
+            "layer_active_sha256": "ad840bf75281333fc389ba7083074e10ff82e7538583242e7a91880e6bbe1b83",
+            "output_active_sha256": "568e904dd9816cbe932cdb05dfc302f723f49aa0f1f88656f5bdcfb8d65ca3d7"
+          },
+          {
+            "depth": 16,
+            "input_active_sha256": "c8312808c3b40b8970d567234f944c71654cbf9d3363aabb1980421fb2597803",
+            "layer_active_sha256": "c8312808c3b40b8970d567234f944c71654cbf9d3363aabb1980421fb2597803",
+            "output_active_sha256": "be00533e86a8692472012223cbd67046affe0da724b26cf66a0659d369ae06e3"
+          },
+          {
+            "depth": 32,
+            "input_active_sha256": "d411e03242f4235a8ea803517db6d81e7e72764a97a4241d0bcea46a6edc7303",
+            "layer_active_sha256": "d411e03242f4235a8ea803517db6d81e7e72764a97a4241d0bcea46a6edc7303",
+            "output_active_sha256": "eb57f09d5bff511a8f0554e0d750fe5f3a10280c51bfce0f4d6d7feadba1d7b8"
+          }
+        ],
+        "transcript_sha256": "395c9f84e0aa17e1ca43303b740d7f8734115856b07244c51ac17762d5683058"
+      }
+    }
+  ],
+  "slices_digest": "0921fcabd0ca090bd7128e691ff74d478ecc58e4832f0fd15a7b66216e1b0f6d",
+  "status": "PASS_OLMDIRECTIONALBLUR_CURRENT_INSTALLED_EXPLICIT_SOURCE_BOUND_UNION",
+  "summary": {
+    "architectures": [
+      "arm64",
+      "x86_64"
+    ],
+    "explicit_source_bound_positive_cells_per_slice": 21,
+    "explicit_source_bound_positive_cells_total": 42,
+    "installed_negative_controls_per_slice": 72,
+    "source_built_natural64_counterfactuals_not_replayed_installed": 64
+  }
+}

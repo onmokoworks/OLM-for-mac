@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "kind": "olmkirakira_pf8_current_install_smoke",
+  "date": "2026-08-12",
+  "status": "installed_host_smoke_pass_pixel_gate_fail_closed",
+  "build": {
+    "production_source_path": "mac/OLMKiraKira/OLMKiraKira.cpp",
+    "production_source_sha256": "c05dc15a0f7a12857d70e0387d55ee5d18d95a25c5b76c316a93399703a2091b",
+    "highlight_core_path": "core/kirakira_highlight.h",
+    "highlight_core_sha256": "e98232e4224b6ae4dd372216e10c29f3ba6621f68ab6cb10b56a02b9cc248390",
+    "configuration": "Debug",
+    "architectures": ["x86_64", "arm64"],
+    "codesign": "adhoc",
+    "codesign_deep_strict": true
+  },
+  "installed_bundle": {
+    "path": "~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin",
+    "binary_path": "~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin/Contents/MacOS/OLMKiraKira",
+    "binary_sha256": "5248592a32d3a34bac67c43a1a65af875097aa1c251840d1db4aa8dcd2b39367",
+    "matching_bundle_count": 1,
+    "previous_binary_sha256": "136ca31b2a2f75bd2dc624bbba4f907e29214202af80926c091abcef536f5c92",
+    "recoverable_backup": "/tmp/olmkirakira-pf8-install-backup.lcSjG1/OLMKiraKira.plugin"
+  },
+  "host_smoke": {
+    "application": "Adobe After Effects 2026",
+    "ae_version": "26.3x87",
+    "ae_pid": 73457,
+    "renderer_raw": 1816,
+    "depth": "PF32",
+    "fixture": "kk_mapped_bm4_mm1_hi_r5_orange_opaque",
+    "highlight_radius": 5,
+    "ae_result_status": "ok",
+    "loaded_module_path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin/Contents/MacOS/OLMKiraKira",
+    "loaded_module_count": 1,
+    "loaded_module_identity_exact": true,
+    "loaded_module_identity_semantics": "the raw report proves one mapped installed path in AE PID 73457; the on-disk binary at that exact path was separately hashed before and after the smoke",
+    "parameters_applied": true,
+    "render_outputs_created": true,
+    "no_effect_exr_sha256": "dc92c84754876c15faa89e48dd4e10e3e0864eb7c4a4febca4fb3495a1d8e019",
+    "effect_on_exr_sha256": "79462401862ae242928edc0b9282551ebff7bfe07fb4acfa03b0b8c1c3e1206e",
+    "windows_raw_float32_exact": false,
+    "input_interpretation": {
+      "preserve_rgb": null,
+      "working_space": "None",
+      "linear_blending": false
+    },
+    "fail_closed_reason": "the no-effect and effect-on branches each differ from Windows in all 6220800 raw FLOAT32 words with preserve_rgb=null; this proves installed load/apply/render only",
+    "raw_report": {
+      "path": "refs/conformance/olmkirakira_pf8_current_install_smoke_raw_20260812.json",
+      "sha256": "0ec121cce5330e532589a752a361ea205dc555c1ea4d9e01b3132ce6a14e21c0"
+    }
+  },
+  "hostless_pf8_source_decode_closure": {
+    "path": "refs/conformance/olmkirakira_pf8_source_decode_closure_20260812.json",
+    "sha256": "50a10ee36bd6e4a1031db88ec836897c6f508b3bc0f2424c5a9c11e590678452",
+    "status": "raw_exact",
+    "claim_boundary": "OLMKiraKira PF8 source decode only: fixed 5x3 alpha_i_over_17 and semi_transparent_color natural/exported fixtures",
+    "relation_to_installed_build": "This SHA binds the historical closure snapshot associated with this recorded Universal build. The current workspace closure has superseded that snapshot after later Smart-route work; its bounded hostless pixel claim remains separate from this AE smoke."
+  },
+  "hostless_highlight_gradient_closure": {
+    "path": "refs/conformance/olmkirakira_mode4_highlight_gradient_closure_20260812.json",
+    "sha256": "cda745b1fb26cdffd3e77d75863d0d231f4d5b82dfb7972e8b208b74c98b1fd7",
+    "status": "raw_exact",
+    "claim_boundary": "fixed 5x3 Highlight-only Radius=3 gradient tuple; natural hostless AEX ray and public exported Mode4 PF8/PF16/PF32",
+    "relation_to_installed_build": "This SHA binds the historical closure snapshot associated with the recorded smoke. The current workspace closure has superseded that snapshot; neither snapshot turns this PF32 AE smoke into pixel-exact evidence."
+  },
+  "historical_install_evidence": {
+    "path": "refs/conformance/olmkirakira_mode4_highlight_gradient_install_smoke_20260812.json",
+    "binary_sha256": "136ca31b2a2f75bd2dc624bbba4f907e29214202af80926c091abcef536f5c92",
+    "relation": "retained historical install smoke for the pre-PF8-source-decode build; it is not the current installed identity"
+  },
+  "claims_not_made": [
+    "No live-AE PF8 pixel claim; the recorded PF8-corrected build smoke row is PF32",
+    "No Mac AE pixel-exact claim for the PF32 Radius 5 smoke fixture",
+    "No Windows/Mac AE pixel-exact claim from this Render Queue smoke",
+    "No arbitrary source, dimensions, rowbytes, channel, parameter Cartesian product, or all-radius promotion",
+    "No PF16/PF32 source-decode rule change outside the separate bounded regression controls"
+  ]
+}

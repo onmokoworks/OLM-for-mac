@@ -1,0 +1,328 @@
+{
+  "accepted_identity_manifest_sha256": "f54d5f8b3d4ed950c1d0e7220b7f81ea17e1d87adbe73d6a3020a2a01fc3fcc7",
+  "after_effects_processes": [],
+  "bundles": {
+    "backup": {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "binary_sha256": "0caf728ce871feefd606cdedd2054f17bce09c80639722748ebecd9ed5440093",
+      "manifest": [
+        {
+          "mode": 493,
+          "path": ".",
+          "type": "directory"
+        },
+        {
+          "mode": 493,
+          "path": "Contents",
+          "type": "directory"
+        },
+        {
+          "bytes": 1422,
+          "mode": 420,
+          "path": "Contents/Info.plist",
+          "sha256": "6a841177a86812759fcf8e293a958392ebba673c24f507c585fcfb093c32325e",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/MacOS",
+          "type": "directory"
+        },
+        {
+          "bytes": 483200,
+          "mode": 493,
+          "path": "Contents/MacOS/OLMDistanceGradation",
+          "sha256": "0caf728ce871feefd606cdedd2054f17bce09c80639722748ebecd9ed5440093",
+          "type": "file"
+        },
+        {
+          "bytes": 8,
+          "mode": 420,
+          "path": "Contents/PkgInfo",
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/Resources",
+          "type": "directory"
+        },
+        {
+          "bytes": 678,
+          "mode": 420,
+          "path": "Contents/Resources/OLMDistanceGradation.rsrc",
+          "sha256": "91b8673899695b2d7784dbb714a80a79ba8c7ee2ebaf5d6c69c0ccd5848c202d",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/_CodeSignature",
+          "type": "directory"
+        },
+        {
+          "bytes": 2472,
+          "mode": 420,
+          "path": "Contents/_CodeSignature/CodeResources",
+          "sha256": "93fff0f91dd95be23ab232a98aa2517b54852f7c56980675639c15e2a6280279",
+          "type": "file"
+        }
+      ],
+      "path": "handoffs/olmdistancegradation_mode5_install_20260812T185828JST/pre_install/OLMDistanceGradation.plugin",
+      "strict_codesign": true,
+      "universal_exact": true
+    },
+    "installed": {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "binary_sha256": "b9971c6480088329ee77a2b01d8187f29b73b1cc06633d77dc3029a4012bfc7a",
+      "manifest": [
+        {
+          "mode": 493,
+          "path": ".",
+          "type": "directory"
+        },
+        {
+          "mode": 493,
+          "path": "Contents",
+          "type": "directory"
+        },
+        {
+          "bytes": 1422,
+          "mode": 420,
+          "path": "Contents/Info.plist",
+          "sha256": "6a841177a86812759fcf8e293a958392ebba673c24f507c585fcfb093c32325e",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/MacOS",
+          "type": "directory"
+        },
+        {
+          "bytes": 465968,
+          "mode": 493,
+          "path": "Contents/MacOS/OLMDistanceGradation",
+          "sha256": "b9971c6480088329ee77a2b01d8187f29b73b1cc06633d77dc3029a4012bfc7a",
+          "type": "file"
+        },
+        {
+          "bytes": 8,
+          "mode": 420,
+          "path": "Contents/PkgInfo",
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/Resources",
+          "type": "directory"
+        },
+        {
+          "bytes": 678,
+          "mode": 420,
+          "path": "Contents/Resources/OLMDistanceGradation.rsrc",
+          "sha256": "85a6b9076e7f758d98add4bb4b07f4e64e10a3ab1a1369031eed952d58ad8cce",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/_CodeSignature",
+          "type": "directory"
+        },
+        {
+          "bytes": 2472,
+          "mode": 420,
+          "path": "Contents/_CodeSignature/CodeResources",
+          "sha256": "e30d90c3e3c9be5d5631830926bb5294708ce3feff5183c999b548e7f6202b61",
+          "type": "file"
+        }
+      ],
+      "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDistanceGradation.plugin",
+      "strict_codesign": true,
+      "universal_exact": true
+    },
+    "pre_swap_original": {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "binary_sha256": "0caf728ce871feefd606cdedd2054f17bce09c80639722748ebecd9ed5440093",
+      "manifest": [
+        {
+          "mode": 493,
+          "path": ".",
+          "type": "directory"
+        },
+        {
+          "mode": 493,
+          "path": "Contents",
+          "type": "directory"
+        },
+        {
+          "bytes": 1422,
+          "mode": 420,
+          "path": "Contents/Info.plist",
+          "sha256": "6a841177a86812759fcf8e293a958392ebba673c24f507c585fcfb093c32325e",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/MacOS",
+          "type": "directory"
+        },
+        {
+          "bytes": 483200,
+          "mode": 493,
+          "path": "Contents/MacOS/OLMDistanceGradation",
+          "sha256": "0caf728ce871feefd606cdedd2054f17bce09c80639722748ebecd9ed5440093",
+          "type": "file"
+        },
+        {
+          "bytes": 8,
+          "mode": 420,
+          "path": "Contents/PkgInfo",
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/Resources",
+          "type": "directory"
+        },
+        {
+          "bytes": 678,
+          "mode": 420,
+          "path": "Contents/Resources/OLMDistanceGradation.rsrc",
+          "sha256": "91b8673899695b2d7784dbb714a80a79ba8c7ee2ebaf5d6c69c0ccd5848c202d",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/_CodeSignature",
+          "type": "directory"
+        },
+        {
+          "bytes": 2472,
+          "mode": 420,
+          "path": "Contents/_CodeSignature/CodeResources",
+          "sha256": "93fff0f91dd95be23ab232a98aa2517b54852f7c56980675639c15e2a6280279",
+          "type": "file"
+        }
+      ],
+      "path": "handoffs/olmdistancegradation_mode5_install_20260812T185828JST/pre_swap_original/OLMDistanceGradation.plugin",
+      "strict_codesign": true,
+      "universal_exact": true
+    },
+    "source": {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "binary_sha256": "b9971c6480088329ee77a2b01d8187f29b73b1cc06633d77dc3029a4012bfc7a",
+      "manifest": [
+        {
+          "mode": 493,
+          "path": ".",
+          "type": "directory"
+        },
+        {
+          "mode": 493,
+          "path": "Contents",
+          "type": "directory"
+        },
+        {
+          "bytes": 1422,
+          "mode": 420,
+          "path": "Contents/Info.plist",
+          "sha256": "6a841177a86812759fcf8e293a958392ebba673c24f507c585fcfb093c32325e",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/MacOS",
+          "type": "directory"
+        },
+        {
+          "bytes": 465968,
+          "mode": 493,
+          "path": "Contents/MacOS/OLMDistanceGradation",
+          "sha256": "b9971c6480088329ee77a2b01d8187f29b73b1cc06633d77dc3029a4012bfc7a",
+          "type": "file"
+        },
+        {
+          "bytes": 8,
+          "mode": 420,
+          "path": "Contents/PkgInfo",
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/Resources",
+          "type": "directory"
+        },
+        {
+          "bytes": 678,
+          "mode": 420,
+          "path": "Contents/Resources/OLMDistanceGradation.rsrc",
+          "sha256": "85a6b9076e7f758d98add4bb4b07f4e64e10a3ab1a1369031eed952d58ad8cce",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/_CodeSignature",
+          "type": "directory"
+        },
+        {
+          "bytes": 2472,
+          "mode": 420,
+          "path": "Contents/_CodeSignature/CodeResources",
+          "sha256": "e30d90c3e3c9be5d5631830926bb5294708ce3feff5183c999b548e7f6202b61",
+          "type": "file"
+        }
+      ],
+      "path": "mac/OLMDistanceGradation/Mac/build/Debug/OLMDistanceGradation.plugin",
+      "strict_codesign": true,
+      "universal_exact": true
+    }
+  },
+  "claim_boundary": "Recoverable build-to-MediaCore identity transition for only OLMDistanceGradation; no AE load/render or numerical-host claim",
+  "generated_at": "2026-08-12T10:01:02.836008+00:00",
+  "identity_transition": {
+    "accepted_at": "2026-08-12T09:59:33.019263+00:00",
+    "changed_plugins": [
+      "OLMDistanceGradation"
+    ],
+    "new_executable_sha256": "b9971c6480088329ee77a2b01d8187f29b73b1cc06633d77dc3029a4012bfc7a",
+    "old_executable_sha256": "0caf728ce871feefd606cdedd2054f17bce09c80639722748ebecd9ed5440093",
+    "unchanged_plugins": [
+      "ColorKeep",
+      "OLMBlur",
+      "OLMColorKey",
+      "OLMDirectionalBlur",
+      "OLMKiraKira",
+      "OLMRadialBlur",
+      "OLMSmoother",
+      "OLMSmoother2",
+      "OLMToonDilate"
+    ]
+  },
+  "pre_identity_manifest_sha256": "70db3215ff4125dcfcf072b3b29ea7b0422ec7fc00c23e1646af79e005cf0954",
+  "production_source_sha256": "1fcfd2c1e748f86807883282f431797ccb733f09b207e844cee086bff9c42ef8",
+  "schema": "olmdistancegradation.mode5-incremental-install-identity/1",
+  "status": "PASS_RECOVERABLE_DISTANCE_ONLY_INSTALL_IDENTITY",
+  "transaction": {
+    "backup_before_install": true,
+    "backup_method": "ditto",
+    "candidate_staged_and_verified_before_swap": true,
+    "installed_bundle_count": 1,
+    "rollback_bundle_retained": true,
+    "source_installed_full_bundle_exact": true
+  },
+  "universal_codegen_report_sha256": "ad5d7d6e9a0c9adc4f315b1d0809f09bdb80a4730531de9ccd66107e27157818"
+}

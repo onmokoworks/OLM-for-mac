@@ -1,0 +1,277 @@
+{
+  "after_effects_processes": [],
+  "claim_boundary": "The current installed arm64 slice replays 33 bounded public cells: 15 exported dual-side cells, 15 Natural64 exact-source cells and three Type3 Layer cells. The current installed x86_64 slice replays 27 exact cells and fail-closes the six dual-side cells whose native Windows UCRT expf words remain missing. This is AE-free installed-Mach-O evidence and does not generalize source, tuple, geometry or host math.",
+  "identities": {
+    "accepted_identity_sha256": "94c6a1eff87e11705a65be638953cb134ff64bd0d919e8501338601aab333650",
+    "dual_runtime_helper_sha256": "2d357c3f94ef710742d0af7386f17914b988139ca439b8089573478b7d484e49",
+    "exported_closure_sha256": "8f0648c585b95fa03473eb315fe57cc4b9f5824ff9d0df84c2f97559411423d9",
+    "installed_binary_sha256": "856ab700df0881cfb039e9c9d0675bf46a7e92b56e8cb0e311d820fd719bc0de",
+    "natural_closure_sha256": "1a98a25bf6bbf4dadb340a122721a26965557c54f849c4881eda20a983e6eba3",
+    "natural_runtime_helper_sha256": "01396bdd12a78e0fff02f2fe86aafbb0bd443827191cc93b59dd6d284d3162d1",
+    "source_sha256": "494116880d037a0d44a48b0e0ebe0fc5358b4cd8892b90ca8c61ea8a7bb2e845",
+    "type3_installed_closure_sha256": "3cd6700be38699548e95be23eaacd0ba609173e9f9d4aeb46d057ea608fc0387"
+  },
+  "runtime": {
+    "dual_side_exported_boundary": {
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ],
+      "arm64_fail_closed": 0,
+      "arm64_success": 15,
+      "input_headers_padding_lifecycle_unchanged": true,
+      "probe_sha256": {
+        "arm64": "255bcd13e83617174d38c6c3f237552e9b6770b40604c521be83161553faefcc",
+        "x86_64": "dc8dedaef3ea67ea8c5345a39c136b1ba0dca2c4e7405ad32426a04ffb039fd5"
+      },
+      "rows": 30,
+      "source_mutation_rejects": 24,
+      "transcript_lines": [
+        "PASS=1 geometry=32x18 tuple=1 depth=8 expected_success=1 error=0",
+        "PASS=1 geometry=32x18 tuple=1 depth=16 expected_success=1 error=0",
+        "PASS=1 geometry=32x18 tuple=1 depth=32 expected_success=1 error=0",
+        "PASS=1 geometry=64x36 tuple=0 depth=8 expected_success=1 error=0",
+        "PASS=1 geometry=64x36 tuple=0 depth=16 expected_success=1 error=0",
+        "PASS=1 geometry=64x36 tuple=0 depth=32 expected_success=1 error=0",
+        "PASS=1 geometry=64x36 tuple=1 depth=8 expected_success=1 error=0",
+        "PASS=1 geometry=64x36 tuple=1 depth=16 expected_success=1 error=0",
+        "PASS=1 geometry=64x36 tuple=1 depth=32 expected_success=1 error=0",
+        "PASS=1 geometry=64x36 tuple=2 depth=8 expected_success=1 error=0",
+        "PASS=1 geometry=64x36 tuple=2 depth=16 expected_success=1 error=0",
+        "PASS=1 geometry=64x36 tuple=2 depth=32 expected_success=1 error=0",
+        "PASS=1 geometry=64x36 tuple=3 depth=8 expected_success=1 error=0",
+        "PASS=1 geometry=64x36 tuple=3 depth=16 expected_success=1 error=0",
+        "PASS=1 geometry=64x36 tuple=3 depth=32 expected_success=1 error=0",
+        "PASS=1 geometry=32x18 tuple=1 depth=8 expected_success=1 error=0",
+        "PASS=1 geometry=32x18 tuple=1 depth=16 expected_success=1 error=0",
+        "PASS=1 geometry=32x18 tuple=1 depth=32 expected_success=1 error=0",
+        "PASS=1 geometry=64x36 tuple=0 depth=8 expected_success=1 error=0",
+        "PASS=1 geometry=64x36 tuple=0 depth=16 expected_success=1 error=0",
+        "PASS=1 geometry=64x36 tuple=0 depth=32 expected_success=0 error=516",
+        "PASS=1 geometry=64x36 tuple=1 depth=8 expected_success=1 error=0",
+        "PASS=1 geometry=64x36 tuple=1 depth=16 expected_success=1 error=0",
+        "PASS=1 geometry=64x36 tuple=1 depth=32 expected_success=0 error=516",
+        "PASS=1 geometry=64x36 tuple=2 depth=8 expected_success=0 error=516",
+        "PASS=1 geometry=64x36 tuple=2 depth=16 expected_success=0 error=516",
+        "PASS=1 geometry=64x36 tuple=2 depth=32 expected_success=0 error=516",
+        "PASS=1 geometry=64x36 tuple=3 depth=8 expected_success=1 error=0",
+        "PASS=1 geometry=64x36 tuple=3 depth=16 expected_success=1 error=0",
+        "PASS=1 geometry=64x36 tuple=3 depth=32 expected_success=0 error=516"
+      ],
+      "transcript_sha256": "03f69f1b125f968e1d212070b4f6194063b3a287a9b696089588b6c70bac46cd",
+      "x86_64_fail_closed": 6,
+      "x86_64_success": 9
+    },
+    "natural64_exact_sources": {
+      "arm64": {
+        "installed_source_mutation_rejects": 15,
+        "positive_cell_count": 15,
+        "positive_cells": [
+          {
+            "installed_source_mutation_rejects": 3,
+            "name": "pinned_crop",
+            "output_sha256": {
+              "PF16": "7fad7744f5fa4fee9a92bfa953164a5d39ee6c6fffe9689b2df9f78629581c5f",
+              "PF32": "8ae8187087f4133b806ff7488ed47c9f2152e34a7fcc1bbe56f7c8f1e3a9d2cf",
+              "PF8": "777321d706587010a88f8e03a00bc6704ec9e7e3445aed5cd915192fe3f4f7f0"
+            },
+            "source_built_installed_public_equal": true,
+            "transcript_sha256": "014f3aee517dee8eb207ed9aae73106899d5e1ea9cf2ea0ecf6d6991ee53e0b8",
+            "typed_source_sha256": {
+              "PF16": "18f79acc8e254e7f1bf8c3753a0d82badcc9f9247f568ba0088b5caf74e5d450",
+              "PF32": "884631deb3be114d9a226566d537323fc1f634e83f58cdd30b73c98cacef708d",
+              "PF8": "0380a27194735f3eb5556bc005fe4be9cc2e1cccfe1a8987226c18d6a146fe03"
+            }
+          },
+          {
+            "installed_source_mutation_rejects": 3,
+            "name": "zero",
+            "output_sha256": {
+              "PF16": "f7b586904e3678145aa47e4232587c913139cef0102d6d8e9276fc80c35cbad3",
+              "PF32": "1c0273095382988333e2f2b5ae487cea460737ed9be65cbad9c5de537f95bf75",
+              "PF8": "2d07a41ae992770085117e9815300bfd0730745883e60b24aaad5e69dfc087ae"
+            },
+            "source_built_installed_public_equal": true,
+            "transcript_sha256": "014f3aee517dee8eb207ed9aae73106899d5e1ea9cf2ea0ecf6d6991ee53e0b8",
+            "typed_source_sha256": {
+              "PF16": "f7b586904e3678145aa47e4232587c913139cef0102d6d8e9276fc80c35cbad3",
+              "PF32": "1c0273095382988333e2f2b5ae487cea460737ed9be65cbad9c5de537f95bf75",
+              "PF8": "2d07a41ae992770085117e9815300bfd0730745883e60b24aaad5e69dfc087ae"
+            }
+          },
+          {
+            "installed_source_mutation_rejects": 3,
+            "name": "constant",
+            "output_sha256": {
+              "PF16": "aefe9f950d028ed3e239e016deab2b26049c543e577ba2292fd8a6c6df555212",
+              "PF32": "050900897e84afc77db8d6ff0278fec8a73f7c05e61d76efc813bd854c5d0d9c",
+              "PF8": "24cea1138c0c926dc39ba4a054e85bca5647a3eceeb0aa6f5f4dd6013b8724af"
+            },
+            "source_built_installed_public_equal": true,
+            "transcript_sha256": "014f3aee517dee8eb207ed9aae73106899d5e1ea9cf2ea0ecf6d6991ee53e0b8",
+            "typed_source_sha256": {
+              "PF16": "1d74d9033ea9ed570c92277cf848d4ae0f9f571a42e3a852e12e6110d914c928",
+              "PF32": "8293539fd0efb2fdded5aaed0d751dda3a4171b8020f6ff67e1f06b10dca5555",
+              "PF8": "784c27133912eb473bb88c560af00d1cadb2c841297bf05ccef648036a86e212"
+            }
+          },
+          {
+            "installed_source_mutation_rejects": 3,
+            "name": "impulse",
+            "output_sha256": {
+              "PF16": "789c56e5a8bab79857281f3677fae982b2ef09cf84d55f69a5e4e66b1aefe476",
+              "PF32": "42215de1b01db1917058ed6044d44c78f95437a7b7dffa85b2ba7c40606dcbdb",
+              "PF8": "8945c78df7e176c5cef2a2c72bd38a860f94e8faa7f38c73ab6a736cc6667ddd"
+            },
+            "source_built_installed_public_equal": true,
+            "transcript_sha256": "014f3aee517dee8eb207ed9aae73106899d5e1ea9cf2ea0ecf6d6991ee53e0b8",
+            "typed_source_sha256": {
+              "PF16": "0e20c1d480bb5e7f6dbc11c5cff6dd69aef2ec9e296cd3faa7b056e48590af8b",
+              "PF32": "5ea5755a117d89c33bfb0685d2ba2e9cf4153d816c2bb06e2d61606fba51611f",
+              "PF8": "c549e434122a54ed2d78b23249ba25bbe6a4c121469a9b1e195743848095cd10"
+            }
+          },
+          {
+            "installed_source_mutation_rejects": 3,
+            "name": "checker",
+            "output_sha256": {
+              "PF16": "b867e87b089a84e9ad7b5254a1de5c341a299eb2716a493e3aa971933f0319a8",
+              "PF32": "80cefedb74595b527f58c9ee83260f5384e4a59d8182e19e55f3a9e895e17d47",
+              "PF8": "4ccc45a12eec7d93ff139b9d28feb8483cf0d17353455d054a482f6a1fc3c90b"
+            },
+            "source_built_installed_public_equal": true,
+            "transcript_sha256": "014f3aee517dee8eb207ed9aae73106899d5e1ea9cf2ea0ecf6d6991ee53e0b8",
+            "typed_source_sha256": {
+              "PF16": "d15a4c5de71ad7cb3774f2a25919f822cfed943aa686480e9f533d05fec0262a",
+              "PF32": "501667f87211e6e20a3d878fb71ab4a29de27b01a7049b97a6b66aa63508cfa1",
+              "PF8": "b5274891a810ed4743b9b8b0816ed8fb6c5a9a1d5f777d71f32d2be010e02fa0"
+            }
+          }
+        ]
+      },
+      "x86_64": {
+        "installed_source_mutation_rejects": 15,
+        "positive_cell_count": 15,
+        "positive_cells": [
+          {
+            "installed_source_mutation_rejects": 3,
+            "name": "pinned_crop",
+            "output_sha256": {
+              "PF16": "7fad7744f5fa4fee9a92bfa953164a5d39ee6c6fffe9689b2df9f78629581c5f",
+              "PF32": "8ae8187087f4133b806ff7488ed47c9f2152e34a7fcc1bbe56f7c8f1e3a9d2cf",
+              "PF8": "777321d706587010a88f8e03a00bc6704ec9e7e3445aed5cd915192fe3f4f7f0"
+            },
+            "source_built_installed_public_equal": true,
+            "transcript_sha256": "014f3aee517dee8eb207ed9aae73106899d5e1ea9cf2ea0ecf6d6991ee53e0b8",
+            "typed_source_sha256": {
+              "PF16": "18f79acc8e254e7f1bf8c3753a0d82badcc9f9247f568ba0088b5caf74e5d450",
+              "PF32": "884631deb3be114d9a226566d537323fc1f634e83f58cdd30b73c98cacef708d",
+              "PF8": "0380a27194735f3eb5556bc005fe4be9cc2e1cccfe1a8987226c18d6a146fe03"
+            }
+          },
+          {
+            "installed_source_mutation_rejects": 3,
+            "name": "zero",
+            "output_sha256": {
+              "PF16": "f7b586904e3678145aa47e4232587c913139cef0102d6d8e9276fc80c35cbad3",
+              "PF32": "1c0273095382988333e2f2b5ae487cea460737ed9be65cbad9c5de537f95bf75",
+              "PF8": "2d07a41ae992770085117e9815300bfd0730745883e60b24aaad5e69dfc087ae"
+            },
+            "source_built_installed_public_equal": true,
+            "transcript_sha256": "014f3aee517dee8eb207ed9aae73106899d5e1ea9cf2ea0ecf6d6991ee53e0b8",
+            "typed_source_sha256": {
+              "PF16": "f7b586904e3678145aa47e4232587c913139cef0102d6d8e9276fc80c35cbad3",
+              "PF32": "1c0273095382988333e2f2b5ae487cea460737ed9be65cbad9c5de537f95bf75",
+              "PF8": "2d07a41ae992770085117e9815300bfd0730745883e60b24aaad5e69dfc087ae"
+            }
+          },
+          {
+            "installed_source_mutation_rejects": 3,
+            "name": "constant",
+            "output_sha256": {
+              "PF16": "aefe9f950d028ed3e239e016deab2b26049c543e577ba2292fd8a6c6df555212",
+              "PF32": "050900897e84afc77db8d6ff0278fec8a73f7c05e61d76efc813bd854c5d0d9c",
+              "PF8": "24cea1138c0c926dc39ba4a054e85bca5647a3eceeb0aa6f5f4dd6013b8724af"
+            },
+            "source_built_installed_public_equal": true,
+            "transcript_sha256": "014f3aee517dee8eb207ed9aae73106899d5e1ea9cf2ea0ecf6d6991ee53e0b8",
+            "typed_source_sha256": {
+              "PF16": "1d74d9033ea9ed570c92277cf848d4ae0f9f571a42e3a852e12e6110d914c928",
+              "PF32": "8293539fd0efb2fdded5aaed0d751dda3a4171b8020f6ff67e1f06b10dca5555",
+              "PF8": "784c27133912eb473bb88c560af00d1cadb2c841297bf05ccef648036a86e212"
+            }
+          },
+          {
+            "installed_source_mutation_rejects": 3,
+            "name": "impulse",
+            "output_sha256": {
+              "PF16": "789c56e5a8bab79857281f3677fae982b2ef09cf84d55f69a5e4e66b1aefe476",
+              "PF32": "42215de1b01db1917058ed6044d44c78f95437a7b7dffa85b2ba7c40606dcbdb",
+              "PF8": "8945c78df7e176c5cef2a2c72bd38a860f94e8faa7f38c73ab6a736cc6667ddd"
+            },
+            "source_built_installed_public_equal": true,
+            "transcript_sha256": "014f3aee517dee8eb207ed9aae73106899d5e1ea9cf2ea0ecf6d6991ee53e0b8",
+            "typed_source_sha256": {
+              "PF16": "0e20c1d480bb5e7f6dbc11c5cff6dd69aef2ec9e296cd3faa7b056e48590af8b",
+              "PF32": "5ea5755a117d89c33bfb0685d2ba2e9cf4153d816c2bb06e2d61606fba51611f",
+              "PF8": "c549e434122a54ed2d78b23249ba25bbe6a4c121469a9b1e195743848095cd10"
+            }
+          },
+          {
+            "installed_source_mutation_rejects": 3,
+            "name": "checker",
+            "output_sha256": {
+              "PF16": "b867e87b089a84e9ad7b5254a1de5c341a299eb2716a493e3aa971933f0319a8",
+              "PF32": "80cefedb74595b527f58c9ee83260f5384e4a59d8182e19e55f3a9e895e17d47",
+              "PF8": "4ccc45a12eec7d93ff139b9d28feb8483cf0d17353455d054a482f6a1fc3c90b"
+            },
+            "source_built_installed_public_equal": true,
+            "transcript_sha256": "014f3aee517dee8eb207ed9aae73106899d5e1ea9cf2ea0ecf6d6991ee53e0b8",
+            "typed_source_sha256": {
+              "PF16": "d15a4c5de71ad7cb3774f2a25919f822cfed943aa686480e9f533d05fec0262a",
+              "PF32": "501667f87211e6e20a3d878fb71ab4a29de27b01a7049b97a6b66aa63508cfa1",
+              "PF8": "b5274891a810ed4743b9b8b0816ed8fb6c5a9a1d5f777d71f32d2be010e02fa0"
+            }
+          }
+        ]
+      }
+    },
+    "type3_layer": {
+      "arm64": {
+        "negative": 54,
+        "positive": 3,
+        "total": 57,
+        "transcript_sha256": "395c9f84e0aa17e1ca43303b740d7f8734115856b07244c51ac17762d5683058"
+      },
+      "x86_64": {
+        "negative": 54,
+        "positive": 3,
+        "total": 57,
+        "transcript_sha256": "395c9f84e0aa17e1ca43303b740d7f8734115856b07244c51ac17762d5683058"
+      }
+    }
+  },
+  "runtime_sha256": "ca6113c2e46684f3727b373b3f1f4555071fd422eb476d7250828990638fe8ec",
+  "schema": "olmdirectionalblur.current-installed-complete-bounded-union/1",
+  "scope": {
+    "arbitrary_source_tuple_geometry": false,
+    "installed_arm64": true,
+    "installed_x86_64": true,
+    "native_after_effects": false,
+    "production_or_install_changed": false
+  },
+  "status": "PASS_OLMDIRECTIONALBLUR_CURRENT_INSTALLED_COMPLETE_BOUNDED_UNION_AE_FREE",
+  "summary": {
+    "arm64_exact_cells": 33,
+    "arm64_fail_closed_cells": 0,
+    "missing_native_ucrt_counts": [
+      8,
+      50,
+      100
+    ],
+    "natural64_exact_cells_per_slice": 15,
+    "type3_exact_cells_per_slice": 3,
+    "x86_64_exact_cells": 27,
+    "x86_64_fail_closed_cells": 6
+  }
+}

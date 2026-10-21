@@ -156,6 +156,17 @@ class CompilerTests(unittest.TestCase):
                 with self.assertRaisesRegex(SpecError, message):
                     compile_witness(spec_path, Path(temp) / f"{name}-package", Path(temp) / f"{name}.zip")
 
+    def test_frida_call_edge_trace_requires_bounded_limits(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            spec_path = self._frida_fixture(Path(temp))
+            spec = json.loads(spec_path.read_text(encoding="utf-8"))
+            spec["transport"]["agent_config"]["call_edge_trace"] = {
+                "enabled": True, "entry_hooks": ["entry"], "max_events": 0, "max_ms": 1000,
+            }
+            spec_path.write_text(json.dumps(spec), encoding="utf-8")
+            with self.assertRaisesRegex(SpecError, "max_events"):
+                compile_witness(spec_path, Path(temp) / "package", Path(temp) / "trace.zip")
+
     def test_in_process_collector_rejects_missing_or_unresolved_assets(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             spec_path = self._collector_fixture(Path(temp))

@@ -1,0 +1,9 @@
+# OLMToonDilate ded9 incremental install identity — 2026-08-13
+
+Status: **PASS_OLMTOONDILATE_DED9_INCREMENTAL_INSTALL_IDENTITY_NO_AE**. Frozen source `ded9eaab6b660044c9035f3aa0d9660f86086ec2e451c97c9ee0c1115574464b` and project `eba3266a1dba3f50b217463c5bb077e9976b22febe70bfb7c5d05c6bdaca8abc` produced candidate `5bbe693106072ceff14a1c1ae5a0d64815cddde58356c57575d29e516479036e`. The candidate and installed bundle have exact full scoped inventories, macOS 11 deployment declarations, Universal arm64+x86_64 slices, strict-valid ad-hoc signatures, and one EffectMain plus one PluginDataEntryFunction2 export per slice.
+
+The accepted identity and retained postcopy are exact at `ef7bf31f4f8907af8d047276296b16c4d918433a94173938ca98b2874c61c368`. Only the OLMToonDilate row fields `sha256`, `source_bundle`, and `source_sha256`, plus top-level `accepted_at` and `installed_after`, changed from preidentity `869a5e88ab34b3b26cc4a3786edb6de93f0e10c88b69c33f6e8d7afb6f18da90`; the other nine rows are exact.
+
+`installed_backup`, `pre_swap_original`, and `moved_old` retain three full-inventory copies of predecessor `fe0a4959a677eb495f290fc384d93a2da4b66119f07bd8d1e5dac0847f95c5e9`. Prepared manifest `028a3695986b374c0a7b7a7da11900f7d18cb0b150f9385dac940f8a6070f36c` and transaction `4c1e47c330b06edb4bfc5857346561eed74fc4862ec851ff1e2b2b9d3109b303` are bound; stage and failed-new paths are absent.
+
+The canonical post-install collection recorded zero After Effects processes; later process state is outside repeat validation. No install or After Effects operation is performed by this auditor. This does not claim AE load/render, numerical host behavior, Developer ID, notarization, distribution, or release readiness. Bundle exchange and accepted-identity replacement were separate atomic operations.

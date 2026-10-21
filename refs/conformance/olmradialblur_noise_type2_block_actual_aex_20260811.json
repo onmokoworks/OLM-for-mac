@@ -334,7 +334,7 @@
         "max_alpha": true,
         "output": true,
         "polar": true,
-        "source_scalar": false
+        "source_scalar": true
       },
       "production_padding_preserved": true,
       "thickness": 3.0
@@ -408,7 +408,7 @@
         "max_alpha": true,
         "output": true,
         "polar": true,
-        "source_scalar": false
+        "source_scalar": true
       },
       "production_padding_preserved": true,
       "thickness": 3.0
@@ -482,7 +482,7 @@
         "max_alpha": true,
         "output": true,
         "polar": true,
-        "source_scalar": false
+        "source_scalar": true
       },
       "production_padding_preserved": true,
       "thickness": 3.0
@@ -556,7 +556,7 @@
         "max_alpha": true,
         "output": true,
         "polar": true,
-        "source_scalar": false
+        "source_scalar": true
       },
       "production_padding_preserved": true,
       "thickness": 3.0
@@ -630,7 +630,7 @@
         "max_alpha": true,
         "output": false,
         "polar": true,
-        "source_scalar": false
+        "source_scalar": true
       },
       "production_padding_preserved": true,
       "thickness": 3.0
@@ -704,7 +704,7 @@
         "max_alpha": true,
         "output": false,
         "polar": true,
-        "source_scalar": false
+        "source_scalar": true
       },
       "production_padding_preserved": true,
       "thickness": 3.0

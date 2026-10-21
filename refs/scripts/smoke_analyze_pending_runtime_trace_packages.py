@@ -68,6 +68,22 @@ def main() -> int:
         if not isinstance(rows, list) or not rows:
             raise AssertionError("expected runtime trace package rows")
         by_id = {row["request_id"]: row for row in rows}
+        ucrt_batch = by_id.get("olm_runtime_trace_olm_math_ucrt_batch_20260814")
+        if ucrt_batch is None:
+            raise AssertionError("missing current native-UCRT batch request")
+        if ucrt_batch["status"] != "pending" or ucrt_batch["priority"] != 0:
+            raise AssertionError(
+                "native-UCRT batch must be the pending queue head at priority 0, "
+                f"got status={ucrt_batch['status']} priority={ucrt_batch['priority']}"
+            )
+        if ucrt_batch["package"] != (
+            "refs/runtime_trace_packages/olm_runtime_trace_olm_math_ucrt_batch_20260814.zip"
+        ):
+            raise AssertionError(f"native-UCRT batch package drift: {ucrt_batch['package']}")
+        if "analyze_olm_math_ucrt_batch_return_20260814.py" not in ucrt_batch["intake_command"]:
+            raise AssertionError("native-UCRT batch must use its strict keyed-return analyzer")
+        if "test_olm_math_ucrt_downstream_replay_20260814.py" not in ucrt_batch["comparison_command"]:
+            raise AssertionError("native-UCRT batch must require final public-output replay")
         dg_typed = by_id.get("olmdistancegradation_8bpc_current_aex_same_run_typed_boundary_20260712")
         if dg_typed is None:
             raise AssertionError("missing DistanceGradation 8bpc typed-boundary request")
@@ -405,6 +421,9 @@ def main() -> int:
         for needle in (
             "Pending Runtime Trace Packages",
             f"Pending: `{pending_count}`",
+            "olm_runtime_trace_olm_math_ucrt_batch_20260814",
+            "494 exact DirectionalBlur expf",
+            "do not launch AE or aerender",
             "Hard lane context",
             "olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702",
             "olmradialblur_tiny_rotation_anchor_watch_followup_20260701",

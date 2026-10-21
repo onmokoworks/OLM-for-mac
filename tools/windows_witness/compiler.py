@@ -448,6 +448,25 @@ def _validate_frida_transport(spec: dict[str, Any], base: Path) -> None:
     if "agent_config" not in transport or not isinstance(transport["agent_config"], dict):
         raise SpecError("spec.transport.agent_config must be an object")
     config = transport["agent_config"]
+    trace = config.get("call_edge_trace", config.get("callEdgeTrace"))
+    if trace is not None:
+        if not isinstance(trace, dict) or trace.get("enabled") is not True:
+            raise SpecError("spec.transport.agent_config.call_edge_trace must be an enabled object when present")
+        entry_hooks = trace.get("entry_hooks", trace.get("entryHooks"))
+        commands = trace.get("pf_cmd_values", trace.get("pfCmdValues", [3, 5]))
+        max_events = trace.get("max_events", trace.get("maxEvents"))
+        max_ms = trace.get("max_ms", trace.get("maxMs"))
+        pf_cmd_arg = trace.get("pf_cmd_arg", trace.get("pfCmdArg", 0))
+        if not isinstance(entry_hooks, list) or not entry_hooks or any(not isinstance(item, str) or not item for item in entry_hooks):
+            raise SpecError("call_edge_trace.entry_hooks must be a non-empty string array")
+        if not isinstance(commands, list) or not commands or any(type(item) is not int or item not in {3, 5} for item in commands):
+            raise SpecError("call_edge_trace.pf_cmd_values must contain only PF_Cmd_RENDER=3 or PF_Cmd_SMART_RENDER=5")
+        if type(max_events) is not int or not 1 <= max_events <= 100000:
+            raise SpecError("call_edge_trace.max_events must be an integer from 1 to 100000")
+        if type(max_ms) is not int or not 1 <= max_ms <= 60000:
+            raise SpecError("call_edge_trace.max_ms must be an integer from 1 to 60000")
+        if type(pf_cmd_arg) is not int or not 0 <= pf_cmd_arg <= 15:
+            raise SpecError("call_edge_trace.pf_cmd_arg must be an integer from 0 to 15")
     module_name = config.get("module_name")
     if module_name != spec.get("plugin", {}).get("module_filename"):
         raise SpecError("spec.transport.agent_config.module_name must match plugin.module_filename")

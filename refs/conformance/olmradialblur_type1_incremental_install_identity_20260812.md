@@ -1,0 +1,3 @@
+# OLMRadialBlur Type 1 incremental install identity
+
+Status: **PASS_RECOVERABLE_RADIAL_ONLY_INSTALL_IDENTITY**. The signed Universal canonical build and sole MediaCore bundle are full-bundle exact at `03e837e8a9ccebbc3e03479b4d8a66f65aa85cce1ac0be616b14dac82284d548`. Both retained pre-install bundles are full-bundle exact at `dee346586c21d9dbf04d89c6bac8a4f61f1e475b647f1df1fcb77a1eba536e97`, and the backed-up accepted manifest differs from the current manifest only in OLMRadialBlur `sha256` and `source_sha256`. The production source and shared noise header are hash-bound. This is a recoverable install-identity claim only; it makes no AE load, render, or numerical-host claim.

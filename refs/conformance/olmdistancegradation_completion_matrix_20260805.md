@@ -7,8 +7,8 @@ is proven.
 | Surface | PF8 | PF16 | PF32 |
 |---|---|---|---|
 | Classic render | Exact | Exact | Exact |
-| Smart pre-render | Exact natural chain | Exact natural chain | Not dispatched by actual AEX |
-| Smart render | Exact, `FUN_181170380` | Exact, `FUN_181170280` | Unsupported by actual AEX; Mac fallback is unclaimed |
+| Smart pre-render | Exact natural chain | Exact natural chain | Exact natural public chain, bounded |
+| Smart render | Exact, `FUN_181170380` | Exact, `FUN_181170280` | Actual public owner: command `0x18` → `FUN_181173d20` → `FUN_181172a10` → iterateFloat/`FUN_181170c90`; fixed17x11 non-Power 24/24 raw exact, Power 8/8 fail-closed; Mode 5 non-Power 6/6 |
 
 | Public axis | Exact witnesses |
 |---|---|
@@ -16,6 +16,7 @@ is proven.
 | Render Mode Layer | PF8 Inside/Outside/Both; PF32 Both owner |
 | Interpolation Constant | PF8 Inside/Layer/use-bg |
 | Constant + Blur | PF32 Inside/RGB/no-bg through actual `cvSmooth` and owner writer |
+| Blur Mode 5 | Fixed17x11 PF32 Constant/Linear/Sphere × background off/on, direct-`expf` IPP order and noncontracting Universal codegen, 6/6 raw exact; Power pair fail-closed pending native UCRT |
 | Interpolation Linear | PF8 Both/Layer/no-bg; PF16 Inside baseline; PF32 Both owner |
 | Interpolation Sphere | PF8/PF16 Outside; PF32 Outside owner |
 | Interpolation Power | PF8 Outside/RGB/no-bg, PF16 Both/Layer/no-bg, and PF32 Both/Layer/no-bg |
@@ -49,5 +50,15 @@ Layer color. Production implements this only for PF32 Both/Layer/no-bg. The
 Power witness is byte-identical to Linear for this scalar field, while retaining
 the actual Power 2.5 parameter contract. Constant-with-blur is now connected
 entry-to-writer for PF32 Inside/RGB/no-bg with a byte-exact bounded witness.
-PF32 Smart remains an explicit actual-AEX unsupported
-boundary, not a missing exact claim.
+The earlier PF32-Smart-unsupported conclusion inspected classic command `0x0b`
+instead of the actual public Smart command and is superseded. Production admits
+only the fixed 17x11 PF32 Smart matrix: Blur Modes 2/3/4 contribute 18 admitted
+non-Power cells and Mode 5 contributes six Constant/Linear/Sphere × background
+off/on cells. All eight Power cells and every unlisted tuple, geometry, or layout fail
+closed. See `olmdistancegradation_public_smart_owner_contract_20260812.{json,md}`
+and `olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.{json,md}`.
+The current installed arm64 executable `231421e4…` has also been replayed
+AE-free through the real-SDK Smart entry: the same six Mode 5 cells are
+source/installed byte-identical with padding and lifecycle exact, while all
+eight Power cells fail closed with untouched output. This does not replace the
+missing native Windows UCRT `powf` capture or constitute a native-AE claim.

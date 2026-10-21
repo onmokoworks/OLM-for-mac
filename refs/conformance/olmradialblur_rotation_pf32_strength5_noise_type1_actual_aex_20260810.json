@@ -15,9 +15,9 @@
         "max_alpha": true,
         "output": true,
         "polar": true,
-        "source_scalar": false
+        "source_scalar": true
       },
-      "production_source_scalar_different_bytes": 489
+      "production_source_scalar_different_bytes": 0
     },
     {
       "actual_output_differs_from_strength5_noise0": true,
@@ -32,9 +32,9 @@
         "max_alpha": true,
         "output": true,
         "polar": true,
-        "source_scalar": false
+        "source_scalar": true
       },
-      "production_source_scalar_different_bytes": 2473
+      "production_source_scalar_different_bytes": 0
     }
   ],
   "control": {

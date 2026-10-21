@@ -1,0 +1,172 @@
+{
+  "application": {
+    "path": "/Applications/Adobe After Effects 2026/Adobe After Effects 2026.app",
+    "plist_build": "26.3.0.87",
+    "plist_short_version": "26.3.0"
+  },
+  "claim_boundary": "Fresh AE installed-path load, effect add, default-parameter PF32 Software render only; no Lab76 two-key live-host pixel-exact claim.",
+  "execution": {
+    "ae_return": {
+      "ae_version": "26.3x87",
+      "effect": {
+        "match_name": "OLM OLM Blur",
+        "name": "OLM Blur",
+        "parameter_count": 5,
+        "parameters_after": [
+          {
+            "index": 1,
+            "match_name": "OLM OLM Blur-0005",
+            "name": "Blur Amount",
+            "value": 5
+          },
+          {
+            "index": 2,
+            "match_name": "OLM OLM Blur-0006",
+            "name": "Blur Smoothness",
+            "value": 100
+          },
+          {
+            "index": 3,
+            "match_name": "OLM OLM Blur-0003",
+            "name": "Number of Repeat",
+            "value": 2
+          },
+          {
+            "index": 4,
+            "match_name": "OLM OLM Blur-0004",
+            "name": "Bias Direction",
+            "value": 1
+          },
+          {
+            "index": 5,
+            "match_name": "OLM OLM Blur-0007",
+            "name": "Legacy",
+            "value": 0
+          }
+        ],
+        "parameters_before": [
+          {
+            "index": 1,
+            "match_name": "OLM OLM Blur-0005",
+            "name": "Blur Amount",
+            "value": 5
+          },
+          {
+            "index": 2,
+            "match_name": "OLM OLM Blur-0006",
+            "name": "Blur Smoothness",
+            "value": 100
+          },
+          {
+            "index": 3,
+            "match_name": "OLM OLM Blur-0003",
+            "name": "Number of Repeat",
+            "value": 2
+          },
+          {
+            "index": 4,
+            "match_name": "OLM OLM Blur-0004",
+            "name": "Bias Direction",
+            "value": 1
+          },
+          {
+            "index": 5,
+            "match_name": "OLM OLM Blur-0007",
+            "name": "Legacy",
+            "value": 0
+          }
+        ],
+        "parameters_unchanged": true
+      },
+      "kind": "olmblur_current_install_ae_return",
+      "os": "Macintosh OS 15.7.2/64",
+      "outputs": {
+        "control": {
+          "path": "/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olmblur-current-install-smoke-bj3zl2mw/output/control.exr00000",
+          "sha256": "038038fcced17f79d5734db404b4c8c97199a6fa5fa498d30c09022fd63a790a"
+        },
+        "effect_on": {
+          "path": "/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olmblur-current-install-smoke-bj3zl2mw/output/effect_on.exr00000",
+          "sha256": "551c7bd47abc58c961c6e11163b547d73d84d3995e93f5b71158b9852c621019"
+        }
+      },
+      "project": {
+        "bits_per_channel": 32,
+        "dimensions": [
+          64,
+          36
+        ],
+        "linear_blending": false,
+        "renderer": "SOFTWARE",
+        "renderer_raw": 1816,
+        "working_space": "None"
+      },
+      "source": {
+        "kind": "AE solid",
+        "rgba8": [
+          26,
+          191,
+          204,
+          255
+        ]
+      },
+      "status": "ok"
+    },
+    "ae_return_text": "{\"kind\":\"olmblur_current_install_ae_return\",\"status\":\"ok\",\"ae_version\":\"26.3x87\",\"os\":\"Macintosh OS 15.7.2/64\",\"project\":{\"bits_per_channel\":32,\"renderer_raw\":1816,\"renderer\":\"SOFTWARE\",\"working_space\":\"None\",\"linear_blending\":false,\"dimensions\":[64,36]},\"effect\":{\"name\":\"OLM Blur\",\"match_name\":\"OLM OLM Blur\",\"parameter_count\":5,\"parameters_before\":[{\"index\":1,\"name\":\"Blur Amount\",\"match_name\":\"OLM OLM Blur-0005\",\"value\":5},{\"index\":2,\"name\":\"Blur Smoothness\",\"match_name\":\"OLM OLM Blur-0006\",\"value\":100},{\"index\":3,\"name\":\"Number of Repeat\",\"match_name\":\"OLM OLM Blur-0003\",\"value\":2},{\"index\":4,\"name\":\"Bias Direction\",\"match_name\":\"OLM OLM Blur-0004\",\"value\":1},{\"index\":5,\"name\":\"Legacy\",\"match_name\":\"OLM OLM Blur-0007\",\"value\":0}],\"parameters_after\":[{\"index\":1,\"name\":\"Blur Amount\",\"match_name\":\"OLM OLM Blur-0005\",\"value\":5},{\"index\":2,\"name\":\"Blur Smoothness\",\"match_name\":\"OLM OLM Blur-0006\",\"value\":100},{\"index\":3,\"name\":\"Number of Repeat\",\"match_name\":\"OLM OLM Blur-0003\",\"value\":2},{\"index\":4,\"name\":\"Bias Direction\",\"match_name\":\"OLM OLM Blur-0004\",\"value\":1},{\"index\":5,\"name\":\"Legacy\",\"match_name\":\"OLM OLM Blur-0007\",\"value\":0}],\"parameters_unchanged\":true},\"source\":{\"kind\":\"AE solid\",\"rgba8\":[26,191,204,255]},\"outputs\":{\"control\":{\"path\":\"/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olmblur-current-install-smoke-bj3zl2mw/output/control.exr00000\",\"sha256\":\"038038fcced17f79d5734db404b4c8c97199a6fa5fa498d30c09022fd63a790a\"},\"effect_on\":{\"path\":\"/var/folders/75/9dt3mly976q79gzrd3sg8qxm0000gn/T/olmblur-current-install-smoke-bj3zl2mw/output/effect_on.exr00000\",\"sha256\":\"551c7bd47abc58c961c6e11163b547d73d84d3995e93f5b71158b9852c621019\"}}}",
+    "host_trace": "LOADER_ENTER\nLOADER_RETURN\n",
+    "osascript": {
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "0\n"
+    }
+  },
+  "fresh_host": {
+    "ae_pids_post_render": [
+      8082
+    ],
+    "ae_pids_pre_render": [
+      8082
+    ],
+    "agent_quit_ae": true,
+    "agent_started_ae": true,
+    "initial_ae_pids": [],
+    "loaded_modules_post_render": {
+      "8082": [
+        "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMBlur.plugin/Contents/MacOS/OLMBlur"
+      ]
+    },
+    "loaded_modules_pre_render": {
+      "8082": []
+    },
+    "open": {
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    "quit": {
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    }
+  },
+  "gates": {
+    "effect_add_and_render_completed": true,
+    "fresh_process": true,
+    "installed_hash_unchanged": true,
+    "lab76_live_pixel_exact_claim": false,
+    "loaded_module_identity_exact_after_effect_add": true
+  },
+  "installed_plugin": {
+    "binary_path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMBlur.plugin/Contents/MacOS/OLMBlur",
+    "binary_sha256_post": "b1461f8ee35b3d566a9825e9e04882c8ec28b51ce9e67dbbd83f463d706d943f",
+    "binary_sha256_pre": "b1461f8ee35b3d566a9825e9e04882c8ec28b51ce9e67dbbd83f463d706d943f",
+    "bundle_path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMBlur.plugin",
+    "expected_binary_sha256": "b1461f8ee35b3d566a9825e9e04882c8ec28b51ce9e67dbbd83f463d706d943f",
+    "matching_bundle_paths": [
+      "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMBlur.plugin"
+    ]
+  },
+  "kind": "olmblur_current_install_ae_smoke_raw",
+  "schema_version": 1,
+  "status": "installed_host_smoke_pass"
+}

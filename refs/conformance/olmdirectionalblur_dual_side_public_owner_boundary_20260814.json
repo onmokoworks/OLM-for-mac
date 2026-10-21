@@ -1,0 +1,154 @@
+{
+  "boundary": {
+    "arm64_public_exact_cells": 15,
+    "mac_public_effectmain_exercised": true,
+    "native_after_effects_exercised": false,
+    "production_policy": "the 6 x86_64 libSystem-expf residual cells fail closed",
+    "windows_exported_smart_observed_cells": 15,
+    "windows_internal_owner_entry": "0x180007BD0",
+    "x86_64_public_exact_cells": 9
+  },
+  "identities": {
+    "feature_tool_sha256": "f7c39d71901ddc8ac744b351bbb6b28245e82f36ab77e34d4eab5675e00c2774",
+    "historical_mac_public_report_sha256": "c09951b1b3483aa68c32e23db99d3bdff93082b0597f4fdc73dd9b77bfc828c3",
+    "internal_owner_report_sha256": "4a7c37b6cd685d0f64052316080792200f9eb2dae8d91628400c2fe5eeda6f8c",
+    "production_source_sha256": "494116880d037a0d44a48b0e0ebe0fc5358b4cd8892b90ca8c61ea8a7bb2e845"
+  },
+  "rows": [
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "noise_checkin": 0,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 32,
+      "error": 516,
+      "error_symbol": "PF_Err_BAD_CALLBACK_PARAM",
+      "geometry": [
+        64,
+        36
+      ],
+      "input_output_headers_unchanged": true,
+      "input_storage_unchanged": true,
+      "output_padding_unchanged": true,
+      "output_storage_unchanged": true,
+      "tuple_index": 0
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "noise_checkin": 0,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 32,
+      "error": 516,
+      "error_symbol": "PF_Err_BAD_CALLBACK_PARAM",
+      "geometry": [
+        64,
+        36
+      ],
+      "input_output_headers_unchanged": true,
+      "input_storage_unchanged": true,
+      "output_padding_unchanged": true,
+      "output_storage_unchanged": true,
+      "tuple_index": 1
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "noise_checkin": 0,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 8,
+      "error": 516,
+      "error_symbol": "PF_Err_BAD_CALLBACK_PARAM",
+      "geometry": [
+        64,
+        36
+      ],
+      "input_output_headers_unchanged": true,
+      "input_storage_unchanged": true,
+      "output_padding_unchanged": true,
+      "output_storage_unchanged": true,
+      "tuple_index": 2
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "noise_checkin": 0,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 16,
+      "error": 516,
+      "error_symbol": "PF_Err_BAD_CALLBACK_PARAM",
+      "geometry": [
+        64,
+        36
+      ],
+      "input_output_headers_unchanged": true,
+      "input_storage_unchanged": true,
+      "output_padding_unchanged": true,
+      "output_storage_unchanged": true,
+      "tuple_index": 2
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "noise_checkin": 0,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 32,
+      "error": 516,
+      "error_symbol": "PF_Err_BAD_CALLBACK_PARAM",
+      "geometry": [
+        64,
+        36
+      ],
+      "input_output_headers_unchanged": true,
+      "input_storage_unchanged": true,
+      "output_padding_unchanged": true,
+      "output_storage_unchanged": true,
+      "tuple_index": 2
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "noise_checkin": 0,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 32,
+      "error": 516,
+      "error_symbol": "PF_Err_BAD_CALLBACK_PARAM",
+      "geometry": [
+        64,
+        36
+      ],
+      "input_output_headers_unchanged": true,
+      "input_storage_unchanged": true,
+      "output_padding_unchanged": true,
+      "output_storage_unchanged": true,
+      "tuple_index": 3
+    }
+  ],
+  "rows_sha256": "b31398ebe99c72d9a848d297e4aa21186203e9d8eb442fba72247afc1e5ce8c3",
+  "schema": "olmdirectionalblur.dual-side-x86-expf-boundary/2",
+  "status": "PASS_DUAL_SIDE_X86_64_EXPF_RESIDUAL_FAIL_CLOSED_6"
+}

@@ -185,6 +185,33 @@ def apply_parameter_profile(state: dict[str, object], profile: str) -> None:
         )
         state["params_by_size"] = {}
         return
+    if profile == "kirakira-mode3-length50" and state.get("key") == "kirakira":
+        state["supported_tuple"] = (
+            "Mode 3 Gaussian Horizontal-only Length 50 Rotation 0"
+        )
+        state["params"] = (
+            ("OLM OLM Kira Kira-0001", "Glow Rotation", 0),
+            ("OLM OLM Kira Kira-0002", "Brightness Gain", 1.0),
+            ("OLM OLM Kira Kira-0003", "Vertical Length", 0),
+            ("OLM OLM Kira Kira-0004", "Horizontal Length", 50),
+            ("OLM OLM Kira Kira-0005", "Diagonal Length", 0),
+            ("OLM OLM Kira Kira-0006", "Highlight Radius", 0),
+            ("OLM OLM Kira Kira-0007", "Glow Opacity", 100),
+            ("OLM OLM Kira Kira-0008", "Channel", 1),
+            ("OLM OLM Kira Kira-0009", "Blur Mode", 3),
+            ("OLM OLM Kira Kira-0010", "Approximated Input", 0),
+            ("OLM OLM Kira Kira-0011", "Strength multiplier", 100),
+            ("OLM OLM Kira Kira-0012", "Source Opacity", 100),
+            ("OLM OLM Kira Kira-0017", "Merge mode", 1),
+            ("OLM OLM Kira Kira-0020", "Horizontal Use Ramp", 0),
+            ("OLM OLM Kira Kira-0026", "Diagonal 2 length", 0),
+            ("OLM OLM Kira Kira-0027", "Fade Out", 0),
+        )
+        state["params_by_size"] = {}
+        # saveFrameToPng returns before this heavy profile finishes rendering;
+        # use the synchronous render queue publication path at 8 bpc too.
+        state["render_queue_8"] = True
+        return
     if profile != "directional-dual" or state.get("key") != "directional":
         raise ValueError(f"parameter profile {profile!r} is not valid for {state.get('key')!r}")
     state["declared_depths"] = (8, 16, 32)
@@ -277,7 +304,7 @@ def main() -> int:
         "--parameter-profile",
         choices=("baseline", "directional-dual", "colorkeep-count100",
                  "blur-legacy-repeat10", "colorkey-edge-blur",
-                 "distance-linear-gaussian"),
+                 "distance-linear-gaussian", "kirakira-mode3-length50"),
         default="baseline",
         help="Select a bounded major-operations profile without changing the baseline 54-cell matrix.",
     )
@@ -295,6 +322,7 @@ def main() -> int:
             "blur-legacy-repeat10": "blur",
             "colorkey-edge-blur": "colorkey",
             "distance-linear-gaussian": "distance",
+            "kirakira-mode3-length50": "kirakira",
         }[args.parameter_profile]
         if selected_keys != [required_plugin]:
             parser.error(

@@ -1,0 +1,195 @@
+{
+  "candidate": {
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "build": {
+      "code_signing": "ad-hoc after CODE_SIGNING_ALLOWED=NO",
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/onmk/Documents/Projects/Personal/OLM as/mac/OLMDistanceGradation/Mac/OLMDistanceGradation.xcodeproj",
+        "-target",
+        "OLMDistanceGradation",
+        "-configuration",
+        "Debug",
+        "ARCHS=arm64 x86_64",
+        "ONLY_ACTIVE_ARCH=NO",
+        "CODE_SIGNING_ALLOWED=NO",
+        "CONFIGURATION_BUILD_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olmdistancegradation_pf32_power_native_ucrt_universal_candidate_20260815/Product",
+        "OBJROOT=<temporary>",
+        "SYMROOT=<temporary>",
+        "SHARED_PRECOMPS_DIR=<temporary>",
+        "build"
+      ],
+      "configuration": "Debug"
+    },
+    "bundle": "handoffs/olmdistancegradation_pf32_power_native_ucrt_universal_candidate_20260815/Product/OLMDistanceGradation.plugin",
+    "inventory": [
+      {
+        "bytes": 1422,
+        "mode": 420,
+        "path": "Contents/Info.plist",
+        "sha256": "6a841177a86812759fcf8e293a958392ebba673c24f507c585fcfb093c32325e"
+      },
+      {
+        "bytes": 482576,
+        "mode": 493,
+        "path": "Contents/MacOS/OLMDistanceGradation",
+        "sha256": "d138c75d7dbd4c9ca3643988eebd9d53b7581947b6e22aa0f424de6433e2f206"
+      },
+      {
+        "bytes": 8,
+        "mode": 420,
+        "path": "Contents/PkgInfo",
+        "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a"
+      },
+      {
+        "bytes": 678,
+        "mode": 420,
+        "path": "Contents/Resources/OLMDistanceGradation.rsrc",
+        "sha256": "91b8673899695b2d7784dbb714a80a79ba8c7ee2ebaf5d6c69c0ccd5848c202d"
+      },
+      {
+        "bytes": 2472,
+        "mode": 420,
+        "path": "Contents/_CodeSignature/CodeResources",
+        "sha256": "93fff0f91dd95be23ab232a98aa2517b54852f7c56980675639c15e2a6280279"
+      }
+    ],
+    "strict_codesign": true
+  },
+  "identities": {
+    "binary_sha256": "d138c75d7dbd4c9ca3643988eebd9d53b7581947b6e22aa0f424de6433e2f206",
+    "closure_sha256": "5a9072bf9c55089939892a57c6ddd8bbfaf805f6a170dae79803926657d73253",
+    "direct_harness_sha256": "f6b9d85c7e6839edde0a229fd57957666442bea5388648ea50c8ec6a9f4f61d1",
+    "fieldgen_sha256": "001493f40681ddf1f8408b15b25c5795500f84423019df6e51c30741dffb71c9",
+    "production_source_sha256": "e2f5020f995b59277ee288f48e74a851fc1c9f6a456678cf0361d00e073dd9a9",
+    "public_harness_sha256": "6d113e40dbf022d875118db426d78023f5f51b86195da5420db7681c9bdb8c0e"
+  },
+  "schema": "olmdistancegradation.pf32-power-native-ucrt-universal-candidate/1",
+  "scope": {
+    "after_effects_launched": false,
+    "fixed_17x11_pf32_power_only": true,
+    "installed": false,
+    "unlisted_fail_closed": true
+  },
+  "slices": {
+    "arm64": {
+      "public_marker": "PASS_OLMDISTANCEGRADATION_PUBLIC_SMART_OWNER_CONTRACT positive=17 mode5_positive=8 power_positive=8 power_negative=7 negative=21 classic_guards=4",
+      "raw_exact_cells": 8,
+      "rows": [
+        {
+          "cell": "mode2.bg0",
+          "native_ucrt_exact": true,
+          "raw_bytes": 2992,
+          "raw_sha256": "42d8142e9aa8cc2abe581cfc8ebc1b473d0861a2e3664e617895639d5451f38c"
+        },
+        {
+          "cell": "mode2.bg1",
+          "native_ucrt_exact": true,
+          "raw_bytes": 2992,
+          "raw_sha256": "47ec340cbbaa60bbacff42f15030619fa9d3fc543b3baf5f9bf17560d1dda36d"
+        },
+        {
+          "cell": "mode3.bg0",
+          "native_ucrt_exact": true,
+          "raw_bytes": 2992,
+          "raw_sha256": "12bdf0c207bff9fb8c0390f848883281b8484802baea72c82f98db96c3176849"
+        },
+        {
+          "cell": "mode3.bg1",
+          "native_ucrt_exact": true,
+          "raw_bytes": 2992,
+          "raw_sha256": "dfeb76265a320e6aae3945fdb2aaa76cd9e77f7e63f586046bca744bfad9cb07"
+        },
+        {
+          "cell": "mode4.bg0",
+          "native_ucrt_exact": true,
+          "raw_bytes": 2992,
+          "raw_sha256": "849be120ac0c5e4990c8a19135ebfccdb2f6350ffe53cd0bb1a9f6aafb486c2a"
+        },
+        {
+          "cell": "mode4.bg1",
+          "native_ucrt_exact": true,
+          "raw_bytes": 2992,
+          "raw_sha256": "0d8860db7bffd87c6737298482eb60d0378b2dc63841d861ee8e174aaee0a81c"
+        },
+        {
+          "cell": "mode5.bg0",
+          "native_ucrt_exact": true,
+          "raw_bytes": 2992,
+          "raw_sha256": "40b5d262cdc0ab372036c9d2774fa9400f74daa7895c75c2222a246b01c485a5"
+        },
+        {
+          "cell": "mode5.bg1",
+          "native_ucrt_exact": true,
+          "raw_bytes": 2992,
+          "raw_sha256": "fe715e7973fa79d6043cbe86dcfce3205869fb23ac9d69a8d98b288ab20ad6d7"
+        }
+      ]
+    },
+    "x86_64": {
+      "public_marker": "PASS_OLMDISTANCEGRADATION_PUBLIC_SMART_OWNER_CONTRACT positive=17 mode5_positive=8 power_positive=8 power_negative=7 negative=21 classic_guards=4",
+      "raw_exact_cells": 8,
+      "rows": [
+        {
+          "cell": "mode2.bg0",
+          "native_ucrt_exact": true,
+          "raw_bytes": 2992,
+          "raw_sha256": "42d8142e9aa8cc2abe581cfc8ebc1b473d0861a2e3664e617895639d5451f38c"
+        },
+        {
+          "cell": "mode2.bg1",
+          "native_ucrt_exact": true,
+          "raw_bytes": 2992,
+          "raw_sha256": "47ec340cbbaa60bbacff42f15030619fa9d3fc543b3baf5f9bf17560d1dda36d"
+        },
+        {
+          "cell": "mode3.bg0",
+          "native_ucrt_exact": true,
+          "raw_bytes": 2992,
+          "raw_sha256": "12bdf0c207bff9fb8c0390f848883281b8484802baea72c82f98db96c3176849"
+        },
+        {
+          "cell": "mode3.bg1",
+          "native_ucrt_exact": true,
+          "raw_bytes": 2992,
+          "raw_sha256": "dfeb76265a320e6aae3945fdb2aaa76cd9e77f7e63f586046bca744bfad9cb07"
+        },
+        {
+          "cell": "mode4.bg0",
+          "native_ucrt_exact": true,
+          "raw_bytes": 2992,
+          "raw_sha256": "849be120ac0c5e4990c8a19135ebfccdb2f6350ffe53cd0bb1a9f6aafb486c2a"
+        },
+        {
+          "cell": "mode4.bg1",
+          "native_ucrt_exact": true,
+          "raw_bytes": 2992,
+          "raw_sha256": "0d8860db7bffd87c6737298482eb60d0378b2dc63841d861ee8e174aaee0a81c"
+        },
+        {
+          "cell": "mode5.bg0",
+          "native_ucrt_exact": true,
+          "raw_bytes": 2992,
+          "raw_sha256": "40b5d262cdc0ab372036c9d2774fa9400f74daa7895c75c2222a246b01c485a5"
+        },
+        {
+          "cell": "mode5.bg1",
+          "native_ucrt_exact": true,
+          "raw_bytes": 2992,
+          "raw_sha256": "fe715e7973fa79d6043cbe86dcfce3205869fb23ac9d69a8d98b288ab20ad6d7"
+        }
+      ]
+    }
+  },
+  "status": "PASS_NONINSTALLED_UNIVERSAL_IDENTITY_SOURCE_RUNTIME_ARM64_X86_64_POWER8_EXACT",
+  "summary": {
+    "architectures": 2,
+    "source_runtime_public_contract_passed_per_arch": true,
+    "source_runtime_raw_exact_cells_per_arch": 8,
+    "source_runtime_raw_exact_cells_total": 16
+  }
+}

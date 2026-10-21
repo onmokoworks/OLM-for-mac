@@ -1,0 +1,114 @@
+{
+  "claim_boundary": "Repository AexLoader/Unicorn execution of the current Windows exported SmartPreRender/SmartRender owner. Both exact retained PF16 tuples are raw exact with untouched row padding; no broader source, tuple, geometry, or depth is inferred.",
+  "claims_not_made": [
+    "native Windows AE",
+    "native Mac AE",
+    "installed Mac binary",
+    "other source/tuple/geometry/depth"
+  ],
+  "identities": {
+    "aex": {
+      "path": "plugins_2025/OLMBlur.aex",
+      "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+    },
+    "public_runner": {
+      "path": "tools/emulation/test_olmblur_exported_effectmain_chain_actual_aex_20260811.py",
+      "sha256": "5043ba89701d5af95018f50df8f712df0e8d2e4348b25d9658f7e54a0f5ffae6"
+    },
+    "worker_runner": {
+      "path": "tools/emulation/test_olmblur_worker16_nonlegacy.py",
+      "sha256": "2225819fc4da24735802ea10a8f09500f4bd3727652212ee3c565440c00ca969"
+    }
+  },
+  "rows": [
+    {
+      "active_source_sha256": "df143537b2c987564fd2c0d0b4f9ad3b2332c4db8d5ccbaf8ac3ebc71b05bb8d",
+      "disposition": "promotable_exact",
+      "geometry": [
+        12,
+        12
+      ],
+      "id": "pf16_12x12_amount3_repeat2_bias1_nonlegacy",
+      "mismatched_bytes": 0,
+      "padding_per_row": 13,
+      "parameters": {
+        "amount_f64": 3.0,
+        "bias": 1,
+        "legacy": 0,
+        "repeat": 2,
+        "smoothness_fixed": 6553600
+      },
+      "public_lifecycle": {
+        "commands": [
+          23,
+          24
+        ],
+        "padding_mismatches": 0,
+        "parameter_checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "return_codes": [
+          0,
+          0
+        ]
+      },
+      "public_output_sha256": "28d648118306c3ed9bedbcd7e99c7af8f8bc26813b701b366c56b966f3a3e846",
+      "rowbytes": 109,
+      "worker_instructions": 102918,
+      "worker_oracle_sha256": "28d648118306c3ed9bedbcd7e99c7af8f8bc26813b701b366c56b966f3a3e846"
+    },
+    {
+      "active_source_sha256": "bc3bfbf7c3d5a908690b71819c9dd83e4bddb9b6f09a417ff06ec6cc3d3943ae",
+      "disposition": "promotable_exact",
+      "geometry": [
+        18,
+        18
+      ],
+      "id": "pf16_18x18_amount11_repeat3_bias2_nonlegacy",
+      "mismatched_bytes": 0,
+      "padding_per_row": 13,
+      "parameters": {
+        "amount_f64": 11.0,
+        "bias": 2,
+        "legacy": 0,
+        "repeat": 3,
+        "smoothness_fixed": 6553600
+      },
+      "public_lifecycle": {
+        "commands": [
+          23,
+          24
+        ],
+        "padding_mismatches": 0,
+        "parameter_checkout_order": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "return_codes": [
+          0,
+          0
+        ]
+      },
+      "public_output_sha256": "64355b2ce493e3d318de8fa09f45234b98236029347b62e9d09e4ef8cb98a4bc",
+      "rowbytes": 157,
+      "worker_instructions": 383372,
+      "worker_oracle_sha256": "64355b2ce493e3d318de8fa09f45234b98236029347b62e9d09e4ef8cb98a4bc"
+    }
+  ],
+  "schema": "olmblur.pf16-retained-tuples-exported-public-owner/1",
+  "status": "PASS_TWO_RETAINED_TUPLES_RAW_EXACT",
+  "summary": {
+    "cells": 2,
+    "mismatch_bytes": 0,
+    "padding_untouched": 2,
+    "public_mismatch": 0,
+    "raw_exact": 2
+  }
+}

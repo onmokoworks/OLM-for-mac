@@ -1,0 +1,527 @@
+{
+  "actual_exported_smart_owner": [
+    {
+      "active_bytes": 100,
+      "depth": "PF8",
+      "guards_intact": true,
+      "pixel_format": "argb8",
+      "raw_sha256": "29f115036540706bb61962d3fa85bfef5dea5f08847ad2dfa19c368d82bcf2eb",
+      "render_mode": "smart-cpu",
+      "smart_pre_render_completed": true,
+      "smart_render_completed": true,
+      "status": "raw_exact",
+      "unsupported_suite_calls": [],
+      "variant": "v1_noninvert"
+    },
+    {
+      "active_bytes": 200,
+      "depth": "PF16",
+      "guards_intact": true,
+      "pixel_format": "argb16",
+      "raw_sha256": "ad57d85d46aee324ecc02636a2eaa14c10b0c01679d30817dd61d2086b9d1e69",
+      "render_mode": "smart-cpu",
+      "smart_pre_render_completed": true,
+      "smart_render_completed": true,
+      "status": "raw_exact",
+      "unsupported_suite_calls": [],
+      "variant": "v1_noninvert"
+    },
+    {
+      "active_bytes": 400,
+      "depth": "PF32",
+      "guards_intact": true,
+      "pixel_format": "argb32f",
+      "raw_sha256": "363b5b2fc0d9a9e30e1a38136985b46cbc8927227c7d2dda8d518104f6782ea8",
+      "render_mode": "smart-cpu",
+      "smart_pre_render_completed": true,
+      "smart_render_completed": true,
+      "status": "raw_exact",
+      "unsupported_suite_calls": [],
+      "variant": "v1_noninvert"
+    },
+    {
+      "active_bytes": 100,
+      "depth": "PF8",
+      "guards_intact": true,
+      "pixel_format": "argb8",
+      "raw_sha256": "ad3c4081df00896edb660aedf61f05a734686c55a468badbcd846431ed4948e2",
+      "render_mode": "smart-cpu",
+      "smart_pre_render_completed": true,
+      "smart_render_completed": true,
+      "status": "raw_exact",
+      "unsupported_suite_calls": [],
+      "variant": "v1_invert"
+    },
+    {
+      "active_bytes": 200,
+      "depth": "PF16",
+      "guards_intact": true,
+      "pixel_format": "argb16",
+      "raw_sha256": "a0276758e35a93d3f48bf5107eaf163c4308cd642d48c9a34bd479cc581781d8",
+      "render_mode": "smart-cpu",
+      "smart_pre_render_completed": true,
+      "smart_render_completed": true,
+      "status": "raw_exact",
+      "unsupported_suite_calls": [],
+      "variant": "v1_invert"
+    },
+    {
+      "active_bytes": 400,
+      "depth": "PF32",
+      "guards_intact": true,
+      "pixel_format": "argb32f",
+      "raw_sha256": "bf00a302cfca39996b23cfa6b17dc86c3e04516353fa7e3374271a2cd0fe6ff6",
+      "render_mode": "smart-cpu",
+      "smart_pre_render_completed": true,
+      "smart_render_completed": true,
+      "status": "raw_exact",
+      "unsupported_suite_calls": [],
+      "variant": "v1_invert"
+    },
+    {
+      "active_bytes": 100,
+      "depth": "PF8",
+      "guards_intact": true,
+      "pixel_format": "argb8",
+      "raw_sha256": "25db2380ab04d862e7fe14e6e319a206dfb83481946aa4392eca29eeb0aee90c",
+      "render_mode": "smart-cpu",
+      "smart_pre_render_completed": true,
+      "smart_render_completed": true,
+      "status": "raw_exact",
+      "unsupported_suite_calls": [],
+      "variant": "v2_noninvert"
+    },
+    {
+      "active_bytes": 200,
+      "depth": "PF16",
+      "guards_intact": true,
+      "pixel_format": "argb16",
+      "raw_sha256": "f79064a05e02aa36580c3323a7a7ec048272b07b14293ef4a7d356726ec2da3e",
+      "render_mode": "smart-cpu",
+      "smart_pre_render_completed": true,
+      "smart_render_completed": true,
+      "status": "raw_exact",
+      "unsupported_suite_calls": [],
+      "variant": "v2_noninvert"
+    },
+    {
+      "active_bytes": 400,
+      "depth": "PF32",
+      "guards_intact": true,
+      "pixel_format": "argb32f",
+      "raw_sha256": "7a463e32ff665b8fb2e263e0fa9ea5177c67b62ea52f500729a5b2b586de78b2",
+      "render_mode": "smart-cpu",
+      "smart_pre_render_completed": true,
+      "smart_render_completed": true,
+      "status": "raw_exact",
+      "unsupported_suite_calls": [],
+      "variant": "v2_noninvert"
+    },
+    {
+      "active_bytes": 100,
+      "depth": "PF8",
+      "guards_intact": true,
+      "pixel_format": "argb8",
+      "raw_sha256": "ad3c4081df00896edb660aedf61f05a734686c55a468badbcd846431ed4948e2",
+      "render_mode": "smart-cpu",
+      "smart_pre_render_completed": true,
+      "smart_render_completed": true,
+      "status": "raw_exact",
+      "unsupported_suite_calls": [],
+      "variant": "v2_invert"
+    },
+    {
+      "active_bytes": 200,
+      "depth": "PF16",
+      "guards_intact": true,
+      "pixel_format": "argb16",
+      "raw_sha256": "a0276758e35a93d3f48bf5107eaf163c4308cd642d48c9a34bd479cc581781d8",
+      "render_mode": "smart-cpu",
+      "smart_pre_render_completed": true,
+      "smart_render_completed": true,
+      "status": "raw_exact",
+      "unsupported_suite_calls": [],
+      "variant": "v2_invert"
+    },
+    {
+      "active_bytes": 400,
+      "depth": "PF32",
+      "guards_intact": true,
+      "pixel_format": "argb32f",
+      "raw_sha256": "4b2a3f6b2739d2751c4c53028dabbeb828879964e9abdbccd63be83abecb2599",
+      "render_mode": "smart-cpu",
+      "smart_pre_render_completed": true,
+      "smart_render_completed": true,
+      "status": "raw_exact",
+      "unsupported_suite_calls": [],
+      "variant": "v2_invert"
+    }
+  ],
+  "case_count": 12,
+  "claim_boundary": "Raw exact only for the fixed 5x5 opaque RGBA8 fixture (24 pixels retained from the prior compound fixture and pixel 0 replaced by the exact key endpoint), Color Key RGB=(202,187,230), Gamma Colors ordered [red,key], Gamma Value=1.8, Smoothness/Range/Extra Smooth=100, Version 1/2 x non-invert/invert x PF8/PF16/PF32. No arbitrary input, Gamma Value, key/palette, smoothing, geometry, AE-host, GPU, or installed-binary claim.",
+  "cross_checks": {
+    "endpoint_pixels_present": {
+      "key": [
+        0,
+        0
+      ],
+      "red": [
+        1,
+        0
+      ]
+    },
+    "invert_version_outputs": "PF8/PF16 equal on this bounded fixture; PF32 distinct",
+    "key_polarities_distinct_each_version_all_depths": true,
+    "noninvert_version_outputs_distinct_all_depths": true
+  },
+  "date": "2026-08-12",
+  "exact_case_count": 12,
+  "exact_key_endpoint_observability": {
+    "diagnostic_scope": "same source and Version 2 non-invert Gamma 1.8 tuple; only Enable Color Key changes from 1 to 0",
+    "exact_key_endpoint_action_distinct_all_depths": true,
+    "key_disabled_raw_sha256_by_depth": {
+      "PF16": "66127e3fbe12b1b39f25127550d006f69db7d8aabe9c571f8caf91fc6819dee7",
+      "PF32": "c6239c135d38db34c1eed69a66855dff650961301df72da35feb5d413c06962b",
+      "PF8": "ca56c65ec9209d52c956f40e51cb8f7c133a001eab1b141b95c04295917cce99"
+    },
+    "key_enabled_raw_sha256_by_depth": {
+      "PF16": "f79064a05e02aa36580c3323a7a7ec048272b07b14293ef4a7d356726ec2da3e",
+      "PF32": "7a463e32ff665b8fb2e263e0fa9ea5177c67b62ea52f500729a5b2b586de78b2",
+      "PF8": "25db2380ab04d862e7fe14e6e319a206dfb83481946aa4392eca29eeb0aee90c"
+    }
+  },
+  "fail_close": [
+    "any input pixel, key/palette endpoint, Gamma Value, smoothing value, version, polarity, geometry, or depth outside the declared twelve cells",
+    "any unpinned AEX, AEXCompat worker/commit, production source, or public EffectMain harness identity",
+    "native Windows, After Effects host/color-management, GPU, or installed-plugin execution"
+  ],
+  "fixture": {
+    "alpha_u8": 255,
+    "derivation": "prior 25-pixel compound fixture with 24 pixels retained and pixel 0 changed from (1,1,1) to exact key endpoint (202,187,230)",
+    "dimensions": [
+      5,
+      5
+    ],
+    "input_png_sha256": "4cbe4d7815b0b5c591fb4db4304633d11b32db2dbab22b5cb04b3ae4235ab13c",
+    "prior_fixture_rgba8_sha256": "3a61958d4ef386108a075ca5acdf294184b0d9d29c9c97bb61c3491726c5698c",
+    "rgb_u8": [
+      [
+        202,
+        187,
+        230
+      ],
+      [
+        255,
+        0,
+        0
+      ],
+      [
+        65,
+        1,
+        1
+      ],
+      [
+        0,
+        255,
+        0
+      ],
+      [
+        206,
+        55,
+        161
+      ],
+      [
+        86,
+        55,
+        26
+      ],
+      [
+        43,
+        73,
+        217
+      ],
+      [
+        231,
+        16,
+        235
+      ],
+      [
+        116,
+        106,
+        230
+      ],
+      [
+        1,
+        9,
+        43
+      ],
+      [
+        91,
+        38,
+        34
+      ],
+      [
+        99,
+        183,
+        84
+      ],
+      [
+        230,
+        125,
+        149
+      ],
+      [
+        208,
+        155,
+        60
+      ],
+      [
+        168,
+        21,
+        161
+      ],
+      [
+        233,
+        157,
+        226
+      ],
+      [
+        8,
+        57,
+        119
+      ],
+      [
+        159,
+        56,
+        196
+      ],
+      [
+        232,
+        156,
+        109
+      ],
+      [
+        50,
+        140,
+        246
+      ],
+      [
+        229,
+        135,
+        20
+      ],
+      [
+        36,
+        6,
+        46
+      ],
+      [
+        176,
+        107,
+        229
+      ],
+      [
+        168,
+        83,
+        193
+      ],
+      [
+        235,
+        7,
+        162
+      ]
+    ],
+    "source_rgba8_sha256": "82199eb51f6455f4842efd1f6020469b04af53a4ba9f7b8df366cd84bf13c67f"
+  },
+  "identities": {
+    "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+    "aexcompat_commit": "28d535469f84f67236ef3425afe4291ea2fb0991",
+    "aexcompat_worker_sha256": "46ab907d286ad4e0e1c2065557100f02c37e0b68df4c22202a825f3fea13ef61",
+    "effectmain_harness_sha256": "2c60d139f2e3ddcce52c77f67c5640358a54a2fd23bd09c624b5e97880d4e229",
+    "generator_sha256": "4677cb4429ec7111fee08fb7eba1f67ad58fd6747eb970c8517b8fc460e9b4e5",
+    "production_source_sha256": "87e861e4a0c5678502d744ab9aaea00a5066b20536be0d1e01f0b98a8045bffd"
+  },
+  "intermediate_gamma_observability": {
+    "diagnostic_scope": "actual exported Version 2 non-invert owner on the same fixture; Gamma endpoints are observation controls, not added exact-production cells",
+    "gamma_1_8_distinct_from_1_0_and_2_4_all_depths": true,
+    "raw_sha256_by_gamma_and_depth": {
+      "1.0": {
+        "PF16": "7786c667f1ddfdfc9fa7653e3d58b1a17ef65214847466056fe0eee781fd01ab",
+        "PF32": "735596ca3461ec380eac33bc507c2b8f3c6d2f19a03d9ddf8b945947708145b0",
+        "PF8": "d11b8baa684132c72c833d1ba7bee8c905e9b54a7de362bd80ce046f9509649c"
+      },
+      "1.8": {
+        "PF16": "f79064a05e02aa36580c3323a7a7ec048272b07b14293ef4a7d356726ec2da3e",
+        "PF32": "7a463e32ff665b8fb2e263e0fa9ea5177c67b62ea52f500729a5b2b586de78b2",
+        "PF8": "25db2380ab04d862e7fe14e6e319a206dfb83481946aa4392eca29eeb0aee90c"
+      },
+      "2.4": {
+        "PF16": "781310546342e5d8ad781e192dc8acecb065e4309df1c4016166d5479732adbd",
+        "PF32": "77d87803b38a38f113a5507d56da04cdac80f9098bf31ec1121c85b1c5b99b81",
+        "PF8": "ed31505731b5679a096deae1073e109c730a378b7fa0f1b8ed963da8353875b3"
+      }
+    }
+  },
+  "parameters": {
+    "color_key_rgb_u8": [
+      202,
+      187,
+      230
+    ],
+    "depths": [
+      "PF8",
+      "PF16",
+      "PF32"
+    ],
+    "extra_smooth": 100,
+    "gamma_mode": "Gamma Colors",
+    "gamma_palette_rgb_u8": [
+      [
+        255,
+        0,
+        0
+      ],
+      [
+        202,
+        187,
+        230
+      ]
+    ],
+    "gamma_value": 1.8,
+    "key_polarities": [
+      "noninvert",
+      "invert"
+    ],
+    "smooth_range": 100,
+    "smoothness": 100,
+    "versions": [
+      1,
+      2
+    ]
+  },
+  "production_code_changed": false,
+  "production_public_effectmain": {
+    "chain": [
+      "EffectMain SmartPreRender",
+      "EffectMain SmartRender",
+      "typed RenderBits output"
+    ],
+    "gates": {
+      "checkout_layer_pixels_calls_per_cell": 1,
+      "checkout_output_calls_per_cell": 1,
+      "complete_input_buffer_unchanged": true,
+      "input_row_padding_preserved": true,
+      "output_row_padding_preserved": true,
+      "parameter_checkins_per_cell": 15,
+      "parameter_checkouts_per_cell": 15,
+      "pre_render_rectangles_preserved": true,
+      "row_padding_bytes_by_depth": {
+        "PF16": 7,
+        "PF32": 13,
+        "PF8": 5
+      },
+      "smart_pre_render_calls_per_cell": 1
+    },
+    "rows": [
+      {
+        "active_bytes": 100,
+        "depth": "PF8",
+        "pixel_format": "argb8",
+        "raw_sha256": "29f115036540706bb61962d3fa85bfef5dea5f08847ad2dfa19c368d82bcf2eb",
+        "status": "raw_exact",
+        "variant": "v1_noninvert"
+      },
+      {
+        "active_bytes": 200,
+        "depth": "PF16",
+        "pixel_format": "argb16",
+        "raw_sha256": "ad57d85d46aee324ecc02636a2eaa14c10b0c01679d30817dd61d2086b9d1e69",
+        "status": "raw_exact",
+        "variant": "v1_noninvert"
+      },
+      {
+        "active_bytes": 400,
+        "depth": "PF32",
+        "pixel_format": "argb32f",
+        "raw_sha256": "363b5b2fc0d9a9e30e1a38136985b46cbc8927227c7d2dda8d518104f6782ea8",
+        "status": "raw_exact",
+        "variant": "v1_noninvert"
+      },
+      {
+        "active_bytes": 100,
+        "depth": "PF8",
+        "pixel_format": "argb8",
+        "raw_sha256": "ad3c4081df00896edb660aedf61f05a734686c55a468badbcd846431ed4948e2",
+        "status": "raw_exact",
+        "variant": "v1_invert"
+      },
+      {
+        "active_bytes": 200,
+        "depth": "PF16",
+        "pixel_format": "argb16",
+        "raw_sha256": "a0276758e35a93d3f48bf5107eaf163c4308cd642d48c9a34bd479cc581781d8",
+        "status": "raw_exact",
+        "variant": "v1_invert"
+      },
+      {
+        "active_bytes": 400,
+        "depth": "PF32",
+        "pixel_format": "argb32f",
+        "raw_sha256": "bf00a302cfca39996b23cfa6b17dc86c3e04516353fa7e3374271a2cd0fe6ff6",
+        "status": "raw_exact",
+        "variant": "v1_invert"
+      },
+      {
+        "active_bytes": 100,
+        "depth": "PF8",
+        "pixel_format": "argb8",
+        "raw_sha256": "25db2380ab04d862e7fe14e6e319a206dfb83481946aa4392eca29eeb0aee90c",
+        "status": "raw_exact",
+        "variant": "v2_noninvert"
+      },
+      {
+        "active_bytes": 200,
+        "depth": "PF16",
+        "pixel_format": "argb16",
+        "raw_sha256": "f79064a05e02aa36580c3323a7a7ec048272b07b14293ef4a7d356726ec2da3e",
+        "status": "raw_exact",
+        "variant": "v2_noninvert"
+      },
+      {
+        "active_bytes": 400,
+        "depth": "PF32",
+        "pixel_format": "argb32f",
+        "raw_sha256": "7a463e32ff665b8fb2e263e0fa9ea5177c67b62ea52f500729a5b2b586de78b2",
+        "status": "raw_exact",
+        "variant": "v2_noninvert"
+      },
+      {
+        "active_bytes": 100,
+        "depth": "PF8",
+        "pixel_format": "argb8",
+        "raw_sha256": "ad3c4081df00896edb660aedf61f05a734686c55a468badbcd846431ed4948e2",
+        "status": "raw_exact",
+        "variant": "v2_invert"
+      },
+      {
+        "active_bytes": 200,
+        "depth": "PF16",
+        "pixel_format": "argb16",
+        "raw_sha256": "a0276758e35a93d3f48bf5107eaf163c4308cd642d48c9a34bd479cc581781d8",
+        "status": "raw_exact",
+        "variant": "v2_invert"
+      },
+      {
+        "active_bytes": 400,
+        "depth": "PF32",
+        "pixel_format": "argb32f",
+        "raw_sha256": "4b2a3f6b2739d2751c4c53028dabbeb828879964e9abdbccd63be83abecb2599",
+        "status": "raw_exact",
+        "variant": "v2_invert"
+      }
+    ]
+  },
+  "schema": "olmsmoother2.gamma18-keyendpoint-owner-closure/1",
+  "status": "raw_exact",
+  "verdict": "PASS_12_INTERMEDIATE_GAMMA_KEY_ENDPOINT_EXPORTED_OWNER_TO_PUBLIC_EFFECTMAIN_RAW_EXACT"
+}

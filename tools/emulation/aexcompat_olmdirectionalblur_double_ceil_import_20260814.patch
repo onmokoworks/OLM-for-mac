@@ -1,0 +1,33 @@
+diff --git a/guest/crates/aex-guest-worker/src/x64/imports.rs b/guest/crates/aex-guest-worker/src/x64/imports.rs
+index 3d9cb1fa..d249a1d6 100644
+--- a/guest/crates/aex-guest-worker/src/x64/imports.rs
++++ b/guest/crates/aex-guest-worker/src/x64/imports.rs
+@@ -49,6 +49,7 @@ enum LegacyWin64Import {
+     CxxThrowException,
+     Cos,
+     CosF,
++    Ceil,
+     CeilF,
+     ExpF,
+     FloorF,
+@@ -353,6 +354,10 @@ fn dispatch_win64_import(library: &str, symbol: &str) -> Win64ImportDispatch {
+         (_, "getenv") => return Win64ImportDispatch::UnsupportedLegacyImport,
+         ("api-ms-win-crt-math-l1-1-0.dll", "cos") => LegacyWin64Import::Cos,
+         (_, "cos") => return Win64ImportDispatch::UnsupportedLegacyImport,
++        ("api-ms-win-crt-math-l1-1-0.dll" | "ucrtbase.dll", "ceil") => {
++            LegacyWin64Import::Ceil
++        }
++        (_, "ceil") => return Win64ImportDispatch::UnsupportedLegacyImport,
+         ("api-ms-win-crt-math-l1-1-0.dll" | "ucrtbase.dll", "ceilf") => {
+             LegacyWin64Import::CeilF
+         }
+@@ -761,6 +766,9 @@ fn install_win64_import(
+             LegacyWin64Import::CosF => {
+                 install_float_import(unicorn, stub, "cosf", f32::cos)?;
+             }
++            LegacyWin64Import::Ceil => {
++                install_double_import(unicorn, stub, "ceil", f64::ceil)?;
++            }
+             LegacyWin64Import::CeilF => {
+                 install_float_import(unicorn, stub, "ceilf", f32::ceil)?;
+             }

@@ -80,18 +80,19 @@ class OLMBlurPF16TypedExactContract(unittest.TestCase):
     def test_production_entrypoints_reach_the_pf16_typed_adapters(self):
         source = SOURCE.read_text(encoding="utf-8")
 
-        # Classic Render must derive 16bpc from the actual ARGB64 world.
-        self.assertRegex(
-            source,
-            r"case\s+PF_PixelFormat_ARGB64:\s*bpc\s*=\s*16;",
-        )
-        self.assertIn("short bpc = extra->input->bitdepth;", source)
-        self.assertIn("ERR(BlurRender(in_data, input, output, bpc, &bp));", source)
-        self.assertIn("ERR(BlurRender(in_data, input_world, output_world, bpc, &bp));", source)
+        # The numerical PF16 owner is Smart Render. The bounded classic owner
+        # accepts ARGB64 only for its default copy-only compatibility tuple.
+        self.assertIn("case PF_PixelFormat_ARGB64:", source)
+        self.assertIn("blur_amount != 5.0", source)
+        self.assertIn("ERR(PF_COPY(input, output, NULL, NULL));", source)
+        self.assertIn("const short bpc=extra->input->bitdepth;", source)
+        self.assertIn("ExactPublicSource(input_world,bpc)", source)
+        self.assertIn("err=BlurRender(in_data,&staged_input,&staged_output,bpc,&bp);", source)
+        self.assertIn("staged_input.rowbytes=(A_long)active;", source)
 
-        # The live PF16 lanes are explicit and must not silently fall back to
-        # byte or float storage.  Both Legacy states are covered by the seven
-        # retained cases and therefore belong to this exact claim boundary.
+        # The Smart PF16 lanes are explicit and must not silently fall back to
+        # byte or float storage. Both Legacy states remain covered by the seven
+        # retained numerical cases through that advertised owner.
         self.assertIn("render_16bpc_nonlegacy_adapter", source)
         self.assertIn("render_16bpc_legacy_adapter", source)
         self.assertIn("if (bpc == 16 && !bp->legacy) {", source)

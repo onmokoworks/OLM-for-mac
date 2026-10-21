@@ -1,0 +1,355 @@
+{
+  "after_effects_processes": [],
+  "authorities": {
+    "build_identity": "9bf6570d46ad6cc5e181b28c21ff4077a127c4e850fe29f7a9ef892b2404b2d5",
+    "installer": "064402415674c46e39cdf00365a0ba3528525cbf1d3179767bd173296222f237",
+    "new_binary": "260c2d5e635b38213adf88e01298510bf7f180b38bdb5e1d2b85a2906fbfbf18",
+    "old_binary": "69da64666478b25957aa268f6bb6fbc869c3d50b61759f9ca00172045afb5194",
+    "post_identity": "e17dddbd8f26b1ac6caf65b43179689b8fa821f2cd9fe1ff23290afe29023431",
+    "pre_identity": "cc9cb7edd30c23aef06b6ef4aab819763f900a1d40938e5b5a2b66758bb566be",
+    "prepared": "46f43e1cc06a6451cc17d83004e3a3b35df9bc8d7d82eb108966ecb7623ce0c8",
+    "source": "8f3ccda261b525f58e9abb6d942986f5f71ce6c67758aa7edfecc50a557f3e8f",
+    "transaction": "0e8aef11b524e39041b32a3a4a5b453ea2dc004fbd804e86cad322a894b5c559"
+  },
+  "candidate": {
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "binary_sha256": "260c2d5e635b38213adf88e01298510bf7f180b38bdb5e1d2b85a2906fbfbf18",
+    "inventory": [
+      {
+        "mode": 420,
+        "path": "Contents/Info.plist",
+        "sha256": "add5a71ec4b5ba5ed02eae65f45411a983766d486f708f17ef893d336f4635e2",
+        "size": 1390
+      },
+      {
+        "mode": 493,
+        "path": "Contents/MacOS/OLMKiraKira",
+        "sha256": "260c2d5e635b38213adf88e01298510bf7f180b38bdb5e1d2b85a2906fbfbf18",
+        "size": 615648
+      },
+      {
+        "mode": 420,
+        "path": "Contents/PkgInfo",
+        "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+        "size": 8
+      },
+      {
+        "mode": 420,
+        "path": "Contents/Resources/OLMKiraKira.rsrc",
+        "sha256": "86fd6aa0b6e9992d52e81f5ff8e49efd1a16b44bbb34527661771921dc85ff49",
+        "size": 670
+      },
+      {
+        "mode": 420,
+        "path": "Contents/_CodeSignature/CodeResources",
+        "sha256": "929e8026435d4363eed881bfa8afc15fe9f2f43bb4f0130dd758fa40acbf3d13",
+        "size": 2454
+      }
+    ],
+    "strict_codesign": true
+  },
+  "candidate_installed_full_inventory_exact": true,
+  "claim_boundary": "Observed Kira-only atomic install identity and rollback closure. No AE launch, native-AE numerical, Developer ID, notarization, distribution, or release claim.",
+  "identity_transition": {
+    "changed_plugins_and_fields": {
+      "OLMKiraKira": [
+        "sha256",
+        "source_bundle",
+        "source_sha256"
+      ]
+    },
+    "new_binary_sha256": "260c2d5e635b38213adf88e01298510bf7f180b38bdb5e1d2b85a2906fbfbf18",
+    "old_binary_sha256": "69da64666478b25957aa268f6bb6fbc869c3d50b61759f9ca00172045afb5194",
+    "other_nine_rows_exact": true,
+    "top_level_changed_fields": [
+      "accepted_at",
+      "installed_after"
+    ]
+  },
+  "installed": {
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "binary_sha256": "260c2d5e635b38213adf88e01298510bf7f180b38bdb5e1d2b85a2906fbfbf18",
+    "inventory": [
+      {
+        "mode": 420,
+        "path": "Contents/Info.plist",
+        "sha256": "add5a71ec4b5ba5ed02eae65f45411a983766d486f708f17ef893d336f4635e2",
+        "size": 1390
+      },
+      {
+        "mode": 493,
+        "path": "Contents/MacOS/OLMKiraKira",
+        "sha256": "260c2d5e635b38213adf88e01298510bf7f180b38bdb5e1d2b85a2906fbfbf18",
+        "size": 615648
+      },
+      {
+        "mode": 420,
+        "path": "Contents/PkgInfo",
+        "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+        "size": 8
+      },
+      {
+        "mode": 420,
+        "path": "Contents/Resources/OLMKiraKira.rsrc",
+        "sha256": "86fd6aa0b6e9992d52e81f5ff8e49efd1a16b44bbb34527661771921dc85ff49",
+        "size": 670
+      },
+      {
+        "mode": 420,
+        "path": "Contents/_CodeSignature/CodeResources",
+        "sha256": "929e8026435d4363eed881bfa8afc15fe9f2f43bb4f0130dd758fa40acbf3d13",
+        "size": 2454
+      }
+    ],
+    "strict_codesign": true
+  },
+  "old_copies": {
+    "installed_backup": {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "binary_sha256": "69da64666478b25957aa268f6bb6fbc869c3d50b61759f9ca00172045afb5194",
+      "inventory": [
+        {
+          "mode": 420,
+          "path": "Contents/Info.plist",
+          "sha256": "add5a71ec4b5ba5ed02eae65f45411a983766d486f708f17ef893d336f4635e2",
+          "size": 1390
+        },
+        {
+          "mode": 493,
+          "path": "Contents/MacOS/OLMKiraKira",
+          "sha256": "69da64666478b25957aa268f6bb6fbc869c3d50b61759f9ca00172045afb5194",
+          "size": 615664
+        },
+        {
+          "mode": 420,
+          "path": "Contents/PkgInfo",
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+          "size": 8
+        },
+        {
+          "mode": 420,
+          "path": "Contents/Resources/OLMKiraKira.rsrc",
+          "sha256": "86fd6aa0b6e9992d52e81f5ff8e49efd1a16b44bbb34527661771921dc85ff49",
+          "size": 670
+        },
+        {
+          "mode": 420,
+          "path": "Contents/_CodeSignature/CodeResources",
+          "sha256": "929e8026435d4363eed881bfa8afc15fe9f2f43bb4f0130dd758fa40acbf3d13",
+          "size": 2454
+        }
+      ],
+      "strict_codesign": true
+    },
+    "moved_old": {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "binary_sha256": "69da64666478b25957aa268f6bb6fbc869c3d50b61759f9ca00172045afb5194",
+      "inventory": [
+        {
+          "mode": 420,
+          "path": "Contents/Info.plist",
+          "sha256": "add5a71ec4b5ba5ed02eae65f45411a983766d486f708f17ef893d336f4635e2",
+          "size": 1390
+        },
+        {
+          "mode": 493,
+          "path": "Contents/MacOS/OLMKiraKira",
+          "sha256": "69da64666478b25957aa268f6bb6fbc869c3d50b61759f9ca00172045afb5194",
+          "size": 615664
+        },
+        {
+          "mode": 420,
+          "path": "Contents/PkgInfo",
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+          "size": 8
+        },
+        {
+          "mode": 420,
+          "path": "Contents/Resources/OLMKiraKira.rsrc",
+          "sha256": "86fd6aa0b6e9992d52e81f5ff8e49efd1a16b44bbb34527661771921dc85ff49",
+          "size": 670
+        },
+        {
+          "mode": 420,
+          "path": "Contents/_CodeSignature/CodeResources",
+          "sha256": "929e8026435d4363eed881bfa8afc15fe9f2f43bb4f0130dd758fa40acbf3d13",
+          "size": 2454
+        }
+      ],
+      "strict_codesign": true
+    },
+    "pre_swap_original": {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "binary_sha256": "69da64666478b25957aa268f6bb6fbc869c3d50b61759f9ca00172045afb5194",
+      "inventory": [
+        {
+          "mode": 420,
+          "path": "Contents/Info.plist",
+          "sha256": "add5a71ec4b5ba5ed02eae65f45411a983766d486f708f17ef893d336f4635e2",
+          "size": 1390
+        },
+        {
+          "mode": 493,
+          "path": "Contents/MacOS/OLMKiraKira",
+          "sha256": "69da64666478b25957aa268f6bb6fbc869c3d50b61759f9ca00172045afb5194",
+          "size": 615664
+        },
+        {
+          "mode": 420,
+          "path": "Contents/PkgInfo",
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+          "size": 8
+        },
+        {
+          "mode": 420,
+          "path": "Contents/Resources/OLMKiraKira.rsrc",
+          "sha256": "86fd6aa0b6e9992d52e81f5ff8e49efd1a16b44bbb34527661771921dc85ff49",
+          "size": 670
+        },
+        {
+          "mode": 420,
+          "path": "Contents/_CodeSignature/CodeResources",
+          "sha256": "929e8026435d4363eed881bfa8afc15fe9f2f43bb4f0130dd758fa40acbf3d13",
+          "size": 2454
+        }
+      ],
+      "strict_codesign": true
+    }
+  },
+  "old_rollback_copy_count": 3,
+  "old_rollback_full_inventories_exact": true,
+  "schema": "olmkirakira.fp-contract-incremental-install-identity/1",
+  "scope": {
+    "after_effects_launched": false,
+    "developer_id_or_notarization": false,
+    "installed": true,
+    "native_after_effects": false
+  },
+  "status": "PASS_OLMKIRAKIRA_FP_CONTRACT_INCREMENTAL_INSTALL_IDENTITY_NO_AE",
+  "transaction": {
+    "after_effects_processes_before_after": [
+      [],
+      []
+    ],
+    "atomic_exchange_api": "renameatx_np(RENAME_SWAP)",
+    "candidate_inventory": [
+      {
+        "mode": 420,
+        "path": "Contents/Info.plist",
+        "sha256": "add5a71ec4b5ba5ed02eae65f45411a983766d486f708f17ef893d336f4635e2",
+        "size": 1390
+      },
+      {
+        "mode": 493,
+        "path": "Contents/MacOS/OLMKiraKira",
+        "sha256": "260c2d5e635b38213adf88e01298510bf7f180b38bdb5e1d2b85a2906fbfbf18",
+        "size": 615648
+      },
+      {
+        "mode": 420,
+        "path": "Contents/PkgInfo",
+        "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+        "size": 8
+      },
+      {
+        "mode": 420,
+        "path": "Contents/Resources/OLMKiraKira.rsrc",
+        "sha256": "86fd6aa0b6e9992d52e81f5ff8e49efd1a16b44bbb34527661771921dc85ff49",
+        "size": 670
+      },
+      {
+        "mode": 420,
+        "path": "Contents/_CodeSignature/CodeResources",
+        "sha256": "929e8026435d4363eed881bfa8afc15fe9f2f43bb4f0130dd758fa40acbf3d13",
+        "size": 2454
+      }
+    ],
+    "installed_inventory": [
+      {
+        "mode": 420,
+        "path": "Contents/Info.plist",
+        "sha256": "add5a71ec4b5ba5ed02eae65f45411a983766d486f708f17ef893d336f4635e2",
+        "size": 1390
+      },
+      {
+        "mode": 493,
+        "path": "Contents/MacOS/OLMKiraKira",
+        "sha256": "260c2d5e635b38213adf88e01298510bf7f180b38bdb5e1d2b85a2906fbfbf18",
+        "size": 615648
+      },
+      {
+        "mode": 420,
+        "path": "Contents/PkgInfo",
+        "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+        "size": 8
+      },
+      {
+        "mode": 420,
+        "path": "Contents/Resources/OLMKiraKira.rsrc",
+        "sha256": "86fd6aa0b6e9992d52e81f5ff8e49efd1a16b44bbb34527661771921dc85ff49",
+        "size": 670
+      },
+      {
+        "mode": 420,
+        "path": "Contents/_CodeSignature/CodeResources",
+        "sha256": "929e8026435d4363eed881bfa8afc15fe9f2f43bb4f0130dd758fa40acbf3d13",
+        "size": 2454
+      }
+    ],
+    "new_binary_sha256": "260c2d5e635b38213adf88e01298510bf7f180b38bdb5e1d2b85a2906fbfbf18",
+    "old_binary_sha256": "69da64666478b25957aa268f6bb6fbc869c3d50b61759f9ca00172045afb5194",
+    "old_inventory": [
+      {
+        "mode": 420,
+        "path": "Contents/Info.plist",
+        "sha256": "add5a71ec4b5ba5ed02eae65f45411a983766d486f708f17ef893d336f4635e2",
+        "size": 1390
+      },
+      {
+        "mode": 493,
+        "path": "Contents/MacOS/OLMKiraKira",
+        "sha256": "69da64666478b25957aa268f6bb6fbc869c3d50b61759f9ca00172045afb5194",
+        "size": 615664
+      },
+      {
+        "mode": 420,
+        "path": "Contents/PkgInfo",
+        "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+        "size": 8
+      },
+      {
+        "mode": 420,
+        "path": "Contents/Resources/OLMKiraKira.rsrc",
+        "sha256": "86fd6aa0b6e9992d52e81f5ff8e49efd1a16b44bbb34527661771921dc85ff49",
+        "size": 670
+      },
+      {
+        "mode": 420,
+        "path": "Contents/_CodeSignature/CodeResources",
+        "sha256": "929e8026435d4363eed881bfa8afc15fe9f2f43bb4f0130dd758fa40acbf3d13",
+        "size": 2454
+      }
+    ],
+    "post_identity_sha256": "e17dddbd8f26b1ac6caf65b43179689b8fa821f2cd9fe1ff23290afe29023431",
+    "pre_identity_sha256": "cc9cb7edd30c23aef06b6ef4aab819763f900a1d40938e5b5a2b66758bb566be",
+    "rollback_copy_count": 3,
+    "schema": "olmkirakira.fp-contract-incremental-install/1",
+    "source_sha256": "8f3ccda261b525f58e9abb6d942986f5f71ce6c67758aa7edfecc50a557f3e8f",
+    "status": "installed"
+  }
+}

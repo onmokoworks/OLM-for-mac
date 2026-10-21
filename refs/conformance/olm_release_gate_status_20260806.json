@@ -1,121 +1,164 @@
 {
-  "claim_boundary": "Release integration only: ten-lane fixed fixtures, installed Universal identities, and one current-Mac-AE load/render witness per plugin. This manifest does not promote unlisted geometries, parameters, bit depths, or AE exactness. Seven Windows AE release-boundary observations are accepted; cross-host exactness remains a per-plugin claim.",
+  "claim_boundary": "Release integration only: current accepted ten-plugin Universal identities, one fresh post-acceptance Mac AE smoke for that exact installed set, the ten fixed-fixture lanes, and parameter/UI registration. The host smoke requires load/apply/exact mapping for all ten, effect-enabled host-frame render only for OLMBlur, OLMDirectionalBlur, and OLMToonDilate, and an explicitly disabled host-frame render for the other seven whose current installed numerical route is not AE-representable or intentionally not promoted. Historical host records cannot satisfy the current host gate. This does not promote unlisted geometries, parameters, bit depths, or Windows/Mac AE pixel equality. Seven Windows AE release-boundary observations are accepted; cross-host exactness remains a per-plugin claim.",
   "fixed_fixture_regression": {
-    "boundary": "Only commands enumerated by the ten fixed-fixture lanes; slow RadialBlur full replay is excluded.",
-    "output_sha256": "3f4cb7381ee21f6ba11ca982a3183e8e63b471d3a19bb1c27e754853ddf209aa",
-    "returncode": 0,
-    "state": "proven",
-    "summary": "PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=510.90s",
-    "tail": [
-      "      |                                                      ^",
-      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here",
-      "  278 | __deprecated_msg(\"This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.\")",
-      "      | ^",
-      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'",
-      "  227 |         #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))",
-      "      |                                                       ^",
-      "1 warning generated.",
-      "In file included from /Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/olmsmoother2_v2_effectmain_pf32_smart_production_harness_20260805.cpp:4:",
-      "In file included from /Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/../../mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp:9:",
-      "/Users/onmk/Documents/Projects/Personal/OLM as/cli/OLMSmoother2/shim/OLMSmoother2.h:203:54: warning: 'sprintf' is deprecated: This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead. [-Wdeprecated-declarations]",
-      "  203 | static PF_ANSICallbacksSuite1 g_ansi_suite = { &std::sprintf };",
-      "      |                                                      ^",
-      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_stdio.h:278:1: note: 'sprintf' has been explicitly marked deprecated here",
-      "  278 | __deprecated_msg(\"This function is provided for compatibility reasons only.  Due to security concerns inherent in the design of sprintf(3), it is highly recommended that you use snprintf(3) instead.\")",
-      "      | ^",
-      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/cdefs.h:227:48: note: expanded from macro '__deprecated_msg'",
-      "  227 |         #define __deprecated_msg(_msg) __attribute__((__deprecated__(_msg)))",
-      "      |                                                       ^",
-      "1 warning generated."
-    ]
+    "reason": "skipped_by_audit_mode",
+    "state": "pending"
   },
-  "generated_at": "2026-08-10T13:14:45.328440+00:00",
+  "generated_at": "2026-08-13T16:49:18.202488+00:00",
   "mac_ae_representative": {
     "counts": {
-      "invalid": 0,
+      "invalid": 10,
       "pending": 0,
-      "proven": 10
+      "proven": 0
     },
     "plugins": [
       {
-        "boundary": "Current installed PF32 case0001 loaded and rendered; render is explicitly not Windows-exact.",
+        "boundary": "Fresh current-binary load/apply/default render only; classic PF8/PF16 numerical exactness remains hostless bounded evidence.",
         "declared_state": "proven",
-        "evidence": "refs/conformance/olmblur_case0001_current_host_result_20260805.json",
-        "failures": [],
+        "evidence": "refs/conformance/olm_all10_post_colorkeep_count9_fresh_ae_smoke_20260813.json",
+        "failures": [
+          "current_host_smoke_identity_sha256_mismatch",
+          "current_host_smoke_identity_acceptance_mismatch",
+          "current_host_smoke_started_at_not_after_acceptance",
+          "current_host_smoke_raw_semantic_validation_failed",
+          "plugin_installed_identity_mismatch",
+          "plugin_post_render_identity_mismatch"
+        ],
         "plugin": "OLMBlur",
-        "state": "proven"
+        "state": "invalid"
       },
       {
-        "boundary": "PF8 five-key representative only; hidden RGB is direct-worker evidence, not AE-export evidence.",
+        "boundary": "Fresh current-binary load/apply/default render only; the fixed 11x7 public PF8/PF16/PF32 exact cells remain separate evidence.",
         "declared_state": "proven",
-        "evidence": "refs/conformance/colorkeep_pf8_current_mac_ae_host_20260806.json",
-        "failures": [],
+        "evidence": "refs/conformance/olm_all10_post_colorkeep_count9_fresh_ae_smoke_20260813.json",
+        "failures": [
+          "current_host_smoke_identity_sha256_mismatch",
+          "current_host_smoke_identity_acceptance_mismatch",
+          "current_host_smoke_started_at_not_after_acceptance",
+          "current_host_smoke_raw_semantic_validation_failed",
+          "plugin_installed_identity_mismatch",
+          "plugin_post_render_identity_mismatch"
+        ],
         "plugin": "ColorKeep",
-        "state": "proven"
+        "state": "invalid"
       },
       {
-        "boundary": "AE 26.3.0.87 Software/PF16 case0001 only.",
+        "boundary": "Fresh current-binary load/apply/default render only; Lab76 and Edge Blur exactness remains limited to their enumerated tuples.",
         "declared_state": "proven",
-        "evidence": "refs/conformance/olmcolorkey_mac_ae_host_phase_result_20260805.json",
-        "failures": [],
+        "evidence": "refs/conformance/olm_all10_post_colorkeep_count9_fresh_ae_smoke_20260813.json",
+        "failures": [
+          "current_host_smoke_identity_sha256_mismatch",
+          "current_host_smoke_identity_acceptance_mismatch",
+          "current_host_smoke_started_at_not_after_acceptance",
+          "current_host_smoke_raw_semantic_validation_failed",
+          "plugin_installed_identity_mismatch",
+          "plugin_post_render_identity_mismatch"
+        ],
         "plugin": "OLMColorKey",
-        "state": "proven"
+        "state": "invalid"
       },
       {
-        "boundary": "AE 26.3.0.87 Software/PF8 case0001 only.",
+        "boundary": "Fresh current-binary load/apply/default render only; natural64 Type 2 admission remains limited to the recorded tuples.",
         "declared_state": "proven",
-        "evidence": "refs/conformance/olmdirectionalblur_pf8_current_mac_ae_exact_20260806.json",
-        "failures": [],
+        "evidence": "refs/conformance/olm_all10_post_colorkeep_count9_fresh_ae_smoke_20260813.json",
+        "failures": [
+          "current_host_smoke_identity_sha256_mismatch",
+          "current_host_smoke_identity_acceptance_mismatch",
+          "current_host_smoke_started_at_not_after_acceptance",
+          "current_host_smoke_raw_semantic_validation_failed",
+          "plugin_installed_identity_mismatch",
+          "plugin_post_render_identity_mismatch"
+        ],
         "plugin": "OLMDirectionalBlur",
-        "state": "proven"
+        "state": "invalid"
       },
       {
-        "boundary": "Software/PF32 basic case0001 effect-on only; control is observational.",
+        "boundary": "The fresh current-binary smoke maps installed 231421e4 from the sole accepted path with its on-disk hash unchanged. Current fixed17x11 hostless public evidence is PF16 32 plus non-Power PF32 24 raw exact; PF32 Power 8 cells fail closed pending native Windows UCRT powf. The Distance smoke row is effect-disabled and makes no AE numerical-exact or unlisted-tuple claim.",
         "declared_state": "proven",
-        "evidence": "refs/conformance/olmdistancegradation_pf32_case0001_current_mac_ae_exact_20260806.json",
-        "failures": [],
+        "evidence": "refs/conformance/olm_all10_post_colorkeep_count9_fresh_ae_smoke_20260813.json",
+        "failures": [
+          "current_host_smoke_identity_sha256_mismatch",
+          "current_host_smoke_identity_acceptance_mismatch",
+          "current_host_smoke_started_at_not_after_acceptance",
+          "current_host_smoke_raw_semantic_validation_failed"
+        ],
         "plugin": "OLMDistanceGradation",
-        "state": "proven"
+        "state": "invalid"
       },
       {
-        "boundary": "Current installed PF32 Mode4 case01 loaded and rendered raw-FLOAT exact to the retained Windows artifact.",
+        "boundary": "Fresh current-binary load/apply/default render only; the declared 5x3 public exact families are not generalized to arbitrary inputs or geometry.",
         "declared_state": "proven",
-        "evidence": "refs/conformance/olmkirakira_mode4_case01_current_mac_ae_20260806.json",
-        "failures": [],
+        "evidence": "refs/conformance/olm_all10_post_colorkeep_count9_fresh_ae_smoke_20260813.json",
+        "failures": [
+          "current_host_smoke_identity_sha256_mismatch",
+          "current_host_smoke_identity_acceptance_mismatch",
+          "current_host_smoke_started_at_not_after_acceptance",
+          "current_host_smoke_raw_semantic_validation_failed",
+          "plugin_installed_identity_mismatch",
+          "plugin_post_render_identity_mismatch"
+        ],
         "plugin": "OLMKiraKira",
-        "state": "proven"
+        "state": "invalid"
       },
       {
-        "boundary": "PF8 case0010 is Windows-AE exact; PF32 case0009 remains outside Windows-AE exactness.",
+        "boundary": "Fresh current-binary load/apply/default render only; fixed PF32 9x7 Type 3 exactness is hostless classic-owner evidence, not live AE pixel exactness.",
         "declared_state": "proven",
-        "evidence": "refs/conformance/olmradialblur_current_mac_ae_supported_lanes_20260806.md",
-        "failures": [],
+        "evidence": "refs/conformance/olm_all10_post_colorkeep_count9_fresh_ae_smoke_20260813.json",
+        "failures": [
+          "current_host_smoke_identity_sha256_mismatch",
+          "current_host_smoke_identity_acceptance_mismatch",
+          "current_host_smoke_started_at_not_after_acceptance",
+          "current_host_smoke_raw_semantic_validation_failed",
+          "plugin_installed_identity_mismatch",
+          "plugin_post_render_identity_mismatch"
+        ],
         "plugin": "OLMRadialBlur",
-        "state": "proven"
+        "state": "invalid"
       },
       {
-        "boundary": "PF8 canonical case0001 and retained key-enabled case05 only.",
+        "boundary": "Fresh current-binary load/apply/default render only; v1 native public admission is classic PF8/PF16 only and 32bpc host conversion is not native PF32 evidence.",
         "declared_state": "proven",
-        "evidence": "refs/conformance/olmsmoother_v1_pf8_current_mac_ae_exact_20260805.json",
-        "failures": [],
+        "evidence": "refs/conformance/olm_all10_post_colorkeep_count9_fresh_ae_smoke_20260813.json",
+        "failures": [
+          "current_host_smoke_identity_sha256_mismatch",
+          "current_host_smoke_identity_acceptance_mismatch",
+          "current_host_smoke_started_at_not_after_acceptance",
+          "current_host_smoke_raw_semantic_validation_failed",
+          "plugin_installed_identity_mismatch",
+          "plugin_post_render_identity_mismatch"
+        ],
         "plugin": "OLMSmoother",
-        "state": "proven"
+        "state": "invalid"
       },
       {
-        "boundary": "PF32 case07 raw-artifact exact; Windows same-run process/module proof is absent, so AE exact is not claimed.",
+        "boundary": "Fresh current-binary load/apply/default render only; v2 public numerical admission is Smart-only and limited to recorded tuples.",
         "declared_state": "proven",
-        "evidence": "refs/conformance/olmsmoother2_pf32_case07_current_mac_ae_raw_exact_20260806.json",
-        "failures": [],
+        "evidence": "refs/conformance/olm_all10_post_colorkeep_count9_fresh_ae_smoke_20260813.json",
+        "failures": [
+          "current_host_smoke_identity_sha256_mismatch",
+          "current_host_smoke_identity_acceptance_mismatch",
+          "current_host_smoke_started_at_not_after_acceptance",
+          "current_host_smoke_raw_semantic_validation_failed",
+          "plugin_installed_identity_mismatch",
+          "plugin_post_render_identity_mismatch"
+        ],
         "plugin": "OLMSmoother2",
-        "state": "proven"
+        "state": "invalid"
       },
       {
-        "boundary": "Current installed PF32 Software/radius-13 representative loaded and rendered in AE 26.3x87; this Mac smoke makes no new Windows-exact claim.",
+        "boundary": "Fresh current-binary load/apply/default render only; optional-checkin lifecycle closure and bounded numerical cells remain separate evidence.",
         "declared_state": "proven",
-        "evidence": "refs/conformance/olmtoondilate_pf32_current_mac_ae_host_20260806.json",
-        "failures": [],
+        "evidence": "refs/conformance/olm_all10_post_colorkeep_count9_fresh_ae_smoke_20260813.json",
+        "failures": [
+          "current_host_smoke_identity_sha256_mismatch",
+          "current_host_smoke_identity_acceptance_mismatch",
+          "current_host_smoke_started_at_not_after_acceptance",
+          "current_host_smoke_raw_semantic_validation_failed",
+          "plugin_installed_identity_mismatch",
+          "plugin_post_render_identity_mismatch"
+        ],
         "plugin": "OLMToonDilate",
-        "state": "proven"
+        "state": "invalid"
       }
     ]
   },
@@ -203,9 +246,9 @@
     "state": "proven",
     "status": "parameter_ui_gate_pass"
   },
-  "releasable": true,
+  "releasable": false,
   "schema": "olm.release-gate-report/1",
-  "status": "release_gate_pass",
+  "status": "release_gate_pending_or_invalid",
   "universal_installs": {
     "boundary": "Bundle identity/architectures/signature only; AE process state is reported but is not an install-identity failure.",
     "bundle_count": 10,
@@ -217,7 +260,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMBlur",
-        "sha256": "13a33d1de04e576353d1364d5046c987cacc87fb7a094d81036b71f66ceddc55",
+        "sha256": "ecdf3d93b4b38fe71f4b66f717079aa86b961205d0a3f1b5b7edbd29e353284d",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -228,7 +271,7 @@
         ],
         "codesign_exact": true,
         "name": "ColorKeep",
-        "sha256": "4974d9f00c5b6a8eaf8ff1fb1cffb1a97d2f36a34af5ae01c759128351d83a2b",
+        "sha256": "dae59a6faf54ed18ac803ad042be2cdab688c5f814edf322d64c108d5247f46d",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -239,7 +282,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMColorKey",
-        "sha256": "98d755b1bf86f0a71857049e4af3f4b161f05347f405aa379bf115bc3e1a8ab6",
+        "sha256": "030e87c5b88c7312e35ecf5998446fb605a522b8a062f1ab798348b3dbf722c4",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -250,7 +293,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMDirectionalBlur",
-        "sha256": "dc6c01ae1cd02f00262689260831e3b97b40ba2e1802e8003957e386b9932289",
+        "sha256": "2863d86f8000f8e014d5a58cefb86291d7c25400075b3b803e696d5490f1f701",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -261,7 +304,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMDistanceGradation",
-        "sha256": "28b067ba5ea93dce261553400a07b4851a327b0f7aea1520b74873c94f35b8bf",
+        "sha256": "231421e4a0c1607a70947778d99d748baefe07078b7e1145f4a4700268116605",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -272,7 +315,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMKiraKira",
-        "sha256": "aef9433ab31fc53d2c307f907e76e9a4831ccf4377693453fd01316110847c8e",
+        "sha256": "260c2d5e635b38213adf88e01298510bf7f180b38bdb5e1d2b85a2906fbfbf18",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -283,7 +326,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMRadialBlur",
-        "sha256": "0535f92f43bf62b947927387a711e140f674330f42d029df09fe60fb1f9023b7",
+        "sha256": "1b29b5eaa97421c87ea1091c2efc7f7a8ad2866722d91e6b48adb2a6b610643c",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -294,7 +337,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMSmoother",
-        "sha256": "27866b533c207e54b38c74a872f4c1a61f876f25b200943203cddfb445029255",
+        "sha256": "f416579eeb61b73da683437d382f786781e6ecdf27d9c4fc52f3ad1d55577162",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -305,7 +348,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMSmoother2",
-        "sha256": "801c9188181d89778121da5be625b79ebbba81368551e92957669037c1a50095",
+        "sha256": "55d138e2a25704ffa59d8bd08d20e2160525f8f8011b8e11c733ae23fddd795e",
         "sha256_exact": true,
         "universal_exact": true
       },
@@ -316,7 +359,7 @@
         ],
         "codesign_exact": true,
         "name": "OLMToonDilate",
-        "sha256": "309715d940268f2fc451aead2cff505044bfaa630dab82de2cd084c8cfe17044",
+        "sha256": "5bbe693106072ceff14a1c1ae5a0d64815cddde58356c57575d29e516479036e",
         "sha256_exact": true,
         "universal_exact": true
       }
@@ -324,6 +367,22 @@
     "preflight_status": "ae_not_running",
     "returncode": 2,
     "state": "proven"
+  },
+  "valid_for": {
+    "current_host_smoke_path": "refs/conformance/olm_all10_post_colorkeep_count9_fresh_ae_smoke_20260813.json",
+    "current_host_smoke_raw_path": "refs/conformance/olm_all10_post_colorkeep_count9_fresh_ae_smoke_raw_20260813.json",
+    "current_host_smoke_raw_sha256": "6f096f2b057025f7b6bcc1119de30f1e0bd5e7341ccaa05eb834a8f4d2e18855",
+    "current_host_smoke_runner_path": "scripts/run_olm_all10_current_install_fresh_ae_smoke_20260812.py",
+    "current_host_smoke_runner_sha256": "45997d4c756fb9d82afde2fbe8f3be503db5e66dff2b15eaaf9ba1e1219ce4b7",
+    "current_host_smoke_sha256": "f87dd1ae13574e56c3e0f428ad3f0b503e37c96dc03b637bfe1ed798161743bc",
+    "installed_identity_manifest_path": "refs/conformance/olm_installed_identity_manifest_20260806.json",
+    "installed_identity_manifest_sha256": "f6239183f5760db8066e514e354dcf9c0d02d4a4339c48d89f3f6e3d75669395",
+    "release_gate_runner_path": "scripts/run_olm_release_gate_20260806.py",
+    "release_gate_runner_sha256": "96bd5026e34ee6f74e9143382d8326d3482a374b5535aa2cacc5193a167c3d0d",
+    "release_manifest_path": "refs/conformance/olm_release_gate_manifest_20260806.json",
+    "release_manifest_sha256": "738e483c2366e7b4a4a98cd40cc848f7016617bf7012443e0572a584444bee70",
+    "windows_boundary_intake_path": "refs/conformance/olm_windows_ae_release_boundary_minimal_intake_20260806.json",
+    "windows_boundary_intake_sha256": "ef64862adef6f58ad70f304d522c1c08f012406bcf91603c0122525ac564b1c4"
   },
   "windows_ae_release_boundary": {
     "accepted_rows": 7,

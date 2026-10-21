@@ -15,9 +15,9 @@
         "max_alpha": true,
         "output": true,
         "polar": true,
-        "source_scalar": false
+        "source_scalar": true
       },
-      "production_source_scalar_different_bytes": 489
+      "production_source_scalar_different_bytes": 0
     },
     {
       "actual_output_sha256": "aca549cc4699ae1523f5845a29e63962cfe039c2b791d3eaa2cd9842f3d7b4bb",
@@ -32,9 +32,9 @@
         "max_alpha": true,
         "output": true,
         "polar": true,
-        "source_scalar": false
+        "source_scalar": true
       },
-      "production_source_scalar_different_bytes": 2473
+      "production_source_scalar_different_bytes": 0
     },
     {
       "actual_output_sha256": "2360fa1e0a83c686e6073ff84b4967b8952f44f4c8b5865620882f7c9e24c5a9",
@@ -49,9 +49,9 @@
         "max_alpha": true,
         "output": true,
         "polar": true,
-        "source_scalar": false
+        "source_scalar": true
       },
-      "production_source_scalar_different_bytes": 489
+      "production_source_scalar_different_bytes": 0
     },
     {
       "actual_output_sha256": "d1ad31a570d98e313215d11de54296fbb83b4b1357ac84c4a15a73cd4f767ad4",
@@ -66,9 +66,9 @@
         "max_alpha": true,
         "output": true,
         "polar": true,
-        "source_scalar": false
+        "source_scalar": true
       },
-      "production_source_scalar_different_bytes": 2473
+      "production_source_scalar_different_bytes": 0
     },
     {
       "actual_output_sha256": "3fa6d34a4b607ef1316a412e97ce83bec08438a54cba5482a5eb4f77e4999834",
@@ -83,9 +83,9 @@
         "max_alpha": true,
         "output": true,
         "polar": true,
-        "source_scalar": false
+        "source_scalar": true
       },
-      "production_source_scalar_different_bytes": 489
+      "production_source_scalar_different_bytes": 0
     },
     {
       "actual_output_sha256": "74e98d8af1a3cb19c41b31c8fa37b396fedcb96899f64a58fd522adb85253cd9",
@@ -100,9 +100,9 @@
         "max_alpha": true,
         "output": true,
         "polar": true,
-        "source_scalar": false
+        "source_scalar": true
       },
-      "production_source_scalar_different_bytes": 2473
+      "production_source_scalar_different_bytes": 0
     }
   ],
   "controls": "The same-offset Noise-0 controls remain independently pinned by the three 20260805 Offset-mode-3 fixtures.",

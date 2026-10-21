@@ -1,0 +1,45 @@
+{
+  "claim_boundary": "Lifecycle-only supersession route. Optional checkin_layer_pixels remains unused on the exact 12 positive public cells, 12 WorldSuite failure cells, and 576 public admission/callback negative rows. Numerical and fail-closed authority belongs to the linked 2026-08-13 closures. No installed-binary or After Effects host claim.",
+  "current_authorities": {
+    "admission_negative_rows": 507,
+    "callback_negative_rows": 69,
+    "negative_optional_checkin_unused_exact": true,
+    "negative_report": "refs/conformance/olmtoondilate_public_admission_negative_closure_20260813.json",
+    "negative_report_sha256": "eaacb30d172d5a467b059a5e5fcfa7baacec2ee3c62f885b274d5e9c8f72bb09",
+    "paired_report": "refs/conformance/olmtoondilate_same_source_public_paired_replay_20260813.json",
+    "paired_report_sha256": "80b4e05d844a33687f0d282037fd360898f99a2cf1eca469e68bf8accafee5c2",
+    "positive_cells": 12,
+    "positive_optional_checkin_calls_per_cell": 0,
+    "world_suite_negative_cells": 12,
+    "world_suite_negative_optional_checkin_calls_per_cell": 0
+  },
+  "gates": {
+    "negative_identity_exact": true,
+    "paired_identity_exact": true,
+    "positive_12_optional_checkin_zero": true,
+    "production_optional_checkin_absent": true,
+    "public_negative_576_optional_checkin_unused": true,
+    "sdk_identity_exact": true,
+    "source_frozen": true,
+    "world_suite_negative_12_optional_checkin_zero": true
+  },
+  "production": {
+    "optional_checkin_call_present": false,
+    "parameter_checkout_checkin_present": true,
+    "returns_extra_pixels_flag_present": true,
+    "source": "mac/OLMToonDilate/OLMToonDilate.cpp",
+    "source_sha256": "ded9eaab6b660044c9035f3aa0d9660f86086ec2e451c97c9ee0c1115574464b"
+  },
+  "schema": "olmtoondilate.optional-checkin-closure/2",
+  "sdk_contract": {
+    "checkin_layer_pixels_not_strictly_necessary": true,
+    "header": "Headers/AE_Effect.h",
+    "header_sha256": "a6d5cdeba53f6934a9bac19c2c1b46b1478266f39995795c59244e3d9a355a0d"
+  },
+  "status": "SUPERSEDED_CURRENT_LIFECYCLE_ROUTE",
+  "supersedes": {
+    "reason": "pre-admission source-included radius-1 and transient candidate claims are replaced by exact-12 paired and canonical negative public-owner closures",
+    "schema": "olmtoondilate.optional-checkin-closure/1",
+    "source_sha256": "70d89711eaa3a630c0cd1820ea12c1976a834fd61ffca29013e2e7e680de90d5"
+  }
+}

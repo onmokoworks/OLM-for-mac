@@ -49,7 +49,7 @@ FULL_OWNER_TEST = (
 )
 MATRIX_TEST = (
     "test_olmdistancegradation_exported_typed_owner_matrix_20260811.py",
-    "PASS_56_CELL_EXACT_8_PF32_MODE5_FAIL_CLOSED",
+    "PASS_56_ADMITTED_RAW_EXACT_8_PF32_POWER_FAIL_CLOSED",
 )
 MATRIX_REPORT = ROOT / "refs/conformance/olmdistancegradation_exported_typed_owner_matrix_20260811.json"
 
@@ -118,7 +118,9 @@ def main():
         "exact_admitted": 56,
         "pf16_exact": 32,
         "pf32_exact": 24,
-        "pf32_mode5_fail_closed": 8,
+        "pf32_power_fail_closed": 8,
+        "pf32_mode5_exact": 6,
+        "pf32_mode5_fail_closed": 2,
     }
     regressions = {name: run_test(name, marker) for name, marker in REGRESSIONS}
     report = {

@@ -56,7 +56,8 @@ def _package_batch(root: Path) -> Path:
 
 
 def _synthesize_return(request_zip: Path, root: Path, *, tamper_manifest: bool = False,
-                       mixed_identity: bool = False, missing_pf_cmd: bool = False) -> Path:
+                       mixed_identity: bool = False, missing_pf_cmd: bool = False,
+                       missing_trace: bool = False, missing_trace_id: bool = False) -> Path:
     request = INTAKE.request_batch(request_zip)
     request_files: dict[str, bytes]
     with zipfile.ZipFile(request_zip) as archive:
@@ -105,6 +106,42 @@ def _synthesize_return(request_zip: Path, root: Path, *, tamper_manifest: bool =
                 **identity,
             },
         ]
+        if not missing_trace:
+            events.extend([
+                {
+                    "sequence": 3,
+                    "event": "trace_status_started",
+                    "thread_id": 700 + index,
+                    "trace_id": f"trace-{index}",
+                    "status": "started",
+                    **identity,
+                },
+                {
+                    "sequence": 4,
+                    "event": "call_edge",
+                    "thread_id": 700 + index,
+                    "trace_id": f"trace-{index}",
+                    "source": module_base,
+                    "target": f"0x{int(module_base, 16) + 0x100:x}",
+                    "source_in_module": True,
+                    "target_in_module": True,
+                    **identity,
+                },
+                {
+                    "sequence": 5,
+                    "event": "trace_status_stopped",
+                    "thread_id": 700 + index,
+                    "trace_id": f"trace-{index}",
+                    "status": "stopped",
+                    "claimable": True,
+                    "reason": "entry_return",
+                    "event_count": 1,
+                    **identity,
+                },
+            ])
+            if missing_trace_id:
+                for event in events[-3:]:
+                    event.pop("trace_id", None)
         if mixed_identity and index == 1:
             events[1]["case_id"] = "stale-case-from-another-run"
 
@@ -207,6 +244,22 @@ class FridaBatchIntakeTests(unittest.TestCase):
             report = INTAKE.validate_return(return_zip, INTAKE.request_batch(request_zip))
             self.assertEqual(report["answered_count"], 0)
             self.assertEqual(report["failed_count"], 6)
+
+    def test_missing_bounded_call_trace_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="olm_frida_batch_test_") as temp:
+            root = Path(temp)
+            request_zip = _package_batch(root)
+            return_zip = _synthesize_return(request_zip, root, missing_trace=True)
+            with self.assertRaisesRegex(INTAKE.IntakeError, "aggregate status contradicts"):
+                INTAKE.validate_return(return_zip, INTAKE.request_batch(request_zip))
+
+    def test_missing_call_trace_identity_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="olm_frida_batch_test_") as temp:
+            root = Path(temp)
+            request_zip = _package_batch(root)
+            return_zip = _synthesize_return(request_zip, root, missing_trace_id=True)
+            with self.assertRaisesRegex(INTAKE.IntakeError, "aggregate status contradicts"):
+                INTAKE.validate_return(return_zip, INTAKE.request_batch(request_zip))
 
 
 if __name__ == "__main__":

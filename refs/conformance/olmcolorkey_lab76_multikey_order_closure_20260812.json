@@ -1,0 +1,630 @@
+{
+  "claim_boundary": "Raw exact only for the fixed 1x1 RGBA8 (26,191,204,255) public Lab76 scalar/global two-key tuple, declared and reversed key order, PF8/PF16/PF32, with Edge Thin, Edge Blur, and Replace disabled. The destructive mutation/Euclidean production rule is admitted only for those six cells; every one-away predicate rejects that rule. Invalid world layouts fail closed, while valid outside tuples retain prior behavior. Per-component evidence records the native mutation but is not a production admission. This closure does not admit arbitrary colors, thresholds, geometry, AE-host execution, GPU, or installed binaries.",
+  "classifier_hook": {
+    "classifier": "0x1800043a0",
+    "events": [
+      {
+        "call": 0,
+        "comparison": {
+          "f32_bits": [
+            "0x43460d86",
+            "0xc3714b5d",
+            "0xc30dce9a"
+          ],
+          "values": [
+            198.05282592773438,
+            -241.2943878173828,
+            -141.80703735351562
+          ]
+        },
+        "key": {
+          "f32_bits": [
+            "0x42a5b69f",
+            "0x43305df3",
+            "0x42b8bece"
+          ],
+          "values": [
+            82.85668182373047,
+            176.3669891357422,
+            92.37266540527344
+          ]
+        },
+        "point": "entry"
+      },
+      {
+        "call": 0,
+        "comparison": {
+          "f32_bits": [
+            "0x43460d86",
+            "0xc2d883c8",
+            "0x41ad72a0"
+          ],
+          "values": [
+            198.05282592773438,
+            -108.25738525390625,
+            21.68096923828125
+          ]
+        },
+        "key": {
+          "f32_bits": [
+            "0x42a5b69f",
+            "0x439ab3b6",
+            "0x437fdc55"
+          ],
+          "values": [
+            82.85668182373047,
+            309.40399169921875,
+            255.8606719970703
+          ]
+        },
+        "point": "post_mutation"
+      },
+      {
+        "call": 1,
+        "comparison": {
+          "f32_bits": [
+            "0x43460d86",
+            "0xc2d883c8",
+            "0x41ad72a0"
+          ],
+          "values": [
+            198.05282592773438,
+            -108.25738525390625,
+            21.68096923828125
+          ]
+        },
+        "key": {
+          "f32_bits": [
+            "0x43460d86",
+            "0xc3714b5d",
+            "0xc30dce9a"
+          ],
+          "values": [
+            198.05282592773438,
+            -241.2943878173828,
+            -141.80703735351562
+          ]
+        },
+        "point": "entry"
+      },
+      {
+        "call": 1,
+        "comparison": {
+          "f32_bits": [
+            "0x43460d86",
+            "0x41c63ca8",
+            "0x43392b42"
+          ],
+          "values": [
+            198.05282592773438,
+            24.779617309570312,
+            185.16897583007812
+          ]
+        },
+        "key": {
+          "f32_bits": [
+            "0x43460d86",
+            "0xc2d883c8",
+            "0x41ad72a0"
+          ],
+          "values": [
+            198.05282592773438,
+            -108.25738525390625,
+            21.68096923828125
+          ]
+        },
+        "point": "post_mutation"
+      }
+    ],
+    "instruction_count": 630,
+    "interpretation": "The PF32 stage-1 callback invokes the same classifier twice. Call 1 enters with the comparison triple already mutated by call 0; each local key is initially unmutated. The public final callback then applies Color Keep semantics.",
+    "per_component": false,
+    "per_component_witness": {
+      "classifier": "0x1800043a0",
+      "events": [
+        {
+          "call": 0,
+          "comparison": {
+            "f32_bits": [
+              "0x43460d86",
+              "0xc3714b5d",
+              "0xc30dce9a"
+            ],
+            "values": [
+              198.05282592773438,
+              -241.2943878173828,
+              -141.80703735351562
+            ]
+          },
+          "key": {
+            "f32_bits": [
+              "0x42a5b69f",
+              "0x43305df3",
+              "0x42b8bece"
+            ],
+            "values": [
+              82.85668182373047,
+              176.3669891357422,
+              92.37266540527344
+            ]
+          },
+          "point": "entry"
+        },
+        {
+          "call": 0,
+          "comparison": {
+            "f32_bits": [
+              "0x43460d86",
+              "0xc2d883c8",
+              "0x41ad72a0"
+            ],
+            "values": [
+              198.05282592773438,
+              -108.25738525390625,
+              21.68096923828125
+            ]
+          },
+          "key": {
+            "f32_bits": [
+              "0x42a5b69f",
+              "0x439ab3b6",
+              "0x437fdc55"
+            ],
+            "values": [
+              82.85668182373047,
+              309.40399169921875,
+              255.8606719970703
+            ]
+          },
+          "point": "post_mutation"
+        },
+        {
+          "call": 1,
+          "comparison": {
+            "f32_bits": [
+              "0x43460d86",
+              "0xc2d883c8",
+              "0x41ad72a0"
+            ],
+            "values": [
+              198.05282592773438,
+              -108.25738525390625,
+              21.68096923828125
+            ]
+          },
+          "key": {
+            "f32_bits": [
+              "0x43460d86",
+              "0xc3714b5d",
+              "0xc30dce9a"
+            ],
+            "values": [
+              198.05282592773438,
+              -241.2943878173828,
+              -141.80703735351562
+            ]
+          },
+          "point": "entry"
+        },
+        {
+          "call": 1,
+          "comparison": {
+            "f32_bits": [
+              "0x43460d86",
+              "0x41c63ca8",
+              "0x43392b42"
+            ],
+            "values": [
+              198.05282592773438,
+              24.779617309570312,
+              185.16897583007812
+            ]
+          },
+          "key": {
+            "f32_bits": [
+              "0x43460d86",
+              "0xc2d883c8",
+              "0x41ad72a0"
+            ],
+            "values": [
+              198.05282592773438,
+              -108.25738525390625,
+              21.68096923828125
+            ]
+          },
+          "point": "post_mutation"
+        }
+      ],
+      "instruction_count": 643,
+      "interpretation": "The PF32 stage-1 callback invokes the same classifier twice. Call 1 enters with the comparison triple already mutated by call 0; each local key is initially unmutated. The public final callback then applies Color Keep semantics.",
+      "per_component": true,
+      "pixel_callback": "0x1800035d0",
+      "post_mutation_hook": "0x180004404",
+      "stage1_output_argb_f32_bits": [
+        "0x00000000",
+        "0x3dd0d0d1",
+        "0x3f3fbfc0",
+        "0x3f4ccccd"
+      ]
+    },
+    "pixel_callback": "0x1800035d0",
+    "post_mutation_hook": "0x180004404",
+    "stage1_output_argb_f32_bits": [
+      "0x00000000",
+      "0x3dd0d0d1",
+      "0x3f3fbfc0",
+      "0x3f4ccccd"
+    ]
+  },
+  "counterfactuals": {
+    "old_nonmutating_declared_hashes": {
+      "PF16": "31299a22989821a5c7205e886d8d2f6c0cc150ba97b46bdf46b4d4c0130fbf7a",
+      "PF32": "176f964534c7f93884c8a90afc9459c6ece0ef38a7a65216b3db4af8fe480589",
+      "PF8": "315caf88910f1cc7edd25c90affec502e4654d0310504cfcb6d7469c68f93c93"
+    },
+    "reason": "Without shared destructive mutation, the second exact-cyan key matches; reversing the native key order likewise makes it match before prior mutation.",
+    "reverse_order_changes_all_three_raw_hashes": true
+  },
+  "date": "2026-08-12",
+  "fail_close": [
+    "the new destructive mutation/Euclidean rule is not admitted outside the declared six cells; valid one-away tuples return to prior behavior and invalid layouts fail closed",
+    "per-component output equivalence beyond the recorded mutation/limit ownership",
+    "AE-host, GPU, current installed-plugin, or unpinned worker/AEX/source identity"
+  ],
+  "fixture": {
+    "dimensions": [
+      1,
+      1
+    ],
+    "input_png_sha256": "fce316245a889eadf92820a0b590949f89ab0f78ea70d1370e5c5ef68a62b6b1",
+    "keys_declared_argb8": [
+      [
+        255,
+        204,
+        38,
+        26
+      ],
+      [
+        255,
+        26,
+        191,
+        204
+      ]
+    ],
+    "parameters": [
+      "Color Keep=0",
+      "Threshold=0.085",
+      "Premultiplied Color=0",
+      "Color Space=3",
+      "Force Lower Precision=1",
+      "Per Color=0",
+      "Per Component=0",
+      "Amount@14=0",
+      "Distance Type@15=1",
+      "Amount@18=0",
+      "Distance Type@19=1",
+      "Direction@20=2",
+      "Number of Colors=2",
+      "Enable Replace=0",
+      "Use Color 1=1",
+      "Color 1=255,204,38,26",
+      "Use Color 2=1",
+      "Color 2=255,26,191,204"
+    ],
+    "rgba8": [
+      26,
+      191,
+      204,
+      255
+    ],
+    "row_padding_bytes": 8
+  },
+  "identities": {
+    "aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+    "aexcompat_commit": "28d535469f84f67236ef3425afe4291ea2fb0991",
+    "aexcompat_worker_sha256": "46ab907d286ad4e0e1c2065557100f02c37e0b68df4c22202a825f3fea13ef61",
+    "decomp_sha256": "19a2a6b200dd68ae046bca69d471dd886415245aec533264e6f7bee8caa33ca8",
+    "disasm_sha256": "c9d4a8fe258d265e32433b6a38422ffa20dfd76e1bf688571377c9c87f0a8176",
+    "production_source_sha256": "8ee1ae7c8974f05ac48c32d6eba5c32cba0abc6d50c397599bf7b3022cb72e59"
+  },
+  "installation_status": {
+    "installed_binary_sha256": "350ed6eb00c078952ad512b621e3489e6e6ed47d9129e3c11748f547fc441230",
+    "meaning": "The existing install smoke belongs to an earlier source and is not evidence for this tree; Universal rebuild/install and AE smoke are deferred to the parent task.",
+    "status": "deferred_stale"
+  },
+  "native_algorithm": {
+    "per_component_limits_retained": {
+      "L": "threshold*151.300994873f + epsilon*2709.929931641f",
+      "a": "threshold*264.367004394f + epsilon*578.713989258f",
+      "b": "threshold*295.572998047f + epsilon*414.675994873f"
+    },
+    "scalar": "sqrt(dL*dL + da*da + db*db) <= ((threshold + epsilon) * 424.4352722167969f), FLOAT32 scalar order",
+    "shared_mutation_ab": [
+      133.03700256347656,
+      163.48800659179688
+    ]
+  },
+  "owner_record": {
+    "after_sha256": "d7c9d9ea9dfa675ab55ae9571790279d6e7c998b51709621559f02cbe4472c67",
+    "dropped_memory_witnesses": 0,
+    "function_rva": "0x9960",
+    "pc_rva": "0x1a14",
+    "semantic_fields": {
+      "color_space_at_0x30": 3,
+      "depth_at_0x20": 32,
+      "epsilon_f32_bits_at_0x54": "0x358637bd",
+      "force_at_0x3c": 1,
+      "key1_argb_f32_bits_at_0x74": [
+        "0x3f800000",
+        "0x3f4ccccd",
+        "0x3e189899",
+        "0x3dd0d0d1"
+      ],
+      "key2_argb_f32_bits_at_0x84": [
+        "0x3f800000",
+        "0x3dd0d0d1",
+        "0x3f3fbfc0",
+        "0x3f4ccccd"
+      ],
+      "number_colors_at_0x38": 2,
+      "per_color_at_0x35": 0,
+      "per_component_at_0x34": 0,
+      "threshold_f32_bits_at_0x50": "0x3dae147b",
+      "use_color_at_0x524_0x525": [
+        1,
+        1
+      ]
+    },
+    "size": 1432,
+    "trace_guards_intact": true,
+    "trace_truncated": false,
+    "watch": "function=0x9960,arg=stack5,size=1432"
+  },
+  "production_admission": {
+    "classic_render_guard": {
+      "rejected_entry_mutations": 7,
+      "rejected_helper_mutations": 10,
+      "rejected_output_untouched": true,
+      "rejection_error": "PF_Err_BAD_CALLBACK_PARAM",
+      "valid_entries": {
+        "PF16": 1,
+        "PF32": 1,
+        "PF8": 1
+      },
+      "valid_unequal_strides": true,
+      "validates": [
+        "input/output format",
+        "data",
+        "dimensions",
+        "rowbytes"
+      ]
+    },
+    "depths": [
+      "PF8",
+      "PF16",
+      "PF32"
+    ],
+    "new_rule_admitted_cells": 6,
+    "orders": [
+      "declared",
+      "reverse"
+    ],
+    "outside_behavior": "valid outside tuples retain prior independently admitted behavior; invalid world layouts fail closed; neither admits destructive mutation/Euclidean behavior",
+    "predicate_one_away": {
+      "depths_tested": 3,
+      "mutations_per_depth": 38,
+      "rejects": 114,
+      "status": "all_rejected"
+    },
+    "smart_null_world_guard": {
+      "checkin_layer_pixels": 1,
+      "output_untouched": true,
+      "rejected_cases": [
+        "null input world",
+        "null output world"
+      ],
+      "rejection_error": "PF_Err_BAD_CALLBACK_PARAM"
+    }
+  },
+  "production_effectmain": {
+    "chain": [
+      "EffectMain SmartPreRender",
+      "33 ordered parameter checkouts",
+      "EffectMain SmartRender",
+      "typed RenderWorld",
+      "33 parameter checkins"
+    ],
+    "gates": {
+      "checkin_layer_pixels": 1,
+      "checkout_layer_pixels": 1,
+      "checkout_output": 1,
+      "input_complete_buffer_unchanged": true,
+      "input_padding_preserved": true,
+      "ordered_parameter_indices": true,
+      "output_padding_preserved": true,
+      "parameter_checkins": 33,
+      "parameter_checkouts": 33,
+      "preserve_rgb_of_zero_alpha": false,
+      "row_padding_bytes": 8,
+      "smart_pre_render": 1
+    },
+    "rows": [
+      {
+        "depth": "PF8",
+        "guards_intact": true,
+        "order": "declared",
+        "pixel_format": "argb8",
+        "raw_pixel_bytes": 4,
+        "raw_pixel_sha256": "bacce67eaa29aa6c18392a911495ddd87e21973ef3db86a116a7c6be74a1c474",
+        "smart_pre_render_completed": true,
+        "smart_render_completed": true,
+        "status": "raw_exact",
+        "unsupported_suite_calls": []
+      },
+      {
+        "depth": "PF16",
+        "guards_intact": true,
+        "order": "declared",
+        "pixel_format": "argb16",
+        "raw_pixel_bytes": 8,
+        "raw_pixel_sha256": "1fe2dd593f9df058114b76fc1d4701bccaf7f461dae7e92e4e0da04dadae1e53",
+        "smart_pre_render_completed": true,
+        "smart_render_completed": true,
+        "status": "raw_exact",
+        "unsupported_suite_calls": []
+      },
+      {
+        "depth": "PF32",
+        "guards_intact": true,
+        "order": "declared",
+        "pixel_format": "argb32f",
+        "raw_pixel_bytes": 16,
+        "raw_pixel_sha256": "350e22668437e1322494faff9a7b7bf07325ca4a6a9fd775878faaa55c240b31",
+        "smart_pre_render_completed": true,
+        "smart_render_completed": true,
+        "status": "raw_exact",
+        "unsupported_suite_calls": []
+      },
+      {
+        "depth": "PF8",
+        "guards_intact": true,
+        "order": "reverse",
+        "pixel_format": "argb8",
+        "raw_pixel_bytes": 4,
+        "raw_pixel_sha256": "315caf88910f1cc7edd25c90affec502e4654d0310504cfcb6d7469c68f93c93",
+        "smart_pre_render_completed": true,
+        "smart_render_completed": true,
+        "status": "raw_exact",
+        "unsupported_suite_calls": []
+      },
+      {
+        "depth": "PF16",
+        "guards_intact": true,
+        "order": "reverse",
+        "pixel_format": "argb16",
+        "raw_pixel_bytes": 8,
+        "raw_pixel_sha256": "31299a22989821a5c7205e886d8d2f6c0cc150ba97b46bdf46b4d4c0130fbf7a",
+        "smart_pre_render_completed": true,
+        "smart_render_completed": true,
+        "status": "raw_exact",
+        "unsupported_suite_calls": []
+      },
+      {
+        "depth": "PF32",
+        "guards_intact": true,
+        "order": "reverse",
+        "pixel_format": "argb32f",
+        "raw_pixel_bytes": 16,
+        "raw_pixel_sha256": "176f964534c7f93884c8a90afc9459c6ece0ef38a7a65216b3db4af8fe480589",
+        "smart_pre_render_completed": true,
+        "smart_render_completed": true,
+        "status": "raw_exact",
+        "unsupported_suite_calls": []
+      }
+    ],
+    "status": "raw_exact"
+  },
+  "public_owner": [
+    {
+      "depth": "PF8",
+      "guards_intact": true,
+      "order": "declared",
+      "pixel_format": "argb8",
+      "raw_pixel_bytes": 4,
+      "raw_pixel_sha256": "bacce67eaa29aa6c18392a911495ddd87e21973ef3db86a116a7c6be74a1c474",
+      "smart_pre_render_completed": true,
+      "smart_render_completed": true,
+      "status": "raw_exact",
+      "unsupported_suite_calls": []
+    },
+    {
+      "depth": "PF16",
+      "guards_intact": true,
+      "order": "declared",
+      "pixel_format": "argb16",
+      "raw_pixel_bytes": 8,
+      "raw_pixel_sha256": "1fe2dd593f9df058114b76fc1d4701bccaf7f461dae7e92e4e0da04dadae1e53",
+      "smart_pre_render_completed": true,
+      "smart_render_completed": true,
+      "status": "raw_exact",
+      "unsupported_suite_calls": []
+    },
+    {
+      "depth": "PF32",
+      "guards_intact": true,
+      "order": "declared",
+      "pixel_format": "argb32f",
+      "raw_pixel_bytes": 16,
+      "raw_pixel_sha256": "350e22668437e1322494faff9a7b7bf07325ca4a6a9fd775878faaa55c240b31",
+      "smart_pre_render_completed": true,
+      "smart_render_completed": true,
+      "status": "raw_exact",
+      "unsupported_suite_calls": []
+    },
+    {
+      "depth": "PF8",
+      "guards_intact": true,
+      "order": "reverse",
+      "pixel_format": "argb8",
+      "raw_pixel_bytes": 4,
+      "raw_pixel_sha256": "315caf88910f1cc7edd25c90affec502e4654d0310504cfcb6d7469c68f93c93",
+      "smart_pre_render_completed": true,
+      "smart_render_completed": true,
+      "status": "raw_exact",
+      "unsupported_suite_calls": []
+    },
+    {
+      "depth": "PF16",
+      "guards_intact": true,
+      "order": "reverse",
+      "pixel_format": "argb16",
+      "raw_pixel_bytes": 8,
+      "raw_pixel_sha256": "31299a22989821a5c7205e886d8d2f6c0cc150ba97b46bdf46b4d4c0130fbf7a",
+      "smart_pre_render_completed": true,
+      "smart_render_completed": true,
+      "status": "raw_exact",
+      "unsupported_suite_calls": []
+    },
+    {
+      "depth": "PF32",
+      "guards_intact": true,
+      "order": "reverse",
+      "pixel_format": "argb32f",
+      "raw_pixel_bytes": 16,
+      "raw_pixel_sha256": "176f964534c7f93884c8a90afc9459c6ece0ef38a7a65216b3db4af8fe480589",
+      "smart_pre_render_completed": true,
+      "smart_render_completed": true,
+      "status": "raw_exact",
+      "unsupported_suite_calls": []
+    }
+  ],
+  "regressions": {
+    "edge_blur": {
+      "command": "tools/emulation/test_olmcolorkey_exported_owner_edge_blur_covering_20260812.py",
+      "status": "pass",
+      "stdout_sha256": "33cfb38a77719f43227b261aed4980cea115558fbaf8f3ca4b67dd63e5420732"
+    },
+    "edge_thin": {
+      "command": "tools/emulation/test_olmcolorkey_edge_thin_family_actual_aex_20260810.py",
+      "status": "pass",
+      "stdout_sha256": "87b59e319aec6b6897fae1f57545ee712d16819cd7874b2062e6b5227eda2e92"
+    },
+    "non_lab76": {
+      "command": "tools/emulation/test_olmcolorkey_colorspace_2_5_matrix_actual_aex_20260810.py",
+      "status": "pass",
+      "stdout_sha256": "a5410f440d44b3e7198594fccafa48cdb95c77cd17cede837c9a70c76b7f2f84"
+    },
+    "replace_edge_composition": {
+      "command": "tools/emulation/test_olmcolorkey_replace_edge_composition_actual_aex_20260811.py",
+      "status": "pass",
+      "stdout_sha256": "dafd9f2def91498c3591bac4403789a35bacdca4c47293824dc6e9eea40b1ea6"
+    },
+    "replace_keep_premult": {
+      "command": "tools/emulation/test_olmcolorkey_keep_premult_replace_actual_aex_20260811.py",
+      "status": "pass",
+      "stdout_sha256": "99e4c2419426c2afa6884522236d681f036eaa55fb7a910fd767e7b9ecd7c24a"
+    }
+  },
+  "schema": "olmcolorkey.lab76-multikey-order-closure/1",
+  "status": "raw_exact"
+}

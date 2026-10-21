@@ -1,0 +1,59 @@
+{
+  "case_id": "final_random10_olm_smoother_v2_07",
+  "claims_not_made": [
+    "No native direct output-world memory capture",
+    "No arbitrary inverse of premultiplication outside this finite fixture",
+    "No other source, tuple, geometry or depth",
+    "No production admission from this oracle relation alone",
+    "No new After Effects execution"
+  ],
+  "current_source_transcript": {
+    "BYTES": "33177600",
+    "INPUT_SHA256": "133a9447f8d722a7add9a5c7fc63bcf16b7e77c21cab9aa7c48d84df8677685b",
+    "OUTPUT_SHA256": "31bbdb17ef62802bc7d67fd66e552e5c0fd7d1e5a740d7aca923acb1d15bf65c"
+  },
+  "identities": {
+    "aex": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+    "harness": "9ea4ea615cd25565cb2c6a9a73fd579424c1c9a36e690edc634ce164528f3172",
+    "input_gzip": "f29cad40b4f0081fa5f279da0e875198a2970ea2d9c1161db7cc2058acf4044c",
+    "source": "c710902f5928c67ae72e2e4ba445e801acd4a3f229f04d23ab6a1cd56cf73168",
+    "windows_exr": "404d2b5732adf9bbbc6aadab4a1f0dd075e4e0f911b29076339f6f0e17479cc0",
+    "windows_manifest": "fd65184c63f529c39d5fdbb173077f45c2a969ff66a17e7972c2dbb5dad45ecc"
+  },
+  "oracle_relation": {
+    "expected_word_correction_used": false,
+    "host_transform": "for each RGB word, round-to-float32(direct * alpha); alpha copied bit-exact",
+    "preimage_unique_over_all_words": true,
+    "unique_preimage_equals_current_source_direct_output": true,
+    "windows_observed_boundary": "actual AEX effect-on final FLOAT EXR under Premultiplied output module"
+  },
+  "production_policy": {
+    "case07_currently_admitted": true,
+    "next_gate": "closed by the separate real-SDK public Smart safety/admission closure",
+    "production_changed_by_this_closure": false
+  },
+  "proof": {
+    "adjacent_float_preimage_collisions": 0,
+    "alpha_bits_census": {
+      "0x3f7fffff": 1044,
+      "0x3f800000": 2072556
+    },
+    "alpha_mismatches": 0,
+    "alpha_word_count": 2073600,
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "direct_raw_sha256": "31bbdb17ef62802bc7d67fd66e552e5c0fd7d1e5a740d7aca923acb1d15bf65c",
+    "direct_vs_final_changed_rgb_words": 3132,
+    "final_semantic_argb_sha256": "69b563091cfc8586113a85298365e8eaaacee51d78ec6f3857b5fd091f2d80eb",
+    "float32_divide_inverse_mismatches": 0,
+    "float32_rgb_times_alpha_mismatches": 0,
+    "negative_or_nonfinite_direct_words": 0,
+    "pixel_count": 2073600,
+    "rgb_word_count": 6220800,
+    "word_count": 8294400
+  },
+  "schema": "olmsmoother2.case07-unique-direct-oracle/1",
+  "status": "PASS_WINDOWS_FINAL_EXR_HAS_UNIQUE_STRAIGHT_PF32_PREIMAGE_MATCHING_CURRENT_SOURCE"
+}

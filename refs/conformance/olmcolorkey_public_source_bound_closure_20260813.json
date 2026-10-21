@@ -1,0 +1,1044 @@
+{
+  "canonical_rows": [
+    {
+      "active_bytes": 2304,
+      "case": "direction1_distance1_amount1",
+      "depth": "PF8",
+      "family": "edge_blur",
+      "height": 18,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "2b05dfeed6c1385d4818cd727aabc6931581b6d39ce22f84a13461b91a33e740",
+      "rowbytes": 136,
+      "status": "raw_exact",
+      "width": 32
+    },
+    {
+      "active_bytes": 4608,
+      "case": "direction1_distance1_amount1",
+      "depth": "PF16",
+      "family": "edge_blur",
+      "height": 18,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "a00beddb5a79592c6452ef4023735916b387be21eb9cd68c774779dd21bb9d59",
+      "rowbytes": 264,
+      "status": "raw_exact",
+      "width": 32
+    },
+    {
+      "active_bytes": 9216,
+      "case": "direction1_distance1_amount1",
+      "depth": "PF32",
+      "family": "edge_blur",
+      "height": 18,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "700e8d0c730006cb26bde8e7eb319fef9447efa9a297abf6a47a41bf1c638d19",
+      "rowbytes": 520,
+      "status": "raw_exact",
+      "width": 32
+    },
+    {
+      "active_bytes": 2304,
+      "case": "direction1_distance3_amount4",
+      "depth": "PF8",
+      "family": "edge_blur",
+      "height": 18,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "92ef482ba2d0a707572faafaf59a9a3fdf6dceb0174aeb6f1a168ba02f264942",
+      "rowbytes": 136,
+      "status": "raw_exact",
+      "width": 32
+    },
+    {
+      "active_bytes": 4608,
+      "case": "direction1_distance3_amount4",
+      "depth": "PF16",
+      "family": "edge_blur",
+      "height": 18,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "b3ad0a0e5fa8f000b13a71225cf121d19b5bcc2b57cb9796b6c5c7bd3d40e16f",
+      "rowbytes": 264,
+      "status": "raw_exact",
+      "width": 32
+    },
+    {
+      "active_bytes": 9216,
+      "case": "direction1_distance3_amount4",
+      "depth": "PF32",
+      "family": "edge_blur",
+      "height": 18,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "7ca0c65aa6c25de1d7298c8861a0890ba81be0ec42df0412145a9ce318eb73ad",
+      "rowbytes": 520,
+      "status": "raw_exact",
+      "width": 32
+    },
+    {
+      "active_bytes": 2304,
+      "case": "direction2_distance2_amount1",
+      "depth": "PF8",
+      "family": "edge_blur",
+      "height": 18,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "e9bf81738e9f93435003e6e9a50b99ba9a72cd4d836c3273570cc6efff1ca909",
+      "rowbytes": 136,
+      "status": "raw_exact",
+      "width": 32
+    },
+    {
+      "active_bytes": 4608,
+      "case": "direction2_distance2_amount1",
+      "depth": "PF16",
+      "family": "edge_blur",
+      "height": 18,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "e92e7467d47362db077e54b86996068c453fdd0e3c4ea310dd9f6de8eec3c30a",
+      "rowbytes": 264,
+      "status": "raw_exact",
+      "width": 32
+    },
+    {
+      "active_bytes": 9216,
+      "case": "direction2_distance2_amount1",
+      "depth": "PF32",
+      "family": "edge_blur",
+      "height": 18,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "69947bbe58214d61a8a133549db3df07eac1aae8f74c1d163c8b280d52374a94",
+      "rowbytes": 520,
+      "status": "raw_exact",
+      "width": 32
+    },
+    {
+      "active_bytes": 2304,
+      "case": "direction2_distance1_amount4",
+      "depth": "PF8",
+      "family": "edge_blur",
+      "height": 18,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "8097cade152bd1d8a71a0594fccb7ae3aac9e846a71c2b734a5b78862a0c18d0",
+      "rowbytes": 136,
+      "status": "raw_exact",
+      "width": 32
+    },
+    {
+      "active_bytes": 4608,
+      "case": "direction2_distance1_amount4",
+      "depth": "PF16",
+      "family": "edge_blur",
+      "height": 18,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "a7e7357d333fc9b0c92451ea8009000777c1c5e363c2ee4fb8697d93e6c860d6",
+      "rowbytes": 264,
+      "status": "raw_exact",
+      "width": 32
+    },
+    {
+      "active_bytes": 9216,
+      "case": "direction2_distance1_amount4",
+      "depth": "PF32",
+      "family": "edge_blur",
+      "height": 18,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "2d5bbeb5f9426a18f8b1237bcf9024b0c0b26e2acab677b5676ecb00b0d73c28",
+      "rowbytes": 520,
+      "status": "raw_exact",
+      "width": 32
+    },
+    {
+      "active_bytes": 2304,
+      "case": "direction3_distance3_amount1",
+      "depth": "PF8",
+      "family": "edge_blur",
+      "height": 18,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "fb19fd35cd867a8f60727fdbf5c1a136144e987ea9e9a4ff15d2d08b9713e823",
+      "rowbytes": 136,
+      "status": "raw_exact",
+      "width": 32
+    },
+    {
+      "active_bytes": 4608,
+      "case": "direction3_distance3_amount1",
+      "depth": "PF16",
+      "family": "edge_blur",
+      "height": 18,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "23489ce8aea28a67086e61914ad68fd0dadfcac92e2126efa0c42bd93a36721e",
+      "rowbytes": 264,
+      "status": "raw_exact",
+      "width": 32
+    },
+    {
+      "active_bytes": 9216,
+      "case": "direction3_distance3_amount1",
+      "depth": "PF32",
+      "family": "edge_blur",
+      "height": 18,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "e369b5d901c4d8457f6b11ef231744c6760e36005e0a9948686861bcfe2343ab",
+      "rowbytes": 520,
+      "status": "raw_exact",
+      "width": 32
+    },
+    {
+      "active_bytes": 2304,
+      "case": "direction3_distance2_amount4",
+      "depth": "PF8",
+      "family": "edge_blur",
+      "height": 18,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "3537a319ff5f280a8c60c55bc5e424d8f3a2a3234b972c534bb40645c0b1207c",
+      "rowbytes": 136,
+      "status": "raw_exact",
+      "width": 32
+    },
+    {
+      "active_bytes": 4608,
+      "case": "direction3_distance2_amount4",
+      "depth": "PF16",
+      "family": "edge_blur",
+      "height": 18,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "c0885430e2007de42bca8b4787eca75ccb0d55789fcf2d4462354c8befefbd80",
+      "rowbytes": 264,
+      "status": "raw_exact",
+      "width": 32
+    },
+    {
+      "active_bytes": 9216,
+      "case": "direction3_distance2_amount4",
+      "depth": "PF32",
+      "family": "edge_blur",
+      "height": 18,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "24abe667cafd713323a7f556425486d4145e6c9a2b48dff94fcacf93d31cc71a",
+      "rowbytes": 520,
+      "status": "raw_exact",
+      "width": 32
+    },
+    {
+      "active_bytes": 9216,
+      "case": "direction0_distance1_amount1",
+      "depth": "PF8",
+      "family": "edge_blur",
+      "height": 36,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "a37e634e3123a3da8bebc0837dcf7957686b4fa9a6125a09082ea477ac3efea0",
+      "rowbytes": 264,
+      "status": "raw_exact",
+      "width": 64
+    },
+    {
+      "active_bytes": 18432,
+      "case": "direction0_distance1_amount1",
+      "depth": "PF16",
+      "family": "edge_blur",
+      "height": 36,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "2602994aae8b1e1e044f91930c9eea536d580b6ad512c2b54717abd4945b2103",
+      "rowbytes": 520,
+      "status": "raw_exact",
+      "width": 64
+    },
+    {
+      "active_bytes": 36864,
+      "case": "direction0_distance1_amount1",
+      "depth": "PF32",
+      "family": "edge_blur",
+      "height": 36,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "f3f1ebc9475753e2c22c9baf017e08959cff3b1f57eb4e0d74573a7a7e509b35",
+      "rowbytes": 1032,
+      "status": "raw_exact",
+      "width": 64
+    },
+    {
+      "active_bytes": 9216,
+      "case": "direction0_distance3_amount4",
+      "depth": "PF8",
+      "family": "edge_blur",
+      "height": 36,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "8f7ee5a49d5ba93c3f44fba077e1b3be7dc262b4f6aab0858f940daac30300ef",
+      "rowbytes": 264,
+      "status": "raw_exact",
+      "width": 64
+    },
+    {
+      "active_bytes": 18432,
+      "case": "direction0_distance3_amount4",
+      "depth": "PF16",
+      "family": "edge_blur",
+      "height": 36,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "35f84cf51c1cf4576a3cb8465419795dea7faf2050b2a38cb6b1254da256cdf7",
+      "rowbytes": 520,
+      "status": "raw_exact",
+      "width": 64
+    },
+    {
+      "active_bytes": 36864,
+      "case": "direction0_distance3_amount4",
+      "depth": "PF32",
+      "family": "edge_blur",
+      "height": 36,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "520f358772ce77b407c574a71ebd76f69b9685e1bb9cf93724ea94c201f992aa",
+      "rowbytes": 1032,
+      "status": "raw_exact",
+      "width": 64
+    },
+    {
+      "active_bytes": 9216,
+      "case": "direction4_distance3_amount1",
+      "depth": "PF8",
+      "family": "edge_blur",
+      "height": 36,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "a37e634e3123a3da8bebc0837dcf7957686b4fa9a6125a09082ea477ac3efea0",
+      "rowbytes": 264,
+      "status": "raw_exact",
+      "width": 64
+    },
+    {
+      "active_bytes": 18432,
+      "case": "direction4_distance3_amount1",
+      "depth": "PF16",
+      "family": "edge_blur",
+      "height": 36,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "2602994aae8b1e1e044f91930c9eea536d580b6ad512c2b54717abd4945b2103",
+      "rowbytes": 520,
+      "status": "raw_exact",
+      "width": 64
+    },
+    {
+      "active_bytes": 36864,
+      "case": "direction4_distance3_amount1",
+      "depth": "PF32",
+      "family": "edge_blur",
+      "height": 36,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "f3f1ebc9475753e2c22c9baf017e08959cff3b1f57eb4e0d74573a7a7e509b35",
+      "rowbytes": 1032,
+      "status": "raw_exact",
+      "width": 64
+    },
+    {
+      "active_bytes": 9216,
+      "case": "direction4_distance1_amount4",
+      "depth": "PF8",
+      "family": "edge_blur",
+      "height": 36,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "3122f0b3353919f00cdfa6ccdb22d46845093d951370488f711dac759c86037d",
+      "rowbytes": 264,
+      "status": "raw_exact",
+      "width": 64
+    },
+    {
+      "active_bytes": 18432,
+      "case": "direction4_distance1_amount4",
+      "depth": "PF16",
+      "family": "edge_blur",
+      "height": 36,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "7dd7381988ad60989a689894957d4e1f9d56908ce90174dac3b1d5784a36f035",
+      "rowbytes": 520,
+      "status": "raw_exact",
+      "width": 64
+    },
+    {
+      "active_bytes": 36864,
+      "case": "direction4_distance1_amount4",
+      "depth": "PF32",
+      "family": "edge_blur",
+      "height": 36,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "44075b247e458dc708f10d70da55c74580aea5622b87057e08355d7343f67d98",
+      "rowbytes": 1032,
+      "status": "raw_exact",
+      "width": 64
+    },
+    {
+      "active_bytes": 5184,
+      "case": "direction0_distance3_amount4_second_source",
+      "depth": "PF8",
+      "family": "edge_blur",
+      "height": 27,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "99647b451957968e17cc26de8539a5dda304ab87700e345af7daf1c16cee058f",
+      "rowbytes": 200,
+      "status": "raw_exact",
+      "width": 48
+    },
+    {
+      "active_bytes": 10368,
+      "case": "direction0_distance3_amount4_second_source",
+      "depth": "PF16",
+      "family": "edge_blur",
+      "height": 27,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "5bec7e489732bac740337674f30a25cb94980820b1a5f061b9bc66e9c167332e",
+      "rowbytes": 392,
+      "status": "raw_exact",
+      "width": 48
+    },
+    {
+      "active_bytes": 20736,
+      "case": "direction0_distance3_amount4_second_source",
+      "depth": "PF32",
+      "family": "edge_blur",
+      "height": 27,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "d44ecf31c9817bfd4383974cad242c78f55c85f370ea66e328bbcff51176be08",
+      "rowbytes": 776,
+      "status": "raw_exact",
+      "width": 48
+    },
+    {
+      "active_bytes": 4,
+      "case": "lab76_declared",
+      "depth": "PF8",
+      "family": "lab76_two_key_order",
+      "height": 1,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "bacce67eaa29aa6c18392a911495ddd87e21973ef3db86a116a7c6be74a1c474",
+      "rowbytes": 12,
+      "status": "raw_exact",
+      "width": 1
+    },
+    {
+      "active_bytes": 8,
+      "case": "lab76_declared",
+      "depth": "PF16",
+      "family": "lab76_two_key_order",
+      "height": 1,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "1fe2dd593f9df058114b76fc1d4701bccaf7f461dae7e92e4e0da04dadae1e53",
+      "rowbytes": 16,
+      "status": "raw_exact",
+      "width": 1
+    },
+    {
+      "active_bytes": 16,
+      "case": "lab76_declared",
+      "depth": "PF32",
+      "family": "lab76_two_key_order",
+      "height": 1,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "350e22668437e1322494faff9a7b7bf07325ca4a6a9fd775878faaa55c240b31",
+      "rowbytes": 24,
+      "status": "raw_exact",
+      "width": 1
+    },
+    {
+      "active_bytes": 4,
+      "case": "lab76_reverse",
+      "depth": "PF8",
+      "family": "lab76_two_key_order",
+      "height": 1,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "315caf88910f1cc7edd25c90affec502e4654d0310504cfcb6d7469c68f93c93",
+      "rowbytes": 12,
+      "status": "raw_exact",
+      "width": 1
+    },
+    {
+      "active_bytes": 8,
+      "case": "lab76_reverse",
+      "depth": "PF16",
+      "family": "lab76_two_key_order",
+      "height": 1,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "31299a22989821a5c7205e886d8d2f6c0cc150ba97b46bdf46b4d4c0130fbf7a",
+      "rowbytes": 16,
+      "status": "raw_exact",
+      "width": 1
+    },
+    {
+      "active_bytes": 16,
+      "case": "lab76_reverse",
+      "depth": "PF32",
+      "family": "lab76_two_key_order",
+      "height": 1,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "176f964534c7f93884c8a90afc9459c6ece0ef38a7a65216b3db4af8fe480589",
+      "rowbytes": 24,
+      "status": "raw_exact",
+      "width": 1
+    },
+    {
+      "active_bytes": 308,
+      "case": "keep_0_premult_0_replace_0",
+      "depth": "PF8",
+      "family": "keep_premult_replace",
+      "height": 7,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "7b04243e0a32e9edac455957670f97eb721e891ca4731aa4fb3acf7d5ba24db3",
+      "rowbytes": 52,
+      "status": "raw_exact",
+      "width": 11
+    },
+    {
+      "active_bytes": 616,
+      "case": "keep_0_premult_0_replace_0",
+      "depth": "PF16",
+      "family": "keep_premult_replace",
+      "height": 7,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "70f0b1e3f0dd3ba5dc448b5123f49ebdfa57665827cd54373b9c833496ecd85d",
+      "rowbytes": 96,
+      "status": "raw_exact",
+      "width": 11
+    },
+    {
+      "active_bytes": 1232,
+      "case": "keep_0_premult_0_replace_0",
+      "depth": "PF32",
+      "family": "keep_premult_replace",
+      "height": 7,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "a6e127182427c71801d6ed2d0b8159bf42f7e37ea7a22bbe2fdab27cbb027e67",
+      "rowbytes": 184,
+      "status": "raw_exact",
+      "width": 11
+    },
+    {
+      "active_bytes": 308,
+      "case": "keep_0_premult_0_replace_1",
+      "depth": "PF8",
+      "family": "keep_premult_replace",
+      "height": 7,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "7b04243e0a32e9edac455957670f97eb721e891ca4731aa4fb3acf7d5ba24db3",
+      "rowbytes": 52,
+      "status": "raw_exact",
+      "width": 11
+    },
+    {
+      "active_bytes": 616,
+      "case": "keep_0_premult_0_replace_1",
+      "depth": "PF16",
+      "family": "keep_premult_replace",
+      "height": 7,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "70f0b1e3f0dd3ba5dc448b5123f49ebdfa57665827cd54373b9c833496ecd85d",
+      "rowbytes": 96,
+      "status": "raw_exact",
+      "width": 11
+    },
+    {
+      "active_bytes": 1232,
+      "case": "keep_0_premult_0_replace_1",
+      "depth": "PF32",
+      "family": "keep_premult_replace",
+      "height": 7,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "a6e127182427c71801d6ed2d0b8159bf42f7e37ea7a22bbe2fdab27cbb027e67",
+      "rowbytes": 184,
+      "status": "raw_exact",
+      "width": 11
+    },
+    {
+      "active_bytes": 308,
+      "case": "keep_0_premult_1_replace_0",
+      "depth": "PF8",
+      "family": "keep_premult_replace",
+      "height": 7,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "2c3080fc14ecc1946e4b79baf974329e29e4143bbcac0f84d6450416f5f9f771",
+      "rowbytes": 52,
+      "status": "raw_exact",
+      "width": 11
+    },
+    {
+      "active_bytes": 616,
+      "case": "keep_0_premult_1_replace_0",
+      "depth": "PF16",
+      "family": "keep_premult_replace",
+      "height": 7,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "9c4f13bfa0ba7372bb2000038398b995647f1df857ca8f8b96a21800fe423b0c",
+      "rowbytes": 96,
+      "status": "raw_exact",
+      "width": 11
+    },
+    {
+      "active_bytes": 1232,
+      "case": "keep_0_premult_1_replace_0",
+      "depth": "PF32",
+      "family": "keep_premult_replace",
+      "height": 7,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "9f5e214100f39109a2c83c69852174a373b5594b4377392306a6560da6525a3b",
+      "rowbytes": 184,
+      "status": "raw_exact",
+      "width": 11
+    },
+    {
+      "active_bytes": 308,
+      "case": "keep_0_premult_1_replace_1",
+      "depth": "PF8",
+      "family": "keep_premult_replace",
+      "height": 7,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "2c3080fc14ecc1946e4b79baf974329e29e4143bbcac0f84d6450416f5f9f771",
+      "rowbytes": 52,
+      "status": "raw_exact",
+      "width": 11
+    },
+    {
+      "active_bytes": 616,
+      "case": "keep_0_premult_1_replace_1",
+      "depth": "PF16",
+      "family": "keep_premult_replace",
+      "height": 7,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "9c4f13bfa0ba7372bb2000038398b995647f1df857ca8f8b96a21800fe423b0c",
+      "rowbytes": 96,
+      "status": "raw_exact",
+      "width": 11
+    },
+    {
+      "active_bytes": 1232,
+      "case": "keep_0_premult_1_replace_1",
+      "depth": "PF32",
+      "family": "keep_premult_replace",
+      "height": 7,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "9f5e214100f39109a2c83c69852174a373b5594b4377392306a6560da6525a3b",
+      "rowbytes": 184,
+      "status": "raw_exact",
+      "width": 11
+    },
+    {
+      "active_bytes": 308,
+      "case": "keep_1_premult_0_replace_0",
+      "depth": "PF8",
+      "family": "keep_premult_replace",
+      "height": 7,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "d6a8b375e921b16809540d3a17bd9a82bc65d87b34b535319faffbafb7a41a66",
+      "rowbytes": 52,
+      "status": "raw_exact",
+      "width": 11
+    },
+    {
+      "active_bytes": 616,
+      "case": "keep_1_premult_0_replace_0",
+      "depth": "PF16",
+      "family": "keep_premult_replace",
+      "height": 7,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "ed4c0b8f2725c87720e6e0544d99784bbda319de67e2380ca39f3ac7dce54e00",
+      "rowbytes": 96,
+      "status": "raw_exact",
+      "width": 11
+    },
+    {
+      "active_bytes": 1232,
+      "case": "keep_1_premult_0_replace_0",
+      "depth": "PF32",
+      "family": "keep_premult_replace",
+      "height": 7,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "1479106d41094294f9ff03073e902dd8dc2809271538df8cc1648ac322161271",
+      "rowbytes": 184,
+      "status": "raw_exact",
+      "width": 11
+    },
+    {
+      "active_bytes": 308,
+      "case": "keep_1_premult_0_replace_1",
+      "depth": "PF8",
+      "family": "keep_premult_replace",
+      "height": 7,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "a78b875624cf1261dcad5feccbbbe688b06003dc1c0b3a0d1db981ba2c2d1d49",
+      "rowbytes": 52,
+      "status": "raw_exact",
+      "width": 11
+    },
+    {
+      "active_bytes": 616,
+      "case": "keep_1_premult_0_replace_1",
+      "depth": "PF16",
+      "family": "keep_premult_replace",
+      "height": 7,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "b40fed4f5d753e5f1d5b53a1d0a534293bb68a77170e083487865653e0c0a008",
+      "rowbytes": 96,
+      "status": "raw_exact",
+      "width": 11
+    },
+    {
+      "active_bytes": 1232,
+      "case": "keep_1_premult_0_replace_1",
+      "depth": "PF32",
+      "family": "keep_premult_replace",
+      "height": 7,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "615ae72d6efe0a6bf4d95b1aab7edf188542c1f3033619405724e9116e992ea4",
+      "rowbytes": 184,
+      "status": "raw_exact",
+      "width": 11
+    },
+    {
+      "active_bytes": 308,
+      "case": "keep_1_premult_1_replace_0",
+      "depth": "PF8",
+      "family": "keep_premult_replace",
+      "height": 7,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "1995fc9d27022fc3aab53f1bd3e5c806f1ceff68c2aa98f4d3c40642654e19ad",
+      "rowbytes": 52,
+      "status": "raw_exact",
+      "width": 11
+    },
+    {
+      "active_bytes": 616,
+      "case": "keep_1_premult_1_replace_0",
+      "depth": "PF16",
+      "family": "keep_premult_replace",
+      "height": 7,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "8e8c7c4d5e5b5830823d11b2061933ef42b982c48964e7acca8f4cd58464c1b3",
+      "rowbytes": 96,
+      "status": "raw_exact",
+      "width": 11
+    },
+    {
+      "active_bytes": 1232,
+      "case": "keep_1_premult_1_replace_0",
+      "depth": "PF32",
+      "family": "keep_premult_replace",
+      "height": 7,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "dee67fc22014a756f91f599488c531f0c47876ba7499bd64aad4c9d8ced6ee1e",
+      "rowbytes": 184,
+      "status": "raw_exact",
+      "width": 11
+    },
+    {
+      "active_bytes": 308,
+      "case": "keep_1_premult_1_replace_1",
+      "depth": "PF8",
+      "family": "keep_premult_replace",
+      "height": 7,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "9a71faf8076def0fca9e749774f98105f01414b64a78fd7da3b567872a2c9d64",
+      "rowbytes": 52,
+      "status": "raw_exact",
+      "width": 11
+    },
+    {
+      "active_bytes": 616,
+      "case": "keep_1_premult_1_replace_1",
+      "depth": "PF16",
+      "family": "keep_premult_replace",
+      "height": 7,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "c4b8bebb5a926b56cd4accb40fcdd086cdb4fefd869aa82d3c0f7b7fe3eb887d",
+      "rowbytes": 96,
+      "status": "raw_exact",
+      "width": 11
+    },
+    {
+      "active_bytes": 1232,
+      "case": "keep_1_premult_1_replace_1",
+      "depth": "PF32",
+      "family": "keep_premult_replace",
+      "height": 7,
+      "public_routes": [
+        "PF_Cmd_RENDER",
+        "PF_Cmd_SMART_RENDER"
+      ],
+      "raw_sha256": "3ac4dd72f574b1e760956b1befddc266cac13adac25150dd5921529f5fd23a14",
+      "rowbytes": 184,
+      "status": "raw_exact",
+      "width": 11
+    }
+  ],
+  "canonical_rows_sha256": "50cd4071b2668fc9d5c5546f284d81ce47de22d7ce3f6b4444939682d0f68611",
+  "claim": "Exactly 63 fixed source/tuple/depth cells are raw exact through both Mac public Classic and Smart entries against the pinned Windows exported Smart owner. Unlisted source, tuple, geometry, format, layout, and error paths fail closed before atomic output commit.",
+  "generated_at": "2026-08-13T23:30:00+09:00",
+  "identities": {
+    "aex_guest_worker": "46ab907d286ad4e0e1c2065557100f02c37e0b68df4c22202a825f3fea13ef61",
+    "evidence_covering": "e2fdd20abecf3160ade533e3d3d4ee18ffa59672a794ed0e264143a0d599434d",
+    "evidence_geometry_transfer": "8f9f6486bffcb591624f7c3c00c252dfaae29cc889ce847566735eccb80f5209",
+    "evidence_keep_premult_replace": "9d24139134d0e1149e84959f23ff38818d004cfbd121da124425943fc16046e6",
+    "evidence_lab76_historical_oracle": "98f7f5b43b7986eb24455110d67dc00c0aedab097da77112a39bce4ab772bc1f",
+    "evidence_second_source": "ddb11fc57cb0b402e5aee0362a81a0b0916f9fd5894e9c581d0e6b6c9159b55f",
+    "probe_public_entries": "8193b267695107b42a8b32751e6fb016a50bb24e121d378159d2604bf4582372",
+    "probe_source_bound_atomic": "ec1823bd2b162b2329653335d66d30ed334b6e3355c196f8c0bfa4a6e8fc5be8",
+    "probe_suite_lifecycle": "ae5523a37ffe3e2a50b3d34c0b1f8c09bb7cdd543899a2df047eccceb424f90a",
+    "production_source": "4dbd264501a0d5d990a3726d16223c01c1996677b925f8546157b6a91ce677d1",
+    "sdk_header": "a6d5cdeba53f6934a9bac19c2c1b46b1478266f39995795c59244e3d9a355a0d",
+    "unit_public_entries": "73a11c8d969ac12838abff46af2bf4ff00c3bf3a4b50aad0c58a39bf3cf1c75d",
+    "unit_source_bound_atomic": "0079ada3ab852b194a4fcc9349ba32c0b6a1c8f3daf4e70cfb2ae0234055d0fc",
+    "unit_suite_lifecycle": "a42132beba365c9e78d5b44c58793821b242572c36b4a1318ae11721edeace3a",
+    "windows_aex": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c"
+  },
+  "lifecycle": {
+    "bad_alloc_maps_to_oom": true,
+    "classic_positive_cells": 63,
+    "first_error_preserved": true,
+    "smart_layer_output_checkin": [
+      1,
+      1,
+      1
+    ],
+    "smart_param_checkout_checkin_success": [
+      33,
+      33
+    ],
+    "smart_positive_cells": 63,
+    "unknown_exception_maps_to_internal": true
+  },
+  "negative_closure": {
+    "all_negative_output_uncommitted": true,
+    "smart_callback_error_or_throw_cases": 13,
+    "smart_param_checkin_failure_ordinals": 33,
+    "smart_param_checkout_failure_ordinals": 33,
+    "smart_param_success_cases": 1,
+    "source_tuple_world_atomic_cases": 567,
+    "world_and_color_suite_cases": 12
+  },
+  "probe_runs": {
+    "public_entries": {
+      "returncode": 0,
+      "stderr": "COLORKEY_PUBLIC_ENTRIES pass=1 classic=63 smart=63 callback_negatives=13",
+      "stdout_bytes": 816816,
+      "stdout_sha256": "dca1d6fccca2145456e8eb19cd9ab8f1b8994d8622cdb3679b777f92c2a973c7"
+    },
+    "public_entries_x86_64": {
+      "returncode": 0,
+      "stderr": "COLORKEY_PUBLIC_ENTRIES pass=1 classic=63 smart=63 callback_negatives=13",
+      "stdout_bytes": 816816,
+      "stdout_sha256": "dca1d6fccca2145456e8eb19cd9ab8f1b8994d8622cdb3679b777f92c2a973c7"
+    },
+    "source_bound_atomic": {
+      "returncode": 0,
+      "stderr": "SOURCE_BOUND_ATOMIC pass=1 positives=63 negatives=567",
+      "stdout_bytes": 408408,
+      "stdout_sha256": "e7b5210d9389e144148ce44bbd06b41589c4136b3fe461e705e9671adf14e6dd"
+    },
+    "suite_lifecycle": {
+      "returncode": 0,
+      "stderr": "",
+      "stdout_bytes": 5806,
+      "stdout_sha256": "8d938d902f484afaa112704864ba344feffa219adc4c7fb2624230fa04579286"
+    }
+  },
+  "schema": "olmcolorkey_public_source_bound_closure_v1",
+  "scope": {
+    "arbitrary_source_or_tuple": false,
+    "arm64_and_rosetta_x86_public_entries": true,
+    "gpu": false,
+    "hostless_real_ae_sdk": true,
+    "install_or_ae_run_performed": false,
+    "installed_binary": false,
+    "native_after_effects": false,
+    "windows_aex_exported_smart_oracle": true
+  },
+  "status": "pass_hostless_public_source_bound_raw_exact",
+  "world_contract": {
+    "active_commit_only": true,
+    "downsample": "1/1",
+    "full_extent_zero_origin": true,
+    "input_output_full_payload_disjoint": true,
+    "pixel_formats": [
+      "ARGB32",
+      "ARGB64",
+      "ARGB128"
+    ],
+    "rowbytes": "width_times_pixel_size_plus_8"
+  }
+}

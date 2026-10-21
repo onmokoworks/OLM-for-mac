@@ -37,7 +37,7 @@
     }
   ],
   "inverse_lut_sha256": "b7014467dcae06109111302b8c930494950d27b817d1390d6434605795772fbc",
-  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "production_source_sha256": "ad9edee80793369219ef5b9e08d5cb397060a315b30aa36ce221d3e2488d2ee1",
   "scope": "PF16/PF32 natural v2 nonuniform 3x2, Extra Smooth=100 upper endpoint, Smoothness=100, Range=1, key/gamma off, LUTs, padding",
   "verdict": "PASS_V2_EXTRA_SMOOTH_100_UPPER_ENDPOINT_TO_PRODUCTION_EXACT"
 }

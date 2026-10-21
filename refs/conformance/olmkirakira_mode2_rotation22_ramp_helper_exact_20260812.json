@@ -1,0 +1,297 @@
+{
+  "kind": "olmkirakira_mode2_rotation22_ramp_helper_exact",
+  "date": "2026-08-12",
+  "status": "exact",
+  "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+  "scope": "15 Rotation-22 horizontal ray words, float32 Brightness Gain 0.73, default three-stop Ramp",
+  "actual_aex_targets": {
+    "mode2_aggregator": "0x18114ffd0",
+    "ramp_helper_reached_by_aggregator": "0x181232080",
+    "pf32_compose_writer": "0x18114e460"
+  },
+  "rows": [
+    {
+      "word": 0,
+      "ray": "0x3e9e5d8c",
+      "scaled_ray": "0x3e6736a9",
+      "actual_aex_rgba": [
+        "0x3f800000",
+        "0x3e40f970",
+        "0x00000000",
+        "0x3e6736a9"
+      ],
+      "portable_rgba": [
+        "0x3f800000",
+        "0x3e40f970",
+        "0x00000000",
+        "0x3e6736a9"
+      ],
+      "exact": true
+    },
+    {
+      "word": 1,
+      "ray": "0x3e85a80c",
+      "scaled_ray": "0x3e43236e",
+      "actual_aex_rgba": [
+        "0x3f800000",
+        "0x3e22dd93",
+        "0x00000000",
+        "0x3e43236e"
+      ],
+      "portable_rgba": [
+        "0x3f800000",
+        "0x3e22dd93",
+        "0x00000000",
+        "0x3e43236e"
+      ],
+      "exact": true
+    },
+    {
+      "word": 2,
+      "ray": "0x3e5670c3",
+      "scaled_ray": "0x3e1c8aa3",
+      "actual_aex_rgba": [
+        "0x3f800000",
+        "0x3e02a6e9",
+        "0x00000000",
+        "0x3e1c8aa3"
+      ],
+      "portable_rgba": [
+        "0x3f800000",
+        "0x3e02a6e9",
+        "0x00000000",
+        "0x3e1c8aa3"
+      ],
+      "exact": true
+    },
+    {
+      "word": 3,
+      "ray": "0x3e228a11",
+      "scaled_ray": "0x3ded4eb3",
+      "actual_aex_rgba": [
+        "0x3f800000",
+        "0x3dc60f79",
+        "0x00000000",
+        "0x3ded4eb3"
+      ],
+      "portable_rgba": [
+        "0x3f800000",
+        "0x3dc60f79",
+        "0x00000000",
+        "0x3ded4eb3"
+      ],
+      "exact": true
+    },
+    {
+      "word": 4,
+      "ray": "0x3de592b6",
+      "scaled_ray": "0x3da7969f",
+      "actual_aex_rgba": [
+        "0x3f800000",
+        "0x3d8bdf31",
+        "0x00000000",
+        "0x3da7969f"
+      ],
+      "portable_rgba": [
+        "0x3f800000",
+        "0x3d8bdf31",
+        "0x00000000",
+        "0x3da7969f"
+      ],
+      "exact": true
+    },
+    {
+      "word": 5,
+      "ray": "0x3eb074fa",
+      "scaled_ray": "0x3e80d046",
+      "actual_aex_rgba": [
+        "0x3f800000",
+        "0x3e570503",
+        "0x00000000",
+        "0x3e80d046"
+      ],
+      "portable_rgba": [
+        "0x3f800000",
+        "0x3e570503",
+        "0x00000000",
+        "0x3e80d046"
+      ],
+      "exact": true
+    },
+    {
+      "word": 6,
+      "ray": "0x3eaf6cc8",
+      "scaled_ray": "0x3e800f69",
+      "actual_aex_rgba": [
+        "0x3f800000",
+        "0x3e55c315",
+        "0x00000000",
+        "0x3e800f69"
+      ],
+      "portable_rgba": [
+        "0x3f800000",
+        "0x3e55c315",
+        "0x00000000",
+        "0x3e800f69"
+      ],
+      "exact": true
+    },
+    {
+      "word": 7,
+      "ray": "0x3eb2ece4",
+      "scaled_ray": "0x3e829d92",
+      "actual_aex_rgba": [
+        "0x3f800000",
+        "0x3e5a0706",
+        "0x00000000",
+        "0x3e829d92"
+      ],
+      "portable_rgba": [
+        "0x3f800000",
+        "0x3e5a0706",
+        "0x00000000",
+        "0x3e829d92"
+      ],
+      "exact": true
+    },
+    {
+      "word": 8,
+      "ray": "0x3ea91c66",
+      "scaled_ray": "0x3e76e6e7",
+      "actual_aex_rgba": [
+        "0x3f800000",
+        "0x3e4e1175",
+        "0x00000000",
+        "0x3e76e6e7"
+      ],
+      "portable_rgba": [
+        "0x3f800000",
+        "0x3e4e1175",
+        "0x00000000",
+        "0x3e76e6e7"
+      ],
+      "exact": true
+    },
+    {
+      "word": 9,
+      "ray": "0x3e8c07e2",
+      "scaled_ray": "0x3e4c71e9",
+      "actual_aex_rgba": [
+        "0x3f800000",
+        "0x3e2aa208",
+        "0x00000000",
+        "0x3e4c71e9"
+      ],
+      "portable_rgba": [
+        "0x3f800000",
+        "0x3e2aa208",
+        "0x00000000",
+        "0x3e4c71e9"
+      ],
+      "exact": true
+    },
+    {
+      "word": 10,
+      "ray": "0x3e31ee9d",
+      "scaled_ray": "0x3e01e3f3",
+      "actual_aex_rgba": [
+        "0x3f800000",
+        "0x3dd8d12f",
+        "0x00000000",
+        "0x3e01e3f3"
+      ],
+      "portable_rgba": [
+        "0x3f800000",
+        "0x3dd8d12f",
+        "0x00000000",
+        "0x3e01e3f3"
+      ],
+      "exact": true
+    },
+    {
+      "word": 11,
+      "ray": "0x3e7b14c5",
+      "scaled_ray": "0x3e374a0b",
+      "actual_aex_rgba": [
+        "0x3f800000",
+        "0x3e18f9dd",
+        "0x00000000",
+        "0x3e374a0b"
+      ],
+      "portable_rgba": [
+        "0x3f800000",
+        "0x3e18f9dd",
+        "0x00000000",
+        "0x3e374a0b"
+      ],
+      "exact": true
+    },
+    {
+      "word": 12,
+      "ray": "0x3ea7d595",
+      "scaled_ray": "0x3e7509c0",
+      "actual_aex_rgba": [
+        "0x3f800000",
+        "0x3e4c8338",
+        "0x00000000",
+        "0x3e7509c0"
+      ],
+      "portable_rgba": [
+        "0x3f800000",
+        "0x3e4c8338",
+        "0x00000000",
+        "0x3e7509c0"
+      ],
+      "exact": true
+    },
+    {
+      "word": 13,
+      "ray": "0x3eb9b1c0",
+      "scaled_ray": "0x3e878e8f",
+      "actual_aex_rgba": [
+        "0x3f800000",
+        "0x3e624695",
+        "0x00000000",
+        "0x3e878e8f"
+      ],
+      "portable_rgba": [
+        "0x3f800000",
+        "0x3e624695",
+        "0x00000000",
+        "0x3e878e8f"
+      ],
+      "exact": true
+    },
+    {
+      "word": 14,
+      "ray": "0x3ec07fad",
+      "scaled_ray": "0x3e8c862a",
+      "actual_aex_rgba": [
+        "0x3f800000",
+        "0x3e6a9130",
+        "0x00000000",
+        "0x3e8c862a"
+      ],
+      "portable_rgba": [
+        "0x3f800000",
+        "0x3e6a9130",
+        "0x00000000",
+        "0x3e8c862a"
+      ],
+      "exact": true
+    }
+  ],
+  "direct_pf32_compose_writer": {
+    "target": "0x18114e460",
+    "bytes": 240,
+    "exact": true,
+    "actual_hex": "d61bf43ea936673e484a2e3d000000004e28f83ecbda543e0d1d303d0c48043cfef1fa3ebd2b453e5c12473dc6ae973c7016fe3e90643b3eca88773d2050003d405f013f01d7393edd1ca13d3a7c3e3d9adf373f8c16c73e752a1d3ed92d833d388a423f4d2fdc3ee9943c3e44f7ab3d57dc4e3f4430f73e2b98623e5c9ad93d5352563f1189053f102a823e920b063e1ec0563f68be093f4218903eccb6213eac274f3f193a073ffa949d3edfce3f3e3d8c673f65ff253fb0f2bd3ec853603e0000803fb027483fcf2ee43ec4a2813e0000803f7eb1623fc683033f1052943e0000803fd97e7a3f1f44143fc837a83e",
+    "portable_hex": "d61bf43ea936673e484a2e3d000000004e28f83ecbda543e0d1d303d0c48043cfef1fa3ebd2b453e5c12473dc6ae973c7016fe3e90643b3eca88773d2050003d405f013f01d7393edd1ca13d3a7c3e3d9adf373f8c16c73e752a1d3ed92d833d388a423f4d2fdc3ee9943c3e44f7ab3d57dc4e3f4430f73e2b98623e5c9ad93d5352563f1189053f102a823e920b063e1ec0563f68be093f4218903eccb6213eac274f3f193a073ffa949d3edfce3f3e3d8c673f65ff253fb0f2bd3ec853603e0000803fb027483fcf2ee43ec4a2813e0000803f7eb1623fc683033f1052943e0000803fd97e7a3f1f44143fc837a83e"
+  },
+  "conclusion": "The direct actual-AEX Mode-2 aggregator (including Ramp helper dispatch) and the portable SSE-ordered path are 15/15 exact for the constructed inputs. Feeding those glow words and the declared source into the direct actual-AEX PF32 compose/writer is also byte exact. The remaining exported PF32 seam is localized to natural-owner state/arguments at or before the aggregator invocation; a natural-entry argument capture is still required to distinguish Brightness arithmetic, input planes, flags, and Ramp payload setup.",
+  "claims_not_made": [
+    "No arbitrary Ramp payload or geometry generalization",
+    "No correction of the remaining exported PF32 word",
+    "No expected-word substitution"
+  ]
+}

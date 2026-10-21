@@ -1,0 +1,79 @@
+{
+  "actual_aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+  "actual_aex_xmm_closure": {
+    "actual_aex_calls": 992,
+    "actual_aex_unique_pairs": 56,
+    "path": "refs/conformance/olmdistancegradation_actual_aex_powf_xmm_closure_20260814.json",
+    "production_only_output_irrelevant_pairs": 7,
+    "sha256": "35f908a8f0f85b5fa39ebc21ba32abcc6e30245cbc7b7ba5bd11cb66d324978d",
+    "status": "PASS_ACTUAL_AEX_POWER8_XMM_INPUTS_PRODUCTION_SUBSEQUENCE_OUTPUT_IRRELEVANT_EXTRA7"
+  },
+  "aexcompat_worker_sha256": "46ab907d286ad4e0e1c2065557100f02c37e0b68df4c22202a825f3fea13ef61",
+  "census_harness_sha256": "88c24f6831460378e4c3d754bb2de2ab13c45bb41dd93d88498f4bf4fed8eb64",
+  "claims_not_made": [
+    "No native Windows UCRT powf result",
+    "No native After Effects execution",
+    "No PF32 Power admission or arbitrary-input generalization"
+  ],
+  "fieldgen_sha256": "001493f40681ddf1f8408b15b25c5795500f84423019df6e51c30741dffb71c9",
+  "generator_sha256": "b489bb309f272d0c6efbf911dc72dcb69be11226a676020f0befd169369c2fd1",
+  "host_substituted_relation": {
+    "actual_exported_sha256": {
+      "mode2.bg0": "3e04fab22152eb32638a4864f256f76bd118ffbb6315b0c7a8b852b27509fc39",
+      "mode2.bg1": "6c86caeab878b256f933d03e105085f86810f255296cc2fa5ac434dc5067e496",
+      "mode3.bg0": "12bdf0c207bff9fb8c0390f848883281b8484802baea72c82f98db96c3176849",
+      "mode3.bg1": "dfeb76265a320e6aae3945fdb2aaa76cd9e77f7e63f586046bca744bfad9cb07",
+      "mode4.bg0": "849be120ac0c5e4990c8a19135ebfccdb2f6350ffe53cd0bb1a9f6aafb486c2a",
+      "mode4.bg1": "0d8860db7bffd87c6737298482eb60d0378b2dc63841d861ee8e174aaee0a81c",
+      "mode5.bg0": "40b5d262cdc0ab372036c9d2774fa9400f74daa7895c75c2222a246b01c485a5",
+      "mode5.bg1": "fe715e7973fa79d6043cbe86dcfce3205869fb23ac9d69a8d98b288ab20ad6d7"
+    },
+    "exported_aex_cells_matching_production": 8,
+    "matrix_status": "PASS_56_ADMITTED_RAW_EXACT_8_PF32_POWER_FAIL_CLOSED",
+    "scope": "pinned AEXCompat worker using host Rust/libSystem f32::powf, not native Windows UCRT"
+  },
+  "matrix_sha256": "4cd0720adb842837e24b5788d09c205fe9e328b437f4e0195e22e43da20f008c",
+  "native_request": {
+    "package_directory": "refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_pf32_power_ucrt_powf_20260813",
+    "package_files_sha256": {
+      "README.md": "b2edf84165a85f4d0a7aa6e26483bd0463057c296aa343d264630295f70d6d5c",
+      "SHA256SUMS.txt": "d8f6275edfcd8c5f72ede238d3db1bf93ffc2add28b5c1f55b531a55590b03ed",
+      "UcrtPowfCapture.cs": "86828ea99baded5fbde42269436290788dde0cad91cb592cd5cc3ec081005d03",
+      "powf_vectors.json": "5fb5f5f7d6303e05bf1ed9219465901ae6f9f41f2a1f66ecb07d874eaff7432c",
+      "request_manifest.json": "bfb3353d74943e57747f737e57aa4222b7c8e92af73f4eef88cd6e6f072dbcb2",
+      "run_olmdistancegradation_pf32_power_ucrt_powf.ps1": "674c3c83c612a8926e0d3c93835b6712422dea033c96c52968894c7f42fe7b60"
+    },
+    "package_zip": "refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_pf32_power_ucrt_powf_20260813.zip",
+    "request_id": "olm_runtime_trace_olmdistancegradation_pf32_power_ucrt_powf_20260813",
+    "status": "ready_not_answered",
+    "zip_sha256": "a6556b201ae1944be6e89d850fa1dc992417f0efd2d6cd9b5e0f6c062f61c2c5"
+  },
+  "production_census": {
+    "canonical_vectors_sha256": "5fb5f5f7d6303e05bf1ed9219465901ae6f9f41f2a1f66ecb07d874eaff7432c",
+    "cell_output_sha256": {
+      "mode2.bg0": "3e04fab22152eb32638a4864f256f76bd118ffbb6315b0c7a8b852b27509fc39",
+      "mode2.bg1": "6c86caeab878b256f933d03e105085f86810f255296cc2fa5ac434dc5067e496",
+      "mode3.bg0": "12bdf0c207bff9fb8c0390f848883281b8484802baea72c82f98db96c3176849",
+      "mode3.bg1": "dfeb76265a320e6aae3945fdb2aaa76cd9e77f7e63f586046bca744bfad9cb07",
+      "mode4.bg0": "849be120ac0c5e4990c8a19135ebfccdb2f6350ffe53cd0bb1a9f6aafb486c2a",
+      "mode4.bg1": "0d8860db7bffd87c6737298482eb60d0378b2dc63841d861ee8e174aaee0a81c",
+      "mode5.bg0": "40b5d262cdc0ab372036c9d2774fa9400f74daa7895c75c2222a246b01c485a5",
+      "mode5.bg1": "fe715e7973fa79d6043cbe86dcfce3205869fb23ac9d69a8d98b288ab20ad6d7"
+    },
+    "cells": 8,
+    "power_exponent_bits": "0x40100000",
+    "powf_calls": 1496,
+    "unique_vectors": 63
+  },
+  "production_policy": {
+    "behavior": "fail_closed_on_arm64_and_x86_64",
+    "pf32_power_cells": 8,
+    "reason": "native Windows UCRT powf result and eight native-derived final RAW comparisons are absent"
+  },
+  "production_source_sha256": "06ffc5b7a2af5cf54a2503d3bf03f9baf2269acbf1277f034937ac79c4a7aba5",
+  "return_analyzer_sha256": "250a207ebc3f7a509a70cccb19a5d6a97f1e392a3f2ee9b9d57907110e29894d",
+  "schema": "olmdistancegradation.pf32-power-ucrt-boundary/1",
+  "shim_sha256": "c034ae8fbe9ce9edb3de6984e992603a3544c1283a74d6a14654c4349ef98c2b",
+  "status": "PASS_ACTUAL_XMM_BOUND_NATIVE_UCRT_REQUEST_READY_POWER_REMAINS_FAIL_CLOSED",
+  "unit_sha256": "3c86bd0da285f09b045bb3b05b93b492cf948d71a5666f2f15530cbba5bb8c19"
+}

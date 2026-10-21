@@ -1,0 +1,233 @@
+{
+  "actual_aex_xmm": {
+    "cells": [
+      {
+        "actual_aex_calls": 124,
+        "cell": "mode2.bg0",
+        "native_changed_calls": 4,
+        "native_mapped_sequence_sha256": "435f803446d8075e91eff39c730c972bb321650938d63822f2c3563571df8661",
+        "unique_pairs": 18
+      },
+      {
+        "actual_aex_calls": 124,
+        "cell": "mode2.bg1",
+        "native_changed_calls": 4,
+        "native_mapped_sequence_sha256": "435f803446d8075e91eff39c730c972bb321650938d63822f2c3563571df8661",
+        "unique_pairs": 18
+      },
+      {
+        "actual_aex_calls": 124,
+        "cell": "mode3.bg0",
+        "native_changed_calls": 0,
+        "native_mapped_sequence_sha256": "2034274182d45ab6fd6a0691a785cbaab7402ec1ccc9022e30edb5c194183651",
+        "unique_pairs": 18
+      },
+      {
+        "actual_aex_calls": 124,
+        "cell": "mode3.bg1",
+        "native_changed_calls": 0,
+        "native_mapped_sequence_sha256": "2034274182d45ab6fd6a0691a785cbaab7402ec1ccc9022e30edb5c194183651",
+        "unique_pairs": 18
+      },
+      {
+        "actual_aex_calls": 124,
+        "cell": "mode4.bg0",
+        "native_changed_calls": 0,
+        "native_mapped_sequence_sha256": "811bf068cb9f4dbebe6aee630f5f4d422e303a994ab025ce1c5e0ca0318e094a",
+        "unique_pairs": 8
+      },
+      {
+        "actual_aex_calls": 124,
+        "cell": "mode4.bg1",
+        "native_changed_calls": 0,
+        "native_mapped_sequence_sha256": "811bf068cb9f4dbebe6aee630f5f4d422e303a994ab025ce1c5e0ca0318e094a",
+        "unique_pairs": 8
+      },
+      {
+        "actual_aex_calls": 124,
+        "cell": "mode5.bg0",
+        "native_changed_calls": 0,
+        "native_mapped_sequence_sha256": "3059529c890027469f0381a1182a93e4ed54ffc744e20e1e25f5c7a34a1ea145",
+        "unique_pairs": 20
+      },
+      {
+        "actual_aex_calls": 124,
+        "cell": "mode5.bg1",
+        "native_changed_calls": 0,
+        "native_mapped_sequence_sha256": "3059529c890027469f0381a1182a93e4ed54ffc744e20e1e25f5c7a34a1ea145",
+        "unique_pairs": 20
+      }
+    ],
+    "summary": {
+      "actual_aex_calls": 992,
+      "actual_aex_unique_pairs": 56,
+      "actual_nonproduction_pairs": 0,
+      "all_actual_calls_in_order": true,
+      "calls_per_actual_cell": 124,
+      "cells": 8,
+      "production_calls": 1496,
+      "production_unique_pairs": 63,
+      "skipped_transparent_calls_per_cell": 63
+    }
+  },
+  "bounded_admission": {
+    "blur_modes": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "blur_size": 1,
+    "canonical_pf32_source_bytes_required": true,
+    "depth": "PF32",
+    "height": 11,
+    "interpolation": "Power",
+    "native_override": {
+      "input_bits": "0x3f4d07a5",
+      "result_bits": "0x3f1b5786"
+    },
+    "owner": "SmartRender CPU",
+    "power": 2.25,
+    "use_background": [
+      false,
+      true
+    ],
+    "width": 17
+  },
+  "claims_not_made": [
+    "No arbitrary Power/geometry/source admission",
+    "No installed or native AE claim"
+  ],
+  "decision": {
+    "after_effects_launched": false,
+    "installed_binary_changed": false,
+    "production_promoted": true,
+    "unlisted_ranges_fail_closed": true
+  },
+  "identities": {
+    "actual_aex_xmm_closure_sha256": "741dce6e7a1dd852d237072502341b40721b7cc7a9000c279f6234c10f07108a",
+    "combined_return_analysis_sha256": "87b6d72cac35baa860b0212a172c26b331b1f662e5188f8135244e23fc13b6ef",
+    "direct_harness_sha256": "f6b9d85c7e6839edde0a229fd57957666442bea5388648ea50c8ec6a9f4f61d1",
+    "dual_replay_tool_sha256": "af09ca96130d88272ea901e5ef86fbbc195ff08c1d060ab909bdf000c0b8ffc3",
+    "fieldgen_sha256": "001493f40681ddf1f8408b15b25c5795500f84423019df6e51c30741dffb71c9",
+    "production_source_sha256": "e2f5020f995b59277ee288f48e74a851fc1c9f6a456678cf0361d00e073dd9a9",
+    "public_harness_sha256": "6d113e40dbf022d875118db426d78023f5f51b86195da5420db7681c9bdb8c0e",
+    "return_zip_sha256": "c50c7db94dfd0417dce6b681cd45209cba9259ff8b25737f28e3f239539a5bf1"
+  },
+  "native_return": {
+    "differences": [
+      {
+        "exponent_bits": "0x40100000",
+        "input_bits": "0x3f4d07a5",
+        "macos_libsystem_bits": "0x3f1b5785",
+        "native_ucrt_bits": "0x3f1b5786",
+        "production_occurrences": 8
+      }
+    ],
+    "native_differs_libsystem": 1,
+    "native_equals_libsystem": 62,
+    "ucrtbase": {
+      "file_version": "10.0.26100.8875 (WinBuild.160101.0800)",
+      "path": "C:\\WINDOWS\\System32\\ucrtbase.dll",
+      "product_version": "10.0.26100.8875",
+      "sha256": "5e7709a6b71bb818260b6f05c5bb3b6ca0c3ca9bc2f58c6242c1cd9d826d0079"
+    },
+    "vectors": 63
+  },
+  "public_contract": {
+    "balanced_layer_and_parameter_lifecycle": true,
+    "classic_guards": 4,
+    "input_immutable": true,
+    "marker": "PASS_OLMDISTANCEGRADATION_PUBLIC_SMART_OWNER_CONTRACT positive=17 mode5_positive=8 power_positive=8 power_negative=7 negative=21 classic_guards=4",
+    "negative_cells": 21,
+    "padding_preserved": true,
+    "pf32_power_negative_cells": 7,
+    "pf32_power_positive_cells": 8,
+    "positive_cells": 17,
+    "public_equals_direct": true,
+    "selector": "PF_Cmd_SMART_RENDER"
+  },
+  "rows": [
+    {
+      "blur_mode": 2,
+      "cell": "mode2.bg0",
+      "current_production_raw_sha256": "42d8142e9aa8cc2abe581cfc8ebc1b473d0861a2e3664e617895639d5451f38c",
+      "full_raw_exact": true,
+      "native_exported_aex_sha256": "42d8142e9aa8cc2abe581cfc8ebc1b473d0861a2e3664e617895639d5451f38c",
+      "raw_bytes": 2992,
+      "use_background": false
+    },
+    {
+      "blur_mode": 2,
+      "cell": "mode2.bg1",
+      "current_production_raw_sha256": "47ec340cbbaa60bbacff42f15030619fa9d3fc543b3baf5f9bf17560d1dda36d",
+      "full_raw_exact": true,
+      "native_exported_aex_sha256": "47ec340cbbaa60bbacff42f15030619fa9d3fc543b3baf5f9bf17560d1dda36d",
+      "raw_bytes": 2992,
+      "use_background": true
+    },
+    {
+      "blur_mode": 3,
+      "cell": "mode3.bg0",
+      "current_production_raw_sha256": "12bdf0c207bff9fb8c0390f848883281b8484802baea72c82f98db96c3176849",
+      "full_raw_exact": true,
+      "native_exported_aex_sha256": "12bdf0c207bff9fb8c0390f848883281b8484802baea72c82f98db96c3176849",
+      "raw_bytes": 2992,
+      "use_background": false
+    },
+    {
+      "blur_mode": 3,
+      "cell": "mode3.bg1",
+      "current_production_raw_sha256": "dfeb76265a320e6aae3945fdb2aaa76cd9e77f7e63f586046bca744bfad9cb07",
+      "full_raw_exact": true,
+      "native_exported_aex_sha256": "dfeb76265a320e6aae3945fdb2aaa76cd9e77f7e63f586046bca744bfad9cb07",
+      "raw_bytes": 2992,
+      "use_background": true
+    },
+    {
+      "blur_mode": 4,
+      "cell": "mode4.bg0",
+      "current_production_raw_sha256": "849be120ac0c5e4990c8a19135ebfccdb2f6350ffe53cd0bb1a9f6aafb486c2a",
+      "full_raw_exact": true,
+      "native_exported_aex_sha256": "849be120ac0c5e4990c8a19135ebfccdb2f6350ffe53cd0bb1a9f6aafb486c2a",
+      "raw_bytes": 2992,
+      "use_background": false
+    },
+    {
+      "blur_mode": 4,
+      "cell": "mode4.bg1",
+      "current_production_raw_sha256": "0d8860db7bffd87c6737298482eb60d0378b2dc63841d861ee8e174aaee0a81c",
+      "full_raw_exact": true,
+      "native_exported_aex_sha256": "0d8860db7bffd87c6737298482eb60d0378b2dc63841d861ee8e174aaee0a81c",
+      "raw_bytes": 2992,
+      "use_background": true
+    },
+    {
+      "blur_mode": 5,
+      "cell": "mode5.bg0",
+      "current_production_raw_sha256": "40b5d262cdc0ab372036c9d2774fa9400f74daa7895c75c2222a246b01c485a5",
+      "full_raw_exact": true,
+      "native_exported_aex_sha256": "40b5d262cdc0ab372036c9d2774fa9400f74daa7895c75c2222a246b01c485a5",
+      "raw_bytes": 2992,
+      "use_background": false
+    },
+    {
+      "blur_mode": 5,
+      "cell": "mode5.bg1",
+      "current_production_raw_sha256": "fe715e7973fa79d6043cbe86dcfce3205869fb23ac9d69a8d98b288ab20ad6d7",
+      "full_raw_exact": true,
+      "native_exported_aex_sha256": "fe715e7973fa79d6043cbe86dcfce3205869fb23ac9d69a8d98b288ab20ad6d7",
+      "raw_bytes": 2992,
+      "use_background": true
+    }
+  ],
+  "rows_sha256": "e1e062803e19fe1b0b06d1b939b980763cfd0bf47b0712b1b8a62544036717fb",
+  "schema": "olmdistancegradation.pf32-power-native-ucrt-public-closure/1",
+  "status": "PASS_NATIVE_UCRT_ACTUAL_XMM_EXPORTED_AEX_MAC_PUBLIC_RAW_EXACT_8_OF_8",
+  "summary": {
+    "actual_aex_calls_native_mapped": 992,
+    "pf32_power_cells": 8,
+    "production_powf_calls": 1496,
+    "same_source_full_raw_exact": 8
+  }
+}

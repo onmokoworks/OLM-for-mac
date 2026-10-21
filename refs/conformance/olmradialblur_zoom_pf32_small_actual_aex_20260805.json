@@ -83,7 +83,7 @@
     "binary": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin/Contents/MacOS/OLMRadialBlur",
     "identity_exact": true,
     "identity_manifest": "refs/conformance/olm_installed_identity_manifest_20260806.json",
-    "sha256": "275b2a1390ddbb8e860e44b4bea5d2908c51fb92d8f18e4139d3b0d7de4a92c7",
+    "sha256": "9be59d18601dc2b031335f4fec8c8c6a1eb13a4888bf0f228efa65e2d5b676b5",
     "source_to_installed_connection": "same current OLMRadialBlur.cpp built, signed, and installed in the preceding PF8 boundary; no production source change in this PF32 pass"
   },
   "kind": "olmradialblur_zoom_pf32_small_actual_aex_20260805",

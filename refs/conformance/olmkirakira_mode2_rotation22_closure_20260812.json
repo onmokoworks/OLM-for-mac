@@ -1,0 +1,492 @@
+{
+  "schema_version": 1,
+  "kind": "olmkirakira_mode2_rotation22_closure",
+  "date": "2026-08-12",
+  "status": "raw_exact",
+  "claim_boundary": "fixed 5x3 tuple, actual AEX Smart owner versus Mac public EffectMain, PF8/PF16/PF32 raw bytes",
+  "identities": {
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "aexcompat_worker_sha256": "46ab907d286ad4e0e1c2065557100f02c37e0b68df4c22202a825f3fea13ef61",
+    "aexcompat_commit": "28d535469f84f67236ef3425afe4291ea2fb0991",
+    "production_source_sha256": "f2e285be7e6caae764bef7c4fa4a6c422bd5312368ba3481022b9eabe9035492",
+    "generator_sha256": "29eaed40fcfbe939677e21aa85c9358c567b434d0ebfa85d211db93d71eacc80"
+  },
+  "fixture": {
+    "dimensions": [
+      5,
+      3
+    ],
+    "padding": 12,
+    "blur_mode": 2,
+    "public_merge_mode": 2,
+    "horizontal_length": 7,
+    "horizontal_use_ramp": true,
+    "brightness_gain": 0.73,
+    "brightness_f32_bits": "0x3f3ae148",
+    "rotation_raw_fixed": 22,
+    "ordered_parameters": [
+      "Blur Mode=2",
+      "Vertical Length=0",
+      "Horizontal Length=7",
+      "Diagonal Length=0",
+      "Diagonal 2 length=0",
+      "Highlight Radius=0",
+      "Merge mode=2",
+      "Channel=1",
+      "Brightness Gain=0.73",
+      "Glow Rotation=fixed:22",
+      "Use Ramp@19=1"
+    ],
+    "ordered_parameters_sha256": "a9134fb95a0691b7fadadd32fa09d63bd6e5c698b9fe1aedad0cee279fece1fe"
+  },
+  "natural_trace": {
+    "trace_stdout_sha256": "47f60809f916df2ceeaebdd1880e4d5585f533faf700ac7afb22de193a1c1d86",
+    "input_png_sha256": "aa175f6a33d67ee4cdd8a8b7e4ef1c797a17f9ff1decfec69c87701b27c419f2",
+    "raw_pixel_sha256": "8c86b78f9a81cf7988ef7c76c2108e221b8cfc65fd129ac166e0b5e73651014f",
+    "render_error": 0,
+    "guards_intact": true,
+    "trace_truncated": false,
+    "dropped_memory_witnesses": 0,
+    "owner_builder": {
+      "target_rva": "0x114e860",
+      "brightness_f32_bits": "0x3f3ae148",
+      "public_merge_mode_at_0x44": 2,
+      "aggregation_selector_at_0x48": 1,
+      "blur_mode_at_0x4c": 2
+    },
+    "typed_owner": {
+      "target_rva": "0x114d7f0",
+      "public_merge_mode_at_0x44": 2,
+      "aggregation_selector_at_0x48": 1,
+      "blur_mode_at_0x4c": 2
+    },
+    "natural_ray": {
+      "bytes": 60,
+      "hex": "8c5d9e3e0ca8853ec370563e118a223eb692e53dfa74b03ec86caf3ee4ecb23e661ca93ee2078c3e9dee313ec5147b3e95d5a73ec0b1b93ead7fc03e",
+      "sha256": "20a32dc10e94eccfc72d32987c6ec2bc1169fe35f6c6b2b7dc2dc7d27a49c0d6",
+      "matching_witness_phases": 1
+    },
+    "ramp_helper": {
+      "target_rva": "0x1232080",
+      "callsite_rva": "0x114fe9c",
+      "enclosing_aggregator_rva": "0x114fd90",
+      "hits": 15,
+      "observed_target_rvas": [
+        "0x1232080"
+      ],
+      "observed_callsite_rvas": [
+        "0x114fe9c"
+      ],
+      "unique_payloads": 1,
+      "payload_sha256": "80030de202298d2f868e07b027eab0fe647a411c4f050b9b95f91b32902c1ea3",
+      "all_payloads_exact": true
+    },
+    "writer_glow": {
+      "watch": "FUN_18114e460 RCX deref +400",
+      "bytes": 240,
+      "hex": "0000803f70f9403e00000000a936673e0000803f93dd223e000000006e23433e0000803fe9a6023e00000000a38a1c3e0000803f780fc63d00000000b34eed3d0000803f31df8b3d000000009f96a73dffff7f3f0305573e0000000046d0803e0000803f15c3553e00000000690f803e0000803f06075a3e00000000929d823e0000803f75114e3e00000000e7e6763e0000803f08a22a3e00000000e9714c3e0000803f2fd1d83d00000000f3e3013e0000803fdef9183e000000000b4a373e0000803f38834c3e00000000c009753e0000803f9546623e000000008f8e873e0000803f30916a3e000000002a868c3e",
+      "sha256": "d3a6b01dfc10fa6e518821b5befd1fc559d4f766e2b479ed0100c9463f92e100"
+    }
+  },
+  "direct_replay": {
+    "target": "0x18114fd90",
+    "pre_scaled_by_harness": false,
+    "brightness_f32_bits": "0x3f3ae148",
+    "flags_hex": "0001000000",
+    "ramp_helper_hits": 15,
+    "instructions": 3915,
+    "bytes": 240,
+    "actual_sha256": "d3a6b01dfc10fa6e518821b5befd1fc559d4f766e2b479ed0100c9463f92e100",
+    "portable_sha256": "d3a6b01dfc10fa6e518821b5befd1fc559d4f766e2b479ed0100c9463f92e100",
+    "natural_writer_sha256": "d3a6b01dfc10fa6e518821b5befd1fc559d4f766e2b479ed0100c9463f92e100",
+    "actual_equals_portable": true,
+    "actual_equals_natural_writer": true,
+    "mismatch_count": 0
+  },
+  "public_all_depths": {
+    "status": "exact",
+    "rows": [
+      {
+        "depth": "PF8",
+        "pixel_format": "argb8",
+        "bytes": 60,
+        "actual_exported_raw_sha256": "189bb206a4ed6bf15e184de6f63fa2b4b72d21419b86e65ee6685d3b50f9f1c8",
+        "mac_effectmain_raw_sha256": "189bb206a4ed6bf15e184de6f63fa2b4b72d21419b86e65ee6685d3b50f9f1c8",
+        "exact": true,
+        "actual_exported_rgba8": [
+          [
+            57,
+            10,
+            0,
+            121
+          ],
+          [
+            53,
+            10,
+            2,
+            123
+          ],
+          [
+            49,
+            12,
+            4,
+            124
+          ],
+          [
+            46,
+            15,
+            7,
+            126
+          ],
+          [
+            46,
+            20,
+            11,
+            128
+          ],
+          [
+            99,
+            39,
+            16,
+            183
+          ],
+          [
+            109,
+            46,
+            21,
+            193
+          ],
+          [
+            123,
+            56,
+            27,
+            206
+          ],
+          [
+            133,
+            64,
+            33,
+            213
+          ],
+          [
+            137,
+            71,
+            40,
+            213
+          ],
+          [
+            134,
+            78,
+            47,
+            206
+          ],
+          [
+            165,
+            94,
+            55,
+            230
+          ],
+          [
+            199,
+            113,
+            64,
+            255
+          ],
+          [
+            225,
+            131,
+            73,
+            255
+          ],
+          [
+            249,
+            147,
+            83,
+            255
+          ]
+        ],
+        "mac_effectmain_active_hex": "79390a007b350a027c310c047e2e0f07802e140bb7632710c16d2e15ce7b381bd5854021d5894728ce864e2fe6a55e37ffc77140ffe18349fff99353",
+        "guards_intact": true,
+        "input_unchanged": true,
+        "mac_padding_preserved": true,
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "render_error": 0
+      },
+      {
+        "depth": "PF16",
+        "pixel_format": "argb16",
+        "bytes": 120,
+        "actual_exported_raw_sha256": "78700c7c4e5f680fcc9fc4b8fbd86d6e8ba364b252b6755cb47178c1b9014625",
+        "mac_effectmain_raw_sha256": "78700c7c4e5f680fcc9fc4b8fbd86d6e8ba364b252b6755cb47178c1b9014625",
+        "exact": true,
+        "actual_exported_rgba8": [
+          [
+            58,
+            11,
+            0,
+            122
+          ],
+          [
+            53,
+            11,
+            2,
+            124
+          ],
+          [
+            49,
+            12,
+            5,
+            125
+          ],
+          [
+            47,
+            15,
+            8,
+            127
+          ],
+          [
+            46,
+            20,
+            12,
+            129
+          ],
+          [
+            99,
+            39,
+            16,
+            183
+          ],
+          [
+            110,
+            47,
+            21,
+            194
+          ],
+          [
+            123,
+            56,
+            27,
+            206
+          ],
+          [
+            133,
+            65,
+            33,
+            213
+          ],
+          [
+            137,
+            72,
+            40,
+            214
+          ],
+          [
+            135,
+            78,
+            48,
+            206
+          ],
+          [
+            165,
+            95,
+            56,
+            231
+          ],
+          [
+            199,
+            114,
+            65,
+            255
+          ],
+          [
+            226,
+            131,
+            74,
+            255
+          ],
+          [
+            250,
+            148,
+            84,
+            255
+          ]
+        ],
+        "mac_effectmain_active_hex": "063de61c720500000a3e9b1a81050801bc3ea51838065e02853f6c17bc070204af403a17110af305f05bc531a513330844610b379217bf0a6e67cc3d531c990d286bc4428a20c110606bdf440624371493679c436427f917c673ff527c2f0a1c008013640b39682000805871c241142500803e7d214a0d2a",
+        "guards_intact": true,
+        "input_unchanged": true,
+        "mac_padding_preserved": true,
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "render_error": 0
+      },
+      {
+        "depth": "PF32",
+        "pixel_format": "argb32f",
+        "bytes": 240,
+        "actual_exported_raw_sha256": "8c86b78f9a81cf7988ef7c76c2108e221b8cfc65fd129ac166e0b5e73651014f",
+        "mac_effectmain_raw_sha256": "8c86b78f9a81cf7988ef7c76c2108e221b8cfc65fd129ac166e0b5e73651014f",
+        "exact": true,
+        "actual_exported_rgba8": [
+          [
+            58,
+            11,
+            0,
+            122
+          ],
+          [
+            53,
+            11,
+            2,
+            124
+          ],
+          [
+            49,
+            12,
+            5,
+            125
+          ],
+          [
+            47,
+            15,
+            8,
+            127
+          ],
+          [
+            46,
+            20,
+            12,
+            129
+          ],
+          [
+            99,
+            39,
+            16,
+            183
+          ],
+          [
+            110,
+            47,
+            21,
+            194
+          ],
+          [
+            123,
+            56,
+            27,
+            206
+          ],
+          [
+            133,
+            65,
+            33,
+            213
+          ],
+          [
+            137,
+            72,
+            40,
+            214
+          ],
+          [
+            135,
+            78,
+            48,
+            206
+          ],
+          [
+            165,
+            95,
+            56,
+            231
+          ],
+          [
+            199,
+            114,
+            65,
+            255
+          ],
+          [
+            226,
+            131,
+            74,
+            255
+          ],
+          [
+            250,
+            148,
+            84,
+            255
+          ]
+        ],
+        "mac_effectmain_active_hex": "d61bf43ea936673e484a2e3d000000004e28f83ecbda543e0d1d303d0c48043cfef1fa3ebd2b453e5c12473dc6ae973c7016fe3e90643b3ec988773d2050003d405f013f01d7393edd1ca13d3a7c3e3d9adf373f8c16c73e752a1d3ed92d833d388a423f4d2fdc3ee9943c3e44f7ab3d57dc4e3f4430f73e2b98623e5c9ad93d5352563f1189053f102a823e920b063e1ec0563f68be093f4218903eccb6213eac274f3f193a073ffa949d3edfce3f3e3d8c673f65ff253fb0f2bd3ec853603e0000803fb027483fcf2ee43ec4a2813e0000803f7eb1623fc683033f1052943e0000803fd97e7a3f1f44143fc837a83e",
+        "guards_intact": true,
+        "input_unchanged": true,
+        "mac_padding_preserved": true,
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "render_error": 0
+      }
+    ]
+  },
+  "history": {
+    "historical_seam_sha256": "f6711895b0cc6090dc2521701ecf73f56dc96aaad51f14b7dc0733a840cba91a",
+    "constructed_fd0_diagnostic_sha256": "b0f5ee885355e6791f00c3fe80d6ddf7d109092b38b2c6447cf7b460852d8bea",
+    "retained_observations": "natural ray exact; old Mac glow differed by 3 words and final PF32 by 1 word",
+    "withdrawn_inference": "natural public Merge 2 dispatches FUN_18114ffd0",
+    "replacement": "owner +0x48 is fixed to 1; natural FUN_18114fd90 replay equals writer glow and corrected production"
+  },
+  "claims_not_made": [
+    "No arbitrary geometry or Ramp payload promotion",
+    "No claim that current AEXCompat main supports the raw-fixed ANGLE fixture",
+    "No Mac AE installed/loaded-binary claim in this hostless closure"
+  ]
+}

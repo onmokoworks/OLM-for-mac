@@ -75,13 +75,25 @@ current local bridge script matches the upstream bridge:
 mcp/bridge_mcp_ghidra.py
 ```
 
-Direct HTTP smoke checks:
+Direct HTTP smoke checks (the `--base` option selects another CodeBrowser):
 
 ```sh
 python3 scripts/ghidra_http.py methods --limit 10
+python3 scripts/ghidra_http.py --base http://127.0.0.1:8081/ info
 python3 scripts/ghidra_http.py current-function
 python3 scripts/ghidra_http.py decompile entryPointFunc
 ```
 
-Ghidra must have a program open and `GhidraMCPPlugin` enabled. The plugin should
-listen on `127.0.0.1:8080`.
+Ghidra must have a program open and `GhidraMCPPlugin` enabled. For multiple
+CodeBrowser windows, assign each a different `Server Port` under `Edit` ->
+`Tool Options` -> `GhidraMCP HTTP Server` (for example `8080` and `8081`).
+Start one bridge with repeated targets, e.g.:
+
+```sh
+python3 tools/GhidraMCP/bridge_mcp_ghidra.py \
+  --ghidra-server olm-main=http://127.0.0.1:8080/ \
+  --ghidra-server olm-helper=http://127.0.0.1:8081/
+```
+
+Every bridge tool accepts the optional `target` argument. Use `list_targets`
+to verify the names available to the MCP client.

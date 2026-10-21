@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "kind": "olmcolorkey_current_install_smoke",
+  "date": "2026-08-12",
+  "status": "installed_host_smoke_pass_no_pixel_promotion",
+  "build": {
+    "production_source_path": "mac/OLMColorKey/OLMColorKey.cpp",
+    "production_source_sha256": "41595dc9ab1054324fa113357f39480073a8ac54e065d1cbf0462028a01e66c8",
+    "configuration": "Debug",
+    "architectures": ["x86_64", "arm64"],
+    "codesign": "adhoc",
+    "codesign_deep_strict": true
+  },
+  "installed_bundle": {
+    "path": "~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMColorKey.plugin",
+    "binary_path": "~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMColorKey.plugin/Contents/MacOS/OLMColorKey",
+    "binary_sha256": "350ed6eb00c078952ad512b621e3489e6e6ed47d9129e3c11748f547fc441230",
+    "matching_bundle_count": 1,
+    "previous_binary_sha256": "7d329f614561705a7e74f38b91baa99bc7c47eb4b4d78542b6b25cd4229bf92c",
+    "recoverable_backup": "/tmp/olmcolorkey-lab76-backup.becrne/OLMColorKey.plugin"
+  },
+  "host_smoke": {
+    "application": "Adobe After Effects 2026",
+    "ae_version": "26.3x87",
+    "ae_pid": 98933,
+    "fresh_process": true,
+    "renderer": "SOFTWARE",
+    "renderer_raw": 1816,
+    "depth": "PF32",
+    "dimensions": [64, 36],
+    "working_space": "None",
+    "linear_blending": false,
+    "source": {
+      "kind": "AE solid",
+      "rgba8": [26, 191, 204, 255]
+    },
+    "effect_name": "OLM Color Key",
+    "effect_match_name": "OLM Color Key",
+    "default_parameter_count": 217,
+    "parameters_unchanged": true,
+    "loaded_module_path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMColorKey.plugin/Contents/MacOS/OLMColorKey",
+    "loaded_module_count_after_effect_add": 1,
+    "loaded_module_identity_exact": true,
+    "loaded_module_identity_semantics": "the fresh process had no OLMColorKey mapping before addProperty; after effect add and both renders, lsof reported exactly the installed path, whose bytes were SHA-bound before launch and after render",
+    "control_exr_sha256": "7bf128f1809160aca2d8d5f6c3f6f67ca3e6c6558c78c83f844f010923ffe855",
+    "effect_on_exr_sha256": "7bf128f1809160aca2d8d5f6c3f6f67ca3e6c6558c78c83f844f010923ffe855",
+    "default_noop_equal": true,
+    "render_outputs_created": true,
+    "ae_quit_after_smoke": true,
+    "raw_report": {
+      "path": "refs/conformance/olmcolorkey_current_install_smoke_raw_20260812.json",
+      "sha256": "92addd3f2aa9a3af246749b3cd86f2a2854e8738c66608db4f72333b8729a8aa"
+    },
+    "runner": {
+      "path": "scripts/run_olmcolorkey_current_install_smoke_20260812.py",
+      "sha256": "82e32dc8bc971049eb052af82df650459eebb8554fa7f405312ab871dac73eb8"
+    }
+  },
+  "hostless_lab76_multikey_closure": {
+    "path": "refs/conformance/olmcolorkey_lab76_multikey_order_closure_20260812.json",
+    "sha256": "4cb2de69e19e705a5ae07de573386dc8fed9b4087b2838be903a2c9c905461e3",
+    "status": "raw_exact",
+    "relation_to_installed_build": "the closure and installed smoke bind the same current production source SHA-256; the closure owns the bounded Lab76 two-key pixel claim, while this AE run owns installed load/add/default-noop-render only"
+  },
+  "claims_not_made": [
+    "No live-AE Lab76 two-key pixel-exact claim",
+    "No Windows/Mac AE pixel-exact claim from the equal control/default-noop output hashes",
+    "No arbitrary ColorKey parameter, source, geometry, depth, renderer, GPU, or host promotion",
+    "No claim that an unloaded pre-addProperty mapping exists; OLMColorKey was observed as a lazy-loaded exact installed mapping after effect add"
+  ]
+}

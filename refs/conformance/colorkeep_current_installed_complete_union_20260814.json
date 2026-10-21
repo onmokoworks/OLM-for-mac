@@ -1,0 +1,178 @@
+{
+  "after_effects_processes": [],
+  "claim_boundary": "The current installed arm64 and Rosetta x86_64 slices replay all ten exact-source legacy count5/100 public paths and all five exact-source/palette count9 paths per slice. This current-state closure does not rewrite the historical install transaction and adds no arbitrary source, palette, tuple or native-AE claim.",
+  "identities": {
+    "accepted_identity_sha256": "94c6a1eff87e11705a65be638953cb134ff64bd0d919e8501338601aab333650",
+    "count9_closure_sha256": "452ab17756f6d487e0d9ce98f71123de742f9a22c719b865a3e4d9b5a3341c43",
+    "installed_binary_sha256": "dae59a6faf54ed18ac803ad042be2cdab688c5f814edf322d64c108d5247f46d",
+    "legacy_closure_sha256": "066ecd23a10b75c78190a8c5dbf3836ba952275d0f4744f687575ce0bc062de9",
+    "source_sha256": "d1c443042998e466b021d6fd2351537a2be63fe95d3e79a2089d82f78217bac3",
+    "union_generator_sha256": "32429241a354b1d1e317d515011fe29e568958a23e46f4dbe6b1e2acaf4b993f"
+  },
+  "runtime": {
+    "count9": {
+      "architectures": {
+        "arm64": {
+          "all_precommit_atomic": true,
+          "padded_output_sha256": "2e68fc7a643641652edb27b6400cbdb2358b10c438893a8c346f8efd1ef7aebe",
+          "paths": 5,
+          "rejects": 136
+        },
+        "x86_64": {
+          "all_precommit_atomic": true,
+          "padded_output_sha256": "2e68fc7a643641652edb27b6400cbdb2358b10c438893a8c346f8efd1ef7aebe",
+          "paths": 5,
+          "rejects": 136
+        }
+      }
+    },
+    "legacy": {
+      "architectures": {
+        "arm64": [
+          {
+            "active_sha256": "3f768aa03c4045a70d16e7695403a27810cc6fe50c46c350fe3f67931b990b13",
+            "count": 5,
+            "depth": "PF8",
+            "entry": "Smart"
+          },
+          {
+            "active_sha256": "37d9446d656008362f7bf81324cd7a6ceefb883b668b9d1c4da1264ee432632a",
+            "count": 5,
+            "depth": "PF16",
+            "entry": "Smart"
+          },
+          {
+            "active_sha256": "fff4c594c4f5c06d8fc8744e189ab8b516fafae63aadd25419636eed9f9de043",
+            "count": 5,
+            "depth": "PF32",
+            "entry": "Smart"
+          },
+          {
+            "active_sha256": "7e9e8bbb203b8aed460ba6f4461469e49861975c34a3c662d4edea4a29909f8d",
+            "count": 100,
+            "depth": "PF8",
+            "entry": "Smart"
+          },
+          {
+            "active_sha256": "dd4b822eafa0ae04ef3766f475f0d792b2dd7597dd48a8e3d7d1fe49cc5527c6",
+            "count": 100,
+            "depth": "PF16",
+            "entry": "Smart"
+          },
+          {
+            "active_sha256": "0768f9ca22351943755bc735356bacaf6b6e6bac9b4dc86deb826b0103dba3df",
+            "count": 100,
+            "depth": "PF32",
+            "entry": "Smart"
+          },
+          {
+            "active_sha256": "3f768aa03c4045a70d16e7695403a27810cc6fe50c46c350fe3f67931b990b13",
+            "count": 5,
+            "depth": "PF8",
+            "entry": "Classic"
+          },
+          {
+            "active_sha256": "37d9446d656008362f7bf81324cd7a6ceefb883b668b9d1c4da1264ee432632a",
+            "count": 5,
+            "depth": "PF16",
+            "entry": "Classic"
+          },
+          {
+            "active_sha256": "7e9e8bbb203b8aed460ba6f4461469e49861975c34a3c662d4edea4a29909f8d",
+            "count": 100,
+            "depth": "PF8",
+            "entry": "Classic"
+          },
+          {
+            "active_sha256": "dd4b822eafa0ae04ef3766f475f0d792b2dd7597dd48a8e3d7d1fe49cc5527c6",
+            "count": 100,
+            "depth": "PF16",
+            "entry": "Classic"
+          }
+        ],
+        "x86_64": [
+          {
+            "active_sha256": "3f768aa03c4045a70d16e7695403a27810cc6fe50c46c350fe3f67931b990b13",
+            "count": 5,
+            "depth": "PF8",
+            "entry": "Smart"
+          },
+          {
+            "active_sha256": "37d9446d656008362f7bf81324cd7a6ceefb883b668b9d1c4da1264ee432632a",
+            "count": 5,
+            "depth": "PF16",
+            "entry": "Smart"
+          },
+          {
+            "active_sha256": "fff4c594c4f5c06d8fc8744e189ab8b516fafae63aadd25419636eed9f9de043",
+            "count": 5,
+            "depth": "PF32",
+            "entry": "Smart"
+          },
+          {
+            "active_sha256": "7e9e8bbb203b8aed460ba6f4461469e49861975c34a3c662d4edea4a29909f8d",
+            "count": 100,
+            "depth": "PF8",
+            "entry": "Smart"
+          },
+          {
+            "active_sha256": "dd4b822eafa0ae04ef3766f475f0d792b2dd7597dd48a8e3d7d1fe49cc5527c6",
+            "count": 100,
+            "depth": "PF16",
+            "entry": "Smart"
+          },
+          {
+            "active_sha256": "0768f9ca22351943755bc735356bacaf6b6e6bac9b4dc86deb826b0103dba3df",
+            "count": 100,
+            "depth": "PF32",
+            "entry": "Smart"
+          },
+          {
+            "active_sha256": "3f768aa03c4045a70d16e7695403a27810cc6fe50c46c350fe3f67931b990b13",
+            "count": 5,
+            "depth": "PF8",
+            "entry": "Classic"
+          },
+          {
+            "active_sha256": "37d9446d656008362f7bf81324cd7a6ceefb883b668b9d1c4da1264ee432632a",
+            "count": 5,
+            "depth": "PF16",
+            "entry": "Classic"
+          },
+          {
+            "active_sha256": "7e9e8bbb203b8aed460ba6f4461469e49861975c34a3c662d4edea4a29909f8d",
+            "count": 100,
+            "depth": "PF8",
+            "entry": "Classic"
+          },
+          {
+            "active_sha256": "dd4b822eafa0ae04ef3766f475f0d792b2dd7597dd48a8e3d7d1fe49cc5527c6",
+            "count": 100,
+            "depth": "PF16",
+            "entry": "Classic"
+          }
+        ]
+      },
+      "paths_per_slice": 10,
+      "source_helper_active_mutation_rejects": 18,
+      "source_helper_exact_inputs": 6
+    }
+  },
+  "schema": "colorkeep.current-installed-complete-bounded-union/1",
+  "scope": {
+    "arbitrary_source_palette_tuple": false,
+    "historical_transaction_rewritten": false,
+    "installed_arm64": true,
+    "installed_x86_64": true,
+    "native_after_effects": false
+  },
+  "status": "PASS_COLORKEEP_CURRENT_INSTALLED_COMPLETE_BOUNDED_UNION_AE_FREE",
+  "summary": {
+    "count9_paths_per_slice": 5,
+    "count9_rejects_per_slice": 136,
+    "exact_public_paths_per_slice": 15,
+    "exact_public_paths_total": 30,
+    "legacy_paths_per_slice": 10,
+    "legacy_source_mutation_rejects": 18
+  }
+}

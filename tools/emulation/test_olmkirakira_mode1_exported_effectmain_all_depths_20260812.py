@@ -28,6 +28,7 @@ HIGHLIGHT_USE_RAMP = int(os.environ.get("OLM_KIRA_HIGHLIGHT_USE_RAMP", "0"))
 BRIGHTNESS_GAIN = float(os.environ.get("OLM_KIRA_BRIGHTNESS_GAIN", "0.1"))
 GLOW_ROTATION = float(os.environ.get("OLM_KIRA_GLOW_ROTATION", "0"))
 GLOW_ROTATION_RAW_FIXED = os.environ.get("OLM_KIRA_GLOW_ROTATION_RAW_FIXED")
+SOURCE_PATTERN = os.environ.get("OLM_KIRA_SOURCE_PATTERN", "semi_transparent_color")
 REPORT = ROOT / os.environ.get(
     "OLM_KIRA_EXPORTED_REPORT",
     "refs/conformance/olmkirakira_mode1_exported_effectmain_all_depths_20260812.json",
@@ -36,7 +37,14 @@ DOC = REPORT.with_suffix(".md")
 DEFAULT_WORKER = Path("/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker")
 DEPTHS = {"PF8": ("argb8", 4), "PF16": ("argb16", 8), "PF32": ("argb32f", 16)}
 WIDTH, HEIGHT, PADDING = 5, 3, 12
-RGBA = tuple((i * 15, i * 11, i * 7, 64 + i * 11) for i in range(WIDTH * HEIGHT))
+if SOURCE_PATTERN == "semi_transparent_color":
+    RGBA = tuple((i * 15, i * 11, i * 7, 64 + i * 11) for i in range(WIDTH * HEIGHT))
+elif SOURCE_PATTERN == "opaque_gray_i_over_17":
+    RGBA = tuple((i * 15, i * 15, i * 15, 255) for i in range(WIDTH * HEIGHT))
+elif SOURCE_PATTERN == "alpha_i_over_17":
+    RGBA = tuple((0, 0, 0, i * 15) for i in range(WIDTH * HEIGHT))
+else:
+    raise ValueError(f"unsupported OLM_KIRA_SOURCE_PATTERN: {SOURCE_PATTERN}")
 
 
 CPP = r'''
@@ -171,18 +179,34 @@ def main() -> int:
         "aggregation; direct float Brightness Gain and PF32 reciprocal-multiply normalization close "
         "the first downstream difference."
         if BLUR_MODE == 1 else (
-        "Mode2 applies Brightness Gain to ray amount before ramp sampling and raw-alpha "
-        "accumulation, then uses the recovered Merge2 composition and typed writer."
-        if BLUR_MODE == 2 else
+        "The exported owner fixes inner aggregation to FUN_18114fd90: it applies Brightness "
+        "Gain before Ramp sampling and alpha-union normalization. UI Merge mode then selects "
+        "the recovered outer composition and typed writer."
+        if BLUR_MODE == 2 else (
+        "Mode 4 uses the exported owner's directed angle table "
+        "{rotation+90, rotation, rotation+45, rotation+135}; each admitted ray then "
+        "passes through the recovered recurrence, fixed inner aggregation, and typed writer."
+        if BLUR_MODE == 4 else
         "The Gaussian Length 50 tuple is admitted by the existing 9x7 Mode3 family evidence and is "
         "compared here through the complete exported owner and typed writer."
         )
+        )
     )
+    active_rays = []
+    if HORIZONTAL_LENGTH > 0:
+        active_rays.append({"name": "Horizontal", "length": HORIZONTAL_LENGTH,
+                            "use_ramp": bool(HORIZONTAL_USE_RAMP)})
+    if DIAGONAL2_LENGTH > 0:
+        active_rays.append({"name": "Diagonal 2", "length": DIAGONAL2_LENGTH,
+                            "use_ramp": False})
+    if HIGHLIGHT_RADIUS > 0:
+        active_rays.append({"name": "Highlight", "length": HIGHLIGHT_RADIUS,
+                            "use_ramp": bool(HIGHLIGHT_USE_RAMP)})
     report = {"kind": f"olmkirakira_{CASE}_exported_effectmain_all_depths", "date": "2026-08-12",
               "status": "exact" if passed else "fail_closed_mismatch",
               "fixture": {"dimensions": [WIDTH, HEIGHT], "padding": PADDING,
                           "blur_mode": BLUR_MODE, "merge_mode": MERGE_MODE,
-                          "active_ray": "Horizontal", "length": HORIZONTAL_LENGTH,
+                          "active_rays": active_rays,
                           "horizontal_use_ramp": bool(HORIZONTAL_USE_RAMP),
                           "diagonal2_length": DIAGONAL2_LENGTH,
                           "highlight_radius": HIGHLIGHT_RADIUS,
@@ -191,7 +215,8 @@ def main() -> int:
                           "glow_rotation": GLOW_ROTATION,
                           "windows_rotation_raw_fixed": (int(GLOW_ROTATION_RAW_FIXED)
                                                          if GLOW_ROTATION_RAW_FIXED is not None else None),
-                          "channel": 1, "semi_transparent": True},
+                          "channel": 1, "source_pattern": SOURCE_PATTERN,
+                          "semi_transparent": SOURCE_PATTERN == "semi_transparent_color"},
               "rows": rows,
               "connected_evidence": {
                   "mode4_natural_families": "olmkirakira_mode4_natural_families_exact_20260811.json",
@@ -201,7 +226,7 @@ def main() -> int:
     REPORT.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     DOC.write_text(f"# OLMKiraKira {CASE} exported EffectMain 3-depth gate（2026-08-12）\n\n"
                    f"Status: **{report['status']}**\n\n"
-                   f"5×3半透明source、Horizontal Length {HORIZONTAL_LENGTH}、Rotation {GLOW_ROTATION}でactual AEX exported Smart ownerとMac public EffectMain(PF_Cmd_RENDER)を比較する。PF8/PF16/PF32のactive bytes、input不変、Mac row paddingを検証する。\n",
+                   f"5×3半透明source、active rays {active_rays}、Rotation {GLOW_ROTATION}でactual AEX exported Smart ownerとMac public EffectMain(PF_Cmd_RENDER)を比較する。PF8/PF16/PF32のactive bytes、input不変、Mac row paddingを検証する。\n",
                    encoding="utf-8")
     print(json.dumps({"status": report["status"], "rows": rows}))
     return 0 if passed else 1

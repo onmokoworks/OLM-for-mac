@@ -1,0 +1,212 @@
+{
+  "accepted_identity": {
+    "actual_installed_and_source_bundles_verified": true,
+    "exact_hash": true,
+    "path": "refs/conformance/olm_installed_identity_manifest_20260806.json",
+    "plugin_count": 10,
+    "plugins": [
+      {
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ],
+        "binary_sha256": "ecdf3d93b4b38fe71f4b66f717079aa86b961205d0a3f1b5b7edbd29e353284d",
+        "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMBlur.plugin",
+        "installed_count_one": true,
+        "plugin": "OLMBlur",
+        "source_bundle": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olmblur_retained_public_universal_candidate_v4_20260813/product/Debug/OLMBlur.plugin",
+        "strict_codesign_valid": true
+      },
+      {
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ],
+        "binary_sha256": "dae59a6faf54ed18ac803ad042be2cdab688c5f814edf322d64c108d5247f46d",
+        "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/ColorKeep.plugin",
+        "installed_count_one": true,
+        "plugin": "ColorKeep",
+        "source_bundle": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/colorkeep_source_bound_complete_union_candidate_20260813/Product/ColorKeep.plugin",
+        "strict_codesign_valid": true
+      },
+      {
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ],
+        "binary_sha256": "51f551a32bd975b7ae1c2437809ecb81af1d06f9e967a8fccbd9dc2a6190ce4d",
+        "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMColorKey.plugin",
+        "installed_count_one": true,
+        "plugin": "OLMColorKey",
+        "source_bundle": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olmcolorkey_second_source_universal_candidate_20260815/product/OLMColorKey.plugin",
+        "strict_codesign_valid": true
+      },
+      {
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ],
+        "binary_sha256": "c64f8ff701008ae0390eb9da1a9e073dcde97a77e9b32701becf6eaa241a2666",
+        "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin",
+        "installed_count_one": true,
+        "plugin": "OLMDirectionalBlur",
+        "source_bundle": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olmdirectionalblur_native_ucrt_admission_candidate_20260815/OLMDirectionalBlur.plugin",
+        "strict_codesign_valid": true
+      },
+      {
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ],
+        "binary_sha256": "9a97a076c118fd1015f40d922bf7f21be7a041f1f049a0e465cc0bc9cd1cd349",
+        "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDistanceGradation.plugin",
+        "installed_count_one": true,
+        "plugin": "OLMDistanceGradation",
+        "source_bundle": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olmdistancegradation_pf32_power_native_ucrt_universal_candidate_macos11_20260815/Product/OLMDistanceGradation.plugin",
+        "strict_codesign_valid": true
+      },
+      {
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ],
+        "binary_sha256": "d4c9b587d41797259de8627e2d3d5bcf7a376f12fa3c8b99dcd820e0b6d80ae3",
+        "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin",
+        "installed_count_one": true,
+        "plugin": "OLMKiraKira",
+        "source_bundle": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olmkirakira_mode3_32x18_candidate_20260815/Product/OLMKiraKira.plugin",
+        "strict_codesign_valid": true
+      },
+      {
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ],
+        "binary_sha256": "9be59d18601dc2b031335f4fec8c8c6a1eb13a4888bf0f228efa65e2d5b676b5",
+        "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin",
+        "installed_count_one": true,
+        "plugin": "OLMRadialBlur",
+        "source_bundle": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olmradialblur_worldsuite_lifecycle_candidate_20260814/Product/OLMRadialBlur.plugin",
+        "strict_codesign_valid": true
+      },
+      {
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ],
+        "binary_sha256": "f416579eeb61b73da683437d382f786781e6ecdf27d9c4fc52f3ad1d55577162",
+        "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother.plugin",
+        "installed_count_one": true,
+        "plugin": "OLMSmoother",
+        "source_bundle": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olmsmoother_source_bound_atomic_universal_candidate_v3_20260813/candidates/OLMSmoother.plugin",
+        "strict_codesign_valid": true
+      },
+      {
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ],
+        "binary_sha256": "c8ea1f0e7dbe7398006578b91e01adfcea975a8c8a3244657ea934eda587c53f",
+        "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother2.plugin",
+        "installed_count_one": true,
+        "plugin": "OLMSmoother2",
+        "source_bundle": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olmsmoother2_pf8_pf16_pf32_public_smart_candidate_20260814/product/OLMSmoother2.plugin",
+        "strict_codesign_valid": true
+      },
+      {
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ],
+        "binary_sha256": "cf029885921b6f7cd9ff5ce26ac6c60aa51392cf0bd31d0a721e2a0f6239d029",
+        "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin",
+        "installed_count_one": true,
+        "plugin": "OLMToonDilate",
+        "source_bundle": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olmtoondilate_universal_candidate_macos11_42b47acb_20260815T000245JST/product/OLMToonDilate.plugin",
+        "strict_codesign_valid": true
+      }
+    ],
+    "required_sha256": "ede4857b810e9f2901561ee8a3a9179c4c508dc2ee058525aa3f46dff4164079",
+    "sha256": "ede4857b810e9f2901561ee8a3a9179c4c508dc2ee058525aa3f46dff4164079"
+  },
+  "dependencies": {
+    "base_payload": {
+      "path": "scripts/ae_host_all10_current_install_fresh_validation_20260812.jsx",
+      "sha256": "ef0477d30d30b1b5c587ebcc511864bd4692ae0ef9cc2d656975a209df4ad511"
+    },
+    "base_runner": {
+      "path": "scripts/run_olm_all10_current_install_fresh_ae_smoke_20260812.py",
+      "sha256": "45997d4c756fb9d82afde2fbe8f3be503db5e66dff2b15eaaf9ba1e1219ce4b7"
+    },
+    "deferred_v2": {
+      "path": "scripts/run_olm_all10_batch5_current_identity_deferred_v2_20260815.py",
+      "sha256": "d4875e4218138f247e9b6a2ee3179e9578c7f5ebe30c207f89fdbde006092138"
+    },
+    "identity": {
+      "path": "refs/conformance/olm_installed_identity_manifest_20260806.json",
+      "sha256": "ede4857b810e9f2901561ee8a3a9179c4c508dc2ee058525aa3f46dff4164079"
+    },
+    "live_v3_runner": {
+      "path": "scripts/run_olm_all10_batch5_current_identity_live_v3_20260815.py",
+      "sha256": "4c78ae7433b69a09dea7515b436ac2488eb3ede406aaf23d72ea265744fbeca4"
+    },
+    "payload": {
+      "path": "scripts/ae_host_all10_batch5_current_identity_live_v3_20260815.jsx",
+      "sha256": "7343ff97e79b1881d32b75f7ec390b900884a40700dc3aea8df30aa7266df404"
+    }
+  },
+  "exact_run_command": "python3 scripts/run_olm_all10_batch5_current_identity_live_v3_20260815.py --run",
+  "execution": {
+    "ae_and_aerender_process_count_required_before_run": 0,
+    "caller_supplied_output_paths_forbidden": true,
+    "default_is_read_only": true,
+    "exact_flag": "--run",
+    "exact_owned_pid_cleanup": true,
+    "fresh_singleton_required": true,
+    "live_entrypoint_present": true,
+    "o_excl_receipt_before_launch": true,
+    "single_attempt_no_retry": true
+  },
+  "fixed_outputs": {
+    "all_absent": true,
+    "artifact_dir": "handoffs/olm_all10_batch5_current_identity_v3_fresh_ae_smoke_20260815",
+    "raw": "refs/conformance/olm_all10_batch5_current_identity_v3_fresh_ae_smoke_raw_20260815.json",
+    "receipt": "handoffs/olm_all10_batch5_current_identity_v3_fresh_ae_smoke_20260815.invocation-receipt.json",
+    "summary": "refs/conformance/olm_all10_batch5_current_identity_v3_fresh_ae_smoke_20260815.json"
+  },
+  "host_frame_policy": {
+    "claim_boundary": "Batch5 installed host load/add/enable-state and exact mapping for all ten; generic effect-enabled host-frame render only for OLMBlur and OLMDirectionalBlur. The other eight bounded effects are disabled before generic saveFrameToPng. Numerical behavior is not assessed. No pixel-exact, Windows-equivalence, typed-plane, padding, admission, or public-owner numerical-exact claim.",
+    "disabled_after_load_add": [
+      "ColorKeep",
+      "OLMColorKey",
+      "OLMDistanceGradation",
+      "OLMKiraKira",
+      "OLMRadialBlur",
+      "OLMSmoother",
+      "OLMSmoother2",
+      "OLMToonDilate"
+    ],
+    "enabled": [
+      "OLMBlur",
+      "OLMDirectionalBlur"
+    ],
+    "numerical_assessment": "not_assessed"
+  },
+  "preflight": {
+    "ae_and_aerender_processes": [],
+    "identity_actual_artifacts_verified": true,
+    "outputs_absent": true,
+    "plugin_count": 10,
+    "process_count": 0
+  },
+  "readiness_policy": {
+    "cache_or_registry_mutation": "forbidden",
+    "canonical_outputs_on_failure": "fail_closed_durable_after_receipt",
+    "get_version_exact": "26.3.0",
+    "nonce_bound_doscript_json_probes": 2,
+    "receipt_created_with_o_excl_before_any_live_launch": true,
+    "same_fresh_singleton_pid": true
+  },
+  "schema": "olm.all10-batch5-current-identity-live-v3-contract/1",
+  "status": "AE_RUN_READY_NEW_IDENTITY_EXPLICIT_RUN_REQUIRED"
+}

@@ -1,0 +1,1213 @@
+{
+  "schema_version": 1,
+  "kind": "olmkirakira_pf8_source_decode_closure",
+  "date": "2026-08-12",
+  "status": "raw_exact",
+  "claim_boundary": "OLMKiraKira PF8 source decode only: fixed 5x3 alpha_i_over_17 and semi_transparent_color natural/exported fixtures",
+  "fixture": {
+    "dimensions": [
+      5,
+      3
+    ],
+    "pixel_format": "PF8/argb8",
+    "source_patterns": [
+      "alpha_i_over_17",
+      "semi_transparent_color"
+    ],
+    "natural_parameters": [
+      "Blur Mode=1",
+      "Vertical Length=0",
+      "Horizontal Length=0",
+      "Diagonal Length=0",
+      "Diagonal 2 length=0",
+      "Highlight Radius=3",
+      "Merge mode=1",
+      "Channel=1",
+      "Brightness Gain=1",
+      "Glow Rotation=0"
+    ]
+  },
+  "identities": {
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "worker_sha256": "46ab907d286ad4e0e1c2065557100f02c37e0b68df4c22202a825f3fea13ef61",
+    "source_sha256": "f2e285be7e6caae764bef7c4fa4a6c422bd5312368ba3481022b9eabe9035492",
+    "core_sha256": "e98232e4224b6ae4dd372216e10c29f3ba6621f68ab6cb10b56a02b9cc248390",
+    "base_sha256": "9197fdec52592eaeea736889c9f0153406741c1d4a398fdd42bd10b0c161cf1a",
+    "oracle_sha256": "6476b53fa377ca77fce3691d1cd5263a446878f459a8fac2bf7fa30b0dc4ce1e",
+    "generator_sha256": "1a3baedaa0c760bfc6f562a010fdd81bc20bd9b40c47d01ef9b72d6745daa6ba",
+    "aexcompat_commit": "28d535469f84f67236ef3425afe4291ea2fb0991"
+  },
+  "source_decode_contract": {
+    "reciprocal_f32_word": "0x3b808081",
+    "operation": "f32(byte * f32(1/255))",
+    "aex_binary_reciprocal": {
+      "va": "0x1814d65a4",
+      "rva": "0x14d65a4",
+      "section": ".rdata",
+      "file_offset": "0x14d57a4",
+      "raw_hex": "8180803b",
+      "u32_word": "0x3b808081"
+    },
+    "production_anchors": {
+      "float32_reciprocal_declaration": 1,
+      "lane_multiply_count": 4,
+      "stale_lane_divide_count": 0
+    }
+  },
+  "exhaustive_byte_domain": {
+    "codes_tested": 256,
+    "equal_codes": 130,
+    "differing_codes": 126,
+    "all_multiply_equals_divide_plus_one_ulp": true,
+    "differing_code_bytes_sha256": "47415d13b6e9cf7f14db3e4176827f70461302fa1bb233e19748f3c8cb1133c8",
+    "differences": [
+      {
+        "code": 3,
+        "multiply": "0x3c40c0c2",
+        "divide": "0x3c40c0c1",
+        "ulp": 1
+      },
+      {
+        "code": 6,
+        "multiply": "0x3cc0c0c2",
+        "divide": "0x3cc0c0c1",
+        "ulp": 1
+      },
+      {
+        "code": 7,
+        "multiply": "0x3ce0e0e2",
+        "divide": "0x3ce0e0e1",
+        "ulp": 1
+      },
+      {
+        "code": 12,
+        "multiply": "0x3d40c0c2",
+        "divide": "0x3d40c0c1",
+        "ulp": 1
+      },
+      {
+        "code": 13,
+        "multiply": "0x3d50d0d2",
+        "divide": "0x3d50d0d1",
+        "ulp": 1
+      },
+      {
+        "code": 14,
+        "multiply": "0x3d60e0e2",
+        "divide": "0x3d60e0e1",
+        "ulp": 1
+      },
+      {
+        "code": 15,
+        "multiply": "0x3d70f0f2",
+        "divide": "0x3d70f0f1",
+        "ulp": 1
+      },
+      {
+        "code": 24,
+        "multiply": "0x3dc0c0c2",
+        "divide": "0x3dc0c0c1",
+        "ulp": 1
+      },
+      {
+        "code": 25,
+        "multiply": "0x3dc8c8ca",
+        "divide": "0x3dc8c8c9",
+        "ulp": 1
+      },
+      {
+        "code": 26,
+        "multiply": "0x3dd0d0d2",
+        "divide": "0x3dd0d0d1",
+        "ulp": 1
+      },
+      {
+        "code": 27,
+        "multiply": "0x3dd8d8da",
+        "divide": "0x3dd8d8d9",
+        "ulp": 1
+      },
+      {
+        "code": 28,
+        "multiply": "0x3de0e0e2",
+        "divide": "0x3de0e0e1",
+        "ulp": 1
+      },
+      {
+        "code": 29,
+        "multiply": "0x3de8e8ea",
+        "divide": "0x3de8e8e9",
+        "ulp": 1
+      },
+      {
+        "code": 30,
+        "multiply": "0x3df0f0f2",
+        "divide": "0x3df0f0f1",
+        "ulp": 1
+      },
+      {
+        "code": 31,
+        "multiply": "0x3df8f8fa",
+        "divide": "0x3df8f8f9",
+        "ulp": 1
+      },
+      {
+        "code": 48,
+        "multiply": "0x3e40c0c2",
+        "divide": "0x3e40c0c1",
+        "ulp": 1
+      },
+      {
+        "code": 49,
+        "multiply": "0x3e44c4c6",
+        "divide": "0x3e44c4c5",
+        "ulp": 1
+      },
+      {
+        "code": 50,
+        "multiply": "0x3e48c8ca",
+        "divide": "0x3e48c8c9",
+        "ulp": 1
+      },
+      {
+        "code": 51,
+        "multiply": "0x3e4cccce",
+        "divide": "0x3e4ccccd",
+        "ulp": 1
+      },
+      {
+        "code": 52,
+        "multiply": "0x3e50d0d2",
+        "divide": "0x3e50d0d1",
+        "ulp": 1
+      },
+      {
+        "code": 53,
+        "multiply": "0x3e54d4d6",
+        "divide": "0x3e54d4d5",
+        "ulp": 1
+      },
+      {
+        "code": 54,
+        "multiply": "0x3e58d8da",
+        "divide": "0x3e58d8d9",
+        "ulp": 1
+      },
+      {
+        "code": 55,
+        "multiply": "0x3e5cdcde",
+        "divide": "0x3e5cdcdd",
+        "ulp": 1
+      },
+      {
+        "code": 56,
+        "multiply": "0x3e60e0e2",
+        "divide": "0x3e60e0e1",
+        "ulp": 1
+      },
+      {
+        "code": 57,
+        "multiply": "0x3e64e4e6",
+        "divide": "0x3e64e4e5",
+        "ulp": 1
+      },
+      {
+        "code": 58,
+        "multiply": "0x3e68e8ea",
+        "divide": "0x3e68e8e9",
+        "ulp": 1
+      },
+      {
+        "code": 59,
+        "multiply": "0x3e6cecee",
+        "divide": "0x3e6ceced",
+        "ulp": 1
+      },
+      {
+        "code": 60,
+        "multiply": "0x3e70f0f2",
+        "divide": "0x3e70f0f1",
+        "ulp": 1
+      },
+      {
+        "code": 61,
+        "multiply": "0x3e74f4f6",
+        "divide": "0x3e74f4f5",
+        "ulp": 1
+      },
+      {
+        "code": 62,
+        "multiply": "0x3e78f8fa",
+        "divide": "0x3e78f8f9",
+        "ulp": 1
+      },
+      {
+        "code": 63,
+        "multiply": "0x3e7cfcfe",
+        "divide": "0x3e7cfcfd",
+        "ulp": 1
+      },
+      {
+        "code": 96,
+        "multiply": "0x3ec0c0c2",
+        "divide": "0x3ec0c0c1",
+        "ulp": 1
+      },
+      {
+        "code": 97,
+        "multiply": "0x3ec2c2c4",
+        "divide": "0x3ec2c2c3",
+        "ulp": 1
+      },
+      {
+        "code": 98,
+        "multiply": "0x3ec4c4c6",
+        "divide": "0x3ec4c4c5",
+        "ulp": 1
+      },
+      {
+        "code": 99,
+        "multiply": "0x3ec6c6c8",
+        "divide": "0x3ec6c6c7",
+        "ulp": 1
+      },
+      {
+        "code": 100,
+        "multiply": "0x3ec8c8ca",
+        "divide": "0x3ec8c8c9",
+        "ulp": 1
+      },
+      {
+        "code": 101,
+        "multiply": "0x3ecacacc",
+        "divide": "0x3ecacacb",
+        "ulp": 1
+      },
+      {
+        "code": 102,
+        "multiply": "0x3eccccce",
+        "divide": "0x3ecccccd",
+        "ulp": 1
+      },
+      {
+        "code": 103,
+        "multiply": "0x3ececed0",
+        "divide": "0x3ecececf",
+        "ulp": 1
+      },
+      {
+        "code": 104,
+        "multiply": "0x3ed0d0d2",
+        "divide": "0x3ed0d0d1",
+        "ulp": 1
+      },
+      {
+        "code": 105,
+        "multiply": "0x3ed2d2d4",
+        "divide": "0x3ed2d2d3",
+        "ulp": 1
+      },
+      {
+        "code": 106,
+        "multiply": "0x3ed4d4d6",
+        "divide": "0x3ed4d4d5",
+        "ulp": 1
+      },
+      {
+        "code": 107,
+        "multiply": "0x3ed6d6d8",
+        "divide": "0x3ed6d6d7",
+        "ulp": 1
+      },
+      {
+        "code": 108,
+        "multiply": "0x3ed8d8da",
+        "divide": "0x3ed8d8d9",
+        "ulp": 1
+      },
+      {
+        "code": 109,
+        "multiply": "0x3edadadc",
+        "divide": "0x3edadadb",
+        "ulp": 1
+      },
+      {
+        "code": 110,
+        "multiply": "0x3edcdcde",
+        "divide": "0x3edcdcdd",
+        "ulp": 1
+      },
+      {
+        "code": 111,
+        "multiply": "0x3ededee0",
+        "divide": "0x3edededf",
+        "ulp": 1
+      },
+      {
+        "code": 112,
+        "multiply": "0x3ee0e0e2",
+        "divide": "0x3ee0e0e1",
+        "ulp": 1
+      },
+      {
+        "code": 113,
+        "multiply": "0x3ee2e2e4",
+        "divide": "0x3ee2e2e3",
+        "ulp": 1
+      },
+      {
+        "code": 114,
+        "multiply": "0x3ee4e4e6",
+        "divide": "0x3ee4e4e5",
+        "ulp": 1
+      },
+      {
+        "code": 115,
+        "multiply": "0x3ee6e6e8",
+        "divide": "0x3ee6e6e7",
+        "ulp": 1
+      },
+      {
+        "code": 116,
+        "multiply": "0x3ee8e8ea",
+        "divide": "0x3ee8e8e9",
+        "ulp": 1
+      },
+      {
+        "code": 117,
+        "multiply": "0x3eeaeaec",
+        "divide": "0x3eeaeaeb",
+        "ulp": 1
+      },
+      {
+        "code": 118,
+        "multiply": "0x3eececee",
+        "divide": "0x3eececed",
+        "ulp": 1
+      },
+      {
+        "code": 119,
+        "multiply": "0x3eeeeef0",
+        "divide": "0x3eeeeeef",
+        "ulp": 1
+      },
+      {
+        "code": 120,
+        "multiply": "0x3ef0f0f2",
+        "divide": "0x3ef0f0f1",
+        "ulp": 1
+      },
+      {
+        "code": 121,
+        "multiply": "0x3ef2f2f4",
+        "divide": "0x3ef2f2f3",
+        "ulp": 1
+      },
+      {
+        "code": 122,
+        "multiply": "0x3ef4f4f6",
+        "divide": "0x3ef4f4f5",
+        "ulp": 1
+      },
+      {
+        "code": 123,
+        "multiply": "0x3ef6f6f8",
+        "divide": "0x3ef6f6f7",
+        "ulp": 1
+      },
+      {
+        "code": 124,
+        "multiply": "0x3ef8f8fa",
+        "divide": "0x3ef8f8f9",
+        "ulp": 1
+      },
+      {
+        "code": 125,
+        "multiply": "0x3efafafc",
+        "divide": "0x3efafafb",
+        "ulp": 1
+      },
+      {
+        "code": 126,
+        "multiply": "0x3efcfcfe",
+        "divide": "0x3efcfcfd",
+        "ulp": 1
+      },
+      {
+        "code": 127,
+        "multiply": "0x3efeff00",
+        "divide": "0x3efefeff",
+        "ulp": 1
+      },
+      {
+        "code": 192,
+        "multiply": "0x3f40c0c2",
+        "divide": "0x3f40c0c1",
+        "ulp": 1
+      },
+      {
+        "code": 193,
+        "multiply": "0x3f41c1c3",
+        "divide": "0x3f41c1c2",
+        "ulp": 1
+      },
+      {
+        "code": 194,
+        "multiply": "0x3f42c2c4",
+        "divide": "0x3f42c2c3",
+        "ulp": 1
+      },
+      {
+        "code": 195,
+        "multiply": "0x3f43c3c5",
+        "divide": "0x3f43c3c4",
+        "ulp": 1
+      },
+      {
+        "code": 196,
+        "multiply": "0x3f44c4c6",
+        "divide": "0x3f44c4c5",
+        "ulp": 1
+      },
+      {
+        "code": 197,
+        "multiply": "0x3f45c5c7",
+        "divide": "0x3f45c5c6",
+        "ulp": 1
+      },
+      {
+        "code": 198,
+        "multiply": "0x3f46c6c8",
+        "divide": "0x3f46c6c7",
+        "ulp": 1
+      },
+      {
+        "code": 199,
+        "multiply": "0x3f47c7c9",
+        "divide": "0x3f47c7c8",
+        "ulp": 1
+      },
+      {
+        "code": 200,
+        "multiply": "0x3f48c8ca",
+        "divide": "0x3f48c8c9",
+        "ulp": 1
+      },
+      {
+        "code": 201,
+        "multiply": "0x3f49c9cb",
+        "divide": "0x3f49c9ca",
+        "ulp": 1
+      },
+      {
+        "code": 202,
+        "multiply": "0x3f4acacc",
+        "divide": "0x3f4acacb",
+        "ulp": 1
+      },
+      {
+        "code": 203,
+        "multiply": "0x3f4bcbcd",
+        "divide": "0x3f4bcbcc",
+        "ulp": 1
+      },
+      {
+        "code": 204,
+        "multiply": "0x3f4cccce",
+        "divide": "0x3f4ccccd",
+        "ulp": 1
+      },
+      {
+        "code": 205,
+        "multiply": "0x3f4dcdcf",
+        "divide": "0x3f4dcdce",
+        "ulp": 1
+      },
+      {
+        "code": 206,
+        "multiply": "0x3f4eced0",
+        "divide": "0x3f4ececf",
+        "ulp": 1
+      },
+      {
+        "code": 207,
+        "multiply": "0x3f4fcfd1",
+        "divide": "0x3f4fcfd0",
+        "ulp": 1
+      },
+      {
+        "code": 208,
+        "multiply": "0x3f50d0d2",
+        "divide": "0x3f50d0d1",
+        "ulp": 1
+      },
+      {
+        "code": 209,
+        "multiply": "0x3f51d1d3",
+        "divide": "0x3f51d1d2",
+        "ulp": 1
+      },
+      {
+        "code": 210,
+        "multiply": "0x3f52d2d4",
+        "divide": "0x3f52d2d3",
+        "ulp": 1
+      },
+      {
+        "code": 211,
+        "multiply": "0x3f53d3d5",
+        "divide": "0x3f53d3d4",
+        "ulp": 1
+      },
+      {
+        "code": 212,
+        "multiply": "0x3f54d4d6",
+        "divide": "0x3f54d4d5",
+        "ulp": 1
+      },
+      {
+        "code": 213,
+        "multiply": "0x3f55d5d7",
+        "divide": "0x3f55d5d6",
+        "ulp": 1
+      },
+      {
+        "code": 214,
+        "multiply": "0x3f56d6d8",
+        "divide": "0x3f56d6d7",
+        "ulp": 1
+      },
+      {
+        "code": 215,
+        "multiply": "0x3f57d7d9",
+        "divide": "0x3f57d7d8",
+        "ulp": 1
+      },
+      {
+        "code": 216,
+        "multiply": "0x3f58d8da",
+        "divide": "0x3f58d8d9",
+        "ulp": 1
+      },
+      {
+        "code": 217,
+        "multiply": "0x3f59d9db",
+        "divide": "0x3f59d9da",
+        "ulp": 1
+      },
+      {
+        "code": 218,
+        "multiply": "0x3f5adadc",
+        "divide": "0x3f5adadb",
+        "ulp": 1
+      },
+      {
+        "code": 219,
+        "multiply": "0x3f5bdbdd",
+        "divide": "0x3f5bdbdc",
+        "ulp": 1
+      },
+      {
+        "code": 220,
+        "multiply": "0x3f5cdcde",
+        "divide": "0x3f5cdcdd",
+        "ulp": 1
+      },
+      {
+        "code": 221,
+        "multiply": "0x3f5ddddf",
+        "divide": "0x3f5dddde",
+        "ulp": 1
+      },
+      {
+        "code": 222,
+        "multiply": "0x3f5edee0",
+        "divide": "0x3f5ededf",
+        "ulp": 1
+      },
+      {
+        "code": 223,
+        "multiply": "0x3f5fdfe1",
+        "divide": "0x3f5fdfe0",
+        "ulp": 1
+      },
+      {
+        "code": 224,
+        "multiply": "0x3f60e0e2",
+        "divide": "0x3f60e0e1",
+        "ulp": 1
+      },
+      {
+        "code": 225,
+        "multiply": "0x3f61e1e3",
+        "divide": "0x3f61e1e2",
+        "ulp": 1
+      },
+      {
+        "code": 226,
+        "multiply": "0x3f62e2e4",
+        "divide": "0x3f62e2e3",
+        "ulp": 1
+      },
+      {
+        "code": 227,
+        "multiply": "0x3f63e3e5",
+        "divide": "0x3f63e3e4",
+        "ulp": 1
+      },
+      {
+        "code": 228,
+        "multiply": "0x3f64e4e6",
+        "divide": "0x3f64e4e5",
+        "ulp": 1
+      },
+      {
+        "code": 229,
+        "multiply": "0x3f65e5e7",
+        "divide": "0x3f65e5e6",
+        "ulp": 1
+      },
+      {
+        "code": 230,
+        "multiply": "0x3f66e6e8",
+        "divide": "0x3f66e6e7",
+        "ulp": 1
+      },
+      {
+        "code": 231,
+        "multiply": "0x3f67e7e9",
+        "divide": "0x3f67e7e8",
+        "ulp": 1
+      },
+      {
+        "code": 232,
+        "multiply": "0x3f68e8ea",
+        "divide": "0x3f68e8e9",
+        "ulp": 1
+      },
+      {
+        "code": 233,
+        "multiply": "0x3f69e9eb",
+        "divide": "0x3f69e9ea",
+        "ulp": 1
+      },
+      {
+        "code": 234,
+        "multiply": "0x3f6aeaec",
+        "divide": "0x3f6aeaeb",
+        "ulp": 1
+      },
+      {
+        "code": 235,
+        "multiply": "0x3f6bebed",
+        "divide": "0x3f6bebec",
+        "ulp": 1
+      },
+      {
+        "code": 236,
+        "multiply": "0x3f6cecee",
+        "divide": "0x3f6ceced",
+        "ulp": 1
+      },
+      {
+        "code": 237,
+        "multiply": "0x3f6dedef",
+        "divide": "0x3f6dedee",
+        "ulp": 1
+      },
+      {
+        "code": 238,
+        "multiply": "0x3f6eeef0",
+        "divide": "0x3f6eeeef",
+        "ulp": 1
+      },
+      {
+        "code": 239,
+        "multiply": "0x3f6feff1",
+        "divide": "0x3f6feff0",
+        "ulp": 1
+      },
+      {
+        "code": 240,
+        "multiply": "0x3f70f0f2",
+        "divide": "0x3f70f0f1",
+        "ulp": 1
+      },
+      {
+        "code": 241,
+        "multiply": "0x3f71f1f3",
+        "divide": "0x3f71f1f2",
+        "ulp": 1
+      },
+      {
+        "code": 242,
+        "multiply": "0x3f72f2f4",
+        "divide": "0x3f72f2f3",
+        "ulp": 1
+      },
+      {
+        "code": 243,
+        "multiply": "0x3f73f3f5",
+        "divide": "0x3f73f3f4",
+        "ulp": 1
+      },
+      {
+        "code": 244,
+        "multiply": "0x3f74f4f6",
+        "divide": "0x3f74f4f5",
+        "ulp": 1
+      },
+      {
+        "code": 245,
+        "multiply": "0x3f75f5f7",
+        "divide": "0x3f75f5f6",
+        "ulp": 1
+      },
+      {
+        "code": 246,
+        "multiply": "0x3f76f6f8",
+        "divide": "0x3f76f6f7",
+        "ulp": 1
+      },
+      {
+        "code": 247,
+        "multiply": "0x3f77f7f9",
+        "divide": "0x3f77f7f8",
+        "ulp": 1
+      },
+      {
+        "code": 248,
+        "multiply": "0x3f78f8fa",
+        "divide": "0x3f78f8f9",
+        "ulp": 1
+      },
+      {
+        "code": 249,
+        "multiply": "0x3f79f9fb",
+        "divide": "0x3f79f9fa",
+        "ulp": 1
+      },
+      {
+        "code": 250,
+        "multiply": "0x3f7afafc",
+        "divide": "0x3f7afafb",
+        "ulp": 1
+      },
+      {
+        "code": 251,
+        "multiply": "0x3f7bfbfd",
+        "divide": "0x3f7bfbfc",
+        "ulp": 1
+      },
+      {
+        "code": 252,
+        "multiply": "0x3f7cfcfe",
+        "divide": "0x3f7cfcfd",
+        "ulp": 1
+      },
+      {
+        "code": 253,
+        "multiply": "0x3f7dfdff",
+        "divide": "0x3f7dfdfe",
+        "ulp": 1
+      },
+      {
+        "code": 254,
+        "multiply": "0x3f7eff00",
+        "divide": "0x3f7efeff",
+        "ulp": 1
+      }
+    ]
+  },
+  "natural_pf8": {
+    "alpha_i_over_17": {
+      "input_png_sha256": "192e69a33dde3ca1fcb13d54e9d4a311ddbd844a95626980571e8b9116f70818",
+      "raw_pixel_sha256": "46245e23f8902a243be948ae282b0b1b3bf53a9f276c0566bc820917076e5ec9",
+      "render_error": 0,
+      "guards_intact": true,
+      "trace_truncated": false,
+      "dropped_memory_witnesses": 0,
+      "source_plane": {
+        "bytes": 240,
+        "sha256": "b44884196d99b474887de19714105178a584a4db37fa3b8712c05cea60d53edb",
+        "hex": "00000000000000000000000000000000000000000000000000000000f2f0703d000000000000000000000000f2f0f03d000000000000000000000000b5b4343e000000000000000000000000f2f0703e0000000000000000000000009796963e000000000000000000000000b5b4b43e000000000000000000000000d4d2d23e000000000000000000000000f2f0f03e0000000000000000000000008887073f0000000000000000000000009796163f000000000000000000000000a6a5253f000000000000000000000000b5b4343f000000000000000000000000c5c3433f000000000000000000000000d4d2523f"
+      },
+      "source_watch": {
+        "function_rva": "0x114e110",
+        "callsite_rva": "0x114d73d",
+        "object_deref": 296
+      },
+      "writer_glow": {
+        "bytes": 240,
+        "sha256": "bd403de80a12e09679ab553ddf4d86f088b912b40b598e0d31423c873ca7b7dc",
+        "hex": "0000803f0000803f0000803f2abbdf3e0000803f0000803f0000803f9c08e43e0000803f0000803f0000803f0e56e83e0000803f0000803f0000803f80a3ec3effff7f3fffff7f3fffff7f3ff2f0f03e0000803f0000803f0000803ff037ca3e0000803f0000803f0000803f6285ce3e0000803f0000803f0000803fd4d2d23e0000803f0000803f0000803f4620d73e0000803f0000803f0000803fb86ddb3e0000803f0000803f0000803fb5b4b43e0000803f0000803f0000803f2702b93e0000803f0000803f0000803f994fbd3e0000803f0000803f0000803f0c9dc13e0000803f0000803f0000803f7eeac53e"
+      },
+      "writer_output": {
+        "bytes": 60,
+        "sha256": "46245e23f8902a243be948ae282b0b1b3bf53a9f276c0566bc820917076e5ec9",
+        "hex": "6fffffff80e1e1e191cacacaa2b8b8b8b4a9a9a9af929292c0888888d27f7f7fe3787878f4727272f05f5f5fff5b5b5bff575757ff545454ff515151"
+      }
+    },
+    "semi_transparent_color": {
+      "input_png_sha256": "aa175f6a33d67ee4cdd8a8b7e4ef1c797a17f9ff1decfec69c87701b27c419f2",
+      "raw_pixel_sha256": "ac38fa6bba9286dc96df3c4b688ce3e2edb1608c79524114e9bbf7c8fdbe0e95",
+      "render_error": 0,
+      "guards_intact": true,
+      "trace_truncated": false,
+      "dropped_memory_witnesses": 0,
+      "source_plane": {
+        "bytes": 240,
+        "sha256": "29d592bf7835777be4d5443b622b93ff41bdb3094f67dc63bc927a83d96c8d42",
+        "hex": "0000000000000000000000008180803ef2f0703db1b0303de2e0e03c9796963ef2f0f03db1b0b03de2e0603dadacac3eb5b4343e8584043ea9a8a83dc4c2c23ef2f0703eb1b0303ee2e0e03ddad8d83e9796963ededc5c3e8d8c0c3ef0eeee3eb5b4b43e8584843ea9a8283e8382023fd4d2d23e9b9a9a3ec6c4443e8e8d0d3ff2f0f03eb1b0b03ee2e0603e9998183f8887073fc8c6c63efefc7c3ea4a3233f9796163fdedcdc3e8d8c8c3eafae2e3fa6a5253ff4f2f23e9b9a9a3ebab9393fb5b4343f8584043fa9a8a83ec6c4443fc5c3433f908f0f3fb7b6b63ed1cf4f3fd4d2523f9b9a1a3fc6c4c43edcda5a3f"
+      },
+      "source_watch": {
+        "function_rva": "0x114e110",
+        "callsite_rva": "0x114d73d",
+        "object_deref": 296
+      }
+    }
+  },
+  "alpha_highlight_chain": {
+    "seed_bytes": 60,
+    "seed_sha256": "807a38189f7c835efc9c0aa2f8e9bbdffa08087a8fb150dae52bb6074273a5f3",
+    "natural_ray_hex": "2abbdf3e9c08e43e0e56e83e80a3ec3ef2f0f03ef037ca3e6285ce3ed4d2d23e4620d73eb86ddb3eb5b4b43e2702b93e994fbd3e0c9dc13e7eeac53e",
+    "natural_ray_sha256": "77779fb72175473f3940c87892bb2a8a823ccf5c86876a48a19ec2de5e103259",
+    "portable_one_pass_ray_sha256": "77779fb72175473f3940c87892bb2a8a823ccf5c86876a48a19ec2de5e103259",
+    "ray_exact": true,
+    "portable_fd90_glow_sha256": "bd403de80a12e09679ab553ddf4d86f088b912b40b598e0d31423c873ca7b7dc",
+    "glow_exact": true,
+    "portable_compose_writer_sha256": "46245e23f8902a243be948ae282b0b1b3bf53a9f276c0566bc820917076e5ec9",
+    "final_exact": true
+  },
+  "divide_counterfactual": {
+    "operation": "f32(byte / f32(255))",
+    "seed_sha256": "281139cc61343bc478d88ec592f27d909977147bc221ac1c7f96425e0d9f5376",
+    "ray_sha256": "b68489d06eaf3491363568933851a9d06e4366f81bb38b45a1bb2f77ecb05815",
+    "final_pf8_sha256": "bc324d7262a0db99a20add695b708f1fa1ad82d399b15e3257d200f94edea73c",
+    "alpha_difference_count": 7,
+    "alpha_max_ulp": 1,
+    "alpha_word_differences": [
+      {
+        "word": 1,
+        "source_byte": 15,
+        "actual_mul": "0x3d70f0f2",
+        "divide": "0x3d70f0f1",
+        "ulp": 1
+      },
+      {
+        "word": 2,
+        "source_byte": 30,
+        "actual_mul": "0x3df0f0f2",
+        "divide": "0x3df0f0f1",
+        "ulp": 1
+      },
+      {
+        "word": 4,
+        "source_byte": 60,
+        "actual_mul": "0x3e70f0f2",
+        "divide": "0x3e70f0f1",
+        "ulp": 1
+      },
+      {
+        "word": 7,
+        "source_byte": 105,
+        "actual_mul": "0x3ed2d2d4",
+        "divide": "0x3ed2d2d3",
+        "ulp": 1
+      },
+      {
+        "word": 8,
+        "source_byte": 120,
+        "actual_mul": "0x3ef0f0f2",
+        "divide": "0x3ef0f0f1",
+        "ulp": 1
+      },
+      {
+        "word": 13,
+        "source_byte": 195,
+        "actual_mul": "0x3f43c3c5",
+        "divide": "0x3f43c3c4",
+        "ulp": 1
+      },
+      {
+        "word": 14,
+        "source_byte": 210,
+        "actual_mul": "0x3f52d2d4",
+        "divide": "0x3f52d2d3",
+        "ulp": 1
+      }
+    ]
+  },
+  "public_alpha_i_over_17": {
+    "status": "exact",
+    "fixture": {
+      "dimensions": [
+        5,
+        3
+      ],
+      "padding": 12,
+      "blur_mode": 1,
+      "merge_mode": 1,
+      "active_rays": [
+        {
+          "name": "Highlight",
+          "length": 3,
+          "use_ramp": false
+        }
+      ],
+      "horizontal_use_ramp": false,
+      "diagonal2_length": 0,
+      "highlight_radius": 3,
+      "highlight_use_ramp": false,
+      "brightness_gain": 1.0,
+      "glow_rotation": 0.0,
+      "windows_rotation_raw_fixed": null,
+      "channel": 1,
+      "source_pattern": "alpha_i_over_17",
+      "semi_transparent": false
+    },
+    "rows": [
+      {
+        "depth": "PF8",
+        "pixel_format": "argb8",
+        "bytes": 60,
+        "exact": true,
+        "actual_exported_raw_sha256": "46245e23f8902a243be948ae282b0b1b3bf53a9f276c0566bc820917076e5ec9",
+        "mac_effectmain_raw_sha256": "46245e23f8902a243be948ae282b0b1b3bf53a9f276c0566bc820917076e5ec9",
+        "mac_active_bytes_sha256": "46245e23f8902a243be948ae282b0b1b3bf53a9f276c0566bc820917076e5ec9",
+        "lifecycle": {
+          "smart_pre_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_PRE_RENDER"
+          },
+          "smart_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_RENDER"
+          }
+        },
+        "lifecycle_sha256": "32909aa0670cf57563ce0af1d7a047884cf4be7c421eeab9796229012c36bfa3",
+        "render_error": 0,
+        "guards_intact": true,
+        "input_unchanged": true,
+        "mac_padding_preserved": true,
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": []
+      },
+      {
+        "depth": "PF16",
+        "pixel_format": "argb16",
+        "bytes": 120,
+        "exact": true,
+        "actual_exported_raw_sha256": "71c2c1ae26ae4e63dc7e985f5b3666bd1a912fcc36d91842a0a2e65841693b13",
+        "mac_effectmain_raw_sha256": "71c2c1ae26ae4e63dc7e985f5b3666bd1a912fcc36d91842a0a2e65841693b13",
+        "mac_active_bytes_sha256": "71c2c1ae26ae4e63dc7e985f5b3666bd1a912fcc36d91842a0a2e65841693b13",
+        "lifecycle": {
+          "smart_pre_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_PRE_RENDER"
+          },
+          "smart_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_RENDER"
+          }
+        },
+        "lifecycle_sha256": "32909aa0670cf57563ce0af1d7a047884cf4be7c421eeab9796229012c36bfa3",
+        "render_error": 0,
+        "guards_intact": true,
+        "input_unchanged": true,
+        "mac_padding_preserved": true,
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": []
+      },
+      {
+        "depth": "PF32",
+        "pixel_format": "argb32f",
+        "bytes": 240,
+        "exact": true,
+        "actual_exported_raw_sha256": "df36edb6a9a16c88c2eb7582928b80493df46da1a46708ee75495a2e513c3dc4",
+        "mac_effectmain_raw_sha256": "df36edb6a9a16c88c2eb7582928b80493df46da1a46708ee75495a2e513c3dc4",
+        "mac_active_bytes_sha256": "df36edb6a9a16c88c2eb7582928b80493df46da1a46708ee75495a2e513c3dc4",
+        "lifecycle": {
+          "smart_pre_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_PRE_RENDER"
+          },
+          "smart_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_RENDER"
+          }
+        },
+        "lifecycle_sha256": "32909aa0670cf57563ce0af1d7a047884cf4be7c421eeab9796229012c36bfa3",
+        "render_error": 0,
+        "guards_intact": true,
+        "input_unchanged": true,
+        "mac_padding_preserved": true,
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": []
+      }
+    ]
+  },
+  "existing_semi_transparent_regression": {
+    "status": "exact",
+    "fixture": {
+      "dimensions": [
+        5,
+        3
+      ],
+      "padding": 12,
+      "blur_mode": 1,
+      "merge_mode": 1,
+      "active_rays": [
+        {
+          "name": "Horizontal",
+          "length": 7,
+          "use_ramp": false
+        }
+      ],
+      "horizontal_use_ramp": false,
+      "diagonal2_length": 0,
+      "highlight_radius": 0,
+      "highlight_use_ramp": false,
+      "brightness_gain": 0.1,
+      "glow_rotation": 0.0,
+      "windows_rotation_raw_fixed": null,
+      "channel": 1,
+      "source_pattern": "semi_transparent_color",
+      "semi_transparent": true
+    },
+    "rows": [
+      {
+        "depth": "PF8",
+        "pixel_format": "argb8",
+        "bytes": 60,
+        "exact": true,
+        "actual_exported_raw_sha256": "ff4de3ff2622faf02c62afe42a7c850586fea7f0fa7a3777f329b1d82b88ed5b",
+        "mac_effectmain_raw_sha256": "ff4de3ff2622faf02c62afe42a7c850586fea7f0fa7a3777f329b1d82b88ed5b",
+        "mac_active_bytes_sha256": "ff4de3ff2622faf02c62afe42a7c850586fea7f0fa7a3777f329b1d82b88ed5b",
+        "lifecycle": {
+          "smart_pre_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_PRE_RENDER"
+          },
+          "smart_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_RENDER"
+          }
+        },
+        "lifecycle_sha256": "32909aa0670cf57563ce0af1d7a047884cf4be7c421eeab9796229012c36bfa3",
+        "render_error": 0,
+        "guards_intact": true,
+        "input_unchanged": true,
+        "mac_padding_preserved": true,
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": []
+      },
+      {
+        "depth": "PF16",
+        "pixel_format": "argb16",
+        "bytes": 120,
+        "exact": true,
+        "actual_exported_raw_sha256": "ee37cf06360d144b85b8d7a32ce9b0612af1f354a0a988c9e1e952e58b9ce41d",
+        "mac_effectmain_raw_sha256": "ee37cf06360d144b85b8d7a32ce9b0612af1f354a0a988c9e1e952e58b9ce41d",
+        "mac_active_bytes_sha256": "ee37cf06360d144b85b8d7a32ce9b0612af1f354a0a988c9e1e952e58b9ce41d",
+        "lifecycle": {
+          "smart_pre_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_PRE_RENDER"
+          },
+          "smart_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_RENDER"
+          }
+        },
+        "lifecycle_sha256": "32909aa0670cf57563ce0af1d7a047884cf4be7c421eeab9796229012c36bfa3",
+        "render_error": 0,
+        "guards_intact": true,
+        "input_unchanged": true,
+        "mac_padding_preserved": true,
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": []
+      },
+      {
+        "depth": "PF32",
+        "pixel_format": "argb32f",
+        "bytes": 240,
+        "exact": true,
+        "actual_exported_raw_sha256": "0d50d86e40f9dd25daef5683e78bc3c066501477ccc36c8c4c7eab0c274b2cb6",
+        "mac_effectmain_raw_sha256": "0d50d86e40f9dd25daef5683e78bc3c066501477ccc36c8c4c7eab0c274b2cb6",
+        "mac_active_bytes_sha256": "0d50d86e40f9dd25daef5683e78bc3c066501477ccc36c8c4c7eab0c274b2cb6",
+        "lifecycle": {
+          "smart_pre_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_PRE_RENDER"
+          },
+          "smart_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_RENDER"
+          }
+        },
+        "lifecycle_sha256": "32909aa0670cf57563ce0af1d7a047884cf4be7c421eeab9796229012c36bfa3",
+        "render_error": 0,
+        "guards_intact": true,
+        "input_unchanged": true,
+        "mac_padding_preserved": true,
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": []
+      }
+    ]
+  },
+  "promotion": "Mode 1 Highlight Radius=3 alpha_i_over_17 PF8/PF16/PF32; PF8 source decode is bounded to the two named 5x3 fixtures",
+  "claims_not_made": [
+    "No arbitrary source, dimensions, rowbytes, channel, parameter Cartesian product, or live-AE claim",
+    "No PF16/PF32 source-decode rule change; those depths are regression controls",
+    "No OLM plugin other than OLMKiraKira is covered by this closure"
+  ]
+}

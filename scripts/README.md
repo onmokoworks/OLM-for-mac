@@ -17,16 +17,16 @@ Macリリース統合ゲート：
 python3 scripts/run_olm_release_gate_20260806.py
 ```
 
-Windows最小7観測パッケージの再生成と返却検証：
+受領済みWindows最小7観測の契約再現・履歴検証（通常は再実行しない）：
 
 ```sh
 python3 scripts/package_windows_ae_release_boundary_minimal_20260806.py
 python3 scripts/verify_windows_ae_release_boundary_minimal_20260806.py RETURN.zip
 ```
 
-現在のWindows対象は
+現行release gateでは7／7 accepted、0 invalid、0 pendingです。契約正本は
 `refs/reference_requests/olm_windows_ae_release_boundary_minimal_20260806.zip`
-だけです。以下に列挙された旧request／pending queue系スクリプトは調査履歴や将来の
+で、同じ7行を再送しません。以下に列挙された旧request／pending queue系スクリプトは調査履歴や将来の
 追加校正用であり、現行リリースの通常手順ではありません。
 
 大きく分けると次の6系統です。

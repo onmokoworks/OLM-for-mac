@@ -1,0 +1,409 @@
+{
+  "kind": "olm_crosshost_corrected_return_audit",
+  "status": "host_transform_classified_kira_exact_pending",
+  "artifacts": {
+    "package_sha256": "50715bef2dff8f4338c818dc78a827ae8bf65680c6397401015b313c78856cef",
+    "windows_return_sha256": "517b341eb9a3798bc863d021cde11c5b2e9911f714b2978088f27178e150d5b6",
+    "mac_return_sha256": "e20eabf453cbf732d5479d2a7bc870645f446c8fae04f627c0836f905396819c",
+    "normalized_kira_report_sha256": "72f91c71fa80c4368c472c822cefebfbe0ece798f762adf64699891a1e1a711f"
+  },
+  "rows": [
+    {
+      "row_id": "colorkeep__discovery_3__colorkeep_opaque_cells_red_darkgray__8bpc__linear_float32_input",
+      "plugin": "ColorKeep",
+      "depth": 8,
+      "source_interpretation_equal": true,
+      "no_effect_alpha_one_pixels": {
+        "windows": 2073600,
+        "mac": 2073600
+      },
+      "channel_binding_correct": true,
+      "cross_host": {
+        "no_effect": {
+          "total": 6220800,
+          "by_channel": {
+            "R": 2073600,
+            "G": 2073600,
+            "B": 2073600,
+            "A": 0
+          }
+        },
+        "effect_on": {
+          "total": 922500,
+          "by_channel": {
+            "R": 307500,
+            "G": 307500,
+            "B": 307500,
+            "A": 0
+          }
+        }
+      },
+      "no_effect_host_transfer": {
+        "unique_input_words": 139,
+        "conflicting_input_words": 0,
+        "effective_power_median": 2.3999937451484534,
+        "effective_power_min": 2.399991696860954,
+        "effective_power_max": 2.399994092608078
+      },
+      "effect_relation": {
+        "keep_mask_mismatched_pixels": 0,
+        "retained_pixels": 307500,
+        "rejected_pixels": 1766100,
+        "within_host_relation_mismatched_values": {
+          "windows": 0,
+          "mac": 0
+        },
+        "cross_host_effect_differences_unexplained_by_retained_control": 0,
+        "plugin_relation_exact": true
+      }
+    },
+    {
+      "row_id": "colorkeep__discovery_3__colorkeep_opaque_cells_red_darkgray__16bpc__linear_float32_input",
+      "plugin": "ColorKeep",
+      "depth": 16,
+      "source_interpretation_equal": true,
+      "no_effect_alpha_one_pixels": {
+        "windows": 2073600,
+        "mac": 2073600
+      },
+      "channel_binding_correct": true,
+      "cross_host": {
+        "no_effect": {
+          "total": 6220800,
+          "by_channel": {
+            "R": 2073600,
+            "G": 2073600,
+            "B": 2073600,
+            "A": 0
+          }
+        },
+        "effect_on": {
+          "total": 922500,
+          "by_channel": {
+            "R": 307500,
+            "G": 307500,
+            "B": 307500,
+            "A": 0
+          }
+        }
+      },
+      "no_effect_host_transfer": {
+        "unique_input_words": 139,
+        "conflicting_input_words": 0,
+        "effective_power_median": 2.399993739714928,
+        "effective_power_min": 2.399991558484922,
+        "effective_power_max": 2.3999941264991835
+      },
+      "effect_relation": {
+        "keep_mask_mismatched_pixels": 0,
+        "retained_pixels": 307500,
+        "rejected_pixels": 1766100,
+        "within_host_relation_mismatched_values": {
+          "windows": 0,
+          "mac": 0
+        },
+        "cross_host_effect_differences_unexplained_by_retained_control": 0,
+        "plugin_relation_exact": true
+      }
+    },
+    {
+      "row_id": "colorkeep__discovery_3__colorkeep_opaque_cells_red_darkgray__32bpc__linear_float32_input",
+      "plugin": "ColorKeep",
+      "depth": 32,
+      "source_interpretation_equal": true,
+      "no_effect_alpha_one_pixels": {
+        "windows": 2073600,
+        "mac": 2073600
+      },
+      "channel_binding_correct": true,
+      "cross_host": {
+        "no_effect": {
+          "total": 6220800,
+          "by_channel": {
+            "R": 2073600,
+            "G": 2073600,
+            "B": 2073600,
+            "A": 0
+          }
+        },
+        "effect_on": {
+          "total": 922500,
+          "by_channel": {
+            "R": 307500,
+            "G": 307500,
+            "B": 307500,
+            "A": 0
+          }
+        }
+      },
+      "no_effect_host_transfer": {
+        "unique_input_words": 139,
+        "conflicting_input_words": 0,
+        "effective_power_median": 2.399993749898155,
+        "effective_power_min": 2.3999932804522977,
+        "effective_power_max": 2.399994185901777
+      },
+      "effect_relation": {
+        "keep_mask_mismatched_pixels": 0,
+        "retained_pixels": 307500,
+        "rejected_pixels": 1766100,
+        "within_host_relation_mismatched_values": {
+          "windows": 0,
+          "mac": 0
+        },
+        "cross_host_effect_differences_unexplained_by_retained_control": 0,
+        "plugin_relation_exact": true
+      }
+    },
+    {
+      "row_id": "olmkirakira__controlled_ramps_off_10__kk_mapped_bm4_mm1_hi_r5_orange_opaque__8bpc__linear_float32_input",
+      "plugin": "OLMKiraKira",
+      "depth": 8,
+      "source_interpretation_equal": true,
+      "no_effect_alpha_one_pixels": {
+        "windows": 2073600,
+        "mac": 2073600
+      },
+      "channel_binding_correct": true,
+      "cross_host": {
+        "no_effect": {
+          "total": 6220800,
+          "by_channel": {
+            "R": 2073600,
+            "G": 2073600,
+            "B": 2073600,
+            "A": 0
+          }
+        },
+        "effect_on": {
+          "total": 6220800,
+          "by_channel": {
+            "R": 2073600,
+            "G": 2073600,
+            "B": 2073600,
+            "A": 0
+          }
+        }
+      },
+      "no_effect_host_transfer": {
+        "unique_input_words": 139,
+        "conflicting_input_words": 0,
+        "effective_power_median": 2.3999937451484534,
+        "effective_power_min": 2.399991696860954,
+        "effective_power_max": 2.399994092608078
+      },
+      "effect_host_transfer": {
+        "unique_input_words": 209,
+        "conflicting_input_words": 204,
+        "effective_power_median": 2.446536761358743,
+        "effective_power_min": 1.8288473178300526,
+        "effective_power_max": 3.5084956540960732
+      },
+      "normalized_mac_replay": {
+        "row_id": "olmkirakira__controlled_ramps_off_10__kk_mapped_bm4_mm1_hi_r5_orange_opaque__8bpc__linear_float32_input",
+        "depth": 8,
+        "ae_pid": 86767,
+        "source_sha256": "308aab1d34084bca7f69f770727cf4fd8c1d615e7f6bc0d3cb5f23aca7ebfdf9",
+        "source_interpretation": {
+          "alpha_mode": 5412,
+          "preserve_rgb_api_available": false,
+          "preserve_rgb": null,
+          "color_profile_name": "undefined",
+          "source_extension": ".exr"
+        },
+        "branches": {
+          "no_effect": {
+            "mac_sha256": "db11e4b7bbfb40caab067397d5909e8e799f3e9a32f38e542083e2653653ab96",
+            "windows_sha256": "308aab1d34084bca7f69f770727cf4fd8c1d615e7f6bc0d3cb5f23aca7ebfdf9",
+            "width": 1920,
+            "height": 1080,
+            "mismatched_values": 6220800,
+            "max_raw_u32_delta": 4206377,
+            "exact": false
+          },
+          "effect_on": {
+            "mac_sha256": "659d170cc81f8744a11017dd8a121e90b7cf4641387f83608cde2a11f8e686ec",
+            "windows_sha256": "13318c2357d3c5900d67d3beeca99ff0bb9f6b28c881bf3067c8b87476e29faf",
+            "width": 1920,
+            "height": 1080,
+            "mismatched_values": 6220800,
+            "max_raw_u32_delta": 20909180,
+            "exact": false
+          }
+        },
+        "status": "mismatch"
+      }
+    },
+    {
+      "row_id": "olmkirakira__controlled_ramps_off_10__kk_mapped_bm4_mm1_hi_r5_orange_opaque__16bpc__linear_float32_input",
+      "plugin": "OLMKiraKira",
+      "depth": 16,
+      "source_interpretation_equal": true,
+      "no_effect_alpha_one_pixels": {
+        "windows": 2073600,
+        "mac": 2073600
+      },
+      "channel_binding_correct": true,
+      "cross_host": {
+        "no_effect": {
+          "total": 6220800,
+          "by_channel": {
+            "R": 2073600,
+            "G": 2073600,
+            "B": 2073600,
+            "A": 0
+          }
+        },
+        "effect_on": {
+          "total": 6220800,
+          "by_channel": {
+            "R": 2073600,
+            "G": 2073600,
+            "B": 2073600,
+            "A": 0
+          }
+        }
+      },
+      "no_effect_host_transfer": {
+        "unique_input_words": 139,
+        "conflicting_input_words": 0,
+        "effective_power_median": 2.399993739714928,
+        "effective_power_min": 2.399991558484922,
+        "effective_power_max": 2.3999941264991835
+      },
+      "effect_host_transfer": {
+        "unique_input_words": 18588,
+        "conflicting_input_words": 14622,
+        "effective_power_median": 2.49946001253685,
+        "effective_power_min": 1.8333936554499055,
+        "effective_power_max": 3.4391772214124057
+      },
+      "normalized_mac_replay": {
+        "row_id": "olmkirakira__controlled_ramps_off_10__kk_mapped_bm4_mm1_hi_r5_orange_opaque__16bpc__linear_float32_input",
+        "depth": 16,
+        "ae_pid": 86767,
+        "source_sha256": "0a668d2d21dce74bda8c06fb0790fc40cbeb077ba6f2a5f5d5dc251769629080",
+        "source_interpretation": {
+          "alpha_mode": 5412,
+          "preserve_rgb_api_available": false,
+          "preserve_rgb": null,
+          "color_profile_name": "undefined",
+          "source_extension": ".exr"
+        },
+        "branches": {
+          "no_effect": {
+            "mac_sha256": "f874cf8b46010bca284582e7c0d2ba21cf272d7a14ba876de0f0dca5e6051187",
+            "windows_sha256": "0a668d2d21dce74bda8c06fb0790fc40cbeb077ba6f2a5f5d5dc251769629080",
+            "width": 1920,
+            "height": 1080,
+            "mismatched_values": 6220800,
+            "max_raw_u32_delta": 31635,
+            "exact": false
+          },
+          "effect_on": {
+            "mac_sha256": "1d791703e5b713e019b60c054bda101deeb44c338dc52b16715fc7ee8b077ff5",
+            "windows_sha256": "021ccb6198e7563e75bbce6300708cc2632e5fd805eba43a8acaf7708e4d9c56",
+            "width": 1920,
+            "height": 1080,
+            "mismatched_values": 6220800,
+            "max_raw_u32_delta": 21996583,
+            "exact": false
+          }
+        },
+        "status": "mismatch"
+      }
+    },
+    {
+      "row_id": "olmkirakira__controlled_ramps_off_10__kk_mapped_bm4_mm1_hi_r5_orange_opaque__32bpc__linear_float32_input",
+      "plugin": "OLMKiraKira",
+      "depth": 32,
+      "source_interpretation_equal": true,
+      "no_effect_alpha_one_pixels": {
+        "windows": 2073600,
+        "mac": 2073600
+      },
+      "channel_binding_correct": true,
+      "cross_host": {
+        "no_effect": {
+          "total": 6220800,
+          "by_channel": {
+            "R": 2073600,
+            "G": 2073600,
+            "B": 2073600,
+            "A": 0
+          }
+        },
+        "effect_on": {
+          "total": 6220800,
+          "by_channel": {
+            "R": 2073600,
+            "G": 2073600,
+            "B": 2073600,
+            "A": 0
+          }
+        }
+      },
+      "no_effect_host_transfer": {
+        "unique_input_words": 139,
+        "conflicting_input_words": 0,
+        "effective_power_median": 2.399993749898155,
+        "effective_power_min": 2.3999932804522977,
+        "effective_power_max": 2.399994185901777
+      },
+      "effect_host_transfer": {
+        "unique_input_words": 342746,
+        "conflicting_input_words": 19904,
+        "effective_power_median": 2.457572644380292,
+        "effective_power_min": 1.8333721451605012,
+        "effective_power_max": 3.438754012567566
+      },
+      "normalized_mac_replay": {
+        "row_id": "olmkirakira__controlled_ramps_off_10__kk_mapped_bm4_mm1_hi_r5_orange_opaque__32bpc__linear_float32_input",
+        "depth": 32,
+        "ae_pid": 86767,
+        "source_sha256": "69ed156db002337d0f24985820b826c28fb0f080090fc9cf44e94ba99f1743a0",
+        "source_interpretation": {
+          "alpha_mode": 5412,
+          "preserve_rgb_api_available": false,
+          "preserve_rgb": null,
+          "color_profile_name": "undefined",
+          "source_extension": ".exr"
+        },
+        "branches": {
+          "no_effect": {
+            "mac_sha256": "60b007d853987674c183b4befdb371f6d2c511c9cab2b33174b4c4589dec8e14",
+            "windows_sha256": "69ed156db002337d0f24985820b826c28fb0f080090fc9cf44e94ba99f1743a0",
+            "width": 1920,
+            "height": 1080,
+            "mismatched_values": 0,
+            "max_raw_u32_delta": 0,
+            "exact": true
+          },
+          "effect_on": {
+            "mac_sha256": "3abee6641879eaffa51809d8147efc25bfd6a0957b0b867642e38aab83d8503b",
+            "windows_sha256": "4e5d647ce465367d0ffa4e8be3a7378bbd0c24c30850f686258292a28af0cee7",
+            "width": 1920,
+            "height": 1080,
+            "mismatched_values": 6220800,
+            "max_raw_u32_delta": 21981135,
+            "exact": false
+          }
+        },
+        "status": "mismatch"
+      }
+    }
+  ],
+  "verdict": {
+    "corrected_channel_binding": true,
+    "raw_cross_host_exact_rows": [],
+    "color_keep_relation_exact_depths": [
+      8,
+      16,
+      32
+    ],
+    "kira_operation_exact_depths": [],
+    "color_keep_relation_exact": true,
+    "kira_reason": "effect outputs are not one component-wise host transfer of Mac outputs; PF32 normalized replay makes control exact but effect RGB differs at all 6,220,800 values"
+  },
+  "claim_boundary": "ColorKeep keep/reject/zero relation is exact for this case at PF8/PF16/PF32. Kira raw and operation exactness remain unproven. No row is promoted to cross-host raw exact."
+}

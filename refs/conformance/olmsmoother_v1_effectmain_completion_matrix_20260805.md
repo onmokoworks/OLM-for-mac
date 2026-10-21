@@ -23,7 +23,12 @@ actual and portable Executor replay both hash to
 
 The public setup and UI no-op boundaries remain exact. Smart Render is not
 advertised by the v1 flags. PF16 typed-session work remains explicitly owned by
-the separate AEXCompat Apple Silicon task, and an AE-host load/render claim is
-still withheld until the newly built universal bundle is observed in-host.
+the separate bounded evidence. The current installed arm64 binary `f416579e…`
+has additionally been replayed AE-free through its real-SDK Classic entry for
+the fixed PF8 checker, PF16 practical 64x36, and its deliberately unaligned
+input control; all three match the current source-built entry, while a source
+bit flip and Classic PF32 both fail closed without output mutation. This is a
+representative installed-entry relation, not the complete admission union or
+an AE-host load/render claim.
 The full-frame exact result is canonical-case evidence, not yet an assertion
 that every PF8 parameter combination has been covered.

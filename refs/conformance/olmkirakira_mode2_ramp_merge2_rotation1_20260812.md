@@ -2,4 +2,4 @@
 
 Status: **exact**
 
-5×3半透明source、Horizontal Length 7、Rotation 0でactual AEX exported Smart ownerとMac public EffectMain(PF_Cmd_RENDER)を比較する。PF8/PF16/PF32のactive bytes、input不変、Mac row paddingを検証する。ANGLE型編集は現AEXCompat workerで未対応のためnondefault rotationはfail-close。
+5×3半透明source、active rays [{'name': 'Horizontal', 'length': 7, 'use_ramp': True}]、Rotation 1.0でactual AEX exported Smart ownerとMac public EffectMain(PF_Cmd_RENDER)を比較する。PF8/PF16/PF32のactive bytes、input不変、Mac row paddingを検証する。

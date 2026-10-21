@@ -1,0 +1,64 @@
+{
+  "after_effects_processes": [],
+  "authorities": {
+    "install_report": "789722f224425fe1eedb3a3a73c34f1d7b5c86309cb36f0d189bd2eafa58bcc8",
+    "installed_binary": "fcd501dae5e62aaa0bb8c022cc55c3a6735e3021d465b42b80c939f33624dd77",
+    "source": "3ff3a4d4319f5b3b5519e517fcf591be417c97e4e9dd62117fe4e42f66ebdfd3",
+    "upstream_generator": "a647aa543e442a1ebc15269ab7b60e28884e518dc6c5b7678786655bfce84737",
+    "upstream_report": "3baaeef9aaf54aa89b7ec141b23cf369a78a291bed33b9b1e3b358eca990f071"
+  },
+  "claim_boundary": "Both current installed Universal slices of ColorKeep reproduce the pinned count9 public contract at Classic PF8/PF16 and Smart PF8/PF16/PF32, and all 136 canonical reject controls remain precommit-atomic on each slice. The x86_64 route runs under Rosetta. The output relation is also live-checked against the pinned Windows exported Smart owner hashes. This is AE-free dlopen evidence limited to the exact 4x3 source, palette, parameters and layout.",
+  "negative": {
+    "arm64": {
+      "all_precommit_atomic": true,
+      "rejects": 136
+    },
+    "x86_64": {
+      "all_precommit_atomic": true,
+      "rejects": 136
+    }
+  },
+  "owner_rows": [
+    {
+      "depth": "PF8",
+      "raw_sha256": "ad5a9e2d70f0adcc6318d340b3fa47ef4b5d89e79d9827554197da41d81da3dd"
+    },
+    {
+      "depth": "PF16",
+      "raw_sha256": "67b738b61c8197b32885019e6395612b7d065b42c8efd5070fc0ab3e84637392"
+    },
+    {
+      "depth": "PF32",
+      "raw_sha256": "5304a3f80f4ed6be0e210e9d925ac4fa7350feacb1035778a0adfc3edec9f469"
+    }
+  ],
+  "schema": "colorkeep.current-installed-count9/1",
+  "scope": {
+    "arbitrary_source_palette_tuple": false,
+    "installed_arm64": true,
+    "installed_x86_64": true,
+    "native_after_effects": false
+  },
+  "status": "PASS_COLORKEEP_CURRENT_INSTALLED_COUNT9_PUBLIC5_REJECT136_AE_FREE",
+  "summary": {
+    "architectures": [
+      "arm64",
+      "x86_64"
+    ],
+    "classic_depths": [
+      8,
+      16
+    ],
+    "positive_bytes_per_slice": 600,
+    "positive_sha256_per_slice": "2e68fc7a643641652edb27b6400cbdb2358b10c438893a8c346f8efd1ef7aebe",
+    "public_paths_per_slice": 5,
+    "public_paths_total": 10,
+    "reject_controls_per_slice": 136,
+    "reject_controls_total": 272,
+    "smart_depths": [
+      8,
+      16,
+      32
+    ]
+  }
+}

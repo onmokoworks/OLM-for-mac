@@ -1,0 +1,137 @@
+{
+  "actual_aex_sha256": "9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c",
+  "aexcompat_worker": {
+    "path": "/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue1135-typed-iterate-suites/guest/target/release/aex-guest-worker",
+    "sha256": "16c329a481aef88c00fd6016e79996eecaabf7a588cff084e866b6bd15d411fc"
+  },
+  "cases": [
+    {
+      "actual_exported_raw_sha256": "99647b451957968e17cc26de8539a5dda304ab87700e345af7daf1c16cee058f",
+      "amount": 4.0,
+      "bytes": 5184,
+      "case": "direction0_distance3_amount4_second_source",
+      "depth": "PF8",
+      "direction": 0,
+      "distance_type": 3,
+      "mac_public_smart_raw_sha256": "99647b451957968e17cc26de8539a5dda304ab87700e345af7daf1c16cee058f",
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "status": "raw_exact",
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF World Suite v2",
+        "PF Iterate8 Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "5bec7e489732bac740337674f30a25cb94980820b1a5f061b9bc66e9c167332e",
+      "amount": 4.0,
+      "bytes": 10368,
+      "case": "direction0_distance3_amount4_second_source",
+      "depth": "PF16",
+      "direction": 0,
+      "distance_type": 3,
+      "mac_public_smart_raw_sha256": "5bec7e489732bac740337674f30a25cb94980820b1a5f061b9bc66e9c167332e",
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "status": "raw_exact",
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF World Suite v2",
+        "PF iterate16 Suite v1"
+      ]
+    },
+    {
+      "actual_exported_raw_sha256": "d44ecf31c9817bfd4383974cad242c78f55c85f370ea66e328bbcff51176be08",
+      "amount": 4.0,
+      "bytes": 20736,
+      "case": "direction0_distance3_amount4_second_source",
+      "depth": "PF32",
+      "direction": 0,
+      "distance_type": 3,
+      "mac_public_smart_raw_sha256": "d44ecf31c9817bfd4383974cad242c78f55c85f370ea66e328bbcff51176be08",
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "status": "raw_exact",
+      "suite_requests": [
+        "PF Handle Suite v2",
+        "AEGP Utility Suite v13",
+        "PF ColorParamSuite v1",
+        "PF World Suite v2",
+        "PF iterateFloat Suite v1"
+      ]
+    }
+  ],
+  "claim_boundary": "Exact only for the declared fixed 48x27 independent semitransparent source, Direction 0 / Distance Type 3 / Amount 4, eight-byte row padding, and PF8/PF16/PF32. Other sources, tuples, geometries, layouts, installed binaries, native Windows, and AE-host execution remain unclaimed.",
+  "fixture": {
+    "alpha8_range": [
+      32,
+      255
+    ],
+    "dimensions": [
+      48,
+      27
+    ],
+    "keys": [
+      "black",
+      "green"
+    ],
+    "row_padding_bytes": 8,
+    "source_family": "independent bars-block-islands semitransparent fixture",
+    "source_png_sha256": "d14513869efb160a1a113e091c991a30ae96c3e524647b9d536c4dc84819f976"
+  },
+  "production_gates": {
+    "checkin_layer_pixels": 1,
+    "checkout_layer": 1,
+    "checkout_layer_pixels": 1,
+    "checkout_output": 1,
+    "input_complete_buffer_unchanged": true,
+    "input_padding_preserved": true,
+    "output_padding_preserved": true,
+    "parameter_checkins": 33,
+    "parameter_checkouts": 33,
+    "public_route": "PF_Cmd_SMART_PRE_RENDER -> PF_Cmd_SMART_RENDER"
+  },
+  "production_source_sha256": "4dbd264501a0d5d990a3726d16223c01c1996677b925f8546157b6a91ce677d1",
+  "schema": "olmcolorkey.exported-owner-edge-second-source/1",
+  "status": "raw_exact",
+  "tuple": {
+    "amount": 4.0,
+    "direction": 0,
+    "distance_type": 3
+  }
+}

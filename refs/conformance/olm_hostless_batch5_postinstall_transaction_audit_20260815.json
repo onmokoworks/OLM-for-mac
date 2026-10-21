@@ -1,0 +1,264 @@
+{
+  "schema": "olm.hostless-batch5-20260815-postinstall-audit/1",
+  "status": "PASS_BATCH5_INSTALLED_TRANSACTION_OLD3_IDENTITY_ALLOWLIST_AE_PENDING",
+  "installer_sha256": "af55334d81e5837dccc40991a3f79bed6135c90b77ad97ddca704e9128d546b4",
+  "readiness_sha256": "17c0cabc862e5b31e52fc4e413a34e2aeb2572b82d7bec729d5af2dc4dc51a44",
+  "prepared_receipt_sha256": "ad0c2fb8ae4d001e4b7d7b218c47bf61c036d99b619f3343e6f43045f413417b",
+  "transaction_receipt_sha256": "9f1b63eacbf72ad46888bfad53a88fa661219fa78def7391f1690a88c111c5d5",
+  "pre_identity_sha256": "94c6a1eff87e11705a65be638953cb134ff64bd0d919e8501338601aab333650",
+  "post_identity_sha256": "ede4857b810e9f2901561ee8a3a9179c4c508dc2ee058525aa3f46dff4164079",
+  "after_effects_and_aerender_processes": [],
+  "identity_exact_changed_paths": [
+    [
+      "OLMColorKey",
+      "sha256"
+    ],
+    [
+      "OLMColorKey",
+      "source_bundle"
+    ],
+    [
+      "OLMColorKey",
+      "source_sha256"
+    ],
+    [
+      "OLMDirectionalBlur",
+      "sha256"
+    ],
+    [
+      "OLMDirectionalBlur",
+      "source_bundle"
+    ],
+    [
+      "OLMDirectionalBlur",
+      "source_sha256"
+    ],
+    [
+      "OLMDistanceGradation",
+      "sha256"
+    ],
+    [
+      "OLMDistanceGradation",
+      "source_bundle"
+    ],
+    [
+      "OLMDistanceGradation",
+      "source_sha256"
+    ],
+    [
+      "OLMKiraKira",
+      "sha256"
+    ],
+    [
+      "OLMKiraKira",
+      "source_bundle"
+    ],
+    [
+      "OLMKiraKira",
+      "source_sha256"
+    ],
+    [
+      "OLMToonDilate",
+      "sha256"
+    ],
+    [
+      "OLMToonDilate",
+      "source_bundle"
+    ],
+    [
+      "OLMToonDilate",
+      "source_sha256"
+    ],
+    [
+      "accepted_at"
+    ],
+    [
+      "installed_after"
+    ]
+  ],
+  "plugins": {
+    "OLMKiraKira": {
+      "installed": {
+        "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin",
+        "binary_sha256": "d4c9b587d41797259de8627e2d3d5bcf7a376f12fa3c8b99dcd820e0b6d80ae3",
+        "inventory_sha256": "f3490edfeb9e09ff3c3a7acb3294fd30ca3f78cd86d011e213f310555abb4f4e",
+        "node_count": 10
+      },
+      "old_exact_copies": {
+        "backup": {
+          "path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_hostless_batch5_install_20260815/installed_backup/OLMKiraKira.plugin",
+          "binary_sha256": "edd6953ff0a86efa550ffd8a5be050cb200342ad68427519c092bcac578596a7",
+          "inventory_sha256": "e24c72d6a9d1d8b599e1fbe47be80a2602404d32a7681ee5461bba7bb108d04e",
+          "node_count": 10
+        },
+        "pre_swap": {
+          "path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_hostless_batch5_install_20260815/pre_swap_original/OLMKiraKira.plugin",
+          "binary_sha256": "edd6953ff0a86efa550ffd8a5be050cb200342ad68427519c092bcac578596a7",
+          "inventory_sha256": "e24c72d6a9d1d8b599e1fbe47be80a2602404d32a7681ee5461bba7bb108d04e",
+          "node_count": 10
+        },
+        "moved_old": {
+          "path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_hostless_batch5_install_20260815/moved_old/OLMKiraKira.plugin",
+          "binary_sha256": "edd6953ff0a86efa550ffd8a5be050cb200342ad68427519c092bcac578596a7",
+          "inventory_sha256": "e24c72d6a9d1d8b599e1fbe47be80a2602404d32a7681ee5461bba7bb108d04e",
+          "node_count": 10
+        }
+      },
+      "identity_changed_fields": [
+        "sha256",
+        "source_bundle",
+        "source_sha256"
+      ],
+      "production_source_sha256": "abf826dd450bcf879585ae786222ba5d5212d11dd9b292c6ba23d379014baeab",
+      "candidate_identity_sha256": "637a396a6a1cb5746ff747e16d30f81b5d32e5948a38eb072c6ccceb18727ff9"
+    },
+    "OLMColorKey": {
+      "installed": {
+        "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMColorKey.plugin",
+        "binary_sha256": "51f551a32bd975b7ae1c2437809ecb81af1d06f9e967a8fccbd9dc2a6190ce4d",
+        "inventory_sha256": "68634ac1697ecca47ee9bf816a563db66f4d2ce47d78f234a3d50e7b04f006c3",
+        "node_count": 10
+      },
+      "old_exact_copies": {
+        "backup": {
+          "path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_hostless_batch5_install_20260815/installed_backup/OLMColorKey.plugin",
+          "binary_sha256": "701ae9192e19d3e97dd33450e37ae97d90d9be5803ab663405507ed5e3659ca7",
+          "inventory_sha256": "5610c7bef6e8cd30d7e053e345bee7c23fc6324c2b2a5add57285f44132c93c0",
+          "node_count": 10
+        },
+        "pre_swap": {
+          "path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_hostless_batch5_install_20260815/pre_swap_original/OLMColorKey.plugin",
+          "binary_sha256": "701ae9192e19d3e97dd33450e37ae97d90d9be5803ab663405507ed5e3659ca7",
+          "inventory_sha256": "5610c7bef6e8cd30d7e053e345bee7c23fc6324c2b2a5add57285f44132c93c0",
+          "node_count": 10
+        },
+        "moved_old": {
+          "path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_hostless_batch5_install_20260815/moved_old/OLMColorKey.plugin",
+          "binary_sha256": "701ae9192e19d3e97dd33450e37ae97d90d9be5803ab663405507ed5e3659ca7",
+          "inventory_sha256": "5610c7bef6e8cd30d7e053e345bee7c23fc6324c2b2a5add57285f44132c93c0",
+          "node_count": 10
+        }
+      },
+      "identity_changed_fields": [
+        "sha256",
+        "source_bundle",
+        "source_sha256"
+      ],
+      "production_source_sha256": "4dbd264501a0d5d990a3726d16223c01c1996677b925f8546157b6a91ce677d1",
+      "candidate_identity_sha256": "aadc2c45c65303077b8251f1d4805824c21263e2aaf5f14f6e7c58e4876c3675"
+    },
+    "OLMToonDilate": {
+      "installed": {
+        "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin",
+        "binary_sha256": "cf029885921b6f7cd9ff5ce26ac6c60aa51392cf0bd31d0a721e2a0f6239d029",
+        "inventory_sha256": "d0fc389b85930cccd4c7a5f3a56c4a12036a8918a2091d531cd86aebe09f317a",
+        "node_count": 10
+      },
+      "old_exact_copies": {
+        "backup": {
+          "path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_hostless_batch5_install_20260815/installed_backup/OLMToonDilate.plugin",
+          "binary_sha256": "5bbe693106072ceff14a1c1ae5a0d64815cddde58356c57575d29e516479036e",
+          "inventory_sha256": "5dbaf31216d68ef1d1d0c5c1ce4f143aca59cc56c0dc2cf4ba37eb41c5bd42b5",
+          "node_count": 10
+        },
+        "pre_swap": {
+          "path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_hostless_batch5_install_20260815/pre_swap_original/OLMToonDilate.plugin",
+          "binary_sha256": "5bbe693106072ceff14a1c1ae5a0d64815cddde58356c57575d29e516479036e",
+          "inventory_sha256": "5dbaf31216d68ef1d1d0c5c1ce4f143aca59cc56c0dc2cf4ba37eb41c5bd42b5",
+          "node_count": 10
+        },
+        "moved_old": {
+          "path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_hostless_batch5_install_20260815/moved_old/OLMToonDilate.plugin",
+          "binary_sha256": "5bbe693106072ceff14a1c1ae5a0d64815cddde58356c57575d29e516479036e",
+          "inventory_sha256": "5dbaf31216d68ef1d1d0c5c1ce4f143aca59cc56c0dc2cf4ba37eb41c5bd42b5",
+          "node_count": 10
+        }
+      },
+      "identity_changed_fields": [
+        "sha256",
+        "source_bundle",
+        "source_sha256"
+      ],
+      "production_source_sha256": "42b47acbc3cd37bcaefdedc1b46f0507ed2e478c5eaab921f645f9055a9c8470",
+      "candidate_identity_sha256": "53b682739c4f8ba0e206b3a8b98024a808618a09103f30a4421c73a9ab0b9add"
+    },
+    "OLMDirectionalBlur": {
+      "installed": {
+        "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin",
+        "binary_sha256": "c64f8ff701008ae0390eb9da1a9e073dcde97a77e9b32701becf6eaa241a2666",
+        "inventory_sha256": "2151b7051035fc584f8f98b9ca4aeba80c7b2a170814806baaf385539fd4c719",
+        "node_count": 10
+      },
+      "old_exact_copies": {
+        "backup": {
+          "path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_hostless_batch5_install_20260815/installed_backup/OLMDirectionalBlur.plugin",
+          "binary_sha256": "856ab700df0881cfb039e9c9d0675bf46a7e92b56e8cb0e311d820fd719bc0de",
+          "inventory_sha256": "cdde2517e3837498ec77c993a098b77328a8ecf3dcf5fa2fd698bb456e36a00c",
+          "node_count": 10
+        },
+        "pre_swap": {
+          "path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_hostless_batch5_install_20260815/pre_swap_original/OLMDirectionalBlur.plugin",
+          "binary_sha256": "856ab700df0881cfb039e9c9d0675bf46a7e92b56e8cb0e311d820fd719bc0de",
+          "inventory_sha256": "cdde2517e3837498ec77c993a098b77328a8ecf3dcf5fa2fd698bb456e36a00c",
+          "node_count": 10
+        },
+        "moved_old": {
+          "path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_hostless_batch5_install_20260815/moved_old/OLMDirectionalBlur.plugin",
+          "binary_sha256": "856ab700df0881cfb039e9c9d0675bf46a7e92b56e8cb0e311d820fd719bc0de",
+          "inventory_sha256": "cdde2517e3837498ec77c993a098b77328a8ecf3dcf5fa2fd698bb456e36a00c",
+          "node_count": 10
+        }
+      },
+      "identity_changed_fields": [
+        "sha256",
+        "source_bundle",
+        "source_sha256"
+      ],
+      "production_source_sha256": "b39732e285688f1f8ae2fc5f64efcfba3d7ac52a1451a2685dd7b606bb18fb12",
+      "candidate_identity_sha256": "3c917afb3c5ab9d66e8a8b718fc4662627fef7f7ea6ea9d8a4779e07e647c4ce"
+    },
+    "OLMDistanceGradation": {
+      "installed": {
+        "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDistanceGradation.plugin",
+        "binary_sha256": "9a97a076c118fd1015f40d922bf7f21be7a041f1f049a0e465cc0bc9cd1cd349",
+        "inventory_sha256": "f1964bb4da3cfb13c5c4adb1e88d7762a7a1edee761dbb8f7374afdeb7ead103",
+        "node_count": 10
+      },
+      "old_exact_copies": {
+        "backup": {
+          "path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_hostless_batch5_install_20260815/installed_backup/OLMDistanceGradation.plugin",
+          "binary_sha256": "231421e4a0c1607a70947778d99d748baefe07078b7e1145f4a4700268116605",
+          "inventory_sha256": "23d9ded03b9bbd2f06329a871ad6140958fd301e25e580ef05a56ab6e0555f96",
+          "node_count": 10
+        },
+        "pre_swap": {
+          "path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_hostless_batch5_install_20260815/pre_swap_original/OLMDistanceGradation.plugin",
+          "binary_sha256": "231421e4a0c1607a70947778d99d748baefe07078b7e1145f4a4700268116605",
+          "inventory_sha256": "23d9ded03b9bbd2f06329a871ad6140958fd301e25e580ef05a56ab6e0555f96",
+          "node_count": 10
+        },
+        "moved_old": {
+          "path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_hostless_batch5_install_20260815/moved_old/OLMDistanceGradation.plugin",
+          "binary_sha256": "231421e4a0c1607a70947778d99d748baefe07078b7e1145f4a4700268116605",
+          "inventory_sha256": "23d9ded03b9bbd2f06329a871ad6140958fd301e25e580ef05a56ab6e0555f96",
+          "node_count": 10
+        }
+      },
+      "identity_changed_fields": [
+        "sha256",
+        "source_bundle",
+        "source_sha256"
+      ],
+      "production_source_sha256": "e2f5020f995b59277ee288f48e74a851fc1c9f6a456678cf0361d00e073dd9a9",
+      "candidate_identity_sha256": "106c2de7989d7b2a27f0acb579b9565377b2a782891b65f86960ac2afa5f4282"
+    }
+  },
+  "scope": {
+    "installed": true,
+    "after_effects_smoke_completed": false,
+    "release_gate_changed": false,
+    "mediacore_changed_by_auditor": false,
+    "identity_changed_by_auditor": false,
+    "after_effects_launched_by_auditor": false
+  }
+}

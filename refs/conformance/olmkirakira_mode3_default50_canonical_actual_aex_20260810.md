@@ -2,7 +2,7 @@
 
 Mode 3の公開UI既定Length `50`を、source work geometry `5×3`、Glow
 Rotation `0°`の標準4方向について閉じた。回転後leafはHorizontal `0°`が
-`9×7`、Diagonal `45°`、Diagonal 2 `-45°`、Vertical `90°`が`9×9`となる。
+`9×7`、Diagonal `45°`、Diagonal 2 owner `135°`、Vertical `90°`が`9×9`となる。direct helper matrixの`-45°`はprimitive fixtureとして保持するが、public ownerのD2 selectorではない。
 
 hash `60997c…99f7`のWindows AEXをprocess attachし、50件のCRT initializerを
 実行した上で`FUN_181150790`を最後まで実行した。各角度についてforward warp、

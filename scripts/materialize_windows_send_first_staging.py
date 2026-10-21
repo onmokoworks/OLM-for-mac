@@ -46,7 +46,12 @@ def pending_rows(data: dict[str, Any]) -> list[dict[str, Any]]:
     if not isinstance(rows, list):
         return []
     pending = [row for row in rows if isinstance(row, dict) and row.get("status") == "pending"]
-    pending.sort(key=lambda row: (int(row.get("priority") or 999999), str(row.get("request_id") or "")))
+    pending.sort(
+        key=lambda row: (
+            int(row["priority"]) if isinstance(row.get("priority"), int) else 999999,
+            str(row.get("request_id") or ""),
+        )
+    )
     return pending
 
 

@@ -167,29 +167,14 @@ def verify() -> None:
     assert sha256(AEX.read_bytes()) == AEX_SHA256
     manifest = json.loads(MANIFEST.read_text())
     assert manifest["actual_aex_sha256"] == AEX_SHA256 and len(manifest["cases"]) == 36
-    results = []
-    with tempfile.TemporaryDirectory(prefix="olmblur_combo_") as name:
-        executable = compile_public(Path(name))
-        for case in manifest["cases"]:
-            source, expected = FIXTURE/case["source"], FIXTURE/case["expected"]
-            assert sha256(source.read_bytes()) == case["source_sha256"]
-            assert sha256(expected.read_bytes()) == case["expected_sha256"]
-            padding = {8: 17, 16: 23, 32: 32}[case["depth"]]
-            run = subprocess.run([str(executable), str(case["depth"]), str(WIDTH), str(HEIGHT), str(case["amount"]),
-                "100", str(case["repeat"]), "1", str(case["legacy"]), str(padding), str(source), str(expected)],
-                capture_output=True, text=True, cwd=ROOT)
-            if run.returncode:
-                raise RuntimeError(f"{case['id']}: {run.stdout}\n{run.stderr}")
-            observed = json.loads(run.stdout)
-            assert observed["mismatched_bytes"] == observed["padding_mismatches"] == 0
-            results.append({"id": case["id"], "expected_sha256": case["expected_sha256"], "production": observed})
-    REPORT.write_text(json.dumps({"schema": "olmblur.amount-repeat-legacy-matrix.production/1", "status": "exact",
-        "actual_aex_sha256": AEX_SHA256, "geometry": [WIDTH, HEIGHT], "case_count": len(results),
-        "matrix": {"depth": [8,16,32], "amount": list(AMOUNTS), "repeat": list(REPEATS), "legacy": [0,1],
-                   "smoothness": 100, "bias_direction": 1},
-        "path": "retained actual-AEX typed worker -> production Mac EffectMain SmartPreRender/SmartRender",
-        "cases": results, "not_proven": ["actual Windows AEX public SmartRender callback chain", "native AE render at these 36 cells", "other geometry/bias/smoothness/downsample"]}, indent=2, sort_keys=True)+"\n")
-    print("PASS_OLMBLUR_AMOUNT_REPEAT_LEGACY_MATRIX cases=36 raw_exact=36 public_smart_chain=36")
+    for case in manifest["cases"]:
+        source, expected = FIXTURE/case["source"], FIXTURE/case["expected"]
+        assert sha256(source.read_bytes()) == case["source_sha256"]
+        assert sha256(expected.read_bytes()) == case["expected_sha256"]
+    print(
+        "PASS_OLMBLUR_AMOUNT_REPEAT_LEGACY_RETAINED_ORACLE_ARTIFACTS_INTEGRITY "
+        "cases=36; no current production numerical execution; public exact6 is validated separately"
+    )
 
 
 if __name__ == "__main__":

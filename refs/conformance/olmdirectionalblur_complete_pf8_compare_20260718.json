@@ -2,7 +2,7 @@
   "schema": 1,
   "kind": "olmdirectionalblur_complete_pf8_compare_20260718",
   "status": "pass",
-  "created_at_utc": "2026-08-05T17:37:44+00:00",
+  "created_at_utc": "2026-08-10T15:54:07+00:00",
   "scope": "hash-bound 16x16 PF8, angle=0, brightness=1, front-strength=8, all variation/back/noise controls zero; actual-AEX natural output versus production Mac dispatcher",
   "dimensions": [
     16,
@@ -138,6 +138,8 @@
     "back_strength": 0,
     "front_alpha_fade": 0,
     "front_sharp_tail": 0.0,
+    "back_alpha_fade": 0,
+    "back_sharp_tail": 0.0,
     "size_variation": 0.0,
     "noise_variation": 0.0,
     "noise_type": 1,

@@ -1,0 +1,220 @@
+{
+  "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+  "bounded_admission": {
+    "admitted_interpolation_modes": [
+      "constant",
+      "linear",
+      "sphere"
+    ],
+    "blur_mode": 5,
+    "blur_size": 1,
+    "canonical_mask_and_parameter_tuple_required": true,
+    "depth": "PF32",
+    "height": 11,
+    "power_requires_native_windows_ucrt_capture": true,
+    "width": 17
+  },
+  "compiler_proof": {
+    "canonical_assembly_sha256": "cbb451ab215d7685eecea3021bf88736b6cb9072a7e290c7c3fbcb1f89960995",
+    "canonical_fused_op_count": 0,
+    "direct_expf_call_present": true,
+    "flags": [
+      "-O3",
+      "-ffp-contract=fast",
+      "-fno-inline-functions"
+    ]
+  },
+  "field_mechanism": {
+    "builds": {
+      "adversarial_contract_fast_o3": {
+        "canonical_sha256": "7aaab7918d72d64fc2c426c7a52748409294bcab8c473bb5a55cbd4d19e037a6",
+        "raw_exact": true
+      },
+      "production_o0": {
+        "canonical_sha256": "7aaab7918d72d64fc2c426c7a52748409294bcab8c473bb5a55cbd4d19e037a6",
+        "raw_exact": true
+      }
+    },
+    "counterfactuals": {
+      "direct_exp_lrtb_wrong_order": {
+        "different_words": 7,
+        "max_ulp": 1,
+        "sha256": "959c754ee24f6e12c5d3fbb77e3497cf815483323077bacb7ccfc16e68ca31ba"
+      },
+      "superseded_lut_early_spatial_fused": {
+        "different_words": 37,
+        "max_ulp": 2,
+        "sha256": "d64cf3a5fe5768c365702a096e6665a9ec306af83a232a5bcd16b5cbb9a0133a"
+      }
+    }
+  },
+  "matrix_sha256": "4cd0720adb842837e24b5788d09c205fe9e328b437f4e0195e22e43da20f008c",
+  "matrix_summary": {
+    "exact_admitted": 56,
+    "pf16_exact": 32,
+    "pf32_exact": 24,
+    "pf32_mode5_exact": 6,
+    "pf32_mode5_fail_closed": 2,
+    "pf32_power_fail_closed": 8
+  },
+  "natural_public_trace": {
+    "dropped_memory_witnesses": 0,
+    "dropped_unsupported_suite_calls": 0,
+    "execution_backend": "unicorn-x86_64",
+    "guards_intact": true,
+    "height": 11,
+    "input_immutable": true,
+    "input_png_sha256": "683259bea613463bb22679f36a78e6d7b4c26dabdbc90e4da480cf76e9eb626a",
+    "input_requests": [
+      [
+        0,
+        0,
+        17,
+        11
+      ]
+    ],
+    "output_request": [
+      0,
+      0,
+      17,
+      11
+    ],
+    "pixel_format": "argb32f",
+    "post_field_sha256": "7aaab7918d72d64fc2c426c7a52748409294bcab8c473bb5a55cbd4d19e037a6",
+    "pre_field_sha256": "6023adbb0e42b6b1269594e72c2f58f5caf3ce8ece80b68da2f06f384aea623c",
+    "raw_output_bytes": 2992,
+    "raw_output_sha256": "50934ac830542ca73fee4a11b924b746a0ae93f97f34b0d2868170bc371dd387",
+    "render_error": 0,
+    "render_mode": "smart-cpu",
+    "selectors": [
+      "SEQUENCE_SETUP",
+      "FRAME_SETUP",
+      "FRAME_SETDOWN",
+      "SMART_PRE_RENDER",
+      "SMART_RENDER",
+      "SEQUENCE_SETDOWN"
+    ],
+    "smart_entry_export": "entryPointFunc",
+    "smart_image_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+    "smart_return_value": 0,
+    "smart_truncated": false,
+    "suite_requests": [
+      "AEGP Utility Suite v7",
+      "PF ColorParamSuite v1",
+      "PF Handle Suite v2",
+      "PF iterateFloat Suite v1"
+    ],
+    "unsupported_suite_calls": [],
+    "width": 17
+  },
+  "not_promoted": [
+    "PF32 Power without native Windows UCRT powf capture",
+    "unlisted PF32 Smart tuple or geometry",
+    "partial-world/origin layouts",
+    "native After Effects pixels",
+    "project/global fast-math configuration and arbitrary fast-math codegen"
+  ],
+  "probe_sha256": "4f4381a79eca89ceaf37dcf8253e0dd2577018780648bba27f36bd43da142f7b",
+  "production_source_sha256": "06ffc5b7a2af5cf54a2503d3bf03f9baf2269acbf1277f034937ac79c4a7aba5",
+  "public_contract": {
+    "balanced_layer_lifecycle": true,
+    "balanced_parameter_lifecycle": true,
+    "input_immutable": true,
+    "marker": "positive=9 mode5_positive=6 power_fail_closed=8 negative=21 classic_guards=4",
+    "mode5_positive_cases": 6,
+    "output_untouched_on_power_reject": true,
+    "padding_preserved": true,
+    "power_fail_closed_cases": 8,
+    "unlisted_mode5_tuple_fail_closed": true
+  },
+  "public_harness_sha256": "84846b4263d38e55bfb9e966d20c179dcea4bc263ccde153aa9d2f863b490776",
+  "schema": "olmdistancegradation.pf32-mode5-ipp-exact-closure/1",
+  "six_aexcompat_diagnostic_cells": [
+    {
+      "actual_exported_raw_sha256": "50934ac830542ca73fee4a11b924b746a0ae93f97f34b0d2868170bc371dd387",
+      "blur_mode": 5,
+      "bytes_compared": 2992,
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "fail_closed": false,
+      "guards_intact": true,
+      "interpolation": "linear",
+      "oracle_boundary": null,
+      "production_renderbits_sha256": "50934ac830542ca73fee4a11b924b746a0ae93f97f34b0d2868170bc371dd387",
+      "use_background": false
+    },
+    {
+      "actual_exported_raw_sha256": "c21fa76f957ad1a94c0fd14ed28960d676e2dfff13de46e868ff951527e3420f",
+      "blur_mode": 5,
+      "bytes_compared": 2992,
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "fail_closed": false,
+      "guards_intact": true,
+      "interpolation": "linear",
+      "oracle_boundary": null,
+      "production_renderbits_sha256": "c21fa76f957ad1a94c0fd14ed28960d676e2dfff13de46e868ff951527e3420f",
+      "use_background": true
+    },
+    {
+      "actual_exported_raw_sha256": "373408c57b6a6e9c5c06920402b8c08755ef6cca4625af326561c3dde38a346d",
+      "blur_mode": 5,
+      "bytes_compared": 2992,
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "fail_closed": false,
+      "guards_intact": true,
+      "interpolation": "sphere",
+      "oracle_boundary": null,
+      "production_renderbits_sha256": "373408c57b6a6e9c5c06920402b8c08755ef6cca4625af326561c3dde38a346d",
+      "use_background": false
+    },
+    {
+      "actual_exported_raw_sha256": "0d3655165718ea5acc787df41ad86fe3d147e6eb76ca34adc2d34a45d07ae5f3",
+      "blur_mode": 5,
+      "bytes_compared": 2992,
+      "depth": "PF32",
+      "different_bytes": 0,
+      "exact": true,
+      "fail_closed": false,
+      "guards_intact": true,
+      "interpolation": "sphere",
+      "oracle_boundary": null,
+      "production_renderbits_sha256": "0d3655165718ea5acc787df41ad86fe3d147e6eb76ca34adc2d34a45d07ae5f3",
+      "use_background": true
+    },
+    {
+      "actual_exported_raw_sha256": "40b5d262cdc0ab372036c9d2774fa9400f74daa7895c75c2222a246b01c485a5",
+      "blur_mode": 5,
+      "bytes_compared": 2992,
+      "depth": "PF32",
+      "different_bytes": 2978,
+      "exact": false,
+      "fail_closed": true,
+      "guards_intact": true,
+      "interpolation": "power",
+      "oracle_boundary": "native Windows UCRT powf required",
+      "production_renderbits_sha256": "fb32705be5df99373690510e4c92b2d512a21f20f722b835d93afccdc864797d",
+      "use_background": false
+    },
+    {
+      "actual_exported_raw_sha256": "fe715e7973fa79d6043cbe86dcfce3205869fb23ac9d69a8d98b288ab20ad6d7",
+      "blur_mode": 5,
+      "bytes_compared": 2992,
+      "depth": "PF32",
+      "different_bytes": 2992,
+      "exact": false,
+      "fail_closed": true,
+      "guards_intact": true,
+      "interpolation": "power",
+      "oracle_boundary": "native Windows UCRT powf required",
+      "production_renderbits_sha256": "fb32705be5df99373690510e4c92b2d512a21f20f722b835d93afccdc864797d",
+      "use_background": true
+    }
+  ],
+  "status": "PASS_FIXED17X11_PF32_MODE5_IPP_FIELD_EXACT_6_ADMITTED_2_POWER_FAIL_CLOSED",
+  "worker_sha256": "46ab907d286ad4e0e1c2065557100f02c37e0b68df4c22202a825f3fea13ef61"
+}

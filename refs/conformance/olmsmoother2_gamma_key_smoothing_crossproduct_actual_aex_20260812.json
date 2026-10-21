@@ -1063,7 +1063,7 @@
     7
   ],
   "pattern": "diagonal",
-  "production_source_sha256": "c0a2588aa6749c3f861f2e7246c4db97fa9d6c3b2b8783889a5c22b36f77dc77",
+  "production_source_sha256": "9f0fe886522cfeaea3b6c86771e93806f0941ee932cc12193e8f9cfe301cf6f9",
   "schema": "olmsmoother2.gamma-key-smoothing-crossproduct/2",
   "scope": "v2 padded 9x7 diagonal fixture; Gamma All plus Gamma Colors with non-invert/invert key; public Gamma endpoints and three smoothing boundary tuples; PF8/PF16/PF32",
   "smoothing_tuples": {

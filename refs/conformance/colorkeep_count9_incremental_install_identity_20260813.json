@@ -1,0 +1,880 @@
+{
+  "accepted_identity_manifest_sha256": "869a5e88ab34b3b26cc4a3786edb6de93f0e10c88b69c33f6e8d7afb6f18da90",
+  "after_effects_processes_at_audit": [],
+  "boundaries": {
+    "ae_operation_performed": false,
+    "candidate_staged_and_verified_before_atomic_exchange": true,
+    "developer_id_signed": false,
+    "manifest_and_bundle_single_atomic_transaction": false,
+    "manifest_update_atomic_file_replace": true,
+    "notarized": false,
+    "old_backup_pre_swap_moved_full_inventory_exact": true,
+    "rollback_original_retained": true,
+    "same_volume_namespace_atomic_bundle_exchange": true,
+    "source_staged_installed_full_inventory_exact": true
+  },
+  "build_evidence": {
+    "build_succeeded_marker": true,
+    "command_deployment_target": "11.0",
+    "compiled_architectures": [
+      "arm64",
+      "x86_64"
+    ],
+    "configuration": "Debug",
+    "error_marker_line_count": 0,
+    "linked_architectures": [
+      "arm64",
+      "x86_64"
+    ],
+    "path": "handoffs/colorkeep_count9_incremental_install_20260813/xcodebuild_macos11.log",
+    "sha256": "127492ba74580141246b0811d20922eb74e786cf7974d9e40e7aee3b26b33072",
+    "warning_marker_line_count": 332
+  },
+  "bundles": {
+    "installed": {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "binary_sha256": "fcd501dae5e62aaa0bb8c022cc55c3a6735e3021d465b42b80c939f33624dd77",
+      "effect_main_exports": {
+        "arm64": 1,
+        "x86_64": 1
+      },
+      "info_plist_minimum_system_version": "11.0",
+      "macho_slice_minimum_versions": {
+        "arm64": "11.0",
+        "x86_64": "11.0"
+      },
+      "manifest": [
+        {
+          "mode": 493,
+          "path": ".",
+          "type": "directory"
+        },
+        {
+          "mode": 493,
+          "path": "Contents",
+          "type": "directory"
+        },
+        {
+          "bytes": 1389,
+          "mode": 420,
+          "path": "Contents/Info.plist",
+          "sha256": "668e0613c9dae7003e12422b8b86b67c3e2701c338dedb4e947840a06be01406",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/MacOS",
+          "type": "directory"
+        },
+        {
+          "bytes": 175376,
+          "mode": 493,
+          "path": "Contents/MacOS/ColorKeep",
+          "sha256": "fcd501dae5e62aaa0bb8c022cc55c3a6735e3021d465b42b80c939f33624dd77",
+          "type": "file"
+        },
+        {
+          "bytes": 8,
+          "mode": 420,
+          "path": "Contents/PkgInfo",
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/Resources",
+          "type": "directory"
+        },
+        {
+          "bytes": 662,
+          "mode": 420,
+          "path": "Contents/Resources/ColorKeep.rsrc",
+          "sha256": "e9511c081223d80eca16f2b66f5211723a26903f83bde19403fd1175b8aa0082",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/_CodeSignature",
+          "type": "directory"
+        },
+        {
+          "bytes": 2450,
+          "mode": 420,
+          "path": "Contents/_CodeSignature/CodeResources",
+          "sha256": "e2dc7da138b789c31c34c32071c7f4195019e47850210281736506960de5203c",
+          "type": "file"
+        }
+      ],
+      "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/ColorKeep.plugin",
+      "strict_codesign": true
+    },
+    "installed_backup": {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "binary_sha256": "262b73e656d4363dce0de6f0fe819fabf461e157ca7cedd98cad107c8db87fe8",
+      "effect_main_exports": {
+        "arm64": 1,
+        "x86_64": 1
+      },
+      "info_plist_minimum_system_version": "26.2",
+      "macho_slice_minimum_versions": {
+        "arm64": "26.2",
+        "x86_64": "26.2"
+      },
+      "manifest": [
+        {
+          "mode": 493,
+          "path": ".",
+          "type": "directory"
+        },
+        {
+          "mode": 493,
+          "path": "Contents",
+          "type": "directory"
+        },
+        {
+          "bytes": 1389,
+          "mode": 420,
+          "path": "Contents/Info.plist",
+          "sha256": "49350ec144e9234dda01f6dfb83564982f4352bf9dc3b6f2e08d111a322725d5",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/MacOS",
+          "type": "directory"
+        },
+        {
+          "bytes": 174560,
+          "mode": 493,
+          "path": "Contents/MacOS/ColorKeep",
+          "sha256": "262b73e656d4363dce0de6f0fe819fabf461e157ca7cedd98cad107c8db87fe8",
+          "type": "file"
+        },
+        {
+          "bytes": 8,
+          "mode": 420,
+          "path": "Contents/PkgInfo",
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/Resources",
+          "type": "directory"
+        },
+        {
+          "bytes": 662,
+          "mode": 420,
+          "path": "Contents/Resources/ColorKeep.rsrc",
+          "sha256": "e9511c081223d80eca16f2b66f5211723a26903f83bde19403fd1175b8aa0082",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/_CodeSignature",
+          "type": "directory"
+        },
+        {
+          "bytes": 2450,
+          "mode": 420,
+          "path": "Contents/_CodeSignature/CodeResources",
+          "sha256": "e2dc7da138b789c31c34c32071c7f4195019e47850210281736506960de5203c",
+          "type": "file"
+        }
+      ],
+      "path": "handoffs/colorkeep_count9_incremental_install_20260813/installed_backup/ColorKeep.plugin",
+      "strict_codesign": true
+    },
+    "moved_old": {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "binary_sha256": "262b73e656d4363dce0de6f0fe819fabf461e157ca7cedd98cad107c8db87fe8",
+      "effect_main_exports": {
+        "arm64": 1,
+        "x86_64": 1
+      },
+      "info_plist_minimum_system_version": "26.2",
+      "macho_slice_minimum_versions": {
+        "arm64": "26.2",
+        "x86_64": "26.2"
+      },
+      "manifest": [
+        {
+          "mode": 493,
+          "path": ".",
+          "type": "directory"
+        },
+        {
+          "mode": 493,
+          "path": "Contents",
+          "type": "directory"
+        },
+        {
+          "bytes": 1389,
+          "mode": 420,
+          "path": "Contents/Info.plist",
+          "sha256": "49350ec144e9234dda01f6dfb83564982f4352bf9dc3b6f2e08d111a322725d5",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/MacOS",
+          "type": "directory"
+        },
+        {
+          "bytes": 174560,
+          "mode": 493,
+          "path": "Contents/MacOS/ColorKeep",
+          "sha256": "262b73e656d4363dce0de6f0fe819fabf461e157ca7cedd98cad107c8db87fe8",
+          "type": "file"
+        },
+        {
+          "bytes": 8,
+          "mode": 420,
+          "path": "Contents/PkgInfo",
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/Resources",
+          "type": "directory"
+        },
+        {
+          "bytes": 662,
+          "mode": 420,
+          "path": "Contents/Resources/ColorKeep.rsrc",
+          "sha256": "e9511c081223d80eca16f2b66f5211723a26903f83bde19403fd1175b8aa0082",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/_CodeSignature",
+          "type": "directory"
+        },
+        {
+          "bytes": 2450,
+          "mode": 420,
+          "path": "Contents/_CodeSignature/CodeResources",
+          "sha256": "e2dc7da138b789c31c34c32071c7f4195019e47850210281736506960de5203c",
+          "type": "file"
+        }
+      ],
+      "path": "handoffs/colorkeep_count9_incremental_install_20260813/moved_old/ColorKeep.plugin",
+      "strict_codesign": true
+    },
+    "pre_swap_original": {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "binary_sha256": "262b73e656d4363dce0de6f0fe819fabf461e157ca7cedd98cad107c8db87fe8",
+      "effect_main_exports": {
+        "arm64": 1,
+        "x86_64": 1
+      },
+      "info_plist_minimum_system_version": "26.2",
+      "macho_slice_minimum_versions": {
+        "arm64": "26.2",
+        "x86_64": "26.2"
+      },
+      "manifest": [
+        {
+          "mode": 493,
+          "path": ".",
+          "type": "directory"
+        },
+        {
+          "mode": 493,
+          "path": "Contents",
+          "type": "directory"
+        },
+        {
+          "bytes": 1389,
+          "mode": 420,
+          "path": "Contents/Info.plist",
+          "sha256": "49350ec144e9234dda01f6dfb83564982f4352bf9dc3b6f2e08d111a322725d5",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/MacOS",
+          "type": "directory"
+        },
+        {
+          "bytes": 174560,
+          "mode": 493,
+          "path": "Contents/MacOS/ColorKeep",
+          "sha256": "262b73e656d4363dce0de6f0fe819fabf461e157ca7cedd98cad107c8db87fe8",
+          "type": "file"
+        },
+        {
+          "bytes": 8,
+          "mode": 420,
+          "path": "Contents/PkgInfo",
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/Resources",
+          "type": "directory"
+        },
+        {
+          "bytes": 662,
+          "mode": 420,
+          "path": "Contents/Resources/ColorKeep.rsrc",
+          "sha256": "e9511c081223d80eca16f2b66f5211723a26903f83bde19403fd1175b8aa0082",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/_CodeSignature",
+          "type": "directory"
+        },
+        {
+          "bytes": 2450,
+          "mode": 420,
+          "path": "Contents/_CodeSignature/CodeResources",
+          "sha256": "e2dc7da138b789c31c34c32071c7f4195019e47850210281736506960de5203c",
+          "type": "file"
+        }
+      ],
+      "path": "handoffs/colorkeep_count9_incremental_install_20260813/pre_swap_original/ColorKeep.plugin",
+      "strict_codesign": true
+    },
+    "source": {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "binary_sha256": "fcd501dae5e62aaa0bb8c022cc55c3a6735e3021d465b42b80c939f33624dd77",
+      "effect_main_exports": {
+        "arm64": 1,
+        "x86_64": 1
+      },
+      "info_plist_minimum_system_version": "11.0",
+      "macho_slice_minimum_versions": {
+        "arm64": "11.0",
+        "x86_64": "11.0"
+      },
+      "manifest": [
+        {
+          "mode": 493,
+          "path": ".",
+          "type": "directory"
+        },
+        {
+          "mode": 493,
+          "path": "Contents",
+          "type": "directory"
+        },
+        {
+          "bytes": 1389,
+          "mode": 420,
+          "path": "Contents/Info.plist",
+          "sha256": "668e0613c9dae7003e12422b8b86b67c3e2701c338dedb4e947840a06be01406",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/MacOS",
+          "type": "directory"
+        },
+        {
+          "bytes": 175376,
+          "mode": 493,
+          "path": "Contents/MacOS/ColorKeep",
+          "sha256": "fcd501dae5e62aaa0bb8c022cc55c3a6735e3021d465b42b80c939f33624dd77",
+          "type": "file"
+        },
+        {
+          "bytes": 8,
+          "mode": 420,
+          "path": "Contents/PkgInfo",
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/Resources",
+          "type": "directory"
+        },
+        {
+          "bytes": 662,
+          "mode": 420,
+          "path": "Contents/Resources/ColorKeep.rsrc",
+          "sha256": "e9511c081223d80eca16f2b66f5211723a26903f83bde19403fd1175b8aa0082",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/_CodeSignature",
+          "type": "directory"
+        },
+        {
+          "bytes": 2450,
+          "mode": 420,
+          "path": "Contents/_CodeSignature/CodeResources",
+          "sha256": "e2dc7da138b789c31c34c32071c7f4195019e47850210281736506960de5203c",
+          "type": "file"
+        }
+      ],
+      "path": "handoffs/colorkeep_count9_incremental_install_20260813/candidate/Product/ColorKeep.plugin",
+      "strict_codesign": true
+    },
+    "staged": {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "binary_sha256": "fcd501dae5e62aaa0bb8c022cc55c3a6735e3021d465b42b80c939f33624dd77",
+      "effect_main_exports": {
+        "arm64": 1,
+        "x86_64": 1
+      },
+      "info_plist_minimum_system_version": "11.0",
+      "macho_slice_minimum_versions": {
+        "arm64": "11.0",
+        "x86_64": "11.0"
+      },
+      "manifest": [
+        {
+          "mode": 493,
+          "path": ".",
+          "type": "directory"
+        },
+        {
+          "mode": 493,
+          "path": "Contents",
+          "type": "directory"
+        },
+        {
+          "bytes": 1389,
+          "mode": 420,
+          "path": "Contents/Info.plist",
+          "sha256": "668e0613c9dae7003e12422b8b86b67c3e2701c338dedb4e947840a06be01406",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/MacOS",
+          "type": "directory"
+        },
+        {
+          "bytes": 175376,
+          "mode": 493,
+          "path": "Contents/MacOS/ColorKeep",
+          "sha256": "fcd501dae5e62aaa0bb8c022cc55c3a6735e3021d465b42b80c939f33624dd77",
+          "type": "file"
+        },
+        {
+          "bytes": 8,
+          "mode": 420,
+          "path": "Contents/PkgInfo",
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/Resources",
+          "type": "directory"
+        },
+        {
+          "bytes": 662,
+          "mode": 420,
+          "path": "Contents/Resources/ColorKeep.rsrc",
+          "sha256": "e9511c081223d80eca16f2b66f5211723a26903f83bde19403fd1175b8aa0082",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/_CodeSignature",
+          "type": "directory"
+        },
+        {
+          "bytes": 2450,
+          "mode": 420,
+          "path": "Contents/_CodeSignature/CodeResources",
+          "sha256": "e2dc7da138b789c31c34c32071c7f4195019e47850210281736506960de5203c",
+          "type": "file"
+        }
+      ],
+      "path": "handoffs/colorkeep_count9_incremental_install_20260813/staged/ColorKeep.plugin",
+      "strict_codesign": true
+    }
+  },
+  "claim_boundary": "ColorKeep-only atomic bundle exchange and accepted installed identity; no AE launch, load, UI, render, fresh smoke, release gate, Developer ID, notarization, or distribution claim.",
+  "generated_at": "2026-08-12T15:46:29.944555+00:00",
+  "generator_sha256": "e3829c5b687b4717a6f55c863f52eda122986ce04890f49842b8bce2aacc18d3",
+  "identity_transition": {
+    "changed_fields": {
+      "ColorKeep": [
+        "sha256",
+        "source_bundle",
+        "source_sha256"
+      ]
+    },
+    "changed_plugins": [
+      "ColorKeep"
+    ],
+    "new_executable_sha256": "fcd501dae5e62aaa0bb8c022cc55c3a6735e3021d465b42b80c939f33624dd77",
+    "old_executable_sha256": "262b73e656d4363dce0de6f0fe819fabf461e157ca7cedd98cad107c8db87fe8",
+    "other_nine_rows_exact": true,
+    "top_level_changed_fields": [
+      "accepted_at",
+      "installed_after"
+    ],
+    "unchanged_plugins": [
+      "OLMBlur",
+      "OLMColorKey",
+      "OLMDirectionalBlur",
+      "OLMDistanceGradation",
+      "OLMKiraKira",
+      "OLMRadialBlur",
+      "OLMSmoother",
+      "OLMSmoother2",
+      "OLMToonDilate"
+    ]
+  },
+  "install_script_sha256": "2f9112abfecdcb5e0a29790db81b162ae8e9d907fb7772b71e32d6576a906365",
+  "installed_bundle_count": 1,
+  "inventory_scope": {
+    "claimed": [
+      "relative path",
+      "entry type",
+      "POSIX mode",
+      "file byte size",
+      "file SHA-256",
+      "symlink target"
+    ],
+    "not_claimed": [
+      "mtime preservation",
+      "extended attributes",
+      "ACL semantic equality",
+      "Finder metadata",
+      "transaction timing beyond recorded observations"
+    ]
+  },
+  "pre_identity_manifest_sha256": "90e37eefd68f990e137d23d46212c7039ec49f03e86bfe076765cc350da3820a",
+  "preinstall_manifest_sha256": "bcb6779f3780ac4d0226aad05c0df4b85de853ea26c06c6b0e49a812b7a924d2",
+  "product_identity": {
+    "bundle_executable": "ColorKeep",
+    "bundle_identifier": "com.adobe.AfterEffects.ColorKeep",
+    "bundle_package_type": "eFKT"
+  },
+  "production_source_sha256": "3ff3a4d4319f5b3b5519e517fcf591be417c97e4e9dd62117fe4e42f66ebdfd3",
+  "project_sha256": "dc9f0d66811f39396fa295f202a6d32738264ccc6a2f581236ec443c7ce3e914",
+  "schema": "colorkeep.count9-incremental-install-identity/1",
+  "stable_all10_preflight_collections": [
+    {
+      "after_effects": [],
+      "bundles": [
+        {
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ],
+          "bundle_count": 1,
+          "codesign_exact": true,
+          "name": "OLMBlur",
+          "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMBlur.plugin",
+          "sha256": "21b629849011847784aba3b5311f42706504aded3b2c70e0dd3a241427e9ecf6",
+          "sha256_exact": true,
+          "universal_exact": true
+        },
+        {
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ],
+          "bundle_count": 1,
+          "codesign_exact": true,
+          "name": "ColorKeep",
+          "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/ColorKeep.plugin",
+          "sha256": "fcd501dae5e62aaa0bb8c022cc55c3a6735e3021d465b42b80c939f33624dd77",
+          "sha256_exact": true,
+          "universal_exact": true
+        },
+        {
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ],
+          "bundle_count": 1,
+          "codesign_exact": true,
+          "name": "OLMColorKey",
+          "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMColorKey.plugin",
+          "sha256": "2e7a090b73cb08af50003768ca2a72784368104f3aad215ad2531e14bd491258",
+          "sha256_exact": true,
+          "universal_exact": true
+        },
+        {
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ],
+          "bundle_count": 1,
+          "codesign_exact": true,
+          "name": "OLMDirectionalBlur",
+          "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin",
+          "sha256": "1dd6c11889a261fadec2f6cd64440c8a3e7afcadcaa59631714e0ffc232ac3e4",
+          "sha256_exact": true,
+          "universal_exact": true
+        },
+        {
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ],
+          "bundle_count": 1,
+          "codesign_exact": true,
+          "name": "OLMDistanceGradation",
+          "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDistanceGradation.plugin",
+          "sha256": "231421e4a0c1607a70947778d99d748baefe07078b7e1145f4a4700268116605",
+          "sha256_exact": true,
+          "universal_exact": true
+        },
+        {
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ],
+          "bundle_count": 1,
+          "codesign_exact": true,
+          "name": "OLMKiraKira",
+          "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin",
+          "sha256": "69da64666478b25957aa268f6bb6fbc869c3d50b61759f9ca00172045afb5194",
+          "sha256_exact": true,
+          "universal_exact": true
+        },
+        {
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ],
+          "bundle_count": 1,
+          "codesign_exact": true,
+          "name": "OLMRadialBlur",
+          "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin",
+          "sha256": "03e837e8a9ccebbc3e03479b4d8a66f65aa85cce1ac0be616b14dac82284d548",
+          "sha256_exact": true,
+          "universal_exact": true
+        },
+        {
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ],
+          "bundle_count": 1,
+          "codesign_exact": true,
+          "name": "OLMSmoother",
+          "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother.plugin",
+          "sha256": "1d24d89fe1511d3cc69ca46498dc9e76ed7a088a163cd5f79d3e87f70a34de5e",
+          "sha256_exact": true,
+          "universal_exact": true
+        },
+        {
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ],
+          "bundle_count": 1,
+          "codesign_exact": true,
+          "name": "OLMSmoother2",
+          "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother2.plugin",
+          "sha256": "b8e399a215ffb43d6332593391995daf12bd2e2770ab8757c3ca822993ced69c",
+          "sha256_exact": true,
+          "universal_exact": true
+        },
+        {
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ],
+          "bundle_count": 1,
+          "codesign_exact": true,
+          "name": "OLMToonDilate",
+          "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin",
+          "sha256": "fe0a4959a677eb495f290fc384d93a2da4b66119f07bd8d1e5dac0847f95c5e9",
+          "sha256_exact": true,
+          "universal_exact": true
+        }
+      ],
+      "claim_boundary": "installed bundle identity and AE restart age only; no plugin load or render claim",
+      "installed_after": "2026-08-12T15:46:29.944555+00:00",
+      "status": "ae_not_running"
+    },
+    {
+      "after_effects": [],
+      "bundles": [
+        {
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ],
+          "bundle_count": 1,
+          "codesign_exact": true,
+          "name": "OLMBlur",
+          "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMBlur.plugin",
+          "sha256": "21b629849011847784aba3b5311f42706504aded3b2c70e0dd3a241427e9ecf6",
+          "sha256_exact": true,
+          "universal_exact": true
+        },
+        {
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ],
+          "bundle_count": 1,
+          "codesign_exact": true,
+          "name": "ColorKeep",
+          "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/ColorKeep.plugin",
+          "sha256": "fcd501dae5e62aaa0bb8c022cc55c3a6735e3021d465b42b80c939f33624dd77",
+          "sha256_exact": true,
+          "universal_exact": true
+        },
+        {
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ],
+          "bundle_count": 1,
+          "codesign_exact": true,
+          "name": "OLMColorKey",
+          "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMColorKey.plugin",
+          "sha256": "2e7a090b73cb08af50003768ca2a72784368104f3aad215ad2531e14bd491258",
+          "sha256_exact": true,
+          "universal_exact": true
+        },
+        {
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ],
+          "bundle_count": 1,
+          "codesign_exact": true,
+          "name": "OLMDirectionalBlur",
+          "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin",
+          "sha256": "1dd6c11889a261fadec2f6cd64440c8a3e7afcadcaa59631714e0ffc232ac3e4",
+          "sha256_exact": true,
+          "universal_exact": true
+        },
+        {
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ],
+          "bundle_count": 1,
+          "codesign_exact": true,
+          "name": "OLMDistanceGradation",
+          "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDistanceGradation.plugin",
+          "sha256": "231421e4a0c1607a70947778d99d748baefe07078b7e1145f4a4700268116605",
+          "sha256_exact": true,
+          "universal_exact": true
+        },
+        {
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ],
+          "bundle_count": 1,
+          "codesign_exact": true,
+          "name": "OLMKiraKira",
+          "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin",
+          "sha256": "69da64666478b25957aa268f6bb6fbc869c3d50b61759f9ca00172045afb5194",
+          "sha256_exact": true,
+          "universal_exact": true
+        },
+        {
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ],
+          "bundle_count": 1,
+          "codesign_exact": true,
+          "name": "OLMRadialBlur",
+          "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin",
+          "sha256": "03e837e8a9ccebbc3e03479b4d8a66f65aa85cce1ac0be616b14dac82284d548",
+          "sha256_exact": true,
+          "universal_exact": true
+        },
+        {
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ],
+          "bundle_count": 1,
+          "codesign_exact": true,
+          "name": "OLMSmoother",
+          "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother.plugin",
+          "sha256": "1d24d89fe1511d3cc69ca46498dc9e76ed7a088a163cd5f79d3e87f70a34de5e",
+          "sha256_exact": true,
+          "universal_exact": true
+        },
+        {
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ],
+          "bundle_count": 1,
+          "codesign_exact": true,
+          "name": "OLMSmoother2",
+          "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother2.plugin",
+          "sha256": "b8e399a215ffb43d6332593391995daf12bd2e2770ab8757c3ca822993ced69c",
+          "sha256_exact": true,
+          "universal_exact": true
+        },
+        {
+          "architectures": [
+            "x86_64",
+            "arm64"
+          ],
+          "bundle_count": 1,
+          "codesign_exact": true,
+          "name": "OLMToonDilate",
+          "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin",
+          "sha256": "fe0a4959a677eb495f290fc384d93a2da4b66119f07bd8d1e5dac0847f95c5e9",
+          "sha256_exact": true,
+          "universal_exact": true
+        }
+      ],
+      "claim_boundary": "installed bundle identity and AE restart age only; no plugin load or render claim",
+      "installed_after": "2026-08-12T15:46:29.944555+00:00",
+      "status": "ae_not_running"
+    }
+  ],
+  "status": "installed_identity_exact_no_ae_execution",
+  "transaction": {
+    "ae_processes_after": [],
+    "ae_processes_before": [],
+    "atomic_exchange_api": "renameatx_np(RENAME_SWAP)",
+    "candidate_staged_verified_before_swap": true,
+    "identity_changed_plugins": [
+      "ColorKeep"
+    ],
+    "identity_top_level_changed_fields": [
+      "accepted_at",
+      "installed_after"
+    ],
+    "new_binary_sha256": "fcd501dae5e62aaa0bb8c022cc55c3a6735e3021d465b42b80c939f33624dd77",
+    "old_binary_sha256": "262b73e656d4363dce0de6f0fe819fabf461e157ca7cedd98cad107c8db87fe8",
+    "post_identity_sha256": "869a5e88ab34b3b26cc4a3786edb6de93f0e10c88b69c33f6e8d7afb6f18da90",
+    "pre_identity_sha256": "90e37eefd68f990e137d23d46212c7039ec49f03e86bfe076765cc350da3820a",
+    "production_source_sha256_after": "3ff3a4d4319f5b3b5519e517fcf591be417c97e4e9dd62117fe4e42f66ebdfd3",
+    "production_source_sha256_before": "3ff3a4d4319f5b3b5519e517fcf591be417c97e4e9dd62117fe4e42f66ebdfd3",
+    "rollback_original": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/colorkeep_count9_incremental_install_20260813/moved_old/ColorKeep.plugin",
+    "same_volume_atomic_bundle_exchange": true,
+    "schema": "colorkeep.count9-incremental-install-transaction/1",
+    "source_before_after_exact": true
+  },
+  "transaction_sha256": "fa51e4297b153964a47cc4fc931689268ef7ee88a2155fe63922dc6dbb330c37"
+}

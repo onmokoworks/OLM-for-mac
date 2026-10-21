@@ -1,0 +1,107 @@
+{
+  "active_source_sha256": {
+    "PF16": "c9d92745cba73fde78d7ad5868d643ad7a88b1dd481e6caacfc7c945ae153b3c",
+    "PF32": "4a7af04987dad9d83589e8609698abaff3f3d89547143c8ad44255bbc62c73f7",
+    "PF8": "85143eda82a237f32b5c9b1d3cf5f73a121bffa9eaba6e05d4728bda4216f000"
+  },
+  "authorities": {
+    "frame_generator_sha256": "1b65a1edeab6e73624570efe32036c2b29733c599f28ca5e2ea621ade199a82e",
+    "probe_sha256": "016da907ff714d0f106babb9975d7eac2ec7804a235d3d3b2ccec970d945c265",
+    "production_sha256": "b74b3d2c7ea6724593b28f82d36615e071e18d813e5b99cc948e26a447fdb0d1"
+  },
+  "claim_boundary": {
+    "not_proven": [
+      "Type2 numerical equality",
+      "arbitrary source",
+      "native AE",
+      "installed candidate",
+      "remaining Type1 families"
+    ],
+    "proven": "24 fixed Rotation Type1 edge/noise cells retain pre-guard output and nine source mutations reject on each architecture"
+  },
+  "mutation_rejects_per_arch": 9,
+  "positive_cells_per_arch": 24,
+  "promotion_state": "hostless_closed_universal_rebuild_and_install_pending",
+  "runs": [
+    {
+      "arch": "arm64",
+      "lines": [
+        "POS PF8 outer f50 nv25 412a0d2d82c182e122c534fc874c10d808f4c712308ee82aa074128f645ebb0f",
+        "POS PF8 outer f50 nv100 8dfbda28b064258b192736fb578c81c25691b06e1f0c9fb24836d8987f60dc18",
+        "POS PF8 outer f100 nv25 cb3dbfb81ac76cccac8aebdb1ac0606e2a7bd3be073a5f26dbf16c3d7a123d05",
+        "POS PF8 outer f100 nv100 0f989faffd8cd8769f2fae4b2bdefdd475dffc8b2c39e413c20463be87bc16d5",
+        "POS PF8 inner f50 nv25 cce9e179a15d3c65fd5940e6a8f238db23b3b43fe68cb996503cc7ab730d3845",
+        "POS PF8 inner f50 nv100 6f49d3a8047855e5b63fecf99d73fe0de3ba1fc338f228d4c2348dec256a7333",
+        "POS PF8 inner f100 nv25 3afc933d9cdce5b1e61e747364429334388fecd54b36b0f979ce645759278593",
+        "POS PF8 inner f100 nv100 5adafcecb7478a3d97edd705a9fa2667dbd5b13212b803c7ee7fbcbda20b8d49",
+        "NEG PF8 m0 reject",
+        "NEG PF8 m1 reject",
+        "NEG PF8 m2 reject",
+        "POS PF16 outer f50 nv25 a41ae87b0eb6c2433029061cdb895ed77f73a2bd12a1a4a9d93e5609512f2f5e",
+        "POS PF16 outer f50 nv100 af99e299d12f1ce6fb604657f3c921191ba59fb7320246bb4c05689da838a676",
+        "POS PF16 outer f100 nv25 476d76021301b8581a7d7868d7de72e05be0183ed83a8100bc1f5a28afa76479",
+        "POS PF16 outer f100 nv100 6288f9d4f97293fdcb0b16bd4a39f52c1f39101e47c6ad991b6b142eaf715a10",
+        "POS PF16 inner f50 nv25 794263d2f41c8ce17fbfd66a813a687f30a8fbb503852114ce949deff4809bec",
+        "POS PF16 inner f50 nv100 8b558d202e1bf5906f8e6366f92affb26076894072fcbe1e2d0e8d6d467630ac",
+        "POS PF16 inner f100 nv25 daf30b1a06d6eaa2435d4561b5e75382587b34bb94d6e63f43ae583e198e6a53",
+        "POS PF16 inner f100 nv100 a98ccf549361fe563b17cc9004b000145fb2b02038ceec521f65c51f9c6553d9",
+        "NEG PF16 m0 reject",
+        "NEG PF16 m1 reject",
+        "NEG PF16 m2 reject",
+        "POS PF32 outer f50 nv25 55754452370cd9f35ccf51ba711bb493e755c5e5fd2fcdfa4cdcf19353cc063f",
+        "POS PF32 outer f50 nv100 4a227a8ffcc39d79dcc0f421690bbf88644bddfb2f898b8ff8d555a1754d7513",
+        "POS PF32 outer f100 nv25 482616a511cf4f38782ea1683bba605107718cd95c6427de0871cfa24d6c7f77",
+        "POS PF32 outer f100 nv100 7a42cbee43b390f8432637d436a35acbcdbc2fe6c90ad293f1b46a37546e41d7",
+        "POS PF32 inner f50 nv25 5199856228b504f20a0f070c4546ec9098eea9a705bb4a78e83d3f38e3fba7bd",
+        "POS PF32 inner f50 nv100 eeb3eada289085a54337fad86f8c80d8de012f940c844f745d1135f4e442f771",
+        "POS PF32 inner f100 nv25 7ba63da1933a428666f6b577a3bff9ffacda5ee1487f7734bfa70f2524c082d3",
+        "POS PF32 inner f100 nv100 440ca5042fdc600dee57910e2de749df0a68c96b190ef1d3dfbed768556d2cb0",
+        "NEG PF32 m0 reject",
+        "NEG PF32 m1 reject",
+        "NEG PF32 m2 reject"
+      ],
+      "transcript_sha256": "352d37c7c33c62172a07fd0b6180e44b4c5d9d694ebee96b6b04db1d4af32fbe"
+    },
+    {
+      "arch": "x86_64",
+      "lines": [
+        "POS PF8 outer f50 nv25 412a0d2d82c182e122c534fc874c10d808f4c712308ee82aa074128f645ebb0f",
+        "POS PF8 outer f50 nv100 8dfbda28b064258b192736fb578c81c25691b06e1f0c9fb24836d8987f60dc18",
+        "POS PF8 outer f100 nv25 cb3dbfb81ac76cccac8aebdb1ac0606e2a7bd3be073a5f26dbf16c3d7a123d05",
+        "POS PF8 outer f100 nv100 0f989faffd8cd8769f2fae4b2bdefdd475dffc8b2c39e413c20463be87bc16d5",
+        "POS PF8 inner f50 nv25 cce9e179a15d3c65fd5940e6a8f238db23b3b43fe68cb996503cc7ab730d3845",
+        "POS PF8 inner f50 nv100 6f49d3a8047855e5b63fecf99d73fe0de3ba1fc338f228d4c2348dec256a7333",
+        "POS PF8 inner f100 nv25 3afc933d9cdce5b1e61e747364429334388fecd54b36b0f979ce645759278593",
+        "POS PF8 inner f100 nv100 5adafcecb7478a3d97edd705a9fa2667dbd5b13212b803c7ee7fbcbda20b8d49",
+        "NEG PF8 m0 reject",
+        "NEG PF8 m1 reject",
+        "NEG PF8 m2 reject",
+        "POS PF16 outer f50 nv25 a41ae87b0eb6c2433029061cdb895ed77f73a2bd12a1a4a9d93e5609512f2f5e",
+        "POS PF16 outer f50 nv100 af99e299d12f1ce6fb604657f3c921191ba59fb7320246bb4c05689da838a676",
+        "POS PF16 outer f100 nv25 476d76021301b8581a7d7868d7de72e05be0183ed83a8100bc1f5a28afa76479",
+        "POS PF16 outer f100 nv100 6288f9d4f97293fdcb0b16bd4a39f52c1f39101e47c6ad991b6b142eaf715a10",
+        "POS PF16 inner f50 nv25 794263d2f41c8ce17fbfd66a813a687f30a8fbb503852114ce949deff4809bec",
+        "POS PF16 inner f50 nv100 8b558d202e1bf5906f8e6366f92affb26076894072fcbe1e2d0e8d6d467630ac",
+        "POS PF16 inner f100 nv25 daf30b1a06d6eaa2435d4561b5e75382587b34bb94d6e63f43ae583e198e6a53",
+        "POS PF16 inner f100 nv100 a98ccf549361fe563b17cc9004b000145fb2b02038ceec521f65c51f9c6553d9",
+        "NEG PF16 m0 reject",
+        "NEG PF16 m1 reject",
+        "NEG PF16 m2 reject",
+        "POS PF32 outer f50 nv25 55754452370cd9f35ccf51ba711bb493e755c5e5fd2fcdfa4cdcf19353cc063f",
+        "POS PF32 outer f50 nv100 4a227a8ffcc39d79dcc0f421690bbf88644bddfb2f898b8ff8d555a1754d7513",
+        "POS PF32 outer f100 nv25 482616a511cf4f38782ea1683bba605107718cd95c6427de0871cfa24d6c7f77",
+        "POS PF32 outer f100 nv100 7a42cbee43b390f8432637d436a35acbcdbc2fe6c90ad293f1b46a37546e41d7",
+        "POS PF32 inner f50 nv25 5199856228b504f20a0f070c4546ec9098eea9a705bb4a78e83d3f38e3fba7bd",
+        "POS PF32 inner f50 nv100 eeb3eada289085a54337fad86f8c80d8de012f940c844f745d1135f4e442f771",
+        "POS PF32 inner f100 nv25 7ba63da1933a428666f6b577a3bff9ffacda5ee1487f7734bfa70f2524c082d3",
+        "POS PF32 inner f100 nv100 440ca5042fdc600dee57910e2de749df0a68c96b190ef1d3dfbed768556d2cb0",
+        "NEG PF32 m0 reject",
+        "NEG PF32 m1 reject",
+        "NEG PF32 m2 reject"
+      ],
+      "transcript_sha256": "352d37c7c33c62172a07fd0b6180e44b4c5d9d694ebee96b6b04db1d4af32fbe"
+    }
+  ],
+  "schema": "olmradialblur.type1-edge-noise-source-guard/1",
+  "status": "pass_hostless"
+}

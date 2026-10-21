@@ -1,0 +1,77 @@
+{
+  "schema": "olm.bounded-port-cycle-final-status/1",
+  "status": "cycle_closed_hostless_complete_ae_fail_closed_release_pending",
+  "closed_at": "2026-08-14T08:50:32.328727+00:00",
+  "stop_rule": "No further numerical seam expansion, AE retry, install, or release-gate run in this cycle.",
+  "installed_identity": {
+    "path": "refs/conformance/olm_installed_identity_manifest_20260806.json",
+    "sha256": "94c6a1eff87e11705a65be638953cb134ff64bd0d919e8501338601aab333650",
+    "plugins": 10,
+    "preflight_status": "ae_not_running",
+    "preflight_exact_bundles": 10
+  },
+  "hostless": {
+    "source_installed_authority": {
+      "path": "refs/conformance/olm_all10_current_source_installed_authority_20260813.json",
+      "sha256": "8138180651e805e352fdb6ffd2e91abd426803d7395d949a545e73c421f3e6f9",
+      "status": "pass_all10_current_source_candidate_installed_exact_ae_deferred"
+    },
+    "bounded_public_routes": {
+      "path": "refs/conformance/olm_all10_current_installed_public_routes_20260813.json",
+      "sha256": "59bacd08c39a6f145242552dc33038496147df234c14916dfae420575c7e8545",
+      "status": "PASS_ALL10_CURRENT_INSTALLED_PUBLIC_ROUTES_AE_FREE_BOUNDED"
+    },
+    "full_runner_attempt": {
+      "runs": 1,
+      "elapsed_seconds": 1592.03,
+      "reported_failures": 14,
+      "failure_classification": "stale aggregate or historical authority bindings only; no pixel-output mismatch",
+      "breakdown": {
+        "ColorKeep": 2,
+        "OLMColorKey": 4,
+        "OLMKiraKira": 8
+      },
+      "repair_validation": "All 14 failing current-authority commands were replaced or repaired and passed targeted validation. Unaffected commands retain the completed full-run result; the full runner was intentionally not repeated."
+    }
+  },
+  "ae_checkpoint": {
+    "attempts": 1,
+    "retries": 0,
+    "runner": {
+      "path": "scripts/run_olm_all10_current_identity_final_v4_20260814.py",
+      "sha256": "94cb7d1d613b5fa88be190047ef8692854f07187381a211c96b6fb64ce7bda31"
+    },
+    "raw": {
+      "path": "refs/conformance/olm_all10_current_identity_v4_fresh_ae_smoke_raw_20260814.json",
+      "sha256": "d16c38520e193209b9b3647103e9b9b9199d5453f98970125f2180d11156bf50"
+    },
+    "summary": {
+      "path": "refs/conformance/olm_all10_current_identity_v4_fresh_ae_smoke_20260814.json",
+      "sha256": "23f7afe57640ed500a5ef7173d5e2d1f80c20c39c95478fc06f3831347c247e7"
+    },
+    "receipt_sha256": "0e5d5eccf2e9c0e3f5a1579069692dd047ae67af405468ddb626b0f381f7364f",
+    "result": "fail_closed",
+    "reason": "AE return did not appear within the one-shot timeout",
+    "plugin_rows_observed": 0,
+    "numerical_assessment": "not_assessed",
+    "owned_pid": 65658,
+    "cleanup": "SIGTERM then SIGKILL of the exact owned PID; remaining AE-family processes zero"
+  },
+  "release": {
+    "path": "refs/conformance/olm_release_gate_status_20260806.json",
+    "sha256": "99fef44827d81746b00587dce150fd14b1bef7685d32a374a701ebcb3fb46e87",
+    "status": "release_gate_pending_or_invalid",
+    "releasable": false,
+    "formal_gate_run_after_checkpoint": false
+  },
+  "deferred_next_cycle_only": {
+    "native_ucrt_dependent_conditions": 15,
+    "breakdown": {
+      "OLMDirectionalBlur_x86_64": 6,
+      "OLMDistanceGradation_PF32_Power": 8,
+      "OLMRadialBlur_Strength290": 1
+    },
+    "current_behavior": "fail_closed",
+    "additional_hostless_seam_candidates": "not started"
+  }
+}

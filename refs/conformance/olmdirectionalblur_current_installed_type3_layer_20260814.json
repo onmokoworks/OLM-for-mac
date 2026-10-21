@@ -1,0 +1,42 @@
+{
+  "after_effects_processes": [],
+  "claim": {
+    "arbitrary_source_tuple_geometry": false,
+    "input_layer_output_padding_headers_immutable": true,
+    "installed_public_raw_exact_depths": [
+      8,
+      16,
+      32
+    ],
+    "native_after_effects": false,
+    "native_windows": false,
+    "one_away_fail_closed_per_slice": 54,
+    "windows_exported_smart_same_source": true
+  },
+  "identities": {
+    "accepted_identity_sha256": "94c6a1eff87e11705a65be638953cb134ff64bd0d919e8501338601aab333650",
+    "build_identity_sha256": "ddc9256d6ca78eec2f521335573589f7c626ae5827927a3399ea64d3a1934eff",
+    "fixture_png_sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4",
+    "installed_binary_sha256": "856ab700df0881cfb039e9c9d0675bf46a7e92b56e8cb0e311d820fd719bc0de",
+    "probe_sha256": "577a5dcc548b8b8a6e67b5c4bef86c88499f5544c42acc1751a2044ac831c710",
+    "source_sha256": "494116880d037a0d44a48b0e0ebe0fc5358b4cd8892b90ca8c61ea8a7bb2e845",
+    "transaction_sha256": "237cb44594e15267e5d397c348b2ec4c8fefef06ad81eb8d0ed1db86da96f9fe",
+    "type3_closure_sha256": "cb15e04eb308dc5329eb5724f93b4d204f70b743a11dcda7e6ceccc79751de08"
+  },
+  "schema": "olmdirectionalblur.current-installed-type3-layer/1",
+  "slices": {
+    "arm64": {
+      "negative": 54,
+      "positive": 3,
+      "total": 57,
+      "transcript_sha256": "395c9f84e0aa17e1ca43303b740d7f8734115856b07244c51ac17762d5683058"
+    },
+    "x86_64": {
+      "negative": 54,
+      "positive": 3,
+      "total": 57,
+      "transcript_sha256": "395c9f84e0aa17e1ca43303b740d7f8734115856b07244c51ac17762d5683058"
+    }
+  },
+  "status": "PASS_CURRENT_INSTALLED_TYPE3_LAYER_BOTH_SLICES_57_OF_57_AE_FREE"
+}

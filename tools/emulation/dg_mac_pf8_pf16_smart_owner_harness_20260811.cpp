@@ -23,6 +23,10 @@ static PF_Err checkout_output(PF_ProgPtr, PF_EffectWorld **world) {
 	return PF_Err_NONE;
 }
 
+static PF_Err checkin_pixels(PF_ProgPtr, A_long index) {
+	return index == DG_INPUT ? PF_Err_NONE : PF_Err_BAD_CALLBACK_PARAM;
+}
+
 static PF_Err checkout_param(A_long index, PF_ParamDef *param) {
 	if (index <= 0 || index >= DG_NUM_PARAMS || !param) return PF_Err_BAD_CALLBACK_PARAM;
 	*param = g_params[index];
@@ -84,7 +88,7 @@ static int run_case(short depth, A_long interpolation, A_long blur, bool backgro
 	in.downsample_y = {1, 1};
 	PF_OutData out{};
 	PF_SmartRenderInput smart_input{depth};
-	PF_SmartRenderCallbacks callbacks{checkout_pixels, checkout_output};
+	PF_SmartRenderCallbacks callbacks{checkout_pixels, checkin_pixels, checkout_output};
 	PF_SmartRenderExtra extra{&smart_input, &callbacks};
 	if (SmartRender(&in, &out, &extra) != PF_Err_NONE) return 10 + depth;
 

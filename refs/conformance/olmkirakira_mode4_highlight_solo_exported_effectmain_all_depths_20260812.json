@@ -10,8 +10,13 @@
     "padding": 12,
     "blur_mode": 4,
     "merge_mode": 2,
-    "active_ray": "Horizontal",
-    "length": 0,
+    "active_rays": [
+      {
+        "name": "Highlight",
+        "length": 3,
+        "use_ramp": true
+      }
+    ],
     "horizontal_use_ramp": false,
     "diagonal2_length": 0,
     "highlight_radius": 3,
@@ -20,6 +25,7 @@
     "glow_rotation": 1.0,
     "windows_rotation_raw_fixed": 1,
     "channel": 1,
+    "source_pattern": "semi_transparent_color",
     "semi_transparent": true
   },
   "rows": [
@@ -397,5 +403,5 @@
     "mode4_natural_families": "olmkirakira_mode4_natural_families_exact_20260811.json",
     "mode4_compose_matrix": "olmkirakira_mode4_compose_matrix_actual_aex_20260811.json"
   },
-  "boundary": "Actual exported SmartPreRender/SmartRender versus Mac public EffectMain(PF_Cmd_RENDER). The Gaussian Length 50 tuple is admitted by the existing 9x7 Mode3 family evidence and is compared here through the complete exported owner and typed writer. Nondefault ANGLE uses the Windows owner's observed raw-fixed-as-degree convention."
+  "boundary": "Actual exported SmartPreRender/SmartRender versus Mac public EffectMain(PF_Cmd_RENDER). Mode 4 uses the exported owner's directed angle table {rotation+90, rotation, rotation+45, rotation+135}; each admitted ray then passes through the recovered recurrence, fixed inner aggregation, and typed writer. Nondefault ANGLE uses the Windows owner's observed raw-fixed-as-degree convention."
 }

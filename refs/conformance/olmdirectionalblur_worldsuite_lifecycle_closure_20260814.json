@@ -1,0 +1,241 @@
+{
+  "claims": {
+    "installed_binary": false,
+    "native_ae": false,
+    "numerical_admission_changed": false,
+    "primary_error_precedes_release_error": true,
+    "real_sdk_source_included": true,
+    "returned_errors_and_throws_are_bounded": true,
+    "success_null_and_function_null_fail_closed": true,
+    "two_formats_then_release_once": true
+  },
+  "rows": [
+    {
+      "acquire": 1,
+      "err": 0,
+      "formats": [
+        842229089,
+        842229089
+      ],
+      "get": 2,
+      "name": "success",
+      "release": 1
+    },
+    {
+      "acquire": 0,
+      "err": 516,
+      "formats": [
+        1717854562,
+        1717854562
+      ],
+      "get": 0,
+      "name": "null_pica",
+      "release": 0
+    },
+    {
+      "acquire": 0,
+      "err": 516,
+      "formats": [
+        1717854562,
+        1717854562
+      ],
+      "get": 0,
+      "name": "null_acquire",
+      "release": 0
+    },
+    {
+      "acquire": 0,
+      "err": 516,
+      "formats": [
+        1717854562,
+        1717854562
+      ],
+      "get": 0,
+      "name": "null_release",
+      "release": 0
+    },
+    {
+      "acquire": 1,
+      "err": 91,
+      "formats": [
+        1717854562,
+        1717854562
+      ],
+      "get": 0,
+      "name": "acquire_error",
+      "release": 0
+    },
+    {
+      "acquire": 1,
+      "err": 516,
+      "formats": [
+        1717854562,
+        1717854562
+      ],
+      "get": 0,
+      "name": "acquire_success_null",
+      "release": 1
+    },
+    {
+      "acquire": 1,
+      "err": 94,
+      "formats": [
+        1717854562,
+        1717854562
+      ],
+      "get": 0,
+      "name": "acquire_throw_pf",
+      "release": 0
+    },
+    {
+      "acquire": 1,
+      "err": 4,
+      "formats": [
+        1717854562,
+        1717854562
+      ],
+      "get": 0,
+      "name": "acquire_throw_oom",
+      "release": 0
+    },
+    {
+      "acquire": 1,
+      "err": 8,
+      "formats": [
+        1717854562,
+        1717854562
+      ],
+      "get": 0,
+      "name": "acquire_throw_other",
+      "release": 0
+    },
+    {
+      "acquire": 1,
+      "err": 516,
+      "formats": [
+        1717854562,
+        1717854562
+      ],
+      "get": 0,
+      "name": "get_function_null",
+      "release": 1
+    },
+    {
+      "acquire": 1,
+      "err": 92,
+      "formats": [
+        1717854562,
+        1717854562
+      ],
+      "get": 1,
+      "name": "get_error_1",
+      "release": 1
+    },
+    {
+      "acquire": 1,
+      "err": 92,
+      "formats": [
+        842229089,
+        1717854562
+      ],
+      "get": 2,
+      "name": "get_error_2",
+      "release": 1
+    },
+    {
+      "acquire": 1,
+      "err": 93,
+      "formats": [
+        842229089,
+        1717854562
+      ],
+      "get": 2,
+      "name": "get_throw_pf",
+      "release": 1
+    },
+    {
+      "acquire": 1,
+      "err": 4,
+      "formats": [
+        842229089,
+        1717854562
+      ],
+      "get": 2,
+      "name": "get_throw_oom",
+      "release": 1
+    },
+    {
+      "acquire": 1,
+      "err": 7,
+      "formats": [
+        842229089,
+        1717854562
+      ],
+      "get": 2,
+      "name": "get_throw_other",
+      "release": 1
+    },
+    {
+      "acquire": 1,
+      "err": 95,
+      "formats": [
+        842229089,
+        842229089
+      ],
+      "get": 2,
+      "name": "release_error",
+      "release": 1
+    },
+    {
+      "acquire": 1,
+      "err": 96,
+      "formats": [
+        842229089,
+        842229089
+      ],
+      "get": 2,
+      "name": "release_throw_pf",
+      "release": 1
+    },
+    {
+      "acquire": 1,
+      "err": 4,
+      "formats": [
+        842229089,
+        842229089
+      ],
+      "get": 2,
+      "name": "release_throw_oom",
+      "release": 1
+    },
+    {
+      "acquire": 1,
+      "err": 9,
+      "formats": [
+        842229089,
+        842229089
+      ],
+      "get": 2,
+      "name": "release_throw_other",
+      "release": 1
+    },
+    {
+      "acquire": 1,
+      "err": 92,
+      "formats": [
+        842229089,
+        1717854562
+      ],
+      "get": 2,
+      "name": "primary_error_wins",
+      "release": 1
+    }
+  ],
+  "rows_sha256": "069236889432e34fff098766662d308c8c915f0e3e526bb54f05d9110392d625",
+  "schema": "olm.directionalblur-worldsuite-lifecycle/1",
+  "source": {
+    "path": "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp",
+    "sha256": "b39732e285688f1f8ae2fc5f64efcfba3d7ac52a1451a2685dd7b606bb18fb12"
+  },
+  "status": "pass"
+}

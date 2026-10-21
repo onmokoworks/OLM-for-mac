@@ -22,11 +22,11 @@ CASES = (
     ("horizontal_solo", "refs/conformance/olmkirakira_mode4_horizontal_solo_exported_effectmain_all_depths_20260812.json",
      {"OLM_KIRA_HORIZONTAL_LENGTH": "5", "OLM_KIRA_HORIZONTAL_USE_RAMP": "1",
       "OLM_KIRA_DIAGONAL2_LENGTH": "0", "OLM_KIRA_HIGHLIGHT_RADIUS": "0", "OLM_KIRA_HIGHLIGHT_USE_RAMP": "0"},
-     [True, True, False]),
+     [True, True, True]),
     ("diagonal2_solo", "refs/conformance/olmkirakira_mode4_diagonal2_solo_exported_effectmain_all_depths_20260812.json",
      {"OLM_KIRA_HORIZONTAL_LENGTH": "0", "OLM_KIRA_HORIZONTAL_USE_RAMP": "0",
       "OLM_KIRA_DIAGONAL2_LENGTH": "7", "OLM_KIRA_HIGHLIGHT_RADIUS": "0", "OLM_KIRA_HIGHLIGHT_USE_RAMP": "0"},
-     [True, True, False]),
+     [True, True, True]),
     ("highlight_solo", "refs/conformance/olmkirakira_mode4_highlight_solo_exported_effectmain_all_depths_20260812.json",
      {"OLM_KIRA_HORIZONTAL_LENGTH": "0", "OLM_KIRA_HORIZONTAL_USE_RAMP": "0",
       "OLM_KIRA_DIAGONAL2_LENGTH": "0", "OLM_KIRA_HIGHLIGHT_RADIUS": "3", "OLM_KIRA_HIGHLIGHT_USE_RAMP": "1"},
@@ -34,7 +34,7 @@ CASES = (
     ("multiray_ramp_merge2_rotation1", "refs/conformance/olmkirakira_mode4_multiray_exported_effectmain_all_depths_20260812.json",
      {"OLM_KIRA_HORIZONTAL_LENGTH": "5", "OLM_KIRA_HORIZONTAL_USE_RAMP": "1",
       "OLM_KIRA_DIAGONAL2_LENGTH": "7", "OLM_KIRA_HIGHLIGHT_RADIUS": "3", "OLM_KIRA_HIGHLIGHT_USE_RAMP": "1"},
-     [False, False, False]),
+     [True, True, True]),
 )
 
 
@@ -57,7 +57,7 @@ def main() -> int:
         valid &= case_valid
         summary.append({"case": name, "exact": exact, "expected": expected,
                         "lifecycle": lifecycle, "valid": case_valid})
-    print(json.dumps({"status": "boundary_fixed" if valid else "unexpected", "cases": summary}))
+    print(json.dumps({"status": "exact" if valid else "unexpected", "cases": summary}))
     return 0 if valid else 1
 
 

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "olmradialblur-type3-current-install-smoke/1",
+  "title": "OLMRadialBlur Type3 current-install AE smoke evidence",
+  "type": "object",
+  "required": ["schema", "status", "source", "build", "installed", "host_smoke", "claims_not_made"],
+  "properties": {
+    "schema": {"const": "olmradialblur-type3-current-install-smoke/1"},
+    "status": {"enum": ["prepared_not_executed", "installed_host_smoke_pass"]},
+    "host_smoke": {
+      "type": "object",
+      "required": ["fresh_process", "renderer", "depth", "module_mapping_persisted", "default_render", "type3", "pixel_exact"],
+      "properties": {
+        "fresh_process": {"const": true}, "renderer": {"const": "SOFTWARE"}, "depth": {"const": "PF32"},
+        "module_mapping_persisted": {"type": "boolean"}, "default_render": {"type": "boolean"},
+        "pixel_exact": {"const": false},
+        "type3": {"enum": ["not_executed", "live_render_plumbing_pass", "live_type3_unavailable_fail_closed", "live_type3_timeout"]}
+      }
+    },
+    "claims_not_made": {"type": "array", "contains": {"const": "No live AE Type3 Layer pixel-exact or Smart numerical claim"}}
+  }
+}

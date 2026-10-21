@@ -1,0 +1,5 @@
+# ColorKeep bounded public-owner guard closure — 2026-08-12
+
+The unchanged Windows AEX exported Smart owner under the pinned AEXCompat worker, the current installed Mac public `EffectMain`, and an isolated Universal candidate are raw exact for the six declared 11×7 cells: counts 5/100 × PF8/PF16/PF32. The candidate classic PF8/PF16 paths are also raw-identical to the four corresponding exported Smart-owner cells. The Mac public harness also pins complete input immutability, 12-byte input/output row padding, world headers, 101 ordered parameter checkout/checkins, and layer/output lifecycle.
+
+The candidate rejects all 62 one-away Smart/classic guard cases before pixel iteration. Classic PF32 and every unlisted geometry, rowbytes, format, count, or palette remain fail-closed. Smart parameter work is phase-ordered as all 101 checkouts, then 100 color conversions, then all 101 checkins; a color or checkin error preserves its first error while cleanup continues through every successfully checked-out parameter. The build is isolated; the current install was not changed.

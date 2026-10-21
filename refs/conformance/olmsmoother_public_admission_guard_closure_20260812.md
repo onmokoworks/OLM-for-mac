@@ -1,0 +1,7 @@
+# OLMSmoother / OLMSmoother2 source-bound public admission guards
+
+Verdict: `PASS_69_SOURCE_BOUND_ATOMIC_PUBLIC_GUARD_AND_LIFECYCLE_CASES`
+
+Both implementations obtain input and output pixel formats from the output-owning world contract and require matching worlds with overflow-safe disjoint active spans and proven row layouts. Admission is entry-specific and fixed-source: OLMSmoother v1 admits only retained exported classic-owner tuples paired with their rowwise active-source SHA-256; OLMSmoother2 does the same for retained Smart-owner cells. V1 Smart and v2 classic remain fail-closed.
+
+Thirty OLMSmoother and thirty-nine OLMSmoother2 cases cover accepted evidence cells, unaligned PF16 input safely copied into aligned staging, first/middle source mutation rejection, both partial-overlap directions, unowned-entry and PF32 classic rejection, format/data/dimension/rowbytes/row-offset/extent/layout faults, inactive-field and tuple/geometry one-aways, ColorParamSuite returned errors and one-ULP decoded-color mutation, parameter/layer checkin failures, and partial Smart/PreRender checkout failures. Padding is excluded from source identity. Numerical work uses aligned private staging; host output is committed only after successful cleanup. Rejected/error outputs and failed PreRender rectangles remain untouched. Direct-core-only fixtures and the synthetic 3x2 PF16 classic adapter remain regression evidence but are not public admissions. Universal build, install, and AE smoke are separate gates.

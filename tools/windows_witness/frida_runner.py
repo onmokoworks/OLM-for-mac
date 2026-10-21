@@ -289,6 +289,38 @@ class Capture:
                                 "module_base": str(base), "aex_sha256": self.contract["_runner"]["aex_sha256"],
                                 "renderer": self.contract["_runner"]["renderer"], "project_bpc": self.contract["_runner"]["project_bpc"]})
             return
+        if event_kind in {"call_edge", "trace_status"}:
+            if "module_base" not in self.observed:
+                raise RunnerError("agent emitted trace metadata before module identity")
+            fields = raw.get("trace") if isinstance(raw.get("trace"), dict) else {}
+            if isinstance(raw.get("data"), dict):
+                fields = {**raw["data"], **fields}
+            canonical = dict(fields)
+            for key, value in raw.items():
+                if key not in {"schema", "sequence", "timestamp", "thread_id", "event", "kind", "type", "module", "trace", "data"}:
+                    canonical.setdefault(key, value)
+            current_case = canonical.get("case_id", self.case_id)
+            if not current_case:
+                raise RunnerError("trace event has no case_id for the current invocation")
+            if self.case_id and str(current_case) != self.case_id:
+                raise RunnerError("agent case_id conflicts with current invocation")
+            if raw.get("thread_id") is not None:
+                canonical["thread_id"] = raw["thread_id"]
+            canonical_event = event_kind
+            if event_kind == "trace_status":
+                trace_state = str(canonical.get("status", "")).lower()
+                if trace_state not in {"started", "stopped", "error"}:
+                    raise RunnerError("trace_status has an unsupported status")
+                canonical_event = "trace_status_" + trace_state
+            canonical.update({"event": canonical_event, "prefix": canonical_event, "run_id": self.contract["_runner"]["run_id"],
+                              "case_id": str(current_case), "ae_pid": str(self.pid if self.pid is not None else self.observed.get("ae_pid", "")),
+                              "module_base": self.observed["module_base"], "aex_sha256": self.contract["_runner"]["aex_sha256"],
+                              "module": self.contract["_runner"]["module"], "renderer": self.contract["_runner"]["renderer"],
+                              "project_bpc": self.contract["_runner"]["project_bpc"]})
+            self.events.append(canonical)
+            if self._complete():
+                self.finished.set()
+            return
         if event_kind in {"call", "return"}:
             if "module_base" not in self.observed:
                 raise RunnerError("agent emitted a hook event before module identity")

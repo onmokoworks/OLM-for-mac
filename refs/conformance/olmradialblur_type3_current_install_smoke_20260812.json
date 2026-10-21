@@ -1,0 +1,71 @@
+{
+  "schema": "olmradialblur-type3-current-install-smoke/1",
+  "status": "installed_host_smoke_pass",
+  "source": {
+    "path": "mac/OLMRadialBlur/OLMRadialBlur.cpp",
+    "sha256": "36063ae68027d97169679b4b234f83ec871cdfed4f936ce6464c7a49cbc71743"
+  },
+  "build": {
+    "isolated_bundle": "handoff/mac_plugin_builds/olmradialblur_type3_20260812/OLMRadialBlur.plugin",
+    "binary_sha256": "7701c3cb864ec9a05c82de68d1ab3a57a18f9a9b4f97e3b8d7b1786a016818b3",
+    "identity_transcript": "handoff/mac_plugin_builds/olmradialblur_type3_20260812/BUILD_IDENTITY.txt",
+    "identity_transcript_sha256": "dba817141b71492b25022275facc2258357a5f11d079623b0fce963dfb2a2dc8",
+    "architectures": ["x86_64", "arm64"],
+    "codesign": "adhoc",
+    "codesign_deep_strict": true
+  },
+  "installed": {
+    "bundle": "~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin",
+    "binary_sha256": "7701c3cb864ec9a05c82de68d1ab3a57a18f9a9b4f97e3b8d7b1786a016818b3",
+    "matching_bundle_count": 1,
+    "previous_binary_sha256": "8a4bd278c3cbffcb924712c6ad20d8c0d70452c4fa2dd4d38fd7373020cd7934",
+    "recoverable_backup": "handoff/mac_plugin_backups/mediacore_20260812_radial_type3_before_install/OLMRadialBlur.plugin"
+  },
+  "host_smoke": {
+    "fresh_process": true,
+    "application": "Adobe After Effects 2026",
+    "ae_version": "26.3x87",
+    "ae_pid": 10809,
+    "renderer": "SOFTWARE",
+    "renderer_raw": 1816,
+    "depth": "PF32",
+    "effect_match_name": "OLM RadialBlur",
+    "effect_added": true,
+    "module_mapping_persisted": true,
+    "loaded_module_exact_path_segment_count": 4,
+    "default_render": true,
+    "default_output_sha256": "ff6ab6d686cc00e17a2b234d237041fb48c49b8e4ab93609ab0f31cde623bbe3",
+    "type3": "live_type3_timeout",
+    "type3_parameter_readback_retained": false,
+    "pixel_exact": false,
+    "ae_stopped": true,
+    "raw_observation": {
+      "path": "refs/conformance/olmradialblur_type3_current_install_smoke_raw_20260812/observation.json",
+      "sha256": "89ab32443afcc8c1542858cdc3502e484b7012b80e2454e029247282533b1ff6"
+    }
+  },
+  "separate_hostless_closure": {
+    "path": "refs/conformance/olmradialblur_type3_layer_span_natural_closure_20260812.json",
+    "sha256": "72f966198d2cbb8cdfe19ba7dd79ca17f2eb35f41d7c157408fd37dfdfd6b580",
+    "relation": "Direct internal-owner and public classic hostless exact evidence remains separate from this AE smoke."
+  },
+  "producer": {
+    "runner": "scripts/run_olmradialblur_type3_current_install_smoke_20260812.py",
+    "runner_sha256": "29cc18e4e8d4328793383b4652f1169248b47eb595a5a26336f73d743a36a2c8",
+    "post_capture_variant": "refs/conformance/olmradialblur_type3_current_install_smoke_runner_capture_20260812.py",
+    "post_capture_variant_sha256": "6f27778665de4a740040861869263a27e5e4663711dca2d03b1152f610099932",
+    "post_capture_variant_relation": "Later reconstructed/hardened variant; it did not generate the retained run.",
+    "retained_capture_protocol": "An earlier runner launched fresh AE PID 10809; the same runtime.jsx was then sent manually through DoScriptFile. Exact producing runner bytes were not retained, so raw artifacts and the protocol observation bound here are the authority.",
+    "payload": "tools/emulation/olmradialblur_type3_current_install_smoke_payload_20260812.jsx",
+    "payload_sha256": "cc05a61edc02dca67b6c6d939453864f83b283da6172f00829c4651047a26dba",
+    "schema": "refs/conformance/olmradialblur_type3_current_install_smoke_schema_20260812.json",
+    "schema_sha256": "1690e8cfad143b03f0ecf61ae26c26619c12a6c917492df6213eb1a8f4fcd8f8",
+    "cleanup": "runner finally terminates osascript and AE; retained run required SIGKILL after timeout"
+  },
+  "claims_not_made": [
+    "No live AE Type3 Layer pixel-exact or Smart numerical claim",
+    "No numerical inference from the default-render PNG",
+    "No claim that the timed-out Type3 Layer render completed",
+    "No promotion beyond the separately bounded hostless closure"
+  ]
+}

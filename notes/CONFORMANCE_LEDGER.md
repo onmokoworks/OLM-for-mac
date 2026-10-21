@@ -1,29 +1,1278 @@
 # OLM Conformance Ledger
 
-- 2026-08-12 OLMRadialBlur Rotation four-family closure: Dual Strength x
+- 2026-08-16 Batch5 final Mac AE host smoke: after one normal post-reboot AE
+  startup cleared the host preference-dialog bootstrap stall, one fresh
+  singleton AE 26.3x87 Software-render process loaded and applied all ten
+  accepted installed plug-ins. `OLMDirectionalBlur` alone remained enabled
+  for the generic 64x36 host frame; the other nine bounded effects were
+  disabled before `saveFrameToPng`. All ten PNG paths completed, vmmap bound
+  exactly one current installed executable per plug-in, every executable
+  remained equal to accepted identity `ede4857b…4079`, and AE exited with no
+  residual AE/aerender process. This is load/add/enable-state/mapping evidence
+  only; numerical behavior was not assessed. Canonical summary
+  `olm_all10_batch5_current_identity_direct_r_v7_fresh_ae_smoke_20260816.json`
+  is `84519be2…314e`; raw report is `5a101470…4ea2`.
+
+- 2026-08-15 DistanceGradation fixed PF32 Power native-UCRT closure: the
+  accepted 1,344-row Windows return (`c50c7db9…a5bf1`) binds 63 Distance
+  `powf(X, 2.25f)` pairs to 64-bit System32 UCRT 10.0.26100.8875
+  (`5e7709a6…6d0079`). Exactly one pair differs from macOS/libSystem:
+  input `0x3f4d07a5` returns Windows `0x3f1b5786` instead of
+  `0x3f1b5785`. All 992 actual-AEX XMM calls are mapped to the returned
+  table; the changed pair occurs four times in each Blur-2 background row
+  and nowhere in the other six public cells. Native-table replay through the
+  exported Windows Smart owner and the current Mac production body is full
+  RAW exact for all eight fixed 17x11 cells (2,992 bytes each). Production
+  source `e2f5020f…dd9a9` therefore admits only Power 2.25, Blur 2–5,
+  background off/on, and the complete bit-exact PF32 source/parameter tuple;
+  it returns the single witnessed UCRT word only inside that admission. The
+  public `PF_Cmd_SMART_RENDER` harness closes all eight positives with input
+  immutable, padding preserved, balanced callbacks, seven Power-specific
+  rejects, 21 other negative cases, and four classic guards. An isolated
+  ad-hoc-signed Universal candidate (`d138c75d…2f206`) initially contained
+  both slices but accidentally inherited macOS 26.2 in Info.plist and both
+  LC_BUILD_VERSION commands, so it is superseded and is not install-ready.
+  A fresh isolated Debug candidate built with explicit
+  `MACOSX_DEPLOYMENT_TARGET=11.0` (`9a97a076…cd349`) has Info.plist plus arm64
+  and x86_64 load commands all at 11.0 plus a strict/deep-valid ad-hoc
+  signature. Within the two AE entrypoints checked, both slices expose
+  `_EffectMain` and intentionally omit `_PluginDataEntryFunction2` as required
+  by the Distance PiPL `CodeMac` contract; other global-defined implementation
+  symbols are outside this claim. Separate source-runtime harnesses
+  repeat 8/8 RAW exact and the public contract per architecture (16 cells
+  total), without claiming direct execution of the candidate Mach-O. It is not installed and AE was not
+  launched; every unlisted tuple, source, geometry, layout, owner, and depth
+  remains fail-closed. Evidence:
+  `olmdistancegradation_pf32_power_native_ucrt_public_closure_20260815` and
+  `olmdistancegradation_pf32_power_native_ucrt_universal_candidate_macos11_20260815`.
+
+- 2026-08-14 RadialBlur PF32 Strength-290 exported math boundary: the exact
+  32x18 disconnected-component source (`187a7caf…`) and fixed Type-1 noise
+  tuple reproduce byte-identical output from the pinned AEX internal owner and
+  current Mac typed owner (`940c1e7e…`). The exported Smart AEX route can now
+  complete AE-free after adding narrowly scoped AEXCompat `atan2f`/`log2f`
+  float imports, but Rust f32 host substitution produces `f8be3360…`: 84
+  float words differ with ULP histogram 1:54, 2:25, 3:3, 4:1, 10:1. A
+  double-to-float counterfactual produces a third hash (`5c70fe26…`), proving
+  that choosing either host substitute as the Windows oracle would be an
+  unsupported generalization. Native Windows UCRT output is not captured, so
+  Strength 290 remains `PF_Err_BAD_CALLBACK_PARAM` before iteration. The
+  exported call census fixes 149 `log2f` calls over one input plus 576
+  `atan2f` calls over a complete 18×32 argument grid, yielding 577 unique
+  native-request vectors. The closure embeds and reconstructs the exact
+  fixture/results, pins both clean AEXCompat patches, and passes eleven tamper
+  tests. Production, installed bundles,
+  network state, and AE were unchanged. Evidence:
+  `olmradialblur_strength290_exported_math_boundary_20260814`. The resulting
+  deterministic AE-free native request is
+  `olmradialblur_strength290_ucrt_math_request_20260814`: its ZIP contains the
+  exact 577 vectors, direct `ucrtbase.dll!atan2f/log2f` bindings, a one-shot
+  AMD64 PowerShell runner, and a closed manifest. ZIP bytes, every member,
+  vector one-aways/removal, symbol drift, host-launch insertion, and false
+  native/promotion claims are rejected by ten tests. No Windows command has
+  been run and no native return is claimed.
+
+- 2026-08-14 native-UCRT hostless gates are now part of the official fixed-
+  fixture runner. The Directional lane runs its 6-cell same-table exported-AEX
+  ↔ Mac-production-direct validator and tamper suite; the Distance lane runs
+  the corresponding 8-cell RenderBits control plus the synthetic 14-cell
+  consumer and bounded-table emitter readiness suites. The default emitter
+  still reports `READY_FAIL_CLOSED_AWAITING_NATIVE_UCRT_RETURN`; the official
+  runner does not invoke the native capture/replay command, Windows/network,
+  AE, or installation. A dedicated runner-integration test pins those command
+  boundaries so evidence drift cannot silently remove the gates. The official
+  Distance lane also replaces the stale Distance-only 63-row package check
+  with the current 1,344-row combined request; the old package remains a
+  retained component but is not a current collection authority. A fresh
+  official Distance-only lane run passes end-to-end in 102.13 seconds,
+  including the existing 56 admitted cells, eight Power fail-closed cells,
+  combined request, same-table control, synthetic consumer and emitter gate.
+  The corresponding official Directional lane passes in 461.09 seconds after
+  rebinding its fresh 15-positive/240-reject public source guard to current
+  source `49411688…2e845`, refreshing the historical-smoke current-authority
+  pointer, and replacing the pre-Type3 candidate verifier with the current
+  installed complete bounded-union replay. Its same-table 6-cell gate passes;
+  the native return remains absent and the six public cells stay fail-closed.
+  Continuing the same authority audit, ToonDilate's installed-identity plus
+  exact12/507-reject lane passes in 41.61 seconds. ColorKeep's pre-union
+  count9-only installed replay was stale against current source/install bytes,
+  so the official lane now uses the current installed complete 11x7 + count9
+  union; that lane passes in 10.62 seconds. No numerical predicate was widened
+  by either authority replacement.
+  ColorKey's current 60-cell-per-entry plus transactional-install lane passes
+  in 39.50 seconds. KiraKira initially exposed a different manifest-lifecycle
+  bug: its historical Kira-only install auditor required the entire accepted
+  ten-plugin manifest to remain byte-identical after later plugin installs.
+  The auditor now preserves the retained Kira-only transition while requiring
+  the current manifest's Kira row to equal that post-install row and requiring
+  ten unique current rows. Its current installed 42/765/3 closure remains
+  exact, and the official Kira lane passes in 56.35 seconds.
+  OLMBlur's complete 40-cell lane passes in 101.94 seconds. OLMSmoother v1's
+  stale representative three-cell installed replay was replaced by the
+  complete 67-cell-per-slice Classic admission union, and its official lane
+  passes in 92.31 seconds. OLMSmoother2 exposed an order-dependent evidence
+  hash: an earlier PF32 Smart-chain command regenerated its report after the
+  shared 69-case guard had captured the old hash. The shared guard was
+  regenerated once against the deterministic current report, then both v1 and
+  v2 installed-union authorities were rebound without changing predicates or
+  runtime bytes. The official v2 39-cell Smart lane passes in 165.99 seconds.
+
+- 2026-08-14 Directional actual-call `powf` census and corrected native-UCRT
+  batch: tracing the six exported-Smart cells showed that they execute 47,514
+  `powf` calls spanning 787 exact input/exponent keys in addition to their
+  Gaussian `expf` calls. The earlier 557-row request was therefore incomplete
+  and is superseded before transfer. The corrected AE-free batch contains 494
+  Directional `expf` rows, 787 Directional `powf` keys, and 63 Distance `powf`
+  rows: 1,344 total under one exact x64 System32 UCRT identity. The new ZIP is
+  `3bb9f841…6637`; project-local staging and the next-action selector bind that
+  exact file. The six trace-control RAW outputs remain 6/6 exact, but host
+  result words are not treated as Windows UCRT evidence. No AE, network,
+  install, or production source changed. Evidence:
+  `olmdirectionalblur_remaining6_ucrt_powf_census_20260814`,
+  `olmdirectionalblur_remaining6_ucrt_powf_request_20260814`, and
+  `olm_math_ucrt_batch_request_20260814`.
+
+- 2026-08-14 native-UCRT dual-owner replay correction: a validated 1,344-row
+  native return and a Mac replay are no longer sufficient to emit production
+  tables merely because they match the older host-substituted RAW hashes. The
+  exact same returned table must also drive the exported DirectionalBlur six
+  and DistanceGradation eight AEX owners, followed by full RAW comparison with
+  the Mac public paths. A fail-closed AEXCompat patch now cleanly applies to
+  pinned source and passes `cargo check` in a temporary clean clone; with a
+  table present, missing `expf` or `powf` keys stop emulation and cannot fall
+  back to host math. A clean release build has now executed the same 1,228-key
+  macOS-host substitute table through all six Directional and eight Distance
+  exported-AEX cells and the matching Mac production direct/RenderBits replays:
+  14/14 full RAW exact. Directional's control is explicitly not Mac public
+  EffectMain. The future-return consumer has also run strict analyzer →
+  normalized 1,227-key table → clean worker → 14-cell comparison end-to-end
+  against the analyzer's synthetic fixture, again 14/14; that UCRT identity is
+  test-only. The Directional Mac direct control records all 996 `expf` calls
+  and all 47,514 double-`pow` calls passing through the keyed float-result table;
+  the earlier expf-only Mac injection claim is superseded. This closes the
+  injection/lookup plumbing only; it is deliberately not native
+  Windows UCRT evidence and does not promote either route. Twenty-four paired
+  evidence tamper tests pass; production and AE remain untouched. Evidence:
+  `olm_actual_aex_native_ucrt_table_replay_readiness_20260814` and the corrected
+  `olm_math_ucrt_downstream_replay_readiness_20260814`, plus
+  `olmdirectionalblur_same_table_dual_owner_plumbing_20260814` and
+  `olmdistancegradation_same_table_dual_owner_plumbing_20260814`, with synthetic
+  consumer readiness in `olm_math_ucrt_native_dual_owner_consumer_readiness_20260814`.
+
+- 2026-08-14 OLMColorKey Keep/Premultiplied/Replace expansion and transactional
+  install: production source `7c66240d…4001` adds 24 fixed 11x7 cells to the
+  prior 36-cell Edge/Lab union. The same exact source/tuple/world matrix is raw
+  exact through Windows exported Smart ownership and Mac real-SDK Classic and
+  Smart public entries at PF8/PF16/PF32. The complete closure is 60 positives
+  per public entry, 540 source/tuple/world rejects, 13 callback controls, 12
+  suite controls, and all 33 parameter checkout/checkin failure ordinals.
+  Universal minOS11 executable `701ae919…9ca7` is full-inventory exact to the
+  installed bundle; predecessor `030e87c5…22c4` remains in three exact copies.
+  Accepted identity `9d7402a3…5bcd` changes only the ColorKey row and two
+  timestamps. Both installed slices replay all 60 cells, the all-ten hostless
+  replay passes 10/10 in 97.68 seconds, and AE remains stopped/deferred.
+  Evidence: `olmcolorkey_public_source_bound_closure_20260813`,
+  `olmcolorkey_current_installed_public_closure_20260813`, and
+  `olmcolorkey_toggle24_transactional_install_20260814`.
+
+- 2026-08-14 native-UCRT batch return semantic hardening: the strict intake,
+  now expanded to 1,344 vectors, rejects mathematically impossible but
+  schema-correct native returns. Directional `expf` rows must be finite and in
+  `(0,1]`, reproduce exact `expf(-0)=1`, be deterministic for repeated argument
+  words, and be monotone/nonconstant within counts 8/50/96/100/240. Directional
+  `powf` rows must be finite in `[0,1]` and preserve their exact exponent-zero
+  and input-one endpoints; Distance `powf` rows must additionally be monotone
+  over the fixed exponent 2.25. Synthetic-return/tamper tests pass. Tailscale
+  was observed stopped and the Windows SSH alias timed out, so
+  no network state was changed and no return is claimed. Directional six and
+  Distance Power eight remain fail-closed pending the genuine native return
+  and their downstream public-output closures.
+
+- 2026-08-14 Distance PF32 Power actual-AEX XMM closure: an isolated,
+  source-patched AEXCompat worker recorded all 992 exported-Smart `powf` calls
+  across the eight fixed cells. Every `(XMM0,XMM1,host-result)` triple is an
+  in-order subsequence of the 1,496 production calls; there are no
+  non-production pairs. Production's seven additional input pairs occur only
+  in 63 transparent skipped pixels per cell, and replacing all seven results
+  with either zero or one leaves all eight final RAW hashes unchanged. Thus
+  pre-call XMM equivalence is closed; the remaining requirement is the genuine
+  native System32 UCRT return for the 1,344-row batch followed by six
+  Directional and eight Distance native-derived final-RAW comparisons. No AE,
+  install, network-state change, or production admission occurred. Evidence:
+  `olmdistancegradation_actual_aex_powf_xmm_closure_20260814` and
+  `olm_math_ucrt_downstream_replay_readiness_20260814`.
+
+- 2026-08-14 native-UCRT bounded integration readiness: the promotion emitter
+  no longer depends on the pre-replay downstream decision. It invokes the exact
+  14-cell consumer, requires exported-AEX↔Mac-production-direct full-RAW
+  equality, and only then emits 377 Directional `expf`, 787 Directional `powf`,
+  and 63 Distance `powf` keyed result rows. Those rows are integration inputs,
+  not public-route proof; separate bounded public EffectMain/Smart closures
+  remain mandatory. Directional index-zero `-0` is normalized to production `+0` only
+  after the strict analyzer proves exact `expf(-0)=+1`. Eventual integration
+  must use the table only inside the existing fixed-cell predicates, reject
+  missing keys, and provide no libSystem fallback for a promoted cell. No
+  production source, install, AE process, or network state changed. Evidence:
+  `test_olm_native_ucrt_promotion_table_readiness_20260814.py` in `tools/emulation`
+  and `tests`.
+
+- 2026-08-14 OLMSmoother2 39-cell transactional install: source
+  `c710902f…` / Universal minOS11 binary `c8ea1f0e…` is now installed by a
+  same-volume `renameatx_np(RENAME_SWAP)` transaction. Accepted identity
+  `7212ca5c…` changes only the OLMSmoother2 hash/source fields and the two
+  top-level timestamps; the other nine rows are exact. Three full-inventory
+  predecessor copies retain `55d138e2…`. Two all-ten installed preflights are
+  byte-identical (`1f3b04a4…`), with ten count-one Universal strictly signed
+  identities and no AE process. The final hostless all-ten current-installed
+  public replay passes all ten plug-ins on both slices in 96.88 seconds;
+  Smoother2 itself executes all 39 positives plus 94 public rows per slice.
+  After Effects was deliberately not launched;
+  the release gate remains pending until a later batched host checkpoint.
+  Evidence: `olmsmoother2_pf8_pf16_pf32_transactional_install_20260814` and
+  `olmsmoother2_current_installed_public_20260813`, the refreshed
+  `olm_all10_current_installed_public_routes_20260813`, and
+  `handoffs/olmsmoother2_pf8_pf16_pf32_incremental_install_20260814/`.
+
+- 2026-08-14 OLMSmoother2 retained full-HD PF8 public promotion: source
+  `c710902f…` adds twelve exact-source, exact-parameter Smart tuples to the
+  prior 25 cells and the case-07 PF16/PF32 pair, for 39 bounded cells total.
+  Current-source direct PF8 outputs are independently preserved; applying the
+  host-side nearest-code byte relation `(rgb * alpha + 127) // 255` reproduces
+  all twelve retained current-AEX PNGs at `99,532,800/99,532,800` bytes exact.
+  The real-SDK public closure passes twelve positives and 34 rejects with
+  atomic output and immutable input/header storage. Universal minOS11 candidate
+  `c8ea1f0e…` passes the same 46 rows on arm64 and Rosetta x86_64. This is a
+  host-presentation relation, not a native Windows output-world capture. The
+  candidate was subsequently installed under the transaction above; this
+  numerical closure itself did not launch AE. Evidence:
+  `olmsmoother2_pf8_legacy12_public_closure_20260814` and
+  `handoffs/olmsmoother2_pf8_pf16_pf32_public_smart_candidate_20260814/`.
+
+- 2026-08-14 all-ten current-installed public checkpoint refresh: the AE-free
+  live runner completed all ten installed public closures on both Universal
+  slices in 65.13 seconds with AE-family processes absent throughout. Radial
+  now contributes its complete 151-cell/slice Type1+Type3 bounded union;
+  Directional contributes arm64 33 exact and x86_64 27 exact plus six
+  deliberate UCRT-pending rejects; ColorKeep uses a new current-state 15-path
+  closure while retaining its historical install transaction unchanged.
+  Distance, Kira and Toon current closures were re-bound only to current live
+  dependency/accepted-identity hashes after their numerical and installed
+  relations reran unchanged. The aggregate report is
+  `olm_all10_current_installed_public_routes_20260813.{json,md}`; live runner
+  `scripts/run_olm_all10_current_installed_public_replays_20260813.py`.
+
+- 2026-08-14 OLMDirectionalBlur current-installed complete bounded union: the
+  current installed `9b5fc6b3...d2eff` is now replayed across the complete
+  retained public set rather than represented by Type3 alone. On arm64 this
+  closes 15 exported dual-side cells, 15 Natural64 exact-source cells and
+  three Type3 Layer cells: 33 exact. On Rosetta x86_64 it closes the 15
+  Natural64 and three Type3 cells plus nine dual-side cells: 27 exact, while
+  the six count-8/50/100 `expf` cells remain deliberately fail-closed. The
+  replay retains source-mutation, Type3 one-away, header, padding and input
+  immutability controls and launches no AE process. Evidence:
+  `olmdirectionalblur_current_installed_complete_bounded_union_20260814`
+  JSON/Markdown and the updated all-ten installed public-route aggregate.
+
+- 2026-08-14 OLMRadialBlur WorldSuite lifecycle and current-installed complete
+  Type1+Type3 public union: source `b74b3d2c...b0d1` replaces the unsafe
+  SuiteScoper path in Classic and Type3 Smart with explicit acquire/get/release,
+  format equality, null/function/error/exception handling and primary-error
+  preservation. The 21-row real-SDK closure passes, and the current installed
+  Universal `9be59d18...76b5` has direct
+  AE-free public-entry replay for the full bounded source union on both arm64
+  and Rosetta x86_64. Type1 contributes all 106 exact-source cells from the
+  pairwise, edge/noise, size/noise, dual-strength and any-size/edge/noise
+  families plus 57 source-mutation rejects per slice. The wrapper executes
+  installed Classic and Smart for every row, requires their entire padded
+  outputs to agree, and verifies input storage immutability. Together with the
+  already closed 45 Type3 source/Layer pairs, the installed public union is
+  151 cells per slice / 302 paired relations total. No production, install or
+  AE process was changed or launched; unlisted inputs remain fail-closed.
+  The immediate predecessor `1b29b5ea...643c` remains in three exact rollback
+  copies. Evidence: `olmradialblur_worldsuite_lifecycle_closure_20260814`,
+  `olmradialblur_worldsuite_lifecycle_install_20260814`,
+  `olmradialblur_current_installed_type1_complete_union_20260814`
+  and `olmradialblur_current_installed_complete_public_union_20260814`
+  JSON/Markdown pairs; the all-ten installed public-route aggregate now binds
+  the combined report.
+
+- 2026-08-14 OLMRadialBlur current-installed complete Type 3 replay: the
+  current installed arm64 and Rosetta x86_64 `9be59d18...76b5` slices were
+  replayed through public Classic and Smart entries for all 45 admitted fixed
+  9x7 source/Layer pairs, not only the earlier canonical pair. Each slice now
+  closes 15 PF8, 15 PF16 and 15 PF32 positives against the source-built typed
+  owner, including padded output, and executes the bounded reject-control set
+  attached to every pair without committing output. The canonical report has
+  90 positive rows total and 45 reject-control sets per slice. This is an
+  AE-free installed-Mach-O replay; no native-AE or arbitrary Type 3 claim is
+  added. Evidence:
+  `olmradialblur_current_installed_type3_all_depth_closure_20260813.{json,md}`
+  and the current all-ten installed public-route aggregate.
+
+- 2026-08-14 OLMDirectionalBlur x86_64 remaining-six evidence correction: the
+  six 64x36 cells that match the exported AEXCompat worker under its injected
+  native-f32 leaf remain admitted on arm64 only. That leaf is a host-side
+  single-precision substitute, not native Windows UCRT. The retained native
+  Windows UCRT `expf` return proves Gaussian counts 96 and 240, while these six
+  cells require counts 8, 50 and 100. Therefore Rosetta x86_64 remains
+  fail-closed until those exact native result words and same-source output are
+  captured; no extrapolation from the existing table is authorized. Evidence:
+  `olmdirectionalblur_exported_smart_remaining6_census_20260814.{json,md}`.
+
+- 2026-08-14 OLMDirectionalBlur remaining-six native-UCRT request: an AE-free
+  Windows return package now materializes all 494 exact float32 Gaussian
+  source-expression rows for counts 8, 50, 96, 100 and 240, together with a 64-bit AMD64
+  `System32\\ucrtbase.dll!expf` capture shim and DLL identity fields. Its
+  read-only validator independently reconstructs every intermediate float32
+  word from `core/dblur_gaussian.h`, pins the current production/AEX/boundary
+  identities, and rejects vector, provenance, target, code and claim tampering.
+  This is capture readiness only: the native return is still absent, the six
+  x86_64 cells remain fail-closed, and neither AEXCompat nor the older count
+  96/240 UCRT table is substituted—the two older counts are recaptured in the
+  same run. It launches no After Effects process.
+  Evidence: `olmdirectionalblur_remaining6_ucrt_expf_request_20260814.{json,md}`
+  and package
+  `refs/runtime_trace_packages/olm_runtime_trace_olmdirectionalblur_remaining6_ucrt_expf_20260814/`.
+  The index-zero source row is IEEE-754 `-0`; the strict analyzer requires its
+  native result to be exact `+1`, after which downstream replay normalizes only
+  that signed-zero pair to production's materialized `+0`.
+
+- 2026-08-14 combined native-UCRT collection batch: the DirectionalBlur
+  494-row `expf` request and DistanceGradation 63-row `powf` request are now
+  hash-pinned behind one 64-bit AMD64 PowerShell wrapper. One invocation must
+  return all 557 rows and the same exact `System32\\ucrtbase.dll` path, version
+  and SHA-256 for both children. The wrapper launches neither After Effects nor
+  `aerender`; Tailscale remained stopped while this package was prepared. This
+  is collection readiness only. DirectionalBlur's six x86_64 cells and
+  DistanceGradation's eight PF32 Power cells remain fail-closed until their
+  separate downstream public-output requirements are satisfied. Evidence:
+  `olm_math_ucrt_batch_request_20260814.{json,md}` and package
+  `refs/runtime_trace_packages/olm_runtime_trace_olm_math_ucrt_batch_20260814/`.
+
+- 2026-08-13 all-10 current installed public-route aggregate: every current
+  installed plug-in now has at least one bounded public-entry hostless replay
+  tied to its exact installed executable and the independent all-ten
+  source/install authority. Both arm64 and Rosetta x86_64 installed slices are
+  replayed for every row. Coverage remains heterogeneous and fixture-specific:
+  it does not claim every tuple, depth or geometry, native After Effects, or a
+  generalized native-Windows relation. The aggregate is read-only by default,
+  records an empty AE process set, and is checked by 8 tamper/boundary tests.
+  Evidence: `olm_all10_current_installed_public_routes_20260813.{json,md}`;
+  lightweight gate: `scripts/run_olm_all10_installed_public_routes_20260813.py`.
+  The separate live checkpoint
+  `scripts/run_olm_all10_current_installed_public_replays_20260813.py` reran all
+  ten installed public probes on both slices and then the aggregate authority
+  gate. The latest 2026-08-14 refresh passed 10/10 in 65.13 seconds with
+  AE-family processes absent before and after.
+
+- 2026-08-13 deferred batched-AE readiness gate: after the all-10 source-to-
+  installed authority closure below, the installed preflight ran twice with
+  byte-identical JSON: ten count-one identity-exact Universal/strict-code-sign
+  bundles and no AE process. The gate explicitly does not authorize or launch
+  AE, does not add a numerical claim, and keeps the formal release state
+  fail-closed. It exists so further hostless improvements can accumulate before
+  one future batched host checkpoint instead of starting AE after every change.
+  The earlier `ready` wording is superseded. The retained one-shot failure
+  reached `AEDoScriptFileCommand` and reported that the scripting function was
+  unavailable before the payload produced a result. Read-only inspection proves
+  the Required plug-in is present, Universal and strict-valid Adobe signed.
+  The retained AE loader log records a cached `Ignore` line, but a separate
+  fresh AE 26.3 run completed `DoScriptFile` successfully, so that line is not
+  causal proof and speculative cache mutation is forbidden. Schema v2
+  therefore separates identity readiness from host automation and records
+  `identity_ready_v3_hostless_contract_valid_ae_not_executed`; the deferred v2
+  runner fails current-identity dependency validation before AE. The replacement
+  v3 contract binds the current identity and is hostlessly valid/output-free,
+  but deliberately has no live entrypoint. A separate reviewed change and
+  explicit approval are still required.
+  The 2026-08-14 refresh binds accepted identity `9d7402a3…5bcd`, the current
+  all-ten source/install authority `828e74d1…f0a3`, and two byte-identical
+  `ae_not_running` preflights (`ba75490c…f1d`); the readiness and authority
+  suites pass without launching AE.
+  Evidence: `olm_deferred_batched_ae_readiness_20260813.{json,md}` and its 6/6
+  tamper/read-only tests.
+
+- 2026-08-13 all-10 current source-to-installed authority closure: the accepted
+  identity manifest `cc9cb7ed...66be` now has a read-only hostless audit that
+  binds each current production source to its plug-in-specific build/install
+  authority, the exact candidate bundle named by the manifest, and the live
+  installed full bundle inventory. All ten candidate/installed inventories are
+  byte-identical; every installed executable is arm64+x86_64 and passes
+  strict/deep code-sign verification. The audit launches no AE process and adds
+  no numerical or Developer ID/notarization claim. Current-identity AE remains
+  deliberately deferred to the next batched checkpoint. Evidence:
+  `olm_all10_current_source_installed_authority_20260813.{json,md}` and
+  `test_olm_all10_current_source_installed_authority_20260813.py` (7/7).
+
+- 2026-08-13 OLMRadialBlur Type 3 exact source/Layer-pair expansion: current
+  source `efb54d65...480b` narrows the fixed 9x7/NV25 public gate to the exact
+  paired matrix that is raw exact through the actual typed owner, source-built
+  direct path, Classic EffectMain, and SmartPreRender -> SmartRender. Each depth
+  is five sources x natural/all-depth/inverse Layers = 15, for 45 rows. Each row closes source span,
+  pre/post blur and padded output, plus source/Layer bit-mutation fail-close.
+  PF8 constant and impulse are exact after routing Type3 through the AEX-like
+  no-epsilon RGB writer; all five PF32 sources are now exact with the all-depth
+  Layer. The strict-valid ad-hoc Universal minOS11 binary `1b29b5ea...643c`
+  is full-inventory exact to the installed bundle; predecessor `ce5b57e1...0e7a`
+  remains in three exact rollback copies. No AE/aerender/formal
+  gate was launched for the 45-row source. Evidence:
+  `olmradialblur_type3_all_depth_public_closure_20260813.{json,md}` and
+  `olmradialblur_type3_45_pair_install_20260813.{json,md}`.
+
+- 2026-08-14 OLMRadialBlur Windows exported Type 3 upstream boundary: the
+  pinned AEX builds its local render-info object at `RSP+0x40` without
+  initializing the Noise Layer destination member at `+0xa8`. Noise Type 3
+  loads that member at `0x1800088b6`; `FUN_18000d9d0` forwards it as `RDX` to
+  the fixed 0x78-byte `PF_LayerDef` copy at `0x180019f20`. Therefore the
+  exported Type 3 route is not promoted as a numerical oracle. The existing
+  45-row Mac public admission remains bound to the typed Windows owner and all
+  unlisted source/Layer/tuple/geometry/layout combinations remain fail-closed.
+  This is static AEX evidence only: no native Windows AE execution or durable
+  dynamic crash-register claim is made. Evidence:
+  `olmradialblur_type3_exported_upstream_boundary_20260814.{json,md}`.
+
+- 2026-08-13 OLMRadialBlur all-depth Type 3/install correction supersedes the
+  Smart-cleanup candidate immediately below. Current source is
+  `0aac085a...cb26`; PF8/PF16/PF32 Classic and Smart public paths are exact for
+  their explicitly pinned Type 3 source/Layer rows, and Universal minOS11
+  candidate/installed executable is `da72af55...b859`. Batch5's older
+  `1bd0d6ee...baa6` bundle is retained in three exact rollback copies. Accepted
+  identity is `cc9cb7ed...66be`; two all-10 preflights are byte-identical and
+  AE remains stopped. A direct installed-arm64 replay also binds Classic and
+  Smart public EffectMain to the typed owner at PF8/PF16/PF32 for the exact 9x7
+  Type 3 source/Layer tuple; 14 variation/source/Layer one-aways fail closed.
+  The same installed public-entry replay now also runs the x86_64 slice under
+  Rosetta: both Universal slices reproduce all three depth outputs and retain
+  the 14 fail-closed controls per slice. No native-AE numerical claim was added. Evidence:
+  `refs/conformance/olmradialblur_current_installed_type3_all_depth_closure_20260813.{json,md}`.
+
+- 2026-08-13 OLMRadialBlur Smart cleanup/atomic closure: production source
+  `8fde53eb08a001e7695d2aec87ecadf3cefcf391ee67a2557e170c0dda248c10`
+  preserves the bounded Type 1 inverse-cell and Type 3 numerical owners while
+  replacing destructor-driven cleanup with explicit success-only ownership.
+  All 30 successful parameter checkouts and the acquired Input/Noise worlds are
+  checked in after returned errors or exceptions; the first failure is retained.
+  Rendering targets a private world and active rows reach the host only after
+  cleanup succeeds. The source-included plumbing probe covers 15 SmartRender
+  checkout/checkin/output/layer failure controls plus two SmartPreRender cleanup
+  controls, with complete input/output preservation on every failure. The
+  fixed PF32 Type 3 9x7/NV25 family also runs 10/10 raw exact through public
+  `SMART_PRE_RENDER -> SMART_RENDER`, matching the direct actual owner and
+  Classic entry at active bytes and row padding; that claim remains limited to
+  the exact source/Layer/content-basis matrix.
+  Universal minOS11 candidate `1bd0d6ee...baa6` was strict-valid ad-hoc signed
+  and was later briefly installed by batch5, then superseded by the current
+  all-depth candidate above. No AE/aerender/formal gate was launched for that
+  intermediate identity. This lifecycle work did not itself promote another
+  numerical tuple.
+
+- 2026-08-13 OLMDirectionalBlur Smart cleanup/atomic closure (historical,
+  superseded by the 2026-08-14 fixed64x36 expansion): production source
+  `6032c79b07f6181420b3ff699eb5f51e0d9adc5f63dc1beaed2c71a40d03ad47`
+  preserves the existing bounded Type 2/Type 3/dual-side numerical outputs and
+  changes only public Smart ownership and commit ordering. Parameter checkin is
+  now limited to successful checkouts, every acquired parameter/layer is cleaned
+  after returned errors or C++ exceptions, the first error is retained, and host
+  active rows are committed from private staging only after all cleanup succeeds.
+  A source-included public probe covers 16 checkout/checkin/output/layer returned-
+  error and throw controls; every failure leaves input and complete host output
+  unchanged. The three source-bound numerical closures remain PF8/PF16/PF32 exact
+  with 64/54/45 fail-closed controls. Universal candidate `371c3b62...d0f0` is
+  arm64+x86_64, minOS11 and strict-valid ad-hoc signed. Batch5 installed this
+  candidate with source/installed identity equality; no batch5 native-AE
+  numerical claim is made. Evidence:
+  `tools/emulation/test_olmdirectionalblur_smart_cleanup_atomic_20260813.py` and
+  `handoffs/olmdirectionalblur_smart_cleanup_universal_candidate_20260813/`.
+
+- 2026-08-13 OLMBlur fractional-Smoothness public closure: source
+  `22eb712a2485e080d811d2c064fe78bd521ee25434ece9a290a2d9b7b6e1fdd7`
+  now matches the Windows exported Smart owner for PF8 12/12, PF16 8/8 and
+  PF32 20/20 retained same-source cells. The three former residuals were an
+  owner materialization boundary: the AEX reads the signed high word of the
+  fixed slider. Mac reproduces it only after exact full-fixed/source/tuple/world
+  admission. Real-SDK controls are PF8 24/744, PF16 16/494 and PF32 40/60.
+  Universal minOS11 candidate `ecdf3d93...284d` is now installed by batch5.
+  Direct `dlopen` replays of both installed Universal slices are byte-identical
+  to the source-built public transcript for the six 24x24 numerical cells, 12
+  optional-checkin positive controls, 91 SmartRender negatives and 1/9
+  SmartPre controls per slice; x86_64 executes under Rosetta.
+  This installed closure is AE-free; no native-AE numerical or formal-gate claim
+  is added. Evidence: `refs/conformance/olmblur_current_installed_public_closure_20260813.{json,md}`.
+
+- 2026-08-13 OLMBlur PF8 retained-source expansion (superseded by the fractional-Smoothness public closure;
+  corrected owner evidence remains active): the corrected exported-owner runner
+  proves exactly eleven same-source PF8 cells. The Mac real-SDK closure records
+  22 optional-checkin successes and 683 fail-closed controls. Only Legacy 19x13
+  Smooth43.75 remains rejected, by 6 active bytes. The earlier 904/1,619-byte
+  NonLegacy differences were runner callback corruption, not owner differences.
+  The candidate at that stage, `90380f48...3a49`, is arm64+x86_64,
+  minOS11 and strict-valid ad-hoc signed; it is not installed and AE was not
+  launched. Evidence: `olmblur_pf8_retained_exported_public_owner_20260813` and
+  `olmblur_pf8_retained_public_admission_20260813`, plus
+  `handoffs/olmblur_pf8_retained_public_universal_candidate_20260813/`.
+
+- 2026-08-13 OLMBlur PF16 retained-worker-source expansion (superseded by the fractional-Smoothness public closure): source
+  `f8db5a6dc846f7649f1c027806c683a0dba93db1a7b89758ffdb94679b1430f1`
+  retains the six 24x24 cells and admits seven exact-source PF16 cells. The
+  NonLegacy set is 7x5 Repeat1, 12x12 Repeat1/Repeat2 and 18x18 Repeat1/Repeat3. The
+  Legacy set is 12x12 Repeat2/Bias1, 18x18 Repeat3/Bias2 and 18x12 mixed-alpha
+  Repeat2/Bias2; all use their retained amount and Smoothness100. Fresh Windows
+  actual AEX exported SmartPre/Smart replay is exact for all seven, including
+  unchanged row padding. Retained Legacy 20x16 Smoothness62.5 differs by 369
+  active bytes and remains explicitly fail-closed without correction. The former
+  1,490-byte NonLegacy difference was runner callback corruption. The Mac real-SDK
+  public closures have fourteen optional-checkin successes and 433 fail-closed
+  controls, with input/header/guard immutability and no failure commit.
+  Universal candidate `e8a916a8...a3e2` is arm64+x86_64, minOS11, exports both entry points, and
+  is strict-valid ad-hoc signed. It is not installed; installed
+  OLMBlur remains `5893faea...c48b`, and AE was not launched. Evidence:
+  `olmblur_pf16_worker_sources_exported_public_owner_20260813.{json,md}`,
+  `olmblur_pf16_retained_tuples_exported_public_owner_20260813.{json,md}`,
+  `olmblur_pf16_legacy_retained_exported_public_owner_20260813.{json,md}`,
+  `olmblur_pf16_worker_sources_public_admission_20260813.{json,md}`, and
+  `handoffs/olmblur_pf16_legacy_retained_public_universal_candidate_20260813/build_identity.json`.
+
+- 2026-08-13 OLMBlur PF16 7x5 exported-public promotion: production source
+  `c79ba706c09043dbf2ec062590eb7f67f0d5b7c201a9be2f3579c00bdc89b3ce`
+  retains the prior six exact-source 24x24 Smart cells and adds only PF16 7x5,
+  rowbytes 69, Amount 4, Smoothness 100, Repeat 1, Bias 1, NonLegacy with the
+  exact recorded source.  The same source executes through the Windows actual
+  AEX exported `SMART_PRE_RENDER -> SMART_RENDER` route and the Mac
+  source-included public `EffectMain`; active output SHA-256
+  `d644ed25...424a` and all 13 padding bytes per row are raw exact.  The PF16
+  writer change follows the recorded AEX `ADDSS 0.5 -> floorf -> CVTTSS2SI ->
+  low AX store` sequence instead of saturating values above 32768, and the two
+  retained complete PF16 worker fixtures remain exact.  The real-SDK Mac
+  closure has two optional-checkin success controls and 62 source/tuple/world/
+  callback rejects, with complete input immutability and atomic destination
+  preservation on every failure.  Universal candidate `fc9c9503...686b` is
+  arm64+x86_64, minOS 11 in both slices and Info.plist, exports both entry
+  points, and is strict-valid ad-hoc signed.  It is not installed; installed
+  OLMBlur remains batch4 `5893faea...c48b`, and AE was not launched. Evidence:
+  `refs/conformance/olmblur_pf16_7x5_exported_public_owner_20260813.{json,md}`,
+  `refs/conformance/olmblur_pf16_7x5_public_admission_20260813.{json,md}`, and
+  `handoffs/olmblur_pf16_7x5_public_universal_candidate_20260813/build_identity.json`.
+
+- 2026-08-14 OLMColorKey fixed-source public-entry closure: production source
+  `4dbd264501a0d5d990a3726d16223c01c1996677b925f8546157b6a91ce677d1`
+  admits exactly 33 recorded Edge Blur cells (32x18 and 64x36 plus the independent
+  fixed 48x27 D0/T3/A4 source at three depths), six fixed 1x1
+  Lab76 declared/reversed two-key cells, and 24 fixed 11x7 Keep/Premultiplied/
+  Replace cells. Real-SDK source-included
+  `EffectMain` makes both Classic and Smart public routes raw exact to the
+  pinned Windows exported Smart-owner hashes for all 63 cells. Input payload
+  and padding remain unchanged, output padding is preserved, and private
+  staging commits active bytes only after cleanup succeeds. The closure rejects
+  567 source/tuple/world one-aways, 13 SmartRender/SmartPre callback errors or
+  throws, 12 World/Color suite cases, and every one of 33 Smart parameter
+  checkout and 33 checkin failure ordinals before commit. Source-local FP
+  contraction is disabled in the typed owner because default clang contraction
+  otherwise changed a recorded PF32 cell. The isolated candidate executable
+  `701ae919...9ca7` is x86_64+arm64, minimum macOS 11 in both slices and
+  Info.plist, exports both public entry points, and passes strict/deep ad-hoc
+  signing. It is installed by the toggle24 transactional update. Direct arm64 and Rosetta x86_64
+  `dlopen` replays of that installed binary each reproduce the prior 60-cell
+  transcript exactly: 60 Classic cells, 60 Smart cells and 13 callback
+  negatives per slice. The new three-cell family is source-built only and was
+  not installed. AE was not launched, so this is not native-AE numerical
+  evidence. Evidence:
+  `refs/conformance/olmcolorkey_public_source_bound_closure_20260813.{json,md}`,
+  `refs/conformance/olmcolorkey_exported_owner_edge_blur_second_source_20260814.{json,md}`,
+  `refs/conformance/olmcolorkey_current_installed_public_closure_20260813.{json,md}`
+  `refs/conformance/olmcolorkey_toggle24_transactional_install_20260814.{json,md}`
+  and `handoffs/olmcolorkey_toggle24_universal_candidate_20260814/`.
+
+- 2026-08-13 OLMBlur bounded Smart public admission: production source
+  `ec0e502eb88c45770e8582f179035a4c1da72bb7e26d3ca3a00a30b835320489`
+  admits only the retained 24x24 exact-source matrix at rowbytes 113/215/416,
+  Amount 5, Smoothness 100, Repeat 1, Bias 1 and Legacy 0/1. The current
+  real-SDK source-included `EffectMain` is raw-exact for PF8/PF16/PF32 x both
+  Legacy values. Twelve success controls cover optional pixel checkin present
+  and null without calling it; 91 SmartRender and nine SmartPre negatives
+  fail closed, while one SmartPre success binds the forwarded request/result.
+  Odd and deliberately misaligned host rows are copied into aligned private
+  staging, `PF_COPY` runs exactly once there, and the host destination is
+  committed only after every fallible operation succeeds. Input storage,
+  headers, padding and guards remain unchanged; every rejected/error/throw/OOM
+  row preserves the complete destination. A separate current real-SDK Classic
+  replay keeps the eight PF8/PF16 default copy-only cells exact and rejects
+  PF32 and a non-default Amount control. The project now pins
+  `MACOSX_DEPLOYMENT_TARGET = 11.0` in both Debug build-setting blocks. The
+  current project-pinned isolated candidate binary `5893faea...c48b` is
+  arm64+x86_64, minimum macOS 11 in both slices and the Info.plist, exports
+  both entry points and passes strict/deep ad-hoc signing. The older
+  command-override-only candidate `3735e8b3...36f8f` is superseded.
+  Batch4 subsequently installed that exact binary and the accepted all-ten
+  identity now binds it. The one authorized post-batch4 AE invocation failed
+  before the O_EXCL receipt/payload, so it adds no OLMBlur load/render claim
+  and was not retried. Evidence:
+  `refs/conformance/olmblur_smart_public_admission_20260813.{json,md}`,
+  `handoffs/olmblur_smart_public_admission_macos11_project_20260813/build_identity.json`,
+  and `refs/conformance/olm_hostless_batch4_incremental_install_20260813.json`.
+
+- 2026-08-12 release-integration supersession (authoritative): all ten named
+  MediaCore executables are accepted through
+  `refs/conformance/olm_installed_identity_manifest_20260806.json`; that
+  manifest, rather than any older SHA embedded below, is the authority for the
+  current installed identities. Each accepted row requires one installed
+  bundle, byte identity with its named build product, arm64+x86_64 and strict
+  code-sign validity. Earlier same-day statements such as "candidate not
+  installed", "current install unchanged", or an older "current binary" SHA
+  are retained only as chronological evidence. Likewise, every AE smoke below
+  that predates the manifest's current `accepted_at` is historical
+  binary-specific evidence and cannot prove the accepted all-ten set. The
+  release gate must bind one fresh post-acceptance all-ten AE smoke to the exact
+  identity-manifest digest and all ten executable hashes. The old 2026-08-10
+  green contents are superseded. The checked-in status was regenerated on
+  2026-08-12 against the accepted identity and frozen fresh artifact and is now
+  `release_gate_pass`: fixed fixtures 10 lanes, current Mac AE 10/10,
+  identity/UI proven and the bounded Windows seven-row gate accepted. It is
+  authoritative only while every saved `valid_for` digest matches current
+  bytes.
+
+- 2026-08-12 Windows-boundary supersession: the minimal seven Windows AE
+  observation contracts are 7 accepted, 0 invalid, 0 pending. This is contract
+  acceptance, not seven cross-host raw-exact claims: ColorKeep and Kira retain
+  host/import RGB differences in their declared boundaries, and Smoother v1
+  localizes its remaining effect-on difference to the host/export boundary.
+  Do not call the seven rows pending, and do not promote their acceptance to
+  blanket Windows/Mac pixel equality. Evidence:
+  `refs/conformance/olm_windows_ae_release_boundary_minimal_intake_20260806.json`.
+
+- 2026-08-12 OLMKiraKira Classic/Smart crosscut admission guard: Classic
+  numerical admission is limited to fourteen declared 5x3, row-padding-12
+  tuples in PF8/PF16/PF32 and now also binds their exact active-pixel source
+  family: semi-transparent color `RGBA=(15i,11i,7i,64+11i)` for directional/
+  multiray fixtures, or alpha-gradient `RGBA=(0,0,0,15i)` for the three
+  highlight controls. Dynamic guards reject 25 source-content mutations:
+  first/middle/last pixels across both families and all depths, plus a PF32
+  signed-zero bit-pattern mutation. They also reject 22 all-depth layout/
+  format/depth/origin mutations; input and
+  output formats, data, dimensions, positive sufficient aligned rowbytes, and
+  checkout/checkin ownership are validated before typed access. Smart now
+  admits exactly the same fourteen tuple/source pairs in PF8/PF16/PF32: all
+  42 public cells are hostless raw exact, preserve input/world headers and row
+  padding, and balance the Windows-exact conditional parameter lifecycle
+  (25 base checkouts, plus only enabled ramp payloads: 25×8 tuples, 26×5,
+  27×1). The layer/output pixel callbacks run once each; the SDK-optional
+  pixel checkin is not called, matching the Windows owner.
+  Partial requests retain the fixed full-frame 5x3 contract. Parameter, ramp,
+  ColorParamSuite, layer/output checkout, alias, extent, origin, format, depth,
+  rowbytes, data, source and tuple negatives reject before output mutation.
+  This is a bounded public-entry proof, not an arbitrary Smart product claim.
+  The isolated ad-hoc-signed Universal candidate is not installed; the retained
+  installed Kira identity and earlier AE smoke predate this Smart promotion and
+  do not establish native-AE numerical exactness. This entry explicitly
+  supersedes the historical ledger statements below that describe Kira as
+  Classic-only, Smart-numerical fail-closed, public Mode 1 raw-mismatched, or
+  production-fail-closed pending the now-completed natural witnesses. Those
+  statements remain chronology only. The regenerated Classic/Smart admission
+  guard is current supporting `exact_bounded_admission` evidence and is linked
+  from the Smart closure; the public Smart closure remains the primary pixel,
+  lifecycle and negative-gate authority. Current evidence:
+  `refs/conformance/olmkirakira_public_smart_bounded_closure_20260812.{json,md}`
+  and `refs/conformance/olmkirakira_classic_smart_admission_guard_20260812.{json,md}`.
+
+- 2026-08-14 OLMKiraKira explicit WorldSuite lifecycle/install correction:
+  production source `f251b191…6c2` retains the bounded 42-cell numerical map
+  and replaces Smart world-format acquisition with explicit checked
+  acquire/get-input/get-output/release handling. A real-SDK source-included
+  closure covers 20 success, returned-error, success-null/function-null and
+  PF_Err/bad_alloc/unknown-exception rows with primary-error precedence. The
+  Universal minOS11 executable `edd6953f…6a7` is full-inventory exact to the
+  installed bundle; the predecessor `260c2d5e…bf18` is retained in three exact
+  rollback copies. Both installed slices replay all 42 positives, 765 negatives
+  and three full-request controls through public EffectMain. No AE process was
+  launched and no native-AE numerical or Developer ID/notarization claim is
+  added. Evidence: `olmkirakira_worldsuite_lifecycle_closure_20260814`,
+  `olmkirakira_worldsuite_incremental_install_identity_20260814`, and the
+  current `olmkirakira_current_installed_public_closure_20260813`.
+
+- 2026-08-13 OLMKiraKira installed FP-contract correction (historical
+  predecessor): direct AE-free
+  `dlopen` replay exposed a build-setting seam hidden by the source closure's
+  global `-ffp-contract=off`: accepted executable `69da6466…5194` reproduced
+  Classic=Smart but differed from the Windows/source oracle in five PF32 cells
+  (Mode 1 x2, Mode 3 x2, Mode 4 multiray). Xcode Debug's default contraction
+  policy reproduced all five old installed hashes; O0/O1/O2/O3 with contraction
+  disabled reproduced the oracle. Production source `8f3ccda2…3e8f` now sets
+  the translation-unit contraction boundary before the inline core headers.
+  The resulting Universal minOS11 executable `260c2d5e…bf18` is installed by
+  a Kira-only atomic transaction with three exact rollback copies. Its actual
+  installed public EffectMain passes all 42 bounded Classic/Smart positives,
+  all 765 negative rows and three full-request controls on both arm64 and
+  Rosetta x86_64, with the same canonical digests per slice as the source-built
+  closure. The retained-old/current-installed seam
+  report runs both binaries through one harness and freezes the old result at
+  37/42 exact: its five PF32 residuals are 3/9/5/6/5 words with maximum 2/2/1/1/1
+  ULP respectively, while current is 42/42. No AE process was launched; this is not
+  native-AE numerical evidence. Evidence:
+  `refs/conformance/olmkirakira_fp_contract_installed_seam_20260813.{json,md}`,
+  `refs/conformance/olmkirakira_current_installed_public_closure_20260813.{json,md}`,
+  `refs/conformance/olmkirakira_fp_contract_incremental_install_identity_20260813.{json,md}`,
+  and `handoffs/olmkirakira_fp_contract_universal_candidate_20260813/build_identity.json`.
+
+- 2026-08-12 OLMDistanceGradation actual public PF32 Smart owner correction:
+  the earlier architecture-wide "unsupported/no owner" conclusion came from
+  treating classic command `0x0b` as the Smart surface and is superseded. The
+  retained AEX dispatches public command `0x18` through `FUN_181173d20`, whose
+  bit-depth-32 branch calls `FUN_181172a10` and then iterateFloat/
+  `FUN_181170c90`. Production preserves that PF32 Smart surface while admitting
+  only the fixed 17x11 matrix: 24 non-Power PF32 cells are exact and eight
+  PF32 Power cells fail closed pending native Windows UCRT `powf`; combined
+  with PF16 this is 56 admitted raw exact. Public EffectMain
+  tests bind PF8/PF16/PF32 output, balanced
+  parameter/world lifecycle, format/layout guards, input immutability, padding,
+  twenty-one Smart negatives, and four classic guards. Unlisted tuples, partial
+  worlds, install/native-AE pixels, and CLI Mode 4/5 are not promoted. Evidence:
+  `refs/conformance/olmdistancegradation_public_smart_owner_contract_20260812.{json,md}`.
+
+- 2026-08-12 OLMDistanceGradation fixed17x11 PF32 Mode 5 IPP exact closure:
+  the retained natural public trace fixes pre-field `6023adbb...`, post-field
+  `7aaab791...`, and Linear/background-off raw output `50934ac8...`. Production
+  now reproduces the IPP order with direct `expf`, L/T/R/B sequential adds,
+  late spatial multiplication, and a source-local noncontracting product
+  helper. Six non-Power Mode 5 public cells and the 56 admitted PF16/PF32 cells
+  are raw exact; the two Mode 5 Power cells and all eight PF32 Power cells fail
+  closed with output untouched. Input, independent output-padding sentinel,
+  guards and lifecycle remain exact. Universal arm64/x86_64 codegen has three
+  helper calls and zero fused operations for the retained field mechanism.
+  The prior portable result (37 words, max 2 ULP) and no-barrier build remain
+  counterfactuals. No coordinate correction, broad tuple/geometry admission,
+  project/global fast-math, arbitrary fast-math codegen, install or native-AE
+  numerical claim is promoted. A later AE-free real-SDK `dlopen` replay binds
+  both current installed Universal slices of executable `231421e4…` to their
+  source-built route for the same six Mode 5 cells per slice, including padding
+  and callback lifecycle, and separately confirms that all eight Power cells
+  per slice return fail-closed with untouched output. The x86_64 route runs
+  under Rosetta. This installed replay still makes no native-AE or native
+  Windows UCRT claim. Evidence:
+  `refs/conformance/olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.{json,md}`,
+  `refs/conformance/olmdistancegradation_pf32_mode5_universal_codegen_20260812.{json,md}`,
+  and `refs/conformance/olmdistancegradation_current_installed_mode5_20260813.{json,md}`.
+
+- 2026-08-12 ColorKeep bounded public-owner closure: pinned AEXCompat
+  `0ee278943751b968ea2b0d5a0e0f483b70c0090d` executes the unchanged Windows
+  exported SmartPreRender/SmartRender owner for count 5/100 × PF8/PF16/PF32.
+  All six 11x7 cells are active-byte exact against the installed Mac public
+  EffectMain and an isolated Universal candidate. The Mac public harness binds
+  101 ordered parameter checkout/checkins per cell, complete input and world-
+  header immutability, and twelve input/output padding bytes per row. Production
+  now admits only that fixed palette, geometry, rowbytes, and counts; Classic
+  PF32 plus all unlisted products remain fail-closed. Thirty-eight Smart and twenty-four
+  Classic one-away guards reject before iteration, including exact world flags/origin
+  and World/Color/Iterate suite acquisition failures. The candidate is ad-hoc signed
+  Universal. The same production source was rebuilt as the named Debug product
+  accepted by the current all-ten installed identity; this does not claim
+  byte identity with the isolated candidate. Fresh post-acceptance AE proof
+  remains separate. Evidence:
+  `refs/conformance/colorkeep_installed_public_covering_matrix_20260812.json` and
+  `refs/conformance/colorkeep_public_guard_closure_20260812.{json,md}`.
+
+- 2026-08-13 ColorKeep count9 exact public closure: production source SHA-256
+  `3ff3a4d4319f5b3b5519e517fcf591be417c97e4e9dd62117fe4e42f66ebdfd3`
+  adds one separately admitted 4x3/padding-8 lane without changing the retained
+  11x7/padding-12 count-5/100 lanes. Windows exported Smart PF8/PF16/PF32 and
+  Mac public EffectMain Classic PF8/PF16 plus Smart PF8/PF16/PF32 are raw exact
+  for the pinned per-depth source and public-representable nine-color palette.
+  Smart also binds the 91 default opaque-black inactive colors; Classic does
+  not read that tail. Admission fixes rowbytes to 24/40/72. Of 136 canonical
+  rejects, 131 reject before iteration and five are controlled iterate-failure
+  cases; all preserve the public destination. Classic PF32 and every
+  unlisted source, palette, count, geometry, stride or layout fail closed.
+  The installed executable `fcd501dae5e62aaa0bb8c022cc55c3a6735e3021d465b42b80c939f33624dd77`
+  is Universal with Info.plist and both slices at minimum macOS 11.0. A current
+  installed public-entry replay now executes both arm64 and Rosetta x86_64:
+  all five paths are raw exact and all 136 rejects remain precommit-atomic per
+  slice. The fresh
+  AE record proves only effect-disabled load/add/single-path mapping for
+  ColorKeep; it did not attempt count9 numerical rendering. The formal saved
+  smoke is now historical because later Toon and batch4 installs changed the
+  accepted identity. Current release status is `release_gate_pending_or_invalid`;
+  this old smoke must not be reused as current host evidence. Evidence:
+  `refs/conformance/colorkeep_nine_color_public_closure_20260813.{json,md}`,
+  `refs/conformance/colorkeep_count9_incremental_install_identity_20260813.{json,md}`,
+  `refs/conformance/colorkeep_current_installed_count9_20260813.{json,md}`,
+  and `refs/conformance/olm_all10_post_colorkeep_count9_fresh_ae_smoke_20260813.json`.
+  The current-installed report is an AE-free real-SDK `dlopen` replay: all five
+  Classic/Smart depth paths match the live Windows exported Smart owner hashes,
+  and the complete 136-row reject matrix remains precommit-atomic. It does not
+  change the native-AE numerical boundary above.
+
+- 2026-08-13 ColorKeep source-bound complete-union refresh: source SHA-256
+  `d1c443042998e466b021d6fd2351537a2be63fe95d3e79a2089d82f78217bac3`
+  adds exact active-source SHA guards to every retained 11x7 count-5/100
+  depth/count lane. The installed Universal executable
+  `dae59a6faf54ed18ac803ad042be2cdab688c5f814edf322d64c108d5247f46d`
+  replays, on arm64 and Rosetta x86_64, all ten legacy public paths and all
+  five count9 public paths. The legacy helper accepts six exact sources and
+  rejects 18 first/middle/last active-byte mutations; count9 retains 136
+  precommit-atomic rejects per slice. Three exact old-bundle copies preserve
+  rollback. No AE launch or native-host numerical claim was added. Evidence:
+  `refs/conformance/colorkeep_source_bound_complete_union_candidate_20260813.{json,md}`
+  and `refs/conformance/colorkeep_source_bound_complete_union_install_20260813.{json,md}`.
+
+- 2026-08-13 OLMBlur complete installed admission replay: the current installed
+  arm64 and Rosetta x86_64 public `EffectMain` paths reproduce every source-bound
+  Smart cell presently admitted by production: PF8 12, PF16 8 and PF32 20,
+  forty cells per slice. Each slice also reproduces the source-built 80 positive
+  controls and 1,298 bounded negative controls. This supersedes the earlier
+  six-cell installed representative report as the current aggregate pointer;
+  it remains AE-free and does not generalize to arbitrary source/tuple/geometry.
+  Evidence: `refs/conformance/olmblur_current_installed_complete_admission_union_20260813.{json,md}`.
+
+- 2026-08-13 batch4 install and one-shot AE boundary: OLMBlur, OLMColorKey,
+  OLMSmoother and OLMSmoother2 were installed from their frozen source-bound
+  Universal minOS11 candidates. Accepted identity SHA-256 is
+  `426dce713a9595157fe4c9fa3731c464e4ef10afd5db269335a12fa4b38beccc`;
+  all ten installed bundles remain exact, Universal and signed. The one
+  authorized post-batch4 AE invocation stopped before the O_EXCL receipt and
+  before `DoScriptFile`: two consecutive exact nonce-bound DoScript readiness
+  responses were not observed. It executed zero plugin rows and supplies no
+  load, frame or numerical evidence. The attempt runner and stderr are frozen
+  under `handoffs/olm_all10_post_batch4_fresh_ae_smoke_failure_20260813/`;
+  retry is code-forbidden. The saved release state is consequently
+  `release_gate_pending_or_invalid`: install 10/10, parameter/UI 10/10 and
+  Windows 7 remain proven/accepted, while current Mac AE is 0 proven/10 invalid
+  and the fixed regression is pending in audit mode.
+
+- 2026-08-13 OLMToonDilate final source authority: frozen source
+  `ded9eaab…4464b` passes the same-source actual-AEX versus Mac public
+  SmartPreRender/SmartRender 12-cell paired replay. The public admission
+  closure rejects 507 one-away rows and closes 69 null, returned-error and
+  success-control lifecycle rows across PF8/PF16/PF32. Successful SmartPre
+  sets `RETURNS_EXTRA_PIXELS`; failed SmartPre does not publish it. The fixed
+  fixture Toon lane consumes both reports and their unit validators. The
+  final-source bundle is now installed, but the current-identity fresh AE
+  load/map/smoke remains pending and does not inherit the hostless numerical
+  claim. Evidence:
+  `refs/conformance/olmtoondilate_same_source_public_paired_replay_20260813.{json,md}`
+  and `refs/conformance/olmtoondilate_public_admission_negative_closure_20260813.{json,md}`.
+
+- 2026-08-13 OLMToonDilate current-installed exact12 closure: accepted current
+  executable `5bbe6931…036e` is loaded directly from the single installed
+  bundle and executes public SmartPreRender/SmartRender for the same four
+  bounded source families at PF8/PF16/PF32 on both arm64 and Rosetta x86_64.
+  All 12 active/payload output hashes per slice equal the source-built paired
+  closure, while input storage and both world headers remain immutable and
+  output padding is exact. The report binds source `ded9eaab…4464b`, current
+  accepted identity `e17dddbd…431`, the incremental install
+  closure and the paired numerical authority. This is an AE-free installed
+  public-entry closure: it proves neither native-AE loading nor native-AE
+  numerical execution. Evidence:
+  `refs/conformance/olmtoondilate_current_installed_exact12_20260813.{json,md}`.
+
+- 2026-08-12 OLMToonDilate optional SmartRender checkin closure (superseded by
+  the final 2026-08-13 paired/admission closures): the retained
+  Windows owner calls the pixel and output checkout callbacks but never calls
+  optional checkin_layer_pixels on successful recorded runs. Production now
+  mirrors that successful lifecycle without changing the separate parameter
+  checkout/checkin pair. SDK-grounded production failure tests return from
+  failed layer/output checkouts with zero checkins and no destination mutation;
+  callbacks returning success with a null world fail closed. Actual-AEX failed-
+  checkout control flow was not captured and is not claimed equivalent. The
+  source-included public path also accepts a null optional callback and preserves
+  the existing bounded PF8/PF16/PF32 pixel, padding, guard, and input-invariance
+  gates. An isolated ad-hoc-signed Universal
+  candidate executes the installed-style public EffectMain matrix 12/12 raw
+  exact with zero optional checkins per case. The same production source was
+  rebuilt as the named Debug product accepted by the current all-ten installed
+  identity; this does not claim byte identity with the isolated candidate.
+  This historical installed candidate does not represent final `ded9eaab…`;
+  fresh post-install AE proof remains pending and separate. Evidence:
+  refs/conformance/olmtoondilate_optional_checkin_closure_20260812.{json,md}.
+
+- 2026-08-12 OLMRadialBlur Type-3 current install / AE smoke: frozen source
+  `36063ae…1743` is recorded alongside the installed ad-hoc-signed Universal binary
+  `7701c3…18b3`; previous binary `8a4bd2…7934` is recoverable under
+  durable `handoff/mac_plugin_backups/mediacore_20260812_radial_type3_before_install/`.
+  Fresh AE 26.3x87 persisted the
+  exact loaded module path, added `OLM RadialBlur`, and rendered a PF32 SOFTWARE
+  16×16 default-effect PNG. The following 9×7 Type-3 Layer render timed out and
+  produced no output, so it adds no live pixel-exact or Smart numerical claim.
+  The direct internal-owner/public classic hostless exact closure remains
+  separate. Evidence: `refs/conformance/olmradialblur_type3_current_install_smoke_20260812.{json,md}`
+  plus the hash-bound `_raw_20260812/` directory.
+
+- 2026-08-12 OLMBlur classic current install / AE smoke: source
+  `21f3c96a…8c89` installed once as ad-hoc-signed Universal binary
+  `b1461f8e…943f`; previous bundle is recoverable at
+  `handoffs/olmblur_classic_current_install_20260812/previous_build.plugin`.
+  Current bundle/build transcript are durable siblings; source/binary are
+  recorded together without claiming reproducible identity. Fresh AE 26.3x87
+  lazy-loaded exactly that path after adding `OLM OLM Blur`, rendered default
+  PF32 SOFTWARE 64×36 control/effect frames, and quit. This is install/load/add/
+  render evidence only: no live classic PF8/PF16 pixel or PF32 classic-route
+  promotion. Raw observation, dedicated runner, summary and tamper gates are
+  hash-bound. Evidence: `refs/conformance/olmblur_classic_current_install_smoke_20260812.{json,md}` and its `_raw_` JSON.
+
+- 2026-08-12 OLMRadialBlur PF32 Zoom Type-3 Layer bounded closure: production
+  now connects only the fixed 9x7/rowbytes160, centered Outer4/Inner0/Size0,
+  NV25/Type3, Repeat-on, Ratio1/Angle0/Quality5/Brightness1, Seed1/Offset0/
+  Thickness3 tuple with a same-origin/same-size PF32 Layer. The direct internal
+  actual owner and public Mac classic EffectMain dispatch are raw
+  exact at source span, pre/post polar planes, and padded output across
+  canonical/zero/constant/impulse/checker sources crossed with normal/inverse
+  Layer gradients (10 rows). The existing executed host regression
+  binds Input/Layer checkout and reverse checkin ordering. PF8/PF16, null or
+  mismatched Layer, and every other unlisted Type-3 geometry/rowbytes/tuple
+  remain fail-closed. It proves Smart Layer plumbing only, not Smart numerical
+  exactness. This is not install/native-AE pixel evidence. Evidence:
+  `refs/conformance/olmradialblur_type3_layer_span_natural_closure_20260812.{json,md}`.
+
+- 2026-08-12 OLMBlur classic public-entry closure: the retained 2025 export
+  routes `PF_Cmd_RENDER` selector `0x0b` to `FUN_18000a180`. With the current
+  registered defaults (Amount 5, Smoothness 100, Repeat 2), its low-dword
+  float-slider read makes Amount zero and the PF8/PF16 non-Legacy worker exits
+  after the initial copy. Padded 24x24 PF8/PF16 are raw copy-exact for all four
+  Bias 1/2 x Legacy 0/1 counterexamples; the owner never reads either field.
+  Production classic Render now admits only that bounded tuple, ignores the
+  unowned fields, and leaves numerical rendering on Smart Render. PF32 and
+  one-away Amount/Smoothness/Repeat are fail-closed and output-untouched because
+  classic distinguishes only the DEEP flag, which aliases PF16 and PF32. The
+  AEX, pinned AEXCompat setup execution, identity-bound (not executed here)
+  worker world/lifecycle source, direct export loader, production source, input,
+  padding, world headers, parameters, and guards are hash-bound. This is not
+  AEXCompat-worker or native-AE classic pixel execution evidence. Evidence:
+  `refs/conformance/olmblur_classic_public_entry_closure_20260812.{json,md}`.
+
+- 2026-08-12 OLMColorKey Lab76 multi-key order closure: the Windows comparator
+  mutates each Lab76 key and the reused comparison triple in place before its
+  predicate, making key order observable. Production now mirrors the recovered
+  float32 a/b offsets and Euclidean threshold order. The declared/reversed
+  two-key public Smart-owner fixtures are 6/6 raw exact across PF8/PF16/PF32,
+  with 33 checkout/checkin ordering, input immutability, and padding bound to
+  the report. The current ad-hoc-signed Universal binary SHA-256 is
+  `350ed6eb00c078952ad512b621e3489e6e6ed47d9129e3c11748f547fc441230`.
+  Fresh AE 26.3x87 lazily loaded exactly that installed path after effect add,
+  retained all 217 default leaf parameters, and completed 64x36 PF32 Software
+  control/default-noop renders before quitting. This host smoke makes no live-AE
+  Lab76 or Windows/Mac pixel-exact claim. Other Lab76 products remain
+  unpromoted. Evidence:
+  `refs/conformance/olmcolorkey_lab76_multikey_order_closure_20260812.{json,md}`
+  and `refs/conformance/olmcolorkey_current_install_smoke_20260812.{json,md}`
+  with its byte-preserved `_raw_` report.
+
+- 2026-08-12 OLMDirectionalBlur Type-2 natural-64 closure: the fixed 64x36
+  crop at `(472,262)`, Angle 45, Front 8, Back 0, Noise Variation 25,
+  Noise Type 2, Size Variation 0 tuple is raw exact through the pinned
+  AEXCompat exported Smart owner and Mac public EffectMain for PF8/PF16/PF32.
+  PF16/PF32 production admission is extended only for this tuple and includes
+  active-rowbyte guards plus a rowwise active-source SHA-256 gate. The older
+  PF8 exact control is now narrowed to the same source gate and cannot fall
+  through to the generic PF8 renderer on a source mismatch. Only the fixed crop and the exact
+  zero/constant/impulse/checker typed buffers are admitted, for 15/15
+  depth/source rows raw exact. Sixty PF16/PF32 rejects cover every new tuple
+  field, both render scales, dimensions, rowbytes, null worlds, source
+  first/middle/last bit mutations, and an unlisted source; four equivalent PF8
+  source rejects bring the closure to 64. The separate fixed 16x16 Type-3
+  source guard below does not broaden this Type-2 lane. Evidence:
+  `refs/conformance/olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.{json,md}`.
+  The retained pre-PF8-narrowing Universal binary SHA-256
+  `9142c19937c54dec8ed07a06c14181db1cf274335b599605251982bf671516f6`
+  was installed once with strict ad-hoc signature verification; AE 26.3x87
+  completed a default-parameter 64x36 SOFTWARE/PF32 render after the smoke
+  script checked the current on-disk SHA. The contemporaneous vmmap path/count
+  observation was not persisted and is therefore not an exact loaded-module
+  proof. This is install/on-disk-identity/apply/render evidence only, not a
+  live-AE Type-2 natural64 pixel claim. Install evidence:
+  `refs/conformance/olmdirectionalblur_type2_natural64_current_install_smoke_20260812.{json,md}`
+  with its byte-preserved `_raw_` result. It is historical and does not prove
+  the current all-depth exact-source bytes. The intermediate uninstalled
+  Type-2-only candidate was bound under
+  `handoffs/olmdirectionalblur_type2_natural64_all_depth_source_universal_candidate_20260813/`
+  (binary SHA-256 `612cb184c1e7b1b7fe92a46a380678eaa465e65c32021cb12c467ca5cd147d4b`)
+  and is superseded by the combined candidate below.
+
+- 2026-08-13 OLMDirectionalBlur fixed Type-3 Layer source guard: the existing
+  16x16 Angle 45 / Front 8 / Sharp Tail 50 / Noise Variation 100 / Type 3
+  public tuple is now bound to the pinned case_0001 active bytes independently
+  for both input and Layer. PF8/PF16/PF32 require exact input/output rowbytes
+  76/144/288, Layer rowbytes 84/152/296, zero extents, and three pairwise
+  disjoint payload spans. The actual exported owner and Mac public Smart route
+  remain raw exact at all three depths with output padding and checkout/checkin
+  lifecycle preserved. Fifty-four source/Layer bit mutations, overlap controls,
+  stride/extent one-aways, and null-data cases return BAD_CALLBACK_PARAM with
+  input, Layer, output storage, and headers unchanged. This does not admit
+  arbitrary source/Layer bytes or another tuple/layout. Evidence:
+  `refs/conformance/olmdirectionalblur_type3_layer_source_guard_closure_20260813.{json,md}`.
+  The combined uninstalled Universal identity is
+  `handoffs/olmdirectionalblur_combined_source_guards_universal_candidate_20260813/`
+  with binary SHA-256
+  `59f584d47a0d68c19fb9cc656b814a9a2cd2f358466c14e212ec6789f8766600`;
+  it is superseded by the public-source-guard candidate below.
+
+- 2026-08-14 OLMDirectionalBlur Type-3 Layer exported-Smart correction (latest):
+  a test-worker-only explicit Layer assignment replays the AEX exported Smart
+  entry with the same fixed 16x16 source as input and Noise Layer. PF8
+  `568e904d...`, PF16 `be00533e...`, and PF32 `eb57f09d...` are raw exact to
+  current Mac public EffectMain. The earlier PF16 `ae246b3b...` internal fixture
+  used legacy `byte*128`; SDK `round(byte*32768/255)` reproduces exported Smart
+  exactly. Production admits only exact source/Layer, tuple, geometry, rowbytes,
+  extents, and disjoint worlds; 54 mutations fail closed. AEXCompat/Unicorn is
+  pinned; native Windows/AE is not claimed. The later transaction below binds the
+  current installed bundle.
+
+- 2026-08-14 OLMDirectionalBlur Type-3 Layer installed closure: Universal minOS 11
+  executable `9b5fc6b3…d2eff` was installed with a same-volume atomic exchange after
+  two exact rollback copies were prepared. Accepted identity moved from `b316ca63…`
+  to `24c4f71a…`; only the DirectionalBlur row and top-level timestamps changed.
+  The installed arm64 and Rosetta x86_64 slices each replay the fixed Type-3 Layer
+  route with 3 exact positives and 54 source/layout one-away rejects (57/57), matching
+  the source-built public path. Two all-ten preflights are byte-identical, report
+  `ae_not_running`, and verify count1, accepted SHA, Universal slices and strict
+  ad-hoc signatures for every bundle. Native AE remains deferred to the aggregate
+  checkpoint.
+
+- 2026-08-14 OLMDirectionalBlur exported-Smart arm64 fifteen-cell promotion: a pinned
+  AEXCompat/Unicorn worker with the minimal finite-double `ceil` import replayed
+  all 15 dual-side rows through the Windows AEX exported Smart entry. Current
+  arm64 public `EffectMain` is raw exact for all 15; Rosetta x86_64 retains the
+  prior nine exact rows and fail-closes six. The six historical residuals are
+  reproduced exactly by the double-round `exp` counterfactual, while actual guest
+  Iterate callbacks plus the imported float `expf` leaf match exported output 6/6.
+  Type-3 Layer internal-owner rows remain fail-closed at 516. Universal minOS 11
+  executable `3528d12c…122a7` is now transactionally installed: arm64 retains all
+  15 exact cells, while x86_64 retains nine and fail-closes six. The pre-change
+  executable `4e238ac0…4d77` remains in three full-bundle rollback copies.
+  Evidence: `olmdirectionalblur_dual_side_exported_smart_closure_20260814`,
+  `olmdirectionalblur_exported_smart_remaining6_census_20260814` fixes the
+  historical residuals at PF8 5 words, PF16 5 words, and PF32 20 words / max 2
+  ULP, and binds the float-leaf closure. No compensation was promoted. Updated
+  dual-side source/boundary closures supersede the old nine-cell candidate. The
+  install is complete; native AE remains deferred to the next batched checkpoint.
+  This is not native Windows or native After Effects evidence.
+
+- 2026-08-14 OLMDirectionalBlur public-owner provenance correction (historical,
+  superseded by the nine-cell exported-Smart promotion above): the retained
+  dual-side 15 cells and fixed Type-3 Layer 3 cells were traced to
+  `dblur_fullrender_host_fixture_20260711.py`, whose `ENTRY=0x180007BD0` calls an
+  internal render owner rather than the AEX exported Smart entry. Their raw
+  exact outputs remain diagnostic, but current source `78175545…f91e` and
+  Universal candidate `0bc5d3a6…657c` return `PF_Err_BAD_CALLBACK_PARAM` (516)
+  for all 18 cells with input/Layer/destination/header/padding unchanged.
+  Natural64 remains admitted because its pinned AEXCompat worker invokes the
+  exported AEX route. Evidence:
+  `olmdirectionalblur_dual_side_public_owner_boundary_20260814.{json,md}` and
+  `olmdirectionalblur_type3_public_owner_boundary_20260814.{json,md}`. Candidate
+  was transactionally installed as `0bc5d3a6…657c`; both installed slices and
+  two identical all10 preflights pass with AE stopped. The following dual-side/Type-3
+  success entries are historical and superseded as public-ownership claims.
+
+- 2026-08-14 OLMDirectionalBlur dual-side public source guard expansion
+  (historical; superseded public-ownership claim): one
+  fixed 32x18 tuple and all four recorded fixed 64x36 tuples are bound to the
+  exact case_0001 active source, depth-specific rowbytes, zero extents and
+  disjoint worlds. All 15 public cells are actual-owner raw exact; 240 source,
+  layout and geometry controls fail closed, including 16x16 internal-owner-only
+  rejection. Source `bd329d36…a6cf`, Universal/installed `e0bba034…b1f4`.
+  AE was not launched. This supersedes the following 32x18-only scope.
+
+- 2026-08-13 OLMDirectionalBlur fixed 32x18 dual-side public source guard
+  (historical, superseded scope):
+  the public Smart tuple Angle 45 / Front 8 Fade 50 Sharp 100 / Back 8 Fade 50
+  Sharp 50 / Size 50 / Noise Variation 100 / Type 2 is now bound to the pinned
+  case_0001 active bytes. PF8/PF16/PF32 require exact input/output rowbytes
+  140/272/544, zero extents, and disjoint payload spans. The actual exported
+  owner and Mac public route remain raw exact at all three depths with output
+  padding and checkout/checkin lifecycle preserved. Forty-five source bit
+  mutations, bidirectional overlap controls, stride/extent/geometry one-aways,
+  and null-data cases return BAD_CALLBACK_PARAM with input, output storage and
+  headers unchanged. At this historical checkpoint the other three dual-side
+  tuples retained internal-owner evidence and were not used to generalize this
+  public admission; the 2026-08-14 fixed64x36 closure supersedes that limitation
+  for its exact source, geometry and rowbytes only. Evidence:
+  `refs/conformance/olmdirectionalblur_dual_side_public_source_guard_closure_20260813.{json,md}`.
+  The source-guard Universal identity was
+  `handoffs/olmdirectionalblur_public_source_guards_universal_candidate_20260813/`
+  with binary SHA-256
+  `0eb4cdd9522337cca73a3f6ce7a2a862424ae4f5db94b762e90d08d631d490e7`
+  and was superseded first by the cleanup candidate and then by the fixed64x36
+  candidate. The historical cleanup binary `371c3b62…` was replayed AE-free through the real-SDK
+  SmartPreRender→SmartRender route for this exact dual-side tuple: PF8/PF16/PF32
+  are source/installed byte-identical on both arm64 and Rosetta x86_64, and a
+  per-depth source-bit mutation fails closed with untouched output on each
+  slice. Evidence:
+  `refs/conformance/olmdirectionalblur_current_installed_dual_side_20260813.{json,md}`.
+
+- 2026-08-13 OLMDirectionalBlur current-installed explicit source-bound union:
+  both installed Universal slices replay the fixed dual-side Type2 and Type3
+  Layer routes at PF8/PF16/PF32 plus the five exact Natural64 sources at all
+  three depths, for 21 exact public cells and 72 installed negative controls
+  per slice.
+  x86_64 executes under Rosetta and AE is not launched. This is an explicit
+  source-bound sub-union, not complete production admission coverage. Type3
+  is replayed by a dedicated real-SDK installed probe rather than relabeling
+  its older reduced-ABI fixture.
+  Evidence: `refs/conformance/olmdirectionalblur_current_installed_source_bound_union_20260813.{json,md}`.
+
+- 2026-08-13 OLMRadialBlur Type1 exact-source batch 4 (hostless closure, installed identity; AE deferred):
+  pairwise 16, dual-strength 18, edge/noise 24, size/edge/noise 12, and
+  size/noise 36 cells are admitted
+  only when their exact PF8/PF16/PF32 active-row fixture SHA matches. On both
+  arm64 and x86_64 the 106 positive outputs remain byte-identical to the
+  pre-guard production transcript; first/middle/last mutation controls for the
+  five route closures (57 reject rows per slice) fail closed
+  with input unchanged and destination untouched. The public count includes
+  eight 9x7 pairwise cells outside the 98-cell projection; all 98 projection rows
+  are source-bound. Universal candidate binary `2934d136…3083` is strict-valid
+  ad-hoc/minOS11 and is full-inventory exact to the sole installed bundle.
+  Predecessor `da72af55…b859` remains in three exact rollback copies; only the
+  Radial identity row and top-level timestamps changed. AE was not launched. Evidence:
+  `olmradialblur_type1_pairwise_source_guard_readiness_20260813.{json,md}`,
+  `olmradialblur_type1_dual_strength_source_guard_20260813.{json,md}`, and
+  `olmradialblur_type1_edge_noise_source_guard_20260813.{json,md}`,
+  `olmradialblur_type1_any_size_edge_noise_source_guard_20260813.{json,md}`,
+  `olmradialblur_type1_size_noise_source_guard_20260813.{json,md}`, and
+  `handoffs/olmradialblur_type1_source_guard_batch4_candidate_20260813/` and
+  `olmradialblur_type1_source_guard_batch4_install_20260813.{json,md}`.
+
+- 2026-08-12 Kira PF8 source-decode / retained pre-Smart install closure: the typed
+  Windows PF8 owner converts each byte with `byte * float32(1/255)` using the
+  AEX constant at VA `0x1814d65a4` (`0x3b808081`). Production and both CLI
+  mirrors now use that same source rule; ColorParamSuite values remain on their
+  separate float path. The fixed 5x3 alpha-`i/17` source, seed, Highlight ray,
+  fd90 glow, and PF8 output are exact, with PF16/PF32 controls and the existing
+  semitransparent fixture unchanged. An exhaustive 256-code gate finds 126
+  divide/multiply differences, all exactly +1 ULP on the AEX multiply side.
+  The last installed pre-Smart Universal binary SHA-256 recorded by this run is
+  `5248592a32d3a34bac67c43a1a65af875097aa1c251840d1db4aa8dcd2b39367`;
+  AE 26.3x87 loaded that exact installed path and completed a PF32 Radius-5
+  load/apply/render smoke. That smoke remains pixel fail-closed because both
+  branches differ from Windows in all 6,220,800 words with
+  `preserve_rgb=null`; it is not a live-AE PF8 pixel claim. Evidence:
+  `refs/conformance/olmkirakira_pf8_source_decode_closure_20260812.{json,md}`
+  and `refs/conformance/olmkirakira_pf8_current_install_smoke_20260812.{json,md}`
+  with its byte-preserved `_raw_` report. The later bounded Smart candidate is
+  not installed and is not covered by this historical AE smoke.
+
+- 2026-08-12 Kira Highlight-gradient install / AE smoke: installed the closure
+  build as one ad-hoc-signed Universal x86_64+arm64 MediaCore bundle, binary
+  SHA-256 `136ca31b2a2f75bd2dc624bbba4f907e29214202af80926c091abcef536f5c92`.
+  AE 26.3x87 loaded that exact module, applied the recorded Highlight Radius 5
+  parameters, and rendered PF32 effect-off/effect-on EXRs. The cross-host pixel
+  gate remains fail-closed because the no-effect input already differs in all
+  6,220,800 words with `preserve_rgb=null`; this is installed load/apply/render
+  evidence only. The raw-exact claim remains the hash-bound 5x3 Radius-3/kernel-7
+  hostless closure below. Evidence:
+  `refs/conformance/olmkirakira_mode4_highlight_gradient_install_smoke_20260812.json`,
+  `.md`, and byte-preserved raw report
+  `refs/conformance/olmkirakira_mode4_highlight_gradient_install_smoke_raw_20260812.json`.
+
+- 2026-08-12 Kira Mode 4 Highlight-gradient closure: on the fixed 5x3
+  Highlight-only Radius 3 (kernel 7), alpha-`i/17` tuple, the natural AEX ray
+  and public exported Mode 4 PF8/PF16/PF32 outputs are raw exact. The former
+  two one-ULP box-ray words are retained only as a counterfactual for the old
+  separable implementation. Mode 2 on the same tuple is an all-depth exact
+  regression control. Mode 1 on the separately hash-bound alpha-`i/17` tuple
+  is also exact at all depths after matching the typed Windows PF8 source
+  decode (`byte * float32(1/255)`); the former one-pixel PF8 mismatch is kept
+  only as a division counterfactual. No arbitrary Mode 1 source, all-radius,
+  or broader gradient family is admitted from these bounded witnesses.
+
+- 2026-08-12 AEXCompat Rotation fixture identity: the Kira Rotation 22 raw
+  fixed ANGLE oracle requires worker commit 28d53546, binary SHA-256
+  46ab907d286ad4e0e1c2065557100f02c37e0b68df4c22202a825f3fea13ef61.
+  The #1162 worker bfd635e3 and current origin/main 47dd3344 reject
+  `Glow Rotation=fixed:22` before render; plain numeric 22 produces different
+  pixels and is not a substitute. The regression gate now fails closed on an
+  unpinned worker identity rather than silently changing oracle semantics.
+
+- 2026-08-12 Kira Rotation 22 public-owner closure: the natural typed owner
+  records UI Merge mode at `state+0x44=2`, while the separate inner aggregation
+  selector is fixed at `state+0x48=1`. The public path therefore uses
+  `FUN_18114fd90` for both UI choices; UI Merge changes only the downstream
+  composition/writer. Natural ray, owner fields, 15 Ramp-helper calls from
+  `0x114fe9c`, default Ramp payload, and writer-entry glow were captured in one
+  pinned-worker Smart render. Direct `FUN_18114fd90` replay from the unscaled
+  ray reproduces all 240 glow bytes, and corrected public EffectMain output is
+  raw exact to the actual AEX for PF8/PF16/PF32. The former `public Mode 2 ->
+  FUN_18114ffd0` and `first difference = fd0 Ramp aggregation` interpretations
+  are withdrawn; the historical seam and constructed-fd0 diagnostics remain
+  hash-bound. No arbitrary geometry, Ramp, or Mac AE claim is promoted.
+
+- 2026-08-12 Kira Mode 4 Diagonal2 owner-angle closure: all three typed
+  Windows owners construct the ray-angle table as Rotation + `{90, 0, 45,
+  135, 0}` degrees. The declared D2-only fixture therefore enters the natural
+  helper at +136 degrees, not the geometrically equivalent -44 degrees used by
+  the former Mac path. Directed Mode 4 recurrence makes those representatives
+  bit-distinct: the old ray differs in 3/15 float words (max 2 ULP), while the
+  corrected +136-degree seed, forward warp, inverse warp, final ray, fd90
+  aggregate, writer glow/source, and 240-byte output all match the pinned AEX
+  trace. The corrected public D2-only and declared multiray fixtures are raw
+  exact for PF8/PF16/PF32. This admission is limited to the recorded 5x3
+  tuples; arbitrary directions and geometry remain fail-closed. The separate
+  Highlight-gradient Radius-3/kernel-7 tuple is closed above without an
+  all-radius promotion.
+
+- 2026-08-12 Kira Diagonal2 install / AE smoke: the owner-angle correction is
+  installed as one ad-hoc-signed Universal bundle, binary SHA-256
+  `39700e41...22b84`, with deep/strict verification and a recoverable backup of
+  the superseded `3ff1d6ed...afb0a` bundle. AE 26.3x87 loaded that exact module
+  and produced PF32 effect-off/effect-on EXRs. Cross-host pixels remain
+  fail-closed because the no-effect branch already differs in all words with
+  `preserve_rgb=null`; this is an installed load/apply/render claim only. D2
+  pixel exactness remains the separate hash-bound hostless closure.
+
+- 2026-08-12 Kira install / AE smoke boundary: the corrected Universal
+  x86_64+arm64 bundle (signed binary SHA-256 `3ff1d6ed...afb0a`) is installed
+  once in MediaCore with strict codesign verification and a recoverable `/tmp`
+  backup of the previous bundle. AE 26.3x87 loaded/applied all 10 OLM effects;
+  the Kira Render Queue path loaded that exact installed module and created
+  PF32 effect-off/effect-on EXRs. Pixel promotion remains fail-closed: the
+  common PNG smoke wrote no PNG for any plugin, and the Render Queue fixture's
+  no-effect branch already differed from Windows with `preserve_rgb=null`.
+  This record proves installed load/apply/render only; Rotation 22 pixel
+  exactness remains the separate hostless, hash-bound closure above.
+
+- 2026-08-12 OLMRadialBlur Rotation Type-1 inverse-cell closure and installed
+  release chain: the exact five existing fixed-32x18 admission flags cover
+  98/98 fresh direct-owner integration cells (`8+18+24+12+36`). Every
+  family-required available raw plane and padded output is exact; prepass alpha
+  is claimed only by the two Edge families. PF8 source span was recovered at
+  owner work `+0x90`. The historical 1-4 ULP/inactive-only classification is
+  superseded: some old differing cells were consumable, although the bounded
+  small strengths did not cross integer-span boundaries. Type2 controls remain
+  exact, Rotation Type3 is 9/9 fail-closed, and Strength290 is post-fix exact in
+  direct-owner diagnostics but remains rejected by public EffectMain. The
+  incremental Universal install identity is `03e837e8...d548`; the post-Radial
+  all-ten smoke relation binds that identity while making no AE numerical-exact
+  claim. Evidence:
+  `refs/conformance/olmradialblur_rotation_type1_inverse_cell_closure_20260812.{json,md}`,
+  `refs/conformance/olmradialblur_type1_incremental_install_identity_20260812.{json,md}`,
+  and `refs/conformance/olm_all10_post_radial_type1_smoke_relation_20260812.{json,md}`.
+
+- 2026-08-12 OLMRadialBlur Rotation four-family closure (historical component
+  coverage; Type-1 scalar wording superseded by the inverse-cell closure above): Dual Strength x
   Size x Noise x selected-side Mode 2/3 Offset is 24/24 consumed-path and
   typed-output exact across PF8/PF16/PF32 on the fixed 32x18 component
   fixture. Size/noise span and simultaneous Outer/Inner internal planes are
   included. Admission remains bounded to the declared tuples and geometry;
   unlisted combinations and Type 3 stay fail-closed.
 
-- 2026-08-12 Kira latest bounded seams: Mode 4 public Highlight solo is 3/3
-  all-depth exact. Horizontal/Diagonal2 solo are PF8/PF16 exact and PF32
-  fail-closed; Diagonal2 multiray is fail-closed at every depth. At Rotation
-  22 degrees, the ray is exact but Ramp aggregate has three one-ULP words and
-  the writer one residual word. Highlight gradient has two one-ULP box-ray
-  words, with subsequent stages exact; constant source is exact. These major
-  Mac-only seams are localized, not closed. No expected-word correction is
-  admitted and no unlisted ray/rotation/gradient combination is promoted.
+- 2026-08-12 Kira latest bounded seams (superseded by the Rotation 22,
+  Diagonal2, and Highlight-gradient closures above): Mode 4 public Horizontal,
+  Diagonal2, and Highlight solo plus the declared Diagonal2 multiray fixture
+  are all-depth raw exact. At Rotation
+  22 degrees, the historical Mac path had three glow one-ULP words and one
+  writer residual; that tuple is now closed by the owner-selector correction.
+  Highlight gradient's former two one-ULP box-ray words are also closed for
+  the fixed 5x3 Radius-3/kernel-7 public Mode 4 tuple at all depths; Mode 2 is
+  an exact control, while the former Mode 1 PF8 seam is closed only for its
+  separately hash-bound alpha-`i/17` source-decode tuple.
+  No expected-word correction is admitted and no unlisted ray, rotation,
+  radius, or gradient combination is promoted.
 
-- 2026-08-12 OLMDirectionalBlur 64x36 dual-side closure: worker and public
+- 2026-08-12 OLMDirectionalBlur 64x36 dual-side closure (historical; Windows
+  side is internal-owner diagnostic, not exported-public evidence): worker and public
   EffectMain matrices are each 12/12 raw exact across PF8/PF16/PF32 and the
   four declared tuples. The fixture exercises rotated width 76, 32 calls on
   each of two rows, and tail preseed. Production admission remains bounded
   to 16x16, 32x18, and 64x36 with those tuples. Type 3, other geometry, and
   unlisted tuples remain fail-closed.
 
-- 2026-08-12 Radial Type 3 investigation stop: reusable OLM runner 886c9e3a
+- 2026-08-12 Radial Type 3 investigation stop (historical; superseded for the
+  one fixed PF32 Classic family by the closure above): reusable OLM runner 886c9e3a
   consumes the #1162 fixture contract, and AEXCompat 3ea396a1 replaces the
   fixture-specific behavior with a generic typed disk resolver. The resolver
   correction does not improve the packed 9x7 output boundary. Primary/noise
@@ -33,7 +1282,8 @@
   further local expansion until a new full-output witness or mapping fact is
   available.
 
-- 2026-08-12 Kira rotation and Radial Type 3 fixture boundary:
+- 2026-08-12 Kira rotation and Radial Type 3 fixture boundary (historical;
+  superseded by the Rotation22 and fixed PF32 Classic Type 3 closures above):
   AEXCompat ANGLE checkpoint 28d53546 fixes raw-fixed interpretation, and
   Kira Mode 1/2/3 at the declared 1-degree setting is 9/9 raw exact across
   PF8/PF16/PF32. Mode 2 PF32 at 22 degrees retains a separate residual.
@@ -52,6 +1302,111 @@
   to the declared semitransparent 64x36 fixture; unlisted tuples, geometry,
   native Windows, and AE-host execution remain unclaimed.
 
+- 2026-08-14 OLMSmoother2 case-07 bounded Smart promotion (current source
+  authority): source `12f2360d…` adds exactly one 1920x1080 tight-row source
+  and tuple at each of PF16 and PF32 to the existing Smart admission. PF16 is
+  reconstructed uniquely from every no-effect EXR word as `code/32768` and is
+  fixed to active SHA-256 `c8d5ded0…`; PF32 is fixed to `133a9447…`. Gamma
+  Value is fixed to AE-readback binary64
+  `3ff451eb80000000`, and the byte parameters plus all six ColorSuite float
+  values are checked before rendering. A fresh real-SDK EffectMain run emits
+  the straight output `31bbdb17…`. For the retained finite fixture, multiplying
+  those RGB words by alpha in float32 gives the Windows premultiplied final EXR
+  semantic ARGB `69b56309…` with 0/8,294,400 word mismatches; the inverse is
+  unique over the observed finite words. This is not a native output-world
+  capture and the EXR is not treated as direct plugin memory. PF16 direct
+  output `d306573a…`, presented wordwise as `code/32768`, matches all
+  8,294,400 Windows effect-on EXR words exactly. Each depth's public closure
+  passes 1 positive plus 23 source/tuple/world/overlap/lifecycle/suite controls,
+  and all 48 rows pass the isolated Universal candidate `23b09445…` under
+  source inclusion and candidate `dlopen`. Candidate
+  authority is
+  `handoffs/olmsmoother2_case07_pf16_pf32_public_smart_candidate_20260814/`; it is
+  minOS11, x86_64+arm64 and strict-valid ad-hoc, but is not installed. The
+  currently installed `55d138e2…` remains the prior 25-cell admission snapshot.
+  No AE launch or smoke was performed.
+
+- 2026-08-13 OLMSmoother v1/v2 fixed-source and atomic-output closure
+  (installed snapshot authority; superseded as current v2 source authority by
+  the 2026-08-14 case-07 entry above): no retained owner report proves arbitrary source
+  bytes, so every public admission now pairs its exact tuple and geometry with
+  a rowwise active-source SHA-256. Padding is deliberately excluded from the
+  source identity. V1 admits only its eleven named Classic source contracts;
+  v2 admits only its thirteen named Smart source contracts. Source first/mid
+  mutations, bidirectional partial overlap, unlisted tuples and layouts reject
+  before host-output mutation. V1 renders into private output staging. V2
+  copies odd-stride PF16/PF32 input into aligned tight staging, renders to
+  aligned output staging, and commits active rows only after every successful
+  parameter/layer cleanup. Explicit World/Color suite acquisition, returned
+  returned errors, success-null/function-null boundaries and first-error
+  cleanup are fail-closed. C++ exceptions are caught at the production C
+  boundary, but callback-throw injection is not claimed by this closure.
+  Real-SDK source-included probes cover
+  WorldSuite 6 cases for each plug-in plus ColorSuite 6 cases for v2, including
+  acquire-success/null, function-null, callback and release errors. The public
+  guard is 69/69, all 24 source
+  fixture digests plus SHA-256 KATs are regenerated from their producers, and
+  the official Smoother/Smoother2 fixed-fixture lanes pass. Durable macOS 11
+  Universal candidates are `f416579e…` (v1) and `55d138e2…` (v2), bound by
+  `handoffs/olmsmoother_source_bound_atomic_universal_candidate_v3_20260813/`
+  manifest `5bc74321…` after the source-contract placement hardening; both
+  are strict-valid ad-hoc only. That manifest is immutable pre-install build
+  provenance. Batch4 subsequently installed both bundles with full candidate/
+  installed inventory equality under accepted identity `426dce71…`; the one
+  post-batch4 AE attempt stopped before receipt/payload and therefore proves no
+  current native-AE load or render. AE-free real-SDK `dlopen` replays now bind
+  both current installed Universal slices back to the same current-source
+  public entries: v1 now replays its complete bounded Classic admission union,
+  covering all 67 fixed-source cells on each slice (134 installed-slice
+  replays). V2 replays its complete bounded Smart
+  admission union: the 3x2 PF32 cell, all 12 Gamma1.8 cells, all six Gamma2.4
+  representatives, and all six fixed 17x11 cells. All 25 cells are exact on
+  each slice (50 installed-slice replays total), including matching World/Color
+  suite and 15 parameter checkout/checkin behavior; representative source
+  mutations and Classic commands fail closed. The x86_64 routes execute under
+  Rosetta. These installed replays do not claim arbitrary source/tuple products
+  or an AE host.
+  Numerical evidence:
+  `refs/conformance/olmsmoother_public_admission_guard_closure_20260812.md`.
+  Installed replay evidence:
+  `refs/conformance/olmsmoother_v1_current_installed_admission_union_20260813.md` and
+  `refs/conformance/olmsmoother2_current_installed_public_20260813.md`.
+
+- 2026-08-12 OLMSmoother v1/v2 public admission and lifecycle guard closure
+  (superseded by the 2026-08-13 fixed-source/atomic-output closure above):
+  production now derives both input and output formats from the PF World Suite
+  owner, requires matching positive dimensions/rowbytes with active-span
+  capacity and non-aliased data. Admission is entry-specific: v1 admits the
+  classic-owner 960x540/64x36/7x5/5x3 families and rejects Smart numerical
+  rendering; v2 admits Smart-owner 17x11, exported 5x5 Gamma 1.8/2.4, and
+  installed-owner 3x2 PF32, while rejecting classic at every depth. The
+  synthetic 3x2 PF16 classic adapter and direct-core-only 5x5
+  smoothing/semtransparent and 9x7 matrices remain regressions but are not
+  admitted. Twenty-three v1 and thirty v2 focused cases pass, including
+  format/data/layout faults, inactive fields, tuple/geometry
+  one-aways, row-offset overflow, and partial Smart checkout failures with output bytes untouched.
+  Only successfully checked-out parameters/layers are checked in. Both
+  isolated candidates build Universal x86_64/arm64 and pass strict ad-hoc
+  codesign verification. Evidence:
+  `refs/conformance/olmsmoother_public_admission_guard_closure_20260812.md` and
+  `refs/conformance/olmsmoother_public_guard_universal_build_20260812.md`.
+  Neither candidate is installed; installed identity and AE smoke remain open.
+
+- 2026-08-12 OLMSmoother2 intermediate Gamma/key endpoint closure: the pinned
+  unchanged AEX exported Smart owner and production public EffectMain agree
+  raw-exact on all 12 cells of Version 1/2 x non-invert/invert x
+  PF8/PF16/PF32. The opaque 5x5 fixture retains 24 pixels from the earlier
+  compound fixture and changes pixel 0 to the exact key endpoint
+  `(202,187,230)`; pixel 1 remains the red endpoint. Gamma Colors is ordered
+  `[red,key]`, Gamma Value is `1.8`, and Smoothness/Range/Extra Smooth are
+  `100`. Public EffectMain also proves Smart lifecycle, all 15 parameter
+  checkout/checkins, complete input immutability, pre-render rectangles, and
+  per-depth input/output padding. Evidence:
+  `refs/conformance/olmsmoother2_gamma18_keyendpoint_exported_owner_closure_20260812.md`.
+  This is fixed-input bounded evidence, not arbitrary intermediate-Gamma,
+  key/palette, parameter-product, native-Windows, AE-host, GPU, or installed
+  execution. No production code or installed plug-in changed.
+
 - 2026-08-12 latest public-owner and geometry update: OLMKiraKira Mode 1,
   Mode 2 ramp/Merge 2, and Mode 3 Gaussian Length 50 are raw exact through
   their declared Rotation-0 public PF8/PF16/PF32 owners. AEXCompat arbitrary
@@ -61,11 +1416,13 @@
   not native arithmetic. OLMColorKey geometry transfer is 11/12 at 64x36;
   PF32 Direction 0/Distance 3/Amount 4 retains the residual. OLMRadialBlur
   Dual Strength x Size x Noise is 24/24 consumed/output exact on fixed 32x18;
-  Rotation Type 1 source-scalar diagnostic ULP differences remain separated
-  from exact prepass/output. None of these records promotes unlisted
+  Rotation Type 1 source-scalar diagnostic ULP differences were still separated
+  from exact prepass/output at this historical checkpoint; that statement is
+  superseded by the fixed32x18 inverse-cell closure above. None of these records promotes unlisted
   geometry, parameters, Windows AE pixels, or Type 3.
 
-- 2026-08-12 Kira Mode 1 and Distance IPP boundary update:
+- 2026-08-12 Kira Mode 1 and historical Distance IPP boundary update
+  (Distance conclusion superseded by the fixed17x11 Mode 5 closure below):
   OLMKiraKira Mode 1 exported/public owner is raw exact for PF8/PF16/PF32 on
   the declared 5x3 semitransparent source, Horizontal Length 7, Rotation 0,
   including input immutability and padding. Nondefault Rotation remains
@@ -73,11 +1430,12 @@
   owners remain open. OLMDistanceGradation PF32 Mode 5 residuals are now
   pinned to the OpenCV 4.5.5 IPP bilateral-produced field before final
   compose, distinct from the classic owner's 187-word identity wrapper.
-  The matrix stays 58/64 exact with six fail-closed and no expected-word
-  correction. The related AEXCompat checkpoint is separate-repository commit
+  At this historical checkpoint the matrix was 58/64 exact with six fail-closed
+  and no expected-word correction. The related AEXCompat checkpoint is separate-repository commit
   6561b11b. Neither result promotes Windows AE pixels or unlisted cases.
 
-- 2026-08-12 public/installed boundary update: ColorKeep installed public
+- 2026-08-12 public/installed boundary update (historical; superseded by the
+  current Classic-only Kira admission and all-ten identity entries above): ColorKeep installed public
   covering is 6-cell raw exact; OLMSmoother2 public EffectMain Smart chain is
   6/6 all-depth core exact (PF32 classic remains absent/fail-closed);
   installed OLMToonDilate Smart covering is 12/12; OLMDirectionalBlur public
@@ -87,24 +1445,27 @@
   public all-depth output remains raw-mismatched and fail-closed, with the box
   primitive as the next local boundary. No result promotes Windows AE pixels
   or unlisted inputs/geometry/parameter products. Remaining release-facing
-  boundaries include DistanceGradation PF32 Mode 5 at 58/64 exact, Smoother v1
-  PF32 host conversion rather than native execution, and general Layer Noise
+  boundaries include Smoother v1 PF32 host conversion rather than native
+  execution, and general Layer Noise
   Type 3 coverage dependent on the macOS declarative runner tracked by
   AEXCompat #1162.
 
-- 2026-08-11 OLMRadialBlur Inner Size/Edge/Noise closure: Inner Strength 4
+- 2026-08-11 OLMRadialBlur Inner Size/Edge/Noise closure (historical scalar
+  wording superseded for fixed32x18 Rotation Type1): Inner Strength 4
   crosses Zoom/Rotation, PF8/PF16/PF32, and four declared tuples for 24 cases.
   Consumed planes and typed outputs are exact. The four PF32 Rotation tuples
   use the bounded forward-angle rule while PF8/PF16 use reverse-angle.
-  Size Variation 25 retains a diagnostic source-scalar one-ULP seam only;
-  prepass onward and output are exact. Unlisted tuples, geometry, and Type 3
+  Size Variation 25 retained a diagnostic source-scalar one-ULP seam at this
+  checkpoint; the later inverse-cell closure makes the admitted Rotation cells
+  raw exact. Unlisted tuples, geometry, and Type 3
   remain fail-closed and are not generalized from this fixture.
 
 - 2026-08-11 four bounded family closures: OLMSmoother2 palette
   count/reorder/duplicate crossed with key polarity and all depths is 18/18
   raw exact. OLMKiraKira closes four additional natural Mode 4 sources and
-  12 typed outputs at max ULP 0; Highlight gradient retains a 2/15-word,
-  one-ULP seam and remains constant-source-only. OLMDirectionalBlur's
+  12 typed outputs at max ULP 0. Its historical Highlight-gradient 2/15-word,
+  one-ULP seam is superseded only for the later fixed Radius-3/kernel-7 tuple;
+  broader radii remain unpromoted. OLMDirectionalBlur's
   simultaneous Front+Back family is also 12/12 raw exact at fixed 32x18,
   with 32 rowdriver calls; other geometry, Type 3, and unlisted tuples stay
   fail-closed. OLMBlur's exported EffectMain Smart chain is active and
@@ -122,14 +1483,15 @@
   tuples, geometry, and Type 3 remain fail-closed; installation does not
   promote them or establish Windows AE pixel exactness.
 
-- 2026-08-11 ColorKey/Distance/AEXCompat evidence update: OLMColorKey adds
+- 2026-08-11 ColorKey/Distance/AEXCompat historical evidence update
+  (Distance conclusion superseded by the 2026-08-12 exact closure below): OLMColorKey adds
   12/12 exact internal-direction covering cells, bringing the retained
   semitransparent matrix to 51/51; PF32 Amount 4 remains bounded to the
   declared shell and unlisted tuples/geometry remain unclaimed.
   OLMDistanceGradation PF32 Mode 5 Linear has a 187/187 exact pre-plane and
   zero changed words across cvSmooth entry/return, but 33 opaque final words
-  remain different. The matrix therefore stays 58 exact/6 fail-closed with
-  no expected-word correction or production change. AEXCompat commit
+  remained different at that checkpoint. No expected-word correction was made.
+  AEXCompat commit
   37bdeae9 on codex/issue851-smart-primary-checkout adds a generic pointee
   dereference watch in the separate repository; focused tests and build pass,
   while three existing-suite failures remain. That tooling change is not
@@ -1151,9 +2513,10 @@
   correctness status is promoted. A source-included arm64 adapter now executes
   the production SmartPreRender/SmartRender dispatch for PF16 and PF32 at
   radius zero. Both paths preserve visible pixels, zero-alpha RGB, input and
-  output padding, perform the expected checkout/check-in calls once, and do
-  not fall back to `PF_Cmd_RENDER`. This is a Mac host-adapter contract proof,
-  not Windows equivalence or `AE exact`. Evidence:
+  output padding, perform both checkout callbacks once, perform the optional
+  pixel checkin zero times like the actual AEX, and do not fall back to
+  `PF_Cmd_RENDER`. This is a Mac host-adapter contract proof, not Windows
+  equivalence or `AE exact`. Evidence:
   `tools/emulation/test_olmtoondilate_mac_smartrender_adapter_20260717.py`.
 
 - 2026-07-17 `OLMSmoother2 case_0012 post-division c280 boundary` (latest
@@ -3626,10 +4989,10 @@ runtime-captured or binary-built block, then replay the same portable core.
 
 | Plug-in / feature | correctness_status | host_status | work_lane | next allowed action | forbidden action |
 | --- | --- | --- | --- | --- | --- |
-| ColorKeep | `guarded` | `host-smoke` | `parked` | Keep as support/helper unless a real Windows Software reference is requested. | Treat synthetic helper output as OLM compatibility. |
+| ColorKeep | `exact-bounded-public-owner` for the retained 11x7 count-5/100 lanes and the separate exact-source/palette 4x3 count-9 lane | `host-smoke` for current installed identity; numerical AE count9 unattempted | `freeze-bounded` | Preserve both admission families and expand only through independent source/palette/geometry/stride-bound public-owner evidence. | Generalize either fixture to arbitrary source/palette/count/layout; call the disabled fresh-AE host frame numerical evidence. |
 | OLMColorKey | 8bpc and 16bpc covered slices retain their prior status. The complete declared 32bpc `case_0001..0009` set is `AE exact` at all 18 raw FLOAT32 control/effect gates with current AEX/Mach-O runtime binding. Cases 0001/0003..0008 use fresh Windows-native 219-parameter construction plus AEPX-embedded Preserve-RGB queues; cases 0002/0009 retain their independent closeouts. Edge Blur directions 1/2/3 remain binary-grounded at the typed apply boundary. The old bulk controls are rejected and are not promotion evidence. | `host-stable` for covered 8/16bpc and the declared 32bpc all-nine set | `bitdepth-expand` | Freeze the exact declared behavior. Any additional ColorKey profile must use the same fresh identity, exact parameter readback, Preserve-RGB output, runtime module binding, and independent no-effect/effect raw gates. | Reopen the exact declared cases from visual or CLI evidence; reuse the rejected bulk pair; discard the no-effect control; use a Windows-local output template that changes Preserve-RGB; compensate for host conversion in plug-in code; or generalize beyond a separately declared and measured profile. |
 | OLMBlur | Packaged 8bpc slice `AE exact`; the declared normalized 16bpc seven-case slice is `7/7 AE exact` on Mac AE `26.3x87`. The declared 32bpc `case_0001..0005` set is also AE exact at both no-effect/effect FLOAT32 gates; cases 0003/0004 use binary-grounded float-exponent/binary64-`exp` coefficient paths, and case 0005 closes by fresh same-contract recapture with final Mach-O `c6a9e54b...e3d9d83e`. | `host-stable` for covered 8/16bpc and 32bpc cases 0001..0005 | `bitdepth-expand` | Freeze the exact covered behavior and expand the same fresh-project, identity-bound FLOAT EXR contract to 32bpc case 0006 next. | Reopen exact 8/16bpc behavior from CLI/PNG speculation; generalize beyond the five proven 32bpc cases; reuse stale reference generations or zero-second cached AEPX outputs; or promote without same-contract no-effect control and raw FLOAT comparison. |
-| OLMToonDilate | 8bpc `AE exact`; covered 16bpc slice is `AE exact`; the bounded PF16 AEX worker uses a five-argument copy callback and exact-opaque `32768` seeding. A true-`2x2` seven-alpha actual-AEX differential crosses the former callback boundary and exactly matches current PF16 source selection, four-word copies, and final typed output; host `PF_COPY` behavior is still an inference; the global seed/premultiply candidate is rejected because it broke two of three normalized regression gates. The declared 32bpc `64x64` typed-procedural Search Radius `13` profile is now Windows/Mac AE exact at both raw FLOAT32 gates: no-effect and effect-on are each `0/16,384` mismatched words with max raw-u32 delta `0`, and effect-on differs from control at `6,448` words. Runtime evidence binds Mac Mach-O `731798e...c36e` and Windows AEX `c05db8c...32b3`; evidence: `refs/conformance/olmtoondilate_32bpc_typed_procedural_ae_exact_20260728.md`. | `host-stable` for covered 8/16bpc and the declared 32bpc typed-procedural profile | `bitdepth-expand` | Freeze the exact slices and expand only through independent hash-bound fixtures with parameter readback, loaded-module identity, and raw no-effect/effect gates. | Reopen the exact 8/16bpc or declared 32bpc core; generalize the one 32bpc profile to all inputs/radii; promote PNG/CLI evidence; treat bounded PF_COPY as a universal host contract; apply the rejected global seed/premultiply candidate; or accept an opaque-background no-op fixture as effect evidence. |
+| OLMToonDilate | `exact-bounded-installed-public-owner`: final source `ded9eaab…4464b` is raw exact for four families × PF8/PF16/PF32 (12 cells) against the actual-AEX public Smart replay; current installed executable `5bbe6931…036e` independently reproduces those 12 public-entry outputs AE-free. 507 admission one-aways and 69 callback/lifecycle rows close 576 fail-closed/control cases. | Current install identity is proven; current native-AE load/render remains pending. Historical AE slices are separate binary-specific evidence. | `freeze-bounded` | Preserve the paired, negative and current-installed exact12 matrices; defer native-AE confirmation to the next authorized aggregate checkpoint. | Generalize to arbitrary tuples; call AexLoader/Unicorn native Windows or AEXCompat; call the installed `dlopen` closure native AE; claim thrown-callback or allocation-failure coverage. |
 | OLMDistanceGradation | current 8bpc canonical batch is `known-red` (`0/29`); current 16bpc extended is `7/16 AE exact`; PF8 truncation and the source-linked alpha-mask/stride/field boundary are binary-grounded, while the PF16 writer remains `inactive_for_fixture` | `host-debuggable` | `cli-port` | Preserve reciprocal-multiply normalization, raw-threshold helper calls, the PF16 nearest-even field-world roundtrip, Power/Constant fixes, depth-gated source mask, and the existing exact set `0008/0010/0011/0020/0021/0022/0023`. The PF8 source-linked mirror matches the actual-AEX helper and OpenCV 4.5.5 at all `187/187` field words with padded rowbytes and fail-closed layout guards; bounded actual-AEX differentials also match current Mac compose/store for injected live-coordinate bytes. Next isolate the actual `RenderBits` host-world/resize staging between those closed boundaries without treating the mirror as the full host path. When the active AE session can be restarted safely, run the canonical Mac AE 8bpc cases with loaded-module identity; if residuals remain, assign them to that integration boundary rather than broad compose/store or EDT retuning. PF16 alpha-store samples remain Windows `3268/9876/28359` versus Mac `3267/9877/28360`; one global writer rule is rejected. Keep Layer/no-bg `0012/0013/0014/0016`, max-2, and outlier `0028` separate. | Treat the source-linked mirror as full `RenderBits` or `AE exact`; interrupt the active AE session; reintroduce threshold downsample scaling; repeat the closed depth-control request or zero-hit `(397,281)` condition; tune PF8 compose/store or the EDT/helper from broad residuals; revert the grounded PF16 boundary; call historical unbound 8bpc candidates current `AE exact`; use a runner without explicit depth or loaded-module identity; reopen `0010/0011`; apply global output rounding toggles; merge `0028` into the max-2 family; broad PNG tuning; or use CLI output as Windows-reference truth. |
 | OLMSmoother v1 | 8bpc `AE exact`; 16/32bpc request is sendable but unreturned | `host-stable` | `parked` | Keep v1 behind the hard lanes. When reopened, run the regenerated fail-closed package whose canonical readback contains only the three v1 parameters; 16bpc is exact-eligible after comparison and 32bpc remains FLOAT EXR probe-only. | Mix v1/v2 behavior without an explicit policy, accept AE compositing controls as v1 parameters, or promote an unreturned 32bpc pass-through branch. |
 | OLMSmoother2 no-key | 8bpc `AE exact`; the declared 32bpc Preserve-RGB case-07 slice is also `AE exact`. The same-render Windows PF32 entry, Windows/Mac no-effect pair, and Windows/Mac effect-on pair are each raw exact at all `8,294,400` FLOAT32 words. The final Mac binary preserves the frozen 8bpc suite at `12/12`, `max_diff=0`. | `host-stable` for covered 8bpc and declared 32bpc case-07 | `bitdepth-expand` | Freeze both exact slices and expand the matching contract to 16bpc; keep other 32bpc cases unpromoted until independently tested. | Retune the closed 8bpc or case-07 32bpc arithmetic; generalize one 32bpc case to the whole feature; or replace raw AE comparisons with CLI evidence. |
@@ -3932,10 +5295,10 @@ Windows Software?".
 
 | Plug-in | Host status | この状態である理由 | AEで今やってよいこと |
 | --- | --- | --- | --- |
-| ColorKeep | `host-smoke` | Support/helper status only; real Windows compatibility slice is thin. | 読み込み・追加・最小レンダーだけを確認する。 |
+| ColorKeep | `host-smoke` outside the bounded numerical closures | Windows exported Smart and Mac public exact evidence exists only for the named 11x7 count-5/100 and exact 4x3 count-9 fixtures; fresh AE kept ColorKeep disabled. | 現行identityの読み込み・追加・mappingだけを回帰し、native AE count9数値一致は別oracleなしに主張しない。 |
 | OLMBlur | `host-stable` for covered 8/16bpc slices | Packaged 8bpc AE exact exists; the current-plugin declared 16bpc slice is now `7/7 AE exact` with loaded-module identity. | 8/16bpcは回帰確認だけを行い、次は同一契約の32bpc FLOAT EXR比較へ進む。 |
 | OLMColorKey | `host-stable` | 16bpc full batch now applies all parameters and verifies 9/9 `max=0` for the covered slice. | 回帰確認と32bpc展開を行う。自由な見た目合わせはしない。 |
-| OLMToonDilate | `host-stable` | Packaged 8bpc AE exact exists and no current host integration blocker is known. | 主に回帰確認を行う。 |
+| OLMToonDilate | accepted older-binary host evidence; final-source host pending | Installed `fe0a…c5e9` has historical load/render evidence, while final source `ded9eaab…4464b` is proven only by install-free public-owner closures. | Incremental install権限が得られるまではhostを変更せず、source-built regressionだけを回す。install後にfresh load／map／smokeを別途取得する。 |
 | OLMDistanceGradation | `host-debuggable` | Mac AE automation is recovered. Single-case probes complete after the `eval` manifest parser fix, and the plug-in can emit gated field dumps for 16bpc witnesses. | 16bpcの指定witnessと回帰だけを確認する。 |
 | OLMSmoother v1 | `host-stable` | Packaged 8bpc v1 slices are AE exact after comp correction. | 対応済みv1 sliceの回帰確認を行う。 |
 | OLMSmoother2 no-key | `host-debuggable` | No-key grid is AE exact, but legacy/key/gamma path is still unresolved. | no-key確認と限定的なlegacy probeだけを行う。 |
@@ -4757,3 +6120,591 @@ reference PNGs with `max_diff=0`.
 - Treat these as AE wiring and exactness checks, not as automatic completion of
   guarded slices.
 - Add 16bpc and 32bpc Windows Software references after the 8bpc IR is stable.
+## 2026-08-05 OLMDirectionalBlur 8bpc case_0001 Mac AE boundary result
+
+- FACT: AE `26.3x87`, SOFTWARE (`renderer_raw=1816`), 8bpc loaded the installed `OLMDirectionalBlur.plugin` executable with SHA-256 `f5860752b815f5f7f45b03a2f7832a53b2cf2ed104989eefbc98a367545bf097`; `vmmap` proved the exact loaded path and the binary predated the AE process.
+- FACT: the Windows pixel-boundary fixture is 960x540 with `front_strength=1690`, despite the source-comp metadata being 1920x1080. The native 960x540 Mac fixture produced a decoded-RGBA-exact no-effect control (`cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4`).
+- FACT: effect-on is not exact. It differs in 147844 pixels, only in red: max absolute delta `[164,0,0,0]`, mean absolute delta `[15.067689043209876,0,0,0]`. Windows red spans 0..164; current Mac red spans 0..30. Green, blue, and alpha are exact.
+- FACT: evidence and fail-closed report are under `refs/mac_validation_runs/olmdirectionalblur_8bpc_20260805_run4/return/`.
+- INFERENCE: host setup, input identity, control transport, renderer, bit depth, and loaded-binary identity are no longer plausible causes for this case. The remaining correctness boundary is the Mac front-only case_0001 algorithm/write path, especially size variation `92` and front sharp tail `45`; the current generic `RenderDirectional8` path is not the Windows algorithm.
+- SCOPE: no correctness promotion. This result covers only the declared 8bpc `case_0001` pixel boundary; 16/32bpc and other modes/cases remain unclaimed.
+
+## 2026-08-05 OLMDirectionalBlur mode-1 promotion and rerun
+
+- FACT: the portable core now implements the actual AEX mode-1 component map,
+  size-variation exponent/divisor, front sharp-tail edge, and AE render-scale
+  projection used by `case_0001`. The captured worker contract is 1104x1104,
+  mode `1`, exponent `0.9200000166893005`, divisor `518530`, front edge
+  `0.44999998807907104`, and worker front strength `845`.
+- FACT: the focused actual-AEX differential is raw-frame exact. Actual AEX and
+  portable ARGB both hash to
+  `e6465cd9994e88abef18f6ca8f62c6d1c9b3ec100efff1d5de4ec16b3e4de1b9`.
+  Evidence: `refs/conformance/dblur_mode1_case0001_portable_20260805.json`.
+- FACT: AE `26.3x87`, SOFTWARE (`renderer_raw=1816`), 8bpc loaded the replaced
+  installed executable with SHA-256
+  `9fbe1461d6149c2ceae3d0ec507f9dd0c90f7d3a8ac2f8a22d3a324dad7b0a58`;
+  `vmmap` proved the exact path and the binary predated PID `77384`.
+- FACT: the rerun reconstructs the 1920x1080 source-comp boundary with nearest
+  2x input and `resolutionFactor=[2,2]`. Its no-effect 960x540 render is decoded
+  RGBA exact to the canonical input.
+- FACT: the Mac effect render equals the portable/actual-AEX-emulation result.
+  Against the Windows AE PNG it has 1639 differing pixels/bytes, each with
+  maximum absolute delta `1`; the earlier 147844-pixel/max-164 algorithmic
+  mismatch is eliminated. The fail-closed Mac AE report remains under
+  `refs/mac_validation_runs/olmdirectionalblur_8bpc_20260805_run5/return/`.
+- FACT: the Windows-validated UCRT gaussian-table witness (`n=96/240`) still
+  passes actual-AEX-versus-portable destination, denominator, alpha, and
+  normalization exactly. That witness already records a later full-render/
+  saved-output discrepancy, so the remaining one-byte deltas do not establish
+  an AEXCompat `expf` defect.
+- INFERENCE: the remaining boundary is Windows AE full-render state or saved
+  image capture, potentially including unobserved UCRT/trigonometric details;
+  it is not currently evidence-backed as an OLM mode-1 algorithm defect.
+- SCOPE: mode-1 8bpc `case_0001` is promoted only to actual-AEX raw exact and
+  Mac-AE-to-emulated-AEX exact. Windows AE pixel exact remains false. Modes 2/3,
+  back/noise paths, other cases, and 16/32bpc remain unclaimed. No AEXCompat
+  source was changed because a generic compatibility defect was not proven.
+
+## 2026-08-05 OLMDirectionalBlur mode-1 back-path promotion
+
+- FACT: the portable mode-1 API and Mac 8bpc host adapter now accept independent
+  Front/Back Strength, Alpha Fade, and Sharp Tail values while still rejecting
+  Noise Variation and non-8bpc paths.
+- FACT: a synthetic back-only fixed-fixture run (`front=0`, `back=240`,
+  downsample `1/2`) reaches the actual AEX rowdriver with worker back count
+  `120`. Actual AEX and portable raw ARGB hash exactly to
+  `1a25fefa174c7a69f1004ce42f116e9633967587bccc3278b0d2418d99084695`.
+- FACT: a second run makes all back-side coefficient families nontrivial:
+  Back Strength `240`, Back Alpha Fade `96`, Back Sharp Tail `25`, Size
+  Variation `50`, downsample `1/2`. The actual worker receives back scatter
+  `120`, back prepass `48`, exponent `0.5`, component divisor `518530`, and
+  back edge `0.25`. Actual AEX and portable raw ARGB hash exactly to
+  `6136b2c1c4c7ebe5d030e6f5933d393a991ced79607409f44a2f3ba2fff93b0e`.
+- FACT: focused evidence is
+  `refs/conformance/dblur_mode1_backonly_portable_20260805.json`; the existing
+  front case_0001 raw-exact gate and Mac host adapter also pass after the API
+  expansion. The readiness audit remains `ready`.
+- SCOPE: this promotes 8bpc no-noise mode-1 back-path internal/raw exactness on
+  the two declared synthetic parameter sets. There is no Windows AE saved-frame
+  reference for these synthetic sets, so Windows AE pixel exact remains
+  unclaimed. Modes 2/3, Noise Variation, 16/32bpc, and the original mixed
+  case_0006..0009 references remain unresolved.
+
+## 2026-08-05 OLMDirectionalBlur mode-3 noise promotion
+
+- FACT: `core/dblur_noise.h` now contains a typed candidate for actual AEX
+  `FUN_180003370`, covering nearest lookup and the AEX mixed float/double
+  smoothstep interpolation order.
+- FACT: twelve actual-AEX calls across nearest/interpolated coordinates are
+  bit-exact to the portable helper. The portable MT19937-based implementation
+  of `FUN_1800034e0` also exactly reproduces the complete 223x223 generated
+  float plane for source 1104x1104, cell size `5`, offset
+  `0.3611111044883728`, and seed `7` (SHA-256
+  `61c28ffa1fb0391f1647a4d4cfd8167307b9e88670103b1477aaef9e7cf492d0`). Evidence:
+  `refs/conformance/dblur_noise_sampler_actual_aex_20260805.json`.
+- FACT: on a deterministic 64x64 witness crop, noise variation
+  `100`, seed `7`, offset UI `13`, thickness UI `10`, and downsample `1/2`, the
+  actual-AEX rowdriver, portable rowdriver detour, and complete portable core
+  are raw exact for both generated-noise branches: Smooth type `1` hashes to
+  `b7edf1fe473004a79933d44e82cdf5c1b8b17201e3062ec093d5c6fe9a8cc882`,
+  while Block type `2` hashes to
+  `f83594c779d3aafb8e0a24ccc06fb7cdc482248861753af693f77ada6b4e674e`.
+  The two outputs are distinct, proving the interpolation selector is active.
+  Evidence: `refs/conformance/dblur_mode3_fullframe_actual_aex_20260805.json`.
+- FACT: the Mac 8bpc adapter now routes Smooth/Block generated-noise settings
+  through the exact core and still rejects Layer noise. Existing mode-1 front/
+  back exact gates, the host adapter, readiness audit, and arm64 build pass.
+- SCOPE: mode-3 internal/raw exactness is promoted only for the declared 64x64
+  Smooth/Block fixture. Full-size raw equivalence, original case_0006..0009,
+  Windows/Mac AE saved frames, mode-2 Layer sampling, and all
+  16/32bpc paths remain unresolved.
+
+## 2026-08-05 OLMDirectionalBlur mode-2 field rowdriver seam
+
+- FACT: `core/dblur_rowdriver.cpp` now exposes the mode-2 one-float-per-pixel
+  field path. On a 16-pixel typed row with nonzero field values `0.0625..1.0`
+  and opacity `0.75`, actual AEX and portable destination, denominator, and
+  alpha buffers are each byte exact. Evidence:
+  `refs/conformance/dblur_mode2_field_rowdriver_actual_aex_20260805.json`.
+- FACT: the fullrender fixture can detour modes `0..3` and captures mode-2
+  field identity separately from mode-3 generated noise.
+- SCOPE: this promotes the pure mode-2 rowdriver coefficient seam only. The AE
+  Layer checkout, channel/luminance conversion, rotation into `params+0x80b0`,
+  Mac SmartRender layer ownership, nonzero full-frame field, and Windows/Mac AE
+  pixels remain unresolved. The zero-field fullrender fixture is not used as
+  evidence for those boundaries.
+- 2026-08-05 `OLMDirectionalBlur 8bpc mode-2 Layer field promotion`:
+  the natural actual-AEX Layer checkout and auxiliary-field construction are
+  now exercised with a nonzero 64x64 controlled Layer crop.  The checked-out
+  PF_Pixel8 A/R/G/B contract is converted exactly as
+  `alpha * (0.299*R + 0.587*G + 0.114*B)`, using the AEX float/divide and
+  double-weighting order, placed in the enlarged work plane, then rotated by
+  `FUN_1800018c0`.  `core/dblur_field.cpp` matches the unrotated 94x94 field
+  byte-for-byte (`4454dcba...56663`), and the new scalar rotator in
+  `core/dblur_rotate.cpp` matches both four focused actual-AEX primitive cases
+  and the natural rotated field (`89627121...41a7b`).  Replacing only the
+  downstream mode-2 rowdriver preserves the complete raw output exactly
+  (`c41939b0...64a76`).  Evidence:
+  `refs/conformance/dblur_scalar_rotate_actual_aex_20260805.json` and
+  `refs/conformance/dblur_mode2_field_builder_actual_aex_20260805.json`.
+  The complete `olm_dblur_layer_mode2_rgba8` portable core also reproduces the
+  same natural actual-AEX raw output byte-for-byte.  Mac production now checks
+  out/checks in both input Layer `0` and Noise Layer `17`, routes equal-sized
+  8bpc worlds through this exact core, and its arm64 Xcode build plus local
+  SmartRender ownership regressions pass.  This promotes the 8bpc portable
+  field/core and bounded Mac host connection; Mac AE, Windows AE, nonmatching
+  layer origins/dimensions, and 16/32bpc remain unclaimed.
+
+- 2026-08-05 `OLMDirectionalBlur mode-2 Mac installation boundary`: the new
+  arm64 bundle was installed into user MediaCore and ad-hoc signature
+  verification passes.  Installed signed Mach-O SHA is
+  `61dca846...5206d`; the recoverable prior bundle is `9fbe1461...7b0a58`.
+  AE 26.3 was already running during deployment, and `lsof` binds its mapped
+  vnode to the renamed old bundle, so no render from that process is accepted
+  as new-build evidence.  A restart and fresh module/hash binding are required
+  before the Mac AE case run.  Evidence:
+  `refs/conformance/dblur_mode2_mac_install_boundary_20260805.json` and `.md`.
+
+- 2026-08-05 `OLMDirectionalBlur mode-2 Mac PF8 adapter gate`: the
+  source-included production adapter routes independent padded input/noise
+  PF_Pixel8 worlds through `olm_dblur_layer_mode2_rgba8` and matches the direct
+  exact-core output pixel-for-pixel while preserving both inputs and all row
+  padding.  A mismatched Noise Layer width is rejected with
+  `PF_Err_BAD_CALLBACK_PARAM` and `used_exact=0`, proving the unsupported
+  boundary does not fall into the approximate renderer.  Evidence:
+  `refs/conformance/dblur_mac_mode2_host_adapter_20260805.json`.
+
+- 2026-08-05 `OLMDirectionalBlur random-10 Mac AE hash-bound runner`:
+  `scripts/run_olmdirectionalblur_8bpc_random10_mac_20260805.py` refuses to
+  start AE rendering unless exactly one AE process maps the installed
+  DirectionalBlur bundle and the on-disk signed Mach-O hash is
+  `61dca846...5206d`.  Its current preflight correctly returns
+  `restart_required`, binding PID `77384` to the renamed old mode-1 bundle.
+  This prevents the pending random-10 result from being misattributed to the
+  new mode-2 implementation.
+
+### 2026-08-05 — OLMRadialBlur case0009 production PF32 chain exact
+
+- Scope: retained 1920x1080 case0009 PF32 fixture, Zoom outer-only path,
+  Software-compatible internal production render; no Mac AE host claim.
+- `RenderZoomTyped<PF_PixelFloat>` now has a focused observation seam for its
+  eligibility, span, and source-scalar inputs without duplicating production
+  logic.
+- Production matches retained actual-AEX identities at every stage:
+  eligibility `861d873d...`, preblur `fc7b1373...`, span `2af5c861...`,
+  source scalar `13a5c887...`, normalized polar `c8037b71...`, and final PF32
+  RGBA frame `7de7d970...`.
+- The 1717-entry Gaussian table remains exact on arm64 and x86_64
+  (`82d66d41...`).
+- Evidence:
+  `refs/conformance/olmradialblur_production_outer_inputs_20260805.json`,
+  `refs/conformance/olmradialblur_production_outer_inputs_20260805.md`.
+- Next gate: hash-bound Mac AE Software PF32 case0009 render versus the
+  retained Windows AE reference.
+
+### 2026-08-05 — OLMRadialBlur case0009 Mac AE install boundary
+
+- The current arm64 production bundle built successfully and was installed at
+  `~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin`.
+- Installed ad-hoc-signed executable SHA-256:
+  `10869891432b304c83d4208e2dd0f1945aea085b8ec5aeb93d7cdac5e5f159fd`.
+- The previous installed bundle was moved recoverably to
+  `handoff/mac_plugin_backups/mediacore_20260805_radialblur_before_case0009/OLMRadialBlur.plugin`;
+  its executable SHA-256 is `58fddbca28fd7fa0b352365e1faba7b554bdf59e5c7ccf2cb6a6b1dac4c34059`.
+- `scripts/run_olmradialblur_case0009_pf32_mac_20260805.py` binds the canonical
+  input hash, installed executable hash, sole AE process, mapped executable
+  path, Software renderer, 32bpc project, exact parameter readback, FLOAT32
+  EXR structure, and semantic RGBA hash.
+- Current AE PID `77384` has no mapped `OLMRadialBlur` executable. The runner
+  therefore returns `restart_required` without rendering; no result from that
+  process may be attributed to the newly installed bundle.
+
+### 2026-08-05 — OLMRadialBlur case0010 Rotation actual-AEX reference split
+
+- The full Mac-Unicorn M4 harness re-executed the pinned 2025 AEX case0010
+  Rotation path in `922.85s` without Windows or AE.
+- Four retained Windows typed polar cells reproduce at `2/4` bit-exact and
+  `4/4` within one RGB ULP with alpha exact, grounding the actual-AEX internal
+  producer/scatter path on Mac.
+- The actual-AEX direct inverse sample at `(1614,6)` is RGB black, while the
+  legacy 20260604 Windows PNG is white. This is a reference-path/provenance
+  split, not evidence for changing the Mac Rotation producer toward white.
+- No production change is authorized. Next gate: a fresh same-run
+  CPU/AEX-bound Windows output or final writeback witness with module identity.
+- Evidence:
+  `refs/conformance/olmradialblur_case0010_mac_unicorn_rotation_rerun_20260805.md`,
+  `tools/emulation/M4_REPORT.md`.
+
+### 2026-08-05 — OLMRadialBlur case0010 Rotation internal production exact
+
+- The full actual-AEX Rotation state was retained as a compressed, hash-bound
+  `1800 x 1104` fixture with pre-scatter, post-scatter/pre-gather, and
+  post-normalize stages. All 19 compressed planes re-expand to their manifest
+  sizes and SHA-256 identities without Windows.
+- The portable two-stage worker now follows the evidenced
+  `FUN_180002780 -> FUN_1800024c0` contract. Its final accumulator, scatter
+  alpha, source scalar, and normalized polar plane are bit-exact across the
+  complete case0010 fixture.
+- Mac production `RenderRotation8` now uses AEX paired float32 trigonometry,
+  rounded float32 PF8 unpack multiplication, the separate source-scalar and
+  eligibility planes, explicit float32 arithmetic boundaries, and the pinned
+  Windows span-3 Gaussian word. Polar RGBA, eligibility, source scalar,
+  accumulator, max alpha, and normalized polar RGBA all match actual AEX with
+  zero differing values.
+- This supersedes the earlier “no production change authorized” statement for
+  the internal producer/worker scope only. Final Mac AE/writeback equivalence
+  remains unclaimed: local witness `(1614,6)` is opaque black, the M4 harness
+  output witness was transparent black, and the legacy Windows PNG is white.
+- Evidence:
+  `refs/conformance/olmradialblur_case0010_rotation_full_planes_20260805.{json,md}`,
+  `refs/conformance/olmradialblur_case0010_rotation_portable_fullplanes_20260805.{json,md}`,
+  `refs/conformance/olmradialblur_case0010_rotation_mac_production_planes_20260805.{json,md}`.
+
+- The new arm64 production bundle was installed with signed executable SHA-256
+  `d48676f8...97c40`. The prior case0009 bundle (`10869891...59fd`) was moved
+  recoverably to
+  `handoff/mac_plugin_backups/mediacore_20260805_radialblur_before_case0010/`.
+  AE PID `77384` does not map RadialBlur, so it was not terminated; a fresh AE
+  process is still required before either host render is attributable to this
+  build. The case0009 hash-bound runner now requires the new installed hash.
+
+### 2026-08-05 — OLMRadialBlur case0010 Rotation CPU PF8 writeback exact
+
+- The actual 2025 Windows AEX owner was continued beyond the prior
+  `1,500,000,000`-instruction harness limit. The full run used segments
+  `1,500,000,000 + 381,934,688` and reached the native PF8 call/store at
+  `+0x7c14/+0x7c19`.
+- For `(1612,6)` and `(1614,6)`, the direct sampler destination, returned
+  float32 RGBA cell, later `+0x7bb0` internal-cell pointer, PF8 stack
+  destination, XMM0..3 words, `255.0f` scale, and immediate before/after ARGB
+  bytes all satisfy the fail-closed pointer and value relations.
+- Native AEX outputs are ARGB `(255,5,5,5)` and `(255,255,255,255)`.
+  `(1614,6)` begins with RGB word `0xbb85c1ca`; the PF8 owner does not lower
+  clamp, so float32 multiply by 255, truncation toward zero, and low-byte store
+  produce white. The earlier transparent-black M4 observation was an
+  instruction-budget truncation, not a native writeback result.
+- The strictly gated Mac case0010 production path matches all six retained
+  internal planes and both native writer witnesses exactly. Unsupported
+  Rotation conditions retain the prior producer, worker, and writer paths.
+- This closes the bounded actual-AEX CPU sampler-to-PF8-world boundary. It does
+  not claim that the currently running AE process loaded this bundle, nor does
+  it close PF-world-to-AE-export behavior.
+- Evidence:
+  `refs/conformance/olmradialblur_case0010_pf8_writeback_actual_aex_20260805.{json,md}`,
+  `refs/conformance/olmradialblur_case0010_rotation_mac_production_planes_20260805.{json,md}`.
+- The updated arm64 bundle was built and installed with ad-hoc-signed
+  executable SHA-256 `965b8346...62f24`. The preceding internal-only bundle
+  (`d48676f8...97c40`) was moved recoverably to
+  `handoff/mac_plugin_backups/mediacore_20260805_radialblur_before_case0010_pf8_writer/`.
+  AE was not terminated; the hash-bound runner therefore still requires a
+  fresh AE process before host output can be attributed to this build.
+
+### 2026-08-05 — OLMRadialBlur case0010 Rotation full CPU PF8 frame exact
+
+- A migrated, identity-checked post-worker checkpoint was resumed through the
+  complete native PF8 owner. The retained `1920 x 1080` raw ARGB world has
+  SHA-256 `cb39306e0e340bfa121e5ea55c9e1b43f87696237b4d6c855a47ce09dba188fc`.
+- The bounded Mac production path now reproduces that entire world exactly:
+  zero differing pixels, zero differing ARGB channels, and maximum absolute
+  byte difference zero. All six retained internal planes and the two native
+  PF8 writer witnesses remain bit-exact.
+- The final residual came from two observable AEX details: bilinear taps are
+  accumulated in `00,01,10,11` order, and negative angles are normalized with
+  the stored double constant `6.2831853` rather than mathematical `2*pi`.
+  Both behaviors are restricted to the exact case0010 gate; the case0009 Zoom
+  production regression remains exact.
+- The focused regression pins both compressed fixture SHA-256
+  `b18b2b11e627db82bc79365196a581e01198739fd7708da6af279ef3e2b9e2f1`
+  and raw-world SHA-256, cross-checks the authoritative conformance report,
+  and succeeds only with status `native_exact`.
+- Evidence boundary: the AEX `atan2f` import in this fixture was serviced by
+  the pinned Mac-Unicorn host hook (double `atan2`, then float32 writeback).
+  This proves exactness against the retained actual-AEX execution environment,
+  not independently against every Windows UCRT `atan2f` implementation.
+  PF-world-to-AE-export behavior still requires a fresh hash-bound AE process.
+- The signed arm64 bundle installed for that host gate has executable SHA-256
+  `1906a26532c88589f1750e695d45b3106e532e7bdaa4d4cde9659047188c9200`.
+  The previous bundle (`965b8346...62f24`) was moved recoverably to
+  `handoff/mac_plugin_backups/mediacore_20260805_radialblur_before_fullframe_exact/`.
+  Both case0009 PF32 and case0010 PF8 runners pin the new hash and currently
+  fail closed with `restart_required`; AE PID `77384` was not terminated.
+# 2026-08-05 OLMSmoother2 Gamma Colors palette cardinality cap
+
+- `refs/conformance/olmsmoother2_gamma_palette_count6_contract_cap_20260805.md`
+  is the fail-closed boundary: direct actual-AEX `a9c0` accepts a constructed
+  six-entry vector, but the public AE surface exposes only Gamma Color 0..4,
+  caps the count at `NUM_GAMMA_COLORS = 5`, and production clamps to five.
+  Count 5 is the maximum natural owner/classifier/worker/RenderBits path.
+  Do not implement or claim PF16/PF32/AE exactness for count 6.
+
+### 2026-08-12 — All-ten current-install fresh AE host smoke
+
+- A zero-preexisting-process campaign launched one fresh After Effects 2026
+  process (PID `71551`) after the accepted installed-identity manifest, bound
+  all ten exact accepted MediaCore executables to that same native `ARM64`
+  PID with one persisted vmmap, used the Software renderer, produced ten fresh
+  host-frame PNGs, exited normally, and left zero matching processes.
+- `OLMBlur`, `OLMDirectionalBlur`, and `OLMToonDilate` were enabled for their
+  host-frame saves and therefore executed plug-in computation, but no numerical
+  oracle was compared. The other seven were loaded/added and then disabled
+  before the host-frame save. None of these default tuples is claimed as a
+  proved public numerical-owner exact result: every row explicitly keeps
+  numerical expected/attempted false and numerical success null.
+- This closes current-installed host load/add, mapping, export, identity, and
+  cleanup only. It does not claim pixel exactness, Windows equivalence,
+  typed-plane or padding behavior, or public-owner numerical exactness.
+- Evidence:
+  `refs/conformance/olm_all10_current_install_fresh_ae_smoke_20260812.{json,md}`,
+  `refs/conformance/olm_all10_current_install_fresh_ae_smoke_raw_20260812.json`,
+  and `handoffs/olm_all10_current_install_fresh_ae_smoke_20260812/`.
+
+### 2026-08-12 — Distance Mode 5 incremental install and post-change AE smoke
+
+- The canonical signed Universal repo build (`b9971c648008...`) replaced only
+  the accepted MediaCore `OLMDistanceGradation.plugin` (`0caf728ce871...`). The
+  old full bundle and pre-change identity manifest are retained under
+  `handoffs/olmdistancegradation_mode5_install_20260812T185828JST/`; both the
+  independent pre-install copy and pre-swap original remain rollback-capable.
+- The accepted ten-plugin identity changed only the Distance row. The other
+  nine rows are byte-identical; every installed executable still matches its
+  named repo build, is Universal arm64+x86_64, and passes strict codesign.
+- A separate fresh AE process loaded and applied all ten exact accepted paths,
+  produced ten host-frame PNGs, and mapped Distance from the sole MediaCore
+  path with executable SHA `b9971c648008...`. Distance was disabled for the
+  host-frame render, so this proves load/apply/mapping only—not Mode 5 AE pixel
+  exactness, typed-plane behavior, padding, or Windows equivalence.
+- Evidence:
+  `refs/conformance/olmdistancegradation_mode5_incremental_install_identity_20260812.{json,md}`,
+  `refs/conformance/olm_all10_post_distance_mode5_fresh_ae_smoke_20260812.json`,
+  `refs/conformance/olm_all10_post_distance_mode5_fresh_ae_smoke_raw_20260812.json`,
+  and `handoffs/olm_all10_post_distance_mode5_fresh_ae_smoke_20260812/`.
+
+### 2026-08-12 — Distance PF32 Power fail-close install and current all-ten AE smoke
+
+- Native Windows UCRT `powf` bytes are not retained. The AEX import is UCRT,
+  while AEXCompat substitutes a host `f32::powf`; therefore all eight fixed
+  PF32 Power cells (Blur 2/3/4/5 × background off/on) now fail closed on both
+  Universal slices. PF16 32 cells and non-Power PF32 24 cells remain the 56
+  admitted raw-exact fixed17x11 Smart cells.
+- The reviewed Universal candidate executable `231421e4a0c1...` replaced only
+  the prior Distance executable `b9971c648008...`. Candidate and installed
+  full-bundle inventories are exact; three complete old-bundle copies are
+  retained. The ten-plugin identity transition changes only the Distance row
+  plus the two top-level acceptance timestamps.
+- One fresh ARM64 AE `26.3x87` Software session mapped all ten accepted
+  executables from their sole paths. Distance mapped `231421e4a0c1...`, the
+  on-disk hash stayed unchanged, ten fresh PNGs were retained, and cleanup left
+  zero AE processes. Distance was disabled for its host-frame save, so this is
+  load/apply/mapping identity only, not a numerical or native-Windows claim.
+- Evidence:
+  `refs/conformance/olmdistancegradation_power_failclose_incremental_install_identity_20260812.{json,md}`,
+  `refs/conformance/olm_all10_post_distance_power_failclose_fresh_ae_smoke_20260812.json`,
+  `refs/conformance/olm_all10_post_distance_power_failclose_fresh_ae_smoke_raw_20260812.json`,
+  and `handoffs/olm_all10_post_distance_power_failclose_fresh_ae_smoke_20260812/`.
+
+### 2026-08-13 — Distance PF32 Power hostless UCRT request boundary
+
+- The current production body was executed past its public admission predicate
+  for the exact eight fixed 17x11 PF32 Power cells only. It issued 1,496
+  `powf(X, 2.25f)` calls, reduced to 63 unique exact float32 input pairs.
+- With the pinned AEXCompat host `f32::powf` substitution, production matches
+  all eight exported Smart AEX buffers byte-for-byte. This is explicitly a
+  host-substituted diagnostic relation, not native Windows UCRT evidence.
+- A deterministic, AE-free x64 PowerShell package now evaluates those 63 pairs
+  with `%WINDIR%\\System32\\ucrtbase.dll!powf`, records result bits and DLL
+  path/version/SHA-256, and has a strict return analyzer with six request/intake
+  tests. The package has not been answered in this workspace.
+- PF32 Power therefore remains fail-closed on both Universal slices. Promotion
+  additionally requires actual-AEX pre-call XMM0/XMM1 equivalence and all eight
+  final native-UCRT-derived public output buffers; the UCRT-only table cannot
+  satisfy those requirements by itself. No AE launch, install, or production
+  source change occurred in this step.
+- Evidence:
+  `refs/conformance/olmdistancegradation_pf32_power_ucrt_request_20260813.{json,md}`,
+  `refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_pf32_power_ucrt_powf_20260813{,.zip}`,
+  `tools/emulation/dg_pf32_power_powf_census_harness_20260813.cpp`, and
+  `scripts/analyze_olmdistancegradation_pf32_power_ucrt_return_20260813.py`.
+- 2026-08-13 OLMBlur corrected retained-source expansion (superseded by the
+  fractional-Smoothness closure above): hostless source `9d6bc2c0...c1b5`
+  admitted eleven of twelve PF8, seven of eight PF16, and nineteen of twenty PF32.
+  Its three Smoothness rejections were subsequently identified as the exported
+  owner's signed integer-part materialization boundary. Universal candidate
+  `00a6811d...9226` is historical, hostless, ad-hoc signed and uninstalled; AE was deferred
+  to the multi-improvement checkpoint. Earlier candidates remain historical only.
+
+### 2026-08-14 — Combined UCRT downstream replay readiness
+
+- The AE-free combined return intake remains unanswered and production remains
+  unchanged. A new hostless downstream replay now consumes keyed `expf`/`powf`
+  result words and executes the existing production arithmetic through the
+  final fixed-cell RAW buffers.
+- Using the explicitly non-native host-substitute self-test table, the replay
+  reproduces all six DirectionalBlur exported-Smart RAW hashes and all eight
+  DistanceGradation host-substituted RAW hashes exactly. This proves the table
+  injection and final-output comparison plumbing only; it does not promote a
+  cell or convert host libm results into Windows evidence.
+- The replay exposed that the six DirectionalBlur renders consume counts 96
+  and 240 as well as the initially requested counts 8, 50 and 100. The request
+  was therefore expanded to all 494 Directional `expf` rows in one run. A
+  subsequent actual exported-call trace found 787 Directional `powf` keys as
+  well. Together with Distance's 63 pairs, one AMD64 process now returns 1,344 rows against one exact
+  UCRT identity; no older-table/UCRT-generation mixing is needed. Distance's
+  actual-AEX pre-call XMM0/XMM1 relation is now closed for all 992 calls; only
+  the native UCRT return and native-derived final RAW comparisons remain. A
+  deterministic transfer ZIP (`3bb9f841…6637`) binds all
+  four request directories byte-for-byte, so the Windows step requires one
+  file transfer and one PowerShell invocation.
+- Evidence: `refs/conformance/olm_math_ucrt_downstream_replay_readiness_20260814.json`,
+  `tools/emulation/test_olm_math_ucrt_downstream_replay_20260814.py`, and
+  `tests/test_olm_math_ucrt_downstream_replay_20260814.py`. No After Effects,
+  install, or release-gate execution occurred.
+
+### 2026-08-14 — Pending Windows queue retargeted to the AE-free UCRT batch
+
+- The pending-runtime analyzer previously ignored the combined UCRT ZIP
+  because that package intentionally uses the math-batch request schema rather
+  than the older debugger trace manifest. The analyzer and all local handoff
+  selectors now recognize the exact batch schema, request id, and 1,344-row
+  contract without weakening the legacy package validators.
+- The combined ZIP is priority `0` and is the sole `Send First` action. The
+  older debugger requests remain visible as unresolved historical backlog;
+  none was silently relabeled answered or superseded by a bounded public
+  closure.
+- The project-local handoff contains the canonical ZIP byte-for-byte
+  (`3bb9f841…6637`) and its README requires one x64 System32 UCRT identity,
+  strict keyed return analysis, then final six-plus-eight public-output replay.
+  It explicitly forbids AE/aerender for this capture.
+- Pending analyzer, staging materializer, fail-closed staging parser, and next
+  action printer smokes pass. No network state, Windows host, After Effects,
+  install, or production plug-in source was changed.
+## 2026-08-14 — historical pre-final all-ten hostless fixed-fixture batch
+
+- One exact invocation of `scripts/run_olm_mac_fixed_fixture_regression_20260805.py` completed all 10 lanes: `PASS_OLM_MAC_FIXED_FIXTURE_REGRESSION lanes=10 elapsed=1607.27s`.
+- Runner SHA-256: `8be841691b2881c42c104ee79b9b0625697d96adf2d3d55a25e281ad29285e5f`; complete 15,663-line log SHA-256: `d5ae41d5ccd0c2b3800071cf6a56516deeb2b41358b6d29a5a7362d295e1cde3`.
+- Durable closure: `handoffs/olm_all10_hostless_fixed_fixture_20260814/`. This batch was hostless: no After Effects, `aerender`, network/remote Windows, installation, or MediaCore mutation. It is not native-AE smoke evidence and does not widen any production admission predicate.
+- A subsequent read-only `--skip-regression` release audit reported Universal install identity `10/10 proven`, parameter/UI registration `10/10 proven`, and Windows boundary `7 accepted / 0 invalid`. This record predates later authority regeneration. The final current-tree run and one-shot AE outcome are supersedingly recorded in `olm_bounded_port_cycle_final_status_20260814`: 14 stale authority checks were repaired with targeted validation, and the sole AE attempt returned no payload and was not retried.
+
+### 2026-08-14 — DirectionalBlur Smart WorldSuite lifecycle closure and install
+
+- Current production source `49411688…2e845` explicitly acquires
+  `PF_WorldSuite2`, verifies both checked-out worlds' formats against the Smart
+  bit depth, and releases the suite before parameter checkout or rendering.
+  Returned errors, success-null suites, null functions, and exceptions map to a
+  bounded error while destination bytes remain untouched; a real-SDK 20-row
+  lifecycle closure is canonical.
+- The numerical admission did not widen. Exported Smart remains arm64 15 exact,
+  x86_64 9 exact plus six fail-closed; Natural64 remains exact at all depths,
+  and Type3 Layer remains three fixed exact-source cells plus 54 rejects per
+  slice. The native Windows UCRT batch remains unanswered.
+- A subsequent product-disabled test-seam compatibility correction restored
+  both reduced-world Smart and real-SDK direct-core regression compilation
+  without widening product admission. Universal minOS 11 candidate
+  `856ab700…bc0de` was strict/deep ad-hoc signed,
+  installed by same-volume atomic exchange, and reproduced the complete bounded
+  public union as arm64 33 exact and x86_64 27 exact plus six fail-closed.
+  Previous `6af1f1d6…67434` is retained in two prepared backups and the moved-old
+  bundle; `9b5fc6b3…d2eff` remains in the prior handoff. Accepted identity is
+  `94c6a1ef…3650`.
+- No After Effects, `aerender`, native Windows, or network process was launched.
+  The next host check remains the single deferred batched checkpoint.
+### 2026-08-14 bounded port cycle closed
+
+- Current all-ten source→installed authority and bounded public hostless routes are closed.
+- The single full fixed-fixture run reported 14 stale authority-generation failures (ColorKeep 2, ColorKey 4, Kira 8), not pixel mismatches. Those commands were repaired or superseded and passed targeted validation; the expensive full run was not repeated.
+- Exactly one final AE checkpoint was attempted and failed closed because no AE return appeared. It was not retried; zero plug-in rows and zero numerical results were claimed, and the exact owned PID was cleaned up.
+- Release remains pending/non-releasable. Directional x86 six, Distance Power eight, and Radial Strength290 one remain fail-closed for a future native-UCRT cycle.
+- Canonical status: `refs/conformance/olm_bounded_port_cycle_final_status_20260814.json`.
+
+### 2026-08-14 — KiraKira Mode3 one-source 32x18 public closure
+
+- Added exactly one bounded admission: Mode3 / Merge1 / Horizontal Length 50 /
+  Rotation 0 / Brightness Gain 0.1 / default remaining controls, fixed 32x18,
+  row padding 12, and the declared wrapped-linear RGBA source fixture.
+- The current Windows AEX exported `SmartPreRender -> SmartRender` owner, Mac
+  public `PF_Cmd_RENDER`, and Mac public full-request Smart owner are active-byte
+  raw exact at PF8/PF16/PF32 (3/3 cells). Input storage/headers and input/output
+  padding are immutable. The Windows run reports both Smart selectors complete
+  with error zero and intact worker guards.
+- Fifty parameter checkout/checkin injected failures and seven one-away
+  request/Rotation/source/layout/extent/rowbytes/depth rows fail closed with
+  destination storage untouched. The previously captured modulo-192-alpha
+  source remains an explicit all-depth fail-close control.
+- Existing 5x3 public closure remains 42/42 exact. No installed bundle,
+  After Effects process, release gate, network, or aggregate identity artifact
+  was changed.
+- Evidence: `refs/conformance/olmkirakira_mode3_32x18_public_closure_20260814.json`,
+  `tools/emulation/test_olmkirakira_mode3_32x18_public_closure_20260814.py`, and
+  `refs/conformance/olmkirakira_mode3_32x18_public_failclose_20260814.json`.
+
+### 2026-08-15 — KiraKira Mode3 32x18 durable Universal handoff
+
+- Materialized the frozen source `abf826dd…baeab` as the durable candidate
+  `handoffs/olmkirakira_mode3_32x18_candidate_20260815/Product/OLMKiraKira.plugin`.
+  Its executable SHA-256 is `d4c9b587…80ae3`, identical to the independently
+  retained transient Universal build identity from the admission guard.
+- Both x86_64 and arm64 slices declare macOS 11.0 and export `EffectMain` plus
+  `PluginDataEntryFunction2`; `Info.plist` also declares 11.0. The bundle is
+  ad-hoc signed and passes deep/strict verification. Every directory and each
+  of the five bundle files is recorded in the adjacent `build_identity.json`.
+- Loading the durable executable through the real-SDK shim reproduces the
+  existing 5x3 closure (42 positive, 765 negative, 3 request controls) and the
+  bounded Mode3 32x18 closure (3 positive, 50 lifecycle failures, 7 one-away
+  negatives). No source or numerical report changed during this handoff.
+- The candidate was not installed; After Effects, aggregate identity, and the
+  release gate were not touched.
+
+### 2026-08-14 — ToonDilate 5x5 radius-4 corner-source public admission
+
+- Added exactly one source-bound family: 5x5, Search Radius binary64 `4.0`,
+  downsample-x 1/1, downsample-y 0/0, with distinct opaque A/B pixels at
+  `(0,0)`/`(4,4)` and transparent C elsewhere. No arbitrary geometry, radius,
+  layout, padding, or source pattern was admitted.
+- The actual Windows AEX exported `SequenceSetup -> SmartPre -> SmartRender`
+  owner and an isolated build of current Mac production `EffectMain` are
+  same-source raw exact at PF8/PF16/PF32. Active and full padded payload hashes,
+  13-byte row padding, 19-byte guards, normalized world headers, input
+  immutability, radius bits, extents, origins, formats, and callback lifecycle
+  all agree. Windows radius authority remains the documented internal f32 seam;
+  this is not a native-Windows or AE-host claim.
+- Public negative closure grew by exactly 126 one-away rows for this family and
+  now passes 633 admission rows plus 69 callback/lifecycle rows (702 total).
+  The pre-existing exact12 public matrix was regenerated unchanged against the
+  new source identity.
+- Evidence: `refs/conformance/olmtoondilate_corner_seed_public_candidate_20260814.json`,
+  `refs/conformance/olmtoondilate_public_admission_negative_closure_20260813.json`,
+  and `tests/test_olmtoondilate_corner_seed_public_admission_20260814.py`.
+  No install, After Effects, network, or release-gate action occurred.
+
+### 2026-08-15 — RadialBlur Strength 290 native-UCRT public boundary
+
+- Strictly validated the returned 64-bit AMD64 `System32\\ucrtbase.dll` table:
+  577 unique vectors covering all 725 actual exported-route calls (149 `log2f`,
+  576 `atan2f`). A clean temporary AEXCompat build replayed every key through
+  the Windows AEX exported `SmartPreRender -> SmartRender` route on the exact
+  PF32 32x18 source and fixed Strength-290 tuple.
+- Native-derived exported RAW is `5c70fe26…351f28`; the current Mac typed-owner
+  RAW is `940c1e7e…614e5`. Eighty float words differ (maximum 4 ULP), so public
+  admission is not justified. Strength 290 remains fail-closed with
+  `PF_Err_BAD_CALLBACK_PARAM` before iteration; no expected-value correction or
+  inferred generalization was added.
+- Evidence:
+  `refs/conformance/olmradialblur_strength290_native_ucrt_exported_public_boundary_20260815.json`.
+  Production, Universal candidate, install, AE, padding claims, and release gate
+  were unchanged.
+- 2026-08-15 OLMDirectionalBlur remaining-six native-UCRT closure: the accepted
+  x64 System32 return validates 494 Gaussian `expf` rows and 787 row-driver
+  `powf` keys under one pinned UCRT identity. Injecting that exact table into
+  the Windows exported Smart owner and the Mac production direct owner yields
+  6/6 full-RAW exact outputs. Each native output is also byte-identical to the
+  pre-existing Rosetta x86_64 arithmetic formerly classified as the
+  double-round counterfactual. The bounded production action is therefore
+  admission-only: no math lookup, expected-value correction, or fallback was
+  added. Live real-SDK public EffectMain closure is now arm64 15/15 and x86_64
+  15/15; all inputs, headers and padding remain unchanged, and the 15-positive
+  / 240-negative source/layout guard still passes. Universal candidate
+  `c64f8ff7…2666` contains x86_64+arm64, minOS 11.0 on both slices, expected
+  exports and a strict-valid ad-hoc signature. It is not installed and AE was
+  not launched. Evidence:
+  `olmdirectionalblur_remaining6_native_ucrt_replay_20260815`,
+  `olmdirectionalblur_dual_side_exported_smart_closure_20260814`, and
+  `olmdirectionalblur_native_ucrt_admission_universal_candidate_20260815`.

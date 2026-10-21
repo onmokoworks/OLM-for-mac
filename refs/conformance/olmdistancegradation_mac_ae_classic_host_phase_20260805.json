@@ -38,6 +38,6 @@
     }
   ],
   "load_identity_contract": "unique installed bundle + executable SHA + successful effect match-name creation",
-  "pf32_smart": "unsupported by actual AEX; excluded and unclaimed",
+  "pf32_smart": "historical assumption superseded 2026-08-12: actual public command 0x18 has a PF32 Smart owner; this classic-host artifact excludes and does not claim it",
   "after_effects_operated": false
 }

@@ -1,0 +1,583 @@
+{
+  "schema": "olmkirakira-windows-boundary-mac-ae-exact/1",
+  "case_id": "kk_mapped_bm4_mm1_hi_r5_orange_opaque",
+  "status": "mismatch",
+  "checks": {
+    "request_exists": true,
+    "return_exists": true,
+    "jsx_exists": true,
+    "plugin_exists": true,
+    "depths_exact": true,
+    "rows_unique": true,
+    "windows_members_complete": true
+  },
+  "request_zip": {
+    "path": "handoffs/windows_batch/olm_windows_ae_release_boundary_minimal_20260806.zip",
+    "sha256": "93bd288e6bcbba2fff0d28318fe383f05bede205df223f141724876d0b8118c1"
+  },
+  "return_zip": {
+    "path": "refs/returns/windows/RETURN_OLM_WINDOWS_AE_RELEASE_BOUNDARY_MINIMAL_20260806.zip",
+    "sha256": "e582b0f368deb6dfbb34de2675e382d2222372705da043151d90dc895f7d7a0a"
+  },
+  "installed_plugin": {
+    "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin/Contents/MacOS/OLMKiraKira",
+    "sha256": "5248592a32d3a34bac67c43a1a65af875097aa1c251840d1db4aa8dcd2b39367"
+  },
+  "rows": [
+    {
+      "row_id": "olmkirakira__controlled_ramps_off_10__kk_mapped_bm4_mm1_hi_r5_orange_opaque__32bpc",
+      "depth": 32,
+      "status": "mismatch",
+      "ae_result": {
+        "status": "ok",
+        "input_interpretation": {
+          "alpha_mode": 5412,
+          "premul_color": [
+            0,
+            0,
+            0
+          ],
+          "preserve_rgb": null,
+          "color_profile_name": null
+        },
+        "row_id": "olmkirakira__controlled_ramps_off_10__kk_mapped_bm4_mm1_hi_r5_orange_opaque__32bpc",
+        "ae_pid": 0,
+        "ae_version": "26.3x87",
+        "renderer_raw": 1816,
+        "bits_per_channel": 32,
+        "working_space_raw": "None",
+        "linear_blending": false,
+        "parameters_before": [
+          {
+            "match_name": "OLM OLM Kira Kira-0001",
+            "display_name": "Glow Rotation",
+            "property_index": 40,
+            "property_type": 6417,
+            "value": 0
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0002",
+            "display_name": "Brightness Gain",
+            "property_index": 5,
+            "property_type": 6417,
+            "value": 1
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0003",
+            "display_name": "Vertical Length",
+            "property_index": 10,
+            "property_type": 6417,
+            "value": 0
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0004",
+            "display_name": "Horizontal Length",
+            "property_index": 16,
+            "property_type": 6417,
+            "value": 0
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0005",
+            "display_name": "Diagonal Length",
+            "property_index": 22,
+            "property_type": 6417,
+            "value": 0
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0006",
+            "display_name": "Highlight Radius",
+            "property_index": 34,
+            "property_type": 6417,
+            "value": 5
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0007",
+            "display_name": "Glow Opacity",
+            "property_index": 8,
+            "property_type": 6417,
+            "value": 100
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0008",
+            "display_name": "Channel",
+            "property_index": 1,
+            "property_type": 6417,
+            "value": 2
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0009",
+            "display_name": "Blur Mode",
+            "property_index": 2,
+            "property_type": 6417,
+            "value": 4
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0010",
+            "display_name": "Approximated Input",
+            "property_index": 4,
+            "property_type": 6417,
+            "value": 0
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0011",
+            "display_name": "Strength multiplier",
+            "property_index": 6,
+            "property_type": 6417,
+            "value": 100
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0012",
+            "display_name": "Source Opacity",
+            "property_index": 9,
+            "property_type": 6417,
+            "value": 100
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0013",
+            "display_name": "Vertical Color",
+            "property_index": 11,
+            "property_type": 6418,
+            "value": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0014",
+            "display_name": "Horizontal Color",
+            "property_index": 17,
+            "property_type": 6418,
+            "value": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0015",
+            "display_name": "Diagonal Color",
+            "property_index": 23,
+            "property_type": 6418,
+            "value": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0016",
+            "display_name": "Highlight Color",
+            "property_index": 35,
+            "property_type": 6418,
+            "value": [
+              1,
+              0.25,
+              0.0625,
+              1
+            ]
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0017",
+            "display_name": "Merge mode",
+            "property_index": 3,
+            "property_type": 6417,
+            "value": 1
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0018",
+            "display_name": "Use Ramp",
+            "property_index": 13,
+            "property_type": 6417,
+            "value": 0
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0020",
+            "display_name": "Use Ramp",
+            "property_index": 19,
+            "property_type": 6417,
+            "value": 0
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0022",
+            "display_name": "Use Ramp",
+            "property_index": 25,
+            "property_type": 6417,
+            "value": 0
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0024",
+            "display_name": "Use Ramp",
+            "property_index": 37,
+            "property_type": 6417,
+            "value": 0
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0026",
+            "display_name": "Diagonal 2 length",
+            "property_index": 28,
+            "property_type": 6417,
+            "value": 0
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0027",
+            "display_name": "Fade Out",
+            "property_index": 7,
+            "property_type": 6417,
+            "value": 0
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0028",
+            "display_name": "Diagonal Color2",
+            "property_index": 29,
+            "property_type": 6418,
+            "value": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0035",
+            "display_name": "Use Ramp",
+            "property_index": 31,
+            "property_type": 6417,
+            "value": 0
+          }
+        ],
+        "parameters_after": [
+          {
+            "match_name": "OLM OLM Kira Kira-0001",
+            "display_name": "Glow Rotation",
+            "property_index": 40,
+            "property_type": 6417,
+            "value": 0
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0002",
+            "display_name": "Brightness Gain",
+            "property_index": 5,
+            "property_type": 6417,
+            "value": 1
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0003",
+            "display_name": "Vertical Length",
+            "property_index": 10,
+            "property_type": 6417,
+            "value": 0
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0004",
+            "display_name": "Horizontal Length",
+            "property_index": 16,
+            "property_type": 6417,
+            "value": 0
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0005",
+            "display_name": "Diagonal Length",
+            "property_index": 22,
+            "property_type": 6417,
+            "value": 0
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0006",
+            "display_name": "Highlight Radius",
+            "property_index": 34,
+            "property_type": 6417,
+            "value": 5
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0007",
+            "display_name": "Glow Opacity",
+            "property_index": 8,
+            "property_type": 6417,
+            "value": 100
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0008",
+            "display_name": "Channel",
+            "property_index": 1,
+            "property_type": 6417,
+            "value": 2
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0009",
+            "display_name": "Blur Mode",
+            "property_index": 2,
+            "property_type": 6417,
+            "value": 4
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0010",
+            "display_name": "Approximated Input",
+            "property_index": 4,
+            "property_type": 6417,
+            "value": 0
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0011",
+            "display_name": "Strength multiplier",
+            "property_index": 6,
+            "property_type": 6417,
+            "value": 100
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0012",
+            "display_name": "Source Opacity",
+            "property_index": 9,
+            "property_type": 6417,
+            "value": 100
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0013",
+            "display_name": "Vertical Color",
+            "property_index": 11,
+            "property_type": 6418,
+            "value": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0014",
+            "display_name": "Horizontal Color",
+            "property_index": 17,
+            "property_type": 6418,
+            "value": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0015",
+            "display_name": "Diagonal Color",
+            "property_index": 23,
+            "property_type": 6418,
+            "value": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0016",
+            "display_name": "Highlight Color",
+            "property_index": 35,
+            "property_type": 6418,
+            "value": [
+              1,
+              0.25,
+              0.0625,
+              1
+            ]
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0017",
+            "display_name": "Merge mode",
+            "property_index": 3,
+            "property_type": 6417,
+            "value": 1
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0018",
+            "display_name": "Use Ramp",
+            "property_index": 13,
+            "property_type": 6417,
+            "value": 0
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0020",
+            "display_name": "Use Ramp",
+            "property_index": 19,
+            "property_type": 6417,
+            "value": 0
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0022",
+            "display_name": "Use Ramp",
+            "property_index": 25,
+            "property_type": 6417,
+            "value": 0
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0024",
+            "display_name": "Use Ramp",
+            "property_index": 37,
+            "property_type": 6417,
+            "value": 0
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0026",
+            "display_name": "Diagonal 2 length",
+            "property_index": 28,
+            "property_type": 6417,
+            "value": 0
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0027",
+            "display_name": "Fade Out",
+            "property_index": 7,
+            "property_type": 6417,
+            "value": 0
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0028",
+            "display_name": "Diagonal Color2",
+            "property_index": 29,
+            "property_type": 6418,
+            "value": [
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "match_name": "OLM OLM Kira Kira-0035",
+            "display_name": "Use Ramp",
+            "property_index": 31,
+            "property_type": 6417,
+            "value": 0
+          }
+        ],
+        "no_effect_source": "/private/tmp/olmkirakira-pf8-ae-smoke.rWwmOV/run/mac/olmkirakira__controlled_ramps_off_10__kk_mapped_bm4_mm1_hi_r5_orange_opaque__32bpc/no_effect_00024.exr",
+        "effect_on_source": "/private/tmp/olmkirakira-pf8-ae-smoke.rWwmOV/run/mac/olmkirakira__controlled_ramps_off_10__kk_mapped_bm4_mm1_hi_r5_orange_opaque__32bpc/effect_on_00024.exr",
+        "no_effect_settings": {
+          "Audio Bit Depth": "32 Bit",
+          "Audio Channels": "Stereo",
+          "Audio Sample Rate": "",
+          "Channels": "RGB + Alpha",
+          "Color": "Premultiplied (Matted)",
+          "Crop": "false",
+          "Crop Bottom": "0",
+          "Crop Left": "0",
+          "Crop Right": "0",
+          "Crop Top": "0",
+          "Depth": "Floating Point+",
+          "Format": "OpenEXR Sequence",
+          "Include Project Link": "false",
+          "Include Source XMP Metadata": "false",
+          "Lock Aspect Ratio": "true",
+          "Output Audio": "Off",
+          "Output File Info": {
+            "Full Flat Path": "/private/tmp/olmkirakira-pf8-ae-smoke.rWwmOV/run/mac/olmkirakira__controlled_ramps_off_10__kk_mapped_bm4_mm1_hi_r5_orange_opaque__32bpc/no_effect_[#####].exr",
+            "Base Path": "/private/tmp/olmkirakira-pf8-ae-smoke.rWwmOV/run/mac/olmkirakira__controlled_ramps_off_10__kk_mapped_bm4_mm1_hi_r5_orange_opaque__32bpc",
+            "Subfolder Path": "",
+            "File Name": "no_effect_[#####].exr",
+            "File Template": "no_effect_[#####].[fileExtension]"
+          },
+          "Post-Render Action": "None",
+          "Resize": "false",
+          "Resize Quality": "High",
+          "Resize to": "HD  \u2022  1920x1080 \u2022 24 fps",
+          "Starting #": "24",
+          "Use Comp Frame Number": "true",
+          "Use Region of Interest": "false",
+          "Video Output": "true"
+        },
+        "effect_on_settings": {
+          "Audio Bit Depth": "32 Bit",
+          "Audio Channels": "Stereo",
+          "Audio Sample Rate": "",
+          "Channels": "RGB + Alpha",
+          "Color": "Premultiplied (Matted)",
+          "Crop": "false",
+          "Crop Bottom": "0",
+          "Crop Left": "0",
+          "Crop Right": "0",
+          "Crop Top": "0",
+          "Depth": "Floating Point+",
+          "Format": "OpenEXR Sequence",
+          "Include Project Link": "false",
+          "Include Source XMP Metadata": "false",
+          "Lock Aspect Ratio": "true",
+          "Output Audio": "Off",
+          "Output File Info": {
+            "Full Flat Path": "/private/tmp/olmkirakira-pf8-ae-smoke.rWwmOV/run/mac/olmkirakira__controlled_ramps_off_10__kk_mapped_bm4_mm1_hi_r5_orange_opaque__32bpc/effect_on_[#####].exr",
+            "Base Path": "/private/tmp/olmkirakira-pf8-ae-smoke.rWwmOV/run/mac/olmkirakira__controlled_ramps_off_10__kk_mapped_bm4_mm1_hi_r5_orange_opaque__32bpc",
+            "Subfolder Path": "",
+            "File Name": "effect_on_[#####].exr",
+            "File Template": "effect_on_[#####].[fileExtension]"
+          },
+          "Post-Render Action": "None",
+          "Resize": "false",
+          "Resize Quality": "High",
+          "Resize to": "HD  \u2022  1920x1080 \u2022 24 fps",
+          "Starting #": "24",
+          "Use Comp Frame Number": "true",
+          "Use Region of Interest": "false",
+          "Video Output": "true"
+        }
+      },
+      "osascript": {
+        "returncode": 0,
+        "stdout": "0\n",
+        "stderr": ""
+      },
+      "host_identity": {
+        "ae_pids": [
+          73457
+        ],
+        "loaded_kira_modules": [
+          "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin/Contents/MacOS/OLMKiraKira"
+        ],
+        "exact": true
+      },
+      "branches": {
+        "no_effect": {
+          "mac_sha256": "dc92c84754876c15faa89e48dd4e10e3e0864eb7c4a4febca4fb3495a1d8e019",
+          "windows_sha256": "baa4f7125b65c743266317230fdf8dfdcd83689c2ad3f7d00bba2af6e8ec2632",
+          "raw_float32_compare": {
+            "equal": false,
+            "max_absolute_error": null,
+            "nonzero_count": 6220800,
+            "nan_inf_policy": "raw FLOAT32 words; NaN and +/-Inf words must match exactly",
+            "mac_sample_counts": {
+              "nan": 0,
+              "+inf": 0,
+              "-inf": 0
+            },
+            "windows_sample_counts": {
+              "nan": 0,
+              "+inf": 0,
+              "-inf": 0
+            }
+          }
+        },
+        "effect_on": {
+          "mac_sha256": "79462401862ae242928edc0b9282551ebff7bfe07fb4acfa03b0b8c1c3e1206e",
+          "windows_sha256": "7074b66b88a91fac5947f2a7ea80e2bae76cf7ca7a7e412a7d42f99add1ef95d",
+          "raw_float32_compare": {
+            "equal": false,
+            "max_absolute_error": null,
+            "nonzero_count": 6220800,
+            "nan_inf_policy": "raw FLOAT32 words; NaN and +/-Inf words must match exactly",
+            "mac_sample_counts": {
+              "nan": 0,
+              "+inf": 0,
+              "-inf": 0
+            },
+            "windows_sample_counts": {
+              "nan": 0,
+              "+inf": 0,
+              "-inf": 0
+            }
+          }
+        }
+      }
+    }
+  ],
+  "claim_boundary": "AE 26.3x87, Software renderer raw 1816, None working space, linear blending off, preserve-RGB straight-alpha opaque_cells_rgba8.png, case kk_mapped_bm4_mm1_hi_r5_orange_opaque, PF8/PF16/PF32 only.",
+  "exact_depths": []
+}

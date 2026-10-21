@@ -1,0 +1,106 @@
+{
+  "artifacts": {
+    "launch_wrapper": {
+      "path": "handoffs/olm_all10_batch5_current_identity_v3_fresh_ae_smoke_20260815/launch.jsx",
+      "sha256": "94355c2fb64e366eb20077207d48b7abb5adab0fceb83b1e73462a3f9b56df1c",
+      "size": 731
+    },
+    "payload": {
+      "path": "scripts/ae_host_all10_batch5_current_identity_live_v3_20260815.jsx",
+      "sha256": "7343ff97e79b1881d32b75f7ec390b900884a40700dc3aea8df30aa7266df404",
+      "size": 2101
+    }
+  },
+  "claim_boundary": "Batch5 installed host load/add/enable-state and exact mapping for all ten; generic effect-enabled host-frame render only for OLMBlur and OLMDirectionalBlur. The other eight bounded effects are disabled before generic saveFrameToPng. Numerical behavior is not assessed. No pixel-exact, Windows-equivalence, typed-plane, padding, admission, or public-owner numerical-exact claim.",
+  "cleanup": {
+    "actions": [
+      {
+        "action": "application_quit",
+        "returncode": 1,
+        "stderr": "47:61: execution error: Adobe After Effects 2026\u3067\u30a8\u30e9\u30fc\u304c\u8d77\u304d\u307e\u3057\u305f: \u30e6\u30fc\u30b6\u306b\u3088\u3063\u3066\u30ad\u30e3\u30f3\u30bb\u30eb\u3055\u308c\u307e\u3057\u305f\u3002 (-128)\n",
+        "stdout": ""
+      },
+      {
+        "action": "SIGTERM",
+        "exact_pids": [
+          51752
+        ]
+      },
+      {
+        "action": "SIGKILL",
+        "exact_pids": [
+          51752
+        ]
+      }
+    ],
+    "completed_at": "2026-08-15T12:07:20.291551+00:00",
+    "owned_pids": [
+      51752
+    ],
+    "remaining_ae_pids": [],
+    "remaining_owned_pids": []
+  },
+  "completed_at": "2026-08-15T12:07:20.292017+00:00",
+  "error": {
+    "message": "DoScriptFile exited before AE return: rc=0 stderr='' stdout='1\\n'",
+    "type": "ValueError"
+  },
+  "generated_at": "2026-08-15T11:50:29.481729+00:00",
+  "host": {
+    "captured_at": null,
+    "fresh_process": true,
+    "initial_ae_pids": [],
+    "initial_process_count": 0,
+    "launch_process_pid": 51752,
+    "launch_requested_at": "2026-08-15T11:50:29.510440+00:00",
+    "open_launch": {
+      "returncode": 0
+    },
+    "pid": 51752,
+    "process_count": 1,
+    "process_identity": {
+      "returncode": 0,
+      "sampled_at": "2026-08-15T11:50:29.776864+00:00",
+      "stderr": "",
+      "stdout": "51752     1 Sat Aug 15 20:50:29 2026     /Applications/Adobe After Effects 2026/Adobe After Effects 2026.app/Contents/MacOS/After Effects"
+    },
+    "process_samples": [
+      {
+        "pids": [
+          51752
+        ],
+        "sampled_at": "2026-08-15T11:50:29.763358+00:00"
+      }
+    ],
+    "quit_succeeded": true,
+    "renderer": null,
+    "renderer_raw": null,
+    "residual_process_count": 0,
+    "script_invocation_pid": 51766,
+    "scriptability_samples": [
+      {
+        "returncode": 0,
+        "sampled_at": "2026-08-15T11:50:29.858837+00:00",
+        "stderr": "",
+        "stdout": "26.3.0"
+      }
+    ],
+    "started_after_identity_acceptance": true,
+    "started_at": "2026-08-15T11:50:29+00:00"
+  },
+  "installed_identity_manifest": {
+    "accepted_at": "2026-08-15T11:43:15.990084+00:00",
+    "accepted_manifest_status": "verified_before_launch",
+    "path": "refs/conformance/olm_installed_identity_manifest_20260806.json",
+    "sha256": "ede4857b810e9f2901561ee8a3a9179c4c508dc2ee058525aa3f46dff4164079"
+  },
+  "passed": false,
+  "plugins": [],
+  "runner": {
+    "path": "scripts/run_olm_all10_batch5_current_identity_live_v3_20260815.py",
+    "sha256": "4c78ae7433b69a09dea7515b436ac2488eb3ede406aaf23d72ea265744fbeca4",
+    "size": 9390
+  },
+  "schema": "olm.all10-current-install-fresh-ae-smoke-raw/1",
+  "status": "fail_closed"
+}

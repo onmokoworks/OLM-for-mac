@@ -1,0 +1,130 @@
+{
+  "host_automation": {
+    "available": false,
+    "blocked_command": "DoScriptFile",
+    "current_runner_execution_forbidden": true,
+    "current_runner_state": {
+      "after_effects_reached": false,
+      "dependency_valid": false,
+      "failure": "corrected smoke execution dependency identity drift",
+      "returncode": 1
+    },
+    "failure_category": "AEErrorDialog",
+    "failure_message_ja": "\u30b9\u30af\u30ea\u30d7\u30c8\u30d5\u30a1\u30a4\u30eb\u3092\u5b9f\u884c\u3067\u304d\u307e\u305b\u3093\u3002\u30b9\u30af\u30ea\u30d7\u30c8\u6a5f\u80fd\u306e\u30d7\u30e9\u30b0\u30a4\u30f3\u304c\u30a4\u30f3\u30b9\u30c8\u30fc\u30eb\u3055\u308c\u3066\u3044\u307e\u305b\u3093\u3002",
+    "historical_success_control": {
+      "ae_version": "26.3.0",
+      "fresh_pid": 71551,
+      "script_invocation_returncode": 0,
+      "script_invocation_stdout": "0\n",
+      "status": "pass"
+    },
+    "next_required_host_action": "do not mutate the plug-in cache by inference; the current-identity v3 contract is hostlessly valid but intentionally has no live entrypoint, so a separate reviewed change and explicit approval are required before one minimal marker and the single aggregate session",
+    "payload_observed": false,
+    "retry_authorized": false,
+    "runtime_load_or_registration_status": "unresolved; the loader log's cached Ignore line is not a causal proof because a retained AE 26.3 fresh process completed DoScriptFile successfully",
+    "scripting_plugin_on_disk": {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "binary_sha256": "81e1d6190d0368e3ca08746dbfa7646cdf54533047c2ecbedd097dbcf3bc3cb0",
+      "bundle_identifier": "com.adobe.ExpressionPal.plugin",
+      "bundle_version": "26.3.0.87",
+      "codesign_deep_strict_valid": true,
+      "loader_log": {
+        "loaded": false,
+        "marked_ignore": true,
+        "path": "/Users/onmk/Library/Preferences/Adobe/After Effects/26.3/Plugin Loading.log",
+        "registry_cached": true,
+        "sha256": "5300a093052148266546f1a51dd209b9605638a808aaf554d96fab8db4238971"
+      },
+      "minimum_macos": "14.0",
+      "on_disk_present": true,
+      "path": "/Applications/Adobe After Effects 2026/Adobe After Effects 2026.app/Contents/Required/Expressions and Scripting Palette.plugin",
+      "plist_sha256": "cc32f6b93113d1bf192462858cd4337ed6483d5f43e077fe08decdf6646c2de8"
+    },
+    "v3_hostless_state": {
+      "after_effects_reached": false,
+      "contract_valid": true,
+      "current_identity_valid": true,
+      "future_outputs_absent": true,
+      "live_entrypoint_present": false
+    }
+  },
+  "inputs": {
+    "accepted_identity": {
+      "path": "refs/conformance/olm_installed_identity_manifest_20260806.json",
+      "sha256": "94c6a1eff87e11705a65be638953cb134ff64bd0d919e8501338601aab333650"
+    },
+    "forbidden_contract": {
+      "path": "refs/conformance/olm_all10_post_toondilate_ded9_corrected_v2_contract_20260813.json",
+      "sha256": "8adaae1f6cce55889bad5eced7c3dc9a29a3bc4d81f19da9e1b0ac46fd60107c"
+    },
+    "forbidden_runner": {
+      "path": "scripts/run_olm_all10_post_toondilate_ded9_corrected_v2_20260813.py",
+      "sha256": "031dbde3c47e4fe95364616e004bbf6dece63788ab4c3b551be97af182eb66fd"
+    },
+    "historical_success_raw": {
+      "path": "refs/conformance/olm_all10_current_install_fresh_ae_smoke_raw_20260812.json",
+      "sha256": "6ee2e4fbeee23e578da2b508f7827f1cc1d38dd7fdf5da534993531e353ec2be"
+    },
+    "host_automation_failure": {
+      "path": "refs/conformance/olm_all10_post_toondilate_ded9_corrected_fresh_ae_smoke_failure_metadata_20260813.json",
+      "sha256": "849de8a7d26ec10866511d03a7ab2521e704d4f7e6d221b66987adf7861b31bf"
+    },
+    "installed_preflight": {
+      "path": "scripts/preflight_olm_all_universal_installs_20260805.py",
+      "sha256": "1065dfabbde20bff12fe6e2bcdce638905bf13e726635c7d7bf617fcfa5f9d96"
+    },
+    "release_status": {
+      "path": "refs/conformance/olm_release_gate_status_20260806.json",
+      "sha256": "99fef44827d81746b00587dce150fd14b1bef7685d32a374a701ebcb3fb46e87"
+    },
+    "source_auditor": {
+      "path": "tools/emulation/audit_olm_all10_current_source_installed_authority_20260813.py",
+      "sha256": "265fbccfc875c96a9cff3149a8e1cf5eb070e6863f9f939fe2dfc30d14913b8b"
+    },
+    "source_report": {
+      "path": "refs/conformance/olm_all10_current_source_installed_authority_20260813.json",
+      "sha256": "8138180651e805e352fdb6ffd2e91abd426803d7395d949a545e73c421f3e6f9"
+    },
+    "v3_contract": {
+      "path": "refs/conformance/olm_all10_current_identity_deferred_v3_contract_20260814.json",
+      "sha256": "805feaf66b7796ea344b24ee40b69e07214dbb5162da31134705db6bf76b8df7"
+    },
+    "v3_runner": {
+      "path": "scripts/run_olm_all10_current_identity_deferred_v3_20260814.py",
+      "sha256": "019e72afe8726c91a41e873690303b1771e133e71a1d35c081e68e2a324ab190"
+    }
+  },
+  "preflight": {
+    "after_effects": [],
+    "bundle_count": 10,
+    "byte_identical": true,
+    "passes": 2,
+    "returncode": 2,
+    "status": "ae_not_running",
+    "stdout_sha256": "d40d29ab632b9a624b670d3ff56f03656765b896b69e2417307d68bcd3b4cd8d"
+  },
+  "release_boundary": {
+    "formal_gate_executed": false,
+    "releasable": false,
+    "saved_status": "release_gate_pending_or_invalid"
+  },
+  "schema": "olm.deferred-batched-ae-readiness/2",
+  "scope": {
+    "after_effects_launch_authorized": false,
+    "after_effects_launched": false,
+    "future_checkpoint_must_be_single_batched_run": true,
+    "future_checkpoint_requires_new_host_automation_authority": true,
+    "numerical_claim_added": false,
+    "reason_for_deferral": "identity is ready and a current-identity v3 hostless contract is valid, but it intentionally has no live entrypoint; the latest one-shot DoScriptFile failure remains unresolved, v2 fails before AE, and no cache mutation or AE retry is authorized without a separate reviewed change and explicit approval",
+    "windows_oracle_return_received": false
+  },
+  "source_authority": {
+    "exact": true,
+    "marker": "PASS_ALL10_CURRENT_SOURCE_CANDIDATE_INSTALLED_EXACT_AE_DEFERRED",
+    "plugin_count": 10
+  },
+  "status": "identity_ready_v3_hostless_contract_valid_ae_not_executed"
+}

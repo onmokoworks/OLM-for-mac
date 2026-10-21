@@ -20,7 +20,7 @@
         "smart_pre_checkout_layer": 1
       },
       "class_plane_sha256": "7acc5d384d518f305da4857618fb5fc041ca0b663c02c8fd8e06a796bd1ec877",
-      "classic_same_params_raw_equal": true,
+      "classic_same_params_rejected": true,
       "classifier_instructions": 69801,
       "depth": "PF8",
       "exact": true,
@@ -78,7 +78,7 @@
         "smart_pre_checkout_layer": 1
       },
       "class_plane_sha256": "af89f16e7525cc1d906e6d66c94d4c67a0e3b73c0e9a4ba8aeea2eb6d43d9fd6",
-      "classic_same_params_raw_equal": true,
+      "classic_same_params_rejected": true,
       "classifier_instructions": 38850,
       "depth": "PF8",
       "exact": true,
@@ -160,7 +160,7 @@
         "smart_pre_checkout_layer": 1
       },
       "class_plane_sha256": "4dbe4d19ba3798baefde56275cbf0ed7514ccb8015d538579b56505e8033eb39",
-      "classic_same_params_raw_equal": true,
+      "classic_same_params_rejected": true,
       "classifier_instructions": 69780,
       "depth": "PF16",
       "exact": true,
@@ -218,7 +218,7 @@
         "smart_pre_checkout_layer": 1
       },
       "class_plane_sha256": "a1af728aebac0f2f27b6554ec2af2aa1ff3c11e5bfe505eaebf298c4d9b83472",
-      "classic_same_params_raw_equal": true,
+      "classic_same_params_rejected": true,
       "classifier_instructions": 69521,
       "depth": "PF16",
       "exact": true,
@@ -300,7 +300,7 @@
         "smart_pre_checkout_layer": 1
       },
       "class_plane_sha256": "620734831c846c255abe729b63e9b438454c87e164380196d771d181bab4f69d",
-      "classic_same_params_raw_equal": null,
+      "classic_same_params_rejected": true,
       "classifier_instructions": 69810,
       "depth": "PF32",
       "exact": true,
@@ -358,7 +358,7 @@
         "smart_pre_checkout_layer": 1
       },
       "class_plane_sha256": "7acc5d384d518f305da4857618fb5fc041ca0b663c02c8fd8e06a796bd1ec877",
-      "classic_same_params_raw_equal": null,
+      "classic_same_params_rejected": true,
       "classifier_instructions": 69780,
       "depth": "PF32",
       "exact": true,
@@ -403,15 +403,15 @@
   "claims_not_made": [
     "No AE process execution",
     "No actual-AEX exported owner claim from this fixture",
-    "No PF32 classic Render claim",
+    "No classic Render numerical claim",
     "No arbitrary parameters/geometry/input-representation generalization"
   ],
   "classic_boundary": {
-    "PF16": "same-params raw exact in both cases",
-    "PF32": "fail-closed/not applicable: classic Render dispatch has no PF32 branch; PF32 numerical public path is SmartRender",
-    "PF8": "same-params raw exact in both cases"
+    "PF16": "same-parameter classic command rejected and output untouched",
+    "PF32": "same-parameter classic command rejected and output untouched",
+    "PF8": "same-parameter classic command rejected and output untouched"
   },
-  "production_source_sha256": "c0a2588aa6749c3f861f2e7246c4db97fa9d6c3b2b8783889a5c22b36f77dc77",
+  "production_source_sha256": "2f08c720b738d9bb847e9a010afe959a59805249e4c92466c98ff85900782e16",
   "schema": "olmsmoother2.public-effectmain-all-depths/1",
   "scope": "PF8/PF16/PF32 two cases each; padded 17x11 semi-transparent practical fixture; SmartPreRender then SmartRender public EffectMain",
   "smart_pre_render_ownership": {

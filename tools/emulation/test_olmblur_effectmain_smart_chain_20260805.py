@@ -6,6 +6,7 @@ from __future__ import annotations
 import hashlib
 import json
 import subprocess
+import sys
 import tempfile
 from pathlib import Path
 
@@ -105,6 +106,19 @@ def installed_identity() -> dict:
 
 
 def main() -> int:
+    # Superseded: the reduced fake ABI in this historical runner cannot
+    # represent the current public world/suite/interaction safety contract.
+    # Delegate to the real AE_Effect.h closure instead of silently weakening
+    # those guards to keep the old 12x12 tuple alive.
+    replacement = ROOT / "tools/emulation/test_olmblur_smart_public_admission_20260813.py"
+    run = subprocess.run([sys.executable, str(replacement), "--validate-only"], cwd=ROOT)
+    if run.returncode:
+        return run.returncode
+    print("PASS_SUPERSEDED_OLMBLUR_EFFECTMAIN_SMART_CHAIN -> exact6 real-SDK closure")
+    return 0
+
+
+def historical_main() -> int:
     checks = installed_identity()
     with tempfile.TemporaryDirectory(prefix="olmblur_effectmain_smart_") as name:
         directory = Path(name)

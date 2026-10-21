@@ -1,0 +1,339 @@
+{
+  "after_effects_processes": [],
+  "architecture_relations": {
+    "arm64": {
+      "case_count": 12,
+      "cases_sha256": "2501ff8739f369ee3b5f6a4606b545550d0433f092d7bb64ca1af9c1f1e78534",
+      "validation_gates_sha256": "b27ea71bdfa416f5fc09ceb25eadcfd0674494ca8ca39968c08489b05b560e0f"
+    },
+    "x86_64": {
+      "case_count": 12,
+      "cases_sha256": "2501ff8739f369ee3b5f6a4606b545550d0433f092d7bb64ca1af9c1f1e78534",
+      "validation_gates_sha256": "b27ea71bdfa416f5fc09ceb25eadcfd0674494ca8ca39968c08489b05b560e0f"
+    }
+  },
+  "architectures": [
+    "arm64",
+    "x86_64"
+  ],
+  "cases": [
+    {
+      "callbacks": {
+        "acquire_world_suite": 1,
+        "checkin_param": 1,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "checkout_param": 1,
+        "get_pixel_format": 2,
+        "optional_checkin_layer_pixels": 0,
+        "pre_checkout": 1,
+        "release_world_suite": 1
+      },
+      "id": "PF8_copy",
+      "input_active_sha256": "28fcdd1bae528a5ca9b3d0ed04599003b0c244d62c2a49c7c7600cbdd3a0d87e",
+      "input_payload_sha256": "55977b5da6f43cae0992525f0d7e66211f224e75be53b134a851a2d2051f3161",
+      "input_storage_immutable": true,
+      "output_active_sha256": "28fcdd1bae528a5ca9b3d0ed04599003b0c244d62c2a49c7c7600cbdd3a0d87e",
+      "output_padding_exact": true,
+      "output_payload_sha256": "99b58cd7458ed0165bc3dab53da9bacaa28649ca8a249f373bcabf915bc483ce",
+      "raw_exact": true,
+      "world_headers_immutable": true
+    },
+    {
+      "callbacks": {
+        "acquire_world_suite": 1,
+        "checkin_param": 1,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "checkout_param": 1,
+        "get_pixel_format": 2,
+        "optional_checkin_layer_pixels": 0,
+        "pre_checkout": 1,
+        "release_world_suite": 1
+      },
+      "id": "PF8_fractional",
+      "input_active_sha256": "b0bb2f13a7b1df3715f3166e8c170801f3e547e6261e9af40ceb309b0b74f593",
+      "input_payload_sha256": "c27e10edda06ec2cbe0126ac70f213b7aeb4a2ec6d69982a05e63f6d5ee8540d",
+      "input_storage_immutable": true,
+      "output_active_sha256": "9e22bace19f7dae26258e99573917c68b7327e6d1ccaf141940be94e2d70e27d",
+      "output_padding_exact": true,
+      "output_payload_sha256": "537ad02a499463ce116e712bc454e0253d044c7d791951e9cb8dcdd1c0b4f1a4",
+      "raw_exact": true,
+      "world_headers_immutable": true
+    },
+    {
+      "callbacks": {
+        "acquire_world_suite": 1,
+        "checkin_param": 1,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "checkout_param": 1,
+        "get_pixel_format": 2,
+        "optional_checkin_layer_pixels": 0,
+        "pre_checkout": 1,
+        "release_world_suite": 1
+      },
+      "id": "PF8_tie_semialpha",
+      "input_active_sha256": "3e82a3170b01e243044550f4ec7c73823901e3d9decb21441fe9850d517545ef",
+      "input_payload_sha256": "ef136e5e12cb06b6c3b493c77ce2ac7f5915e712992e52c7b8852a8a47f809e7",
+      "input_storage_immutable": true,
+      "output_active_sha256": "05dd195813a594c4185a488a0433eaca16b8668cd6588f48fb77ca7c0050eb0c",
+      "output_padding_exact": true,
+      "output_payload_sha256": "a9906acc873782e9d6681bde00b7ffbfd7061ee2869f4bfb5ffb8da30009b69a",
+      "raw_exact": true,
+      "world_headers_immutable": true
+    },
+    {
+      "callbacks": {
+        "acquire_world_suite": 1,
+        "checkin_param": 1,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "checkout_param": 1,
+        "get_pixel_format": 2,
+        "optional_checkin_layer_pixels": 0,
+        "pre_checkout": 1,
+        "release_world_suite": 1
+      },
+      "id": "PF8_high_downsample",
+      "input_active_sha256": "10a8f71efc874ad922ad1784eab5f0eec57a623eeca2742e54ef2de55148c902",
+      "input_payload_sha256": "fcffd0fec6009ea64070a7cde94b38adfff5f969705f17363772c3b700b3df62",
+      "input_storage_immutable": true,
+      "output_active_sha256": "5aeed3ca62bc73ecc24a4fa05fc3db2b9b5ac258de2ce90c98724ea055d4707a",
+      "output_padding_exact": true,
+      "output_payload_sha256": "db196c8370e043fbcfbe1eb9854ae497b1d4f6ba5d8503423c2c3696570276a9",
+      "raw_exact": true,
+      "world_headers_immutable": true
+    },
+    {
+      "callbacks": {
+        "acquire_world_suite": 1,
+        "checkin_param": 1,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "checkout_param": 1,
+        "get_pixel_format": 2,
+        "optional_checkin_layer_pixels": 0,
+        "pre_checkout": 1,
+        "release_world_suite": 1
+      },
+      "id": "PF16_copy",
+      "input_active_sha256": "29728fe4ef8dbec47f7fd68da5a9a582b59066038b27add5ebe87071c8f09b54",
+      "input_payload_sha256": "f2f202f905bed35dbfdeca426377423fb169b703783c608b6c1ba6cbe5cd1ef2",
+      "input_storage_immutable": true,
+      "output_active_sha256": "29728fe4ef8dbec47f7fd68da5a9a582b59066038b27add5ebe87071c8f09b54",
+      "output_padding_exact": true,
+      "output_payload_sha256": "fa62fdf9fd1807476bb64367df3ae720a6492dfcc93827928f18849066b22ee3",
+      "raw_exact": true,
+      "world_headers_immutable": true
+    },
+    {
+      "callbacks": {
+        "acquire_world_suite": 1,
+        "checkin_param": 1,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "checkout_param": 1,
+        "get_pixel_format": 2,
+        "optional_checkin_layer_pixels": 0,
+        "pre_checkout": 1,
+        "release_world_suite": 1
+      },
+      "id": "PF16_fractional",
+      "input_active_sha256": "3bcb46077510265bd25eec45104f439f587bd03495df5edce01c61cecba21037",
+      "input_payload_sha256": "25f70cf711916fa57bf1008c12f71231c9deed780f7dcf9357085ac99c1428d9",
+      "input_storage_immutable": true,
+      "output_active_sha256": "b57f15217528ebbe5b1b61415688f3d046c417d39c361a6a07dfda9c24faac59",
+      "output_padding_exact": true,
+      "output_payload_sha256": "56b731797901e14ac4f4e3c396bce16858b02bf3e2431aae8227d70c07720eea",
+      "raw_exact": true,
+      "world_headers_immutable": true
+    },
+    {
+      "callbacks": {
+        "acquire_world_suite": 1,
+        "checkin_param": 1,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "checkout_param": 1,
+        "get_pixel_format": 2,
+        "optional_checkin_layer_pixels": 0,
+        "pre_checkout": 1,
+        "release_world_suite": 1
+      },
+      "id": "PF16_tie_semialpha",
+      "input_active_sha256": "31af1cb49d73db7b803b95a653d51bf583a00fae9ff78cd98847e35d14bb7cbe",
+      "input_payload_sha256": "dc2fd3e8eeadc3ca49790c1a48f7ce2507cac649d70ad21f3f8095c7f6c9566a",
+      "input_storage_immutable": true,
+      "output_active_sha256": "d52a4cadf64b8177fba642b054fad4fef99e5f769124989f5844d31fde1bccb7",
+      "output_padding_exact": true,
+      "output_payload_sha256": "e376c20bc1394849106c1ee935d872d65d907df587a293a215ee43eb828228b5",
+      "raw_exact": true,
+      "world_headers_immutable": true
+    },
+    {
+      "callbacks": {
+        "acquire_world_suite": 1,
+        "checkin_param": 1,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "checkout_param": 1,
+        "get_pixel_format": 2,
+        "optional_checkin_layer_pixels": 0,
+        "pre_checkout": 1,
+        "release_world_suite": 1
+      },
+      "id": "PF16_high_downsample",
+      "input_active_sha256": "79653684e48ad270e5ba921be40d938cc15f1017402da54536fd35ff8f3bf002",
+      "input_payload_sha256": "93e87fba0b2874842695b4d52ea8011912e548dfe51fd8b4ddf301a3e0167f47",
+      "input_storage_immutable": true,
+      "output_active_sha256": "ab2480b2e58e3c575b9cacdbe2d483174898d5eab6024a7d170ceadabcf9d036",
+      "output_padding_exact": true,
+      "output_payload_sha256": "36c2e106c3d42e4477fc50dad6253fbc5626c7aa59a4ba9a39a2fab0e06d8f8b",
+      "raw_exact": true,
+      "world_headers_immutable": true
+    },
+    {
+      "callbacks": {
+        "acquire_world_suite": 1,
+        "checkin_param": 1,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "checkout_param": 1,
+        "get_pixel_format": 2,
+        "optional_checkin_layer_pixels": 0,
+        "pre_checkout": 1,
+        "release_world_suite": 1
+      },
+      "id": "PF32_copy",
+      "input_active_sha256": "d4bf63076bba553b519d80af8678f0bae141ab2512d2f5ef3139904ef6623807",
+      "input_payload_sha256": "629b15ee89f6f55c327abedb838fb8e81454672943094fae65785f9b66ce5e1d",
+      "input_storage_immutable": true,
+      "output_active_sha256": "d4bf63076bba553b519d80af8678f0bae141ab2512d2f5ef3139904ef6623807",
+      "output_padding_exact": true,
+      "output_payload_sha256": "9aa2d7cf061830744437a6f9a45867673fb8e39aef73261d32e0e9b555b918bd",
+      "raw_exact": true,
+      "world_headers_immutable": true
+    },
+    {
+      "callbacks": {
+        "acquire_world_suite": 1,
+        "checkin_param": 1,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "checkout_param": 1,
+        "get_pixel_format": 2,
+        "optional_checkin_layer_pixels": 0,
+        "pre_checkout": 1,
+        "release_world_suite": 1
+      },
+      "id": "PF32_fractional",
+      "input_active_sha256": "fef7add0856a28eab2b61dbf3427ab5f799caa6188d65b27d825398ca45d3b96",
+      "input_payload_sha256": "ea7757583fdcce2188d17ad2acb8545a532061ac92278d9d0810b14c343a596a",
+      "input_storage_immutable": true,
+      "output_active_sha256": "b9767fdbd1733f8281566ca003c19514e1b60072e054cda53923f5b85b0c430e",
+      "output_padding_exact": true,
+      "output_payload_sha256": "a39fb89a2e383ef934caf59b6e540b30e998abbe3fb39369297fa70c7892efc5",
+      "raw_exact": true,
+      "world_headers_immutable": true
+    },
+    {
+      "callbacks": {
+        "acquire_world_suite": 1,
+        "checkin_param": 1,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "checkout_param": 1,
+        "get_pixel_format": 2,
+        "optional_checkin_layer_pixels": 0,
+        "pre_checkout": 1,
+        "release_world_suite": 1
+      },
+      "id": "PF32_tie_semialpha",
+      "input_active_sha256": "1c2b046b5ea08eb1aa3ed19b940c3e162ecbfbe5d562ce51b95e3eaa6fe0c0d7",
+      "input_payload_sha256": "e5d59e2e8a313f09e1b95108d9465c37a691f1e7fbffcceffe570f8559dd87be",
+      "input_storage_immutable": true,
+      "output_active_sha256": "87de042025825f99d43cd8b7b3441cea78dbc0afcd5410786d7952f2bfc013e6",
+      "output_padding_exact": true,
+      "output_payload_sha256": "d230eb87a8ab6d5e8c1341cd84255556b2ae3646e7cce8a8026246d14fc1da22",
+      "raw_exact": true,
+      "world_headers_immutable": true
+    },
+    {
+      "callbacks": {
+        "acquire_world_suite": 1,
+        "checkin_param": 1,
+        "checkout_layer_pixels": 1,
+        "checkout_output": 1,
+        "checkout_param": 1,
+        "get_pixel_format": 2,
+        "optional_checkin_layer_pixels": 0,
+        "pre_checkout": 1,
+        "release_world_suite": 1
+      },
+      "id": "PF32_high_downsample",
+      "input_active_sha256": "ca82e46d2885daaa63de2920207b385573dcc2ede60ec7036bbc5e8bf05c66b0",
+      "input_payload_sha256": "beb71bf781c821f28425b7af3bc05994142f8e4f09fc8a663166650098a5ada2",
+      "input_storage_immutable": true,
+      "output_active_sha256": "162e0f47588045812bdfad5f4a13347d02486fb3c4d6e5ebf4bbff4b97d2755d",
+      "output_padding_exact": true,
+      "output_payload_sha256": "a1c9f00a94c733327ccf1a75d38e53128b979d1d76153ccf2b71970b240cf0c2",
+      "raw_exact": true,
+      "world_headers_immutable": true
+    }
+  ],
+  "cases_sha256": "2501ff8739f369ee3b5f6a4606b545550d0433f092d7bb64ca1af9c1f1e78534",
+  "identities": {
+    "accepted_identity": "9d7402a37c9e4e5204860b0bcff7efed00708cb469e26a9d422a0c3401775bcd",
+    "install_closure": "a44987234e57fb12dc23f0c8819689560d40ba527e46781bb796bec33dc91f09",
+    "installed_binary": "5bbe693106072ceff14a1c1ae5a0d64815cddde58356c57575d29e516479036e",
+    "mac_validator": "d4e42d0b3d40b81c120ac68f527283cf7b0405ed4121979818902ce753a8188d",
+    "paired_closure": "80b4e05d844a33687f0d282037fd360898f99a2cf1eca469e68bf8accafee5c2",
+    "probe_source": "687358e977691fe311b3cd3444796ef70e12c00eb6dce3accebef6afcb45df4a",
+    "production_source": "ded9eaab6b660044c9035f3aa0d9660f86086ec2e451c97c9ee0c1115574464b"
+  },
+  "installed_binary": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate",
+  "matrix": {
+    "case_count": 12,
+    "depths": [
+      8,
+      16,
+      32
+    ],
+    "families": [
+      "copy",
+      "fractional",
+      "tie_semialpha",
+      "high_downsample"
+    ]
+  },
+  "schema": "olmtoondilate.current-installed-exact12/1",
+  "scope": {
+    "after_effects_launched": false,
+    "installed_arm64": true,
+    "installed_public_effectmain_dlopen": true,
+    "installed_x86_64": true,
+    "native_after_effects_host_claim": false,
+    "unlisted_tuple_or_source_claim": false,
+    "windows_public_owner_relation_inherited_from_paired_closure": true
+  },
+  "status": "pass_current_installed_exact12_against_paired_windows_public_owner",
+  "validation_gates": {
+    "all_12_exact": true,
+    "callback_lifecycle_exact": true,
+    "case_ids_exact": true,
+    "guards_untouched": true,
+    "input_storage_immutable": true,
+    "negative_buffers_headers_padding_guards_untouched": true,
+    "padding_exact": true,
+    "pinned_active_and_payload_hashes_exact": true,
+    "pre_render_lifecycle_exact": true,
+    "preserve_rgb_false_exact": true,
+    "returns_extra_pixels_flag_exact_positive_and_negative": true,
+    "row0_alignment_exact": true,
+    "world_headers_immutable": true,
+    "world_suite_12_negatives_exact": true,
+    "world_suite_lifecycle_exact": true
+  },
+  "validation_gates_sha256": "b27ea71bdfa416f5fc09ceb25eadcfd0674494ca8ca39968c08489b05b560e0f"
+}

@@ -1,0 +1,4180 @@
+{
+  "build": {
+    "clean_temporary_clone": true,
+    "patched_callbacks_sha256": "8c5169bca72b58b42f559b8d7b38c5c58c3f38dc0ec853f10baf3642be2d8db4",
+    "patched_imports_sha256": "382ed6c7891a0b83e4569b37f8cd812058efa28356c86cd3dd6b2eb701278f6e",
+    "patched_main_sha256": "fb6d2000412dad75bedc6f458dbc1a58dc525aa454bf43378cb0981456102a5a",
+    "release_build": true,
+    "worker_bytes": 3906704,
+    "worker_sha256": "c53cb1a36737b6519fc1e2da42e8637013070809381c0a06b3a5a87277b9034f"
+  },
+  "comparison": {
+    "canonical_diff_sha256": "3ca3fe67bec890a71f4d31887b2be07ab1b550e0315327981d91ff370f4eff87",
+    "different_float_words": 80,
+    "mac_typed_owner_sha256": "940c1e7e1ef45a58ebd81df06c263c1e7a1e0a38a209f9a800f1d2c5d51614e5",
+    "max_ulp": 4,
+    "native_exported_sha256": "5c70fe269db5c2923c1ce1a63645f83075975ab6b13eb34e09c240b999351f28",
+    "same_source_full_raw_exact": false,
+    "ulp_histogram": {
+      "1": 51,
+      "2": 24,
+      "3": 4,
+      "4": 1
+    }
+  },
+  "exported_smart": {
+    "guards_intact": true,
+    "input_requests": [
+      [
+        0,
+        0,
+        32,
+        18
+      ]
+    ],
+    "output_request": [
+      0,
+      0,
+      32,
+      18
+    ],
+    "raw_bytes": 9216,
+    "raw_sha256": "5c70fe269db5c2923c1ce1a63645f83075975ab6b13eb34e09c240b999351f28",
+    "render_error": 0,
+    "render_mode": "smart-cpu"
+  },
+  "fixture": {
+    "bytes": 9216,
+    "height": 18,
+    "pixel_format": "PF32_ARGB_FLOAT_LE",
+    "rowbytes": 512,
+    "source_file_unchanged_after_replay": true,
+    "source_sha256": "187a7caf98537700d3644aed245150467f284b87ef73df56e46dd331ba40cf1f",
+    "width": 32
+  },
+  "identities": {
+    "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "aexcompat_head": "28d535469f84f67236ef3425afe4291ea2fb0991",
+    "patches": [
+      {
+        "path": "tools/emulation/aexcompat_olmradialblur_float_math_imports_20260814.patch",
+        "sha256": "04147344b71c3f08a5e7e796d9d50f65845def15e924a2836a9e89ae249f81e3"
+      },
+      {
+        "path": "tools/emulation/aexcompat_exact_raw_input_20260815.patch",
+        "sha256": "3f71c2d1184e650c87308f1b8fcaf9710ed203920dc55edf113d3fb5ea051483"
+      },
+      {
+        "path": "tools/emulation/aexcompat_raw_output_dump_20260814.patch",
+        "sha256": "c6351dcdaff243d80c8cd0d1fbf414e496097b55a2c23d0e6cbfb665f1e4d8fa"
+      },
+      {
+        "path": "tools/emulation/aexcompat_olmradialblur_native_ucrt_table_20260815.patch",
+        "sha256": "b2e85afd7ce7ef902d48a45cebb9da47d7ecd10281e9a6435f76f03fc9bceb76"
+      },
+      {
+        "path": "tools/emulation/aexcompat_olmradialblur_native_ucrt_trace_20260815.patch",
+        "sha256": "fcdb602feb7100eb65bb2d8e33f1a0be2093d6b748407993311a043118a0f9ec"
+      }
+    ],
+    "prior_boundary_sha256": "fd164d69cac9d7f92f5bc109aff744e2426846d17de823bd9fbe7519d9d2927a",
+    "prior_boundary_tool_sha256": "7af2816f7588ec71d33332c0a65be5bd639f54304c18f4144e47f0ceec7f8fd6",
+    "production_source_sha256": "b74b3d2c7ea6724593b28f82d36615e071e18d813e5b99cc948e26a447fdb0d1",
+    "return_zip": {
+      "operational_source_path": "/Volumes/onmk/olm_pr/new/mac_returns/olm_runtime_trace_olmradialblur_strength290_ucrt_math_return_windows_20260815_020556.zip",
+      "sha256": "2adf1d5ac2ddcff79e4da492ee61985935c2f83a75224c85d19b6f01ba1a0d91"
+    },
+    "validated_return_report_sha256": "9666d40a45ca751d38e681ec956aa70c4e944f6527fd708f8d58a092ede9a8fe"
+  },
+  "native_return": {
+    "claims_not_made": [
+      "No production admission",
+      "No After Effects execution"
+    ],
+    "production_policy": "Strength 290 remains fail-closed pending native-derived exported-AEX and Mac-public final RAW closure",
+    "request_id": "olm_runtime_trace_olmradialblur_strength290_ucrt_math_20260814",
+    "return_path": "/Volumes/onmk/olm_pr/new/mac_returns/olm_runtime_trace_olmradialblur_strength290_ucrt_math_return_windows_20260815_020556.zip",
+    "return_sha256": "2adf1d5ac2ddcff79e4da492ee61985935c2f83a75224c85d19b6f01ba1a0d91",
+    "schema": "olmradialblur.strength290-ucrt-math-return-analysis/1",
+    "status": "PASS_NATIVE_WINDOWS_UCRT_RADIAL_577_RETURN_VALIDATED_NO_PROMOTION",
+    "ucrtbase": {
+      "file_version": "10.0.26100.8875 (WinBuild.160101.0800)",
+      "loaded_path": "C:\\WINDOWS\\System32\\ucrtbase.dll",
+      "product_version": "10.0.26100.8875",
+      "requested_path": "C:\\WINDOWS\\System32\\ucrtbase.dll",
+      "sha256": "5e7709a6b71bb818260b6f05c5bb3b6ca0c3ca9bc2f58c6242c1cd9d826d0079"
+    },
+    "vectors": {
+      "atan2f": 576,
+      "log2f": 1,
+      "original_call_count": 725,
+      "unique": 577
+    }
+  },
+  "native_rows": [
+    {
+      "argument_bits": "0x4f800000",
+      "call_count": 149,
+      "function": "log2f",
+      "native_ucrt_result_bits": "0x42000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x00000000",
+      "right_bits": "0x00000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x00000000",
+      "right_bits": "0x3f800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x00000000",
+      "right_bits": "0x40000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x00000000",
+      "right_bits": "0x40400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x00000000",
+      "right_bits": "0x40800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x00000000",
+      "right_bits": "0x40a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x00000000",
+      "right_bits": "0x40c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x00000000",
+      "right_bits": "0x40e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x00000000",
+      "right_bits": "0x41000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x00000000",
+      "right_bits": "0x41100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x00000000",
+      "right_bits": "0x41200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x00000000",
+      "right_bits": "0x41300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x00000000",
+      "right_bits": "0x41400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x00000000",
+      "right_bits": "0x41500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x00000000",
+      "right_bits": "0x41600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x00000000",
+      "right_bits": "0x41700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x40490fdb",
+      "right_bits": "0xbf800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x40490fdb",
+      "right_bits": "0xc0000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x40490fdb",
+      "right_bits": "0xc0400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x40490fdb",
+      "right_bits": "0xc0800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x40490fdb",
+      "right_bits": "0xc0a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x40490fdb",
+      "right_bits": "0xc0c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x40490fdb",
+      "right_bits": "0xc0e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x40490fdb",
+      "right_bits": "0xc1000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x40490fdb",
+      "right_bits": "0xc1100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x40490fdb",
+      "right_bits": "0xc1200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x40490fdb",
+      "right_bits": "0xc1300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x40490fdb",
+      "right_bits": "0xc1400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x40490fdb",
+      "right_bits": "0xc1500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x40490fdb",
+      "right_bits": "0xc1600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x40490fdb",
+      "right_bits": "0xc1700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x00000000",
+      "native_ucrt_result_bits": "0x40490fdb",
+      "right_bits": "0xc1800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x3fc90fdb",
+      "right_bits": "0x00000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x3f490fdb",
+      "right_bits": "0x3f800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x3eed6338",
+      "right_bits": "0x40000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x3ea4bc7d",
+      "right_bits": "0x40400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x3e7adbb0",
+      "right_bits": "0x40800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x3e4a2210",
+      "right_bits": "0x40a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x3e291cbc",
+      "right_bits": "0x40c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x3e114d76",
+      "right_bits": "0x40e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x3dfeadd5",
+      "right_bits": "0x41000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x3de2a041",
+      "right_bits": "0x41100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x3dcc1f14",
+      "right_bits": "0x41200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x3db9abe4",
+      "right_bits": "0x41300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x3daa45f3",
+      "right_bits": "0x41400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x3d9d3a95",
+      "right_bits": "0x41500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x3d9209a6",
+      "right_bits": "0x41600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x3d8854e4",
+      "right_bits": "0x41700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x4016cbe4",
+      "right_bits": "0xbf800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x402b6374",
+      "right_bits": "0xc0000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x4034784b",
+      "right_bits": "0xc0400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x40396220",
+      "right_bits": "0xc0800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x403c6dba",
+      "right_bits": "0xc0a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x403e7e0f",
+      "right_bits": "0xc0c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x403ffb03",
+      "right_bits": "0xc0e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x40411a6c",
+      "right_bits": "0xc1000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x4041fad9",
+      "right_bits": "0xc1100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x4042aee2",
+      "right_bits": "0xc1200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x4043427c",
+      "right_bits": "0xc1300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x4043bdab",
+      "right_bits": "0xc1400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x40442606",
+      "right_bits": "0xc1500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x40447f8d",
+      "right_bits": "0xc1600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x4044cd34",
+      "right_bits": "0xc1700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x3f800000",
+      "native_ucrt_result_bits": "0x4045112f",
+      "right_bits": "0xc1800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x3fc90fdb",
+      "right_bits": "0x00000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x3f8db70d",
+      "right_bits": "0x3f800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x3f490fdb",
+      "right_bits": "0x40000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x3f168757",
+      "right_bits": "0x40400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x3eed6338",
+      "right_bits": "0x40800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x3ec2d1bb",
+      "right_bits": "0x40a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x3ea4bc7d",
+      "right_bits": "0x40c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x3e8e7d4b",
+      "right_bits": "0x40e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x3e7adbb0",
+      "right_bits": "0x41000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x3e5feac1",
+      "right_bits": "0x41100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x3e4a2210",
+      "right_bits": "0x41200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x3e382b84",
+      "right_bits": "0x41300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x3e291cbc",
+      "right_bits": "0x41400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x3e1c501b",
+      "right_bits": "0x41500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x3e114d76",
+      "right_bits": "0x41600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x3e07bb97",
+      "right_bits": "0x41700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x40023454",
+      "right_bits": "0xbf800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x4016cbe4",
+      "right_bits": "0xc0000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x40236e05",
+      "right_bits": "0xc0400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x402b6374",
+      "right_bits": "0xc0800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x4030b5a3",
+      "right_bits": "0xc0a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x4034784b",
+      "right_bits": "0xc0c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x40374031",
+      "right_bits": "0xc0e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x40396220",
+      "right_bits": "0xc1000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x403b112f",
+      "right_bits": "0xc1100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x403c6dba",
+      "right_bits": "0xc1200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x403d8d22",
+      "right_bits": "0xc1300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x403e7e0f",
+      "right_bits": "0xc1400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x403f4ad9",
+      "right_bits": "0xc1500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x403ffb03",
+      "right_bits": "0xc1600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x40409421",
+      "right_bits": "0xc1700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40000000",
+      "native_ucrt_result_bits": "0x40411a6c",
+      "right_bits": "0xc1800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x3fc90fdb",
+      "right_bits": "0x00000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x3f9fe0bb",
+      "right_bits": "0x3f800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x3f7b985f",
+      "right_bits": "0x40000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x3f490fdb",
+      "right_bits": "0x40400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x3f24bc7d",
+      "right_bits": "0x40800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x3f0a58ef",
+      "right_bits": "0x40a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x3eed6338",
+      "right_bits": "0x40c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x3ecf4dfa",
+      "right_bits": "0x40e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x3eb7b0ca",
+      "right_bits": "0x41000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x3ea4bc7d",
+      "right_bits": "0x41100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x3e9539d3",
+      "right_bits": "0x41200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x3e885230",
+      "right_bits": "0x41300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x3e7adbb0",
+      "right_bits": "0x41400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x3e683df5",
+      "right_bits": "0x41500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x3e5828da",
+      "right_bits": "0x41600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x3e4a2210",
+      "right_bits": "0x41700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x3ff23efa",
+      "right_bits": "0xbf800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x400a29c3",
+      "right_bits": "0xc0000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x4016cbe4",
+      "right_bits": "0xc0400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x401fe0bb",
+      "right_bits": "0xc0800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x4026799f",
+      "right_bits": "0xc0a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x402b6374",
+      "right_bits": "0xc0c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x402f261b",
+      "right_bits": "0xc0e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x403219c1",
+      "right_bits": "0xc1000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x4034784b",
+      "right_bits": "0xc1100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x403668a0",
+      "right_bits": "0xc1200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x40380595",
+      "right_bits": "0xc1300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x40396220",
+      "right_bits": "0xc1400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x403a8bfb",
+      "right_bits": "0xc1500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x403b8d4d",
+      "right_bits": "0xc1600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x403c6dba",
+      "right_bits": "0xc1700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40400000",
+      "native_ucrt_result_bits": "0x403d331d",
+      "right_bits": "0xc1800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x3fc90fdb",
+      "right_bits": "0x00000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x3fa9b465",
+      "right_bits": "0x3f800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x3f8db70d",
+      "right_bits": "0x40000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x3f6d6338",
+      "right_bits": "0x40400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x3f490fdb",
+      "right_bits": "0x40800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x3f2cbbd3",
+      "right_bits": "0x40a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x3f168757",
+      "right_bits": "0x40c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x3f04e6c2",
+      "right_bits": "0x40e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x3eed6338",
+      "right_bits": "0x41000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x3ed62180",
+      "right_bits": "0x41100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x3ec2d1bb",
+      "right_bits": "0x41200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x3eb2921d",
+      "right_bits": "0x41300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x3ea4bc7d",
+      "right_bits": "0x41400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x3e98d4da",
+      "right_bits": "0x41500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x3e8e7d4b",
+      "right_bits": "0x41600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x3e856dad",
+      "right_bits": "0x41700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x3fe86b51",
+      "right_bits": "0xbf800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x40023454",
+      "right_bits": "0xc0000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x400db70d",
+      "right_bits": "0xc0400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x4016cbe4",
+      "right_bits": "0xc0800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x401de0e6",
+      "right_bits": "0xc0a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x40236e05",
+      "right_bits": "0xc0c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x4027d62a",
+      "right_bits": "0xc0e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x402b6374",
+      "right_bits": "0xc1000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x402e4bab",
+      "right_bits": "0xc1100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x4030b5a3",
+      "right_bits": "0xc1200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x4032bd97",
+      "right_bits": "0xc1300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x4034784b",
+      "right_bits": "0xc1400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x4035f53f",
+      "right_bits": "0xc1500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x40374031",
+      "right_bits": "0xc1600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x40386225",
+      "right_bits": "0xc1700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40800000",
+      "native_ucrt_result_bits": "0x40396220",
+      "right_bits": "0xc1800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x3fc90fdb",
+      "right_bits": "0x00000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x3fafcb99",
+      "right_bits": "0x3f800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x3f985b6c",
+      "right_bits": "0x40000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x3f83e363",
+      "right_bits": "0x40400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x3f6563e3",
+      "right_bits": "0x40800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x3f490fdb",
+      "right_bits": "0x40a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x3f31da5e",
+      "right_bits": "0x40c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x3f1ec8ac",
+      "right_bits": "0x40e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x3f0f005d",
+      "right_bits": "0x41000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x3f01d135",
+      "right_bits": "0x41100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x3eed6338",
+      "right_bits": "0x41200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x3eda6eeb",
+      "right_bits": "0x41300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x3eca2210",
+      "right_bits": "0x41400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x3ebbfe35",
+      "right_bits": "0x41500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x3eafa0d5",
+      "right_bits": "0x41600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x3ea4bc7d",
+      "right_bits": "0x41700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x3fe2541d",
+      "right_bits": "0xbf800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x3ff9c449",
+      "right_bits": "0xc0000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x40071e29",
+      "right_bits": "0xc0400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x400fb6e2",
+      "right_bits": "0xc0800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x4016cbe4",
+      "right_bits": "0xc0a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x401c9943",
+      "right_bits": "0xc0c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x40215db0",
+      "right_bits": "0xc0e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x40254fc3",
+      "right_bits": "0xc1000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x40289b8d",
+      "right_bits": "0xc1100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x402b6374",
+      "right_bits": "0xc1200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x402dc1fd",
+      "right_bits": "0xc1300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x402fcb99",
+      "right_bits": "0xc1400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x40319014",
+      "right_bits": "0xc1500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x40331bc0",
+      "right_bits": "0xc1600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x4034784b",
+      "right_bits": "0xc1700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40a00000",
+      "native_ucrt_result_bits": "0x4035ad63",
+      "right_bits": "0xc1800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x3fc90fdb",
+      "right_bits": "0x00000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x3fb3ec43",
+      "right_bits": "0x3f800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x3f9fe0bb",
+      "right_bits": "0x40000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x3f8db70d",
+      "right_bits": "0x40400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x3f7b985f",
+      "right_bits": "0x40800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x3f604557",
+      "right_bits": "0x40a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x3f490fdb",
+      "right_bits": "0x40c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x3f356888",
+      "right_bits": "0x40e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x3f24bc7d",
+      "right_bits": "0x41000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x3f168757",
+      "right_bits": "0x41100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x3f0a58ef",
+      "right_bits": "0x41200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x3effaa60",
+      "right_bits": "0x41300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x3eed6338",
+      "right_bits": "0x41400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x3edd648d",
+      "right_bits": "0x41500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x3ecf4dfa",
+      "right_bits": "0x41600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x3ec2d1bb",
+      "right_bits": "0x41700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x3fde3372",
+      "right_bits": "0xbf800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x3ff23efa",
+      "right_bits": "0xc0000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x40023454",
+      "right_bits": "0xc0400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x400a29c3",
+      "right_bits": "0xc0800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x4010fe85",
+      "right_bits": "0xc0a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x4016cbe4",
+      "right_bits": "0xc0c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x401bb5b9",
+      "right_bits": "0xc0e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x401fe0bb",
+      "right_bits": "0xc1000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x40236e05",
+      "right_bits": "0xc1100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x4026799f",
+      "right_bits": "0xc1200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x40291a8f",
+      "right_bits": "0xc1300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x402b6374",
+      "right_bits": "0xc1400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x402d6349",
+      "right_bits": "0xc1500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x402f261b",
+      "right_bits": "0xc1600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x4030b5a3",
+      "right_bits": "0xc1700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40c00000",
+      "native_ucrt_result_bits": "0x403219c1",
+      "right_bits": "0xc1800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x3fc90fdb",
+      "right_bits": "0x00000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x3fb6e62c",
+      "right_bits": "0x3f800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x3fa57088",
+      "right_bits": "0x40000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x3f953c5c",
+      "right_bits": "0x40400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x3f869c79",
+      "right_bits": "0x40800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x3f73570a",
+      "right_bits": "0x40a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x3f5cb72d",
+      "right_bits": "0x40c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x3f490fdb",
+      "right_bits": "0x40e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x3f38053e",
+      "right_bits": "0x41000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x3f293a20",
+      "right_bits": "0x41100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x3f1c5889",
+      "right_bits": "0x41200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x3f11152a",
+      "right_bits": "0x41300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x3f072fe3",
+      "right_bits": "0x41400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x3efce5e2",
+      "right_bits": "0x41500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x3eed6338",
+      "right_bits": "0x41600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x3edf8d98",
+      "right_bits": "0x41700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x3fdb3989",
+      "right_bits": "0xbf800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x3fecaf2d",
+      "right_bits": "0xc0000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x3ffce359",
+      "right_bits": "0xc0400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x4005c19e",
+      "right_bits": "0xc0800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x400c3a18",
+      "right_bits": "0xc0a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x4011e20f",
+      "right_bits": "0xc0c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x4016cbe4",
+      "right_bits": "0xc0e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x401b0e8b",
+      "right_bits": "0xc1000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x401ec153",
+      "right_bits": "0xc1100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x4021f9b8",
+      "right_bits": "0xc1200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x4024ca90",
+      "right_bits": "0xc1300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x402743e2",
+      "right_bits": "0xc1400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x4029731e",
+      "right_bits": "0xc1500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x402b6374",
+      "right_bits": "0xc1600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x402d1e28",
+      "right_bits": "0xc1700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x40e00000",
+      "native_ucrt_result_bits": "0x402eaaec",
+      "right_bits": "0xc1800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x3fc90fdb",
+      "right_bits": "0x00000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x3fb924fd",
+      "right_bits": "0x3f800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x3fa9b465",
+      "right_bits": "0x40000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x3f9b23a8",
+      "right_bits": "0x40400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x3f8db70d",
+      "right_bits": "0x40800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x3f818fac",
+      "right_bits": "0x40a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x3f6d6338",
+      "right_bits": "0x40c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x3f5a1a77",
+      "right_bits": "0x40e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x3f490fdb",
+      "right_bits": "0x41000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x3f3a053c",
+      "right_bits": "0x41100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x3f2cbbd3",
+      "right_bits": "0x41200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x3f20f8cb",
+      "right_bits": "0x41300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x3f168757",
+      "right_bits": "0x41400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x3f0d3943",
+      "right_bits": "0x41500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x3f04e6c2",
+      "right_bits": "0x41600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x3efadbb0",
+      "right_bits": "0x41700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x3fd8fab8",
+      "right_bits": "0xbf800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x3fe86b51",
+      "right_bits": "0xc0000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x3ff6fc0d",
+      "right_bits": "0xc0400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x40023454",
+      "right_bits": "0xc0800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x40084805",
+      "right_bits": "0xc0a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x400db70d",
+      "right_bits": "0xc0c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x4012893d",
+      "right_bits": "0xc0e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x4016cbe4",
+      "right_bits": "0xc1000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x401a8e8c",
+      "right_bits": "0xc1100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x401de0e6",
+      "right_bits": "0xc1200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x4020d1a8",
+      "right_bits": "0xc1300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x40236e05",
+      "right_bits": "0xc1400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x4025c18a",
+      "right_bits": "0xc1500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x4027d62a",
+      "right_bits": "0xc1600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x4029b465",
+      "right_bits": "0xc1700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0x41000000",
+      "native_ucrt_result_bits": "0x402b6374",
+      "right_bits": "0xc1800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xbfc90fdb",
+      "right_bits": "0x00000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xbf490fdb",
+      "right_bits": "0x3f800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xbeed6338",
+      "right_bits": "0x40000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xbea4bc7d",
+      "right_bits": "0x40400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xbe7adbb0",
+      "right_bits": "0x40800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xbe4a2210",
+      "right_bits": "0x40a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xbe291cbc",
+      "right_bits": "0x40c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xbe114d76",
+      "right_bits": "0x40e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xbdfeadd5",
+      "right_bits": "0x41000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xbde2a041",
+      "right_bits": "0x41100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xbdcc1f14",
+      "right_bits": "0x41200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xbdb9abe4",
+      "right_bits": "0x41300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xbdaa45f3",
+      "right_bits": "0x41400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xbd9d3a95",
+      "right_bits": "0x41500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xbd9209a6",
+      "right_bits": "0x41600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xbd8854e4",
+      "right_bits": "0x41700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xc016cbe4",
+      "right_bits": "0xbf800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xc02b6374",
+      "right_bits": "0xc0000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xc034784b",
+      "right_bits": "0xc0400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xc0396220",
+      "right_bits": "0xc0800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xc03c6dba",
+      "right_bits": "0xc0a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xc03e7e0f",
+      "right_bits": "0xc0c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xc03ffb03",
+      "right_bits": "0xc0e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xc0411a6c",
+      "right_bits": "0xc1000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xc041fad9",
+      "right_bits": "0xc1100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xc042aee2",
+      "right_bits": "0xc1200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xc043427c",
+      "right_bits": "0xc1300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xc043bdab",
+      "right_bits": "0xc1400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xc0442606",
+      "right_bits": "0xc1500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xc0447f8d",
+      "right_bits": "0xc1600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xc044cd34",
+      "right_bits": "0xc1700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xbf800000",
+      "native_ucrt_result_bits": "0xc045112f",
+      "right_bits": "0xc1800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xbfc90fdb",
+      "right_bits": "0x00000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xbf8db70d",
+      "right_bits": "0x3f800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xbf490fdb",
+      "right_bits": "0x40000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xbf168757",
+      "right_bits": "0x40400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xbeed6338",
+      "right_bits": "0x40800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xbec2d1bb",
+      "right_bits": "0x40a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xbea4bc7d",
+      "right_bits": "0x40c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xbe8e7d4b",
+      "right_bits": "0x40e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xbe7adbb0",
+      "right_bits": "0x41000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xbe5feac1",
+      "right_bits": "0x41100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xbe4a2210",
+      "right_bits": "0x41200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xbe382b84",
+      "right_bits": "0x41300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xbe291cbc",
+      "right_bits": "0x41400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xbe1c501b",
+      "right_bits": "0x41500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xbe114d76",
+      "right_bits": "0x41600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xbe07bb97",
+      "right_bits": "0x41700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xc0023454",
+      "right_bits": "0xbf800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xc016cbe4",
+      "right_bits": "0xc0000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xc0236e05",
+      "right_bits": "0xc0400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xc02b6374",
+      "right_bits": "0xc0800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xc030b5a3",
+      "right_bits": "0xc0a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xc034784b",
+      "right_bits": "0xc0c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xc0374031",
+      "right_bits": "0xc0e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xc0396220",
+      "right_bits": "0xc1000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xc03b112f",
+      "right_bits": "0xc1100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xc03c6dba",
+      "right_bits": "0xc1200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xc03d8d22",
+      "right_bits": "0xc1300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xc03e7e0f",
+      "right_bits": "0xc1400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xc03f4ad9",
+      "right_bits": "0xc1500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xc03ffb03",
+      "right_bits": "0xc1600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xc0409421",
+      "right_bits": "0xc1700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0000000",
+      "native_ucrt_result_bits": "0xc0411a6c",
+      "right_bits": "0xc1800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xbfc90fdb",
+      "right_bits": "0x00000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xbf9fe0bb",
+      "right_bits": "0x3f800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xbf7b985f",
+      "right_bits": "0x40000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xbf490fdb",
+      "right_bits": "0x40400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xbf24bc7d",
+      "right_bits": "0x40800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xbf0a58ef",
+      "right_bits": "0x40a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xbeed6338",
+      "right_bits": "0x40c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xbecf4dfa",
+      "right_bits": "0x40e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xbeb7b0ca",
+      "right_bits": "0x41000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xbea4bc7d",
+      "right_bits": "0x41100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xbe9539d3",
+      "right_bits": "0x41200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xbe885230",
+      "right_bits": "0x41300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xbe7adbb0",
+      "right_bits": "0x41400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xbe683df5",
+      "right_bits": "0x41500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xbe5828da",
+      "right_bits": "0x41600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xbe4a2210",
+      "right_bits": "0x41700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xbff23efa",
+      "right_bits": "0xbf800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xc00a29c3",
+      "right_bits": "0xc0000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xc016cbe4",
+      "right_bits": "0xc0400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xc01fe0bb",
+      "right_bits": "0xc0800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xc026799f",
+      "right_bits": "0xc0a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xc02b6374",
+      "right_bits": "0xc0c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xc02f261b",
+      "right_bits": "0xc0e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xc03219c1",
+      "right_bits": "0xc1000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xc034784b",
+      "right_bits": "0xc1100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xc03668a0",
+      "right_bits": "0xc1200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xc0380595",
+      "right_bits": "0xc1300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xc0396220",
+      "right_bits": "0xc1400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xc03a8bfb",
+      "right_bits": "0xc1500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xc03b8d4d",
+      "right_bits": "0xc1600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xc03c6dba",
+      "right_bits": "0xc1700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0400000",
+      "native_ucrt_result_bits": "0xc03d331d",
+      "right_bits": "0xc1800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xbfc90fdb",
+      "right_bits": "0x00000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xbfa9b465",
+      "right_bits": "0x3f800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xbf8db70d",
+      "right_bits": "0x40000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xbf6d6338",
+      "right_bits": "0x40400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xbf490fdb",
+      "right_bits": "0x40800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xbf2cbbd3",
+      "right_bits": "0x40a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xbf168757",
+      "right_bits": "0x40c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xbf04e6c2",
+      "right_bits": "0x40e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xbeed6338",
+      "right_bits": "0x41000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xbed62180",
+      "right_bits": "0x41100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xbec2d1bb",
+      "right_bits": "0x41200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xbeb2921d",
+      "right_bits": "0x41300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xbea4bc7d",
+      "right_bits": "0x41400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xbe98d4da",
+      "right_bits": "0x41500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xbe8e7d4b",
+      "right_bits": "0x41600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xbe856dad",
+      "right_bits": "0x41700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xbfe86b51",
+      "right_bits": "0xbf800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xc0023454",
+      "right_bits": "0xc0000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xc00db70d",
+      "right_bits": "0xc0400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xc016cbe4",
+      "right_bits": "0xc0800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xc01de0e6",
+      "right_bits": "0xc0a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xc0236e05",
+      "right_bits": "0xc0c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xc027d62a",
+      "right_bits": "0xc0e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xc02b6374",
+      "right_bits": "0xc1000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xc02e4bab",
+      "right_bits": "0xc1100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xc030b5a3",
+      "right_bits": "0xc1200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xc032bd97",
+      "right_bits": "0xc1300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xc034784b",
+      "right_bits": "0xc1400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xc035f53f",
+      "right_bits": "0xc1500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xc0374031",
+      "right_bits": "0xc1600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xc0386225",
+      "right_bits": "0xc1700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0800000",
+      "native_ucrt_result_bits": "0xc0396220",
+      "right_bits": "0xc1800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xbfc90fdb",
+      "right_bits": "0x00000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xbfafcb99",
+      "right_bits": "0x3f800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xbf985b6c",
+      "right_bits": "0x40000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xbf83e363",
+      "right_bits": "0x40400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xbf6563e3",
+      "right_bits": "0x40800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xbf490fdb",
+      "right_bits": "0x40a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xbf31da5e",
+      "right_bits": "0x40c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xbf1ec8ac",
+      "right_bits": "0x40e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xbf0f005d",
+      "right_bits": "0x41000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xbf01d135",
+      "right_bits": "0x41100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xbeed6338",
+      "right_bits": "0x41200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xbeda6eeb",
+      "right_bits": "0x41300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xbeca2210",
+      "right_bits": "0x41400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xbebbfe35",
+      "right_bits": "0x41500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xbeafa0d5",
+      "right_bits": "0x41600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xbea4bc7d",
+      "right_bits": "0x41700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xbfe2541d",
+      "right_bits": "0xbf800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xbff9c449",
+      "right_bits": "0xc0000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xc0071e29",
+      "right_bits": "0xc0400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xc00fb6e2",
+      "right_bits": "0xc0800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xc016cbe4",
+      "right_bits": "0xc0a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xc01c9943",
+      "right_bits": "0xc0c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xc0215db0",
+      "right_bits": "0xc0e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xc0254fc3",
+      "right_bits": "0xc1000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xc0289b8d",
+      "right_bits": "0xc1100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xc02b6374",
+      "right_bits": "0xc1200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xc02dc1fd",
+      "right_bits": "0xc1300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xc02fcb99",
+      "right_bits": "0xc1400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xc0319014",
+      "right_bits": "0xc1500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xc0331bc0",
+      "right_bits": "0xc1600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xc034784b",
+      "right_bits": "0xc1700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0a00000",
+      "native_ucrt_result_bits": "0xc035ad63",
+      "right_bits": "0xc1800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xbfc90fdb",
+      "right_bits": "0x00000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xbfb3ec43",
+      "right_bits": "0x3f800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xbf9fe0bb",
+      "right_bits": "0x40000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xbf8db70d",
+      "right_bits": "0x40400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xbf7b985f",
+      "right_bits": "0x40800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xbf604557",
+      "right_bits": "0x40a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xbf490fdb",
+      "right_bits": "0x40c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xbf356888",
+      "right_bits": "0x40e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xbf24bc7d",
+      "right_bits": "0x41000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xbf168757",
+      "right_bits": "0x41100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xbf0a58ef",
+      "right_bits": "0x41200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xbeffaa60",
+      "right_bits": "0x41300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xbeed6338",
+      "right_bits": "0x41400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xbedd648d",
+      "right_bits": "0x41500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xbecf4dfa",
+      "right_bits": "0x41600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xbec2d1bb",
+      "right_bits": "0x41700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xbfde3372",
+      "right_bits": "0xbf800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xbff23efa",
+      "right_bits": "0xc0000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xc0023454",
+      "right_bits": "0xc0400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xc00a29c3",
+      "right_bits": "0xc0800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xc010fe85",
+      "right_bits": "0xc0a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xc016cbe4",
+      "right_bits": "0xc0c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xc01bb5b9",
+      "right_bits": "0xc0e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xc01fe0bb",
+      "right_bits": "0xc1000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xc0236e05",
+      "right_bits": "0xc1100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xc026799f",
+      "right_bits": "0xc1200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xc0291a8f",
+      "right_bits": "0xc1300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xc02b6374",
+      "right_bits": "0xc1400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xc02d6349",
+      "right_bits": "0xc1500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xc02f261b",
+      "right_bits": "0xc1600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xc030b5a3",
+      "right_bits": "0xc1700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0c00000",
+      "native_ucrt_result_bits": "0xc03219c1",
+      "right_bits": "0xc1800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xbfc90fdb",
+      "right_bits": "0x00000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xbfb6e62c",
+      "right_bits": "0x3f800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xbfa57088",
+      "right_bits": "0x40000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xbf953c5c",
+      "right_bits": "0x40400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xbf869c79",
+      "right_bits": "0x40800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xbf73570a",
+      "right_bits": "0x40a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xbf5cb72d",
+      "right_bits": "0x40c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xbf490fdb",
+      "right_bits": "0x40e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xbf38053e",
+      "right_bits": "0x41000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xbf293a20",
+      "right_bits": "0x41100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xbf1c5889",
+      "right_bits": "0x41200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xbf11152a",
+      "right_bits": "0x41300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xbf072fe3",
+      "right_bits": "0x41400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xbefce5e2",
+      "right_bits": "0x41500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xbeed6338",
+      "right_bits": "0x41600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xbedf8d98",
+      "right_bits": "0x41700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xbfdb3989",
+      "right_bits": "0xbf800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xbfecaf2d",
+      "right_bits": "0xc0000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xbffce359",
+      "right_bits": "0xc0400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xc005c19e",
+      "right_bits": "0xc0800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xc00c3a18",
+      "right_bits": "0xc0a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xc011e20f",
+      "right_bits": "0xc0c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xc016cbe4",
+      "right_bits": "0xc0e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xc01b0e8b",
+      "right_bits": "0xc1000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xc01ec153",
+      "right_bits": "0xc1100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xc021f9b8",
+      "right_bits": "0xc1200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xc024ca90",
+      "right_bits": "0xc1300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xc02743e2",
+      "right_bits": "0xc1400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xc029731e",
+      "right_bits": "0xc1500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xc02b6374",
+      "right_bits": "0xc1600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xc02d1e28",
+      "right_bits": "0xc1700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc0e00000",
+      "native_ucrt_result_bits": "0xc02eaaec",
+      "right_bits": "0xc1800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xbfc90fdb",
+      "right_bits": "0x00000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xbfb924fd",
+      "right_bits": "0x3f800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xbfa9b465",
+      "right_bits": "0x40000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xbf9b23a8",
+      "right_bits": "0x40400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xbf8db70d",
+      "right_bits": "0x40800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xbf818fac",
+      "right_bits": "0x40a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xbf6d6338",
+      "right_bits": "0x40c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xbf5a1a77",
+      "right_bits": "0x40e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xbf490fdb",
+      "right_bits": "0x41000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xbf3a053c",
+      "right_bits": "0x41100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xbf2cbbd3",
+      "right_bits": "0x41200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xbf20f8cb",
+      "right_bits": "0x41300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xbf168757",
+      "right_bits": "0x41400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xbf0d3943",
+      "right_bits": "0x41500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xbf04e6c2",
+      "right_bits": "0x41600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xbefadbb0",
+      "right_bits": "0x41700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xbfd8fab8",
+      "right_bits": "0xbf800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xbfe86b51",
+      "right_bits": "0xc0000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xbff6fc0d",
+      "right_bits": "0xc0400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xc0023454",
+      "right_bits": "0xc0800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xc0084805",
+      "right_bits": "0xc0a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xc00db70d",
+      "right_bits": "0xc0c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xc012893d",
+      "right_bits": "0xc0e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xc016cbe4",
+      "right_bits": "0xc1000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xc01a8e8c",
+      "right_bits": "0xc1100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xc01de0e6",
+      "right_bits": "0xc1200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xc020d1a8",
+      "right_bits": "0xc1300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xc0236e05",
+      "right_bits": "0xc1400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xc025c18a",
+      "right_bits": "0xc1500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xc027d62a",
+      "right_bits": "0xc1600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xc029b465",
+      "right_bits": "0xc1700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1000000",
+      "native_ucrt_result_bits": "0xc02b6374",
+      "right_bits": "0xc1800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xbfc90fdb",
+      "right_bits": "0x00000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xbfbae5d7",
+      "right_bits": "0x3f800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xbfad1283",
+      "right_bits": "0x40000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xbf9fe0bb",
+      "right_bits": "0x40400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xbf93877b",
+      "right_bits": "0x40800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xbf882740",
+      "right_bits": "0x40a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xbf7b985f",
+      "right_bits": "0x40c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xbf68e595",
+      "right_bits": "0x40e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xbf581a7a",
+      "right_bits": "0x41000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xbf490fdb",
+      "right_bits": "0x41100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xbf3b99c5",
+      "right_bits": "0x41200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xbf2f8bf8",
+      "right_bits": "0x41300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xbf24bc7d",
+      "right_bits": "0x41400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xbf1b04fa",
+      "right_bits": "0x41500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xbf12432c",
+      "right_bits": "0x41600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xbf0a58ef",
+      "right_bits": "0x41700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xbfd739df",
+      "right_bits": "0xbf800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xbfe50d33",
+      "right_bits": "0xc0000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xbff23efa",
+      "right_bits": "0xc0400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xbffe983b",
+      "right_bits": "0xc0800000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xc004fc3b",
+      "right_bits": "0xc0a00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xc00a29c3",
+      "right_bits": "0xc0c00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xc00ed675",
+      "right_bits": "0xc0e00000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xc013093c",
+      "right_bits": "0xc1000000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xc016cbe4",
+      "right_bits": "0xc1100000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xc01a2969",
+      "right_bits": "0xc1200000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xc01d2cdd",
+      "right_bits": "0xc1300000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xc01fe0bb",
+      "right_bits": "0xc1400000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xc0224e9c",
+      "right_bits": "0xc1500000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xc0247f10",
+      "right_bits": "0xc1600000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xc026799f",
+      "right_bits": "0xc1700000"
+    },
+    {
+      "call_count": 1,
+      "function": "atan2f",
+      "left_bits": "0xc1100000",
+      "native_ucrt_result_bits": "0xc02844dd",
+      "right_bits": "0xc1800000"
+    }
+  ],
+  "native_rows_sha256": "52bf76720eef963c77db0a9325f3902bbc9986ad9ce853930ca6f7ad0854d2bd",
+  "native_table": {
+    "atan2f_calls": 576,
+    "log2f_calls": 149,
+    "original_calls": 725,
+    "table_sha256": "72dd4c7e87ddea8821124da098572cd0e73be2ec97c523cc9d1cebe4926e83cf",
+    "trace_sha256": "a4fd26987f382126d599fbb6b3204b480267c8aa0aeac61eaf3917622334e335",
+    "unique_replayed_vectors": 577,
+    "vectors": 577
+  },
+  "public_admission": {
+    "current_result": "PF_Err_BAD_CALLBACK_PARAM_before_iteration",
+    "decision": "retain_fail_closed_because_native_exported_and_mac_typed_final_raw_differ",
+    "justified": false,
+    "production_changed": false
+  },
+  "schema": "olmradialblur.strength290-native-ucrt-exported-public-boundary/1",
+  "scope": {
+    "after_effects_launched": false,
+    "native_after_effects_claimed": false,
+    "padding_claimed": false,
+    "plugin_installed": false,
+    "universal_candidate_built": false,
+    "unlisted_tuple_or_geometry_claimed": false
+  },
+  "status": "PASS_NATIVE_UCRT_EXPORTED_SMART_MISMATCH_STRENGTH290_REMAINS_FAIL_CLOSED"
+}

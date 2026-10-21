@@ -327,6 +327,42 @@ def validate_lane(files: dict[str, bytes], run_root: str, expected: dict[str, An
         read = reads["pf_cmd"]
         require(read.get("type") == ENTRY_READ_TYPE and type(read.get("value")) is int, f"{label}: pf_cmd is not typed i32")
 
+    require("trace_status_error" not in event_names, f"{label}: bounded call trace reported an error")
+    started = [item for item in events if item.get("event") == "trace_status_started"]
+    require(len(started) == 1, f"{label}: exactly one trace start is required")
+    start = started[0]
+    require(start.get("status") == "started", f"{label}: bounded call trace start is invalid")
+    require(type(start.get("thread_id")) is int and start["thread_id"] > 0,
+            f"{label}: bounded call trace start thread identity is missing")
+    require(isinstance(start.get("trace_id"), str) and start["trace_id"],
+            f"{label}: bounded call trace start ID is missing")
+    stopped = [item for item in events if item.get("event") == "trace_status_stopped"]
+    require(len(stopped) == 1, f"{label}: exactly one successful trace stop is required")
+    stop = stopped[0]
+    require(stop.get("status") == "stopped" and stop.get("claimable") is True,
+            f"{label}: bounded call trace is not claimable")
+    require(type(stop.get("event_count")) is int and stop["event_count"] > 0,
+            f"{label}: bounded call trace retained no edges")
+    require(type(stop.get("thread_id")) is int and stop["thread_id"] > 0,
+            f"{label}: bounded call trace thread identity is missing")
+    require(isinstance(stop.get("trace_id"), str) and stop["trace_id"],
+            f"{label}: bounded call trace ID is missing")
+    require(start["thread_id"] == stop["thread_id"], f"{label}: trace start/stop thread identity drifted")
+    require(start["trace_id"] == stop["trace_id"], f"{label}: trace start/stop identity drifted")
+    call_edges = [item for item in events if item.get("event") == "call_edge"]
+    require(1 <= len(call_edges) <= 4096, f"{label}: bounded call-edge cardinality is invalid")
+    require(len(call_edges) == stop["event_count"], f"{label}: call-edge count differs from trace stop metadata")
+    for edge in call_edges:
+        require(edge.get("thread_id") == stop["thread_id"], f"{label}: call-edge thread identity drifted")
+        require(edge.get("trace_id") == stop["trace_id"], f"{label}: call-edge trace identity drifted")
+        for address_name in ("source", "target"):
+            address = edge.get(address_name)
+            require(isinstance(address, str) and HEX.fullmatch(address) is not None and int(address, 16) > 0,
+                    f"{label}: call-edge {address_name} is not a nonzero hexadecimal address")
+        require(type(edge.get("source_in_module")) is bool and type(edge.get("target_in_module")) is bool,
+                f"{label}: call-edge module classification is missing")
+        require(edge["source_in_module"] or edge["target_in_module"], f"{label}: call-edge is outside the pinned AEX")
+
     return {
         "package": expected["package"],
         "status": "answered",
@@ -340,6 +376,7 @@ def validate_lane(files: dict[str, bytes], run_root: str, expected: dict[str, An
         "project_bpc": expected["bpc"],
         "renderer": expected["renderer"],
         "entrypoint_events": len(entry_events),
+        "call_edges": len(call_edges),
         "event_count": len(events),
         "request_package_sha256": expected["package_sha256"],
         "returned_contract_sha256": sha256_bytes(contract_bytes),

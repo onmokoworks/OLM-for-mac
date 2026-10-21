@@ -17,3 +17,9 @@
 | `SMART_RENDER` PF32 | Actual typed worker and preparation dependencies | Public production EffectMain | Exact finite, tolerance, signed-zero, NaN/Inf/sNaN, subnormal and multicolor fixtures |
 
 Largest remaining public-command gap: `ABOUT`. Its public branch is present, but the exact localized message depends on the DLL string-table initializer, which the current hostless AEX fixture does not execute.
+
+The current installed arm64 executable `fcd501da…` is also bound AE-free to the
+exact count9 contract: Classic PF8/PF16 plus Smart PF8/PF16/PF32 are 5/5 exact
+against the live-checked Windows exported Smart owner hashes, and all 136
+canonical rejects remain precommit-atomic. This is not native-AE numerical
+evidence and does not broaden the fixed 4x3/source/palette/layout admission.

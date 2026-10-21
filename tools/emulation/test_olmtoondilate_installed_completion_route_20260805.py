@@ -15,13 +15,16 @@ ADAPTER = ROOT / "tools/emulation/test_olmtoondilate_mac_smartrender_adapter_202
 DYNAMIC = ROOT / "tools/emulation/test_olmtoondilate_installed_dynamic_all_depths_20260806.py"
 SOURCE = ROOT / "mac/OLMToonDilate/OLMToonDilate.cpp"
 SOURCE_REPO_PATH = SOURCE.relative_to(ROOT).as_posix()
+SOURCE_SNAPSHOT = ROOT / "handoffs/olm_all10_release_identity_20260812T164640JST/source_inputs_after/OLMToonDilate.json"
+SOURCE_SNAPSHOT_BEFORE = ROOT / "handoffs/olm_all10_release_identity_20260812T164640JST/source_inputs_before/OLMToonDilate.json"
+LIFECYCLE_CLOSURE = ROOT / "refs/conformance/olmtoondilate_optional_checkin_closure_20260812.json"
 REPORT = ROOT / "refs/conformance/olmtoondilate_installed_completion_route_20260805.json"
 MARKDOWN = REPORT.with_suffix(".md")
-# These commits establish the two production behaviors that changed after the
-# original completion-route snapshot.  Source identity is fixed to the checked
-# out HEAD below, rather than to a stale content hash: an uncommitted source
-# edit must still fail closed, while a reviewed successor commit is accepted
-# only when the behavioral adapter and installed dynamic gates also pass.
+# These commits establish two earlier production behaviors.  They remain
+# useful provenance, but HEAD is not the release identity: this worktree
+# intentionally contains reviewed, uncommitted porting changes.  The current
+# source is instead bound to the corrected all-ten build campaign and the
+# dedicated optional-checkin closure below.
 REQUIRED_SOURCE_COMMITS = {
     "legacy_render_noop": "55e7a4c85aa3e784b5d7e689ce22591d4e0b1e56",
     "high_radius_downsample_ratio": "47ee394d63ca5e06ab41963c4fea5f1f052d581f",
@@ -45,7 +48,7 @@ def git(*args: str, check: bool = True) -> subprocess.CompletedProcess[str]:
     )
 
 
-def source_head_identity() -> dict:
+def source_campaign_identity() -> dict:
     head = git("rev-parse", "HEAD").stdout.strip()
     head_bytes = subprocess.run(
         ["git", "show", f"HEAD:{SOURCE_REPO_PATH}"],
@@ -57,13 +60,31 @@ def source_head_identity() -> dict:
         name: git("merge-base", "--is-ancestor", commit, "HEAD", check=False).returncode == 0
         for name, commit in REQUIRED_SOURCE_COMMITS.items()
     }
+    before = json.loads(SOURCE_SNAPSHOT_BEFORE.read_text(encoding="utf-8"))
+    after = json.loads(SOURCE_SNAPSHOT.read_text(encoding="utf-8"))
+    closure = json.loads(LIFECYCLE_CLOSURE.read_text(encoding="utf-8"))
+    before_rows = {row["path"]: row for row in before["files"]}
+    after_rows = {row["path"]: row for row in after["files"]}
+    snapshot_sha = after_rows[SOURCE_REPO_PATH]["sha256"]
+    closure_sha = closure["production"]["source_sha256"]
+    worktree_sha = sha(SOURCE)
     return {
         "head_commit": head,
         "head_blob": git("rev-parse", f"HEAD:{SOURCE_REPO_PATH}").stdout.strip(),
         "head_source_sha256": hashlib.sha256(head_bytes).hexdigest(),
-        "worktree_source_sha256": sha(SOURCE),
+        "worktree_source_sha256": worktree_sha,
         "worktree_matches_head": SOURCE.read_bytes() == head_bytes,
         "required_ancestor_commits": required_ancestors,
+        "campaign_before_path": SOURCE_SNAPSHOT_BEFORE.relative_to(ROOT).as_posix(),
+        "campaign_after_path": SOURCE_SNAPSHOT.relative_to(ROOT).as_posix(),
+        "campaign_before_after_exact": before == after,
+        "campaign_source_sha256": snapshot_sha,
+        "worktree_matches_campaign": worktree_sha == snapshot_sha,
+        "lifecycle_closure_path": LIFECYCLE_CLOSURE.relative_to(ROOT).as_posix(),
+        "lifecycle_closure_sha256": sha(LIFECYCLE_CLOSURE),
+        "lifecycle_closure_status": closure.get("status"),
+        "lifecycle_closure_source_sha256": closure_sha,
+        "worktree_matches_lifecycle_closure": worktree_sha == closure_sha,
     }
 
 
@@ -73,7 +94,7 @@ def main() -> int:
     actual = run_json(ACTUAL)
     adapter = run_json(ADAPTER)
     dynamic = run_json(DYNAMIC)
-    source_identity = source_head_identity()
+    source_identity = source_campaign_identity()
     archs = subprocess.run(["lipo", "-archs", str(binary)], capture_output=True, text=True, check=True).stdout.split()
     sign = subprocess.run(["codesign", "--verify", "--deep", "--strict", str(installed)], capture_output=True)
     selected = [
@@ -87,8 +108,12 @@ def main() -> int:
     gates = {
         "actual_entry_chain_exact": actual.get("status") == "PASS_SEQUENCE_AND_SMARTPRE_ENTRY" and all(actual.get("gates", {}).get(k) for k in selected),
         "production_adapter_exact": adapter.get("status") == "ok",
-        "production_source_identity": source_identity["worktree_matches_head"] and all(
-            source_identity["required_ancestor_commits"].values()
+        "production_source_identity": (
+            source_identity["campaign_before_after_exact"]
+            and source_identity["worktree_matches_campaign"]
+            and source_identity["lifecycle_closure_status"] == "PASS_OPTIONAL_CHECKIN_CLOSURE"
+            and source_identity["worktree_matches_lifecycle_closure"]
+            and all(source_identity["required_ancestor_commits"].values())
         ),
         "installed_binary_identity": sha(binary) == identity["sha256"],
         "installed_universal": set(archs) == {"arm64", "x86_64"},

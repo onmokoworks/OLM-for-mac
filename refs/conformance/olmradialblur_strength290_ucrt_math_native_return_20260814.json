@@ -1,0 +1,25 @@
+{
+  "claims_not_made": [
+    "No production admission",
+    "No After Effects execution"
+  ],
+  "production_policy": "Strength 290 remains fail-closed pending native-derived exported-AEX and Mac-public final RAW closure",
+  "request_id": "olm_runtime_trace_olmradialblur_strength290_ucrt_math_20260814",
+  "return_path": "/Volumes/onmk/olm_pr/new/mac_returns/olm_runtime_trace_olmradialblur_strength290_ucrt_math_return_windows_20260815_020556.zip",
+  "return_sha256": "2adf1d5ac2ddcff79e4da492ee61985935c2f83a75224c85d19b6f01ba1a0d91",
+  "schema": "olmradialblur.strength290-ucrt-math-return-analysis/1",
+  "status": "PASS_NATIVE_WINDOWS_UCRT_RADIAL_577_RETURN_VALIDATED_NO_PROMOTION",
+  "ucrtbase": {
+    "file_version": "10.0.26100.8875 (WinBuild.160101.0800)",
+    "loaded_path": "C:\\WINDOWS\\System32\\ucrtbase.dll",
+    "product_version": "10.0.26100.8875",
+    "requested_path": "C:\\WINDOWS\\System32\\ucrtbase.dll",
+    "sha256": "5e7709a6b71bb818260b6f05c5bb3b6ca0c3ca9bc2f58c6242c1cd9d826d0079"
+  },
+  "vectors": {
+    "atan2f": 576,
+    "log2f": 1,
+    "original_call_count": 725,
+    "unique": 577
+  }
+}

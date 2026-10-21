@@ -5,10 +5,27 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tools.windows_witness.frida_runner import load_contract, run_parse_only
+from tools.windows_witness.frida_runner import Capture, load_contract, run_parse_only
 
 
 class FridaRunnerTests(unittest.TestCase):
+    def test_optional_trace_metadata_and_edges_are_preserved(self) -> None:
+        contract = {
+            "_runner": {"run_id": "run-live", "module": "Fx.aex", "aex_sha256": "a" * 64,
+                        "renderer": "Software", "project_bpc": "16", "case_ids": ["case_0001"]},
+            "validation": {"events": [{"name": "module_loaded", "prefix": "module_loaded",
+                                         "cardinality": {"scope": "global", "min": 1, "max": 1}, "required_fields": []}]},
+        }
+        capture = Capture(contract, Path("."), 42, "case_0001")
+        capture._record({"event": "module", "module": {"name": "Fx.aex", "base": "0x1000", "size": 4096}})
+        capture._record({"event": "trace_status", "thread_id": 7, "trace": {"status": "started", "claimable": False}})
+        capture._record({"event": "call_edge", "thread_id": 7, "source": "0x1100", "target": "0x2100", "source_in_module": True,
+                         "target_in_module": False})
+        self.assertEqual([row["event"] for row in capture.events], ["module_loaded", "trace_status_started", "call_edge"])
+        self.assertFalse(capture.events[1]["claimable"])
+        self.assertEqual(capture.events[2]["thread_id"], 7)
+        self.assertEqual(capture.events[2]["source"], "0x1100")
+
     def test_actual_agent_shape_is_normalized_and_typed_reads_fail_closed(self) -> None:
         identity = ["run_id", "ae_pid", "module_base", "aex_sha256", "project_bpc", "renderer", "case_id"]
         witness = {

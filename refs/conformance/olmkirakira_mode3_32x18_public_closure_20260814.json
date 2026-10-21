@@ -1,0 +1,552 @@
+{
+  "schema": "olmkirakira.mode3-32x18-public-closure/1",
+  "date": "2026-08-14",
+  "status": "raw_exact_bounded_public_classic_and_smart",
+  "identities": {
+    "production_source_sha256": "abf826dd450bcf879585ae786222ba5d5212d11dd9b292c6ba23d379014baeab",
+    "base_harness_sha256": "1623680d7fe2cf6525e0e2893d7c25b6d629accf5fd81318a35fab1e64af01c4",
+    "oracle_probe_sha256": "cfb2486e8e2bbb5d253260a36008f400e0dfad464837550a8a9992797d0a87aa",
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+  },
+  "fixture": {
+    "dimensions": [
+      32,
+      18
+    ],
+    "padding": 12,
+    "blur_mode": 3,
+    "merge_mode": 1,
+    "horizontal_length": 50,
+    "brightness_gain": 0.1,
+    "glow_rotation": 0,
+    "source_pattern": "rgba_wrapped_linear_v1",
+    "source_active_rgba8_sha256": "ee68cbbe99aed90c01188c3f3954dbe167c974a2ae9aadb94ecbb8752cba2d14"
+  },
+  "positive_cells": [
+    {
+      "depth": 8,
+      "oracle_sha256": "77c5825780a940fcb87825807c9d91eda4919e97f72b4c34977e05f7e6d3ac6e",
+      "mac_smart_sha256": "77c5825780a940fcb87825807c9d91eda4919e97f72b4c34977e05f7e6d3ac6e",
+      "mac_classic_sha256": "77c5825780a940fcb87825807c9d91eda4919e97f72b4c34977e05f7e6d3ac6e",
+      "input_header_and_full_storage_immutable": true,
+      "input_and_output_padding_preserved": true,
+      "parameter_checkout_checkin": [
+        25,
+        25
+      ],
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "depth": 16,
+      "oracle_sha256": "4d635cd68aacbdcbd6670d597fbe27e04444dd499a6c63f9b74153941a6189e8",
+      "mac_smart_sha256": "4d635cd68aacbdcbd6670d597fbe27e04444dd499a6c63f9b74153941a6189e8",
+      "mac_classic_sha256": "4d635cd68aacbdcbd6670d597fbe27e04444dd499a6c63f9b74153941a6189e8",
+      "input_header_and_full_storage_immutable": true,
+      "input_and_output_padding_preserved": true,
+      "parameter_checkout_checkin": [
+        25,
+        25
+      ],
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "depth": 32,
+      "oracle_sha256": "9ffcaf2aedd97e989bfa1a2825e3f3ef2bd26aa40be9d74f71db85c7fa7abf23",
+      "mac_smart_sha256": "9ffcaf2aedd97e989bfa1a2825e3f3ef2bd26aa40be9d74f71db85c7fa7abf23",
+      "mac_classic_sha256": "9ffcaf2aedd97e989bfa1a2825e3f3ef2bd26aa40be9d74f71db85c7fa7abf23",
+      "input_header_and_full_storage_immutable": true,
+      "input_and_output_padding_preserved": true,
+      "parameter_checkout_checkin": [
+        25,
+        25
+      ],
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ]
+    }
+  ],
+  "parameter_lifecycle_failures": [
+    {
+      "failure": "0/-1",
+      "error": 700,
+      "callback_shape": "1/1/1/0",
+      "attempts": "1/0",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/0",
+      "error": 800,
+      "callback_shape": "1/1/1/0",
+      "attempts": "1/1",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "1/-1",
+      "error": 701,
+      "callback_shape": "1/1/1/0",
+      "attempts": "2/1",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/1",
+      "error": 801,
+      "callback_shape": "1/1/1/0",
+      "attempts": "2/2",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "2/-1",
+      "error": 702,
+      "callback_shape": "1/1/1/0",
+      "attempts": "3/2",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/2",
+      "error": 802,
+      "callback_shape": "1/1/1/0",
+      "attempts": "3/3",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "3/-1",
+      "error": 703,
+      "callback_shape": "1/1/1/0",
+      "attempts": "4/3",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/3",
+      "error": 803,
+      "callback_shape": "1/1/1/0",
+      "attempts": "4/4",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "4/-1",
+      "error": 704,
+      "callback_shape": "1/1/1/0",
+      "attempts": "5/4",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/4",
+      "error": 804,
+      "callback_shape": "1/1/1/0",
+      "attempts": "5/5",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "5/-1",
+      "error": 705,
+      "callback_shape": "1/1/1/0",
+      "attempts": "6/5",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/5",
+      "error": 805,
+      "callback_shape": "1/1/1/0",
+      "attempts": "6/6",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "6/-1",
+      "error": 706,
+      "callback_shape": "1/1/1/0",
+      "attempts": "7/6",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/6",
+      "error": 806,
+      "callback_shape": "1/1/1/0",
+      "attempts": "7/7",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "7/-1",
+      "error": 707,
+      "callback_shape": "1/1/1/0",
+      "attempts": "8/7",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/7",
+      "error": 807,
+      "callback_shape": "1/1/1/0",
+      "attempts": "8/8",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "8/-1",
+      "error": 708,
+      "callback_shape": "1/1/1/0",
+      "attempts": "9/8",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/8",
+      "error": 808,
+      "callback_shape": "1/1/1/0",
+      "attempts": "9/9",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "9/-1",
+      "error": 709,
+      "callback_shape": "1/1/1/0",
+      "attempts": "10/9",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/9",
+      "error": 809,
+      "callback_shape": "1/1/1/0",
+      "attempts": "10/10",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "10/-1",
+      "error": 710,
+      "callback_shape": "1/1/1/0",
+      "attempts": "11/10",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/10",
+      "error": 810,
+      "callback_shape": "1/1/1/0",
+      "attempts": "11/11",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "11/-1",
+      "error": 711,
+      "callback_shape": "1/1/1/0",
+      "attempts": "12/11",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/11",
+      "error": 811,
+      "callback_shape": "1/1/1/0",
+      "attempts": "12/12",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "12/-1",
+      "error": 712,
+      "callback_shape": "1/1/1/0",
+      "attempts": "13/12",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/12",
+      "error": 812,
+      "callback_shape": "1/1/1/0",
+      "attempts": "13/13",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "13/-1",
+      "error": 713,
+      "callback_shape": "1/1/1/0",
+      "attempts": "14/13",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/13",
+      "error": 813,
+      "callback_shape": "1/1/1/0",
+      "attempts": "14/14",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "14/-1",
+      "error": 714,
+      "callback_shape": "1/1/1/0",
+      "attempts": "15/14",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/14",
+      "error": 814,
+      "callback_shape": "1/1/1/0",
+      "attempts": "15/15",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "15/-1",
+      "error": 715,
+      "callback_shape": "1/1/1/0",
+      "attempts": "16/15",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/15",
+      "error": 815,
+      "callback_shape": "1/1/1/0",
+      "attempts": "16/16",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "16/-1",
+      "error": 716,
+      "callback_shape": "1/1/1/0",
+      "attempts": "17/16",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/16",
+      "error": 816,
+      "callback_shape": "1/1/1/0",
+      "attempts": "17/17",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "17/-1",
+      "error": 717,
+      "callback_shape": "1/1/1/0",
+      "attempts": "18/17",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/17",
+      "error": 817,
+      "callback_shape": "1/1/1/0",
+      "attempts": "18/18",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "18/-1",
+      "error": 718,
+      "callback_shape": "1/1/1/0",
+      "attempts": "19/18",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/18",
+      "error": 818,
+      "callback_shape": "1/1/1/0",
+      "attempts": "19/19",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "19/-1",
+      "error": 719,
+      "callback_shape": "1/1/1/0",
+      "attempts": "20/19",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/19",
+      "error": 819,
+      "callback_shape": "1/1/1/0",
+      "attempts": "20/20",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "20/-1",
+      "error": 720,
+      "callback_shape": "1/1/1/0",
+      "attempts": "21/20",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/20",
+      "error": 820,
+      "callback_shape": "1/1/1/0",
+      "attempts": "21/21",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "21/-1",
+      "error": 721,
+      "callback_shape": "1/1/1/0",
+      "attempts": "22/21",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/21",
+      "error": 821,
+      "callback_shape": "1/1/1/0",
+      "attempts": "22/22",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "22/-1",
+      "error": 722,
+      "callback_shape": "1/1/1/0",
+      "attempts": "23/22",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/22",
+      "error": 822,
+      "callback_shape": "1/1/1/0",
+      "attempts": "23/23",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "23/-1",
+      "error": 723,
+      "callback_shape": "1/1/1/0",
+      "attempts": "24/23",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/23",
+      "error": 823,
+      "callback_shape": "1/1/1/0",
+      "attempts": "24/24",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "24/-1",
+      "error": 724,
+      "callback_shape": "1/1/1/0",
+      "attempts": "25/24",
+      "input_immutable": true,
+      "output_untouched": true
+    },
+    {
+      "failure": "-1/24",
+      "error": 824,
+      "callback_shape": "1/1/1/0",
+      "attempts": "25/25",
+      "input_immutable": true,
+      "output_untouched": true
+    }
+  ],
+  "negative_rows": [
+    {
+      "name": "pre_request_unlisted",
+      "error": 516,
+      "callbacks": "0/0/0/0",
+      "output_untouched": true,
+      "input_and_headers_immutable": true
+    },
+    {
+      "name": "rotation_one",
+      "error": 516,
+      "callbacks": "1/1/1/0",
+      "output_untouched": true,
+      "input_and_headers_immutable": true
+    },
+    {
+      "name": "source_mutation",
+      "error": 516,
+      "callbacks": "1/1/1/0",
+      "output_untouched": true,
+      "input_and_headers_immutable": true
+    },
+    {
+      "name": "input_width",
+      "error": 516,
+      "callbacks": "1/1/1/0",
+      "output_untouched": true,
+      "input_and_headers_immutable": true
+    },
+    {
+      "name": "output_extent",
+      "error": 516,
+      "callbacks": "1/1/1/0",
+      "output_untouched": true,
+      "input_and_headers_immutable": true
+    },
+    {
+      "name": "output_rowbytes_extra",
+      "error": 516,
+      "callbacks": "1/1/1/0",
+      "output_untouched": true,
+      "input_and_headers_immutable": true
+    },
+    {
+      "name": "declared_depth",
+      "error": 516,
+      "callbacks": "1/1/1/0",
+      "output_untouched": true,
+      "input_and_headers_immutable": true
+    }
+  ],
+  "contract": {
+    "dimensions": [
+      32,
+      18
+    ],
+    "row_padding_bytes": 12,
+    "tuple": "Mode3/Merge1/Horizontal50/Rotation0/Gain0.1/default remaining controls",
+    "source": "exact wrapped-linear RGBA fixture only",
+    "smart_request": "full 32x18 only",
+    "windows_route": "exported SmartPreRender -> SmartRender",
+    "mac_routes": [
+      "public PF_Cmd_RENDER",
+      "public SmartPreRender -> SmartRender"
+    ],
+    "ae_launched": false,
+    "installed": false
+  },
+  "boundary": "Exactly three cells: this one tuple/source/layout at PF8/PF16/PF32. Rotation1, source mutation, other layout/extent/rowbytes/depth, partial 32x18 requests, and parameter lifecycle failures remain fail-closed before output mutation."
+}

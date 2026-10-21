@@ -47,7 +47,7 @@
       ]
     ]
   },
-  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "production_source_sha256": "ad9edee80793369219ef5b9e08d5cb397060a315b30aa36ce221d3e2488d2ee1",
   "scope": "PF16/PF32 independent v2 Gamma Colors ordered [red,black], gamma2.4, key off, padded3x2, LUTs; direct actual comparator below/tie/above",
   "threshold": {
     "comparison": "strict abs(delta) < threshold",

@@ -1,0 +1,96 @@
+{
+  "schema": "olm.all10-batch5-current-identity-v3-one-shot-failure-metadata/1",
+  "status": "FAIL_CLOSED_NO_RETRY",
+  "attempt": {
+    "one_shot": true,
+    "retry_authorized": false,
+    "owned_after_effects_pid": 51752,
+    "script_invocation_pid": 51766,
+    "scriptability_probe_succeeded": true,
+    "doscriptfile_returncode": 0,
+    "doscriptfile_stdout": "1\n",
+    "nonce_bound_ae_return_created": false,
+    "pngs_created": 0,
+    "raw_plugin_rows": 0
+  },
+  "artifacts": {
+    "raw": {
+      "path": "refs/conformance/olm_all10_batch5_current_identity_v3_fresh_ae_smoke_raw_20260815.json",
+      "sha256": "4e9013563b5562afdcd2467e058e11775c0cb1355029108be334c13fc23075f0",
+      "size": 3657
+    },
+    "summary": {
+      "path": "refs/conformance/olm_all10_batch5_current_identity_v3_fresh_ae_smoke_20260815.json",
+      "sha256": "7c307f7fa741691d783ce48d48a7f40b5bc42dd7a03747f2fcfb01d351f130a0",
+      "size": 12354
+    },
+    "invocation_receipt": {
+      "path": "handoffs/olm_all10_batch5_current_identity_v3_fresh_ae_smoke_20260815.invocation-receipt.json",
+      "sha256": "ff843ef668b4494e61a7e09b05b0ac739d7ff5574f45a2fe494cacf8162617e4",
+      "size": 104
+    },
+    "launch_wrapper": {
+      "path": "handoffs/olm_all10_batch5_current_identity_v3_fresh_ae_smoke_20260815/launch.jsx",
+      "sha256": "94355c2fb64e366eb20077207d48b7abb5adab0fceb83b1e73462a3f9b56df1c",
+      "size": 731
+    },
+    "plugin_loading_excerpt": {
+      "path": "handoffs/olm_all10_batch5_current_identity_v3_fresh_ae_smoke_20260815/plugin_loading_excerpt_lines255_336.txt",
+      "sha256": "f5836c3fc4fd94f677a5b4c6ce0aa96e91be6cc34304db1080f1562e5ee16874",
+      "size": 5825
+    }
+  },
+  "installed_identity": {
+    "manifest_path": "refs/conformance/olm_installed_identity_manifest_20260806.json",
+    "manifest_sha256": "ede4857b810e9f2901561ee8a3a9179c4c508dc2ee058525aa3f46dff4164079",
+    "unchanged_after_failure": true
+  },
+  "cleanup": {
+    "owned_pid": 51752,
+    "exact_term_then_kill": true,
+    "remaining_owned_pids": [],
+    "remaining_ae_pids": [],
+    "broad_kill_used": false
+  },
+  "host_breadcrumb": {
+    "original_path": "/Users/onmk/Library/Preferences/Adobe/After Effects/26.3/Plugin Loading.log",
+    "original_sha256_at_capture": "25b76bfe1b731955658b949e50cde9b50b7a76b8e770b635d8e63d6b8984d40a",
+    "original_size_at_capture": 333236,
+    "original_birthtime_local": "2026-08-15T21:05:10+0900",
+    "original_mtime_local": "2026-08-15T21:05:15+0900",
+    "captured_line_range": [
+      255,
+      336
+    ],
+    "excerpt": {
+      "path": "handoffs/olm_all10_batch5_current_identity_v3_fresh_ae_smoke_20260815/plugin_loading_excerpt_lines255_336.txt",
+      "sha256": "f5836c3fc4fd94f677a5b4c6ce0aa96e91be6cc34304db1080f1562e5ee16874",
+      "size": 5825
+    },
+    "all10_discovered": true,
+    "all10_load_from_disk_attempted": true,
+    "all10_no_loader_recognized_and_ignored": true,
+    "plugins": [
+      "ColorKeep",
+      "OLMBlur",
+      "OLMColorKey",
+      "OLMDirectionalBlur",
+      "OLMDistanceGradation",
+      "OLMKiraKira",
+      "OLMRadialBlur",
+      "OLMSmoother",
+      "OLMSmoother2",
+      "OLMToonDilate"
+    ]
+  },
+  "classification": {
+    "persisted_protocol_failure": "host_script_dispatch_or_payload_bootstrap_failure_before_nonce_bound_return",
+    "independent_startup_breadcrumb": "all10_plugin_loader_recognition_failure_before_any_observed_effect_add_or_render_result",
+    "plugin_specific_runtime_observation_available": false,
+    "effect_add_attempted": null,
+    "render_attempted": null,
+    "numerical_behavior_assessed": false,
+    "explanation": "AE answered the version probe and DoScriptFile returned rc=0/stdout 1, but no nonce-bound ae_return was written. The separate startup log shows every exact10 bundle was scanned, attempted from disk, then ignored because no loader recognized it. The two facts do not prove that the payload reached any plugin-specific stage."
+  },
+  "claim_boundary": "Preserves one Batch5 v3 invocation and read-only startup-log evidence. It proves fail-closed host protocol plus all10 loader non-recognition for this launch; it proves no observed effect-add, render, host-frame, numerical, or plugin-crash result and authorizes no retry. Whether the unreturned payload attempted effect add or render is not observed."
+}

@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[2]
 MAC_SOURCE = ROOT / "mac/OLMKiraKira/OLMKiraKira.cpp"
 MODE2_WITNESS = ROOT / "refs/conformance/olmkirakira_mode2_compose_witness_20260716.json"
 AEX_PATH = ROOT / "plugins_2025/OLMKiraKira.aex"
+AEX_PF8_DECODE_SCALE = 0x1814D65A4
 AEX_PF8_SCALE = 0x1814D65A8
 AEX_PF16_SCALE = 0x1814D65AC
 
@@ -58,19 +59,27 @@ def main() -> int:
     source = MAC_SOURCE.read_text(encoding="utf-8")
     evidence = __import__("json").loads(MODE2_WITNESS.read_text(encoding="utf-8"))
     loader = AexLoader(str(AEX_PATH), fast=True)
+    aex_pf8_decode_bits = struct.unpack("<I", bytes(loader.uc.mem_read(AEX_PF8_DECODE_SCALE, 4)))[0]
     aex_pf8_scale = struct.unpack("<f", bytes(loader.uc.mem_read(AEX_PF8_SCALE, 4)))[0]
     aex_pf16_scale = struct.unpack("<f", bytes(loader.uc.mem_read(AEX_PF16_SCALE, 4)))[0]
     static = {
-        "mac_reads_normalized_8bpc": "p.red / 255.0f" in source and "p.alpha / 255.0f" in source,
+        "mac_reads_normalized_8bpc": (
+            "constexpr float kByteToFloat = 1.0f / 255.0f;" in source
+            and "p.red * kByteToFloat" in source
+            and "p.alpha * kByteToFloat" in source
+        ),
         "mac_reads_normalized_16bpc": "p.red / static_cast<float>(PF_MAX_CHAN16)" in source and "p.alpha / static_cast<float>(PF_MAX_CHAN16)" in source,
         "mac_reads_float32": "return {p.red, p.green, p.blue, p.alpha};" in source,
-        "mac_screen_over_rgb": "1.0f - (1.0f - src.r) * (1.0f - Clamp01(glow[idx].r * glow_a))" in source,
-        "mac_source_alpha_only": "out.a = src_a;" in source,
+        "mac_outer_compose_helpers": (
+            "compose_merge2_pixel(glow, source, glow_opacity, source_opacity)" in source
+            and "compose_premultiply_pixel(" in source
+        ),
         "mac_pf8_lround": "Clamp01(p.a) * 255.0f" in source and "Clamp01(p.r) * 255.0f" in source,
         "mac_pf16_lround": "Clamp01(p.a) * PF_MAX_CHAN16" in source and "Clamp01(p.r) * PF_MAX_CHAN16" in source,
         "mac_pf32_clamp": "out.alpha = Clamp01(p.a);" in source and "out.red   = Clamp01(p.r);" in source,
         "mode2_witness_pass": evidence["status"] == "pass" and evidence["ae_exact_claim"] is False,
         "aex_pf8_scale_255": aex_pf8_scale == 255.0,
+        "aex_pf8_decode_reciprocal_bits": aex_pf8_decode_bits == 0x3B808081,
         "aex_pf16_scale_32768": aex_pf16_scale == 32768.0,
     }
 
@@ -80,7 +89,12 @@ def main() -> int:
         struct.unpack("<f", struct.pack("<I", int(bits, 16)))[0]
         for bits in evidence["cases"]["one_short_ray"]["post_clamp_f32"]
     )
-    source_rgb = tuple(f32(30.0 / 255.0) for _ in range(3))
+    byte_to_float = f32(1.0 / 255.0)
+    source_rgb = tuple(f32(30.0 * byte_to_float) for _ in range(3))
+    differing_byte_codes = [
+        value for value in range(256)
+        if f32(value * byte_to_float) != f32(value / 255.0)
+    ]
     composed = screen_over(source_rgb, mode2_glow, 1.0, 1.0)
     result = {
         "mode2_post_clamp_rgba_f32": [f32_hex(value) for value in mode2_glow],
@@ -97,15 +111,25 @@ def main() -> int:
             "PF16": writeback(composed, 32768),
             "PF32": [f32_hex(value) for value in writeback(composed, None)],
         },
+        "pf8_source_decode": {
+            "aex_reciprocal_bits": f"0x{aex_pf8_decode_bits:08x}",
+            "multiply_vs_divide_differing_code_count": len(differing_byte_codes),
+            "multiply_vs_divide_differing_codes": differing_byte_codes,
+            "all_differences_are_multiply_plus_one_ulp": all(
+                struct.unpack("<I", struct.pack("<f", f32(value * byte_to_float)))[0]
+                == struct.unpack("<I", struct.pack("<f", f32(value / 255.0)))[0] + 1
+                for value in differing_byte_codes
+            ),
+        },
         "static_checks": static,
         "facts": [
             "FACT: the Mode-2 input float comes from the checked-in post-clamp one_short_ray witness.",
-            "FACT: the Mac source contains the normalized-channel, screen-over, source-alpha, and typed writer expressions checked above.",
+            "FACT: the Mac source contains the normalized-channel, current outer-compose helper, and typed writer expressions checked above.",
             "FACT: PF8/PF16 use C++ lround after clamp and PF32 clamps normalized float channels in this Mac source.",
-            "FACT: the checked-in AEX writer constants are 255.0 for PF8 and 32768.0 for PF16.",
+            "FACT: the checked-in AEX PF8 decode reciprocal is 0x3b808081; writer constants are 255.0 for PF8 and 32768.0 for PF16.",
         ],
         "inferences": [
-            "INFERENCE: this Python replay is a bounded local fixture for the operation order; it is not a host-bound execution trace.",
+            "INFERENCE: the retained screen-over replay is a historical bounded local fixture; current public outer-compose exactness is gated elsewhere.",
             "INFERENCE: the derived PF8/PF16/PF32 tuples are expected Mac-source results for these supplied inputs, not AE output claims.",
         ],
         "limits": [

@@ -1,5 +1,12 @@
 # OLM RadialBlur Type 3 PF32 AEXCompat fixture boundary
 
+> **Superseded for one bounded tuple (2026-08-12):** this remains the historical
+> AEXCompat world-publication boundary, but no longer controls the fixed PF32
+> Zoom 9×7/NV25 admission. A later direct internal owner execution recovered
+> nonzero source-span, pre/post, and output planes and matched the public Mac
+> classic owner. See `olmradialblur_type3_layer_span_natural_closure_20260812.{json,md}`.
+> The wider four-case AEXCompat matrix below remains unpromoted.
+
 2026-08-12 に AEXCompat `40c3348c` で、Type 3 witness v2 の PF32 pilot 4ケースを各2回実行した。
 
 Classic fixture は8回すべて完走した。primary world は全行で一致し、Noise Layer の native PF32 checkpoint は pattern と inverse で異なる値を保持したうえで、それぞれrepeat間でbyte一致した。したがって、このfixtureについてprimary／secondary-layer world I/Oと反復決定性は確認できた。

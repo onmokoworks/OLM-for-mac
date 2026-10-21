@@ -21,9 +21,9 @@
         "final_rgba": true,
         "max_alpha": true,
         "output": true,
-        "source_scalar": false
+        "source_scalar": true
       },
-      "production_source_scalar_different_bytes": 489,
+      "production_source_scalar_different_bytes": 0,
       "size_variation": 1.0,
       "source_size_factor_all_one": true
     },
@@ -46,9 +46,9 @@
         "final_rgba": true,
         "max_alpha": true,
         "output": true,
-        "source_scalar": false
+        "source_scalar": true
       },
-      "production_source_scalar_different_bytes": 2473,
+      "production_source_scalar_different_bytes": 0,
       "size_variation": 1.0,
       "source_size_factor_all_one": true
     },
@@ -71,9 +71,9 @@
         "final_rgba": true,
         "max_alpha": true,
         "output": true,
-        "source_scalar": false
+        "source_scalar": true
       },
-      "production_source_scalar_different_bytes": 489,
+      "production_source_scalar_different_bytes": 0,
       "size_variation": 25.0,
       "source_size_factor_all_one": true
     },
@@ -96,9 +96,9 @@
         "final_rgba": true,
         "max_alpha": true,
         "output": true,
-        "source_scalar": false
+        "source_scalar": true
       },
-      "production_source_scalar_different_bytes": 2473,
+      "production_source_scalar_different_bytes": 0,
       "size_variation": 25.0,
       "source_size_factor_all_one": true
     },
@@ -121,9 +121,9 @@
         "final_rgba": true,
         "max_alpha": true,
         "output": true,
-        "source_scalar": false
+        "source_scalar": true
       },
-      "production_source_scalar_different_bytes": 489,
+      "production_source_scalar_different_bytes": 0,
       "size_variation": 100.0,
       "source_size_factor_all_one": true
     },
@@ -146,9 +146,9 @@
         "final_rgba": true,
         "max_alpha": true,
         "output": true,
-        "source_scalar": false
+        "source_scalar": true
       },
-      "production_source_scalar_different_bytes": 2473,
+      "production_source_scalar_different_bytes": 0,
       "size_variation": 100.0,
       "source_size_factor_all_one": true
     }

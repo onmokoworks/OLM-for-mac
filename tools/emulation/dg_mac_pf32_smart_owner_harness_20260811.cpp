@@ -17,6 +17,9 @@ static PF_Err checkout_output(PF_ProgPtr, PF_EffectWorld **world) {
 	if (!world) return PF_Err_BAD_CALLBACK_PARAM;
 	*world = g_output; return PF_Err_NONE;
 }
+static PF_Err checkin_pixels(PF_ProgPtr, A_long index) {
+	return index == DG_INPUT ? PF_Err_NONE : PF_Err_BAD_CALLBACK_PARAM;
+}
 static PF_Err checkout_param(A_long index, PF_ParamDef *param) {
 	if (index <= 0 || index >= DG_NUM_PARAMS || !param) return PF_Err_BAD_CALLBACK_PARAM;
 	*param = g_params[index]; return PF_Err_NONE;
@@ -44,12 +47,12 @@ int main() {
 	g_params[DG_GRAD_COLOR].u.cd.value = {255, 28, 0, 238};
 	g_params[DG_BG_COLOR].u.cd.value = {255, 16, 160, 48};
 	g_params[DG_INTERP_MODE].u.pd.value = INTERP_LINEAR;
-	g_params[DG_POWER].u.fs_d.value = 1;
+	g_params[DG_POWER].u.fs_d.value = 2.25;
 	g_params[DG_BLUR_MODE].u.pd.value = 2;
 	g_params[DG_BLUR_SIZE].u.sd.value = 1;
 	PF_InData in{}; in.downsample_x = {1, 1}; in.downsample_y = {1, 1};
 	PF_OutData out{}; PF_SmartRenderInput smart_input{32};
-	PF_SmartRenderCallbacks callbacks{checkout_pixels, checkout_output};
+	PF_SmartRenderCallbacks callbacks{checkout_pixels, checkin_pixels, checkout_output};
 	PF_SmartRenderExtra extra{&smart_input, &callbacks};
 	if (SmartRender(&in, &out, &extra) != PF_Err_NONE) return 2;
 	PF_ParamDef *params[DG_NUM_PARAMS]; params[0] = &g_params[0]; g_params[0].u.ld = input;

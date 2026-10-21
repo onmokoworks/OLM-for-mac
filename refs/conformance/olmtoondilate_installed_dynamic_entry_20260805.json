@@ -1,7 +1,7 @@
 {
   "status": "PASS_INSTALLED_DYNAMIC_ENTRY",
   "installed_binary": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate",
-  "binary_sha256": "bf84a1f76fe584fee76386ae14edda0ee976d2336a0f50cea23e55ac3647f073",
+  "binary_sha256": "fe0a4959a677eb495f290fc384d93a2da4b66119f07bd8d1e5dac0847f95c5e9",
   "architecture": "arm64",
   "entry_symbol": "EffectMain",
   "commands": [
@@ -24,14 +24,15 @@
     "pre": 1,
     "pixels": 1,
     "output": 1,
-    "checkin": 1,
+    "checkin": 0,
     "param": 1
   },
   "gates": {
     "dlopen_and_dlsym": true,
     "smartpre_to_smartrender_returned": true,
     "typed_writer_visible_exact": true,
-    "padding_unchanged": true
+    "padding_unchanged": true,
+    "optional_checkin_never_called": true
   },
   "claim_boundary": "Installed arm64 slice dynamically loaded and executed AE-free with focused host callbacks; real AE execution remains unclaimed."
 }

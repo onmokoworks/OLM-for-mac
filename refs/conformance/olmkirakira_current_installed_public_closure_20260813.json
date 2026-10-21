@@ -1,0 +1,923 @@
+{
+  "after_effects_processes": [],
+  "architecture_relations": {
+    "arm64": {
+      "negative_rows": 765,
+      "negative_rows_sha256": "a13a6b9b3e2372785a36566d4d0eff5aec905ab3b995f2574b384e9464378d28",
+      "positive_cells": 42,
+      "positive_cells_sha256": "112f5c2e11b84bff20ec961f046186e69a9e650e96cb5f1aec3449acfce2565a",
+      "request_controls": 3,
+      "request_controls_sha256": "c205a7b68cc69db6520b9239e6af4babd54ae66d50fda53101185747b1cd4e68"
+    },
+    "x86_64": {
+      "negative_rows": 765,
+      "negative_rows_sha256": "a13a6b9b3e2372785a36566d4d0eff5aec905ab3b995f2574b384e9464378d28",
+      "positive_cells": 42,
+      "positive_cells_sha256": "112f5c2e11b84bff20ec961f046186e69a9e650e96cb5f1aec3449acfce2565a",
+      "request_controls": 3,
+      "request_controls_sha256": "c205a7b68cc69db6520b9239e6af4babd54ae66d50fda53101185747b1cd4e68"
+    }
+  },
+  "authorities": {
+    "accepted_identity": "94c6a1eff87e11705a65be638953cb134ff64bd0d919e8501338601aab333650",
+    "base_generator": "5b3e93d45632c3452e81b0b39f63786c6c146e28e0fb7ed5611a0217ec3ea9f1",
+    "base_report": "22ed602e6ba016a7f0fb5c36a13d74d082d656a66808e3606d330d4ef6fcf5c1",
+    "harness": "1623680d7fe2cf6525e0e2893d7c25b6d629accf5fd81318a35fab1e64af01c4",
+    "install_closure": "b58642cb7f7317718c7f7fd6ddcd3b2ce7312159f26b65ddea4228b8bbd92bed",
+    "installed_binary": "edd6953ff0a86efa550ffd8a5be050cb200342ad68427519c092bcac578596a7",
+    "production_source": "f251b19150a0b490d58cf6bece4c40fe9403f9bd36849cfe8c89ffbd14fc96c2",
+    "shim": "eccf768d497919c1b875ea10e3c73ec53e35a16af9c4a561303497d25ae8097a"
+  },
+  "claim_boundary": "Both accepted current installed Universal slices of OLMKiraKira EffectMain independently reproduce the 42 bounded Classic/Smart positive cells, 765 fail-closed parameter/world/lifecycle rows, and three full-request controls per slice from the source-built public closure. The x86_64 route runs under Rosetta. This is a real-SDK AE-free dlopen replay, not native After Effects execution or an arbitrary tuple/source/geometry claim.",
+  "installed_binary_path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin/Contents/MacOS/OLMKiraKira",
+  "negative_relation": {
+    "all_input_headers_immutable": true,
+    "all_output_untouched": true,
+    "row_count": 765,
+    "rows_sha256": "a13a6b9b3e2372785a36566d4d0eff5aec905ab3b995f2574b384e9464378d28"
+  },
+  "positive_cells": [
+    {
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "ff4de3ff2622faf02c62afe42a7c850586fea7f0fa7a3777f329b1d82b88ed5b",
+      "depth": 8,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "ff4de3ff2622faf02c62afe42a7c850586fea7f0fa7a3777f329b1d82b88ed5b",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF8/ARGB32",
+      "smart_sha256": "ff4de3ff2622faf02c62afe42a7c850586fea7f0fa7a3777f329b1d82b88ed5b",
+      "tuple": "m1_h7_r0"
+    },
+    {
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "ee37cf06360d144b85b8d7a32ce9b0612af1f354a0a988c9e1e952e58b9ce41d",
+      "depth": 16,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "ee37cf06360d144b85b8d7a32ce9b0612af1f354a0a988c9e1e952e58b9ce41d",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF16/ARGB64",
+      "smart_sha256": "ee37cf06360d144b85b8d7a32ce9b0612af1f354a0a988c9e1e952e58b9ce41d",
+      "tuple": "m1_h7_r0"
+    },
+    {
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "0d50d86e40f9dd25daef5683e78bc3c066501477ccc36c8c4c7eab0c274b2cb6",
+      "depth": 32,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "0d50d86e40f9dd25daef5683e78bc3c066501477ccc36c8c4c7eab0c274b2cb6",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF32/ARGB128",
+      "smart_sha256": "0d50d86e40f9dd25daef5683e78bc3c066501477ccc36c8c4c7eab0c274b2cb6",
+      "tuple": "m1_h7_r0"
+    },
+    {
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "9c20573663b0cda83708eeb206ac7a6dddd6705629eeee0f7a9d357959881ef6",
+      "depth": 8,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "9c20573663b0cda83708eeb206ac7a6dddd6705629eeee0f7a9d357959881ef6",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF8/ARGB32",
+      "smart_sha256": "9c20573663b0cda83708eeb206ac7a6dddd6705629eeee0f7a9d357959881ef6",
+      "tuple": "m1_h7_r1"
+    },
+    {
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "80792b3f984e959150aacfecbc4bc01ab2ee51f047c41f5676df5fb9073479f2",
+      "depth": 16,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "80792b3f984e959150aacfecbc4bc01ab2ee51f047c41f5676df5fb9073479f2",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF16/ARGB64",
+      "smart_sha256": "80792b3f984e959150aacfecbc4bc01ab2ee51f047c41f5676df5fb9073479f2",
+      "tuple": "m1_h7_r1"
+    },
+    {
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "4a221600eb32528a6b186712f1dc9a3d5f97b2f61add1ae8662e8c52e2dd58bb",
+      "depth": 32,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "4a221600eb32528a6b186712f1dc9a3d5f97b2f61add1ae8662e8c52e2dd58bb",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF32/ARGB128",
+      "smart_sha256": "4a221600eb32528a6b186712f1dc9a3d5f97b2f61add1ae8662e8c52e2dd58bb",
+      "tuple": "m1_h7_r1"
+    },
+    {
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "46245e23f8902a243be948ae282b0b1b3bf53a9f276c0566bc820917076e5ec9",
+      "depth": 8,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "46245e23f8902a243be948ae282b0b1b3bf53a9f276c0566bc820917076e5ec9",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF8/ARGB32",
+      "smart_sha256": "46245e23f8902a243be948ae282b0b1b3bf53a9f276c0566bc820917076e5ec9",
+      "tuple": "m1_highlight_r3"
+    },
+    {
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "71c2c1ae26ae4e63dc7e985f5b3666bd1a912fcc36d91842a0a2e65841693b13",
+      "depth": 16,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "71c2c1ae26ae4e63dc7e985f5b3666bd1a912fcc36d91842a0a2e65841693b13",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF16/ARGB64",
+      "smart_sha256": "71c2c1ae26ae4e63dc7e985f5b3666bd1a912fcc36d91842a0a2e65841693b13",
+      "tuple": "m1_highlight_r3"
+    },
+    {
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "df36edb6a9a16c88c2eb7582928b80493df46da1a46708ee75495a2e513c3dc4",
+      "depth": 32,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "df36edb6a9a16c88c2eb7582928b80493df46da1a46708ee75495a2e513c3dc4",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF32/ARGB128",
+      "smart_sha256": "df36edb6a9a16c88c2eb7582928b80493df46da1a46708ee75495a2e513c3dc4",
+      "tuple": "m1_highlight_r3"
+    },
+    {
+      "checkout_checkin": [
+        26,
+        26
+      ],
+      "classic_sha256": "9193537a74075244aa1a7c38f506dbc546864940942315f7358fbab5d2145d26",
+      "depth": 8,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "9193537a74075244aa1a7c38f506dbc546864940942315f7358fbab5d2145d26",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF8/ARGB32",
+      "smart_sha256": "9193537a74075244aa1a7c38f506dbc546864940942315f7358fbab5d2145d26",
+      "tuple": "m2_h7_ramp_r0"
+    },
+    {
+      "checkout_checkin": [
+        26,
+        26
+      ],
+      "classic_sha256": "7df16d7172e645dacc52711a6c3fbf49faeb2eaba00ef463a9c00584d4fbe0ad",
+      "depth": 16,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "7df16d7172e645dacc52711a6c3fbf49faeb2eaba00ef463a9c00584d4fbe0ad",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF16/ARGB64",
+      "smart_sha256": "7df16d7172e645dacc52711a6c3fbf49faeb2eaba00ef463a9c00584d4fbe0ad",
+      "tuple": "m2_h7_ramp_r0"
+    },
+    {
+      "checkout_checkin": [
+        26,
+        26
+      ],
+      "classic_sha256": "f3d831eab1bc4d57e787733aeffd0863a1840cbf0bf7e79dd1f2d4eec60c1763",
+      "depth": 32,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "f3d831eab1bc4d57e787733aeffd0863a1840cbf0bf7e79dd1f2d4eec60c1763",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF32/ARGB128",
+      "smart_sha256": "f3d831eab1bc4d57e787733aeffd0863a1840cbf0bf7e79dd1f2d4eec60c1763",
+      "tuple": "m2_h7_ramp_r0"
+    },
+    {
+      "checkout_checkin": [
+        26,
+        26
+      ],
+      "classic_sha256": "0328f5deed53fdab62d0ce08db1f2666fe13b8cbd85c743f85dc0d048c127ace",
+      "depth": 8,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "0328f5deed53fdab62d0ce08db1f2666fe13b8cbd85c743f85dc0d048c127ace",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF8/ARGB32",
+      "smart_sha256": "0328f5deed53fdab62d0ce08db1f2666fe13b8cbd85c743f85dc0d048c127ace",
+      "tuple": "m2_h7_ramp_r1"
+    },
+    {
+      "checkout_checkin": [
+        26,
+        26
+      ],
+      "classic_sha256": "d7cad5ac7c353627bef978b85205fefb749bff6fa2e1b6a9429d772f7edd73fd",
+      "depth": 16,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "d7cad5ac7c353627bef978b85205fefb749bff6fa2e1b6a9429d772f7edd73fd",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF16/ARGB64",
+      "smart_sha256": "d7cad5ac7c353627bef978b85205fefb749bff6fa2e1b6a9429d772f7edd73fd",
+      "tuple": "m2_h7_ramp_r1"
+    },
+    {
+      "checkout_checkin": [
+        26,
+        26
+      ],
+      "classic_sha256": "024e207a669266ad0e8382d80adef67f6b55fdfc17e208b060bf2340a79b9eb6",
+      "depth": 32,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "024e207a669266ad0e8382d80adef67f6b55fdfc17e208b060bf2340a79b9eb6",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF32/ARGB128",
+      "smart_sha256": "024e207a669266ad0e8382d80adef67f6b55fdfc17e208b060bf2340a79b9eb6",
+      "tuple": "m2_h7_ramp_r1"
+    },
+    {
+      "checkout_checkin": [
+        26,
+        26
+      ],
+      "classic_sha256": "189bb206a4ed6bf15e184de6f63fa2b4b72d21419b86e65ee6685d3b50f9f1c8",
+      "depth": 8,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "189bb206a4ed6bf15e184de6f63fa2b4b72d21419b86e65ee6685d3b50f9f1c8",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF8/ARGB32",
+      "smart_sha256": "189bb206a4ed6bf15e184de6f63fa2b4b72d21419b86e65ee6685d3b50f9f1c8",
+      "tuple": "m2_h7_ramp_r22_g073"
+    },
+    {
+      "checkout_checkin": [
+        26,
+        26
+      ],
+      "classic_sha256": "78700c7c4e5f680fcc9fc4b8fbd86d6e8ba364b252b6755cb47178c1b9014625",
+      "depth": 16,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "78700c7c4e5f680fcc9fc4b8fbd86d6e8ba364b252b6755cb47178c1b9014625",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF16/ARGB64",
+      "smart_sha256": "78700c7c4e5f680fcc9fc4b8fbd86d6e8ba364b252b6755cb47178c1b9014625",
+      "tuple": "m2_h7_ramp_r22_g073"
+    },
+    {
+      "checkout_checkin": [
+        26,
+        26
+      ],
+      "classic_sha256": "8c86b78f9a81cf7988ef7c76c2108e221b8cfc65fd129ac166e0b5e73651014f",
+      "depth": 32,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "8c86b78f9a81cf7988ef7c76c2108e221b8cfc65fd129ac166e0b5e73651014f",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF32/ARGB128",
+      "smart_sha256": "8c86b78f9a81cf7988ef7c76c2108e221b8cfc65fd129ac166e0b5e73651014f",
+      "tuple": "m2_h7_ramp_r22_g073"
+    },
+    {
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "5026fd55404879917f3b72e242987289e35c918b07edcdbe983005d6d019e38c",
+      "depth": 8,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "5026fd55404879917f3b72e242987289e35c918b07edcdbe983005d6d019e38c",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF8/ARGB32",
+      "smart_sha256": "5026fd55404879917f3b72e242987289e35c918b07edcdbe983005d6d019e38c",
+      "tuple": "m2_highlight_r3"
+    },
+    {
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "c2e203a0e5a355d98f7b1c23da47f398ec3fe846875b957d3b75e70b5f870c39",
+      "depth": 16,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "c2e203a0e5a355d98f7b1c23da47f398ec3fe846875b957d3b75e70b5f870c39",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF16/ARGB64",
+      "smart_sha256": "c2e203a0e5a355d98f7b1c23da47f398ec3fe846875b957d3b75e70b5f870c39",
+      "tuple": "m2_highlight_r3"
+    },
+    {
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "fbd4f245f442b20ec73a1e67b26286e4bc01b9cab7fde6b4b5a086a1e31612f9",
+      "depth": 32,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "fbd4f245f442b20ec73a1e67b26286e4bc01b9cab7fde6b4b5a086a1e31612f9",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF32/ARGB128",
+      "smart_sha256": "fbd4f245f442b20ec73a1e67b26286e4bc01b9cab7fde6b4b5a086a1e31612f9",
+      "tuple": "m2_highlight_r3"
+    },
+    {
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "0cf9de4e73720eba926739b6f1a92d901bd0b64b9e29c597a6239a43da415d94",
+      "depth": 8,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "0cf9de4e73720eba926739b6f1a92d901bd0b64b9e29c597a6239a43da415d94",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF8/ARGB32",
+      "smart_sha256": "0cf9de4e73720eba926739b6f1a92d901bd0b64b9e29c597a6239a43da415d94",
+      "tuple": "m3_h50_r0"
+    },
+    {
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "67b1fbbf6750a81d8fe2ac6c5d3d96457714f6437770bb3842a35f5d853da5a4",
+      "depth": 16,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "67b1fbbf6750a81d8fe2ac6c5d3d96457714f6437770bb3842a35f5d853da5a4",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF16/ARGB64",
+      "smart_sha256": "67b1fbbf6750a81d8fe2ac6c5d3d96457714f6437770bb3842a35f5d853da5a4",
+      "tuple": "m3_h50_r0"
+    },
+    {
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "36a6eebfb764e075667cf1d0f40cba6d7e8ef7fb65fbc95b66721e7ae44a1518",
+      "depth": 32,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "36a6eebfb764e075667cf1d0f40cba6d7e8ef7fb65fbc95b66721e7ae44a1518",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF32/ARGB128",
+      "smart_sha256": "36a6eebfb764e075667cf1d0f40cba6d7e8ef7fb65fbc95b66721e7ae44a1518",
+      "tuple": "m3_h50_r0"
+    },
+    {
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "a338165e447b5a22b49c089763a9cbaf3325e29c05e7ed76047b19ad7a821564",
+      "depth": 8,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "a338165e447b5a22b49c089763a9cbaf3325e29c05e7ed76047b19ad7a821564",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF8/ARGB32",
+      "smart_sha256": "a338165e447b5a22b49c089763a9cbaf3325e29c05e7ed76047b19ad7a821564",
+      "tuple": "m3_h50_r1"
+    },
+    {
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "8228e38081d8e8d84df7263bdf3dfeb9b2c873a43c0423c9a81a8f2304af9986",
+      "depth": 16,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "8228e38081d8e8d84df7263bdf3dfeb9b2c873a43c0423c9a81a8f2304af9986",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF16/ARGB64",
+      "smart_sha256": "8228e38081d8e8d84df7263bdf3dfeb9b2c873a43c0423c9a81a8f2304af9986",
+      "tuple": "m3_h50_r1"
+    },
+    {
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "3d7f63c1ff88a3a4f00205af6a553a6f7a0927f5ae68bd4e93a2d901f55749f5",
+      "depth": 32,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "3d7f63c1ff88a3a4f00205af6a553a6f7a0927f5ae68bd4e93a2d901f55749f5",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF32/ARGB128",
+      "smart_sha256": "3d7f63c1ff88a3a4f00205af6a553a6f7a0927f5ae68bd4e93a2d901f55749f5",
+      "tuple": "m3_h50_r1"
+    },
+    {
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "5026fd55404879917f3b72e242987289e35c918b07edcdbe983005d6d019e38c",
+      "depth": 8,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "5026fd55404879917f3b72e242987289e35c918b07edcdbe983005d6d019e38c",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF8/ARGB32",
+      "smart_sha256": "5026fd55404879917f3b72e242987289e35c918b07edcdbe983005d6d019e38c",
+      "tuple": "m4_highlight_r3"
+    },
+    {
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "c2e203a0e5a355d98f7b1c23da47f398ec3fe846875b957d3b75e70b5f870c39",
+      "depth": 16,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "c2e203a0e5a355d98f7b1c23da47f398ec3fe846875b957d3b75e70b5f870c39",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF16/ARGB64",
+      "smart_sha256": "c2e203a0e5a355d98f7b1c23da47f398ec3fe846875b957d3b75e70b5f870c39",
+      "tuple": "m4_highlight_r3"
+    },
+    {
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "fbd4f245f442b20ec73a1e67b26286e4bc01b9cab7fde6b4b5a086a1e31612f9",
+      "depth": 32,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "fbd4f245f442b20ec73a1e67b26286e4bc01b9cab7fde6b4b5a086a1e31612f9",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF32/ARGB128",
+      "smart_sha256": "fbd4f245f442b20ec73a1e67b26286e4bc01b9cab7fde6b4b5a086a1e31612f9",
+      "tuple": "m4_highlight_r3"
+    },
+    {
+      "checkout_checkin": [
+        26,
+        26
+      ],
+      "classic_sha256": "bacc1fc79a6076e6ef5a681ed444acd18de5585cb47b7332ef9628c5e494ed34",
+      "depth": 8,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "bacc1fc79a6076e6ef5a681ed444acd18de5585cb47b7332ef9628c5e494ed34",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF8/ARGB32",
+      "smart_sha256": "bacc1fc79a6076e6ef5a681ed444acd18de5585cb47b7332ef9628c5e494ed34",
+      "tuple": "m4_h5_ramp"
+    },
+    {
+      "checkout_checkin": [
+        26,
+        26
+      ],
+      "classic_sha256": "28ffaa5d3c1a66c4095c89dd7ccb87782b30a8ae8d7bc9f21779efedcbe1914e",
+      "depth": 16,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "28ffaa5d3c1a66c4095c89dd7ccb87782b30a8ae8d7bc9f21779efedcbe1914e",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF16/ARGB64",
+      "smart_sha256": "28ffaa5d3c1a66c4095c89dd7ccb87782b30a8ae8d7bc9f21779efedcbe1914e",
+      "tuple": "m4_h5_ramp"
+    },
+    {
+      "checkout_checkin": [
+        26,
+        26
+      ],
+      "classic_sha256": "5cc484e50772e2acd74bc85b4c5d073837cd7349c22d068d655ab0ed3877bd49",
+      "depth": 32,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "5cc484e50772e2acd74bc85b4c5d073837cd7349c22d068d655ab0ed3877bd49",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF32/ARGB128",
+      "smart_sha256": "5cc484e50772e2acd74bc85b4c5d073837cd7349c22d068d655ab0ed3877bd49",
+      "tuple": "m4_h5_ramp"
+    },
+    {
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "30b58167110e9bcc125244395ee07a16a6e8d00142869fd283f10f264b1ae0f6",
+      "depth": 8,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "30b58167110e9bcc125244395ee07a16a6e8d00142869fd283f10f264b1ae0f6",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF8/ARGB32",
+      "smart_sha256": "30b58167110e9bcc125244395ee07a16a6e8d00142869fd283f10f264b1ae0f6",
+      "tuple": "m4_d2_l7"
+    },
+    {
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "0853a40e66d15baf32fc85a6233b2fc387ec8413b1d4789df736c66afe5ea4b3",
+      "depth": 16,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "0853a40e66d15baf32fc85a6233b2fc387ec8413b1d4789df736c66afe5ea4b3",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF16/ARGB64",
+      "smart_sha256": "0853a40e66d15baf32fc85a6233b2fc387ec8413b1d4789df736c66afe5ea4b3",
+      "tuple": "m4_d2_l7"
+    },
+    {
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "1eb072a44e5fad044073c09245f25ff1a4359f378e24c28cbaa6a62fd6025d27",
+      "depth": 32,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "1eb072a44e5fad044073c09245f25ff1a4359f378e24c28cbaa6a62fd6025d27",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF32/ARGB128",
+      "smart_sha256": "1eb072a44e5fad044073c09245f25ff1a4359f378e24c28cbaa6a62fd6025d27",
+      "tuple": "m4_d2_l7"
+    },
+    {
+      "checkout_checkin": [
+        26,
+        26
+      ],
+      "classic_sha256": "d7a4fd9628e70685681455e3971110d125112086a94db3fb11b3b6170ee46917",
+      "depth": 8,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "d7a4fd9628e70685681455e3971110d125112086a94db3fb11b3b6170ee46917",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF8/ARGB32",
+      "smart_sha256": "d7a4fd9628e70685681455e3971110d125112086a94db3fb11b3b6170ee46917",
+      "tuple": "m4_highlight_ramp"
+    },
+    {
+      "checkout_checkin": [
+        26,
+        26
+      ],
+      "classic_sha256": "81bafe08009db7c1be9400a788527a4df899b2f5e05a33981e6a0aac0a1391b0",
+      "depth": 16,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "81bafe08009db7c1be9400a788527a4df899b2f5e05a33981e6a0aac0a1391b0",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF16/ARGB64",
+      "smart_sha256": "81bafe08009db7c1be9400a788527a4df899b2f5e05a33981e6a0aac0a1391b0",
+      "tuple": "m4_highlight_ramp"
+    },
+    {
+      "checkout_checkin": [
+        26,
+        26
+      ],
+      "classic_sha256": "b8421b82508a79162b116e90408a6013419f07b47a4d6150aac4f767d8963537",
+      "depth": 32,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "b8421b82508a79162b116e90408a6013419f07b47a4d6150aac4f767d8963537",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF32/ARGB128",
+      "smart_sha256": "b8421b82508a79162b116e90408a6013419f07b47a4d6150aac4f767d8963537",
+      "tuple": "m4_highlight_ramp"
+    },
+    {
+      "checkout_checkin": [
+        27,
+        27
+      ],
+      "classic_sha256": "5befdae0f497de64a04804c3576c8960f4d9fc06a664c7ea8e692600e1c38233",
+      "depth": 8,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "5befdae0f497de64a04804c3576c8960f4d9fc06a664c7ea8e692600e1c38233",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF8/ARGB32",
+      "smart_sha256": "5befdae0f497de64a04804c3576c8960f4d9fc06a664c7ea8e692600e1c38233",
+      "tuple": "m4_multiray"
+    },
+    {
+      "checkout_checkin": [
+        27,
+        27
+      ],
+      "classic_sha256": "92fdd029c1a005be30c8f57d7049ff284dd5a452466166ffb1a1393456b2798d",
+      "depth": 16,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "92fdd029c1a005be30c8f57d7049ff284dd5a452466166ffb1a1393456b2798d",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF16/ARGB64",
+      "smart_sha256": "92fdd029c1a005be30c8f57d7049ff284dd5a452466166ffb1a1393456b2798d",
+      "tuple": "m4_multiray"
+    },
+    {
+      "checkout_checkin": [
+        27,
+        27
+      ],
+      "classic_sha256": "4b82d09706892d87e42088a909dc5884a158e711947cf86181444a7e3108f858",
+      "depth": 32,
+      "input_header_padding_immutable": true,
+      "oracle_sha256": "4b82d09706892d87e42088a909dc5884a158e711947cf86181444a7e3108f858",
+      "pixel_callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "pixel_format": "PF32/ARGB128",
+      "smart_sha256": "4b82d09706892d87e42088a909dc5884a158e711947cf86181444a7e3108f858",
+      "tuple": "m4_multiray"
+    }
+  ],
+  "positive_cells_sha256": "112f5c2e11b84bff20ec961f046186e69a9e650e96cb5f1aec3449acfce2565a",
+  "request_controls": [
+    {
+      "callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "ff4de3ff2622faf02c62afe42a7c850586fea7f0fa7a3777f329b1d82b88ed5b",
+      "depth": 8,
+      "oracle_sha256": "ff4de3ff2622faf02c62afe42a7c850586fea7f0fa7a3777f329b1d82b88ed5b",
+      "request_rect": [
+        0,
+        0,
+        5,
+        3
+      ],
+      "smart_sha256": "ff4de3ff2622faf02c62afe42a7c850586fea7f0fa7a3777f329b1d82b88ed5b",
+      "tuple": "m1_h7_r0"
+    },
+    {
+      "callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "ee37cf06360d144b85b8d7a32ce9b0612af1f354a0a988c9e1e952e58b9ce41d",
+      "depth": 16,
+      "oracle_sha256": "ee37cf06360d144b85b8d7a32ce9b0612af1f354a0a988c9e1e952e58b9ce41d",
+      "request_rect": [
+        0,
+        0,
+        5,
+        3
+      ],
+      "smart_sha256": "ee37cf06360d144b85b8d7a32ce9b0612af1f354a0a988c9e1e952e58b9ce41d",
+      "tuple": "m1_h7_r0"
+    },
+    {
+      "callbacks": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "checkout_checkin": [
+        25,
+        25
+      ],
+      "classic_sha256": "0d50d86e40f9dd25daef5683e78bc3c066501477ccc36c8c4c7eab0c274b2cb6",
+      "depth": 32,
+      "oracle_sha256": "0d50d86e40f9dd25daef5683e78bc3c066501477ccc36c8c4c7eab0c274b2cb6",
+      "request_rect": [
+        0,
+        0,
+        5,
+        3
+      ],
+      "smart_sha256": "0d50d86e40f9dd25daef5683e78bc3c066501477ccc36c8c4c7eab0c274b2cb6",
+      "tuple": "m1_h7_r0"
+    }
+  ],
+  "request_controls_sha256": "c205a7b68cc69db6520b9239e6af4babd54ae66d50fda53101185747b1cd4e68",
+  "schema": "olmkirakira.current-installed-public-closure/1",
+  "scope": {
+    "after_effects_launched": false,
+    "arbitrary_tuple_source_geometry": false,
+    "installed_arm64": true,
+    "installed_effectmain_dlopen": true,
+    "installed_x86_64": true,
+    "native_after_effects": false,
+    "public_classic_and_smart": true
+  },
+  "status": "PASS_OLMKIRAKIRA_CURRENT_INSTALLED_PUBLIC_42_765_3_AE_FREE"
+}

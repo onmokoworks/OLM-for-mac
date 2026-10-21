@@ -1,0 +1,717 @@
+{
+  "schema": "olm.hostless-batch5-20260815-install-readiness/1",
+  "status": "PASS_HOSTLESS_BATCH5_CANDIDATES_READY_FOR_TRANSACTIONAL_PREP_NOT_INSTALLED",
+  "accepted_pre_identity_sha256": "94c6a1eff87e11705a65be638953cb134ff64bd0d919e8501338601aab333650",
+  "after_effects_processes": [],
+  "transaction_artifact_state": "clean",
+  "candidate_count": 5,
+  "superseded_distance_binary_explicitly_forbidden": "d138c75d7dbd4c9ca3643988eebd9d53b7581947b6e22aa0f424de6433e2f206",
+  "plugins": {
+    "OLMKiraKira": {
+      "candidate_bundle": "handoffs/olmkirakira_mode3_32x18_candidate_20260815/Product/OLMKiraKira.plugin",
+      "candidate_binary_sha256": "d4c9b587d41797259de8627e2d3d5bcf7a376f12fa3c8b99dcd820e0b6d80ae3",
+      "candidate_identity": "handoffs/olmkirakira_mode3_32x18_candidate_20260815/build_identity.json",
+      "candidate_identity_sha256": "637a396a6a1cb5746ff747e16d30f81b5d32e5948a38eb072c6ccceb18727ff9",
+      "source": "mac/OLMKiraKira/OLMKiraKira.cpp",
+      "source_sha256": "abf826dd450bcf879585ae786222ba5d5212d11dd9b292c6ba23d379014baeab",
+      "project": "mac/OLMKiraKira/Mac/OLMKiraKira.xcodeproj/project.pbxproj",
+      "project_sha256": "81b2d4246a5dac6f0d8579cb545a7fd9ab201ee63d42a07ccfe544404aff4e4f",
+      "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin",
+      "installed_binary_sha256": "edd6953ff0a86efa550ffd8a5be050cb200342ad68427519c092bcac578596a7",
+      "required_exports": [
+        "_EffectMain",
+        "_PluginDataEntryFunction2"
+      ],
+      "candidate_inventory": [
+        {
+          "path": ".",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/Info.plist",
+          "mode": 420,
+          "type": "file",
+          "bytes": 1390,
+          "sha256": "add5a71ec4b5ba5ed02eae65f45411a983766d486f708f17ef893d336f4635e2"
+        },
+        {
+          "path": "Contents/MacOS",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/MacOS/OLMKiraKira",
+          "mode": 493,
+          "type": "file",
+          "bytes": 615376,
+          "sha256": "d4c9b587d41797259de8627e2d3d5bcf7a376f12fa3c8b99dcd820e0b6d80ae3"
+        },
+        {
+          "path": "Contents/PkgInfo",
+          "mode": 420,
+          "type": "file",
+          "bytes": 8,
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a"
+        },
+        {
+          "path": "Contents/Resources",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/Resources/OLMKiraKira.rsrc",
+          "mode": 420,
+          "type": "file",
+          "bytes": 670,
+          "sha256": "86fd6aa0b6e9992d52e81f5ff8e49efd1a16b44bbb34527661771921dc85ff49"
+        },
+        {
+          "path": "Contents/_CodeSignature",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/_CodeSignature/CodeResources",
+          "mode": 420,
+          "type": "file",
+          "bytes": 2454,
+          "sha256": "929e8026435d4363eed881bfa8afc15fe9f2f43bb4f0130dd758fa40acbf3d13"
+        }
+      ],
+      "installed_inventory": [
+        {
+          "path": ".",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/Info.plist",
+          "mode": 420,
+          "type": "file",
+          "bytes": 1390,
+          "sha256": "add5a71ec4b5ba5ed02eae65f45411a983766d486f708f17ef893d336f4635e2"
+        },
+        {
+          "path": "Contents/MacOS",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/MacOS/OLMKiraKira",
+          "mode": 493,
+          "type": "file",
+          "bytes": 614752,
+          "sha256": "edd6953ff0a86efa550ffd8a5be050cb200342ad68427519c092bcac578596a7"
+        },
+        {
+          "path": "Contents/PkgInfo",
+          "mode": 420,
+          "type": "file",
+          "bytes": 8,
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a"
+        },
+        {
+          "path": "Contents/Resources",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/Resources/OLMKiraKira.rsrc",
+          "mode": 420,
+          "type": "file",
+          "bytes": 670,
+          "sha256": "86fd6aa0b6e9992d52e81f5ff8e49efd1a16b44bbb34527661771921dc85ff49"
+        },
+        {
+          "path": "Contents/_CodeSignature",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/_CodeSignature/CodeResources",
+          "mode": 420,
+          "type": "file",
+          "bytes": 2454,
+          "sha256": "929e8026435d4363eed881bfa8afc15fe9f2f43bb4f0130dd758fa40acbf3d13"
+        }
+      ]
+    },
+    "OLMColorKey": {
+      "candidate_bundle": "handoffs/olmcolorkey_second_source_universal_candidate_20260815/product/OLMColorKey.plugin",
+      "candidate_binary_sha256": "51f551a32bd975b7ae1c2437809ecb81af1d06f9e967a8fccbd9dc2a6190ce4d",
+      "candidate_identity": "handoffs/olmcolorkey_second_source_universal_candidate_20260815/build_identity.json",
+      "candidate_identity_sha256": "aadc2c45c65303077b8251f1d4805824c21263e2aaf5f14f6e7c58e4876c3675",
+      "source": "mac/OLMColorKey/OLMColorKey.cpp",
+      "source_sha256": "4dbd264501a0d5d990a3726d16223c01c1996677b925f8546157b6a91ce677d1",
+      "project": "mac/OLMColorKey/Mac/OLMColorKey.xcodeproj/project.pbxproj",
+      "project_sha256": "b5b77f24dec0a1ec9d426c20d68384f03d3381145f1494fec59c491bcec2d72b",
+      "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMColorKey.plugin",
+      "installed_binary_sha256": "701ae9192e19d3e97dd33450e37ae97d90d9be5803ab663405507ed5e3659ca7",
+      "required_exports": [
+        "_EffectMain",
+        "_PluginDataEntryFunction2"
+      ],
+      "candidate_inventory": [
+        {
+          "path": ".",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/Info.plist",
+          "mode": 420,
+          "type": "file",
+          "bytes": 1390,
+          "sha256": "9aea133189417cbde20f199280f51bee27e0fc2d2aaf1ce6f1db80493499834c"
+        },
+        {
+          "path": "Contents/MacOS",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/MacOS/OLMColorKey",
+          "mode": 493,
+          "type": "file",
+          "bytes": 592384,
+          "sha256": "51f551a32bd975b7ae1c2437809ecb81af1d06f9e967a8fccbd9dc2a6190ce4d"
+        },
+        {
+          "path": "Contents/PkgInfo",
+          "mode": 420,
+          "type": "file",
+          "bytes": 8,
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a"
+        },
+        {
+          "path": "Contents/Resources",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/Resources/OLMColorKey.rsrc",
+          "mode": 420,
+          "type": "file",
+          "bytes": 666,
+          "sha256": "e324376b05a34071b186a7c460515ff6860f0a5565c08ab90849f38b622a4529"
+        },
+        {
+          "path": "Contents/_CodeSignature",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/_CodeSignature/CodeResources",
+          "mode": 420,
+          "type": "file",
+          "bytes": 2454,
+          "sha256": "5e6ab841dee48874d9fa9a7d6eeb78864076ab5efc27eba42d965cbabd667cce"
+        }
+      ],
+      "installed_inventory": [
+        {
+          "path": ".",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/Info.plist",
+          "mode": 420,
+          "type": "file",
+          "bytes": 1390,
+          "sha256": "9aea133189417cbde20f199280f51bee27e0fc2d2aaf1ce6f1db80493499834c"
+        },
+        {
+          "path": "Contents/MacOS",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/MacOS/OLMColorKey",
+          "mode": 493,
+          "type": "file",
+          "bytes": 591696,
+          "sha256": "701ae9192e19d3e97dd33450e37ae97d90d9be5803ab663405507ed5e3659ca7"
+        },
+        {
+          "path": "Contents/PkgInfo",
+          "mode": 420,
+          "type": "file",
+          "bytes": 8,
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a"
+        },
+        {
+          "path": "Contents/Resources",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/Resources/OLMColorKey.rsrc",
+          "mode": 420,
+          "type": "file",
+          "bytes": 666,
+          "sha256": "e324376b05a34071b186a7c460515ff6860f0a5565c08ab90849f38b622a4529"
+        },
+        {
+          "path": "Contents/_CodeSignature",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/_CodeSignature/CodeResources",
+          "mode": 420,
+          "type": "file",
+          "bytes": 2454,
+          "sha256": "5e6ab841dee48874d9fa9a7d6eeb78864076ab5efc27eba42d965cbabd667cce"
+        }
+      ]
+    },
+    "OLMToonDilate": {
+      "candidate_bundle": "handoffs/olmtoondilate_universal_candidate_macos11_42b47acb_20260815T000245JST/product/OLMToonDilate.plugin",
+      "candidate_binary_sha256": "cf029885921b6f7cd9ff5ce26ac6c60aa51392cf0bd31d0a721e2a0f6239d029",
+      "candidate_identity": "handoffs/olmtoondilate_universal_candidate_macos11_42b47acb_20260815T000245JST/build_identity.json",
+      "candidate_identity_sha256": "53b682739c4f8ba0e206b3a8b98024a808618a09103f30a4421c73a9ab0b9add",
+      "source": "mac/OLMToonDilate/OLMToonDilate.cpp",
+      "source_sha256": "42b47acbc3cd37bcaefdedc1b46f0507ed2e478c5eaab921f645f9055a9c8470",
+      "project": "mac/OLMToonDilate/Mac/OLMToonDilate.xcodeproj/project.pbxproj",
+      "project_sha256": "eba3266a1dba3f50b217463c5bb077e9976b22febe70bfb7c5d05c6bdaca8abc",
+      "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin",
+      "installed_binary_sha256": "5bbe693106072ceff14a1c1ae5a0d64815cddde58356c57575d29e516479036e",
+      "required_exports": [
+        "_EffectMain",
+        "_PluginDataEntryFunction2"
+      ],
+      "candidate_inventory": [
+        {
+          "path": ".",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/Info.plist",
+          "mode": 420,
+          "type": "file",
+          "bytes": 1398,
+          "sha256": "b9591a315151cde8ff92d2aa649f80bb829589dbb134b669a01d55650b25d8dc"
+        },
+        {
+          "path": "Contents/MacOS",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/MacOS/OLMToonDilate",
+          "mode": 493,
+          "type": "file",
+          "bytes": 243776,
+          "sha256": "cf029885921b6f7cd9ff5ce26ac6c60aa51392cf0bd31d0a721e2a0f6239d029"
+        },
+        {
+          "path": "Contents/PkgInfo",
+          "mode": 420,
+          "type": "file",
+          "bytes": 8,
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a"
+        },
+        {
+          "path": "Contents/Resources",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/Resources/OLMToonDilate.rsrc",
+          "mode": 420,
+          "type": "file",
+          "bytes": 670,
+          "sha256": "265753c64c6a6317dbcffe071b37d957eed0ca87d26f0da66f44473ef3d6fbae"
+        },
+        {
+          "path": "Contents/_CodeSignature",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/_CodeSignature/CodeResources",
+          "mode": 420,
+          "type": "file",
+          "bytes": 2458,
+          "sha256": "704836d23df9d5ebeee9b6abeacb3b4bdcac2b61ca5273d4116f07f57aa8a100"
+        }
+      ],
+      "installed_inventory": [
+        {
+          "path": ".",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/Info.plist",
+          "mode": 420,
+          "type": "file",
+          "bytes": 1398,
+          "sha256": "b9591a315151cde8ff92d2aa649f80bb829589dbb134b669a01d55650b25d8dc"
+        },
+        {
+          "path": "Contents/MacOS",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/MacOS/OLMToonDilate",
+          "mode": 493,
+          "type": "file",
+          "bytes": 243376,
+          "sha256": "5bbe693106072ceff14a1c1ae5a0d64815cddde58356c57575d29e516479036e"
+        },
+        {
+          "path": "Contents/PkgInfo",
+          "mode": 420,
+          "type": "file",
+          "bytes": 8,
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a"
+        },
+        {
+          "path": "Contents/Resources",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/Resources/OLMToonDilate.rsrc",
+          "mode": 420,
+          "type": "file",
+          "bytes": 670,
+          "sha256": "265753c64c6a6317dbcffe071b37d957eed0ca87d26f0da66f44473ef3d6fbae"
+        },
+        {
+          "path": "Contents/_CodeSignature",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/_CodeSignature/CodeResources",
+          "mode": 420,
+          "type": "file",
+          "bytes": 2458,
+          "sha256": "704836d23df9d5ebeee9b6abeacb3b4bdcac2b61ca5273d4116f07f57aa8a100"
+        }
+      ]
+    },
+    "OLMDirectionalBlur": {
+      "candidate_bundle": "handoffs/olmdirectionalblur_native_ucrt_admission_candidate_20260815/OLMDirectionalBlur.plugin",
+      "candidate_binary_sha256": "c64f8ff701008ae0390eb9da1a9e073dcde97a77e9b32701becf6eaa241a2666",
+      "candidate_identity": "refs/conformance/olmdirectionalblur_native_ucrt_admission_universal_candidate_20260815.json",
+      "candidate_identity_sha256": "3c917afb3c5ab9d66e8a8b718fc4662627fef7f7ea6ea9d8a4779e07e647c4ce",
+      "source": "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp",
+      "source_sha256": "b39732e285688f1f8ae2fc5f64efcfba3d7ac52a1451a2685dd7b606bb18fb12",
+      "project": "mac/OLMDirectionalBlur/Mac/OLMDirectionalBlur.xcodeproj/project.pbxproj",
+      "project_sha256": "dda5520209f069d0336c3873726a87ff97a8f8f0114d97e21c96289199d83127",
+      "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin",
+      "installed_binary_sha256": "856ab700df0881cfb039e9c9d0675bf46a7e92b56e8cb0e311d820fd719bc0de",
+      "required_exports": [
+        "_EffectMain",
+        "_PluginDataEntryFunction2"
+      ],
+      "candidate_inventory": [
+        {
+          "path": ".",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/Info.plist",
+          "mode": 420,
+          "type": "file",
+          "bytes": 1417,
+          "sha256": "c8119aa071cd8acfa681f86d7b8da26dae9fe05ebe75e897f532bfea2d386778"
+        },
+        {
+          "path": "Contents/MacOS",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/MacOS/OLMDirectionalBlur",
+          "mode": 493,
+          "type": "file",
+          "bytes": 456688,
+          "sha256": "c64f8ff701008ae0390eb9da1a9e073dcde97a77e9b32701becf6eaa241a2666"
+        },
+        {
+          "path": "Contents/PkgInfo",
+          "mode": 420,
+          "type": "file",
+          "bytes": 8,
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a"
+        },
+        {
+          "path": "Contents/Resources",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/Resources/OLMDirectionalBlur.rsrc",
+          "mode": 420,
+          "type": "file",
+          "bytes": 678,
+          "sha256": "d4fe83ce9711fc298e2847b7941f7137da94ff2d651354db17a1fce90a9382e4"
+        },
+        {
+          "path": "Contents/_CodeSignature",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/_CodeSignature/CodeResources",
+          "mode": 420,
+          "type": "file",
+          "bytes": 2468,
+          "sha256": "3b116909e0ab7bf307ec3282a0e02c2ec261f1694512608758016007a0e9c094"
+        }
+      ],
+      "installed_inventory": [
+        {
+          "path": ".",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/Info.plist",
+          "mode": 420,
+          "type": "file",
+          "bytes": 1417,
+          "sha256": "c8119aa071cd8acfa681f86d7b8da26dae9fe05ebe75e897f532bfea2d386778"
+        },
+        {
+          "path": "Contents/MacOS",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/MacOS/OLMDirectionalBlur",
+          "mode": 493,
+          "type": "file",
+          "bytes": 456368,
+          "sha256": "856ab700df0881cfb039e9c9d0675bf46a7e92b56e8cb0e311d820fd719bc0de"
+        },
+        {
+          "path": "Contents/PkgInfo",
+          "mode": 420,
+          "type": "file",
+          "bytes": 8,
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a"
+        },
+        {
+          "path": "Contents/Resources",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/Resources/OLMDirectionalBlur.rsrc",
+          "mode": 420,
+          "type": "file",
+          "bytes": 678,
+          "sha256": "d4fe83ce9711fc298e2847b7941f7137da94ff2d651354db17a1fce90a9382e4"
+        },
+        {
+          "path": "Contents/_CodeSignature",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/_CodeSignature/CodeResources",
+          "mode": 420,
+          "type": "file",
+          "bytes": 2468,
+          "sha256": "3b116909e0ab7bf307ec3282a0e02c2ec261f1694512608758016007a0e9c094"
+        }
+      ]
+    },
+    "OLMDistanceGradation": {
+      "candidate_bundle": "handoffs/olmdistancegradation_pf32_power_native_ucrt_universal_candidate_macos11_20260815/Product/OLMDistanceGradation.plugin",
+      "candidate_binary_sha256": "9a97a076c118fd1015f40d922bf7f21be7a041f1f049a0e465cc0bc9cd1cd349",
+      "candidate_identity": "refs/conformance/olmdistancegradation_pf32_power_native_ucrt_universal_candidate_macos11_20260815.json",
+      "candidate_identity_sha256": "106c2de7989d7b2a27f0acb579b9565377b2a782891b65f86960ac2afa5f4282",
+      "source": "mac/OLMDistanceGradation/OLMDistanceGradation.cpp",
+      "source_sha256": "e2f5020f995b59277ee288f48e74a851fc1c9f6a456678cf0361d00e073dd9a9",
+      "project": "mac/OLMDistanceGradation/Mac/OLMDistanceGradation.xcodeproj/project.pbxproj",
+      "project_sha256": "47a276d3f63a6275178eea858a85d8ca0392b994ee025df9d678f2dbdb8e210b",
+      "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDistanceGradation.plugin",
+      "installed_binary_sha256": "231421e4a0c1607a70947778d99d748baefe07078b7e1145f4a4700268116605",
+      "required_exports": [
+        "_EffectMain"
+      ],
+      "candidate_inventory": [
+        {
+          "path": ".",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/Info.plist",
+          "mode": 420,
+          "type": "file",
+          "bytes": 1422,
+          "sha256": "e40ee9b959bcd2d3ef7d79e552ed0e71be940c9c8522329c273e6f686eb5db42"
+        },
+        {
+          "path": "Contents/MacOS",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/MacOS/OLMDistanceGradation",
+          "mode": 493,
+          "type": "file",
+          "bytes": 466272,
+          "sha256": "9a97a076c118fd1015f40d922bf7f21be7a041f1f049a0e465cc0bc9cd1cd349"
+        },
+        {
+          "path": "Contents/PkgInfo",
+          "mode": 420,
+          "type": "file",
+          "bytes": 8,
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a"
+        },
+        {
+          "path": "Contents/Resources",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/Resources/OLMDistanceGradation.rsrc",
+          "mode": 420,
+          "type": "file",
+          "bytes": 678,
+          "sha256": "91b8673899695b2d7784dbb714a80a79ba8c7ee2ebaf5d6c69c0ccd5848c202d"
+        },
+        {
+          "path": "Contents/_CodeSignature",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/_CodeSignature/CodeResources",
+          "mode": 420,
+          "type": "file",
+          "bytes": 2472,
+          "sha256": "93fff0f91dd95be23ab232a98aa2517b54852f7c56980675639c15e2a6280279"
+        }
+      ],
+      "installed_inventory": [
+        {
+          "path": ".",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/Info.plist",
+          "mode": 420,
+          "type": "file",
+          "bytes": 1422,
+          "sha256": "6a841177a86812759fcf8e293a958392ebba673c24f507c585fcfb093c32325e"
+        },
+        {
+          "path": "Contents/MacOS",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/MacOS/OLMDistanceGradation",
+          "mode": 493,
+          "type": "file",
+          "bytes": 466224,
+          "sha256": "231421e4a0c1607a70947778d99d748baefe07078b7e1145f4a4700268116605"
+        },
+        {
+          "path": "Contents/PkgInfo",
+          "mode": 420,
+          "type": "file",
+          "bytes": 8,
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a"
+        },
+        {
+          "path": "Contents/Resources",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/Resources/OLMDistanceGradation.rsrc",
+          "mode": 420,
+          "type": "file",
+          "bytes": 678,
+          "sha256": "91b8673899695b2d7784dbb714a80a79ba8c7ee2ebaf5d6c69c0ccd5848c202d"
+        },
+        {
+          "path": "Contents/_CodeSignature",
+          "mode": 493,
+          "type": "directory"
+        },
+        {
+          "path": "Contents/_CodeSignature/CodeResources",
+          "mode": 420,
+          "type": "file",
+          "bytes": 2472,
+          "sha256": "93fff0f91dd95be23ab232a98aa2517b54852f7c56980675639c15e2a6280279"
+        }
+      ]
+    }
+  },
+  "scope": {
+    "installer_executed": false,
+    "prepared": false,
+    "installed": false,
+    "after_effects_launched": false,
+    "production_sources_changed": false
+  }
+}

@@ -9,7 +9,8 @@ const state = {
   configurePromise: null,
   configureResolve: null,
   configureReject: null,
-  hooks: []
+  hooks: [],
+  trace: { enabled: false, active: false, stopping: false, session: null, timer: null }
 };
 
 function text(value) {
@@ -39,6 +40,106 @@ function emit(kind, fields) {
 
 function fail(code, message, details) {
   emit('error', { error: { code: code, message: message, details: details || null } });
+}
+
+function traceConfig() {
+  const value = state.config && (state.config.call_edge_trace || state.config.callEdgeTrace);
+  if (!value || value.enabled !== true) return { enabled: false };
+  const entryHooks = value.entry_hooks || value.entryHooks;
+  const commands = value.pf_cmd_values || value.pfCmdValues || [3, 5];
+  const maxEvents = Number(value.max_events === undefined ? value.maxEvents : value.max_events);
+  const maxMs = Number(value.max_ms === undefined ? value.maxMs : value.max_ms);
+  const pfCmdArg = Number(value.pf_cmd_arg === undefined ? value.pfCmdArg || 0 : value.pf_cmd_arg);
+  if (!Array.isArray(entryHooks) || !entryHooks.length || entryHooks.some(function (item) { return !text(item); })) throw new Error('call_edge_trace.entry_hooks must be a non-empty array');
+  if (!Array.isArray(commands) || !commands.length || commands.some(function (item) { return !Number.isInteger(Number(item)) || [3, 5].indexOf(Number(item)) === -1; })) throw new Error('call_edge_trace.pf_cmd_values must contain only PF_Cmd_RENDER=3 or PF_Cmd_SMART_RENDER=5');
+  if (!Number.isInteger(maxEvents) || maxEvents < 1 || maxEvents > 100000) throw new Error('call_edge_trace.max_events must be an integer from 1 to 100000');
+  if (!Number.isInteger(maxMs) || maxMs < 1 || maxMs > 60000) throw new Error('call_edge_trace.max_ms must be an integer from 1 to 60000');
+  if (!Number.isInteger(pfCmdArg) || pfCmdArg < 0 || pfCmdArg > 15) throw new Error('call_edge_trace.pf_cmd_arg must be an integer from 0 to 15');
+  return { enabled: true, entryHooks: entryHooks.map(text), commands: commands.map(Number), maxEvents: maxEvents, maxMs: maxMs, pfCmdArg: pfCmdArg };
+}
+
+function traceStatus(status, details) {
+  emit('trace_status', Object.assign({
+    trace: { status: status, claimable: status === 'stopped', max_events: state.trace.config && state.trace.config.maxEvents || null, max_ms: state.trace.config && state.trace.config.maxMs || null, event_count: state.trace.count || 0 }
+  }, details || {}));
+}
+
+function traceStop(reason, claimable) {
+  const session = state.trace.session;
+  if (!session || state.trace.stopping) return;
+  state.trace.stopping = true;
+  if (state.trace.timer) { clearTimeout(state.trace.timer); state.trace.timer = null; }
+  const cleanupErrors = [];
+  try { Stalker.flush(); } catch (error) { cleanupErrors.push('flush: ' + text(error)); }
+  let unfollowed = false;
+  try { Stalker.unfollow(session.threadId); unfollowed = true; } catch (error) { cleanupErrors.push('unfollow: ' + text(error)); }
+  if (unfollowed) {
+    try { Stalker.garbageCollect(); } catch (error) { cleanupErrors.push('garbageCollect: ' + text(error)); }
+  }
+  state.trace.session = null;
+  state.trace.active = false;
+  state.trace.stopping = false;
+  if (cleanupErrors.length) {
+    traceStatus('error', { reason: 'stalker_stop_failed', error: cleanupErrors.join('; '), thread_id: session.threadId, trace_id: session.id });
+    return;
+  }
+  traceStatus('stopped', { reason: reason || 'limit', thread_id: session.threadId, trace_id: session.id, trace: { status: 'stopped', claimable: claimable !== false, max_events: state.trace.config && state.trace.config.maxEvents || null, max_ms: state.trace.config && state.trace.config.maxMs || null, event_count: state.trace.count || 0 } });
+}
+
+function traceError(reason, error) {
+  traceStop('error', false);
+  traceStatus('error', { reason: reason, error: text(error), trace: { status: 'error', claimable: false, max_events: state.trace.config && state.trace.config.maxEvents || null, max_ms: state.trace.config && state.trace.config.maxMs || null, event_count: state.trace.count || 0 } });
+}
+
+function parsedCallEdges(events) {
+  let parsed = Stalker.parse(events, { stringify: true });
+  if (typeof parsed === 'string') parsed = JSON.parse(parsed);
+  const rows = Array.isArray(parsed) ? parsed : [];
+  return rows.map(function (row) {
+    if (Array.isArray(row)) return { source: row[1], target: row[2], type: row[0] };
+    return row || {};
+  }).filter(function (row) { return text(row.type).toLowerCase() === 'call' || row.type === 0 || row.type === 'call'; });
+}
+
+function traceReceive(events) {
+  const session = state.trace.session;
+  if (!session || !state.trace.active) return;
+  try {
+    parsedCallEdges(events).forEach(function (row) {
+      if (!state.trace.session || state.trace.count >= state.trace.config.maxEvents) return;
+      const source = ptr(row.location || row.from || row.source);
+      const target = ptr(row.target || row.to);
+      if (source.isNull() || target.isNull() || (!inModule(source, 1) && !inModule(target, 1))) return;
+      state.trace.count++;
+      emit('call_edge', { thread_id: session.threadId, trace_id: session.id, source: pointer(source), target: pointer(target), source_in_module: inModule(source, 1), target_in_module: inModule(target, 1), source_rva: inModule(source, 1) ? source.sub(state.module.base).toUInt32() : null, target_rva: inModule(target, 1) ? target.sub(state.module.base).toUInt32() : null });
+      if (state.trace.count >= state.trace.config.maxEvents) traceStop('max_events');
+    });
+  } catch (error) { traceError('stalker_parse_failed', error); }
+}
+
+function selectedTraceEntry(item, spec, args) {
+  if (!state.trace.config.enabled || state.trace.active) return false;
+  const name = text(spec.name || spec.hook_name || spec.export || '');
+  if (state.trace.config.entryHooks.indexOf(name) === -1 && state.trace.config.entryHooks.indexOf(String(item.address)) === -1) return false;
+  try {
+    const command = readDirectArgument(args[state.trace.config.pfCmdArg], 'i32');
+    return state.trace.config.commands.indexOf(command) !== -1;
+  } catch (_) { return false; }
+}
+
+function traceStart(item, spec, args) {
+  if (!selectedTraceEntry(item, spec, args)) return null;
+  const threadId = Process.getCurrentThreadId();
+  state.trace.count = 0;
+  state.trace.active = true;
+  state.trace.stopping = false;
+  state.trace.session = { id: 'trace-' + (++state.trace.sequence), threadId: threadId, hook: text(spec.name || spec.export || 'entry') };
+  traceStatus('started', { thread_id: threadId, trace_id: state.trace.session.id, hook: state.trace.session.hook, command_values: state.trace.config.commands });
+  try {
+    Stalker.follow(threadId, { events: { call: true, ret: false, exec: false, block: false }, onReceive: traceReceive });
+    state.trace.timer = setTimeout(function () { traceStop('max_ms'); }, state.trace.config.maxMs);
+    return state.trace.session.id;
+  } catch (error) { traceError('stalker_start_failed', error); return null; }
 }
 
 function moduleName(module) {
@@ -223,6 +324,7 @@ function hookSpec(spec, defaultKind) {
       this.witness = item.hits < item.limit && gateMatches(spec.case_gate || spec.caseGate, args);
       if (!this.witness) return;
       item.hits++;
+      this.traceSessionId = traceStart(item, spec, args);
       const values = [];
       const count = Number(spec.argument_count !== undefined ? spec.argument_count : spec.argumentCount || 0);
       for (let i = 0; i < count; i++) values.push(pointer(args[i]));
@@ -231,6 +333,7 @@ function hookSpec(spec, defaultKind) {
     onLeave: function (retval) {
       if (!this.witness) return;
       emit('return', { module: moduleInfo(state.module), hook: { name: hookName, kind: item.kind, rva: rva }, return_value: pointer(retval), reads: configuredReads(spec, [], retval, 'retval', hookName) });
+      if (this.traceSessionId && state.trace.session && state.trace.session.id === this.traceSessionId) traceStop('entry_return');
     }
   });
   state.hooks.push(item);
@@ -298,6 +401,9 @@ rpc.exports = {
     state.module = null;
     state.hooks.forEach(function (item) { try { item.listener.detach(); } catch (_) {} });
     state.hooks = [];
+    traceStop('reconfigure');
+    state.trace = { enabled: false, active: false, stopping: false, session: null, timer: null, count: 0, sequence: 0, config: { enabled: false } };
+    try { state.trace.config = traceConfig(); state.trace.enabled = state.trace.config.enabled; } catch (error) { fail('TRACE_CONFIG_INVALID', text(error)); }
     state.sequence = 0;
     state.configurePromise = new Promise(function (resolve, reject) { state.configureResolve = resolve; state.configureReject = reject; });
     const interval = Math.max(10, Number(state.config.poll_interval_ms || state.config.pollIntervalMs || 100));

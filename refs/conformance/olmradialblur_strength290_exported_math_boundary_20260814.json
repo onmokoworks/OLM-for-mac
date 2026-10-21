@@ -1,0 +1,174 @@
+{
+  "actual_exported_call_census": {
+    "atan2f": {
+      "calls": 576,
+      "canonical_pair_digest": "6b93c0586bacd69118a7efffb58eecbd862d3c7affd1cfe1421ead1999fd851b",
+      "cartesian_product": true,
+      "left_bits": [
+        "0x00000000",
+        "0x3f800000",
+        "0x40000000",
+        "0x40400000",
+        "0x40800000",
+        "0x40a00000",
+        "0x40c00000",
+        "0x40e00000",
+        "0x41000000",
+        "0xbf800000",
+        "0xc0000000",
+        "0xc0400000",
+        "0xc0800000",
+        "0xc0a00000",
+        "0xc0c00000",
+        "0xc0e00000",
+        "0xc1000000",
+        "0xc1100000"
+      ],
+      "right_bits": [
+        "0x00000000",
+        "0x3f800000",
+        "0x40000000",
+        "0x40400000",
+        "0x40800000",
+        "0x40a00000",
+        "0x40c00000",
+        "0x40e00000",
+        "0x41000000",
+        "0x41100000",
+        "0x41200000",
+        "0x41300000",
+        "0x41400000",
+        "0x41500000",
+        "0x41600000",
+        "0x41700000",
+        "0xbf800000",
+        "0xc0000000",
+        "0xc0400000",
+        "0xc0800000",
+        "0xc0a00000",
+        "0xc0c00000",
+        "0xc0e00000",
+        "0xc1000000",
+        "0xc1100000",
+        "0xc1200000",
+        "0xc1300000",
+        "0xc1400000",
+        "0xc1500000",
+        "0xc1600000",
+        "0xc1700000",
+        "0xc1800000"
+      ],
+      "unique_pairs": 576
+    },
+    "log2f": {
+      "calls": 149,
+      "host_substitute_result_bits": [
+        "0x42000000"
+      ],
+      "input_bits": [
+        "0x4f800000"
+      ],
+      "unique_inputs": 1
+    },
+    "native_request_vectors": 577,
+    "raw_trace_sha256": "8544b8ea35e7055a136f27f93bdcf19a4071e4ba31d16edc6ad00a93e7058eec",
+    "total_calls": 725,
+    "trace_worker_sha256": "c77ec9d203b2ffd1124525e92f28aaa5ca5553166aaa2a0afe5f82488fca96fd"
+  },
+  "boundary": {
+    "aexcompat_head": "28d535469f84f67236ef3425afe4291ea2fb0991",
+    "float_imports": [
+      "atan2f",
+      "log2f"
+    ],
+    "host_substituted_float_math_is_not_native_windows_ucrt": true,
+    "installed_bundle_changed": false,
+    "native_after_effects_used": false,
+    "native_windows_ucrt_capture_received": false,
+    "network_state_changed": false,
+    "production_admission_added": false,
+    "python_double_math_is_not_native_windows_ucrt": true,
+    "strength290_public_result": "PF_Err_BAD_CALLBACK_PARAM_before_iteration"
+  },
+  "comparison": {
+    "canonical_diff_sha256": "0390f51b69c63d6ed03d04b4a44847e0d683ed9269e535febc55d625cf470f29",
+    "different_words": 84,
+    "exported_equals_internal": false,
+    "internal_equals_mac_typed": true,
+    "max_ulp": 10,
+    "ulp_histogram": {
+      "1": 54,
+      "10": 1,
+      "2": 25,
+      "3": 3,
+      "4": 1
+    }
+  },
+  "fixture": {
+    "active_source_sha256": "187a7caf98537700d3644aed245150467f284b87ef73df56e46dd331ba40cf1f",
+    "bytes": 9216,
+    "height": 18,
+    "pixel_format": "PF32_ARGB_FLOAT_LE",
+    "rowbytes": 512,
+    "source_family": "opaque disconnected 3x3, 2x2, and 1x1 components on transparent black",
+    "width": 32
+  },
+  "identities": {
+    "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "aexcompat_float_math_patch_sha256": "04147344b71c3f08a5e7e796d9d50f65845def15e924a2836a9e89ae249f81e3",
+    "aexcompat_float_math_trace_patch_sha256": "a1dc5e91cb2a9c9c2e332c7ce2361c97eee6134e9b89f3bf0e9bd890b8038684",
+    "production_source_sha256": "b74b3d2c7ea6724593b28f82d36615e071e18d813e5b99cc948e26a447fdb0d1",
+    "type1_closure_generator_sha256": "4e50de24a7f1eeda37c1a24d60a6cfb58c0f94d0bc14970f6e3ade0c73b22a5e",
+    "type1_closure_report_sha256": "d0dd7b20615e18a0e9dc3cf501c4fe858f88e5ef7344ab9f691a2a41f2a9921b"
+  },
+  "owners": {
+    "aex_internal_owner": {
+      "bytes": 9216,
+      "output_sha256": "940c1e7e1ef45a58ebd81df06c263c1e7a1e0a38a209f9a800f1d2c5d51614e5"
+    },
+    "exported_f64_to_f32_counterfactual": {
+      "bytes": 9216,
+      "output_sha256": "5c70fe269db5c2923c1ce1a63645f83075975ab6b13eb34e09c240b999351f28"
+    },
+    "exported_smart_aexcompat_f32_math": {
+      "bytes": 9216,
+      "guards_intact": true,
+      "output_sha256": "f8be33609ffc5b5f1bdf2af64b638a0850a386b79fbb95bb0a5c73c5d3c5ad60",
+      "render_error": 0,
+      "returncode": 0,
+      "worker_sha256": "fa0541ff62babf170fd8c53b6de21d6747b27c4e55eeec8270f68051dd4bf80d"
+    },
+    "mac_typed_owner": {
+      "bytes": 9216,
+      "output_sha256": "940c1e7e1ef45a58ebd81df06c263c1e7a1e0a38a209f9a800f1d2c5d51614e5"
+    }
+  },
+  "parameters": {
+    "angle_degrees": 0.0,
+    "blur_type": "Rotation_Type_2",
+    "brightness": 1.0,
+    "center": [
+      16.0,
+      9.0
+    ],
+    "inner_edge_fade": 0,
+    "inner_offset": 0,
+    "inner_offset_mode": 1,
+    "inner_strength": 0,
+    "noise_offset": 0.0,
+    "noise_type": 1,
+    "noise_variation": 100.0,
+    "outer_edge_fade": 0,
+    "outer_offset": 0,
+    "outer_offset_mode": 1,
+    "outer_strength": 290,
+    "quality": 5.0,
+    "ratio": 1.0,
+    "repeat_border": 1,
+    "seed": 1,
+    "size_variation": 25.0,
+    "thickness": 10.0
+  },
+  "schema": "olmradialblur.strength290-exported-math-boundary/1",
+  "status": "PASS_LOCALIZED_HOST_MATH_BOUNDARY_STRENGTH290_REMAINS_FAIL_CLOSED"
+}

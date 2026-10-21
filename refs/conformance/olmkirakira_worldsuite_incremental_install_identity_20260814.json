@@ -1,0 +1,22 @@
+{
+  "after_effects_processes": [],
+  "authorities": {
+    "identity_after": "a77f3a5d91787984ca4f1bb4bcffddbea5cb35f71ca12ac31953ed8f30b972e1",
+    "identity_before": "b186a6448dc68f3d117617962237f0ff56087c99530f7823b1cb97abfdd872a3",
+    "installer": "99415bc2147fc5233ba9d0f5bec5a3e6f9cc3ecbe39d74906dcf6470b4598a7c",
+    "transaction": "305d503982086fe02a85af2c506904eef1d769ee6b7ee1252d20f011c1c94a29"
+  },
+  "candidate_installed_inventory_exact": true,
+  "new_binary_sha256": "edd6953ff0a86efa550ffd8a5be050cb200342ad68427519c092bcac578596a7",
+  "non_kira_identity_rows_exact": true,
+  "old_binary_sha256": "260c2d5e635b38213adf88e01298510bf7f180b38bdb5e1d2b85a2906fbfbf18",
+  "rollback_copy_count": 3,
+  "schema": "olmkirakira.worldsuite-install-audit/1",
+  "scope": {
+    "adhoc_codesign_only": true,
+    "native_after_effects": false,
+    "transaction_history": true
+  },
+  "source_sha256": "f251b19150a0b490d58cf6bece4c40fe9403f9bd36849cfe8c89ffbd14fc96c2",
+  "status": "PASS_OLMKIRAKIRA_WORLDSUITE_INCREMENTAL_INSTALL_NO_AE"
+}

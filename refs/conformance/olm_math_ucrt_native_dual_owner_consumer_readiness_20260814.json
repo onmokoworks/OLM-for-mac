@@ -1,0 +1,215 @@
+{
+  "consumer": {
+    "decision": {
+      "after_effects_launched": false,
+      "directional_public_effectmain_closure_still_required": true,
+      "distance_public_smart_closure_still_required": true,
+      "installed_binary_changed": false,
+      "network_changed": false,
+      "production_promoted": false
+    },
+    "directional_mac_table_calls": {
+      "expf": 996,
+      "pow": 47514,
+      "powf": 0
+    },
+    "directional_rows": [
+      {
+        "aex_raw_sha256": "312a602e939e68cae1b8d966af9ec33e0a8c3646c1c326664abbcb73456bce0e",
+        "depth": 8,
+        "guards_intact": true,
+        "mac_production_direct_raw_sha256": "312a602e939e68cae1b8d966af9ec33e0a8c3646c1c326664abbcb73456bce0e",
+        "raw_bytes": 9216,
+        "render_mode": "smart-cpu",
+        "same_table_full_raw_exact": true,
+        "tuple_index": 2
+      },
+      {
+        "aex_raw_sha256": "902490856e0c784d2c2fb9b1ba91d4e1ada5053acbeddaef5da15ade471a815e",
+        "depth": 16,
+        "guards_intact": true,
+        "mac_production_direct_raw_sha256": "902490856e0c784d2c2fb9b1ba91d4e1ada5053acbeddaef5da15ade471a815e",
+        "raw_bytes": 18432,
+        "render_mode": "smart-cpu",
+        "same_table_full_raw_exact": true,
+        "tuple_index": 2
+      },
+      {
+        "aex_raw_sha256": "27ed24ed8bf54b48af831e6ec5a44dd195c89b2fdd0acea5dee123b37d5adc20",
+        "depth": 32,
+        "guards_intact": true,
+        "mac_production_direct_raw_sha256": "27ed24ed8bf54b48af831e6ec5a44dd195c89b2fdd0acea5dee123b37d5adc20",
+        "raw_bytes": 36864,
+        "render_mode": "smart-cpu",
+        "same_table_full_raw_exact": true,
+        "tuple_index": 0
+      },
+      {
+        "aex_raw_sha256": "0b74caf1aef39ab242ca09b10d65bdc77a3646f31511a72f29c3e5e6d70635c2",
+        "depth": 32,
+        "guards_intact": true,
+        "mac_production_direct_raw_sha256": "0b74caf1aef39ab242ca09b10d65bdc77a3646f31511a72f29c3e5e6d70635c2",
+        "raw_bytes": 36864,
+        "render_mode": "smart-cpu",
+        "same_table_full_raw_exact": true,
+        "tuple_index": 1
+      },
+      {
+        "aex_raw_sha256": "ea11382502f61da8a5a1408dd294b15dd5af0fda81f18b9823c2d2a453f0b792",
+        "depth": 32,
+        "guards_intact": true,
+        "mac_production_direct_raw_sha256": "ea11382502f61da8a5a1408dd294b15dd5af0fda81f18b9823c2d2a453f0b792",
+        "raw_bytes": 36864,
+        "render_mode": "smart-cpu",
+        "same_table_full_raw_exact": true,
+        "tuple_index": 2
+      },
+      {
+        "aex_raw_sha256": "faa5ad5686a58a4f390a354e14c72ac4255212b1be05ddf174345e8d11d42782",
+        "depth": 32,
+        "guards_intact": true,
+        "mac_production_direct_raw_sha256": "faa5ad5686a58a4f390a354e14c72ac4255212b1be05ddf174345e8d11d42782",
+        "raw_bytes": 36864,
+        "render_mode": "smart-cpu",
+        "same_table_full_raw_exact": true,
+        "tuple_index": 3
+      }
+    ],
+    "directional_rows_sha256": "19f2e545a869c4fc1da5ac2687343c311a2c4e1c5e68ca479d5b6a3b598dd8c2",
+    "distance_rows": [
+      {
+        "aex_raw_sha256": "3e04fab22152eb32638a4864f256f76bd118ffbb6315b0c7a8b852b27509fc39",
+        "blur_mode": 2,
+        "cell": "mode2.bg0",
+        "guards_intact": true,
+        "mac_renderbits_raw_sha256": "3e04fab22152eb32638a4864f256f76bd118ffbb6315b0c7a8b852b27509fc39",
+        "raw_bytes": 2992,
+        "same_table_full_raw_exact": true,
+        "use_background": false
+      },
+      {
+        "aex_raw_sha256": "6c86caeab878b256f933d03e105085f86810f255296cc2fa5ac434dc5067e496",
+        "blur_mode": 2,
+        "cell": "mode2.bg1",
+        "guards_intact": true,
+        "mac_renderbits_raw_sha256": "6c86caeab878b256f933d03e105085f86810f255296cc2fa5ac434dc5067e496",
+        "raw_bytes": 2992,
+        "same_table_full_raw_exact": true,
+        "use_background": true
+      },
+      {
+        "aex_raw_sha256": "12bdf0c207bff9fb8c0390f848883281b8484802baea72c82f98db96c3176849",
+        "blur_mode": 3,
+        "cell": "mode3.bg0",
+        "guards_intact": true,
+        "mac_renderbits_raw_sha256": "12bdf0c207bff9fb8c0390f848883281b8484802baea72c82f98db96c3176849",
+        "raw_bytes": 2992,
+        "same_table_full_raw_exact": true,
+        "use_background": false
+      },
+      {
+        "aex_raw_sha256": "dfeb76265a320e6aae3945fdb2aaa76cd9e77f7e63f586046bca744bfad9cb07",
+        "blur_mode": 3,
+        "cell": "mode3.bg1",
+        "guards_intact": true,
+        "mac_renderbits_raw_sha256": "dfeb76265a320e6aae3945fdb2aaa76cd9e77f7e63f586046bca744bfad9cb07",
+        "raw_bytes": 2992,
+        "same_table_full_raw_exact": true,
+        "use_background": true
+      },
+      {
+        "aex_raw_sha256": "849be120ac0c5e4990c8a19135ebfccdb2f6350ffe53cd0bb1a9f6aafb486c2a",
+        "blur_mode": 4,
+        "cell": "mode4.bg0",
+        "guards_intact": true,
+        "mac_renderbits_raw_sha256": "849be120ac0c5e4990c8a19135ebfccdb2f6350ffe53cd0bb1a9f6aafb486c2a",
+        "raw_bytes": 2992,
+        "same_table_full_raw_exact": true,
+        "use_background": false
+      },
+      {
+        "aex_raw_sha256": "0d8860db7bffd87c6737298482eb60d0378b2dc63841d861ee8e174aaee0a81c",
+        "blur_mode": 4,
+        "cell": "mode4.bg1",
+        "guards_intact": true,
+        "mac_renderbits_raw_sha256": "0d8860db7bffd87c6737298482eb60d0378b2dc63841d861ee8e174aaee0a81c",
+        "raw_bytes": 2992,
+        "same_table_full_raw_exact": true,
+        "use_background": true
+      },
+      {
+        "aex_raw_sha256": "40b5d262cdc0ab372036c9d2774fa9400f74daa7895c75c2222a246b01c485a5",
+        "blur_mode": 5,
+        "cell": "mode5.bg0",
+        "guards_intact": true,
+        "mac_renderbits_raw_sha256": "40b5d262cdc0ab372036c9d2774fa9400f74daa7895c75c2222a246b01c485a5",
+        "raw_bytes": 2992,
+        "same_table_full_raw_exact": true,
+        "use_background": false
+      },
+      {
+        "aex_raw_sha256": "fe715e7973fa79d6043cbe86dcfce3205869fb23ac9d69a8d98b288ab20ad6d7",
+        "blur_mode": 5,
+        "cell": "mode5.bg1",
+        "guards_intact": true,
+        "mac_renderbits_raw_sha256": "fe715e7973fa79d6043cbe86dcfce3205869fb23ac9d69a8d98b288ab20ad6d7",
+        "raw_bytes": 2992,
+        "same_table_full_raw_exact": true,
+        "use_background": true
+      }
+    ],
+    "distance_rows_sha256": "a3e7957c2677093ef5ac216b5c8c025620a31b7e30af34355e719b2e3a0392a0",
+    "status": "PASS_NATIVE_TABLE_EXPORTED_AEX_MAC_DIRECT_FULL_RAW_14_OF_14",
+    "summary": {
+      "directional_same_table_exact": 6,
+      "distance_same_table_exact": 8,
+      "total_same_table_exact": 14
+    },
+    "table": {
+      "expf_unique_keys": 377,
+      "powf_unique_keys": 850,
+      "sha256": "487191c9e48617a316eda7040ce87931f09aeb882158fd2f2324f59dc0ed211c",
+      "source": "validated_native_windows_ucrt_return",
+      "total_unique_keys": 1227
+    },
+    "worker_build": {
+      "clean_clone": true,
+      "patched_callbacks_sha256": "c6db8fea04e2db211943ff923bbfe8b22655859dcf07210e403516a80c4b9aca",
+      "patched_imports_sha256": "27ad9a37a640c13dbed6e95a8eb7cca27406db8d48b3c89b9573075546f4d466",
+      "patched_main_sha256": "5efc9609220a4cf5f077ef975e92a5815359d6323d2019f14c6bddc307df90b7",
+      "release_build": true,
+      "worker_bytes": 3887728,
+      "worker_sha256": "c2f28fd0f28b73ebb57b68e7ffefc9e11c254f016aae5d0ed157f7ab3d3f6af7"
+    }
+  },
+  "identities": {
+    "consumer_sha256": "af09ca96130d88272ea901e5ef86fbbc195ff08c1d060ab909bdf000c0b8ffc3",
+    "directional_host_control_sha256": "77fc65535ca2390e3e626446a86aa9ebbbbd6612db76875ccca9714876095e98",
+    "distance_host_control_sha256": "59f36cb877f47837684fa59d97fa3cac228fd11de5decee12e13524f2a77ac6c",
+    "synthetic_return_builder_sha256": "cfe9118537f8d7deb794eb27c958b963bc547c25b14eca7db36952660eee9123"
+  },
+  "schema": "olm.math-ucrt-native-dual-owner-consumer-readiness/1",
+  "scope": {
+    "after_effects_launched": false,
+    "clean_aexcompat_release_build": true,
+    "consumer_code_path_executed": true,
+    "installed_binary_changed": false,
+    "native_windows_result_claimed": false,
+    "native_windows_return_received": false,
+    "network_changed": false,
+    "production_changed": false,
+    "strict_return_analyzer_executed": true
+  },
+  "status": "PASS_SYNTHETIC_VALIDATED_RETURN_CONSUMER_AEX_MAC_DIRECT_14_OF_14",
+  "synthetic_return": {
+    "explicitly_not_native_windows_evidence": true,
+    "ucrt_file_version": "10.0.test",
+    "ucrt_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "validated_vectors": {
+      "directional_expf": 494,
+      "directional_powf": 787,
+      "distance_powf": 63,
+      "total": 1344
+    }
+  }
+}

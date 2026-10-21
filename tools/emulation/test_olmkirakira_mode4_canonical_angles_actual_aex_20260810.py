@@ -40,14 +40,16 @@ def main() -> int:
     assert {c["angle_degrees"] for c in report["cases"]} == {-45, 0, 17, 45, 90}
     source = PRODUCTION.read_text(encoding="utf-8")
     for expression in ("90.0 + glow_rotation", "glow_rotation",
-                       "45.0 + glow_rotation", "-45.0 + glow_rotation"):
+                       "45.0 + glow_rotation", "135.0 + glow_rotation"):
         assert expression in source
     assert "if (blur_mode == 4)" in source
     assert "mode4_rotated_scalar_admitted(" in source
     assert "return input;" in source
     # Public source work geometry 5x3 at default Glow Rotation 0 reaches these
     # exact rotated-leaf tuples for the four named directional controls.
-    for angle, expected_wh in ((0, (9, 7)), (45, (9, 9)), (-45, (9, 9)), (90, (9, 9))):
+    # -45 remains a valid direct-helper primitive in the matrix above.  The
+    # exported owner, however, selects +135 for Diagonal 2.
+    for angle, expected_wh in ((0, (9, 7)), (45, (9, 9)), (135, (9, 9)), (90, (9, 9))):
         assert (extent(5, 3, angle), extent(3, 5, angle)) == expected_wh
 
     with tempfile.TemporaryDirectory(prefix="kira_mode4_canonical_") as td:

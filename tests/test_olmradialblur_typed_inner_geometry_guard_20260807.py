@@ -27,7 +27,9 @@ template <typename P> PF_Err run(double cx,double cy,double cw,double ch,int irb
 int main(){{
   if(run<PF_Pixel16>(4,3,9,7,80,88,9,7)!=PF_Err_NONE)return 1;
   if(run<PF_PixelFloat>(4,3,9,7,160,176,9,7)!=PF_Err_NONE)return 2;
-  if(run<PF_Pixel16>(4.5,3,9,7,80,88,9,7)!=PF_Err_BAD_CALLBACK_PARAM)return 3;
+  // GenericBaseline now admits an in-frame off-center point; the exact fixture
+  // profile remains preferred when its centered tuple matches.
+  if(run<PF_Pixel16>(4.5,3,9,7,80,88,9,7)!=PF_Err_NONE)return 3;
   if(run<PF_PixelFloat>(4,3,8,7,160,176,9,7)!=PF_Err_BAD_CALLBACK_PARAM)return 4;
   if(run<PF_Pixel16>(4,3,9,7,71,88,9,7)!=PF_Err_BAD_CALLBACK_PARAM)return 5;
   if(run<PF_PixelFloat>(4,3,9,7,160,176,8,7)!=PF_Err_BAD_CALLBACK_PARAM)return 6;

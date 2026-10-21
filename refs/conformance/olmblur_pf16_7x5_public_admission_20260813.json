@@ -1,0 +1,137 @@
+{
+  "claim_boundary": "For the exact PF16 7x5 source, rowbytes 69, Amount 4, Smoothness 100, Repeat 1, Bias 1 and NonLegacy tuple only, current Mac public SmartRender is raw exact to the same-source Windows exported owner and preserves input, output headers, padding and guards. Enumerated one-away and lifecycle failures commit no output. No other source, tuple, geometry, depth, native AE or installed-binary behavior is promoted.",
+  "claims_not_made": [
+    "PF8 or PF32 for this geometry",
+    "another PF16 source/tuple/layout",
+    "native Windows AE",
+    "native Mac AE",
+    "current installed binary",
+    "release gate"
+  ],
+  "contract": {
+    "active_output_sha256": "d644ed25b46352400797efce2abaa29c7a50c20ad44a7eac4a3618f774ed424a",
+    "active_source_sha256": "5faee8f036157e787ab66a48553da63cc3d4b3bacd678c53ac12a9fe6ef0117b",
+    "depth": "PF16",
+    "geometry": [
+      7,
+      5
+    ],
+    "padding_per_row": 13,
+    "parameters": {
+      "amount_f64": 4.0,
+      "bias": 1,
+      "legacy": 0,
+      "repeat": 1,
+      "smoothness_fixed": 6553600
+    },
+    "rowbytes": 69
+  },
+  "gates": [
+    "real AE_Effect.h source-included SmartRender",
+    "optional pixel checkin present/null and never called",
+    "same-source Windows exported public owner",
+    "active output raw exact",
+    "13 input padding bytes copied only on success",
+    "input full storage and world header immutable",
+    "output world header and guards immutable",
+    "failure output full storage untouched",
+    "source first/middle/last mutation",
+    "parameter and world/layout one-aways",
+    "bidirectional partial overlap",
+    "five checkout and five checkin failure ordinals",
+    "suite/format/copy/allocation failures"
+  ],
+  "identities": {
+    "probe": {
+      "path": "tools/emulation/probe_olmblur_pf16_7x5_public_admission_20260813.cpp",
+      "sha256": "796a656e14838dac783611cf534c31c722068e2a17ebc663e0c3c078fb5ee1be"
+    },
+    "source": {
+      "path": "mac/OLMBlur/OLMBlur.cpp",
+      "sha256": "22eb712a2485e080d811d2c064fe78bd521ee25434ece9a290a2d9b7b6e1fdd7"
+    },
+    "windows_exported_owner": {
+      "path": "refs/conformance/olmblur_pf16_7x5_exported_public_owner_20260813.json",
+      "sha256": "7d0374fc07cdeeee509a2db0d77ad96ad0d924a0d68fbeb464ad2cb769e4c4a6"
+    },
+    "worker": {
+      "path": "core/olmblur_worker16_nonlegacy.cpp",
+      "sha256": "e0cec4230006c518514e4c730fa940fb935074a48e401d8e7f586b46b7b4266e"
+    }
+  },
+  "run_lines": [
+    "SMALL positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL positive exact=1 expected=0 actual=0 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL source_first exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL source_middle exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL source_last exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL amount_up exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL amount_down exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL smooth_down exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL smooth_up exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL repeat_down exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL repeat_up exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL bias_down exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL bias_up exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL legacy_one exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL legacy_invalid exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL input_width exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL output_height exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL input_rowbytes exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL output_rowbytes exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL input_extent exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL output_extent exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL input_origin exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL output_origin exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL input_flags exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL output_flags exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL input_format exact=1 expected=516 actual=516 params=5/5 suite=1/2/1 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL output_format exact=1 expected=516 actual=516 params=5/5 suite=1/2/1 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL depth exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL dsx_num exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL dsx_den exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL dsy_num exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL dsy_den exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL alias exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL overlap_forward exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL overlap_backward exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL input_null exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL output_null exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL null_layer exact=1 expected=516 actual=516 params=0/0 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL null_output exact=1 expected=516 actual=516 params=0/0 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL null_param_out exact=1 expected=516 actual=516 params=0/0 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL null_param_in exact=1 expected=516 actual=516 params=0/0 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL null_pica exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL null_acquire exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL null_release exact=1 expected=516 actual=516 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL layer_error exact=1 expected=70 actual=70 params=0/0 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL output_error exact=1 expected=71 actual=71 params=0/0 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL param_checkout_1 exact=1 expected=72 actual=72 params=1/0 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL param_checkout_2 exact=1 expected=72 actual=72 params=2/1 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL param_checkout_3 exact=1 expected=72 actual=72 params=3/2 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL param_checkout_4 exact=1 expected=72 actual=72 params=4/3 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL param_checkout_5 exact=1 expected=72 actual=72 params=5/4 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL param_checkin_1 exact=1 expected=73 actual=73 params=1/1 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL param_checkin_2 exact=1 expected=73 actual=73 params=2/2 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL param_checkin_3 exact=1 expected=73 actual=73 params=3/3 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL param_checkin_4 exact=1 expected=73 actual=73 params=4/4 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL param_checkin_5 exact=1 expected=73 actual=73 params=5/5 suite=0/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL suite_acquire exact=1 expected=74 actual=74 params=5/5 suite=1/0/0 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL suite_null exact=1 expected=516 actual=516 params=5/5 suite=1/0/1 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL format_input exact=1 expected=75 actual=75 params=5/5 suite=1/1/1 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL format_output exact=1 expected=76 actual=76 params=5/5 suite=1/2/1 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL suite_release exact=1 expected=80 actual=80 params=5/5 suite=1/2/1 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL copy_error exact=1 expected=86 actual=86 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL copy_throw_oom exact=1 expected=4 actual=4 params=5/5 suite=1/2/1 copy=1 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "SMALL stage_oom exact=1 expected=4 actual=4 params=5/5 suite=1/2/1 copy=0 input=1 output=1 success=1 headers=1 mismatches=0 first=-1/0/0",
+    "small_all_exact=1 positive=2 negative=62"
+  ],
+  "run_sha256": "235822ee615d9ddd99ad2f312c31da24f40c4b8bc73e45d9f237b4dcd3ff9181",
+  "schema": "olmblur.pf16-7x5-public-admission/1",
+  "status": "PASS_PF16_7X5_PUBLIC_RAW_EXACT_AND_62_FAIL_CLOSED",
+  "summary": {
+    "all_exact": true,
+    "negative_controls": 62,
+    "positive_controls": 2
+  }
+}

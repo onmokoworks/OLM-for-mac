@@ -1,0 +1,362 @@
+{
+  "after_effects_operation_performed": false,
+  "authoritative_build_evidence": {
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "build_result": "BUILD SUCCEEDED",
+    "bundle_inventory_sha256": "d307abb79ab1e426c8f367f13d61573fa5e5be6e5babd59216415be9eef43bd8",
+    "configuration": "Debug",
+    "created_at_jst": "2026-08-13T02:52:57+09:00",
+    "path": "handoffs/olmtoondilate_ded9_incremental_install_20260813/build_identity.json",
+    "plist_minimum_system_version": "11.0",
+    "required_exports": {
+      "arm64": [
+        "_EffectMain",
+        "_PluginDataEntryFunction2"
+      ],
+      "x86_64": [
+        "_EffectMain",
+        "_PluginDataEntryFunction2"
+      ]
+    },
+    "sha256": "17623fdb49e0dbca5acf37ae1461bce3d2ae65acdbcbcdb62e19d42b6c440f76",
+    "signature": {
+      "cdhash": "4cce48186a315684e1bc34a34a25fcb146117d6b",
+      "kind": "adhoc",
+      "strict_deep_verify": true
+    },
+    "slice_minimum_versions": {
+      "arm64": "11.0",
+      "x86_64": "11.0"
+    }
+  },
+  "build_and_prepare_go_conditions": {
+    "accepted_preidentity_exact": true,
+    "after_effects_not_running": true,
+    "candidate_full_inventory_observed": true,
+    "candidate_macos11_exact": true,
+    "candidate_required_exports_exact": true,
+    "candidate_strict_codesign_valid": true,
+    "candidate_universal_exact": true,
+    "clean_or_exact_prepared_state": true,
+    "explicit_prepare_or_install_execution_still_required": true,
+    "other_nine_rows_projected_exact": true,
+    "predecessor_full_inventory_observed": true,
+    "source_and_project_frozen": true,
+    "toon_row_only_projected": true,
+    "top_level_timestamp_fields_only_projected": true
+  },
+  "build_identity_sha256": "17623fdb49e0dbca5acf37ae1461bce3d2ae65acdbcbcdb62e19d42b6c440f76",
+  "candidate_executable_sha256": "5bbe693106072ceff14a1c1ae5a0d64815cddde58356c57575d29e516479036e",
+  "claim_boundary": "Read-only readiness for an explicit future OLMToonDilate-only transaction: frozen candidate and current predecessor identity, complete scoped inventories, rollback plan, same-volume staging, renameatx_np(RENAME_SWAP), and the projected ten-plugin identity transition. No --install invocation, filesystem installation mutation, AE launch/load/UI/render, Developer ID, notarization, distribution, or post-install identity claim.",
+  "default_installer_mode": "read-only dry-run validation",
+  "generated_from_frozen_build_at": "2026-08-13T02:52:57+09:00",
+  "install_flag_executed": false,
+  "install_go_conditions": {
+    "candidate_and_predecessor_reverified": true,
+    "installed_backup_full_inventory_exact": true,
+    "post_prepare_artifacts_absent": true,
+    "pre_identity_exact_and_current": true,
+    "pre_swap_original_full_inventory_exact": true,
+    "preinstall_manifest_exact": true,
+    "prepared_artifacts_present": true
+  },
+  "installer_sha256": "4c31138980c4bface0e7e91d50063aff8c90577d26ec21d83a6ff49e3d232b26",
+  "old_installed_executable_sha256": "fe0a4959a677eb495f290fc384d93a2da4b66119f07bd8d1e5dac0847f95c5e9",
+  "only_mediacore_or_accepted_identity_mutating_cli_flag": "--install",
+  "pre_identity_manifest_sha256": "869a5e88ab34b3b26cc4a3786edb6de93f0e10c88b69c33f6e8d7afb6f18da90",
+  "preflight": {
+    "after_effects_processes": [],
+    "candidate": {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "binary_sha256": "5bbe693106072ceff14a1c1ae5a0d64815cddde58356c57575d29e516479036e",
+      "bundle_executable": "OLMToonDilate",
+      "bundle_identifier": "com.adobe.AfterEffects.OLMToonDilate",
+      "info_plist_minimum_system_version": "11.0",
+      "macho_slice_minimum_versions": {
+        "arm64": "11.0",
+        "x86_64": "11.0"
+      },
+      "manifest": [
+        {
+          "mode": 493,
+          "path": ".",
+          "type": "directory"
+        },
+        {
+          "mode": 493,
+          "path": "Contents",
+          "type": "directory"
+        },
+        {
+          "bytes": 1398,
+          "mode": 420,
+          "path": "Contents/Info.plist",
+          "sha256": "b9591a315151cde8ff92d2aa649f80bb829589dbb134b669a01d55650b25d8dc",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/MacOS",
+          "type": "directory"
+        },
+        {
+          "bytes": 243376,
+          "mode": 493,
+          "path": "Contents/MacOS/OLMToonDilate",
+          "sha256": "5bbe693106072ceff14a1c1ae5a0d64815cddde58356c57575d29e516479036e",
+          "type": "file"
+        },
+        {
+          "bytes": 8,
+          "mode": 420,
+          "path": "Contents/PkgInfo",
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/Resources",
+          "type": "directory"
+        },
+        {
+          "bytes": 670,
+          "mode": 420,
+          "path": "Contents/Resources/OLMToonDilate.rsrc",
+          "sha256": "265753c64c6a6317dbcffe071b37d957eed0ca87d26f0da66f44473ef3d6fbae",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/_CodeSignature",
+          "type": "directory"
+        },
+        {
+          "bytes": 2458,
+          "mode": 420,
+          "path": "Contents/_CodeSignature/CodeResources",
+          "sha256": "704836d23df9d5ebeee9b6abeacb3b4bdcac2b61ca5273d4116f07f57aa8a100",
+          "type": "file"
+        }
+      ],
+      "required_exports": {
+        "arm64": {
+          "_EffectMain": 1,
+          "_PluginDataEntryFunction2": 1
+        },
+        "x86_64": {
+          "_EffectMain": 1,
+          "_PluginDataEntryFunction2": 1
+        }
+      },
+      "signing_kind": "ad-hoc",
+      "strict_codesign": true
+    },
+    "identity_transition": {
+      "changed_fields": {
+        "OLMToonDilate": [
+          "sha256",
+          "source_bundle",
+          "source_sha256"
+        ]
+      },
+      "changed_plugins": [
+        "OLMToonDilate"
+      ],
+      "other_nine_rows_exact": true,
+      "top_level_changed_fields": [
+        "accepted_at",
+        "installed_after"
+      ],
+      "unchanged_plugins": [
+        "ColorKeep",
+        "OLMBlur",
+        "OLMColorKey",
+        "OLMDirectionalBlur",
+        "OLMDistanceGradation",
+        "OLMKiraKira",
+        "OLMRadialBlur",
+        "OLMSmoother",
+        "OLMSmoother2"
+      ]
+    },
+    "installed_before": {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "binary_sha256": "fe0a4959a677eb495f290fc384d93a2da4b66119f07bd8d1e5dac0847f95c5e9",
+      "bundle_executable": "OLMToonDilate",
+      "bundle_identifier": "com.adobe.AfterEffects.OLMToonDilate",
+      "info_plist_minimum_system_version": "26.2",
+      "macho_slice_minimum_versions": {
+        "arm64": "26.2",
+        "x86_64": "26.2"
+      },
+      "manifest": [
+        {
+          "mode": 493,
+          "path": ".",
+          "type": "directory"
+        },
+        {
+          "mode": 493,
+          "path": "Contents",
+          "type": "directory"
+        },
+        {
+          "bytes": 1398,
+          "mode": 420,
+          "path": "Contents/Info.plist",
+          "sha256": "5083e74398255a0f912ac5bf0ceaccb634a6e92ae5890d3b81a59dd487df6e21",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/MacOS",
+          "type": "directory"
+        },
+        {
+          "bytes": 200944,
+          "mode": 493,
+          "path": "Contents/MacOS/OLMToonDilate",
+          "sha256": "fe0a4959a677eb495f290fc384d93a2da4b66119f07bd8d1e5dac0847f95c5e9",
+          "type": "file"
+        },
+        {
+          "bytes": 8,
+          "mode": 420,
+          "path": "Contents/PkgInfo",
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/Resources",
+          "type": "directory"
+        },
+        {
+          "bytes": 670,
+          "mode": 420,
+          "path": "Contents/Resources/OLMToonDilate.rsrc",
+          "sha256": "265753c64c6a6317dbcffe071b37d957eed0ca87d26f0da66f44473ef3d6fbae",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/_CodeSignature",
+          "type": "directory"
+        },
+        {
+          "bytes": 2458,
+          "mode": 420,
+          "path": "Contents/_CodeSignature/CodeResources",
+          "sha256": "704836d23df9d5ebeee9b6abeacb3b4bdcac2b61ca5273d4116f07f57aa8a100",
+          "type": "file"
+        }
+      ],
+      "required_exports": {
+        "arm64": {
+          "_EffectMain": 1,
+          "_PluginDataEntryFunction2": 1
+        },
+        "x86_64": {
+          "_EffectMain": 1,
+          "_PluginDataEntryFunction2": 1
+        }
+      },
+      "signing_kind": "ad-hoc",
+      "strict_codesign": true
+    },
+    "installed_bundle_count": 1,
+    "new_binary_sha256": "5bbe693106072ceff14a1c1ae5a0d64815cddde58356c57575d29e516479036e",
+    "old_binary_sha256": "fe0a4959a677eb495f290fc384d93a2da4b66119f07bd8d1e5dac0847f95c5e9",
+    "pre_identity_sha256": "869a5e88ab34b3b26cc4a3786edb6de93f0e10c88b69c33f6e8d7afb6f18da90",
+    "production_source_sha256": "ded9eaab6b660044c9035f3aa0d9660f86086ec2e451c97c9ee0c1115574464b",
+    "project_sha256": "eba3266a1dba3f50b217463c5bb077e9976b22febe70bfb7c5d05c6bdaca8abc",
+    "same_volume_stage_and_handoff": true,
+    "schema": "olmtoondilate.ded9-transactional-install-preflight/1",
+    "status": "dry_run_install_ready_prepared_no_mutation",
+    "transaction_artifact_paths": [
+      "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olmtoondilate_ded9_incremental_install_20260813/installed_backup/OLMToonDilate.plugin",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olmtoondilate_ded9_incremental_install_20260813/pre_swap_original/OLMToonDilate.plugin",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olmtoondilate_ded9_incremental_install_20260813/olm_installed_identity_manifest_before.json",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olmtoondilate_ded9_incremental_install_20260813/preinstall_inventory_manifest.json",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olmtoondilate_ded9_incremental_install_20260813/moved_old/OLMToonDilate.plugin",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olmtoondilate_ded9_incremental_install_20260813/failed_new/OLMToonDilate.plugin",
+      "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/.OLMToonDilate.ded9-stage-20260813",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olmtoondilate_ded9_incremental_install_20260813/olm_installed_identity_manifest_after.json",
+      "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olmtoondilate_ded9_incremental_install_20260813/install_transaction.json"
+    ],
+    "transaction_artifact_state": "prepared",
+    "transaction_artifacts_absent": false
+  },
+  "prepare_cleanup_cli_flag": "--cleanup-prepare",
+  "prepare_cli_flag": "--prepare",
+  "prepared_install_evidence": {
+    "accepted_identity_unchanged_since_prepare": true,
+    "candidate_reverified_exact": true,
+    "installed_predecessor_reverified_exact": true,
+    "old_bundle_copy_count_before_swap": 2,
+    "old_bundle_full_inventories_exact": true,
+    "post_prepare_artifacts_absent": true,
+    "pre_identity_sha256": "869a5e88ab34b3b26cc4a3786edb6de93f0e10c88b69c33f6e8d7afb6f18da90"
+  },
+  "production_source_sha256": "ded9eaab6b660044c9035f3aa0d9660f86086ec2e451c97c9ee0c1115574464b",
+  "project_sha256": "eba3266a1dba3f50b217463c5bb077e9976b22febe70bfb7c5d05c6bdaca8abc",
+  "prospective_identity_transition": {
+    "changed_fields": {
+      "OLMToonDilate": [
+        "sha256",
+        "source_bundle",
+        "source_sha256"
+      ]
+    },
+    "changed_plugins": [
+      "OLMToonDilate"
+    ],
+    "other_nine_rows_exact": true,
+    "top_level_changed_fields": [
+      "accepted_at",
+      "installed_after"
+    ],
+    "unchanged_plugins": [
+      "ColorKeep",
+      "OLMBlur",
+      "OLMColorKey",
+      "OLMDirectionalBlur",
+      "OLMDistanceGradation",
+      "OLMKiraKira",
+      "OLMRadialBlur",
+      "OLMSmoother",
+      "OLMSmoother2"
+    ]
+  },
+  "schema": "olmtoondilate.ded9-transactional-install-readiness/1",
+  "status": "GO_OLMTOONDILATE_DED9_INSTALL_READY_PREPARED_NO_MUTATION",
+  "transaction_plan": {
+    "before_bundle_mutation": [
+      "exact pre-identity byte copy",
+      "installed_backup full bundle inventory copy",
+      "pre_swap_original full bundle inventory copy",
+      "preinstall inventory manifest"
+    ],
+    "bundle_exchange": "renameatx_np(RENAME_SWAP)",
+    "failure_restores_exact_pre_identity_bytes": true,
+    "failure_restores_predecessor_bundle": true,
+    "identity_write": "same-directory atomic os.replace",
+    "manifest_and_bundle_single_atomic_primitive": false,
+    "manual_prepare_cleanup": "--cleanup-prepare refuses unless predecessor install and identity remain exact and no post-prepare artifact exists",
+    "prepare_failure_cleanup": "automatic removal of only pre-swap preparation outputs",
+    "prepare_reexecution": "idempotent only after exact live prepared-artifact revalidation",
+    "same_volume_verified": true,
+    "stage_is_installed_bundle_sibling": true,
+    "stage_location": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/.OLMToonDilate.ded9-stage-20260813",
+    "success_retains_moved_old_third_copy": true
+  }
+}

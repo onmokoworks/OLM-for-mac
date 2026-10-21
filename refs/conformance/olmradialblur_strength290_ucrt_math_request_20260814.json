@@ -1,0 +1,63 @@
+{
+  "boundary": {
+    "after_effects_required": false,
+    "native_return_included": false,
+    "production_admission_changed": false,
+    "returned_words_alone_sufficient_for_promotion": false,
+    "strength290_remains_fail_closed": true
+  },
+  "package": {
+    "files": {
+      "README.md": "ac65fe3596486a1841dfca61011053c06a5615ccac64c99f3c930cf8d7b4e442",
+      "UcrtRadialMathCapture.cs": "fea716c8fca9a8d6a00debc328d5b3262521ffe07e45e799601773b6b23ef4bc",
+      "math_vectors.json": "ea6f3ffbb19a02196e0df3e07cd23c0b1276fefbf79d6695f014283a848307e0",
+      "request_manifest.json": "67919fd83a2794ae67d95b6e2389b31b5568d5aca2600ca0129274a395936730",
+      "run_olmradialblur_strength290_ucrt_math.ps1": "df359bac8b839df6e85b5f5aecf275722dd87151899ce7ecddf602831085c096"
+    },
+    "path": "refs/runtime_trace_packages/olm_runtime_trace_olmradialblur_strength290_ucrt_math_20260814",
+    "transfer_zip": "refs/runtime_trace_packages/olm_runtime_trace_olmradialblur_strength290_ucrt_math_20260814.zip",
+    "transfer_zip_sha256": "aef82105df520c3cf7ce5f9d2a7b2424abc2ceb746c2d98a9119db3b9ee1203b"
+  },
+  "provenance": {
+    "actual_aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "aexcompat_head": "28d535469f84f67236ef3425afe4291ea2fb0991",
+    "exported_math_boundary_sha256": "fd164d69cac9d7f92f5bc109aff744e2426846d17de823bd9fbe7519d9d2927a",
+    "float_import_patch_sha256": "04147344b71c3f08a5e7e796d9d50f65845def15e924a2836a9e89ae249f81e3",
+    "float_trace_patch_sha256": "a1dc5e91cb2a9c9c2e332c7ce2361c97eee6134e9b89f3bf0e9bd890b8038684",
+    "production_source_sha256": "b74b3d2c7ea6724593b28f82d36615e071e18d813e5b99cc948e26a447fdb0d1"
+  },
+  "request_id": "olm_runtime_trace_olmradialblur_strength290_ucrt_math_20260814",
+  "return_contract": {
+    "all_577_rows_required": true,
+    "input_dependency_sha256_checked_before_load": true,
+    "loaded_module_path_matches_system32_required": true,
+    "loaded_module_sha256_matches_recorded_required": true,
+    "one_amd64_process_required": true,
+    "same_system32_ucrt_identity_required": true,
+    "schema": "olmradialblur.strength290-ucrt-math-return/1",
+    "unknown_keys_rejected": true
+  },
+  "schema": "olmradialblur.strength290-ucrt-math-request-closure/1",
+  "status": "READY_NATIVE_WINDOWS_UCRT_577_VECTORS_AE_FREE",
+  "target": {
+    "path": "%WINDIR%\\System32\\ucrtbase.dll",
+    "process": "64-bit x64 PowerShell",
+    "symbols": [
+      "atan2f",
+      "log2f"
+    ]
+  },
+  "vectors": {
+    "atan2f_calls": 576,
+    "atan2f_cartesian_dimensions": [
+      18,
+      32
+    ],
+    "atan2f_unique": 576,
+    "canonical_sha256": "66c75b1feb0e0d9479fe87278d830ce9fb31dfd1ecf5e53a14e8bfc1c6b3db8c",
+    "log2f_calls": 149,
+    "log2f_unique": 1,
+    "original_call_count": 725,
+    "unique": 577
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "bindings": {
+    "identity_manifest": {
+      "path": "refs/conformance/olm_installed_identity_manifest_20260806.json",
+      "sha256": "44e1dca88bb9413ca28e86792fcf9b7d5b48f71a6b770f35bd414897f5bc0061",
+      "size": 6886
+    },
+    "post_radial_raw": {
+      "path": "refs/conformance/olm_all10_post_radial_rotation_type1_inverse_cell_fresh_ae_smoke_raw_20260812.json",
+      "sha256": "70af4ec2e13a569e5e4865f5140e89333c4b6c305e7bac8fdd10bf6d319eaafa",
+      "size": 48408
+    },
+    "post_radial_summary": {
+      "path": "refs/conformance/olm_all10_post_radial_rotation_type1_inverse_cell_fresh_ae_smoke_20260812.json",
+      "sha256": "fbfed8d7d83d0a53221e71ea6192ac135a4efd0438ee51277a45817ec0330b47",
+      "size": 19335
+    },
+    "preserved_distance_raw": {
+      "path": "refs/conformance/olm_all10_post_distance_mode5_fresh_ae_smoke_raw_20260812.json",
+      "sha256": "a2dca875aa7572aceeeb5b0300bb8d83689135975abe14ccd50172def1d1bd6d",
+      "size": 47928
+    },
+    "preserved_distance_summary": {
+      "path": "refs/conformance/olm_all10_post_distance_mode5_fresh_ae_smoke_20260812.json",
+      "sha256": "f8c0e884b1dbbade2fa58a2ca33d452459610716efc78089741bac29bee4d61c",
+      "size": 19055
+    },
+    "producer_payload": {
+      "path": "scripts/ae_host_all10_current_install_fresh_validation_20260812.jsx",
+      "sha256": "ef0477d30d30b1b5c587ebcc511864bd4692ae0ef9cc2d656975a209df4ad511",
+      "size": 11745
+    },
+    "producer_runner": {
+      "path": "scripts/run_olm_all10_current_install_fresh_ae_smoke_20260812.py",
+      "sha256": "35fa2ecde4299dd9084ed1c89e50f20fd5ee016477cf18c9a460e696ddd6d459",
+      "size": 48433
+    },
+    "radial_incremental_install": {
+      "path": "refs/conformance/olmradialblur_type1_incremental_install_identity_20260812.json",
+      "sha256": "044a50eec5226a5c58c1d3e06788c602705385724071b77ea514f14897df6b0f",
+      "size": 12188
+    }
+  },
+  "claim_boundary": "Fresh installed-host plumbing for the exact Radial-only incremental identity; no AE numerical exactness and no replacement or mutation of the Distance snapshot",
+  "durable_artifacts": {
+    "canonical_sha256": "1e6740425b2cd8eda1eefa3c9f0a4ec82a6c2faacfff1bef06a28cb6406ab0eb",
+    "count": 14
+  },
+  "generated_at": "2026-08-12T11:07:42.264592+00:00",
+  "relations": {
+    "distance_snapshot_bytes_preserved": true,
+    "distance_snapshot_substitution_rejected": true,
+    "incremental_identity_changed_plugins": [
+      "OLMRadialBlur"
+    ],
+    "post_radial_producer_validation": true,
+    "radial_executable_sha256": "03e837e8a9ccebbc3e03479b4d8a66f65aa85cce1ac0be616b14dac82284d548"
+  },
+  "schema": "olm.all10-post-radial-type1-smoke-relation/1",
+  "status": "PASS_POST_RADIAL_SMOKE_IDENTITY_RELATION"
+}

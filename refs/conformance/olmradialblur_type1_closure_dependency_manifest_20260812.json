@@ -1,0 +1,147 @@
+{
+  "schema": "olm.radialblur-type1-workspace-handoff-dependency-manifest/1",
+  "status": "COMPLETE_WORKSPACE_HANDOFF_CHAIN",
+  "claim_boundary": "Current workspace artifacts for the Radial Rotation Type-1 inverse-cell closure plus the historical incremental-install identity and post-Radial smoke relation. The current closure source is newer than that historical install/smoke pair and the identities are deliberately kept separate. Presence and hashes are verified in this workspace; git tracked or clean-checkout availability is not claimed. This manifest does not rerun AE, install, build, or the formal release gate.",
+  "install_evidence_boundary": {
+    "backup_flags": "The install report's backup_before_install, backup_method, and rollback_bundle_retained fields combine observed retained-bundle bytes with provided transaction metadata; they do not independently prove the historical ditto invocation.",
+    "signing": "strict_codesign=true records successful strict validation of an ad-hoc signature. It is not a Developer ID signature or Apple notarization claim."
+  },
+  "exact_files": [
+    {
+      "path": "mac/OLMRadialBlur/OLMRadialBlur.cpp",
+      "role": "production Type-1 selector and public admission boundary",
+      "sha256": "b74b3d2c7ea6724593b28f82d36615e071e18d813e5b99cc948e26a447fdb0d1"
+    },
+    {
+      "path": "core/dblur_noise.h",
+      "role": "shared inverse-cell sampler implementation",
+      "sha256": "f0600bb4bb208ed8fba92cc6586eb66ac8f767299c8928ec88fc4635c1cfb591"
+    },
+    {
+      "path": "tools/emulation/test_olmradialblur_rotation_type1_inverse_cell_closure_20260812.py",
+      "role": "read-only-by-default closure generator and validator",
+      "sha256": "4e50de24a7f1eeda37c1a24d60a6cfb58c0f94d0bc14970f6e3ade0c73b22a5e"
+    },
+    {
+      "path": "tests/test_olmradialblur_rotation_type1_inverse_cell_closure_20260812.py",
+      "role": "closure and tamper unit tests",
+      "sha256": "7ebeeebd55af77600ecd6a1d7d3c345b27a43f7ff939d05b0af2187e160f6b55"
+    },
+    {
+      "path": "refs/conformance/olmradialblur_rotation_type1_inverse_cell_closure_20260812.json",
+      "role": "98-cell machine-readable closure report",
+      "sha256": "d0dd7b20615e18a0e9dc3cf501c4fe858f88e5ef7344ab9f691a2a41f2a9921b"
+    },
+    {
+      "path": "refs/conformance/olmradialblur_rotation_type1_inverse_cell_closure_20260812.md",
+      "role": "human-readable closure report",
+      "sha256": "b7e89453a494785473c78740637253c5c28451870be3f3ca29ab24eb4f0a663a"
+    },
+    {
+      "path": "tools/emulation/audit_olmradialblur_type1_incremental_install_identity_20260812.py",
+      "role": "incremental-install identity auditor",
+      "sha256": "54a5441a9a096d081e20c1e86c5b140d1fd38e1d1f032e4669e0c8d05f3faea0"
+    },
+    {
+      "path": "tests/test_olmradialblur_type1_incremental_install_identity_20260812.py",
+      "role": "incremental-install identity unit tests",
+      "sha256": "a6d1268978bd1af595409c6063462d473fe104014e2b8561215640ecb4b9dc5a"
+    },
+    {
+      "path": "refs/conformance/olmradialblur_type1_incremental_install_identity_20260812.json",
+      "role": "installed Radial identity report",
+      "sha256": "044a50eec5226a5c58c1d3e06788c602705385724071b77ea514f14897df6b0f"
+    },
+    {
+      "path": "refs/conformance/olmradialblur_type1_incremental_install_identity_20260812.md",
+      "role": "installed Radial identity narrative",
+      "sha256": "c3c9b0d768de643a9c48296ec5259bc7608cd6d0369e96e603db907aa602be2c"
+    },
+    {
+      "path": "tools/emulation/audit_olm_all10_post_radial_type1_smoke_relation_20260812.py",
+      "role": "post-Radial smoke relation auditor",
+      "sha256": "683c2aa1b879de1e560fc363edf60005d4db12116a60ecdffb3976b0aa414695"
+    },
+    {
+      "path": "tests/test_olm_all10_post_radial_type1_smoke_relation_20260812.py",
+      "role": "post-Radial smoke relation unit tests",
+      "sha256": "a7a38675bf1d089dd984e2cfe6ce028be24d0a801acde78ecf2b36c6d4e1384d"
+    },
+    {
+      "path": "refs/conformance/olm_all10_post_radial_type1_smoke_relation_20260812.json",
+      "role": "post-Radial smoke identity relation",
+      "sha256": "e04e30e1f0aae4d76c99ce7e736c4e529ae6517b403b908253cc5761eabbd57a"
+    },
+    {
+      "path": "refs/conformance/olm_all10_post_radial_type1_smoke_relation_20260812.md",
+      "role": "post-Radial smoke identity relation narrative",
+      "sha256": "d79b1bfc0ea099017a1c6791684f067db86d92470e8ebed5326a9abdb647b9e5"
+    },
+    {
+      "path": "refs/conformance/olm_all10_post_radial_rotation_type1_inverse_cell_fresh_ae_smoke_20260812.json",
+      "role": "bound post-Radial smoke summary",
+      "sha256": "fbfed8d7d83d0a53221e71ea6192ac135a4efd0438ee51277a45817ec0330b47"
+    },
+    {
+      "path": "refs/conformance/olm_all10_post_radial_rotation_type1_inverse_cell_fresh_ae_smoke_raw_20260812.json",
+      "role": "bound post-Radial smoke raw artifact",
+      "sha256": "70af4ec2e13a569e5e4865f5140e89333c4b6c305e7bac8fdd10bf6d319eaafa"
+    },
+    {
+      "path": "refs/conformance/olm_installed_identity_manifest_20260806.json",
+      "role": "accepted installed identity manifest bound by install and smoke reports",
+      "sha256": "b186a6448dc68f3d117617962237f0ff56087c99530f7823b1cb97abfdd872a3"
+    }
+  ],
+  "release_consumers": [
+    {
+      "path": "KNOWN_LIMITATIONS.md",
+      "sha256": "3fc5595041dd7ba90de26f88099f4a3fe37235a4d1796cbf76545e41f4e6978a",
+      "required_text": [
+        "exact five admission flags／98セル",
+        "inactive-only表現はhistorical",
+        "Strength 290 public admission"
+      ]
+    },
+    {
+      "path": "refs/conformance/OLM_MAC_RELEASE_NOTES_20260806.md",
+      "sha256": "21afaf965065b6b8908e6067f45ac04af13f094a5eeb2695817ef340e00a99a0",
+      "required_text": [
+        "Rotation Type 1 inverse-cell closure",
+        "raw exactへ更新",
+        "旧sampled-source-scalar ULP seam"
+      ]
+    },
+    {
+      "path": "notes/CONFORMANCE_LEDGER.md",
+      "sha256": "a25fb44fa1ecb16f438bcd20d04c2c4c47b4e8dfe83e3bcd98786e505eac41dd",
+      "required_text": [
+        "Rotation Type-1 inverse-cell closure and installed",
+        "olmradialblur_type1_incremental_install_identity_20260812",
+        "olm_all10_post_radial_type1_smoke_relation_20260812"
+      ]
+    },
+    {
+      "path": "refs/conformance/olm_release_completion_matrix_20260806.md",
+      "sha256": "3678e8e129bed8edc7cd488d08eb902c81ff35174bd77833a7118045eeaf4a5d",
+      "required_text": [
+        "olmradialblur_rotation_type1_inverse_cell_closure_20260812",
+        "olmradialblur_type1_incremental_install_identity_20260812",
+        "olm_all10_post_radial_type1_smoke_relation_20260812"
+      ]
+    }
+  ],
+  "relations": {
+    "current_production_source_sha256": "b74b3d2c7ea6724593b28f82d36615e071e18d813e5b99cc948e26a447fdb0d1",
+    "historical_install_source_sha256": "184fb4e70913622b29f5b627d1eaae1f70b8dedfe6d8b78b8f644058e6121fec",
+    "core_sampler_source_sha256": "f0600bb4bb208ed8fba92cc6586eb66ac8f767299c8928ec88fc4635c1cfb591",
+    "installed_radial_executable_sha256": "03e837e8a9ccebbc3e03479b4d8a66f65aa85cce1ac0be616b14dac82284d548",
+    "closure_report": "refs/conformance/olmradialblur_rotation_type1_inverse_cell_closure_20260812.json",
+    "incremental_install_report": "refs/conformance/olmradialblur_type1_incremental_install_identity_20260812.json",
+    "post_radial_smoke_relation": "refs/conformance/olm_all10_post_radial_type1_smoke_relation_20260812.json"
+  },
+  "self_artifacts": [
+    "refs/conformance/olmradialblur_type1_closure_dependency_manifest_20260812.json",
+    "tests/test_olmradialblur_type1_closure_dependency_manifest_20260812.py"
+  ]
+}

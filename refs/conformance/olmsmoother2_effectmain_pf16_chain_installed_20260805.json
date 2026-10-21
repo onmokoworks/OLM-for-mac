@@ -26,11 +26,11 @@
       "x86_64",
       "arm64"
     ],
-    "binary_sha256": "fe782f344dcaf8865b778198b0faeb8cecd525062a83f38aca8dc1db74442c34",
-    "codesign_record": "pass",
+    "binary_sha256": "138d63c1365b0988f70ed5b47fd1d497a882a2ed470d2e7016b000a7fb9872b1",
+    "identity_manifest": "OLMSmoother2",
     "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother2.plugin"
   },
-  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "production_source_sha256": "fdc6ee488f78bceda85c52579c579a460ea675dc21305ff8c2a07dc69009df96",
   "remaining_largest_boundary": "AE process load/binding of the installed hash and real host command invocation; AE was not operated in this task",
   "verdict": "PASS_ACTUAL_AEX_CLASSIFIER_WORKER_TO_PRODUCTION_EFFECTMAIN_PF16_INSTALLED_IDENTITY"
 }

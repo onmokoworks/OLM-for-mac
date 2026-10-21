@@ -1,0 +1,101 @@
+{
+  "claim_boundary": "Actual Windows 2025 AEX exported SmartPreRender/SmartRender under the repository AexLoader/Unicorn, using the exact 7x5 PF16 source also admitted by Mac production. This is hostless public-owner numerical evidence, not native AE or arbitrary-source evidence.",
+  "claims_not_made": [
+    "native Windows AE",
+    "native Mac AE",
+    "installed Mac binary",
+    "other source/tuple/geometry/depth",
+    "Windows world-header equivalence"
+  ],
+  "contract": {
+    "active_output_sha256": "d644ed25b46352400797efce2abaa29c7a50c20ad44a7eac4a3618f774ed424a",
+    "active_source_sha256": "5faee8f036157e787ab66a48553da63cc3d4b3bacd678c53ac12a9fe6ef0117b",
+    "depth": "PF16",
+    "geometry": [
+      7,
+      5
+    ],
+    "padding_per_row": 13,
+    "parameters": {
+      "amount_f64": 4.0,
+      "bias": 1,
+      "legacy": 0,
+      "repeat": 1,
+      "smoothness_fixed": 6553600
+    },
+    "rowbytes": 69
+  },
+  "gates": {
+    "active_raw_exact": true,
+    "commands": [
+      23,
+      24
+    ],
+    "padding_untouched": true,
+    "parameter_checkout_order": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "returns_zero": true
+  },
+  "identities": {
+    "aex": {
+      "path": "plugins_2025/OLMBlur.aex",
+      "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+    },
+    "public_runner": {
+      "path": "tools/emulation/test_olmblur_exported_effectmain_chain_actual_aex_20260811.py",
+      "sha256": "5043ba89701d5af95018f50df8f712df0e8d2e4348b25d9658f7e54a0f5ffae6"
+    },
+    "source_generator": {
+      "path": "tools/emulation/test_olmblur_case0006_border_order_writer_differential_20260716.py",
+      "sha256": "4bb739a94605fb2cb5cef1a8aa4874328394e8d8c13a33512fa39a7cbf94d410"
+    }
+  },
+  "public_result": {
+    "active_sha256": "d644ed25b46352400797efce2abaa29c7a50c20ad44a7eac4a3618f774ed424a",
+    "callback_events": [
+      "pre_checkout_layer",
+      "checkout_layer_pixels",
+      "checkout_output",
+      "checkin_param_1",
+      "checkin_param_2",
+      "checkin_param_3",
+      "checkin_param_4",
+      "checkin_param_5",
+      "copy_world"
+    ],
+    "commands": [
+      23,
+      24
+    ],
+    "depth": 16,
+    "handle_suite_events": 48,
+    "id": "pf16_7x5_amount4_repeat1_legacy0",
+    "instructions": {
+      "smart_pre_render": 433,
+      "smart_render": 21776
+    },
+    "legacy": 0,
+    "mismatched_bytes": 0,
+    "oracle_sha256": "d644ed25b46352400797efce2abaa29c7a50c20ad44a7eac4a3618f774ed424a",
+    "padding_mismatches": 0,
+    "parameter_checkout_order": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "return_codes": [
+      0,
+      0
+    ]
+  },
+  "schema": "olmblur.pf16-7x5-exported-public-owner/1",
+  "status": "PASS_ACTUAL_EXPORTED_SMART_OWNER_PF16_7X5_RAW_EXACT",
+  "worker_instructions": 20512
+}

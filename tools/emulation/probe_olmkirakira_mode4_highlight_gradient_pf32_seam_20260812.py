@@ -1,35 +1,51 @@
 #!/usr/bin/env python3
-"""Capture the bounded Mode4 gradient Highlight two-word PF32 seam."""
+"""Compatibility redirect for the superseded Highlight gradient seam."""
 from __future__ import annotations
-import importlib.util, json
+
+import hashlib
+import json
+import subprocess
 from pathlib import Path
-ROOT=Path(__file__).resolve().parents[2]
-BASE=ROOT/"tools/emulation/probe_olmkirakira_mode4_fullcaller_scaffold_20260807.py"
-SINGLE=ROOT/"refs/conformance/olmkirakira_mode4_natural_fullframe_exact_20260811.json"
-OUT=ROOT/"refs/conformance/olmkirakira_mode4_highlight_gradient_pf32_seam_20260812.json"
-DOC=OUT.with_suffix(".md")
-def load():
- s=importlib.util.spec_from_file_location("k",BASE);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
-def main()->int:
- m=load()
- try:
-  m.main(natural=True,natural_slot=4,natural_length=3,highlight_gradient=True,allow_ray_mismatch=True)
-  r=json.loads(SINGLE.read_text()); diffs=r["actual_aex"]["ray_differences"]
-  typed=r["actual_aex"]["typed_outputs"]
-  valid=(len(r["actual_aex"]["same_run_seed_f32"])==15 and
-         [(x["word"],x["ulp"]) for x in diffs]==[(3,1),(11,1)] and
-         len(r["actual_aex"]["aggregation_u32"])==60 and
-         all(v["actual_hex"]==v["portable_hex"] for v in typed.values()))
-  r.update(kind="olmkirakira_mode4_highlight_gradient_pf32_seam",date="2026-08-12",
-           status="fail_closed_pf32_seam" if valid else "unexpected")
-  r["first_difference"]={"stage":"highlight_isotropic_box_blur_ray","words":[3,11],"ulp":[1,1],
-    "rejected":"Changing the general accumulator from double to float increases the mismatch from 2 to 8 words; no fixture correction is admitted."}
-  r["controls"]={"constant_highlight":"15/15 ray words and PF8/PF16/PF32 exact",
-    "gradient_downstream":"actual ray -> aggregate 15 pixels -> PF8/PF16/PF32 writer oracle exact"}
-  OUT.write_text(json.dumps(r,indent=2)+"\n")
-  DOC.write_text("# OLMKiraKira Mode4 Highlight gradient PF32 seam（2026-08-12）\n\nStatus: **"+r["status"]+"**\n\n5×3 gradientのsame-run seed 15 wordsからHighlight rayで初めてword 3/11が各1 ULPずれる。actual ray以後のaggregate 15 pixelsとPF8/PF16/PF32 writerはexact。constant Highlight controlも全段exact。一般boxFilter則を回収できていないためproductionは変更せずPF32 gradientをfail-closeする。\n")
-  print(json.dumps({"status":r["status"],"ray_differences":diffs}))
-  return 0 if valid else 1
- finally:
-  m.main(natural=True,natural_slot=1,natural_length=5,natural_rotation=0)
-if __name__=="__main__":raise SystemExit(main())
+
+
+ROOT = Path(__file__).resolve().parents[2]
+GENERATOR = ROOT / "tools/emulation/test_olmkirakira_mode4_highlight_gradient_closure_20260812.py"
+CLOSURE = ROOT / "refs/conformance/olmkirakira_mode4_highlight_gradient_closure_20260812.json"
+HISTORICAL = ROOT / "refs/conformance/olmkirakira_mode4_highlight_gradient_pf32_seam_20260812.json"
+OUT = ROOT / "refs/conformance/olmkirakira_mode4_highlight_gradient_pf32_seam_supersession_20260812.json"
+EXPECTED_HISTORICAL_SHA = "531179e93d198d6b794c6e9ba4869df624de24b9cc3464582ab3b13a6a192c82"
+
+
+def main() -> int:
+    subprocess.run(["python3", str(GENERATOR)], cwd=ROOT, check=True)
+    closure = json.loads(CLOSURE.read_text(encoding="utf-8"))
+    if closure.get("status") != "raw_exact":
+        raise RuntimeError("replacement Highlight gradient closure is not exact")
+    historical_sha = hashlib.sha256(HISTORICAL.read_bytes()).hexdigest()
+    historical = json.loads(HISTORICAL.read_text(encoding="utf-8"))
+    if historical_sha != EXPECTED_HISTORICAL_SHA or historical.get("status") != "fail_closed_pf32_seam":
+        raise RuntimeError("immutable historical Highlight seam changed")
+    report = {
+        "kind": "olmkirakira_mode4_highlight_gradient_pf32_seam",
+        "date": "2026-08-12",
+        "status": "superseded_by_raw_exact_closure",
+        "superseded_by": "olmkirakira_mode4_highlight_gradient_closure_20260812.json",
+        "closure_sha256": hashlib.sha256(CLOSURE.read_bytes()).hexdigest(),
+        "historical_artifact": {
+            "path": "olmkirakira_mode4_highlight_gradient_pf32_seam_20260812.json",
+            "sha256": historical_sha,
+            "status": historical["status"],
+        },
+        "historical_counterfactual": {
+            "old_separable_ray_difference_words": [3, 11],
+            "ulp": [1, 1],
+            "meaning": "retained as a rejected implementation, not a current production seam",
+        },
+    }
+    OUT.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps({"status": report["status"], "superseded_by": report["superseded_by"]}))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -1,0 +1,89 @@
+{
+  "schema": "olm.all10-batch5-direct-r-v4-startup-modal-failure/1",
+  "status": "fail_closed_no_retry",
+  "attempt": {
+    "started_at": "2026-08-15T16:18:42.062039+00:00",
+    "launch_mode": "direct_executable_dash_r",
+    "owned_after_effects_pid": 34970,
+    "nonce_bound_ae_return_created": false,
+    "png_count": 0,
+    "plugin_rows": 0,
+    "plugin_execution_reached": null,
+    "retry_performed": false
+  },
+  "classification": {
+    "boundary": "AE startup before nonce-bound payload return",
+    "observed_state": "startup preference/recovery modal",
+    "evidence": "The macOS incident report places the main thread in dvaui messagebox modal code called by CEggApp::BirthPrefs. The later SIGABRT was produced while terminating the exact owned process after the bounded observation window.",
+    "not_claimed": [
+      "OLM plugin code executed",
+      "OLM plugin caused the startup modal",
+      "numerical rendering was attempted",
+      "the termination SIGABRT was an autonomous plugin crash"
+    ]
+  },
+  "host_diagnostics": {
+    "unified_log": {
+      "modal_created_at": "2026-08-16T01:18:45.934+09:00",
+      "window_class": "DVAMacDialog",
+      "app_was_non_active": true
+    },
+    "after_effects_application_signature": {
+      "codesign_root_strict": "pass",
+      "codesign_deep_strict": "pass",
+      "spctl_execute_assessment": "accepted",
+      "authority": "Developer ID Application: Adobe Inc. (JQ525L2MZD)",
+      "notarization": "stapled"
+    },
+    "interpretation": "The Adobe application and its scripting plug-in are intact and signed. The remaining boundary is an AE preference/recovery startup dialog, not an invalid OLM or AE bundle signature."
+  },
+  "identity": {
+    "path": "refs/conformance/olm_installed_identity_manifest_20260806.json",
+    "sha256": "ede4857b810e9f2901561ee8a3a9179c4c508dc2ee058525aa3f46dff4164079",
+    "plugin_count": 10,
+    "post_cleanup_revalidated": true
+  },
+  "artifacts": {
+    "runner": {
+      "path": "scripts/run_olm_all10_batch5_current_identity_direct_r_v4_20260816.py",
+      "sha256": "0440936340087108bfc6e45811b572449330b1049e44e9cc4fb1df3b6a42e205"
+    },
+    "receipt": {
+      "path": "handoffs/olm_all10_batch5_current_identity_direct_r_v4_fresh_ae_smoke_20260816.invocation-receipt.json",
+      "sha256": "f2fa1b8ba948c0255dce5bcdba5b2f483795a709e8dba1c3d41e951db7c039d3"
+    },
+    "launch_wrapper": {
+      "path": "handoffs/olm_all10_batch5_current_identity_direct_r_v4_fresh_ae_smoke_20260816/launch.jsx",
+      "sha256": "4c422df206cc8e3036cce59776140b5a48a29a51d6b76548410f55ec24b5aec9"
+    },
+    "macos_incident": {
+      "path": "handoffs/olm_all10_batch5_current_identity_direct_r_v4_fresh_ae_smoke_20260816/crash_evidence/After_Effects-2026-08-16-012322.ips",
+      "sha256": "a4f51f033cd721bf030cfca52e27aa0a346c28c7767b1717edea3de870e8ff40",
+      "exception": "EXC_CRASH/SIGABRT",
+      "faulting_thread": 0,
+      "key_frames": [
+        "dvaui::ui::OS_Dialog::ModalLoop",
+        "dvaui::dialogs::UI_MessageBox::RunModal",
+        "CEggApp::BirthPrefs",
+        "MainMain"
+      ]
+    },
+    "minidump": {
+      "path": "handoffs/olm_all10_batch5_current_identity_direct_r_v4_fresh_ae_smoke_20260816/crash_evidence/0e9e59ff-9898-4374-901b-acea08363c7c.dmp",
+      "sha256": "1fb57237b1a7b5dcbd0a98e4e9086692f6b1ef1a0e4cae377c2335618598a952"
+    },
+    "sentry_event": {
+      "path": "handoffs/olm_all10_batch5_current_identity_direct_r_v4_fresh_ae_smoke_20260816/crash_evidence/sentry-event",
+      "sha256": "91ef4a5956b0b13986c404cd597909f8fb69bd635635271478ee45cda672e212"
+    },
+    "sentry_breadcrumb1": {
+      "path": "handoffs/olm_all10_batch5_current_identity_direct_r_v4_fresh_ae_smoke_20260816/crash_evidence/sentry-breadcrumb1",
+      "sha256": "7503950da191c8eec3cdd6f78cc74c9a66b636fc6801406a94b01af42d300a34"
+    }
+  },
+  "post_cleanup": {
+    "after_effects_or_aerender_processes": [],
+    "installed_identity_unchanged": true
+  },
+  "next_boundary": "Do not rerun AE automatically. Clear or answer the AE startup preference/recovery modal in an explicitly authorized host-maintenance step, then use a newly versioned one-shot receipt."
+}

@@ -1,0 +1,5571 @@
+{
+  "authorities": {
+    "analyzer_sha256": "fb79973f7a6fd116e2cf7464976c0ba334bc0063e8b19b03ef9166ec53e0f4df",
+    "canonical_return_report_sha256": "87b6d72cac35baa860b0212a172c26b331b1f662e5188f8135244e23fc13b6ef",
+    "census_sha256": "4ca94db9ba97d1042b2ff45c3c11721c50f7e6426b08db6ec92509325649ac36",
+    "consumer_sha256": "af09ca96130d88272ea901e5ef86fbbc195ff08c1d060ab909bdf000c0b8ffc3",
+    "downstream_sha256": "350f84049fb69fca15e4ff49b5613173f2c7189eeeba8dc2f795c14330740f72",
+    "plumbing_sha256": "8f11d24a0e9dfb1943493e5aef6f32a7b089de7575e577d827a5434e677da626",
+    "pre_integration_source_sha256": "b39732e285688f1f8ae2fc5f64efcfba3d7ac52a1451a2685dd7b606bb18fb12",
+    "return_sha256": "c50c7db94dfd0417dce6b681cd45209cba9259ff8b25737f28e3f239539a5bf1",
+    "ucrtbase": {
+      "file_version": "10.0.26100.8875 (WinBuild.160101.0800)",
+      "path": "C:\\WINDOWS\\System32\\ucrtbase.dll",
+      "product_version": "10.0.26100.8875",
+      "sha256": "5e7709a6b71bb818260b6f05c5bb3b6ca0c3ca9bc2f58c6242c1cd9d826d0079"
+    }
+  },
+  "decision": {
+    "after_effects_launched": false,
+    "arbitrary_tuple_or_geometry": false,
+    "contract": "x86_64 fixed 64x36 former-residual six only; admission-only source change",
+    "installed_binary_changed": false,
+    "production_changed_by_tool": false,
+    "production_math_change_required": false,
+    "promotable_cells": 6
+  },
+  "mac_table_calls": {
+    "expf": 996,
+    "pow": 47514,
+    "powf": 0
+  },
+  "rows": [
+    {
+      "aex_raw_sha256": "312a602e939e68cae1b8d966af9ec33e0a8c3646c1c326664abbcb73456bce0e",
+      "depth": 8,
+      "guards_intact": true,
+      "mac_production_direct_raw_sha256": "312a602e939e68cae1b8d966af9ec33e0a8c3646c1c326664abbcb73456bce0e",
+      "native_matches_preexisting_x86_raw": true,
+      "preexisting_x86_raw_sha256": "312a602e939e68cae1b8d966af9ec33e0a8c3646c1c326664abbcb73456bce0e",
+      "raw_bytes": 9216,
+      "render_mode": "smart-cpu",
+      "same_table_full_raw_exact": true,
+      "tuple_index": 2
+    },
+    {
+      "aex_raw_sha256": "902490856e0c784d2c2fb9b1ba91d4e1ada5053acbeddaef5da15ade471a815e",
+      "depth": 16,
+      "guards_intact": true,
+      "mac_production_direct_raw_sha256": "902490856e0c784d2c2fb9b1ba91d4e1ada5053acbeddaef5da15ade471a815e",
+      "native_matches_preexisting_x86_raw": true,
+      "preexisting_x86_raw_sha256": "902490856e0c784d2c2fb9b1ba91d4e1ada5053acbeddaef5da15ade471a815e",
+      "raw_bytes": 18432,
+      "render_mode": "smart-cpu",
+      "same_table_full_raw_exact": true,
+      "tuple_index": 2
+    },
+    {
+      "aex_raw_sha256": "27ed24ed8bf54b48af831e6ec5a44dd195c89b2fdd0acea5dee123b37d5adc20",
+      "depth": 32,
+      "guards_intact": true,
+      "mac_production_direct_raw_sha256": "27ed24ed8bf54b48af831e6ec5a44dd195c89b2fdd0acea5dee123b37d5adc20",
+      "native_matches_preexisting_x86_raw": true,
+      "preexisting_x86_raw_sha256": "27ed24ed8bf54b48af831e6ec5a44dd195c89b2fdd0acea5dee123b37d5adc20",
+      "raw_bytes": 36864,
+      "render_mode": "smart-cpu",
+      "same_table_full_raw_exact": true,
+      "tuple_index": 0
+    },
+    {
+      "aex_raw_sha256": "0b74caf1aef39ab242ca09b10d65bdc77a3646f31511a72f29c3e5e6d70635c2",
+      "depth": 32,
+      "guards_intact": true,
+      "mac_production_direct_raw_sha256": "0b74caf1aef39ab242ca09b10d65bdc77a3646f31511a72f29c3e5e6d70635c2",
+      "native_matches_preexisting_x86_raw": true,
+      "preexisting_x86_raw_sha256": "0b74caf1aef39ab242ca09b10d65bdc77a3646f31511a72f29c3e5e6d70635c2",
+      "raw_bytes": 36864,
+      "render_mode": "smart-cpu",
+      "same_table_full_raw_exact": true,
+      "tuple_index": 1
+    },
+    {
+      "aex_raw_sha256": "ea11382502f61da8a5a1408dd294b15dd5af0fda81f18b9823c2d2a453f0b792",
+      "depth": 32,
+      "guards_intact": true,
+      "mac_production_direct_raw_sha256": "ea11382502f61da8a5a1408dd294b15dd5af0fda81f18b9823c2d2a453f0b792",
+      "native_matches_preexisting_x86_raw": true,
+      "preexisting_x86_raw_sha256": "ea11382502f61da8a5a1408dd294b15dd5af0fda81f18b9823c2d2a453f0b792",
+      "raw_bytes": 36864,
+      "render_mode": "smart-cpu",
+      "same_table_full_raw_exact": true,
+      "tuple_index": 2
+    },
+    {
+      "aex_raw_sha256": "faa5ad5686a58a4f390a354e14c72ac4255212b1be05ddf174345e8d11d42782",
+      "depth": 32,
+      "guards_intact": true,
+      "mac_production_direct_raw_sha256": "faa5ad5686a58a4f390a354e14c72ac4255212b1be05ddf174345e8d11d42782",
+      "native_matches_preexisting_x86_raw": true,
+      "preexisting_x86_raw_sha256": "faa5ad5686a58a4f390a354e14c72ac4255212b1be05ddf174345e8d11d42782",
+      "raw_bytes": 36864,
+      "render_mode": "smart-cpu",
+      "same_table_full_raw_exact": true,
+      "tuple_index": 3
+    }
+  ],
+  "rows_sha256": "515069a851eeab786c7017b1bc38580bd7d1612d8be7cca4800f2870793c0d94",
+  "schema": "olmdirectionalblur.remaining6-native-ucrt-replay/1",
+  "status": "PASS_DIRECTIONAL_REMAINING6_NATIVE_UCRT_EXPORTED_AEX_MAC_DIRECT_RAW_EXACT",
+  "table": {
+    "expf": [
+      {
+        "argument_bits": "0x00000000",
+        "result_bits": "0x3f800000"
+      },
+      {
+        "argument_bits": "0xb8a3d70a",
+        "result_bits": "0x3f7ffae1"
+      },
+      {
+        "argument_bits": "0xb9a3d70a",
+        "result_bits": "0x3f7feb86"
+      },
+      {
+        "argument_bits": "0xb9ebedfb",
+        "result_bits": "0x3f7fe284"
+      },
+      {
+        "argument_bits": "0xba000000",
+        "result_bits": "0x3f7fe002"
+      },
+      {
+        "argument_bits": "0xba3851ec",
+        "result_bits": "0x3f7fd1f0"
+      },
+      {
+        "argument_bits": "0xbaa3d70a",
+        "result_bits": "0x3f7fae22"
+      },
+      {
+        "argument_bits": "0xbaebedfb",
+        "result_bits": "0x3f7f8a24"
+      },
+      {
+        "argument_bits": "0xbb000000",
+        "result_bits": "0x3f7f8020"
+      },
+      {
+        "argument_bits": "0xbb3851ec",
+        "result_bits": "0x3f7f47f0"
+      },
+      {
+        "argument_bits": "0xbb7ae148",
+        "result_bits": "0x3f7f0599"
+      },
+      {
+        "argument_bits": "0xbb84b5dd",
+        "result_bits": "0x3f7ef71e"
+      },
+      {
+        "argument_bits": "0xbb900000",
+        "result_bits": "0x3f7ee0a2"
+      },
+      {
+        "argument_bits": "0xbba3d70a",
+        "result_bits": "0x3f7eb923"
+      },
+      {
+        "argument_bits": "0xbbcf5c29",
+        "result_bits": "0x3f7e6297"
+      },
+      {
+        "argument_bits": "0xbbebedfb",
+        "result_bits": "0x3f7e29d6"
+      },
+      {
+        "argument_bits": "0xbc000000",
+        "result_bits": "0x3f7e01ff"
+      },
+      {
+        "argument_bits": "0xbc1ae148",
+        "result_bits": "0x3f7d9766"
+      },
+      {
+        "argument_bits": "0xbc3851ec",
+        "result_bits": "0x3f7d22da"
+      },
+      {
+        "argument_bits": "0xbc480000",
+        "result_bits": "0x3f7ce4dd"
+      },
+      {
+        "argument_bits": "0xbc5851ec",
+        "result_bits": "0x3f7ca468"
+      },
+      {
+        "argument_bits": "0xbc7ae148",
+        "result_bits": "0x3f7c1c20"
+      },
+      {
+        "argument_bits": "0xbc84b5dd",
+        "result_bits": "0x3f7be2df"
+      },
+      {
+        "argument_bits": "0xbc900000",
+        "result_bits": "0x3f7b8a11"
+      },
+      {
+        "argument_bits": "0xbca3d70a",
+        "result_bits": "0x3f7aee4d"
+      },
+      {
+        "argument_bits": "0xbcb4a234",
+        "result_bits": "0x3f7a6abf"
+      },
+      {
+        "argument_bits": "0xbcb8f5c3",
+        "result_bits": "0x3f7a48e6"
+      },
+      {
+        "argument_bits": "0xbcc40000",
+        "result_bits": "0x3f79f29c"
+      },
+      {
+        "argument_bits": "0xbccf5c29",
+        "result_bits": "0x3f7999f0"
+      },
+      {
+        "argument_bits": "0xbce70a3d",
+        "result_bits": "0x3f78e180"
+      },
+      {
+        "argument_bits": "0xbcebedfb",
+        "result_bits": "0x3f78bb7c"
+      },
+      {
+        "argument_bits": "0xbd000000",
+        "result_bits": "0x3f781fab"
+      },
+      {
+        "argument_bits": "0xbd0d1eb8",
+        "result_bits": "0x3f775489"
+      },
+      {
+        "argument_bits": "0xbd154c99",
+        "result_bits": "0x3f76d639"
+      },
+      {
+        "argument_bits": "0xbd1ae148",
+        "result_bits": "0x3f768030"
+      },
+      {
+        "argument_bits": "0xbd220000",
+        "result_bits": "0x3f761297"
+      },
+      {
+        "argument_bits": "0xbd2947ae",
+        "result_bits": "0x3f75a2ba"
+      },
+      {
+        "argument_bits": "0xbd3851ec",
+        "result_bits": "0x3f74bc40"
+      },
+      {
+        "argument_bits": "0xbd480000",
+        "result_bits": "0x3f73ccde"
+      },
+      {
+        "argument_bits": "0xbd5851ec",
+        "result_bits": "0x3f72d4b0"
+      },
+      {
+        "argument_bits": "0xbd5f06f7",
+        "result_bits": "0x3f726efa"
+      },
+      {
+        "argument_bits": "0xbd6947ae",
+        "result_bits": "0x3f71d3d2"
+      },
+      {
+        "argument_bits": "0xbd720000",
+        "result_bits": "0x3f71502a"
+      },
+      {
+        "argument_bits": "0xbd7ae148",
+        "result_bits": "0x3f70ca61"
+      },
+      {
+        "argument_bits": "0xbd84b5dd",
+        "result_bits": "0x3f6feff0"
+      },
+      {
+        "argument_bits": "0xbd868f5c",
+        "result_bits": "0x3f6fb87d"
+      },
+      {
+        "argument_bits": "0xbd8ffff9",
+        "result_bits": "0x3f6e9e46"
+      },
+      {
+        "argument_bits": "0xbd900000",
+        "result_bits": "0x3f6e9e45"
+      },
+      {
+        "argument_bits": "0xbd99c28f",
+        "result_bits": "0x3f6d7bd9"
+      },
+      {
+        "argument_bits": "0xbd9bc01a",
+        "result_bits": "0x3f6d40ca"
+      },
+      {
+        "argument_bits": "0xbda3d70a",
+        "result_bits": "0x3f6c515a"
+      },
+      {
+        "argument_bits": "0xbda90000",
+        "result_bits": "0x3f6bb91f"
+      },
+      {
+        "argument_bits": "0xbdae3d71",
+        "result_bits": "0x3f6b1eeb"
+      },
+      {
+        "argument_bits": "0xbdb4a234",
+        "result_bits": "0x3f6a634e"
+      },
+      {
+        "argument_bits": "0xbdb8f5c3",
+        "result_bits": "0x3f69e4ae"
+      },
+      {
+        "argument_bits": "0xbdc40000",
+        "result_bits": "0x3f68a2c7"
+      },
+      {
+        "argument_bits": "0xbdcf5c29",
+        "result_bits": "0x3f675959"
+      },
+      {
+        "argument_bits": "0xbddb0a3d",
+        "result_bits": "0x3f66088a"
+      },
+      {
+        "argument_bits": "0xbde10000",
+        "result_bits": "0x3f655d6a"
+      },
+      {
+        "argument_bits": "0xbde70a3d",
+        "result_bits": "0x3f64b07f"
+      },
+      {
+        "argument_bits": "0xbdebedfb",
+        "result_bits": "0x3f6424e4"
+      },
+      {
+        "argument_bits": "0xbdf35c29",
+        "result_bits": "0x3f635160"
+      },
+      {
+        "argument_bits": "0xbe000000",
+        "result_bits": "0x3f61eb51"
+      },
+      {
+        "argument_bits": "0xbe052bd4",
+        "result_bits": "0x3f60c7fc"
+      },
+      {
+        "argument_bits": "0xbe067ae1",
+        "result_bits": "0x3f607e7c"
+      },
+      {
+        "argument_bits": "0xbe0d1eb8",
+        "result_bits": "0x3f5f0b07"
+      },
+      {
+        "argument_bits": "0xbe108000",
+        "result_bits": "0x3f5e4ede"
+      },
+      {
+        "argument_bits": "0xbe13eb85",
+        "result_bits": "0x3f5d911d"
+      },
+      {
+        "argument_bits": "0xbe154c99",
+        "result_bits": "0x3f5d44c4"
+      },
+      {
+        "argument_bits": "0xbe1ae148",
+        "result_bits": "0x3f5c10e4"
+      },
+      {
+        "argument_bits": "0xbe220000",
+        "result_bits": "0x3f5a8a89"
+      },
+      {
+        "argument_bits": "0xbe26594b",
+        "result_bits": "0x3f599d71"
+      },
+      {
+        "argument_bits": "0xbe2947ae",
+        "result_bits": "0x3f58fe33"
+      },
+      {
+        "argument_bits": "0xbe30b852",
+        "result_bits": "0x3f576c0e"
+      },
+      {
+        "argument_bits": "0xbe348000",
+        "result_bits": "0x3f56a0db"
+      },
+      {
+        "argument_bits": "0xbe3851ec",
+        "result_bits": "0x3f55d445"
+      },
+      {
+        "argument_bits": "0xbe40147b",
+        "result_bits": "0x3f543702"
+      },
+      {
+        "argument_bits": "0xbe480000",
+        "result_bits": "0x3f529471"
+      },
+      {
+        "argument_bits": "0xbe4b367a",
+        "result_bits": "0x3f51eb92"
+      },
+      {
+        "argument_bits": "0xbe50147b",
+        "result_bits": "0x3f50ecbf"
+      },
+      {
+        "argument_bits": "0xbe5851ec",
+        "result_bits": "0x3f4f4016"
+      },
+      {
+        "argument_bits": "0xbe5c8000",
+        "result_bits": "0x3f4e67f4"
+      },
+      {
+        "argument_bits": "0xbe5f06f7",
+        "result_bits": "0x3f4de5b5"
+      },
+      {
+        "argument_bits": "0xbe60b852",
+        "result_bits": "0x3f4d8ea4"
+      },
+      {
+        "argument_bits": "0xbe6947ae",
+        "result_bits": "0x3f4bd895"
+      },
+      {
+        "argument_bits": "0xbe720000",
+        "result_bits": "0x3f4a1e16"
+      },
+      {
+        "argument_bits": "0xbe73c361",
+        "result_bits": "0x3f49c512"
+      },
+      {
+        "argument_bits": "0xbe7ae148",
+        "result_bits": "0x3f485f53"
+      },
+      {
+        "argument_bits": "0xbe81f5c3",
+        "result_bits": "0x3f469c7a"
+      },
+      {
+        "argument_bits": "0xbe844000",
+        "result_bits": "0x3f45b993"
+      },
+      {
+        "argument_bits": "0xbe84b5dd",
+        "result_bits": "0x3f458c14"
+      },
+      {
+        "argument_bits": "0xbe868f5c",
+        "result_bits": "0x3f44d5b7"
+      },
+      {
+        "argument_bits": "0xbe8b3d71",
+        "result_bits": "0x3f430b39"
+      },
+      {
+        "argument_bits": "0xbe8ffff9",
+        "result_bits": "0x3f413d2e"
+      },
+      {
+        "argument_bits": "0xbe900000",
+        "result_bits": "0x3f413d2b"
+      },
+      {
+        "argument_bits": "0xbe94d70a",
+        "result_bits": "0x3f3f6bbc"
+      },
+      {
+        "argument_bits": "0xbe99c28f",
+        "result_bits": "0x3f3d9718"
+      },
+      {
+        "argument_bits": "0xbe9bc01a",
+        "result_bits": "0x3f3cdac8"
+      },
+      {
+        "argument_bits": "0xbe9c4000",
+        "result_bits": "0x3f3caba0"
+      },
+      {
+        "argument_bits": "0xbe9ec28f",
+        "result_bits": "0x3f3bbf6d"
+      },
+      {
+        "argument_bits": "0xbea3d70a",
+        "result_bits": "0x3f39e4e7"
+      },
+      {
+        "argument_bits": "0xbea7f62c",
+        "result_bits": "0x3f38675a"
+      },
+      {
+        "argument_bits": "0xbea90000",
+        "result_bits": "0x3f3807b4"
+      },
+      {
+        "argument_bits": "0xbeae3d71",
+        "result_bits": "0x3f362801"
+      },
+      {
+        "argument_bits": "0xbeb38f5c",
+        "result_bits": "0x3f3445fa"
+      },
+      {
+        "argument_bits": "0xbeb4a234",
+        "result_bits": "0x3f33e54f"
+      },
+      {
+        "argument_bits": "0xbeb64000",
+        "result_bits": "0x3f335425"
+      },
+      {
+        "argument_bits": "0xbeb8f5c3",
+        "result_bits": "0x3f3261cc"
+      },
+      {
+        "argument_bits": "0xbebe70a4",
+        "result_bits": "0x3f307ba3"
+      },
+      {
+        "argument_bits": "0xbec1c433",
+        "result_bits": "0x3f2f5710"
+      },
+      {
+        "argument_bits": "0xbec40000",
+        "result_bits": "0x3f2e93ab"
+      },
+      {
+        "argument_bits": "0xbec9a3d7",
+        "result_bits": "0x3f2caa10"
+      },
+      {
+        "argument_bits": "0xbecf5c29",
+        "result_bits": "0x3f2abefe"
+      },
+      {
+        "argument_bits": "0xbed24000",
+        "result_bits": "0x3f29c8f6"
+      },
+      {
+        "argument_bits": "0xbed528f6",
+        "result_bits": "0x3f28d29f"
+      },
+      {
+        "argument_bits": "0xbedb0a3d",
+        "result_bits": "0x3f26e520"
+      },
+      {
+        "argument_bits": "0xbedd6a16",
+        "result_bits": "0x3f261f72"
+      },
+      {
+        "argument_bits": "0xbee10000",
+        "result_bits": "0x3f24f6a9"
+      },
+      {
+        "argument_bits": "0xbee70a3d",
+        "result_bits": "0x3f230766"
+      },
+      {
+        "argument_bits": "0xbeebedfb",
+        "result_bits": "0x3f217ab8"
+      },
+      {
+        "argument_bits": "0xbeed28f6",
+        "result_bits": "0x3f21177f"
+      },
+      {
+        "argument_bits": "0xbef04000",
+        "result_bits": "0x3f201f5c"
+      },
+      {
+        "argument_bits": "0xbef35c29",
+        "result_bits": "0x3f1f2720"
+      },
+      {
+        "argument_bits": "0xbef9a3d7",
+        "result_bits": "0x3f1d3670"
+      },
+      {
+        "argument_bits": "0xbefae7d6",
+        "result_bits": "0x3f1cd313"
+      },
+      {
+        "argument_bits": "0xbf000000",
+        "result_bits": "0x3f1b4598"
+      },
+      {
+        "argument_bits": "0xbf033852",
+        "result_bits": "0x3f1954c0"
+      },
+      {
+        "argument_bits": "0xbf052bd4",
+        "result_bits": "0x3f182ab5"
+      },
+      {
+        "argument_bits": "0xbf067ae1",
+        "result_bits": "0x3f17640f"
+      },
+      {
+        "argument_bits": "0xbf082000",
+        "result_bits": "0x3f166bd2"
+      },
+      {
+        "argument_bits": "0xbf09c7ae",
+        "result_bits": "0x3f1573ad"
+      },
+      {
+        "argument_bits": "0xbf0d1eb8",
+        "result_bits": "0x3f1383c0"
+      },
+      {
+        "argument_bits": "0xbf0d1eb9",
+        "result_bits": "0x3f1383bf"
+      },
+      {
+        "argument_bits": "0xbf108000",
+        "result_bits": "0x3f11946d"
+      },
+      {
+        "argument_bits": "0xbf13eb85",
+        "result_bits": "0x3f0fa5db"
+      },
+      {
+        "argument_bits": "0xbf154c99",
+        "result_bits": "0x3f0ee044"
+      },
+      {
+        "argument_bits": "0xbf176148",
+        "result_bits": "0x3f0db82d"
+      },
+      {
+        "argument_bits": "0xbf192000",
+        "result_bits": "0x3f0cc1b8"
+      },
+      {
+        "argument_bits": "0xbf1ae148",
+        "result_bits": "0x3f0bcb88"
+      },
+      {
+        "argument_bits": "0xbf1db574",
+        "result_bits": "0x3f0a4242"
+      },
+      {
+        "argument_bits": "0xbf1e6b85",
+        "result_bits": "0x3f09e011"
+      },
+      {
+        "argument_bits": "0xbf21fff8",
+        "result_bits": "0x3f07f5ec"
+      },
+      {
+        "argument_bits": "0xbf220000",
+        "result_bits": "0x3f07f5e8"
+      },
+      {
+        "argument_bits": "0xbf259eb8",
+        "result_bits": "0x3f060d32"
+      },
+      {
+        "argument_bits": "0xbf26594b",
+        "result_bits": "0x3f05aba3"
+      },
+      {
+        "argument_bits": "0xbf2947ae",
+        "result_bits": "0x3f04260e"
+      },
+      {
+        "argument_bits": "0xbf2b2000",
+        "result_bits": "0x3f03331e"
+      },
+      {
+        "argument_bits": "0xbf2cfae1",
+        "result_bits": "0x3f02409f"
+      },
+      {
+        "argument_bits": "0xbf2f381e",
+        "result_bits": "0x3f011e3b"
+      },
+      {
+        "argument_bits": "0xbf30b852",
+        "result_bits": "0x3f005d05"
+      },
+      {
+        "argument_bits": "0xbf348000",
+        "result_bits": "0x3efcf6bd"
+      },
+      {
+        "argument_bits": "0xbf3851ec",
+        "result_bits": "0x3ef93797"
+      },
+      {
+        "argument_bits": "0xbf3c2e14",
+        "result_bits": "0x3ef57cd5"
+      },
+      {
+        "argument_bits": "0xbf3e2000",
+        "result_bits": "0x3ef3a12a"
+      },
+      {
+        "argument_bits": "0xbf40147b",
+        "result_bits": "0x3ef1c6af"
+      },
+      {
+        "argument_bits": "0xbf41a6b5",
+        "result_bits": "0x3ef04bf8"
+      },
+      {
+        "argument_bits": "0xbf44051f",
+        "result_bits": "0x3eee1561"
+      },
+      {
+        "argument_bits": "0xbf480000",
+        "result_bits": "0x3eea6922"
+      },
+      {
+        "argument_bits": "0xbf4b367a",
+        "result_bits": "0x3ee77cba"
+      },
+      {
+        "argument_bits": "0xbf4c051f",
+        "result_bits": "0x3ee6c22a"
+      },
+      {
+        "argument_bits": "0xbf50147b",
+        "result_bits": "0x3ee320ad"
+      },
+      {
+        "argument_bits": "0xbf522000",
+        "result_bits": "0x3ee1520c"
+      },
+      {
+        "argument_bits": "0xbf542e14",
+        "result_bits": "0x3edf84df"
+      },
+      {
+        "argument_bits": "0xbf55013b",
+        "result_bits": "0x3edeccce"
+      },
+      {
+        "argument_bits": "0xbf5851ec",
+        "result_bits": "0x3edbeef1"
+      },
+      {
+        "argument_bits": "0xbf5c8000",
+        "result_bits": "0x3ed85f16"
+      },
+      {
+        "argument_bits": "0xbf5f06f7",
+        "result_bits": "0x3ed63ef6"
+      },
+      {
+        "argument_bits": "0xbf60b852",
+        "result_bits": "0x3ed4d57b"
+      },
+      {
+        "argument_bits": "0xbf64fae1",
+        "result_bits": "0x3ed15250"
+      },
+      {
+        "argument_bits": "0xbf672000",
+        "result_bits": "0x3ecf9331"
+      },
+      {
+        "argument_bits": "0xbf6947ae",
+        "result_bits": "0x3ecdd5bf"
+      },
+      {
+        "argument_bits": "0xbf6d9eb8",
+        "result_bits": "0x3eca5ff4"
+      },
+      {
+        "argument_bits": "0xbf720000",
+        "result_bits": "0x3ec6f117"
+      },
+      {
+        "argument_bits": "0xbf73c361",
+        "result_bits": "0x3ec59386"
+      },
+      {
+        "argument_bits": "0xbf766b85",
+        "result_bits": "0x3ec38951"
+      },
+      {
+        "argument_bits": "0xbf7ae148",
+        "result_bits": "0x3ec028c7"
+      },
+      {
+        "argument_bits": "0xbf7d2000",
+        "result_bits": "0x3ebe7b44"
+      },
+      {
+        "argument_bits": "0xbf7e7a10",
+        "result_bits": "0x3ebd7a73"
+      },
+      {
+        "argument_bits": "0xbf7f6148",
+        "result_bits": "0x3ebccf9d"
+      },
+      {
+        "argument_bits": "0xbf81f5c3",
+        "result_bits": "0x3eb97df8"
+      },
+      {
+        "argument_bits": "0xbf844000",
+        "result_bits": "0x3eb633f8"
+      },
+      {
+        "argument_bits": "0xbf84b5dd",
+        "result_bits": "0x3eb58c7f"
+      },
+      {
+        "argument_bits": "0xbf868f5c",
+        "result_bits": "0x3eb2f1be"
+      },
+      {
+        "argument_bits": "0xbf88e3d7",
+        "result_bits": "0x3eafb768"
+      },
+      {
+        "argument_bits": "0xbf8a1000",
+        "result_bits": "0x3eae1d3c"
+      },
+      {
+        "argument_bits": "0xbf8a4c30",
+        "result_bits": "0x3eadcb70"
+      },
+      {
+        "argument_bits": "0xbf8b3d71",
+        "result_bits": "0x3eac8512"
+      },
+      {
+        "argument_bits": "0xbf8d9c29",
+        "result_bits": "0x3ea95adb"
+      },
+      {
+        "argument_bits": "0xbf8ffff9",
+        "result_bits": "0x3ea638e2"
+      },
+      {
+        "argument_bits": "0xbf900000",
+        "result_bits": "0x3ea638d9"
+      },
+      {
+        "argument_bits": "0xbf9268f6",
+        "result_bits": "0x3ea31f27"
+      },
+      {
+        "argument_bits": "0xbf94d70a",
+        "result_bits": "0x3ea00ddc"
+      },
+      {
+        "argument_bits": "0xbf95d14e",
+        "result_bits": "0x3e9ed61d"
+      },
+      {
+        "argument_bits": "0xbf961000",
+        "result_bits": "0x3e9e8864"
+      },
+      {
+        "argument_bits": "0xbf974a3d",
+        "result_bits": "0x3e9d050e"
+      },
+      {
+        "argument_bits": "0xbf99c28f",
+        "result_bits": "0x3e9a04d0"
+      },
+      {
+        "argument_bits": "0xbf9bc01a",
+        "result_bits": "0x3e97a470"
+      },
+      {
+        "argument_bits": "0xbf9c4000",
+        "result_bits": "0x3e970d36"
+      },
+      {
+        "argument_bits": "0xbf9ec28f",
+        "result_bits": "0x3e941e52"
+      },
+      {
+        "argument_bits": "0xbfa14a3d",
+        "result_bits": "0x3e913833"
+      },
+      {
+        "argument_bits": "0xbfa1cc64",
+        "result_bits": "0x3e90a4d4"
+      },
+      {
+        "argument_bits": "0xbfa29000",
+        "result_bits": "0x3e8fc872"
+      },
+      {
+        "argument_bits": "0xbfa3d70a",
+        "result_bits": "0x3e8e5ae8"
+      },
+      {
+        "argument_bits": "0xbfa668f6",
+        "result_bits": "0x3e8b867f"
+      },
+      {
+        "argument_bits": "0xbfa7f62c",
+        "result_bits": "0x3e89d822"
+      },
+      {
+        "argument_bits": "0xbfa90000",
+        "result_bits": "0x3e88bb05"
+      },
+      {
+        "argument_bits": "0xbfab9c29",
+        "result_bits": "0x3e85f883"
+      },
+      {
+        "argument_bits": "0xbfae3d71",
+        "result_bits": "0x3e833f04"
+      },
+      {
+        "argument_bits": "0xbfaf9000",
+        "result_bits": "0x3e81e5a8"
+      },
+      {
+        "argument_bits": "0xbfb0e3d7",
+        "result_bits": "0x3e808e90"
+      },
+      {
+        "argument_bits": "0xbfb38f5c",
+        "result_bits": "0x3e7bce5c"
+      },
+      {
+        "argument_bits": "0xbfb4a234",
+        "result_bits": "0x3e79b3f0"
+      },
+      {
+        "argument_bits": "0xbfb64000",
+        "result_bits": "0x3e7691c7"
+      },
+      {
+        "argument_bits": "0xbfb8f5c3",
+        "result_bits": "0x3e71676b"
+      },
+      {
+        "argument_bits": "0xbfbb2475",
+        "result_bits": "0x3e6d52ab"
+      },
+      {
+        "argument_bits": "0xbfbbb0a4",
+        "result_bits": "0x3e6c4f4f"
+      },
+      {
+        "argument_bits": "0xbfbd1000",
+        "result_bits": "0x3e69ca1b"
+      },
+      {
+        "argument_bits": "0xbfbe70a4",
+        "result_bits": "0x3e674978"
+      },
+      {
+        "argument_bits": "0xbfc135c3",
+        "result_bits": "0x3e6255e7"
+      },
+      {
+        "argument_bits": "0xbfc1c433",
+        "result_bits": "0x3e615a95"
+      },
+      {
+        "argument_bits": "0xbfc40000",
+        "result_bits": "0x3e5d749e"
+      },
+      {
+        "argument_bits": "0xbfc6cf5c",
+        "result_bits": "0x3e58a599"
+      },
+      {
+        "argument_bits": "0xbfc8816f",
+        "result_bits": "0x3e55cbc0"
+      },
+      {
+        "argument_bits": "0xbfc9a3d7",
+        "result_bits": "0x3e53e8d5"
+      },
+      {
+        "argument_bits": "0xbfcb1000",
+        "result_bits": "0x3e51914a"
+      },
+      {
+        "argument_bits": "0xbfcc7d71",
+        "result_bits": "0x3e4f3e4b"
+      },
+      {
+        "argument_bits": "0xbfcf5c29",
+        "result_bits": "0x3e4aa5f5"
+      },
+      {
+        "argument_bits": "0xbfd24000",
+        "result_bits": "0x3e461fc6"
+      },
+      {
+        "argument_bits": "0xbfd528f6",
+        "result_bits": "0x3e41abb3"
+      },
+      {
+        "argument_bits": "0xbfd65461",
+        "result_bits": "0x3e3fe8ba"
+      },
+      {
+        "argument_bits": "0xbfd8170a",
+        "result_bits": "0x3e3d49af"
+      },
+      {
+        "argument_bits": "0xbfd99000",
+        "result_bits": "0x3e3b1f6c"
+      },
+      {
+        "argument_bits": "0xbfdb0a3d",
+        "result_bits": "0x3e38f9a8"
+      },
+      {
+        "argument_bits": "0xbfdd6a16",
+        "result_bits": "0x3e359357"
+      },
+      {
+        "argument_bits": "0xbfde028f",
+        "result_bits": "0x3e34bb8d"
+      },
+      {
+        "argument_bits": "0xbfe0fff5",
+        "result_bits": "0x3e308f5a"
+      },
+      {
+        "argument_bits": "0xbfe10000",
+        "result_bits": "0x3e308f4b"
+      },
+      {
+        "argument_bits": "0xbfe4028f",
+        "result_bits": "0x3e2c74ce"
+      },
+      {
+        "argument_bits": "0xbfe49d4a",
+        "result_bits": "0x3e2ba4d4"
+      },
+      {
+        "argument_bits": "0xbfe70a3d",
+        "result_bits": "0x3e286bff"
+      },
+      {
+        "argument_bits": "0xbfe89000",
+        "result_bits": "0x3e266e2f"
+      },
+      {
+        "argument_bits": "0xbfea170a",
+        "result_bits": "0x3e2474c3"
+      },
+      {
+        "argument_bits": "0xbfebedfb",
+        "result_bits": "0x3e221c05"
+      },
+      {
+        "argument_bits": "0xbfed28f6",
+        "result_bits": "0x3e208f03"
+      },
+      {
+        "argument_bits": "0xbff04000",
+        "result_bits": "0x3e1cbaa5"
+      },
+      {
+        "argument_bits": "0xbff35c29",
+        "result_bits": "0x3e18f789"
+      },
+      {
+        "argument_bits": "0xbff67d71",
+        "result_bits": "0x3e154593"
+      },
+      {
+        "argument_bits": "0xbff81000",
+        "result_bits": "0x3e1372fd"
+      },
+      {
+        "argument_bits": "0xbff9a3d7",
+        "result_bits": "0x3e11a4a4"
+      },
+      {
+        "argument_bits": "0xbffae7d6",
+        "result_bits": "0x3e1035ce"
+      },
+      {
+        "argument_bits": "0xbffccf5c",
+        "result_bits": "0x3e0e149b"
+      },
+      {
+        "argument_bits": "0xc0000000",
+        "result_bits": "0x3e0a9555"
+      },
+      {
+        "argument_bits": "0xc0014880",
+        "result_bits": "0x3e07d518"
+      },
+      {
+        "argument_bits": "0xc0019ae1",
+        "result_bits": "0x3e0726b1"
+      },
+      {
+        "argument_bits": "0xc0033852",
+        "result_bits": "0x3e03c88a"
+      },
+      {
+        "argument_bits": "0xc0040800",
+        "result_bits": "0x3e021f9a"
+      },
+      {
+        "argument_bits": "0xc004d852",
+        "result_bits": "0x3e007abb"
+      },
+      {
+        "argument_bits": "0xc0052bd4",
+        "result_bits": "0x3dffa707"
+      },
+      {
+        "argument_bits": "0xc0067ae1",
+        "result_bits": "0x3dfa7a3d"
+      },
+      {
+        "argument_bits": "0xc0082000",
+        "result_bits": "0x3df41f18"
+      },
+      {
+        "argument_bits": "0xc0091de7",
+        "result_bits": "0x3df05e13"
+      },
+      {
+        "argument_bits": "0xc009c7ae",
+        "result_bits": "0x3dede3ba"
+      },
+      {
+        "argument_bits": "0xc00b71ec",
+        "result_bits": "0x3de7c7ce"
+      },
+      {
+        "argument_bits": "0xc00c4800",
+        "result_bits": "0x3de4c58d"
+      },
+      {
+        "argument_bits": "0xc00d1eb8",
+        "result_bits": "0x3de1cb08"
+      },
+      {
+        "argument_bits": "0xc00d1eb9",
+        "result_bits": "0x3de1cb05"
+      },
+      {
+        "argument_bits": "0xc00ece14",
+        "result_bits": "0x3ddbed0c"
+      },
+      {
+        "argument_bits": "0xc0108000",
+        "result_bits": "0x3dd62d84"
+      },
+      {
+        "argument_bits": "0xc0112e49",
+        "result_bits": "0x3dd3e95b"
+      },
+      {
+        "argument_bits": "0xc012347b",
+        "result_bits": "0x3dd08c1b"
+      },
+      {
+        "argument_bits": "0xc013eb85",
+        "result_bits": "0x3dcb0879"
+      },
+      {
+        "argument_bits": "0xc014c800",
+        "result_bits": "0x3dc851b5"
+      },
+      {
+        "argument_bits": "0xc0154c99",
+        "result_bits": "0x3dc6b45b"
+      },
+      {
+        "argument_bits": "0xc015a51f",
+        "result_bits": "0x3dc5a240"
+      },
+      {
+        "argument_bits": "0xc0176148",
+        "result_bits": "0x3dc05919"
+      },
+      {
+        "argument_bits": "0xc0192000",
+        "result_bits": "0x3dbb2ca6"
+      },
+      {
+        "argument_bits": "0xc01979a7",
+        "result_bits": "0x3dba272b"
+      },
+      {
+        "argument_bits": "0xc01ae148",
+        "result_bits": "0x3db61c89"
+      },
+      {
+        "argument_bits": "0xc01ca51f",
+        "result_bits": "0x3db12865"
+      },
+      {
+        "argument_bits": "0xc01d8800",
+        "result_bits": "0x3daeb8b3"
+      },
+      {
+        "argument_bits": "0xc01db574",
+        "result_bits": "0x3dae3cc9"
+      },
+      {
+        "argument_bits": "0xc01e6b85",
+        "result_bits": "0x3dac4fdc"
+      },
+      {
+        "argument_bits": "0xc020347b",
+        "result_bits": "0x3da7928c"
+      },
+      {
+        "argument_bits": "0xc021fff8",
+        "result_bits": "0x3da2f02d"
+      },
+      {
+        "argument_bits": "0xc0220000",
+        "result_bits": "0x3da2f019"
+      },
+      {
+        "argument_bits": "0xc023ce14",
+        "result_bits": "0x3d9e6820"
+      },
+      {
+        "argument_bits": "0xc0259eb8",
+        "result_bits": "0x3d99fa3e"
+      },
+      {
+        "argument_bits": "0xc026594b",
+        "result_bits": "0x3d983be9"
+      },
+      {
+        "argument_bits": "0xc0268800",
+        "result_bits": "0x3d97ccf8"
+      },
+      {
+        "argument_bits": "0xc02771ec",
+        "result_bits": "0x3d95a613"
+      },
+      {
+        "argument_bits": "0xc02947ae",
+        "result_bits": "0x3d916b41"
+      },
+      {
+        "argument_bits": "0xc02ac155",
+        "result_bits": "0x3d8e1afb"
+      },
+      {
+        "argument_bits": "0xc02b2000",
+        "result_bits": "0x3d8d4962"
+      },
+      {
+        "argument_bits": "0xc02cfae1",
+        "result_bits": "0x3d894016"
+      },
+      {
+        "argument_bits": "0xc02ed852",
+        "result_bits": "0x3d854ef9"
+      },
+      {
+        "argument_bits": "0xc02f381e",
+        "result_bits": "0x3d848803"
+      },
+      {
+        "argument_bits": "0xc02fc800",
+        "result_bits": "0x3d835f5d"
+      },
+      {
+        "argument_bits": "0xc030b852",
+        "result_bits": "0x3d8175a9"
+      },
+      {
+        "argument_bits": "0xc0329ae1",
+        "result_bits": "0x3d7b678c"
+      },
+      {
+        "argument_bits": "0xc033bda5",
+        "result_bits": "0x3d76fb70"
+      },
+      {
+        "argument_bits": "0xc0348000",
+        "result_bits": "0x3d7411d5"
+      },
+      {
+        "argument_bits": "0xc03667ae",
+        "result_bits": "0x3d6ce96e"
+      },
+      {
+        "argument_bits": "0xc03851ec",
+        "result_bits": "0x3d65ed8f"
+      },
+      {
+        "argument_bits": "0xc0394800",
+        "result_bits": "0x3d628019"
+      },
+      {
+        "argument_bits": "0xc03a3eb8",
+        "result_bits": "0x3d5f1d7c"
+      },
+      {
+        "argument_bits": "0xc03c2e14",
+        "result_bits": "0x3d58786c"
+      },
+      {
+        "argument_bits": "0xc03cf4f1",
+        "result_bits": "0x3d55dbdc"
+      },
+      {
+        "argument_bits": "0xc03e2000",
+        "result_bits": "0x3d51fd9c"
+      },
+      {
+        "argument_bits": "0xc040147b",
+        "result_bits": "0x3d4bac4f"
+      },
+      {
+        "argument_bits": "0xc041a6b5",
+        "result_bits": "0x3d46bbd9"
+      },
+      {
+        "argument_bits": "0xc0420b85",
+        "result_bits": "0x3d4583c4"
+      },
+      {
+        "argument_bits": "0xc0430800",
+        "result_bits": "0x3d427e8b"
+      },
+      {
+        "argument_bits": "0xc044051f",
+        "result_bits": "0x3d3f833a"
+      },
+      {
+        "argument_bits": "0xc0460148",
+        "result_bits": "0x3d39a9f4"
+      },
+      {
+        "argument_bits": "0xc0466738",
+        "result_bits": "0x3d388327"
+      },
+      {
+        "argument_bits": "0xc0480000",
+        "result_bits": "0x3d33f737"
+      },
+      {
+        "argument_bits": "0xc04a0148",
+        "result_bits": "0x3d2e6a43"
+      },
+      {
+        "argument_bits": "0xc04b367a",
+        "result_bits": "0x3d2b2788"
+      },
+      {
+        "argument_bits": "0xc04c051f",
+        "result_bits": "0x3d290260"
+      },
+      {
+        "argument_bits": "0xc04d0800",
+        "result_bits": "0x3d265c1c"
+      },
+      {
+        "argument_bits": "0xc04e0b85",
+        "result_bits": "0x3d23bed6"
+      },
+      {
+        "argument_bits": "0xc050147b",
+        "result_bits": "0x3d1e9eea"
+      },
+      {
+        "argument_bits": "0xc0522000",
+        "result_bits": "0x3d19a1e8"
+      },
+      {
+        "argument_bits": "0xc0542e14",
+        "result_bits": "0x3d14c71d"
+      },
+      {
+        "argument_bits": "0xc055013b",
+        "result_bits": "0x3d12df68"
+      },
+      {
+        "argument_bits": "0xc0563eb8",
+        "result_bits": "0x3d100dd2"
+      },
+      {
+        "argument_bits": "0xc0574800",
+        "result_bits": "0x3d0dbd85"
+      },
+      {
+        "argument_bits": "0xc05851ec",
+        "result_bits": "0x3d0b7557"
+      },
+      {
+        "argument_bits": "0xc059fcb9",
+        "result_bits": "0x3d07df56"
+      },
+      {
+        "argument_bits": "0xc05a67ae",
+        "result_bits": "0x3d06fd01"
+      },
+      {
+        "argument_bits": "0xc05c7ff5",
+        "result_bits": "0x3d02a434"
+      },
+      {
+        "argument_bits": "0xc05c8000",
+        "result_bits": "0x3d02a41d"
+      },
+      {
+        "argument_bits": "0xc05e9ae1",
+        "result_bits": "0x3cfcd406"
+      },
+      {
+        "argument_bits": "0xc05f06f7",
+        "result_bits": "0x3cfb2a71"
+      },
+      {
+        "argument_bits": "0xc060b852",
+        "result_bits": "0x3cf49c0c"
+      },
+      {
+        "argument_bits": "0xc061c800",
+        "result_bits": "0x3cf0963e"
+      },
+      {
+        "argument_bits": "0xc062d852",
+        "result_bits": "0x3cec9f02"
+      },
+      {
+        "argument_bits": "0xc0641ff3",
+        "result_bits": "0x3ce7efba"
+      },
+      {
+        "argument_bits": "0xc064fae1",
+        "result_bits": "0x3ce4db9a"
+      },
+      {
+        "argument_bits": "0xc0672000",
+        "result_bits": "0x3cdd508a"
+      },
+      {
+        "argument_bits": "0xc06947ae",
+        "result_bits": "0x3cd5fc91"
+      },
+      {
+        "argument_bits": "0xc06b71ec",
+        "result_bits": "0x3ccede6e"
+      },
+      {
+        "argument_bits": "0xc06c8800",
+        "result_bits": "0x3ccb632d"
+      },
+      {
+        "argument_bits": "0xc06d9eb8",
+        "result_bits": "0x3cc7f4eb"
+      },
+      {
+        "argument_bits": "0xc06e7e29",
+        "result_bits": "0x3cc53f8e"
+      },
+      {
+        "argument_bits": "0xc06fce14",
+        "result_bits": "0x3cc13ecc"
+      },
+      {
+        "argument_bits": "0xc0720000",
+        "result_bits": "0x3cbabadd"
+      },
+      {
+        "argument_bits": "0xc073c361",
+        "result_bits": "0x3cb5a7df"
+      },
+      {
+        "argument_bits": "0xc074347b",
+        "result_bits": "0x3cb467f3"
+      },
+      {
+        "argument_bits": "0xc0766b85",
+        "result_bits": "0x3cae44e6"
+      },
+      {
+        "argument_bits": "0xc0778800",
+        "result_bits": "0x3cab44f5"
+      },
+      {
+        "argument_bits": "0xc078a51f",
+        "result_bits": "0x3ca8508d"
+      },
+      {
+        "argument_bits": "0xc0791759",
+        "result_bits": "0x3ca72530"
+      },
+      {
+        "argument_bits": "0xc07ae148",
+        "result_bits": "0x3ca289ca"
+      },
+      {
+        "argument_bits": "0xc07d2000",
+        "result_bits": "0x3c9cef80"
+      },
+      {
+        "argument_bits": "0xc07e7a10",
+        "result_bits": "0x3c99a7d0"
+      },
+      {
+        "argument_bits": "0xc07f6148",
+        "result_bits": "0x3c978096"
+      },
+      {
+        "argument_bits": "0xc080d28f",
+        "result_bits": "0x3c923bfe"
+      },
+      {
+        "argument_bits": "0xc0816400",
+        "result_bits": "0x3c8fa937"
+      },
+      {
+        "argument_bits": "0xc081f5c3",
+        "result_bits": "0x3c8d209e"
+      },
+      {
+        "argument_bits": "0xc0831a3d",
+        "result_bits": "0x3c882d7c"
+      },
+      {
+        "argument_bits": "0xc0844000",
+        "result_bits": "0x3c836184"
+      },
+      {
+        "argument_bits": "0xc084b5dd",
+        "result_bits": "0x3c818113"
+      },
+      {
+        "argument_bits": "0xc085670a",
+        "result_bits": "0x3c7d777b"
+      },
+      {
+        "argument_bits": "0xc0868f5c",
+        "result_bits": "0x3c747651"
+      },
+      {
+        "argument_bits": "0xc0872400",
+        "result_bits": "0x3c701107"
+      },
+      {
+        "argument_bits": "0xc0877d57",
+        "result_bits": "0x3c6d766f"
+      },
+      {
+        "argument_bits": "0xc087b8f6",
+        "result_bits": "0x3c6bbd9c"
+      },
+      {
+        "argument_bits": "0xc088e3d7",
+        "result_bits": "0x3c634b7b"
+      },
+      {
+        "argument_bits": "0xc08a1000",
+        "result_bits": "0x3c5b1e0a"
+      },
+      {
+        "argument_bits": "0xc08a4c30",
+        "result_bits": "0x3c59836c"
+      },
+      {
+        "argument_bits": "0xc08b3d71",
+        "result_bits": "0x3c533376"
+      },
+      {
+        "argument_bits": "0xc08c6c29",
+        "result_bits": "0x3c4b89f9"
+      },
+      {
+        "argument_bits": "0xc08d0400",
+        "result_bits": "0x3c47cd13"
+      },
+      {
+        "argument_bits": "0xc08d2268",
+        "result_bits": "0x3c470f94"
+      },
+      {
+        "argument_bits": "0xc08d9c29",
+        "result_bits": "0x3c441fca"
+      },
+      {
+        "argument_bits": "0xc08ecd71",
+        "result_bits": "0x3c3cf331"
+      }
+    ],
+    "expf_keys": 377,
+    "powf": [
+      {
+        "exponent_bits": "0x00000000",
+        "input_bits": "0x00000000",
+        "result_bits": "0x3f800000"
+      },
+      {
+        "exponent_bits": "0x3f000000",
+        "input_bits": "0x00000000",
+        "result_bits": "0x00000000"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3a4a0000",
+        "result_bits": "0x351f6400"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3b030000",
+        "result_bits": "0x36861200"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3b0e8000",
+        "result_bits": "0x369ea480"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3b112000",
+        "result_bits": "0x36a48a88"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3b370000",
+        "result_bits": "0x3702d100"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3bfe0000",
+        "result_bits": "0x387c0400"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3c04c800",
+        "result_bits": "0x3889bdb9"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3c09f000",
+        "result_bits": "0x3894a582"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3c0e2000",
+        "result_bits": "0x389dcf08"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3c156000",
+        "result_bits": "0x38ae51c8"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3c1eb000",
+        "result_bits": "0x38c4bb72"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3c29d000",
+        "result_bits": "0x38e14892"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3c302000",
+        "result_bits": "0x38f25808"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3c675000",
+        "result_bits": "0x39510179"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3c6cb000",
+        "result_bits": "0x395ad4f9"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3c75c000",
+        "result_bits": "0x396be910"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3c7ca000",
+        "result_bits": "0x39794b64"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3c8d4000",
+        "result_bits": "0x399bdf20"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3c8e8c00",
+        "result_bits": "0x399ebf39"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3c904000",
+        "result_bits": "0x39a29020"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3c9ea800",
+        "result_bits": "0x39c4a79c"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ca93000",
+        "result_bits": "0x39dfa0d2"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3caa9c00",
+        "result_bits": "0x39e3671e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3cbab000",
+        "result_bits": "0x3a082439"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3cbfe000",
+        "result_bits": "0x3a0fd004"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3cc22000",
+        "result_bits": "0x3a133484"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3cc39000",
+        "result_bits": "0x3a1564b1"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3cc54800",
+        "result_bits": "0x3a1807e4"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3cca9000",
+        "result_bits": "0x3a204791"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ccb7000",
+        "result_bits": "0x3a21aad1"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ccfb000",
+        "result_bits": "0x3a287e19"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3cd5c000",
+        "result_bits": "0x3a327910"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ce2e000",
+        "result_bits": "0x3a491044"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ce8a400",
+        "result_bits": "0x3a5369a9"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3d011000",
+        "result_bits": "0x3a822242"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3d02cc00",
+        "result_bits": "0x3a85a7a5"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3d041800",
+        "result_bits": "0x3a885184"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3d098900",
+        "result_bits": "0x3a93c7d7"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3d11aa00",
+        "result_bits": "0x3aa5c40a"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3d153340",
+        "result_bits": "0x3aade966"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3d21de00",
+        "result_bits": "0x3accb1f9"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3d23a800",
+        "result_bits": "0x3ad13ebc"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3d23b6c0",
+        "result_bits": "0x3ad16476"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3d24ab2d",
+        "result_bits": "0x3ad3d788"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3d414000",
+        "result_bits": "0x3b11e190"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3d58e500",
+        "result_bits": "0x3b37c33d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3d58e800",
+        "result_bits": "0x3b37c852"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3d591400",
+        "result_bits": "0x3b3812ea"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3d708a00",
+        "result_bits": "0x3b62030a"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3d7fb800",
+        "result_bits": "0x3b7f7014"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3d819400",
+        "result_bits": "0x3b832cfb"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3d8ed600",
+        "result_bits": "0x3b9f6436"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3d929a00",
+        "result_bits": "0x3ba7e809"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3d94b000",
+        "result_bits": "0x3bacb7f2"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3d95fe00",
+        "result_bits": "0x3bafc350"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3d9d1e80",
+        "result_bits": "0x3bc0dcd9"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3d9e4800",
+        "result_bits": "0x3bc3b9e9"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3da18c00",
+        "result_bits": "0x3bcbe2c9"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3da62a00",
+        "result_bits": "0x3bd7b4fe"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3da65000",
+        "result_bits": "0x3bd817b2"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3db2f000",
+        "result_bits": "0x3bfa2542"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3db2fc00",
+        "result_bits": "0x3bfa46d0"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3db50800",
+        "result_bits": "0x3c000450"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3db60350",
+        "result_bits": "0x3c0168b6"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3db68a00",
+        "result_bits": "0x3c022882"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3db7b000",
+        "result_bits": "0x3c03cd19"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3dbc7e00",
+        "result_bits": "0x3c0ac94e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3dc0f400",
+        "result_bits": "0x3c116ee9"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3dc10400",
+        "result_bits": "0x3c118708"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3dc23200",
+        "result_bits": "0x3c134fd2"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3dc25b20",
+        "result_bits": "0x3c138e3d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3dc2ee00",
+        "result_bits": "0x3c146d95"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3dc36e00",
+        "result_bits": "0x3c1530c3"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3dc6f300",
+        "result_bits": "0x3c1a9ccb"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3dcc2780",
+        "result_bits": "0x3c22cefa"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3dd01a00",
+        "result_bits": "0x3c292a43"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3dd0b000",
+        "result_bits": "0x3c2a1e79"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3dd2fe00",
+        "result_bits": "0x3c2de5b4"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ddea800",
+        "result_bits": "0x3c41a7ce"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3de5e000",
+        "result_bits": "0x3c4e6a84"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3de9c600",
+        "result_bits": "0x3c557a05"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3df20600",
+        "result_bits": "0x3c64cf58"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3df47c00",
+        "result_bits": "0x3c697c9c"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3df82400",
+        "result_bits": "0x3c7085c5"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e047b00",
+        "result_bits": "0x3c891e26"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e059000",
+        "result_bits": "0x3c8b5de2"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e05fc00",
+        "result_bits": "0x3c8c3fa0"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e069c00",
+        "result_bits": "0x3c8d8f5e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e0991c0",
+        "result_bits": "0x3c93daa5"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e0b2800",
+        "result_bits": "0x3c9748ec"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e0f0580",
+        "result_bits": "0x3c9fce4a"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e114780",
+        "result_bits": "0x3ca4e426"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e12b680",
+        "result_bits": "0x3ca82958"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e13e300",
+        "result_bits": "0x3caadcf7"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e16ef40",
+        "result_bits": "0x3cb1fa7d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e178200",
+        "result_bits": "0x3cb3553c"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e17c300",
+        "result_bits": "0x3cb3ef3d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e1c2200",
+        "result_bits": "0x3cbe72e9"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e1c23f0",
+        "result_bits": "0x3cbe77a3"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e1c7200",
+        "result_bits": "0x3cbf3646"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e1e3900",
+        "result_bits": "0x3cc394d1"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e1eac80",
+        "result_bits": "0x3cc4b2c4"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e1fae00",
+        "result_bits": "0x3cc73335"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e200200",
+        "result_bits": "0x3cc80500"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e206200",
+        "result_bits": "0x3cc8f54b"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e211700",
+        "result_bits": "0x3ccabbe0"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e218700",
+        "result_bits": "0x3ccbd62a"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e248000",
+        "result_bits": "0x3cd36880"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e252800",
+        "result_bits": "0x3cd5192d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e26b800",
+        "result_bits": "0x3cd92649"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e27d900",
+        "result_bits": "0x3cdc19ac"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e289d00",
+        "result_bits": "0x3cde1ce1"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e2b3400",
+        "result_bits": "0x3ce4fd05"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e2da400",
+        "result_bits": "0x3ceb8e22"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e2e5100",
+        "result_bits": "0x3ced646b"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e310200",
+        "result_bits": "0x3cf4c788"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e312200",
+        "result_bits": "0x3cf52011"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e317900",
+        "result_bits": "0x3cf61116"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e385c00",
+        "result_bits": "0x3d04c461"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e38f500",
+        "result_bits": "0x3d05a11a"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e3a5d00",
+        "result_bits": "0x3d07ab46"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e3a7a00",
+        "result_bits": "0x3d07d582"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e3c8440",
+        "result_bits": "0x3d0ad282"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e3e5400",
+        "result_bits": "0x3d0d80cc"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e3e9400",
+        "result_bits": "0x3d0de006"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e3f1200",
+        "result_bits": "0x3d0e9bdd"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e3f5000",
+        "result_bits": "0x3d0ef879"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e402800",
+        "result_bits": "0x3d103c06"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e430000",
+        "result_bits": "0x3d148900"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e448b00",
+        "result_bits": "0x3d16e523"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e44d300",
+        "result_bits": "0x3d1753c6"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e47f800",
+        "result_bits": "0x3d1c3380"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e48b880",
+        "result_bits": "0x3d1d60cd"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e496000",
+        "result_bits": "0x3d1e67e4"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e497280",
+        "result_bits": "0x3d1e8500"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e49f000",
+        "result_bits": "0x3d1f4ac1"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e4a2aa0",
+        "result_bits": "0x3d1fa74c"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e4e4100",
+        "result_bits": "0x3d262cad"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e4ff600",
+        "result_bits": "0x3d28efc0"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e4ffe00",
+        "result_bits": "0x3d28fcc0"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e503000",
+        "result_bits": "0x3d294e09"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e51d500",
+        "result_bits": "0x3d2bfd7b"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e520c00",
+        "result_bits": "0x3d2c57b1"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e534f00",
+        "result_bits": "0x3d2e6b52"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e542700",
+        "result_bits": "0x3d2fd09e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e56b480",
+        "result_bits": "0x3d341245"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e575200",
+        "result_bits": "0x3d351ad6"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e5a1000",
+        "result_bits": "0x3d39bf41"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e5d4c00",
+        "result_bits": "0x3d3f4c4f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e5d4d00",
+        "result_bits": "0x3d3f4e09"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e5e8600",
+        "result_bits": "0x3d416cae"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e5f0800",
+        "result_bits": "0x3d424ef0"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e5f6a00",
+        "result_bits": "0x3d42f9d8"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e666700",
+        "result_bits": "0x3d4f5d3d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e686e80",
+        "result_bits": "0x3d530878"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e6ac600",
+        "result_bits": "0x3d574e91"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e6bdc00",
+        "result_bits": "0x3d594da5"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e6de1e0",
+        "result_bits": "0x3d5d0c00"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e6e2800",
+        "result_bits": "0x3d5d8e66"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e6ea2c0",
+        "result_bits": "0x3d5e7304"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e6f0bc0",
+        "result_bits": "0x3d5f36f1"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e6fab00",
+        "result_bits": "0x3d6060bc"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e704200",
+        "result_bits": "0x3d617bd1"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e71ae00",
+        "result_bits": "0x3d642912"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e725980",
+        "result_bits": "0x3d656d55"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e74fe00",
+        "result_bits": "0x3d6a752c"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e764100",
+        "result_bits": "0x3d6ce0fd"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e764900",
+        "result_bits": "0x3d6cf061"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e778c00",
+        "result_bits": "0x3d6f5f75"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e7874b0",
+        "result_bits": "0x3d71224a"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e78cb00",
+        "result_bits": "0x3d71c9f1"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e7b4200",
+        "result_bits": "0x3d769a7d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e7b4d00",
+        "result_bits": "0x3d76b015"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e7cea00",
+        "result_bits": "0x3d79dd86"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e7ed300",
+        "result_bits": "0x3d7da762"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e7f1200",
+        "result_bits": "0x3d7e24dd"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e7f9400",
+        "result_bits": "0x3d7f282e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e801240",
+        "result_bits": "0x3d802483"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e809b80",
+        "result_bits": "0x3d8137bd"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e80f060",
+        "result_bits": "0x3d81e283"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e82ddc4",
+        "result_bits": "0x3d85cbf6"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e84e300",
+        "result_bits": "0x3d89f5c3"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e853a80",
+        "result_bits": "0x3d8aabad"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e855010",
+        "result_bits": "0x3d8ad893"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e855b40",
+        "result_bits": "0x3d8aefe2"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e85a900",
+        "result_bits": "0x3d8b9213"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e85ee00",
+        "result_bits": "0x3d8c2253"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e88c9e0",
+        "result_bits": "0x3d922e3a"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e891900",
+        "result_bits": "0x3d92d789"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e894480",
+        "result_bits": "0x3d9334c7"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e89ac00",
+        "result_bits": "0x3d941317"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e89b400",
+        "result_bits": "0x3d94244d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e8b4100",
+        "result_bits": "0x3d977f4d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e8bc700",
+        "result_bits": "0x3d98a369"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e8cc500",
+        "result_bits": "0x3d9ad01f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e8d1600",
+        "result_bits": "0x3d9b827c"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e8d7200",
+        "result_bits": "0x3d9c4d8e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e8eba00",
+        "result_bits": "0x3d9f25be"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e903d00",
+        "result_bits": "0x3da2895d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e907c00",
+        "result_bits": "0x3da31778"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e921980",
+        "result_bits": "0x3da6c231"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e923600",
+        "result_bits": "0x3da70347"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e92f5ec",
+        "result_bits": "0x3da8badb"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e93e700",
+        "result_bits": "0x3daae635"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e947900",
+        "result_bits": "0x3dac3842"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e954120",
+        "result_bits": "0x3dae09c0"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e954200",
+        "result_bits": "0x3dae0bca"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e95a000",
+        "result_bits": "0x3daee748"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e967380",
+        "result_bits": "0x3db0d71c"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e97b140",
+        "result_bits": "0x3db3c528"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e97b800",
+        "result_bits": "0x3db3d528"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e984880",
+        "result_bits": "0x3db52c59"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e98a780",
+        "result_bits": "0x3db60eab"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e990900",
+        "result_bits": "0x3db6f785"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e99e600",
+        "result_bits": "0x3db90975"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e99e980",
+        "result_bits": "0x3db911e0"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e9a8506",
+        "result_bits": "0x3dba88a1"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e9adb00",
+        "result_bits": "0x3dbb586f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e9b0a00",
+        "result_bits": "0x3dbbca39"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e9b0f00",
+        "result_bits": "0x3dbbd656"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3e9f60de",
+        "result_bits": "0x3dc672f1"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ea094d4",
+        "result_bits": "0x3dc974bf"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ea0e600",
+        "result_bits": "0x3dca409d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ea1f600",
+        "result_bits": "0x3dcceeb1"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ea21f00",
+        "result_bits": "0x3dcd5680"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ea46a00",
+        "result_bits": "0x3dd32ff8"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ea4e380",
+        "result_bits": "0x3dd4688c"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ea62600",
+        "result_bits": "0x3dd7aa9b"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ea70b00",
+        "result_bits": "0x3dd9feb5"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ea78a80",
+        "result_bits": "0x3ddb4bfc"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ea89d40",
+        "result_bits": "0x3dde1d89"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ea8cb80",
+        "result_bits": "0x3dde9774"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ea94600",
+        "result_bits": "0x3ddfdafe"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eab1b40",
+        "result_bits": "0x3de4bad5"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eab5400",
+        "result_bits": "0x3de552a7"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eac0980",
+        "result_bits": "0x3de73989"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eac2990",
+        "result_bits": "0x3de78fc0"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ead0800",
+        "result_bits": "0x3de9e7a0"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eade080",
+        "result_bits": "0x3dec3264"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eae2e00",
+        "result_bits": "0x3ded0521"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eaf42a0",
+        "result_bits": "0x3deff850"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eafa000",
+        "result_bits": "0x3df0f848"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eafbe00",
+        "result_bits": "0x3df14aa2"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eafd5c0",
+        "result_bits": "0x3df18bde"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eb03400",
+        "result_bits": "0x3df28f15"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eb0f500",
+        "result_bits": "0x3df4a395"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eb12120",
+        "result_bits": "0x3df51da5"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eb16700",
+        "result_bits": "0x3df5df2f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eb23f80",
+        "result_bits": "0x3df838bc"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eb41200",
+        "result_bits": "0x3dfd52a3"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eb4fc00",
+        "result_bits": "0x3dffe6b0"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eb55800",
+        "result_bits": "0x3e00758e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eb725c0",
+        "result_bits": "0x3e0306fe"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eb7a000",
+        "result_bits": "0x3e03b624"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eb7bd80",
+        "result_bits": "0x3e03e079"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eb7ed80",
+        "result_bits": "0x3e042569"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ebb0d00",
+        "result_bits": "0x3e08abff"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ebbb4c0",
+        "result_bits": "0x3e09a190"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ebc0480",
+        "result_bits": "0x3e0a169c"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ebc3a80",
+        "result_bits": "0x3e0a65f9"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ebc6400",
+        "result_bits": "0x3e0aa307"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ebd1800",
+        "result_bits": "0x3e0bac72"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ebd5c00",
+        "result_bits": "0x3e0c10f9"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ec0e598",
+        "result_bits": "0x3e115932"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ec10280",
+        "result_bits": "0x3e1184c5"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ec1b800",
+        "result_bits": "0x3e1296f4"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ec1e200",
+        "result_bits": "0x3e12d68c"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ec23c74",
+        "result_bits": "0x3e135fae"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ec24900",
+        "result_bits": "0x3e1372b9"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ec28600",
+        "result_bits": "0x3e13cf5e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ec2ab00",
+        "result_bits": "0x3e14079e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ec3e200",
+        "result_bits": "0x3e15e214"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ec4a100",
+        "result_bits": "0x3e1706ed"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ec4b500",
+        "result_bits": "0x3e1725a8"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ec51200",
+        "result_bits": "0x3e17b4b5"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ec58480",
+        "result_bits": "0x3e186532"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ec63300",
+        "result_bits": "0x3e1972ee"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ec65e00",
+        "result_bits": "0x3e19b58b"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ec67600",
+        "result_bits": "0x3e19dabe"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ec6e480",
+        "result_bits": "0x3e1a8642"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ec77500",
+        "result_bits": "0x3e1b671b"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ec77b80",
+        "result_bits": "0x3e1b713d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ec7d000",
+        "result_bits": "0x3e1bf509"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ec7ffc0",
+        "result_bits": "0x3e1c3f9c"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ec827a0",
+        "result_bits": "0x3e1c7df0"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ec85900",
+        "result_bits": "0x3e1ccb2f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eca5208",
+        "result_bits": "0x3e1fe58f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eca87c0",
+        "result_bits": "0x3e203a83"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ecacc00",
+        "result_bits": "0x3e20a693"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ecd0080",
+        "result_bits": "0x3e2429cd"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ecd4e00",
+        "result_bits": "0x3e24a604"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ecd5180",
+        "result_bits": "0x3e24aba1"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ecd5280",
+        "result_bits": "0x3e24ad3c"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ecfaa80",
+        "result_bits": "0x3e28752d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ed18680",
+        "result_bits": "0x3e2b7ce4"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ed20d00",
+        "result_bits": "0x3e2c5955"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ed28ac0",
+        "result_bits": "0x3e2d27ee"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ed2b600",
+        "result_bits": "0x3e2d6f19"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ed2c080",
+        "result_bits": "0x3e2d8063"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ed2cc00",
+        "result_bits": "0x3e2d9353"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ed2d280",
+        "result_bits": "0x3e2d9e07"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ed2eec0",
+        "result_bits": "0x3e2dcc92"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ed30400",
+        "result_bits": "0x3e2def98"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ed3d500",
+        "result_bits": "0x3e2f48cf"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ed3e480",
+        "result_bits": "0x3e2f6277"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ed5ac80",
+        "result_bits": "0x3e325881"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ed5c300",
+        "result_bits": "0x3e327e13"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ed5fa80",
+        "result_bits": "0x3e32dace"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ed72300",
+        "result_bits": "0x3e34cbcf"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ed7d800",
+        "result_bits": "0x3e35fc86"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ed80480",
+        "result_bits": "0x3e364798"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ed8fa00",
+        "result_bits": "0x3e37e6d4"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3edaac60",
+        "result_bits": "0x3e3aca08"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3edc0800",
+        "result_bits": "0x3e3d1dc0"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3edc7700",
+        "result_bits": "0x3e3ddcbf"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3edcb280",
+        "result_bits": "0x3e3e4348"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3edcf2e0",
+        "result_bits": "0x3e3eb257"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eddb200",
+        "result_bits": "0x3e3ffcd0"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ede0a00",
+        "result_bits": "0x3e409558"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ede2300",
+        "result_bits": "0x3e40c0b9"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3edf4a00",
+        "result_bits": "0x3e42c201"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3edf56c0",
+        "result_bits": "0x3e42d840"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3edf5b80",
+        "result_bits": "0x3e42e08a"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3edfe100",
+        "result_bits": "0x3e43c9c4"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ee01540",
+        "result_bits": "0x3e442532"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ee06f00",
+        "result_bits": "0x3e44c270"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ee07bc0",
+        "result_bits": "0x3e44d8cc"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ee14a00",
+        "result_bits": "0x3e464329"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ee2bc80",
+        "result_bits": "0x3e48d15d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ee43800",
+        "result_bits": "0x3e4b73cc"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ee4a640",
+        "result_bits": "0x3e4c388e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ee4b600",
+        "result_bits": "0x3e4c54b1"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ee50700",
+        "result_bits": "0x3e4ce586"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ee55900",
+        "result_bits": "0x3e4d7859"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ee65080",
+        "result_bits": "0x3e4f34bf"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ee75240",
+        "result_bits": "0x3e51058a"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ee76180",
+        "result_bits": "0x3e51211a"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ee8bb40",
+        "result_bits": "0x3e5393ed"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ee90e50",
+        "result_bits": "0x3e542b0e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ee9ae00",
+        "result_bits": "0x3e554e32"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eea0be8",
+        "result_bits": "0x3e55f9c5"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eea6900",
+        "result_bits": "0x3e56a41f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eeb4000",
+        "result_bits": "0x3e582e90"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eeb6740",
+        "result_bits": "0x3e5876b9"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eed1b00",
+        "result_bits": "0x3e5b9b01"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eee0900",
+        "result_bits": "0x3e5d54bc"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eef1e80",
+        "result_bits": "0x3e5f59f7"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eefee00",
+        "result_bits": "0x3e60de41"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ef0ac00",
+        "result_bits": "0x3e6242f4"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ef12200",
+        "result_bits": "0x3e632109"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ef13a80",
+        "result_bits": "0x3e634f32"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ef17700",
+        "result_bits": "0x3e63c145"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ef1ac00",
+        "result_bits": "0x3e64254c"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ef26700",
+        "result_bits": "0x3e6586e5"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ef27fc0",
+        "result_bits": "0x3e65b5c7"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ef28480",
+        "result_bits": "0x3e65bec7"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ef2b500",
+        "result_bits": "0x3e661ab4"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ef2fe60",
+        "result_bits": "0x3e66a5ea"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ef36f00",
+        "result_bits": "0x3e677bea"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ef400c0",
+        "result_bits": "0x3e68916e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ef40340",
+        "result_bits": "0x3e689632"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ef52e00",
+        "result_bits": "0x3e6ad114"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ef62b00",
+        "result_bits": "0x3e6cb6ab"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ef6ea20",
+        "result_bits": "0x3e6e26cc"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ef7cf00",
+        "result_bits": "0x3e6fe119"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ef814b0",
+        "result_bits": "0x3e706817"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ef85800",
+        "result_bits": "0x3e70ea9e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ef88700",
+        "result_bits": "0x3e7145d7"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ef8e800",
+        "result_bits": "0x3e720252"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ef9a180",
+        "result_bits": "0x3e736b91"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3ef9a600",
+        "result_bits": "0x3e737458"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3efa5280",
+        "result_bits": "0x3e74c53d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3efa7100",
+        "result_bits": "0x3e7500e6"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3efab500",
+        "result_bits": "0x3e758604"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3efac600",
+        "result_bits": "0x3e75a751"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3efbe1c0",
+        "result_bits": "0x3e77d476"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3efe0900",
+        "result_bits": "0x3e7c15dc"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3efe8c00",
+        "result_bits": "0x3e7d1a1d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3eff6f00",
+        "result_bits": "0x3e7ede52"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f0009c0",
+        "result_bits": "0x3e801381"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f007c62",
+        "result_bits": "0x3e80f93d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f00f5c0",
+        "result_bits": "0x3e81ed58"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f0105e0",
+        "result_bits": "0x3e820dd8"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f01b080",
+        "result_bits": "0x3e8366b5"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f0206c0",
+        "result_bits": "0x3e8415b6"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f021a80",
+        "result_bits": "0x3e843dd9"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f025480",
+        "result_bits": "0x3e84b3dc"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f027ac0",
+        "result_bits": "0x3e8501cc"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f0356a0",
+        "result_bits": "0x3e86c38a"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f046780",
+        "result_bits": "0x3e88f5cc"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f05b100",
+        "result_bits": "0x3e8ba2c9"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f0623ce",
+        "result_bits": "0x3e8c9301"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f064460",
+        "result_bits": "0x3e8cd74e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f06f400",
+        "result_bits": "0x3e8e48b1"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f070600",
+        "result_bits": "0x3e8e6ea8"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f0764a0",
+        "result_bits": "0x3e8f3691"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f079400",
+        "result_bits": "0x3e8f9adb"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f079d80",
+        "result_bits": "0x3e8faefc"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f07d540",
+        "result_bits": "0x3e902536"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f07e200",
+        "result_bits": "0x3e904047"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f07e580",
+        "result_bits": "0x3e9047b5"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f088f80",
+        "result_bits": "0x3e91b191"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f08ebc0",
+        "result_bits": "0x3e9276aa"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f08f600",
+        "result_bits": "0x3e928c99"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f091140",
+        "result_bits": "0x3e92c6ef"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f092000",
+        "result_bits": "0x3e92e688"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f098418",
+        "result_bits": "0x3e93bd4c"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f0a0b00",
+        "result_bits": "0x3e94dfb9"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f0a4b00",
+        "result_bits": "0x3e9569e4"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f0af450",
+        "result_bits": "0x3e96d89f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f0afea0",
+        "result_bits": "0x3e96ef04"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f0b21c0",
+        "result_bits": "0x3e973b56"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f0bda80",
+        "result_bits": "0x3e98ce03"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f0c4340",
+        "result_bits": "0x3e99b33f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f0c58c0",
+        "result_bits": "0x3e99e262"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f0da6dc",
+        "result_bits": "0x3e9cc276"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f0dfea0",
+        "result_bits": "0x3e9d84f3"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f0e4a70",
+        "result_bits": "0x3e9e2d54"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f0e5f00",
+        "result_bits": "0x3e9e5b0f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f0ec0c0",
+        "result_bits": "0x3e9f34cc"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f0f8600",
+        "result_bits": "0x3ea0edf4"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f0f9040",
+        "result_bits": "0x3ea104f2"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f105000",
+        "result_bits": "0x3ea2b432"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f106b50",
+        "result_bits": "0x3ea2f1ce"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f10f380",
+        "result_bits": "0x3ea425af"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f11e3c0",
+        "result_bits": "0x3ea64794"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f120d80",
+        "result_bits": "0x3ea6a6cd"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f122580",
+        "result_bits": "0x3ea6dd97"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f1228c0",
+        "result_bits": "0x3ea6e503"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f122c40",
+        "result_bits": "0x3ea6ed01"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f126720",
+        "result_bits": "0x3ea77394"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f12ff00",
+        "result_bits": "0x3ea8cfb4"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f1313c0",
+        "result_bits": "0x3ea8ff60"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f137000",
+        "result_bits": "0x3ea9d3a2"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f139080",
+        "result_bits": "0x3eaa1e89"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f14b900",
+        "result_bits": "0x3eacccdb"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f150616",
+        "result_bits": "0x3ead802c"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f153500",
+        "result_bits": "0x3eaded7a"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f15ba40",
+        "result_bits": "0x3eaf24ac"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f15cc80",
+        "result_bits": "0x3eaf4f61"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f15f080",
+        "result_bits": "0x3eafa3ae"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f16b000",
+        "result_bits": "0x3eb16572"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f16f2c0",
+        "result_bits": "0x3eb202be"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f181e00",
+        "result_bits": "0x3eb4c747"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f183600",
+        "result_bits": "0x3eb50057"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f189a98",
+        "result_bits": "0x3eb5efe4"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f18c100",
+        "result_bits": "0x3eb64b83"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f18d500",
+        "result_bits": "0x3eb67b42"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f195200",
+        "result_bits": "0x3eb7a63d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f1956c0",
+        "result_bits": "0x3eb7b19e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f195c80",
+        "result_bits": "0x3eb7bf65"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f198c80",
+        "result_bits": "0x3eb8327c"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f199ac0",
+        "result_bits": "0x3eb854ae"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f1ab700",
+        "result_bits": "0x3ebb015e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f1aed00",
+        "result_bits": "0x3ebb83ff"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f1b69c0",
+        "result_bits": "0x3ebcb274"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f1c99c0",
+        "result_bits": "0x3ebf977d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f1d35e8",
+        "result_bits": "0x3ec11654"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f1d5800",
+        "result_bits": "0x3ec16a1d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f1d8080",
+        "result_bits": "0x3ec1cdbb"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f1e3e80",
+        "result_bits": "0x3ec3a26b"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f1e6f00",
+        "result_bits": "0x3ec41a68"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f1e9fc0",
+        "result_bits": "0x3ec49329"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f1efa90",
+        "result_bits": "0x3ec5747e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f1f0054",
+        "result_bits": "0x3ec582d1"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f1f00e0",
+        "result_bits": "0x3ec5842d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f1f0300",
+        "result_bits": "0x3ec58974"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f1f3200",
+        "result_bits": "0x3ec5fe4c"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f1f7880",
+        "result_bits": "0x3ec6adcf"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f1fc000",
+        "result_bits": "0x3ec76020"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f216c00",
+        "result_bits": "0x3ecb920b"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f216fc0",
+        "result_bits": "0x3ecb9b81"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2208c0",
+        "result_bits": "0x3ecd1e27"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f220920",
+        "result_bits": "0x3ecd1f1a"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f222bf8",
+        "result_bits": "0x3ecd775b"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f226f40",
+        "result_bits": "0x3ece21fb"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f227a80",
+        "result_bits": "0x3ece3e89"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f228340",
+        "result_bits": "0x3ece54c1"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f229980",
+        "result_bits": "0x3ece8d44"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f23fd80",
+        "result_bits": "0x3ed21998"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f240500",
+        "result_bits": "0x3ed22cd0"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f244400",
+        "result_bits": "0x3ed2ce64"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f248100",
+        "result_bits": "0x3ed36b12"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f253960",
+        "result_bits": "0x3ed54605"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f254100",
+        "result_bits": "0x3ed559b5"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f25c140",
+        "result_bits": "0x3ed6a55d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f25f640",
+        "result_bits": "0x3ed72eb7"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f264d40",
+        "result_bits": "0x3ed8108d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f275580",
+        "result_bits": "0x3edac153"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2780c0",
+        "result_bits": "0x3edb3277"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f27a7c0",
+        "result_bits": "0x3edb9895"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f27cf00",
+        "result_bits": "0x3edbff73"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f27d980",
+        "result_bits": "0x3edc1afc"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2874c0",
+        "result_bits": "0x3eddb2e2"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f288c10",
+        "result_bits": "0x3eddf043"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f28ab80",
+        "result_bits": "0x3ede4316"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f291280",
+        "result_bits": "0x3edf52dd"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f292c00",
+        "result_bits": "0x3edf963f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f296680",
+        "result_bits": "0x3ee030fc"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f29ac88",
+        "result_bits": "0x3ee0ea80"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f29f360",
+        "result_bits": "0x3ee1a678"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2a1c00",
+        "result_bits": "0x3ee21266"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2a5240",
+        "result_bits": "0x3ee2a2af"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2b2340",
+        "result_bits": "0x3ee4d039"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2b3b80",
+        "result_bits": "0x3ee51116"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2b8bc0",
+        "result_bits": "0x3ee5e7fe"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2b9580",
+        "result_bits": "0x3ee60221"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2bd180",
+        "result_bits": "0x3ee6a319"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2c2240",
+        "result_bits": "0x3ee77c15"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2c28e8",
+        "result_bits": "0x3ee78dfd"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2c4060",
+        "result_bits": "0x3ee7cd22"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2cd680",
+        "result_bits": "0x3ee961df"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2ce300",
+        "result_bits": "0x3ee983a3"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2cf3c0",
+        "result_bits": "0x3ee9b0e4"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2d0880",
+        "result_bits": "0x3ee9e8fb"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2d5500",
+        "result_bits": "0x3eeab7fc"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2d6e00",
+        "result_bits": "0x3eeafbb7"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2d8680",
+        "result_bits": "0x3eeb3e1f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2ddc10",
+        "result_bits": "0x3eec2656"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2de280",
+        "result_bits": "0x3eec37d3"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2e1780",
+        "result_bits": "0x3eecc7e8"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2e4a80",
+        "result_bits": "0x3eed52b7"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2e8b80",
+        "result_bits": "0x3eee03dc"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2ed100",
+        "result_bits": "0x3eeec18d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2eef00",
+        "result_bits": "0x3eef1386"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2efa80",
+        "result_bits": "0x3eef32f6"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2f80c0",
+        "result_bits": "0x3ef0a28f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f2fd480",
+        "result_bits": "0x3ef1886f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f301800",
+        "result_bits": "0x3ef24204"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f302100",
+        "result_bits": "0x3ef25ac9"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f303000",
+        "result_bits": "0x3ef28412"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f313400",
+        "result_bits": "0x3ef551e5"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f316200",
+        "result_bits": "0x3ef5d153"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3164c0",
+        "result_bits": "0x3ef5d8f2"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f31a000",
+        "result_bits": "0x3ef67d48"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f321480",
+        "result_bits": "0x3ef7c107"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3249e8",
+        "result_bits": "0x3ef855b8"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f325280",
+        "result_bits": "0x3ef86da9"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f329180",
+        "result_bits": "0x3ef91d51"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f33e400",
+        "result_bits": "0x3efcd146"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f34b000",
+        "result_bits": "0x3eff0ff2"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f34c340",
+        "result_bits": "0x3eff464e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f34c700",
+        "result_bits": "0x3eff50e5"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f34f960",
+        "result_bits": "0x3effdf44"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f350b20",
+        "result_bits": "0x3f0008bc"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f353f00",
+        "result_bits": "0x3f005226"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f355080",
+        "result_bits": "0x3f006aee"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f359c40",
+        "result_bits": "0x3f00d652"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f35e480",
+        "result_bits": "0x3f013ce9"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f362800",
+        "result_bits": "0x3f019ce6"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f362d80",
+        "result_bits": "0x3f01a4ba"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f363a80",
+        "result_bits": "0x3f01b73b"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f365080",
+        "result_bits": "0x3f01d68f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f367580",
+        "result_bits": "0x3f020b48"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f36ace0",
+        "result_bits": "0x3f025a43"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f36cf40",
+        "result_bits": "0x3f028b57"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f36e900",
+        "result_bits": "0x3f02b020"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f375360",
+        "result_bits": "0x3f03484e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f397e40",
+        "result_bits": "0x3f0667b7"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f399a40",
+        "result_bits": "0x3f06904d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3a0d00",
+        "result_bits": "0x3f0736e5"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3a1b00",
+        "result_bits": "0x3f074b3f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3a4600",
+        "result_bits": "0x3f0789cb"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3a7c00",
+        "result_bits": "0x3f07d86c"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3a8d90",
+        "result_bits": "0x3f07f204"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3ad120",
+        "result_bits": "0x3f08548d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3b1600",
+        "result_bits": "0x3f08b926"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3b2120",
+        "result_bits": "0x3f08c969"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3b4e00",
+        "result_bits": "0x3f090b0c"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3b6980",
+        "result_bits": "0x3f09334c"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3b7700",
+        "result_bits": "0x3f094711"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3b8d00",
+        "result_bits": "0x3f09674c"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3baf00",
+        "result_bits": "0x3f099922"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3bbd00",
+        "result_bits": "0x3f09adaa"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3c6bc0",
+        "result_bits": "0x3f0aae6f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3c6d80",
+        "result_bits": "0x3f0ab103"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3c6e00",
+        "result_bits": "0x3f0ab1bf"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3c7a40",
+        "result_bits": "0x3f0ac3c8"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3ca480",
+        "result_bits": "0x3f0b0206"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3d0780",
+        "result_bits": "0x3f0b9413"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3d3780",
+        "result_bits": "0x3f0bdaff"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3d56a0",
+        "result_bits": "0x3f0c0906"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3d90c0",
+        "result_bits": "0x3f0c5f0d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3f5a30",
+        "result_bits": "0x3f0f07b3"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3f5b80",
+        "result_bits": "0x3f0f09aa"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3f8b70",
+        "result_bits": "0x3f0f515d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3f9a80",
+        "result_bits": "0x3f0f67e8"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f3fd980",
+        "result_bits": "0x3f0fc646"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f403800",
+        "result_bits": "0x3f10540c"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f404940",
+        "result_bits": "0x3f106df5"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f414100",
+        "result_bits": "0x3f11e313"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f415380",
+        "result_bits": "0x3f11ff02"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f42b6c8",
+        "result_bits": "0x3f14198a"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f433780",
+        "result_bits": "0x3f14dd99"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f435ee0",
+        "result_bits": "0x3f1519ac"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f438d80",
+        "result_bits": "0x3f1560df"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f43f690",
+        "result_bits": "0x3f16018d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f442a80",
+        "result_bits": "0x3f16511b"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f448700",
+        "result_bits": "0x3f16deff"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f44d6c0",
+        "result_bits": "0x3f17598a"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f451480",
+        "result_bits": "0x3f17b88f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f457e38",
+        "result_bits": "0x3f185b80"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f457ec0",
+        "result_bits": "0x3f185c52"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f45e3c0",
+        "result_bits": "0x3f18f850"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f45f660",
+        "result_bits": "0x3f19151d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f461340",
+        "result_bits": "0x3f1941c8"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f46ce40",
+        "result_bits": "0x3f1a63b1"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f46ed80",
+        "result_bits": "0x3f1a943e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4740e8",
+        "result_bits": "0x3f1b15f9"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f47b400",
+        "result_bits": "0x3f1bc957"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f47db80",
+        "result_bits": "0x3f1c06fd"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f481600",
+        "result_bits": "0x3f1c6262"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f48ec00",
+        "result_bits": "0x3f1db19a"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f48ef00",
+        "result_bits": "0x3f1db64f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f492500",
+        "result_bits": "0x3f1e0b1f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4937c0",
+        "result_bits": "0x3f1e2898"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f493b80",
+        "result_bits": "0x3f1e2e7d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f494480",
+        "result_bits": "0x3f1e3ca3"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4a2a80",
+        "result_bits": "0x3f1fa719"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4a3f60",
+        "result_bits": "0x3f1fc813"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4a5780",
+        "result_bits": "0x3f1fee34"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4aca40",
+        "result_bits": "0x3f20a3cd"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4acbc0",
+        "result_bits": "0x3f20a62d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4adc00",
+        "result_bits": "0x3f20bfed"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4afd00",
+        "result_bits": "0x3f20f43e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4b14e9",
+        "result_bits": "0x3f211a2b"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4b3f80",
+        "result_bits": "0x3f215dc5"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4c0980",
+        "result_bits": "0x3f229f24"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4c3c80",
+        "result_bits": "0x3f22f07a"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4c5f40",
+        "result_bits": "0x3f2327f1"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4c8f80",
+        "result_bits": "0x3f237504"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4d9a00",
+        "result_bits": "0x3f252001"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4da8c0",
+        "result_bits": "0x3f2537b3"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4e3940",
+        "result_bits": "0x3f262030"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4e4400",
+        "result_bits": "0x3f263182"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4e78f0",
+        "result_bits": "0x3f2686db"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4ea800",
+        "result_bits": "0x3f26d2ce"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4ec040",
+        "result_bits": "0x3f26f9f7"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4efa20",
+        "result_bits": "0x3f275780"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4f2280",
+        "result_bits": "0x3f2798d0"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f4f5f40",
+        "result_bits": "0x3f27fb2d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f504400",
+        "result_bits": "0x3f296e92"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f504d40",
+        "result_bits": "0x3f297d9f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f51c720",
+        "result_bits": "0x3f2be6bd"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f520c80",
+        "result_bits": "0x3f2c5883"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f521120",
+        "result_bits": "0x3f2c601a"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5228c0",
+        "result_bits": "0x3f2c86e1"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f526640",
+        "result_bits": "0x3f2cebea"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f53eb00",
+        "result_bits": "0x3f2f6d3a"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f53ec80",
+        "result_bits": "0x3f2f6fb5"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f54a568",
+        "result_bits": "0x3f30a25f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f54b640",
+        "result_bits": "0x3f30be5c"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f54ce80",
+        "result_bits": "0x3f30e6ab"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f54d580",
+        "result_bits": "0x3f30f24e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5550c8",
+        "result_bits": "0x3f31bf86"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f55e150",
+        "result_bits": "0x3f32b0b5"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f56b180",
+        "result_bits": "0x3f340d3d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f56b460",
+        "result_bits": "0x3f341210"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f56c640",
+        "result_bits": "0x3f34300d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f576100",
+        "result_bits": "0x3f353413"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f581440",
+        "result_bits": "0x3f36622e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f592300",
+        "result_bits": "0x3f382c5b"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f598800",
+        "result_bits": "0x3f38d7d8"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5996c0",
+        "result_bits": "0x3f38f0ea"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f59f280",
+        "result_bits": "0x3f398d03"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5a0400",
+        "result_bits": "0x3f39aad0"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5a0600",
+        "result_bits": "0x3f39ae38"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5a8000",
+        "result_bits": "0x3f3a7e40"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5b63a0",
+        "result_bits": "0x3f3c039b"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5b8cfa",
+        "result_bits": "0x3f3c4a81"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5b9900",
+        "result_bits": "0x3f3c5f21"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5bbf00",
+        "result_bits": "0x3f3ca059"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5bcb00",
+        "result_bits": "0x3f3cb4f3"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5c3480",
+        "result_bits": "0x3f3d6a47"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5c4080",
+        "result_bits": "0x3f3d7eec"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5c4500",
+        "result_bits": "0x3f3d86ab"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5c9300",
+        "result_bits": "0x3f3e0cfc"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5ca440",
+        "result_bits": "0x3f3e2ab7"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5cdbc0",
+        "result_bits": "0x3f3e8a6f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5ce2c0",
+        "result_bits": "0x3f3e9683"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5d1a20",
+        "result_bits": "0x3f3ef61e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5d1d00",
+        "result_bits": "0x3f3efb15"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5d3be0",
+        "result_bits": "0x3f3f306f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5d5ee2",
+        "result_bits": "0x3f3f6cf5"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5d7180",
+        "result_bits": "0x3f3f8d29"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5eed00",
+        "result_bits": "0x3f421fe7"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5f8f00",
+        "result_bits": "0x3f433a72"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5f9380",
+        "result_bits": "0x3f43424e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5fd4c0",
+        "result_bits": "0x3f43b457"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5fdfc0",
+        "result_bits": "0x3f43c794"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f5fec00",
+        "result_bits": "0x3f43dd02"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f607b00",
+        "result_bits": "0x3f44d77b"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f61a140",
+        "result_bits": "0x3f46dcd8"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f621340",
+        "result_bits": "0x3f47a5fe"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f621400",
+        "result_bits": "0x3f47a752"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f621980",
+        "result_bits": "0x3f47b109"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f623080",
+        "result_bits": "0x3f47d9ab"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f623580",
+        "result_bits": "0x3f47e281"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f627400",
+        "result_bits": "0x3f485105"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f629500",
+        "result_bits": "0x3f488b6b"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f6298c0",
+        "result_bits": "0x3f48920e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f62c3c0",
+        "result_bits": "0x3f48de35"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f637e80",
+        "result_bits": "0x3f4a2996"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f63cc40",
+        "result_bits": "0x3f4ab3dc"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f63f000",
+        "result_bits": "0x3f4af381"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f649100",
+        "result_bits": "0x3f4c129a"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f64d752",
+        "result_bits": "0x3f4c903f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f651120",
+        "result_bits": "0x3f4cf7a4"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f65e900",
+        "result_bits": "0x3f4e7aae"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f661500",
+        "result_bits": "0x3f4ec9be"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f662ac0",
+        "result_bits": "0x3f4ef0d8"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f66b280",
+        "result_bits": "0x3f4fe53a"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f66cf40",
+        "result_bits": "0x3f50190f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f66d180",
+        "result_bits": "0x3f501d1d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f66e160",
+        "result_bits": "0x3f5039bf"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f682980",
+        "result_bits": "0x3f528b3f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f6881c0",
+        "result_bits": "0x3f532b6e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f68af00",
+        "result_bits": "0x3f537da8"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f693940",
+        "result_bits": "0x3f547943"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f6a5900",
+        "result_bits": "0x3f5686d3"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f6b1a20",
+        "result_bits": "0x3f57e8f9"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f6b6b00",
+        "result_bits": "0x3f587d9f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f6c5c80",
+        "result_bits": "0x3f5a3aad"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f6cb780",
+        "result_bits": "0x3f5ae2d8"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f6d7970",
+        "result_bits": "0x3f5c4a13"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f6de800",
+        "result_bits": "0x3f5d1762"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f6e38c0",
+        "result_bits": "0x3f5dad92"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f6e4680",
+        "result_bits": "0x3f5dc729"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f6e6300",
+        "result_bits": "0x3f5dfc3a"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f6e7b60",
+        "result_bits": "0x3f5e29a2"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f6e8900",
+        "result_bits": "0x3f5e4305"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f6e9080",
+        "result_bits": "0x3f5e5100"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f6f1b00",
+        "result_bits": "0x3f5f536d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f6f52d7",
+        "result_bits": "0x3f5fbbc8"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f6f6800",
+        "result_bits": "0x3f5fe35a"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f705080",
+        "result_bits": "0x3f619709"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f718480",
+        "result_bits": "0x3f63dabe"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f719800",
+        "result_bits": "0x3f63ff8a"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f71d680",
+        "result_bits": "0x3f647591"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f7219b0",
+        "result_bits": "0x3f64f493"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f7232c0",
+        "result_bits": "0x3f6523fd"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f72ed00",
+        "result_bits": "0x3f6684ef"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f72f600",
+        "result_bits": "0x3f669604"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f730e80",
+        "result_bits": "0x3f66c488"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f746d40",
+        "result_bits": "0x3f696071"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f748600",
+        "result_bits": "0x3f698fb6"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f755ac0",
+        "result_bits": "0x3f6b26d4"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f756bc0",
+        "result_bits": "0x3f6b476b"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f75a680",
+        "result_bits": "0x3f6bb81d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f75d480",
+        "result_bits": "0x3f6c106d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f75e980",
+        "result_bits": "0x3f6c38c4"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f762680",
+        "result_bits": "0x3f6cae04"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f766d80",
+        "result_bits": "0x3f6d36a1"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f76ab80",
+        "result_bits": "0x3f6dae0d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f784760",
+        "result_bits": "0x3f70ca5e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f78c140",
+        "result_bits": "0x3f71b6fe"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f78c4c0",
+        "result_bits": "0x3f71bdcb"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f797400",
+        "result_bits": "0x3f7312dd"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f797a40",
+        "result_bits": "0x3f731f0b"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f79a500",
+        "result_bits": "0x3f737264"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f79d080",
+        "result_bits": "0x3f73c743"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f7a3e16",
+        "result_bits": "0x3f749d52"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f7a4780",
+        "result_bits": "0x3f74afba"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f7abbe0",
+        "result_bits": "0x3f75937b"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f7b0880",
+        "result_bits": "0x3f7629ab"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f7bab40",
+        "result_bits": "0x3f776942"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f7bbdd0",
+        "result_bits": "0x3f778dc3"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f7c1a40",
+        "result_bits": "0x3f7843b1"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f7c2d60",
+        "result_bits": "0x3f78695d"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f7c5f80",
+        "result_bits": "0x3f78cc28"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f7cee6e",
+        "result_bits": "0x3f79e647"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f7cef40",
+        "result_bits": "0x3f79e7e6"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f7dc040",
+        "result_bits": "0x3f7b858f"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f7de498",
+        "result_bits": "0x3f7bcda1"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f7e2780",
+        "result_bits": "0x3f7c5268"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f7e3f00",
+        "result_bits": "0x3f7c8114"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f7e7b80",
+        "result_bits": "0x3f7cf94e"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f7ecae0",
+        "result_bits": "0x3f7d9735"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f7ecf00",
+        "result_bits": "0x3f7d9f6b"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f7eda00",
+        "result_bits": "0x3f7db552"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f7eddc0",
+        "result_bits": "0x3f7dbcc9"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f7fb600",
+        "result_bits": "0x3f7f6c15"
+      },
+      {
+        "exponent_bits": "0x40000000",
+        "input_bits": "0x3f7ff500",
+        "result_bits": "0x3f7fea00"
+      },
+      {
+        "exponent_bits": "0x00000000",
+        "input_bits": "0x3f800000",
+        "result_bits": "0x3f800000"
+      },
+      {
+        "exponent_bits": "0x3f000000",
+        "input_bits": "0x3f800000",
+        "result_bits": "0x3f800000"
+      }
+    ],
+    "powf_keys": 787,
+    "rows_sha256": "6aae668e0bab6b54e11677453e04dc3716874ec749690cfc8bbec0545edf3579",
+    "serialized_sha256": "fe491ec5315ee3b74952d92eba73dd26416fafd692e563a4f02c1d4ecaf97851"
+  },
+  "worker_build": {
+    "clean_clone": true,
+    "patched_callbacks_sha256": "c6db8fea04e2db211943ff923bbfe8b22655859dcf07210e403516a80c4b9aca",
+    "patched_imports_sha256": "27ad9a37a640c13dbed6e95a8eb7cca27406db8d48b3c89b9573075546f4d466",
+    "patched_main_sha256": "5efc9609220a4cf5f077ef975e92a5815359d6323d2019f14c6bddc307df90b7",
+    "release_build": true,
+    "worker_bytes": 3887728,
+    "worker_sha256": "c2f28fd0f28b73ebb57b68e7ffefc9e11c254f016aae5d0ed157f7ab3d3f6af7"
+  }
+}

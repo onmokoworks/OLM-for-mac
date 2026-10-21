@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "kind": "olmblur_classic_current_install_smoke",
+  "status": "installed_host_smoke_pass_no_classic_pixel_promotion",
+  "date": "2026-08-12",
+  "build": {
+    "production_source_path": "mac/OLMBlur/OLMBlur.cpp",
+    "production_source_sha256": "21f3c96acd699ed463635435ed586030d65784406d71d06333a5d0afe6618c89",
+    "source_binary_relation": "recorded alongside the build transcript and durable artifact; not a reproducible-build claim",
+    "configuration": "Debug",
+    "architectures": ["x86_64", "arm64"],
+    "codesign": "adhoc",
+    "codesign_deep_strict": true
+  },
+  "installed_bundle": {
+    "path": "~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMBlur.plugin",
+    "binary_sha256": "b1461f8ee35b3d566a9825e9e04882c8ec28b51ce9e67dbbd83f463d706d943f",
+    "matching_bundle_count": 1,
+    "previous_binary_sha256": "272b764a0d5ebbc4f7167eebdfd36a645be9d5a96ff23ebf64a92b464d575d22",
+    "recoverable_backup": "handoffs/olmblur_classic_current_install_20260812/previous_build.plugin"
+  },
+  "host_smoke": {
+    "raw_report": {"path": "refs/conformance/olmblur_classic_current_install_smoke_raw_20260812.json", "sha256": "a620dbf7fa18332197672053b6c26168673caef19d4ce7a9d4babb77ec75adfa"},
+    "observed_raw": {"path": "refs/conformance/olmblur_classic_current_install_smoke_observed_raw_20260812.json", "sha256": "5a1b5d1e1533e8733e23f7adc9d162130859d1a03227463625d6b146f8b3bdd4"},
+    "observed_runner": {"path": "scripts/run_olmblur_classic_current_install_smoke_observed_20260812.py", "sha256": "dbb0bf8886ef298f9517c8345cd2fafbb62ac82827ca981b9e7138fd086ae23b"},
+    "sanitizer": {"path": "scripts/sanitize_olmblur_classic_current_install_smoke_20260812.py", "sha256": "54c1e51ea579a5b584bf9af5e336afb79513875cad6129a859f6eb2498119a7e"},
+    "replay_runner": {"path": "scripts/run_olmblur_classic_current_install_smoke_20260812.py", "sha256": "b612b08516020b38f54de0ab01fef10da38ef0f0c107ac7d9fd72cc421afca58"},
+    "application": "Adobe After Effects 2026",
+    "ae_version": "26.3x87",
+    "ae_pid": 8082,
+    "fresh_process": true,
+    "renderer": "SOFTWARE",
+    "renderer_raw": 1816,
+    "depth": "PF32",
+    "dimensions": [64, 36],
+    "working_space": "None",
+    "linear_blending": false,
+    "effect_match_name": "OLM OLM Blur",
+    "default_parameter_count": 5,
+    "parameters_unchanged": true,
+    "loaded_module_path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMBlur.plugin/Contents/MacOS/OLMBlur",
+    "loaded_module_identity_exact": true,
+    "control_exr_sha256": "038038fcced17f79d5734db404b4c8c97199a6fa5fa498d30c09022fd63a790a",
+    "effect_on_exr_sha256": "551c7bd47abc58c961c6e11163b547d73d84d3995e93f5b71158b9852c621019",
+    "ae_quit_after_smoke": true
+  },
+  "durable_artifacts": {"manifest": "handoffs/olmblur_classic_current_install_20260812/manifest.json", "manifest_sha256": "48907c060d8d20c0fc9bdaccb103463a47556dd1e78eab0faa5bdee169244666", "current_bundle": "handoffs/olmblur_classic_current_install_20260812/current_build.plugin", "previous_bundle": "handoffs/olmblur_classic_current_install_20260812/previous_build.plugin", "build_log": "handoffs/olmblur_classic_current_install_20260812/xcodebuild.log"},
+  "classic_public_entry_closure": {
+    "path": "refs/conformance/olmblur_classic_public_entry_closure_20260812.json",
+    "sha256": "510c40c29f133ad5bee6a9a1d9d2105a56a1eb9552fcbbc52ceca6d92886a28a",
+    "relation": "same frozen production source; hostless/direct-export evidence owns the bounded classic PF8/PF16 pixel claim"
+  },
+  "claims_not_made": [
+    "No live-AE classic PF8/PF16 pixel-exact claim",
+    "No proof that AE routed this PF32 render through classic PF_Cmd_RENDER",
+    "No Windows/Mac pixel equality claim from these EXR hashes",
+    "No arbitrary parameter, geometry, depth, renderer, GPU, or host promotion"
+  ]
+}

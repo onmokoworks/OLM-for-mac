@@ -1,0 +1,32 @@
+{
+  "schema": "olmkirakira_mode3_32x18_public_failclose_v2",
+  "date": "2026-08-14",
+  "status": "exact_fail_closed_unlisted_source",
+  "production_source_sha256": "abf826dd450bcf879585ae786222ba5d5212d11dd9b292c6ba23d379014baeab",
+  "probe_sha256": "1e95f36fec2c551b2acb8c80d43399cb4ba8bf3902a1a164be31674dfed81080",
+  "fixture": {
+    "dimensions": [
+      32,
+      18
+    ],
+    "padding": 12,
+    "blur_mode": 3,
+    "merge_mode": 1,
+    "horizontal_length": 50,
+    "source_pattern": "unlisted_modulo192_alpha_v1"
+  },
+  "depths": [
+    "PF8",
+    "PF16",
+    "PF32"
+  ],
+  "result": {
+    "return": "PF_Err_BAD_CALLBACK_PARAM",
+    "input_full_storage_unchanged": true,
+    "output_full_storage_untouched": true,
+    "probe_stdout": "PF8=0 PF16=0 PF32=0"
+  },
+  "boundary": "The current public Mac EffectMain admits only the separately proven wrapped-linear 32x18 source for this tuple. This modulo-192-alpha source is not admitted and fails closed before output mutation. No numerical equality is claimed for this source.",
+  "ae_launched": false,
+  "installed_or_production_modified": false
+}

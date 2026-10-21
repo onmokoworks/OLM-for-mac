@@ -1,0 +1,92 @@
+{
+  "artifact_dir": "handoffs/olm_all10_post_toondilate_ded9_corrected_fresh_ae_smoke_20260813",
+  "claim_boundary": "Fresh installed host load/add/enable-state and exact mapping for all ten; effect-enabled generic host-frame render only for OLMBlur and OLMDirectionalBlur; OLMToonDilate and the other seven are disabled before generic saveFrameToPng. Numerical behavior is not assessed by this AE smoke. No pixel-exact, Windows-equivalence, typed-plane, padding, admission, or public-owner numerical-exact claim.",
+  "disabled_host_frame_plugins": [
+    "ColorKeep",
+    "OLMColorKey",
+    "OLMDistanceGradation",
+    "OLMKiraKira",
+    "OLMRadialBlur",
+    "OLMSmoother",
+    "OLMSmoother2",
+    "OLMToonDilate"
+  ],
+  "enabled_host_frame_plugins": [
+    "OLMBlur",
+    "OLMDirectionalBlur"
+  ],
+  "execution_dependencies": {
+    "accepted_installed_identity": {
+      "path": "refs/conformance/olm_installed_identity_manifest_20260806.json",
+      "sha256": "ef7bf31f4f8907af8d047276296b16c4d918433a94173938ca98b2874c61c368"
+    },
+    "base_jsx_payload": {
+      "path": "scripts/ae_host_all10_current_install_fresh_validation_20260812.jsx",
+      "sha256": "ef0477d30d30b1b5c587ebcc511864bd4692ae0ef9cc2d656975a209df4ad511"
+    },
+    "base_python_runner": {
+      "path": "scripts/run_olm_all10_current_install_fresh_ae_smoke_20260812.py",
+      "sha256": "45997d4c756fb9d82afde2fbe8f3be503db5e66dff2b15eaaf9ba1e1219ce4b7"
+    },
+    "classification": "pinned_dynamic_execution_dependencies",
+    "corrected_jsx_wrapper": {
+      "path": "scripts/ae_host_all10_post_toondilate_ded9_corrected_20260813.jsx",
+      "sha256": "95e75363743cd2537046bb7d2afa0d73586f772f77d34c72dfcd0386cb558fb8"
+    },
+    "corrected_python_wrapper": {
+      "path": "scripts/run_olm_all10_post_toondilate_ded9_corrected_20260813.py",
+      "sha256": "2246fb4b50929c948386a2e4b1fc8e9bd153d7e34768e44c2ee9b7a6ae501f70"
+    },
+    "toondilate_post_install_identity": {
+      "path": "refs/conformance/olmtoondilate_ded9_incremental_install_identity_20260813.json",
+      "sha256": "39536c468aa358884984f5a22fca759aaa94958e0430b55776e42da50f0aef2d"
+    }
+  },
+  "invocation_receipt": "handoffs/olm_all10_post_toondilate_ded9_corrected_fresh_ae_smoke_20260813.invocation-receipt.json",
+  "numerical_render_assessment": "not_assessed_by_ae_smoke",
+  "raw_report": "refs/conformance/olm_all10_post_toondilate_ded9_corrected_fresh_ae_smoke_raw_20260813.json",
+  "schema": "olm.all10-post-toondilate-ded9-corrected-contract/1",
+  "summary": "refs/conformance/olm_all10_post_toondilate_ded9_corrected_fresh_ae_smoke_20260813.json",
+  "superseded_failed_attempt": {
+    "classification": "immutable_fail_closed_superseded_attempt_never_reused",
+    "raw": {
+      "path": "refs/conformance/olm_all10_post_toondilate_ded9_fresh_ae_smoke_raw_20260813.json",
+      "sha256": "17a728f155c292a45b4c1ed83fcc9ba2e0f7d72785732c97eec8780a8f4d0e0e"
+    },
+    "receipt": {
+      "path": "handoffs/olm_all10_post_toondilate_ded9_fresh_ae_smoke_20260813.invocation-receipt.json",
+      "sha256": "ed52902307f2e098c46dfb1343ac4105d3067657ac4d8a5a8001b2f71abaae7b"
+    },
+    "summary": {
+      "path": "refs/conformance/olm_all10_post_toondilate_ded9_fresh_ae_smoke_20260813.json",
+      "sha256": "055820bf760d8c31d627e352c0fb87d11ecf263804f1bc3f8dcbc51c33c1972b"
+    }
+  },
+  "superseded_host_authority": {
+    "classification": "historical_pre_toon_install_smoke_not_current_identity_authority",
+    "current_identity_sha256": "ef7bf31f4f8907af8d047276296b16c4d918433a94173938ca98b2874c61c368",
+    "formal_consumer_retarget_pending": true,
+    "historical_identity_sha256": "869a5e88ab34b3b26cc4a3786edb6de93f0e10c88b69c33f6e8d7afb6f18da90",
+    "raw": {
+      "path": "refs/conformance/olm_all10_post_colorkeep_count9_fresh_ae_smoke_raw_20260813.json",
+      "sha256": "6f096f2b057025f7b6bcc1119de30f1e0bd5e7341ccaa05eb834a8f4d2e18855"
+    },
+    "summary": {
+      "path": "refs/conformance/olm_all10_post_colorkeep_count9_fresh_ae_smoke_20260813.json",
+      "sha256": "f87dd1ae13574e56c3e0f428ad3f0b503e37c96dc03b637bfe1ed798161743bc"
+    }
+  },
+  "toondilate_numerical_authorities": {
+    "classification": "separate_hostless_numerical_authorities_not_ae_pixel_evidence",
+    "public_admission_negative": {
+      "path": "refs/conformance/olmtoondilate_public_admission_negative_closure_20260813.json",
+      "row_count": 576,
+      "sha256": "eaacb30d172d5a467b059a5e5fcfa7baacec2ee3c62f885b274d5e9c8f72bb09"
+    },
+    "same_source_paired_exact12": {
+      "case_count": 12,
+      "path": "refs/conformance/olmtoondilate_same_source_public_paired_replay_20260813.json",
+      "sha256": "80b4e05d844a33687f0d282037fd360898f99a2cf1eca469e68bf8accafee5c2"
+    }
+  }
+}

@@ -8,6 +8,7 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 import tempfile
 from pathlib import Path
 
@@ -71,7 +72,7 @@ def compile_probe(directory: Path) -> Path:
     return executable
 
 
-def main() -> int:
+def historical_main() -> int:
     assert hashlib.sha256(MANIFEST.read_bytes()).hexdigest() == MANIFEST_SHA256
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     assert manifest["bit_depth"] == 16 and manifest["legacy"] == 1
@@ -102,6 +103,12 @@ def main() -> int:
         "cases": results,
         "scope": "production public render dispatcher against retained actual-AEX complete worker fixtures; no AE-host or EffectMain command invocation claim"
     }, sort_keys=True))
+    return 0
+
+
+def main() -> int:
+    subprocess.run([sys.executable, "tools/emulation/smoke_olmblur_worker16_legacy.py"], cwd=ROOT, check=True)
+    print("PASS_SUPERSEDED_FAKE_ABI_PF16_LEGACY_ADAPTER -> typed worker regression; no public claim")
     return 0
 
 

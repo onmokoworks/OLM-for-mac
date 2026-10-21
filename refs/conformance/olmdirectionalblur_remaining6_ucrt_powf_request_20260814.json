@@ -1,0 +1,35 @@
+{
+  "acceptance": {
+    "after_effects_required": false,
+    "all_787_rows_required": true,
+    "same_system32_ucrt_identity_required": true
+  },
+  "boundary": {
+    "native_return_included": false,
+    "production_changed": false,
+    "same_table_aex_and_mac_replay_still_required": true
+  },
+  "package": {
+    "files": {
+      "README.md": "dd25461847cce962091b2765b53256fe9a55770b9c92ffc3e9377e3721b95fc9",
+      "UcrtPowfCapture.cs": "86828ea99baded5fbde42269436290788dde0cad91cb592cd5cc3ec081005d03",
+      "powf_vectors.json": "1f090f4c2b640150cd555acba94d71548ae5e5598616a33dcf19360c30715894",
+      "request_manifest.json": "21c5927720116b95623971a54bb06264c81ef4b6a146d43da1c7cb3c02892faf",
+      "run_olmdirectionalblur_remaining6_ucrt_powf.ps1": "5ba2b6e889fcb18fabd9f8657ae8485ccc7fd14c23d417d3d1848765355d9f70"
+    },
+    "path": "refs/runtime_trace_packages/olm_runtime_trace_olmdirectionalblur_remaining6_ucrt_powf_20260814"
+  },
+  "provenance": {
+    "actual_exported_cells": 6,
+    "observed_powf_occurrences": 47514,
+    "powf_census_path": "refs/conformance/olmdirectionalblur_remaining6_ucrt_powf_census_20260814.json",
+    "powf_census_sha256": "091d41969f5617452666e976f038913ebe2dad96c656f1cd75e4e9b7093e0dac"
+  },
+  "request_id": "olm_runtime_trace_olmdirectionalblur_remaining6_ucrt_powf_20260814",
+  "schema": "olmdirectionalblur.remaining6-ucrt-powf-request-closure/1",
+  "status": "ready_native_windows_ucrt_powf_capture_ae_free",
+  "vectors": {
+    "count": 787,
+    "rows_sha256": "6443e08c357a72c325bc711fc0970e862a3dbfb6054daac9e92989a175a45b86"
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "schema": "olm.all10-post-toondilate-ded9-corrected-fresh-ae-failure-metadata/1",
+  "status": "FAILURE_PRESERVED_NO_RETRY_FORMAL_GATE_BLOCKED",
+  "captured_at": "2026-08-13T03:46:51+09:00",
+  "attempt": {
+    "one_shot": true,
+    "retry_authorized": false,
+    "launch_requested_at": "2026-08-12T18:35:55.165793+00:00",
+    "owned_after_effects_pid": 36723,
+    "script_invocation_pid": 36729,
+    "scriptability_probe": {
+      "sampled_at": "2026-08-12T18:35:55.503524+00:00",
+      "returncode": 0,
+      "stdout": "26.3.0"
+    },
+    "runner_error": {
+      "type": "ValueError",
+      "message": "DoScriptFile exited before AE return: rc=0 stderr='' stdout='1\\n'"
+    },
+    "ae_return_created": false,
+    "pngs_created": 0
+  },
+  "failure_artifacts": {
+    "raw": {
+      "path": "refs/conformance/olm_all10_post_toondilate_ded9_corrected_fresh_ae_smoke_raw_20260813.json",
+      "sha256": "bfdafa52dd3912093eaaaea54507311bdb574ff66fba3b4ae033bd179c3a428f",
+      "size": 8657
+    },
+    "summary": {
+      "path": "refs/conformance/olm_all10_post_toondilate_ded9_corrected_fresh_ae_smoke_20260813.json",
+      "sha256": "0d0fa68c29c7268a50a0b78ce493c9473d8afcecc022899b0e9e23ba0f81e90a",
+      "size": 18469
+    },
+    "invocation_receipt": {
+      "path": "handoffs/olm_all10_post_toondilate_ded9_corrected_fresh_ae_smoke_20260813.invocation-receipt.json",
+      "sha256": "2bc516f728c4349029cc80b6179ea467ab5f623c58d32d5e3a2de4b9d3d260e8",
+      "size": 104
+    },
+    "launch_wrapper": {
+      "path": "handoffs/olm_all10_post_toondilate_ded9_corrected_fresh_ae_smoke_20260813/launch.jsx",
+      "sha256": "d77bd5942cd3f97f248a6571b13ae82a0224f733b971c571376eb2ff72f446e4",
+      "size": 742
+    }
+  },
+  "crash_evidence": {
+    "sentry_run_id": "8753122c-21b7-41c4-232f-3ec1a67714dc",
+    "minidump_id": "fb0bc574-64cd-4e90-b401-fa4bf527c050",
+    "copied_files": [
+      {
+        "path": "handoffs/olm_all10_post_toondilate_ded9_corrected_fresh_ae_smoke_20260813/crash_evidence/__sentry-breadcrumb1",
+        "sha256": "5c7c14a37b641248aa7b888fecc5580ceb7dd9e78bfeea36978f96b211ec4c6c",
+        "size": 2394
+      },
+      {
+        "path": "handoffs/olm_all10_post_toondilate_ded9_corrected_fresh_ae_smoke_20260813/crash_evidence/__sentry-event",
+        "sha256": "dee3e7a43f2f0edce1b5720742e91fc2d74cdf28a1986413374d5ddff5520474",
+        "size": 1329
+      },
+      {
+        "path": "handoffs/olm_all10_post_toondilate_ded9_corrected_fresh_ae_smoke_20260813/crash_evidence/fb0bc574-64cd-4e90-b401-fa4bf527c050.dmp",
+        "sha256": "29b087b55f32ba09dd52eac1bc68b31cca1534699079fd55e903f56f1f0ad8ff",
+        "size": 2200960
+      },
+      {
+        "path": "handoffs/olm_all10_post_toondilate_ded9_corrected_fresh_ae_smoke_20260813/crash_evidence/session.json",
+        "sha256": "33b94ab4c2ce7f0aeab59fc2ebf8e33e9a0af30c27c9ba29b80f32c002c5fab3",
+        "size": 227
+      }
+    ],
+    "do_script_error_dialog": {
+      "timestamp": "2026-08-12T18:35:58.056724Z",
+      "category": "AEErrorDialog",
+      "message_ja": "スクリプトファイルを実行できません。スクリプト機能のプラグインがインストールされていません。",
+      "stack_owner": "AEDoScriptFileCommand performDefaultImplementation"
+    },
+    "force_quit_event": {
+      "timestamp": "2026-08-12T18:42:10.304607Z",
+      "category": "signal",
+      "message": "OnForceQuit",
+      "sending_process": "Python",
+      "error_description": "SIGTERM",
+      "will_crash": true
+    },
+    "classification": "DoScriptFile entered an AE error dialog before the payload produced ae_return.json. The minidump was generated later by the runner's exact owned-PID SIGTERM cleanup; it is not evidence of an OLMToonDilate-originated crash."
+  },
+  "cleanup_observation": {
+    "runner_cleanup_completed_at": "2026-08-12T18:42:28.765303+00:00",
+    "actions": [
+      "application_quit",
+      "SIGTERM exact PID 36723",
+      "SIGKILL exact PID 36723"
+    ],
+    "manual_exact_term_kill_repeated_after_crash_evidence_copy": true,
+    "observed_at": "2026-08-13T03:46:51+09:00",
+    "remaining_exact_pid": 36723,
+    "remaining_process_state": "UE",
+    "broad_kill_used": false
+  },
+  "subsequent_exact_cleanup": {
+    "performed_by": "root coordinator after crash-evidence SHA verification",
+    "sequence": [
+      "SIGKILL exact AdobeCrashReport PID 38140",
+      "SIGKILL exact Adobe crashpad PID 36747",
+      "SIGKILL exact owned After Effects PID 36723",
+      "exact cleanup of orphan dynamiclink PID 37527",
+      "exact cleanup of orphan TeamHub PID 37528"
+    ],
+    "observed_at": "2026-08-13T03:49:05+09:00",
+    "after_effects_exact_processes": [],
+    "afterfx_exact_processes": [],
+    "aerender_exact_processes": [],
+    "adobe_crash_helpers_for_attempt": [],
+    "cleanup_complete": true,
+    "broad_kill_used": false
+  },
+  "installed_identity": {
+    "toondilate_binary_sha256": "5bbe693106072ceff14a1c1ae5a0d64815cddde58356c57575d29e516479036e",
+    "accepted_manifest_path": "refs/conformance/olm_installed_identity_manifest_20260806.json",
+    "accepted_manifest_sha256": "ef7bf31f4f8907af8d047276296b16c4d918433a94173938ca98b2874c61c368",
+    "unchanged_after_failure": true
+  },
+  "claim_boundary": "This record preserves and classifies one failed corrected aggregate AE-smoke invocation. It proves neither host-frame success nor OLMToonDilate numerical behavior, does not authorize a retry, and leaves the formal release gate blocked."
+}

@@ -1,0 +1,69 @@
+diff --git a/guest/crates/aex-guest-worker/src/x64/callbacks.rs b/guest/crates/aex-guest-worker/src/x64/callbacks.rs
+--- a/guest/crates/aex-guest-worker/src/x64/callbacks.rs
++++ b/guest/crates/aex-guest-worker/src/x64/callbacks.rs
+@@ -335,6 +335,31 @@ fn emulate_vcomp_for_static_simple_init(unicorn: &mut Unicorn<'_, GuestState>) {
+     }
+ }
+ 
++fn olm_radial_native_ucrt_result(kind: &str, left: u32, right: Option<u32>) -> Option<u32> {
++    let path = std::env::var_os("OLM_RADIAL_NATIVE_UCRT_TABLE")?;
++    let text = std::fs::read_to_string(path).ok()?;
++    for line in text.lines() {
++        let fields = line.split_ascii_whitespace().collect::<Vec<_>>();
++        let matched = match (kind, right, fields.as_slice()) {
++            ("log2f", None, ["l", argument, _]) =>
++                u32::from_str_radix(argument, 16).ok() == Some(left),
++            ("atan2f", Some(second), ["a", first, other, _]) =>
++                u32::from_str_radix(first, 16).ok() == Some(left)
++                    && u32::from_str_radix(other, 16).ok() == Some(second),
++            _ => false,
++        };
++        if matched {
++            return fields.last().and_then(|word| u32::from_str_radix(word, 16).ok());
++        }
++    }
++    None
++}
++
++fn olm_radial_missing_native_ucrt_result(unicorn: &mut Unicorn<'_, GuestState>, name: &str) {
++    unicorn.get_data_mut().callback_error = Some(format!("missing OLM Radial native UCRT {name} key"));
++    let _ = unicorn.emu_stop();
++}
++
+ fn install_float_import(
+     unicorn: &mut Unicorn<'static, GuestState>,
+     address: u64,
+@@ -346,7 +373,15 @@ fn install_float_import(
+         unicorn.add_code_hook(address, address, move |unicorn, _, _| {
+             if let Ok(bits) = unicorn.reg_read(RegisterX86::XMM0) {
+                 let value = f32::from_bits(bits as u32);
+-                let output = operation(value);
++                let output = if name == "log2f" && std::env::var_os("OLM_RADIAL_NATIVE_UCRT_TABLE").is_some() {
++                    let Some(result) = olm_radial_native_ucrt_result("log2f", bits as u32, None) else {
++                        olm_radial_missing_native_ucrt_result(unicorn, name);
++                        return;
++                    };
++                    f32::from_bits(result)
++                } else {
++                    operation(value)
++                };
+                 if unicorn.get_data().math_calls.len() < 32 {
+                     unicorn
+                         .get_data_mut()
+@@ -435,7 +470,15 @@ fn install_float_binary_import(
+                 unicorn.reg_read(RegisterX86::XMM0),
+                 unicorn.reg_read(RegisterX86::XMM1),
+             ) {
+-                let value = operation(f32::from_bits(left as u32), f32::from_bits(right as u32));
++                let value = if name == "atan2f" && std::env::var_os("OLM_RADIAL_NATIVE_UCRT_TABLE").is_some() {
++                    let Some(result) = olm_radial_native_ucrt_result("atan2f", left as u32, Some(right as u32)) else {
++                        olm_radial_missing_native_ucrt_result(unicorn, name);
++                        return;
++                    };
++                    f32::from_bits(result)
++                } else {
++                    operation(f32::from_bits(left as u32), f32::from_bits(right as u32))
++                };
+                 if unicorn.get_data().math_calls.len() < 32 {
+                     unicorn.get_data_mut().math_calls.push(format!(
+                         "{name}({},{})={value}",

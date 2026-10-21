@@ -1,20 +1,33 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import math
+import os
 import struct
 import sys
 import time
+import zlib
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from aex_loader import AexLoader  # noqa: E402
+from aex_loader import AexLoader, RETURN_TRAMPOLINE  # noqa: E402
 from unicorn.x86_const import (  # noqa: E402
+    UC_X86_REG_R13,
+    UC_X86_REG_R14,
+    UC_X86_REG_RBX,
     UC_X86_REG_RCX,
     UC_X86_REG_RDX,
+    UC_X86_REG_RDI,
+    UC_X86_REG_RSI,
     UC_X86_REG_R8,
     UC_X86_REG_R9,
     UC_X86_REG_RSP,
+    UC_X86_REG_RIP,
+    UC_X86_REG_XMM0,
+    UC_X86_REG_XMM1,
+    UC_X86_REG_XMM2,
+    UC_X86_REG_XMM3,
 )
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -28,7 +41,14 @@ FUN_180002780 = 0x180002780
 FUN_180001000 = 0x180001000
 FUN_180001B10 = 0x180001B10
 FUN_180004640 = 0x180004640
+FUN_180004EBF = 0x180004EBF
+FUN_180004EC8 = 0x180004EC8
 FUN_180007520 = 0x180007520
+FUN_180007B45 = 0x180007B45
+FUN_180007B4A = 0x180007B4A
+FUN_180007BB0 = 0x180007BB0
+FUN_180007C14 = 0x180007C14
+FUN_180007C19 = 0x180007C19
 FUN_180008690 = 0x180008690
 FUN_18000DE60 = 0x18000DE60
 FUN_18000E190 = 0x18000E190
@@ -50,6 +70,71 @@ EXTRA_DUMP_CELLS = [
 ]
 ALPHA_BITS = 0x3F800000
 BRIGHT_WITNESS_SOURCES = [(1669, 81), (1684, 105)]
+WRITEBACK_WITNESS_COORDS = {(1612, 6), (1614, 6)}
+PF8_SCALE_ADDRESS = 0x1800252A0
+
+
+def sha256_bytes(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
+
+
+def write_compressed_plane(directory: Path, name: str, data: bytes) -> dict:
+    directory.mkdir(parents=True, exist_ok=True)
+    path = directory / f"{name}.bin.zlib"
+    encoded = zlib.compress(data, level=9)
+    path.write_bytes(encoded)
+    return {
+        "path": path.name,
+        "raw_bytes": len(data),
+        "raw_sha256": sha256_bytes(data),
+        "zlib_bytes": len(encoded),
+        "zlib_sha256": sha256_bytes(encoded),
+    }
+
+
+def capture_full_rotation_planes(loader: AexLoader, param1: int, angular_count: int,
+                                 directory: Path, stage: str,
+                                 eligibility_mask: int = 0) -> dict:
+    pointers = {
+        "normalized_or_polar_rgba": u64(loader, param1 + 0xE * 4),
+        "slot_0x10": u64(loader, param1 + 0x10 * 4),
+        "slot_0x12": u64(loader, param1 + 0x12 * 4),
+        "slot_0x14": u64(loader, param1 + 0x14 * 4),
+        "accum_rgba": u64(loader, param1 + 0xF250 * 4),
+        "max_alpha": u64(loader, param1 + 0xF252 * 4),
+    }
+    scalar_bytes = pointers["normalized_or_polar_rgba"] - pointers["max_alpha"]
+    rgba_bytes = pointers["max_alpha"] - pointers["accum_rgba"]
+    if scalar_bytes <= 0 or rgba_bytes != scalar_bytes * 4 or scalar_bytes % 4:
+        raise RuntimeError(f"unexpected Rotation plane allocation geometry: {pointers}")
+    cells = scalar_bytes // 4
+    if angular_count <= 0 or cells % angular_count:
+        raise RuntimeError(f"Rotation plane cell geometry does not divide: {cells}/{angular_count}")
+    radius_count = cells // angular_count
+    sizes = {
+        "normalized_or_polar_rgba": rgba_bytes,
+        "slot_0x10": scalar_bytes,
+        "slot_0x12": scalar_bytes,
+        "slot_0x14": scalar_bytes,
+        "accum_rgba": rgba_bytes,
+        "max_alpha": scalar_bytes,
+    }
+    planes = {
+        name: write_compressed_plane(
+            directory, f"{stage}__{name}", loader.read_bytes(address, sizes[name]))
+        for name, address in pointers.items()
+    }
+    if eligibility_mask:
+        planes["eligibility_mask"] = write_compressed_plane(
+            directory, f"{stage}__eligibility_mask", loader.read_bytes(eligibility_mask, cells))
+    return {
+        "stage": stage,
+        "geometry": {"angular_count": angular_count, "radius_count": radius_count,
+                     "cells": cells},
+        "pointers": {name: f"0x{address:x}" for name, address in pointers.items()},
+        "eligibility_mask_pointer": f"0x{eligibility_mask:x}" if eligibility_mask else None,
+        "planes": planes,
+    }
 
 
 def u32(loader: AexLoader, addr: int) -> int:
@@ -62,6 +147,15 @@ def u64(loader: AexLoader, addr: int) -> int:
 
 def f32_from_bits(bits: int) -> float:
     return struct.unpack("<f", struct.pack("<I", bits))[0]
+
+
+def low_f32_word(loader: AexLoader, register: int) -> tuple[int, float]:
+    word = loader.uc.reg_read(register) & 0xFFFFFFFF
+    return word, f32_from_bits(word)
+
+
+def f32_mul(a: float, b: float) -> float:
+    return struct.unpack("<f", struct.pack("<f", a * b))[0]
 
 
 def ulp_distance_u32(a: int, b: int) -> int:
@@ -408,7 +502,22 @@ def main() -> int:
         "rotation_param2": 0,
         "scatter_calls": [],
         "max_calls": [],
+        "full_plane_stages": [],
+        "writeback_owner": None,
+        "rotation_worker_returned": False,
+        "post_worker_checkpoint": None,
+        "sampler_calls": [],
+        "sampler_pending": None,
+        "writeback_internal_cells": {},
+        "writeback_calls": [],
+        "writeback_pending": None,
+        "writeback_stopped_after_target": False,
     }
+    dump_dir_raw = os.environ.get("OLM_RADIALBLUR_M4_DUMP_DIR", "").strip()
+    dump_dir = Path(dump_dir_raw).resolve() if dump_dir_raw else None
+    writeback_witness = os.environ.get("OLM_RADIALBLUR_M4_WRITEBACK_WITNESS", "").strip() == "1"
+    checkpoint_raw = os.environ.get("OLM_RADIALBLUR_M4_POST_WORKER_CHECKPOINT", "").strip()
+    checkpoint_path = Path(checkpoint_raw).resolve() if checkpoint_raw else None
 
     def capture_rotation(ld: AexLoader, address: int, size: int) -> None:
         captured["rotation_param1"] = ld.uc.reg_read(UC_X86_REG_RCX)
@@ -419,20 +528,323 @@ def main() -> int:
         rsp = ld.uc.reg_read(UC_X86_REG_RSP)
         stack5 = struct.unpack("<Q", ld.read_bytes(rsp + 0x28, 8))[0]
         captured["scatter_calls"].append((address, args, stack5))
+        observed_stages = {item["stage"] for item in captured["full_plane_stages"]}
+        stage = "pre_scatter" if address == FUN_180002780 else "post_scatter_pre_gather"
+        if dump_dir is not None and stage not in observed_stages:
+            quality_recip = struct.unpack("<f", ld.read_bytes(args[0], 4))[0]
+            angular_count = int(round(360.0 / quality_recip)) if quality_recip else 0
+            eligibility_mask = stack5 if address == FUN_1800024C0 else 0
+            captured["full_plane_stages"].append(
+                capture_full_rotation_planes(
+                    ld, args[0], angular_count, dump_dir, stage, eligibility_mask))
+
+    def capture_writeback_owner(ld: AexLoader, address: int, size: int) -> None:
+        work = ld.uc.reg_read(UC_X86_REG_RBX)
+        world = ld.uc.reg_read(UC_X86_REG_R13)
+        captured["writeback_owner"] = {
+            "rip": f"0x{address:x}",
+            "work": f"0x{work:x}",
+            "blur_type": u32(ld, work + 0x20),
+            "internal_frame": f"0x{u64(ld, work + 0xA0):x}",
+            "brightness_gain_word": f"0x{u32(ld, work + 0x38):08x}",
+            "brightness_gain": struct.unpack("<f", ld.read_bytes(work + 0x38, 4))[0],
+            "output_world": f"0x{world:x}",
+            "output_data": f"0x{u64(ld, world + 0x18):x}",
+            "output_rowbytes": u32(ld, world + 0x20),
+            "output_width": u32(ld, world + 0x24),
+            "output_height": u32(ld, world + 0x28),
+        }
+
+    def capture_rotation_worker_return(ld: AexLoader, address: int, size: int) -> None:
+        captured["rotation_worker_returned"] = True
+        if checkpoint_path is None or captured["post_worker_checkpoint"] is not None:
+            return
+        owner = captured.get("writeback_owner")
+        metadata = {
+            "schema": "olmradialblur.case0010-post-worker-checkpoint/1",
+            "kind": "case0010_rotation_post_worker_pre_pf8",
+            "rip": f"0x{address:x}",
+            "case_id": "case_0010",
+            "fast": True,
+            "max_threads": 1,
+            "input_sha256": hashlib.sha256(INPUT_PNG.read_bytes()).hexdigest(),
+            "manifest_sha256": hashlib.sha256(MANIFEST.read_bytes()).hexdigest(),
+            "render_ctx": f"0x{render_ctx:x}",
+            "input_world": f"0x{input_world:x}",
+            "output_world": f"0x{output_world:x}",
+            "param_ctx": f"0x{param_ctx:x}",
+            "owner": owner,
+            "rotation_worker_returned": True,
+        }
+        header = ld.save_checkpoint(checkpoint_path, metadata=metadata)
+        captured["post_worker_checkpoint"] = {
+            "path": str(checkpoint_path),
+            "sha256": hashlib.sha256(checkpoint_path.read_bytes()).hexdigest(),
+            "header_sha256": header.get("header_sha256"),
+            "rip": f"0x{address:x}",
+        }
+
+    def capture_sampler_call(ld: AexLoader, address: int, size: int) -> None:
+        owner = captured.get("writeback_owner")
+        if not owner:
+            return
+        internal_base = int(owner["internal_frame"], 16)
+        destination = ld.uc.reg_read(UC_X86_REG_RDX)
+        delta = destination - internal_base
+        width_local = owner["output_width"]
+        if delta < 0 or delta % 16:
+            return
+        cell = delta // 16
+        xy = (cell % width_local, cell // width_local)
+        if xy not in WRITEBACK_WITNESS_COORDS:
+            return
+        rsp = ld.uc.reg_read(UC_X86_REG_RSP)
+        source_polar = u64(ld, ld.uc.reg_read(UC_X86_REG_RSI) + 0x38)
+        call = {
+            "rip": f"0x{address:x}",
+            "xy": list(xy),
+            "source_polar": f"0x{source_polar:x}",
+            "destination": f"0x{destination:x}",
+            "expected_destination": f"0x{internal_base + 16 * (xy[1] * width_local + xy[0]):x}",
+            "radial_count": ld.uc.reg_read(UC_X86_REG_R8) & 0xFFFFFFFF,
+            "sample_angle_word": f"0x{u32(ld, rsp + 0x20):08x}",
+            "sample_radius_word": f"0x{u32(ld, rsp + 0x28):08x}",
+            "returned_rgba_words": None,
+            "returned_rgba_f32": None,
+        }
+        captured["sampler_calls"].append(call)
+        captured["sampler_pending"] = call
+
+    def capture_sampler_return(ld: AexLoader, address: int, size: int) -> None:
+        pending = captured.get("sampler_pending")
+        if not pending:
+            return
+        destination = ld.uc.reg_read(UC_X86_REG_RDI)
+        raw = ld.read_bytes(destination, 16)
+        pending["return_rip"] = f"0x{address:x}"
+        pending["return_destination"] = f"0x{destination:x}"
+        pending["returned_rgba_words"] = [
+            f"0x{word:08x}" for word in struct.unpack("<4I", raw)]
+        pending["returned_rgba_f32"] = list(struct.unpack("<4f", raw))
+        captured["sampler_pending"] = None
+
+    def capture_internal_writeback_cell(ld: AexLoader, address: int, size: int) -> None:
+        owner = captured.get("writeback_owner")
+        if not owner:
+            return
+        internal_base = int(owner["internal_frame"], 16)
+        pointer = ld.uc.reg_read(UC_X86_REG_RDI)
+        delta = pointer - internal_base
+        width_local = owner["output_width"]
+        if delta < 0 or delta % 16:
+            return
+        cell = delta // 16
+        xy = (cell % width_local, cell // width_local)
+        if xy not in WRITEBACK_WITNESS_COORDS:
+            return
+        raw = ld.read_bytes(pointer, 16)
+        captured["writeback_internal_cells"][f"{xy[0]},{xy[1]}"] = {
+            "rip": f"0x{address:x}",
+            "pointer": f"0x{pointer:x}",
+            "expected_pointer": f"0x{internal_base + 16 * (xy[1] * width_local + xy[0]):x}",
+            "rgba_words": [f"0x{word:08x}" for word in struct.unpack("<4I", raw)],
+            "rgba_f32": list(struct.unpack("<4f", raw)),
+        }
+
+    def capture_pf8_call(ld: AexLoader, address: int, size: int) -> None:
+        x = ld.uc.reg_read(UC_X86_REG_RSI) & 0xFFFFFFFF
+        y = ld.uc.reg_read(UC_X86_REG_R14) & 0xFFFFFFFF
+        if (x, y) not in WRITEBACK_WITNESS_COORDS:
+            return
+        owner = captured.get("writeback_owner")
+        if not owner:
+            raise RuntimeError("PF8 call observed without writeback owner")
+        rsp = ld.uc.reg_read(UC_X86_REG_RSP)
+        pointer_stack = u64(ld, rsp + 0x20)
+        expected = int(owner["output_data"], 16) + y * owner["output_rowbytes"] + x * 4
+        xmm = [low_f32_word(ld, reg) for reg in (
+            UC_X86_REG_XMM0, UC_X86_REG_XMM1, UC_X86_REG_XMM2, UC_X86_REG_XMM3)]
+        destination = pointer_stack
+        call = {
+            "rip": f"0x{address:x}",
+            "xy": [x, y],
+            "destination_stack_0x20": f"0x{pointer_stack:x}",
+            "expected_destination": f"0x{expected:x}",
+            "resolved_destination": f"0x{destination:x}",
+            "rgba_words": [f"0x{word:08x}" for word, _ in xmm],
+            "rgba_f32": [value for _, value in xmm],
+            "pf8_scale_word": f"0x{u32(ld, PF8_SCALE_ADDRESS):08x}",
+            "pf8_scale": struct.unpack("<f", ld.read_bytes(PF8_SCALE_ADDRESS, 4))[0],
+            "before_argb": list(ld.read_bytes(destination, 4)),
+            "after_argb": None,
+        }
+        captured["writeback_calls"].append(call)
+        captured["writeback_pending"] = call
+
+    def capture_pf8_return(ld: AexLoader, address: int, size: int) -> None:
+        pending = captured.get("writeback_pending")
+        if not pending:
+            return
+        destination = int(pending["resolved_destination"], 16)
+        pending["after_argb"] = list(ld.read_bytes(destination, 4))
+        captured["writeback_pending"] = None
+        if tuple(pending["xy"]) == (1614, 6):
+            captured["writeback_stopped_after_target"] = True
+            ld.uc.emu_stop()
 
     loader.add_code_hook(FUN_180004640, capture_rotation)
     loader.add_code_hook(FUN_180002780, capture_scatter)
     loader.add_code_hook(FUN_1800024C0, capture_scatter)
+    if writeback_witness:
+        loader.add_code_hook(FUN_180007B45, capture_writeback_owner)
+        loader.add_code_hook(FUN_180007B4A, capture_rotation_worker_return)
+        loader.add_code_hook(FUN_180004EBF, capture_sampler_call)
+        loader.add_code_hook(FUN_180004EC8, capture_sampler_return)
+        loader.add_code_hook(FUN_180007BB0, capture_internal_writeback_cell)
+        loader.add_code_hook(FUN_180007C14, capture_pf8_call)
+        loader.add_code_hook(FUN_180007C19, capture_pf8_return)
 
     t0 = time.time()
     loader.call_function(FUN_180008690, int_args=[0, 0, 0, param_ctx, render_ctx], max_instructions=5_000_000)
     param_ctx_dump = read_param_ctx(loader, param_ctx)
-    loader.call_function(
+    render_segments = [loader.call_function(
         FUN_180007520,
         int_args=[render_ctx, 0, input_world, output_world, param_ctx],
         max_instructions=1_500_000_000,
-    )
+    )]
+    while not captured["writeback_stopped_after_target"]:
+        ld_rip = loader.uc.reg_read(UC_X86_REG_RIP)
+        if ld_rip == RETURN_TRAMPOLINE:
+            break
+        if len(render_segments) >= 5:
+            raise RuntimeError(
+                f"Rotation owner did not finish within continuation budget; RIP=0x{ld_rip:x}")
+        render_segments.append(loader.resume_execution(max_instructions=500_000_000))
     elapsed = time.time() - t0
+    if writeback_witness:
+        owner = captured.get("writeback_owner")
+        sampler_calls = captured.get("sampler_calls", [])
+        calls = captured.get("writeback_calls", [])
+        cells = captured.get("writeback_internal_cells", {})
+        checks = {
+            "rotation_owner_observed": owner is not None,
+            "blur_type_is_rotation": bool(owner and owner["blur_type"] == 2),
+            "rotation_worker_returned": captured["rotation_worker_returned"],
+            "exactly_two_sampler_calls": len(sampler_calls) == 2 and
+                {tuple(call["xy"]) for call in sampler_calls} == WRITEBACK_WITNESS_COORDS,
+            "both_internal_cells_observed": set(cells) == {"1612,6", "1614,6"},
+            "exactly_two_pf8_calls_observed": len(calls) == 2 and
+                {tuple(call["xy"]) for call in calls} == WRITEBACK_WITNESS_COORDS,
+            "stopped_after_final_witness": captured["writeback_stopped_after_target"],
+        }
+        checks["sampler_pointer_relations"] = bool(sampler_calls) and all(
+            call["destination"] == call["expected_destination"] == call.get("return_destination")
+            for call in sampler_calls)
+        checks["sampler_return_observed"] = bool(sampler_calls) and all(
+            call["returned_rgba_words"] is not None for call in sampler_calls)
+        checks["internal_pointer_relations"] = bool(cells) and all(
+            cell["pointer"] == cell["expected_pointer"] for cell in cells.values())
+        checks["sampler_to_writeback_same_cell"] = bool(sampler_calls) and bool(cells) and all(
+            cells[f"{call['xy'][0]},{call['xy'][1]}"]["pointer"] == call["destination"]
+            for call in sampler_calls)
+        checks["destination_pointer_relations"] = bool(calls) and all(
+            call["expected_destination"] == call["destination_stack_0x20"]
+            for call in calls)
+        checks["native_store_observed"] = bool(calls) and all(
+            call["after_argb"] is not None for call in calls)
+        for call in calls:
+            scale = call["pf8_scale"]
+            rgba = call["rgba_f32"]
+            expected_argb = [
+                int(f32_mul(rgba[3], scale)) & 0xFF,
+                int(f32_mul(rgba[0], scale)) & 0xFF,
+                int(f32_mul(rgba[1], scale)) & 0xFF,
+                int(f32_mul(rgba[2], scale)) & 0xFF,
+            ]
+            call["oracle_argb"] = expected_argb
+            call["native_store_matches_oracle"] = call["after_argb"] == expected_argb
+        checks["native_store_matches_oracle"] = bool(calls) and all(
+            call["native_store_matches_oracle"] for call in calls)
+        evidence = {
+            "schema": "olmradialblur.case0010-pf8-writeback-witness/1",
+            "scope": {
+                "case_id": "case_0010",
+                "path": "actual Windows AEX under Mac Unicorn fast=True",
+                "pixel_format": "PF8 ARGB",
+                "witness_coordinates": [list(xy) for xy in sorted(WRITEBACK_WITNESS_COORDS)],
+                "stopped_immediately_after": [1614, 6],
+            },
+            "identity": {
+                "aex_path": str(AEX_PATH),
+                "aex_sha256": hashlib.sha256(AEX_PATH.read_bytes()).hexdigest(),
+                "input_path": str(INPUT_PNG),
+                "input_sha256": hashlib.sha256(INPUT_PNG.read_bytes()).hexdigest(),
+                "manifest_path": str(MANIFEST),
+                "manifest_sha256": hashlib.sha256(MANIFEST.read_bytes()).hexdigest(),
+            },
+            "elapsed_seconds": elapsed,
+            "render_instruction_segments": [segment["instructions"] for segment in render_segments],
+            "post_worker_checkpoint": captured["post_worker_checkpoint"],
+            "owner": owner,
+            "sampler_calls": sampler_calls,
+            "internal_cells": cells,
+            "pf8_calls": calls,
+            "checks": checks,
+            "status": "exact" if all(checks.values()) else "failed",
+            "boundary": (
+                "Proves the native CPU owner sampler-to-internal-frame-to-PF8 pack/store boundary; "
+                "does not prove PF-world-to-AE-export provenance."
+                if all(checks.values()) else
+                "Unresolved because at least one required sampler/writeback relation failed."
+            ),
+        }
+        evidence_json = REPO_ROOT / "refs" / "conformance" / "olmradialblur_case0010_pf8_writeback_actual_aex_20260805.json"
+        evidence_md = evidence_json.with_suffix(".md")
+        evidence_json.write_text(json.dumps(evidence, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        exact_summary = (
+            "The actual Windows AEX Rotation owner returned from `FUN_180004640`; the gated "
+            "`+0x4ec3/+0x4ec8` sampler destination, `+0x7bb0` internal cell, and native "
+            "`+0x7c14/+0x7c19` PF8 store were all observed for `(1612,6)` and `(1614,6)`."
+            if evidence["status"] == "exact"
+            else "The attempted witness did not satisfy every fail-closed relation; no boundary closure is claimed."
+        )
+        boundary_summary = (
+            "Boundary: this closes actual-AEX CPU sampler → internal-frame → PF8-world writeback. "
+            "It does not identify the provenance of the legacy white PNG or prove AE export behavior.\n"
+            if evidence["status"] == "exact"
+            else "Boundary: unresolved because at least one required relation failed.\n"
+        )
+        evidence_md.write_text(
+            "# OLMRadialBlur case0010 PF8 writeback actual-AEX witness — 2026-08-05\n\n"
+            f"Status: `{evidence['status']}`.\n\n"
+            f"{exact_summary}\n\n"
+            "The JSON retains sampler coordinates and returned float words, internal-cell "
+            "pointers, the mandatory stack destination, PF8 scale word, XMM float words, and "
+            "bytes immediately before and after the native store.\n\n"
+            f"Checks: `{json.dumps(checks, sort_keys=True)}`.\n\n"
+            f"{boundary_summary}",
+            encoding="utf-8",
+        )
+        if evidence["status"] != "exact":
+            raise RuntimeError(f"PF8 writeback witness failed closed: {checks}")
+    if dump_dir is not None:
+        quality_recip = struct.unpack(
+            "<f", loader.read_bytes(captured["rotation_param1"], 4))[0]
+        angular_count = int(round(360.0 / quality_recip)) if quality_recip else 0
+        captured["full_plane_stages"].append(
+            capture_full_rotation_planes(loader, captured["rotation_param1"], angular_count,
+                                         dump_dir, "post_normalize"))
+        manifest = {
+            "schema": "olmradialblur.rotation-full-plane-dump/1",
+            "aex_path": str(AEX_PATH),
+            "aex_sha256": hashlib.sha256(AEX_PATH.read_bytes()).hexdigest(),
+            "case_id": "case_0010",
+            "input_path": str(INPUT_PNG),
+            "input_sha256": hashlib.sha256(INPUT_PNG.read_bytes()).hexdigest(),
+            "stages": captured["full_plane_stages"],
+        }
+        (dump_dir / "manifest.json").write_text(
+            json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
     if not captured["rotation_param1"]:
         raise RuntimeError("FUN_180004640 entry was not observed")
@@ -505,6 +917,12 @@ def main() -> int:
     direct_sample_u8 = tuple(
         max(0, min(255, int(round(channel * 255.0)))) for channel in direct_sample
     )
+    native_writeback_exact = (
+        writeback_witness
+        and len(captured.get("writeback_calls", [])) == 2
+        and all(call.get("native_store_matches_oracle") for call in captured["writeback_calls"])
+        and captured.get("writeback_stopped_after_target")
+    )
 
     report_lines = []
     report_lines.append("## M4到達点")
@@ -576,9 +994,11 @@ def main() -> int:
         report_lines.append("- ビット一致ゲート未達。`FUN_180002780 / FUN_1800024c0` の promotion 条件確定は保留。")
     report_lines.append("")
     report_lines.append("## Mac 港への含意")
-    if direct_sample_u8[:3] == (0, 0, 0):
-        report_lines.append("- AEX の座標変換と `+0xe` direct sampler は witness `(1614,6)` を黒として返す。これは 20260604 PNG 参照の白とは一致しない。")
-        report_lines.append("- よって、この witness だけを根拠に Mac 側 scatter を白へ寄せる変更は危険。まず Windows PNG が CPU AEX Software 経路そのものか、またはGPU/旧AEX/manifest混入かを分離する必要がある。")
+    if native_writeback_exact:
+        report_lines.append("- direct sampler `(1614,6)` の負RGBは黒相当だが、native PF8 ownerは下限clampせず、255倍・trunc・low-byte格納により ARGB `(255,255,255,255)` を書く。")
+        report_lines.append("- 旧M4の透明黒は1.5B instruction上限による未完走worldであり、native writeback結果ではなかった。Macのbounded case0010 writerはこのCPU規則へ一致させる。")
+    elif direct_sample_u8[:3] == (0, 0, 0):
+        report_lines.append("- AEX の座標変換と `+0xe` direct sampler は witness `(1614,6)` を黒として返す。native PF8 writeback未観測のため、この値だけから最終byteを断定しない。")
     elif all_match or one_ulp_count == len(results):
         report_lines.append("- emulation が Windows typed cells と同値で direct sampler も参照方向に出るなら、Mac 港の欠落は scatter 段の `FUN_180002780 / FUN_1800024c0` にある。次段は witness-angle 近傍角への配布条件をそのまま移植すること。")
     else:
@@ -586,7 +1006,9 @@ def main() -> int:
         report_lines.append(f"- 参考 dump: `FUN_180007520` unpack 後の bright source px 1669,81 -> {tuple(round(v, 6) for v in witness_unpack['1669,81'])}, 1684,105 -> {tuple(round(v, 6) for v in witness_unpack['1684,105'])}。")
     report_lines.append("")
     report_lines.append("## 残課題")
-    if direct_sample_u8[:3] == (0, 0, 0):
+    if native_writeback_exact:
+        report_lines.append("- actual-AEX CPU sampler→internal frame→PF8 worldは回答済み。残る境界はMac AEの新bundle load、Software host render、PF-world→exportである。")
+    elif direct_sample_u8[:3] == (0, 0, 0):
         report_lines.append("- case_0010 witness `(1614,6)` は `reference-path-split suspected` として扱う。PNG白へ合わせ込む前に、同一AEX/Software/EXRまたはCPU writeback witnessで参照経路を確定する。")
         report_lines.append("- 追加解析する場合は、`FUN_180001b10 -> FUN_180001000(+0xe)` の direct sample 黒を起点に、PNG参照生成時のAEXバージョン/レンダー経路/入力manifestを監査する。")
     elif all_match or one_ulp_count == len(results):

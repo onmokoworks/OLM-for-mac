@@ -1,0 +1,53 @@
+{
+  "binary": {
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "backup_binary_sha256": {
+      "installed_backup": "6af1f1d6d67cd8087778b3040f913e34836092b283ad9f8f36dce2fe32767434",
+      "moved_old": "6af1f1d6d67cd8087778b3040f913e34836092b283ad9f8f36dce2fe32767434",
+      "pre_swap_original": "6af1f1d6d67cd8087778b3040f913e34836092b283ad9f8f36dce2fe32767434"
+    },
+    "backup_inventory_sha256": {
+      "installed_backup": "2d69b626aece72d30e642dd4b505e615010f47140623d76c61d0bd5bca187f53",
+      "moved_old": "2d69b626aece72d30e642dd4b505e615010f47140623d76c61d0bd5bca187f53",
+      "pre_swap_original": "2d69b626aece72d30e642dd4b505e615010f47140623d76c61d0bd5bca187f53"
+    },
+    "candidate_installed_inventory_exact": true,
+    "candidate_inventory_sha256": "3a89af7df7a1179307eee2fe5fd4b03dd10cb18afa0b85a4d498ce8b65f07418",
+    "installed_inventory_sha256": "3a89af7df7a1179307eee2fe5fd4b03dd10cb18afa0b85a4d498ce8b65f07418",
+    "minimum_system_version": "11.0",
+    "new_sha256": "856ab700df0881cfb039e9c9d0675bf46a7e92b56e8cb0e311d820fd719bc0de",
+    "old_sha256": "6af1f1d6d67cd8087778b3040f913e34836092b283ad9f8f36dce2fe32767434",
+    "strict_codesign": true
+  },
+  "identities": {
+    "accepted_identity_sha256": "94c6a1eff87e11705a65be638953cb134ff64bd0d919e8501338601aab333650",
+    "candidate_authority_sha256": "ddc9256d6ca78eec2f521335573589f7c626ae5827927a3399ea64d3a1934eff",
+    "install_time_authority_sha256": "15185edc77645fe47a829a1373abd2c2a9907cc87257bc91e5e01fb00deb8e2a",
+    "post_identity_sha256": "94c6a1eff87e11705a65be638953cb134ff64bd0d919e8501338601aab333650",
+    "pre_identity_sha256": "1ae637d09701656113d938273486631d596c2c619f02f57a67a85ad34e8073a7",
+    "prepared_sha256": "7eb1d45bf30b10f49b818ff49f2553eaa24601b94bb4ef2b696b26203bce14c7",
+    "source_sha256": "494116880d037a0d44a48b0e0ebe0fc5358b4cd8892b90ca8c61ea8a7bb2e845",
+    "transaction_sha256": "237cb44594e15267e5d397c348b2ec4c8fefef06ad81eb8d0ed1db86da96f9fe"
+  },
+  "schema": "olmdirectionalblur.testseam-install-closure/1",
+  "scope": {
+    "after_effects_launched": false,
+    "after_effects_processes": [],
+    "distribution_signature_or_notarization": false,
+    "evidence_rebind_is_not_a_second_install": true,
+    "native_ae_numerical_claim": false
+  },
+  "status": "PASS_INSTALLED_AE_DEFERRED",
+  "transaction": {
+    "accepted_equals_post_copy": true,
+    "current_authority_binary_unchanged": true,
+    "current_authority_rebind_after_evidence_cascade": true,
+    "identity_relation_directional_only": true,
+    "new": "856ab700df0881cfb039e9c9d0675bf46a7e92b56e8cb0e311d820fd719bc0de",
+    "old": "6af1f1d6d67cd8087778b3040f913e34836092b283ad9f8f36dce2fe32767434",
+    "same_volume_atomic_exchange": true
+  }
+}

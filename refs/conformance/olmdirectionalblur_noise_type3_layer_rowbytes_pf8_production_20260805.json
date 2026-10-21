@@ -2,7 +2,7 @@
   "schema": 1,
   "kind": "olmdirectionalblur_noise_type3_layer_rowbytes_pf8_production_20260805",
   "status": "pass",
-  "created_at_utc": "2026-08-05T17:37:26+00:00",
+  "created_at_utc": "2026-08-20T09:53:18+00:00",
   "scope": "16x16 PF8 source and Type 3 Layer have equal dimensions/origins but independent rowbytes: source 76, Layer 92; Noise Variation 25, Front Strength 8, other controls zero",
   "geometry": {
     "dimensions": [
@@ -156,6 +156,8 @@
     "back_strength": 0,
     "front_alpha_fade": 0,
     "front_sharp_tail": 0.0,
+    "back_alpha_fade": 0,
+    "back_sharp_tail": 0.0,
     "size_variation": 0.0,
     "noise_variation": 25.0,
     "noise_type": 3,

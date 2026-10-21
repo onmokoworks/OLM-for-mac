@@ -16,7 +16,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CAMPAIGN_ID = "olm_windows_all_plugins_reference_campaign_20260731_r4"
+CAMPAIGN_ID = "olm_windows_all_plugins_reference_campaign_20260731_r5"
 DEST_ROOT = ROOT / "handoffs" / "windows_batch"
 PACKAGE_DIR = DEST_ROOT / CAMPAIGN_ID
 PACKAGE_ZIP = DEST_ROOT / f"{CAMPAIGN_ID}.zip"
@@ -26,7 +26,7 @@ EXPECTED_LANE_ROWS = {
     "OLMDistanceGradation": 99,
     "OLMDirectionalBlur": 54,
     "OLMRadialBlur": 18,
-    "OLMKiraKira": 30,
+    "OLMKiraKira": 60,
     "OLMSmoother v1": 19,
     "ColorKeep": 9,
 }
@@ -52,6 +52,177 @@ KIRAKIRA_ALPHA_CASE_IDS = {
 KIRAKIRA_INTENTIONAL_NOOP_IDS = {
     "kk_mapped_bm3_mm1_hi_r0_orange_opaque",
 }
+KIRAKIRA_FINAL_RANDOM_REQUEST = (
+    "refs/reference_requests/olm_final_random10_olm_kira_kira_20260629.json"
+)
+KIRAKIRA_FINAL_RANDOM_REQUEST_SHA256 = (
+    "974548b8323cbcad65e7f02a96a1758adc36146651449bafa84e0915981a1140"
+)
+KIRAKIRA_FINAL_RANDOM_RICH42_MANIFEST = (
+    "refs/win_references/20260710_190500__ae26_3_32bpc_recap/"
+    "OLMKiraKira/reference_manifest.json"
+)
+KIRAKIRA_FINAL_RANDOM_RICH42_MANIFEST_SHA256 = (
+    "638cb66a60a52f4f9877f0f74937a891d447dc85673c8cca48c0780acf3ec9e7"
+)
+KIRAKIRA_FINAL_RANDOM_CASE_IDS = [
+    f"final_random10_olm_kira_kira_{index:02d}" for index in range(1, 11)
+]
+KIRAKIRA_FINAL_RANDOM_METADATA = {
+    "final_random10_olm_kira_kira_01": {
+        "full_42_property_readback_sha256": "9baabc16de003ac9b8e1d407d812d2651e527d237b1da54cf5091577129dc440",
+        "mode": 4,
+        "merge_mode": 2,
+        "approximated_input": 0,
+    },
+    "final_random10_olm_kira_kira_02": {
+        "full_42_property_readback_sha256": "be3664b249e030f2ce45337f2c6f1fcdc712797d35c5144267a1f8e36cd3e83c",
+        "mode": 1,
+        "merge_mode": 1,
+        "approximated_input": 0,
+    },
+    "final_random10_olm_kira_kira_03": {
+        "full_42_property_readback_sha256": "95bd69def5027340fde2520d8541490ee0996a1f26459734f370676f5ff92cb5",
+        "mode": 3,
+        "merge_mode": 1,
+        "approximated_input": 0,
+    },
+    "final_random10_olm_kira_kira_04": {
+        "full_42_property_readback_sha256": "22a2d8eb5b4eddf88c78bb676ac6a7e76eccd30da2bb62cad10354836e897e88",
+        "mode": 4,
+        "merge_mode": 2,
+        "approximated_input": 1,
+    },
+    "final_random10_olm_kira_kira_05": {
+        "full_42_property_readback_sha256": "c261bf4deb3fc8d17dd1a8b85c6c386d7d4f7d37fd10228bfea8914e674669fa",
+        "mode": 1,
+        "merge_mode": 2,
+        "approximated_input": 1,
+    },
+    "final_random10_olm_kira_kira_06": {
+        "full_42_property_readback_sha256": "cf30acd083b7a8836b54a7a7a0d3bee51ce4d181c94ee5b22d1cb82fdd982d5b",
+        "mode": 2,
+        "merge_mode": 1,
+        "approximated_input": 0,
+    },
+    "final_random10_olm_kira_kira_07": {
+        "full_42_property_readback_sha256": "244d2121750c31dd7b4c06577f2d89c942f8835c1b95a50ce796955cc54075c2",
+        "mode": 3,
+        "merge_mode": 2,
+        "approximated_input": 0,
+    },
+    "final_random10_olm_kira_kira_08": {
+        "full_42_property_readback_sha256": "452cd9b7c1d0246b42eebbaeb94a92c1e95f6b3a1c7dbee8aea323113d43432a",
+        "mode": 1,
+        "merge_mode": 2,
+        "approximated_input": 1,
+    },
+    "final_random10_olm_kira_kira_09": {
+        "full_42_property_readback_sha256": "ace4fd4afec942562600730e73cab1cb8bd0318d06407fe370c29fa52f21ff84",
+        "mode": 2,
+        "merge_mode": 1,
+        "approximated_input": 1,
+    },
+    "final_random10_olm_kira_kira_10": {
+        "full_42_property_readback_sha256": "433d05f5135c31329a2f2f88dbd7acca4851a80c7ec71ec79274ca7a69e7dc91",
+        "mode": 3,
+        "merge_mode": 1,
+        "approximated_input": 1,
+    },
+}
+KIRAKIRA_RICH42_CAPTURE_JSX = r'''/* Deterministic OLMKiraKira rich-42 capture. */
+(function (global) {
+    "use strict";
+
+    function requireEnglishAE() {
+        if (app.isoLanguage !== "en_US") {
+            throw new Error(
+                "OLMKiraKira rich-42 capture requires AE locale en_US; observed " +
+                app.isoLanguage
+            );
+        }
+    }
+
+    function rangeMetadata(property) {
+        var hasMin = property.hasMin === true;
+        var hasMax = property.hasMax === true;
+        return {
+            hasMin: hasMin,
+            hasMax: hasMax,
+            minValue: hasMin ? property.minValue : null,
+            maxValue: hasMax ? property.maxValue : null,
+            unitsText: property.unitsText || ""
+        };
+    }
+
+    function captureLeaf(property, path) {
+        var value = null;
+        var valueReadMethod = null;
+        var errorText = null;
+        try {
+            value = property.value;
+            valueReadMethod = "value";
+        } catch (error) {
+            errorText = String(error);
+        }
+        var row = {
+            path: path,
+            path_full: [],
+            name: property.name,
+            match_name: property.matchName,
+            property_index: property.propertyIndex,
+            property_type: String(property.propertyType),
+            property_value_type: String(property.propertyValueType),
+            is_time_varying: property.isTimeVarying === true,
+            num_keys: property.numKeys,
+            can_set_expression: property.canSetExpression === true,
+            expression_enabled: property.expressionEnabled === true,
+            enabled: property.enabled === true,
+            active: property.active === true,
+            value: value,
+            value_read_method: valueReadMethod,
+            range_metadata: rangeMetadata(property)
+        };
+        if (errorText !== null) {
+            row.error = errorText;
+        }
+        return row;
+    }
+
+    function visit(group, parentPath, rows) {
+        var index;
+        for (index = 1; index <= group.numProperties; index += 1) {
+            var property = group.property(index);
+            var path = parentPath.concat([property.name]);
+            if (property.propertyType === PropertyType.PROPERTY) {
+                rows.push(captureLeaf(property, path));
+            } else {
+                visit(property, path, rows);
+            }
+        }
+    }
+
+    global.captureOLMKiraKiraRich42 = function (effect) {
+        requireEnglishAE();
+        if (!effect || effect.matchName !== "OLM OLM Kira Kira") {
+            throw new Error("expected one OLM OLM Kira Kira effect");
+        }
+        var rows = [];
+        visit(effect, [effect.name], rows);
+        if (rows.length !== 42) {
+            throw new Error("expected exactly 42 ordered leaves; observed " + rows.length);
+        }
+        return rows;
+    };
+}(this));
+'''
+KIRAKIRA_RICH42_CAPTURE_JSX_SHA256 = hashlib.sha256(
+    KIRAKIRA_RICH42_CAPTURE_JSX.encode("utf-8")
+).hexdigest()
+KIRAKIRA_RICH42_CAPTURE_PHASE = (
+    "after_parameter_and_standard_option_writes_after_params_before_snapshot_"
+    "before_render"
+)
 PLUGIN_AEX_MEMBERS = {
     "OLMDistanceGradation": "aex/DistanceGradation.aex",
     "OLMDirectionalBlur": "aex/OLMDirectionalBlur.aex",
@@ -67,7 +238,7 @@ PLUGIN_AEX_MEMBERS = {
 TOOL_SOURCES = [
     (
         "scripts/verify_olm_windows_all_plugins_reference_return_20260731.py",
-        "08258845b17a3f8fad6f8e8130fbce457cb8bd29792cadcd6b45f14bfe615428",
+        "d0c185e55fc488f393002c1bc1be52349c5ad9b12209d449c2e3d29ad3c877a5",
         "tools/VERIFY_RETURN.py",
         "Fail-closed request self-test and independent return intake.",
     ),
@@ -189,6 +360,35 @@ def copy_verified(relative: str, expected_sha256: str, destination: Path) -> dic
 
 
 INPUT_SOURCES = [
+    *[
+        (
+            f"kirakira_final_random_{index:02d}.exr",
+            "refs/win_references/20260710_190500__ae26_3_32bpc_recap/"
+            "OLMKiraKira/"
+            "olm_bitdepth_32bpc_olmkirakira_exr_20260710__software_32bpc__fr24__"
+            f"final_random10_olm_kira_kira_{index:02d}_before_effects.exr",
+            digest,
+            (
+                "1920x1080 uncompressed FLOAT A/B/G/R; exact hash-bound "
+                f"KiraKira final-random case {index:02d} source."
+            ),
+        )
+        for index, digest in enumerate(
+            (
+                "8c1d418c7b853cc6f79087215ee86ab0b9eac423953c1a3409af3e120891a7f0",
+                "e100cd998a5e6f093cf7233821a0ba67d866117ca2f1b300023d6672457e6954",
+                "8bdac36ca9a84569ce568781810283eb1bbcb326934c123d2daf38b16c80bc91",
+                "f004f56651793a586e94dfabd467eb0e0df9fcf5f8500db5d54e215e070bc267",
+                "24b0782b49de384af3f46d613c0c69dd01a6bb02d38226a54a413950d58155d6",
+                "27e55775eb4b6b038ac04f10b56e5800904efb658864ff4c1c64ed0728ae2676",
+                "20962bb08aa7c5a5cdaa549fbff0356d240b91bed6c67b5ca4c6b6d325c9a356",
+                "d9bfadc91935239a44deec0872d2dd24b15b26eeb8488cd34b06cde3121e20fc",
+                "d32e20f429da453910c6fa2038bf133b29fae0df793acb9444c3af399fbc3729",
+                "2cbad9f4d6afb88e285191728a4120c9e0b7691d64b52cfa4a77ce8127029d88",
+            ),
+            1,
+        )
+    ],
     (
         "final_random_float_grid.exr",
         "refs/win_references/20260710_190500__ae26_3_32bpc_recap/OLMDirectionalBlur/"
@@ -498,27 +698,36 @@ LANES = [
         "plugin": "OLMKiraKira",
         "priority": 1,
         "status": "thin_blocking",
-        "case_count": 10,
+        "case_count": 20,
         "depths": [8, 16, 32],
-        "rows_estimate": 30,
+        "rows_estimate": 60,
+        "row_groups": [
+            {"case_count": 10, "depths": [8, 16, 32], "rows": 30},
+            {"case_count": 10, "depths": [8, 16, 32], "rows": 30},
+        ],
         "required": [
             "ten fully materialized, match-name-only controlled cases at 8/16/32bpc",
             "Blur Modes 1/2/3/4, Merge Modes 1/2, Approximated Input, Fade, Highlight Radius, and Highlight Color differentials",
-            "all five Use Ramp controls fixed and read back as zero",
+            "controlled ramps-off group only: all five Use Ramp controls fixed and read back as zero",
+            "authoritative final-random ten at 8/16/32bpc using ten exact hash-bound FLOAT32 source fixtures",
+            "all 40 plugin leaves plus both standard options captured as the declared 42-property readback",
         ],
         "request_seeds": [
             "kirakira_single_ray_20260606.json",
+            "olm_final_random10_olm_kira_kira_20260629.json",
         ],
         "case_definition_overrides": [
             "case_definitions/olmkirakira_controlled_ramps_off_matrix.json",
+            "case_definitions/olmkirakira_final_random_all30.json",
         ],
         "special_contract": (
-            "Write and read back exactly the 25 mapped match names in the bundled "
-            "controlled matrix. Never address a parameter by property index. Never "
-            "write or infer the five label rows, five opaque custom-ramp payload "
-            "rows, or five separator rows. The old final-random states that enabled "
-            "Use Ramp are historical seeds only and are intentionally excluded until "
-            "the custom-ramp serialization ABI is mapped."
+            "Preserve the 30-row controlled ramps-off matrix and add, rather than "
+            "replace it with, the 30-row authoritative final-random group. Resolve "
+            "all 25 writable plugin leaves by exact match_name only. Capture the "
+            "five label rows, five opaque custom-ramp payload rows, and five "
+            "separator rows as non-writable surface/readback rows; never infer or "
+            "write their values. Capture Effect Opacity and GPU Rendering as the "
+            "two standard-option rows completing the declared 42-property record."
         ),
     },
     {
@@ -752,7 +961,8 @@ binaries, all 40 historical request JSONs as case-definition seeds, the modern
 evidence that should be reused, two bounded KiraKira mapping/IR support files,
 and the fail-closed return contract.
 
-This r4 archive supersedes r1 and the rejected local r2/r3 drafts. Do not
+This immutable r5 archive supersedes r4, while preserving every r4 controlled
+execution row and adding the authoritative KiraKira final-random 30. Do not
 merge older inputs or instructions into this campaign.
 
 ## Why this recapture exists
@@ -836,7 +1046,7 @@ intake.
 | OLMDistanceGradation | Thin provenance and unresolved host-world/depth staging | 33 cases at 8/16/32bpc = 99 rows | Failure-only |
 | OLMDirectionalBlur | Full writer output and undeclared features/depths are not closed | 18 cases at 8/16/32bpc = 54 rows | Failure-only |
 | OLMRadialBlur | Production plane, Rotation/Inner, and depth coverage remain open | 6 fully materialized controlled cases at 8/16/32bpc = 18 rows | One same-run PNG + witness crop for canonical 20260604 case0010@8; otherwise failure-only |
-| OLMKiraKira | Outer compose and several modes/controls remain open; custom-ramp states are deferred until serializable | 10 controlled ramps-off cases at 8/16/32bpc = 30 rows | Two same-run PF8 writer PNG/trace pairs; otherwise trace-only or failure-only |
+| OLMKiraKira | Outer compose and several modes/controls remain open | 10 controlled ramps-off cases plus 10 authoritative final-random cases at 8/16/32bpc = 60 rows | Two controlled same-run PF8 writer PNG/trace pairs plus authoritative per-row property-readback/lineage and conditional Mode4 evidence |
 | OLMSmoother v1 | 16bpc and classic-host-converted 32bpc need same-source proof | 3 canonical cases at 8/16/32 plus ten 32bpc cases = 19 rows | Failure-only |
 | ColorKeep | Real Windows AE coverage was previously absent | 3 cases at 8/16/32bpc = 9 support-only rows | Parameter/UI mismatch only |
 | OLMBlur | Declared slices already have reusable AE-exact evidence | 0 new rows | None |
@@ -884,13 +1094,33 @@ Windows user explicitly starts the batch.
 
 - Before execution, `VERIFY_REQUEST.ps1` must pass. Read the README, gap matrix,
   campaign manifest, return contract, and `RETURN_FORMAT.md`.
+- Before any AE operation, inventory every declared AE 26.3 plug-in root and
+  apply the exact per-row `plugin_deployment_contract`. Fail on any same-effect
+  or same-basename collision, require exactly one effective target basename,
+  effect identity, and SHA-256. Before explicit user start, perform read-only
+  request verification and read-only plugin-root inventory only: no cleanup,
+  copy, request-tree write, AE project creation, or AE/aerender launch.
+  After explicit user start, clean only the exact external
+  `%LOCALAPPDATA%\\OLM_Codex_Staging\\<campaign_id>` staging root and exact
+  MediaCore campaign root, prove both nonexistent or empty, then copy once per
+  plugin through external staging into the known-scanned user MediaCore path
+  `%APPDATA%\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore\\OLM_Codex_Isolated\\`
+  `<campaign_id>\\<plugin>\\<aex_basename>`, rechecking SHA-256 after each copy.
+  Remove the exact external staging campaign root after deployment and prove
+  it absent. Row-specific duplicate AEX copies are forbidden. Record the
+  expanded absolute `deployed_runtime_path` and bind it to process/AEX-load
+  evidence. Only after deployment and staging cleanup verify may the runner
+  create an AE project or launch AE/aerender. The extracted checksum-bound
+  request tree is never written.
 - Adobe After Effects must be exactly 26.3x87.
 - Renderer must be Software, raw value 1816.
 - Working space must serialize as JSON `null` (AE raw value may be empty or
   None and must also be preserved separately); linear blending and
   blend-colors-using-1.0-gamma must be false.
-- Pin 24fps and render frame 24 (time 1.0s). Ignore the historical optional
-  30fps DirectionalBlur render set.
+- Pin 24fps and use the exact per-row frame/time/span in
+  `ROW_INVENTORY.comp`. The authoritative KiraKira final-random group renders
+  frame 0 (time 0.0s); all pre-existing controlled rows remain at frame 24
+  (time 1.0s). Ignore the historical optional 30fps DirectionalBlur render set.
 - Open the bundled Preserve-RGB template, replace its placeholder footage,
   resolving exact item names `OLM_COLOR_PROBE_INPUT` and
   `OLM_COLOR_PROBE_COMP`. Require exactly one layer, layer 1 sourced from that
@@ -900,8 +1130,10 @@ Windows user explicitly starts the batch.
 - After replacement, apply the exact per-row `ROW_INVENTORY.comp`: resize the
   comp to the source dimensions, keep pixel aspect 1 and full resolution,
   set duration exactly 2.0 seconds, center the sole source layer at 100% scale,
-  and verify every field before render. Render only the exact one-frame span
-  starting at 1.0 seconds with duration 1/24 second.
+  and verify every field before render. Render only the exact per-row
+  one-frame span with duration 1/24 second. Require the sole source layer's
+  live `startTime=0`, `inPoint=0`, `outPoint=2`, `stretch=100`, and
+  `timeRemapEnabled=false` before and after render.
 - Run project depths 8, 16, or 32 exactly as declared.
 - Primary output at every depth is uncompressed scanline OpenEXR with physical
   channels A/B/G/R, each channel FLOAT type 2. PNG may exist only as preview.
@@ -919,6 +1151,8 @@ Windows user explicitly starts the batch.
 - comp size, pixel aspect, frame rate, frame, project depth, renderer, and all
   project color settings;
 - effect display name and match name;
+- exact cardinality one for the named `FootageItem` and exact cardinality one
+  for the named `CompItem`; same-name wrong-type or duplicate items fail;
 - every plugin leaf as `(property_index, match_name, display_name, value_type,
   value)`, with expected, pre-render, and post-render snapshots;
 - for every `float32_u32_*` action, independently encode the live pre/post
@@ -929,6 +1163,8 @@ Windows user explicitly starts the batch.
   output-path-dependent fields;
 - EXR header inspection;
 - AfterFX/aerender path, SHA-256, version, PID, start time, command, and nonce;
+- absolute deployed AEX runtime path, bound to the isolated runtime member and
+  exact target basename/effect/hash after the collision gate;
 - ETW parent-to-real-AfterFX-child mapping and that child's AEX image load and
   unload, including the exact bundled AEX SHA-256, plus the exact normalized
   five-row CSV projection required by `RETURN_FORMAT.md`.
@@ -1016,8 +1252,8 @@ the verifier.
    `python -B .\\tools\\VERIFY_RETURN.py --request-root <original-extracted-request> --return-root <return-staging>`
 
 6. Only after that command passes, create one ZIP64 archive named
-   `olm_windows_all_plugins_reference_return_20260731_r4.zip` and the sidecar
-   `olm_windows_all_plugins_reference_return_20260731_r4.zip.sha256`.
+   `olm_windows_all_plugins_reference_return_20260731_r5.zip` and the sidecar
+   `olm_windows_all_plugins_reference_return_20260731_r5.zip.sha256`.
 
 Do not place per-plugin ZIPs inside the parent. Budget at least 25 GB free
 space for the uncompressed FLOAT32 EXRs and staging copies.
@@ -1031,7 +1267,10 @@ space for the uncompressed FLOAT32 EXRs and staging copies.
 - `execution_rows_sha256`, `row_inventory_sha256`,
   `campaign_manifest_sha256`: hashes of the exact outbound files
 - `row_count`: {EXPECTED_TOTAL_ROWS}
-- `rows`: an exact ordered deep copy of `EXECUTION_ROWS.json#/rows`
+- `rows`: an exact ordered deep copy of `EXECUTION_ROWS.json#/rows`; every
+  item must validate against the normative
+  `schemas/EXECUTION_ROW.schema.json`, referenced directly by
+  `schemas/BATCH_MANIFEST.schema.json#/properties/rows/items`
 
 Its binding SHA used below is canonical JSON SHA-256 with ASCII escaping,
 sorted keys, separators `,` and `:`, no BOM, and no trailing newline.
@@ -1076,17 +1315,50 @@ Pass payloads:
   `display_name`, `property_type`, `enabled`, `active`, `value_available`, and
   `value`, in the exact declared order. A pass has true and an empty failure
   list.
+- `kirakira_property_readback` (authoritative KiraKira final-random rows
+  only): the exact ordered 42-property record: all 40 plugin leaves followed
+  by Effect Opacity and GPU Rendering. Preserve each rich AE capture row
+  without projecting or renaming fields. Every row contains the common
+  identity, state, expression, range, and authoritative `value` fields; rows
+  whose value cannot be read additionally retain their exact `error` text.
+  Hash the complete ordered row objects, including all metadata. The
+  canonical hash must equal the case contract's
+  `full_42_property_readback_sha256`. Use the bundled
+  `tools/capture_olmkirakira_rich42.jsx`, require `app.isoLanguage=en_US`,
+  and compare against the exact 42-row preimage embedded in the case contract;
+  locale-dependent error strings are retained byte-for-byte in English. The
+  case contract identifies the sequence as
+  `{KIRAKIRA_RICH42_CAPTURE_PHASE}`. Evidence `capture_phase` is exactly
+  `{{"after_parameter_and_standard_option_writes":true,`
+  `"after_params_before_snapshot":true,"before_first_render":true,`
+  `"params_before_values_sha256":"<bound hash>"}}`, where the bound hash is
+  the exact sibling `params_before.values_sha256`. Every writable rich row
+  must equal the same row actions/live values. The
+  `params_setup.observed_surface` is strictly the fresh pre-write identity and
+  default gate and must never be reused as case-specific rich-42 value
+  evidence.
+- `kirakira_lineage` (authoritative KiraKira final-random rows only): the
+  same-run process/module/pixel lineage, including all enabled-ramp
+  `ramp_records` and the selected typed `writer`. `kirakira_mode4` is
+  additionally required only for authoritative rows whose case contract has
+  `mode=4`; its `witness_id` and `output_xy` must exactly bind the 7x9x4
+  full-caller trace to that row's lineage witness and pixel.
 - `project_before`, `project_after`: exactly `expected_project_contract`,
   `expected_project_contract_sha256`, `observed_project`, and
   `observed_project_sha256`. The expected contract is copied from the row;
   both hashes use canonical JSON. `observed_project` has exactly
   `project_return_member`, `project_sha256`, `run_nonce`, `source`, `comp`,
-  `source_layer`, `effect`, and `render_queue_items`. The nested source binds
+  `project_item_inventory`, `source_layer`, `effect`, and
+  `render_queue_items`. The nested source binds
   member/hash/absolute runtime path, named footage item and ID, Preserve RGB,
   straight alpha, and non-premultiplication. The process record repeats the
-  same source runtime path. The comp and layer bind the named comp, exact row comp
-  contract, one layer, source-item identity, 100% scale/centering, and Effect
-  Parade counts 0 before add and 1 after add. The effect binds display/match
+  same source runtime path. The project-item inventory proves exactly one
+  `FootageItem` named `OLM_COLOR_PROBE_INPUT` and exactly one `CompItem` named
+  `OLM_COLOR_PROBE_COMP`, with no same-name wrong-type or duplicate item. The
+  comp and layer bind the named comp, exact row comp contract, one layer,
+  source-item identity, 100% scale/centering, exact startTime/inPoint/outPoint/
+  stretch/timeRemapEnabled values, and Effect Parade counts 0 before add and
+  1 after add. The effect binds display/match
   name and property index 1. The two RQ records bind distinct IDs, effect
   enabled false/true, and their exact output members. Each RQ record also
   carries its exact 1-based queue index, observed comp item ID, output-module
@@ -1094,6 +1366,10 @@ Pass payloads:
   `<run_nonce>:rq:<queue_index>`. It captures canonical compact STRING-format
   Render Settings via
   `RenderQueueItem.getSettings(GetSettingsFormat.STRING)` plus its SHA-256.
+  Each RQ record also contains live numeric `timeSpanStart` and
+  `timeSpanDuration`, exactly equal to the row comp's
+  `render_time_span_start_seconds` and
+  `render_time_span_duration_seconds`.
   The nested `Effects` setting must occur exactly once and
   normalize to `All Off` for no-effect, and to `Current Settings` or `All On`
   for effect-on. `Color Depth` must occur exactly once and be `Current
@@ -1132,8 +1408,18 @@ Pass payloads:
   arbitrary FLOAT32 source words because project-depth quantization is
   expected.
 - `process`: the project/source/AEX fields checked by `VERIFY_RETURN.py`, plus
-  `project`, `outputs`, `logs`, `process_start_unix_ns`, and
-  `process_end_unix_ns`. `project` has exactly `return_path`, `runtime_path`,
+  `plugin_deployment`, `project`, `outputs`, `logs`,
+  `process_start_unix_ns`, and
+  `process_end_unix_ns`. The deployment observation contains the complete
+  declared-root inventory, collision counts, isolated staging/runtime paths,
+  and absolute `deployed_runtime_path`; that path must equal the AEX image-load
+  path and bind the requested basename, effect identities, and SHA-256. It
+  also proves exact campaign-root cleanup/emptiness before copy, the two
+  post-copy SHA-256 checks, post-deployment removal/absence of the exact
+  external staging campaign root, and one deployed copy per plugin shared by
+  all of that plugin's rows; a request-tree write or row-specific runtime copy
+  is terminal failure.
+  `project` has exactly `return_path`, `runtime_path`,
   and `sha256`. Each `outputs.no_effect` / `outputs.effect_on` record has
   exactly `return_path`, `runtime_path`, `sha256`, `preexisting=false`,
   `finalized=true`, a post-start `mtime_unix_ns`, positive
@@ -1285,6 +1571,7 @@ RETURN_CONTRACT = {
             "case_contract_sha256",
             "intentional_noop",
             "expected_raw_off_on_relation",
+            "plugin_deployment_contract",
         ],
         "canonical_json": {
             "encoding": "UTF-8",
@@ -1369,6 +1656,7 @@ RETURN_CONTRACT = {
         "aex/",
         "schemas/",
         "tools/",
+        "tools/capture_olmkirakira_rich42.jsx (required outbound deterministic capture tool)",
         "requests/",
         "inputs/",
         "case_definitions/",
@@ -1402,6 +1690,9 @@ RETURN_CONTRACT = {
         "evidence/<row_id>/exr_header_effect_on.json (required for terminal pass rows)",
         "evidence/<row_id>/raw_off_on_comparison.json (required for terminal pass rows)",
         "evidence/<row_id>/process.json (required for terminal pass rows)",
+        "evidence/<row_id>/kirakira_property_readback.json (required for passing OLMKiraKira final_random_authoritative_10 rows)",
+        "evidence/<row_id>/kirakira_lineage.json (required for passing OLMKiraKira final_random_authoritative_10 rows)",
+        "evidence/<row_id>/kirakira_mode4.json (required for passing OLMKiraKira final_random_authoritative_10 rows whose case mode is 4)",
         "evidence/<row_id>/etw.etl (required for terminal pass rows)",
         "evidence/<row_id>/etw.csv (required for terminal pass rows)",
         "evidence/<row_id>/aerender_stdout.txt (required for terminal pass rows)",
@@ -1466,6 +1757,207 @@ def build_return_schemas() -> dict[str, dict[str, object]]:
         },
         "additionalProperties": False,
     }
+    execution_row_schema: dict[str, object] = {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "EXECUTION_ROW.schema.json",
+        "type": "object",
+        "additionalProperties": False,
+        "required": [
+            "row_id",
+            "plugin",
+            "group_id",
+            "case_id",
+            "depth",
+            "source_member",
+            "source_sha256",
+            "aex_member",
+            "aex_sha256",
+            "comp",
+            "case_definition_file",
+            "case_definition_sha256",
+            "case_contract_sha256",
+            "intentional_noop",
+            "expected_raw_off_on_relation",
+            "plugin_deployment_contract",
+            "effect",
+            "parameter_surface",
+            "parameter_writes",
+            "parameter_action_semantics",
+            "standard_options",
+            "project_contract",
+            "fresh_identity_contract",
+            "execution_row_sha256",
+        ],
+        "properties": {
+            "row_id": {"type": "string", "minLength": 1},
+            "plugin": {"enum": list(EXPECTED_LANE_ROWS)},
+            "group_id": {"type": "string", "minLength": 1},
+            "case_id": {"type": "string", "minLength": 1},
+            "depth": {"enum": [8, 16, 32]},
+            "source_member": {"type": "string", "pattern": "^inputs/"},
+            "source_sha256": {"type": "string", "pattern": sha_pattern},
+            "aex_member": {"type": "string", "pattern": "^aex/[^/]+\\.aex$"},
+            "aex_sha256": {"type": "string", "pattern": sha_pattern},
+            "comp": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": [
+                    "width",
+                    "height",
+                    "pixel_aspect",
+                    "frame_rate",
+                    "frame",
+                    "time_seconds",
+                    "duration_seconds",
+                    "render_time_span_start_seconds",
+                    "render_time_span_duration_seconds",
+                    "resolution_factor",
+                    "source_layer_scale",
+                    "source_layer_centered",
+                    "source_layer_index",
+                    "source_layer_timing",
+                    "num_layers",
+                ],
+                "properties": {
+                    "width": {"type": "integer", "minimum": 1},
+                    "height": {"type": "integer", "minimum": 1},
+                    "pixel_aspect": {"const": 1.0},
+                    "frame_rate": {"const": 24},
+                    "frame": {"type": "integer", "minimum": 0},
+                    "time_seconds": {"type": "number", "minimum": 0},
+                    "duration_seconds": {"const": 2.0},
+                    "render_time_span_start_seconds": {
+                        "type": "number",
+                        "minimum": 0,
+                    },
+                    "render_time_span_duration_seconds": {"const": 1.0 / 24.0},
+                    "resolution_factor": {
+                        "const": [1, 1],
+                    },
+                    "source_layer_scale": {"const": [100.0, 100.0]},
+                    "source_layer_centered": {"const": True},
+                    "source_layer_index": {"const": 1},
+                    "source_layer_timing": {
+                        "const": {
+                            "startTime": 0.0,
+                            "inPoint": 0.0,
+                            "outPoint": 2.0,
+                            "stretch": 100.0,
+                            "timeRemapEnabled": False,
+                        }
+                    },
+                    "num_layers": {"const": 1},
+                },
+            },
+            "case_definition_file": {
+                "type": "string",
+                "pattern": "^case_definitions/[^/]+\\.json$",
+            },
+            "case_definition_sha256": {"type": "string", "pattern": sha_pattern},
+            "case_contract_sha256": {"type": "string", "pattern": sha_pattern},
+            "intentional_noop": {"type": "boolean"},
+            "expected_raw_off_on_relation": {"enum": ["identical", "different"]},
+            "plugin_deployment_contract": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": [
+                    "preflight_only_until_explicit_user_start",
+                    "declared_ae_26_3_plugin_root_ids",
+                    "target",
+                    "staging_campaign_root_path_expression",
+                    "isolated_staging_path_expression",
+                    "deployment_campaign_root_path_expression",
+                    "deployed_runtime_path_expression",
+                    "deployment_copy_contract",
+                    "campaign_root_cleanup_gate",
+                    "staging_root_cleanup_gate",
+                    "deployed_runtime_path_binding",
+                    "effective_target_gate",
+                    "sequencing_contract",
+                    "request_tree_write_count",
+                    "evidence_observation_contract",
+                ],
+                "properties": {
+                    "preflight_only_until_explicit_user_start": {"const": True},
+                    "declared_ae_26_3_plugin_root_ids": {
+                        "const": [
+                            "ae_application_plugins",
+                            "adobe_common_mediacore_machine",
+                            "adobe_common_mediacore_user",
+                        ]
+                    },
+                    "target": {"type": "object"},
+                    "staging_campaign_root_path_expression": {
+                        "type": "string",
+                        "pattern": (
+                            "^%LOCALAPPDATA%\\\\OLM_Codex_Staging\\\\"
+                        ),
+                    },
+                    "isolated_staging_path_expression": {
+                        "type": "string",
+                        "pattern": (
+                            "^%LOCALAPPDATA%\\\\OLM_Codex_Staging\\\\"
+                        ),
+                    },
+                    "deployment_campaign_root_path_expression": {
+                        "type": "string",
+                        "pattern": (
+                            "^%APPDATA%\\\\Adobe\\\\Common\\\\Plug-ins\\\\7\\.0"
+                            "\\\\MediaCore\\\\OLM_Codex_Isolated\\\\"
+                        ),
+                    },
+                    "deployed_runtime_path_expression": {
+                        "type": "string",
+                        "pattern": (
+                            "^%APPDATA%\\\\Adobe\\\\Common\\\\Plug-ins\\\\7\\.0"
+                            "\\\\MediaCore\\\\OLM_Codex_Isolated\\\\"
+                        ),
+                    },
+                    "deployment_copy_contract": {"type": "object"},
+                    "campaign_root_cleanup_gate": {"type": "object"},
+                    "staging_root_cleanup_gate": {"type": "object"},
+                    "deployed_runtime_path_binding": {"type": "object"},
+                    "effective_target_gate": {"type": "object"},
+                    "sequencing_contract": {
+                        "type": "array",
+                        "minItems": 5,
+                        "maxItems": 5,
+                        "items": {"type": "string", "minLength": 1},
+                    },
+                    "request_tree_write_count": {"const": 0},
+                    "evidence_observation_contract": {"type": "object"},
+                },
+            },
+            "effect": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": ["display_name", "match_name"],
+                "properties": {
+                    "display_name": {"type": "string", "minLength": 1},
+                    "match_name": {"type": "string", "minLength": 1},
+                },
+            },
+            "parameter_surface": {"type": "object"},
+            "parameter_writes": {"type": "array"},
+            "parameter_action_semantics": {"type": "object"},
+            "standard_options": {"type": "array"},
+            "project_contract": {
+                "type": "object",
+                "required": [
+                    "ae_version",
+                    "renderer",
+                    "renderer_raw",
+                    "bits_per_channel",
+                    "comp",
+                    "input_interpretation",
+                    "render_queue_observation_contract",
+                    "primary_output",
+                ],
+            },
+            "fresh_identity_contract": {"type": "object"},
+            "execution_row_sha256": {"type": "string", "pattern": sha_pattern},
+        },
+    }
     batch_schema: dict[str, object] = {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "$id": "batch-manifest.schema.json",
@@ -1491,7 +1983,7 @@ def build_return_schemas() -> dict[str, dict[str, object]]:
                 "type": "array",
                 "minItems": EXPECTED_TOTAL_ROWS,
                 "maxItems": EXPECTED_TOTAL_ROWS,
-                "items": {"type": "object"},
+                "items": {"$ref": "EXECUTION_ROW.schema.json"},
             },
         },
     }
@@ -2176,6 +2668,7 @@ def build_return_schemas() -> dict[str, dict[str, object]]:
     }
     return {
         "BATCH_MANIFEST.schema.json": batch_schema,
+        "EXECUTION_ROW.schema.json": execution_row_schema,
         "EVIDENCE_BINDING.schema.json": evidence_binding_schema,
         "RETURN_STATUS.schema.json": return_status_schema,
         "OLMKIRAKIRA_CROSS_ROW.schema.json": cross_row_schema,
@@ -2214,14 +2707,153 @@ def build_campaign_manifest(inputs: list[dict[str, object]]) -> dict[str, object
             "linear_blending": False,
             "blend_colors_using_1_0_gamma": False,
             "frame_rate": 24,
-            "frame": 24,
-            "time_seconds": 1.0,
+            "default_frame": 24,
+            "default_time_seconds": 1.0,
             "comp_contract": (
                 "authoritative per row in ROW_INVENTORY.comp; comp dimensions "
                 "equal the bound source dimensions, source layer is centered at "
                 "100% scale, pixel aspect is 1, and resolution factor is [1,1]"
             ),
             "depths": [8, 16, 32],
+            "aex_deployment_preflight": {
+                "operation_policy": (
+                    "inventory and validate only during preflight; do not launch, "
+                    "stop, configure, or modify After Effects automatically"
+                ),
+                "declared_ae_26_3_plugin_roots": [
+                    {
+                        "root_id": "ae_application_plugins",
+                        "path_expression": "<AE_26_3_SUPPORT_FILES>\\Plug-ins",
+                    },
+                    {
+                        "root_id": "adobe_common_mediacore_machine",
+                        "path_expression": (
+                            "%PROGRAMFILES%\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore"
+                        ),
+                    },
+                    {
+                        "root_id": "adobe_common_mediacore_user",
+                        "path_expression": (
+                            "%APPDATA%\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore"
+                        ),
+                    },
+                ],
+                "inventory_contract": {
+                    "resolve_every_declared_root": True,
+                    "record_missing_roots_explicitly": True,
+                    "recursive_aex_inventory": True,
+                    "required_fields": [
+                        "root_id",
+                        "declared_path_expression",
+                        "resolved_absolute_path",
+                        "exists",
+                        "aex_basename",
+                        "aex_absolute_path",
+                        "sha256",
+                        "effect_display_name",
+                        "effect_match_name",
+                    ],
+                },
+                "collision_gate": {
+                    "required_effective_target_count_after_copy": 1,
+                    "fail_on_same_basename_other_hash": True,
+                    "fail_on_same_effect_display_name_other_hash": True,
+                    "fail_on_same_effect_match_name_other_hash": True,
+                    "fail_on_duplicate_effective_target_paths": True,
+                    "inventory_must_complete_before_any_copy": True,
+                    "external_collision_scope": (
+                        "every declared plugin root outside the exact current "
+                        "campaign deployment root"
+                    ),
+                },
+                "isolated_staging_path_expression": (
+                    "%LOCALAPPDATA%\\OLM_Codex_Staging\\"
+                    f"{CAMPAIGN_ID}\\<plugin>\\<aex_basename>"
+                ),
+                "staging_campaign_root_path_expression": (
+                    f"%LOCALAPPDATA%\\OLM_Codex_Staging\\{CAMPAIGN_ID}"
+                ),
+                "deployment_campaign_root_path_expression": (
+                    "%APPDATA%\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore\\"
+                    f"OLM_Codex_Isolated\\{CAMPAIGN_ID}"
+                ),
+                "isolated_runtime_path_expression": (
+                    "%APPDATA%\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore\\"
+                    f"OLM_Codex_Isolated\\{CAMPAIGN_ID}\\<plugin>\\<aex_basename>"
+                ),
+                "deployment_copy_contract": {
+                    "directory_method": "System.IO.Directory.CreateDirectory",
+                    "copy_method": "System.IO.File.Copy(source, destination, false)",
+                    "source": "exact extracted aex_member after SHA-256 verification",
+                    "copy_sequence": [
+                        "source_to_isolated_staging_path",
+                        "SHA-256 staging recheck",
+                        "staging_to_isolated_runtime_path",
+                        "SHA-256 deployed runtime recheck",
+                    ],
+                    "overwrite_allowed": False,
+                    "expected_copy_count_per_plugin": 1,
+                    "row_specific_copies_forbidden": True,
+                },
+                "campaign_root_cleanup_gate": {
+                    "scope": "exact deployment_campaign_root_path_expression only",
+                    "record_precleanup_inventory": True,
+                    "remove_existing_campaign_root_before_copy": True,
+                    "reject_reparse_points_or_scope_escape": True,
+                    "require_nonexistent_or_empty_after_cleanup": True,
+                    "require_only_expected_per_plugin_files_after_copy": True,
+                    "begin_only_after_explicit_user_start": True,
+                    "complete_before_ae_project_or_aerender_start": True,
+                },
+                "staging_root_cleanup_gate": {
+                    "scope": "exact staging_campaign_root_path_expression only",
+                    "begin_only_after_explicit_user_start": True,
+                    "remove_existing_staging_campaign_root_before_copy": True,
+                    "reject_reparse_points_or_scope_escape": True,
+                    "require_nonexistent_or_empty_after_cleanup": True,
+                    "complete_before_first_copy": True,
+                    "post_deployment_remove_exact_staging_campaign_root": True,
+                    "post_cleanup_require_nonexistent": True,
+                    "complete_before_ae_project_or_aerender_start": True,
+                },
+                "sequencing_contract": [
+                    "before explicit user start: read-only request verification and declared-root inventory only",
+                    "after explicit user start: clean exact external staging and MediaCore campaign roots",
+                    "copy and SHA-256 verify staging then deployed per-plugin AEX files",
+                    "remove and verify absent the exact external staging campaign root",
+                    "only then create an AE project or launch aerender",
+                ],
+                "request_tree_write_count": 0,
+                "evidence_observation_contract": {
+                    "member": "evidence/<row_id>/process.json",
+                    "data_field": "plugin_deployment",
+                    "required_fields": [
+                        "localappdata_path",
+                        "declared_root_inventory",
+                        "external_collision_counts",
+                        "staging_campaign_root",
+                        "staging_precleanup_inventory",
+                        "staging_cleanup_performed",
+                        "staging_empty_before_copy",
+                        "isolated_staging_path",
+                        "isolated_staging_sha256",
+                        "deployment_campaign_root",
+                        "deployment_precleanup_inventory",
+                        "deployment_cleanup_performed",
+                        "deployment_empty_before_copy",
+                        "deployed_runtime_path",
+                        "deployed_runtime_sha256",
+                        "copy_count_for_plugin",
+                        "staging_postcleanup_nonexistent",
+                        "request_tree_write_count",
+                        "read_only_preflight_completed_before_explicit_user_start",
+                        "deployment_began_after_explicit_user_start",
+                        "ae_started_after_verified_deployment_and_staging_cleanup",
+                    ],
+                },
+                "runtime_binding_field": "deployed_runtime_path",
+                "execution_requires_explicit_user_start_after_preflight": True,
+            },
             "input_interpretation": {
                 "method": "hash_bound_aep_template_footage_replace",
                 "replace_method": "FootageItem.replace(File)",
@@ -2234,6 +2866,16 @@ def build_campaign_manifest(inputs: list[dict[str, object]]) -> dict[str, object
                 ),
                 "footage_item_name": "OLM_COLOR_PROBE_INPUT",
                 "comp_item_name": "OLM_COLOR_PROBE_COMP",
+                "project_item_name_type_cardinality": {
+                    "OLM_COLOR_PROBE_INPUT": {
+                        "item_type": "FootageItem",
+                        "exact_count": 1,
+                    },
+                    "OLM_COLOR_PROBE_COMP": {
+                        "item_type": "CompItem",
+                        "exact_count": 1,
+                    },
+                },
                 "comp_layer_index": 1,
                 "expected_num_layers": 1,
                 "source_identity_gate": (
@@ -2383,7 +3025,11 @@ def build_row_inventory() -> dict[str, object]:
         intentional_noop_ids: set[str] | None = None,
         source_policy: str,
         cross_row_comparison: dict[str, object] | None = None,
+        frame: int = 24,
     ) -> None:
+        if frame < 0:
+            fail(f"{group_id}: frame must be nonnegative")
+        time_seconds = frame / 24.0
         noop_ids = intentional_noop_ids or set()
         case_definition_path = PACKAGE_DIR / case_definition_file
         if (
@@ -2473,15 +3119,22 @@ def build_row_inventory() -> dict[str, object]:
                             "height": source_dimensions[1],
                             "pixel_aspect": 1.0,
                             "frame_rate": 24,
-                            "frame": 24,
-                            "time_seconds": 1.0,
+                            "frame": frame,
+                            "time_seconds": time_seconds,
                             "duration_seconds": 2.0,
-                            "render_time_span_start_seconds": 1.0,
+                            "render_time_span_start_seconds": time_seconds,
                             "render_time_span_duration_seconds": 1.0 / 24.0,
                             "resolution_factor": [1, 1],
                             "source_layer_scale": [100.0, 100.0],
                             "source_layer_centered": True,
                             "source_layer_index": 1,
+                            "source_layer_timing": {
+                                "startTime": 0.0,
+                                "inPoint": 0.0,
+                                "outPoint": 2.0,
+                                "stretch": 100.0,
+                                "timeRemapEnabled": False,
+                            },
                             "num_layers": 1,
                         },
                         "case_definition_file": case_definition_file,
@@ -2663,6 +3316,27 @@ def build_row_inventory() -> dict[str, object]:
             "all_declared_differentials_must_be_nonzero": True,
         },
     )
+    kirakira_final_random_name = "olm_final_random10_olm_kira_kira_20260629.json"
+    kirakira_final_random_cases = load_request_cases(kirakira_final_random_name)
+    if [str(case.get("id")) for case in kirakira_final_random_cases] != (
+        KIRAKIRA_FINAL_RANDOM_CASE_IDS
+    ):
+        fail("KiraKira authoritative final-random case identity/order drift")
+    add_group(
+        plugin="OLMKiraKira",
+        group_id="final_random_authoritative_10",
+        depths=[8, 16, 32],
+        cases=kirakira_final_random_cases,
+        case_definition_file="case_definitions/olmkirakira_final_random_all30.json",
+        source_for=lambda case: (
+            f"inputs/kirakira_final_random_{int(str(case['id'])[-2:]):02d}.exr"
+        ),
+        source_policy=(
+            "each final-random case uses its exact hash-bound 20260710 "
+            "before-effects uncompressed FLOAT32 EXR; no odd/even substitution"
+        ),
+        frame=0,
+    )
 
     smoother_name = "olmsmoother_v1_bitdepth_16_32bpc_software_20260715.json"
     smoother_source_map = {
@@ -2821,8 +3495,128 @@ def build_execution_rows(row_inventory: dict[str, object]) -> dict[str, object]:
                 if action["action"] == "verify_fresh_default":
                     action["expected_fresh_default"] = canonical_value
             parameter_actions.append(action)
+        aex_basename = Path(str(row["aex_member"])).name
+        deployment_plugin_directory = str(row["plugin"])
+        deployment_campaign_root = (
+            "%APPDATA%\\Adobe\\Common\\Plug-ins\\7.0\\MediaCore\\"
+            f"OLM_Codex_Isolated\\{CAMPAIGN_ID}"
+        )
+        deployed_runtime_path = (
+            f"{deployment_campaign_root}\\{deployment_plugin_directory}\\"
+            f"{aex_basename}"
+        )
+        staging_campaign_root = (
+            f"%LOCALAPPDATA%\\OLM_Codex_Staging\\{CAMPAIGN_ID}"
+        )
+        isolated_staging_path = (
+            f"{staging_campaign_root}\\{deployment_plugin_directory}\\"
+            f"{aex_basename}"
+        )
         execution_row: dict[str, object] = {
             **row,
+            "plugin_deployment_contract": {
+                "preflight_only_until_explicit_user_start": True,
+                "declared_ae_26_3_plugin_root_ids": [
+                    "ae_application_plugins",
+                    "adobe_common_mediacore_machine",
+                    "adobe_common_mediacore_user",
+                ],
+                "target": {
+                    "aex_basename": aex_basename,
+                    "effect_display_name": definition.get("effect_display_name"),
+                    "effect_match_name": definition.get("effect_match_name"),
+                    "sha256": row["aex_sha256"],
+                },
+                "staging_campaign_root_path_expression": staging_campaign_root,
+                "isolated_staging_path_expression": isolated_staging_path,
+                "deployment_campaign_root_path_expression": (
+                    deployment_campaign_root
+                ),
+                "deployed_runtime_path_expression": deployed_runtime_path,
+                "deployment_copy_contract": {
+                    "directory_method": "System.IO.Directory.CreateDirectory",
+                    "copy_method": (
+                        "System.IO.File.Copy(source, destination, false)"
+                    ),
+                    "source_sha256": row["aex_sha256"],
+                    "staging_sha256": row["aex_sha256"],
+                    "deployed_sha256": row["aex_sha256"],
+                    "overwrite_allowed": False,
+                    "copy_count_for_plugin": 1,
+                    "row_specific_copies_forbidden": True,
+                },
+                "campaign_root_cleanup_gate": {
+                    "scope_path_expression": deployment_campaign_root,
+                    "inventory_all_declared_roots_before_cleanup": True,
+                    "remove_only_exact_campaign_root": True,
+                    "reject_reparse_points_or_scope_escape": True,
+                    "require_nonexistent_or_empty_before_copy": True,
+                    "require_only_expected_per_plugin_files_after_copy": True,
+                    "begin_only_after_explicit_user_start": True,
+                    "complete_before_ae_project_or_aerender_start": True,
+                },
+                "staging_root_cleanup_gate": {
+                    "scope_path_expression": staging_campaign_root,
+                    "begin_only_after_explicit_user_start": True,
+                    "remove_only_exact_staging_campaign_root": True,
+                    "reject_reparse_points_or_scope_escape": True,
+                    "require_nonexistent_or_empty_before_copy": True,
+                    "post_deployment_remove_exact_staging_campaign_root": True,
+                    "post_cleanup_require_nonexistent": True,
+                    "complete_before_ae_project_or_aerender_start": True,
+                },
+                "deployed_runtime_path_binding": {
+                    "field": "deployed_runtime_path",
+                    "expected_path_expression": deployed_runtime_path,
+                    "must_be_absolute_after_environment_expansion": True,
+                    "must_be_recorded_before_project_creation": True,
+                    "must_match_process_and_aex_load_evidence": True,
+                },
+                "effective_target_gate": {
+                    "external_same_basename_count_before_copy": 0,
+                    "external_same_effect_display_name_count_before_copy": 0,
+                    "external_same_effect_match_name_count_before_copy": 0,
+                    "effective_matching_basename_effect_hash_count_after_copy": 1,
+                    "same_basename_other_hash_count": 0,
+                    "same_effect_display_name_other_hash_count": 0,
+                    "same_effect_match_name_other_hash_count": 0,
+                },
+                "sequencing_contract": [
+                    "read-only verification and collision inventory before explicit user start",
+                    "external staging and MediaCore campaign cleanup after explicit user start",
+                    "copy and SHA-256 verification after cleanup",
+                    "external staging campaign cleanup after deployment",
+                    "AE project creation and aerender only after verified deployment",
+                ],
+                "request_tree_write_count": 0,
+                "evidence_observation_contract": {
+                    "member": "evidence/<row_id>/process.json",
+                    "data_field": "plugin_deployment",
+                    "required_fields": [
+                        "localappdata_path",
+                        "declared_root_inventory",
+                        "external_collision_counts",
+                        "staging_campaign_root",
+                        "staging_precleanup_inventory",
+                        "staging_cleanup_performed",
+                        "staging_empty_before_copy",
+                        "isolated_staging_path",
+                        "isolated_staging_sha256",
+                        "deployment_campaign_root",
+                        "deployment_precleanup_inventory",
+                        "deployment_cleanup_performed",
+                        "deployment_empty_before_copy",
+                        "deployed_runtime_path",
+                        "deployed_runtime_sha256",
+                        "copy_count_for_plugin",
+                        "staging_postcleanup_nonexistent",
+                        "request_tree_write_count",
+                        "read_only_preflight_completed_before_explicit_user_start",
+                        "deployment_began_after_explicit_user_start",
+                        "ae_started_after_verified_deployment_and_staging_cleanup",
+                    ],
+                },
+            },
             "effect": {
                 "display_name": definition.get("effect_display_name"),
                 "match_name": definition.get("effect_match_name"),
@@ -2863,12 +3657,36 @@ def build_execution_rows(row_inventory: dict[str, object]) -> dict[str, object]:
                     ),
                     "footage_item_name": "OLM_COLOR_PROBE_INPUT",
                     "comp_item_name": "OLM_COLOR_PROBE_COMP",
+                    "project_item_name_type_cardinality": {
+                        "OLM_COLOR_PROBE_INPUT": {
+                            "item_type": "FootageItem",
+                            "exact_count": 1,
+                        },
+                        "OLM_COLOR_PROBE_COMP": {
+                            "item_type": "CompItem",
+                            "exact_count": 1,
+                        },
+                    },
                     "comp_layer_index": 1,
                     "expected_num_layers": 1,
                     "source_identity_gate": (
                         "comp.layer(1).source.id == footage_item.id after replace"
                     ),
                     "effect_parade_must_be_empty_before_add": True,
+                },
+                "render_queue_observation_contract": {
+                    "branch_names": ["no_effect", "effect_on"],
+                    "required_live_fields": [
+                        "timeSpanStart",
+                        "timeSpanDuration",
+                    ],
+                    "timeSpanStart": row["comp"][
+                        "render_time_span_start_seconds"
+                    ],
+                    "timeSpanDuration": row["comp"][
+                        "render_time_span_duration_seconds"
+                    ],
+                    "comparison_mode": "exact_live_numeric_readback",
                 },
                 "primary_output": {
                     "format": "OpenEXR",
@@ -4075,6 +4893,327 @@ def build_case_definition_overrides() -> dict[str, object]:
             "independent Mac raw off/on comparison is still required for AE exactness"
         ),
     }
+    kirakira_final_random_path = verified_source(
+        KIRAKIRA_FINAL_RANDOM_REQUEST,
+        KIRAKIRA_FINAL_RANDOM_REQUEST_SHA256,
+    )
+    kirakira_final_random_source = json.loads(
+        kirakira_final_random_path.read_text(encoding="utf-8")
+    )
+    kirakira_rich42_manifest_path = verified_source(
+        KIRAKIRA_FINAL_RANDOM_RICH42_MANIFEST,
+        KIRAKIRA_FINAL_RANDOM_RICH42_MANIFEST_SHA256,
+    )
+    kirakira_rich42_manifest = json.loads(
+        kirakira_rich42_manifest_path.read_text(encoding="utf-8")
+    )
+    kirakira_rich42_manifest_cases = kirakira_rich42_manifest.get("cases")
+    if not isinstance(kirakira_rich42_manifest_cases, list):
+        fail("KiraKira rich-42 source manifest has no cases array")
+    kirakira_rich42_by_case_id: dict[str, list[dict[str, object]]] = {}
+    for manifest_case in kirakira_rich42_manifest_cases:
+        if not isinstance(manifest_case, dict) or not isinstance(
+            manifest_case.get("id"), str
+        ):
+            fail("KiraKira rich-42 source manifest has an invalid case")
+        effects = manifest_case.get("effects")
+        if (
+            not isinstance(effects, list)
+            or len(effects) != 1
+            or not isinstance(effects[0], dict)
+            or effects[0].get("match_name") != "OLM OLM Kira Kira"
+            or not isinstance(effects[0].get("params"), list)
+        ):
+            fail("KiraKira rich-42 source manifest effect contract drift")
+        rows = effects[0]["params"]
+        if len(rows) != 42 or any(not isinstance(row, dict) for row in rows):
+            fail("KiraKira rich-42 source manifest row cardinality drift")
+        kirakira_rich42_by_case_id[str(manifest_case["id"])] = rows
+    kirakira_final_random_request_cases = kirakira_final_random_source.get("cases")
+    if not isinstance(kirakira_final_random_request_cases, list):
+        fail("KiraKira final-random request has no cases array")
+    kirakira_surface_by_index = {
+        int(row["property_index"]): row for row in kirakira_exact_rows
+    }
+    kirakira_writable_indices = [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        13,
+        16,
+        17,
+        19,
+        22,
+        23,
+        25,
+        28,
+        29,
+        31,
+        34,
+        35,
+        37,
+        40,
+    ]
+    kirakira_readback_only_indices = [
+        index for index in range(1, 41) if index not in kirakira_writable_indices
+    ]
+    if (
+        sorted(kirakira_surface_by_index) != list(range(1, 41))
+        or len(kirakira_writable_indices) != 25
+        or len(kirakira_readback_only_indices) != 15
+    ):
+        fail("KiraKira final-random surface index partition drift")
+
+    kirakira_final_random_cases: list[dict[str, object]] = []
+    observed_final_random_ids: list[str] = []
+    for request_case in kirakira_final_random_request_cases:
+        if not isinstance(request_case, dict):
+            fail("KiraKira final-random request contains a non-object case")
+        case_id = request_case.get("id")
+        params = request_case.get("params")
+        if not isinstance(case_id, str) or not isinstance(params, dict):
+            fail("KiraKira final-random request case is missing id or params")
+        observed_final_random_ids.append(case_id)
+        metadata = KIRAKIRA_FINAL_RANDOM_METADATA.get(case_id)
+        if metadata is None:
+            fail(f"KiraKira final-random case lacks authoritative metadata: {case_id}")
+        param_indices = sorted(
+            int(key.removeprefix("__index_"))
+            for key in params
+            if isinstance(key, str) and key.startswith("__index_")
+        )
+        if (
+            len(param_indices) != len(params)
+            or param_indices != kirakira_writable_indices
+        ):
+            fail(f"KiraKira final-random writable index drift: {case_id}")
+        if (
+            params["__index_2"] != metadata["mode"]
+            or params["__index_3"] != metadata["merge_mode"]
+            or params["__index_4"] != metadata["approximated_input"]
+        ):
+            fail(f"KiraKira final-random mode metadata drift: {case_id}")
+        rich42_preimage = kirakira_rich42_by_case_id.get(case_id)
+        if rich42_preimage is None:
+            fail(f"KiraKira final-random rich-42 preimage missing: {case_id}")
+        rich42_sha256 = canonical_json_sha256(rich42_preimage)
+        if rich42_sha256 != metadata["full_42_property_readback_sha256"]:
+            fail(
+                "KiraKira final-random rich-42 preimage hash drift: "
+                f"{case_id}: {rich42_sha256}"
+            )
+        case_number = int(case_id[-2:])
+        source_member = f"inputs/kirakira_final_random_{case_number:02d}.exr"
+        writes = []
+        for property_index in kirakira_writable_indices:
+            surface_row = kirakira_surface_by_index[property_index]
+            writes.append(
+                {
+                    "match_name": str(surface_row["match_name"]),
+                    "property_type": int(surface_row["property_type"]),
+                    "value": params[f"__index_{property_index}"],
+                }
+            )
+        kirakira_final_random_cases.append(
+            {
+                "case_id": case_id,
+                "source": source_record(source_member),
+                "depths": [8, 16, 32],
+                "intentional_noop": False,
+                "input_id": request_case.get("input"),
+                "random_seed": request_case.get("random_seed"),
+                "reason": request_case.get("reason"),
+                "mode": metadata["mode"],
+                "merge_mode": metadata["merge_mode"],
+                "approximated_input": metadata["approximated_input"],
+                "full_42_property_readback_sha256": metadata[
+                    "full_42_property_readback_sha256"
+                ],
+                "full_42_property_readback_preimage": rich42_preimage,
+                "full_42_property_readback_preimage_contract": {
+                    "ordered_row_count": 42,
+                    "canonical_json": {
+                        "encoding": "UTF-8",
+                        "ensure_ascii": True,
+                        "sort_keys": True,
+                        "separators": [",", ":"],
+                        "allow_nan": False,
+                        "bom": False,
+                        "trailing_newline": False,
+                    },
+                    "source_manifest_repository_path": (
+                        KIRAKIRA_FINAL_RANDOM_RICH42_MANIFEST
+                    ),
+                    "source_manifest_sha256": (
+                        KIRAKIRA_FINAL_RANDOM_RICH42_MANIFEST_SHA256
+                    ),
+                    "capture_tool_member": (
+                        "tools/capture_olmkirakira_rich42.jsx"
+                    ),
+                    "capture_tool_sha256": KIRAKIRA_RICH42_CAPTURE_JSX_SHA256,
+                    "capture_phase_id": KIRAKIRA_RICH42_CAPTURE_PHASE,
+                    "evidence_capture_phase": {
+                        "after_parameter_and_standard_option_writes": True,
+                        "after_params_before_snapshot": True,
+                        "before_first_render": True,
+                        "params_before_values_sha256": (
+                            "<exact bound params_before.values_sha256>"
+                        ),
+                    },
+                    "capture_sequence": [
+                        "apply and read back all case parameter actions",
+                        "apply and read back both standard options",
+                        "write params_before.json from those live readbacks",
+                        "capture the ordered rich 42-property rows",
+                        "only then begin either render branch",
+                    ],
+                    "value_binding": {
+                        "writable_plugin_rows": (
+                            "must equal the same live values encoded in "
+                            "params_before.parameter_actions and row.parameter_writes"
+                        ),
+                        "standard_option_rows": (
+                            "must equal the same live values encoded in "
+                            "params_before.standard_options and row.standard_options"
+                        ),
+                        "params_before_values_sha256_required": True,
+                    },
+                    "params_setup_observed_surface_role": (
+                        "fresh pre-write surface identity/default gate only; never "
+                        "reuse it for case-specific rich-42 value equality"
+                    ),
+                    "required_ae_locale": "en_US",
+                    "error_policy": (
+                        "retain exact English AE Error.toString() text; no "
+                        "translation, punctuation normalization, or projection"
+                    ),
+                },
+                "writes": writes,
+            }
+        )
+    if (
+        observed_final_random_ids != KIRAKIRA_FINAL_RANDOM_CASE_IDS
+        or set(KIRAKIRA_FINAL_RANDOM_METADATA) != set(KIRAKIRA_FINAL_RANDOM_CASE_IDS)
+        or set(kirakira_rich42_by_case_id) != set(KIRAKIRA_FINAL_RANDOM_CASE_IDS)
+    ):
+        fail("KiraKira final-random case identity/order drift")
+
+    kirakira_final_random_surface_rows = [
+        {
+            **row,
+            "ae_property_type": 6212,
+            "property_value_type": int(row["property_type"]),
+            "write": int(row["property_index"]) in kirakira_writable_indices,
+            "readback_only": (
+                int(row["property_index"]) in kirakira_readback_only_indices
+            ),
+        }
+        for row in kirakira_exact_rows
+    ]
+    kirakira_final_random_override = {
+        "schema_version": 1,
+        "plugin": "OLMKiraKira",
+        "effect_display_name": "OLM Kira Kira",
+        "effect_match_name": "OLM OLM Kira Kira",
+        "aex_member": "aex/OLMKiraKira.aex",
+        "aex_sha256": AEX_SOURCES["OLMKiraKira.aex"],
+        "depths": [8, 16, 32],
+        "frame": 0,
+        "time_seconds": 0.0,
+        "authoritative_request_member": (
+            "requests/olm_final_random10_olm_kira_kira_20260629.json"
+        ),
+        "authoritative_request_sha256": KIRAKIRA_FINAL_RANDOM_REQUEST_SHA256,
+        "surface_contract": {
+            "write_resolution": (
+                "recursive exact match_name only; property indices are mapping "
+                "provenance and must never be used to resolve a write"
+            ),
+            "plugin_only_leaf_count": 40,
+            "declared_property_readback_count": 42,
+            "exact_rows": kirakira_final_random_surface_rows,
+            "writable_plugin_property_indices": kirakira_writable_indices,
+            "writable_plugin_match_names": [
+                kirakira_surface_by_index[index]["match_name"]
+                for index in kirakira_writable_indices
+            ],
+            "readback_only_plugin_property_indices": (
+                kirakira_readback_only_indices
+            ),
+            "readback_only_plugin_match_names": [
+                kirakira_surface_by_index[index]["match_name"]
+                for index in kirakira_readback_only_indices
+            ],
+            "standard_option_rows": [
+                {
+                    "name": "Effect Opacity",
+                    "match_name": "ADBE Effect Mask Opacity",
+                    "property_index": 2,
+                    "ae_property_type": 6212,
+                    "property_value_type": 6417,
+                    "value": 100,
+                    "write": True,
+                },
+                {
+                    "name": "GPU Rendering",
+                    "match_name": "ADBE Force CPU GPU",
+                    "property_index": 3,
+                    "ae_property_type": 6212,
+                    "property_value_type": 6417,
+                    "value": 1,
+                    "write": True,
+                },
+            ],
+            "full_readback_required_fields": [
+                "path",
+                "path_full",
+                "name",
+                "match_name",
+                "property_index",
+                "property_type",
+                "property_value_type",
+                "is_time_varying",
+                "num_keys",
+                "can_set_expression",
+                "expression_enabled",
+                "enabled",
+                "active",
+                "value",
+                "value_read_method",
+                "range_metadata",
+            ],
+            "full_readback_optional_error_field": (
+                "error; required exactly where the authoritative AE capture "
+                "could not read a NO_VALUE or CUSTOM_VALUE property"
+            ),
+            "full_readback_hash_projection": (
+                "none; hash each complete ordered rich AE row exactly as captured"
+            ),
+            "full_readback_canonical_hash_field": (
+                "full_42_property_readback_sha256"
+            ),
+            "fail_if": [
+                "the plugin surface is not exactly 40 ordered leaves",
+                "the full record is not exactly 40 plugin leaves plus two standard options",
+                "a writable leaf is missing, duplicated, or resolved by property index",
+                "a NO_VALUE, CUSTOM_VALUE, label, or separator row is written",
+                "the complete 42-property canonical readback hash differs from the case contract",
+            ],
+        },
+        "cases": kirakira_final_random_cases,
+        "claim_boundary": (
+            "authoritative Windows execution rows and exact source/readback "
+            "bindings; independent return verification remains required"
+        ),
+    }
     colorkeep_lane = next(lane for lane in LANES if lane["plugin"] == "ColorKeep")
     input_hashes = {
         f"inputs/{name}": digest for name, _, digest, _ in INPUT_SOURCES
@@ -4171,6 +5310,7 @@ def build_case_definition_overrides() -> dict[str, object]:
         "olmsmoother_v1_materialized_13.json": smoother_v1_override,
         "olmradialblur_minimal_controlled_r4.json": radial_override,
         "olmkirakira_controlled_ramps_off_matrix.json": kirakira_override,
+        "olmkirakira_final_random_all30.json": kirakira_final_random_override,
     }
 
 
@@ -4252,6 +5392,23 @@ def main() -> None:
         record = copy_verified(source, digest, PACKAGE_DIR / member)
         record["purpose"] = purpose
         tool_index.append(record)
+    rich42_capture_path = PACKAGE_DIR / "tools" / "capture_olmkirakira_rich42.jsx"
+    write_text(rich42_capture_path, KIRAKIRA_RICH42_CAPTURE_JSX)
+    if sha256(rich42_capture_path) != KIRAKIRA_RICH42_CAPTURE_JSX_SHA256:
+        fail("generated KiraKira rich-42 capture tool hash drift")
+    tool_index.append(
+        {
+            "member": "tools/capture_olmkirakira_rich42.jsx",
+            "sha256": KIRAKIRA_RICH42_CAPTURE_JSX_SHA256,
+            "bytes": rich42_capture_path.stat().st_size,
+            "source_repository_path": None,
+            "generated_by": Path(__file__).name,
+            "purpose": (
+                "Deterministic English-locale AE capture of the exact ordered "
+                "OLMKiraKira rich 42-property preimage."
+            ),
+        }
+    )
     write_json(
         PACKAGE_DIR / "TOOL_INDEX.json",
         {

@@ -1,11 +1,30 @@
 # OLMDistanceGradation PF32 SmartRender boundary
 
-- Status: `not_an_aex_path`; a PF32 SmartRender byte-exact claim is impossible for the retained AEX entrypoint.
+Status: **PASS_ACTUAL_PUBLIC_PF32_SMART_OWNER_STATIC_AND_BOUNDED_PRODUCTION**.
 
-The actual AEX classic Render dispatch explicitly selects PF32 and calls `FUN_181172a10`. Its SmartRender dispatch has only two branches: request flag bit 0 selects PF16 (`FUN_181170280`), otherwise PF8 (`FUN_181170380`). There is no call or branch to the PF32 owner.
+This document supersedes its earlier `not_an_aex_path` conclusion. That audit
+mistook exported command `0x0b` for SmartRender. The actual public
+`PF_Cmd_SMART_RENDER` selector is command `0x18`, which calls
+`FUN_181173d20`. Its bitdepth-`0x20` branch checks out the input and output
+worlds, calls PF32 whole owner `FUN_181172a10`, acquires `PF iterateFloat
+Suite` v1, and composes through `FUN_181170c90`.
 
-SmartPreRender result/max-result rectangle plumbing can be audited independently, but no actual-AEX PF32 SmartRender output world, parameter sequence, sequence/pre-render lifetime, or 2,992-byte result exists to capture. The already exact PF32 fixture belongs to classic `PF_Cmd_RENDER`.
+The Mac public adapter therefore keeps PF32 Smart support. It validates the
+declared depth against both world formats, requires equal non-null dimensions
+and sufficient rowbytes, balances successful parameter and layer checkouts,
+and admits PF32 only through the fixed 17×11 exported-owner matrix predicate.
+Twenty-four non-Power fixed17x11 PF32 cells are admitted and raw exact. This includes
+six non-Power Mode 5 cells after reproducing the IPP direct-`expf`, L/T/R/B, late
+spatial-multiply and noncontracting-product order. Eight PF32 Power cells fail closed
+because no native Windows UCRT `powf` result is retained. All unlisted PF32 Smart
+tuples still fail closed with `PF_Err_BAD_CALLBACK_PARAM`; Classic PF32 remains
+a separate owner. Project/global arbitrary fast-math codegen is not promoted.
 
-The former Mac source contained a direct PF32 SmartRender fallback. It was not AEX-grounded and has now been removed: a Smart request whose bit depth is neither 8 nor 16 returns `PF_Err_BAD_CALLBACK_PARAM` before either host world checkout. Reusing either integer SmartRender callback would violate the bit-depth boundary. The next legitimate host proof is a hash-bound AE run showing that 32bpc routes to classic Render while SmartPre/SmartRender remain the 8/16 path.
+`tools/emulation/audit_olmdistancegradation_pf32_smartrender_boundary_20260805.py`
+pins the corrected AEX dispatch and production boundary. The previous weak
+substring checks are removed.
 
-`tools/emulation/audit_olmdistancegradation_pf32_smartrender_boundary_20260805.py` locks these dispatch, guard, and rectangle facts. `tools/emulation/test_olmdistancegradation_pf32_smart_fail_closed_20260810.py` executes the production entry and proves that PF32 is rejected without host checkout. Resize and blur remain separate.
+The Mode 5 arithmetic, public padding/lifecycle closure and both-slice
+Universal codegen proof are bound by
+`olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.{json,md}` and
+`olmdistancegradation_pf32_mode5_universal_codegen_20260812.{json,md}`.

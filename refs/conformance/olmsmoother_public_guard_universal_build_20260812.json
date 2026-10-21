@@ -1,0 +1,33 @@
+{
+  "schema": "olm.smoother-public-guard-universal-build/1",
+  "verdict": "PASS_ISOLATED_UNIVERSAL_BUILDS_SIGNED_NOT_INSTALLED",
+  "builds": {
+    "OLMSmoother": {
+      "bundle": "/tmp/olmsmoother-entry-guard.7pzsv4/Product/OLMSmoother.plugin",
+      "architectures": ["x86_64", "arm64"],
+      "binary_sha256_after_adhoc_sign": "ea9196448a59766eb0e48c01c226000f45f256e9161befe65db4f9470c424631",
+      "codesign_verify": "valid on disk; satisfies Designated Requirement",
+      "production_source_sha256": "d856e91347bfefe83301fe539b5192f22ce39193bc82625830eab83822f51dc9"
+    },
+    "OLMSmoother2": {
+      "bundle": "/tmp/olmsmoother2-entry-guard.6JYfwL/Product/OLMSmoother2.plugin",
+      "architectures": ["x86_64", "arm64"],
+      "binary_sha256_after_adhoc_sign": "fda7627201f1b7de447200ca75b9d30727b392ad5cd47f7a9f8443244ca692d4",
+      "codesign_verify": "valid on disk; satisfies Designated Requirement",
+      "production_source_sha256": "87e861e4a0c5678502d744ab9aaea00a5066b20536be0d1e01f0b98a8045bffd"
+    }
+  },
+  "build_contract": {
+    "configuration": "Debug",
+    "architectures": "ARCHS=arm64 x86_64; ONLY_ACTIVE_ARCH=NO",
+    "derived_data": "isolated /tmp directories",
+    "initial_build_signing": "CODE_SIGNING_ALLOWED=NO",
+    "post_build_signing": "ad-hoc deep sign followed by strict verification"
+  },
+  "installed_state_changed": false,
+  "claims_not_made": [
+    "No installed bundle identity claim",
+    "No After Effects load or render claim",
+    "Temporary build paths are not durable artifact storage"
+  ]
+}

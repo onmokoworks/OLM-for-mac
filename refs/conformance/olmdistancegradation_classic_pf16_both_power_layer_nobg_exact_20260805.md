@@ -15,5 +15,7 @@ and consumed by 187 actual `FUN_181170480` calls.
 - Production comparison: 1,650/1,650 bytes including padding, zero mismatches.
 
 The actual probe uses real libm `powf`; PF8 staging is not reused. No
-production change or reinstall was required. Remaining matrix gaps are PF32
-Power and Constant with blur. PF32 Smart remains unsupported by the actual AEX.
+production change or reinstall was required. At the time, the remaining matrix
+gaps were PF32 Power and Constant with blur. The then-current PF32-Smart-
+unsupported conclusion is superseded: the actual public command `0x18` has a
+PF32 Smart owner, as recorded by the 2026-08-12 public-owner contract.

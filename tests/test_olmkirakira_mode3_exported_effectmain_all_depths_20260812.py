@@ -14,7 +14,8 @@ class KiraMode3ExportedOwnerTest(unittest.TestCase):
         subprocess.run(["python3", str(SCRIPT)], cwd=ROOT, check=True)
         report = json.loads(REPORT.read_text(encoding="utf-8"))
         self.assertEqual(report["status"], "exact")
-        self.assertEqual(report["fixture"]["length"], 50)
+        active_rays = report["fixture"]["active_rays"]
+        self.assertEqual(active_rays, [{"name": "Horizontal", "length": 50, "use_ramp": False}])
         self.assertEqual([row["depth"] for row in report["rows"]], ["PF8", "PF16", "PF32"])
         self.assertTrue(all(row["exact"] and row["guards_intact"] for row in report["rows"]))
 

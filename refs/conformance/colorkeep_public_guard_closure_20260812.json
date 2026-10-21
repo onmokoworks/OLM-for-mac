@@ -1,0 +1,130 @@
+{
+  "admission": {
+    "classic_depths": [
+      8,
+      16
+    ],
+    "classic_pf32": "fail_closed",
+    "enabled_color_counts": [
+      5,
+      100
+    ],
+    "geometry": [
+      11,
+      7
+    ],
+    "palette": "fixed 100-entry public ARGB8 palette in owner report",
+    "row_padding_bytes": 12,
+    "smart_depths": [
+      8,
+      16,
+      32
+    ]
+  },
+  "candidate_active_sha256": [
+    "3f768aa03c4045a70d16e7695403a27810cc6fe50c46c350fe3f67931b990b13",
+    "37d9446d656008362f7bf81324cd7a6ceefb883b668b9d1c4da1264ee432632a",
+    "fff4c594c4f5c06d8fc8744e189ab8b516fafae63aadd25419636eed9f9de043",
+    "7e9e8bbb203b8aed460ba6f4461469e49861975c34a3c662d4edea4a29909f8d",
+    "dd4b822eafa0ae04ef3766f475f0d792b2dd7597dd48a8e3d7d1fe49cc5527c6",
+    "0768f9ca22351943755bc735356bacaf6b6e6bac9b4dc86deb826b0103dba3df"
+  ],
+  "candidate_classic_active_sha256": [
+    "3f768aa03c4045a70d16e7695403a27810cc6fe50c46c350fe3f67931b990b13",
+    "37d9446d656008362f7bf81324cd7a6ceefb883b668b9d1c4da1264ee432632a",
+    "7e9e8bbb203b8aed460ba6f4461469e49861975c34a3c662d4edea4a29909f8d",
+    "dd4b822eafa0ae04ef3766f475f0d792b2dd7597dd48a8e3d7d1fe49cc5527c6"
+  ],
+  "candidate_classic_matches_corresponding_exported_smart_owner": true,
+  "candidate_input_padding_headers_lifecycle": "same public harness gates as installed owner matrix",
+  "candidate_matches_actual_exported_owner": true,
+  "generator_sha256": "17f36598a2b1eb0cb5b884edaa0a85e1252e4c06a883cf70bbec686d8deee00e",
+  "guards": {
+    "all_rejected_before_iteration": true,
+    "checkout_failure_lifecycle": {
+      "input_checkout_failure": "no output checkout or layer checkin",
+      "output_checkout_failure": "one input layer checkin",
+      "validation_parameter_or_palette_failure": "one input layer checkin"
+    },
+    "classic_one_away_rejects": 24,
+    "input_and_headers_unchanged": true,
+    "output_unchanged": true,
+    "smart_one_away_rejects": 38,
+    "smart_parameter_phases": {
+      "color_error": {
+        "counts": [
+          101,
+          17,
+          101
+        ],
+        "error_position": 17,
+        "first_error_preserved": true
+      },
+      "first_checkin_error": {
+        "counts": [
+          101,
+          100,
+          101
+        ],
+        "error_position": 17,
+        "first_error_preserved": true
+      },
+      "full_path_counts": [
+        101,
+        100,
+        101
+      ],
+      "missing_color_suite_cleanup_counts": [
+        101,
+        0,
+        101
+      ],
+      "order": "checkout_all_then_convert_all_then_checkin_all"
+    },
+    "total_rejects": 62
+  },
+  "isolated_universal_build": {
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "binary": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/colorkeep_public_guard_candidate_20260812.v_ctbspw/Product/ColorKeep.plugin/Contents/MacOS/ColorKeep",
+    "binary_sha256": "65cc6d3af4f1f92ed9225200c00e355186b0f17d9e92663b4aad7a74a225799d",
+    "build_command": [
+      "xcodebuild",
+      "-project",
+      "mac/ColorKeep/Mac/ColorKeep.xcodeproj",
+      "-target",
+      "ColorKeep",
+      "-configuration",
+      "Release",
+      "ARCHS=arm64 x86_64",
+      "ONLY_ACTIVE_ARCH=NO",
+      "CODE_SIGNING_ALLOWED=NO",
+      "CONFIGURATION_BUILD_DIR=/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/colorkeep_public_guard_candidate_20260812.v_ctbspw/Product",
+      "OBJROOT=/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/colorkeep_public_guard_candidate_20260812.v_ctbspw/Obj",
+      "SYMROOT=/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/colorkeep_public_guard_candidate_20260812.v_ctbspw/Sym",
+      "build"
+    ],
+    "build_log": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/colorkeep_public_guard_candidate_20260812.v_ctbspw/xcodebuild.log",
+    "build_log_sha256": "a136e1eff9f75991904a8afefe4ffe2a2a4347aed05d2da14c9be4429532ea66",
+    "bundle": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/colorkeep_public_guard_candidate_20260812.v_ctbspw/Product/ColorKeep.plugin",
+    "codesign_verify": "pass",
+    "info_plist_sha256": "668e0613c9dae7003e12422b8b86b67c3e2701c338dedb4e947840a06be01406",
+    "resource_sha256": "e9511c081223d80eca16f2b66f5211723a26903f83bde19403fd1175b8aa0082"
+  },
+  "not_claimed": [
+    "arbitrary geometry, rowbytes, palette, or enabled count",
+    "native Windows AE execution",
+    "current Mac install changed by this closure",
+    "After Effects host load/render of the candidate"
+  ],
+  "owner_cells": 6,
+  "owner_generator_sha256": "01df2e499f054c45913cfc5a45f945a216be1f8540c1b1a126c3a61979a315fc",
+  "owner_report": "refs/conformance/colorkeep_installed_public_covering_matrix_20260812.json",
+  "owner_report_sha256": "e9536b591d5429c3c6b68eb9ee00f055a1ae9bff36da84bd157ffe3387063d68",
+  "production_source": "mac/ColorKeep/ColorKeep.cpp",
+  "production_source_sha256": "d1c443042998e466b021d6fd2351537a2be63fe95d3e79a2089d82f78217bac3",
+  "schema": "colorkeep.public-guard-closure/1",
+  "status": "exact_bounded_public_owner_and_fail_closed_guards"
+}

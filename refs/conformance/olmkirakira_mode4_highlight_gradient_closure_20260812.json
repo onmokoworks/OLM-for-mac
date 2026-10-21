@@ -1,0 +1,451 @@
+{
+  "schema_version": 1,
+  "kind": "olmkirakira_mode4_highlight_gradient_closure",
+  "date": "2026-08-12",
+  "status": "raw_exact",
+  "claim_boundary": "fixed 5x3 Highlight-only Radius=3 gradient tuple; natural hostless AEX ray and public exported Mode4 PF8/PF16/PF32",
+  "identities": {
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "worker_sha256": "46ab907d286ad4e0e1c2065557100f02c37e0b68df4c22202a825f3fea13ef61",
+    "asm_sha256": "d23c749d225a934580c96f2929fb9d7253d07b1be208faa9de6ff89efc1f89b3",
+    "decomp_sha256": "990693e95695cd83032764f0452fbbe336b8f910ce4d9f5af94a2094c7f6328a",
+    "core_sha256": "e98232e4224b6ae4dd372216e10c29f3ba6621f68ab6cb10b56a02b9cc248390",
+    "source_sha256": "f2e285be7e6caae764bef7c4fa4a6c422bd5312368ba3481022b9eabe9035492",
+    "scaffold_sha256": "df7e62dd9efd9ca4f039000129d25d0c4291b4efe2c0bb7e14b86d27d7da87d7",
+    "current_probe_sha256": "b9247481f085da6714a99da405531677991f9d032aaf9985dc713de298da1981",
+    "counterfactual_probe_sha256": "c52d3a472f16f071c46b6a74c307194f93b858b95198e02e6bba5bbde6290a23",
+    "generator_sha256": "5707ac82cd4e751d2e7d44400f8ee3c4607c18b1e190acd955db7343c72b9b48",
+    "aexcompat_commit": "28d535469f84f67236ef3425afe4291ea2fb0991"
+  },
+  "fixture": {
+    "dimensions": [
+      5,
+      3
+    ],
+    "source_pattern": "gradient i/17",
+    "hostless_source_rgba": "opaque gray i/17",
+    "public_source_rgba": "RGB zero, alpha byte i*15",
+    "blur_modes": {
+      "primary": 4,
+      "same_algorithm_control": 2,
+      "cross_mode_control": 1
+    },
+    "highlight_radius": 3,
+    "all_directional_lengths_zero": true,
+    "merge_mode": 1,
+    "brightness_gain": 1.0,
+    "rotation": 0,
+    "all_ramps_off": true
+  },
+  "hostless_same_run_actual_aex": {
+    "entry": {
+      "function": "FUN_18114f4a0",
+      "va": "0x18114f4a0",
+      "entries": 1
+    },
+    "direction": {
+      "slot": 4,
+      "angle_degrees": null,
+      "glow_rotation": 0,
+      "length": 3,
+      "blur_mode": 4
+    },
+    "seed_words": 15,
+    "seed_sha256": "281139cc61343bc478d88ec592f27d909977147bc221ac1c7f96425e0d9f5376",
+    "actual_ray_words": 15,
+    "actual_ray_sha256": "4c2e39a69241ae5ec473f1782839fc4e1f5a4afe888a7a8745d2471134bb245c",
+    "portable_ray_sha256": "4c2e39a69241ae5ec473f1782839fc4e1f5a4afe888a7a8745d2471134bb245c",
+    "ray_exact": true,
+    "ray_differences": [],
+    "aggregation_words": 60,
+    "aggregation_sha256": "e4f46ec47dae7845cc87e1a345b69b672ad61148b5fa71b4e3228aabb9b9260e",
+    "typed_output_sha256": {
+      "PF8": "0181a1e39d16d438d980395368af4eb7caeb1ac20429de1ba2529d2360910e50",
+      "PF16": "bf70b56862229c326a05782af505274da8eb4d748560d4c177cade608d471650",
+      "PF32": "25ee167e73e0aa92e8f59620e3d99bcb1c233f080642849fdbcfb064523d60da"
+    },
+    "suite_acquire_count": 12,
+    "suite_release_count": 12,
+    "fault": null
+  },
+  "counterfactual_old_separable": {
+    "description": "normalize/cast after horizontal, then normalize/cast after vertical, repeated three times",
+    "current_ray_sha256": "4c2e39a69241ae5ec473f1782839fc4e1f5a4afe888a7a8745d2471134bb245c",
+    "current_exact": true,
+    "old_ray_sha256": "2509a03ca80ae140b3368ff96a6232e1d8b8ace27b6a99159626002cecb11461",
+    "old_ray_difference_count": 2,
+    "old_ray_max_ulp": 1,
+    "old_ray_differences": [
+      {
+        "word": 3,
+        "actual": "0x3ed359b2",
+        "old_separable": "0x3ed359b1",
+        "ulp": 1
+      },
+      {
+        "word": 11,
+        "actual": "0x3ed24bf4",
+        "old_separable": "0x3ed24bf5",
+        "ulp": 1
+      }
+    ]
+  },
+  "static_binary_and_core_anchors": {
+    "highlight_three_pass_boxfilter_calls": {
+      "0x18114fa95": 1,
+      "0x18114fae7": 1,
+      "0x18114fb39": 1
+    },
+    "baseline_filter_types": {
+      "baseline_RowSum<float,double>": 3,
+      "baseline_ColumnSum<double,float>": 3
+    },
+    "production_core_contract": {
+      "row_accumulator": "double",
+      "column_accumulator": "double",
+      "output_store": "float after one 2-D kernel-area scale"
+    }
+  },
+  "public_exported_mode4": {
+    "source_status": "exact",
+    "rows": [
+      {
+        "depth": "PF8",
+        "pixel_format": "argb8",
+        "bytes": 60,
+        "exact": true,
+        "actual_exported_raw_sha256": "5026fd55404879917f3b72e242987289e35c918b07edcdbe983005d6d019e38c",
+        "mac_effectmain_raw_sha256": "5026fd55404879917f3b72e242987289e35c918b07edcdbe983005d6d019e38c",
+        "mac_active_bytes_sha256": "5026fd55404879917f3b72e242987289e35c918b07edcdbe983005d6d019e38c",
+        "lifecycle": {
+          "smart_pre_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_PRE_RENDER"
+          },
+          "smart_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_RENDER"
+          }
+        },
+        "lifecycle_sha256": "32909aa0670cf57563ce0af1d7a047884cf4be7c421eeab9796229012c36bfa3",
+        "render_error": 0,
+        "guards_intact": true,
+        "input_unchanged": true,
+        "mac_padding_preserved": true,
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": []
+      },
+      {
+        "depth": "PF16",
+        "pixel_format": "argb16",
+        "bytes": 120,
+        "exact": true,
+        "actual_exported_raw_sha256": "c2e203a0e5a355d98f7b1c23da47f398ec3fe846875b957d3b75e70b5f870c39",
+        "mac_effectmain_raw_sha256": "c2e203a0e5a355d98f7b1c23da47f398ec3fe846875b957d3b75e70b5f870c39",
+        "mac_active_bytes_sha256": "c2e203a0e5a355d98f7b1c23da47f398ec3fe846875b957d3b75e70b5f870c39",
+        "lifecycle": {
+          "smart_pre_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_PRE_RENDER"
+          },
+          "smart_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_RENDER"
+          }
+        },
+        "lifecycle_sha256": "32909aa0670cf57563ce0af1d7a047884cf4be7c421eeab9796229012c36bfa3",
+        "render_error": 0,
+        "guards_intact": true,
+        "input_unchanged": true,
+        "mac_padding_preserved": true,
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": []
+      },
+      {
+        "depth": "PF32",
+        "pixel_format": "argb32f",
+        "bytes": 240,
+        "exact": true,
+        "actual_exported_raw_sha256": "fbd4f245f442b20ec73a1e67b26286e4bc01b9cab7fde6b4b5a086a1e31612f9",
+        "mac_effectmain_raw_sha256": "fbd4f245f442b20ec73a1e67b26286e4bc01b9cab7fde6b4b5a086a1e31612f9",
+        "mac_active_bytes_sha256": "fbd4f245f442b20ec73a1e67b26286e4bc01b9cab7fde6b4b5a086a1e31612f9",
+        "lifecycle": {
+          "smart_pre_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_PRE_RENDER"
+          },
+          "smart_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_RENDER"
+          }
+        },
+        "lifecycle_sha256": "32909aa0670cf57563ce0af1d7a047884cf4be7c421eeab9796229012c36bfa3",
+        "render_error": 0,
+        "guards_intact": true,
+        "input_unchanged": true,
+        "mac_padding_preserved": true,
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": []
+      }
+    ]
+  },
+  "public_exported_mode2_control": {
+    "source_status": "exact",
+    "rows": [
+      {
+        "depth": "PF8",
+        "pixel_format": "argb8",
+        "bytes": 60,
+        "exact": true,
+        "actual_exported_raw_sha256": "5026fd55404879917f3b72e242987289e35c918b07edcdbe983005d6d019e38c",
+        "mac_effectmain_raw_sha256": "5026fd55404879917f3b72e242987289e35c918b07edcdbe983005d6d019e38c",
+        "mac_active_bytes_sha256": "5026fd55404879917f3b72e242987289e35c918b07edcdbe983005d6d019e38c",
+        "lifecycle": {
+          "smart_pre_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_PRE_RENDER"
+          },
+          "smart_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_RENDER"
+          }
+        },
+        "lifecycle_sha256": "32909aa0670cf57563ce0af1d7a047884cf4be7c421eeab9796229012c36bfa3",
+        "render_error": 0,
+        "guards_intact": true,
+        "input_unchanged": true,
+        "mac_padding_preserved": true,
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": []
+      },
+      {
+        "depth": "PF16",
+        "pixel_format": "argb16",
+        "bytes": 120,
+        "exact": true,
+        "actual_exported_raw_sha256": "c2e203a0e5a355d98f7b1c23da47f398ec3fe846875b957d3b75e70b5f870c39",
+        "mac_effectmain_raw_sha256": "c2e203a0e5a355d98f7b1c23da47f398ec3fe846875b957d3b75e70b5f870c39",
+        "mac_active_bytes_sha256": "c2e203a0e5a355d98f7b1c23da47f398ec3fe846875b957d3b75e70b5f870c39",
+        "lifecycle": {
+          "smart_pre_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_PRE_RENDER"
+          },
+          "smart_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_RENDER"
+          }
+        },
+        "lifecycle_sha256": "32909aa0670cf57563ce0af1d7a047884cf4be7c421eeab9796229012c36bfa3",
+        "render_error": 0,
+        "guards_intact": true,
+        "input_unchanged": true,
+        "mac_padding_preserved": true,
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": []
+      },
+      {
+        "depth": "PF32",
+        "pixel_format": "argb32f",
+        "bytes": 240,
+        "exact": true,
+        "actual_exported_raw_sha256": "fbd4f245f442b20ec73a1e67b26286e4bc01b9cab7fde6b4b5a086a1e31612f9",
+        "mac_effectmain_raw_sha256": "fbd4f245f442b20ec73a1e67b26286e4bc01b9cab7fde6b4b5a086a1e31612f9",
+        "mac_active_bytes_sha256": "fbd4f245f442b20ec73a1e67b26286e4bc01b9cab7fde6b4b5a086a1e31612f9",
+        "lifecycle": {
+          "smart_pre_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_PRE_RENDER"
+          },
+          "smart_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_RENDER"
+          }
+        },
+        "lifecycle_sha256": "32909aa0670cf57563ce0af1d7a047884cf4be7c421eeab9796229012c36bfa3",
+        "render_error": 0,
+        "guards_intact": true,
+        "input_unchanged": true,
+        "mac_padding_preserved": true,
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": []
+      }
+    ]
+  },
+  "public_exported_mode1_cross_mode_regression": {
+    "source_status": "exact",
+    "rows": [
+      {
+        "depth": "PF8",
+        "pixel_format": "argb8",
+        "bytes": 60,
+        "exact": true,
+        "actual_exported_raw_sha256": "46245e23f8902a243be948ae282b0b1b3bf53a9f276c0566bc820917076e5ec9",
+        "mac_effectmain_raw_sha256": "46245e23f8902a243be948ae282b0b1b3bf53a9f276c0566bc820917076e5ec9",
+        "mac_active_bytes_sha256": "46245e23f8902a243be948ae282b0b1b3bf53a9f276c0566bc820917076e5ec9",
+        "lifecycle": {
+          "smart_pre_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_PRE_RENDER"
+          },
+          "smart_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_RENDER"
+          }
+        },
+        "lifecycle_sha256": "32909aa0670cf57563ce0af1d7a047884cf4be7c421eeab9796229012c36bfa3",
+        "render_error": 0,
+        "guards_intact": true,
+        "input_unchanged": true,
+        "mac_padding_preserved": true,
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": []
+      },
+      {
+        "depth": "PF16",
+        "pixel_format": "argb16",
+        "bytes": 120,
+        "exact": true,
+        "actual_exported_raw_sha256": "71c2c1ae26ae4e63dc7e985f5b3666bd1a912fcc36d91842a0a2e65841693b13",
+        "mac_effectmain_raw_sha256": "71c2c1ae26ae4e63dc7e985f5b3666bd1a912fcc36d91842a0a2e65841693b13",
+        "mac_active_bytes_sha256": "71c2c1ae26ae4e63dc7e985f5b3666bd1a912fcc36d91842a0a2e65841693b13",
+        "lifecycle": {
+          "smart_pre_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_PRE_RENDER"
+          },
+          "smart_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_RENDER"
+          }
+        },
+        "lifecycle_sha256": "32909aa0670cf57563ce0af1d7a047884cf4be7c421eeab9796229012c36bfa3",
+        "render_error": 0,
+        "guards_intact": true,
+        "input_unchanged": true,
+        "mac_padding_preserved": true,
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": []
+      },
+      {
+        "depth": "PF32",
+        "pixel_format": "argb32f",
+        "bytes": 240,
+        "exact": true,
+        "actual_exported_raw_sha256": "df36edb6a9a16c88c2eb7582928b80493df46da1a46708ee75495a2e513c3dc4",
+        "mac_effectmain_raw_sha256": "df36edb6a9a16c88c2eb7582928b80493df46da1a46708ee75495a2e513c3dc4",
+        "mac_active_bytes_sha256": "df36edb6a9a16c88c2eb7582928b80493df46da1a46708ee75495a2e513c3dc4",
+        "lifecycle": {
+          "smart_pre_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_PRE_RENDER"
+          },
+          "smart_render": {
+            "attempted": true,
+            "completed": true,
+            "error": 0,
+            "selector": "SMART_RENDER"
+          }
+        },
+        "lifecycle_sha256": "32909aa0670cf57563ce0af1d7a047884cf4be7c421eeab9796229012c36bfa3",
+        "render_error": 0,
+        "guards_intact": true,
+        "input_unchanged": true,
+        "mac_padding_preserved": true,
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": []
+      }
+    ]
+  },
+  "connected_pf8_source_decode_closure": {
+    "path": "refs/conformance/olmkirakira_pf8_source_decode_closure_20260812.json",
+    "sha256": "d3da9c00aa57297f7b2fa937803f6e8a2b1f955f01884e65edaed85435f03bb3",
+    "status": "raw_exact"
+  },
+  "promotion": {
+    "admitted": "Mode 4 Highlight Radius=3 alpha_i_over_17 tuple, PF8/PF16/PF32",
+    "mode2_control": "exact regression only; no new promotion",
+    "mode1_control": "PF8/PF16/PF32 exact after the separately hash-bound source-decode closure"
+  },
+  "supersedes": "olmkirakira_mode4_highlight_gradient_pf32_seam_20260812.json",
+  "history": {
+    "historical_seam": "olmkirakira_mode4_highlight_gradient_pf32_seam_20260812.json",
+    "sha256": "531179e93d198d6b794c6e9ba4869df624de24b9cc3464582ab3b13a6a192c82",
+    "status": "fail_closed_pf32_seam"
+  },
+  "claims_not_made": [
+    "No arbitrary dimensions, radii, sources, parameter Cartesian product, or live-AE promotion",
+    "Mode 1 PF8 is exact only for the separately hash-bound source-decode tuple",
+    "No claim that the baseline filter-type anchors prove the runtime CPU dispatch branch"
+  ]
+}

@@ -1,4 +1,5 @@
 import unittest
+import random
 from pathlib import Path
 
 
@@ -56,7 +57,17 @@ class ToonDilateTypedCoreTests(unittest.TestCase):
         self.assertIn("PF_OutFlag2_FLOAT_COLOR_AWARE", source)
         self.assertIn("RenderTyped<PF_Pixel16>", source)
         self.assertIn("RenderTyped<PF_PixelFloat>", source)
-        self.assertIn("RenderWorld(input_world, output_world, info, extra->input->bitdepth)", source)
+        self.assertIn("RenderWorld(input_world, &staged_world, info, extra->input->bitdepth)", source)
+        self.assertIn("ValidateToonBetaAdmission<PF_Pixel8>", source)
+        self.assertIn("ValidateToonBetaAdmission<PF_Pixel16>", source)
+        self.assertIn("ValidateToonBetaAdmission<PF_PixelFloat>", source)
+        self.assertIn("input->width != output->width", source)
+        self.assertIn("static_cast<size_t>(input->rowbytes) < active_rowbytes", source)
+        self.assertIn("height * static_cast<size_t>(output->rowbytes)", source)
+        smart = source[source.index("static PF_Err\nSmartRender"):source.index(
+            "static PF_Err\nGetToonPixelFormats", source.index("static PF_Err\nSmartRender")
+        )]
+        self.assertNotIn("ValidateToonPublicAdmission<", smart)
         self.assertIn("PF_PixelFormat_ARGB32", source)
         self.assertIn("PF_PixelFormat_ARGB64", source)
         self.assertIn("PF_PixelFormat_ARGB128", source)
@@ -96,6 +107,47 @@ class ToonDilateTypedCoreTests(unittest.TestCase):
         result = render_typed(source, 32)
         self.assertEqual(result[0][1], opaque)
         self.assertEqual(result[0][2], semi)
+
+    def test_seeded_arbitrary_images_and_geometries_are_deterministic(self):
+        rng = random.Random(0x0A11CE)
+        dimensions = [(1, 1), (2, 3), (7, 5), (17, 11), (31, 19), (64, 36)]
+        for depth in (8, 16, 32):
+            maximum = {8: 255, 16: 32768, 32: 1.0}[depth]
+            for width, height in dimensions:
+                source = []
+                for y in range(height):
+                    row = []
+                    for x in range(width):
+                        if (x + 3 * y) % 11 == 0:
+                            alpha = maximum
+                        elif depth == 32:
+                            alpha = rng.random() * 0.999
+                        else:
+                            alpha = rng.randrange(int(maximum))
+                        if depth == 32:
+                            rgb = (rng.random(), rng.random(), rng.random())
+                        else:
+                            rgb = tuple(rng.randrange(int(maximum) + 1) for _ in range(3))
+                        row.append((*rgb, alpha))
+                    source.append(row)
+                first = render_typed(source, depth, search_radius=2.01)
+                second = render_typed(source, depth, search_radius=2.01)
+                self.assertEqual(first, second, (depth, width, height))
+                self.assertEqual(len(first), height)
+                self.assertTrue(all(len(row) == width for row in first))
+
+    def test_public_beta_admission_is_source_and_geometry_independent(self):
+        source = SOURCE.read_text(encoding="utf-8")
+        start = source.index("static PF_Err ValidateToonBetaAdmission")
+        end = source.index("template <typename PixelT>\nstatic PF_Err ValidateWorlds", start)
+        admission = source[start:end]
+        self.assertNotIn("ToonPublicSourceMatches", admission)
+        self.assertNotIn("input->width ==", admission)
+        self.assertNotIn("input->height ==", admission)
+        self.assertNotIn("expected_rowbytes", admission)
+        self.assertIn("input->rowbytes", admission)
+        self.assertIn("output->rowbytes", admission)
+        self.assertIn("std::isfinite(info.search_radius)", admission)
 
 
 if __name__ == "__main__":

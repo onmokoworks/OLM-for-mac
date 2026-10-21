@@ -1,0 +1,88 @@
+{
+  "actual_public_owner": {
+    "chain": [
+      "entryPointFunc",
+      "FUN_181173d20",
+      "bitdepth 0x20",
+      "FUN_181172a10",
+      "PF iterateFloat Suite v1",
+      "FUN_181170c90"
+    ],
+    "selector": "PF_Cmd_SMART_RENDER (0x18)"
+  },
+  "aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+  "aexcompat_checkout_head": "28d535469f84f67236ef3425afe4291ea2fb0991",
+  "aexcompat_x64_imports_sha256": "8d456fcda1935aa665dd0107e521758cf70ca1e428fb90150d59455ad9a5b5aa",
+  "bounded_matrix": {
+    "actual_cells": 64,
+    "exact_admitted": 56,
+    "pf16_exact": 32,
+    "pf32_exact": 24,
+    "pf32_mode5_exact": 6,
+    "pf32_mode5_fail_closed": 2,
+    "pf32_power_fail_closed": 8
+  },
+  "disassembly_sha256": "b830129adaf05dc2e32a357902b0a60d6cf8f0429340f8cbf869b8287507229c",
+  "harness_sha256": "84846b4263d38e55bfb9e966d20c179dcea4bc263ccde153aa9d2f863b490776",
+  "matrix_report_sha256": "4cd0720adb842837e24b5788d09c205fe9e328b437f4e0195e22e43da20f008c",
+  "natural_public_trace": {
+    "guards_intact": true,
+    "input_png_sha256": "683259bea613463bb22679f36a78e6d7b4c26dabdbc90e4da480cf76e9eb626a",
+    "output_sha256": "50934ac830542ca73fee4a11b924b746a0ae93f97f34b0d2868170bc371dd387",
+    "post_ipp_field_sha256": "7aaab7918d72d64fc2c426c7a52748409294bcab8c473bb5a55cbd4d19e037a6",
+    "pre_field_sha256": "6023adbb0e42b6b1269594e72c2f58f5caf3ce8ece80b68da2f06f384aea623c",
+    "render_error": 0,
+    "selectors": [
+      "SEQUENCE_SETUP",
+      "FRAME_SETUP",
+      "FRAME_SETDOWN",
+      "SMART_PRE_RENDER",
+      "SMART_RENDER",
+      "SEQUENCE_SETDOWN"
+    ],
+    "watch": "rva=0x12c97d3 rcx/rdx deref=16 size=748"
+  },
+  "not_promoted": [
+    "unlisted PF32 Smart tuple or geometry",
+    "partial-world/origin layouts",
+    "native After Effects pixels",
+    "CLI Mode 4/5 as an oracle"
+  ],
+  "power_oracle_boundary": {
+    "aex_import_module": "api-ms-win-crt-math-l1-1-0.dll",
+    "aex_import_symbol": "powf",
+    "aex_pf32_callsite": "0x181170ea3",
+    "aexcompat_substitution": "LegacyWin64Import::PowF -> install_float_binary_import(..., f32::powf)",
+    "native_windows_ucrt_capture_available": false,
+    "production_policy": "PF32 Power fail-closed on both arm64 and x86_64"
+  },
+  "production_public_contract": {
+    "canonical_alpha_bits": true,
+    "classic_guard_cases": 4,
+    "color_suite_error_propagation": true,
+    "exception_cleanup": true,
+    "format_matches_declared_depth": true,
+    "full_extent_and_zero_origin": true,
+    "input_immutable": true,
+    "layer_checkins": 1,
+    "layer_checkouts": 1,
+    "negative_cases": 21,
+    "padding_preserved": true,
+    "parameter_checkins": 12,
+    "parameter_checkouts": 12,
+    "pf32_mode5_positive_cases": 6,
+    "pf32_power_fail_closed_cases": 8,
+    "positive_depths": [
+      8,
+      16,
+      32
+    ]
+  },
+  "production_source_sha256": "06ffc5b7a2af5cf54a2503d3bf03f9baf2269acbf1277f034937ac79c4a7aba5",
+  "schema": "olmdistancegradation.public-smart-owner-contract/1",
+  "shim_sha256": "c034ae8fbe9ce9edb3de6984e992603a3544c1283a74d6a14654c4349ef98c2b",
+  "static_audit_sha256": "bc1e7769770fb5933f5434c0a9c56bf4e2437d8b7c1f8c2ca9009c0073060567",
+  "status": "PASS_ACTUAL_PUBLIC_PF32_SMART_OWNER_BOUNDED_56_RAW_EXACT_8_POWER_FAIL_CLOSED",
+  "worker_build_revision": "94210e518ffef47866f017c723b52a7d0914bae8",
+  "worker_sha256": "46ab907d286ad4e0e1c2065557100f02c37e0b68df4c22202a825f3fea13ef61"
+}

@@ -1,8 +1,14 @@
 {
-  "active_and_padding_exact": true,
   "actual_aex_sha256": "6d3718868c6c876c3bb370b19cb2bb3c4f89a3a479c29f03ae0d032a5d043b86",
+  "aexcompat_worker": {
+    "commit": "0ee278943751b968ea2b0d5a0e0f483b70c0090d",
+    "modified_by_this_task": false,
+    "path": "/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue1135-typed-iterate-suites/guest/target/release/aex-guest-worker",
+    "sha256": "16c329a481aef88c00fd6016e79996eecaabf7a588cff084e866b6bd15d411fc"
+  },
   "cells": [
     {
+      "actual_exported_owner_sha256": "3f768aa03c4045a70d16e7695403a27810cc6fe50c46c350fe3f67931b990b13",
       "cases": [
         "retained_semitransparent",
         "rejected_semitransparent",
@@ -13,10 +19,31 @@
       ],
       "depth": "PF8",
       "enabled_count": 5,
-      "oracle_sha256": "267ffb987e244e065e2778be7fabf3ad8fe4fe1d9bacf87c169cf301ea1305b9",
-      "path": "PF_Cmd_RENDER"
+      "installed_active_sha256": "3f768aa03c4045a70d16e7695403a27810cc6fe50c46c350fe3f67931b990b13",
+      "mac_path": "dlsym EffectMain->SmartPreRender->SmartRender",
+      "raw_pixel_bytes": 308,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "status": "raw_exact",
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF ColorParamSuite v1",
+        "PF Iterate8 Suite v1"
+      ],
+      "windows_path": "exported SmartPreRender->SmartRender"
     },
     {
+      "actual_exported_owner_sha256": "37d9446d656008362f7bf81324cd7a6ceefb883b668b9d1c4da1264ee432632a",
       "cases": [
         "retained_semitransparent",
         "rejected_semitransparent",
@@ -27,10 +54,31 @@
       ],
       "depth": "PF16",
       "enabled_count": 5,
-      "oracle_sha256": "bb65ce432586150d395eea734ba6f366e576429f8420588bf04ac314b6668bbd",
-      "path": "PF_Cmd_RENDER"
+      "installed_active_sha256": "37d9446d656008362f7bf81324cd7a6ceefb883b668b9d1c4da1264ee432632a",
+      "mac_path": "dlsym EffectMain->SmartPreRender->SmartRender",
+      "raw_pixel_bytes": 616,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "status": "raw_exact",
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF ColorParamSuite v1",
+        "PF iterate16 Suite v1"
+      ],
+      "windows_path": "exported SmartPreRender->SmartRender"
     },
     {
+      "actual_exported_owner_sha256": "fff4c594c4f5c06d8fc8744e189ab8b516fafae63aadd25419636eed9f9de043",
       "cases": [
         "retained_semitransparent",
         "rejected_semitransparent",
@@ -41,10 +89,31 @@
       ],
       "depth": "PF32",
       "enabled_count": 5,
-      "oracle_sha256": "47025329c2d856b224b13c4b3f522c0a123035cba50d4e14effaf46c347c243d",
-      "path": "PF_Cmd_SMART_PRE_RENDER->PF_Cmd_SMART_RENDER"
+      "installed_active_sha256": "fff4c594c4f5c06d8fc8744e189ab8b516fafae63aadd25419636eed9f9de043",
+      "mac_path": "dlsym EffectMain->SmartPreRender->SmartRender",
+      "raw_pixel_bytes": 1232,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "status": "raw_exact",
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF ColorParamSuite v1",
+        "PF iterateFloat Suite v1"
+      ],
+      "windows_path": "exported SmartPreRender->SmartRender"
     },
     {
+      "actual_exported_owner_sha256": "7e9e8bbb203b8aed460ba6f4461469e49861975c34a3c662d4edea4a29909f8d",
       "cases": [
         "retained_semitransparent",
         "rejected_semitransparent",
@@ -55,10 +124,31 @@
       ],
       "depth": "PF8",
       "enabled_count": 100,
-      "oracle_sha256": "4ecd487b73c230649cbdf3a3eab0fea9200eda6af8a83dc421f8df11fd1698eb",
-      "path": "PF_Cmd_RENDER"
+      "installed_active_sha256": "7e9e8bbb203b8aed460ba6f4461469e49861975c34a3c662d4edea4a29909f8d",
+      "mac_path": "dlsym EffectMain->SmartPreRender->SmartRender",
+      "raw_pixel_bytes": 308,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "status": "raw_exact",
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF ColorParamSuite v1",
+        "PF Iterate8 Suite v1"
+      ],
+      "windows_path": "exported SmartPreRender->SmartRender"
     },
     {
+      "actual_exported_owner_sha256": "dd4b822eafa0ae04ef3766f475f0d792b2dd7597dd48a8e3d7d1fe49cc5527c6",
       "cases": [
         "retained_semitransparent",
         "rejected_semitransparent",
@@ -69,10 +159,31 @@
       ],
       "depth": "PF16",
       "enabled_count": 100,
-      "oracle_sha256": "57478c7d6021f25007864541e3abb59425431895853542d35434210a98a7f2c8",
-      "path": "PF_Cmd_RENDER"
+      "installed_active_sha256": "dd4b822eafa0ae04ef3766f475f0d792b2dd7597dd48a8e3d7d1fe49cc5527c6",
+      "mac_path": "dlsym EffectMain->SmartPreRender->SmartRender",
+      "raw_pixel_bytes": 616,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "status": "raw_exact",
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF ColorParamSuite v1",
+        "PF iterate16 Suite v1"
+      ],
+      "windows_path": "exported SmartPreRender->SmartRender"
     },
     {
+      "actual_exported_owner_sha256": "0768f9ca22351943755bc735356bacaf6b6e6bac9b4dc86deb826b0103dba3df",
       "cases": [
         "retained_semitransparent",
         "rejected_semitransparent",
@@ -83,12 +194,32 @@
       ],
       "depth": "PF32",
       "enabled_count": 100,
-      "oracle_sha256": "2b78dbbaee3be4704396cb4fb0a86e61c9d94d268be86b6ede572f2b331562dc",
-      "path": "PF_Cmd_SMART_PRE_RENDER->PF_Cmd_SMART_RENDER"
+      "installed_active_sha256": "0768f9ca22351943755bc735356bacaf6b6e6bac9b4dc86deb826b0103dba3df",
+      "mac_path": "dlsym EffectMain->SmartPreRender->SmartRender",
+      "raw_pixel_bytes": 1232,
+      "smart_pre_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_PRE_RENDER"
+      },
+      "smart_render": {
+        "attempted": true,
+        "completed": true,
+        "error": 0,
+        "selector": "SMART_RENDER"
+      },
+      "status": "raw_exact",
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF ColorParamSuite v1",
+        "PF iterateFloat Suite v1"
+      ],
+      "windows_path": "exported SmartPreRender->SmartRender"
     }
   ],
-  "claim_boundary": "Current installed arm64 public EffectMain under focused AE-free callbacks, PF8/PF16 legacy and PF32 Smart, counts 5/100, fixed 11x7 fixture only.",
-  "combined_output_sha256": "9488f1dfd08a10079d293b54147bf95d2e9973bad63a655170a240440a8d602a",
+  "claim_boundary": "Current installed arm64 public EffectMain under focused AE-free callbacks and actual exported Windows Smart owner under pinned AEXCompat, PF8/PF16/PF32, counts 5/100, fixed public palette and 11x7 fixture only.",
+  "combined_active_output_sha256": "741b6f7cfbebe552f301ca302f1588d087032279f2f48729fdc8df084b1111b6",
   "fixture": {
     "contracts": [
       "retained/rejected semitransparent",
@@ -98,16 +229,635 @@
     ],
     "height": 7,
     "padding_per_row": 12,
+    "palette_argb8": [
+      [
+        128,
+        11,
+        17,
+        23
+      ],
+      [
+        128,
+        40,
+        64,
+        94
+      ],
+      [
+        128,
+        69,
+        111,
+        165
+      ],
+      [
+        0,
+        51,
+        102,
+        153
+      ],
+      [
+        64,
+        191,
+        0,
+        128
+      ],
+      [
+        191,
+        32,
+        223,
+        96
+      ],
+      [
+        128,
+        185,
+        48,
+        198
+      ],
+      [
+        128,
+        214,
+        95,
+        18
+      ],
+      [
+        128,
+        243,
+        142,
+        89
+      ],
+      [
+        128,
+        21,
+        189,
+        160
+      ],
+      [
+        128,
+        50,
+        236,
+        231
+      ],
+      [
+        128,
+        79,
+        32,
+        51
+      ],
+      [
+        128,
+        108,
+        79,
+        122
+      ],
+      [
+        128,
+        137,
+        126,
+        193
+      ],
+      [
+        128,
+        166,
+        173,
+        13
+      ],
+      [
+        128,
+        195,
+        220,
+        84
+      ],
+      [
+        128,
+        224,
+        16,
+        155
+      ],
+      [
+        128,
+        2,
+        63,
+        226
+      ],
+      [
+        128,
+        31,
+        110,
+        46
+      ],
+      [
+        128,
+        60,
+        157,
+        117
+      ],
+      [
+        128,
+        89,
+        204,
+        188
+      ],
+      [
+        128,
+        118,
+        0,
+        8
+      ],
+      [
+        128,
+        147,
+        47,
+        79
+      ],
+      [
+        128,
+        176,
+        94,
+        150
+      ],
+      [
+        128,
+        205,
+        141,
+        221
+      ],
+      [
+        128,
+        234,
+        188,
+        41
+      ],
+      [
+        128,
+        12,
+        235,
+        112
+      ],
+      [
+        128,
+        41,
+        31,
+        183
+      ],
+      [
+        128,
+        70,
+        78,
+        3
+      ],
+      [
+        128,
+        99,
+        125,
+        74
+      ],
+      [
+        128,
+        128,
+        172,
+        145
+      ],
+      [
+        128,
+        157,
+        219,
+        216
+      ],
+      [
+        128,
+        186,
+        15,
+        36
+      ],
+      [
+        128,
+        215,
+        62,
+        107
+      ],
+      [
+        128,
+        244,
+        109,
+        178
+      ],
+      [
+        128,
+        22,
+        156,
+        249
+      ],
+      [
+        128,
+        51,
+        203,
+        69
+      ],
+      [
+        128,
+        80,
+        250,
+        140
+      ],
+      [
+        128,
+        109,
+        46,
+        211
+      ],
+      [
+        128,
+        138,
+        93,
+        31
+      ],
+      [
+        128,
+        167,
+        140,
+        102
+      ],
+      [
+        128,
+        196,
+        187,
+        173
+      ],
+      [
+        128,
+        225,
+        234,
+        244
+      ],
+      [
+        128,
+        3,
+        30,
+        64
+      ],
+      [
+        128,
+        32,
+        77,
+        135
+      ],
+      [
+        128,
+        61,
+        124,
+        206
+      ],
+      [
+        128,
+        90,
+        171,
+        26
+      ],
+      [
+        128,
+        119,
+        218,
+        97
+      ],
+      [
+        128,
+        148,
+        14,
+        168
+      ],
+      [
+        128,
+        177,
+        61,
+        239
+      ],
+      [
+        128,
+        206,
+        108,
+        59
+      ],
+      [
+        128,
+        235,
+        155,
+        130
+      ],
+      [
+        128,
+        13,
+        202,
+        201
+      ],
+      [
+        128,
+        42,
+        249,
+        21
+      ],
+      [
+        128,
+        71,
+        45,
+        92
+      ],
+      [
+        128,
+        100,
+        92,
+        163
+      ],
+      [
+        128,
+        129,
+        139,
+        234
+      ],
+      [
+        128,
+        158,
+        186,
+        54
+      ],
+      [
+        128,
+        187,
+        233,
+        125
+      ],
+      [
+        128,
+        216,
+        29,
+        196
+      ],
+      [
+        128,
+        245,
+        76,
+        16
+      ],
+      [
+        128,
+        23,
+        123,
+        87
+      ],
+      [
+        128,
+        52,
+        170,
+        158
+      ],
+      [
+        128,
+        81,
+        217,
+        229
+      ],
+      [
+        128,
+        110,
+        13,
+        49
+      ],
+      [
+        128,
+        139,
+        60,
+        120
+      ],
+      [
+        128,
+        168,
+        107,
+        191
+      ],
+      [
+        128,
+        197,
+        154,
+        11
+      ],
+      [
+        128,
+        226,
+        201,
+        82
+      ],
+      [
+        128,
+        4,
+        248,
+        153
+      ],
+      [
+        128,
+        33,
+        44,
+        224
+      ],
+      [
+        128,
+        62,
+        91,
+        44
+      ],
+      [
+        128,
+        91,
+        138,
+        115
+      ],
+      [
+        128,
+        120,
+        185,
+        186
+      ],
+      [
+        128,
+        149,
+        232,
+        6
+      ],
+      [
+        128,
+        178,
+        28,
+        77
+      ],
+      [
+        128,
+        207,
+        75,
+        148
+      ],
+      [
+        128,
+        236,
+        122,
+        219
+      ],
+      [
+        128,
+        14,
+        169,
+        39
+      ],
+      [
+        128,
+        43,
+        216,
+        110
+      ],
+      [
+        128,
+        72,
+        12,
+        181
+      ],
+      [
+        128,
+        101,
+        59,
+        1
+      ],
+      [
+        128,
+        130,
+        106,
+        72
+      ],
+      [
+        128,
+        159,
+        153,
+        143
+      ],
+      [
+        128,
+        188,
+        200,
+        214
+      ],
+      [
+        128,
+        217,
+        247,
+        34
+      ],
+      [
+        128,
+        246,
+        43,
+        105
+      ],
+      [
+        128,
+        24,
+        90,
+        176
+      ],
+      [
+        128,
+        53,
+        137,
+        247
+      ],
+      [
+        128,
+        82,
+        184,
+        67
+      ],
+      [
+        128,
+        111,
+        231,
+        138
+      ],
+      [
+        128,
+        140,
+        27,
+        209
+      ],
+      [
+        128,
+        169,
+        74,
+        29
+      ],
+      [
+        128,
+        198,
+        121,
+        100
+      ],
+      [
+        128,
+        227,
+        168,
+        171
+      ],
+      [
+        128,
+        5,
+        215,
+        242
+      ],
+      [
+        128,
+        34,
+        11,
+        62
+      ],
+      [
+        128,
+        63,
+        58,
+        133
+      ],
+      [
+        159,
+        223,
+        64,
+        32
+      ],
+      [
+        64,
+        159,
+        0,
+        96
+      ]
+    ],
     "width": 11
   },
   "identity_manifest": "refs/conformance/olm_installed_identity_manifest_20260806.json",
+  "input_complete_buffer_unchanged": true,
+  "input_padding_preserved": true,
   "installed_binary": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/ColorKeep.plugin/Contents/MacOS/ColorKeep",
-  "installed_binary_sha256": "4974d9f00c5b6a8eaf8ff1fb1cffb1a97d2f36a34af5ae01c759128351d83a2b",
+  "installed_binary_sha256": "262b73e656d4363dce0de6f0fe819fabf461e157ca7cedd98cad107c8db87fe8",
+  "mac_lifecycle_per_cell": {
+    "checkin_layer_pixels": 1,
+    "checkout_layer_pixels": 1,
+    "checkout_output": 1,
+    "ordered_parameter_slots": [
+      1,
+      101
+    ],
+    "parameter_checkins": 101,
+    "parameter_checkouts": 101,
+    "pre_render": 1
+  },
   "not_proven": [
     "native After Effects suite behavior",
     "other parameter combinations or geometries",
     "cross-host AE export raw equality"
   ],
+  "output_padding_preserved": true,
   "raw_exact": true,
-  "status": "installed_public_six_cell_raw_exact"
+  "schema": "colorkeep.installed-public-owner-covering/2",
+  "status": "installed_public_six_cell_raw_exact",
+  "world_headers_unchanged": true
 }

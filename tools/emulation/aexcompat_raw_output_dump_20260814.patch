@@ -1,0 +1,20 @@
+diff --git a/guest/crates/aex-guest-worker/src/main.rs b/guest/crates/aex-guest-worker/src/main.rs
+index b147243b..1c5fdb38 100644
+--- a/guest/crates/aex-guest-worker/src/main.rs
++++ b/guest/crates/aex-guest-worker/src/main.rs
+@@ -575,11 +575,15 @@ fn render_png(
+     output_image
+         .save_with_format(output, image::ImageFormat::Png)
+         .map_err(|error| format!("write output PNG: {error}"))?;
++    let raw_output = output.with_extension("raw");
++    std::fs::write(&raw_output, &report.raw_pixels)
++        .map_err(|error| format!("write raw output: {error}"))?;
+     let mut report_json =
+         serde_json::to_value(&report).map_err(|error| format!("serialize report: {error}"))?;
+     report_json["pixel_bytes"] = serde_json::json!(report.raw_pixel_bytes);
+     report_json["input_png_sha256"] = serde_json::json!(input_png_sha256);
+     report_json["output_png"] = serde_json::json!(output);
++    report_json["output_raw"] = serde_json::json!(raw_output);
+     if !execution_traces.is_empty() {
+         report_json["execution_traces"] = serde_json::to_value(execution_traces)
+             .map_err(|error| format!("serialize traces: {error}"))?;

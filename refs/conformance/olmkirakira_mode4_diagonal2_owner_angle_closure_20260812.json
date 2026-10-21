@@ -1,0 +1,541 @@
+{
+  "schema_version": 1,
+  "kind": "olmkirakira_mode4_diagonal2_owner_angle_closure",
+  "date": "2026-08-12",
+  "status": "raw_exact",
+  "claim_boundary": "fixed 5x3 Mode4 Diagonal2-only tuple, natural AEX Smart owner and Mac public EffectMain, PF8/PF16/PF32 raw bytes",
+  "identities": {
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "aexcompat_worker_sha256": "46ab907d286ad4e0e1c2065557100f02c37e0b68df4c22202a825f3fea13ef61",
+    "aexcompat_commit": "28d535469f84f67236ef3425afe4291ea2fb0991",
+    "disassembly_sha256": "d23c749d225a934580c96f2929fb9d7253d07b1be208faa9de6ff89efc1f89b3",
+    "production_source_sha256": "f2e285be7e6caae764bef7c4fa4a6c422bd5312368ba3481022b9eabe9035492",
+    "generator_sha256": "e96a0ec0e85576d444e71a0baf18822a722ef9a40c12bc613267b56d8666dbc1"
+  },
+  "fixture": {
+    "dimensions": [
+      5,
+      3
+    ],
+    "padding": 12,
+    "blur_mode": 4,
+    "public_merge_mode": 2,
+    "brightness_gain": 0.73,
+    "rotation_raw_fixed": 1,
+    "diagonal2_length": 7,
+    "all_other_rays_zero": true,
+    "all_ramps_off": true,
+    "ordered_parameters": [
+      "Blur Mode=4",
+      "Vertical Length=0",
+      "Horizontal Length=0",
+      "Diagonal Length=0",
+      "Diagonal 2 length=7",
+      "Highlight Radius=0",
+      "Merge mode=2",
+      "Channel=1",
+      "Brightness Gain=0.73",
+      "Glow Rotation=fixed:1"
+    ],
+    "ordered_parameters_sha256": "a065b813ef50fb3afbead82d58fc365320e14a6830570fe3d6462124d38272b5"
+  },
+  "natural_trace": {
+    "trace_stdout_sha256": "5426f4a016bef572f292ca8b4ae8d53426ca5a93199ba6140b627012e3549a71",
+    "input_png_sha256": "aa175f6a33d67ee4cdd8a8b7e4ef1c797a17f9ff1decfec69c87701b27c419f2",
+    "raw_pixel_sha256": "1eb072a44e5fad044073c09245f25ff1a4359f378e24c28cbaa6a62fd6025d27",
+    "render_error": 0,
+    "guards_intact": true,
+    "trace_truncated": false,
+    "dropped_memory_witnesses": 0,
+    "owner_builder": {
+      "rotation_raw_fixed_at_0x00": 1,
+      "brightness_f32_bits_at_0x04": "0x3f3ae148",
+      "diagonal2_length_at_0x28": 7,
+      "public_merge_at_0x44": 2,
+      "aggregation_selector_at_0x48": 1,
+      "blur_mode_at_0x4c": 4
+    },
+    "typed_owner": {
+      "rotation_raw_fixed_at_0x00": 1,
+      "diagonal2_length_at_0x28": 7,
+      "public_merge_at_0x44": 2,
+      "aggregation_selector_at_0x48": 1,
+      "blur_mode_at_0x4c": 4
+    },
+    "helper": {
+      "function_rva": "0x1150790",
+      "owner_callsite_rva": "0x114f929",
+      "angle_degrees": 136,
+      "length": 7,
+      "blur_mode": 4
+    },
+    "stages": {
+      "seed": {
+        "bytes": 60,
+        "sha256": "4c52a6f9e0b97638c819e3a08d81fb98fadea274bdf24e6d460bcaad2a2ad4ad",
+        "hex": "8180803e9796963eadacac3ec3c2c23ed9d8d83eefeeee3e8382023f8e8d0d3f9998183fa4a3233fafae2e3fbab9393fc5c4443fd0cf4f3fdbda5a3f"
+      },
+      "forward": {
+        "bytes": 324,
+        "sha256": "1944bc2f67ab8fe75ed2ba7008818f3e997e2cfc0d57e651eecf734e6bc45ce6",
+        "hex": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d2d1b13c00000000000000000000000000000000000000000000000000000000bbba903eec2b2a3fe2e1513d000000000000000000000000000000000000000093921e3e9998183f9f9e363f0a0a1e3fc4c3913d0000000000000000000000000000000011112f3ef2f1d13efffe063fc0be263f7776173f7b7ab23d000000000000000000000000000000004e4e0a3e6f6faf3eefeeee3e7e7d153f7372c13e0000000000000000000000000000000000000000dcdad23d6160903e4949913e00000000000000000000000000000000000000000000000000000000fffd7d3d000000000000000000000000"
+      },
+      "inverse": {
+        "bytes": 324,
+        "sha256": "d881377ad739c571a881302f5ad542b52899ebf93932e874f52b718d0f1b870b",
+        "hex": "00000000000000000000000006db9e3a5062953bcc84003d36288b3d0e86873d00000000000000000000000046c5da3ad360ba3bf80e1c3df0baae3d88890b3eec4a243e6c73be3d0000000064a30c3ac3623c3bfbf2263d45efc13da719223e39003d3e586d403e2b0c1f3e8289e43a4d4cd73bcb4df03cc423b43dbcb8203ed1483f3e7236413ef794313e1286ce3dea58b93b391d313d2ee0a33dea531a3e63493a3e5402343e6a3c133ef116d23d155b2d3dfe00213dc0b3d43da9331a3ec7df2e3ee50f323e07550b3e6aad643d0d48023dfa50cd3aa51ac03c0207273ef11a4b3e4431453ee2802f3ea9ffd13d10f4d03c71f0d5390000000000000000baae443d05b62c3e02fd183e340fbd3d57af093de539c83a00000000000000000000000000000000839a193d1532973dec44e63c96369e3a000000000000000000000000"
+      },
+      "ray": {
+        "bytes": 60,
+        "sha256": "6026b57821a052062b4346487727f7eccfc22a960661d8fcdfc43127fb4372c8",
+        "hex": "cb4df03cc423b43dbcb8203ed1483f3e7236413e2ee0a33dea531a3e63493a3e5402343e6a3c133ea9331a3ec7df2e3ee50f323e07550b3e6aad643d"
+      },
+      "glow": {
+        "bytes": 240,
+        "sha256": "c2725b89989892fa1fef3bb5bd62939d9b5b50738ce3c2cd459ee0047b786dab",
+        "hex": "0000803f0000803f0000803ffd6baf3c0000803f0000803f0000803f8380833d0000803f0000803f0000803f50a7ea3d0000803f0000803f0000803f3da30b3effff7f3fffff7f3fffff7f3f960b0d3e0000803f0000803f0000803f2f426f3d0000803f0000803f0000803f8e51e13dffff7f3fffff7f3fffff7f3f41fd073e0000803f0000803f0000803f1a68033e0000803f0000803f0000803fedf6d63dffff7f3fffff7f3fffff7f3f7722e13d0000803f0000803f0000803ff550ff3d0000803f0000803f0000803f3efc013e0000803f0000803f0000803fc86ccb3d0000803f0000803f0000803f3cef263d"
+      },
+      "source": {
+        "bytes": 240,
+        "sha256": "5f19e68ee17627c45e8aebefa660ddc23f5eae72b21a5ef7fee354ecaa892a94",
+        "hex": "0000000000000000000000008180803ef1f0703db1b0303de1e0e03c9796963ef1f0f03db1b0b03de1e0603dadacac3eb5b4343e8584043ea9a8a83dc3c2c23ef1f0703eb1b0303ee1e0e03dd9d8d83e9796963edddc5c3e8d8c0c3eefeeee3eb5b4b43e8584843ea9a8283e8382023fd3d2d23e9b9a9a3ec5c4443e8e8d0d3ff1f0f03eb1b0b03ee1e0603e9998183f8887073fc7c6c63efdfc7c3ea4a3233f9796163fdddcdc3e8d8c8c3eafae2e3fa6a5253ff3f2f23e9b9a9a3ebab9393fb5b4343f8584043fa9a8a83ec5c4443fc4c3433f908f0f3fb7b6b63ed0cf4f3fd3d2523f9b9a1a3fc5c4c43edbda5a3f"
+      },
+      "output": {
+        "bytes": 240,
+        "sha256": "1eb072a44e5fad044073c09245f25ff1a4359f378e24c28cbaa6a62fd6025d27",
+        "hex": "41778b3efd6baf3cfd6baf3cfd6baf3cb876b73e3defa63d617c9d3d8409943d8156e73ec2f41d3e211f133e8149083e314a043f7360503edc0b3e3e45b72b3e52af0f3f4617733ef5e0573ea4aa3c3e9a6b063f195d483e48e2223ef0cefa3db5ac1e3f4874943e7cc6773e69a4463ede8c2f3f5291b83e447b993e6eca743ea072393fbb52d13e4806ab3ed6b9843e82823e3f9601e33e5ccdb43e2199863efed24a3f6be5023f70fdce3e0d30983ed9a3593f0117183f1116f03e21feaf3ed443653f50642b3f615a063fe3a0c23e693d693fcf57383f38f70d3f422dc73ecf49653fb8aa3e3fc89a0e3fb015bd3e"
+      }
+    },
+    "fd90_dynamic_entry": {
+      "internal_function_rva": "0x1150250",
+      "internal_callsite_rva": "0x114fdec",
+      "hit": true
+    }
+  },
+  "static_owner_angle_table": {
+    "base_angle_degrees": 135,
+    "typed_owner_anchors": {
+      "0x18114ce8e": 1,
+      "0x18114d45e": 1,
+      "0x18114da2e": 1
+    },
+    "production_expression": "135.0 + glow_rotation"
+  },
+  "angle_representative_proof": {
+    "natural_angle_degrees": 136,
+    "corrected_portable_angle_degrees": 136,
+    "counterfactual_old_angle_degrees": -44,
+    "corrected_stage_exact": {
+      "forward_words": 81,
+      "inverse_words": 81,
+      "ray_words": 15
+    },
+    "old_ray_difference_count": 3,
+    "old_ray_max_ulp": 2,
+    "old_ray_differences": [
+      {
+        "word": 6,
+        "natural": "0x3e1a53ea",
+        "old_minus_180": "0x3e1a53e8",
+        "ulp": 2
+      },
+      {
+        "word": 7,
+        "natural": "0x3e3a4963",
+        "old_minus_180": "0x3e3a4962",
+        "ulp": 1
+      },
+      {
+        "word": 12,
+        "natural": "0x3e320fe5",
+        "old_minus_180": "0x3e320fe6",
+        "ulp": 1
+      }
+    ]
+  },
+  "downstream_proof": {
+    "portable_glow_sha256": "c2725b89989892fa1fef3bb5bd62939d9b5b50738ce3c2cd459ee0047b786dab",
+    "portable_output_sha256": "1eb072a44e5fad044073c09245f25ff1a4359f378e24c28cbaa6a62fd6025d27",
+    "glow_exact": true,
+    "output_exact": true
+  },
+  "public_all_depths": {
+    "status": "exact",
+    "rows": [
+      {
+        "depth": "PF8",
+        "pixel_format": "argb8",
+        "bytes": 60,
+        "actual_exported_raw_sha256": "30b58167110e9bcc125244395ee07a16a6e8d00142869fd283f10f264b1ae0f6",
+        "mac_effectmain_raw_sha256": "30b58167110e9bcc125244395ee07a16a6e8d00142869fd283f10f264b1ae0f6",
+        "exact": true,
+        "actual_exported_rgba8": [
+          [
+            5,
+            5,
+            5,
+            69
+          ],
+          [
+            20,
+            19,
+            18,
+            91
+          ],
+          [
+            39,
+            36,
+            33,
+            115
+          ],
+          [
+            51,
+            47,
+            42,
+            131
+          ],
+          [
+            60,
+            53,
+            46,
+            143
+          ],
+          [
+            49,
+            40,
+            31,
+            133
+          ],
+          [
+            73,
+            61,
+            49,
+            158
+          ],
+          [
+            91,
+            76,
+            60,
+            174
+          ],
+          [
+            104,
+            85,
+            66,
+            184
+          ],
+          [
+            113,
+            90,
+            67,
+            189
+          ],
+          [
+            130,
+            103,
+            75,
+            202
+          ],
+          [
+            151,
+            119,
+            87,
+            216
+          ],
+          [
+            170,
+            133,
+            96,
+            228
+          ],
+          [
+            183,
+            141,
+            99,
+            232
+          ],
+          [
+            189,
+            142,
+            94,
+            228
+          ]
+        ],
+        "mac_effectmain_active_hex": "450505055b1413127327242183332f2a8f3c352e8531281f9e493d31ae5b4c3cb8685542bd715a43ca82674bd8977757e4aa8560e8b78d63e4bd8e5e",
+        "guards_intact": true,
+        "input_unchanged": true,
+        "mac_padding_preserved": true,
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "render_error": 0
+      },
+      {
+        "depth": "PF16",
+        "pixel_format": "argb16",
+        "bytes": 120,
+        "actual_exported_raw_sha256": "0853a40e66d15baf32fc85a6233b2fc387ec8413b1d4789df736c66afe5ea4b3",
+        "mac_effectmain_raw_sha256": "0853a40e66d15baf32fc85a6233b2fc387ec8413b1d4789df736c66afe5ea4b3",
+        "exact": true,
+        "actual_exported_rgba8": [
+          [
+            5,
+            5,
+            5,
+            69
+          ],
+          [
+            21,
+            20,
+            18,
+            91
+          ],
+          [
+            39,
+            37,
+            34,
+            115
+          ],
+          [
+            52,
+            47,
+            43,
+            132
+          ],
+          [
+            61,
+            54,
+            47,
+            143
+          ],
+          [
+            50,
+            41,
+            31,
+            134
+          ],
+          [
+            74,
+            62,
+            49,
+            158
+          ],
+          [
+            92,
+            76,
+            61,
+            175
+          ],
+          [
+            104,
+            85,
+            66,
+            185
+          ],
+          [
+            113,
+            90,
+            67,
+            190
+          ],
+          [
+            130,
+            103,
+            76,
+            202
+          ],
+          [
+            151,
+            120,
+            88,
+            217
+          ],
+          [
+            171,
+            134,
+            97,
+            228
+          ],
+          [
+            184,
+            141,
+            99,
+            232
+          ],
+          [
+            190,
+            142,
+            94,
+            228
+          ]
+        ],
+        "mac_effectmain_active_hex": "dd22bd02bd02bd02de2d6f0ad7094009d539be136312091125420c1ac1177715d747621efc1a951736430b195c14ad0f564f1c25f81ed418c657242e5f26991eb95c5434c12a2e21415fc038332da62169657241bf330b26d26c0b4c053cff2ba172b1552c43a7309e742c5cfb46cb31a472545f4c47452f",
+        "guards_intact": true,
+        "input_unchanged": true,
+        "mac_padding_preserved": true,
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "render_error": 0
+      },
+      {
+        "depth": "PF32",
+        "pixel_format": "argb32f",
+        "bytes": 240,
+        "actual_exported_raw_sha256": "1eb072a44e5fad044073c09245f25ff1a4359f378e24c28cbaa6a62fd6025d27",
+        "mac_effectmain_raw_sha256": "1eb072a44e5fad044073c09245f25ff1a4359f378e24c28cbaa6a62fd6025d27",
+        "exact": true,
+        "actual_exported_rgba8": [
+          [
+            5,
+            5,
+            5,
+            69
+          ],
+          [
+            21,
+            20,
+            18,
+            91
+          ],
+          [
+            39,
+            37,
+            34,
+            115
+          ],
+          [
+            52,
+            47,
+            43,
+            132
+          ],
+          [
+            61,
+            54,
+            47,
+            143
+          ],
+          [
+            50,
+            41,
+            31,
+            134
+          ],
+          [
+            74,
+            62,
+            49,
+            158
+          ],
+          [
+            92,
+            76,
+            61,
+            175
+          ],
+          [
+            104,
+            85,
+            66,
+            185
+          ],
+          [
+            113,
+            90,
+            67,
+            190
+          ],
+          [
+            130,
+            103,
+            76,
+            202
+          ],
+          [
+            151,
+            120,
+            88,
+            217
+          ],
+          [
+            171,
+            134,
+            97,
+            228
+          ],
+          [
+            184,
+            141,
+            99,
+            232
+          ],
+          [
+            190,
+            142,
+            94,
+            228
+          ]
+        ],
+        "mac_effectmain_active_hex": "41778b3efd6baf3cfd6baf3cfd6baf3cb876b73e3defa63d617c9d3d8409943d8156e73ec2f41d3e211f133e8149083e314a043f7360503edc0b3e3e45b72b3e52af0f3f4617733ef5e0573ea4aa3c3e9a6b063f195d483e48e2223ef0cefa3db5ac1e3f4874943e7cc6773e69a4463ede8c2f3f5291b83e447b993e6eca743ea072393fbb52d13e4806ab3ed6b9843e82823e3f9601e33e5ccdb43e2199863efed24a3f6be5023f70fdce3e0d30983ed9a3593f0117183f1116f03e21feaf3ed443653f50642b3f615a063fe3a0c23e693d693fcf57383f38f70d3f422dc73ecf49653fb8aa3e3fc89a0e3fb015bd3e",
+        "guards_intact": true,
+        "input_unchanged": true,
+        "mac_padding_preserved": true,
+        "smart_pre_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_PRE_RENDER"
+        },
+        "smart_render": {
+          "attempted": true,
+          "completed": true,
+          "error": 0,
+          "selector": "SMART_RENDER"
+        },
+        "suite_requests": [
+          "PF Handle Suite v2",
+          "AEGP Utility Suite v13",
+          "PF ColorParamSuite v1"
+        ],
+        "unsupported_suite_calls": [],
+        "render_error": 0
+      }
+    ]
+  },
+  "claims_not_made": [
+    "No arbitrary angle, geometry, source, or parameter Cartesian-product promotion",
+    "No live Windows AE or Mac AE pixel-exact claim",
+    "No claim that -45 and +135 are generally interchangeable in the Mode4 chain"
+  ]
+}

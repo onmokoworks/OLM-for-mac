@@ -1,0 +1,23 @@
+{
+  "kind": "olmkirakira_mode4_highlight_gradient_pf32_seam",
+  "date": "2026-08-12",
+  "status": "superseded_by_raw_exact_closure",
+  "superseded_by": "olmkirakira_mode4_highlight_gradient_closure_20260812.json",
+  "closure_sha256": "f36249eac1e5d71454c75a2b4ba01b2697f4bc49cfddb343a0c2130035edde24",
+  "historical_artifact": {
+    "path": "olmkirakira_mode4_highlight_gradient_pf32_seam_20260812.json",
+    "sha256": "531179e93d198d6b794c6e9ba4869df624de24b9cc3464582ab3b13a6a192c82",
+    "status": "fail_closed_pf32_seam"
+  },
+  "historical_counterfactual": {
+    "old_separable_ray_difference_words": [
+      3,
+      11
+    ],
+    "ulp": [
+      1,
+      1
+    ],
+    "meaning": "retained as a rejected implementation, not a current production seam"
+  }
+}

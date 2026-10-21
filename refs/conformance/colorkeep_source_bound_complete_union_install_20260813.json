@@ -1,0 +1,616 @@
+{
+  "authorities": {
+    "current_accepted_identity_sha256": "3722313db6f77ff1e8ba44ff13a95a66b4a46727f86275d0801b0576048b55ed",
+    "install_post_identity_sha256": "4d0b65792e6ccec43577fac7cde4f78e59180cab72cec36443a7b032fea6a70a",
+    "installer_sha256": "559f6143f1e76bc265066c6abf307cc783c1259f2b544b169251d36cdf15d280",
+    "pre_identity_sha256": "e17dddbd8f26b1ac6caf65b43179689b8fa821f2cd9fe1ff23290afe29023431",
+    "preinstall_sha256": "4cd34d84281591eb05c8391c1d9985d1aff84ad11d1bb8114ef082176757cf52",
+    "production_source_sha256": "d1c443042998e466b021d6fd2351537a2be63fe95d3e79a2089d82f78217bac3",
+    "transaction_sha256": "87ae1b919366197a68b8f8f4fe0fe4f9c4d60b6fcefc9cb8a62ace63adec0613",
+    "union_generator_sha256": "32429241a354b1d1e317d515011fe29e568958a23e46f4dbe6b1e2acaf4b993f"
+  },
+  "bundles": {
+    "candidate": {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "binary_sha256": "dae59a6faf54ed18ac803ad042be2cdab688c5f814edf322d64c108d5247f46d",
+      "effect_main_exports": {
+        "arm64": 1,
+        "x86_64": 1
+      },
+      "info_plist_minimum_system_version": "11.0",
+      "macho_slice_minimum_versions": {
+        "arm64": "11.0",
+        "x86_64": "11.0"
+      },
+      "manifest": [
+        {
+          "mode": 493,
+          "path": ".",
+          "type": "directory"
+        },
+        {
+          "mode": 493,
+          "path": "Contents",
+          "type": "directory"
+        },
+        {
+          "bytes": 1389,
+          "mode": 420,
+          "path": "Contents/Info.plist",
+          "sha256": "668e0613c9dae7003e12422b8b86b67c3e2701c338dedb4e947840a06be01406",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/MacOS",
+          "type": "directory"
+        },
+        {
+          "bytes": 192992,
+          "mode": 493,
+          "path": "Contents/MacOS/ColorKeep",
+          "sha256": "dae59a6faf54ed18ac803ad042be2cdab688c5f814edf322d64c108d5247f46d",
+          "type": "file"
+        },
+        {
+          "bytes": 8,
+          "mode": 420,
+          "path": "Contents/PkgInfo",
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/Resources",
+          "type": "directory"
+        },
+        {
+          "bytes": 662,
+          "mode": 420,
+          "path": "Contents/Resources/ColorKeep.rsrc",
+          "sha256": "e9511c081223d80eca16f2b66f5211723a26903f83bde19403fd1175b8aa0082",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/_CodeSignature",
+          "type": "directory"
+        },
+        {
+          "bytes": 2450,
+          "mode": 420,
+          "path": "Contents/_CodeSignature/CodeResources",
+          "sha256": "e2dc7da138b789c31c34c32071c7f4195019e47850210281736506960de5203c",
+          "type": "file"
+        }
+      ],
+      "path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/colorkeep_source_bound_complete_union_candidate_20260813/Product/ColorKeep.plugin",
+      "strict_codesign": true
+    },
+    "installed": {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "binary_sha256": "dae59a6faf54ed18ac803ad042be2cdab688c5f814edf322d64c108d5247f46d",
+      "effect_main_exports": {
+        "arm64": 1,
+        "x86_64": 1
+      },
+      "info_plist_minimum_system_version": "11.0",
+      "macho_slice_minimum_versions": {
+        "arm64": "11.0",
+        "x86_64": "11.0"
+      },
+      "manifest": [
+        {
+          "mode": 493,
+          "path": ".",
+          "type": "directory"
+        },
+        {
+          "mode": 493,
+          "path": "Contents",
+          "type": "directory"
+        },
+        {
+          "bytes": 1389,
+          "mode": 420,
+          "path": "Contents/Info.plist",
+          "sha256": "668e0613c9dae7003e12422b8b86b67c3e2701c338dedb4e947840a06be01406",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/MacOS",
+          "type": "directory"
+        },
+        {
+          "bytes": 192992,
+          "mode": 493,
+          "path": "Contents/MacOS/ColorKeep",
+          "sha256": "dae59a6faf54ed18ac803ad042be2cdab688c5f814edf322d64c108d5247f46d",
+          "type": "file"
+        },
+        {
+          "bytes": 8,
+          "mode": 420,
+          "path": "Contents/PkgInfo",
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/Resources",
+          "type": "directory"
+        },
+        {
+          "bytes": 662,
+          "mode": 420,
+          "path": "Contents/Resources/ColorKeep.rsrc",
+          "sha256": "e9511c081223d80eca16f2b66f5211723a26903f83bde19403fd1175b8aa0082",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/_CodeSignature",
+          "type": "directory"
+        },
+        {
+          "bytes": 2450,
+          "mode": 420,
+          "path": "Contents/_CodeSignature/CodeResources",
+          "sha256": "e2dc7da138b789c31c34c32071c7f4195019e47850210281736506960de5203c",
+          "type": "file"
+        }
+      ],
+      "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/ColorKeep.plugin",
+      "strict_codesign": true
+    },
+    "installed_backup": {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "binary_sha256": "fcd501dae5e62aaa0bb8c022cc55c3a6735e3021d465b42b80c939f33624dd77",
+      "effect_main_exports": {
+        "arm64": 1,
+        "x86_64": 1
+      },
+      "info_plist_minimum_system_version": "11.0",
+      "macho_slice_minimum_versions": {
+        "arm64": "11.0",
+        "x86_64": "11.0"
+      },
+      "manifest": [
+        {
+          "mode": 493,
+          "path": ".",
+          "type": "directory"
+        },
+        {
+          "mode": 493,
+          "path": "Contents",
+          "type": "directory"
+        },
+        {
+          "bytes": 1389,
+          "mode": 420,
+          "path": "Contents/Info.plist",
+          "sha256": "668e0613c9dae7003e12422b8b86b67c3e2701c338dedb4e947840a06be01406",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/MacOS",
+          "type": "directory"
+        },
+        {
+          "bytes": 175376,
+          "mode": 493,
+          "path": "Contents/MacOS/ColorKeep",
+          "sha256": "fcd501dae5e62aaa0bb8c022cc55c3a6735e3021d465b42b80c939f33624dd77",
+          "type": "file"
+        },
+        {
+          "bytes": 8,
+          "mode": 420,
+          "path": "Contents/PkgInfo",
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/Resources",
+          "type": "directory"
+        },
+        {
+          "bytes": 662,
+          "mode": 420,
+          "path": "Contents/Resources/ColorKeep.rsrc",
+          "sha256": "e9511c081223d80eca16f2b66f5211723a26903f83bde19403fd1175b8aa0082",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/_CodeSignature",
+          "type": "directory"
+        },
+        {
+          "bytes": 2450,
+          "mode": 420,
+          "path": "Contents/_CodeSignature/CodeResources",
+          "sha256": "e2dc7da138b789c31c34c32071c7f4195019e47850210281736506960de5203c",
+          "type": "file"
+        }
+      ],
+      "path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/colorkeep_source_bound_complete_union_install_20260813/installed_backup/ColorKeep.plugin",
+      "strict_codesign": true
+    },
+    "moved_old": {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "binary_sha256": "fcd501dae5e62aaa0bb8c022cc55c3a6735e3021d465b42b80c939f33624dd77",
+      "effect_main_exports": {
+        "arm64": 1,
+        "x86_64": 1
+      },
+      "info_plist_minimum_system_version": "11.0",
+      "macho_slice_minimum_versions": {
+        "arm64": "11.0",
+        "x86_64": "11.0"
+      },
+      "manifest": [
+        {
+          "mode": 493,
+          "path": ".",
+          "type": "directory"
+        },
+        {
+          "mode": 493,
+          "path": "Contents",
+          "type": "directory"
+        },
+        {
+          "bytes": 1389,
+          "mode": 420,
+          "path": "Contents/Info.plist",
+          "sha256": "668e0613c9dae7003e12422b8b86b67c3e2701c338dedb4e947840a06be01406",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/MacOS",
+          "type": "directory"
+        },
+        {
+          "bytes": 175376,
+          "mode": 493,
+          "path": "Contents/MacOS/ColorKeep",
+          "sha256": "fcd501dae5e62aaa0bb8c022cc55c3a6735e3021d465b42b80c939f33624dd77",
+          "type": "file"
+        },
+        {
+          "bytes": 8,
+          "mode": 420,
+          "path": "Contents/PkgInfo",
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/Resources",
+          "type": "directory"
+        },
+        {
+          "bytes": 662,
+          "mode": 420,
+          "path": "Contents/Resources/ColorKeep.rsrc",
+          "sha256": "e9511c081223d80eca16f2b66f5211723a26903f83bde19403fd1175b8aa0082",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/_CodeSignature",
+          "type": "directory"
+        },
+        {
+          "bytes": 2450,
+          "mode": 420,
+          "path": "Contents/_CodeSignature/CodeResources",
+          "sha256": "e2dc7da138b789c31c34c32071c7f4195019e47850210281736506960de5203c",
+          "type": "file"
+        }
+      ],
+      "path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/colorkeep_source_bound_complete_union_install_20260813/moved_old/ColorKeep.plugin",
+      "strict_codesign": true
+    },
+    "pre_swap_original": {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "binary_sha256": "fcd501dae5e62aaa0bb8c022cc55c3a6735e3021d465b42b80c939f33624dd77",
+      "effect_main_exports": {
+        "arm64": 1,
+        "x86_64": 1
+      },
+      "info_plist_minimum_system_version": "11.0",
+      "macho_slice_minimum_versions": {
+        "arm64": "11.0",
+        "x86_64": "11.0"
+      },
+      "manifest": [
+        {
+          "mode": 493,
+          "path": ".",
+          "type": "directory"
+        },
+        {
+          "mode": 493,
+          "path": "Contents",
+          "type": "directory"
+        },
+        {
+          "bytes": 1389,
+          "mode": 420,
+          "path": "Contents/Info.plist",
+          "sha256": "668e0613c9dae7003e12422b8b86b67c3e2701c338dedb4e947840a06be01406",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/MacOS",
+          "type": "directory"
+        },
+        {
+          "bytes": 175376,
+          "mode": 493,
+          "path": "Contents/MacOS/ColorKeep",
+          "sha256": "fcd501dae5e62aaa0bb8c022cc55c3a6735e3021d465b42b80c939f33624dd77",
+          "type": "file"
+        },
+        {
+          "bytes": 8,
+          "mode": 420,
+          "path": "Contents/PkgInfo",
+          "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/Resources",
+          "type": "directory"
+        },
+        {
+          "bytes": 662,
+          "mode": 420,
+          "path": "Contents/Resources/ColorKeep.rsrc",
+          "sha256": "e9511c081223d80eca16f2b66f5211723a26903f83bde19403fd1175b8aa0082",
+          "type": "file"
+        },
+        {
+          "mode": 493,
+          "path": "Contents/_CodeSignature",
+          "type": "directory"
+        },
+        {
+          "bytes": 2450,
+          "mode": 420,
+          "path": "Contents/_CodeSignature/CodeResources",
+          "sha256": "e2dc7da138b789c31c34c32071c7f4195019e47850210281736506960de5203c",
+          "type": "file"
+        }
+      ],
+      "path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/colorkeep_source_bound_complete_union_install_20260813/pre_swap_original/ColorKeep.plugin",
+      "strict_codesign": true
+    }
+  },
+  "claim_boundary": "ColorKeep-only hostless historical install transition, current accepted ColorKeep-row identity, and complete bounded public replay. Later changes to other accepted identity rows are outside this transaction. No AE launch/load/render, Developer ID, notarization, or arbitrary source/tuple claim.",
+  "identity_transition": {
+    "changed_plugins": {
+      "ColorKeep": [
+        "sha256",
+        "source_bundle",
+        "source_sha256"
+      ]
+    },
+    "new_sha256": "dae59a6faf54ed18ac803ad042be2cdab688c5f814edf322d64c108d5247f46d",
+    "old_sha256": "fcd501dae5e62aaa0bb8c022cc55c3a6735e3021d465b42b80c939f33624dd77",
+    "top_level_changed_fields": [
+      "accepted_at",
+      "installed_after"
+    ],
+    "unchanged_plugins": [
+      "OLMBlur",
+      "OLMColorKey",
+      "OLMDirectionalBlur",
+      "OLMDistanceGradation",
+      "OLMKiraKira",
+      "OLMRadialBlur",
+      "OLMSmoother",
+      "OLMSmoother2",
+      "OLMToonDilate"
+    ]
+  },
+  "installed_replay": {
+    "count9_union": {
+      "architectures": {
+        "arm64": {
+          "all_precommit_atomic": true,
+          "padded_output_sha256": "2e68fc7a643641652edb27b6400cbdb2358b10c438893a8c346f8efd1ef7aebe",
+          "paths": 5,
+          "rejects": 136
+        },
+        "x86_64": {
+          "all_precommit_atomic": true,
+          "padded_output_sha256": "2e68fc7a643641652edb27b6400cbdb2358b10c438893a8c346f8efd1ef7aebe",
+          "paths": 5,
+          "rejects": 136
+        }
+      }
+    },
+    "legacy_union": {
+      "architectures": {
+        "arm64": [
+          {
+            "active_sha256": "3f768aa03c4045a70d16e7695403a27810cc6fe50c46c350fe3f67931b990b13",
+            "count": 5,
+            "depth": "PF8",
+            "entry": "Smart"
+          },
+          {
+            "active_sha256": "37d9446d656008362f7bf81324cd7a6ceefb883b668b9d1c4da1264ee432632a",
+            "count": 5,
+            "depth": "PF16",
+            "entry": "Smart"
+          },
+          {
+            "active_sha256": "fff4c594c4f5c06d8fc8744e189ab8b516fafae63aadd25419636eed9f9de043",
+            "count": 5,
+            "depth": "PF32",
+            "entry": "Smart"
+          },
+          {
+            "active_sha256": "7e9e8bbb203b8aed460ba6f4461469e49861975c34a3c662d4edea4a29909f8d",
+            "count": 100,
+            "depth": "PF8",
+            "entry": "Smart"
+          },
+          {
+            "active_sha256": "dd4b822eafa0ae04ef3766f475f0d792b2dd7597dd48a8e3d7d1fe49cc5527c6",
+            "count": 100,
+            "depth": "PF16",
+            "entry": "Smart"
+          },
+          {
+            "active_sha256": "0768f9ca22351943755bc735356bacaf6b6e6bac9b4dc86deb826b0103dba3df",
+            "count": 100,
+            "depth": "PF32",
+            "entry": "Smart"
+          },
+          {
+            "active_sha256": "3f768aa03c4045a70d16e7695403a27810cc6fe50c46c350fe3f67931b990b13",
+            "count": 5,
+            "depth": "PF8",
+            "entry": "Classic"
+          },
+          {
+            "active_sha256": "37d9446d656008362f7bf81324cd7a6ceefb883b668b9d1c4da1264ee432632a",
+            "count": 5,
+            "depth": "PF16",
+            "entry": "Classic"
+          },
+          {
+            "active_sha256": "7e9e8bbb203b8aed460ba6f4461469e49861975c34a3c662d4edea4a29909f8d",
+            "count": 100,
+            "depth": "PF8",
+            "entry": "Classic"
+          },
+          {
+            "active_sha256": "dd4b822eafa0ae04ef3766f475f0d792b2dd7597dd48a8e3d7d1fe49cc5527c6",
+            "count": 100,
+            "depth": "PF16",
+            "entry": "Classic"
+          }
+        ],
+        "x86_64": [
+          {
+            "active_sha256": "3f768aa03c4045a70d16e7695403a27810cc6fe50c46c350fe3f67931b990b13",
+            "count": 5,
+            "depth": "PF8",
+            "entry": "Smart"
+          },
+          {
+            "active_sha256": "37d9446d656008362f7bf81324cd7a6ceefb883b668b9d1c4da1264ee432632a",
+            "count": 5,
+            "depth": "PF16",
+            "entry": "Smart"
+          },
+          {
+            "active_sha256": "fff4c594c4f5c06d8fc8744e189ab8b516fafae63aadd25419636eed9f9de043",
+            "count": 5,
+            "depth": "PF32",
+            "entry": "Smart"
+          },
+          {
+            "active_sha256": "7e9e8bbb203b8aed460ba6f4461469e49861975c34a3c662d4edea4a29909f8d",
+            "count": 100,
+            "depth": "PF8",
+            "entry": "Smart"
+          },
+          {
+            "active_sha256": "dd4b822eafa0ae04ef3766f475f0d792b2dd7597dd48a8e3d7d1fe49cc5527c6",
+            "count": 100,
+            "depth": "PF16",
+            "entry": "Smart"
+          },
+          {
+            "active_sha256": "0768f9ca22351943755bc735356bacaf6b6e6bac9b4dc86deb826b0103dba3df",
+            "count": 100,
+            "depth": "PF32",
+            "entry": "Smart"
+          },
+          {
+            "active_sha256": "3f768aa03c4045a70d16e7695403a27810cc6fe50c46c350fe3f67931b990b13",
+            "count": 5,
+            "depth": "PF8",
+            "entry": "Classic"
+          },
+          {
+            "active_sha256": "37d9446d656008362f7bf81324cd7a6ceefb883b668b9d1c4da1264ee432632a",
+            "count": 5,
+            "depth": "PF16",
+            "entry": "Classic"
+          },
+          {
+            "active_sha256": "7e9e8bbb203b8aed460ba6f4461469e49861975c34a3c662d4edea4a29909f8d",
+            "count": 100,
+            "depth": "PF8",
+            "entry": "Classic"
+          },
+          {
+            "active_sha256": "dd4b822eafa0ae04ef3766f475f0d792b2dd7597dd48a8e3d7d1fe49cc5527c6",
+            "count": 100,
+            "depth": "PF16",
+            "entry": "Classic"
+          }
+        ]
+      },
+      "paths_per_slice": 10,
+      "source_helper_active_mutation_rejects": 18,
+      "source_helper_exact_inputs": 6
+    }
+  },
+  "preflight": [
+    {
+      "all_identity_universal_codesign_exact": true,
+      "plugin_rows": 10,
+      "returncode": 2,
+      "status": "ae_not_running",
+      "stdout_sha256": "ce0ac406784dcf68df3f53c69fc01f683ec22d012c413bd4fef9632d71a21423"
+    },
+    {
+      "all_identity_universal_codesign_exact": true,
+      "plugin_rows": 10,
+      "returncode": 2,
+      "status": "ae_not_running",
+      "stdout_sha256": "ce0ac406784dcf68df3f53c69fc01f683ec22d012c413bd4fef9632d71a21423"
+    }
+  ],
+  "schema": "colorkeep.source-bound-complete-union-install/1",
+  "scope": {
+    "after_effects_launched": false,
+    "arm64": true,
+    "installed": true,
+    "native_after_effects": false,
+    "rollback_copies": 3,
+    "x86_64_rosetta": true
+  },
+  "status": "PASS_COLORKEEP_SOURCE_BOUND_COMPLETE_UNION_INSTALLED_AE_FREE"
+}

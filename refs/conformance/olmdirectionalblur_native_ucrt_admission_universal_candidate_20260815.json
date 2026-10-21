@@ -1,0 +1,35 @@
+{
+  "schema": "olmdirectionalblur.native-ucrt-admission-universal-candidate/1",
+  "status": "PASS_DIRECTIONAL_NATIVE_UCRT_ADMISSION_UNIVERSAL_CANDIDATE",
+  "claim_boundary": "Universal candidate only; not installed and not exercised in After Effects",
+  "authorities": {
+    "production_source_sha256": "b39732e285688f1f8ae2fc5f64efcfba3d7ac52a1451a2685dd7b606bb18fb12",
+    "native_ucrt_replay_sha256": "a3cdfc9ff17bad80a38dde316ea09e9787763df0aab2eba3d360d737321f6152",
+    "public_closure_sha256": "94d9a4d44d9274f88fe7e56398b8bb060ff27508c7c14e212a0ffc6437f33e0f",
+    "source_guard_sha256": "90254702d6ec14a4a059bf12db3835329ad22e9eb807457c248b7e17d871dc9f"
+  },
+  "candidate": {
+    "path": "handoffs/olmdirectionalblur_native_ucrt_admission_candidate_20260815/OLMDirectionalBlur.plugin",
+    "binary_sha256": "c64f8ff701008ae0390eb9da1a9e073dcde97a77e9b32701becf6eaa241a2666",
+    "architectures": ["x86_64", "arm64"],
+    "minimum_macos": {"x86_64": "11.0", "arm64": "11.0"},
+    "identifier": "com.adobe.AfterEffects.OLMDirectionalBlur",
+    "exports": ["EffectMain", "PluginDataEntryFunction2"],
+    "strict_adhoc_signature": true,
+    "bundle_inventory_sha256": "fd3227be2f730228207e47cb2a2231785dc13d261dc4afa69373885328b4873a"
+  },
+  "numerical": {
+    "native_ucrt_x86_new_cells": 6,
+    "public_exact_arm64": 15,
+    "public_exact_x86_64": 15,
+    "source_guard_positive": 15,
+    "source_guard_negative": 240,
+    "production_math_changed": false,
+    "production_admission_changed": true
+  },
+  "scope": {
+    "installed": false,
+    "after_effects_launched": false,
+    "arbitrary_source_tuple_geometry": false
+  }
+}

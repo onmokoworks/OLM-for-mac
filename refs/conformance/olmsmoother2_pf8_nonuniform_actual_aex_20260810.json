@@ -37,7 +37,7 @@
       "version": "v2"
     }
   ],
-  "production_source_sha256": "d8a7a489bb3bc875e998926bdde971ac66f5544c41ff6bc583819bf0daf0a784",
+  "production_source_sha256": "ad9edee80793369219ef5b9e08d5cb397060a315b30aa36ce221d3e2488d2ee1",
   "scope": "PF8 v1/v2, key disabled, gamma UI none, smoothness 100, range 1, extra smooth 0, padded 3x2 nonuniform fixtures",
   "verdict": "PASS_PF8_NATURAL_AEX_CLASSIFIER_C280_TYPED_WORKER_TO_PRODUCTION_EXACT"
 }

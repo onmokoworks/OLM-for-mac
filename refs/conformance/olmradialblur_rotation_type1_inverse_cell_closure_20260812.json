@@ -1,0 +1,3806 @@
+{
+  "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+  "cells": [
+    {
+      "category": "pairwise",
+      "evidence": [
+        {
+          "case_sha256": "e4eace07adda913cff4531c0cf49aa0bd7f122a32c86e6f8cc9f2c89426239ba",
+          "report": "refs/conformance/olmradialblur_noise_type1_pf16_pairwise_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_noise_type1_pairwise",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "pairwise-pf16-nv100-s1-o1-t3",
+      "params": {
+        "depth": 16,
+        "noise_offset": 1.0,
+        "noise_variation": 100.0,
+        "seed": 1,
+        "thickness": 3.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "pairwise",
+      "evidence": [
+        {
+          "case_sha256": "7cb16c563aa86888b105ff22f3b9ce85ce4dbddadaf79f4397dc951136c66f51",
+          "report": "refs/conformance/olmradialblur_noise_type1_pf16_pairwise_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_noise_type1_pairwise",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "pairwise-pf16-nv100-s2-o0-t10",
+      "params": {
+        "depth": 16,
+        "noise_offset": 0.0,
+        "noise_variation": 100.0,
+        "seed": 2,
+        "thickness": 10.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "pairwise",
+      "evidence": [
+        {
+          "case_sha256": "d795d6264674c53f89fe91994aced4a307fd4750c84d95235ddccb1ad5f88329",
+          "report": "refs/conformance/olmradialblur_noise_type1_pf16_pairwise_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_noise_type1_pairwise",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "pairwise-pf16-nv25-s1-o0-t3",
+      "params": {
+        "depth": 16,
+        "noise_offset": 0.0,
+        "noise_variation": 25.0,
+        "seed": 1,
+        "thickness": 3.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "pairwise",
+      "evidence": [
+        {
+          "case_sha256": "05e56b9cadc83dcfcb86e6d0b4ae409ae4ce38426e692bd8199a77f3610701fc",
+          "report": "refs/conformance/olmradialblur_noise_type1_pf16_pairwise_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_noise_type1_pairwise",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "pairwise-pf16-nv25-s2-o1-t10",
+      "params": {
+        "depth": 16,
+        "noise_offset": 1.0,
+        "noise_variation": 25.0,
+        "seed": 2,
+        "thickness": 10.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "pairwise",
+      "evidence": [
+        {
+          "case_sha256": "aa89015724c52cdc93e9fc7ccab5ec854a403bda4c5a8b5e9cbaf54a6b13c8c5",
+          "report": "refs/conformance/olmradialblur_noise_type1_pf8_combo_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_noise_type1_pairwise",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "pairwise-pf8-nv100-s1-o1-t3",
+      "params": {
+        "depth": 8,
+        "noise_offset": 1.0,
+        "noise_variation": 100.0,
+        "seed": 1,
+        "thickness": 3.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "pairwise",
+      "evidence": [
+        {
+          "case_sha256": "9e87faa19fbc5d2315f9924c5903d1a1ab4bbadcd82e084854a6e0f61090cfaa",
+          "report": "refs/conformance/olmradialblur_noise_type1_pf8_combo_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_noise_type1_pairwise",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "pairwise-pf8-nv100-s2-o0-t10",
+      "params": {
+        "depth": 8,
+        "noise_offset": 0.0,
+        "noise_variation": 100.0,
+        "seed": 2,
+        "thickness": 10.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "pairwise",
+      "evidence": [
+        {
+          "case_sha256": "7ad89b55fdd9e44110800235ff1bb0c8c636b728fd8976f1bc3a4af945b335a2",
+          "report": "refs/conformance/olmradialblur_noise_type1_pf8_combo_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_noise_type1_pairwise",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "pairwise-pf8-nv25-s1-o0-t3",
+      "params": {
+        "depth": 8,
+        "noise_offset": 0.0,
+        "noise_variation": 25.0,
+        "seed": 1,
+        "thickness": 3.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "pairwise",
+      "evidence": [
+        {
+          "case_sha256": "a03dc02fb2711976721e3fd954c8161f9a57461eb67effd1999784062f12bd7c",
+          "report": "refs/conformance/olmradialblur_noise_type1_pf8_combo_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_noise_type1_pairwise",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "pairwise-pf8-nv25-s2-o1-t10",
+      "params": {
+        "depth": 8,
+        "noise_offset": 1.0,
+        "noise_variation": 25.0,
+        "seed": 2,
+        "thickness": 10.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "dual_strength",
+      "evidence": [
+        {
+          "case_sha256": "47adcfe23d1b891cee2c1265de440f21bfa3232da810b2859299c7dc39a31d14",
+          "report": "refs/conformance/olmradialblur_dual_strength_noise_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_dual_strength_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "dual-pf16-i2-sv0-nv100",
+      "params": {
+        "depth": 16,
+        "inner_strength": 2,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "outer_strength": 4,
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "dual_strength",
+      "evidence": [
+        {
+          "case_sha256": "2a12c56908dde7197606ca651b0785ae8161070290c0067ec4dfea38c0bbfe59",
+          "report": "refs/conformance/olmradialblur_dual_strength_noise_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_dual_strength_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "dual-pf16-i2-sv0-nv25",
+      "params": {
+        "depth": 16,
+        "inner_strength": 2,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "outer_strength": 4,
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "dual_strength",
+      "evidence": [
+        {
+          "case_sha256": "13d46a8127ff138e852a32d95f86b7db115297315e5123ef07dacdb13e7b9a9f",
+          "report": "refs/conformance/olmradialblur_dual_strength_size_noise_components_actual_aex_20260812.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_dual_strength_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "dual-pf16-i2-sv25-nv25",
+      "params": {
+        "depth": 16,
+        "inner_strength": 2,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "outer_strength": 4,
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "dual_strength",
+      "evidence": [
+        {
+          "case_sha256": "b2e71a9eccfe7a8dfbcaa86e377dd342d4a8355fdf43f47d610fdf492ca721e1",
+          "report": "refs/conformance/olmradialblur_dual_strength_noise_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_dual_strength_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "dual-pf16-i4-sv0-nv100",
+      "params": {
+        "depth": 16,
+        "inner_strength": 4,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "outer_strength": 4,
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "dual_strength",
+      "evidence": [
+        {
+          "case_sha256": "138b72de5758072d8809c7dbf1a10047381251ff61ef8aebf7f44b5f021df422",
+          "report": "refs/conformance/olmradialblur_dual_strength_noise_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_dual_strength_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "dual-pf16-i4-sv0-nv25",
+      "params": {
+        "depth": 16,
+        "inner_strength": 4,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "outer_strength": 4,
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "dual_strength",
+      "evidence": [
+        {
+          "case_sha256": "74dcc49f710c9e6a8cde276f1e21a695bf84759b783591e5fc33b15d900648d7",
+          "report": "refs/conformance/olmradialblur_dual_strength_size_noise_components_actual_aex_20260812.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_dual_strength_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "dual-pf16-i4-sv25-nv25",
+      "params": {
+        "depth": 16,
+        "inner_strength": 4,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "outer_strength": 4,
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "dual_strength",
+      "evidence": [
+        {
+          "case_sha256": "021af0f13aed8d06165ee501e247f6c9e00acdf4587cb5664d4408f36455ec6e",
+          "report": "refs/conformance/olmradialblur_dual_strength_noise_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_dual_strength_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "dual-pf32-i2-sv0-nv100",
+      "params": {
+        "depth": 32,
+        "inner_strength": 2,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "outer_strength": 4,
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "dual_strength",
+      "evidence": [
+        {
+          "case_sha256": "458371676b8af45cb1396c5b041d579c32564ff8c53cba75952fa8d72bdd2810",
+          "report": "refs/conformance/olmradialblur_dual_strength_noise_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_dual_strength_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "dual-pf32-i2-sv0-nv25",
+      "params": {
+        "depth": 32,
+        "inner_strength": 2,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "outer_strength": 4,
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "dual_strength",
+      "evidence": [
+        {
+          "case_sha256": "11337995ca55449772d56065862049d239aaff1bd27cd441d42c4f5ca98a1e5d",
+          "report": "refs/conformance/olmradialblur_dual_strength_size_noise_components_actual_aex_20260812.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_dual_strength_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "dual-pf32-i2-sv25-nv25",
+      "params": {
+        "depth": 32,
+        "inner_strength": 2,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "outer_strength": 4,
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "dual_strength",
+      "evidence": [
+        {
+          "case_sha256": "145d313fa53e2c392013d88cc468f9e74dd69b7e27660db16836b1981339c36e",
+          "report": "refs/conformance/olmradialblur_dual_strength_noise_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_dual_strength_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "dual-pf32-i4-sv0-nv100",
+      "params": {
+        "depth": 32,
+        "inner_strength": 4,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "outer_strength": 4,
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "dual_strength",
+      "evidence": [
+        {
+          "case_sha256": "637e9fd7e3353c4702f6799174c330d5cdbcdd67eacccd7c7a452fdfdf2f0d9f",
+          "report": "refs/conformance/olmradialblur_dual_strength_noise_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_dual_strength_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "dual-pf32-i4-sv0-nv25",
+      "params": {
+        "depth": 32,
+        "inner_strength": 4,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "outer_strength": 4,
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "dual_strength",
+      "evidence": [
+        {
+          "case_sha256": "683ca1d2006a23062d4052353aa43cea02ce1bfe0d7d148f309cf21e8bc7c663",
+          "report": "refs/conformance/olmradialblur_dual_strength_size_noise_components_actual_aex_20260812.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_dual_strength_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "dual-pf32-i4-sv25-nv25",
+      "params": {
+        "depth": 32,
+        "inner_strength": 4,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "outer_strength": 4,
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "dual_strength",
+      "evidence": [
+        {
+          "case_sha256": "d036d31d3fe4801859630b411902d5c2ff48fb7671c84ed5d3f95b4712567dc9",
+          "report": "refs/conformance/olmradialblur_dual_strength_noise_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_dual_strength_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "dual-pf8-i2-sv0-nv100",
+      "params": {
+        "depth": 8,
+        "inner_strength": 2,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "outer_strength": 4,
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "dual_strength",
+      "evidence": [
+        {
+          "case_sha256": "93ce7bc170d41b186cbde7ab992b926c4110b9cc153e7da56a641030e9fb20b8",
+          "report": "refs/conformance/olmradialblur_dual_strength_noise_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_dual_strength_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "dual-pf8-i2-sv0-nv25",
+      "params": {
+        "depth": 8,
+        "inner_strength": 2,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "outer_strength": 4,
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "dual_strength",
+      "evidence": [
+        {
+          "case_sha256": "c180876f3de6258615b079a516aff72dcb2ed624d8dafc3e95ecfd0d08d06177",
+          "report": "refs/conformance/olmradialblur_dual_strength_size_noise_components_actual_aex_20260812.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_dual_strength_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "dual-pf8-i2-sv25-nv25",
+      "params": {
+        "depth": 8,
+        "inner_strength": 2,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "outer_strength": 4,
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "dual_strength",
+      "evidence": [
+        {
+          "case_sha256": "fe070ff416ece858270267049d040f49b2451505255825b26ecbdf016a8803f8",
+          "report": "refs/conformance/olmradialblur_dual_strength_noise_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_dual_strength_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "dual-pf8-i4-sv0-nv100",
+      "params": {
+        "depth": 8,
+        "inner_strength": 4,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "outer_strength": 4,
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "dual_strength",
+      "evidence": [
+        {
+          "case_sha256": "9d3738574232a4f5ea7bbe54f93ffbe0da2f7f294f7c28ff5c44de61ea190d06",
+          "report": "refs/conformance/olmradialblur_dual_strength_noise_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_dual_strength_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "dual-pf8-i4-sv0-nv25",
+      "params": {
+        "depth": 8,
+        "inner_strength": 4,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "outer_strength": 4,
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "dual_strength",
+      "evidence": [
+        {
+          "case_sha256": "62904a0095a3d19ad6bf48aabea5d238a8f18f5c3523cc4a80775de2eea8c20a",
+          "report": "refs/conformance/olmradialblur_dual_strength_size_noise_components_actual_aex_20260812.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_dual_strength_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "dual-pf8-i4-sv25-nv25",
+      "params": {
+        "depth": 8,
+        "inner_strength": 4,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "outer_strength": 4,
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "8d0679532e385f6c708a2b756af2f87fadb5d8a24fc3b0c107667d962d1ef80b",
+          "report": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_edge_noise_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "edge-pf16-inner-f100-nv100",
+      "params": {
+        "depth": 16,
+        "edge_fade": 100,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "side": "inner",
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "d18fbf7e1c29354c36e803a00eb49240fec6971bf0ff3e194176fb929d11706d",
+          "report": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_edge_noise_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "edge-pf16-inner-f100-nv25",
+      "params": {
+        "depth": 16,
+        "edge_fade": 100,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "side": "inner",
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "dedcaf13d572af874d80c11ce891d3980a459e59e925a4871f9ea710fabf44c7",
+          "report": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_edge_noise_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "edge-pf16-inner-f50-nv100",
+      "params": {
+        "depth": 16,
+        "edge_fade": 50,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "side": "inner",
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "f34e2e5d54f93fd58b1421f6076ba4671f0b50094dc40cd42b6687c0ab3b17be",
+          "report": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_edge_noise_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "edge-pf16-inner-f50-nv25",
+      "params": {
+        "depth": 16,
+        "edge_fade": 50,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "side": "inner",
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "cc61b4214e48e6c21409619d9639366c5b17c00b8ed28646b7a78cd92ba4bf9b",
+          "report": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_edge_noise_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "edge-pf16-outer-f100-nv100",
+      "params": {
+        "depth": 16,
+        "edge_fade": 100,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "side": "outer",
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "c309a4e5a3fdef2cf5f9c28697ae45dde0d7395a2d531ab19cebc03ab679b718",
+          "report": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_edge_noise_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "edge-pf16-outer-f100-nv25",
+      "params": {
+        "depth": 16,
+        "edge_fade": 100,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "side": "outer",
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "504fdadcdc6ce5dbc27700a1c1992e90481e889e67639b137b9e847edffc71fd",
+          "report": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_edge_noise_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "edge-pf16-outer-f50-nv100",
+      "params": {
+        "depth": 16,
+        "edge_fade": 50,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "side": "outer",
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "d788f32d5c19518fc9c91e566ffc2b4baaa2fd4f8291ef2ecb30624abc026140",
+          "report": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_edge_noise_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "edge-pf16-outer-f50-nv25",
+      "params": {
+        "depth": 16,
+        "edge_fade": 50,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "side": "outer",
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "c53f97d9e3d3386ac86b7a17f32aad27d4f4d60e6a9365791dedd98a3fe4b141",
+          "report": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_edge_noise_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "edge-pf32-inner-f100-nv100",
+      "params": {
+        "depth": 32,
+        "edge_fade": 100,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "side": "inner",
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "6b5156ca5de73d0e4ee54b6980447cebb41461229b84a594fb621bb1ee5df360",
+          "report": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_edge_noise_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "edge-pf32-inner-f100-nv25",
+      "params": {
+        "depth": 32,
+        "edge_fade": 100,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "side": "inner",
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "3f56ffe3d62cfc1b95538630c8e3fae7273391983e434ae527e430d8c1293f03",
+          "report": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_edge_noise_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "edge-pf32-inner-f50-nv100",
+      "params": {
+        "depth": 32,
+        "edge_fade": 50,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "side": "inner",
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "752bdd1ddeab2997b85e0dbf27b104609e70ad6d026428a3d686571c4ee2f9b0",
+          "report": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_edge_noise_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "edge-pf32-inner-f50-nv25",
+      "params": {
+        "depth": 32,
+        "edge_fade": 50,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "side": "inner",
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "39999b457dee03c824eddbebdc55f569fb180cda2825c45d34e9b90b8089cff0",
+          "report": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_edge_noise_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "edge-pf32-outer-f100-nv100",
+      "params": {
+        "depth": 32,
+        "edge_fade": 100,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "side": "outer",
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "14017306482fac34817c4b6ccb12c1933a71d8b3b286d96a3fe708c125e7c2b6",
+          "report": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_edge_noise_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "edge-pf32-outer-f100-nv25",
+      "params": {
+        "depth": 32,
+        "edge_fade": 100,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "side": "outer",
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "87eec92c0f4131aa242884fa0493cebc6aacdd363751685cb4237c039ff718a6",
+          "report": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_edge_noise_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "edge-pf32-outer-f50-nv100",
+      "params": {
+        "depth": 32,
+        "edge_fade": 50,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "side": "outer",
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "1e039edbeb2d79d14acf9f210c34be5156f54709249799650497353633a8df72",
+          "report": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_edge_noise_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "edge-pf32-outer-f50-nv25",
+      "params": {
+        "depth": 32,
+        "edge_fade": 50,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "side": "outer",
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "d6a1bb7c080019133a3b92e51567f577f5b368e0a0097f191c93f8e1af98081e",
+          "report": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_edge_noise_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "edge-pf8-inner-f100-nv100",
+      "params": {
+        "depth": 8,
+        "edge_fade": 100,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "side": "inner",
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "fee77a40b3c22e96640f55d75e22ff19d0f2e75a9a28ec9c8aa05998a050d0d7",
+          "report": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_edge_noise_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "edge-pf8-inner-f100-nv25",
+      "params": {
+        "depth": 8,
+        "edge_fade": 100,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "side": "inner",
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "b395929d1e58308d7c13c4b24c6131d6b01d25bc36f6d521b3ec37cac4f6d0aa",
+          "report": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_edge_noise_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "edge-pf8-inner-f50-nv100",
+      "params": {
+        "depth": 8,
+        "edge_fade": 50,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "side": "inner",
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "d44b4499288c304c32318a91339948dd7b6c7e868bafb60b1bb84f02e8a68937",
+          "report": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_edge_noise_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "edge-pf8-inner-f50-nv25",
+      "params": {
+        "depth": 8,
+        "edge_fade": 50,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "side": "inner",
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "808226827524e8881d0aa96eacc8a7e45607da98f50e7d1902df2c356e9eea83",
+          "report": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_edge_noise_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "edge-pf8-outer-f100-nv100",
+      "params": {
+        "depth": 8,
+        "edge_fade": 100,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "side": "outer",
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "87442395df2304cf35e7d80de4cd177332282582f8ecf7e5937560b61bf85cc2",
+          "report": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_edge_noise_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "edge-pf8-outer-f100-nv25",
+      "params": {
+        "depth": 8,
+        "edge_fade": 100,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "side": "outer",
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "5e3515632b4651b5d6783f522f8aad892ffd0ad39e96d7f304bc359aedc4b2ef",
+          "report": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_edge_noise_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "edge-pf8-outer-f50-nv100",
+      "params": {
+        "depth": 8,
+        "edge_fade": 50,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "side": "outer",
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "9f78dec214f9eec5300cdfea5228b8b7020442a0db0c8c537e784fc754a6e3d4",
+          "report": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_edge_noise_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "edge-pf8-outer-f50-nv25",
+      "params": {
+        "depth": 8,
+        "edge_fade": 50,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "side": "outer",
+        "size_variation": 0.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "any_size_edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "12e46b194070d7484ddcb7bd31bc058ee680b4b1dba34464ef50ea55f750201c",
+          "report": "refs/conformance/olmradialblur_inner_size_edge_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_any_size_edge_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-edge-pf16-inner-f100-nv100",
+      "params": {
+        "depth": 16,
+        "edge_fade": 100,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "side": "inner",
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "any_size_edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "cc9f6d7c92531eb2995e3ef8d2fa872afe9b6c38aea3aa0c8ce593a424d089df",
+          "report": "refs/conformance/olmradialblur_inner_size_edge_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_any_size_edge_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-edge-pf16-inner-f50-nv25",
+      "params": {
+        "depth": 16,
+        "edge_fade": 50,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "side": "inner",
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "any_size_edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "03fdb988dc371f5ac253b1ed92fd60583413f6fcd308b02cafd8ee752b77c468",
+          "report": "refs/conformance/olmradialblur_size_edge_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_any_size_edge_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-edge-pf16-outer-f100-nv100",
+      "params": {
+        "depth": 16,
+        "edge_fade": 100,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "side": "outer",
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "any_size_edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "5ad5463c90213ae0a37925481c419d270a169e827dfc44c95257fba485763c6d",
+          "report": "refs/conformance/olmradialblur_size_edge_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_any_size_edge_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-edge-pf16-outer-f50-nv25",
+      "params": {
+        "depth": 16,
+        "edge_fade": 50,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "side": "outer",
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "any_size_edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "f2f5032a6f923bc1a1ef8a1ed5d443834865659d74c454d528c35d9ccf5c4d05",
+          "report": "refs/conformance/olmradialblur_inner_size_edge_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_any_size_edge_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-edge-pf32-inner-f100-nv100",
+      "params": {
+        "depth": 32,
+        "edge_fade": 100,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "side": "inner",
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "any_size_edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "d1f5c657bc80c1dbb238246768f2a1c216f3b265b5864dfc016bc10a3989c405",
+          "report": "refs/conformance/olmradialblur_inner_size_edge_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_any_size_edge_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-edge-pf32-inner-f50-nv25",
+      "params": {
+        "depth": 32,
+        "edge_fade": 50,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "side": "inner",
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "any_size_edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "4123f135017ba674cb8ca3bd9f030c5fa829296d652c044de6a25bf5b02df2d6",
+          "report": "refs/conformance/olmradialblur_size_edge_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_any_size_edge_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-edge-pf32-outer-f100-nv100",
+      "params": {
+        "depth": 32,
+        "edge_fade": 100,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "side": "outer",
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "any_size_edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "92b05b83720275bd6a8d5771019e2a257a9e4ad2d7f8a75d5c70c6938b98ad2b",
+          "report": "refs/conformance/olmradialblur_size_edge_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_any_size_edge_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-edge-pf32-outer-f50-nv25",
+      "params": {
+        "depth": 32,
+        "edge_fade": 50,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "side": "outer",
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "any_size_edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "fde7580218462a0d4987c3575481988a0db63c4fd5ede0829affc5427020dbca",
+          "report": "refs/conformance/olmradialblur_inner_size_edge_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_any_size_edge_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-edge-pf8-inner-f100-nv100",
+      "params": {
+        "depth": 8,
+        "edge_fade": 100,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "side": "inner",
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "any_size_edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "b004ec69031456005c0520a0a2f107311f5daba86dfca0166b2dc0364908cd6e",
+          "report": "refs/conformance/olmradialblur_inner_size_edge_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_any_size_edge_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-edge-pf8-inner-f50-nv25",
+      "params": {
+        "depth": 8,
+        "edge_fade": 50,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "side": "inner",
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "any_size_edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "578f1cf26e16c80c2bc4e337d1000b970a2522789c7f1cf44811355352a0b3bb",
+          "report": "refs/conformance/olmradialblur_size_edge_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_any_size_edge_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-edge-pf8-outer-f100-nv100",
+      "params": {
+        "depth": 8,
+        "edge_fade": 100,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "side": "outer",
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "any_size_edge_noise",
+      "evidence": [
+        {
+          "case_sha256": "e1e4e34e088f02e479f36dd38b207345185caf91fb1a43621bca0bcb82db26bb",
+          "report": "refs/conformance/olmradialblur_size_edge_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_any_size_edge_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-edge-pf8-outer-f50-nv25",
+      "params": {
+        "depth": 8,
+        "edge_fade": 50,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "side": "outer",
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "a822edcdc5268f5829582233d9e80b2ce798a2b6cd29b3cb75c45119f762c6f8",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        },
+        {
+          "case_sha256": "fd34b53d485d63813e6faafe2585714164c80f99c77a0bc8b3fefcd17ad6b164",
+          "report": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf16-g0.5-sv100-nv100",
+      "params": {
+        "brightness_gain": 0.5,
+        "depth": 16,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "size_variation": 100.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older factorized reports retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "6be2efee6b34e3b5fc981a7ed2f5db339588eb0832a51c56ac98e43c086e3702",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        },
+        {
+          "case_sha256": "fd34b53d485d63813e6faafe2585714164c80f99c77a0bc8b3fefcd17ad6b164",
+          "report": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf16-g0.5-sv100-nv25",
+      "params": {
+        "brightness_gain": 0.5,
+        "depth": 16,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "size_variation": 100.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older factorized reports retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "f06608ec2a4db3060227b8cb94ca951c71d7e6789630579c770dcfa323856759",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        },
+        {
+          "case_sha256": "fd34b53d485d63813e6faafe2585714164c80f99c77a0bc8b3fefcd17ad6b164",
+          "report": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf16-g0.5-sv25-nv100",
+      "params": {
+        "brightness_gain": 0.5,
+        "depth": 16,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older factorized reports retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "6c72c035f2299505820fea1c5e4ca3b1f426603c24650a1bfc0e4893e6397067",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        },
+        {
+          "case_sha256": "fd34b53d485d63813e6faafe2585714164c80f99c77a0bc8b3fefcd17ad6b164",
+          "report": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf16-g0.5-sv25-nv25",
+      "params": {
+        "brightness_gain": 0.5,
+        "depth": 16,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older factorized reports retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "a822edcdc5268f5829582233d9e80b2ce798a2b6cd29b3cb75c45119f762c6f8",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf16-g1-sv100-nv100",
+      "params": {
+        "brightness_gain": 1.0,
+        "depth": 16,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "size_variation": 100.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older gain1 report retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "6be2efee6b34e3b5fc981a7ed2f5db339588eb0832a51c56ac98e43c086e3702",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf16-g1-sv100-nv25",
+      "params": {
+        "brightness_gain": 1.0,
+        "depth": 16,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "size_variation": 100.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older gain1 report retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "f06608ec2a4db3060227b8cb94ca951c71d7e6789630579c770dcfa323856759",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf16-g1-sv25-nv100",
+      "params": {
+        "brightness_gain": 1.0,
+        "depth": 16,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older gain1 report retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "6c72c035f2299505820fea1c5e4ca3b1f426603c24650a1bfc0e4893e6397067",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf16-g1-sv25-nv25",
+      "params": {
+        "brightness_gain": 1.0,
+        "depth": 16,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older gain1 report retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "a822edcdc5268f5829582233d9e80b2ce798a2b6cd29b3cb75c45119f762c6f8",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        },
+        {
+          "case_sha256": "85c9588d917a23585c7edfdbd17a0749d6064d29da476994c427e3b3c441c9f3",
+          "report": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf16-g2-sv100-nv100",
+      "params": {
+        "brightness_gain": 2.0,
+        "depth": 16,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "size_variation": 100.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older factorized reports retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "6be2efee6b34e3b5fc981a7ed2f5db339588eb0832a51c56ac98e43c086e3702",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        },
+        {
+          "case_sha256": "85c9588d917a23585c7edfdbd17a0749d6064d29da476994c427e3b3c441c9f3",
+          "report": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf16-g2-sv100-nv25",
+      "params": {
+        "brightness_gain": 2.0,
+        "depth": 16,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "size_variation": 100.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older factorized reports retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "f06608ec2a4db3060227b8cb94ca951c71d7e6789630579c770dcfa323856759",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        },
+        {
+          "case_sha256": "85c9588d917a23585c7edfdbd17a0749d6064d29da476994c427e3b3c441c9f3",
+          "report": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf16-g2-sv25-nv100",
+      "params": {
+        "brightness_gain": 2.0,
+        "depth": 16,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older factorized reports retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "6c72c035f2299505820fea1c5e4ca3b1f426603c24650a1bfc0e4893e6397067",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        },
+        {
+          "case_sha256": "85c9588d917a23585c7edfdbd17a0749d6064d29da476994c427e3b3c441c9f3",
+          "report": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf16-g2-sv25-nv25",
+      "params": {
+        "brightness_gain": 2.0,
+        "depth": 16,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older factorized reports retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "e5c086f7bb8ee9ece6387991ad938b03651a107e83b44d98171b1d0afbe9a372",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        },
+        {
+          "case_sha256": "293e2da09f8b58d37541c3c7d62b9a6a176606b1fce9ba4465d305c4325e0136",
+          "report": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf32-g0.5-sv100-nv100",
+      "params": {
+        "brightness_gain": 0.5,
+        "depth": 32,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "size_variation": 100.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older factorized reports retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "6d7663120c49f004357330061024559102b07e5bfecac6e3f18b163fb3fa23e9",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        },
+        {
+          "case_sha256": "293e2da09f8b58d37541c3c7d62b9a6a176606b1fce9ba4465d305c4325e0136",
+          "report": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf32-g0.5-sv100-nv25",
+      "params": {
+        "brightness_gain": 0.5,
+        "depth": 32,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "size_variation": 100.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older factorized reports retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "4a26f06a7eb20780836177b8a3e03b2e436f01836ec9b0847e6e1a3e91f4d598",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        },
+        {
+          "case_sha256": "293e2da09f8b58d37541c3c7d62b9a6a176606b1fce9ba4465d305c4325e0136",
+          "report": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf32-g0.5-sv25-nv100",
+      "params": {
+        "brightness_gain": 0.5,
+        "depth": 32,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older factorized reports retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "f56d93ac7f354934a3db3f6eb6ed2acf4ec1e443443752a6ce2e8959f4db38a3",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        },
+        {
+          "case_sha256": "293e2da09f8b58d37541c3c7d62b9a6a176606b1fce9ba4465d305c4325e0136",
+          "report": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf32-g0.5-sv25-nv25",
+      "params": {
+        "brightness_gain": 0.5,
+        "depth": 32,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older factorized reports retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "e5c086f7bb8ee9ece6387991ad938b03651a107e83b44d98171b1d0afbe9a372",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf32-g1-sv100-nv100",
+      "params": {
+        "brightness_gain": 1.0,
+        "depth": 32,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "size_variation": 100.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older gain1 report retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "6d7663120c49f004357330061024559102b07e5bfecac6e3f18b163fb3fa23e9",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf32-g1-sv100-nv25",
+      "params": {
+        "brightness_gain": 1.0,
+        "depth": 32,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "size_variation": 100.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older gain1 report retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "4a26f06a7eb20780836177b8a3e03b2e436f01836ec9b0847e6e1a3e91f4d598",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf32-g1-sv25-nv100",
+      "params": {
+        "brightness_gain": 1.0,
+        "depth": 32,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older gain1 report retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "f56d93ac7f354934a3db3f6eb6ed2acf4ec1e443443752a6ce2e8959f4db38a3",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf32-g1-sv25-nv25",
+      "params": {
+        "brightness_gain": 1.0,
+        "depth": 32,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older gain1 report retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "e5c086f7bb8ee9ece6387991ad938b03651a107e83b44d98171b1d0afbe9a372",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        },
+        {
+          "case_sha256": "49646e6a95201e30c4823f06bfe206b633f2c2e1ac12e0437d8535fb184fa023",
+          "report": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf32-g2-sv100-nv100",
+      "params": {
+        "brightness_gain": 2.0,
+        "depth": 32,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "size_variation": 100.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older factorized reports retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "6d7663120c49f004357330061024559102b07e5bfecac6e3f18b163fb3fa23e9",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        },
+        {
+          "case_sha256": "49646e6a95201e30c4823f06bfe206b633f2c2e1ac12e0437d8535fb184fa023",
+          "report": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf32-g2-sv100-nv25",
+      "params": {
+        "brightness_gain": 2.0,
+        "depth": 32,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "size_variation": 100.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older factorized reports retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "4a26f06a7eb20780836177b8a3e03b2e436f01836ec9b0847e6e1a3e91f4d598",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        },
+        {
+          "case_sha256": "49646e6a95201e30c4823f06bfe206b633f2c2e1ac12e0437d8535fb184fa023",
+          "report": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf32-g2-sv25-nv100",
+      "params": {
+        "brightness_gain": 2.0,
+        "depth": 32,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older factorized reports retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "f56d93ac7f354934a3db3f6eb6ed2acf4ec1e443443752a6ce2e8959f4db38a3",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        },
+        {
+          "case_sha256": "49646e6a95201e30c4823f06bfe206b633f2c2e1ac12e0437d8535fb184fa023",
+          "report": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf32-g2-sv25-nv25",
+      "params": {
+        "brightness_gain": 2.0,
+        "depth": 32,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older factorized reports retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "4e54173b3aab5a3146775e75379988a3cba6da11fbc99e3f350b9c408751fd00",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        },
+        {
+          "case_sha256": "12bf86e09d1cc5b244b5fa48758f15633b7dde1a35775e4b7f4780cff61ac312",
+          "report": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf8-g0.5-sv100-nv100",
+      "params": {
+        "brightness_gain": 0.5,
+        "depth": 8,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "size_variation": 100.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older factorized reports retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "dd39c9020623b48279729bc8ef6d857b3fe41b6df8e97369dfd86a10d70b66e5",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        },
+        {
+          "case_sha256": "12bf86e09d1cc5b244b5fa48758f15633b7dde1a35775e4b7f4780cff61ac312",
+          "report": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf8-g0.5-sv100-nv25",
+      "params": {
+        "brightness_gain": 0.5,
+        "depth": 8,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "size_variation": 100.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older factorized reports retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "c961ac28cb6c094ce4ac8083d4dd6897115d352d117160e9d22952b688eabc54",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        },
+        {
+          "case_sha256": "12bf86e09d1cc5b244b5fa48758f15633b7dde1a35775e4b7f4780cff61ac312",
+          "report": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf8-g0.5-sv25-nv100",
+      "params": {
+        "brightness_gain": 0.5,
+        "depth": 8,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older factorized reports retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "60f447472eedfc41bfeb7e49f6b8c1c79b4577f567f63e24ea5ee3ebc9b9c790",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        },
+        {
+          "case_sha256": "12bf86e09d1cc5b244b5fa48758f15633b7dde1a35775e4b7f4780cff61ac312",
+          "report": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf8-g0.5-sv25-nv25",
+      "params": {
+        "brightness_gain": 0.5,
+        "depth": 8,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older factorized reports retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "4e54173b3aab5a3146775e75379988a3cba6da11fbc99e3f350b9c408751fd00",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf8-g1-sv100-nv100",
+      "params": {
+        "brightness_gain": 1.0,
+        "depth": 8,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "size_variation": 100.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older gain1 report retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "dd39c9020623b48279729bc8ef6d857b3fe41b6df8e97369dfd86a10d70b66e5",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf8-g1-sv100-nv25",
+      "params": {
+        "brightness_gain": 1.0,
+        "depth": 8,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "size_variation": 100.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older gain1 report retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "c961ac28cb6c094ce4ac8083d4dd6897115d352d117160e9d22952b688eabc54",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf8-g1-sv25-nv100",
+      "params": {
+        "brightness_gain": 1.0,
+        "depth": 8,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older gain1 report retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "60f447472eedfc41bfeb7e49f6b8c1c79b4577f567f63e24ea5ee3ebc9b9c790",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf8-g1-sv25-nv25",
+      "params": {
+        "brightness_gain": 1.0,
+        "depth": 8,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older gain1 report retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "4e54173b3aab5a3146775e75379988a3cba6da11fbc99e3f350b9c408751fd00",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        },
+        {
+          "case_sha256": "56f93358d193e3ab34305afa6189f391db2e68c23c6881b0c1cc6424964669c5",
+          "report": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf8-g2-sv100-nv100",
+      "params": {
+        "brightness_gain": 2.0,
+        "depth": 8,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "size_variation": 100.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older factorized reports retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "dd39c9020623b48279729bc8ef6d857b3fe41b6df8e97369dfd86a10d70b66e5",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        },
+        {
+          "case_sha256": "56f93358d193e3ab34305afa6189f391db2e68c23c6881b0c1cc6424964669c5",
+          "report": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf8-g2-sv100-nv25",
+      "params": {
+        "brightness_gain": 2.0,
+        "depth": 8,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "size_variation": 100.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older factorized reports retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "c961ac28cb6c094ce4ac8083d4dd6897115d352d117160e9d22952b688eabc54",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        },
+        {
+          "case_sha256": "56f93358d193e3ab34305afa6189f391db2e68c23c6881b0c1cc6424964669c5",
+          "report": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf8-g2-sv25-nv100",
+      "params": {
+        "brightness_gain": 2.0,
+        "depth": 8,
+        "noise_type": 1,
+        "noise_variation": 100.0,
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older factorized reports retained as context"
+    },
+    {
+      "category": "size_noise",
+      "evidence": [
+        {
+          "case_sha256": "60f447472eedfc41bfeb7e49f6b8c1c79b4577f567f63e24ea5ee3ebc9b9c790",
+          "report": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json"
+        },
+        {
+          "case_sha256": "56f93358d193e3ab34305afa6189f391db2e68c23c6881b0c1cc6424964669c5",
+          "report": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+        }
+      ],
+      "exact": true,
+      "flag": "use_aex_typed_rotation_size_noise_components_32x18",
+      "fresh_integration": {
+        "available_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ],
+        "raw_exact": true
+      },
+      "id": "size-noise-pf8-g2-sv25-nv25",
+      "params": {
+        "brightness_gain": 2.0,
+        "depth": 8,
+        "noise_type": 1,
+        "noise_variation": 25.0,
+        "size_variation": 25.0
+      },
+      "prior_consumed_planes_and_typed_output_exact": true,
+      "proof_composition": "fresh direct-owner integration row; older factorized reports retained as context"
+    }
+  ],
+  "claims_not_made": [
+    "Strength290 public admission",
+    "arbitrary strength, geometry, seed, offset, thickness, fade, size, or brightness",
+    "Rotation Type3 numerical admission",
+    "native After Effects render",
+    "installed plug-in identity",
+    "natural exported-public Windows AEX execution for all 98 rows"
+  ],
+  "controls": {
+    "strength290": "excluded; diagnostic direct-owner counterexample only, never a public admission or closure row",
+    "type2": {
+      "any_size_edge_noise": "Type2 rows remain on SampleRadialBlockNoisePlaneAEX",
+      "dual_strength": "12 Rotation Type2 rows in the dual-strength evidence remain exact",
+      "edge_noise": "24 Rotation Type2 rows in the edge endpoint evidence remain exact",
+      "pairwise": "selector is Type1-only; the existing Type2 block route is not selected",
+      "size_noise": "12 gain1 Rotation Type2 rows remain on SampleRadialBlockNoisePlaneAEX"
+    },
+    "type3_rotation": "fail-closed at RenderWorld: Type3 requires a Layer and only PF32 Zoom has one bounded admission; Rotation is rejected"
+  },
+  "core_sampler_source": {
+    "path": "core/dblur_noise.h",
+    "required_inverse_cell_tokens": [
+      "inline float sample_radial_noise_plane(const NoisePlaneView& plane, int x, int y,",
+      "const float inverse_cell_size = 1.0f / plane.cell_size;",
+      "const float sample_x = static_cast<float>(x) * inverse_cell_size;",
+      "const float sample_y = static_cast<float>(y) * inverse_cell_size;"
+    ],
+    "sha256": "f0600bb4bb208ed8fba92cc6586eb66ac8f767299c8928ec88fc4635c1cfb591"
+  },
+  "evidence_reports": {
+    "brightness": {
+      "path": "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json",
+      "sha256": "1012c66ceb326a552110176376ba1c778e5594c9ff6cd2b7ed35988fb619c1fc"
+    },
+    "dual_strength": {
+      "path": "refs/conformance/olmradialblur_dual_strength_noise_32x18_actual_aex_20260811.json",
+      "sha256": "b6a203389ce84ddcd188fafbfd8f1fdf5976682ad3a6ecd573165353c0093b7b"
+    },
+    "dual_strength_component": {
+      "path": "refs/conformance/olmradialblur_dual_strength_size_noise_components_actual_aex_20260812.json",
+      "sha256": "e5b4848de8bc8e8f8828cef3de30cde98cd8dd651dd5951a8bff07bf813d337d"
+    },
+    "edge_noise": {
+      "path": "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json",
+      "sha256": "50ba554b22b995c97e9e45ad0bbd90401c354562b58ca362a61cfa7903836535"
+    },
+    "inner_size_edge": {
+      "path": "refs/conformance/olmradialblur_inner_size_edge_noise_components_actual_aex_20260811.json",
+      "sha256": "e7227e0aebf5c241a1efbf96dc860acd1a4c2e1b64869092108a0ce0f3d09f34"
+    },
+    "outer_size_edge": {
+      "path": "refs/conformance/olmradialblur_size_edge_noise_components_actual_aex_20260811.json",
+      "sha256": "cd1aea626f2e2251961c7216f16b7465f5585feeb13905f633265641eb5522e7"
+    },
+    "pairwise_pf16": {
+      "path": "refs/conformance/olmradialblur_noise_type1_pf16_pairwise_actual_aex_20260811.json",
+      "sha256": "6e5c2e223a862dfa31663717c87c7fb1020547b864d21f8b449ac2dbbf703096"
+    },
+    "pairwise_pf8": {
+      "path": "refs/conformance/olmradialblur_noise_type1_pf8_combo_actual_aex_20260811.json",
+      "sha256": "806891d51f0c500cf05571707ba521a1bc154670855422c9ed5db528cf750863"
+    },
+    "size_noise": {
+      "path": "refs/conformance/olmradialblur_rotation_size_noise_components_actual_aex_20260811.json",
+      "sha256": "25cb37a726e43bc785cd4d27a59ca6c97065aa79652f3d0065a8a83ee174c185"
+    }
+  },
+  "flag_counts": {
+    "any_size_edge_noise": 12,
+    "dual_strength": 18,
+    "edge_noise": 24,
+    "pairwise": 8,
+    "size_noise": 36
+  },
+  "fresh_integration_verification": {
+    "all_family_required_available_planes_exact": true,
+    "available_plane_union": [
+      "source_span",
+      "source_scalar",
+      "polar",
+      "prepass_alpha",
+      "accum",
+      "max_alpha",
+      "final_rgba",
+      "coordinates",
+      "padded_output"
+    ],
+    "campaign": "fresh actual-AEX direct-owner versus temporary integrated production copies",
+    "controls": {
+      "type2_actual": {
+        "cases": 12,
+        "different_bytes": 0,
+        "exact": 12,
+        "selector_branch": "unchanged block sampler"
+      },
+      "type3_rotation_fail_close": {
+        "cases": 9,
+        "fail_closed": 9,
+        "output_unchanged": true,
+        "pixel_iteration": 0
+      }
+    },
+    "diagnostic_tmp_provenance": [
+      {
+        "command": "python3 /tmp/verify_radial_dual_type1_inverse.py",
+        "role": "dual-strength 18-cell direct-owner plane comparison",
+        "script_sha256": "89cbbd0f4e1a1f03f4cd2b55b06fb5316d400492b840969e509d3611337feadf"
+      },
+      {
+        "command": "python3 /tmp/verify_radial_pf8_dual_type1_source_span.py",
+        "role": "PF8 owner+0x90 dual-strength source-span capture",
+        "script_sha256": "ffec1154a4a39dddc7cd829d0475cfca5d2f4ad0e8a69e3615d175648768750e"
+      },
+      {
+        "artifact_sha256": "220625cce8823a2968aef40b7276df395629d43806823c0b275a8e5261512853",
+        "command": "temporary Python matrix -> /tmp/olmradialblur_type1_edge_noise_inverse_selector_verify_20260812.json",
+        "role": "24 edge/noise cells"
+      },
+      {
+        "artifact_sha256": "c46ae28358f1c03634d8ee07e9bfbf972610c9f5a625b39dd73c5e49c423e362",
+        "command": "temporary PF8 owner hook -> /tmp/olmradialblur_pf8_type1_edge_noise_owner_span_verify_20260812.json",
+        "role": "PF8 edge/noise owner+0x90 source span"
+      },
+      {
+        "artifact_sha256": "1e6a31f3a67d3783b364f47fc56d0cd241eaf7d24b6370404fefc3735742122b",
+        "command": "temporary matrix -> /tmp/radial_type1_verify.WsJDg0/candidate_report.json",
+        "role": "12 size+edge+noise cells"
+      },
+      {
+        "command": "python3 /tmp/verify_pf8_type1_size_noise_span.py",
+        "role": "PF8 size/noise owner+0x90 source-span matrix",
+        "script_sha256": "4c9ac0d76caf3a14a20b6b5ef14bd26cdfdbb7e12b0faf5d9d083b0921aae626"
+      },
+      {
+        "command": "python3 /tmp/verify_olmradialblur_type1_size_noise_pf16.py",
+        "role": "PF16 size/noise all-plane matrix",
+        "script_sha256": "9f0941b6bf73fd3ac39786718792073d9dff24c493f6fa50cd91742bda903060"
+      },
+      {
+        "command": "python3 /tmp/verify_olmradialblur_type1_size_noise_pf32.py",
+        "role": "PF32 size/noise all-plane matrix",
+        "script_sha256": "22a8f1f19dec9172d7218a6dae19f8114cf70ddfa60dda5e0c334cbdae1f833e"
+      },
+      {
+        "artifact_sha256": "b64cae8e45ca0ecdc935a221cc39a442cd05801cb8110ede08461f26818c295a",
+        "command": "temporary control matrix -> /tmp/olmradialblur_type1_candidate_type2_nonregression_20260812.json",
+        "role": "Type2 actual/control non-regression"
+      },
+      {
+        "command": "ephemeral /tmp Strength290 direct-owner replay",
+        "role": "post-fix minimum-boundary diagnostic; all named planes zero-diff"
+      },
+      {
+        "command": "ephemeral /tmp Rotation-Type3 public fail-close probe",
+        "role": "nine one-away Type3 controls rejected before iteration"
+      }
+    ],
+    "different_bytes": 0,
+    "exact_cells": 98,
+    "isolated_universal_build": {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "arm64_slice_sha256": "0f047d076e5561a7f402b10f0a9a90459fc1d09f9b85ef1ce35b130e1fa7721d",
+      "codesign": {
+        "claim": "the durable hostless bundle was ad-hoc signed after the isolated build; no Developer ID or notarization claim",
+        "enabled_during_build": false,
+        "strict_deep_valid": true,
+        "type": "ad-hoc",
+        "whole_bundle_signed": true
+      },
+      "command": [
+        "xcodebuild",
+        "-project",
+        "mac/OLMRadialBlur/Mac/OLMRadialBlur.xcodeproj",
+        "-scheme",
+        "OLMRadialBlur",
+        "-configuration",
+        "Debug",
+        "ARCHS=arm64 x86_64",
+        "ONLY_ACTIVE_ARCH=NO",
+        "MACOSX_DEPLOYMENT_TARGET=11.0",
+        "CODE_SIGNING_ALLOWED=NO",
+        "build"
+      ],
+      "install_or_ae_launch": false,
+      "provenance": "durable hostless Type1 pairwise, dual-strength, and edge/noise source-guard batch candidate; the closure generator does not rerun xcodebuild",
+      "required_exports": [
+        "EffectMain",
+        "PluginData"
+      ],
+      "required_exports_present": true,
+      "universal_binary_sha256": "2934d1367a5fd9d1fead35894271d9adf58ca1e008cab436e0a7d6bbb6f13083",
+      "x86_64_slice_sha256": "14e90c512aefd7e86758b73d7666ea0de774acd3c63460e72bc52145e4676499"
+    },
+    "per_family": {
+      "any_size_edge_noise": {
+        "cells": 12,
+        "exact": 12,
+        "raw_exact_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ]
+      },
+      "dual_strength": {
+        "cells": 18,
+        "exact": 18,
+        "raw_exact_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ]
+      },
+      "edge_noise": {
+        "cells": 24,
+        "exact": 24,
+        "raw_exact_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "prepass_alpha",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ]
+      },
+      "pairwise": {
+        "cells": 8,
+        "exact": 8,
+        "raw_exact_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ]
+      },
+      "size_noise": {
+        "cells": 36,
+        "exact": 36,
+        "raw_exact_planes": [
+          "source_span",
+          "source_scalar",
+          "polar",
+          "accum",
+          "max_alpha",
+          "final_rgba",
+          "coordinates",
+          "padded_output"
+        ]
+      }
+    },
+    "pf8_source_span_capture": {
+      "different_float_words": 0,
+      "exact": true,
+      "hook": "Rotation owner return; owner work pointer + 0x90",
+      "purpose": "closes the PF8 fixture gap where source_span was not in the ordinary returned plane map"
+    },
+    "provenance_boundary": "commands and hashes describe completed ephemeral /tmp diagnostics; the generator deliberately does not rerun that expensive campaign, and validation pins this materialized result without inferring it from the older checked-in reports",
+    "size_noise_aggregate": {
+      "cells": 36,
+      "compared_bytes": 55214784,
+      "different_bytes": 0,
+      "planes": [
+        "source_span",
+        "source_scalar",
+        "polar",
+        "accum",
+        "max_alpha",
+        "final_rgba",
+        "coordinates",
+        "padded_output"
+      ]
+    },
+    "strength290_diagnostic": {
+      "all_named_planes_exact": true,
+      "different_bytes": 0,
+      "planes": [
+        "source_span",
+        "source_scalar",
+        "polar",
+        "accum",
+        "max_alpha",
+        "final_rgba",
+        "coordinates",
+        "padded_output"
+      ],
+      "public_effectmain": "PF_Err_BAD_CALLBACK_PARAM; still not admitted",
+      "role": "post-fix direct-owner counterexample replay only"
+    },
+    "total_cells": 98,
+    "tracked_source_edited_by_campaign": false
+  },
+  "owner_provenance": {
+    "mac_numeric": "direct typed-owner fixture evidence plus the canonical common-sampler selector integration",
+    "mac_public": "natural classic EffectMain admission is bounded by the same flags; no claim that these are 98 fresh natural-owner captures",
+    "windows_actual": "direct internal AEX owner through the repository x86_64 emulation fixtures; not natural exported-public execution"
+  },
+  "production_source_sha256": "b74b3d2c7ea6724593b28f82d36615e071e18d813e5b99cc948e26a447fdb0d1",
+  "schema": "olm.radialblur-rotation-type1-inverse-cell-closure/1",
+  "scope": "Rotation; fixed 32x18 component/pairwise fixtures; Type1; exactly five existing admission flags and 98 enumerated cells",
+  "selector_contract": {
+    "canonical_compact_sha256": "f64a2d86b368572427b82626a094b7bf437387bcdd0253b4e8bdd65eb6ebb3eb",
+    "coordinate_rule": "inverse_cell_size = 1.0f / cell_size; x/y * inverse_cell_size",
+    "flags_in_exact_order": [
+      "use_aex_typed_noise_type1_pairwise",
+      "use_aex_typed_rotation_dual_strength_32x18",
+      "use_aex_typed_rotation_edge_noise_32x18",
+      "use_aex_typed_rotation_any_size_edge_noise_components_32x18",
+      "use_aex_typed_rotation_size_noise_components_32x18"
+    ],
+    "name": "use_aex_rotation_type1_inverse_cell_32x18",
+    "sampler": "olm::dblur::sample_radial_noise_plane",
+    "type2_branch_unchanged": true
+  },
+  "status": "exact_bounded_98_cells_inverse_cell_integrated",
+  "supersedes_stale_inactive_only_wording": [
+    "refs/conformance/olmradialblur_noise_type1_pf8_combo_actual_aex_20260811.json",
+    "refs/conformance/olmradialblur_noise_type1_pf16_pairwise_actual_aex_20260811.json",
+    "refs/conformance/olmradialblur_dual_strength_noise_32x18_actual_aex_20260811.json",
+    "refs/conformance/olmradialblur_dual_strength_size_noise_components_actual_aex_20260812.json",
+    "refs/conformance/olmradialblur_edge_noise_endpoints_32x18_actual_aex_20260811.json",
+    "refs/conformance/olmradialblur_size_edge_noise_components_actual_aex_20260811.json",
+    "refs/conformance/olmradialblur_inner_size_edge_noise_components_actual_aex_20260811.json",
+    "refs/conformance/olmradialblur_brightness_size_noise_components_actual_aex_20260811.json"
+  ],
+  "total_cells": 98
+}

@@ -223,6 +223,36 @@ def parse_windows_witness_generated_package(path: Path) -> dict[str, Any] | None
 
 def parse_staged_request_package(path: Path) -> dict[str, Any] | None:
     """Recognize both legacy runtime requests and generated witness packages."""
+    try:
+        with zipfile.ZipFile(path) as archive:
+            batch_names = [
+                info.filename
+                for info in archive.infolist()
+                if not info.is_dir()
+                and info.filename.replace("\\", "/").endswith(
+                    "olm_runtime_trace_olm_math_ucrt_batch_20260814/request_manifest.json"
+                )
+            ]
+    except (OSError, zipfile.BadZipFile):
+        return None
+    if batch_names:
+        require(len(batch_names) == 1, f"{path.name} has duplicate math-UCRT batch manifests")
+        files = read_zip_members(path)
+        canonical_name = canonical_member(batch_names[0])
+        manifest = load_json_bytes(files[canonical_name], f"{path.name}:math-UCRT request_manifest.json")
+        require(manifest.get("schema") == "olm.math-ucrt-batch-request/1", f"{path.name} math-UCRT schema mismatch")
+        require(manifest.get("request_id") == "olm_runtime_trace_olm_math_ucrt_batch_20260814", f"{path.name} math-UCRT request_id mismatch")
+        vectors = manifest.get("vectors")
+        require(isinstance(vectors, dict) and vectors == {
+            "directional_expf": 494, "directional_powf": 787,
+            "distance_powf": 63, "total": 1344,
+        }, f"{path.name} math-UCRT vector count mismatch")
+        return {
+            "manifest": manifest,
+            "path": path,
+            "request_ids": {"olm_runtime_trace_olm_math_ucrt_batch_20260814"},
+            "package_kind": "olm_math_ucrt_batch_request",
+        }
     generated = parse_windows_witness_generated_package(path)
     if generated is not None:
         return generated
@@ -966,7 +996,10 @@ def main(argv: list[str] | None = None) -> int:
 
     pending = json.loads(pending_path.read_text(encoding="utf-8"))
     rows = [row for row in pending.get("requests", []) if isinstance(row, dict) and row.get("status") == "pending"]
-    rows.sort(key=lambda row: (int(row.get("priority") or 999999), str(row.get("request_id") or "")))
+    rows.sort(key=lambda row: (
+        int(row["priority"]) if isinstance(row.get("priority"), int) else 999999,
+        str(row.get("request_id") or ""),
+    ))
     using_project_staging = staging_dir == project_staging_dir
     temporary_staging: tempfile.TemporaryDirectory[str] | None = None
     if using_project_staging:

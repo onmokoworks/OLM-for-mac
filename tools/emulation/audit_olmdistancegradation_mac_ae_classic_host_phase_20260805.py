@@ -5,7 +5,7 @@ ROOT=Path(__file__).resolve().parents[2]
 MANIFEST=ROOT/'refs/conformance/olmdistancegradation_mac_ae_classic_host_phase_20260805.json'
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
- m=json.loads(MANIFEST.read_text());assert m['status']=='prepared_not_executed' and m['pf32_smart'].startswith('unsupported')
+ m=json.loads(MANIFEST.read_text());assert m['status']=='prepared_not_executed' and m['pf32_smart'].startswith('historical assumption superseded')
  exe=Path(m['installed_executable']);assert exe.is_file() and sha(exe)==m['installed_sha256']
  assert [x['depth'] for x in m['classic_targets']]==[8,16,32]
  for row in m['classic_targets']:
@@ -17,5 +17,5 @@ def main():
  assert 'PF32 Smart' not in r32 and 'pf32_smart' in r16
  ae1=subprocess.run(['pgrep','-x','AfterFX'],capture_output=True,text=True);ae2=subprocess.run(['pgrep','-x','After Effects'],capture_output=True,text=True)
  assert ae1.returncode==1 and ae2.returncode==1 and not ae1.stdout.strip() and not ae2.stdout.strip()
- print(json.dumps({'status':'PASS_MAC_AE_CLASSIC_HOST_PHASE_PREPARED','installed_sha256':m['installed_sha256'],'depths':[8,16,32],'renderer':'SOFTWARE','ae_running':False,'ae_operated':False,'pf32_smart':'unsupported_unclaimed'},indent=2))
+ print(json.dumps({'status':'PASS_MAC_AE_CLASSIC_HOST_PHASE_PREPARED','installed_sha256':m['installed_sha256'],'depths':[8,16,32],'renderer':'SOFTWARE','ae_running':False,'ae_operated':False,'pf32_smart':'historical_assumption_superseded_actual_public_owner_exists_not_exercised_here'},indent=2))
 if __name__=='__main__':raise SystemExit(main())

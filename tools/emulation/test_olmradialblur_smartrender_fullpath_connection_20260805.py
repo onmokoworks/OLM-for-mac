@@ -13,25 +13,26 @@ REPORT = ROOT / "refs/conformance/olmradialblur_smartrender_fullpath_connection_
 
 def main():
     source = SOURCE.read_text()
-    guard = source[source.index("struct SmartPixelCheckoutGuard"):source.index(
-        "static void DeletePreRenderData", source.index("struct SmartPixelCheckoutGuard"))]
     smart = source[source.index("SmartRender(PF_InData"):source.index("extern \"C\" DllExport", source.index("SmartRender(PF_InData"))]
     effect = source[source.index("EffectMain("):]
     gates = {
         "effectmain_dispatches_smart_render": "case PF_Cmd_SMART_RENDER:" in effect and "SmartRender(in_data" in effect,
         "checkout_input_then_output": smart.index("checkout_layer_pixels") < smart.index("checkout_output"),
-        "all_public_params_checked_out": "for (int i = 1; i < OLMRADIALBLUR_NUM_PARAMS; ++i)" in smart and "PF_CHECKOUT_PARAM" in smart,
+        "all_public_params_checked_out": "for (int i = 1; !err && i < OLMRADIALBLUR_NUM_PARAMS; ++i)" in smart and "PF_CHECKOUT_PARAM" in smart,
         "pre_render_dimensions_consumed": "pre_render_data" in smart and "pre->comp_width" in smart and "pre->comp_height" in smart,
-        "smart_bitdepth_routes_renderworld": "RenderWorld(input_world, output_world, noise_world, info, extra->input->bitdepth)" in smart,
+        "smart_bitdepth_routes_staged_renderworld": "RenderWorld(input_world, &staged_world, noise_world, info" in smart,
         "input_checked_in": (
-            "SmartPixelCheckoutGuard pixel_guard{in_data, extra};" in smart and
-            "pixel_guard.input_checked_out = err == PF_Err_NONE;" in smart and
-            "if (input_checked_out)" in guard and
-            "OLMRADIALBLUR_INPUT" in guard and "checkin_layer_pixels" in guard),
+            "input_checked_out = err == PF_Err_NONE;" in smart and
+            "if (input_checked_out)" in smart and
+            "OLMRADIALBLUR_INPUT" in smart and "checkin_layer_pixels" in smart),
         "noise_checked_in_when_checked_out": (
-            "pixel_guard.noise_checked_out = err == PF_Err_NONE;" in smart and
-            "if (noise_checked_out)" in guard and
-            "OLMRADIALBLUR_NOISE_LAYER" in guard and "checkin_layer_pixels" in guard),
+            "noise_checked_out = err == PF_Err_NONE;" in smart and
+            "if (noise_checked_out)" in smart and
+            "OLMRADIALBLUR_NOISE_LAYER" in smart and "checkin_layer_pixels" in smart),
+        "cleanup_precedes_atomic_commit": (
+            smart.index("if (thrown) std::rethrow_exception(thrown)") <
+            smart.index("if (!err && render_complete)") and
+            "staged_output" in smart and "active_row_bytes" in smart),
     }
     pf32 = json.loads(PF32_REPORT.read_text())
     binary, row = verified_binary("OLMRadialBlur")
@@ -45,16 +46,16 @@ def main():
     })
     report = {
         "kind": "olmradialblur_smartrender_fullpath_connection_20260805",
-        "status": "connected" if all(gates.values()) else "blocked",
-        "connection": ["EffectMain(PF_Cmd_SMART_RENDER)", "SmartRender callbacks/param checkout", "RenderWorld(bitdepth=32)", "RenderZoomTyped<PF_PixelFloat>", "pre/post planes", "FUN_180017490 writer", "current installed Universal binary"],
+        "status": "current_source_connected_installed_identity_separate" if all(gates.values()) else "blocked",
+        "connection": ["EffectMain(PF_Cmd_SMART_RENDER)", "SmartRender callbacks/param checkout", "private staged RenderWorld(bitdepth=32)", "cleanup", "active-row commit"],
         "gates": gates,
         "installed": {"path": str(binary), "sha256": row["sha256"], "architectures": arch, "identity_manifest": str(MANIFEST.relative_to(ROOT))},
         "actual_production_evidence": str(PF32_REPORT.relative_to(ROOT)),
-        "claim_boundary": "AE-free compositional connection: public adapter structure is fail-closed source-audited and the exact RenderWorld path is executed; no AE process or host callback ABI is claimed dynamically.",
+        "claim_boundary": "AE-free current-source compositional audit plus a separate historical installed-identity check. The current cleanup candidate is not installed, so no source-to-installed equality, AE process, native host callback ABI, or new numerical tuple is claimed.",
     }
     REPORT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     print(json.dumps(report, indent=2, sort_keys=True))
-    return 0 if report["status"] == "connected" else 1
+    return 0 if report["status"] == "current_source_connected_installed_identity_separate" else 1
 
 
 if __name__ == "__main__":

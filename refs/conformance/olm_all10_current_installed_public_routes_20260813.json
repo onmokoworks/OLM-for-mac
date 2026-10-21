@@ -1,0 +1,142 @@
+{
+  "after_effects_processes": [],
+  "installed_authority": {
+    "path": "refs/conformance/olm_all10_current_source_installed_authority_20260813.json",
+    "plugin_count": 10,
+    "sha256": "8138180651e805e352fdb6ffd2e91abd426803d7395d949a545e73c421f3e6f9"
+  },
+  "rows": [
+    {
+      "bounded_coverage": "both Universal slices: all 10 source-bound legacy count5/100 paths, all 5 count9 paths, 18 legacy source mutations, and 136 count9 rejects per slice",
+      "installed_authority_checks_all_true": true,
+      "installed_binary_sha256": "dae59a6faf54ed18ac803ad042be2cdab688c5f814edf322d64c108d5247f46d",
+      "installed_universal_slices_replayed": true,
+      "native_after_effects": false,
+      "plugin": "ColorKeep",
+      "public_report": "refs/conformance/colorkeep_current_installed_complete_union_20260814.json",
+      "public_report_sha256": "50aafd53a7cbc4309417cf0d9f3a89632e1ffcf36f2e3fdf38b92ae162a0c94a",
+      "public_status": "PASS_COLORKEEP_CURRENT_INSTALLED_COMPLETE_BOUNDED_UNION_AE_FREE",
+      "source_sha256": "d1c443042998e466b021d6fd2351537a2be63fe95d3e79a2089d82f78217bac3"
+    },
+    {
+      "bounded_coverage": "both Universal slices: complete bounded Smart union PF8 12 + PF16 8 + PF32 20 = 40 exact cells and 1,298 negative controls per slice",
+      "installed_authority_checks_all_true": true,
+      "installed_binary_sha256": "ecdf3d93b4b38fe71f4b66f717079aa86b961205d0a3f1b5b7edbd29e353284d",
+      "installed_universal_slices_replayed": true,
+      "native_after_effects": false,
+      "plugin": "OLMBlur",
+      "public_report": "refs/conformance/olmblur_current_installed_complete_admission_union_20260813.json",
+      "public_report_sha256": "f49ec2e1ef321c8eab4e9f25ad66ed2c84e30114e2ada0fe862cd3387bb28eb5",
+      "public_status": "PASS_OLMBLUR_CURRENT_INSTALLED_COMPLETE_SMART_ADMISSION_UNION_AE_FREE",
+      "source_sha256": "22eb712a2485e080d811d2c064fe78bd521ee25434ece9a290a2d9b7b6e1fdd7"
+    },
+    {
+      "bounded_coverage": "both slices: Classic 60 and Smart 60 bounded cells per slice; 13 callback rejects per slice",
+      "installed_authority_checks_all_true": true,
+      "installed_binary_sha256": "701ae9192e19d3e97dd33450e37ae97d90d9be5803ab663405507ed5e3659ca7",
+      "installed_universal_slices_replayed": true,
+      "native_after_effects": false,
+      "plugin": "OLMColorKey",
+      "public_report": "refs/conformance/olmcolorkey_current_installed_public_closure_20260813.json",
+      "public_report_sha256": "fbc71bb938d127a430f37665234728468b00e6053312e25239725d1cb14d65a6",
+      "public_status": "PASS_OLMCOLORKEY_CURRENT_INSTALLED_BOTH_SLICES_PUBLIC60_AE_FREE",
+      "source_sha256": "7c66240d5813e240663d06fe342d45b73b9b2ce2f2d8b0852ffe7f73351e4001"
+    },
+    {
+      "bounded_coverage": "current installed arm64: 33 bounded exact public cells; x86_64: 27 exact and six fail-closed pending native Windows UCRT expf counts 8/50/100; includes dual-side, Natural64 exact-source and Type3 Layer routes",
+      "installed_authority_checks_all_true": true,
+      "installed_binary_sha256": "856ab700df0881cfb039e9c9d0675bf46a7e92b56e8cb0e311d820fd719bc0de",
+      "installed_universal_slices_replayed": true,
+      "native_after_effects": false,
+      "plugin": "OLMDirectionalBlur",
+      "public_report": "refs/conformance/olmdirectionalblur_current_installed_complete_bounded_union_20260814.json",
+      "public_report_sha256": "f1fd17c51ccd42d0c1491c926e763462a6dfba300690880c92cfb4fa25c002b9",
+      "public_status": "PASS_OLMDIRECTIONALBLUR_CURRENT_INSTALLED_COMPLETE_BOUNDED_UNION_AE_FREE",
+      "source_sha256": "494116880d037a0d44a48b0e0ebe0fc5358b4cd8892b90ca8c61ea8a7bb2e845"
+    },
+    {
+      "bounded_coverage": "both Universal slices: fixed PF32 Mode5 6 exact cells and all 8 PF32 Power cells fail closed per slice pending native UCRT powf",
+      "installed_authority_checks_all_true": true,
+      "installed_binary_sha256": "231421e4a0c1607a70947778d99d748baefe07078b7e1145f4a4700268116605",
+      "installed_universal_slices_replayed": true,
+      "native_after_effects": false,
+      "plugin": "OLMDistanceGradation",
+      "public_report": "refs/conformance/olmdistancegradation_current_installed_mode5_20260813.json",
+      "public_report_sha256": "98f3b2ecc66a1cb56e105fb7697dca46b1e654f8b66ae3a0596166bced1b2ceb",
+      "public_status": "PASS_OLMDISTANCEGRADATION_CURRENT_INSTALLED_MODE5_6_POWER_FAILCLOSED_8_AE_FREE",
+      "source_sha256": "06ffc5b7a2af5cf54a2503d3bf03f9baf2269acbf1277f034937ac79c4a7aba5"
+    },
+    {
+      "bounded_coverage": "both Universal slices: 42 bounded public positives, 765 negatives, and 3 full-request controls per slice",
+      "installed_authority_checks_all_true": true,
+      "installed_binary_sha256": "edd6953ff0a86efa550ffd8a5be050cb200342ad68427519c092bcac578596a7",
+      "installed_universal_slices_replayed": true,
+      "native_after_effects": false,
+      "plugin": "OLMKiraKira",
+      "public_report": "refs/conformance/olmkirakira_current_installed_public_closure_20260813.json",
+      "public_report_sha256": "9bc2b377a99e1391844efe5dccf9c4232f40e38a3e72b55ceedc7d63db29f0cf",
+      "public_status": "PASS_OLMKIRAKIRA_CURRENT_INSTALLED_PUBLIC_42_765_3_AE_FREE",
+      "source_sha256": "f251b19150a0b490d58cf6bece4c40fe9403f9bd36849cfe8c89ffbd14fc96c2"
+    },
+    {
+      "bounded_coverage": "both Universal slices: complete bounded public union of 106 exact-source Type1 cells plus all 45 fixed 9x7 Type3 source/Layer pairs per slice; 57 Type1 mutation rejects and 45 Type3 reject-control sets per slice",
+      "installed_authority_checks_all_true": true,
+      "installed_binary_sha256": "9be59d18601dc2b031335f4fec8c8c6a1eb13a4888bf0f228efa65e2d5b676b5",
+      "installed_universal_slices_replayed": true,
+      "native_after_effects": false,
+      "plugin": "OLMRadialBlur",
+      "public_report": "refs/conformance/olmradialblur_current_installed_complete_public_union_20260814.json",
+      "public_report_sha256": "083bdaf45321bba8753627cb479bc5499d80077ba570262dd744d203fd3dee18",
+      "public_status": "PASS_OLMRADIALBLUR_CURRENT_INSTALLED_COMPLETE_TYPE1_TYPE3_PUBLIC_UNION_AE_FREE",
+      "source_sha256": "b74b3d2c7ea6724593b28f82d36615e071e18d813e5b99cc948e26a447fdb0d1"
+    },
+    {
+      "bounded_coverage": "both Universal slices: complete bounded Classic admission union, 67 exact cells per slice",
+      "installed_authority_checks_all_true": true,
+      "installed_binary_sha256": "f416579eeb61b73da683437d382f786781e6ecdf27d9c4fc52f3ad1d55577162",
+      "installed_universal_slices_replayed": true,
+      "native_after_effects": false,
+      "plugin": "OLMSmoother",
+      "public_report": "refs/conformance/olmsmoother_v1_current_installed_admission_union_20260813.json",
+      "public_report_sha256": "34d66834c08ff265b8760ec84f2b2595023ca3ed9120582726f97e3d10c3963a",
+      "public_status": "PASS_OLMSMOOTHER_V1_CURRENT_INSTALLED_COMPLETE_CLASSIC_ADMISSION_UNION_AE_FREE",
+      "source_sha256": "c8c7b7728553ee4ccaadc7ef802be40e607d7e7a7b829958d4b8dfab80f633dc"
+    },
+    {
+      "bounded_coverage": "both Universal slices: complete bounded Smart admission union, 39 exact cells; the newly installed PF8/PF16/PF32 expansion executes 94 public rows per slice in addition to the prior 25-cell union",
+      "installed_authority_checks_all_true": true,
+      "installed_binary_sha256": "c8ea1f0e7dbe7398006578b91e01adfcea975a8c8a3244657ea934eda587c53f",
+      "installed_universal_slices_replayed": true,
+      "native_after_effects": false,
+      "plugin": "OLMSmoother2",
+      "public_report": "refs/conformance/olmsmoother2_current_installed_public_20260813.json",
+      "public_report_sha256": "3e1ba25a3f259a8f26ccea21b38c7f4bfc3d63e61881b455e5811711e0810f4f",
+      "public_status": "PASS_OLMSMOOTHER2_CURRENT_INSTALLED_COMPLETE_SMART_ADMISSION_UNION_AE_FREE",
+      "source_sha256": "c710902f5928c67ae72e2e4ba445e801acd4a3f229f04d23ab6a1cd56cf73168"
+    },
+    {
+      "bounded_coverage": "both Universal slices: 12 fixed same-source current installed cells per slice paired to the bounded Windows public owner",
+      "installed_authority_checks_all_true": true,
+      "installed_binary_sha256": "5bbe693106072ceff14a1c1ae5a0d64815cddde58356c57575d29e516479036e",
+      "installed_universal_slices_replayed": true,
+      "native_after_effects": false,
+      "plugin": "OLMToonDilate",
+      "public_report": "refs/conformance/olmtoondilate_current_installed_exact12_20260813.json",
+      "public_report_sha256": "33eb4fe76e7f852c0a698e18eb63871343efd35e258da58359d1786146a796ed",
+      "public_status": "pass_current_installed_exact12_against_paired_windows_public_owner",
+      "source_sha256": "ded9eaab6b660044c9035f3aa0d9660f86086ec2e451c97c9ee0c1115574464b"
+    }
+  ],
+  "schema": "olm.all10-current-installed-public-routes/1",
+  "scope": {
+    "after_effects_launched": false,
+    "all_ten_arm64_and_x86_64_slices_replayed": true,
+    "all_tuples_depths_geometries_claimed": false,
+    "current_installed_public_entry_hostless_replay_for_all_ten": true,
+    "developer_id_or_notarization_claimed": false,
+    "heterogeneous_bounded_coverage_only": true,
+    "native_after_effects_claimed": false,
+    "windows_native_host_claim_generalized": false
+  },
+  "status": "PASS_ALL10_CURRENT_INSTALLED_PUBLIC_ROUTES_AE_FREE_BOUNDED"
+}

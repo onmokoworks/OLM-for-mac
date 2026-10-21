@@ -117,7 +117,7 @@ template <typename P> static Result run_case(Effect effect, short depth, const c
     PF_InData in{};PF_OutData out{};in.inter.checkout_param=checkout_param;in.inter.checkin_param=checkin_param;in.downsample_x.num=ds_num;in.downsample_x.den=ds_den;
     PF_PreRenderInput pi{};PF_PreRenderOutput po{};PF_PreRenderCallbacks pcb{};pcb.checkout_layer=pre_checkout;PF_PreRenderExtra pe{&pi,&po,&pcb};const PF_Err pre_err=effect(PF_Cmd_SMART_PRE_RENDER,&in,&out,nullptr,nullptr,&pe);
     PF_SmartRenderInput si{};si.bitdepth=depth;si.pre_render_data=po.pre_render_data;PF_SmartRenderCallbacks scb{};scb.checkout_layer_pixels=pixels;scb.checkout_output=output;scb.checkin_layer_pixels=checkin;PF_SmartRenderExtra se{&si,&scb};const PF_Err render_err=effect(PF_Cmd_SMART_RENDER,&in,&out,nullptr,nullptr,&se);
-    const int effective=radius<=0?0:static_cast<int>(std::ceil(radius*ds_num/ds_den));const auto expected=oracle(source,w,h,effective);bool exact=pre_err==0&&render_err==0&&g_pre==1&&g_pixels==1&&g_output_hits==1&&g_checkin==1&&g_param==1&&g_param_checkin==1&&g_preserve_rgb;
+    const int effective=radius<=0?0:static_cast<int>(std::ceil(radius*ds_num/ds_den));const auto expected=oracle(source,w,h,effective);bool exact=pre_err==0&&render_err==0&&g_pre==1&&g_pixels==1&&g_output_hits==1&&g_checkin==0&&g_param==1&&g_param_checkin==1&&g_preserve_rgb;
     exact=exact&&std::memcmp(&input,&input_before,sizeof(input))==0&&std::memcmp(&destination,&output_before,sizeof(destination))==0;
     for(int y=0;y<h;++y){exact=exact&&std::memcmp(ob.data()+GUARD+static_cast<size_t>(y)*rowbytes,expected.data()+static_cast<size_t>(y)*w,static_cast<size_t>(w)*sizeof(P))==0;for(int i=w*sizeof(P);i<rowbytes;++i)exact=exact&&ob[GUARD+static_cast<size_t>(y)*rowbytes+i]==0xEE;}
     for(int i=0;i<GUARD;++i) exact=exact&&ib[i]==0xC7&&ib[GUARD+payload+i]==0xC7&&ob[i]==0xD9&&ob[GUARD+payload+i]==0xD9;
@@ -183,7 +183,8 @@ def main() -> int:
         "actual_aex_boundary": actual_boundary,
         "matrix": {"depths": [8, 16, 32], "families": ["radius0_copy", "radius2.01_corner_frontier", "radius3_tie_semialpha_nonseed", "radius100_513x17_downsample2/1"], "case_count": 12},
         "cases": result["cases"],
-        "gates": {"dlopen_effectmain": True, "all_12_raw_exact": result["all_exact"], "padding_and_guards_exact": result["all_exact"], "callback_lifecycle_exact": result["all_exact"], "world_headers_unchanged": result["all_exact"], "preserve_rgb_of_zero_alpha_requested": result["all_exact"]},
+        "smart_render_callback_contract": {"checkout_layer_pixels_per_case": 1, "checkout_output_per_case": 1, "optional_checkin_layer_pixels_per_case": 0},
+        "gates": {"dlopen_effectmain": True, "all_12_raw_exact": result["all_exact"], "padding_and_guards_exact": result["all_exact"], "callback_lifecycle_exact": result["all_exact"], "optional_checkin_never_called": result["all_exact"], "world_headers_unchanged": result["all_exact"], "preserve_rgb_of_zero_alpha_requested": result["all_exact"]},
         "claim_boundary": "Current installed arm64 EffectMain under focused AE-free callbacks, connected to the checked-in actual-AEX covering evidence. No broader real-AE-host claim.",
     }
     REPORT.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
@@ -193,7 +194,7 @@ def main() -> int:
         f"- Current installed arm64 binary SHA-256: `{identity['sha256']}`.\n"
         "- Public `EffectMain` SmartPreRender → SmartRender covers PF8/PF16/PF32 × four semantic families (12/12 raw-exact).\n"
         "- Families: radius-0 mixed-alpha copy; radius-2.01 odd padded corner/frontier; radius-3 competing tie with semi-alpha nonseed; radius-100 513×17 downsample 2/1.\n"
-        "- Every cell checks visible typed words, row padding, allocation guards, unchanged world headers, preserve-RGB request, and checkout/checkin lifecycle.\n"
+        "- Every cell checks visible typed words, row padding, allocation guards, unchanged world headers, preserve-RGB request, both checkout callbacks once, and the optional checkin callback zero times.\n"
         f"- The expected behavior is bound to actual AEX `{ACTUAL_AEX_SHA256}` and `{actual_boundary['path']}` (`{actual_boundary['sha256']}`).\n"
         "- This is an AE-free installed-binary boundary; it does not broaden the real AE-host claim.\n",
         encoding="utf-8",

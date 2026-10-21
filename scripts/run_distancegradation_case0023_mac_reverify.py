@@ -124,7 +124,7 @@ def main() -> int:
         "request_dir": str(request),
         "profile": {"bits_per_channel": 16, "gpu_accel_type": "SOFTWARE", "software_equivalent_profile": "software_16bpc", "max_diff": 0},
         "installed_plugin": {"bundle": str(PLUGIN_BUNDLE), "executable": str(PLUGIN_EXECUTABLE), "sha256": PLUGIN_SHA256},
-        "pf32_smart_boundary": "unsupported by actual AEX; not exercised or claimed",
+        "pf32_smart_boundary": "actual public owner exists; this PF16 classic host recipe does not exercise or claim PF32 Smart",
         "commands": [subprocess.list2cmdline(cmd) for cmd in commands],
         "blocked_reason": None if gui_ready else "AE GUI execution requires macOS with osascript; no GUI run performed.",
     }

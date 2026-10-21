@@ -1,0 +1,546 @@
+{
+  "claim_boundary": {
+    "PF8_control": "PF8 numerical ownership was already exact; this closure now rejects mutated or unlisted PF8 source bytes before the generic PF8 fallback",
+    "admitted": "the pinned crop plus zero, constant, impulse, and checker source bytes at the declared 64x36 Type2/NV25/Size0 tuple",
+    "crop_origin_note": "crop origin identifies the pinned witness only and is not a render predicate",
+    "fail_closed": "PF16/PF32 60 rejects cover every production predicate parameter field, both scales, input/output dimensions, null data, short rowbytes, capped huge rowbytes, source first/middle/last one-bit mutations, and an unlisted source; four matching PF8 source mutations/unlisted controls also reject, all with output untouched",
+    "new_lane": "PF16/PF32 NV25 64x36 remain the promoted lane; its preexisting PF8 control is now narrowed to the same exact five-source union",
+    "not_claimed": [
+      "other tuple/geometry",
+      "interactive AE export"
+    ],
+    "source_basis": "production rowwise active-source SHA-256 admits only the pinned crop plus zero/constant/impulse/checker, each worker/public raw-exact at every depth"
+  },
+  "counterfactuals": {
+    "depth16_32_one_away_rejects": 60,
+    "input_unchanged": true,
+    "output_untouched": true,
+    "pf8_source_rejects": 4,
+    "rejects": 64,
+    "source_one_away_or_unlisted_rejects": 12,
+    "status": "pass"
+  },
+  "identities": {
+    "aex_path": "plugins_2025/OLMDirectionalBlur.aex",
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "core_sha256": {
+      "core/dblur_field.cpp": "ccd409aea09f72fe8e274f58f6806fbf67628b7b56f414d3ed1bf820b2515ff1",
+      "core/dblur_frontonly.cpp": "850e16884fb471ebcb313231a6d1c4593d33fc0d1cbebe18fa087166125ea2a5",
+      "core/dblur_rotate.cpp": "5b02748d421befb1ecda0fd36ff34c5b225ebee5e928e0460e1c14d174c101d7",
+      "core/dblur_rowdriver.cpp": "9f271073adaf2746a5144cf4793f0ebe574f51787705f265421710215596481d"
+    },
+    "generator_path": "tools/emulation/test_olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.py",
+    "generator_sha256": "66aa80ae4a687a2c332b05570aa742e7477bd9d533ff74eeaa06f1fffcf6a587",
+    "production_path": "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp",
+    "production_sha256": "494116880d037a0d44a48b0e0ebe0fc5358b4cd8892b90ca8c61ea8a7bb2e845",
+    "public_base_path": "tools/emulation/test_olmdirectionalblur_public_effectmain_feature_matrix_20260811.py",
+    "public_base_sha256": "f7c39d71901ddc8ac744b351bbb6b28245e82f36ab77e34d4eab5675e00c2774",
+    "scaffold_base_path": "tools/emulation/test_olmdirectionalblur_mac_smartrender_adapter_20260717.py",
+    "scaffold_base_sha256": "cc133ee7ce5f2608acb21362ef64632923b5adf4d8b629aaeaf850b0a79210ba",
+    "source_path": "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png",
+    "source_sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4",
+    "worker_commit": "28d535469f84f67236ef3425afe4291ea2fb0991",
+    "worker_path": "/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker",
+    "worker_pixel_transport_path": "/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/crates/aex-guest-worker/src/pixel.rs",
+    "worker_pixel_transport_sha256": "ee4fd50ddf44dc3f86c182ea05ad4841507f333fc132e1488a302609456c8f84",
+    "worker_sha256": "46ab907d286ad4e0e1c2065557100f02c37e0b68df4c22202a825f3fea13ef61"
+  },
+  "input": {
+    "PF16_transport": "(u8 * 32768 + 127) // 255",
+    "PF32_transport": "float32(u8 / 255)",
+    "PF8_transport": "u8 RGBA to ARGB byte permutation",
+    "decoded_argb_sha256": {
+      "PF16": "18f79acc8e254e7f1bf8c3753a0d82badcc9f9247f568ba0088b5caf74e5d450",
+      "PF32": "884631deb3be114d9a226566d537323fc1f634e83f58cdd30b73c98cacef708d",
+      "PF8": "0380a27194735f3eb5556bc005fe4be9cc2e1cccfe1a8987226c18d6a146fe03"
+    },
+    "decoded_rgba_sha256": "0118296e6c16a0113a31e71a64cac301152e44d9623ca2db92bbbfb166dd22fa",
+    "png_sha256": "3ce01b2ade326e5d923e463fdbb099083c5c1497c9a119933d2461ab02ce6de6"
+  },
+  "kind": "olmdirectionalblur_type2_natural64_aexcompat_closure_20260812",
+  "public_effectmain": [
+    {
+      "depth": "PF8",
+      "input_checkin": 1,
+      "input_unchanged": true,
+      "noise_checkin": 0,
+      "noise_layer_optional_and_absent": true,
+      "output_checkout": 1,
+      "padding": true,
+      "param_checkin": 21,
+      "param_checkout": 21,
+      "pixel_checkout": 2,
+      "pre_checkout": 2,
+      "raw_bytes": 9216,
+      "raw_sha256": "777321d706587010a88f8e03a00bc6704ec9e7e3445aed5cd915192fe3f4f7f0",
+      "rowbytes": 268
+    },
+    {
+      "depth": "PF16",
+      "input_checkin": 1,
+      "input_unchanged": true,
+      "noise_checkin": 0,
+      "noise_layer_optional_and_absent": true,
+      "output_checkout": 1,
+      "padding": true,
+      "param_checkin": 21,
+      "param_checkout": 21,
+      "pixel_checkout": 2,
+      "pre_checkout": 2,
+      "raw_bytes": 18432,
+      "raw_sha256": "7fad7744f5fa4fee9a92bfa953164a5d39ee6c6fffe9689b2df9f78629581c5f",
+      "rowbytes": 528
+    },
+    {
+      "depth": "PF32",
+      "input_checkin": 1,
+      "input_unchanged": true,
+      "noise_checkin": 0,
+      "noise_layer_optional_and_absent": true,
+      "output_checkout": 1,
+      "padding": true,
+      "param_checkin": 21,
+      "param_checkout": 21,
+      "pixel_checkout": 2,
+      "pre_checkout": 2,
+      "raw_bytes": 36864,
+      "raw_sha256": "8ae8187087f4133b806ff7488ed47c9f2152e34a7fcc1bbe56f7c8f1e3a9d2cf",
+      "rowbytes": 1056
+    }
+  ],
+  "schema_version": 2,
+  "source_basis": [
+    {
+      "all_depth_raw_exact": true,
+      "decoded_rgba_sha256": "2d07a41ae992770085117e9815300bfd0730745883e60b24aaad5e69dfc087ae",
+      "name": "zero",
+      "public_raw_sha256": {
+        "PF16": "f7b586904e3678145aa47e4232587c913139cef0102d6d8e9276fc80c35cbad3",
+        "PF32": "1c0273095382988333e2f2b5ae487cea460737ed9be65cbad9c5de537f95bf75",
+        "PF8": "2d07a41ae992770085117e9815300bfd0730745883e60b24aaad5e69dfc087ae"
+      },
+      "typed_input_sha256": {
+        "PF16": "f7b586904e3678145aa47e4232587c913139cef0102d6d8e9276fc80c35cbad3",
+        "PF32": "1c0273095382988333e2f2b5ae487cea460737ed9be65cbad9c5de537f95bf75",
+        "PF8": "2d07a41ae992770085117e9815300bfd0730745883e60b24aaad5e69dfc087ae"
+      },
+      "worker_raw_sha256": {
+        "PF16": "f7b586904e3678145aa47e4232587c913139cef0102d6d8e9276fc80c35cbad3",
+        "PF32": "1c0273095382988333e2f2b5ae487cea460737ed9be65cbad9c5de537f95bf75",
+        "PF8": "2d07a41ae992770085117e9815300bfd0730745883e60b24aaad5e69dfc087ae"
+      }
+    },
+    {
+      "all_depth_raw_exact": true,
+      "decoded_rgba_sha256": "f5a52cd1c8c91b13d0768d038bc1f87575c610958fed949560da7bff60244b19",
+      "name": "constant",
+      "public_raw_sha256": {
+        "PF16": "aefe9f950d028ed3e239e016deab2b26049c543e577ba2292fd8a6c6df555212",
+        "PF32": "050900897e84afc77db8d6ff0278fec8a73f7c05e61d76efc813bd854c5d0d9c",
+        "PF8": "24cea1138c0c926dc39ba4a054e85bca5647a3eceeb0aa6f5f4dd6013b8724af"
+      },
+      "typed_input_sha256": {
+        "PF16": "1d74d9033ea9ed570c92277cf848d4ae0f9f571a42e3a852e12e6110d914c928",
+        "PF32": "8293539fd0efb2fdded5aaed0d751dda3a4171b8020f6ff67e1f06b10dca5555",
+        "PF8": "784c27133912eb473bb88c560af00d1cadb2c841297bf05ccef648036a86e212"
+      },
+      "worker_raw_sha256": {
+        "PF16": "aefe9f950d028ed3e239e016deab2b26049c543e577ba2292fd8a6c6df555212",
+        "PF32": "050900897e84afc77db8d6ff0278fec8a73f7c05e61d76efc813bd854c5d0d9c",
+        "PF8": "24cea1138c0c926dc39ba4a054e85bca5647a3eceeb0aa6f5f4dd6013b8724af"
+      }
+    },
+    {
+      "all_depth_raw_exact": true,
+      "decoded_rgba_sha256": "bea713a103ab89ac7c5b6c9337782065b7eed02ce32ed6c4b28fad9fdde4d747",
+      "name": "impulse",
+      "public_raw_sha256": {
+        "PF16": "789c56e5a8bab79857281f3677fae982b2ef09cf84d55f69a5e4e66b1aefe476",
+        "PF32": "42215de1b01db1917058ed6044d44c78f95437a7b7dffa85b2ba7c40606dcbdb",
+        "PF8": "8945c78df7e176c5cef2a2c72bd38a860f94e8faa7f38c73ab6a736cc6667ddd"
+      },
+      "typed_input_sha256": {
+        "PF16": "0e20c1d480bb5e7f6dbc11c5cff6dd69aef2ec9e296cd3faa7b056e48590af8b",
+        "PF32": "5ea5755a117d89c33bfb0685d2ba2e9cf4153d816c2bb06e2d61606fba51611f",
+        "PF8": "c549e434122a54ed2d78b23249ba25bbe6a4c121469a9b1e195743848095cd10"
+      },
+      "worker_raw_sha256": {
+        "PF16": "789c56e5a8bab79857281f3677fae982b2ef09cf84d55f69a5e4e66b1aefe476",
+        "PF32": "42215de1b01db1917058ed6044d44c78f95437a7b7dffa85b2ba7c40606dcbdb",
+        "PF8": "8945c78df7e176c5cef2a2c72bd38a860f94e8faa7f38c73ab6a736cc6667ddd"
+      }
+    },
+    {
+      "all_depth_raw_exact": true,
+      "decoded_rgba_sha256": "25a6d80edf0087f92d276b2872a340dbf1b0c462957bdded8319919c19f4999a",
+      "name": "checker",
+      "public_raw_sha256": {
+        "PF16": "b867e87b089a84e9ad7b5254a1de5c341a299eb2716a493e3aa971933f0319a8",
+        "PF32": "80cefedb74595b527f58c9ee83260f5384e4a59d8182e19e55f3a9e895e17d47",
+        "PF8": "4ccc45a12eec7d93ff139b9d28feb8483cf0d17353455d054a482f6a1fc3c90b"
+      },
+      "typed_input_sha256": {
+        "PF16": "d15a4c5de71ad7cb3774f2a25919f822cfed943aa686480e9f533d05fec0262a",
+        "PF32": "501667f87211e6e20a3d878fb71ab4a29de27b01a7049b97a6b66aa63508cfa1",
+        "PF8": "b5274891a810ed4743b9b8b0816ed8fb6c5a9a1d5f777d71f32d2be010e02fa0"
+      },
+      "worker_raw_sha256": {
+        "PF16": "b867e87b089a84e9ad7b5254a1de5c341a299eb2716a493e3aa971933f0319a8",
+        "PF32": "80cefedb74595b527f58c9ee83260f5384e4a59d8182e19e55f3a9e895e17d47",
+        "PF8": "4ccc45a12eec7d93ff139b9d28feb8483cf0d17353455d054a482f6a1fc3c90b"
+      }
+    }
+  ],
+  "status": "exact_bounded_public_owner",
+  "tuple": {
+    "angle": 45,
+    "back_alpha_fade": 0,
+    "back_sharp_tail": 0,
+    "back_strength": 0,
+    "brightness_gain": 1,
+    "crop_origin": [
+      472,
+      262
+    ],
+    "front_alpha_fade": 0,
+    "front_sharp_tail": 0,
+    "front_strength": 8,
+    "geometry": [
+      64,
+      36
+    ],
+    "noise_offset": 0,
+    "noise_type": 2,
+    "noise_variation": 25,
+    "render_scale": [
+      1,
+      1
+    ],
+    "seed": 1,
+    "size_variation": 0,
+    "thickness": 3
+  },
+  "worker_actual": [
+    {
+      "depth": "PF8",
+      "dropped_unsupported_suite_calls": 0,
+      "guards_intact": true,
+      "input_requests": [
+        [
+          0,
+          0,
+          64,
+          36
+        ]
+      ],
+      "output_request": [
+        0,
+        0,
+        64,
+        36
+      ],
+      "parameter_values": [
+        {
+          "name": "Angle",
+          "slot": 1,
+          "value": 45.0
+        },
+        {
+          "name": "Brightness Gain",
+          "slot": 2,
+          "value": 1.0
+        },
+        {
+          "name": "Size Variation",
+          "slot": 3,
+          "value": 0.0
+        },
+        {
+          "name": "Blur Strength",
+          "slot": 5,
+          "value": 8.0
+        },
+        {
+          "name": "Alpha Fade",
+          "slot": 6,
+          "value": 0.0
+        },
+        {
+          "name": "Sharp Tail",
+          "slot": 7,
+          "value": 0.0
+        },
+        {
+          "name": "Blur Strength",
+          "slot": 10,
+          "value": 0.0
+        },
+        {
+          "name": "Alpha Fade",
+          "slot": 11,
+          "value": 0.0
+        },
+        {
+          "name": "Sharp Tail",
+          "slot": 12,
+          "value": 0.0
+        },
+        {
+          "name": "Noise Variation",
+          "slot": 15,
+          "value": 25.0
+        },
+        {
+          "name": "Noise Type",
+          "slot": 16,
+          "value": 2.0
+        },
+        {
+          "name": "Seed",
+          "slot": 18,
+          "value": 1.0
+        },
+        {
+          "name": "Offset",
+          "slot": 19,
+          "value": 0.0
+        },
+        {
+          "name": "Thickness",
+          "slot": 20,
+          "value": 3.0
+        }
+      ],
+      "pixel_format": "argb8",
+      "raw_pixel_bytes": 9216,
+      "raw_pixel_sha256": "777321d706587010a88f8e03a00bc6704ec9e7e3445aed5cd915192fe3f4f7f0",
+      "render_error": 0,
+      "render_mode": "smart-cpu",
+      "setup": {
+        "advertised_num_params": 22,
+        "global_setup_error": 0,
+        "params_setup_error": 0
+      },
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF Handle Suite v2",
+        "PF Iterate8 Suite v1"
+      ],
+      "unsupported_suite_calls": []
+    },
+    {
+      "depth": "PF16",
+      "dropped_unsupported_suite_calls": 0,
+      "guards_intact": true,
+      "input_requests": [
+        [
+          0,
+          0,
+          64,
+          36
+        ]
+      ],
+      "output_request": [
+        0,
+        0,
+        64,
+        36
+      ],
+      "parameter_values": [
+        {
+          "name": "Angle",
+          "slot": 1,
+          "value": 45.0
+        },
+        {
+          "name": "Brightness Gain",
+          "slot": 2,
+          "value": 1.0
+        },
+        {
+          "name": "Size Variation",
+          "slot": 3,
+          "value": 0.0
+        },
+        {
+          "name": "Blur Strength",
+          "slot": 5,
+          "value": 8.0
+        },
+        {
+          "name": "Alpha Fade",
+          "slot": 6,
+          "value": 0.0
+        },
+        {
+          "name": "Sharp Tail",
+          "slot": 7,
+          "value": 0.0
+        },
+        {
+          "name": "Blur Strength",
+          "slot": 10,
+          "value": 0.0
+        },
+        {
+          "name": "Alpha Fade",
+          "slot": 11,
+          "value": 0.0
+        },
+        {
+          "name": "Sharp Tail",
+          "slot": 12,
+          "value": 0.0
+        },
+        {
+          "name": "Noise Variation",
+          "slot": 15,
+          "value": 25.0
+        },
+        {
+          "name": "Noise Type",
+          "slot": 16,
+          "value": 2.0
+        },
+        {
+          "name": "Seed",
+          "slot": 18,
+          "value": 1.0
+        },
+        {
+          "name": "Offset",
+          "slot": 19,
+          "value": 0.0
+        },
+        {
+          "name": "Thickness",
+          "slot": 20,
+          "value": 3.0
+        }
+      ],
+      "pixel_format": "argb16",
+      "raw_pixel_bytes": 18432,
+      "raw_pixel_sha256": "7fad7744f5fa4fee9a92bfa953164a5d39ee6c6fffe9689b2df9f78629581c5f",
+      "render_error": 0,
+      "render_mode": "smart-cpu",
+      "setup": {
+        "advertised_num_params": 22,
+        "global_setup_error": 0,
+        "params_setup_error": 0
+      },
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF Handle Suite v2",
+        "PF iterate16 Suite v1"
+      ],
+      "unsupported_suite_calls": []
+    },
+    {
+      "depth": "PF32",
+      "dropped_unsupported_suite_calls": 0,
+      "guards_intact": true,
+      "input_requests": [
+        [
+          0,
+          0,
+          64,
+          36
+        ]
+      ],
+      "output_request": [
+        0,
+        0,
+        64,
+        36
+      ],
+      "parameter_values": [
+        {
+          "name": "Angle",
+          "slot": 1,
+          "value": 45.0
+        },
+        {
+          "name": "Brightness Gain",
+          "slot": 2,
+          "value": 1.0
+        },
+        {
+          "name": "Size Variation",
+          "slot": 3,
+          "value": 0.0
+        },
+        {
+          "name": "Blur Strength",
+          "slot": 5,
+          "value": 8.0
+        },
+        {
+          "name": "Alpha Fade",
+          "slot": 6,
+          "value": 0.0
+        },
+        {
+          "name": "Sharp Tail",
+          "slot": 7,
+          "value": 0.0
+        },
+        {
+          "name": "Blur Strength",
+          "slot": 10,
+          "value": 0.0
+        },
+        {
+          "name": "Alpha Fade",
+          "slot": 11,
+          "value": 0.0
+        },
+        {
+          "name": "Sharp Tail",
+          "slot": 12,
+          "value": 0.0
+        },
+        {
+          "name": "Noise Variation",
+          "slot": 15,
+          "value": 25.0
+        },
+        {
+          "name": "Noise Type",
+          "slot": 16,
+          "value": 2.0
+        },
+        {
+          "name": "Seed",
+          "slot": 18,
+          "value": 1.0
+        },
+        {
+          "name": "Offset",
+          "slot": 19,
+          "value": 0.0
+        },
+        {
+          "name": "Thickness",
+          "slot": 20,
+          "value": 3.0
+        }
+      ],
+      "pixel_format": "argb32f",
+      "raw_pixel_bytes": 36864,
+      "raw_pixel_sha256": "8ae8187087f4133b806ff7488ed47c9f2152e34a7fcc1bbe56f7c8f1e3a9d2cf",
+      "render_error": 0,
+      "render_mode": "smart-cpu",
+      "setup": {
+        "advertised_num_params": 22,
+        "global_setup_error": 0,
+        "params_setup_error": 0
+      },
+      "suite_requests": [
+        "AEGP Utility Suite v7",
+        "PF Handle Suite v2",
+        "PF iterateFloat Suite v1"
+      ],
+      "unsupported_suite_calls": []
+    }
+  ]
+}

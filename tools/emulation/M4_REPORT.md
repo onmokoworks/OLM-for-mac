@@ -1,11 +1,11 @@
 ## M4到達点
 - `FUN_180008690 -> FUN_180007520 -> FUN_180004640` を case_0010 実入力 `1920x1080` で emulation 実行した。
-- 実行モードは `fast=True`。壁時計は 909.91s。
+- 実行モードは `fast=True`。壁時計は 1268.31s。
 - reader provenance は 21 call を捕捉し、`param_2` は実バイナリの `FUN_180008690` 本体に構築させた。
 - `FUN_180004640` 入口の実引数は `param_1=0xf0c25c0`, `param_2=0x400003c0`。
 - `param_1[0]` = 0.200000003 -> `iVar29=1800`。
 - witness buffers: `f250=0x268e4800`, `f252=0x28737000`, `+0xe=0x28ecba00`。
-- output witness `(1614,6)` ARGB bytes `(0, 0, 0, 0)`, RGBA `(0, 0, 0, 0)`。
+- output witness `(1614,6)` ARGB bytes `(255, 255, 255, 255)`, RGBA `(255, 255, 255, 255)`。
 - direct inverse sample `(1614,6)`: radius=844.317504883, angle=5.598455906, angle_scale=286.478912354, radius_base=0, sample=(1603.839558785, 844.317504883), `+0xe` RGBA float=(-0.004081939, -0.004081939, -0.004081939, 1.0), u8=(0, 0, 0, 255).
 
 ## ビット照合結果
@@ -25,8 +25,7 @@
 - ただし本 run では `FUN_180002780 / FUN_1800024c0` 内の witness-angle promotion 条件分岐までは未分解で、bright lobe が col1604 へ届く具体条件の確定には追加の段階 dump が残る。
 
 ## Mac 港への含意
-- AEX の座標変換と `+0xe` direct sampler は witness `(1614,6)` を黒として返す。これは 20260604 PNG 参照の白とは一致しない。
-- よって、この witness だけを根拠に Mac 側 scatter を白へ寄せる変更は危険。まず Windows PNG が CPU AEX Software 経路そのものか、またはGPU/旧AEX/manifest混入かを分離する必要がある。
+- AEX の座標変換と `+0xe` direct sampler は witness `(1614,6)` を黒として返す。native PF8 writeback未観測のため、この値だけから最終byteを断定しない。
 
 ## 残課題
 - case_0010 witness `(1614,6)` は `reference-path-split suspected` として扱う。PNG白へ合わせ込む前に、同一AEX/Software/EXRまたはCPU writeback witnessで参照経路を確定する。

@@ -514,7 +514,8 @@ def pending_runtime_trace_priorities(root: Path) -> dict[str, int]:
         if not isinstance(request_id, str) or not request_id:
             continue
         try:
-            priorities[request_id] = int(row.get("priority") or 999999)
+            value = row.get("priority")
+            priorities[request_id] = int(value) if value is not None else 999999
         except (TypeError, ValueError):
             priorities[request_id] = 999999
     return priorities
@@ -970,6 +971,33 @@ def runtime_trace_package_manifest(path: Path) -> dict[str, Any] | None:
     try:
         with zipfile.ZipFile(path) as archive:
             for name in archive.namelist():
+                if not name.replace("\\", "/").endswith(
+                    "olm_runtime_trace_olm_math_ucrt_batch_20260814/request_manifest.json"
+                ):
+                    continue
+                batch = json.loads(archive.read(name).decode("utf-8"))
+                if not isinstance(batch, dict) or batch.get("schema") != "olm.math-ucrt-batch-request/1":
+                    return None
+                vectors = batch.get("vectors")
+                request_id = batch.get("request_id")
+                if request_id != "olm_runtime_trace_olm_math_ucrt_batch_20260814":
+                    return None
+                if not isinstance(vectors, dict) or vectors != {
+                    "directional_expf": 494, "directional_powf": 787,
+                    "distance_powf": 63, "total": 1344,
+                }:
+                    return None
+                return {
+                    "kind": "olm_runtime_trace_request_package",
+                    "profile": "olm-math-ucrt-batch-native-windows-no-ae",
+                    "runtime_actions": [
+                        {
+                            "request_id": request_id,
+                            "plugin_area": "AE-free native System32 UCRT expf/powf exact batch",
+                        }
+                    ],
+                }
+            for name in archive.namelist():
                 if not name.endswith("runtime_trace_package_manifest.json"):
                     continue
                 data = json.loads(archive.read(name).decode("utf-8"))
@@ -1043,6 +1071,7 @@ def staged_runtime_trace_package(
 
 def runtime_trace_acceptance_note(request_ids: list[str]) -> str:
     mapping = {
+        "olm_runtime_trace_olm_math_ucrt_batch_20260814": "refs/conformance/olm_math_ucrt_batch_request_20260814.json",
         "olmradialblur_case0010_final_writeback_20260708": "refs/conformance/olmradialblur_case0010_final_writeback_contract_20260708.md",
         "olmradialblur_tiny_rotation_anchor_context_watch_followup_20260702": "refs/conformance/olmradialblur_tiny_rotation_anchor_context_watch_return_acceptance_20260702.md",
         "olmradialblur_tiny_rotation_anchor_pointer_watch_followup_20260702": "refs/conformance/olmradialblur_tiny_rotation_anchor_pointer_watch_return_acceptance_20260702.md",

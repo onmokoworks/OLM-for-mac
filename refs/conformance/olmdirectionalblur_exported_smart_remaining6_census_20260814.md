@@ -1,0 +1,5 @@
+# OLMDirectionalBlur exported-Smart former remaining-six expf closure
+
+The six formerly rejected 64×36 cells are raw-exact on arm64. The historical double-round counterfactual differs at the same five red coordinates in PF8 and PF16. PF32 exposes those five red residuals plus eleven alpha residuals; the other three PF32 tuples differ only in alpha at 1, 1, and 2 words. All historical float residuals are at most two ULP. The fixture executes the actual guest AEX Iterate callback body. Selecting the imported single-precision `expf` leaf makes all six outputs byte-identical to the pinned exported Smart worker, while the double-round counterfactual recreates every residual. Production admits those exact source/world/tuple cells on arm64 only. x86_64 remains fail-closed because the AEXCompat native-f32 leaf is not Windows UCRT, and the retained native-Windows UCRT return covers Gaussian counts 96 and 240 rather than the required 8, 50, and 100. No value compensation, native-Windows result, or After Effects claim is made.
+
+Rows digest: `a1c8f62218bd274c4509f10c88c41ca79f99640439c24c230cfa98bd60c5e796`.

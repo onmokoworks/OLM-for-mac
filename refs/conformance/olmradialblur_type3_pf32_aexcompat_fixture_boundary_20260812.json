@@ -1,4 +1,9 @@
 {
+  "supersession": {
+    "status": "historical_transport_boundary_superseded_for_one_bounded_tuple",
+    "by": "refs/conformance/olmradialblur_type3_layer_span_natural_closure_20260812.json",
+    "reason": "The all-zero classic fixture was a runner output-publication limitation. A later direct internal PF32 owner execution recovered nonzero source-span/pre/post/output planes and matched the public Mac classic owner for the fixed 9x7 NV25 Zoom tuple. This does not change the historical AEXCompat observation or admit its broader four-case matrix."
+  },
   "schema": "olm.actual-aex.fixture-boundary",
   "schema_version": 1,
   "effect": "OLM RadialBlur",

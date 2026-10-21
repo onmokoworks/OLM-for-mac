@@ -113,7 +113,7 @@
   "cases": [
     {
       "aex_mask_then_native_main_raw_uint16_exact": true,
-      "key_off_sha256": "c9b94abfac52d3bce934d3b968d944dc62d31f674de7ed6c9b31edf9ea35e5e4",
+      "key_off_sha256": "3dcc5f21b11b1378e2bda7547d97e5fa07c2d94769b8b722426e81319cf46c3d",
       "key_on_sha256": "92f5abc12f7f97391ba5a221f3ad9ec007ceda864920464d835484b841e9fc54",
       "padding_preserved": true,
       "tolerance": 0

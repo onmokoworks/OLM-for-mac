@@ -1,0 +1,78 @@
+{
+  "acceptance": {
+    "after_effects_required": false,
+    "native_return_must_be_64_bit_amd64": true,
+    "native_return_must_bind_system32_ucrtbase_identity": true,
+    "native_return_must_cover_all_494_rows": true
+  },
+  "boundary": {
+    "aexcompat_substitute_accepted_as_windows_ucrt": false,
+    "canonical_file_set_excludes_future_return_directory": true,
+    "native_windows_return_included": false,
+    "older_counts_96_240_extrapolated": false,
+    "production_admission_changed": false,
+    "x86_remaining_six_currently_fail_closed": true
+  },
+  "package": {
+    "canonical_top_level_files": [
+      "README.md",
+      "UcrtExpfCapture.cs",
+      "expf_vectors.json",
+      "request_manifest.json",
+      "run_olmdirectionalblur_remaining6_ucrt_expf.ps1"
+    ],
+    "file_sha256": {
+      "README.md": "e5de4d10dea896aa8f9c024db9435b7d4ab3703ce2e3eca87bdbae9626f24e09",
+      "UcrtExpfCapture.cs": "abba08ce55644ac7ace25bdca91aa938c4efc73e94290b046f99e60fec1f3515",
+      "expf_vectors.json": "f48aa088fe1040d3985a7b8eeb66211c082ff716b07ba1ac002129d7dd18b1a8",
+      "request_manifest.json": "2979fc4de8813b5838f966305c06c1af1b2cc050b5f1fa3641fa9f94c65b3c53",
+      "run_olmdirectionalblur_remaining6_ucrt_expf.ps1": "39f3b18674a73d83e1d8f1a968ba7359ee00c996c9c76e78cee483fc20a9fd3d"
+    },
+    "path": "refs/runtime_trace_packages/olm_runtime_trace_olmdirectionalblur_remaining6_ucrt_expf_20260814"
+  },
+  "provenance": {
+    "actual_aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "aex_import_symbol": "expf",
+    "gaussian_header_sha256": "c51bfca6d7f8a3d30ac58f3a2605a2bade053876c42f1179c0e02f60adb8258c",
+    "older_native_ucrt_table_sha256": "8282b5947a6688f4f26d4dd1783328b17559f163a1112b0c57a571bbd4f1965d",
+    "production_source_sha256": "494116880d037a0d44a48b0e0ebe0fc5358b4cd8892b90ca8c61ea8a7bb2e845",
+    "remaining_six_boundary_sha256": "5c8b2318fa66597c442e9a208e3848600e1f921f378e24563094bdd9591ae80e"
+  },
+  "request_id": "olm_runtime_trace_olmdirectionalblur_remaining6_ucrt_expf_20260814",
+  "schema": "olmdirectionalblur.remaining6-ucrt-expf-request-closure/1",
+  "status": "ready_native_windows_ucrt_capture_ae_free",
+  "target": {
+    "path": "%WINDIR%\\System32\\ucrtbase.dll",
+    "process": "64-bit x64 PowerShell",
+    "symbol": "expf"
+  },
+  "vectors": {
+    "count": 494,
+    "counts": [
+      8,
+      50,
+      96,
+      100,
+      240
+    ],
+    "first": {
+      "argument_bits": "0x80000000",
+      "count": 8,
+      "denominator_bits": "0x41638e44",
+      "index": 0,
+      "numerator_bits": "0x80000000",
+      "ratio_bits": "0x402aaaab",
+      "ratio_square_bits": "0x40e38e3a"
+    },
+    "last": {
+      "argument_bits": "0xc08ecd71",
+      "count": 240,
+      "denominator_bits": "0x46480000",
+      "index": 239,
+      "numerator_bits": "0xc75f2100",
+      "ratio_bits": "0x42a00000",
+      "ratio_square_bits": "0x45c80000"
+    },
+    "rows_sha256": "0b13bec85e6b37e663f50ea36ce08f544b8e7bc6807c708af58b4f9c04aac455"
+  }
+}

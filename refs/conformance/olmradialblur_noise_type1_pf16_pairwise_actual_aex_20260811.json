@@ -239,7 +239,7 @@
         "max_alpha": true,
         "output": true,
         "polar": true,
-        "source_scalar": false
+        "source_scalar": true
       },
       "mode": "rotation",
       "noise_variation": 25.0,
@@ -303,7 +303,7 @@
         "max_alpha": true,
         "output": true,
         "polar": true,
-        "source_scalar": false
+        "source_scalar": true
       },
       "mode": "rotation",
       "noise_variation": 100.0,

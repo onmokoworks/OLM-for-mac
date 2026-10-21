@@ -243,7 +243,11 @@ def main(natural: bool = False, natural_slot: int = 1,
                 direction_lengths = [0, 0, 0, 0, 0]
                 direction_lengths[natural_slot] = natural_length
                 if natural_slot < 4:
-                    direction_angles[natural_slot] = (90, 0, 45, -45)[natural_slot] + natural_rotation
+                    # The exported typed owners construct slot 3 with
+                    # rotation+135 (LEA +0x87), not the geometrically
+                    # equivalent -45 representative. Mode 4 is bit-sensitive
+                    # to that directed-angle choice.
+                    direction_angles[natural_slot] = (90, 0, 45, 135)[natural_slot] + natural_rotation
             self.write_bytes(lengths, struct.pack("<5i", *direction_angles))
             self.write_bytes(angles, struct.pack("<5i", *direction_lengths))
             colors = self.host_alloc(80, align=16)

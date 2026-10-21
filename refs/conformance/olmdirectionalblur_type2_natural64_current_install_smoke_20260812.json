@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "kind": "olmdirectionalblur_type2_natural64_current_install_smoke_20260812",
+  "date": "2026-08-12",
+  "status": "installed_host_smoke_pass_pixel_gate_fail_closed",
+  "build": {
+    "production_source_path": "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp",
+    "production_source_sha256": "b37b100cf99ef900bb7b661a013e5d1bf4b8e106214887d199adfa8f505c8bc6",
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "codesign": "adhoc",
+    "codesign_deep_strict": true
+  },
+  "installed_bundle": {
+    "path": "~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin",
+    "binary_path": "~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin/Contents/MacOS/OLMDirectionalBlur",
+    "binary_sha256": "9142c19937c54dec8ed07a06c14181db1cf274335b599605251982bf671516f6",
+    "matching_bundle_count": 1,
+    "previous_binary_sha256": "f9c914b6fd30b4715d3c469859f2271b0bcdbadd72a15724438cffbf61b09940",
+    "recoverable_backup": "/tmp/olmdirectionalblur-natural64-backup.nvITrj/OLMDirectionalBlur.plugin"
+  },
+  "host_smoke": {
+    "application": "Adobe After Effects 2026",
+    "ae_version": "26.3x87",
+    "ae_pid": 92353,
+    "renderer_raw": 1816,
+    "renderer": "SOFTWARE",
+    "depth": "PF32",
+    "composition_geometry": [
+      64,
+      36
+    ],
+    "input_png_sha256": "0673ea66da1913c89180fed2b9500cd26ce5b88511cf2c59dfd9d515e67a5e4e",
+    "effect_match_name": "OLM Directional Blur",
+    "effect_added": true,
+    "effect_enabled": true,
+    "parameters": "plugin defaults; no Type-2 natural64 tuple values were applied",
+    "ae_result_status": "ok",
+    "loaded_module_path_observed": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin/Contents/MacOS/OLMDirectionalBlur",
+    "loaded_module_count_observed": 1,
+    "loaded_module_observation": "ephemeral vmmap observation for AE PID 92353; the raw vmmap output was not retained",
+    "loaded_module_identity_persisted": false,
+    "loaded_module_identity_semantics": "the path/count observation is recorded as operator evidence only and is not independently proven by the byte-preserved raw result; the raw result binds the script-checked on-disk binary SHA and successful default effect render",
+    "output_png_sha256": "bf59701e9e4e562c9cb3e174bf9302283ea779f0e799303506772ff20208c99e",
+    "render_output_created": true,
+    "raw_result": {
+      "path": "refs/conformance/olmdirectionalblur_type2_natural64_current_install_smoke_raw_20260812.json",
+      "sha256": "3482673aa164cf03e7f99945a29eb35a74fa4a9e29942370625f6ac2d36112e2"
+    },
+    "pixel_exact": false,
+    "scope": "script-checked current on-disk Universal binary / default-effect add / SOFTWARE PF32 render; mapped-module identity remains unpersisted operator observation"
+  },
+  "hostless_type2_natural64_closure": {
+    "path": "refs/conformance/olmdirectionalblur_type2_natural64_aexcompat_closure_20260812.json",
+    "sha256": "3b75a06e07446df07f4445cc0ce40798febb42087f5c6e353b0c9b9dc6d58647",
+    "status": "exact_bounded_public_owner",
+    "production_source_sha256": "b37b100cf99ef900bb7b661a013e5d1bf4b8e106214887d199adfa8f505c8bc6",
+    "claim_boundary": "PF16/PF32 NV25 Type-2 64x36 declared tuple plus the closure's PF8 control and declared source basis",
+    "relation_to_installed_build": "the closure binds the same production source SHA-256 as the installed Universal build; its bounded hostless pixels remain separate from this default-parameter AE smoke"
+  },
+  "claims_not_made": [
+    "No live-AE Type-2 natural64 tuple pixel claim; this smoke used plugin defaults",
+    "No Windows/Mac AE pixel-exact claim from this output PNG",
+    "No promotion beyond the separate bounded hostless closure",
+    "No claim for arbitrary parameters, dimensions, source content, rowbytes, renderer, or host version"
+  ]
+}

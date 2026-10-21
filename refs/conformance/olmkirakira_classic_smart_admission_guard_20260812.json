@@ -1,0 +1,136 @@
+{
+  "kind": "olmkirakira_classic_smart_admission_guard",
+  "date": "2026-08-12",
+  "status": "exact_bounded_admission",
+  "classic": {
+    "dimensions": [
+      5,
+      3
+    ],
+    "row_padding_bytes": 12,
+    "pixel_formats": [
+      "PF8/ARGB32",
+      "PF16/ARGB64",
+      "PF32/ARGB128"
+    ],
+    "admitted_declared_tuples": 14,
+    "rejected_mutations": 7,
+    "source_content_mutations_rejected": 25,
+    "layout_format_depth_mutations_rejected": 22,
+    "source_function": "ClassicClosureSourceFamilyForTuple + ClassicClosureSourceMatches",
+    "source_families": {
+      "semi_transparent_color": "RGBA=(15*i,11*i,7*i,64+11*i)",
+      "alpha_gradient": "RGBA=(0,0,0,15*i)"
+    }
+  },
+  "smart": {
+    "status": "linked_raw_exact_bounded_public_smart",
+    "evidence_path": "refs/conformance/olmkirakira_public_smart_bounded_closure_20260812.json",
+    "evidence_sha256": "a8cf5cd9560c6d54bac960eac426562ad8cc41c76f1b4f1f1a45b6ce1c8c1a93",
+    "positive_cell_count": 42,
+    "canonical_cells_sha256": "112f5c2e11b84bff20ec961f046186e69a9e650e96cb5f1aec3449acfce2565a",
+    "canonical_negative_rows_sha256": "a13a6b9b3e2372785a36566d4d0eff5aec905ab3b995f2574b384e9464378d28",
+    "optional_pixel_checkin": true,
+    "all_negative_outputs_untouched": true
+  },
+  "mode3_32x18": {
+    "status": "linked_raw_exact_bounded_public_classic_and_smart",
+    "evidence_path": "refs/conformance/olmkirakira_mode3_32x18_public_closure_20260814.json",
+    "evidence_sha256": "bcebea0e40f1c3fce63ba1f3587141f44d111c8410b1316b50cf69c52944de4c",
+    "positive_cell_count": 3,
+    "tuple": "Mode3/Merge1/Horizontal50/Rotation0/Gain0.1",
+    "source": "wrapped-linear RGBA fixture",
+    "dimensions": [
+      32,
+      18
+    ],
+    "row_padding_bytes": 12
+  },
+  "static_checks": {
+    "world_pair_validates_both_formats": true,
+    "layout_checks_active_rowbytes": true,
+    "classic_fixed_layout": true,
+    "classic_tuple_map": true,
+    "classic_source_content_gate": true,
+    "smart_calls_checked_parameter_decoder": true,
+    "smart_calls_numeric_owner": true,
+    "smart_has_no_unconditional_bad_callback": true,
+    "smart_format_matches_declared_depth": true,
+    "smart_pixel_checkin_is_optional": true
+  },
+  "universal_isolated_build": {
+    "configuration": "Debug",
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "codesign_verify_strict": true,
+    "binary_sha256": "d4c9b587d41797259de8627e2d3d5bcf7a376f12fa3c8b99dcd820e0b6d80ae3",
+    "isolated_temp_product": true,
+    "installed": false
+  },
+  "evidence": [
+    {
+      "path": "refs/conformance/olmkirakira_mode1_exported_effectmain_all_depths_20260812.json",
+      "sha256": "8464aa75ac75e71fd9151b881a858c650b7447ba2f56d3decf68d24d688c1122",
+      "status": "exact"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_mode1_rotation1_20260812.json",
+      "sha256": "0ec60ae12a79ed48518b652ca24d45fb4c92a8dea5e4f4cabc11bd9723dff4d8",
+      "status": "exact"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_mode2_ramp_merge2_exported_effectmain_all_depths_20260812.json",
+      "sha256": "7d73caa283d321ab1b08051543f3b472562868218ddca35142352b6a330f736a",
+      "status": "exact"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_mode2_ramp_merge2_rotation1_20260812.json",
+      "sha256": "3590cebcb7339285c898a3198a903b47fb0a94846f248a9ce190ee476e6d6d4c",
+      "status": "exact"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_mode2_rotation22_closure_20260812.json",
+      "sha256": "d88b3aa163330216fba22848abfdb1f25dbb562c8cf10d4284d9254c43cdd433",
+      "status": "raw_exact"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_mode3_gaussian_length50_exported_effectmain_all_depths_20260812.json",
+      "sha256": "ec9f170e9472bfceda99af8e545dc90bd69a0a87811d37077e53003b4b54a08b",
+      "status": "exact"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_mode3_gaussian_length50_rotation1_20260812.json",
+      "sha256": "fae26f1a974f40ec1d49429acd70fed633b9863b5f97aeef6fe203755764fe9b",
+      "status": "exact"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_mode4_diagonal2_owner_angle_closure_20260812.json",
+      "sha256": "402ec3c99adf7cb5b951359bffc01361a449a7935197d2e84d4c2d440e9c7fad",
+      "status": "raw_exact"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_mode4_highlight_gradient_closure_20260812.json",
+      "sha256": "f36249eac1e5d71454c75a2b4ba01b2697f4bc49cfddb343a0c2130035edde24",
+      "status": "raw_exact"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_mode4_horizontal_solo_exported_effectmain_all_depths_20260812.json",
+      "sha256": "6433ae1745813107f765509464b157891beb55266944f63f24af1b2fcc072633",
+      "status": "exact"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_mode4_highlight_solo_exported_effectmain_all_depths_20260812.json",
+      "sha256": "455f89f1355e39ed751a7deb5f254e1d993adce11785a555c245ccb27032e702",
+      "status": "exact"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_mode4_multiray_exported_effectmain_all_depths_20260812.json",
+      "sha256": "fda9a9f42c59ca9992745e4d58e060bf4d8d4fd42908023aa4df726cba4a1f5c",
+      "status": "exact"
+    }
+  ],
+  "source_sha256": "abf826dd450bcf879585ae786222ba5d5212d11dd9b292c6ba23d379014baeab",
+  "claim_boundary": "The named 5x3 closures remain unchanged. One additional Mode3/Merge1/Horizontal50/Rotation0/Gain0.1 wrapped-linear source at exactly 32x18 and row padding 12 is admitted by Classic and full-request Smart at PF8/PF16/PF32. Other tuple/source/layout/request combinations remain fail-closed; no install or AE-host numerical claim is made."
+}

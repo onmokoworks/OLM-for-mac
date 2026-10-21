@@ -17,7 +17,7 @@ class RadialType3ProductionTests(unittest.TestCase):
         self.assertEqual(result["status"], "exact")
         self.assertEqual(result["rows"], 6)
         self.assertFalse(result["special_values_admitted"])
-        self.assertFalse(result["renderworld_type3_admitted"])
+        self.assertEqual(result["renderworld_type3_admitted"], "bounded_pf32_9x7_nv25_only")
 
 
 if __name__ == "__main__":

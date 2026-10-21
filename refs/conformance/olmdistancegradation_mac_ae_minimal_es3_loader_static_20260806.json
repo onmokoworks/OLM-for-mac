@@ -21,5 +21,5 @@
   "installed_sha256": "656537d052f67a9e7eb4d4ba2c6f5c890fe34e3d2c47069bcfba01854d96055e",
   "ae_pid_observed_alive_but_not_operated": 10665,
   "test": "tools/emulation/test_olmdistancegradation_mac_ae_es3_loader_20260806.py",
-  "pf32_smart": "unsupported by actual AEX; unclaimed"
+  "pf32_smart": "historical assumption superseded 2026-08-12: actual public command 0x18 has a PF32 Smart owner; this static loader artifact makes no Smart claim"
 }

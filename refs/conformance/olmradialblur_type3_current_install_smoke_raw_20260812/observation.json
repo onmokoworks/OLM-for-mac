@@ -1,0 +1,68 @@
+{
+  "kind": "olmradialblur_type3_current_install_smoke_raw_observation_20260812",
+  "status": "default_render_plumbing_pass_type3_timeout",
+  "ae": {
+    "application": "Adobe After Effects 2026",
+    "version": "26.3x87",
+    "pid": 10809,
+    "fresh_process": true,
+    "bits": 32,
+    "renderer_raw": 1816,
+    "renderer": "SOFTWARE",
+    "stopped_after_capture": true,
+    "termination": "SIGKILL after Type3 Layer render remained blocked"
+  },
+  "installed": {
+    "binary_path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin/Contents/MacOS/OLMRadialBlur",
+    "binary_sha256": "7701c3cb864ec9a05c82de68d1ab3a57a18f9a9b4f97e3b8d7b1786a016818b3",
+    "matching_bundle_count": 1,
+    "architectures": ["x86_64", "arm64"],
+    "codesign_deep_strict": true
+  },
+  "ready": {
+    "member": "ready.json",
+    "sha256": "983933d0b69d693643aeb6216729a732baab1e076bc1c69593ed08fe5e167f8a",
+    "effect_match_name": "OLM RadialBlur"
+  },
+  "module_mapping": {
+    "member": "vmmap.txt.gz",
+    "compressed_sha256": "6ee6cf98ede2e5c5389d607dd111b57362eb0f93507e9ef5aa564dc0a06e8899",
+    "uncompressed_sha256": "738b290fe77785c22d152e907f30c6e965bac24608cf21c93d42a3fc1a9abe0e",
+    "exact_path_segment_count": 4
+  },
+  "default_render": {
+    "member": "default_plumbing.png",
+    "sha256": "ff6ab6d686cc00e17a2b234d237041fb48c49b8e4ab93609ab0f31cde623bbe3",
+    "dimensions": [16, 16],
+    "format": "PNG 16-bit RGBA",
+    "effect_enabled": true,
+    "pixel_exact": false
+  },
+  "type3_layer": {
+    "attempted": true,
+    "status": "live_type3_timeout",
+    "noise_layer_match_name": "OLM RadialBlur-0021",
+    "parameters_requested": {
+      "OLM RadialBlur-0001": 1,
+      "OLM RadialBlur-0002": [4, 3],
+      "OLM RadialBlur-0004": 4,
+      "OLM RadialBlur-0008": 0,
+      "OLM RadialBlur-0012": 1,
+      "OLM RadialBlur-0013": 0,
+      "OLM RadialBlur-0015": 5,
+      "OLM RadialBlur-0016": 1,
+      "OLM RadialBlur-0017": 0,
+      "OLM RadialBlur-0019": 25,
+      "OLM RadialBlur-0020": 3,
+      "OLM RadialBlur-0024": 3,
+      "OLM RadialBlur-0026": true,
+      "OLM RadialBlur-0028": 1,
+      "OLM RadialBlur-0029": 0
+    },
+    "parameter_readback_retained": false,
+    "result_json_created": false,
+    "output_created": false,
+    "pixel_exact": false,
+    "smart_numerical_exact": false
+  }
+}

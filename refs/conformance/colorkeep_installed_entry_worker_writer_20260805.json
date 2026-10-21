@@ -8,7 +8,7 @@
     "arm64"
   ],
   "installed_binary": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/ColorKeep.plugin/Contents/MacOS/ColorKeep",
-  "installed_binary_sha256": "ccc89781fa547450acc3053cb77bff8d6983cd8c6835866c87449e7a64117cce",
+  "installed_binary_sha256": "dae59a6faf54ed18ac803ad042be2cdab688c5f814edf322d64c108d5247f46d",
   "loading": "dlopen(RTLD_NOW|RTLD_LOCAL) of the installed MediaCore Mach-O succeeded",
   "not_proven": [
     "After Effects loading of this hash",
@@ -17,7 +17,7 @@
   ],
   "public_entry": {
     "executed_command": "PF_Cmd_GLOBAL_SETUP",
-    "image_offset": "0x6cc",
+    "image_offset": "0x7dc",
     "payload_hex": "000808004000000200140008",
     "resolution": "dlsym(EffectMain)",
     "symbol": "_EffectMain"
@@ -27,7 +27,7 @@
   "status": "installed_hash_bound_exact",
   "worker_writer": {
     "fixture": "PF16 extended-range 4x3, rowbytes40, padding8",
-    "image_offset": "0x1aec",
+    "image_offset": "0x39d0",
     "observed_sha256": "1fa0ee04a8e57924bfb14a3c57f9ac937c7737486daca69b2bec689f6afe4a5e",
     "resolution": "local Mach-O symbol offset plus dladdr image base",
     "symbol": "__ZL15ColorKeep16FuncPviiP10PF_Pixel16S1_"

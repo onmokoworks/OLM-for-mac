@@ -1,0 +1,47 @@
+{
+  "boundary": {
+    "mac_public_effectmain_exercised": true,
+    "native_after_effects_exercised": false,
+    "native_windows_exercised": false,
+    "production_policy": "only the fixed 16x16 same-source Type-3 Layer tuple is admitted at PF8/PF16/PF32; mutations and unlisted routes fail closed",
+    "windows_exported_smart_entry_proven": true,
+    "windows_oracle_entry": "AEX exported Smart entry under pinned repository AEXCompat/Unicorn worker"
+  },
+  "identities": {
+    "closure_report_sha256": "cb15e04eb308dc5329eb5724f93b4d204f70b743a11dcda7e6ceccc79751de08",
+    "closure_tool_sha256": "2b869b1de1143c5d7029753d9474182d19a2972af1f3ef6545f9c2cb2a307fcd",
+    "production_source_sha256": "494116880d037a0d44a48b0e0ebe0fc5358b4cd8892b90ca8c61ea8a7bb2e845"
+  },
+  "rows": [
+    {
+      "depth": 8,
+      "layer_sha256": "ad840bf75281333fc389ba7083074e10ff82e7538583242e7a91880e6bbe1b83",
+      "mac_public_effectmain_sha256": "568e904dd9816cbe932cdb05dfc302f723f49aa0f1f88656f5bdcfb8d65ca3d7",
+      "output_padding_preserved": true,
+      "raw_exact": true,
+      "source_sha256": "ad840bf75281333fc389ba7083074e10ff82e7538583242e7a91880e6bbe1b83",
+      "windows_exported_smart_sha256": "568e904dd9816cbe932cdb05dfc302f723f49aa0f1f88656f5bdcfb8d65ca3d7"
+    },
+    {
+      "depth": 16,
+      "layer_sha256": "c8312808c3b40b8970d567234f944c71654cbf9d3363aabb1980421fb2597803",
+      "mac_public_effectmain_sha256": "be00533e86a8692472012223cbd67046affe0da724b26cf66a0659d369ae06e3",
+      "output_padding_preserved": true,
+      "raw_exact": true,
+      "source_sha256": "c8312808c3b40b8970d567234f944c71654cbf9d3363aabb1980421fb2597803",
+      "windows_exported_smart_sha256": "be00533e86a8692472012223cbd67046affe0da724b26cf66a0659d369ae06e3"
+    },
+    {
+      "depth": 32,
+      "layer_sha256": "d411e03242f4235a8ea803517db6d81e7e72764a97a4241d0bcea46a6edc7303",
+      "mac_public_effectmain_sha256": "eb57f09d5bff511a8f0554e0d750fe5f3a10280c51bfce0f4d6d7feadba1d7b8",
+      "output_padding_preserved": true,
+      "raw_exact": true,
+      "source_sha256": "d411e03242f4235a8ea803517db6d81e7e72764a97a4241d0bcea46a6edc7303",
+      "windows_exported_smart_sha256": "eb57f09d5bff511a8f0554e0d750fe5f3a10280c51bfce0f4d6d7feadba1d7b8"
+    }
+  ],
+  "rows_sha256": "d002719857cb606e287000d6fbad4d49b121d078ba1c91e5a3e2d9e44a7034df",
+  "schema": "olmdirectionalblur.type3-public-owner-boundary/2",
+  "status": "PASS_TYPE3_EXPORTED_SMART_PUBLIC_RAW_EXACT_3"
+}

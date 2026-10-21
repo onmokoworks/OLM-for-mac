@@ -1,13 +1,59 @@
 #!/usr/bin/env python3
-"""Fail-closed proof that the AEX SmartRender path has no PF32 owner."""
+"""Pin the actual public PF32 Smart owner and the bounded Mac admission."""
+import hashlib
 import json
 from pathlib import Path
-ROOT=Path(__file__).resolve().parents[2]
-def block(s,a,b):return s[s.index(a):s.index(b,s.index(a))]
-def main():
- asm=(ROOT/'disasm/DistanceGradation.aex.asm.txt').read_text();src=(ROOT/'mac/OLMDistanceGradation/OLMDistanceGradation.cpp').read_text()
- classic=block(asm,'; === FUN_181173d20 @ 181173d20 ===','; === FUN_181174060 @ 181174060 ===');smart=block(asm,'181174da9  MOV R8,qword ptr [R10]','181174e3d  MOV RDX,R14')
- facts={'classic_pf32_owner': '181173f6d  CALL 0x181172a10' in classic,'smart_pf16_branch':'181174df1  CALL 0x181170280' in smart,'smart_pf8_branch':'181174e31  CALL 0x181170380' in smart,'smart_pf32_owner_absent':'181172a10' not in smart,'production_rejects_non_integer_smart_depth':'extra->input->bitdepth != 8 && extra->input->bitdepth != 16' in src,'production_has_no_direct_pf32_smart_branch':'err = RenderBits<PF_PixelFloat>(in_data, params, input_world, output_world);' not in src[src.index('SmartRender(PF_InData'):src.index('// ============================================================================\n// Entry point')],'pre_render_unions_result_rect':'UnionLRect_inline(&in_result.result_rect, &extra->output->result_rect);' in src,'pre_render_unions_max_rect':'UnionLRect_inline(&in_result.max_result_rect, &extra->output->max_result_rect);' in src}
- assert all(facts.values()),facts
- r={'schema':'olmdistancegradation.pf32-smartrender-boundary/2','status':'fail_closed_not_an_aex_path','facts':facts,'decision':{'pf32_actual_aex_entry':'classic PF_Cmd_RENDER -> FUN_181172a10','pf32_actual_aex_smart_owner':None,'production_pf32_smart_result':'PF_Err_BAD_CALLBACK_PARAM before host checkout','required_host_validation':'prove AE routes PF32 to classic Render; SmartRender direct PF32 remains rejected'},'forbidden':['reuse PF8 smart callback','reuse PF16 smart callback','claim PF32 SmartRender exact from classic owner fixture']};print(json.dumps(r,indent=2));return 0
-if __name__=='__main__':raise SystemExit(main())
+
+ROOT = Path(__file__).resolve().parents[2]
+AEX = ROOT / "aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex"
+ASM = ROOT / "disasm/DistanceGradation.aex.asm.txt"
+SOURCE = ROOT / "mac/OLMDistanceGradation/OLMDistanceGradation.cpp"
+
+def sha(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+def function(text: str, name: str, next_name: str) -> str:
+    start = text.index(f"; === {name}")
+    return text[start:text.index(f"; === {next_name}", start)]
+
+def main() -> int:
+    asm = ASM.read_text(encoding="utf-8")
+    source = SOURCE.read_text(encoding="utf-8")
+    entry = function(asm, "entryPointFunc @ 181174bd0", "FUN_181174f90 @ 181174f90")
+    smart = function(asm, "FUN_181173d20 @ 181173d20", "FUN_181174060 @ 181174060")
+    facts = {
+        "public_case_0x18_calls_smart_owner": "181174f0e  CALL 0x181173d20" in entry,
+        "smart_reads_declared_bitdepth": "181173d58  MOVZX ECX,word ptr [RAX + 0x2c]" in smart,
+        "smart_pf32_branch": "181173ede  CMP CX,0x20" in smart,
+        "smart_input_checkout": "181173f22  CALL qword ptr [RAX]" in smart,
+        "smart_output_checkout": "181173f3e  CALL qword ptr [RAX + 0x10]" in smart,
+        "smart_pf32_whole_owner": "181173f6d  CALL 0x181172a10" in smart,
+        "smart_float_compose": "181173ffc  LEA RCX,[0x181170c90]" in smart,
+        "smart_iterate_float": "181174024  CALL qword ptr [R10]" in smart,
+        "production_accepts_depth_32": "extra->input->bitdepth != 32" in source,
+        "production_pf32_branch": "RenderBits<PF_PixelFloat>(in_data, params, input_world, output_world, true)" in source,
+        "production_bounded_predicate": "is_admitted_pf32_smart_exported_matrix" in source,
+        "production_balances_layer_checkout": "extra->cb->checkin_layer_pixels(in_data->effect_ref, DG_INPUT)" in source,
+        "production_validates_world_formats": "input_format != expected_format || output_format != expected_format" in source,
+    }
+    assert all(facts.values()), facts
+    report = {
+        "schema": "olmdistancegradation.pf32-smartrender-boundary/3",
+        "status": "PASS_ACTUAL_PUBLIC_PF32_SMART_OWNER_STATIC_AND_BOUNDED_PRODUCTION",
+        "aex_sha256": sha(AEX),
+        "disassembly_sha256": sha(ASM),
+        "production_source_sha256": sha(SOURCE),
+        "facts": facts,
+        "actual_owner_chain": [
+            "entryPointFunc case 0x18", "FUN_181173d20 bitdepth 0x20",
+            "input/output checkout", "FUN_181172a10 PF32 whole owner",
+            "PF iterateFloat Suite v1", "FUN_181170c90 compose",
+        ],
+        "production_boundary": "PF32 Smart is admitted only by the fixed 17x11 exported matrix predicate; unlisted tuples remain PF_Err_BAD_CALLBACK_PARAM",
+        "supersedes": "The earlier version misclassified case 0x0b as SmartRender and falsely reported that the AEX had no PF32 Smart owner.",
+    }
+    print(json.dumps(report, indent=2, sort_keys=True))
+    return 0
+
+if __name__ == "__main__":
+    raise SystemExit(main())

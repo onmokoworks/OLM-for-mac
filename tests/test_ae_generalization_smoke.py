@@ -122,6 +122,35 @@ class AEGeneralizationSmokeTests(unittest.TestCase):
         ])
         self.assertEqual(campaign.PLUGINS["distance"]["params"], baseline["params"])
 
+    def test_kirakira_mode3_length50_profile_is_separate_from_baseline(self) -> None:
+        baseline = campaign.plugin_state("kirakira")
+        profiled = campaign.plugin_state("kirakira")
+        campaign.apply_parameter_profile(profiled, "kirakira-mode3-length50")
+        params = {match: value for match, _name, value in profiled["params"]}
+        self.assertEqual(params, {
+            "OLM OLM Kira Kira-0001": 0,
+            "OLM OLM Kira Kira-0002": 1.0,
+            "OLM OLM Kira Kira-0003": 0,
+            "OLM OLM Kira Kira-0004": 50,
+            "OLM OLM Kira Kira-0005": 0,
+            "OLM OLM Kira Kira-0006": 0,
+            "OLM OLM Kira Kira-0007": 100,
+            "OLM OLM Kira Kira-0008": 1,
+            "OLM OLM Kira Kira-0009": 3,
+            "OLM OLM Kira Kira-0010": 0,
+            "OLM OLM Kira Kira-0011": 100,
+            "OLM OLM Kira Kira-0012": 100,
+            "OLM OLM Kira Kira-0017": 1,
+            "OLM OLM Kira Kira-0020": 0,
+            "OLM OLM Kira Kira-0026": 0,
+            "OLM OLM Kira Kira-0027": 0,
+        })
+        self.assertEqual(profiled["declared_depths"], (8, 16, 32))
+        self.assertTrue(profiled["render_queue_8"])
+        self.assertEqual(baseline["supported_tuple"],
+                         "closed Mode 2 Highlight radius 3 tuple")
+        self.assertEqual(campaign.PLUGINS["kirakira"]["params"], baseline["params"])
+
     def run_preflight(self, profile: str, plugins: tuple[str, ...] = ()) -> dict:
         with tempfile.TemporaryDirectory() as raw:
             plugin_args = [item for plugin in plugins for item in ("--plugin", plugin)]

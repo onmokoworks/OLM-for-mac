@@ -1,0 +1,218 @@
+{
+  "after_effects_processes": [],
+  "all10_preflight": {
+    "bundle_count": 10,
+    "byte_identical": true,
+    "passes": 2,
+    "returncode": 2,
+    "status": "ae_not_running",
+    "stdout_sha256": "1f3b04a4200eb5402844746f750f56d9a57e63e86c7877a916580a9137402781"
+  },
+  "authorities": {
+    "all10_installed_preflight": "1065dfabbde20bff12fe6e2bcdce638905bf13e726635c7d7bf617fcfa5f9d96",
+    "base_public_guard": "446e9db01b9bf16fd35a24693fb5fde81fd8f01573280d2c4ca299863e48c2a5",
+    "candidate_build_identity": "c0852db33833084681012fa4a854f21bd50f96d29b392deb784df0fa89a6bd0b",
+    "installer": "b85a68eb800491cef972c2aa149e6e89fda32a9596d97d03784b3e2fb0e263cb",
+    "official_runner": "d0c35f0a5d992068051bd255164450235bd904958d87fc336efa457e0dc7b1e4",
+    "pf16_public_closure": "3da92c902d05da8de59a020918429c8c7fa51a69b5495c66541a9204c6cc86d3",
+    "pf32_public_closure": "19758a53a11cbbfd5aa192144570ebcaa87c5a0b3d207cf655fb3072d1d17dfe",
+    "pf8_public_closure": "f7053387b000cfcb61d555723b665af75266af039ea5c1e2ace81ebb8a7800d7",
+    "production_source": "c710902f5928c67ae72e2e4ba445e801acd4a3f229f04d23ab6a1cd56cf73168",
+    "project": "8a5525814eb7917b4ee124c507caf6a085200decf6072b32d52779e38279b89a"
+  },
+  "candidate": {
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "binary_sha256": "c8ea1f0e7dbe7398006578b91e01adfcea975a8c8a3244657ea934eda587c53f",
+    "full_inventory": [
+      {
+        "mode": 493,
+        "path": ".",
+        "type": "directory"
+      },
+      {
+        "mode": 493,
+        "path": "Contents",
+        "type": "directory"
+      },
+      {
+        "bytes": 1395,
+        "mode": 420,
+        "path": "Contents/Info.plist",
+        "sha256": "ec869775844f179a91f9d9c6bf1586607cb499cda44e3852e86a0ff9dbd384df",
+        "type": "file"
+      },
+      {
+        "mode": 493,
+        "path": "Contents/MacOS",
+        "type": "directory"
+      },
+      {
+        "bytes": 497232,
+        "mode": 493,
+        "path": "Contents/MacOS/OLMSmoother2",
+        "sha256": "c8ea1f0e7dbe7398006578b91e01adfcea975a8c8a3244657ea934eda587c53f",
+        "type": "file"
+      },
+      {
+        "bytes": 8,
+        "mode": 420,
+        "path": "Contents/PkgInfo",
+        "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+        "type": "file"
+      },
+      {
+        "mode": 493,
+        "path": "Contents/Resources",
+        "type": "directory"
+      },
+      {
+        "bytes": 666,
+        "mode": 420,
+        "path": "Contents/Resources/OLMSmoother2.rsrc",
+        "sha256": "749e5c5f9b9eeea9bc3ef46d8169dc32be4905e72e715e208f5afd062b9686c6",
+        "type": "file"
+      },
+      {
+        "mode": 493,
+        "path": "Contents/_CodeSignature",
+        "type": "directory"
+      },
+      {
+        "bytes": 2456,
+        "mode": 420,
+        "path": "Contents/_CodeSignature/CodeResources",
+        "sha256": "30d0fec824c13f313caf83c8d599cdcc8098d06ac5f58c0c3d4329bd15e81346",
+        "type": "file"
+      }
+    ],
+    "minimum_versions": {
+      "arm64": "11.0",
+      "x86_64": "11.0"
+    },
+    "required_exports": {
+      "arm64": {
+        "_EffectMain": 1
+      },
+      "x86_64": {
+        "_EffectMain": 1
+      }
+    },
+    "signing_kind": "ad-hoc",
+    "strict_codesign": true
+  },
+  "claim_boundary": "Current workspace and on-disk predecessor/candidate identities; hostless numerical closure only; AE deferred to a later batch",
+  "claims_not_made": [
+    "No After Effects or aerender launch",
+    "No installed-new-binary claim until the explicit install transaction completes",
+    "No numerical generalization beyond the 39 source/tuple/geometry-bound Smart cells",
+    "No native Windows output-world memory claim for host-presentation transforms",
+    "No Developer ID, notarization, or distribution acceptance claim"
+  ],
+  "identity_transition": {
+    "changed_fields": {
+      "OLMSmoother2": [
+        "sha256",
+        "source_bundle",
+        "source_sha256"
+      ]
+    },
+    "changed_plugins": [
+      "OLMSmoother2"
+    ],
+    "other_nine_rows_exact": true,
+    "top_level_changed_fields": [
+      "accepted_at",
+      "installed_after"
+    ],
+    "unchanged_plugins": [
+      "ColorKeep",
+      "OLMBlur",
+      "OLMColorKey",
+      "OLMDirectionalBlur",
+      "OLMDistanceGradation",
+      "OLMKiraKira",
+      "OLMRadialBlur",
+      "OLMSmoother",
+      "OLMToonDilate"
+    ]
+  },
+  "installed_predecessor": {
+    "binary_sha256": "55d138e2a25704ffa59d8bd08d20e2160525f8f8011b8e11c733ae23fddd795e",
+    "bundle_count": 1,
+    "full_inventory": [
+      {
+        "mode": 493,
+        "path": ".",
+        "type": "directory"
+      },
+      {
+        "mode": 493,
+        "path": "Contents",
+        "type": "directory"
+      },
+      {
+        "bytes": 1395,
+        "mode": 420,
+        "path": "Contents/Info.plist",
+        "sha256": "ec869775844f179a91f9d9c6bf1586607cb499cda44e3852e86a0ff9dbd384df",
+        "type": "file"
+      },
+      {
+        "mode": 493,
+        "path": "Contents/MacOS",
+        "type": "directory"
+      },
+      {
+        "bytes": 480624,
+        "mode": 493,
+        "path": "Contents/MacOS/OLMSmoother2",
+        "sha256": "55d138e2a25704ffa59d8bd08d20e2160525f8f8011b8e11c733ae23fddd795e",
+        "type": "file"
+      },
+      {
+        "bytes": 8,
+        "mode": 420,
+        "path": "Contents/PkgInfo",
+        "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+        "type": "file"
+      },
+      {
+        "mode": 493,
+        "path": "Contents/Resources",
+        "type": "directory"
+      },
+      {
+        "bytes": 666,
+        "mode": 420,
+        "path": "Contents/Resources/OLMSmoother2.rsrc",
+        "sha256": "749e5c5f9b9eeea9bc3ef46d8169dc32be4905e72e715e208f5afd062b9686c6",
+        "type": "file"
+      },
+      {
+        "mode": 493,
+        "path": "Contents/_CodeSignature",
+        "type": "directory"
+      },
+      {
+        "bytes": 2456,
+        "mode": 420,
+        "path": "Contents/_CodeSignature/CodeResources",
+        "sha256": "30d0fec824c13f313caf83c8d599cdcc8098d06ac5f58c0c3d4329bd15e81346",
+        "type": "file"
+      }
+    ]
+  },
+  "prepared_evidence": {
+    "candidate_installed_full_inventory_exact": true,
+    "old_bundle_copy_count": 3,
+    "old_bundle_full_inventories_exact": true,
+    "post_identity_sha256": "7212ca5c887826eeb7d7f33474c87aed79f37407fe39472e182639fcdb9f6f16",
+    "transaction_sha256": "3d1638fea17ecd8ac63c6e28c6443c462a3f1ec8a002873f4021c4c549f692b9"
+  },
+  "schema": "olmsmoother2.pf8-pf16-pf32-transactional-install-audit/1",
+  "status": "installed_identity_closed_ae_deferred",
+  "transaction_state": "installed"
+}

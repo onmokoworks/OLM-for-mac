@@ -1,0 +1,510 @@
+{
+  "after_effects_processes": [],
+  "authorities": {
+    "base_generator": "5b3e93d45632c3452e81b0b39f63786c6c146e28e0fb7ed5611a0217ec3ea9f1",
+    "current_binary": "260c2d5e635b38213adf88e01298510bf7f180b38bdb5e1d2b85a2906fbfbf18",
+    "harness": "1623680d7fe2cf6525e0e2893d7c25b6d629accf5fd81318a35fab1e64af01c4",
+    "old_binary": "69da64666478b25957aa268f6bb6fbc869c3d50b61759f9ca00172045afb5194",
+    "shim": "eccf768d497919c1b875ea10e3c73ec53e35a16af9c4a561303497d25ae8097a"
+  },
+  "claim_boundary": "AE-free same-harness counterfactual of retained predecessor and current installed public EffectMain. It localizes build-setting contraction drift; it is not native-AE or arbitrary-product evidence.",
+  "rows": [
+    {
+      "current_installed_sha256": "ff4de3ff2622faf02c62afe42a7c850586fea7f0fa7a3777f329b1d82b88ed5b",
+      "current_oracle_exact": true,
+      "depth": 8,
+      "old_installed_sha256": "ff4de3ff2622faf02c62afe42a7c850586fea7f0fa7a3777f329b1d82b88ed5b",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "ff4de3ff2622faf02c62afe42a7c850586fea7f0fa7a3777f329b1d82b88ed5b",
+      "tuple": "m1_h7_r0"
+    },
+    {
+      "current_installed_sha256": "ee37cf06360d144b85b8d7a32ce9b0612af1f354a0a988c9e1e952e58b9ce41d",
+      "current_oracle_exact": true,
+      "depth": 16,
+      "old_installed_sha256": "ee37cf06360d144b85b8d7a32ce9b0612af1f354a0a988c9e1e952e58b9ce41d",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "ee37cf06360d144b85b8d7a32ce9b0612af1f354a0a988c9e1e952e58b9ce41d",
+      "tuple": "m1_h7_r0"
+    },
+    {
+      "current_installed_sha256": "0d50d86e40f9dd25daef5683e78bc3c066501477ccc36c8c4c7eab0c274b2cb6",
+      "current_oracle_exact": true,
+      "depth": 32,
+      "old_installed_sha256": "ce8b0cfdabcc3960fc2d79a4a268d2115ade1f0c7595fd07e21b4d2e03788b46",
+      "old_oracle_exact": false,
+      "old_pf32_max_ulp": 2,
+      "old_pf32_word_differences": 3,
+      "oracle_sha256": "0d50d86e40f9dd25daef5683e78bc3c066501477ccc36c8c4c7eab0c274b2cb6",
+      "tuple": "m1_h7_r0"
+    },
+    {
+      "current_installed_sha256": "9c20573663b0cda83708eeb206ac7a6dddd6705629eeee0f7a9d357959881ef6",
+      "current_oracle_exact": true,
+      "depth": 8,
+      "old_installed_sha256": "9c20573663b0cda83708eeb206ac7a6dddd6705629eeee0f7a9d357959881ef6",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "9c20573663b0cda83708eeb206ac7a6dddd6705629eeee0f7a9d357959881ef6",
+      "tuple": "m1_h7_r1"
+    },
+    {
+      "current_installed_sha256": "80792b3f984e959150aacfecbc4bc01ab2ee51f047c41f5676df5fb9073479f2",
+      "current_oracle_exact": true,
+      "depth": 16,
+      "old_installed_sha256": "80792b3f984e959150aacfecbc4bc01ab2ee51f047c41f5676df5fb9073479f2",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "80792b3f984e959150aacfecbc4bc01ab2ee51f047c41f5676df5fb9073479f2",
+      "tuple": "m1_h7_r1"
+    },
+    {
+      "current_installed_sha256": "4a221600eb32528a6b186712f1dc9a3d5f97b2f61add1ae8662e8c52e2dd58bb",
+      "current_oracle_exact": true,
+      "depth": 32,
+      "old_installed_sha256": "792d84bbe657e78d503f875980aa9cd6b600d1abb5ec167a87413451e5af2995",
+      "old_oracle_exact": false,
+      "old_pf32_max_ulp": 2,
+      "old_pf32_word_differences": 9,
+      "oracle_sha256": "4a221600eb32528a6b186712f1dc9a3d5f97b2f61add1ae8662e8c52e2dd58bb",
+      "tuple": "m1_h7_r1"
+    },
+    {
+      "current_installed_sha256": "46245e23f8902a243be948ae282b0b1b3bf53a9f276c0566bc820917076e5ec9",
+      "current_oracle_exact": true,
+      "depth": 8,
+      "old_installed_sha256": "46245e23f8902a243be948ae282b0b1b3bf53a9f276c0566bc820917076e5ec9",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "46245e23f8902a243be948ae282b0b1b3bf53a9f276c0566bc820917076e5ec9",
+      "tuple": "m1_highlight_r3"
+    },
+    {
+      "current_installed_sha256": "71c2c1ae26ae4e63dc7e985f5b3666bd1a912fcc36d91842a0a2e65841693b13",
+      "current_oracle_exact": true,
+      "depth": 16,
+      "old_installed_sha256": "71c2c1ae26ae4e63dc7e985f5b3666bd1a912fcc36d91842a0a2e65841693b13",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "71c2c1ae26ae4e63dc7e985f5b3666bd1a912fcc36d91842a0a2e65841693b13",
+      "tuple": "m1_highlight_r3"
+    },
+    {
+      "current_installed_sha256": "df36edb6a9a16c88c2eb7582928b80493df46da1a46708ee75495a2e513c3dc4",
+      "current_oracle_exact": true,
+      "depth": 32,
+      "old_installed_sha256": "df36edb6a9a16c88c2eb7582928b80493df46da1a46708ee75495a2e513c3dc4",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "df36edb6a9a16c88c2eb7582928b80493df46da1a46708ee75495a2e513c3dc4",
+      "tuple": "m1_highlight_r3"
+    },
+    {
+      "current_installed_sha256": "9193537a74075244aa1a7c38f506dbc546864940942315f7358fbab5d2145d26",
+      "current_oracle_exact": true,
+      "depth": 8,
+      "old_installed_sha256": "9193537a74075244aa1a7c38f506dbc546864940942315f7358fbab5d2145d26",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "9193537a74075244aa1a7c38f506dbc546864940942315f7358fbab5d2145d26",
+      "tuple": "m2_h7_ramp_r0"
+    },
+    {
+      "current_installed_sha256": "7df16d7172e645dacc52711a6c3fbf49faeb2eaba00ef463a9c00584d4fbe0ad",
+      "current_oracle_exact": true,
+      "depth": 16,
+      "old_installed_sha256": "7df16d7172e645dacc52711a6c3fbf49faeb2eaba00ef463a9c00584d4fbe0ad",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "7df16d7172e645dacc52711a6c3fbf49faeb2eaba00ef463a9c00584d4fbe0ad",
+      "tuple": "m2_h7_ramp_r0"
+    },
+    {
+      "current_installed_sha256": "f3d831eab1bc4d57e787733aeffd0863a1840cbf0bf7e79dd1f2d4eec60c1763",
+      "current_oracle_exact": true,
+      "depth": 32,
+      "old_installed_sha256": "f3d831eab1bc4d57e787733aeffd0863a1840cbf0bf7e79dd1f2d4eec60c1763",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "f3d831eab1bc4d57e787733aeffd0863a1840cbf0bf7e79dd1f2d4eec60c1763",
+      "tuple": "m2_h7_ramp_r0"
+    },
+    {
+      "current_installed_sha256": "0328f5deed53fdab62d0ce08db1f2666fe13b8cbd85c743f85dc0d048c127ace",
+      "current_oracle_exact": true,
+      "depth": 8,
+      "old_installed_sha256": "0328f5deed53fdab62d0ce08db1f2666fe13b8cbd85c743f85dc0d048c127ace",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "0328f5deed53fdab62d0ce08db1f2666fe13b8cbd85c743f85dc0d048c127ace",
+      "tuple": "m2_h7_ramp_r1"
+    },
+    {
+      "current_installed_sha256": "d7cad5ac7c353627bef978b85205fefb749bff6fa2e1b6a9429d772f7edd73fd",
+      "current_oracle_exact": true,
+      "depth": 16,
+      "old_installed_sha256": "d7cad5ac7c353627bef978b85205fefb749bff6fa2e1b6a9429d772f7edd73fd",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "d7cad5ac7c353627bef978b85205fefb749bff6fa2e1b6a9429d772f7edd73fd",
+      "tuple": "m2_h7_ramp_r1"
+    },
+    {
+      "current_installed_sha256": "024e207a669266ad0e8382d80adef67f6b55fdfc17e208b060bf2340a79b9eb6",
+      "current_oracle_exact": true,
+      "depth": 32,
+      "old_installed_sha256": "024e207a669266ad0e8382d80adef67f6b55fdfc17e208b060bf2340a79b9eb6",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "024e207a669266ad0e8382d80adef67f6b55fdfc17e208b060bf2340a79b9eb6",
+      "tuple": "m2_h7_ramp_r1"
+    },
+    {
+      "current_installed_sha256": "189bb206a4ed6bf15e184de6f63fa2b4b72d21419b86e65ee6685d3b50f9f1c8",
+      "current_oracle_exact": true,
+      "depth": 8,
+      "old_installed_sha256": "189bb206a4ed6bf15e184de6f63fa2b4b72d21419b86e65ee6685d3b50f9f1c8",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "189bb206a4ed6bf15e184de6f63fa2b4b72d21419b86e65ee6685d3b50f9f1c8",
+      "tuple": "m2_h7_ramp_r22_g073"
+    },
+    {
+      "current_installed_sha256": "78700c7c4e5f680fcc9fc4b8fbd86d6e8ba364b252b6755cb47178c1b9014625",
+      "current_oracle_exact": true,
+      "depth": 16,
+      "old_installed_sha256": "78700c7c4e5f680fcc9fc4b8fbd86d6e8ba364b252b6755cb47178c1b9014625",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "78700c7c4e5f680fcc9fc4b8fbd86d6e8ba364b252b6755cb47178c1b9014625",
+      "tuple": "m2_h7_ramp_r22_g073"
+    },
+    {
+      "current_installed_sha256": "8c86b78f9a81cf7988ef7c76c2108e221b8cfc65fd129ac166e0b5e73651014f",
+      "current_oracle_exact": true,
+      "depth": 32,
+      "old_installed_sha256": "8c86b78f9a81cf7988ef7c76c2108e221b8cfc65fd129ac166e0b5e73651014f",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "8c86b78f9a81cf7988ef7c76c2108e221b8cfc65fd129ac166e0b5e73651014f",
+      "tuple": "m2_h7_ramp_r22_g073"
+    },
+    {
+      "current_installed_sha256": "5026fd55404879917f3b72e242987289e35c918b07edcdbe983005d6d019e38c",
+      "current_oracle_exact": true,
+      "depth": 8,
+      "old_installed_sha256": "5026fd55404879917f3b72e242987289e35c918b07edcdbe983005d6d019e38c",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "5026fd55404879917f3b72e242987289e35c918b07edcdbe983005d6d019e38c",
+      "tuple": "m2_highlight_r3"
+    },
+    {
+      "current_installed_sha256": "c2e203a0e5a355d98f7b1c23da47f398ec3fe846875b957d3b75e70b5f870c39",
+      "current_oracle_exact": true,
+      "depth": 16,
+      "old_installed_sha256": "c2e203a0e5a355d98f7b1c23da47f398ec3fe846875b957d3b75e70b5f870c39",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "c2e203a0e5a355d98f7b1c23da47f398ec3fe846875b957d3b75e70b5f870c39",
+      "tuple": "m2_highlight_r3"
+    },
+    {
+      "current_installed_sha256": "fbd4f245f442b20ec73a1e67b26286e4bc01b9cab7fde6b4b5a086a1e31612f9",
+      "current_oracle_exact": true,
+      "depth": 32,
+      "old_installed_sha256": "fbd4f245f442b20ec73a1e67b26286e4bc01b9cab7fde6b4b5a086a1e31612f9",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "fbd4f245f442b20ec73a1e67b26286e4bc01b9cab7fde6b4b5a086a1e31612f9",
+      "tuple": "m2_highlight_r3"
+    },
+    {
+      "current_installed_sha256": "0cf9de4e73720eba926739b6f1a92d901bd0b64b9e29c597a6239a43da415d94",
+      "current_oracle_exact": true,
+      "depth": 8,
+      "old_installed_sha256": "0cf9de4e73720eba926739b6f1a92d901bd0b64b9e29c597a6239a43da415d94",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "0cf9de4e73720eba926739b6f1a92d901bd0b64b9e29c597a6239a43da415d94",
+      "tuple": "m3_h50_r0"
+    },
+    {
+      "current_installed_sha256": "67b1fbbf6750a81d8fe2ac6c5d3d96457714f6437770bb3842a35f5d853da5a4",
+      "current_oracle_exact": true,
+      "depth": 16,
+      "old_installed_sha256": "67b1fbbf6750a81d8fe2ac6c5d3d96457714f6437770bb3842a35f5d853da5a4",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "67b1fbbf6750a81d8fe2ac6c5d3d96457714f6437770bb3842a35f5d853da5a4",
+      "tuple": "m3_h50_r0"
+    },
+    {
+      "current_installed_sha256": "36a6eebfb764e075667cf1d0f40cba6d7e8ef7fb65fbc95b66721e7ae44a1518",
+      "current_oracle_exact": true,
+      "depth": 32,
+      "old_installed_sha256": "5cb3df6263dd05b83e29b246b3e70cd57d36d58ca113162138521945fd28ca76",
+      "old_oracle_exact": false,
+      "old_pf32_max_ulp": 1,
+      "old_pf32_word_differences": 5,
+      "oracle_sha256": "36a6eebfb764e075667cf1d0f40cba6d7e8ef7fb65fbc95b66721e7ae44a1518",
+      "tuple": "m3_h50_r0"
+    },
+    {
+      "current_installed_sha256": "a338165e447b5a22b49c089763a9cbaf3325e29c05e7ed76047b19ad7a821564",
+      "current_oracle_exact": true,
+      "depth": 8,
+      "old_installed_sha256": "a338165e447b5a22b49c089763a9cbaf3325e29c05e7ed76047b19ad7a821564",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "a338165e447b5a22b49c089763a9cbaf3325e29c05e7ed76047b19ad7a821564",
+      "tuple": "m3_h50_r1"
+    },
+    {
+      "current_installed_sha256": "8228e38081d8e8d84df7263bdf3dfeb9b2c873a43c0423c9a81a8f2304af9986",
+      "current_oracle_exact": true,
+      "depth": 16,
+      "old_installed_sha256": "8228e38081d8e8d84df7263bdf3dfeb9b2c873a43c0423c9a81a8f2304af9986",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "8228e38081d8e8d84df7263bdf3dfeb9b2c873a43c0423c9a81a8f2304af9986",
+      "tuple": "m3_h50_r1"
+    },
+    {
+      "current_installed_sha256": "3d7f63c1ff88a3a4f00205af6a553a6f7a0927f5ae68bd4e93a2d901f55749f5",
+      "current_oracle_exact": true,
+      "depth": 32,
+      "old_installed_sha256": "d1eb63633ff66aa3ca6ea4aef922ebb7aa8225e1be5fc7505b0eec77a1b1e37f",
+      "old_oracle_exact": false,
+      "old_pf32_max_ulp": 1,
+      "old_pf32_word_differences": 6,
+      "oracle_sha256": "3d7f63c1ff88a3a4f00205af6a553a6f7a0927f5ae68bd4e93a2d901f55749f5",
+      "tuple": "m3_h50_r1"
+    },
+    {
+      "current_installed_sha256": "30b58167110e9bcc125244395ee07a16a6e8d00142869fd283f10f264b1ae0f6",
+      "current_oracle_exact": true,
+      "depth": 8,
+      "old_installed_sha256": "30b58167110e9bcc125244395ee07a16a6e8d00142869fd283f10f264b1ae0f6",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "30b58167110e9bcc125244395ee07a16a6e8d00142869fd283f10f264b1ae0f6",
+      "tuple": "m4_d2_l7"
+    },
+    {
+      "current_installed_sha256": "0853a40e66d15baf32fc85a6233b2fc387ec8413b1d4789df736c66afe5ea4b3",
+      "current_oracle_exact": true,
+      "depth": 16,
+      "old_installed_sha256": "0853a40e66d15baf32fc85a6233b2fc387ec8413b1d4789df736c66afe5ea4b3",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "0853a40e66d15baf32fc85a6233b2fc387ec8413b1d4789df736c66afe5ea4b3",
+      "tuple": "m4_d2_l7"
+    },
+    {
+      "current_installed_sha256": "1eb072a44e5fad044073c09245f25ff1a4359f378e24c28cbaa6a62fd6025d27",
+      "current_oracle_exact": true,
+      "depth": 32,
+      "old_installed_sha256": "1eb072a44e5fad044073c09245f25ff1a4359f378e24c28cbaa6a62fd6025d27",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "1eb072a44e5fad044073c09245f25ff1a4359f378e24c28cbaa6a62fd6025d27",
+      "tuple": "m4_d2_l7"
+    },
+    {
+      "current_installed_sha256": "bacc1fc79a6076e6ef5a681ed444acd18de5585cb47b7332ef9628c5e494ed34",
+      "current_oracle_exact": true,
+      "depth": 8,
+      "old_installed_sha256": "bacc1fc79a6076e6ef5a681ed444acd18de5585cb47b7332ef9628c5e494ed34",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "bacc1fc79a6076e6ef5a681ed444acd18de5585cb47b7332ef9628c5e494ed34",
+      "tuple": "m4_h5_ramp"
+    },
+    {
+      "current_installed_sha256": "28ffaa5d3c1a66c4095c89dd7ccb87782b30a8ae8d7bc9f21779efedcbe1914e",
+      "current_oracle_exact": true,
+      "depth": 16,
+      "old_installed_sha256": "28ffaa5d3c1a66c4095c89dd7ccb87782b30a8ae8d7bc9f21779efedcbe1914e",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "28ffaa5d3c1a66c4095c89dd7ccb87782b30a8ae8d7bc9f21779efedcbe1914e",
+      "tuple": "m4_h5_ramp"
+    },
+    {
+      "current_installed_sha256": "5cc484e50772e2acd74bc85b4c5d073837cd7349c22d068d655ab0ed3877bd49",
+      "current_oracle_exact": true,
+      "depth": 32,
+      "old_installed_sha256": "5cc484e50772e2acd74bc85b4c5d073837cd7349c22d068d655ab0ed3877bd49",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "5cc484e50772e2acd74bc85b4c5d073837cd7349c22d068d655ab0ed3877bd49",
+      "tuple": "m4_h5_ramp"
+    },
+    {
+      "current_installed_sha256": "5026fd55404879917f3b72e242987289e35c918b07edcdbe983005d6d019e38c",
+      "current_oracle_exact": true,
+      "depth": 8,
+      "old_installed_sha256": "5026fd55404879917f3b72e242987289e35c918b07edcdbe983005d6d019e38c",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "5026fd55404879917f3b72e242987289e35c918b07edcdbe983005d6d019e38c",
+      "tuple": "m4_highlight_r3"
+    },
+    {
+      "current_installed_sha256": "c2e203a0e5a355d98f7b1c23da47f398ec3fe846875b957d3b75e70b5f870c39",
+      "current_oracle_exact": true,
+      "depth": 16,
+      "old_installed_sha256": "c2e203a0e5a355d98f7b1c23da47f398ec3fe846875b957d3b75e70b5f870c39",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "c2e203a0e5a355d98f7b1c23da47f398ec3fe846875b957d3b75e70b5f870c39",
+      "tuple": "m4_highlight_r3"
+    },
+    {
+      "current_installed_sha256": "fbd4f245f442b20ec73a1e67b26286e4bc01b9cab7fde6b4b5a086a1e31612f9",
+      "current_oracle_exact": true,
+      "depth": 32,
+      "old_installed_sha256": "fbd4f245f442b20ec73a1e67b26286e4bc01b9cab7fde6b4b5a086a1e31612f9",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "fbd4f245f442b20ec73a1e67b26286e4bc01b9cab7fde6b4b5a086a1e31612f9",
+      "tuple": "m4_highlight_r3"
+    },
+    {
+      "current_installed_sha256": "d7a4fd9628e70685681455e3971110d125112086a94db3fb11b3b6170ee46917",
+      "current_oracle_exact": true,
+      "depth": 8,
+      "old_installed_sha256": "d7a4fd9628e70685681455e3971110d125112086a94db3fb11b3b6170ee46917",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "d7a4fd9628e70685681455e3971110d125112086a94db3fb11b3b6170ee46917",
+      "tuple": "m4_highlight_ramp"
+    },
+    {
+      "current_installed_sha256": "81bafe08009db7c1be9400a788527a4df899b2f5e05a33981e6a0aac0a1391b0",
+      "current_oracle_exact": true,
+      "depth": 16,
+      "old_installed_sha256": "81bafe08009db7c1be9400a788527a4df899b2f5e05a33981e6a0aac0a1391b0",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "81bafe08009db7c1be9400a788527a4df899b2f5e05a33981e6a0aac0a1391b0",
+      "tuple": "m4_highlight_ramp"
+    },
+    {
+      "current_installed_sha256": "b8421b82508a79162b116e90408a6013419f07b47a4d6150aac4f767d8963537",
+      "current_oracle_exact": true,
+      "depth": 32,
+      "old_installed_sha256": "b8421b82508a79162b116e90408a6013419f07b47a4d6150aac4f767d8963537",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "b8421b82508a79162b116e90408a6013419f07b47a4d6150aac4f767d8963537",
+      "tuple": "m4_highlight_ramp"
+    },
+    {
+      "current_installed_sha256": "5befdae0f497de64a04804c3576c8960f4d9fc06a664c7ea8e692600e1c38233",
+      "current_oracle_exact": true,
+      "depth": 8,
+      "old_installed_sha256": "5befdae0f497de64a04804c3576c8960f4d9fc06a664c7ea8e692600e1c38233",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "5befdae0f497de64a04804c3576c8960f4d9fc06a664c7ea8e692600e1c38233",
+      "tuple": "m4_multiray"
+    },
+    {
+      "current_installed_sha256": "92fdd029c1a005be30c8f57d7049ff284dd5a452466166ffb1a1393456b2798d",
+      "current_oracle_exact": true,
+      "depth": 16,
+      "old_installed_sha256": "92fdd029c1a005be30c8f57d7049ff284dd5a452466166ffb1a1393456b2798d",
+      "old_oracle_exact": true,
+      "old_pf32_max_ulp": 0,
+      "old_pf32_word_differences": 0,
+      "oracle_sha256": "92fdd029c1a005be30c8f57d7049ff284dd5a452466166ffb1a1393456b2798d",
+      "tuple": "m4_multiray"
+    },
+    {
+      "current_installed_sha256": "4b82d09706892d87e42088a909dc5884a158e711947cf86181444a7e3108f858",
+      "current_oracle_exact": true,
+      "depth": 32,
+      "old_installed_sha256": "33a66a7e7e38bf19a10b715f7a3a30fd016961536c07f7619ae991049c53c709",
+      "old_oracle_exact": false,
+      "old_pf32_max_ulp": 1,
+      "old_pf32_word_differences": 5,
+      "oracle_sha256": "4b82d09706892d87e42088a909dc5884a158e711947cf86181444a7e3108f858",
+      "tuple": "m4_multiray"
+    }
+  ],
+  "rows_sha256": "87d274191a15070ad98a8c9787b4064136e983e2cdd3cb6d1d1e6851c9444177",
+  "schema": "olmkirakira.installed-fp-contract-seam/1",
+  "scope": {
+    "arbitrary_tuple_source_geometry": false,
+    "native_after_effects": false
+  },
+  "status": "PASS_OLMKIRAKIRA_INSTALLED_FP_CONTRACT_SEAM_OLD37_NEW42_NO_AE",
+  "summary": {
+    "current_oracle_exact": 42,
+    "mismatch_keys": [
+      [
+        "m1_h7_r0",
+        32
+      ],
+      [
+        "m1_h7_r1",
+        32
+      ],
+      [
+        "m3_h50_r0",
+        32
+      ],
+      [
+        "m3_h50_r1",
+        32
+      ],
+      [
+        "m4_multiray",
+        32
+      ]
+    ],
+    "old_oracle_exact": 37,
+    "old_oracle_mismatched": 5,
+    "row_count": 42
+  }
+}

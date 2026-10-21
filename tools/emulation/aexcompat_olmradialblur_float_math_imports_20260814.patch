@@ -1,0 +1,50 @@
+diff --git a/guest/crates/aex-guest-worker/src/x64/imports.rs b/guest/crates/aex-guest-worker/src/x64/imports.rs
+index 3d9cb1fa..33622810 100644
+--- a/guest/crates/aex-guest-worker/src/x64/imports.rs
++++ b/guest/crates/aex-guest-worker/src/x64/imports.rs
+@@ -47,11 +47,13 @@ enum LegacyWin64Import {
+     VcruntimeExceptionCopy,
+     VcruntimeExceptionDestroy,
+     CxxThrowException,
++    Atan2F,
+     Cos,
+     CosF,
+     CeilF,
+     ExpF,
+     FloorF,
++    Log2F,
+     PowF,
+     Pow,
+     Sin,
+@@ -471,9 +473,11 @@ fn dispatch_win64_import(library: &str, symbol: &str) -> Win64ImportDispatch {
+             "memset" => LegacyWin64Import::Memset,
+             "memcpy" | "memmove" => LegacyWin64Import::MemoryCopy,
+             "_CxxThrowException" => LegacyWin64Import::CxxThrowException,
++            "atan2f" => LegacyWin64Import::Atan2F,
+             "cosf" => LegacyWin64Import::CosF,
+             "expf" => LegacyWin64Import::ExpF,
+             "floorf" => LegacyWin64Import::FloorF,
++            "log2f" => LegacyWin64Import::Log2F,
+             "powf" => LegacyWin64Import::PowF,
+             "pow" => LegacyWin64Import::Pow,
+             "sinf" => LegacyWin64Import::SinF,
+@@ -755,6 +759,9 @@ fn install_win64_import(
+                     }),
+                 )?;
+             }
++            LegacyWin64Import::Atan2F => {
++                install_float_binary_import(unicorn, stub, "atan2f", f32::atan2)?;
++            }
+             LegacyWin64Import::Cos => {
+                 install_double_import(unicorn, stub, "cos", f64::cos)?;
+             }
+@@ -770,6 +777,9 @@ fn install_win64_import(
+             LegacyWin64Import::FloorF => {
+                 install_float_import(unicorn, stub, "floorf", f32::floor)?;
+             }
++            LegacyWin64Import::Log2F => {
++                install_float_import(unicorn, stub, "log2f", f32::log2)?;
++            }
+             LegacyWin64Import::PowF => {
+                 install_float_binary_import(unicorn, stub, "powf", f32::powf)?;
+             }

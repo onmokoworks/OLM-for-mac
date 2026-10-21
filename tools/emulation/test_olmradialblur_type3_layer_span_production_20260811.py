@@ -17,7 +17,7 @@ def run() -> dict:
     production_source = SOURCE.read_text()
     assert "noise_variation_normalized" in production_source
     assert "info.noise_variation * 0.01f" in production_source
-    assert "not admitted until" in production_source
+    assert "use_aex_typed_zoom_type3_layer_span_small" in production_source
     assert "PF32 special values" not in evidence.get("scope", "")
     expected = {(r["depth"], r["noise_variation"]): r["span_words"] for r in evidence["rows"]}
     arrays = "\n".join(
@@ -74,7 +74,7 @@ int main(){{int e=0;
             "controls_invariant": ["seed", "noise_offset", "thickness"],
             "noise_variation_input": "normalized 0.25/1.0, not UI 25/100",
             "special_values_admitted": False,
-            "renderworld_type3_admitted": False}
+            "renderworld_type3_admitted": "bounded_pf32_9x7_nv25_only"}
 
 
 def main() -> int:

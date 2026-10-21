@@ -17,7 +17,7 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def main() -> int:
+def historical_main() -> int:
     matrix = json.loads(MATRIX.read_text(encoding="utf-8"))
     assert [row["command"] for row in matrix["public_commands"]] == [
         "PF_Cmd_ABOUT", "PF_Cmd_GLOBAL_SETUP", "PF_Cmd_PARAMS_SETUP",
@@ -59,6 +59,14 @@ def main() -> int:
                     "tools/emulation/test_olmblur_32bpc_source_aex_adapter_20260717.py"],
                    cwd=ROOT, check=True)
     print("[OK] OLMBlur completion matrix: all PF8/PF16/PF32 Legacy and NonLegacy worker and BlurRender dispatch cells exact")
+    return 0
+
+
+def main() -> int:
+    """Supersede the reduced fake-ABI public replay with current real-SDK lanes."""
+    subprocess.run([sys.executable, "tools/emulation/test_olmblur_classic_public_real_sdk_20260813.py"], cwd=ROOT, check=True)
+    subprocess.run([sys.executable, "tools/emulation/test_olmblur_smart_public_admission_20260813.py", "--validate-only"], cwd=ROOT, check=True)
+    print("PASS_SUPERSEDED_OLMBLUR_EFFECTMAIN_COMPLETION_MATRIX -> current real-SDK Classic + exact6 Smart")
     return 0
 
 

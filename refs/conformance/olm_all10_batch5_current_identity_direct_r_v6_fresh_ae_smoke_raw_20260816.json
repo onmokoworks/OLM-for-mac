@@ -1,0 +1,412 @@
+{
+  "ae_return": {
+    "ae_version": "26.3x87",
+    "claim_boundary": "Batch5 installed host load/add/enable-state and exact mapping for all ten; effect-enabled generic host-frame render only for OLMBlur and OLMDirectionalBlur; OLMToonDilate and the other seven bounded effects are disabled before generic saveFrameToPng. Numerical behavior is not assessed by this AE smoke. No pixel-exact, Windows-equivalence, typed-plane, padding, admission, or public-owner numerical-exact claim.",
+    "completed_epoch_ms": 1786846729246,
+    "os": "Macintosh OS 15.7.2/64",
+    "plugins": [
+      {
+        "applied": true,
+        "depth": 32,
+        "dimensions": [
+          64,
+          36
+        ],
+        "effect_can_enable_after_add": true,
+        "effect_disabled_during_host_frame": false,
+        "effect_enabled_during_render": true,
+        "effect_enabled_host_frame_attempted": true,
+        "effect_enabled_host_frame_succeeded": false,
+        "effect_enabled_numerical_render_attempted": false,
+        "effect_name": "OLM Blur",
+        "error": "Error: saveFrameToPng returned without a PNG",
+        "host_frame_render_succeeded": false,
+        "host_smoke_expectation": "enabled_host_frame_render",
+        "loaded": true,
+        "match_name": "OLM OLM Blur",
+        "numerical_render_assessment": "not_assessed",
+        "numerical_render_attempted": false,
+        "numerical_render_expected": false,
+        "numerical_render_succeeded": null,
+        "numerical_render_supported": false,
+        "output_modified_epoch_ms": null,
+        "output_path": null,
+        "output_size": null,
+        "plugin": "OLMBlur",
+        "render_succeeded": false
+      },
+      {
+        "applied": true,
+        "depth": 32,
+        "dimensions": [
+          11,
+          7
+        ],
+        "effect_can_enable_after_add": true,
+        "effect_disabled_during_host_frame": true,
+        "effect_enabled_during_render": false,
+        "effect_enabled_host_frame_attempted": false,
+        "effect_enabled_host_frame_succeeded": false,
+        "effect_enabled_numerical_render_attempted": false,
+        "effect_name": "Color Keep",
+        "error": "",
+        "host_frame_render_succeeded": true,
+        "host_smoke_expectation": "disabled_host_frame_render",
+        "loaded": true,
+        "match_name": "OLM Color Keep",
+        "numerical_render_assessment": "not_assessed",
+        "numerical_render_attempted": false,
+        "numerical_render_expected": false,
+        "numerical_render_succeeded": null,
+        "numerical_render_supported": false,
+        "output_modified_epoch_ms": 1786846726000,
+        "output_path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_all10_batch5_current_identity_direct_r_v6_fresh_ae_smoke_20260816/png/ColorKeep.png",
+        "output_size": 86,
+        "plugin": "ColorKeep",
+        "render_succeeded": true
+      },
+      {
+        "applied": true,
+        "depth": 32,
+        "dimensions": [
+          4,
+          4
+        ],
+        "effect_can_enable_after_add": true,
+        "effect_disabled_during_host_frame": true,
+        "effect_enabled_during_render": false,
+        "effect_enabled_host_frame_attempted": false,
+        "effect_enabled_host_frame_succeeded": false,
+        "effect_enabled_numerical_render_attempted": false,
+        "effect_name": "OLM Color Key",
+        "error": "",
+        "host_frame_render_succeeded": true,
+        "host_smoke_expectation": "disabled_host_frame_render",
+        "loaded": true,
+        "match_name": "OLM Color Key",
+        "numerical_render_assessment": "not_assessed",
+        "numerical_render_attempted": false,
+        "numerical_render_expected": false,
+        "numerical_render_succeeded": null,
+        "numerical_render_supported": false,
+        "output_modified_epoch_ms": 1786846726000,
+        "output_path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_all10_batch5_current_identity_direct_r_v6_fresh_ae_smoke_20260816/png/OLMColorKey.png",
+        "output_size": 82,
+        "plugin": "OLMColorKey",
+        "render_succeeded": true
+      },
+      {
+        "applied": true,
+        "depth": 32,
+        "dimensions": [
+          64,
+          36
+        ],
+        "effect_can_enable_after_add": true,
+        "effect_disabled_during_host_frame": false,
+        "effect_enabled_during_render": true,
+        "effect_enabled_host_frame_attempted": true,
+        "effect_enabled_host_frame_succeeded": true,
+        "effect_enabled_numerical_render_attempted": false,
+        "effect_name": "OLM DirectionalBlur",
+        "error": "",
+        "host_frame_render_succeeded": true,
+        "host_smoke_expectation": "enabled_host_frame_render",
+        "loaded": true,
+        "match_name": "OLM Directional Blur",
+        "numerical_render_assessment": "not_assessed",
+        "numerical_render_attempted": false,
+        "numerical_render_expected": false,
+        "numerical_render_succeeded": null,
+        "numerical_render_supported": false,
+        "output_modified_epoch_ms": 1786846727000,
+        "output_path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_all10_batch5_current_identity_direct_r_v6_fresh_ae_smoke_20260816/png/OLMDirectionalBlur.png",
+        "output_size": 181,
+        "plugin": "OLMDirectionalBlur",
+        "render_succeeded": true
+      },
+      {
+        "applied": true,
+        "depth": 32,
+        "dimensions": [
+          17,
+          11
+        ],
+        "effect_can_enable_after_add": true,
+        "effect_disabled_during_host_frame": true,
+        "effect_enabled_during_render": false,
+        "effect_enabled_host_frame_attempted": false,
+        "effect_enabled_host_frame_succeeded": false,
+        "effect_enabled_numerical_render_attempted": false,
+        "effect_name": "Distance Gradation",
+        "error": "",
+        "host_frame_render_succeeded": true,
+        "host_smoke_expectation": "disabled_host_frame_render",
+        "loaded": true,
+        "match_name": "OLM Distance Gradation",
+        "numerical_render_assessment": "not_assessed",
+        "numerical_render_attempted": false,
+        "numerical_render_expected": false,
+        "numerical_render_succeeded": null,
+        "numerical_render_supported": false,
+        "output_modified_epoch_ms": 1786846727000,
+        "output_path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_all10_batch5_current_identity_direct_r_v6_fresh_ae_smoke_20260816/png/OLMDistanceGradation.png",
+        "output_size": 102,
+        "plugin": "OLMDistanceGradation",
+        "render_succeeded": true
+      },
+      {
+        "applied": true,
+        "depth": 8,
+        "dimensions": [
+          5,
+          4
+        ],
+        "effect_can_enable_after_add": true,
+        "effect_disabled_during_host_frame": true,
+        "effect_enabled_during_render": false,
+        "effect_enabled_host_frame_attempted": false,
+        "effect_enabled_host_frame_succeeded": false,
+        "effect_enabled_numerical_render_attempted": false,
+        "effect_name": "OLM Kira Kira",
+        "error": "",
+        "host_frame_render_succeeded": true,
+        "host_smoke_expectation": "disabled_host_frame_render",
+        "loaded": true,
+        "match_name": "OLM OLM Kira Kira",
+        "numerical_render_assessment": "not_assessed",
+        "numerical_render_attempted": false,
+        "numerical_render_expected": false,
+        "numerical_render_succeeded": null,
+        "numerical_render_supported": false,
+        "output_modified_epoch_ms": 1786846727000,
+        "output_path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_all10_batch5_current_identity_direct_r_v6_fresh_ae_smoke_20260816/png/OLMKiraKira.png",
+        "output_size": 78,
+        "plugin": "OLMKiraKira",
+        "render_succeeded": true
+      },
+      {
+        "applied": true,
+        "depth": 32,
+        "dimensions": [
+          9,
+          7
+        ],
+        "effect_can_enable_after_add": true,
+        "effect_disabled_during_host_frame": true,
+        "effect_enabled_during_render": false,
+        "effect_enabled_host_frame_attempted": false,
+        "effect_enabled_host_frame_succeeded": false,
+        "effect_enabled_numerical_render_attempted": false,
+        "effect_name": "OLM RadialBlur",
+        "error": "",
+        "host_frame_render_succeeded": true,
+        "host_smoke_expectation": "disabled_host_frame_render",
+        "loaded": true,
+        "match_name": "OLM RadialBlur",
+        "numerical_render_assessment": "not_assessed",
+        "numerical_render_attempted": false,
+        "numerical_render_expected": false,
+        "numerical_render_succeeded": null,
+        "numerical_render_supported": false,
+        "output_modified_epoch_ms": 1786846728000,
+        "output_path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_all10_batch5_current_identity_direct_r_v6_fresh_ae_smoke_20260816/png/OLMRadialBlur.png",
+        "output_size": 85,
+        "plugin": "OLMRadialBlur",
+        "render_succeeded": true
+      },
+      {
+        "applied": true,
+        "depth": 16,
+        "dimensions": [
+          17,
+          11
+        ],
+        "effect_can_enable_after_add": true,
+        "effect_disabled_during_host_frame": true,
+        "effect_enabled_during_render": false,
+        "effect_enabled_host_frame_attempted": false,
+        "effect_enabled_host_frame_succeeded": false,
+        "effect_enabled_numerical_render_attempted": false,
+        "effect_name": "OLM Smoother",
+        "error": "",
+        "host_frame_render_succeeded": true,
+        "host_smoke_expectation": "disabled_host_frame_render",
+        "loaded": true,
+        "match_name": "OLM Smoother",
+        "numerical_render_assessment": "not_assessed",
+        "numerical_render_attempted": false,
+        "numerical_render_expected": false,
+        "numerical_render_succeeded": null,
+        "numerical_render_supported": false,
+        "output_modified_epoch_ms": 1786846728000,
+        "output_path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_all10_batch5_current_identity_direct_r_v6_fresh_ae_smoke_20260816/png/OLMSmoother.png",
+        "output_size": 102,
+        "plugin": "OLMSmoother",
+        "render_succeeded": true
+      },
+      {
+        "applied": true,
+        "depth": 32,
+        "dimensions": [
+          17,
+          11
+        ],
+        "effect_can_enable_after_add": true,
+        "effect_disabled_during_host_frame": true,
+        "effect_enabled_during_render": false,
+        "effect_enabled_host_frame_attempted": false,
+        "effect_enabled_host_frame_succeeded": false,
+        "effect_enabled_numerical_render_attempted": false,
+        "effect_name": "OLM Smoother v2",
+        "error": "",
+        "host_frame_render_succeeded": true,
+        "host_smoke_expectation": "disabled_host_frame_render",
+        "loaded": true,
+        "match_name": "OLM Smoother v2",
+        "numerical_render_assessment": "not_assessed",
+        "numerical_render_attempted": false,
+        "numerical_render_expected": false,
+        "numerical_render_succeeded": null,
+        "numerical_render_supported": false,
+        "output_modified_epoch_ms": 1786846728000,
+        "output_path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_all10_batch5_current_identity_direct_r_v6_fresh_ae_smoke_20260816/png/OLMSmoother2.png",
+        "output_size": 102,
+        "plugin": "OLMSmoother2",
+        "render_succeeded": true
+      },
+      {
+        "applied": true,
+        "depth": 32,
+        "dimensions": [
+          64,
+          36
+        ],
+        "effect_can_enable_after_add": true,
+        "effect_disabled_during_host_frame": true,
+        "effect_enabled_during_render": false,
+        "effect_enabled_host_frame_attempted": false,
+        "effect_enabled_host_frame_succeeded": false,
+        "effect_enabled_numerical_render_attempted": false,
+        "effect_name": "OLM Toon Dilate",
+        "error": "",
+        "host_frame_render_succeeded": true,
+        "host_smoke_expectation": "disabled_host_frame_render",
+        "loaded": true,
+        "match_name": "ADBE OLMToonDilate",
+        "numerical_render_assessment": "not_assessed",
+        "numerical_render_attempted": false,
+        "numerical_render_expected": false,
+        "numerical_render_succeeded": null,
+        "numerical_render_supported": false,
+        "output_modified_epoch_ms": 1786846728000,
+        "output_path": "/Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_all10_batch5_current_identity_direct_r_v6_fresh_ae_smoke_20260816/png/OLMToonDilate.png",
+        "output_size": 181,
+        "plugin": "OLMToonDilate",
+        "render_succeeded": true
+      }
+    ],
+    "project": {
+      "linear_blending": false,
+      "renderer": "SOFTWARE",
+      "renderer_raw": 1816,
+      "working_space": "None"
+    },
+    "run_nonce": "49e69d862373889dd8ce4c7189e5bc37",
+    "schema": "olm.all10-fresh-ae-host-return/1",
+    "started_epoch_ms": 1786846705745,
+    "status": "fail_closed"
+  },
+  "artifacts": {
+    "ae_return": {
+      "path": "handoffs/olm_all10_batch5_current_identity_direct_r_v6_fresh_ae_smoke_20260816/ae_return.json",
+      "sha256": "91ee8651388c369463a66054b70c821576957cdd72f8c9ece0756a9ccb157011",
+      "size": 9968
+    },
+    "launch_wrapper": {
+      "path": "handoffs/olm_all10_batch5_current_identity_direct_r_v6_fresh_ae_smoke_20260816/launch.jsx",
+      "sha256": "a279796cb514272c26d219332b1e4b66de9d429e5b674ade529147b579579b25",
+      "size": 758
+    },
+    "payload": {
+      "path": "scripts/ae_host_all10_batch5_current_identity_live_v3_20260815.jsx",
+      "sha256": "7343ff97e79b1881d32b75f7ec390b900884a40700dc3aea8df30aa7266df404",
+      "size": 2101
+    }
+  },
+  "claim_boundary": "Batch5 installed host load/add/enable-state and exact mapping for all ten; generic effect-enabled host-frame render only for OLMBlur and OLMDirectionalBlur. The other eight bounded effects are disabled before generic saveFrameToPng. Numerical behavior is not assessed. No pixel-exact, Windows-equivalence, typed-plane, padding, admission, or public-owner numerical-exact claim.",
+  "cleanup": {
+    "actions": [
+      {
+        "action": "application_quit",
+        "returncode": 0,
+        "stderr": "",
+        "stdout": ""
+      }
+    ],
+    "completed_at": "2026-08-16T02:19:03.829743+00:00",
+    "owned_pids": [
+      2267
+    ],
+    "remaining_ae_pids": [],
+    "remaining_owned_pids": []
+  },
+  "completed_at": "2026-08-16T02:19:03.830212+00:00",
+  "error": {
+    "message": "AE return status/version mismatch",
+    "type": "ValueError"
+  },
+  "generated_at": "2026-08-16T02:16:33.348749+00:00",
+  "host": {
+    "captured_at": null,
+    "fresh_process": true,
+    "initial_ae_pids": [],
+    "initial_process_count": 0,
+    "launch_process_pid": 2267,
+    "launch_requested_at": "2026-08-16T02:16:33.381578+00:00",
+    "pid": 2267,
+    "process_count": 1,
+    "process_identity": {
+      "returncode": 0,
+      "sampled_at": "2026-08-16T02:16:33.411034+00:00",
+      "stderr": "",
+      "stdout": " 2267  2265 Sun Aug 16 11:16:33 2026     /Applications/Adobe After Effects 2026/Adobe After Effects 2026.app/Contents/MacOS/After Effects -r /Users/onmk/Documents/Projects/Personal/OLM as/handoffs/olm_all10_batch5_current_identity_direct_r_v6_fresh_ae_smoke_20260816/launch.jsx"
+    },
+    "process_samples": [
+      {
+        "pids": [
+          2267
+        ],
+        "sampled_at": "2026-08-16T02:16:33.402426+00:00"
+      }
+    ],
+    "quit_succeeded": true,
+    "renderer": "SOFTWARE",
+    "renderer_raw": 1816,
+    "residual_process_count": 0,
+    "script_invocation_pid": 2267,
+    "started_after_identity_acceptance": true,
+    "started_at": "2026-08-16T02:16:33+00:00",
+    "startup_script_launch": {
+      "executable": "/Applications/Adobe After Effects 2026/Adobe After Effects 2026.app/Contents/MacOS/After Effects",
+      "launcher_pid": 2267,
+      "mode": "direct_executable_dash_r",
+      "wrapper": "handoffs/olm_all10_batch5_current_identity_direct_r_v6_fresh_ae_smoke_20260816/launch.jsx"
+    }
+  },
+  "installed_identity_manifest": {
+    "accepted_at": "2026-08-15T11:43:15.990084+00:00",
+    "accepted_manifest_status": "verified_before_launch",
+    "path": "refs/conformance/olm_installed_identity_manifest_20260806.json",
+    "sha256": "ede4857b810e9f2901561ee8a3a9179c4c508dc2ee058525aa3f46dff4164079"
+  },
+  "passed": false,
+  "plugins": [],
+  "runner": {
+    "path": "scripts/run_olm_all10_batch5_current_identity_direct_r_v6_20260816.py",
+    "sha256": "04cf56a21b0ad1cd86afcc8e09f4efc604d546260a9dc47a53c9faca6f8cf05c",
+    "size": 1133
+  },
+  "schema": "olm.all10-current-install-fresh-ae-smoke-raw/1",
+  "status": "fail_closed"
+}

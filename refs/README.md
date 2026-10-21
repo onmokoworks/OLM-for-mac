@@ -8,11 +8,11 @@ Windows AEへの依頼パッケージを保存します。
 - [`conformance/OLM_MAC_RELEASE_NOTES_20260806.md`](conformance/OLM_MAC_RELEASE_NOTES_20260806.md)：日本語リリースノート
 - [`conformance/olm_release_completion_matrix_20260806.md`](conformance/olm_release_completion_matrix_20260806.md)：プラグイン別の完成対象と証拠境界
 - [`conformance/olm_release_gate_status_20260806.json`](conformance/olm_release_gate_status_20260806.json)：最終Mac統合ゲート
-- [`reference_requests/olm_windows_ae_release_boundary_minimal_20260806.zip`](reference_requests/olm_windows_ae_release_boundary_minimal_20260806.zip)：保留中のWindows 7観測
+- [`reference_requests/olm_windows_ae_release_boundary_minimal_20260806.zip`](reference_requests/olm_windows_ae_release_boundary_minimal_20260806.zip)：受領済みWindows 7観測の固定契約（7／7 accepted、0 pending）
 
 `conformance/`の古い日付の記録は、調査過程と判断根拠を保存する履歴です。最新状態を
-決める正本ではありません。現在のWindows作業で過去のpending requestを一括再送せず、
-hash固定された最小7行パッケージだけを使用してください。
+決める正本ではありません。最小7行は受領・受理済みです。過去のpending requestや
+同じ7行を再送せず、将来の追加校正が必要な場合だけ別のhash固定契約を作成してください。
 
 ## 旧Reference Render Diff Harness
 

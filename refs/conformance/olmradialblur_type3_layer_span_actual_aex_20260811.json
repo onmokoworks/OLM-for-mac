@@ -1,4 +1,6 @@
 {
+  "superseded_by": "refs/conformance/olmradialblur_type3_layer_span_natural_closure_20260812.json",
+  "supersession_scope": "The historical helper-only not_admitted decision is superseded only for the fixed PF32 Zoom 9x7/NV25 same-origin Layer tuple; all six composer rows remain valid evidence.",
   "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
   "formula": "f32(f32(f32(NV*luma)+f32(1-NV))*size_factor)",
   "luminance": "f32((double(f32(R*A))*0.299 + double(f32(G*A))*0.587) + double(f32(B*A))*0.114)",

@@ -134,6 +134,14 @@ def _frida_agent_config(profile: dict[str, Any], module_filename: str) -> dict[s
         "module_name": module_filename,
         "exports": [entry],
         "internal_rvas": internal,
+        "call_edge_trace": {
+            "enabled": True,
+            "entry_hooks": [entry["name"]],
+            "pf_cmd_values": [3, 5],
+            "pf_cmd_arg": 0,
+            "max_events": 4096,
+            "max_ms": 10000,
+        },
         "poll_interval_ms": 100,
     }
 
@@ -158,6 +166,32 @@ def _generic_events(agent_config: dict[str, Any], entry_rva: int) -> list[dict[s
             "pf_cmd_type": {"equals": "i32"},
             "pf_cmd_value": {"pattern": "^-?[0-9]+$"},
         },
+    })
+    events.append({
+        "name": "trace_status_started",
+        "prefix": "FRIDA_TRACE_STARTED",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": common + ["thread_id", "trace_id", "status"],
+        "field_constraints": {
+            "status": {"equals": "started"},
+        },
+    })
+    events.append({
+        "name": "trace_status_stopped",
+        "prefix": "FRIDA_TRACE_STOPPED",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 1},
+        "required_fields": common + ["thread_id", "trace_id", "status", "claimable", "reason", "event_count"],
+        "field_constraints": {
+            "status": {"equals": "stopped"},
+            "claimable": {"equals": True},
+            "event_count": {"pattern": "^[1-9][0-9]*$"},
+        },
+    })
+    events.append({
+        "name": "call_edge",
+        "prefix": "FRIDA_CALL_EDGE",
+        "cardinality": {"scope": "per_case", "min": 1, "max": 4096},
+        "required_fields": common + ["thread_id", "trace_id", "source", "target", "source_in_module", "target_in_module"],
     })
     for hook in agent_config["internal_rvas"]:
         events.append({

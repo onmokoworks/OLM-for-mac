@@ -154,9 +154,25 @@ question is which AEX path a real AE render takes. The generated package:
   timeout drift.
 
 The shared 2025 AEX map is
-`frida_profiles/olm_entrypoints_20260718.json`. Broad instruction tracing is
-deliberately disabled. Use CDB after the Frida trace has selected a narrow
+`frida_profiles/olm_entrypoints_20260718.json`. Broad or unlimited instruction
+tracing is deliberately disabled. Use CDB after the Frida trace has selected a narrow
 callsite that needs stepping, register inspection, or a data watchpoint.
+
+### Optional bounded call-edge trace
+
+The Frida transport can request a narrowly scoped call-flow survey with
+`transport.agent_config.call_edge_trace`. It is disabled unless an enabled
+object is supplied and must name selected entry hooks plus hard `max_events`
+and `max_ms` limits. The default command set is `PF_Cmd_RENDER=3` and
+`PF_Cmd_SMART_RENDER=5`; the agent reads the configured `pf_cmd_arg` (default
+`arg(0)`) and starts tracing only for those commands on the named entry hook.
+
+The agent uses Frida Stalker call events for that one thread and retains an
+edge only when its source or target is inside the hash-pinned AEX module.
+`call_edge` rows contain both addresses and in-module RVAs where applicable.
+`trace_status` rows record start, bounded stop, and parser/start/stop errors;
+errors are marked `claimable: false`, so an incomplete survey cannot be read
+as a discovered call chain. No broad or unlimited Stalker session is started.
 
 Build the six-lane entry survey with:
 

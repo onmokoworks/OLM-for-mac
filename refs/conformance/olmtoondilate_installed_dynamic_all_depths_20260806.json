@@ -1,7 +1,7 @@
 {
   "status": "PASS_INSTALLED_DYNAMIC_COVERING_MATRIX",
   "installed_binary": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin/Contents/MacOS/OLMToonDilate",
-  "binary_sha256": "bf84a1f76fe584fee76386ae14edda0ee976d2336a0f50cea23e55ac3647f073",
+  "binary_sha256": "fe0a4959a677eb495f290fc384d93a2da4b66119f07bd8d1e5dac0847f95c5e9",
   "architecture": "arm64",
   "commands": [
     "PF_Cmd_SMART_PRE_RENDER",
@@ -120,11 +120,17 @@
       "compared_words": 34884
     }
   ],
+  "smart_render_callback_contract": {
+    "checkout_layer_pixels_per_case": 1,
+    "checkout_output_per_case": 1,
+    "optional_checkin_layer_pixels_per_case": 0
+  },
   "gates": {
     "dlopen_effectmain": true,
     "all_12_raw_exact": true,
     "padding_and_guards_exact": true,
     "callback_lifecycle_exact": true,
+    "optional_checkin_never_called": true,
     "world_headers_unchanged": true,
     "preserve_rgb_of_zero_alpha_requested": true
   },

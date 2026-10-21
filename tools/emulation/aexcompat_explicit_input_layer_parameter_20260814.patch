@@ -1,0 +1,277 @@
+diff --git a/guest/crates/aex-guest-worker/src/classic.rs b/guest/crates/aex-guest-worker/src/classic.rs
+index bb0da409..3b5ce009 100644
+--- a/guest/crates/aex-guest-worker/src/classic.rs
++++ b/guest/crates/aex-guest-worker/src/classic.rs
+@@ -97,6 +97,7 @@ pub struct ParameterValue {
+     pub color: Option<[u8; 4]>,
+     pub point: Option<[f64; 2]>,
+     pub angle_fixed: Option<i32>,
++    pub layer_from_input: bool,
+ }
+ 
+ #[derive(Debug, Serialize)]
+@@ -111,6 +112,8 @@ pub struct AppliedParameter {
+     pub point: Option<[f64; 2]>,
+     #[serde(skip_serializing_if = "Option::is_none")]
+     pub angle_fixed: Option<i32>,
++    #[serde(skip_serializing_if = "std::ops::Not::not")]
++    pub layer_from_input: bool,
+ }
+ 
+ #[derive(Clone, Debug, Serialize)]
+@@ -1351,7 +1354,14 @@ impl ClassicHost {
+                                 .map_or(requested.name == captured.name, |slot| slot == index + 1)
+                     })
+             {
+-                apply_parameter_value(&mut definition, captured.param_type, requested)?;
++                if !apply_layer_from_input(
++                    &mut definition,
++                    captured.param_type,
++                    requested,
++                    &input_world,
++                )? {
++                    apply_parameter_value(&mut definition, captured.param_type, requested)?;
++                }
+                 applied_requests.insert(request_index);
+                 applied_values.push(AppliedParameter {
+                     slot: index + 1,
+@@ -1360,6 +1370,7 @@ impl ClassicHost {
+                     color: requested.color,
+                     point: requested.point,
+                     angle_fixed: requested.angle_fixed,
++                    layer_from_input: requested.layer_from_input,
+                 });
+             }
+             let parameter = resources.parameter_definitions[index];
+@@ -2545,6 +2556,11 @@ fn apply_parameter_value(
+     param_type: i32,
+     requested: &ParameterValue,
+ ) -> Result<(), ClassicError> {
++    if requested.layer_from_input {
++        return Err(ClassicError::Input(
++            "input-layer payload requires a layer parameter".into(),
++        ));
++    }
+     if let Some(angle_fixed) = requested.angle_fixed {
+         if param_type != PARAM_ANGLE
+             || requested.value.is_some()
+@@ -2647,6 +2663,32 @@ fn apply_parameter_value(
+     Ok(())
+ }
+ 
++fn apply_layer_from_input(
++    definition: &mut [u8],
++    param_type: i32,
++    requested: &ParameterValue,
++    input_world: &[u8],
++) -> Result<bool, ClassicError> {
++    if !requested.layer_from_input {
++        return Ok(false);
++    }
++    if param_type != PARAM_LAYER
++        || requested.value.is_some()
++        || requested.color.is_some()
++        || requested.point.is_some()
++        || requested.angle_fixed.is_some()
++        || definition.len() < abi::PARAM_U_OFFSET + abi::PF_LAYER_DEF_SIZE
++        || input_world.len() != abi::PF_LAYER_DEF_SIZE
++    {
++        return Err(ClassicError::Input(
++            "input-layer payload requires a layer parameter and no other payload".into(),
++        ));
++    }
++    definition[abi::PARAM_U_OFFSET..abi::PARAM_U_OFFSET + abi::PF_LAYER_DEF_SIZE]
++        .copy_from_slice(input_world);
++    Ok(true)
++}
++
+ fn color_descriptor(definition: &[u8], param_type: i32) -> (Option<[u8; 4]>, Option<[u8; 4]>) {
+     if param_type != PARAM_COLOR {
+         return (None, None);
+@@ -3038,6 +3080,7 @@ mod tests {
+             color: None,
+             point: None,
+             angle_fixed: None,
++            layer_from_input: false,
+         };
+         apply_parameter_value(&mut fixed, PARAM_FIXED_SLIDER, &scalar(12.5)).unwrap();
+         assert_eq!(read_i32(&fixed, union), 12 * 65536 + 32768);
+@@ -3057,6 +3100,7 @@ mod tests {
+                     color: None,
+                     point: None,
+                     angle_fixed: Some(raw),
++                    layer_from_input: false,
+                 },
+             )
+             .unwrap();
+@@ -3093,6 +3137,7 @@ mod tests {
+                 color: None,
+                 point: Some([42.5, -7.25]),
+                 angle_fixed: None,
++                layer_from_input: false,
+             },
+         )
+         .unwrap();
+@@ -3126,6 +3171,7 @@ mod tests {
+                 color: Some([255, 64, 128, 192]),
+                 point: None,
+                 angle_fixed: None,
++                layer_from_input: false,
+             },
+         )
+         .unwrap();
+@@ -3140,6 +3186,7 @@ mod tests {
+             color: Some([255, 64, 128, 192]),
+             point: None,
+             angle_fixed: None,
++            layer_from_input: false,
+         })
+         .unwrap();
+         assert_eq!(applied["slot"], 2);
+@@ -3160,6 +3207,7 @@ mod tests {
+                 color: Some([255, 1, 2, 3]),
+                 point: None,
+                 angle_fixed: None,
++                layer_from_input: false,
+             },
+         )
+         .unwrap_err();
+@@ -3212,5 +3260,28 @@ mod tests {
+             &explicit_none[abi::PARAM_U_OFFSET..abi::PARAM_U_OFFSET + abi::PF_LAYER_DEF_SIZE],
+             &explicit_before[abi::PARAM_U_OFFSET..abi::PARAM_U_OFFSET + abi::PF_LAYER_DEF_SIZE]
+         );
++
++        let request = ParameterValue {
++            slot: Some(17),
++            name: "Noise Layer".into(),
++            value: None,
++            color: None,
++            point: None,
++            angle_fixed: None,
++            layer_from_input: true,
++        };
++        assert!(
++            apply_layer_from_input(&mut explicit_none, PARAM_LAYER, &request, &input_world)
++                .unwrap()
++        );
++        assert_eq!(
++            &explicit_none[abi::PARAM_U_OFFSET..abi::PARAM_U_OFFSET + abi::PF_LAYER_DEF_SIZE],
++            input_world
++        );
++
++        let mut wrong_type = vec![0xa5; abi::PF_PARAM_DEF_SIZE];
++        assert!(
++            apply_layer_from_input(&mut wrong_type, PARAM_SLIDER, &request, &input_world).is_err()
++        );
+     }
+ }
+diff --git a/guest/crates/aex-guest-worker/src/main.rs b/guest/crates/aex-guest-worker/src/main.rs
+index b147243b..9cc0c2f3 100644
+--- a/guest/crates/aex-guest-worker/src/main.rs
++++ b/guest/crates/aex-guest-worker/src/main.rs
+@@ -578,6 +578,13 @@ fn render_png(
+     let mut report_json =
+         serde_json::to_value(&report).map_err(|error| format!("serialize report: {error}"))?;
+     report_json["pixel_bytes"] = serde_json::json!(report.raw_pixel_bytes);
++    report_json["raw_pixel_hex"] = serde_json::json!(
++        report
++            .raw_pixels
++            .iter()
++            .map(|value| format!("{value:02x}"))
++            .collect::<String>()
++    );
+     report_json["input_png_sha256"] = serde_json::json!(input_png_sha256);
+     report_json["output_png"] = serde_json::json!(output);
+     if !execution_traces.is_empty() {
+@@ -778,21 +785,21 @@ fn parse_parameter_values(values: &[std::ffi::OsString]) -> Result<Vec<Parameter
+             return Err(format!("duplicate parameter assignment: {identity:?}"));
+         }
+         let components = encoded.split(',').collect::<Vec<_>>();
+-        let (numeric, point, color, angle_fixed) = if let Some(degrees) =
+-            encoded.strip_prefix("deg:")
+-        {
++        let (numeric, point, color, angle_fixed, layer_from_input) = if encoded == "layer:input" {
++            (None, None, None, None, true)
++        } else if let Some(degrees) = encoded.strip_prefix("deg:") {
+             let degrees = degrees
+                 .parse::<f64>()
+                 .map_err(|error| format!("invalid angle degrees for {name:?}: {error}"))?;
+             if !degrees.is_finite() {
+                 return Err(format!("angle degrees for {name:?} must be finite"));
+             }
+-            (Some(degrees), None, None, None)
++            (Some(degrees), None, None, None, false)
+         } else if let Some(fixed) = encoded.strip_prefix("fixed:") {
+             let fixed = fixed
+                 .parse::<i32>()
+                 .map_err(|error| format!("invalid raw fixed angle for {name:?}: {error}"))?;
+-            (None, None, None, Some(fixed))
++            (None, None, None, Some(fixed), false)
+         } else {
+             match components.as_slice() {
+                 [number] => (
+@@ -804,6 +811,7 @@ fn parse_parameter_values(values: &[std::ffi::OsString]) -> Result<Vec<Parameter
+                     None,
+                     None,
+                     None,
++                    false,
+                 ),
+                 [x, y] => (
+                     None,
+@@ -815,6 +823,7 @@ fn parse_parameter_values(values: &[std::ffi::OsString]) -> Result<Vec<Parameter
+                     ]),
+                     None,
+                     None,
++                    false,
+                 ),
+                 [alpha, red, green, blue] => {
+                     let mut color = [0u8; 4];
+@@ -824,7 +833,7 @@ fn parse_parameter_values(values: &[std::ffi::OsString]) -> Result<Vec<Parameter
+                             format!("ARGB8 component for {name:?} must be an integer from 0 to 255")
+                         })?;
+                     }
+-                    (None, None, Some(color), None)
++                    (None, None, Some(color), None, false)
+                 }
+                 _ => {
+                     return Err(format!(
+@@ -840,6 +849,7 @@ fn parse_parameter_values(values: &[std::ffi::OsString]) -> Result<Vec<Parameter
+             color,
+             point,
+             angle_fixed,
++            layer_from_input,
+         });
+     }
+     Ok(parsed)
+@@ -1033,6 +1043,19 @@ mod tests {
+         assert!(parse_parameter_values(&[OsString::from("Rotation=fixed:2147483648")]).is_err());
+     }
+ 
++    #[test]
++    fn parameter_parser_accepts_explicit_input_layer_assignment() {
++        let values =
++            parse_parameter_values(&[OsString::from("Noise Layer@17=layer:input")]).unwrap();
++        assert_eq!(values.len(), 1);
++        assert_eq!(values[0].slot, Some(17));
++        assert!(values[0].layer_from_input);
++        assert_eq!(values[0].value, None);
++        assert_eq!(values[0].color, None);
++        assert_eq!(values[0].point, None);
++        assert_eq!(values[0].angle_fixed, None);
++    }
++
+     #[test]
+     fn trace_watches_are_separated_from_parameter_assignments() {
+         let mut values = vec![
+diff --git a/guest/crates/aex-guest-worker/src/resident.rs b/guest/crates/aex-guest-worker/src/resident.rs
+index f5aa0876..5f514f08 100644
+--- a/guest/crates/aex-guest-worker/src/resident.rs
++++ b/guest/crates/aex-guest-worker/src/resident.rs
+@@ -587,6 +587,7 @@ fn parse_parameter_payload(
+             color,
+             point,
+             angle_fixed,
++            layer_from_input: false,
+         });
+     }
+     Ok(values)

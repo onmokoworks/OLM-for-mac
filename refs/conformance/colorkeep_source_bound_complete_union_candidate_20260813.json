@@ -1,0 +1,221 @@
+{
+  "authorities": {
+    "count9_generator_sha256": "a647aa543e442a1ebc15269ab7b60e28884e518dc6c5b7678786655bfce84737",
+    "count9_report_sha256": "452ab17756f6d487e0d9ce98f71123de742f9a22c719b865a3e4d9b5a3341c43",
+    "legacy_generator_sha256": "01df2e499f054c45913cfc5a45f945a216be1f8540c1b1a126c3a61979a315fc",
+    "legacy_report_sha256": "e9536b591d5429c3c6b68eb9ee00f055a1ae9bff36da84bd157ffe3387063d68",
+    "legacy_source_probe_sha256": "755aaf8dd6e0a8791a584459d072d5e6e7e61d89f5f2d2cfaf668c4729c23e98",
+    "legacy_source_unit_sha256": "9d214a3936b7420822a9344f31d3f1c116735ad8a82ace0eab9807e1b09fd450",
+    "production_source_sha256": "d1c443042998e466b021d6fd2351537a2be63fe95d3e79a2089d82f78217bac3",
+    "project_sha256": "6020880ddb4db0b10e0d437101930e6bc4338834e2df47fa84f48a5294eebf46"
+  },
+  "candidate": {
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "binary_sha256": "dae59a6faf54ed18ac803ad042be2cdab688c5f814edf322d64c108d5247f46d",
+    "bundle": "handoffs/colorkeep_source_bound_complete_union_candidate_20260813/Product/ColorKeep.plugin",
+    "codesign": "strict-valid-ad-hoc",
+    "info_minimum_system_version": "11.0",
+    "inventory": [
+      {
+        "path": "Contents/Info.plist",
+        "sha256": "668e0613c9dae7003e12422b8b86b67c3e2701c338dedb4e947840a06be01406",
+        "size": 1389
+      },
+      {
+        "path": "Contents/MacOS/ColorKeep",
+        "sha256": "dae59a6faf54ed18ac803ad042be2cdab688c5f814edf322d64c108d5247f46d",
+        "size": 192992
+      },
+      {
+        "path": "Contents/PkgInfo",
+        "sha256": "e13c5afd5f73acd972f0bc6472b86b8b0adf50bb82ed19a4680978469d45675a",
+        "size": 8
+      },
+      {
+        "path": "Contents/Resources/ColorKeep.rsrc",
+        "sha256": "e9511c081223d80eca16f2b66f5211723a26903f83bde19403fd1175b8aa0082",
+        "size": 662
+      },
+      {
+        "path": "Contents/_CodeSignature/CodeResources",
+        "sha256": "e2dc7da138b789c31c34c32071c7f4195019e47850210281736506960de5203c",
+        "size": 2450
+      }
+    ],
+    "slices": {
+      "arm64": {
+        "exports": [
+          "_EffectMain",
+          "_PluginDataEntryFunction2"
+        ],
+        "minos": "11.0"
+      },
+      "x86_64": {
+        "exports": [
+          "_EffectMain",
+          "_PluginDataEntryFunction2"
+        ],
+        "minos": "11.0"
+      }
+    }
+  },
+  "claim_boundary": "AE-free current-workspace evidence for the exact source-bound ColorKeep public union only: legacy 11x7 count5/100 and count9 4x3. No arbitrary source, palette, geometry, native AE, installation, Developer ID, or notarization claim.",
+  "count9_union": {
+    "architectures": {
+      "arm64": {
+        "all_precommit_atomic": true,
+        "padded_output_sha256": "2e68fc7a643641652edb27b6400cbdb2358b10c438893a8c346f8efd1ef7aebe",
+        "paths": 5,
+        "rejects": 136
+      },
+      "x86_64": {
+        "all_precommit_atomic": true,
+        "padded_output_sha256": "2e68fc7a643641652edb27b6400cbdb2358b10c438893a8c346f8efd1ef7aebe",
+        "paths": 5,
+        "rejects": 136
+      }
+    }
+  },
+  "legacy_union": {
+    "architectures": {
+      "arm64": [
+        {
+          "active_sha256": "3f768aa03c4045a70d16e7695403a27810cc6fe50c46c350fe3f67931b990b13",
+          "count": 5,
+          "depth": "PF8",
+          "entry": "Smart"
+        },
+        {
+          "active_sha256": "37d9446d656008362f7bf81324cd7a6ceefb883b668b9d1c4da1264ee432632a",
+          "count": 5,
+          "depth": "PF16",
+          "entry": "Smart"
+        },
+        {
+          "active_sha256": "fff4c594c4f5c06d8fc8744e189ab8b516fafae63aadd25419636eed9f9de043",
+          "count": 5,
+          "depth": "PF32",
+          "entry": "Smart"
+        },
+        {
+          "active_sha256": "7e9e8bbb203b8aed460ba6f4461469e49861975c34a3c662d4edea4a29909f8d",
+          "count": 100,
+          "depth": "PF8",
+          "entry": "Smart"
+        },
+        {
+          "active_sha256": "dd4b822eafa0ae04ef3766f475f0d792b2dd7597dd48a8e3d7d1fe49cc5527c6",
+          "count": 100,
+          "depth": "PF16",
+          "entry": "Smart"
+        },
+        {
+          "active_sha256": "0768f9ca22351943755bc735356bacaf6b6e6bac9b4dc86deb826b0103dba3df",
+          "count": 100,
+          "depth": "PF32",
+          "entry": "Smart"
+        },
+        {
+          "active_sha256": "3f768aa03c4045a70d16e7695403a27810cc6fe50c46c350fe3f67931b990b13",
+          "count": 5,
+          "depth": "PF8",
+          "entry": "Classic"
+        },
+        {
+          "active_sha256": "37d9446d656008362f7bf81324cd7a6ceefb883b668b9d1c4da1264ee432632a",
+          "count": 5,
+          "depth": "PF16",
+          "entry": "Classic"
+        },
+        {
+          "active_sha256": "7e9e8bbb203b8aed460ba6f4461469e49861975c34a3c662d4edea4a29909f8d",
+          "count": 100,
+          "depth": "PF8",
+          "entry": "Classic"
+        },
+        {
+          "active_sha256": "dd4b822eafa0ae04ef3766f475f0d792b2dd7597dd48a8e3d7d1fe49cc5527c6",
+          "count": 100,
+          "depth": "PF16",
+          "entry": "Classic"
+        }
+      ],
+      "x86_64": [
+        {
+          "active_sha256": "3f768aa03c4045a70d16e7695403a27810cc6fe50c46c350fe3f67931b990b13",
+          "count": 5,
+          "depth": "PF8",
+          "entry": "Smart"
+        },
+        {
+          "active_sha256": "37d9446d656008362f7bf81324cd7a6ceefb883b668b9d1c4da1264ee432632a",
+          "count": 5,
+          "depth": "PF16",
+          "entry": "Smart"
+        },
+        {
+          "active_sha256": "fff4c594c4f5c06d8fc8744e189ab8b516fafae63aadd25419636eed9f9de043",
+          "count": 5,
+          "depth": "PF32",
+          "entry": "Smart"
+        },
+        {
+          "active_sha256": "7e9e8bbb203b8aed460ba6f4461469e49861975c34a3c662d4edea4a29909f8d",
+          "count": 100,
+          "depth": "PF8",
+          "entry": "Smart"
+        },
+        {
+          "active_sha256": "dd4b822eafa0ae04ef3766f475f0d792b2dd7597dd48a8e3d7d1fe49cc5527c6",
+          "count": 100,
+          "depth": "PF16",
+          "entry": "Smart"
+        },
+        {
+          "active_sha256": "0768f9ca22351943755bc735356bacaf6b6e6bac9b4dc86deb826b0103dba3df",
+          "count": 100,
+          "depth": "PF32",
+          "entry": "Smart"
+        },
+        {
+          "active_sha256": "3f768aa03c4045a70d16e7695403a27810cc6fe50c46c350fe3f67931b990b13",
+          "count": 5,
+          "depth": "PF8",
+          "entry": "Classic"
+        },
+        {
+          "active_sha256": "37d9446d656008362f7bf81324cd7a6ceefb883b668b9d1c4da1264ee432632a",
+          "count": 5,
+          "depth": "PF16",
+          "entry": "Classic"
+        },
+        {
+          "active_sha256": "7e9e8bbb203b8aed460ba6f4461469e49861975c34a3c662d4edea4a29909f8d",
+          "count": 100,
+          "depth": "PF8",
+          "entry": "Classic"
+        },
+        {
+          "active_sha256": "dd4b822eafa0ae04ef3766f475f0d792b2dd7597dd48a8e3d7d1fe49cc5527c6",
+          "count": 100,
+          "depth": "PF16",
+          "entry": "Classic"
+        }
+      ]
+    },
+    "paths_per_slice": 10,
+    "source_helper_active_mutation_rejects": 18,
+    "source_helper_exact_inputs": 6
+  },
+  "schema": "colorkeep.source-bound-complete-union-candidate/1",
+  "scope": {
+    "after_effects_launched": false,
+    "arm64": true,
+    "installed": false,
+    "x86_64_rosetta": true
+  },
+  "status": "PASS_COLORKEEP_SOURCE_BOUND_COMPLETE_UNION_CANDIDATE"
+}

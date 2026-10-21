@@ -55,7 +55,7 @@
     ]
   },
   "production_png_sha256": "41b011eb8191b1785081069f3c1a95b9151e0361846aeed0cbf60d41ed777aa9",
-  "production_source_sha256": "e538a7398c271a82d689babeaa350def3c09f927cafa555df94cff23ee1d624e",
+  "production_source_sha256": "6a4a4415901674e8649792b67877d0cca0da29d69876d0951e7948ddd536f300",
   "retained_fixture_audit": {
     "ae_version": "26.2x49",
     "fixture_identity_complete": false,

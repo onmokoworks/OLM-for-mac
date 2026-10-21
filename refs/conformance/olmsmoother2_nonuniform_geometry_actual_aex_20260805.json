@@ -29,7 +29,7 @@
       "typed_worker_instructions": 3785
     }
   ],
-  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "production_source_sha256": "ad9edee80793369219ef5b9e08d5cb397060a315b30aa36ce221d3e2488d2ee1",
   "scope": "PF16/PF32 independent padded nonuniform 3x2; v1, key disabled, gamma none, smoothness100, range1, no host",
   "verdict": "PASS_NATURAL_AEX_CLASSIFIER_C280_TO_PRODUCTION_PADDED_3X2_EXACT"
 }

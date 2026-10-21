@@ -1,0 +1,45 @@
+{
+  "after_effects_processes": [],
+  "authorities": {
+    "accepted_identity": "94c6a1eff87e11705a65be638953cb134ff64bd0d919e8501338601aab333650",
+    "build_identity": "f768e6b3413e4b6ebaee285ea478040a26311c7a6ff8e3b33b0d2dacf728bdec",
+    "install_transaction": "4e8cf6f894e8b03b7b358865554c55951a1872dbb6ebe0ef3003aa6fd7d64004",
+    "installed_binary": "701ae9192e19d3e97dd33450e37ae97d90d9be5803ab663405507ed5e3659ca7",
+    "probe": "8193b267695107b42a8b32751e6fb016a50bb24e121d378159d2604bf4582372",
+    "production_source": "4dbd264501a0d5d990a3726d16223c01c1996677b925f8546157b6a91ce677d1",
+    "shim": "9aef5fdb5103d215a957da668f163305e697fe8eb891a6532b8a537713100e7e",
+    "source_report": "423d1ea02e5aa40b78264ba7ba4cfd28ff42fde472f0d6ff99ba33ef7514a4a0"
+  },
+  "claim_boundary": "The current installed arm64 and x86_64 OLMColorKey slices each reproduce the retained 60-cell subset of the source-built real-SDK public-entry transcript: 60 bounded Classic cells, the same 60 Smart cells and 13 callback negatives. The three new 48x27 source cells are deliberately omitted because this installed identity predates them. The transformed probe includes the hash-pinned production source only for fixture/parameter helper definitions; every EffectMain call is forwarded by dlopen to the installed Mach-O. No native-AE or arbitrary-source claim is made.",
+  "schema": "olmcolorkey.current-installed-public-closure/1",
+  "scope": {
+    "arbitrary_source_tuple_geometry": false,
+    "installed_binary": true,
+    "native_after_effects": false
+  },
+  "slice_runs": {
+    "arm64": {
+      "returncode": 0,
+      "stderr": "COLORKEY_PUBLIC_ENTRIES pass=1 classic=60 smart=60 callback_negatives=13\n",
+      "stdout_bytes": 744240,
+      "stdout_sha256": "6d6f9ecb4fba21d59c16c77f5e4f0f823bb9328204f9e00901bee29999c5f3f6"
+    },
+    "x86_64": {
+      "returncode": 0,
+      "stderr": "COLORKEY_PUBLIC_ENTRIES pass=1 classic=60 smart=60 callback_negatives=13\n",
+      "stdout_bytes": 744240,
+      "stdout_sha256": "6d6f9ecb4fba21d59c16c77f5e4f0f823bb9328204f9e00901bee29999c5f3f6"
+    }
+  },
+  "status": "PASS_OLMCOLORKEY_CURRENT_INSTALLED_BOTH_SLICES_PUBLIC60_AE_FREE",
+  "summary": {
+    "architectures": [
+      "arm64",
+      "x86_64"
+    ],
+    "callback_negatives_per_slice": 13,
+    "classic_cells_per_slice": 60,
+    "smart_cells_per_slice": 60,
+    "source_built_transcript_exact_per_slice": true
+  }
+}

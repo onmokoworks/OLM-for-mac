@@ -64,7 +64,7 @@
   ],
   "palette_owner": "0x180002930",
   "pf16_exact_tie_representable": false,
-  "production_source_sha256": "973e196195608d61aee0739740fcb6d6804b5fd3504aaf7474b600c43aa559e9",
+  "production_source_sha256": "ad9edee80793369219ef5b9e08d5cb397060a315b30aa36ce221d3e2488d2ee1",
   "scope": "PF16/PF32 independent v2 invert key, key RGB=1/255, threshold sides; PF32 exact tie; gamma UI none, LUTs, padded 3x2",
   "threshold_bits": "0x3b008081",
   "verdict": "PASS_V2_INVERT_KEY_PALETTE_NATURAL_AEX_TO_PRODUCTION_PADDED_3X2_EXACT"

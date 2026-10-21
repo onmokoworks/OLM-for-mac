@@ -1,0 +1,36 @@
+{
+  "claims_not_made": [
+    "No native Windows After Effects execution",
+    "No durable dynamic crash-register or crash-address claim",
+    "No claim that AEXCompat caused or repairs the upstream destination",
+    "No arbitrary Type3 source, Layer, tuple, geometry, or layout claim"
+  ],
+  "identities": {
+    "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "assembly_sha256": "feaf9366c4cff7fc726bea62af94f8b6a638d08fb597844463e3a6274c0b3971",
+    "decomp_sha256": "6d3f0cfc60883762d129940de2a717b8c6dd1efea7e06c254da259fef6b0e2f1",
+    "production_source_sha256": "b74b3d2c7ea6724593b28f82d36615e071e18d813e5b99cc948e26a447fdb0d1",
+    "typed_owner_report": "refs/conformance/olmradialblur_type3_all_depth_public_closure_20260813.json",
+    "typed_owner_report_sha256": "ce0dc29245a93775a384984c70999ae2381fd148b0bd2c53d9c0a697a2830002"
+  },
+  "production_policy": {
+    "bounded_windows_typed_owner_retained": true,
+    "mac_public_45_row_admission_unchanged": true,
+    "unlisted_source_layer_tuple_geometry_fail_closed": true,
+    "windows_exported_type3_is_numerical_oracle": false
+  },
+  "schema": "olmradialblur.type3-exported-upstream-boundary/1",
+  "static_chain": {
+    "copy_forward_call_rva": "0x18000da60",
+    "fixed_copy_bytes": 120,
+    "fixed_copy_rva": "0x180019f20",
+    "initialized_before_materializer": false,
+    "materializer_call_rva": "0x1800088c9",
+    "member_load_rva": "0x1800088b6",
+    "noise_layer_member": "+0xa8 (RSP+0xe8)",
+    "noise_type_layer_value": 3,
+    "parameter_index": "0x15",
+    "render_info_stack_base": "RSP+0x40"
+  },
+  "status": "PASS_STATIC_UPSTREAM_EXPORTED_TYPE3_DESTINATION_UNINITIALIZED_TYPED_OWNER_RETAINED"
+}

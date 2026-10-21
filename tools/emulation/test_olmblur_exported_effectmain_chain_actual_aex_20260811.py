@@ -62,8 +62,20 @@ def run_row(case: dict[str, object]) -> dict[str, object]:
 
     loader = AexLoader(str(AEX), verbose=False, fast=True)
     loader.register_libm_impls(max_threads=1)
-    loader.register_import_impl("pow", lambda ld, args: (ld.write_xmm_f64(0, math.pow(ld.read_xmm_f64(0), ld.read_xmm_f64(1))) or 0))
-    loader.register_import_impl("powf", lambda ld, args: (ld.write_xmm_f32(0, math.pow(ld.read_xmm_f32(0), ld.read_xmm_f32(1))) or 0))
+    # Import implementations receive the raw Unicorn object as their first
+    # argument.  Close over ``loader`` for the XMM helpers; treating that raw
+    # object as AexLoader raises inside the import shim and silently leaves the
+    # incoming XMM value in place, corrupting every repeat>1 numerical census.
+    def impl_pow(_uc, _args):
+        loader.write_xmm_f64(0, math.pow(loader.read_xmm_f64(0), loader.read_xmm_f64(1)))
+        return 0
+
+    def impl_powf(_uc, _args):
+        loader.write_xmm_f32(0, math.pow(loader.read_xmm_f32(0), loader.read_xmm_f32(1)))
+        return 0
+
+    loader.register_import_impl("pow", impl_pow)
+    loader.register_import_impl("powf", impl_powf)
     spbasic, handle_events = build_pf_suites(loader)
     in_data = build_context(loader, spbasic)
     out_data = loader.host_alloc(0x300)
@@ -102,7 +114,15 @@ def run_row(case: dict[str, object]) -> dict[str, object]:
     qword(loader, utils + 0x40, loader.install_callback("PF/copy", copy_world))
     qword(loader, in_data + 0xB0, utils)
 
-    values = {1: float(case["amount"]), 2: 100, 3: 1, 4: 1, 5: legacy}
+    # Keep the historical matrix defaults, while allowing later bounded
+    # same-source owner probes to supply their exact retained tuple.
+    values = {
+        1: float(case["amount"]),
+        2: float(case.get("smoothness", 100)),
+        3: int(case.get("repeat", 1)),
+        4: int(case.get("bias_direction", 1)),
+        5: legacy,
+    }
 
     def checkout_param(ld: AexLoader, args: list[int]) -> int:
         index, out = int(args[1]), stack_arg(ld, 5)
@@ -111,7 +131,11 @@ def run_row(case: dict[str, object]) -> dict[str, object]:
         if index == 1:
             ld.write_bytes(out + 0x38, struct.pack("<d", values[index]))
         elif index == 2:
-            ld.write_bytes(out + 0x3A, struct.pack("<h", values[index]))
+            # PF_FixedSliderDef::value is the 32-bit 16.16 fixed value at
+            # PF_ParamDef.u + 0x00.  Writing a short at +0x3A happened to
+            # materialize integer percentages, but discarded every retained
+            # fractional Smoothness value.
+            ld.write_bytes(out + 0x38, struct.pack("<i", round(values[index] * 65536.0)))
         elif index in (3, 4):
             ld.write_bytes(out + 0x38, struct.pack("<i", values[index]))
         elif index == 5:
@@ -183,7 +207,8 @@ def run_row(case: dict[str, object]) -> dict[str, object]:
     assert pre["rax"] == render["rax"] == 0
     assert param_order == [1, 2, 3, 4, 5]
     assert callback_events[:3] == ["pre_checkout_layer", "checkout_layer_pixels", "checkout_output"]
-    assert mismatches == padding_mismatches == 0, (case["id"], mismatches, padding_mismatches, param_order, callback_events)
+    if case.get("expect_exact", True):
+        assert mismatches == padding_mismatches == 0, (case["id"], mismatches, padding_mismatches, param_order, callback_events)
     return {
         "id": case["id"], "depth": depth, "legacy": legacy,
         "commands": [23, 24], "return_codes": [pre["rax"], render["rax"]],

@@ -9,12 +9,12 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class Mode4HighlightGainBoundaryTests(unittest.TestCase):
-    def test_production_uses_direct_brightness_only_for_mode4_highlight(self) -> None:
+    def test_production_uses_direct_brightness_for_all_exported_owner_layers(self) -> None:
         source = (ROOT / "mac/OLMKiraKira/OLMKiraKira.cpp").read_text(encoding="utf-8")
-        self.assertIn("const double highlight_scale = info.blur_mode == 4", source)
-        self.assertIn("? info.brightness_gain", source)
-        self.assertIn("AddColoredUnion(glow, highlight, info.highlight_color, highlight_scale);", source)
-        self.assertIn("AddColoredUnion(glow, vertical, info.vertical_color, scale);", source)
+        self.assertIn("float scale = (float)info.brightness_gain;", source)
+        self.assertIn("const float highlight_scale = (float)info.brightness_gain;", source)
+        self.assertIn("AddColoredUnion(glow, highlight, info.highlight_color, info.highlight_use_ramp, info.highlight_ramp, highlight_scale);", source)
+        self.assertIn("AddColoredUnion(glow, vertical, info.vertical_color, info.vertical_use_ramp, info.vertical_ramp, scale);", source)
 
     def test_observed_ratio_identifies_removed_scaffold_factor(self) -> None:
         evidence = json.loads((ROOT / "refs/conformance/olmkirakira_mode4_highlight_gain_pf32_20260806.json").read_text(encoding="utf-8"))

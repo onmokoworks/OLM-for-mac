@@ -1,0 +1,23 @@
+diff --git a/guest/crates/aex-guest-worker/src/main.rs b/guest/crates/aex-guest-worker/src/main.rs
+--- a/guest/crates/aex-guest-worker/src/main.rs
++++ b/guest/crates/aex-guest-worker/src/main.rs
+@@ -522,7 +522,16 @@ fn render_png(
+         .into_rgba8();
+     let (width, height) = rgba.dimensions();
+-    let input_pixels = pixel_format
+-        .promote_rgba8(rgba.as_raw())
+-        .map_err(|error| error.to_string())?;
++    let input_pixels = if let Some(path) = std::env::var_os("OLM_EXACT_RAW_INPUT") {
++        let bytes = std::fs::read(path)
++            .map_err(|error| format!("read exact raw input: {error}"))?;
++        pixel_format
++            .validate_bytes(width, height, &bytes)
++            .map_err(|error| error.to_string())?;
++        bytes
++    } else {
++        pixel_format
++            .promote_rgba8(rgba.as_raw())
++            .map_err(|error| error.to_string())?
++    };
+     let mut host = ClassicHost::new_with_effect(image, effect_selector)
+         .map_err(|error| CommandFailure::from(error.to_string()))?;

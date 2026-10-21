@@ -1,0 +1,572 @@
+{
+  "claim_boundary": "All twenty retained PF32 same-source cells are raw exact between the Windows exported Smart owner and current Mac public SmartRender. The Legacy Smoothness 37.5 exported owner intentionally consumes the signed integer part of PF_Fixed and therefore differs from the fractional internal-worker oracle; Mac reproduces that public boundary only for the exact admitted cell. Mac controls comprise 40 optional-checkin successes and 60 source one-away rejects.",
+  "claims_not_made": [
+    "native AE",
+    "installed binary",
+    "fractional internal-worker equality for Smoothness 37.5",
+    "arbitrary PF32 source or tuple"
+  ],
+  "identities": {
+    "actual_aex": {
+      "path": "plugins_2025/OLMBlur.aex",
+      "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+    },
+    "legacy_manifest": {
+      "path": "tools/emulation/fixtures/olmblur_worker32_legacy/manifest.json",
+      "sha256": "53b4f553c3ebc6ad81c4562f251c4624ff55383fcef89c8de4db1e4674227cf5"
+    },
+    "nonlegacy_manifest": {
+      "path": "tools/emulation/fixtures/olmblur_worker32_nonlegacy/manifest.json",
+      "sha256": "03e9d5386c96c75f6173a438c629c47bfb30bef4ad40369dad3e1e032a03e2f8"
+    },
+    "probe": {
+      "path": "tools/emulation/probe_olmblur_pf32_retained_public_admission_20260813.cpp",
+      "sha256": "0d4c9e29c50e7656ba46186dd78ac54af6e086c6f2bc9daaa5940028d8a9f690"
+    },
+    "public_runner": {
+      "path": "tools/emulation/test_olmblur_exported_effectmain_chain_actual_aex_20260811.py",
+      "sha256": "5043ba89701d5af95018f50df8f712df0e8d2e4348b25d9658f7e54a0f5ffae6"
+    },
+    "source": {
+      "path": "mac/OLMBlur/OLMBlur.cpp",
+      "sha256": "22eb712a2485e080d811d2c064fe78bd521ee25434ece9a290a2d9b7b6e1fdd7"
+    }
+  },
+  "mac_run_lines": [
+    "PF32 nonlegacy_12x12_repeat2 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 nonlegacy_12x12_repeat2 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 nonlegacy_12x12_repeat2 mut=1 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_12x12_repeat2 mut=2 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_12x12_repeat2 mut=3 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_18x18_repeat3_reverse mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 nonlegacy_18x18_repeat3_reverse mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 nonlegacy_18x18_repeat3_reverse mut=1 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_18x18_repeat3_reverse mut=2 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_18x18_repeat3_reverse mut=3 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_4x3_1294_b1 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 nonlegacy_4x3_1294_b1 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 nonlegacy_4x3_1294_b1 mut=1 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_4x3_1294_b1 mut=2 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_4x3_1294_b1 mut=3 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_4x3_1294_b2 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 nonlegacy_4x3_1294_b2 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 nonlegacy_4x3_1294_b2 mut=1 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_4x3_1294_b2 mut=2 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_4x3_1294_b2 mut=3 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_4x3_1256_r4 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 nonlegacy_4x3_1256_r4 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 nonlegacy_4x3_1256_r4 mut=1 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_4x3_1256_r4 mut=2 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_4x3_1256_r4 mut=3 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_7x5_r2 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 nonlegacy_7x5_r2 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 nonlegacy_7x5_r2 mut=1 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_7x5_r2 mut=2 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_7x5_r2 mut=3 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_7x5_r10 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 nonlegacy_7x5_r10 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 nonlegacy_7x5_r10 mut=1 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_7x5_r10 mut=2 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_7x5_r10 mut=3 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_repeat1 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_repeat1 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_repeat1 mut=1 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_repeat1 mut=2 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_repeat1 mut=3 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_repeat2_reverse mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_repeat2_reverse mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_repeat2_reverse mut=1 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_repeat2_reverse mut=2 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_repeat2_reverse mut=3 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_1256_r4 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_1256_r4 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_1256_r4 mut=1 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_1256_r4 mut=2 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_1256_r4 mut=3 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_5_r2 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_5_r2 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_5_r2 mut=1 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_5_r2 mut=2 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_5_r2 mut=3 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_5_r10 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_5_r10 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_5_r10 mut=1 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_5_r10 mut=2 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 nonlegacy_24x24_5_r10 mut=3 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 legacy_12x12_repeat2 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 legacy_12x12_repeat2 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 legacy_12x12_repeat2 mut=1 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 legacy_12x12_repeat2 mut=2 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 legacy_12x12_repeat2 mut=3 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 legacy_18x18_repeat3 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 legacy_18x18_repeat3 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 legacy_18x18_repeat3 mut=1 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 legacy_18x18_repeat3 mut=2 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 legacy_18x18_repeat3 mut=3 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 legacy_18x12_mixed mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 legacy_18x12_mixed mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 legacy_18x12_mixed mut=1 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 legacy_18x12_mixed mut=2 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 legacy_18x12_mixed mut=3 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 legacy_7x5_red_boundary mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 legacy_7x5_red_boundary mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 legacy_7x5_red_boundary mut=1 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 legacy_7x5_red_boundary mut=2 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 legacy_7x5_red_boundary mut=3 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 legacy_9x7_mixed_repeat10 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 legacy_9x7_mixed_repeat10 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 legacy_9x7_mixed_repeat10 mut=1 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 legacy_9x7_mixed_repeat10 mut=2 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 legacy_9x7_mixed_repeat10 mut=3 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 legacy_24x24_repeat1 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 legacy_24x24_repeat1 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 legacy_24x24_repeat1 mut=1 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 legacy_24x24_repeat1 mut=2 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 legacy_24x24_repeat1 mut=3 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 legacy_24x24_repeat10 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 legacy_24x24_repeat10 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 legacy_24x24_repeat10 mut=1 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 legacy_24x24_repeat10 mut=2 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 legacy_24x24_repeat10 mut=3 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 legacy_24x24_smooth37_5 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 legacy_24x24_smooth37_5 mut=0 exact=1 expected=0 actual=0 success=1 untouched=1",
+    "PF32 legacy_24x24_smooth37_5 mut=1 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 legacy_24x24_smooth37_5 mut=2 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "PF32 legacy_24x24_smooth37_5 mut=3 exact=1 expected=516 actual=516 success=1 untouched=1",
+    "pf32_retained_all_exact=1 positive=40 negative=60"
+  ],
+  "mac_run_sha256": "d6ebc00a8706d6a9251c9297aa74f6ce9c1c90ff74ea7a21fa0ee185962626ae",
+  "owner_rows": [
+    {
+      "active_source_sha256": "3ba187703af04bb4086990d7084249186bb45dfdbe0b1644038d13afbe41ee1e",
+      "exported_active_sha256": "e5f2a5f11c0dd3b1b9ef4df231017b9b1fdea58730920a9294dee29bdc86cc87",
+      "family": "nonlegacy",
+      "geometry": [
+        12,
+        12
+      ],
+      "id": "32bpc_nonlegacy_basic",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameters": {
+        "amount_f64": 3.0,
+        "bias": 1,
+        "legacy": 0,
+        "repeat": 2,
+        "smoothness_fixed": 6553600
+      },
+      "rowbytes": 205,
+      "worker_oracle_sha256": "e5f2a5f11c0dd3b1b9ef4df231017b9b1fdea58730920a9294dee29bdc86cc87"
+    },
+    {
+      "active_source_sha256": "4bb9b9e953b355cabfb2a8a4c3d5bfc95ff8e268c08dfbb91d8c155d2a7c83c9",
+      "exported_active_sha256": "2e98fd35416665c40f618f1a51c0deac2e93a1439865210630cbcef6d5662757",
+      "family": "nonlegacy",
+      "geometry": [
+        18,
+        18
+      ],
+      "id": "32bpc_nonlegacy_large_radius_reverse",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameters": {
+        "amount_f64": 11.0,
+        "bias": 2,
+        "legacy": 0,
+        "repeat": 3,
+        "smoothness_fixed": 6553600
+      },
+      "rowbytes": 301,
+      "worker_oracle_sha256": "2e98fd35416665c40f618f1a51c0deac2e93a1439865210630cbcef6d5662757"
+    },
+    {
+      "active_source_sha256": "e474d186b95d356618aa87df72052a7434530f442329198d447a176e0c389a2d",
+      "exported_active_sha256": "864ba02f8d13a0f06964a4baa6a6de2a4fe716a946d73431578a4b0203143f7d",
+      "family": "nonlegacy",
+      "geometry": [
+        4,
+        3
+      ],
+      "id": "32bpc_nonlegacy_amount1294_bias1",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameters": {
+        "amount_f64": 129.4,
+        "bias": 1,
+        "legacy": 0,
+        "repeat": 2,
+        "smoothness_fixed": 6553600
+      },
+      "rowbytes": 77,
+      "worker_oracle_sha256": "864ba02f8d13a0f06964a4baa6a6de2a4fe716a946d73431578a4b0203143f7d"
+    },
+    {
+      "active_source_sha256": "e474d186b95d356618aa87df72052a7434530f442329198d447a176e0c389a2d",
+      "exported_active_sha256": "00478e6c1c3d4dd5a02e3bfbd7c5c22318864d2e817e387eff3a97cb43c0b6b5",
+      "family": "nonlegacy",
+      "geometry": [
+        4,
+        3
+      ],
+      "id": "32bpc_nonlegacy_amount1294_bias2",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameters": {
+        "amount_f64": 129.4,
+        "bias": 2,
+        "legacy": 0,
+        "repeat": 2,
+        "smoothness_fixed": 6553600
+      },
+      "rowbytes": 77,
+      "worker_oracle_sha256": "00478e6c1c3d4dd5a02e3bfbd7c5c22318864d2e817e387eff3a97cb43c0b6b5"
+    },
+    {
+      "active_source_sha256": "e474d186b95d356618aa87df72052a7434530f442329198d447a176e0c389a2d",
+      "exported_active_sha256": "125a0a0590f0572228593a8bc71452ac8642e5d97411a032e3eeb3011652d7f5",
+      "family": "nonlegacy",
+      "geometry": [
+        4,
+        3
+      ],
+      "id": "32bpc_nonlegacy_amount1256_repeat4",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameters": {
+        "amount_f64": 125.6,
+        "bias": 1,
+        "legacy": 0,
+        "repeat": 4,
+        "smoothness_fixed": 6553600
+      },
+      "rowbytes": 77,
+      "worker_oracle_sha256": "125a0a0590f0572228593a8bc71452ac8642e5d97411a032e3eeb3011652d7f5"
+    },
+    {
+      "active_source_sha256": "7d7233b625775fa4a250b21349b2de6040705db5be48558b94eba01766b0cdb4",
+      "exported_active_sha256": "fb389dc49dacf988aa5fb7e595805f62994e386ffcb22f55e0ab3441a16d213e",
+      "family": "nonlegacy",
+      "geometry": [
+        7,
+        5
+      ],
+      "id": "32bpc_nonlegacy_amount5_repeat2",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameters": {
+        "amount_f64": 5.0,
+        "bias": 1,
+        "legacy": 0,
+        "repeat": 2,
+        "smoothness_fixed": 6553600
+      },
+      "rowbytes": 125,
+      "worker_oracle_sha256": "fb389dc49dacf988aa5fb7e595805f62994e386ffcb22f55e0ab3441a16d213e"
+    },
+    {
+      "active_source_sha256": "7d7233b625775fa4a250b21349b2de6040705db5be48558b94eba01766b0cdb4",
+      "exported_active_sha256": "66065bdb3e32f81612ce70f9a6535fc1c475f3618ccb343a53c35612bf921e85",
+      "family": "nonlegacy",
+      "geometry": [
+        7,
+        5
+      ],
+      "id": "32bpc_nonlegacy_amount5_repeat10",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameters": {
+        "amount_f64": 5.0,
+        "bias": 1,
+        "legacy": 0,
+        "repeat": 10,
+        "smoothness_fixed": 6553600
+      },
+      "rowbytes": 125,
+      "worker_oracle_sha256": "66065bdb3e32f81612ce70f9a6535fc1c475f3618ccb343a53c35612bf921e85"
+    },
+    {
+      "active_source_sha256": "9bd827bc4210a6470e8ee9f03de25f349e77b33148791252b2775a703a876166",
+      "exported_active_sha256": "1a3e3b5cf75b15d4c18cf578e3d09de5ee602224b1953630d442991d89a14222",
+      "family": "nonlegacy",
+      "geometry": [
+        24,
+        24
+      ],
+      "id": "32bpc_nonlegacy_case0001_repeat1_large_radius",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameters": {
+        "amount_f64": 129.4,
+        "bias": 1,
+        "legacy": 0,
+        "repeat": 1,
+        "smoothness_fixed": 6553600
+      },
+      "rowbytes": 397,
+      "worker_oracle_sha256": "1a3e3b5cf75b15d4c18cf578e3d09de5ee602224b1953630d442991d89a14222"
+    },
+    {
+      "active_source_sha256": "9bd827bc4210a6470e8ee9f03de25f349e77b33148791252b2775a703a876166",
+      "exported_active_sha256": "361449701b209551690433556bcd8e467ac373ef8fcac939d21b6dd9de7d628d",
+      "family": "nonlegacy",
+      "geometry": [
+        24,
+        24
+      ],
+      "id": "32bpc_nonlegacy_case0002_repeat2_large_radius_reverse",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameters": {
+        "amount_f64": 129.4,
+        "bias": 2,
+        "legacy": 0,
+        "repeat": 2,
+        "smoothness_fixed": 6553600
+      },
+      "rowbytes": 397,
+      "worker_oracle_sha256": "361449701b209551690433556bcd8e467ac373ef8fcac939d21b6dd9de7d628d"
+    },
+    {
+      "active_source_sha256": "9bd827bc4210a6470e8ee9f03de25f349e77b33148791252b2775a703a876166",
+      "exported_active_sha256": "1e7c3275a17949586fdc804a490949e07a6a40c39b23f3191bf5fca923a463a5",
+      "family": "nonlegacy",
+      "geometry": [
+        24,
+        24
+      ],
+      "id": "32bpc_nonlegacy_case0004_repeat4_full24",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameters": {
+        "amount_f64": 125.6,
+        "bias": 1,
+        "legacy": 0,
+        "repeat": 4,
+        "smoothness_fixed": 6553600
+      },
+      "rowbytes": 397,
+      "worker_oracle_sha256": "1e7c3275a17949586fdc804a490949e07a6a40c39b23f3191bf5fca923a463a5"
+    },
+    {
+      "active_source_sha256": "9bd827bc4210a6470e8ee9f03de25f349e77b33148791252b2775a703a876166",
+      "exported_active_sha256": "285548bcef5e1776f0bf643e8b433c37729d02355597491def4f24716ed459c4",
+      "family": "nonlegacy",
+      "geometry": [
+        24,
+        24
+      ],
+      "id": "32bpc_nonlegacy_case0005_repeat2_full24",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameters": {
+        "amount_f64": 5.0,
+        "bias": 1,
+        "legacy": 0,
+        "repeat": 2,
+        "smoothness_fixed": 6553600
+      },
+      "rowbytes": 397,
+      "worker_oracle_sha256": "285548bcef5e1776f0bf643e8b433c37729d02355597491def4f24716ed459c4"
+    },
+    {
+      "active_source_sha256": "9bd827bc4210a6470e8ee9f03de25f349e77b33148791252b2775a703a876166",
+      "exported_active_sha256": "d5efd0d450aeedd882d99314c4e527af1382549cd409642ed34d15a41a140663",
+      "family": "nonlegacy",
+      "geometry": [
+        24,
+        24
+      ],
+      "id": "32bpc_nonlegacy_case0006_repeat10_full24",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameters": {
+        "amount_f64": 5.0,
+        "bias": 1,
+        "legacy": 0,
+        "repeat": 10,
+        "smoothness_fixed": 6553600
+      },
+      "rowbytes": 397,
+      "worker_oracle_sha256": "d5efd0d450aeedd882d99314c4e527af1382549cd409642ed34d15a41a140663"
+    },
+    {
+      "active_source_sha256": "3ba187703af04bb4086990d7084249186bb45dfdbe0b1644038d13afbe41ee1e",
+      "exported_active_sha256": "65b8ceb35a23e4a07ec0b36afc971990a8a79e7006957425edb5b62fee36071b",
+      "family": "legacy",
+      "geometry": [
+        12,
+        12
+      ],
+      "id": "32bpc_legacy_basic",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameters": {
+        "amount_f64": 3.0,
+        "bias": 1,
+        "legacy": 1,
+        "repeat": 2,
+        "smoothness_fixed": 6553600
+      },
+      "rowbytes": 205,
+      "worker_oracle_sha256": "65b8ceb35a23e4a07ec0b36afc971990a8a79e7006957425edb5b62fee36071b"
+    },
+    {
+      "active_source_sha256": "4bb9b9e953b355cabfb2a8a4c3d5bfc95ff8e268c08dfbb91d8c155d2a7c83c9",
+      "exported_active_sha256": "ad5edc4e89d6d507fe603a02135bf64c73edf19adb7d902641de564e3ba451c2",
+      "family": "legacy",
+      "geometry": [
+        18,
+        18
+      ],
+      "id": "32bpc_legacy_large_radius_reverse",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameters": {
+        "amount_f64": 11.0,
+        "bias": 2,
+        "legacy": 1,
+        "repeat": 3,
+        "smoothness_fixed": 6553600
+      },
+      "rowbytes": 301,
+      "worker_oracle_sha256": "ad5edc4e89d6d507fe603a02135bf64c73edf19adb7d902641de564e3ba451c2"
+    },
+    {
+      "active_source_sha256": "e05517666327f0aa3f235dbfabc3e16f10dcf8da67a8cc669e71789ff9e25abe",
+      "exported_active_sha256": "9aa69f160134af42142150e1cdc9712db5ae73132dc62ad61d98ef84c9e5ed02",
+      "family": "legacy",
+      "geometry": [
+        18,
+        12
+      ],
+      "id": "32bpc_legacy_mixed_alpha_reverse",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameters": {
+        "amount_f64": 3.0,
+        "bias": 2,
+        "legacy": 1,
+        "repeat": 2,
+        "smoothness_fixed": 6553600
+      },
+      "rowbytes": 301,
+      "worker_oracle_sha256": "9aa69f160134af42142150e1cdc9712db5ae73132dc62ad61d98ef84c9e5ed02"
+    },
+    {
+      "active_source_sha256": "30ecbc854d01ebf66b723dbbd98c2466777c41856d78b4698936afb37fe4fb7b",
+      "exported_active_sha256": "4c56459d0bc5ad6816595bdec4fe2ddbb852bbe79c5ce7365043cf91b6138645",
+      "family": "legacy",
+      "geometry": [
+        7,
+        5
+      ],
+      "id": "32bpc_legacy_declared_248_6_red_boundary",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameters": {
+        "amount_f64": 248.6,
+        "bias": 1,
+        "legacy": 1,
+        "repeat": 10,
+        "smoothness_fixed": 6553600
+      },
+      "rowbytes": 125,
+      "worker_oracle_sha256": "4c56459d0bc5ad6816595bdec4fe2ddbb852bbe79c5ce7365043cf91b6138645"
+    },
+    {
+      "active_source_sha256": "97f43051c82ac6cb253703788386ea7435fad4cc8f5009fad1eb1fa8a619eff1",
+      "exported_active_sha256": "808570a735a6d8990e21a274df1cabc4125e22a1874859fd43dd9197f308606f",
+      "family": "legacy",
+      "geometry": [
+        9,
+        7
+      ],
+      "id": "32bpc_legacy_declared_5_mixed_alpha",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameters": {
+        "amount_f64": 5.0,
+        "bias": 1,
+        "legacy": 1,
+        "repeat": 10,
+        "smoothness_fixed": 6553600
+      },
+      "rowbytes": 157,
+      "worker_oracle_sha256": "808570a735a6d8990e21a274df1cabc4125e22a1874859fd43dd9197f308606f"
+    },
+    {
+      "active_source_sha256": "9bd827bc4210a6470e8ee9f03de25f349e77b33148791252b2775a703a876166",
+      "exported_active_sha256": "449be0449b3ea9095ed20dd299569a0f57751bf20fd84b1704c4bc4760735343",
+      "family": "legacy",
+      "geometry": [
+        24,
+        24
+      ],
+      "id": "32bpc_legacy_case0007_repeat1_full24",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameters": {
+        "amount_f64": 5.0,
+        "bias": 1,
+        "legacy": 1,
+        "repeat": 1,
+        "smoothness_fixed": 6553600
+      },
+      "rowbytes": 397,
+      "worker_oracle_sha256": "449be0449b3ea9095ed20dd299569a0f57751bf20fd84b1704c4bc4760735343"
+    },
+    {
+      "active_source_sha256": "9bd827bc4210a6470e8ee9f03de25f349e77b33148791252b2775a703a876166",
+      "exported_active_sha256": "4f955aa9b2ee1275849c06ccc66574607a3e68b9287c7c262558d4cabc3b7bc2",
+      "family": "legacy",
+      "geometry": [
+        24,
+        24
+      ],
+      "id": "32bpc_legacy_case0003_repeat10_full24",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameters": {
+        "amount_f64": 248.6,
+        "bias": 1,
+        "legacy": 1,
+        "repeat": 10,
+        "smoothness_fixed": 6553600
+      },
+      "rowbytes": 397,
+      "worker_oracle_sha256": "4f955aa9b2ee1275849c06ccc66574607a3e68b9287c7c262558d4cabc3b7bc2"
+    },
+    {
+      "active_source_sha256": "9bd827bc4210a6470e8ee9f03de25f349e77b33148791252b2775a703a876166",
+      "exported_active_sha256": "fb2b0d121cf6ee7c789ed8be03635f5a92942779574ed99475b9a9dea0bfaf33",
+      "family": "legacy",
+      "geometry": [
+        24,
+        24
+      ],
+      "id": "32bpc_legacy_smoothness37_5_full24",
+      "mismatched_bytes": 3945,
+      "padding_mismatches": 0,
+      "parameters": {
+        "amount_f64": 11.0,
+        "bias": 2,
+        "legacy": 1,
+        "repeat": 3,
+        "smoothness_fixed": 2457600
+      },
+      "rowbytes": 397,
+      "worker_oracle_sha256": "a0b48d578a84dda09d4d71d0bb801a70ef0ed92c7f59f32b72ace8bb753ecf44"
+    }
+  ],
+  "owner_rows_sha256": "972f224afb0049d99be1279a12565b41912f9138a6b39facca6ea0000497cdff",
+  "schema": "olmblur.pf32-retained-public-closure/3",
+  "status": "PASS_20_WINDOWS_EXPORTED_TO_MAC_PUBLIC_RAW_EXACT",
+  "summary": {
+    "integer_materialization_boundary": 1,
+    "internal_worker_oracle_exact": 19,
+    "mac_negative_controls": 60,
+    "mac_positive_controls": 40,
+    "owner_cells": 20,
+    "windows_exported_to_mac_raw_exact": 20
+  }
+}

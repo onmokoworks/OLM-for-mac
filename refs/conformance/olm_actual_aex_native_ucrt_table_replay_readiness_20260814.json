@@ -1,0 +1,76 @@
+{
+  "build": {
+    "cargo_check_package": "aex-guest-worker",
+    "cargo_check_passed": true,
+    "patch_applied": true,
+    "patched_callbacks_sha256": "c6db8fea04e2db211943ff923bbfe8b22655859dcf07210e403516a80c4b9aca",
+    "temporary_clean_clone": true
+  },
+  "inputs": {
+    "aex": {
+      "directional": {
+        "path": "aex/OLMDirectionalBlur/Plugins/64/2025/OLMDirectionalBlur.aex",
+        "sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e"
+      },
+      "distance": {
+        "path": "aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex",
+        "sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+      }
+    },
+    "aexcompat_head": "28d535469f84f67236ef3425afe4291ea2fb0991",
+    "aexcompat_repo": "/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout",
+    "callbacks": {
+      "path": "/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/crates/aex-guest-worker/src/x64/callbacks.rs",
+      "sha256": "b26755017884874a7721bc749325a54f97f517f750d97db181ca6df36a0d6e31"
+    },
+    "host_substitute_plumbing_controls": {
+      "directional": {
+        "report_sha256": "77fc65535ca2390e3e626446a86aa9ebbbbd6612db76875ccca9714876095e98",
+        "tool_sha256": "8f11d24a0e9dfb1943493e5aef6f32a7b089de7575e577d827a5434e677da626"
+      },
+      "distance": {
+        "report_sha256": "59f36cb877f47837684fa59d97fa3cac228fd11de5decee12e13524f2a77ac6c",
+        "tool_sha256": "a6a7e359be9dd31ba0eaede2a248c8f51247d6feeef9f8ab4c875c342862db3c"
+      }
+    },
+    "mac_downstream_replay": {
+      "path": "tools/emulation/test_olm_math_ucrt_downstream_replay_20260814.py",
+      "sha256": "350f84049fb69fca15e4ff49b5613173f2c7189eeeba8dc2f795c14330740f72"
+    },
+    "patch": {
+      "path": "tools/emulation/aexcompat_native_ucrt_table_replay_20260814.patch",
+      "sha256": "6fee08e81a7d0901eb2bfa4914bf6cbec2c3161806988eb52b9392f4dfd94361"
+    },
+    "strict_return_analyzer": {
+      "path": "scripts/analyze_olm_math_ucrt_batch_return_20260814.py",
+      "sha256": "d5da42b05446d0dcd25790ce5bbcafb1d157bcae0db86b03588133fec895c91d"
+    }
+  },
+  "next_exact_proof": {
+    "compare_full_raw_and_public_storage_contract": true,
+    "directional_exported_cells": 6,
+    "distance_exported_cells": 8,
+    "host_substitute_same_table_directional_proven": 6,
+    "host_substitute_same_table_distance_proven": 8,
+    "same_native_table_required_for_aex_and_mac": true
+  },
+  "schema": "olm.actual-aex-native-ucrt-table-replay-readiness/1",
+  "scope": {
+    "after_effects_launched": false,
+    "host_substitute_actual_aex_replay_executed": true,
+    "host_substitute_patched_worker_built": true,
+    "native_table_actual_aex_replay_executed": false,
+    "native_windows_return_received": false,
+    "network_changed": false,
+    "production_changed": false
+  },
+  "status": "READY_NATIVE_TABLE_REPLAY_HOST_SUBSTITUTE_DUAL_OWNER_PLUMBING_PROVEN",
+  "table_contract": {
+    "environment": "OLM_NATIVE_UCRT_TABLE",
+    "expf_exact_key": true,
+    "format": "e <argument_u32_hex> <result_u32_hex> or p <input_u32_hex> <exponent_u32_hex> <result_u32_hex>",
+    "host_math_fallback_when_table_present": false,
+    "missing_key_fails_closed": true,
+    "powf_exact_pair_key": true
+  }
+}

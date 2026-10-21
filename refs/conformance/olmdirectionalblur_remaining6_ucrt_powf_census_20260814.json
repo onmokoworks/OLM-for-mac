@@ -1,0 +1,3250 @@
+{
+  "boundary": {
+    "after_effects_launched": false,
+    "host_substituted_results_are_not_native_windows_ucrt": true,
+    "keys_only_are_authoritative_for_native_request": true,
+    "native_windows_return_received": false,
+    "network_changed": false,
+    "original_557_row_batch_is_incomplete": true
+  },
+  "calls": {
+    "all_six_exported_raw_exact": true,
+    "expf_occurrences": 996,
+    "expf_unique_arguments": 107,
+    "powf_exponent_distribution": {
+      "0x00000000": 2,
+      "0x3f000000": 2,
+      "0x40000000": 783
+    },
+    "powf_occurrences": 47514,
+    "powf_unique_pairs": 787
+  },
+  "cells": [
+    {
+      "depth": 8,
+      "expf_calls": 166,
+      "expf_unique": 107,
+      "powf_calls": 7919,
+      "powf_unique": 785,
+      "raw_sha256": "636e649414ff0ad3968aabb97733dbb67f92900898829361b3f44c58758cfdb3",
+      "tuple_index": 2
+    },
+    {
+      "depth": 16,
+      "expf_calls": 166,
+      "expf_unique": 107,
+      "powf_calls": 7919,
+      "powf_unique": 785,
+      "raw_sha256": "4846a56aea99d2db6be3e56930a8ef1143394e89ca97e316d84a8ec165b4179d",
+      "tuple_index": 2
+    },
+    {
+      "depth": 32,
+      "expf_calls": 166,
+      "expf_unique": 107,
+      "powf_calls": 7919,
+      "powf_unique": 785,
+      "raw_sha256": "05989b2976a2056c738a2c41cf6c9ac39a3fcf8caa35eba4ca1d828fecb9fe19",
+      "tuple_index": 0
+    },
+    {
+      "depth": 32,
+      "expf_calls": 116,
+      "expf_unique": 57,
+      "powf_calls": 7919,
+      "powf_unique": 785,
+      "raw_sha256": "814ae4ec073d6e6ad4c83dea25227de5362d0ae6b8346d155c6aafe086149ac7",
+      "tuple_index": 1
+    },
+    {
+      "depth": 32,
+      "expf_calls": 166,
+      "expf_unique": 107,
+      "powf_calls": 7919,
+      "powf_unique": 785,
+      "raw_sha256": "453bbdf19955a3c6b91f2ca9b756e0d0aa9f2949b5855050636170a117039fc1",
+      "tuple_index": 2
+    },
+    {
+      "depth": 32,
+      "expf_calls": 216,
+      "expf_unique": 107,
+      "powf_calls": 7919,
+      "powf_unique": 785,
+      "raw_sha256": "3424989500b9b05791c1ce9e33e99fb810b5e3c63ad6b4e8c3897c6a2d832c09",
+      "tuple_index": 3
+    }
+  ],
+  "identities": {
+    "aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "ceil_patch_sha256": "cb694903e4df9885242bd1c146f8e42c7a6f917c16ca86dd00fb59f4dae6db51",
+    "native_table_patch_sha256": "6fee08e81a7d0901eb2bfa4914bf6cbec2c3161806988eb52b9392f4dfd94361",
+    "raw_output_patch_sha256": "c6351dcdaff243d80c8cd0d1fbf414e496097b55a2c23d0e6cbfb665f1e4d8fa",
+    "remaining6_census_sha256": "4ca94db9ba97d1042b2ff45c3c11721c50f7e6426b08db6ec92509325649ac36",
+    "source_png_sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4",
+    "trace_patch_sha256": "6ce7050e55f3e92faf0b1f6200b07c1feebad60bbb663308bb5a8a9626ecab25"
+  },
+  "powf_pairs": [
+    {
+      "exponent_bits": "0x00000000",
+      "input_bits": "0x00000000"
+    },
+    {
+      "exponent_bits": "0x3f000000",
+      "input_bits": "0x00000000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3a4a0000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3b030000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3b0e8000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3b112000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3b370000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3bfe0000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3c04c800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3c09f000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3c0e2000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3c156000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3c1eb000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3c29d000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3c302000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3c675000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3c6cb000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3c75c000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3c7ca000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3c8d4000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3c8e8c00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3c904000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3c9ea800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ca93000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3caa9c00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3cbab000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3cbfe000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3cc22000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3cc39000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3cc54800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3cca9000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ccb7000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ccfb000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3cd5c000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ce2e000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ce8a400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3d011000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3d02cc00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3d041800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3d098900"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3d11aa00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3d153340"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3d21de00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3d23a800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3d23b6c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3d24ab2d"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3d414000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3d58e500"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3d58e800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3d591400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3d708a00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3d7fb800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3d819400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3d8ed600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3d929a00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3d94b000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3d95fe00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3d9d1e80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3d9e4800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3da18c00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3da62a00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3da65000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3db2f000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3db2fc00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3db50800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3db60350"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3db68a00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3db7b000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3dbc7e00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3dc0f400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3dc10400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3dc23200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3dc25b20"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3dc2ee00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3dc36e00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3dc6f300"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3dcc2780"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3dd01a00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3dd0b000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3dd2fe00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ddea800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3de5e000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3de9c600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3df20600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3df47c00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3df82400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e047b00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e059000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e05fc00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e069c00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e0991c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e0b2800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e0f0580"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e114780"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e12b680"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e13e300"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e16ef40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e178200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e17c300"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e1c2200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e1c23f0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e1c7200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e1e3900"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e1eac80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e1fae00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e200200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e206200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e211700"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e218700"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e248000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e252800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e26b800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e27d900"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e289d00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e2b3400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e2da400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e2e5100"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e310200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e312200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e317900"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e385c00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e38f500"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e3a5d00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e3a7a00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e3c8440"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e3e5400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e3e9400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e3f1200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e3f5000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e402800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e430000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e448b00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e44d300"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e47f800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e48b880"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e496000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e497280"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e49f000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e4a2aa0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e4e4100"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e4ff600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e4ffe00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e503000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e51d500"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e520c00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e534f00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e542700"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e56b480"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e575200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e5a1000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e5d4c00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e5d4d00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e5e8600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e5f0800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e5f6a00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e666700"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e686e80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e6ac600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e6bdc00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e6de1e0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e6e2800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e6ea2c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e6f0bc0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e6fab00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e704200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e71ae00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e725980"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e74fe00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e764100"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e764900"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e778c00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e7874b0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e78cb00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e7b4200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e7b4d00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e7cea00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e7ed300"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e7f1200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e7f9400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e801240"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e809b80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e80f060"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e82ddc4"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e84e300"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e853a80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e855010"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e855b40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e85a900"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e85ee00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e88c9e0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e891900"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e894480"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e89ac00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e89b400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e8b4100"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e8bc700"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e8cc500"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e8d1600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e8d7200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e8eba00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e903d00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e907c00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e921980"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e923600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e92f5ec"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e93e700"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e947900"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e954120"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e954200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e95a000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e967380"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e97b140"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e97b800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e984880"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e98a780"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e990900"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e99e600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e99e980"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e9a8506"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e9adb00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e9b0a00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e9b0f00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3e9f60de"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ea094d4"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ea0e600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ea1f600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ea21f00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ea46a00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ea4e380"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ea62600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ea70b00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ea78a80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ea89d40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ea8cb80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ea94600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eab1b40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eab5400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eac0980"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eac2990"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ead0800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eade080"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eae2e00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eaf42a0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eafa000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eafbe00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eafd5c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eb03400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eb0f500"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eb12120"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eb16700"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eb23f80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eb41200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eb4fc00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eb55800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eb725c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eb7a000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eb7bd80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eb7ed80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ebb0d00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ebbb4c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ebc0480"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ebc3a80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ebc6400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ebd1800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ebd5c00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ec0e598"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ec10280"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ec1b800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ec1e200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ec23c74"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ec24900"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ec28600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ec2ab00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ec3e200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ec4a100"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ec4b500"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ec51200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ec58480"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ec63300"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ec65e00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ec67600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ec6e480"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ec77500"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ec77b80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ec7d000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ec7ffc0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ec827a0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ec85900"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eca5208"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eca87c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ecacc00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ecd0080"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ecd4e00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ecd5180"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ecd5280"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ecfaa80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ed18680"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ed20d00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ed28ac0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ed2b600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ed2c080"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ed2cc00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ed2d280"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ed2eec0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ed30400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ed3d500"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ed3e480"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ed5ac80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ed5c300"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ed5fa80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ed72300"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ed7d800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ed80480"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ed8fa00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3edaac60"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3edc0800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3edc7700"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3edcb280"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3edcf2e0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eddb200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ede0a00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ede2300"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3edf4a00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3edf56c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3edf5b80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3edfe100"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ee01540"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ee06f00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ee07bc0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ee14a00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ee2bc80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ee43800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ee4a640"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ee4b600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ee50700"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ee55900"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ee65080"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ee75240"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ee76180"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ee8bb40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ee90e50"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ee9ae00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eea0be8"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eea6900"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eeb4000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eeb6740"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eed1b00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eee0900"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eef1e80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eefee00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ef0ac00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ef12200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ef13a80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ef17700"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ef1ac00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ef26700"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ef27fc0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ef28480"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ef2b500"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ef2fe60"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ef36f00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ef400c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ef40340"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ef52e00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ef62b00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ef6ea20"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ef7cf00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ef814b0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ef85800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ef88700"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ef8e800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ef9a180"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3ef9a600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3efa5280"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3efa7100"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3efab500"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3efac600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3efbe1c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3efe0900"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3efe8c00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3eff6f00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f0009c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f007c62"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f00f5c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f0105e0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f01b080"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f0206c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f021a80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f025480"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f027ac0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f0356a0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f046780"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f05b100"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f0623ce"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f064460"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f06f400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f070600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f0764a0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f079400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f079d80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f07d540"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f07e200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f07e580"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f088f80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f08ebc0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f08f600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f091140"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f092000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f098418"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f0a0b00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f0a4b00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f0af450"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f0afea0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f0b21c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f0bda80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f0c4340"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f0c58c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f0da6dc"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f0dfea0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f0e4a70"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f0e5f00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f0ec0c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f0f8600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f0f9040"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f105000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f106b50"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f10f380"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f11e3c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f120d80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f122580"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f1228c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f122c40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f126720"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f12ff00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f1313c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f137000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f139080"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f14b900"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f150616"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f153500"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f15ba40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f15cc80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f15f080"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f16b000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f16f2c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f181e00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f183600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f189a98"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f18c100"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f18d500"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f195200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f1956c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f195c80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f198c80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f199ac0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f1ab700"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f1aed00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f1b69c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f1c99c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f1d35e8"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f1d5800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f1d8080"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f1e3e80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f1e6f00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f1e9fc0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f1efa90"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f1f0054"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f1f00e0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f1f0300"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f1f3200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f1f7880"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f1fc000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f216c00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f216fc0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2208c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f220920"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f222bf8"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f226f40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f227a80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f228340"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f229980"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f23fd80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f240500"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f244400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f248100"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f253960"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f254100"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f25c140"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f25f640"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f264d40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f275580"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2780c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f27a7c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f27cf00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f27d980"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2874c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f288c10"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f28ab80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f291280"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f292c00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f296680"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f29ac88"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f29f360"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2a1c00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2a5240"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2b2340"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2b3b80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2b8bc0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2b9580"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2bd180"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2c2240"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2c28e8"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2c4060"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2cd680"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2ce300"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2cf3c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2d0880"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2d5500"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2d6e00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2d8680"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2ddc10"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2de280"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2e1780"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2e4a80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2e8b80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2ed100"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2eef00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2efa80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2f80c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f2fd480"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f301800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f302100"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f303000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f313400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f316200"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3164c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f31a000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f321480"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3249e8"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f325280"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f329180"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f33e400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f34b000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f34c340"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f34c700"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f34f960"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f350b20"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f353f00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f355080"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f359c40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f35e480"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f362800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f362d80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f363a80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f365080"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f367580"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f36ace0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f36cf40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f36e900"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f375360"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f397e40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f399a40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3a0d00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3a1b00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3a4600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3a7c00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3a8d90"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3ad120"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3b1600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3b2120"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3b4e00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3b6980"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3b7700"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3b8d00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3baf00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3bbd00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3c6bc0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3c6d80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3c6e00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3c7a40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3ca480"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3d0780"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3d3780"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3d56a0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3d90c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3f5a30"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3f5b80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3f8b70"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3f9a80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f3fd980"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f403800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f404940"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f414100"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f415380"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f42b6c8"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f433780"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f435ee0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f438d80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f43f690"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f442a80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f448700"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f44d6c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f451480"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f457e38"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f457ec0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f45e3c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f45f660"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f461340"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f46ce40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f46ed80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4740e8"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f47b400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f47db80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f481600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f48ec00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f48ef00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f492500"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4937c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f493b80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f494480"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4a2a80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4a3f60"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4a5780"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4aca40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4acbc0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4adc00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4afd00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4b14e9"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4b3f80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4c0980"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4c3c80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4c5f40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4c8f80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4d9a00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4da8c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4e3940"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4e4400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4e78f0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4ea800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4ec040"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4efa20"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4f2280"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f4f5f40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f504400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f504d40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f51c720"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f520c80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f521120"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5228c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f526640"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f53eb00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f53ec80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f54a568"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f54b640"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f54ce80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f54d580"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5550c8"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f55e150"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f56b180"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f56b460"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f56c640"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f576100"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f581440"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f592300"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f598800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5996c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f59f280"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5a0400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5a0600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5a8000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5b63a0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5b8cfa"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5b9900"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5bbf00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5bcb00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5c3480"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5c4080"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5c4500"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5c9300"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5ca440"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5cdbc0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5ce2c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5d1a20"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5d1d00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5d3be0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5d5ee2"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5d7180"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5eed00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5f8f00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5f9380"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5fd4c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5fdfc0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f5fec00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f607b00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f61a140"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f621340"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f621400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f621980"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f623080"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f623580"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f627400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f629500"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f6298c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f62c3c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f637e80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f63cc40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f63f000"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f649100"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f64d752"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f651120"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f65e900"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f661500"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f662ac0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f66b280"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f66cf40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f66d180"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f66e160"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f682980"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f6881c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f68af00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f693940"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f6a5900"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f6b1a20"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f6b6b00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f6c5c80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f6cb780"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f6d7970"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f6de800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f6e38c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f6e4680"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f6e6300"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f6e7b60"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f6e8900"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f6e9080"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f6f1b00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f6f52d7"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f6f6800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f705080"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f718480"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f719800"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f71d680"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f7219b0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f7232c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f72ed00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f72f600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f730e80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f746d40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f748600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f755ac0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f756bc0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f75a680"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f75d480"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f75e980"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f762680"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f766d80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f76ab80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f784760"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f78c140"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f78c4c0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f797400"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f797a40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f79a500"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f79d080"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f7a3e16"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f7a4780"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f7abbe0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f7b0880"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f7bab40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f7bbdd0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f7c1a40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f7c2d60"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f7c5f80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f7cee6e"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f7cef40"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f7dc040"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f7de498"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f7e2780"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f7e3f00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f7e7b80"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f7ecae0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f7ecf00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f7eda00"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f7eddc0"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f7fb600"
+    },
+    {
+      "exponent_bits": "0x40000000",
+      "input_bits": "0x3f7ff500"
+    },
+    {
+      "exponent_bits": "0x00000000",
+      "input_bits": "0x3f800000"
+    },
+    {
+      "exponent_bits": "0x3f000000",
+      "input_bits": "0x3f800000"
+    }
+  ],
+  "powf_pairs_sha256": "6443e08c357a72c325bc711fc0970e862a3dbfb6054daac9e92989a175a45b86",
+  "schema": "olmdirectionalblur.remaining6-ucrt-powf-call-census/1",
+  "status": "PASS_ACTUAL_EXPORTED_SMART_SIX_POWF_KEYS_CENSUSED_AE_FREE",
+  "trace_worker": {
+    "aexcompat_head": "28d535469f84f67236ef3425afe4291ea2fb0991",
+    "combined_release_worker_sha256": "e0ac80cac6f94179cd5f42794cd042771d719bba7c299d212775c7b254e83382",
+    "patch_order": [
+      "ceil",
+      "raw_output",
+      "native_table",
+      "ucrt_call_trace"
+    ]
+  }
+}

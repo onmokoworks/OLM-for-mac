@@ -1127,5 +1127,5 @@
       "render_error": 0
     }
   ],
-  "boundary": "Three nondefault-rotation public-owner cases across PF8/PF16/PF32. The Windows AEX declares ANGLE but consumes its raw fixed integer as degrees; raw fixed 1 therefore corresponds to Mac rotation 1 degree. Mode2 also enables the default Ramp and Merge2. Actual exported SmartPreRender/SmartRender is compared to Mac public EffectMain active bytes with input, row padding, and output guards checked. Rotation 22 degrees remains a separate PF32 Merge2 rounding boundary."
+  "boundary": "Three nondefault-rotation public-owner cases across PF8/PF16/PF32. The Windows AEX declares ANGLE but consumes its raw fixed integer as degrees; raw fixed 1 therefore corresponds to Mac rotation 1 degree. Mode2 also enables the default Ramp and Merge2. Actual exported SmartPreRender/SmartRender is compared to Mac public EffectMain active bytes with input, row padding, and output guards checked. Rotation 22 degrees is closed by the separate hash-bound owner-selector closure."
 }

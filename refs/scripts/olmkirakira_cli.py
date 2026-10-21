@@ -530,7 +530,7 @@ def axis_rotate_rays(
             crop_offset_y, crop_offset_x, rotate_order, rotate_prefilter
         ),
         rotated_axis_blur(
-            seed, scaled_length("diagonal2_length"), -45.0 + glow_rotation, falloff, include_center, filter_border,
+            seed, scaled_length("diagonal2_length"), 135.0 + glow_rotation, falloff, include_center, filter_border,
             crop_offset_y, crop_offset_x, rotate_order, rotate_prefilter
         ),
     ]
@@ -564,7 +564,7 @@ def opencv_two_temp_rays(
             alias_roi, center_mode, trace_records, "diagonal"
         ),
         opencv_two_temp_axis_blur(
-            seed, scaled_length("diagonal2_length"), -45.0 + glow_rotation, passes,
+            seed, scaled_length("diagonal2_length"), 135.0 + glow_rotation, passes,
             alias_roi, center_mode, trace_records, "diagonal2"
         ),
     ]
@@ -647,7 +647,8 @@ def render_kirakira(
     opencv_center_mode: str = "normal",
     trace_records: list[dict[str, Any]] | None = None,
 ) -> Image.Image:
-    rgba = np.asarray(image.convert("RGBA"), dtype=np.uint8).astype(np.float32) / 255.0
+    rgba = np.asarray(image.convert("RGBA"), dtype=np.uint8).astype(np.float32)
+    rgba *= np.float32(1.0 / 255.0)
     if auto_length_scale:
         length_scale = float(image.width) / comp_width if comp_width > 0.0 else 1.0
     channel = int(float_param(params, "channel", 0.0))

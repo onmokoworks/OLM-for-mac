@@ -1,5 +1,5 @@
 {
-  "status": "PASS_INSTALLED_COMPLETION_ROUTE",
+  "status": "BLOCKED_FAIL_CLOSED",
   "route": [
     "actual AEX entry_point command 0x17 SmartPreRender",
     "actual AEX entry_point command 0x18 typed PF8/PF16/PF32 workers and writers",
@@ -11,21 +11,31 @@
   ],
   "actual_aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
   "actual_report_sha256": "7713103e879a1da5eb2d0758c917229f353bd1fd2f08533516e4c8fdb1194e1e",
-  "production_source_sha256": "dda35f064d8de900c911fa18474552d1c117488a7846417d536d438c6de03f24",
+  "production_source_sha256": "ded9eaab6b660044c9035f3aa0d9660f86086ec2e451c97c9ee0c1115574464b",
   "production_source_identity": {
-    "head_commit": "0985abfa43f003e8e8508b949c7e4b141b885ca3",
+    "head_commit": "6383ec4edfaf5156b57cbf78c8fa3aaa46f151bf",
     "head_blob": "57129ddbb849562936e2b1b8202c53d88261aa40",
     "head_source_sha256": "dda35f064d8de900c911fa18474552d1c117488a7846417d536d438c6de03f24",
-    "worktree_source_sha256": "dda35f064d8de900c911fa18474552d1c117488a7846417d536d438c6de03f24",
-    "worktree_matches_head": true,
+    "worktree_source_sha256": "ded9eaab6b660044c9035f3aa0d9660f86086ec2e451c97c9ee0c1115574464b",
+    "worktree_matches_head": false,
     "required_ancestor_commits": {
       "legacy_render_noop": true,
       "high_radius_downsample_ratio": true
-    }
+    },
+    "campaign_before_path": "handoffs/olm_all10_release_identity_20260812T164640JST/source_inputs_before/OLMToonDilate.json",
+    "campaign_after_path": "handoffs/olm_all10_release_identity_20260812T164640JST/source_inputs_after/OLMToonDilate.json",
+    "campaign_before_after_exact": true,
+    "campaign_source_sha256": "acb15ad566bc997cf1c20dbb32dd685f869a5c2a5ad77fc726ff311560d85190",
+    "worktree_matches_campaign": false,
+    "lifecycle_closure_path": "refs/conformance/olmtoondilate_optional_checkin_closure_20260812.json",
+    "lifecycle_closure_sha256": "e5f88c4c0da87d3d03a75a19496016ff3c0965dc5a63c97e82c22296a79c95b1",
+    "lifecycle_closure_status": "SUPERSEDED_CURRENT_LIFECYCLE_ROUTE",
+    "lifecycle_closure_source_sha256": "ded9eaab6b660044c9035f3aa0d9660f86086ec2e451c97c9ee0c1115574464b",
+    "worktree_matches_lifecycle_closure": true
   },
   "installed": {
     "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin",
-    "binary_sha256": "bf84a1f76fe584fee76386ae14edda0ee976d2336a0f50cea23e55ac3647f073",
+    "binary_sha256": "fe0a4959a677eb495f290fc384d93a2da4b66119f07bd8d1e5dac0847f95c5e9",
     "architectures": [
       "x86_64",
       "arm64"
@@ -34,8 +44,8 @@
   },
   "gates": {
     "actual_entry_chain_exact": true,
-    "production_adapter_exact": true,
-    "production_source_identity": true,
+    "production_adapter_exact": false,
+    "production_source_identity": false,
     "installed_binary_identity": true,
     "installed_universal": true,
     "installed_codesign_valid": true,
@@ -82,7 +92,7 @@
       ]
     },
     "architecture": "arm64",
-    "binary_sha256": "bf84a1f76fe584fee76386ae14edda0ee976d2336a0f50cea23e55ac3647f073",
+    "binary_sha256": "fe0a4959a677eb495f290fc384d93a2da4b66119f07bd8d1e5dac0847f95c5e9",
     "cases": [
       {
         "compared_words": 140,
@@ -154,6 +164,7 @@
       "all_12_raw_exact": true,
       "callback_lifecycle_exact": true,
       "dlopen_effectmain": true,
+      "optional_checkin_never_called": true,
       "padding_and_guards_exact": true,
       "preserve_rgb_of_zero_alpha_requested": true,
       "world_headers_unchanged": true
@@ -172,6 +183,11 @@
         "radius3_tie_semialpha_nonseed",
         "radius100_513x17_downsample2/1"
       ]
+    },
+    "smart_render_callback_contract": {
+      "checkout_layer_pixels_per_case": 1,
+      "checkout_output_per_case": 1,
+      "optional_checkin_layer_pixels_per_case": 0
     },
     "status": "PASS_INSTALLED_DYNAMIC_COVERING_MATRIX"
   },

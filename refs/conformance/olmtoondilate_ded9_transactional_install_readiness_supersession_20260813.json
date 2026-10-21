@@ -1,0 +1,26 @@
+{
+  "after_effects_operation_performed": false,
+  "claim_boundary": "The immutable prepared-state readiness report is retained as historical evidence. It is no longer evaluated against live pre-install state; current authority is the bound read-only post-install identity report. No install or AE operation is performed.",
+  "current_post_install_authority": {
+    "accepted_identity_manifest_sha256": "ef7bf31f4f8907af8d047276296b16c4d918433a94173938ca98b2874c61c368",
+    "auditor_path": "tools/emulation/audit_olmtoondilate_ded9_incremental_install_identity_20260813.py",
+    "auditor_sha256": "558080e0148f8538e5abbe7ae0d99b2a1be48899fff3576a0b9b342a59ca1d98",
+    "installed_executable_sha256": "5bbe693106072ceff14a1c1ae5a0d64815cddde58356c57575d29e516479036e",
+    "report_path": "refs/conformance/olmtoondilate_ded9_incremental_install_identity_20260813.json",
+    "report_sha256": "39536c468aa358884984f5a22fca759aaa94958e0430b55776e42da50f0aef2d",
+    "status": "PASS_OLMTOONDILATE_DED9_INCREMENTAL_INSTALL_IDENTITY_NO_AE"
+  },
+  "historical_prepared_readiness": {
+    "candidate_executable_sha256": "5bbe693106072ceff14a1c1ae5a0d64815cddde58356c57575d29e516479036e",
+    "markdown_sha256": "21ee24faaebe19d553d4733cedaf33f9023dcf1e977b3d94e1249aef79a1e2c5",
+    "path": "refs/conformance/olmtoondilate_ded9_transactional_install_readiness_20260813.json",
+    "pre_identity_manifest_sha256": "869a5e88ab34b3b26cc4a3786edb6de93f0e10c88b69c33f6e8d7afb6f18da90",
+    "prepared_install_go_conditions_all_true": true,
+    "sha256": "ba374e2b3a3415bf06caa4622493ee95505b987c102caa591c0178bcacbf04c4",
+    "status": "GO_OLMTOONDILATE_DED9_INSTALL_READY_PREPARED_NO_MUTATION",
+    "treated_as_live_current_state": false
+  },
+  "install_operation_performed": false,
+  "schema": "olmtoondilate.ded9-transactional-install-readiness/2",
+  "status": "PASS_OLMTOONDILATE_DED9_PREPARED_READINESS_SUPERSEDED_BY_POST_INSTALL_IDENTITY"
+}

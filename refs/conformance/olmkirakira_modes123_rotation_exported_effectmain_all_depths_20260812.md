@@ -2,4 +2,4 @@
 
 Status: **exact**
 
-Windows raw fixed 1（実処理上1°）でMode 1、Mode 2（Ramp＋Merge2）、Mode 3（Gaussian Length 50）のactual exported Smart ownerとMac public EffectMainをPF8/PF16/PF32で比較する。Rotation 22°のMode2 PF32には別途丸め境界が残る。
+Windows raw fixed 1（実処理上1°）でMode 1、Mode 2（Ramp＋Merge2）、Mode 3（Gaussian Length 50）のactual exported Smart ownerとMac public EffectMainをPF8/PF16/PF32で比較する。Rotation 22°は別のhash-bound owner-selector closureで3深度exactに閉じている。

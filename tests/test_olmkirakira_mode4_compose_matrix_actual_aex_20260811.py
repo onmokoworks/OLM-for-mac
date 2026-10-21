@@ -33,12 +33,12 @@ class Mode4ComposeMatrixActualAexTests(unittest.TestCase):
         source = PRODUCTION.read_text(encoding="utf-8")
         self.assertIn("if (length <= 0) return input;", source)
         self.assertNotIn("if (length <= 1) return input;", source)
-        merge2_d2 = source.index("AddColoredMerge2(glow, diagonal2")
-        merge2_highlight = source.index("AddColoredMerge2(glow, highlight")
-        merge1_d2 = source.index("AddColoredUnion(glow, diagonal2")
-        merge1_highlight = source.index("AddColoredUnion(glow, highlight")
-        self.assertLess(merge2_d2, merge2_highlight)
-        self.assertLess(merge1_d2, merge1_highlight)
+        d2 = source.index("AddColoredUnion(glow, diagonal2")
+        highlight = source.index("AddColoredUnion(glow, highlight")
+        self.assertLess(d2, highlight)
+        self.assertEqual(source.count("AddColoredUnion(glow,"), 5)
+        self.assertNotIn("AddColoredMerge2(glow,", source)
+        self.assertIn("state+0x48 to one", source)
 
 
 if __name__ == "__main__":

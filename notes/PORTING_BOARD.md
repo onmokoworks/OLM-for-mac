@@ -1915,12 +1915,17 @@ behavior.
 
 2026-06-05 Glow Rotation plumbing:
 
+> Superseded 2026-08-12 for the public owner: the Diagonal 2 representative is
+> `135+rotation`, not `-45+rotation`. The axis is geometrically equivalent but
+> the directed Mode 4 recurrence is not bit-equivalent; see the D2 owner-angle
+> closure evidence.
+
 - The current three Windows reference cases all have Glow Rotation=`0`, so this
   is not expected to improve the present PNG diffs.
 - `cli/OLMKiraKira/main.cpp`, `refs/scripts/olmkirakira_cli.py`, and
   `mac/OLMKiraKira/OLMKiraKira.cpp` now add `glow_rotation` to the four ray
-  base angles (`90/0/45/-45`). This closes a real parameter-compatibility hole
-  for future random cases with nonzero rotation.
+  base angles (`90/0/45/-45`) as understood at that historical checkpoint.
+  The later owner-bound correction changes the last representative to `135`.
 - Regression checks after the change:
   - C++ CLI unchanged: `case_0001 max=22 mean=0.8382`,
     `case_0002 max=24 mean=1.1630`, `case_0003 max=60 mean=1.7023`.

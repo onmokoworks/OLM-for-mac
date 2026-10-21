@@ -1,0 +1,195 @@
+{
+  "schema": "olm.kirakira-smart-workspace-dependency-manifest/1",
+  "status": "CURRENT_WORKSPACE_CHAIN_HASH_BOUND",
+  "claim_boundary": "Current workspace artifacts for the bounded OLMKiraKira public Smart closure and its Classic admission guard only. The files and hashes are verified in this workspace; git tracked state, git cleanliness, and clean-checkout availability are not claimed. No plugin install or After Effects host run is performed or claimed by this manifest.",
+  "exact_files": [
+    {
+      "path": "mac/OLMKiraKira/OLMKiraKira.cpp",
+      "role": "production bounded Classic and Smart adapter",
+      "sha256": "abf826dd450bcf879585ae786222ba5d5212d11dd9b292c6ba23d379014baeab"
+    },
+    {
+      "path": "tools/emulation/olmkirakira_public_smart_bounded_closure_harness_20260812.cpp",
+      "role": "public Smart and Classic closure harness",
+      "sha256": "1623680d7fe2cf6525e0e2893d7c25b6d629accf5fd81318a35fab1e64af01c4"
+    },
+    {
+      "path": "tools/emulation/test_olmkirakira_public_smart_bounded_closure_20260812.py",
+      "role": "read-only-by-default Smart closure generator and validator",
+      "sha256": "5b3e93d45632c3452e81b0b39f63786c6c146e28e0fb7ed5611a0217ec3ea9f1"
+    },
+    {
+      "path": "tests/test_olmkirakira_public_smart_bounded_closure_20260812.py",
+      "role": "Smart closure and tamper unit tests",
+      "sha256": "5db56dc8e2e345bf55d169073652e435d969041ec24b8de4b345ac32df750687"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_public_smart_bounded_closure_20260812.json",
+      "role": "authoritative 42-positive and 765-negative Smart closure report",
+      "sha256": "a8cf5cd9560c6d54bac960eac426562ad8cc41c76f1b4f1f1a45b6ce1c8c1a93"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_public_smart_bounded_closure_20260812.md",
+      "role": "human-readable Smart closure boundary",
+      "sha256": "b206cb074b467bb1eb3ef80a22546b6e401bdf5df3aaa523a512ca4d01b4213f"
+    },
+    {
+      "path": "tools/emulation/test_olmkirakira_classic_smart_admission_guard_20260812.py",
+      "role": "Classic admission guard generator and read-only validator",
+      "sha256": "088305241a0fcad103217bd248bd506af9f157fe58fe5a92c9b855f6bce22b18"
+    },
+    {
+      "path": "tests/test_olmkirakira_classic_smart_admission_guard_20260812.py",
+      "role": "Classic and linked Smart admission guard unit tests",
+      "sha256": "494a6e5cd5c7a49286444dd94342fdb3d6a6c9baf28a50811dd7ee36f661b078"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_classic_smart_admission_guard_20260812.json",
+      "role": "linked Classic and Smart admission report",
+      "sha256": "7f35778fb03bff60dae47cd8c2f9be7967308d0b3fc8117b3f97009182a69436"
+    },
+    {
+      "path": "plugins_2025/OLMKiraKira.aex",
+      "role": "pinned Windows 2025 OLMKiraKira owner binary",
+      "sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7"
+    },
+    {
+      "path": "disasm/OLMKiraKira.aex.asm.txt",
+      "role": "static Windows owner disassembly",
+      "sha256": "d23c749d225a934580c96f2929fb9d7253d07b1be208faa9de6ff89efc1f89b3"
+    },
+    {
+      "path": "decomp/OLMKiraKira.aex.c.txt",
+      "role": "static Windows owner decompilation",
+      "sha256": "990693e95695cd83032764f0452fbbe336b8f910ce4d9f5af94a2094c7f6328a"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_mode2_common_owner_20260717.json",
+      "role": "dynamic common-owner lineage JSON",
+      "sha256": "67e05ec67ee1cf419bb8a88efa3dd2fdfb4b4499145dfc2a9557437c9d4f73c2"
+    },
+    {
+      "path": "Headers/AE_Effect.h",
+      "role": "SDK Smart callback ABI declaration",
+      "sha256": "a6d5cdeba53f6934a9bac19c2c1b46b1478266f39995795c59244e3d9a355a0d"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_pf8_source_decode_closure_20260812.json",
+      "role": "dependent PF8 source-decode closure",
+      "sha256": "d3da9c00aa57297f7b2fa937803f6e8a2b1f955f01884e65edaed85435f03bb3"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_mode1_exported_effectmain_all_depths_20260812.json",
+      "role": "guard evidence Mode1 horizontal rotation0 closure",
+      "sha256": "8464aa75ac75e71fd9151b881a858c650b7447ba2f56d3decf68d24d688c1122"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_mode1_rotation1_20260812.json",
+      "role": "guard evidence Mode1 horizontal rotation1 closure",
+      "sha256": "0ec60ae12a79ed48518b652ca24d45fb4c92a8dea5e4f4cabc11bd9723dff4d8"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_mode2_ramp_merge2_exported_effectmain_all_depths_20260812.json",
+      "role": "guard evidence Mode2 ramp rotation0 closure",
+      "sha256": "7d73caa283d321ab1b08051543f3b472562868218ddca35142352b6a330f736a"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_mode2_ramp_merge2_rotation1_20260812.json",
+      "role": "guard evidence Mode2 ramp rotation1 closure",
+      "sha256": "3590cebcb7339285c898a3198a903b47fb0a94846f248a9ce190ee476e6d6d4c"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_mode4_highlight_gradient_closure_20260812.json",
+      "role": "guard evidence Mode4 Highlight gradient closure",
+      "sha256": "f36249eac1e5d71454c75a2b4ba01b2697f4bc49cfddb343a0c2130035edde24"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_mode2_rotation22_closure_20260812.json",
+      "role": "guard evidence Mode2 Rotation22 closure",
+      "sha256": "d88b3aa163330216fba22848abfdb1f25dbb562c8cf10d4284d9254c43cdd433"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_mode3_gaussian_length50_exported_effectmain_all_depths_20260812.json",
+      "role": "guard evidence Mode3 Gaussian rotation0 closure",
+      "sha256": "ec9f170e9472bfceda99af8e545dc90bd69a0a87811d37077e53003b4b54a08b"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_mode3_gaussian_length50_rotation1_20260812.json",
+      "role": "guard evidence Mode3 Gaussian rotation1 closure",
+      "sha256": "fae26f1a974f40ec1d49429acd70fed633b9863b5f97aeef6fe203755764fe9b"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_mode4_diagonal2_owner_angle_closure_20260812.json",
+      "role": "guard evidence Mode4 Diagonal2 owner-angle closure",
+      "sha256": "402ec3c99adf7cb5b951359bffc01361a449a7935197d2e84d4c2d440e9c7fad"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_mode4_horizontal_solo_exported_effectmain_all_depths_20260812.json",
+      "role": "guard evidence Mode4 horizontal solo closure",
+      "sha256": "6433ae1745813107f765509464b157891beb55266944f63f24af1b2fcc072633"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_mode4_highlight_solo_exported_effectmain_all_depths_20260812.json",
+      "role": "guard evidence Mode4 Highlight solo closure",
+      "sha256": "455f89f1355e39ed751a7deb5f254e1d993adce11785a555c245ccb27032e702"
+    },
+    {
+      "path": "refs/conformance/olmkirakira_mode4_multiray_exported_effectmain_all_depths_20260812.json",
+      "role": "guard evidence Mode4 multiray closure",
+      "sha256": "fda9a9f42c59ca9992745e4d58e060bf4d8d4fd42908023aa4df726cba4a1f5c"
+    }
+  ],
+  "relations": {
+    "production_source_sha256": "abf826dd450bcf879585ae786222ba5d5212d11dd9b292c6ba23d379014baeab",
+    "smart_report": "refs/conformance/olmkirakira_public_smart_bounded_closure_20260812.json",
+    "smart_report_sha256": "a8cf5cd9560c6d54bac960eac426562ad8cc41c76f1b4f1f1a45b6ce1c8c1a93",
+    "smart_canonical_cells_sha256": "112f5c2e11b84bff20ec961f046186e69a9e650e96cb5f1aec3449acfce2565a",
+    "smart_canonical_negative_rows_sha256": "a13a6b9b3e2372785a36566d4d0eff5aec905ab3b995f2574b384e9464378d28",
+    "classic_smart_guard_report": "refs/conformance/olmkirakira_classic_smart_admission_guard_20260812.json",
+    "classic_smart_guard_report_sha256": "7f35778fb03bff60dae47cd8c2f9be7967308d0b3fc8117b3f97009182a69436",
+    "windows_aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "aexcompat_worker_sha256": "46ab907d286ad4e0e1c2065557100f02c37e0b68df4c22202a825f3fea13ef61",
+    "aexcompat_commit": "28d535469f84f67236ef3425afe4291ea2fb0991"
+  },
+  "windows_callback_abi": {
+    "disassembly_function": "FUN_18114c8f0",
+    "checkout_layer_pixels": {
+      "callback_slot": "+0x0",
+      "anchor_tokens": [
+        "18114c930  MOV RAX,qword ptr [R9 + 0x8]",
+        "18114c934  MOV R9,qword ptr [RAX]",
+        "18114c945  CALL R9"
+      ]
+    },
+    "checkout_output": {
+      "callback_slot": "+0x10",
+      "anchor_tokens": [
+        "18114c94f  MOV RAX,qword ptr [RDI + 0x8]",
+        "18114c953  MOV R9,qword ptr [RAX + 0x10]",
+        "18114c963  CALL R9"
+      ]
+    },
+    "checkin_layer_pixels": {
+      "callback_slot": "+0x8",
+      "dedicated_evidence": "FUN_18114c8f0 contains no load-and-call through callback-table slot +0x8; no Windows pixel checkin call is claimed.",
+      "called": false
+    },
+    "sdk_field_order": [
+      "checkout_layer_pixels",
+      "checkin_layer_pixels",
+      "checkout_output"
+    ],
+    "sdk_checkin_is_optional": true
+  },
+  "runners": {
+    "smart_validate_only": "python3 tools/emulation/test_olmkirakira_public_smart_bounded_closure_20260812.py --validate-only",
+    "smart_unit": "python3 -m unittest tests.test_olmkirakira_public_smart_bounded_closure_20260812 -v",
+    "guard_validate_only": "python3 tools/emulation/test_olmkirakira_classic_smart_admission_guard_20260812.py --validate-only",
+    "guard_unit": "python3 -m unittest tests.test_olmkirakira_classic_smart_admission_guard_20260812 -v",
+    "manifest_unit": "python3 -m unittest tests.test_olmkirakira_smart_workspace_dependency_manifest_20260812 -v"
+  },
+  "self_artifacts": [
+    "refs/conformance/olmkirakira_smart_workspace_dependency_manifest_20260812.json",
+    "tests/test_olmkirakira_smart_workspace_dependency_manifest_20260812.py"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "child_summary_sha256": {
+    "directional": "fd2dd6eaedde26a55340554b612cac8ef333869f479610bd588213c37a9d451d",
+    "directional_powf": "ef56359859fbbffb67534724e2eb5912e45bb19030e50091938afc091f3e2782",
+    "distance": "7fbcea45030037c36b9b01921e6b6faf5c69ad7f71885d15b5084a6fb9d7860a"
+  },
+  "claims_not_made": [
+    "No production admission",
+    "No After Effects execution"
+  ],
+  "distance_actual_aex_xmm_closure_sha256": "741dce6e7a1dd852d237072502341b40721b7cc7a9000c279f6234c10f07108a",
+  "production_policy": {
+    "directional_six": "fail_closed_pending_native-derived public output closure",
+    "distance_power_eight": "fail_closed_pending native-derived final public output closure"
+  },
+  "request_id": "olm_runtime_trace_olm_math_ucrt_batch_20260814",
+  "result_semantics": {
+    "directional_expf_exact_zero_argument_and_monotonic_per_count": true,
+    "directional_expf_finite_positive_unit_interval": true,
+    "directional_powf_finite_unit_interval_and_exact_endpoints": true,
+    "directional_repeated_arguments_deterministic": true,
+    "distance_powf_exact_zero_one_endpoints_and_monotonic": true,
+    "distance_powf_finite_unit_interval": true
+  },
+  "return_path": "/Volumes/onmk/olm_pr/new/mac_returns/olm_runtime_trace_olm_math_ucrt_batch_return_windows_20260815_020556.zip",
+  "return_sha256": "c50c7db94dfd0417dce6b681cd45209cba9259ff8b25737f28e3f239539a5bf1",
+  "schema": "olm.math-ucrt-batch-return-analysis/1",
+  "status": "PASS_NATIVE_WINDOWS_UCRT_BATCH_RETURN_VALIDATED_NO_PROMOTION",
+  "ucrtbase": {
+    "file_version": "10.0.26100.8875 (WinBuild.160101.0800)",
+    "path": "C:\\WINDOWS\\System32\\ucrtbase.dll",
+    "product_version": "10.0.26100.8875",
+    "sha256": "5e7709a6b71bb818260b6f05c5bb3b6ca0c3ca9bc2f58c6242c1cd9d826d0079"
+  },
+  "vectors": {
+    "directional_expf": 494,
+    "directional_powf": 787,
+    "distance_powf": 63,
+    "total": 1344
+  }
+}

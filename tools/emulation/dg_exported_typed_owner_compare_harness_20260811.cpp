@@ -18,7 +18,8 @@ static int render(const std::vector<std::uint8_t> &source, const char *output_pa
 	constexpr int width = 17, height = 11;
 	const int rowbytes = width * static_cast<int>(sizeof(Pixel));
 	if (source.size() != static_cast<std::size_t>(rowbytes * height)) return 3;
-	std::vector<std::uint8_t> output(source.size());
+	std::vector<std::uint8_t> output(source.size(), 0x5a);
+	const auto output_before = output;
 	PF_LayerDef input{const_cast<std::uint8_t *>(source.data()), width, height, rowbytes,
 		static_cast<int>(sizeof(Pixel) == 8 ? 16 : 32), {0, 0, width, height}};
 	PF_LayerDef destination{output.data(), width, height, rowbytes,
@@ -44,7 +45,10 @@ static int render(const std::vector<std::uint8_t> &source, const char *output_pa
 	PF_InData in_data{};
 	in_data.downsample_x = {1, 1};
 	in_data.downsample_y = {1, 1};
-	if (RenderBits<Pixel>(&in_data, params, &input, &destination, true) != 0) return 4;
+	const PF_Err render_err = RenderBits<Pixel>(&in_data, params, &input, &destination, true);
+	if (render_err != PF_Err_NONE) {
+		return 4;
+	}
 	std::ofstream stream(output_path, std::ios::binary);
 	stream.write(reinterpret_cast<const char *>(output.data()), static_cast<std::streamsize>(output.size()));
 	return stream ? 0 : 5;

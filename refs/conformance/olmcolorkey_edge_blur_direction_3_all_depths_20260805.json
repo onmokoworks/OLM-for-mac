@@ -7,9 +7,9 @@
         "actual_direction_is_3": true,
         "actual_direction_plane_exact": true,
         "actual_final_alpha_exact": true,
-        "production_direction_plane_exact": true,
-        "production_final_alpha_exact": true,
-        "production_padding_preserved": true
+        "production_direction_plane_exact": false,
+        "production_final_alpha_exact": false,
+        "production_padding_preserved": false
       },
       "pixel_format": "PF8"
     },
@@ -20,9 +20,9 @@
         "actual_direction_is_3": true,
         "actual_direction_plane_exact": true,
         "actual_final_alpha_exact": true,
-        "production_direction_plane_exact": true,
-        "production_final_alpha_exact": true,
-        "production_padding_preserved": true
+        "production_direction_plane_exact": false,
+        "production_final_alpha_exact": false,
+        "production_padding_preserved": false
       },
       "pixel_format": "PF16"
     },
@@ -33,15 +33,15 @@
         "actual_direction_is_3": true,
         "actual_direction_plane_exact": true,
         "actual_final_alpha_exact": true,
-        "production_direction_plane_exact": true,
-        "production_final_alpha_exact": true,
-        "production_padding_preserved": true
+        "production_direction_plane_exact": false,
+        "production_final_alpha_exact": false,
+        "production_padding_preserved": false
       },
       "pixel_format": "PF32"
     }
   ],
   "claim_boundary": "Bounded actual full-worker to production source-adapter proof only; no other direction, amount, shape, or AE-host claim.",
-  "production_source_sha256": "91165211f1b63a1861b1c241c5f50c79528c7238610926709d1ce37909b1257b",
+  "production_source_sha256": "8d3083cc2042af230c35f657b1db1c06e4c375ddd2e806198ece42a1c91466cb",
   "scope": "4x3 single black key, Edge Blur amount 2.0, direction 3, PF8/PF16/PF32",
-  "status": "pass"
+  "status": "fail"
 }

@@ -1,0 +1,101 @@
+{
+  "dependencies": {
+    "base_payload": {
+      "path": "scripts/ae_host_all10_current_install_fresh_validation_20260812.jsx",
+      "sha256": "ef0477d30d30b1b5c587ebcc511864bd4692ae0ef9cc2d656975a209df4ad511"
+    },
+    "base_runner": {
+      "path": "scripts/run_olm_all10_current_install_fresh_ae_smoke_20260812.py",
+      "sha256": "45997d4c756fb9d82afde2fbe8f3be503db5e66dff2b15eaaf9ba1e1219ce4b7"
+    },
+    "batch5_payload": {
+      "path": "scripts/ae_host_all10_batch5_current_identity_deferred_v1_20260815.jsx",
+      "sha256": "9696c221899dc4b4aeebbc25b469fc86b8c6019becf868b7059d089941dcd3c3"
+    },
+    "batch5_runner": {
+      "path": "scripts/run_olm_all10_batch5_current_identity_deferred_v1_20260815.py",
+      "sha256": "1d6443b142c61c78df481070bc107fc992671fa9938bb46816f8bebbb6b5b697"
+    },
+    "predecessor_deferred": {
+      "path": "scripts/run_olm_all10_current_identity_deferred_v3_20260814.py",
+      "sha256": "019e72afe8726c91a41e873690303b1771e133e71a1d35c081e68e2a324ab190"
+    },
+    "predecessor_identity": {
+      "path": "refs/conformance/olm_installed_identity_manifest_20260806.json",
+      "sha256": "94c6a1eff87e11705a65be638953cb134ff64bd0d919e8501338601aab333650"
+    },
+    "predecessor_live": {
+      "path": "scripts/run_olm_all10_current_identity_final_v4_20260814.py",
+      "sha256": "94cb7d1d613b5fa88be190047ef8692854f07187381a211c96b6fb64ce7bda31"
+    }
+  },
+  "execution": {
+    "all_live_calls_refuse_before_lock_receipt_subprocess_or_launch": true,
+    "existing_artifact_overwrite_forbidden": true,
+    "live_entrypoint_present": false,
+    "separate_reviewed_live_adapter_required": true,
+    "single_fresh_batched_session_required": true
+  },
+  "future_paths": {
+    "all_absent": true,
+    "artifact_dir": "handoffs/olm_all10_batch5_current_identity_v1_fresh_ae_smoke_20260815",
+    "raw": "refs/conformance/olm_all10_batch5_current_identity_v1_fresh_ae_smoke_raw_20260815.json",
+    "receipt": "handoffs/olm_all10_batch5_current_identity_v1_fresh_ae_smoke_20260815.invocation-receipt.json",
+    "summary": "refs/conformance/olm_all10_batch5_current_identity_v1_fresh_ae_smoke_20260815.json"
+  },
+  "host_frame_policy": {
+    "claim_boundary": "Batch5 installed host load/add/enable-state and exact mapping for all ten; generic effect-enabled host-frame render only for OLMBlur and OLMDirectionalBlur. The other eight bounded effects are disabled before generic saveFrameToPng. Numerical behavior is not assessed. No pixel-exact, Windows-equivalence, typed-plane, padding, admission, or public-owner numerical-exact claim.",
+    "disabled_after_load_add": [
+      "ColorKeep",
+      "OLMColorKey",
+      "OLMDistanceGradation",
+      "OLMKiraKira",
+      "OLMRadialBlur",
+      "OLMSmoother",
+      "OLMSmoother2",
+      "OLMToonDilate"
+    ],
+    "enabled": [
+      "OLMBlur",
+      "OLMDirectionalBlur"
+    ],
+    "numerical_assessment": "not_assessed"
+  },
+  "identity_retarget": {
+    "emit_policy": "explicit --identity plus --emit-retargeted-contract to a new absent path only",
+    "required_plugin_count": 10,
+    "required_plugins": [
+      "ColorKeep",
+      "OLMBlur",
+      "OLMColorKey",
+      "OLMDirectionalBlur",
+      "OLMDistanceGradation",
+      "OLMKiraKira",
+      "OLMRadialBlur",
+      "OLMSmoother",
+      "OLMSmoother2",
+      "OLMToonDilate"
+    ],
+    "required_row_gates": [
+      "source_installed_exact",
+      "universal_exact",
+      "codesign_exact",
+      "installed_bundle_count_one"
+    ],
+    "required_schema": "olm.installed-identity-manifest/1",
+    "state": "awaiting_installer_and_identity",
+    "target": null
+  },
+  "readiness_policy": {
+    "cache_or_registry_mutation": "forbidden_without_separate_evidence_and_approval",
+    "canonical_outputs_on_failure": "absent",
+    "exact_owned_pid_cleanup": true,
+    "get_version_exact": "26.3.0",
+    "nonce_bound_doscript_json_probes": 2,
+    "one_live_attempt_no_retry": true,
+    "receipt_after_readiness_only": true,
+    "same_fresh_singleton_pid": true
+  },
+  "schema": "olm.all10-batch5-current-identity-deferred-v1-contract/1",
+  "status": "AE_FORBIDDEN_AWAITING_BATCH5_IDENTITY"
+}

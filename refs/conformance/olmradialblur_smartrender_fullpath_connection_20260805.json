@@ -1,18 +1,17 @@
 {
   "actual_production_evidence": "refs/conformance/olmradialblur_zoom_pf32_small_actual_aex_20260805.json",
-  "claim_boundary": "AE-free compositional connection: public adapter structure is fail-closed source-audited and the exact RenderWorld path is executed; no AE process or host callback ABI is claimed dynamically.",
+  "claim_boundary": "AE-free current-source compositional audit plus a separate historical installed-identity check. The current cleanup candidate is not installed, so no source-to-installed equality, AE process, native host callback ABI, or new numerical tuple is claimed.",
   "connection": [
     "EffectMain(PF_Cmd_SMART_RENDER)",
     "SmartRender callbacks/param checkout",
-    "RenderWorld(bitdepth=32)",
-    "RenderZoomTyped<PF_PixelFloat>",
-    "pre/post planes",
-    "FUN_180017490 writer",
-    "current installed Universal binary"
+    "private staged RenderWorld(bitdepth=32)",
+    "cleanup",
+    "active-row commit"
   ],
   "gates": {
     "all_public_params_checked_out": true,
     "checkout_input_then_output": true,
+    "cleanup_precedes_atomic_commit": true,
     "effectmain_dispatches_smart_render": true,
     "input_checked_in": true,
     "installed_identity_exact": true,
@@ -21,7 +20,7 @@
     "pf32_actual_to_renderworld_exact": true,
     "pf32_pre_post_output_exact": true,
     "pre_render_dimensions_consumed": true,
-    "smart_bitdepth_routes_renderworld": true
+    "smart_bitdepth_routes_staged_renderworld": true
   },
   "installed": {
     "architectures": [
@@ -30,8 +29,8 @@
     ],
     "identity_manifest": "refs/conformance/olm_installed_identity_manifest_20260806.json",
     "path": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin/Contents/MacOS/OLMRadialBlur",
-    "sha256": "275b2a1390ddbb8e860e44b4bea5d2908c51fb92d8f18e4139d3b0d7de4a92c7"
+    "sha256": "9be59d18601dc2b031335f4fec8c8c6a1eb13a4888bf0f228efa65e2d5b676b5"
   },
   "kind": "olmradialblur_smartrender_fullpath_connection_20260805",
-  "status": "connected"
+  "status": "current_source_connected_installed_identity_separate"
 }

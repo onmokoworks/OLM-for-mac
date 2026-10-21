@@ -33,5 +33,5 @@
   "post_vmmap": "OLMDistanceGradation not mapped; consistent with effect-add not reached",
   "conclusion": "The minimal loader's first absolute trace write did not occur, so failure remains before loader evaluation at DoScriptFile delivery.",
   "stop_rule_observed": "Stopped after the one permitted attempt; no retry and no AE termination or restart.",
-  "pf32_smart": "unsupported by actual AEX; unclaimed"
+  "pf32_smart": "historical assumption superseded 2026-08-12: actual public command 0x18 has a PF32 Smart owner; this failed loader attempt makes no Smart claim"
 }

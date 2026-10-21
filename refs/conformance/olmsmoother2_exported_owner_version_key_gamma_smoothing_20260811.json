@@ -3,7 +3,7 @@
   "aexcompat_worker": {
     "modified_by_this_task": false,
     "path": "/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker",
-    "sha256": "2f8c706f2fa3b1dec81090e9e497161fbd6c96be7db86be79857c355db798c91"
+    "sha256": "46ab907d286ad4e0e1c2065557100f02c37e0b68df4c22202a825f3fea13ef61"
   },
   "cases": [
     {
@@ -813,7 +813,7 @@
     "exported_entry": "0x180009e60",
     "smart_render_materialization": "PF_InData checkout_param/checkin_param callbacks feed FUN_180004e10 before bitdepth 8/16/32 dispatch"
   },
-  "production_source_sha256": "d8a7a489bb3bc875e998926bdde971ac66f5544c41ff6bc583819bf0daf0a784",
+  "production_source_sha256": "c0a2588aa6749c3f861f2e7246c4db97fa9d6c3b2b8783889a5c22b36f77dc77",
   "schema": "olmsmoother2.exported-owner-compound/1",
   "scope": "actual unchanged Windows AEX exported SmartPreRender/SmartRender complete tight buffers versus production RenderBits; 5x5 RGBA8 source promoted by host to PF8/PF16/PF32; Version1 non-invert and Version2 invert representatives; Gamma Colors [red,key] 2.4; Smoothness/Range/Extra100",
   "verdict": "PASS_ACTUAL_EXPORTED_SMART_OWNER_VERSION_KEY_GAMMA_SMOOTHING_ALL_DEPTHS_EXACT"

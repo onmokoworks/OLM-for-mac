@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "kind": "olmkirakira_mode4_highlight_gradient_install_smoke",
+  "date": "2026-08-12",
+  "status": "installed_host_smoke_pass_pixel_gate_fail_closed",
+  "build": {
+    "production_source_sha256": "b467633eebd83b196db146e5f27fea9a6338985efa4d22719ae0cb891aef384b",
+    "highlight_core_sha256": "e98232e4224b6ae4dd372216e10c29f3ba6621f68ab6cb10b56a02b9cc248390",
+    "configuration": "Debug",
+    "architectures": ["x86_64", "arm64"],
+    "codesign": "adhoc",
+    "codesign_deep_strict": true
+  },
+  "installed_bundle": {
+    "path": "~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin",
+    "binary_sha256": "136ca31b2a2f75bd2dc624bbba4f907e29214202af80926c091abcef536f5c92",
+    "matching_bundle_count": 1,
+    "previous_binary_sha256": "39700e41d7b1c22f16fa161856c7e453ecaaf80160168c275f1785c90a622b84",
+    "recoverable_backup": "/tmp/olmkirakira-highlight-install-backup.ed3Bpp/OLMKiraKira.plugin"
+  },
+  "host_smoke": {
+    "application": "Adobe After Effects 2026",
+    "ae_version": "26.3x87",
+    "renderer_raw": 1816,
+    "depth": "PF32",
+    "fixture": "kk_mapped_bm4_mm1_hi_r5_orange_opaque",
+    "highlight_radius": 5,
+    "ae_result_status": "ok",
+    "loaded_module_path": "~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin/Contents/MacOS/OLMKiraKira",
+    "loaded_module_identity_exact": true,
+    "parameters_applied": true,
+    "render_outputs_created": true,
+    "no_effect_exr_sha256": "eeba79d4717865eadfb6359a0380cd6b3ce6340bc0e75aeb1c8f4d5c1277294c",
+    "effect_on_exr_sha256": "a7b70ce2b2d8984d1891f5960cceaf818ace6e57358483d78bf75effae6a24d4",
+    "windows_raw_float32_exact": false,
+    "input_interpretation": {
+      "preserve_rgb": null,
+      "working_space": "None",
+      "linear_blending": false
+    },
+    "fail_closed_reason": "the no-effect branch already differs in all 6220800 words with preserve_rgb=null; this proves installed load/apply/render only",
+    "raw_report": {
+      "path": "refs/conformance/olmkirakira_mode4_highlight_gradient_install_smoke_raw_20260812.json",
+      "sha256": "a335c37dc1825699ae444ad824db6676dc7c180196df22ac6abc147e4dabda10"
+    },
+    "loaded_module_identity_semantics": "the raw report proves one mapped installed path; the on-disk binary at that path was separately hashed before and after the smoke"
+  },
+  "hostless_highlight_gradient_closure": {
+    "path": "refs/conformance/olmkirakira_mode4_highlight_gradient_closure_20260812.json",
+    "sha256": "cda745b1fb26cdffd3e77d75863d0d231f4d5b82dfb7972e8b208b74c98b1fd7",
+    "status": "raw_exact",
+    "fixture": "5x3 Highlight Radius 3 / kernel 7 / alpha_i_over_17",
+    "depths": ["PF8", "PF16", "PF32"],
+    "relation_to_installed_build": "This SHA binds the historical closure snapshot associated with the recorded smoke. The current workspace closure has superseded that snapshot after later PF8 and Smart-route changes; the installed binary identity remains bound exclusively by build.production_source_sha256 and installed_bundle.binary_sha256."
+  },
+  "claims_not_made": [
+    "No Mac AE pixel-exact claim for the Highlight gradient fixture",
+    "No Windows/Mac AE pixel-exact claim from the Radius 5 Render Queue smoke",
+    "No all-radius or arbitrary-gradient promotion",
+    "No arbitrary Mode 1 input promotion"
+  ]
+}

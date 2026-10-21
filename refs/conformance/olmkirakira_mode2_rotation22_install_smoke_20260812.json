@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "kind": "olmkirakira_mode2_rotation22_install_smoke",
+  "date": "2026-08-12",
+  "status": "installed_host_smoke_pass_pixel_gate_fail_closed",
+  "installed_bundle": {
+    "path": "~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin",
+    "binary_sha256": "3ff1d6ed30922d869f0368e73d9a529f3c52f7ce27bb2d5acefd7c8fd16afb0a",
+    "architectures": [
+      "x86_64",
+      "arm64"
+    ],
+    "codesign_deep_strict": true,
+    "matching_bundle_count": 1,
+    "previous_binary_sha256": "4b14115ffd4bc064a7370aa50df6c3ff5a314860ee66426aa41f165de310674f",
+    "recoverable_backup": "/tmp/olmkirakira-install-backup.vmgWtQ/OLMKiraKira.plugin"
+  },
+  "host": {
+    "application": "Adobe After Effects 2026",
+    "ae_version": "26.3x87",
+    "macos_version": "15.7.2",
+    "machine": "arm64",
+    "renderer_raw": 1816
+  },
+  "minimal_all_plugin_smoke": {
+    "result_sha256": "8fdf391afa223593a5843b00436dabcc66797ff358b19f1d0d63e53324be67d5",
+    "loaded_and_applied": "10/10",
+    "rendered": "0/10",
+    "failure": "CompItem.saveFrameToPng returned without creating a PNG for every plugin",
+    "classification": "common host-smoke harness failure; no per-plugin render claim"
+  },
+  "kira_render_queue_smoke": {
+    "result_sha256": "fe3ff716cc631ebd697d9735e85eec8cace5c1859ddaf0226132b9d65e0952c9",
+    "fixture": "kk_mapped_bm4_mm1_hi_r5_orange_opaque PF32",
+    "ae_result_status": "ok",
+    "loaded_module_path": "~/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin/Contents/MacOS/OLMKiraKira",
+    "loaded_module_identity_exact": true,
+    "no_effect_exr_sha256": "b5530d3762b407f867b6a4523dc2d348c13c90b2bc8f0ba3781f54d0c649e5e2",
+    "effect_on_exr_sha256": "09cd2322c20e856f4ffec8540860df09a8515035c4b7cab24ba39e71670d9cd2",
+    "render_outputs_created": true,
+    "windows_raw_float32_exact": false,
+    "fail_closed_reason": "the no-effect branch already differs in all 6220800 words and AE reports preserve_rgb=null; this run proves installed load/apply/render only"
+  },
+  "hostless_rotation22_closure": {
+    "path": "refs/conformance/olmkirakira_mode2_rotation22_closure_20260812.json",
+    "sha256": "029fd1d24652ad3daac4bd5bf4d07eccecf405cbec2ee11c2423777b7ef15007",
+    "status": "raw_exact",
+    "depths": [
+      "PF8",
+      "PF16",
+      "PF32"
+    ]
+  },
+  "claims_not_made": [
+    "No Mac AE pixel-exact claim for Rotation 22 degrees",
+    "No Windows/Mac AE pixel-exact claim from the Mode 4 Render Queue smoke",
+    "No promotion beyond the hash-bound hostless Rotation 22 tuple"
+  ]
+}

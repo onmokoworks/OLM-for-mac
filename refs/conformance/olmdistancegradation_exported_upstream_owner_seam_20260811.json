@@ -3,11 +3,13 @@
   "aexcompat_worker": {
     "modified_by_olm_task": false,
     "path": "/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker",
-    "sha256": "eaa6be471ae2bb7c4557046c868f31ee7ca15621abb0c9277d5c2601523d57b3"
+    "sha256": "46ab907d286ad4e0e1c2065557100f02c37e0b68df4c22202a825f3fea13ef61"
   },
   "claims_not_made": [
     "No native After Effects execution",
-    "No Mac partial-world/origin claim"
+    "No native Windows UCRT powf result for PF32 Power",
+    "No Mac partial-world/origin claim",
+    "No unlisted PF32 tuple, geometry, or layout claim"
   ],
   "exported_pf8_rows": [
     {
@@ -97,21 +99,23 @@
     "width": 17
   },
   "owner_facts": {
-    "PF16": "exported Smart owner 8/8 exact; classic owner remains separately exact",
-    "PF32": "exported Smart owner 8/8 exact; classic FUN_181172a10 remains separately exact",
-    "PF8": "exported Smart owner 8/8 exact"
+    "PF16": "exported Smart owner 32/32 exact on the fixed typed matrix; classic owner remains separately exact",
+    "PF32": "actual public Smart owner has 24 admitted non-Power exact cells; eight Power cells fail closed pending native Windows UCRT powf capture",
+    "PF8": "exported Smart owner 8/8 exact in this bounded upstream subset"
   },
-  "schema": "olmdistancegradation.exported-upstream-owner-seam/3",
-  "status": "PASS_EXPORTED_SMART_OWNER_ALL_DEPTHS_BOUNDED_EXACT",
+  "schema": "olmdistancegradation.exported-upstream-owner-seam/5",
+  "status": "PASS_EXPORTED_SMART_OWNER_ALL_DEPTHS_BOUNDED_64_RAW_EXACT_8_POWER_FAIL_CLOSED",
   "typed_owner_evidence": {
     "path": "refs/conformance/olmdistancegradation_exported_typed_owner_matrix_20260811.json",
-    "status": "PASS_PF16_PF32_EXPORTED_SMART_OWNER_16_CELL_EXACT",
+    "status": "PASS_56_ADMITTED_RAW_EXACT_8_PF32_POWER_FAIL_CLOSED",
     "summary": {
-      "cells": 16,
-      "completed": 16,
-      "exact": 16,
-      "pf16_exact": 8,
-      "pf32_exact": 8
+      "actual_aex_cells": 64,
+      "exact_admitted": 56,
+      "pf16_exact": 32,
+      "pf32_exact": 24,
+      "pf32_mode5_exact": 6,
+      "pf32_mode5_fail_closed": 2,
+      "pf32_power_fail_closed": 8
     }
   }
 }

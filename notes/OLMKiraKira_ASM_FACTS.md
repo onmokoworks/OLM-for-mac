@@ -739,7 +739,10 @@ Current best-supported IR checkpoints:
   by glow alpha, and keep source alpha.
 - Zero-length rays are skipped rather than blurred as the raw seed.
 - Ray order/angles are `{vertical=90+rotation, horizontal=0+rotation,
-  diagonal=45+rotation, highlight_zero, diagonal2=-45+rotation}`.
+  diagonal=45+rotation, diagonal2=135+rotation, highlight_zero}`. The three
+  typed owner bodies construct the fourth angle with `LEA ... +0x87`; using
+  the geometrically equivalent `-45+rotation` is not bit-equivalent through
+  Mode 4's directed recurrence and fixed-point warp rounding.
 - `FUN_181150790`'s helper scalar is not needed by merge-mode-1
   `FUN_18114fd90`; final aggregation consumes ray buffers plus Brightness/Gain.
 - Strength=0 Brightness maps `fd90`'s trailing `param_10` to `127/255`.

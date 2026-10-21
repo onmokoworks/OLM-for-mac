@@ -1,0 +1,558 @@
+{
+  "canonical_rows_sha256": "8b5cd4662624b8052af3d60528ae336c7d4c90fac9563604a6e085472ab138a9",
+  "claim_boundary": "Eleven of twelve retained PF8 same-source cells are raw exact through the Windows exported SmartPre/SmartRender owner with 13 padding bytes per row unchanged. Only the Legacy Smoothness 43.75 cell differs, by exactly 6 active bytes, and remains fail-closed; no correction is inferred.",
+  "claims_not_made": [
+    "native Windows AE",
+    "Mac public admission",
+    "current installed binary",
+    "correction of mismatched cells",
+    "arbitrary source or tuple"
+  ],
+  "identities": {
+    "actual_aex": {
+      "path": "plugins_2025/OLMBlur.aex",
+      "sha256": "f0611785e7b14ac4fcfc75f23b8862beb4539eee52d25d472556849535e96e5b"
+    },
+    "legacy_manifest": {
+      "path": "tools/emulation/fixtures/olmblur_worker8_legacy/manifest.json",
+      "sha256": "144d0f8bfdccc6d8d6aa48344addb4dc9b10b280cbdfd585059c35d9f2bf4fa1"
+    },
+    "nonlegacy_manifest": {
+      "path": "tools/emulation/fixtures/olmblur_worker_orchestration/manifest.json",
+      "sha256": "40b3225900bb679e03c1a675c1a3877df2335c5822731ae0fe7bed7edcee9b52"
+    },
+    "runner": {
+      "path": "tools/emulation/test_olmblur_exported_effectmain_chain_actual_aex_20260811.py",
+      "sha256": "5043ba89701d5af95018f50df8f712df0e8d2e4348b25d9658f7e54a0f5ffae6"
+    }
+  },
+  "rows": [
+    {
+      "active_source_sha256": "cd47374c1febd0b96676975e0ec02e97b62417a54f9d351995a8e356f4953c8c",
+      "callback_events": [
+        "pre_checkout_layer",
+        "checkout_layer_pixels",
+        "checkout_output",
+        "checkin_param_1",
+        "checkin_param_2",
+        "checkin_param_3",
+        "checkin_param_4",
+        "checkin_param_5",
+        "copy_world"
+      ],
+      "exported_active_sha256": "b76687e43911deaf3add6c025f955ae852d599b264e567f0c1c1201939ed823b",
+      "family": "nonlegacy",
+      "geometry": [
+        12,
+        12
+      ],
+      "id": "8bpc_nonlegacy_basic",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameter_checkout_order": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "parameters": {
+        "amount_f64": 3.0,
+        "bias": 1,
+        "legacy": 0,
+        "repeat": 2,
+        "smoothness_fixed": 6553600
+      },
+      "return_codes": [
+        0,
+        0
+      ],
+      "rowbytes": 61,
+      "worker_oracle_sha256": "b76687e43911deaf3add6c025f955ae852d599b264e567f0c1c1201939ed823b"
+    },
+    {
+      "active_source_sha256": "dda0693f106bc532ef9eb91b3f26c1b257009095e88e3f5e8a1f097a150857bf",
+      "callback_events": [
+        "pre_checkout_layer",
+        "checkout_layer_pixels",
+        "checkout_output",
+        "checkin_param_1",
+        "checkin_param_2",
+        "checkin_param_3",
+        "checkin_param_4",
+        "checkin_param_5",
+        "copy_world"
+      ],
+      "exported_active_sha256": "069f73793776c475293e72d219b2d43d58319ef68f56e3c79150a3adefcd876e",
+      "family": "nonlegacy",
+      "geometry": [
+        18,
+        18
+      ],
+      "id": "8bpc_nonlegacy_large_radius",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameter_checkout_order": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "parameters": {
+        "amount_f64": 11.0,
+        "bias": 2,
+        "legacy": 0,
+        "repeat": 3,
+        "smoothness_fixed": 6553600
+      },
+      "return_codes": [
+        0,
+        0
+      ],
+      "rowbytes": 85,
+      "worker_oracle_sha256": "069f73793776c475293e72d219b2d43d58319ef68f56e3c79150a3adefcd876e"
+    },
+    {
+      "active_source_sha256": "d0f15a0688bb1f46d516fd9eda08c670953fcf5dab1cad578e8aa14fe23e37bf",
+      "callback_events": [
+        "pre_checkout_layer",
+        "checkout_layer_pixels",
+        "checkout_output",
+        "checkin_param_1",
+        "checkin_param_2",
+        "checkin_param_3",
+        "checkin_param_4",
+        "checkin_param_5",
+        "copy_world"
+      ],
+      "exported_active_sha256": "9e1890b407be13fdd1cc546081555060eb741c21d817ef519f7f4321a576dc11",
+      "family": "nonlegacy",
+      "geometry": [
+        24,
+        24
+      ],
+      "id": "8bpc_nonlegacy_case0001_repeat1_large_radius",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameter_checkout_order": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "parameters": {
+        "amount_f64": 129.4,
+        "bias": 1,
+        "legacy": 0,
+        "repeat": 1,
+        "smoothness_fixed": 6553600
+      },
+      "return_codes": [
+        0,
+        0
+      ],
+      "rowbytes": 109,
+      "worker_oracle_sha256": "9e1890b407be13fdd1cc546081555060eb741c21d817ef519f7f4321a576dc11"
+    },
+    {
+      "active_source_sha256": "d0f15a0688bb1f46d516fd9eda08c670953fcf5dab1cad578e8aa14fe23e37bf",
+      "callback_events": [
+        "pre_checkout_layer",
+        "checkout_layer_pixels",
+        "checkout_output",
+        "checkin_param_1",
+        "checkin_param_2",
+        "checkin_param_3",
+        "checkin_param_4",
+        "checkin_param_5",
+        "copy_world"
+      ],
+      "exported_active_sha256": "2501da9f856ff5d8cc25dac1c12088f8d65eeee4ec5ef40bc58e4d8f3032cf62",
+      "family": "nonlegacy",
+      "geometry": [
+        24,
+        24
+      ],
+      "id": "8bpc_nonlegacy_case0002_repeat2_large_radius_reverse",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameter_checkout_order": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "parameters": {
+        "amount_f64": 129.4,
+        "bias": 2,
+        "legacy": 0,
+        "repeat": 2,
+        "smoothness_fixed": 6553600
+      },
+      "return_codes": [
+        0,
+        0
+      ],
+      "rowbytes": 109,
+      "worker_oracle_sha256": "2501da9f856ff5d8cc25dac1c12088f8d65eeee4ec5ef40bc58e4d8f3032cf62"
+    },
+    {
+      "active_source_sha256": "586835578947adf0b3f1a5a5e574398ca66df585766d3af9fd6381ae92225e4a",
+      "callback_events": [
+        "pre_checkout_layer",
+        "checkout_layer_pixels",
+        "checkout_output",
+        "checkin_param_1",
+        "checkin_param_2",
+        "checkin_param_3",
+        "checkin_param_4",
+        "checkin_param_5",
+        "copy_world"
+      ],
+      "exported_active_sha256": "2d8a58a1fc24f03a2082a2d20ec824ea63f1c7f0f658ea8f3506329e39cac9cd",
+      "family": "legacy",
+      "geometry": [
+        12,
+        12
+      ],
+      "id": "8bpc_legacy_basic",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameter_checkout_order": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "parameters": {
+        "amount_f64": 3.0,
+        "bias": 1,
+        "legacy": 1,
+        "repeat": 2,
+        "smoothness_fixed": 6553600
+      },
+      "return_codes": [
+        0,
+        0
+      ],
+      "rowbytes": 61,
+      "worker_oracle_sha256": "2d8a58a1fc24f03a2082a2d20ec824ea63f1c7f0f658ea8f3506329e39cac9cd"
+    },
+    {
+      "active_source_sha256": "dac589013b502bab4b245ab77028a823782f09f5fba333c26f775536b389ba04",
+      "callback_events": [
+        "pre_checkout_layer",
+        "checkout_layer_pixels",
+        "checkout_output",
+        "checkin_param_1",
+        "checkin_param_2",
+        "checkin_param_3",
+        "checkin_param_4",
+        "checkin_param_5",
+        "copy_world"
+      ],
+      "exported_active_sha256": "286b898d8aa8742573965764088c4d1c7f2835e7214f30f1ffce9e6251ecddef",
+      "family": "legacy",
+      "geometry": [
+        18,
+        18
+      ],
+      "id": "8bpc_legacy_large_radius_reverse",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameter_checkout_order": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "parameters": {
+        "amount_f64": 11.0,
+        "bias": 2,
+        "legacy": 1,
+        "repeat": 3,
+        "smoothness_fixed": 6553600
+      },
+      "return_codes": [
+        0,
+        0
+      ],
+      "rowbytes": 85,
+      "worker_oracle_sha256": "286b898d8aa8742573965764088c4d1c7f2835e7214f30f1ffce9e6251ecddef"
+    },
+    {
+      "active_source_sha256": "aa8120e34bbcffd2b5eab03b01c9df29a073d3d985a8b505612b9b553ca9aae0",
+      "callback_events": [
+        "pre_checkout_layer",
+        "checkout_layer_pixels",
+        "checkout_output",
+        "checkin_param_1",
+        "checkin_param_2",
+        "checkin_param_3",
+        "checkin_param_4",
+        "checkin_param_5",
+        "copy_world"
+      ],
+      "exported_active_sha256": "663cb730bdaa4cf552fa74e1e18120e74e0efccda17a11f3f29d29095ca94dba",
+      "family": "legacy",
+      "geometry": [
+        18,
+        12
+      ],
+      "id": "8bpc_legacy_mixed_alpha_reverse",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameter_checkout_order": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "parameters": {
+        "amount_f64": 3.0,
+        "bias": 2,
+        "legacy": 1,
+        "repeat": 2,
+        "smoothness_fixed": 6553600
+      },
+      "return_codes": [
+        0,
+        0
+      ],
+      "rowbytes": 85,
+      "worker_oracle_sha256": "663cb730bdaa4cf552fa74e1e18120e74e0efccda17a11f3f29d29095ca94dba"
+    },
+    {
+      "active_source_sha256": "680c3cf7dffabc4d4527f3a3698bea01d3a7352786c47e2389891d8f3f19083e",
+      "callback_events": [
+        "pre_checkout_layer",
+        "checkout_layer_pixels",
+        "checkout_output",
+        "checkin_param_1",
+        "checkin_param_2",
+        "checkin_param_3",
+        "checkin_param_4",
+        "checkin_param_5",
+        "copy_world"
+      ],
+      "exported_active_sha256": "c72f434389bffe31e9164d8c23605657f33b2c421ece6f49b62074afa533a5d7",
+      "family": "legacy",
+      "geometry": [
+        6,
+        6
+      ],
+      "id": "8bpc_legacy_case0003_radius248_boundary_gradient",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameter_checkout_order": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "parameters": {
+        "amount_f64": 248.6,
+        "bias": 1,
+        "legacy": 1,
+        "repeat": 10,
+        "smoothness_fixed": 6553600
+      },
+      "return_codes": [
+        0,
+        0
+      ],
+      "rowbytes": 37,
+      "worker_oracle_sha256": "c72f434389bffe31e9164d8c23605657f33b2c421ece6f49b62074afa533a5d7"
+    },
+    {
+      "active_source_sha256": "e4dd7db49faf3373caa42916e7c8aad47d0fd5385c4a04f6293f12d13dddd29b",
+      "callback_events": [
+        "pre_checkout_layer",
+        "checkout_layer_pixels",
+        "checkout_output",
+        "checkin_param_1",
+        "checkin_param_2",
+        "checkin_param_3",
+        "checkin_param_4",
+        "checkin_param_5",
+        "copy_world"
+      ],
+      "exported_active_sha256": "d6dbac193bd935e97a3b944596c1e2439d70d70ea089750feed877873dd68d9a",
+      "family": "legacy",
+      "geometry": [
+        12,
+        12
+      ],
+      "id": "8bpc_legacy_case0003_repeat10_large_radius_full12",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameter_checkout_order": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "parameters": {
+        "amount_f64": 248.6,
+        "bias": 1,
+        "legacy": 1,
+        "repeat": 10,
+        "smoothness_fixed": 6553600
+      },
+      "return_codes": [
+        0,
+        0
+      ],
+      "rowbytes": 61,
+      "worker_oracle_sha256": "d6dbac193bd935e97a3b944596c1e2439d70d70ea089750feed877873dd68d9a"
+    },
+    {
+      "active_source_sha256": "2506b82ef7f054d4c7eff5eb6916f98deb18bff118d81366944a4cdf49f51395",
+      "callback_events": [
+        "pre_checkout_layer",
+        "checkout_layer_pixels",
+        "checkout_output",
+        "checkin_param_1",
+        "checkin_param_2",
+        "checkin_param_3",
+        "checkin_param_4",
+        "checkin_param_5",
+        "copy_world"
+      ],
+      "exported_active_sha256": "2d14e67722a6b7cccb42c4a4429d3a216cfc2079977ec763127da684e3436c14",
+      "family": "legacy",
+      "geometry": [
+        16,
+        16
+      ],
+      "id": "8bpc_legacy_case0007_repeat1",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameter_checkout_order": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "parameters": {
+        "amount_f64": 5.0,
+        "bias": 1,
+        "legacy": 1,
+        "repeat": 1,
+        "smoothness_fixed": 6553600
+      },
+      "return_codes": [
+        0,
+        0
+      ],
+      "rowbytes": 77,
+      "worker_oracle_sha256": "2d14e67722a6b7cccb42c4a4429d3a216cfc2079977ec763127da684e3436c14"
+    },
+    {
+      "active_source_sha256": "21f943c064c606a63f5fd11db556abf61bd8abb022c6e41b164fc8220b9df882",
+      "callback_events": [
+        "pre_checkout_layer",
+        "checkout_layer_pixels",
+        "checkout_output",
+        "checkin_param_1",
+        "checkin_param_2",
+        "checkin_param_3",
+        "checkin_param_4",
+        "checkin_param_5",
+        "copy_world"
+      ],
+      "exported_active_sha256": "16c35706fddef21394a8ed7f702dbbf6cfae3471edd256a015eaaac05cc3179c",
+      "family": "legacy",
+      "geometry": [
+        10,
+        8
+      ],
+      "id": "8bpc_legacy_bias_reverse_radius1_boundary",
+      "mismatched_bytes": 0,
+      "padding_mismatches": 0,
+      "parameter_checkout_order": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "parameters": {
+        "amount_f64": 1.0,
+        "bias": 2,
+        "legacy": 1,
+        "repeat": 2,
+        "smoothness_fixed": 6553600
+      },
+      "return_codes": [
+        0,
+        0
+      ],
+      "rowbytes": 53,
+      "worker_oracle_sha256": "16c35706fddef21394a8ed7f702dbbf6cfae3471edd256a015eaaac05cc3179c"
+    },
+    {
+      "active_source_sha256": "81a9e964e8e74810d0cc4d4dbf5d3522cfc5f1513f6d50b306c3628ddfda39f3",
+      "callback_events": [
+        "pre_checkout_layer",
+        "checkout_layer_pixels",
+        "checkout_output",
+        "checkin_param_1",
+        "checkin_param_2",
+        "checkin_param_3",
+        "checkin_param_4",
+        "checkin_param_5",
+        "copy_world"
+      ],
+      "exported_active_sha256": "3b557809537eac30baa547dacba705071b1ad2293d90b73adcad1b8c4e3ec5ab",
+      "family": "legacy",
+      "geometry": [
+        19,
+        13
+      ],
+      "id": "8bpc_legacy_smoothness43_75_byte_boundaries",
+      "mismatched_bytes": 6,
+      "padding_mismatches": 0,
+      "parameter_checkout_order": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "parameters": {
+        "amount_f64": 9.0,
+        "bias": 2,
+        "legacy": 1,
+        "repeat": 3,
+        "smoothness_fixed": 2867200
+      },
+      "return_codes": [
+        0,
+        0
+      ],
+      "rowbytes": 89,
+      "worker_oracle_sha256": "67037ca39d5ffad4a2ae21a1a846cab4778c6c064c5b2e0ee355db62756ebfdf"
+    }
+  ],
+  "schema": "olmblur.pf8-retained-exported-public-owner/1",
+  "status": "PASS_11_RAW_EXACT_1_PUBLIC_MISMATCH_FAIL_CLOSED",
+  "summary": {
+    "case_count": 12,
+    "mismatch_bytes": {
+      "8bpc_legacy_smoothness43_75_byte_boundaries": 6
+    },
+    "padding_mismatches": 0,
+    "public_mismatch_fail_closed": 1,
+    "raw_exact": 11
+  }
+}

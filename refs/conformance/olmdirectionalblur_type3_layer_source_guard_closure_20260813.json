@@ -1,0 +1,1059 @@
+{
+  "claim_boundary": {
+    "not_proven": [
+      "arbitrary or mutated input or Layer bytes",
+      "other tuple, geometry, rowbytes, extent, overlap, or renderer",
+      "interactive or native After Effects numerical output",
+      "native Windows execution (the exported AEX ran under the pinned repo AEXCompat/Unicorn worker)"
+    ],
+    "proven": "fixed 16x16 public Smart Type-3 Layer tuple, exact case_0001 source used independently for input and Layer, exact depth-specific rowbytes and zero extents; Windows AEX exported Smart and Mac public active output are raw exact at PF8/PF16/PF32"
+  },
+  "identities": {
+    "actual_aex_path": "plugins_2025/OLMDirectionalBlur.aex",
+    "actual_aex_sha256": "d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e",
+    "ceil_patch_path": "tools/emulation/aexcompat_olmdirectionalblur_double_ceil_import_20260814.patch",
+    "ceil_patch_sha256": "cb694903e4df9885242bd1c146f8e42c7a6f917c16ca86dd00fb59f4dae6db51",
+    "feature_tool_path": "tools/emulation/test_olmdirectionalblur_public_effectmain_feature_matrix_20260811.py",
+    "feature_tool_sha256": "f7c39d71901ddc8ac744b351bbb6b28245e82f36ab77e34d4eab5675e00c2774",
+    "fixture_path": "refs/win_references/20260604_olm/OLMDirectionalBlur/case_0001_before_effects.png",
+    "fixture_sha256": "cc1bf1aa128dea6197405ee722c66198fb5fcbc213bf2569c7af9f30be4fa4f4",
+    "layer_patch_path": "tools/emulation/aexcompat_explicit_input_layer_parameter_20260814.patch",
+    "layer_patch_sha256": "b0a0b45ddd2c9f944137d8ef725485b7d27475acc6744c117b7d751cde253c70",
+    "production_path": "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp",
+    "production_sha256": "f213902b4e606b1f35f548d801a66dd83213c254c6fa5cbfca7dae71daa9634f",
+    "worker_base_commit": "28d535469f84f67236ef3425afe4291ea2fb0991",
+    "worker_path": "handoffs/olmdirectionalblur_type3_layer_exported_worker_20260814/bin/aex-guest-worker",
+    "worker_sha256": "98b936737e696b679f52eda2cf745d0c712b5f0ccf685ec76e0079bb532eaee5"
+  },
+  "kind": "olmdirectionalblur_type3_layer_source_guard_closure_20260813",
+  "negative_digest": "40b68dd69f4b97f60eda0da60dafeb2e8dacbfb2dcfd831f851391522c939b08",
+  "negatives": [
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 8,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "input_first_active_bit",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 8,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "input_middle_active_bit",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 8,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "input_last_active_bit",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 8,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "layer_first_active_bit",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 8,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "layer_middle_active_bit",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 8,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "layer_last_active_bit",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 8,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "output_overlaps_input",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 8,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "layer_overlaps_input",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 8,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "output_overlaps_layer",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 8,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "input_rowbytes_plus_one",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 8,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "layer_rowbytes_plus_one",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 8,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "output_rowbytes_plus_one",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 8,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "input_extent_right_minus_one",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 8,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "layer_extent_left_plus_one",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 8,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "output_extent_bottom_minus_one",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 8,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "input_data_null",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 8,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "layer_data_null",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 8,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "output_data_null",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 16,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "input_first_active_bit",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 16,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "input_middle_active_bit",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 16,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "input_last_active_bit",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 16,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "layer_first_active_bit",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 16,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "layer_middle_active_bit",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 16,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "layer_last_active_bit",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 16,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "output_overlaps_input",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 16,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "layer_overlaps_input",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 16,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "output_overlaps_layer",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 16,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "input_rowbytes_plus_one",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 16,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "layer_rowbytes_plus_one",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 16,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "output_rowbytes_plus_one",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 16,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "input_extent_right_minus_one",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 16,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "layer_extent_left_plus_one",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 16,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "output_extent_bottom_minus_one",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 16,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "input_data_null",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 16,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "layer_data_null",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 16,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "output_data_null",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 32,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "input_first_active_bit",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 32,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "input_middle_active_bit",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 32,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "input_last_active_bit",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 32,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "layer_first_active_bit",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 32,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "layer_middle_active_bit",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 32,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "layer_last_active_bit",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 32,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "output_overlaps_input",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 32,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "layer_overlaps_input",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 32,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "output_overlaps_layer",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 0,
+        "param_checkout": 0,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 32,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "input_rowbytes_plus_one",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 32,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "layer_rowbytes_plus_one",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 32,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "output_rowbytes_plus_one",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 32,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "input_extent_right_minus_one",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 32,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "layer_extent_left_plus_one",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 32,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "output_extent_bottom_minus_one",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 32,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "input_data_null",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 32,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "layer_data_null",
+      "storage_untouched": true
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 32,
+      "error": 25,
+      "headers_untouched": true,
+      "input_layer_immutable": true,
+      "name": "output_data_null",
+      "storage_untouched": true
+    }
+  ],
+  "positive_digest": "e94d617a69e7e670e7314c56785026a6bb47974d19fa255cd64f532d46b55aee",
+  "positives": [
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 8,
+      "geometry": [
+        16,
+        16
+      ],
+      "input_active_sha256": "ad840bf75281333fc389ba7083074e10ff82e7538583242e7a91880e6bbe1b83",
+      "input_output_rowbytes": 76,
+      "layer_active_sha256": "ad840bf75281333fc389ba7083074e10ff82e7538583242e7a91880e6bbe1b83",
+      "layer_rowbytes": 84,
+      "output_active_sha256": "568e904dd9816cbe932cdb05dfc302f723f49aa0f1f88656f5bdcfb8d65ca3d7",
+      "output_padding_preserved": true,
+      "raw_exact": true,
+      "windows_exported_smart": {
+        "guards_intact": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            16,
+            16
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "render_mode": "smart-cpu",
+        "suite_requests": [
+          "AEGP Utility Suite v7",
+          "PF Handle Suite v2",
+          "PF Iterate8 Suite v1"
+        ],
+        "unsupported_suite_calls": []
+      }
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 16,
+      "geometry": [
+        16,
+        16
+      ],
+      "input_active_sha256": "c8312808c3b40b8970d567234f944c71654cbf9d3363aabb1980421fb2597803",
+      "input_output_rowbytes": 144,
+      "layer_active_sha256": "c8312808c3b40b8970d567234f944c71654cbf9d3363aabb1980421fb2597803",
+      "layer_rowbytes": 152,
+      "output_active_sha256": "be00533e86a8692472012223cbd67046affe0da724b26cf66a0659d369ae06e3",
+      "output_padding_preserved": true,
+      "raw_exact": true,
+      "windows_exported_smart": {
+        "guards_intact": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            16,
+            16
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "render_mode": "smart-cpu",
+        "suite_requests": [
+          "AEGP Utility Suite v7",
+          "PF Handle Suite v2",
+          "PF iterate16 Suite v1"
+        ],
+        "unsupported_suite_calls": []
+      }
+    },
+    {
+      "callbacks": {
+        "input_checkin": 1,
+        "layer_checkin": 1,
+        "param_checkin": 21,
+        "param_checkout": 21,
+        "pixel_checkout": 2,
+        "pre_checkout": 2
+      },
+      "depth": 32,
+      "geometry": [
+        16,
+        16
+      ],
+      "input_active_sha256": "d411e03242f4235a8ea803517db6d81e7e72764a97a4241d0bcea46a6edc7303",
+      "input_output_rowbytes": 288,
+      "layer_active_sha256": "d411e03242f4235a8ea803517db6d81e7e72764a97a4241d0bcea46a6edc7303",
+      "layer_rowbytes": 296,
+      "output_active_sha256": "eb57f09d5bff511a8f0554e0d750fe5f3a10280c51bfce0f4d6d7feadba1d7b8",
+      "output_padding_preserved": true,
+      "raw_exact": true,
+      "windows_exported_smart": {
+        "guards_intact": true,
+        "input_requests": [
+          [
+            0,
+            0,
+            16,
+            16
+          ]
+        ],
+        "output_request": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "render_mode": "smart-cpu",
+        "suite_requests": [
+          "AEGP Utility Suite v7",
+          "PF Handle Suite v2",
+          "PF iterateFloat Suite v1"
+        ],
+        "unsupported_suite_calls": []
+      }
+    }
+  ],
+  "schema_version": 2,
+  "status": "exact_bounded_public_owner_source_guard",
+  "tuple": {
+    "angle": 45.0,
+    "back_alpha_fade": 0,
+    "back_sharp_tail": 0.0,
+    "back_strength": 0,
+    "brightness_gain": 1.0,
+    "front_alpha_fade": 0,
+    "front_sharp_tail": 50.0,
+    "front_strength": 8,
+    "noise_offset": 0,
+    "noise_type": 3,
+    "noise_variation": 100.0,
+    "render_scale": [
+      1.0,
+      1.0
+    ],
+    "seed": 1,
+    "size_variation": 0.0,
+    "thickness": 3.0
+  }
+}

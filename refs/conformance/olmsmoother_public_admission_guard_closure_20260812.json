@@ -1,0 +1,168 @@
+{
+  "actual_aex_sha256": {
+    "OLMSmoother": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+    "OLMSmoother2": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7"
+  },
+  "admission_map": {
+    "OLMSmoother Smart": [],
+    "OLMSmoother classic": [
+      "PF8 960x540 tight canonical no-key/tolerance6",
+      "PF8/PF16 7x5 +8 bytes row padding, key (202,187,230), key off/on, tolerance 0/1/6/127/255",
+      "PF16 64x36 +32 bytes padding, key off/on, tolerance 6/127",
+      "PF16 5x3 rowbytes48 key-on tolerance6"
+    ],
+    "OLMSmoother2 Smart": [
+      "3x2 installed-owner PF32 default cell",
+      "5x5 Gamma1.8 exported-owner 12 cells",
+      "5x5 Gamma2.4 exported-owner representatives",
+      "17x11 six-cell public EffectMain all-depth matrix"
+    ],
+    "OLMSmoother2 classic": []
+  },
+  "case_ids": {
+    "OLMSmoother": [
+      "accept_pf8_7x5",
+      "accept_pf16_64x36",
+      "accept_pf16_unaligned_input_via_aligned_staging",
+      "source_mutation_pf8_reject",
+      "source_mutation_pf16_reject",
+      "partial_overlap_forward_reject",
+      "partial_overlap_backward_reject",
+      "classic_pf32_reject",
+      "output_format_mismatch",
+      "null_input_data",
+      "null_output_data",
+      "alias_reject",
+      "dimension_mismatch",
+      "rowbytes_mismatch",
+      "short_rowbytes",
+      "tuple_usekey",
+      "tuple_tolerance",
+      "tuple_key",
+      "geometry_reject",
+      "layout_reject",
+      "row_offset_overflow",
+      "extent_reject",
+      "null_params",
+      "smart_unowned_entry_reject",
+      "smart_partial_param_checkin",
+      "smart_output_failure_checkin",
+      "smart_layer_failure_no_checkin",
+      "smart_param_checkin_error_preserves_primary_and_continues",
+      "smart_layer_checkin_error_preserves_primary",
+      "pre_failure_rect_untouched"
+    ],
+    "OLMSmoother2": [
+      "accept_gamma18_pf8",
+      "accept_gamma18_pf16_smart",
+      "accept_gamma18_pf32_smart",
+      "checkin_error_atomic_reject",
+      "color_error_atomic_reject",
+      "color_value_one_ulp_atomic_reject",
+      "source_mutation_gamma18_pf8_reject",
+      "source_mutation_gamma18_pf16_reject",
+      "source_mutation_gamma18_pf32_reject",
+      "partial_overlap_forward_reject",
+      "partial_overlap_backward_reject",
+      "classic_pf32_reject",
+      "classic_pf16_unowned_reject",
+      "output_format_mismatch",
+      "null_input_data",
+      "null_output_data",
+      "alias_reject",
+      "dimension_mismatch",
+      "rowbytes_mismatch",
+      "short_rowbytes",
+      "tuple_gamma",
+      "tuple_smoothing",
+      "tuple_palette_count",
+      "tuple_palette_color",
+      "geometry_reject",
+      "layout_reject",
+      "row_offset_overflow",
+      "extent_reject",
+      "inactive_palette_tail_reject",
+      "reject_unowned_3x2_pf16",
+      "accept_3x2_pf32_smart",
+      "source_mutation_3x2_pf32_reject",
+      "reject_inferred_3x2_pf8",
+      "reject_3x2_inactive_invert",
+      "null_params",
+      "smart_partial_param_checkin",
+      "smart_output_failure_checkin",
+      "smart_layer_failure_no_checkin",
+      "pre_failure_rect_untouched"
+    ]
+  },
+  "claims_not_made": [
+    "No arbitrary input or parameter-product generalization",
+    "No direct-core-only fixture is promoted to a public admission",
+    "No v1 Smart or v2 classic numerical ownership",
+    "No admission outside the listed entry, geometry/rowbytes, and parameter cells",
+    "No installed bundle or AE-host claim from this closure"
+  ],
+  "guard_cases": {
+    "OLMSmoother": 30,
+    "OLMSmoother2": 39,
+    "total": 69
+  },
+  "identities": {
+    "documentation_sha256": "e8a32d92dbde31ea10fa3523c7d94552b19345c6bfa4cfaa84f29324603a70e7",
+    "generator_sha256": "dd2b9b581922c65f7a81e238c41da71843db439e2a4141d1a0cd0b0096084efe",
+    "harness_v1_sha256": "d9e97d7efc17a4a4749d1acc6a59ca1a93e4deaff2d774bd8c9749ba69fd39d4",
+    "harness_v2_sha256": "402cea32e9a7926da700e5c770f1f6516eb8edffbe21ec3236e9b171bbb35bbd",
+    "inventory": {
+      "refs/conformance/olmsmoother2_effectmain_pf16_chain_installed_20260805.json": "a5e564e1b643155184cdcc4f9f87dee5b4e5dae648acbcdbdfca8ca97fc28a36",
+      "refs/conformance/olmsmoother2_effectmain_pf32_smart_chain_installed_20260805.json": "0559bf9bf952cbd59432368f212bf34c3ed8fccf2b027ba13d1b4410b6a70e42",
+      "refs/conformance/olmsmoother2_exported_owner_version_key_gamma_smoothing_20260811.json": "922d61a56783d549b0d472a598953c383055553c3ad39a3624b0e11585ea01a6",
+      "refs/conformance/olmsmoother2_gamma18_keyendpoint_exported_owner_closure_20260812.json": "6b4ac3e367495526a2ea3a5e8f8b6a9008159a4317610994f07aea832207ea21",
+      "refs/conformance/olmsmoother2_gamma_key_smoothing_crossproduct_actual_aex_20260812.json": "c0d1b2a7696de077ad319f5c75db837ec5c6dd4e102fb6fa1ecbd40ddf1273d6",
+      "refs/conformance/olmsmoother2_public_effectmain_all_depths_actual_aex_20260812.json": "6fad62003e9a486f5bcb504604586b061230b23f560d63000a773057f53d932c",
+      "refs/conformance/olmsmoother2_public_smoothing_endpoints_actual_aex_20260810.json": "b6c38d1f5a34c19bd621fa73cd9fcf648333684f8c92bceb8d3db25d720f3bf7",
+      "refs/conformance/olmsmoother2_semtransparent_premul_actual_aex_20260810.json": "5aeb78f3bb56caad1aeb65fffa75beec35c5d638a12112c4240ebd6c9892c666",
+      "refs/conformance/olmsmoother_v1_case0001_pf8_fullframe_actual_aex_20260805.json": "205afda1cc60d62da67943a523962d729056602bbd765d1750e8e3ea139a38cc",
+      "refs/conformance/olmsmoother_v1_colored_fractional_alpha_actual_aex_20260811.json": "a055363d70bdb316594d5a0d63082fd540e94b1ffb5a67e22eb0a14e048079c6",
+      "refs/conformance/olmsmoother_v1_key_tolerance_geometry_actual_aex_20260810.json": "0e21f69302eaa811feaba21bdc96635acb56eee84e8120fe84937a5489c27564",
+      "refs/conformance/olmsmoother_v1_pf16_colorkey_effectmain_actual_production_20260810.json": "f261e6636d56fcb6ee19cf9541cc9cac01c51165451b718c2d520d32f10393e4",
+      "refs/conformance/olmsmoother_v1_pf16_practical_geometry_actual_aex_20260812.json": "944a44a565091d17a872c1c722cc7190e46d39c0a213ab42d55cebbe03e7c046"
+    },
+    "production_v1_sha256": "c8c7b7728553ee4ccaadc7ef802be40e607d7e7a7b829958d4b8dfab80f633dc",
+    "production_v2_sha256": "c710902f5928c67ae72e2e4ba445e801acd4a3f229f04d23ab6a1cd56cf73168",
+    "real_sdk_suite_probe_sha256": "7306126fd6a394801192486eea8d4e51e2466859566b5d5ac131077502d405ca",
+    "real_sdk_suite_unit_sha256": "61c4e97548d4cd53bef8908b4a117e451aa91d1a448a6e1f231b9f3f433c626d",
+    "sha256_rows_header_sha256": "bfdcc9a2f4575aabab692b7b4ca1cf9ddb8188c7fbb1efdae30d197bf0f2d9e5",
+    "shim_v1_sha256": "41bfe0a332cc2c4d1847cfad05ee4078988d44d0a3443cd360b6c98c9fc5555b",
+    "validator_unit_sha256": "fc36a951e3b9b2da969a229c840e0248edbd2ef84798565c623fb21694d87693"
+  },
+  "lifecycle_contract": [
+    "check in only parameters whose checkout succeeded",
+    "check in input layer after every successful layer checkout, including later output/parameter failure",
+    "do not check in input layer when layer checkout failed",
+    "render into aligned private staging and commit only after successful parameter/layer cleanup",
+    "propagate ColorParamSuite and parameter-checkin errors while leaving host output untouched",
+    "do not union uninitialized checkout rectangles after SmartPreRender failure",
+    "leave output bytes untouched on rejected cases"
+  ],
+  "real_sdk_suite_lifecycle": {
+    "OLMSmoother": {
+      "world_cases": 6
+    },
+    "OLMSmoother2": {
+      "color_cases": 6,
+      "world_cases": 6
+    },
+    "result": "PASS"
+  },
+  "schema": "olm.smoother-public-admission-guard/1",
+  "scope": "OLMSmoother classic and OLMSmoother2 Smart owner guards; entry-specific fixed-source public/exported-owner exact-evidence admission maps; source mutations, partial overlap, unowned entries, malformed worlds, PF32 classic, one-away tuples/geometries, and partial callback failures fail closed",
+  "verdict": "PASS_69_SOURCE_BOUND_ATOMIC_PUBLIC_GUARD_AND_LIFECYCLE_CASES",
+  "world_contract": [
+    "non-null input/output data with overflow-safe disjoint active spans",
+    "same positive dimensions",
+    "same positive rowbytes with active span and row-offset capacity",
+    "full-frame input/output extent hints",
+    "input/output format equality from PF World Suite v2",
+    "classic PF32 rejected for both plug-ins",
+    "exact admitted geometry/rowbytes and fixed active-source SHA-256 only"
+  ]
+}

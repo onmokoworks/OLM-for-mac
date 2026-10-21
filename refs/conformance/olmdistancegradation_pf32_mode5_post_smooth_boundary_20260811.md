@@ -1,6 +1,25 @@
 # OLMDistanceGradation PF32 Mode5 post-smooth boundary
 
-Status: **PARTIAL_SUCCESS_IPP_FIELD_PRODUCER_NUMERIC_REDUCTION_OPEN**.
+Status: **HISTORICAL_PARTIAL_SUCCESS_SUPERSEDED_BY_EXACT_IPP_ORDER_CLOSURE**.
+
+2026-08-12 final supersession: direct `expf`, L/T/R/B sequential accumulation,
+late spatial multiplication and explicit noncontracting float products
+reproduce the captured IPP field exactly. Fixed17x11 PF32 Mode 5 non-Power is 6/6
+public raw exact; its Power pair fails closed pending native UCRT evidence, and
+the combined PF16/PF32 admission is 56 exact plus 8 Power rejects. The old portable
+37-word/max-2-ULP result remains a counterfactual; no expected-word or
+coordinate correction was admitted. See
+`olmdistancegradation_pf32_mode5_ipp_exact_closure_20260812.{json,md}`.
+
+2026-08-12 clarification: this historical document first separated the classic
+identity wrapper from the exported PF32 IPP path. A later natural public Smart
+trace proves the actual owner chain as command `0x18` → `FUN_181173d20` →
+`FUN_181172a10` → iterateFloat/`FUN_181170c90` and captures the post-IPP
+field hash
+`7aaab7918d72d64fc2c426c7a52748409294bcab8c473bb5a55cbd4d19e037a6`.
+That trace superseded any architecture-wide inference that PF32 Smart lacks an
+actual owner; by itself it did not close the numeric residual. See
+`olmdistancegradation_public_smart_owner_contract_20260812.{json,md}`.
 
 The checked-in Windows AEX was executed through the existing PF32 whole-owner
 probe with the exported 17x11 alpha fixture, Linear interpolation, background
@@ -31,10 +50,9 @@ are one ULP lower in the AEX result, two are two ULP lower, and the two horizont
 endpoints are one ULP higher. Transparent pixels are cleared by compose and are
 not part of this numeric class.
 
-No expected-word or expected-index correction is admitted. Linear, Sphere, and
-Power Mode5, background off/on, remain fail-closed until the exact x86
-OpenCV/IPP numeric mechanism is reproduced. The bounded matrix remains 58 exact
-and 6 fail-closed.
+No expected-word or expected-index correction was admitted. Linear, Sphere,
+and Power Mode5, background off/on, remained fail-closed at this historical
+checkpoint; the exact mechanism and supersession are recorded above.
 
 The focused pointee-memory trace capability needed for this investigation is
 separately committed and pushed in AEXCompat as `37bdeae9` on

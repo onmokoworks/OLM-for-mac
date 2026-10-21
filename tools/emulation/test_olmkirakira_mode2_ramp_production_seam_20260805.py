@@ -76,8 +76,9 @@ def main() -> int:
                    stdout=subprocess.DEVNULL)
 
     mac = MAC.read_text(encoding="utf-8")
-    assert "add_colored_merge2(" in mac
-    assert "use_ramp ? &ramp : nullptr" in mac
+    assert "sample_merge2_ramp(ramp, alpha)" in mac
+    assert "both public merge choices use FUN_18114fd90" in mac
+    assert "AddColoredMerge2(glow," not in mac
     assert "info.vertical_use_ramp, info.vertical_ramp" in mac
     assert "info.diagonal2_use_ramp, info.diagonal2_ramp" in mac
     print("PASS_OLMKIRAKIRA_MODE2_RAMP_PRODUCTION_SEAM_20260805 cases=7 words=28 two_enabled_serialized=exact max_ulp=0")

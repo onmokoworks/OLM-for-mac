@@ -1,0 +1,24 @@
+diff --git a/guest/crates/aex-guest-worker/src/x64/callbacks.rs b/guest/crates/aex-guest-worker/src/x64/callbacks.rs
+--- a/guest/crates/aex-guest-worker/src/x64/callbacks.rs
++++ b/guest/crates/aex-guest-worker/src/x64/callbacks.rs
+@@ -351,7 +351,19 @@ fn olm_radial_native_ucrt_result(kind: &str, left: u32, right: Option<u32>) -> O
+             _ => false,
+         };
+         if matched {
+-            return fields.last().and_then(|word| u32::from_str_radix(word, 16).ok());
++            let result = fields.last().and_then(|word| u32::from_str_radix(word, 16).ok());
++            if let (Some(result), Some(path)) =
++                (result, std::env::var_os("OLM_RADIAL_NATIVE_UCRT_REPLAY_TRACE"))
++            {
++                use std::io::Write as _;
++                if let Ok(mut output) = std::fs::OpenOptions::new().create(true).append(true).open(path) {
++                    match right {
++                        None => { let _ = writeln!(output, "{kind} {left:08x} {result:08x}"); }
++                        Some(value) => { let _ = writeln!(output, "{kind} {left:08x} {value:08x} {result:08x}"); }
++                    }
++                }
++            }
++            return result;
+         }
+     }
+     None

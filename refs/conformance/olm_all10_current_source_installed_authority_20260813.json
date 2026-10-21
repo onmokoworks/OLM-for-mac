@@ -1,0 +1,291 @@
+{
+  "accepted_identity": {
+    "path": "refs/conformance/olm_installed_identity_manifest_20260806.json",
+    "plugin_count": 10,
+    "sha256": "94c6a1eff87e11705a65be638953cb134ff64bd0d919e8501338601aab333650"
+  },
+  "after_effects_processes": [],
+  "plugins": [
+    {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "authority": "refs/conformance/colorkeep_source_bound_complete_union_install_20260813.json",
+      "authority_sha256": "4c092bb05f44f8d77960c5989b1a94767a149ae834ad2412476a79a3db0ed73c",
+      "binary_sha256": "dae59a6faf54ed18ac803ad042be2cdab688c5f814edf322d64c108d5247f46d",
+      "candidate_bundle": "handoffs/colorkeep_source_bound_complete_union_candidate_20260813/Product/ColorKeep.plugin",
+      "checks": {
+        "authority_binds_binary": true,
+        "authority_binds_source": true,
+        "candidate_binary_exact": true,
+        "candidate_installed_full_inventory_exact": true,
+        "codesign_strict": true,
+        "installed_binary_exact": true,
+        "installed_count_one": true,
+        "manifest_binary_exact": true,
+        "source_sha_exact": true,
+        "universal_exact": true
+      },
+      "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/ColorKeep.plugin",
+      "inventory_file_count": 5,
+      "plugin": "ColorKeep",
+      "source": "mac/ColorKeep/ColorKeep.cpp",
+      "source_sha256": "d1c443042998e466b021d6fd2351537a2be63fe95d3e79a2089d82f78217bac3"
+    },
+    {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "authority": "handoffs/olmblur_retained_public_universal_candidate_v4_20260813/build_identity.json",
+      "authority_sha256": "767ec979aa369a3c2417d2577bfc9d87a2f06d3f419a8a617993de25f839dbf5",
+      "binary_sha256": "ecdf3d93b4b38fe71f4b66f717079aa86b961205d0a3f1b5b7edbd29e353284d",
+      "candidate_bundle": "handoffs/olmblur_retained_public_universal_candidate_v4_20260813/product/Debug/OLMBlur.plugin",
+      "checks": {
+        "authority_binds_binary": true,
+        "authority_binds_source": true,
+        "candidate_binary_exact": true,
+        "candidate_installed_full_inventory_exact": true,
+        "codesign_strict": true,
+        "installed_binary_exact": true,
+        "installed_count_one": true,
+        "manifest_binary_exact": true,
+        "source_sha_exact": true,
+        "universal_exact": true
+      },
+      "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMBlur.plugin",
+      "inventory_file_count": 5,
+      "plugin": "OLMBlur",
+      "source": "mac/OLMBlur/OLMBlur.cpp",
+      "source_sha256": "22eb712a2485e080d811d2c064fe78bd521ee25434ece9a290a2d9b7b6e1fdd7"
+    },
+    {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "authority": "refs/conformance/olmcolorkey_toggle24_transactional_install_20260814.json",
+      "authority_sha256": "5eeec71c1f35420ca8904e145ed939f77b46a355eb4d9a86148ad465219f0851",
+      "binary_sha256": "701ae9192e19d3e97dd33450e37ae97d90d9be5803ab663405507ed5e3659ca7",
+      "candidate_bundle": "handoffs/olmcolorkey_toggle24_universal_candidate_20260814/product/OLMColorKey.plugin",
+      "checks": {
+        "authority_binds_binary": true,
+        "authority_binds_source": true,
+        "candidate_binary_exact": true,
+        "candidate_installed_full_inventory_exact": true,
+        "codesign_strict": true,
+        "installed_binary_exact": true,
+        "installed_count_one": true,
+        "manifest_binary_exact": true,
+        "source_sha_exact": true,
+        "universal_exact": true
+      },
+      "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMColorKey.plugin",
+      "inventory_file_count": 5,
+      "plugin": "OLMColorKey",
+      "source": "mac/OLMColorKey/OLMColorKey.cpp",
+      "source_sha256": "7c66240d5813e240663d06fe342d45b73b9b2ce2f2d8b0852ffe7f73351e4001"
+    },
+    {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "authority": "handoffs/olmdirectionalblur_testseam_compat_candidate_20260814/build_identity.json",
+      "authority_sha256": "ddc9256d6ca78eec2f521335573589f7c626ae5827927a3399ea64d3a1934eff",
+      "binary_sha256": "856ab700df0881cfb039e9c9d0675bf46a7e92b56e8cb0e311d820fd719bc0de",
+      "candidate_bundle": "handoffs/olmdirectionalblur_testseam_compat_candidate_20260814/Product/OLMDirectionalBlur.plugin",
+      "checks": {
+        "authority_binds_binary": true,
+        "authority_binds_source": true,
+        "candidate_binary_exact": true,
+        "candidate_installed_full_inventory_exact": true,
+        "codesign_strict": true,
+        "installed_binary_exact": true,
+        "installed_count_one": true,
+        "manifest_binary_exact": true,
+        "source_sha_exact": true,
+        "universal_exact": true
+      },
+      "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDirectionalBlur.plugin",
+      "inventory_file_count": 5,
+      "plugin": "OLMDirectionalBlur",
+      "source": "mac/OLMDirectionalBlur/OLMDirectionalBlur.cpp",
+      "source_sha256": "494116880d037a0d44a48b0e0ebe0fc5358b4cd8892b90ca8c61ea8a7bb2e845"
+    },
+    {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "authority": "refs/conformance/olmdistancegradation_power_failclose_incremental_install_identity_20260812.json",
+      "authority_sha256": "3623fb6fb6412836e00aba58b058ed0a319d43bfea84e9e27ecb3b773f417578",
+      "binary_sha256": "231421e4a0c1607a70947778d99d748baefe07078b7e1145f4a4700268116605",
+      "candidate_bundle": "handoffs/olmdistancegradation_pf32_power_failclose_universal_candidate_20260812/product/OLMDistanceGradation.plugin",
+      "checks": {
+        "authority_binds_binary": true,
+        "authority_binds_source": true,
+        "candidate_binary_exact": true,
+        "candidate_installed_full_inventory_exact": true,
+        "codesign_strict": true,
+        "installed_binary_exact": true,
+        "installed_count_one": true,
+        "manifest_binary_exact": true,
+        "source_sha_exact": true,
+        "universal_exact": true
+      },
+      "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMDistanceGradation.plugin",
+      "inventory_file_count": 5,
+      "plugin": "OLMDistanceGradation",
+      "source": "mac/OLMDistanceGradation/OLMDistanceGradation.cpp",
+      "source_sha256": "06ffc5b7a2af5cf54a2503d3bf03f9baf2269acbf1277f034937ac79c4a7aba5"
+    },
+    {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "authority": "refs/conformance/olmkirakira_worldsuite_incremental_install_identity_20260814.json",
+      "authority_sha256": "b58642cb7f7317718c7f7fd6ddcd3b2ce7312159f26b65ddea4228b8bbd92bed",
+      "binary_sha256": "edd6953ff0a86efa550ffd8a5be050cb200342ad68427519c092bcac578596a7",
+      "candidate_bundle": "handoffs/olmkirakira_worldsuite_lifecycle_candidate_20260814/Product/OLMKiraKira.plugin",
+      "checks": {
+        "authority_binds_binary": true,
+        "authority_binds_source": true,
+        "candidate_binary_exact": true,
+        "candidate_installed_full_inventory_exact": true,
+        "codesign_strict": true,
+        "installed_binary_exact": true,
+        "installed_count_one": true,
+        "manifest_binary_exact": true,
+        "source_sha_exact": true,
+        "universal_exact": true
+      },
+      "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMKiraKira.plugin",
+      "inventory_file_count": 5,
+      "plugin": "OLMKiraKira",
+      "source": "mac/OLMKiraKira/OLMKiraKira.cpp",
+      "source_sha256": "f251b19150a0b490d58cf6bece4c40fe9403f9bd36849cfe8c89ffbd14fc96c2"
+    },
+    {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "authority": "handoffs/olmradialblur_worldsuite_lifecycle_candidate_20260814/build_identity.json",
+      "authority_sha256": "641af05eec81269738fa65d99fcd59bd0d16f1d28f89eb95bbe8f978c5c6bb93",
+      "binary_sha256": "9be59d18601dc2b031335f4fec8c8c6a1eb13a4888bf0f228efa65e2d5b676b5",
+      "candidate_bundle": "handoffs/olmradialblur_worldsuite_lifecycle_candidate_20260814/Product/OLMRadialBlur.plugin",
+      "checks": {
+        "authority_binds_binary": true,
+        "authority_binds_source": true,
+        "candidate_binary_exact": true,
+        "candidate_installed_full_inventory_exact": true,
+        "codesign_strict": true,
+        "installed_binary_exact": true,
+        "installed_count_one": true,
+        "manifest_binary_exact": true,
+        "source_sha_exact": true,
+        "universal_exact": true
+      },
+      "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMRadialBlur.plugin",
+      "inventory_file_count": 5,
+      "plugin": "OLMRadialBlur",
+      "source": "mac/OLMRadialBlur/OLMRadialBlur.cpp",
+      "source_sha256": "b74b3d2c7ea6724593b28f82d36615e071e18d813e5b99cc948e26a447fdb0d1"
+    },
+    {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "authority": "handoffs/olmsmoother_source_bound_atomic_universal_candidate_v3_20260813/build_identity.json",
+      "authority_sha256": "5bc7432144a90801319452b1a23e39e131a75a266c270839640eff68a4bd40bd",
+      "binary_sha256": "f416579eeb61b73da683437d382f786781e6ecdf27d9c4fc52f3ad1d55577162",
+      "candidate_bundle": "handoffs/olmsmoother_source_bound_atomic_universal_candidate_v3_20260813/candidates/OLMSmoother.plugin",
+      "checks": {
+        "authority_binds_binary": true,
+        "authority_binds_source": true,
+        "candidate_binary_exact": true,
+        "candidate_installed_full_inventory_exact": true,
+        "codesign_strict": true,
+        "installed_binary_exact": true,
+        "installed_count_one": true,
+        "manifest_binary_exact": true,
+        "source_sha_exact": true,
+        "universal_exact": true
+      },
+      "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother.plugin",
+      "inventory_file_count": 5,
+      "plugin": "OLMSmoother",
+      "source": "mac/OLMSmoother/Mac/OLMSmoother_port.cpp",
+      "source_sha256": "c8c7b7728553ee4ccaadc7ef802be40e607d7e7a7b829958d4b8dfab80f633dc"
+    },
+    {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "authority": "refs/conformance/olmsmoother2_pf8_pf16_pf32_transactional_install_20260814.json",
+      "authority_sha256": "38001b4343c5dea4078c2e2c9678bbfa9bf88b737043b453f0674eac7b159483",
+      "binary_sha256": "c8ea1f0e7dbe7398006578b91e01adfcea975a8c8a3244657ea934eda587c53f",
+      "candidate_bundle": "handoffs/olmsmoother2_pf8_pf16_pf32_public_smart_candidate_20260814/product/OLMSmoother2.plugin",
+      "checks": {
+        "authority_binds_binary": true,
+        "authority_binds_source": true,
+        "candidate_binary_exact": true,
+        "candidate_installed_full_inventory_exact": true,
+        "codesign_strict": true,
+        "installed_binary_exact": true,
+        "installed_count_one": true,
+        "manifest_binary_exact": true,
+        "source_sha_exact": true,
+        "universal_exact": true
+      },
+      "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMSmoother2.plugin",
+      "inventory_file_count": 5,
+      "plugin": "OLMSmoother2",
+      "source": "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp",
+      "source_sha256": "c710902f5928c67ae72e2e4ba445e801acd4a3f229f04d23ab6a1cd56cf73168"
+    },
+    {
+      "architectures": [
+        "x86_64",
+        "arm64"
+      ],
+      "authority": "refs/conformance/olmtoondilate_ded9_incremental_install_identity_20260813.json",
+      "authority_sha256": "a44987234e57fb12dc23f0c8819689560d40ba527e46781bb796bec33dc91f09",
+      "binary_sha256": "5bbe693106072ceff14a1c1ae5a0d64815cddde58356c57575d29e516479036e",
+      "candidate_bundle": "handoffs/olmtoondilate_ded9_incremental_install_20260813/candidate/Product/OLMToonDilate.plugin",
+      "checks": {
+        "authority_binds_binary": true,
+        "authority_binds_source": true,
+        "candidate_binary_exact": true,
+        "candidate_installed_full_inventory_exact": true,
+        "codesign_strict": true,
+        "installed_binary_exact": true,
+        "installed_count_one": true,
+        "manifest_binary_exact": true,
+        "source_sha_exact": true,
+        "universal_exact": true
+      },
+      "installed_bundle": "/Users/onmk/Library/Application Support/Adobe/Common/Plug-ins/7.0/MediaCore/OLMToonDilate.plugin",
+      "inventory_file_count": 5,
+      "plugin": "OLMToonDilate",
+      "source": "mac/OLMToonDilate/OLMToonDilate.cpp",
+      "source_sha256": "ded9eaab6b660044c9035f3aa0d9660f86086ec2e451c97c9ee0c1115574464b"
+    }
+  ],
+  "schema": "olm.all10-current-source-installed-authority/1",
+  "scope": {
+    "after_effects_checkpoint_deferred": true,
+    "after_effects_launched": false,
+    "candidate_to_installed_full_inventory_exact": true,
+    "developer_id_or_notarization_claimed": false,
+    "installed_universal_strict_codesign": true,
+    "numerical_claim_added": false,
+    "production_source_to_build_authority_bound": true
+  },
+  "status": "pass_all10_current_source_candidate_installed_exact_ae_deferred"
+}

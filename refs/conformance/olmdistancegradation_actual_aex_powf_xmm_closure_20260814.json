@@ -1,0 +1,6153 @@
+{
+  "boundary": {
+    "actual_aex_exported_smart_path": true,
+    "aexcompat_host_powf_is_not_native_windows_ucrt": true,
+    "native_after_effects": false,
+    "production_admission_changed": false,
+    "remaining_requirement": "native UCRT results followed by eight native-derived final RAW comparisons"
+  },
+  "cells": [
+    {
+      "actual_aex_calls": 124,
+      "actual_trace": [
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f66b4cd",
+          "input_bits": "0x3f746ed4"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f2d448f",
+          "input_bits": "0x3f573a1f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3ed092f3",
+          "input_bits": "0x3f2bc090"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e6ccede",
+          "input_bits": "0x3f058a9f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2286ba",
+          "input_bits": "0x3ee1f06f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2286ba",
+          "input_bits": "0x3ee1f06f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e6ccede",
+          "input_bits": "0x3f058a9f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3ed092f3",
+          "input_bits": "0x3f2bc090"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f2d448f",
+          "input_bits": "0x3f573a1f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f66b4cd",
+          "input_bits": "0x3f746ed4"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5da97e",
+          "input_bits": "0x3f702075"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f1b5785",
+          "input_bits": "0x3f4d07a5"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3ea03ec5",
+          "input_bits": "0x3f18c3e4"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e08cb1b",
+          "input_bits": "0x3ed146de"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d8431ab",
+          "input_bits": "0x3e97787e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d8431ab",
+          "input_bits": "0x3e97787e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e08cb1b",
+          "input_bits": "0x3ed146de"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3ea03ec5",
+          "input_bits": "0x3f18c3e4"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f1b5785",
+          "input_bits": "0x3f4d07a5"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5da97e",
+          "input_bits": "0x3f702075"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f54d182",
+          "input_bits": "0x3f6bd216"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0a7f22",
+          "input_bits": "0x3f42d52b"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e6dc0ea",
+          "input_bits": "0x3f05c738"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d8431ab",
+          "input_bits": "0x3e97787e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d8431ab",
+          "input_bits": "0x3e97787e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e6dc0ea",
+          "input_bits": "0x3f05c738"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0a7f22",
+          "input_bits": "0x3f42d52b"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f54d182",
+          "input_bits": "0x3f6bd216"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f527b7d",
+          "input_bits": "0x3f6aaaab"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f527b7d",
+          "input_bits": "0x3f6aaaab"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f527b7d",
+          "input_bits": "0x3f6aaaab"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f527b7d",
+          "input_bits": "0x3f6aaaab"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f527b7d",
+          "input_bits": "0x3f6aaaab"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f527b7d",
+          "input_bits": "0x3f6aaaab"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f527b7d",
+          "input_bits": "0x3f6aaaab"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f527b7d",
+          "input_bits": "0x3f6aaaab"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f527b7d",
+          "input_bits": "0x3f6aaaab"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f527b7d",
+          "input_bits": "0x3f6aaaab"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f54d182",
+          "input_bits": "0x3f6bd216"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0a7f22",
+          "input_bits": "0x3f42d52b"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e6dc0ea",
+          "input_bits": "0x3f05c738"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d8431ab",
+          "input_bits": "0x3e97787e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d8431ab",
+          "input_bits": "0x3e97787e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e6dc0ea",
+          "input_bits": "0x3f05c738"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0a7f22",
+          "input_bits": "0x3f42d52b"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f54d182",
+          "input_bits": "0x3f6bd216"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5da97e",
+          "input_bits": "0x3f702075"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f1b5785",
+          "input_bits": "0x3f4d07a5"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3ea03ec5",
+          "input_bits": "0x3f18c3e4"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e08cb1b",
+          "input_bits": "0x3ed146de"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d8431ab",
+          "input_bits": "0x3e97787e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d8431ab",
+          "input_bits": "0x3e97787e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e08cb1b",
+          "input_bits": "0x3ed146de"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3ea03ec5",
+          "input_bits": "0x3f18c3e4"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f1b5785",
+          "input_bits": "0x3f4d07a5"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5da97e",
+          "input_bits": "0x3f702075"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f66b4cd",
+          "input_bits": "0x3f746ed4"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f2d448f",
+          "input_bits": "0x3f573a1f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3ed092f3",
+          "input_bits": "0x3f2bc090"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e6ccede",
+          "input_bits": "0x3f058a9f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2286ba",
+          "input_bits": "0x3ee1f06f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2286ba",
+          "input_bits": "0x3ee1f06f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e6ccede",
+          "input_bits": "0x3f058a9f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3ed092f3",
+          "input_bits": "0x3f2bc090"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f2d448f",
+          "input_bits": "0x3f573a1f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f66b4cd",
+          "input_bits": "0x3f746ed4"
+        }
+      ],
+      "actual_trace_sha256": "23f442b1176068a7504df98bb7e79e9baf19388c7c191832335ec2a608a87998",
+      "actual_unique_pairs": 18,
+      "blur_mode": 2,
+      "production_calls": 187,
+      "production_subsequence_positions": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186
+      ],
+      "skipped_production_calls": 63,
+      "use_background": false
+    },
+    {
+      "actual_aex_calls": 124,
+      "actual_trace": [
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f66b4cd",
+          "input_bits": "0x3f746ed4"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f2d448f",
+          "input_bits": "0x3f573a1f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3ed092f3",
+          "input_bits": "0x3f2bc090"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e6ccede",
+          "input_bits": "0x3f058a9f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2286ba",
+          "input_bits": "0x3ee1f06f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2286ba",
+          "input_bits": "0x3ee1f06f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e6ccede",
+          "input_bits": "0x3f058a9f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3ed092f3",
+          "input_bits": "0x3f2bc090"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f2d448f",
+          "input_bits": "0x3f573a1f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f66b4cd",
+          "input_bits": "0x3f746ed4"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5da97e",
+          "input_bits": "0x3f702075"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f1b5785",
+          "input_bits": "0x3f4d07a5"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3ea03ec5",
+          "input_bits": "0x3f18c3e4"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e08cb1b",
+          "input_bits": "0x3ed146de"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d8431ab",
+          "input_bits": "0x3e97787e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d8431ab",
+          "input_bits": "0x3e97787e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e08cb1b",
+          "input_bits": "0x3ed146de"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3ea03ec5",
+          "input_bits": "0x3f18c3e4"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f1b5785",
+          "input_bits": "0x3f4d07a5"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5da97e",
+          "input_bits": "0x3f702075"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f54d182",
+          "input_bits": "0x3f6bd216"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0a7f22",
+          "input_bits": "0x3f42d52b"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e6dc0ea",
+          "input_bits": "0x3f05c738"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d8431ab",
+          "input_bits": "0x3e97787e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d8431ab",
+          "input_bits": "0x3e97787e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e6dc0ea",
+          "input_bits": "0x3f05c738"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0a7f22",
+          "input_bits": "0x3f42d52b"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f54d182",
+          "input_bits": "0x3f6bd216"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f527b7d",
+          "input_bits": "0x3f6aaaab"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f527b7d",
+          "input_bits": "0x3f6aaaab"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f527b7d",
+          "input_bits": "0x3f6aaaab"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f527b7d",
+          "input_bits": "0x3f6aaaab"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f527b7d",
+          "input_bits": "0x3f6aaaab"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f527b7d",
+          "input_bits": "0x3f6aaaab"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f527b7d",
+          "input_bits": "0x3f6aaaab"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f527b7d",
+          "input_bits": "0x3f6aaaab"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f527b7d",
+          "input_bits": "0x3f6aaaab"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f527b7d",
+          "input_bits": "0x3f6aaaab"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f54d182",
+          "input_bits": "0x3f6bd216"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0a7f22",
+          "input_bits": "0x3f42d52b"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e6dc0ea",
+          "input_bits": "0x3f05c738"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d8431ab",
+          "input_bits": "0x3e97787e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d8431ab",
+          "input_bits": "0x3e97787e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e6dc0ea",
+          "input_bits": "0x3f05c738"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0a7f22",
+          "input_bits": "0x3f42d52b"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f54d182",
+          "input_bits": "0x3f6bd216"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5da97e",
+          "input_bits": "0x3f702075"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f1b5785",
+          "input_bits": "0x3f4d07a5"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3ea03ec5",
+          "input_bits": "0x3f18c3e4"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e08cb1b",
+          "input_bits": "0x3ed146de"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d8431ab",
+          "input_bits": "0x3e97787e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d8431ab",
+          "input_bits": "0x3e97787e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e08cb1b",
+          "input_bits": "0x3ed146de"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3ea03ec5",
+          "input_bits": "0x3f18c3e4"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f1b5785",
+          "input_bits": "0x3f4d07a5"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5da97e",
+          "input_bits": "0x3f702075"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f66b4cd",
+          "input_bits": "0x3f746ed4"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f2d448f",
+          "input_bits": "0x3f573a1f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3ed092f3",
+          "input_bits": "0x3f2bc090"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e6ccede",
+          "input_bits": "0x3f058a9f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2286ba",
+          "input_bits": "0x3ee1f06f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e0ed4eb",
+          "input_bits": "0x3ed55555"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2286ba",
+          "input_bits": "0x3ee1f06f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e6ccede",
+          "input_bits": "0x3f058a9f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3ed092f3",
+          "input_bits": "0x3f2bc090"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f2d448f",
+          "input_bits": "0x3f573a1f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f66b4cd",
+          "input_bits": "0x3f746ed4"
+        }
+      ],
+      "actual_trace_sha256": "23f442b1176068a7504df98bb7e79e9baf19388c7c191832335ec2a608a87998",
+      "actual_unique_pairs": 18,
+      "blur_mode": 2,
+      "production_calls": 187,
+      "production_subsequence_positions": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186
+      ],
+      "skipped_production_calls": 63,
+      "use_background": true
+    },
+    {
+      "actual_aex_calls": 124,
+      "actual_trace": [
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f6e2b1d",
+          "input_bits": "0x3f77ea6c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f33a73d",
+          "input_bits": "0x3f5ab784"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3ed7417e",
+          "input_bits": "0x3f2e2d1c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e762db9",
+          "input_bits": "0x3f07dd60"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2e24ae",
+          "input_bits": "0x3ee8fab6"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2e24ae",
+          "input_bits": "0x3ee8fab6"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e762db9",
+          "input_bits": "0x3f07dd60"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3ed7417e",
+          "input_bits": "0x3f2e2d1c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f33a73d",
+          "input_bits": "0x3f5ab784"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f6e2b1d",
+          "input_bits": "0x3f77ea6c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f653228",
+          "input_bits": "0x3f73b86e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f1aaeef",
+          "input_bits": "0x3f4ca4a2"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e9aad66",
+          "input_bits": "0x3f166207"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e005a75",
+          "input_bits": "0x3ecb6fba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d6ddaff",
+          "input_bits": "0x3e908416"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d6ddaff",
+          "input_bits": "0x3e908416"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e005a75",
+          "input_bits": "0x3ecb6fba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e9aad66",
+          "input_bits": "0x3f166207"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f1aaeef",
+          "input_bits": "0x3f4ca4a2"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f653228",
+          "input_bits": "0x3f73b86e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5ebf98",
+          "input_bits": "0x3f70a62c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f098def",
+          "input_bits": "0x3f423e14"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e6777b8",
+          "input_bits": "0x3f0431cc"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d6ddaff",
+          "input_bits": "0x3e908416"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d6ddaff",
+          "input_bits": "0x3e908416"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e6777b8",
+          "input_bits": "0x3f0431cc"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f098def",
+          "input_bits": "0x3f423e14"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5ebf98",
+          "input_bits": "0x3f70a62c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5d661a",
+          "input_bits": "0x3f700000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5d661a",
+          "input_bits": "0x3f700000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5d661a",
+          "input_bits": "0x3f700000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5d661a",
+          "input_bits": "0x3f700000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5d661a",
+          "input_bits": "0x3f700000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5d661a",
+          "input_bits": "0x3f700000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5d661a",
+          "input_bits": "0x3f700000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5d661a",
+          "input_bits": "0x3f700000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5d661a",
+          "input_bits": "0x3f700000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5d661a",
+          "input_bits": "0x3f700000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5ebf98",
+          "input_bits": "0x3f70a62c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f098def",
+          "input_bits": "0x3f423e14"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e6777b8",
+          "input_bits": "0x3f0431cc"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d6ddaff",
+          "input_bits": "0x3e908416"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d6ddaff",
+          "input_bits": "0x3e908416"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e6777b8",
+          "input_bits": "0x3f0431cc"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f098def",
+          "input_bits": "0x3f423e14"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5ebf98",
+          "input_bits": "0x3f70a62c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f653228",
+          "input_bits": "0x3f73b86e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f1aaeef",
+          "input_bits": "0x3f4ca4a2"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e9aad66",
+          "input_bits": "0x3f166207"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e005a75",
+          "input_bits": "0x3ecb6fba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d6ddaff",
+          "input_bits": "0x3e908416"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d6ddaff",
+          "input_bits": "0x3e908416"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e005a75",
+          "input_bits": "0x3ecb6fba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e9aad66",
+          "input_bits": "0x3f166207"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f1aaeef",
+          "input_bits": "0x3f4ca4a2"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f653228",
+          "input_bits": "0x3f73b86e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f6e2b1d",
+          "input_bits": "0x3f77ea6c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f33a73d",
+          "input_bits": "0x3f5ab784"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3ed7417e",
+          "input_bits": "0x3f2e2d1c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e762db9",
+          "input_bits": "0x3f07dd60"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2e24ae",
+          "input_bits": "0x3ee8fab6"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2e24ae",
+          "input_bits": "0x3ee8fab6"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e762db9",
+          "input_bits": "0x3f07dd60"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3ed7417e",
+          "input_bits": "0x3f2e2d1c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f33a73d",
+          "input_bits": "0x3f5ab784"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f6e2b1d",
+          "input_bits": "0x3f77ea6c"
+        }
+      ],
+      "actual_trace_sha256": "3d7542d99f7f3698e16c0973316b0902b646011004ba7000eb7bf261ff33e67f",
+      "actual_unique_pairs": 18,
+      "blur_mode": 3,
+      "production_calls": 187,
+      "production_subsequence_positions": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186
+      ],
+      "skipped_production_calls": 63,
+      "use_background": false
+    },
+    {
+      "actual_aex_calls": 124,
+      "actual_trace": [
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f6e2b1d",
+          "input_bits": "0x3f77ea6c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f33a73d",
+          "input_bits": "0x3f5ab784"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3ed7417e",
+          "input_bits": "0x3f2e2d1c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e762db9",
+          "input_bits": "0x3f07dd60"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2e24ae",
+          "input_bits": "0x3ee8fab6"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2e24ae",
+          "input_bits": "0x3ee8fab6"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e762db9",
+          "input_bits": "0x3f07dd60"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3ed7417e",
+          "input_bits": "0x3f2e2d1c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f33a73d",
+          "input_bits": "0x3f5ab784"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f6e2b1d",
+          "input_bits": "0x3f77ea6c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f653228",
+          "input_bits": "0x3f73b86e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f1aaeef",
+          "input_bits": "0x3f4ca4a2"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e9aad66",
+          "input_bits": "0x3f166207"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e005a75",
+          "input_bits": "0x3ecb6fba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d6ddaff",
+          "input_bits": "0x3e908416"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d6ddaff",
+          "input_bits": "0x3e908416"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e005a75",
+          "input_bits": "0x3ecb6fba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e9aad66",
+          "input_bits": "0x3f166207"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f1aaeef",
+          "input_bits": "0x3f4ca4a2"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f653228",
+          "input_bits": "0x3f73b86e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5ebf98",
+          "input_bits": "0x3f70a62c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f098def",
+          "input_bits": "0x3f423e14"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e6777b8",
+          "input_bits": "0x3f0431cc"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d6ddaff",
+          "input_bits": "0x3e908416"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d6ddaff",
+          "input_bits": "0x3e908416"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e6777b8",
+          "input_bits": "0x3f0431cc"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f098def",
+          "input_bits": "0x3f423e14"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5ebf98",
+          "input_bits": "0x3f70a62c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5d661a",
+          "input_bits": "0x3f700000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5d661a",
+          "input_bits": "0x3f700000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5d661a",
+          "input_bits": "0x3f700000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5d661a",
+          "input_bits": "0x3f700000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5d661a",
+          "input_bits": "0x3f700000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5d661a",
+          "input_bits": "0x3f700000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5d661a",
+          "input_bits": "0x3f700000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5d661a",
+          "input_bits": "0x3f700000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5d661a",
+          "input_bits": "0x3f700000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5d661a",
+          "input_bits": "0x3f700000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5ebf98",
+          "input_bits": "0x3f70a62c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f098def",
+          "input_bits": "0x3f423e14"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e6777b8",
+          "input_bits": "0x3f0431cc"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d6ddaff",
+          "input_bits": "0x3e908416"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d6ddaff",
+          "input_bits": "0x3e908416"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e6777b8",
+          "input_bits": "0x3f0431cc"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f098def",
+          "input_bits": "0x3f423e14"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f5ebf98",
+          "input_bits": "0x3f70a62c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f653228",
+          "input_bits": "0x3f73b86e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f1aaeef",
+          "input_bits": "0x3f4ca4a2"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e9aad66",
+          "input_bits": "0x3f166207"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e005a75",
+          "input_bits": "0x3ecb6fba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d6ddaff",
+          "input_bits": "0x3e908416"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d6ddaff",
+          "input_bits": "0x3e908416"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e005a75",
+          "input_bits": "0x3ecb6fba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e9aad66",
+          "input_bits": "0x3f166207"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f1aaeef",
+          "input_bits": "0x3f4ca4a2"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f653228",
+          "input_bits": "0x3f73b86e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f6e2b1d",
+          "input_bits": "0x3f77ea6c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f33a73d",
+          "input_bits": "0x3f5ab784"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3ed7417e",
+          "input_bits": "0x3f2e2d1c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e762db9",
+          "input_bits": "0x3f07dd60"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2e24ae",
+          "input_bits": "0x3ee8fab6"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e1f678e",
+          "input_bits": "0x3ee00000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2e24ae",
+          "input_bits": "0x3ee8fab6"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e762db9",
+          "input_bits": "0x3f07dd60"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3ed7417e",
+          "input_bits": "0x3f2e2d1c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f33a73d",
+          "input_bits": "0x3f5ab784"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f6e2b1d",
+          "input_bits": "0x3f77ea6c"
+        }
+      ],
+      "actual_trace_sha256": "3d7542d99f7f3698e16c0973316b0902b646011004ba7000eb7bf261ff33e67f",
+      "actual_unique_pairs": 18,
+      "blur_mode": 3,
+      "production_calls": 187,
+      "production_subsequence_positions": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186
+      ],
+      "skipped_production_calls": 63,
+      "use_background": true
+    },
+    {
+      "actual_aex_calls": 124,
+      "actual_trace": [
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f4aabbc",
+          "input_bits": "0x3f66c15a"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3eeac0c6",
+          "input_bits": "0x3f3504f3"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e8a595d",
+          "input_bits": "0x3f0f1bbd"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e8a595d",
+          "input_bits": "0x3f0f1bbd"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3eeac0c6",
+          "input_bits": "0x3f3504f3"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f4aabbc",
+          "input_bits": "0x3f66c15a"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f16dee8",
+          "input_bits": "0x3f4a62c2"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e8a595d",
+          "input_bits": "0x3f0f1bbd"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e8a595d",
+          "input_bits": "0x3f0f1bbd"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f16dee8",
+          "input_bits": "0x3f4a62c2"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f16dee8",
+          "input_bits": "0x3f4a62c2"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e8a595d",
+          "input_bits": "0x3f0f1bbd"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e8a595d",
+          "input_bits": "0x3f0f1bbd"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f16dee8",
+          "input_bits": "0x3f4a62c2"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f4aabbc",
+          "input_bits": "0x3f66c15a"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3eeac0c6",
+          "input_bits": "0x3f3504f3"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e8a595d",
+          "input_bits": "0x3f0f1bbd"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e8a595d",
+          "input_bits": "0x3f0f1bbd"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3eeac0c6",
+          "input_bits": "0x3f3504f3"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f4aabbc",
+          "input_bits": "0x3f66c15a"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        }
+      ],
+      "actual_trace_sha256": "d0d01e4df95fc367ee313b1bfa95aee6ddef7ee9339a7f0a35aaf430d8b3db8a",
+      "actual_unique_pairs": 8,
+      "blur_mode": 4,
+      "production_calls": 187,
+      "production_subsequence_positions": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186
+      ],
+      "skipped_production_calls": 63,
+      "use_background": false
+    },
+    {
+      "actual_aex_calls": 124,
+      "actual_trace": [
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f4aabbc",
+          "input_bits": "0x3f66c15a"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3eeac0c6",
+          "input_bits": "0x3f3504f3"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e8a595d",
+          "input_bits": "0x3f0f1bbd"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e8a595d",
+          "input_bits": "0x3f0f1bbd"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3eeac0c6",
+          "input_bits": "0x3f3504f3"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f4aabbc",
+          "input_bits": "0x3f66c15a"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f16dee8",
+          "input_bits": "0x3f4a62c2"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e8a595d",
+          "input_bits": "0x3f0f1bbd"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e8a595d",
+          "input_bits": "0x3f0f1bbd"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f16dee8",
+          "input_bits": "0x3f4a62c2"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d1",
+          "input_bits": "0x3f400000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f16dee8",
+          "input_bits": "0x3f4a62c2"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e8a595d",
+          "input_bits": "0x3f0f1bbd"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e8a595d",
+          "input_bits": "0x3f0f1bbd"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f16dee8",
+          "input_bits": "0x3f4a62c2"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f4aabbc",
+          "input_bits": "0x3f66c15a"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3eeac0c6",
+          "input_bits": "0x3f3504f3"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e8a595d",
+          "input_bits": "0x3f0f1bbd"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e8a595d",
+          "input_bits": "0x3f0f1bbd"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3eeac0c6",
+          "input_bits": "0x3f3504f3"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f4aabbc",
+          "input_bits": "0x3f66c15a"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f800000",
+          "input_bits": "0x3f800000"
+        }
+      ],
+      "actual_trace_sha256": "d0d01e4df95fc367ee313b1bfa95aee6ddef7ee9339a7f0a35aaf430d8b3db8a",
+      "actual_unique_pairs": 8,
+      "blur_mode": 4,
+      "production_calls": 187,
+      "production_subsequence_positions": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186
+      ],
+      "skipped_production_calls": 63,
+      "use_background": true
+    },
+    {
+      "actual_aex_calls": 124,
+      "actual_trace": [
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f7617e7",
+          "input_bits": "0x3f7b8c7b"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f38e14c",
+          "input_bits": "0x3f5d85c1"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3edd58af",
+          "input_bits": "0x3f30597e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e7eac50",
+          "input_bits": "0x3f09edc0"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e38ebbb",
+          "input_bits": "0x3eef47ec"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e38ebbb",
+          "input_bits": "0x3eef47ec"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e7eac50",
+          "input_bits": "0x3f09edc0"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3edd58af",
+          "input_bits": "0x3f30597e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f38e14c",
+          "input_bits": "0x3f5d85c1"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f7617e7",
+          "input_bits": "0x3f7b8c7b"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f6b80bd",
+          "input_bits": "0x3f76adbf"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f1aa9c7",
+          "input_bits": "0x3f4ca19a"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e95bd6f",
+          "input_bits": "0x3f143af0"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3df43c2e",
+          "input_bits": "0x3ec6fba0"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d547a23",
+          "input_bits": "0x3e89729f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d547a23",
+          "input_bits": "0x3e89729f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3df43c2e",
+          "input_bits": "0x3ec6fba0"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e95bd6f",
+          "input_bits": "0x3f143af0"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f1aa9c7",
+          "input_bits": "0x3f4ca19a"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f6b80bd",
+          "input_bits": "0x3f76adbf"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f08f122",
+          "input_bits": "0x3f41db8c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e619f4b",
+          "input_bits": "0x3f02b343"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d547a23",
+          "input_bits": "0x3e89729f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d547a23",
+          "input_bits": "0x3e89729f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e619f4b",
+          "input_bits": "0x3f02b343"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f08f122",
+          "input_bits": "0x3f41db8c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d0",
+          "input_bits": "0x3f3fffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fb",
+          "input_bits": "0x3effffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d0",
+          "input_bits": "0x3f3fffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d0",
+          "input_bits": "0x3f3fffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fb",
+          "input_bits": "0x3effffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d0",
+          "input_bits": "0x3f3fffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d0",
+          "input_bits": "0x3f3fffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fb",
+          "input_bits": "0x3effffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d0",
+          "input_bits": "0x3f3fffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d0",
+          "input_bits": "0x3f3fffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fb",
+          "input_bits": "0x3effffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d0",
+          "input_bits": "0x3f3fffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d0",
+          "input_bits": "0x3f3fffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fb",
+          "input_bits": "0x3effffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d0",
+          "input_bits": "0x3f3fffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f08f121",
+          "input_bits": "0x3f41db8b"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e619f4b",
+          "input_bits": "0x3f02b343"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d547a23",
+          "input_bits": "0x3e89729f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d547a23",
+          "input_bits": "0x3e89729f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e619f4b",
+          "input_bits": "0x3f02b343"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f08f121",
+          "input_bits": "0x3f41db8b"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f6b80bd",
+          "input_bits": "0x3f76adbf"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f1aa9c7",
+          "input_bits": "0x3f4ca19a"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e95bd6d",
+          "input_bits": "0x3f143aef"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3df43c2e",
+          "input_bits": "0x3ec6fba0"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d547a23",
+          "input_bits": "0x3e89729f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d547a23",
+          "input_bits": "0x3e89729f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3df43c2e",
+          "input_bits": "0x3ec6fba0"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e95bd6d",
+          "input_bits": "0x3f143aef"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f1aa9c7",
+          "input_bits": "0x3f4ca19a"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f6b80bd",
+          "input_bits": "0x3f76adbf"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f7617e7",
+          "input_bits": "0x3f7b8c7b"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f38e14c",
+          "input_bits": "0x3f5d85c1"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3edd58af",
+          "input_bits": "0x3f30597e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e7eac50",
+          "input_bits": "0x3f09edc0"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e38ebbb",
+          "input_bits": "0x3eef47ec"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e38ebbb",
+          "input_bits": "0x3eef47ec"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e7eac50",
+          "input_bits": "0x3f09edc0"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3edd58af",
+          "input_bits": "0x3f30597e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f38e14c",
+          "input_bits": "0x3f5d85c1"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f7617e7",
+          "input_bits": "0x3f7b8c7b"
+        }
+      ],
+      "actual_trace_sha256": "b25f511b6f468793cb31b639b3556bdf237019f923cdb9728ff2627a907fbe10",
+      "actual_unique_pairs": 20,
+      "blur_mode": 5,
+      "production_calls": 187,
+      "production_subsequence_positions": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186
+      ],
+      "skipped_production_calls": 63,
+      "use_background": false
+    },
+    {
+      "actual_aex_calls": 124,
+      "actual_trace": [
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f7617e7",
+          "input_bits": "0x3f7b8c7b"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f38e14c",
+          "input_bits": "0x3f5d85c1"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3edd58af",
+          "input_bits": "0x3f30597e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e7eac50",
+          "input_bits": "0x3f09edc0"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e38ebbb",
+          "input_bits": "0x3eef47ec"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e38ebbb",
+          "input_bits": "0x3eef47ec"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e7eac50",
+          "input_bits": "0x3f09edc0"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3edd58af",
+          "input_bits": "0x3f30597e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f38e14c",
+          "input_bits": "0x3f5d85c1"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f7617e7",
+          "input_bits": "0x3f7b8c7b"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f6b80bd",
+          "input_bits": "0x3f76adbf"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f1aa9c7",
+          "input_bits": "0x3f4ca19a"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e95bd6f",
+          "input_bits": "0x3f143af0"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3df43c2e",
+          "input_bits": "0x3ec6fba0"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d547a23",
+          "input_bits": "0x3e89729f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d547a23",
+          "input_bits": "0x3e89729f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3df43c2e",
+          "input_bits": "0x3ec6fba0"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e95bd6f",
+          "input_bits": "0x3f143af0"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f1aa9c7",
+          "input_bits": "0x3f4ca19a"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f6b80bd",
+          "input_bits": "0x3f76adbf"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f08f122",
+          "input_bits": "0x3f41db8c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e619f4b",
+          "input_bits": "0x3f02b343"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d547a23",
+          "input_bits": "0x3e89729f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d547a23",
+          "input_bits": "0x3e89729f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e619f4b",
+          "input_bits": "0x3f02b343"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f08f122",
+          "input_bits": "0x3f41db8c"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d0",
+          "input_bits": "0x3f3fffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fb",
+          "input_bits": "0x3effffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d0",
+          "input_bits": "0x3f3fffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d0",
+          "input_bits": "0x3f3fffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fb",
+          "input_bits": "0x3effffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d0",
+          "input_bits": "0x3f3fffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d0",
+          "input_bits": "0x3f3fffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fb",
+          "input_bits": "0x3effffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d0",
+          "input_bits": "0x3f3fffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d0",
+          "input_bits": "0x3f3fffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fb",
+          "input_bits": "0x3effffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d0",
+          "input_bits": "0x3f3fffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d0",
+          "input_bits": "0x3f3fffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fb",
+          "input_bits": "0x3effffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e5744fd",
+          "input_bits": "0x3f000000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f0601d0",
+          "input_bits": "0x3f3fffff"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f08f121",
+          "input_bits": "0x3f41db8b"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e619f4b",
+          "input_bits": "0x3f02b343"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d547a23",
+          "input_bits": "0x3e89729f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d547a23",
+          "input_bits": "0x3e89729f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e619f4b",
+          "input_bits": "0x3f02b343"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f08f121",
+          "input_bits": "0x3f41db8b"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f67d2e4",
+          "input_bits": "0x3f74f55d"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f6b80bd",
+          "input_bits": "0x3f76adbf"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f1aa9c7",
+          "input_bits": "0x3f4ca19a"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e95bd6d",
+          "input_bits": "0x3f143aef"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3df43c2e",
+          "input_bits": "0x3ec6fba0"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d547a23",
+          "input_bits": "0x3e89729f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d3504f3",
+          "input_bits": "0x3e800000"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3d547a23",
+          "input_bits": "0x3e89729f"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3df43c2e",
+          "input_bits": "0x3ec6fba0"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e95bd6d",
+          "input_bits": "0x3f143aef"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f1aa9c7",
+          "input_bits": "0x3f4ca19a"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f6b80bd",
+          "input_bits": "0x3f76adbf"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f7617e7",
+          "input_bits": "0x3f7b8c7b"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f38e14c",
+          "input_bits": "0x3f5d85c1"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3edd58af",
+          "input_bits": "0x3f30597e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e7eac50",
+          "input_bits": "0x3f09edc0"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e38ebbb",
+          "input_bits": "0x3eef47ec"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e2fb95a",
+          "input_bits": "0x3ee9eaba"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e38ebbb",
+          "input_bits": "0x3eef47ec"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3e7eac50",
+          "input_bits": "0x3f09edc0"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3edd58af",
+          "input_bits": "0x3f30597e"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f38e14c",
+          "input_bits": "0x3f5d85c1"
+        },
+        {
+          "exponent_bits": "0x40100000",
+          "host_substituted_result_bits": "0x3f7617e7",
+          "input_bits": "0x3f7b8c7b"
+        }
+      ],
+      "actual_trace_sha256": "b25f511b6f468793cb31b639b3556bdf237019f923cdb9728ff2627a907fbe10",
+      "actual_unique_pairs": 20,
+      "blur_mode": 5,
+      "production_calls": 187,
+      "production_subsequence_positions": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186
+      ],
+      "skipped_production_calls": 63,
+      "use_background": true
+    }
+  ],
+  "cells_sha256": "00889a63b5e70f4391db075029cb8dd8b5d14969dad2b12ee4cdcca9c8f6da49",
+  "identities": {
+    "actual_aex_sha256": "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae",
+    "aexcompat_callbacks_sha256": "b26755017884874a7721bc749325a54f97f517f750d97db181ca6df36a0d6e31",
+    "downstream_replay_sha256": "350f84049fb69fca15e4ff49b5613173f2c7189eeeba8dc2f795c14330740f72",
+    "production_census_generator_sha256": "b489bb309f272d0c6efbf911dc72dcb69be11226a676020f0befd169369c2fd1",
+    "trace_patch_sha256": "d34764afc8bfd66e22cc5c77637f2b8070963a5d2370f8d8f956271ab8513ca9",
+    "traced_worker_sha256": "03714915d5e19ebe6aa98529881aa6410ec4895ee55d2cc29090b4f5327cec8b"
+  },
+  "production_only_irrelevance": {
+    "pair_count": 7,
+    "pixel_calls_per_cell": 63,
+    "production_only_pairs": [
+      [
+        "0x00000000",
+        "0x40100000"
+      ],
+      [
+        "0x3d30aa30",
+        "0x40100000"
+      ],
+      [
+        "0x3d800000",
+        "0x40100000"
+      ],
+      [
+        "0x3daaaaab",
+        "0x40100000"
+      ],
+      [
+        "0x3db1a33b",
+        "0x40100000"
+      ],
+      [
+        "0x3ded413d",
+        "0x40100000"
+      ],
+      [
+        "0x3e1a011a",
+        "0x40100000"
+      ]
+    ],
+    "replays": {
+      "all_one": {
+        "matching_cells": 8,
+        "raw_sha256": {
+          "mode2.bg0": "3e04fab22152eb32638a4864f256f76bd118ffbb6315b0c7a8b852b27509fc39",
+          "mode2.bg1": "6c86caeab878b256f933d03e105085f86810f255296cc2fa5ac434dc5067e496",
+          "mode3.bg0": "12bdf0c207bff9fb8c0390f848883281b8484802baea72c82f98db96c3176849",
+          "mode3.bg1": "dfeb76265a320e6aae3945fdb2aaa76cd9e77f7e63f586046bca744bfad9cb07",
+          "mode4.bg0": "849be120ac0c5e4990c8a19135ebfccdb2f6350ffe53cd0bb1a9f6aafb486c2a",
+          "mode4.bg1": "0d8860db7bffd87c6737298482eb60d0378b2dc63841d861ee8e174aaee0a81c",
+          "mode5.bg0": "40b5d262cdc0ab372036c9d2774fa9400f74daa7895c75c2222a246b01c485a5",
+          "mode5.bg1": "fe715e7973fa79d6043cbe86dcfce3205869fb23ac9d69a8d98b288ab20ad6d7"
+        },
+        "replacement_bits": "0x3f800000"
+      },
+      "all_zero": {
+        "matching_cells": 8,
+        "raw_sha256": {
+          "mode2.bg0": "3e04fab22152eb32638a4864f256f76bd118ffbb6315b0c7a8b852b27509fc39",
+          "mode2.bg1": "6c86caeab878b256f933d03e105085f86810f255296cc2fa5ac434dc5067e496",
+          "mode3.bg0": "12bdf0c207bff9fb8c0390f848883281b8484802baea72c82f98db96c3176849",
+          "mode3.bg1": "dfeb76265a320e6aae3945fdb2aaa76cd9e77f7e63f586046bca744bfad9cb07",
+          "mode4.bg0": "849be120ac0c5e4990c8a19135ebfccdb2f6350ffe53cd0bb1a9f6aafb486c2a",
+          "mode4.bg1": "0d8860db7bffd87c6737298482eb60d0378b2dc63841d861ee8e174aaee0a81c",
+          "mode5.bg0": "40b5d262cdc0ab372036c9d2774fa9400f74daa7895c75c2222a246b01c485a5",
+          "mode5.bg1": "fe715e7973fa79d6043cbe86dcfce3205869fb23ac9d69a8d98b288ab20ad6d7"
+        },
+        "replacement_bits": "0x00000000"
+      }
+    }
+  },
+  "schema": "olmdistancegradation.actual-aex-powf-xmm-closure/1",
+  "status": "PASS_ACTUAL_AEX_POWER8_XMM_INPUTS_PRODUCTION_SUBSEQUENCE_OUTPUT_IRRELEVANT_EXTRA7",
+  "summary": {
+    "actual_aex_calls": 992,
+    "actual_aex_unique_pairs": 56,
+    "actual_nonproduction_pairs": 0,
+    "all_actual_calls_in_order": true,
+    "calls_per_actual_cell": 124,
+    "cells": 8,
+    "production_calls": 1496,
+    "production_unique_pairs": 63,
+    "skipped_transparent_calls_per_cell": 63
+  }
+}

@@ -11,8 +11,9 @@ work on it in turns. This is the shared contract. It is short on purpose.
 - `refs/conformance/olm_release_completion_matrix_20260806.md`
 - `refs/conformance/olm_release_gate_status_20260806.json`
 
-Mac側release gateはPASS済み。新しいパラメーター族を増やさず、Windows AEの
-hash固定7行が返るまでは候補を固定する。過去のpending queueを再送しない。
+Mac側release gateはPASS済み。Windows AEのhash固定7行も7／7 accepted、0 invalid、
+0 pendingです。新しいパラメーター族を根拠なく増やさず、過去のpending queueや
+受領済み7行を再送しない。
 
 ## The bar
 - **Correctness = exact sample match** against the Windows **CPU Software**

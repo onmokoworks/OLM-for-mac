@@ -74,7 +74,7 @@
     "pf8_code0_vs_key_code1": "outside strict key-match threshold in both non-invert and invert paths"
   },
   "inverse_lut_sha256": "b7014467dcae06109111302b8c930494950d27b817d1390d6434605795772fbc",
-  "production_source_sha256": "d8a7a489bb3bc875e998926bdde971ac66f5544c41ff6bc583819bf0daf0a784",
+  "production_source_sha256": "ad9edee80793369219ef5b9e08d5cb397060a315b30aa36ce221d3e2488d2ee1",
   "scope": "PF8 v2 non-invert and invert key followed by Gamma Colors ordered [red,key], gamma2.4, padded3x2, captured LUTs",
   "verdict": "PASS_PF8_V2_KEY_AND_INVERT_PLUS_GAMMA_COLORS_TO_PRODUCTION_EXACT"
 }

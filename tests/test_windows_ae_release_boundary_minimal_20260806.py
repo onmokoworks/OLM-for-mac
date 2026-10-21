@@ -30,13 +30,12 @@ def load_packager():
 
 
 class MinimalWindowsBoundaryScopeTest(unittest.TestCase):
-    def test_authoritative_matrix_declares_exact_required_families(self) -> None:
+    def test_authoritative_matrix_records_accepted_bounded_batch(self) -> None:
         text = MATRIX.read_text(encoding="utf-8")
         required = (
-            "ColorKeep controlled calibration at PF8/PF16/PF32",
-            "OLMKiraKira controlled Mode4 calibration at PF8/PF16/PF32",
-            "OLMSmoother v1 PF16, one representative canonical row",
-            "These seven observations belong in one batch.",
+            "7 observations accepted, 0 invalid, 0 pending",
+            "Acceptance is not a claim that all seven cross-host outputs are raw exact",
+            "The historical one-shot Windows request was fully returned",
         )
         for phrase in required:
             self.assertIn(phrase, text)

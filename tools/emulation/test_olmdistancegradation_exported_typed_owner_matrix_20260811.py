@@ -8,9 +8,12 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parents[2]
 AEX = ROOT / "aex/OLMDistanceGradation/Plugins/64/2025/DistanceGradation.aex"
 HARNESS = ROOT / "tools/emulation/dg_exported_typed_owner_compare_harness_20260811.cpp"
+SOURCE = ROOT / "mac/OLMDistanceGradation/OLMDistanceGradation.cpp"
 REPORT = ROOT / "refs/conformance/olmdistancegradation_exported_typed_owner_matrix_20260811.json"
 DOC = REPORT.with_suffix(".md")
 DEFAULT_WORKER = Path("/Users/onmk/Documents/Projects/Personal/04_Tools/AEXCompat-issue851-smart-primary-checkout/guest/target/release/aex-guest-worker")
+AEX_SHA256 = "a1d317c0e18371494bc9c9933684593ca903eb6f3fe262ec06d5147b4c0bcbae"
+WORKER_SHA256 = "46ab907d286ad4e0e1c2065557100f02c37e0b68df4c22202a825f3fea13ef61"
 def sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -65,6 +68,7 @@ def resident_render(worker: Path, source_raw: Path, output_raw: Path, depth: str
 def main() -> int:
     worker = Path(os.environ.get("OLM_AEX_GUEST_WORKER", str(DEFAULT_WORKER)))
     if not worker.is_file(): raise RuntimeError(f"worker missing: {worker}")
+    assert sha(AEX) == AEX_SHA256 and sha(worker) == WORKER_SHA256
     rows = []
     with tempfile.TemporaryDirectory(prefix="dg_typed_owner_") as temporary:
         td = Path(temporary); source_png = td / "input.png"; executable = td / "harness"
@@ -88,56 +92,52 @@ def main() -> int:
                         expected_raw = td / f"expected_{depth}_{key}.raw"
                         expected = subprocess.run([str(executable), depth, str(source_raw), str(expected_raw),
                             interpolation, str(background), str(blur)], text=True, capture_output=True)
-                        rejected = depth == "PF32" and blur == 5 and interpolation != "constant"
-                        if rejected:
-                            assert expected.returncode == 4
-                            rows.append({"depth": depth, "interpolation": interpolation,
-                                "blur_mode": blur, "use_background": bool(background),
-                                "actual_exported_raw_sha256": sha(actual_raw),
-                                "production_status": "fail_closed_bad_callback_param",
-                                "exact": False, "fail_closed": True,
-                                "guards_intact": frame["output"]["guards_intact"]})
-                            continue
                         assert expected.returncode == 0, expected.stderr
                         expected_sha = sha(expected_raw)
                         actual = actual_raw.read_bytes()
                         actual_sha = sha(actual_raw)
-                        exact = actual_sha == expected_sha
+                        fail_closed = depth == "PF32" and interpolation == "power"
+                        exact = not fail_closed and actual_sha == expected_sha
                         rows.append({"depth": depth, "interpolation": interpolation, "blur_mode": blur,
                             "use_background": bool(background), "bytes_compared": len(expected_raw.read_bytes()),
                             "actual_exported_raw_sha256": actual_sha,
                             "production_renderbits_sha256": expected_sha, "exact": exact,
                             "different_bytes": sum(a != b for a, b in zip(actual, expected_raw.read_bytes())),
-                            "guards_intact": frame["output"]["guards_intact"], "fail_closed": False})
+                            "guards_intact": frame["output"]["guards_intact"], "fail_closed": fail_closed,
+                            "oracle_boundary": "native Windows UCRT powf required" if fail_closed else None})
     assert len(rows) == 64 and all(row["guards_intact"] for row in rows)
     exact_cells = sum(row["exact"] for row in rows)
-    assert exact_cells == 58, [
+    assert exact_cells == 56, [
         (row["depth"], row["interpolation"], row["blur_mode"], row["use_background"])
         for row in rows if not row["exact"]
     ]
-    assert sum(row.get("fail_closed", False) for row in rows) == 6
+    assert sum(row.get("fail_closed", False) for row in rows) == 8
     report = {"schema": "olmdistancegradation.exported-typed-owner-matrix/1",
-        "status": "PASS_58_CELL_EXACT_6_PF32_MODE5_FAIL_CLOSED",
-        "actual_aex_sha256": sha(AEX), "worker_sha256": sha(worker),
+        "status": "PASS_56_ADMITTED_RAW_EXACT_8_PF32_POWER_FAIL_CLOSED",
+        "actual_aex_sha256": AEX_SHA256, "worker_sha256": WORKER_SHA256,
+        "production_source_sha256": sha(SOURCE),
         "fixture": {"width": 17, "height": 11, "input_png_sha256": input_png_sha256},
         "summary": {"actual_aex_cells": 64, "exact_admitted": exact_cells,
-                    "pf16_exact": 32, "pf32_exact": 26,
-                    "pf32_mode5_constant_exact": 2,
-                    "pf32_mode5_fail_closed": 6},
+                    "pf16_exact": 32, "pf32_exact": 24,
+                    "pf32_power_fail_closed": 8,
+                    "pf32_mode5_exact": 6,
+                    "pf32_mode5_fail_closed": 2},
         "rows": rows, "claims_not_made": ["No native After Effects execution",
             "No PF32 GPU SmartRender claim",
-            "No native Mac AE PF32 SmartRender host execution or field-staging claim"]}
+            "No native Mac AE PF32 SmartRender host execution or field-staging claim",
+            "No native Windows UCRT powf result for the eight PF32 Power cells"]}
     REPORT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     DOC.write_text("# OLMDistanceGradation exported typed owner matrix\n\n"
-        "Status: **PASS_58_CELL_EXACT_6_PF32_MODE5_FAIL_CLOSED**.\n\n"
+        "Status: **PASS_56_ADMITTED_RAW_EXACT_8_PF32_POWER_FAIL_CLOSED**.\n\n"
         "The unchanged Windows AEX completed exported SmartPreRender/SmartRender for PF16 and PF32 "
         "across Constant/Linear/Sphere/Power × Blur 2/3/4/5 × Background off/on. All 32 PF16 "
-        "buffers, the 24 PF32 Blur 2/3/4 buffers, and the two PF32 Constant/Mode 5 buffers match "
-        "production `RenderBits` byte-for-byte. Constant/Mode 5 is admitted only for the exact "
-        "17x11 mask and parameter tuple after reproducing OpenCV 4.5.5's 4096-bin bilateral LUT, "
-        "replicated border, four-lane fused accumulation, and tail reduction. The remaining six "
-        "PF32 Linear/Sphere/Power Mode 5 cells retain one/two-ULP dispatch residuals and stay "
-        "fail-closed with `PF_Err_BAD_CALLBACK_PARAM`. PF16 acquires `PF iterate16 "
+        "buffers and the 24 non-Power PF32 buffers match admitted production `RenderBits` byte-for-byte. "
+        "The eight PF32 Power cells are fail-closed because the AEX imports Windows UCRT `powf` while "
+        "the pinned AEXCompat worker substitutes a host `f32::powf`; those raw buffers are retained only "
+        "as diagnostic captures, not as a native-Windows oracle. PF32 Mode 5 "
+        "is admitted only for the exact 17x11 mask and parameter tuple after reproducing the retained "
+        "IPP body: direct color `expf`, L/T/R/B sequential accumulation, a late common spatial "
+        "weight, and source-local contraction prohibition. PF16 acquires `PF iterate16 "
         "Suite` v1 and PF32 acquires `PF iterateFloat Suite` v1; no `_CxxThrowException` continuation "
         "or exception swallowing is used. This proves the bounded production RenderBits tuples only; "
         "native Mac AE PF32 SmartRender host execution and field staging remain a separate "

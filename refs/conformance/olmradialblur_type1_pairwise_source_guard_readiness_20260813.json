@@ -1,0 +1,97 @@
+{
+  "active_source_sha256": {
+    "PF16_32x18": "c9d92745cba73fde78d7ad5868d643ad7a88b1dd481e6caacfc7c945ae153b3c",
+    "PF16_9x7": "5c853513cbbbdab275383c7aa6b6d82e0f7fef95565a7d0d4f6dd04426a75b33",
+    "PF8_32x18": "85143eda82a237f32b5c9b1d3cf5f73a121bffa9eaba6e05d4728bda4216f000",
+    "PF8_9x7": "3b62de8577b33598ede56c0a3ca5bc636a40b9bf7bc9599000d9840b531eeffe"
+  },
+  "authorities": {
+    "pf16_generator_sha256": "408d06730e1a2ebaf660f54584f8e3d210c7740cad4345b5bebe38ea1c8a44f0",
+    "pf8_generator_sha256": "0c636ecaabd7afd40b92e5cfb0ea8ab18b223360c7067d43f736f73bbbcdf7c6",
+    "probe_sha256": "7461ea39530f5e4b4fb8d71bb2a31dafa20d4c1e6ed95d4092e310918fa7278f",
+    "production_sha256": "b74b3d2c7ea6724593b28f82d36615e071e18d813e5b99cc948e26a447fdb0d1"
+  },
+  "claim_boundary": {
+    "not_proven": [
+      "arbitrary source content",
+      "the remaining 90 rows of the 98-cell Type1 projection",
+      "PF32 pairwise route, which is not in this pairwise family",
+      "native After Effects output"
+    ],
+    "proven": "four retained PF8/PF16 pairwise fixture identities admit 16 cells unchanged and 12 source mutations fail closed on arm64 and x86_64"
+  },
+  "current_public_admission_source_guard_present": true,
+  "promotion_state": "hostless_source_guard_and_universal_candidate_closed_install_pending",
+  "runs": [
+    {
+      "arch": "arm64",
+      "lines": [
+        "POS PF8 9x7 c0 34e7cf04dbf37f5b9d34164c8277af1c73061966e020443929b1529bfe4aaa11",
+        "POS PF8 9x7 c1 34e7cf04dbf37f5b9d34164c8277af1c73061966e020443929b1529bfe4aaa11",
+        "POS PF8 9x7 c2 6bb55ef05632d7a351039b3430b122696294495de3e68e8ab4bc0ca81510c3cc",
+        "POS PF8 9x7 c3 5b3b3119b3d0f944e0088ea9cd375e9bf755646977291ef14e79fcc7a09fe5c6",
+        "NEG PF8 9x7 m0 reject",
+        "NEG PF8 9x7 m1 reject",
+        "NEG PF8 9x7 m2 reject",
+        "POS PF16 9x7 c0 844e1828d724c6ed4669adcf16131a4d363fad5962b35f3e1f6a697a537694ad",
+        "POS PF16 9x7 c1 844e1828d724c6ed4669adcf16131a4d363fad5962b35f3e1f6a697a537694ad",
+        "POS PF16 9x7 c2 c7327862c06b473402429f5e4e5ac7513313433c62711360e5f5f0b37e4acc21",
+        "POS PF16 9x7 c3 df4d7805f235e2eff85c4753ecb94ff34e1a20ef46ff01dd92247fdb828ec433",
+        "NEG PF16 9x7 m0 reject",
+        "NEG PF16 9x7 m1 reject",
+        "NEG PF16 9x7 m2 reject",
+        "POS PF8 32x18 c0 f794c62c29961bb5ab023c8422e76f63026198f26260ea2e98db0687a31cf02a",
+        "POS PF8 32x18 c1 0a032b54172ecdb3f2da1a8a2a99c065aaa65e503816ef64187d095a6b58b3c2",
+        "POS PF8 32x18 c2 df35323758309e611892c3113de888e9387a9f7eb3fc0a50e601944a1201bf46",
+        "POS PF8 32x18 c3 6c3054b59a8cb81c6850fb7027136b0aa831e336eecb6086b205daa9ef7b28e8",
+        "NEG PF8 32x18 m0 reject",
+        "NEG PF8 32x18 m1 reject",
+        "NEG PF8 32x18 m2 reject",
+        "POS PF16 32x18 c0 83e37e02a2dea754b04cdf1cc685fe8c3a374409dc8f7d467c11c6806643032a",
+        "POS PF16 32x18 c1 93d6a5dd8052c00c518ebec38cecd3dec67cd05bfb08de562632b5e1c5cf0466",
+        "POS PF16 32x18 c2 3cf2b493ef45803a69d406de3ee12d540f677e532f7c571cc41b8693938015a1",
+        "POS PF16 32x18 c3 1f31db95b3d06616813eab77b35a4ef264bc79892cfb4763852745b193075cfd",
+        "NEG PF16 32x18 m0 reject",
+        "NEG PF16 32x18 m1 reject",
+        "NEG PF16 32x18 m2 reject"
+      ],
+      "transcript_sha256": "a319697bf043a51ecddea2eff31e2f9769e42c339870cc922e55648fbb14b84d"
+    },
+    {
+      "arch": "x86_64",
+      "lines": [
+        "POS PF8 9x7 c0 34e7cf04dbf37f5b9d34164c8277af1c73061966e020443929b1529bfe4aaa11",
+        "POS PF8 9x7 c1 34e7cf04dbf37f5b9d34164c8277af1c73061966e020443929b1529bfe4aaa11",
+        "POS PF8 9x7 c2 6bb55ef05632d7a351039b3430b122696294495de3e68e8ab4bc0ca81510c3cc",
+        "POS PF8 9x7 c3 5b3b3119b3d0f944e0088ea9cd375e9bf755646977291ef14e79fcc7a09fe5c6",
+        "NEG PF8 9x7 m0 reject",
+        "NEG PF8 9x7 m1 reject",
+        "NEG PF8 9x7 m2 reject",
+        "POS PF16 9x7 c0 844e1828d724c6ed4669adcf16131a4d363fad5962b35f3e1f6a697a537694ad",
+        "POS PF16 9x7 c1 844e1828d724c6ed4669adcf16131a4d363fad5962b35f3e1f6a697a537694ad",
+        "POS PF16 9x7 c2 c7327862c06b473402429f5e4e5ac7513313433c62711360e5f5f0b37e4acc21",
+        "POS PF16 9x7 c3 df4d7805f235e2eff85c4753ecb94ff34e1a20ef46ff01dd92247fdb828ec433",
+        "NEG PF16 9x7 m0 reject",
+        "NEG PF16 9x7 m1 reject",
+        "NEG PF16 9x7 m2 reject",
+        "POS PF8 32x18 c0 f794c62c29961bb5ab023c8422e76f63026198f26260ea2e98db0687a31cf02a",
+        "POS PF8 32x18 c1 0a032b54172ecdb3f2da1a8a2a99c065aaa65e503816ef64187d095a6b58b3c2",
+        "POS PF8 32x18 c2 df35323758309e611892c3113de888e9387a9f7eb3fc0a50e601944a1201bf46",
+        "POS PF8 32x18 c3 6c3054b59a8cb81c6850fb7027136b0aa831e336eecb6086b205daa9ef7b28e8",
+        "NEG PF8 32x18 m0 reject",
+        "NEG PF8 32x18 m1 reject",
+        "NEG PF8 32x18 m2 reject",
+        "POS PF16 32x18 c0 83e37e02a2dea754b04cdf1cc685fe8c3a374409dc8f7d467c11c6806643032a",
+        "POS PF16 32x18 c1 93d6a5dd8052c00c518ebec38cecd3dec67cd05bfb08de562632b5e1c5cf0466",
+        "POS PF16 32x18 c2 3cf2b493ef45803a69d406de3ee12d540f677e532f7c571cc41b8693938015a1",
+        "POS PF16 32x18 c3 1f31db95b3d06616813eab77b35a4ef264bc79892cfb4763852745b193075cfd",
+        "NEG PF16 32x18 m0 reject",
+        "NEG PF16 32x18 m1 reject",
+        "NEG PF16 32x18 m2 reject"
+      ],
+      "transcript_sha256": "a319697bf043a51ecddea2eff31e2f9769e42c339870cc922e55648fbb14b84d"
+    }
+  ],
+  "schema": "olmradialblur.type1-pairwise-source-guard-readiness/1",
+  "status": "pass_pairwise_source_guard_integrated_hostless"
+}

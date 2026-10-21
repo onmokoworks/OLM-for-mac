@@ -3,9 +3,10 @@
 このディレクトリには、Windows AEでしか確認できないhost境界を取得するための
 requestとhash固定ZIPを保存します。
 
-## 現在実行するパッケージ
+## 受領済みの最小7行パッケージ
 
-現在のMacリリース候補に必要なのは、次の1ファイルだけです。
+現行release gateが受理したWindows境界は次の1ファイルです。7行は7／7 accepted、
+0 invalid、0 pendingであり、通常作業で再実行・再送しません。
 
 `olm_windows_ae_release_boundary_minimal_20260806.zip`
 
@@ -15,7 +16,7 @@ SHA-256：
 6a060641dc867cbb5cb858136f6fd294fb49d274fa252cec71459bc9b20a4652
 ```
 
-取得対象は次の7行です。
+受領対象だった7行は次のとおりです。
 
 - ColorKeep：PF8／PF16／PF32
 - OLMKiraKira controlled Mode 4：PF8／PF16／PF32

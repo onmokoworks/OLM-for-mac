@@ -17,6 +17,7 @@ RUNTIME_RESULT_FILENAMES = {
 }
 
 PRIORITY_PROFILES = {
+    "olm-math-ucrt-batch-native-windows-no-ae": 0,
     "olmdirectionalblur-2025-front-alpha-host-boundary": 1,
     "olmdirectionalblur-2025-alpha-fade-fullrender-row755-pre-normalization": 3,
     "olmdirectionalblur-row755-common-core": 3,
@@ -84,6 +85,20 @@ PRIORITY_PROFILES = {
     "olmsmoother2-legacy-key-producer-common-core": 214,
     "windows-ae-addproperty-stall-diagnostics": 900,
     "windows-ae-runner-startup-diagnostics": 901,
+}
+
+SPECIAL_INTAKE_COMMANDS = {
+    "olm_runtime_trace_olm_math_ucrt_batch_20260814": (
+        "python3 scripts/analyze_olm_math_ucrt_batch_return_20260814.py "
+        "path/to/olm_math_ucrt_batch_return.json --write"
+    ),
+}
+
+SPECIAL_COMPARISON_COMMANDS = {
+    "olm_runtime_trace_olm_math_ucrt_batch_20260814": (
+        "python3 tools/emulation/test_olm_math_ucrt_downstream_replay_20260814.py "
+        "--native-return path/to/olm_math_ucrt_batch_return.json"
+    ),
 }
 
 PARTIAL_STILL_PENDING_REQUEST_IDS = {
@@ -284,6 +299,7 @@ COMPARISON_COMMANDS = [
 ]
 
 ACCEPTANCE_NOTES = {
+    "olm_runtime_trace_olm_math_ucrt_batch_20260814": "refs/runtime_trace_packages/olm_runtime_trace_olm_math_ucrt_batch_20260814.zip::olm_runtime_trace_olm_math_ucrt_batch_20260814/README.md",
     "olmdirectionalblur_alpha_fade_fullrender_row755_20260712": "refs/runtime_trace_packages/olmdirectionalblur_alpha_fade_fullrender_row755_20260712/README.md",
     "olmdistancegradation_8bpc_current_aex_same_run_typed_boundary_20260712": "refs/runtime_trace_packages/olm_runtime_trace_olmdistancegradation_8bpc_current_aex_same_run_typed_boundary_20260712/README_RUNTIME_TRACE.md",
     "olmdirectionalblur_front_alpha_host_boundary_2025_20260711": "refs/conformance/dblur_alpha_host_boundary_20260711.md",
@@ -325,6 +341,10 @@ ACCEPTANCE_NOTES = {
 }
 
 HARD_LANE_CONTEXTS = {
+    "olm_runtime_trace_olm_math_ucrt_batch_20260814": {
+        "note": "refs/conformance/olm_math_ucrt_batch_request_20260814.json",
+        "summary": "Current highest-value external action. It is AE-free and closes only the exact expf/powf leaves; promotion still requires strict keyed validation and final six-plus-eight public-output replay.",
+    },
     "olmdirectionalblur_front_alpha_host_boundary_2025_20260711": {
         "note": "refs/conformance/dblur_alpha_host_boundary_20260711.md",
         "summary": "The front-alpha kernel is binary-grounded, but the retained June19 reference omitted loaded-AEX identity and the exact PF input world. This one hash-gated invocation-bound capture decides host input, AEX generation, and output/export ownership without PNG tuning.",
@@ -474,6 +494,50 @@ def read_json(path: Path) -> Any:
 def package_manifest(path: Path) -> dict[str, Any] | None:
     try:
         with zipfile.ZipFile(path) as archive:
+            batch_name = next(
+                (
+                    member
+                    for member in archive.namelist()
+                    if member.replace("\\", "/").endswith(
+                        "olm_runtime_trace_olm_math_ucrt_batch_20260814/request_manifest.json"
+                    )
+                ),
+                None,
+            )
+            if batch_name is not None:
+                batch = json.loads(archive.read(batch_name).decode("utf-8"))
+                if not isinstance(batch, dict) or batch.get("schema") != "olm.math-ucrt-batch-request/1":
+                    return None
+                request_id = batch.get("request_id")
+                vectors = batch.get("vectors")
+                if not isinstance(request_id, str) or not isinstance(vectors, dict):
+                    return None
+                total = vectors.get("total")
+                if total != 1344:
+                    return None
+                return {
+                    "kind": "olm_runtime_trace_request_package",
+                    "profile": "olm-math-ucrt-batch-native-windows-no-ae",
+                    "supersedes": [],
+                    "runtime_actions": [
+                        {
+                            "request_id": request_id,
+                            "plugin_area": (
+                                "AE-free native System32 UCRT capture: 494 exact DirectionalBlur expf "
+                                "vectors plus 787 actual-call DirectionalBlur powf keys and 63 exact "
+                                "DistanceGradation powf vectors in one x64 process."
+                            ),
+                            "command": (
+                                "powershell -NoProfile -ExecutionPolicy Bypass -File "
+                                ".\\run_olm_math_ucrt_batch.ps1 -OutputDir C:\\olm-ucrt-return"
+                            ),
+                            "stop_condition": (
+                                "Return all 1,344 keyed float32 results with one exact 64-bit "
+                                "%WINDIR%\\System32\\ucrtbase.dll identity; do not launch AE or aerender."
+                            ),
+                        }
+                    ],
+                }
             name = next(
                 (member for member in archive.namelist() if member.replace("\\", "/").endswith("runtime_trace_package_manifest.json")),
                 None,
@@ -695,10 +759,19 @@ def superseded_request_ids(root: Path) -> set[str]:
 
 
 def comparison_command(request_id: str) -> str:
+    if request_id in SPECIAL_COMPARISON_COMMANDS:
+        return SPECIAL_COMPARISON_COMMANDS[request_id]
     for needle, command in COMPARISON_COMMANDS:
         if needle in request_id:
             return command
     return "python3 scripts/intake_olm_return.py path/to/return.zip --runtime-summary-json refs/reports/runtime_trace_summary.json --runtime-summary-md refs/reports/runtime_trace_summary.md --runtime-comparison-dir refs/reports/runtime_trace_comparisons"
+
+
+def intake_command(request_id: str) -> str:
+    return SPECIAL_INTAKE_COMMANDS.get(
+        request_id,
+        "python3 scripts/intake_olm_return.py path/to/return.zip --runtime-summary-json refs/reports/runtime_trace_summary.json --runtime-summary-md refs/reports/runtime_trace_summary.md --runtime-comparison-dir refs/reports/runtime_trace_comparisons",
+    )
 
 
 def acceptance_note(request_id: str) -> str:
@@ -777,7 +850,7 @@ def collect(root: Path, package_dir: Path) -> list[dict[str, Any]]:
                     "plugin_area": action.get("plugin_area") or "",
                     "command": action.get("command") or "",
                     "stop_condition": action.get("stop_condition") or "",
-                    "intake_command": "python3 scripts/intake_olm_return.py path/to/return.zip --runtime-summary-json refs/reports/runtime_trace_summary.json --runtime-summary-md refs/reports/runtime_trace_summary.md --runtime-comparison-dir refs/reports/runtime_trace_comparisons",
+                    "intake_command": intake_command(request_id),
                     "comparison_command": comparison_command(request_id),
                     "acceptance_note": acceptance_note(request_id),
                     "hard_lane_context": hard_lane_context(request_id),
