@@ -7,6 +7,7 @@ installation, reference-worker rebuild, source-included Mac substitute, or rende
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 from dataclasses import asdict
 import hashlib
 import json
@@ -31,6 +32,14 @@ PLUGINS = ('ColorKeep', 'OLMBlur', 'OLMColorKey', 'OLMDirectionalBlur',
 
 def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def import_summary(calls):
+    # Smoother2's setup alone calls exp 19,560 times. Preserve identity/counts,
+    # not a multi-megabyte per-call argument transcript in the committed report.
+    return {'count': len(calls),
+            'counts_by_import': dict(sorted(Counter(f'{c["dll"]}!{c["name"]}' for c in calls).items())),
+            'transcript_sha256': hashlib.sha256(json.dumps(calls, sort_keys=True).encode()).hexdigest()}
 
 
 def abi_control(main):
@@ -192,7 +201,7 @@ def original_setup(path, entry, fill):
     return {'return_code': result['rax'], 'my_version': values[0], 'out_flags': values[1],
             'out_flags2': values[2], 'initial_fill': fill, 'suite_acquisitions': acquired,
             'suite_releases': released, 'registrations': registrations,
-            'imports': [asdict(call) for call in loader.import_log]}
+            'imports': import_summary([asdict(call) for call in loader.import_log])}
 
 
 def run(command, log, env):
