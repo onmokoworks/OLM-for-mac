@@ -1,0 +1,1414 @@
+{
+  "budget_minutes": 30,
+  "case_timeout_seconds": 10,
+  "cases": [],
+  "claims_not_made": [
+    "Signature clusters are not proven root causes.",
+    "Finite random coverage is not all-input compatibility.",
+    "This is CPU AEX emulation vs a fake SDK host, not native AE/Windows UCRT validation.",
+    "AEX packed strides vs Mac random padding does not establish AEX odd-stride support."
+  ],
+  "completed": 35,
+  "corpus_max_bytes": 2000000,
+  "deadline_reached": false,
+  "elapsed_seconds": 9.8055,
+  "framework_sha256": {
+    "tools/fuzz/adapters/__init__.py": "872b5caf08c225f78a57a12ae35dabd133c4a40586446a26a9961f12a22926de",
+    "tools/fuzz/adapters/colorkeep.py": "8905fb46fb5efe366ad50a28be52a7d7c10712b94800515e58640405c03660c1",
+    "tools/fuzz/adapters/olmblur.py": "b8e167d77b51016159184db5b59f7ff5044670676f1c029730c127e195e6c9b2",
+    "tools/fuzz/adapters/olmcolorkey.py": "ad5ade6755c69a33142ebe8a7df3154435d77893119ca5eb1269daaf92ecafac",
+    "tools/fuzz/adapters/olmdirectionalblur.py": "3f0cf45156be8cf015c909206acc7760157f9e47ba71ba0be380696f5ad1dcc4",
+    "tools/fuzz/adapters/olmdistancegradation.py": "2e58d20d22b65e07fc16c2d59157ae113620fec8ad154a51d62d759323b1e4c1",
+    "tools/fuzz/adapters/olmkirakira.py": "84c38bf2abf6268bc1cf98c20a2af4d7160f6f616eccc8b69bf42e8970f4f3c0",
+    "tools/fuzz/adapters/olmsmoother.py": "ae62cd7ea76ee6f5f3f0e953705fd603294d1f1bd7c10aa8b0d25001c0af7512",
+    "tools/fuzz/adapters/olmsmoother2.py": "ee99864b16e277fccb6e3be109f772f60ec459350a38d490fc45ebf6cc0c05cf",
+    "tools/fuzz/adapters/olmtoondilate.py": "7103eb0724d5a84102d1acd72d559b70a96d4dfc7b7f29e943f956302f290ce1",
+    "tools/fuzz/adapters/public.py": "85b449adfd246ca48b095cb57f48368242c09a23085b55e007a5699d6683480c",
+    "tools/fuzz/adapters/radialblur.py": "4c13a3b61cf8c23b2f86c8597c0505fd8d735705579ddb557807e90efea998bc",
+    "tools/fuzz/capture_declarations.py": "1c6a013fc157c76785a8214b92e1769f4bf471fa5122fc460979f5c811d13f0b",
+    "tools/fuzz/core.py": "16a1e410e0c43a4b822ac4697a82d3e2723acf5025d605ff1069480c086a1fbd",
+    "tools/fuzz/kirakira_triage_summary.py": "36340cb869e8bb40601190519a9efa321c15ecf16418eda380fc3a3f91119131",
+    "tools/fuzz/probe_directionalblur_zero_strength.py": "547bd8a58c2b24bfe1714a29b31f62427b04494a2872e142dea379d659d58c95",
+    "tools/fuzz/probe_distancegradation_default_owner.py": "d5dd94587b38db929d8e2ebd6bd4a92fe4e6ecd1e869ea3a25c75b97c6626702",
+    "tools/fuzz/probe_kirakira_tiny_owner_F04.py": "49a2cac5f7f61e6d228cbcbe0c171c201a997ec891a401e442323468f35f67df",
+    "tools/fuzz/probe_radialblur_zoom_F08.py": "8075b52a12015545c2656e592d1155e64d56ce902ea399a7bed8ef39c6967b97",
+    "tools/fuzz/rebaseline_corpus.py": "ca70b9badfac664a498a4b66adf9e36ed3e6166bfea85c2a06c3b6a54509d29c",
+    "tools/fuzz/refusal_census.py": "741ee0f8ad24acde87a77af8ce63cc63f142ebb24167eb821e0d63b568302152",
+    "tools/fuzz/run.py": "7209037849fa05710977c3a6723aa64f0aeb5a37668fcb8b5a05c34a12a0c3da",
+    "tools/fuzz/summarize_kirakira_tiny_owner_F04.py": "9c30e52a8eebb40d8370adda1e52e512fa42f6ca2d3176b310560f2cb1638588",
+    "tools/fuzz/t05_bypass_summary.py": "6c04612b712f336c7d1f1e77e7bf88ec938d4868fb79d7fddba4478f2e8ca3d6",
+    "tools/fuzz/test_adapters.py": "1f3cb30aadb20d41db823b065468159336ed61c1bcd61655a13471e96c55ffb2",
+    "tools/fuzz/test_framework.py": "c5f3fa8bf01539378c6319fdb1e90973fddbc2d083b7cc7c6459294a5eeec111",
+    "tools/fuzz/triage_directionalblur.py": "6a563f9ccadf1bc7ed515ade56c032ab2c0a0c9df68b49c14a31b591315b409a",
+    "tools/fuzz/triage_distancegradation.py": "5910d6f2495c3cc7745f7aafb5f6b321b3da32ced0327bb0006271dbab685939",
+    "tools/fuzz/triage_kirakira.py": "532be82e6c7fe91d189e62c63c2b87c11a6e9638f86461f613be6387f0d21c10",
+    "tools/fuzz/triage_olmsmoother2.py": "227209086ba97c08717deb0bce9a42705cce0108bca7c0c164a30d9ee5948f8a"
+  },
+  "generator_version": 1,
+  "jobs": 4,
+  "max_size": 256,
+  "plugin": "radialblur",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/aex/OLMRadialBlur/Plugins/64/2025/OLMRadialBlur.aex",
+    "aex_sha256": "ffbb1d0109671e3ea9b1a12cd1126f2c72f965197577a57cc602fb096414ccdb",
+    "aex_stride": "packed session input/output; random odd byte padding on Mac worlds only",
+    "calibration": [
+      {
+        "actual_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+        "depth": 8,
+        "expected_sha256": "08e194c5833069043646521bc3e2c636665dd1511a13834ffc10724fb433f174",
+        "family": 1,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+        "depth": 16,
+        "expected_sha256": "73e2beeab38650321530b7cc4202d3a2c7a47a9dc4513c22a576b6cf7c2a1c82",
+        "family": 1,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "40c57843a01558219e98bb52b6a9f4be10e6389081f84c7f195e2c36eac2235d",
+        "depth": 32,
+        "expected_sha256": "37eb1d2bcead7fd3e88543878f90ff6c36f1f1f65cf6a694a1385423d1f022bc",
+        "family": 1,
+        "matches_retained": false,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+        "depth": 8,
+        "expected_sha256": "f966156647da21607df7b32c78ccf47266905387a71a3b3aa7aab5a2aff36ed6",
+        "family": 2,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+        "depth": 16,
+        "expected_sha256": "118407b15aaaebf031d17e861f511b08b7e9add98e116b8381e682d13076b9c6",
+        "family": 2,
+        "matches_retained": true,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      {
+        "actual_sha256": "8d77e834eea39e4c429d37daa74db8569251b8de5d72265762e456327dcf0c57",
+        "depth": 32,
+        "expected_sha256": "20a8738362accff3c21b7a40f5c9215bf57e99635aa813cbf7828eee3b072c07",
+        "family": 2,
+        "matches_retained": false,
+        "oracle": {
+          "guards_intact": true,
+          "session_clean": true,
+          "status": "ok"
+        }
+      }
+    ],
+    "candidate_bypass": "",
+    "candidate_sanitize": false,
+    "candidate_sha256": "4307206310b4ef097fb7bb665ecdc10cf64db07fc4e8faa5aa438929839ad1eb",
+    "candidate_source_sha256": "7cc086b942e9febe858c1a451d2047224bcbda1dc6e2163d79fdf4a7da5d57ea",
+    "compiler": "clang++ arm64 -O2 -fno-fast-math -ffp-contract=off (existing public.build)",
+    "coordinates": "Mac pixel PF_Fixed; AEX percent via public.native_case",
+    "core_sha256": "5098f0acafc9d7a76136d306bd15193ca0c987fd3610e9340b311e6646001bee",
+    "declarations_sha256": "16467c9c7956218d7966e330d644056b2101e46a84beb03e760073668a356bf3",
+    "harness_sha256": "5b8c82bc3dca745f08f62aee44f182c60fcc5bfcdad4a40ff56e77a78916c402",
+    "header_sha256": "487cea536ce93b4f1525385fa159aad3a5c764bc69257efe75b39268b12f990e",
+    "host": "AEXCompat Unicorn CPU Smart; SDK fake Mac Classic/Smart EffectMain",
+    "noise_layer": "None (slot 26 omitted); popup Layer is sampled, independent layer checkout is outside this adapter",
+    "reference_limit": "Host math imports are not a native Windows UCRT/AE oracle. Calibration is finite, not general equivalence.",
+    "source_sha256": "7cc086b942e9febe858c1a451d2047224bcbda1dc6e2163d79fdf4a7da5d57ea",
+    "stage_support": "session protocol + public EffectMain harness expose final raw only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/.cache/olm-emu/radial_offset_reference_20261002/target/release/aex-guest-worker",
+    "worker_sha256": "93622cbc412f31a094f34da4555eb1023231f26f560869924b9faab28ec4f7ed",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB; no color conversion"
+  },
+  "replay": "tests/fuzz_corpus/radialblur",
+  "replay_matches_saved": false,
+  "replays": [
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000006_253d4390d90b.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "37e13466788bbc792cce4be17b3a27649e13a8ef2a41c3571a0095fcbda02181",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 21 0"
+            },
+            "raw_sha256": "37e13466788bbc792cce4be17b3a27649e13a8ef2a41c3571a0095fcbda02181",
+            "status": "exact"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 21 0"
+            },
+            "raw_sha256": "37e13466788bbc792cce4be17b3a27649e13a8ef2a41c3571a0095fcbda02181",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000029_b099428e963b.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "2779b50f63d1211d52a204b3f7aec55bbceafd28ee895f045f75e55fe5c2e73f",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "516",
+              "INFO": "0 8 0 0"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 8 0 0"
+            },
+            "raw_sha256": "2779b50f63d1211d52a204b3f7aec55bbceafd28ee895f045f75e55fe5c2e73f",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000034_f67ec58a433d.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "aff56455f8e0afd1f2f876344d2ee3c004e98ddb933a1ee50318a2ffb67bfd45",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "516",
+              "INFO": "0 18 0 0"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 18 0 0"
+            },
+            "raw_sha256": "aff56455f8e0afd1f2f876344d2ee3c004e98ddb933a1ee50318a2ffb67bfd45",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000041_42e5f8af427d.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "b4248c210a2905b94345e1a8414d0e12efcfb2f4f0f2397159a71283397a0ccd",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "b4248c210a2905b94345e1a8414d0e12efcfb2f4f0f2397159a71283397a0ccd",
+            "status": "exact"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "b4248c210a2905b94345e1a8414d0e12efcfb2f4f0f2397159a71283397a0ccd",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000043_5a4c69b38522.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "75f90c42318461b5ddd87f5c163d6ba82c6ba6ef6bee1002339ecd4fb0c52407",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "75f90c42318461b5ddd87f5c163d6ba82c6ba6ef6bee1002339ecd4fb0c52407",
+            "status": "exact"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "75f90c42318461b5ddd87f5c163d6ba82c6ba6ef6bee1002339ecd4fb0c52407",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000044_d1d38fe702c9.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "eff9698676c0460f731721ce4f5b986ff84888a6a18ea1cfe9fa358057d3d9c0",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "516",
+              "INFO": "0 0 0 0"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "eff9698676c0460f731721ce4f5b986ff84888a6a18ea1cfe9fa358057d3d9c0",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000050_aa6536a877df.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "b84248631ff42aae9f47df7f9fb3f2f8323bca8942d33a35652ab108a0df5d3e",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "b84248631ff42aae9f47df7f9fb3f2f8323bca8942d33a35652ab108a0df5d3e",
+            "status": "exact"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "b84248631ff42aae9f47df7f9fb3f2f8323bca8942d33a35652ab108a0df5d3e",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000081_9774c69c219e.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "a006a5cfe0a5f8da6c25cfa6276c878a4fab7f1fda8e4675909ac022f195ce4e",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "0",
+              "INFO": "0 32 0 0"
+            },
+            "raw_sha256": "a006a5cfe0a5f8da6c25cfa6276c878a4fab7f1fda8e4675909ac022f195ce4e",
+            "status": "exact"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 32 0 0"
+            },
+            "raw_sha256": "a006a5cfe0a5f8da6c25cfa6276c878a4fab7f1fda8e4675909ac022f195ce4e",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000091_0f4b356bb556.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "f8ec1ac04cc50aea6d1e9d084ec73368e3cffac0835f63d912d1668c02af2582",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "f8ec1ac04cc50aea6d1e9d084ec73368e3cffac0835f63d912d1668c02af2582",
+            "status": "exact"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "f8ec1ac04cc50aea6d1e9d084ec73368e3cffac0835f63d912d1668c02af2582",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000152_0f4b356bb556.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "9c1031e84fb6841bdad81df53c4eb9c8c07713a9eaa5bbd22598822cb5d564d0",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "9c1031e84fb6841bdad81df53c4eb9c8c07713a9eaa5bbd22598822cb5d564d0",
+            "status": "exact"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "9c1031e84fb6841bdad81df53c4eb9c8c07713a9eaa5bbd22598822cb5d564d0",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000153_f8d4024784b4.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "23bc0127ca890e30378f4b80ab658e8e3cc316c1afb9264891af14c63611d681",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "516",
+              "INFO": "0 0 0 0"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "23bc0127ca890e30378f4b80ab658e8e3cc316c1afb9264891af14c63611d681",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000180_f67ec58a433d.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "98e78175b2c5f392ea0694f76331c40f2780ace8e0899d59b1ac6bee87effaa4",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "516",
+              "INFO": "0 23 0 0"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 23 0 0"
+            },
+            "raw_sha256": "98e78175b2c5f392ea0694f76331c40f2780ace8e0899d59b1ac6bee87effaa4",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000203_f8d4024784b4.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "c01da1c52bbbe922b47172f3f806087a18929cd10fa13de4d8aea5f56d43b155",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "c01da1c52bbbe922b47172f3f806087a18929cd10fa13de4d8aea5f56d43b155",
+            "status": "exact"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "c01da1c52bbbe922b47172f3f806087a18929cd10fa13de4d8aea5f56d43b155",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000221_dc2eff5fb2aa.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "5a25b2a5624cd113a18ea84e594fb05e7941f88a46538566326d54f40110d064",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "5a25b2a5624cd113a18ea84e594fb05e7941f88a46538566326d54f40110d064",
+            "status": "exact"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "5a25b2a5624cd113a18ea84e594fb05e7941f88a46538566326d54f40110d064",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000230_f8d4024784b4.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "fb4d2fad3cb0c5a5724c64c8568c9f91584c94007cfee2ba87be58ec647d5144",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "516",
+              "INFO": "0 0 0 0"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "fb4d2fad3cb0c5a5724c64c8568c9f91584c94007cfee2ba87be58ec647d5144",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000253_0f4b356bb556.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "56b10b93033b4de9947293803b2f4582cf3812043b2c29a72485bada0d90770a",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "56b10b93033b4de9947293803b2f4582cf3812043b2c29a72485bada0d90770a",
+            "status": "exact"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "56b10b93033b4de9947293803b2f4582cf3812043b2c29a72485bada0d90770a",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000268_c68d152bb97c.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "301032c0a9fcc367f5818dd47f816514418958123012071f4428cd1036a4d8a3",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "516",
+              "INFO": "164.134033203125 0 13 0"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "164.134033203125 0 13 0"
+            },
+            "raw_sha256": "301032c0a9fcc367f5818dd47f816514418958123012071f4428cd1036a4d8a3",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000269_d7848a7c740d.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "e1c52d3f4a238abc97ba6e80c36cde8e1663139ebc9c89c4e185926f05f7614b",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "516",
+              "INFO": "-189.80970764160156 0 0 0"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "-189.80970764160156 0 0 0"
+            },
+            "raw_sha256": "e1c52d3f4a238abc97ba6e80c36cde8e1663139ebc9c89c4e185926f05f7614b",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000271_9a5b282a1ffa.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "ed8680b37b183f6edc7b625e625469ef22643b31136aaf8ae9e76999200239bd",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "ed8680b37b183f6edc7b625e625469ef22643b31136aaf8ae9e76999200239bd",
+            "status": "exact"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "ed8680b37b183f6edc7b625e625469ef22643b31136aaf8ae9e76999200239bd",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000303_5a4c69b38522.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "b48e676b273349dbbe557da2b4c738b734f93c5c4878523fdb78c366a84e7fe9",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "b48e676b273349dbbe557da2b4c738b734f93c5c4878523fdb78c366a84e7fe9",
+            "status": "exact"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "b48e676b273349dbbe557da2b4c738b734f93c5c4878523fdb78c366a84e7fe9",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000305_93a01b17e479.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "663f3af5b3aa5c4ec10e4b422923b9330dda800477fb54471ca18217862a7f84",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "663f3af5b3aa5c4ec10e4b422923b9330dda800477fb54471ca18217862a7f84",
+            "status": "exact"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "663f3af5b3aa5c4ec10e4b422923b9330dda800477fb54471ca18217862a7f84",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000328_93a01b17e479.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "78c2a133afa29304e1603afbf92953902f4afc546959864f4cb8577b9dbb8bf0",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "78c2a133afa29304e1603afbf92953902f4afc546959864f4cb8577b9dbb8bf0",
+            "status": "exact"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "78c2a133afa29304e1603afbf92953902f4afc546959864f4cb8577b9dbb8bf0",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000347_d1d38fe702c9.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "5ff58c9e020cab7c64260e77e7634052e62ff7d40b140af395a3fa39221a1f3f",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "516",
+              "INFO": "0 0 0 0"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "5ff58c9e020cab7c64260e77e7634052e62ff7d40b140af395a3fa39221a1f3f",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000369_90303525f87f.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "4cb65488a0381ccd2ef02384d00419930cfbbea2a056ebb144255e2ab08fb8d6",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "0",
+              "INFO": "115.08343505859375 0 0 0"
+            },
+            "raw_sha256": "4cb65488a0381ccd2ef02384d00419930cfbbea2a056ebb144255e2ab08fb8d6",
+            "status": "exact"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "115.08343505859375 0 0 0"
+            },
+            "raw_sha256": "4cb65488a0381ccd2ef02384d00419930cfbbea2a056ebb144255e2ab08fb8d6",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000379_dc2eff5fb2aa.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "b10e97e600a05a06810d564ae98d17f2d835665c3af2a6c6a78ecf1aa54cda19",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "b10e97e600a05a06810d564ae98d17f2d835665c3af2a6c6a78ecf1aa54cda19",
+            "status": "exact"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "b10e97e600a05a06810d564ae98d17f2d835665c3af2a6c6a78ecf1aa54cda19",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000384_d1d38fe702c9.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "125489becfde5a6442accc40f2a8667285c1fe4c37808df8c2fb50f579528b9c",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "516",
+              "INFO": "0 0 0 0"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "125489becfde5a6442accc40f2a8667285c1fe4c37808df8c2fb50f579528b9c",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000390_f8d4024784b4.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "8a35722fc39cae3d956156019994686e56ec38486339f35d7c71831903d8ff6d",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "516",
+              "INFO": "0 0 0 0"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "8a35722fc39cae3d956156019994686e56ec38486339f35d7c71831903d8ff6d",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000421_71f8c982c45b.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "11ae8545258181800f5839c999b455ac18ac0045cc933b570bd7062e7799379e",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "0",
+              "INFO": "0 80 0 0"
+            },
+            "raw_sha256": "11ae8545258181800f5839c999b455ac18ac0045cc933b570bd7062e7799379e",
+            "status": "exact"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 80 0 0"
+            },
+            "raw_sha256": "11ae8545258181800f5839c999b455ac18ac0045cc933b570bd7062e7799379e",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000425_df3690c920ab.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "87fd3782a620116260a596081f06a29f0a4e2615dee460dc52ecbd456b56174f",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 516,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "516",
+              "INFO": "0 0 0 0"
+            },
+            "status": "refusal"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "87fd3782a620116260a596081f06a29f0a4e2615dee460dc52ecbd456b56174f",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000440_e04d91d93cb4.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "c394b161db08dc1441a4b65b742162e0f9f262c7479f7e6d415637038d74f193",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "c394b161db08dc1441a4b65b742162e0f9f262c7479f7e6d415637038d74f193",
+            "status": "exact"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "c394b161db08dc1441a4b65b742162e0f9f262c7479f7e6d415637038d74f193",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000444_253d4390d90b.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "4f8abe132434ca0e9cbdde3dabb10e88bb02b596e6dae684be6fdcc3b8b1c873",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 22 0"
+            },
+            "raw_sha256": "4f8abe132434ca0e9cbdde3dabb10e88bb02b596e6dae684be6fdcc3b8b1c873",
+            "status": "exact"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 22 0"
+            },
+            "raw_sha256": "4f8abe132434ca0e9cbdde3dabb10e88bb02b596e6dae684be6fdcc3b8b1c873",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000448_d1d38fe702c9.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "477917214f009f1eb0f14b0f60d2f21c079d1cefa1317f428380613520e6de78",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "477917214f009f1eb0f14b0f60d2f21c079d1cefa1317f428380613520e6de78",
+            "status": "exact"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "477917214f009f1eb0f14b0f60d2f21c079d1cefa1317f428380613520e6de78",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000458_e04d91d93cb4.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "28e83749fff99edc9be17d8d4c4c48d6415efe9a8206b535bb937a292592178b",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "28e83749fff99edc9be17d8d4c4c48d6415efe9a8206b535bb937a292592178b",
+            "status": "exact"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "28e83749fff99edc9be17d8d4c4c48d6415efe9a8206b535bb937a292592178b",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000486_0f4b356bb556.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "404783196698d1444aae6325a7e89366f5a5b4436bedba80a1c1bc1b07bde4bc",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "404783196698d1444aae6325a7e89366f5a5b4436bedba80a1c1bc1b07bde4bc",
+            "status": "exact"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "404783196698d1444aae6325a7e89366f5a5b4436bedba80a1c1bc1b07bde4bc",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    },
+    {
+      "matches_saved": false,
+      "path": "tests/fuzz_corpus/radialblur/seed1_case000487_5a4c69b38522.json",
+      "result": {
+        "first_mismatching_stage": null,
+        "oracle": {
+          "guards_intact": true,
+          "raw_sha256": "5f9f965bf9501f4876834884f14aef2352c35c825ae465f4b26acbb0c29b6b85",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "routes": {
+          "classic": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "0 0 0 0 0 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "5f9f965bf9501f4876834884f14aef2352c35c825ae465f4b26acbb0c29b6b85",
+            "status": "exact"
+          },
+          "smart": {
+            "error": 0,
+            "metadata": {
+              "COUNTS": "1 32 32 1 1 1 1",
+              "ERROR": "0",
+              "INFO": "0 0 0 0"
+            },
+            "raw_sha256": "5f9f965bf9501f4876834884f14aef2352c35c825ae465f4b26acbb0c29b6b85",
+            "status": "exact"
+          }
+        },
+        "stage_observation": "paired stages unavailable; final raw output only"
+      }
+    }
+  ],
+  "requested": 35,
+  "schema": "olm-fuzz-report/1",
+  "scratch_bytes_before_cleanup": 902785,
+  "seed": 1,
+  "shrink_attempts": 32,
+  "shrink_seconds": 10,
+  "started_utc": "2026-10-21T17:44:54.621880+00:00",
+  "status": "replay_complete"
+}
