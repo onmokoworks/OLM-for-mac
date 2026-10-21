@@ -47,6 +47,29 @@ static PF_Err RadialRefusal(const char *function, const char *tag, int line, PF_
 #define OLM_RADIAL_REFUSAL(tag) RadialRefusal(__func__, tag, __LINE__, PF_Err_BAD_CALLBACK_PARAM)
 #define OLM_RADIAL_ERROR(tag, code) RadialRefusal(__func__, tag, __LINE__, code)
 
+// EXPERIMENT ONLY: a scratch build may name admission-guard tags in
+// OLM_RADIAL_EXPERIMENT_BYPASS to fall through those guards. Empty by default,
+// so shipped behavior and output bytes are unchanged (verified by corpus replay).
+#ifndef OLM_RADIAL_EXPERIMENT_BYPASS
+#define OLM_RADIAL_EXPERIMENT_BYPASS ""
+#endif
+
+static bool RadialExperimentBypass(const char *tag)
+{
+	static constexpr const char *bypass = OLM_RADIAL_EXPERIMENT_BYPASS;
+	if (bypass[0] == '\0') return false;
+	const std::size_t tag_length = std::strlen(tag);
+	for (const char *item = bypass; *item;) {
+		const char *separator = std::strchr(item, ',');
+		const std::size_t item_length = separator
+			? static_cast<std::size_t>(separator - item) : std::strlen(item);
+		if (item_length == tag_length && std::strncmp(item, tag, tag_length) == 0) return true;
+		if (!separator) break;
+		item = separator + 1;
+	}
+	return false;
+}
+
 static constexpr PF_FpLong kPi = 3.141592653589793238462643383279502884;
 
 static float RadialNoiseOffsetRadians(PF_Fixed raw_angle)
@@ -2866,7 +2889,8 @@ static PF_Err RenderZoomTyped(
 		!use_aex_typed_zoom_offcenter_brightness && (!use_aex_zoom_geometry || info.repeat_border == FALSE ||
 		(!use_aex_typed_zoom_ellipse_geometry && (info.ratio != 1.0 || info.angle_deg != 0.0)) ||
 		info.quality != 5.0 || info.brightness_gain != 1.0 ||
-		info.size_variation != 0.0 || info.outer_edge_fade != 0 || info.inner_edge_fade != 0)) {
+		info.size_variation != 0.0 || info.outer_edge_fade != 0 || info.inner_edge_fade != 0) &&
+		!RadialExperimentBypass("unadmitted-zoom-profile")) {
 		return OLM_RADIAL_REFUSAL("unadmitted-zoom-profile");
 	}
 	const bool use_aex_pf32_zoom_noise_type1_small = input && output &&
@@ -3031,12 +3055,33 @@ static PF_Err RenderZoomTyped(
 	    !use_aex_typed_zoom_type3_layer_span_small &&
 	    !use_aex_typed_zoom_transform_worker_32x18 &&
 	    !use_aex_typed_zoom_any_size_edge_noise_components_32x18 &&
-	    !use_aex_typed_zoom_size_noise_components_32x18))) {
+	    !use_aex_typed_zoom_size_noise_components_32x18)) &&
+		!RadialExperimentBypass("unadmitted-zoom-noise-inner-profile")) {
 		// These branches are not yet backed by an actual-AEX worker/output
 		// contract.  Returning success with an unchanged frame made an
 		// unsupported render indistinguishable from an exact identity result.
 		return OLM_RADIAL_REFUSAL("unadmitted-zoom-noise-inner-profile");
 	}
+
+	// The original Zoom builder (57a4..5830) builds its four tables from
+	// Strength and Edge Fade only; Offset/Offset Mode belong to Rotation.
+	// Keep admission above unchanged, but select the same Zoom worker for a
+	// legal offset profile as for its neutral-offset controls. Falling back to
+	// the legacy convolution clamps polar alpha and drops signed contributions
+	// before inverse sampling (F08's original-AEX plane witnesses).
+	OLMRadialBlurInfo zoom_worker_profile = info;
+	zoom_worker_profile.outer_offset_mode = 1;
+	zoom_worker_profile.outer_offset = 0;
+	zoom_worker_profile.inner_offset_mode = 1;
+	zoom_worker_profile.inner_offset = 0;
+	const bool legal_zoom_offsets = info.outer_offset_mode >= 1 && info.outer_offset_mode <= 3 &&
+		info.inner_offset_mode >= 1 && info.inner_offset_mode <= 3 &&
+		info.outer_offset >= 0 && info.outer_offset <= 500 &&
+		info.inner_offset >= 0 && info.inner_offset <= 500;
+	const bool use_native_zoom_baseline = use_generic_baseline ||
+		(legal_zoom_offsets && info.blur_type == 1 &&
+		 info.size_variation == 0.0 && info.noise_variation == 0.0 &&
+		 IsGenericBaselineWorldPair<PixelT>(input, output, zoom_worker_profile));
 
 	const A_long w = output->width;
 	const A_long h = output->height;
@@ -3061,7 +3106,7 @@ static PF_Err RenderZoomTyped(
 	const double base_angle = info.angle_deg * kPi / 180.0;
 	// Original builder: FLOAT32 Quality -> DIVSS reciprocal; constructor:
 	// CVTSS2SD -> MULSD stored constant -> FLOAT32 radians. Count uses DIVSS.
-	const bool use_native_quality_setup = use_generic_baseline || use_generic_size_noise;
+	const bool use_native_quality_setup = use_native_zoom_baseline || use_generic_size_noise;
 	const double quality = use_native_quality_setup ? (double)(float)info.quality : (info.quality > 0.0 ? info.quality : 5.0);
 	const double step_deg = use_native_quality_setup ? (double)RadialF32Div(1.0f, (float)quality) : 1.0 / quality;
 	const double step_rad = use_native_quality_setup ? (double)(float)(step_deg * 0.017453292500000002) : step_deg * kPi / 180.0;
@@ -3115,7 +3160,7 @@ static PF_Err RenderZoomTyped(
 		info.thickness == 10.0 && info.comp_width == 9.0 && info.comp_height == 7.0;
 	const bool use_aex_pf16_bounded_offset_small =
 		use_aex_pf16_offset_mode2_ui2_small || use_aex_pf16_offset_mode3_ui2_small;
-	bool use_aex_outer_only = use_generic_baseline || use_generic_size_noise || use_generic_type3 || (
+	bool use_aex_outer_only = use_native_zoom_baseline || use_generic_size_noise || use_generic_type3 || (
 		info.inner_strength == 0 && info.inner_offset == 0 && info.inner_edge_fade == 0 &&
 		info.outer_offset == 0 && info.outer_edge_fade == 0 &&
 		info.size_variation == 0.0 && info.noise_variation == 0.0) ||
@@ -3314,7 +3359,7 @@ static PF_Err RenderZoomTyped(
 			worker_info.outer_offset_mode = 1;
 			worker_info.outer_offset = 0;
 		}
-		const bool use_aex_zoom_inner = (use_generic_baseline && info.inner_strength != 0) ||
+		const bool use_aex_zoom_inner = (use_native_zoom_baseline && info.inner_strength != 0) ||
 			use_aex_pf32_zoom_inner_small ||
 			use_aex_pf32_zoom_inner_noise_small || use_aex_typed_zoom_inner_pairwise ||
 			use_aex_typed_zoom_dual_size_components_32x18 ||
@@ -3323,7 +3368,7 @@ static PF_Err RenderZoomTyped(
 		const std::vector<float> inner_weights = use_aex_zoom_inner
 			? (use_native_quality_setup ? RotationFadeGaussianWeights(info.inner_strength) : ZoomGaussianWeights(info.inner_strength))
 			: std::vector<float>();
-		const A_long outer_fade_span = ((use_generic_baseline && info.outer_edge_fade != 0) ||
+		const A_long outer_fade_span = ((use_native_zoom_baseline && info.outer_edge_fade != 0) ||
 			use_aex_typed_zoom_edge_fade_32x18 ||
 			use_aex_typed_zoom_size_edge_components_32x18 ||
 			use_aex_typed_zoom_any_size_edge_noise_components_32x18 ||
@@ -3332,7 +3377,7 @@ static PF_Err RenderZoomTyped(
 			? info.outer_edge_fade : 0;
 		const std::vector<float> outer_fade_weights = outer_fade_span > 0
 			? RotationFadeGaussianWeights(outer_fade_span) : std::vector<float>();
-		const A_long inner_fade_span = (use_generic_baseline && info.inner_edge_fade != 0) ||
+		const A_long inner_fade_span = (use_native_zoom_baseline && info.inner_edge_fade != 0) ||
 			use_aex_typed_zoom_inner_size_edge_noise_components_32x18
 			? info.inner_edge_fade : 0;
 		const std::vector<float> inner_fade_weights = inner_fade_span > 0
@@ -4145,7 +4190,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 	     !use_aex_typed_rotation_any_size_edge_noise_components_32x18 &&
 	     !use_aex_typed_rotation_size_noise_components_32x18 &&
 	     !use_aex_pf32_opaque_size_noise_type1_small &&
-	     !use_aex_pf32_edge_fade_cross_small))) {
+	     !use_aex_pf32_edge_fade_cross_small)) &&
+		!RadialExperimentBypass("unadmitted-rotation-profile")) {
 		return OLM_RADIAL_REFUSAL("unadmitted-rotation-profile");
 	}
 
@@ -4362,7 +4408,8 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 		use_aex_pf32_offset_mode3_ui4_small || use_aex_pf16_offset_mode3_ui2_small ||
 		use_aex_pf16_offset_mode3_ui3_small;
 	const bool use_generic_two_stage = use_generic_baseline || use_generic_size_noise;
-	if (!use_generic_baseline && !use_generic_size_noise && !use_aex_exact) return OLM_RADIAL_REFUSAL("unadmitted-two-stage-profile");
+	if (!use_generic_baseline && !use_generic_size_noise && !use_aex_exact &&
+		!RadialExperimentBypass("unadmitted-two-stage-profile")) return OLM_RADIAL_REFUSAL("unadmitted-two-stage-profile");
 	const RadialBlurDebugConfig debug = LoadRadialBlurDebugConfig();
 	FloatImage src;
 	src.width = w;
@@ -5276,7 +5323,8 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 	PF_EffectWorld *noise_world, const OLMRadialBlurInfo &info, short bitdepth)
 {
 	if (IsRadialNoOpControlProfile(info)) return RenderRadialNoOpCopy(input, output, info, bitdepth);
-	if (info.noise_type == 3 && !RequiresNoiseLayer(info)) {
+	if (info.noise_type == 3 && !RequiresNoiseLayer(info) &&
+		!RadialExperimentBypass("type3-zero-noise")) {
 		// A zero/negative Type-3 amount does not belong to the sole admitted
 		// NV25 layer tuple; do not let it fall through a generic neutral lane.
 		return OLM_RADIAL_REFUSAL("type3-zero-noise");
@@ -5310,7 +5358,8 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			IsGenericSizeNoiseWorldPair<PF_PixelFloat>(input, output, info)) &&
 			GenericRadialInputIsSDR<PF_PixelFloat>(input);
 		else return OLM_RADIAL_REFUSAL("generic-bitdepth");
-		if (!admitted) return OLM_RADIAL_REFUSAL("generic-world-not-admitted");
+		if (!admitted && !RadialExperimentBypass("generic-world-not-admitted"))
+			return OLM_RADIAL_REFUSAL("generic-world-not-admitted");
 		// Original typed callers copy the world first and stop when all six
 		// Strength, Offset and Fade integers are zero, regardless of Gain/Noise.
 		if (info.outer_strength == 0 && info.inner_strength == 0 &&

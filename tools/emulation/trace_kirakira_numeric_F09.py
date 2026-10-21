@@ -1,0 +1,272 @@
+#!/usr/bin/env python3
+"""Paired raw stage census for the retained T06 numeric witnesses.
+
+Uses the original AEX full caller, its original source reader and outer writer.
+The existing Python probe supplies Windows allocation/TLS/import scaffolding;
+no numerical AEX function is replaced. Each result is bound independently to
+the resident public worker's final raw output before interpreting its stages.
+Mac instrumentation and admission bypass exist only in a scratch translation
+unit. This is a diagnostic, not a production admission change.
+"""
+import argparse
+import json
+import os
+from pathlib import Path
+import struct
+import sys
+import time
+from types import SimpleNamespace
+
+sys.dont_write_bytecode = True
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT/'tools/fuzz'))
+from adapters import olmkirakira
+from core import load_corpus, sha, raw_diff
+from run import default_worker, main_checkout
+
+
+def original_trace(case, aex):
+    import probe_olmkirakira_mode3_actual_aex as base
+    from unicorn.x86_const import (UC_X86_REG_RBP, UC_X86_REG_RDX, UC_X86_REG_RCX,
+        UC_X86_REG_RSP, UC_X86_REG_XMM0, UC_X86_REG_XMM1, UC_X86_REG_XMM2, UC_X86_REG_XMM3)
+    p = {v['slot']: v['value'] for v in case['parameters']}
+    w, h = case['geometry']; n = w*h
+    stages = {}; geometry = []
+    original = base.AexLoader
+
+    class Loader(original):
+        def add_code_hook(self, address, callback):
+            # The base probe normally stops at Gaussian entry. Here execute
+            # the actual Gaussian body, after the original CRT initializers.
+            if address != base.FUN_GAUSSIAN:
+                return super().add_code_hook(address, callback)
+
+        def call_function(self, address, *args, **kwargs):
+            if address != base.FUN_HELPER:
+                return super().call_function(address, *args, **kwargs)
+            def alloc(data):
+                ptr = self.host_alloc(max(8, len(data)), align=64)
+                self.write_bytes(ptr, data)
+                return ptr
+            def words(ptr, count):
+                return self.read_bytes(ptr, count*4).hex()
+            # Import-free known answer also validates the fifth Win64 stack
+            # argument before any full-caller observation is trusted.
+            probe_input = alloc(bytes([255,255,0,0])); probe_rgba = alloc(bytes(16))
+            super().call_function(0x181230a80,
+                int_args=[probe_rgba,probe_rgba+4,probe_rgba+8,probe_rgba+12,probe_input],max_instructions=1000)
+            assert self.read_bytes(probe_rgba,16) == struct.pack('<4f',1,0,0,1)
+            raw = alloc(case['pixels']); pixels = alloc(bytes(n*16))
+            reader = {8:0x181230a80,16:0x181230af0,32:0x181230b60}[case['depth']]
+            for i in range(n):
+                q = pixels+i*16
+                super().call_function(reader, int_args=[q,q+4,q+8,q+12,raw+i*case['depth']//2], max_instructions=1000)
+            stages['source'] = words(pixels,n*4)
+            def sincos_entry(ld, _addr, _size):
+                geometry.append(dict(radians_f32_hex=struct.pack('<I',ld.uc.reg_read(UC_X86_REG_XMM0)&0xffffffff).hex()))
+            def sincos_return(ld, _addr, _size):
+                geometry[-1]['sine_cosine_f32_hex'] = (ld.uc.reg_read(UC_X86_REG_XMM0)&((1<<64)-1)).to_bytes(8,'little').hex()
+            super().add_code_hook(0x18114f78b,sincos_entry)
+            super().add_code_hook(0x18114f790,sincos_return)
+            ray_number = [-1]
+            op_number = [0]
+            def helper_entry(ld, _addr, _size):
+                ray_number[0] += 1; op_number[0] = 0
+            super().add_code_hook(base.FUN_HELPER, helper_entry)
+            def op_entry(ld, addr, _size):
+                num = op_number[0]; op_number[0] += 1
+                name = f'helper{ray_number[0]}_op{num}'
+                def read_wrapper(wrapper):
+                    matptr = struct.unpack('<Q',ld.read_bytes(wrapper+8,8))[0]
+                    mat = base.read_mat(ld,matptr)
+                    assert mat
+                    data = b''.join(ld.read_bytes(int(mat['data'],16)+y*mat['step_bytes'],mat['cols']*mat['channels']*4) for y in range(mat['rows']))
+                    return data.hex(), [mat['cols'],mat['rows'],mat['channels']]
+                source_wrapper = ld.uc.reg_read(UC_X86_REG_RCX)
+                dest_wrapper = ld.uc.reg_read(UC_X86_REG_RDX)
+                stages[name+'_in'], stages[name+'_shape'] = read_wrapper(source_wrapper)
+                ret = struct.unpack('<Q',ld.read_bytes(ld.uc.reg_read(UC_X86_REG_RSP),8))[0]
+                active = [True]
+                def returned(ld, _addr, _size):
+                    if active[0]:
+                        active[0] = False
+                        stages[name+'_out'],_ = read_wrapper(dest_wrapper)
+                super(Loader,self).add_code_hook(ret, returned)
+            for addr in (0x181297ac0,0x181280bc0):
+                super().add_code_hook(addr, op_entry)
+            def seed(ld, _addr, _size):
+                mat = base.read_mat(ld, ld.uc.reg_read(UC_X86_REG_RBP))
+                assert mat and mat['rows'] == h and mat['cols'] == w
+                stages['seed_channels'] = mat['channels']
+                stages['seed'] = b''.join(ld.read_bytes(int(mat['data'],16)+y*mat['step_bytes'], w*mat['channels']*4) for y in range(h)).hex()
+            super().add_code_hook(0x18114f589, seed)
+            def aggregate(ld, _addr, _size):
+                ptrs = struct.unpack('<5Q',ld.read_bytes(ld.uc.reg_read(UC_X86_REG_RDX),40))
+                for i, ptr in enumerate(ptrs):
+                    stages[f'ray{i}'] = words(ptr,n*stages['seed_channels'])
+            for addr in (0x18114fd90,0x18114f020):
+                super().add_code_hook(addr, aggregate)
+            handles = {}
+            def new_handle(ld, args):
+                ptr = alloc(bytes(max(8,int(args[0])))); handles[ptr] = 1
+                return ptr
+            no_op = lambda ld,args: 0
+            suite = alloc(struct.pack('<4Q', self.install_callback('F09 new',new_handle),
+                self.install_callback('F09 lock',lambda ld,args: args[0]),
+                self.install_callback('F09 unlock',no_op), self.install_callback('F09 dispose',no_op)))
+            def acquire(ld,args):
+                ld.write_bytes(args[2],struct.pack('<Q',suite)); return 0
+            basic = alloc(struct.pack('<2Q',self.install_callback('F09 acquire',acquire),self.install_callback('F09 release',no_op)))
+            host = alloc(bytes(0x188)); self.write_bytes(host+0x180,struct.pack('<Q',basic))
+            obj = alloc(bytes(8))
+            ctor = {1:0x18114edb0,2:0x1811505c0,4:0x18114ec20}.get(p[1],0x18114eed0)
+            super().call_function(ctor,int_args=[obj],max_instructions=1000)
+            angles = alloc(struct.pack('<5i',*[a+round(p[40]*65536) for a in (90,0,45,135)],0))
+            lengths = alloc(struct.pack('<5i',*[p[s] for s in (10,16,22,28,34)]))
+            assert all(p[s] == 0 for s in (13,19,25,31,37)) and not p[4]
+            colors = alloc(struct.pack('<20f',*[v/255 for s in (11,17,23,29,35) for v in p[s]]))
+            ramps = alloc(bytes(5*0x144)); flags = alloc(bytes(5)); glow = alloc(bytes(n*16))
+            bits = lambda f: struct.unpack('<I',struct.pack('<f',f))[0]
+            result = super().call_function(0x18114f4a0,
+                int_args=[obj,host,pixels,glow,angles,lengths,colors,ramps,flags,p[2],w,h,bits(p[6]/100),bits(p[7]),1,bits(p[5])],
+                max_instructions=200_000_000)
+            stages['glow'] = words(glow,n*4)
+            owner = alloc(bytes(0x200))
+            for off,data in ((0x38,struct.pack('<f',p[8]/100)),(0x3c,struct.pack('<f',p[9]/100)),
+                (0x44,struct.pack('<i',p[3])),(0x58,struct.pack('<i',n)),
+                (0x128,struct.pack('<Q',pixels)),(0x190,struct.pack('<Q',glow))):
+                self.write_bytes(owner+off,data)
+            output = alloc(bytes(len(case['pixels'])))
+            compose = {8:0x18114e110,16:0x18114ddc0,32:0x18114e460}[case['depth']]
+            composed = bytearray()
+            def before_writer(ld, _addr, _size):
+                composed.extend(struct.pack('<4I',*[ld.uc.reg_read(r)&0xffffffff for r in
+                    (UC_X86_REG_XMM0,UC_X86_REG_XMM1,UC_X86_REG_XMM2,UC_X86_REG_XMM3)]))
+            super().add_code_hook({8:0x181230b90,16:0x181230bd0,32:0x181230c20}[case['depth']],before_writer)
+            world = alloc(bytes(0x40))
+            self.write_bytes(world+0x18,struct.pack('<Qiii',output,len(case['pixels']),n,1))
+            super().call_function(compose,int_args=[owner,world],max_instructions=max(200_000,n*1000))
+            stages['output'] = self.read_bytes(output,len(case['pixels'])).hex()
+            stages['composed'] = composed.hex()
+            return result
+
+    base.AexLoader = Loader
+    try:
+        result = base.run(SimpleNamespace(aex_path=aex,width=w,height=h,length=50,sigma=0,max_instructions=200_000_000))
+    finally:
+        base.AexLoader = original
+    return dict(stages=stages,geometry=geometry,status=result['status'],error=result.get('error'),
+                crt=result.get('manual_crt_initializers_diagnostic'))
+
+
+def traced_source(source_path, gate_off=True):
+    source = source_path.read_text()
+    source = source.replace('#include "OLMKiraKira.h"', '#include "'+str(olmkirakira.SOURCE.with_suffix('.h'))+'"')
+    source = source.replace('#include "../../core/', '#include "'+str(ROOT/'core')+'/')
+    assert source.count('if (!exact_closure && !generic_beta) {') == 2
+    if gate_off:
+        source = source.replace('if (!exact_closure && !generic_beta) {','if (false) {')
+    helper = r'''
+static void F09Dump(const char *name, const void *data, size_t size) {
+    const char *dir = std::getenv("F09_TRACE"); if (!dir) return;
+    std::string path = std::string(dir) + "/" + name + ".raw";
+    FILE *f = std::fopen(path.c_str(), "wb"); if (!f) std::abort();
+    if (std::fwrite(data, 1, size, f) != size) std::abort(); std::fclose(f);
+}
+'''
+    source = source.replace('static std::vector<float> DirectionBoxBlur(', helper+'\nstatic int F09Ray = -1;\nstatic std::vector<float> DirectionBoxBlur(')
+    def insert(marker, text):
+        nonlocal source
+        assert source.count(marker) == 1, marker
+        source = source.replace(marker,text+'\n'+marker)
+    insert('\tconst A_long passes = BlurModePasses(info.blur_mode);',
+           '\tF09Dump("source", working_pixels.data(), working_pixels.size()*sizeof(FloatRGBA));\n\tF09Dump("seed", seed.data(), seed.size()*4);')
+    insert('\tfloat scale = (float)info.brightness_gain;', '\n'.join(f'\tF09Dump("ray{i}", {name}.data(), {name}.size()*4);' for i,name in enumerate(('vertical','horizontal','diagonal','diagonal2','highlight'))))
+    insert('\tstd::vector<FloatRGBA> composed((size_t)work_width * work_height);','\tF09Dump("glow", glow.data(), glow.size()*sizeof(FloatRGBA));')
+    insert('\tstd::vector<FloatRGBA> glow_full;', '\tF09Dump("composed", composed.data(), composed.size()*sizeof(FloatRGBA));')
+    insert('\ttemp_a = WarpGetRotDirect(temp_a, rw, rh, rw, rh, temp_cx, temp_cy, angle_deg);',
+        '\t++F09Ray; F09Dump(("helper"+std::to_string(F09Ray)+"_op0_in").c_str(),temp_a.data(),temp_a.size()*4);')
+    insert('\tstd::vector<float> temp_b((size_t)rw * rh);',
+        '\tF09Dump(("helper"+std::to_string(F09Ray)+"_op0_out").c_str(),temp_a.data(),temp_a.size()*4);')
+    insert('\t\tsrc.swap(dst);',
+        '\t\tF09Dump(("helper"+std::to_string(F09Ray)+"_op"+std::to_string(pass+1)+"_out").c_str(),dst.data(),dst.size()*4);')
+    return source
+
+
+def build_mac(source, scratch, options, deadline, gate_off=True):
+    class Adapter(olmkirakira.Adapter):
+        def compile(self, argv, deadline):
+            if argv[0] == 'clang++':
+                host = next(Path(x) for x in argv if str(x).endswith('/host.cpp'))
+                src = host.parent/'trace.cpp'; src.write_text(traced_source(source,gate_off))
+                host.write_text(host.read_text().replace(str(olmkirakira.SOURCE),str(src)))
+            return super().compile(argv,deadline)
+    scratch.mkdir(parents=True,exist_ok=True)
+    adapter = Adapter(options)
+    adapter.binary,_ = adapter.build(scratch,deadline)
+    return adapter
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--scratch',type=Path,required=True)
+    parser.add_argument('--report',type=Path,required=True)
+    parser.add_argument('--source',type=Path,default=olmkirakira.SOURCE,
+                        help='Read an alternate revision; includes still resolve in this worktree')
+    parser.add_argument('--indices',type=int,nargs='+',default=[148,116,78,157,19,210,23,232,3])
+    args = parser.parse_args()
+    args.scratch = args.scratch.resolve()
+    assert args.scratch.is_relative_to(ROOT/'orchestra/state')
+    args.scratch.mkdir(parents=True,exist_ok=True)
+    os.environ.update(TMPDIR=str(args.scratch),TMP=str(args.scratch),TEMP=str(args.scratch),
+                      OLM_KK_PROCESS_ATTACH_DIAGNOSTIC='1',OLM_KK_MANUAL_CRT_INITIALIZERS_DIAGNOSTIC='1')
+    deadline = time.monotonic()+3600
+    adapter = build_mac(args.source,args.scratch,
+        SimpleNamespace(max_size=256,case_timeout=180,main=main_checkout(),worker=default_worker()),deadline)
+    report = dict(schema='olm-kira-F09-stage-trace/1',aex_sha256=sha(adapter.aex.read_bytes()),
+        worker_sha256=sha(adapter.worker.read_bytes()),source_sha256=sha(args.source.read_bytes()),
+        source_path=str(args.source),
+        contracts=dict(aex='CPU original full caller + source reader + typed outer writer',
+            host='probe-local TLS, allocation, CRT initializers; Python libm imports; no numerical detours',
+            mac='Classic EffectMain, scratch tuple bypass, arm64 O2 ffp-contract=off',
+            limitation='Full-caller stages are usable only when final bytes bind to the public resident worker; neither is native AE/UCRT proof'),
+        rows=[])
+    for index in args.indices:
+        path = next((ROOT/'tests/fuzz_corpus/olmkirakira_gate_off_T06').glob(f'seed1_case{index:06}_*.json'))
+        case,_ = load_corpus(path,adapter)
+        directory = args.scratch/str(index); directory.mkdir(exist_ok=True)
+        adapter.env['F09_TRACE'] = str(directory)
+        status,public = adapter.oracle(case,directory,deadline)
+        candidate,mac,*_ = adapter.candidate(case,directory,'classic',deadline)
+        trace = original_trace(case,adapter.aex)
+        stages = trace['stages']; paired = {}
+        for name in [*(k for k in stages if k not in ('output','seed_channels') and not k.endswith('_shape'))]:
+            file = directory/(name+'.raw')
+            if name in stages and file.exists():
+                expected,actual = bytes.fromhex(stages[name]),file.read_bytes()
+                paired[name] = dict(exact=expected==actual,aex_sha256=sha(expected),mac_sha256=sha(actual),
+                    aex_hex=expected.hex(),mac_hex=actual.hex(),diff=None if expected==actual else raw_diff(expected,actual,32))
+        bound = 'output' in stages and bytes.fromhex(stages['output']) == public and status['status']=='ok'
+        # Keep captured plane data compact while retaining complete word-exact
+        # first differences, hashes, shape and public final-output binding.
+        for values in paired.values():
+            for key in ('aex_hex','mac_hex'):
+                if len(values[key]) > 512:
+                    del values[key]
+        row = dict(index=index,case_path=str(path.relative_to(ROOT)),input_sha256=sha(case['pixels']),
+            geometry=case['geometry'],depth=case['depth'],oracle=status,candidate=candidate,
+            public_sha256=sha(public),mac_sha256=sha(mac),trace_public_exact=bound,
+            trace_output_sha256=sha(bytes.fromhex(stages.get('output',''))),trace_status=trace['status'],trace_error=trace['error'],
+            aex_geometry=trace['geometry'],abi_leaf_exact='source' in stages,
+            aex_shapes={k:v for k,v in stages.items() if k.endswith('_shape')},
+            final_diff=raw_diff(public,mac,case['depth']) if public!=mac else None,
+            first_divergent_stage=next((k for k,v in paired.items() if not v['exact']),None),paired=paired)
+        report['rows'].append(row)
+        args.report.parent.mkdir(parents=True,exist_ok=True)
+        args.report.write_text(json.dumps(report,indent=2)+'\n')
+        print(index,'bound',bound,'first',row['first_divergent_stage'],'error',trace['error'],flush=True)
+    assert all(r['trace_public_exact'] for r in report['rows']), 'unbound AEX trace; do not infer a public first stage'
+
+
+if __name__ == '__main__':
+    main()

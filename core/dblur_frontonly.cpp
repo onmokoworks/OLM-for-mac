@@ -408,8 +408,12 @@ static int render_minimal_argb16(const std::uint16_t* input_argb,
                                          int layer_rowbytes,
                                          bool expfloat = false,
                                          bool process_full_height = false) {
+    // AEX 0x180003dc0 tests Strength AND Alpha Fade on both sides. Fade
+    // alone still runs rotate/prepass/normalize/writeback; zero scatter
+    // counts are valid. The public dispatcher handles the four-zero copy.
     if (!input_argb || !output_argb || width <= 0 || height <= 0 ||
-        (front_strength <= 0 && back_strength <= 0) ||
+        (front_strength == 0 && back_strength == 0 &&
+         front_alpha_fade == 0 && back_alpha_fade == 0) ||
         front_strength < 0 || back_strength < 0 || front_alpha_fade < 0 ||
         back_alpha_fade < 0 || !std::isfinite(front_sharp_tail_percent) ||
         !std::isfinite(back_sharp_tail_percent) ||
@@ -600,8 +604,11 @@ static int render_minimal_argb32(const float* input_argb,
                                  int layer_rowbytes,
                                  bool expfloat = false,
                                  bool process_full_height = false) {
+    // PF32 has the same four-control test at AEX 0x1800058db.
     if (!input_argb || !output_argb || width <= 0 || height <= 0 ||
-        (front_strength <= 0 && back_strength <= 0) || front_alpha_fade < 0 ||
+        (front_strength == 0 && back_strength == 0 &&
+         front_alpha_fade == 0 && back_alpha_fade == 0) ||
+        front_strength < 0 || back_strength < 0 || front_alpha_fade < 0 ||
         back_alpha_fade < 0 || !std::isfinite(front_sharp_tail_percent) ||
         !std::isfinite(back_sharp_tail_percent)) return -1;
     try {

@@ -1,0 +1,67 @@
+{
+  "aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+  "capture": "Original AEX PARAMS_SETUP via existing AEXCompat session protocol, no render",
+  "parameters": [
+    {
+      "default_value": 0.0,
+      "flags": 0,
+      "index": -1,
+      "name": "Use Color Key",
+      "param_type": 4,
+      "precision": null,
+      "slider_max": 1.0,
+      "slider_min": 0.0,
+      "slot": 1,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": 1.0,
+      "valid_min": 0.0
+    },
+    {
+      "current_color": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "default_color": [
+        255,
+        255,
+        255,
+        255
+      ],
+      "default_value": null,
+      "flags": 0,
+      "index": -1,
+      "name": "Color Key",
+      "param_type": 5,
+      "precision": null,
+      "slider_max": null,
+      "slider_min": null,
+      "slot": 2,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": null,
+      "valid_min": null
+    },
+    {
+      "default_value": 6.0,
+      "flags": 0,
+      "index": -1,
+      "name": "Do Smooth Range",
+      "param_type": 1,
+      "precision": null,
+      "slider_max": 255.0,
+      "slider_min": 0.0,
+      "slot": 3,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": 255.0,
+      "valid_min": 0.0
+    }
+  ],
+  "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261"
+}

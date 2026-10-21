@@ -1,0 +1,322 @@
+{
+  "case": {
+    "depth": 16,
+    "geometry": [
+      17,
+      11
+    ],
+    "index": 214,
+    "input_padding": 0,
+    "output_padding": 0,
+    "parameters": [
+      {
+        "kind": "u",
+        "slot": 1,
+        "value": 6
+      },
+      {
+        "kind": "u",
+        "slot": 2,
+        "value": 2
+      },
+      {
+        "kind": "u",
+        "slot": 3,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 4,
+        "value": 1
+      },
+      {
+        "kind": "s",
+        "slot": 5,
+        "value": 69.18729090741607
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 718
+      },
+      {
+        "kind": "s",
+        "slot": 7,
+        "value": 1.0
+      },
+      {
+        "kind": "i",
+        "slot": 8,
+        "value": 8024
+      },
+      {
+        "kind": "i",
+        "slot": 9,
+        "value": 25
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 408
+      },
+      {
+        "kind": "c",
+        "slot": 11,
+        "value": [
+          255,
+          217,
+          36,
+          227
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 13,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 16,
+        "value": 10
+      },
+      {
+        "kind": "c",
+        "slot": 17,
+        "value": [
+          255,
+          99,
+          48,
+          95
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 19,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 22,
+        "value": 12
+      },
+      {
+        "kind": "c",
+        "slot": 23,
+        "value": [
+          255,
+          98,
+          111,
+          158
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 25,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 28,
+        "value": 47
+      },
+      {
+        "kind": "c",
+        "slot": 29,
+        "value": [
+          255,
+          229,
+          10,
+          170
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 31,
+        "value": 1
+      },
+      {
+        "kind": "i",
+        "slot": 34,
+        "value": 2
+      },
+      {
+        "kind": "c",
+        "slot": 35,
+        "value": [
+          255,
+          203,
+          124,
+          54
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 37,
+        "value": 0
+      },
+      {
+        "kind": "a",
+        "slot": 40,
+        "value": -470.4297332763672
+      }
+    ],
+    "profile": "sdr",
+    "seed": 1
+  },
+  "generator_version": 1,
+  "index": 214,
+  "input_sha256": "fe7a7718dd707c6e3b6b7ddac2ee82710a046b607e5dd68adb3fa2d42bf7c9d2",
+  "max_size": 256,
+  "operations": [
+    {
+      "geometry": [
+        17,
+        11
+      ],
+      "kind": "crop"
+    },
+    {
+      "kind": "params",
+      "values": {
+        "2": 2
+      }
+    },
+    {
+      "kind": "params",
+      "values": {
+        "3": 1
+      }
+    }
+  ],
+  "pixels_zlib_base64": "eNoVlH1Q03Ucx99siMhgYwgbLAjGwwYOt8nDhkhjPAzYKU8bbAw2UBgwMMfYgMEPdV/zfLh8iCwWWXZlqZnaaWSiZXQ+4tWVolSn4sPlWfnUeV2G5UPf/v/d/d7f1/v1/oAIBn+W/msF2R9gTHItBBmTKAUjImBXWBhnuxVIT7u4Yr5E4n2W5CtoDwOmZKGlZg2QpT3A2RsC1OTLUq8IbXkteKjYwa/sviLs1vsFtVFfurcYcx0gwUVm6/HVIHVlf4Rl80C+KXzsO80BOR9b5DgmB/YYW7pts0Ec/WtVN3NAxLrM/LfzQA4P+IWjNI8oRxtXMQ/gix7kZ6SuCO/n+uVHLCB8w6l8t5iruQ6Nbdy3hhfhtIpDeMCceQ2GnVKQx5WHgw81A4H6080PVUJvv+jggpyKTWZ53bfZH8eCTBcr5C8WrG880n8mflqW4D1ZsmzRDZrjVzcTtm/w0ixX8iv6eDVQbqqQWotAFHxx0bigqmkmIiwrqZDmkl2MuREP8oVgd6d8AbDScMMzngvyTvWY5GawvXO07YghgZceLbegrb4bCGb0TUc1IJYWY2Bx7ZAhQvn94kc2gO06JHjeCXIp8EzqFT1worco+r0QykcdHbRac7H+LmOWDKcDP3IVhTr1UOSMyd/1oeOp6BKziTdsAZ5XPOrt5Y6r9kt2Zcak/SzcojxULUsBfqr/J2iyEtj40kaZS/lvjW1wb/tUMsjXjbfVmbLoVmHaZo++BHit3h/iSAMpY0mX+gSfcn9pD7RcMAOvmz7ovicHWSAfdYkyKEfH1TnaILPkREhouX+QDO5OPudVNQAbep5ItrNHAuY39XAlLSCJiUxr65KPxeGe0IzPBu4ECOpX9cUHgAQx17R+2sexWV+lv9QFcnbR1oD9y0FGHD5pdw8r5Yq8vKZTmx6sMUnmbZUY5dusx10NOpAHjOvlp7m/mYXm4RZVyu7er1rj+PJ2oLrQBGc1EI4oyT7K/3JUvP2gAGR0uZ7xiUGumvZ2lXnC0WHub395EUhbXQyrj77rRfYMP4V6NelwhmctDeQ+snyimPKASKNvc5we4LahOm3MDqKpu1s+QX16nveMo9RESJPqmuQ+JzCU93BuZCXI4lR2w0HKZX/kJs8M7WuFxpL1RvDc9EHbN+qIcGBt4kxzwxzv0m38fxrP1wAduFD9RyLIIvVkK5tyOsccqEml/u+SDnfkCGj+OH5prYLuJXrhgGGeetWI4FT/dz6Qe7mPZRUvAMzAZN996qGEcyuWrweJVd4puLgKpKlX3FzMAm4sS28c6QD2ln/OV1CucdlrrR4DSGSw25sgKc7J0v3FXHYDCcl+6zEDcLr8LeZM+q8lzeZp7VtZwN2ekcwxFUhuzcRcJhSE7b3ed9Ye3FdiO8KbdoKc4kxknm8Cpr3fuqwZdKf8GNtNt6W41L3FOkF3ooi5zHb1AZbQJbEDdN8r829pZTW33AX9q5e+NgskOu4E3qxvrxpWDTQ+oPdG1yDseJ7ytfJp5/sshRe4N0ejGGGBsKrOuXWU105sjUoJpz0GNmcK7E/NU7X33Tc5//fxRNzTCDJUU8be1rZHlNwZxMxd+CjvmTPC8KoaZN2sk5zN9E51hHKTR2x0pykbTKVBIL3sDUHZBtaKW6pM1kq6A62hOf6oEGS8a43YVEG/S+WpSujdOeO9Fu5rAb4LOTx/fl5phtEyNPuHZRuamIWlAft4f3av4ziZaerLeuOymLFEQJe9ilse1GbnlF2IYWUDk/a89jjrKHt13VDVaV2d8veE7eoDXRuZ+NzpwlAd4HFMdFc17jBMiWqVJxXAhcVFxuP0f+vkO3h9mgJToZ2v01ce5WgF9sgo6stOb73oLOUniFXGFJcBH802WiaovxUNfokzAHjXvK32iTap655klIlVAn9n/yhdUPUfI/r0tw==",
+  "plugin": "olmkirakira",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMKiraKira.aex",
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "builder_anomalies": "Brightness Gain default 0.10000000149011612 is below declared min 1; sampling/shrinking default clamped to legal 1. Blur Mode samples declared 1..3 only.",
+    "candidate_sha256": "1ac1e99e6e802b828aefefb8ea2db5fcd912efe503d459e5286995de8dc1d2f3",
+    "declarations_sha256": "b1e500a914d04b30c4fcd581cbbb9caaa974e55cf683e9554c7d5d6e391a7731",
+    "dependencies_sha256": {
+      "mac/OLMKiraKira/OLMKiraKira.cpp": "5fd4818b4dec04fd14468fd986ded9498a765290923ddfec71e417faf7f52e14",
+      "mac/OLMKiraKira/OLMKiraKira.h": "26c5209a6fddebbde96190fe09e0749b6f7dd6bec1421815b7a6e5fa6f73d64d",
+      "tools/emulation/olmkirakira_public_smart_bounded_closure_harness_20260812.cpp": "49e5922fac66eaa53f57b45edf5ac06073bfb13dd3f24d85ddaae9c619877800",
+      "tools/fuzz/harnesses/kirakira_main.cpp": "14dee9cf51476808095c6dd1cb78b16310fbe09301b9dbc3f0d962f1a248346e",
+      "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c"
+    },
+    "host": "Original AEX Unicorn CPU smartfx; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "oracle_render_path": "smartfx",
+    "out_of_range_builder_defaults": [
+      {
+        "builder_default": 0.10000000149011612,
+        "sampled_default": 1.0,
+        "slot": 5
+      }
+    ],
+    "ramps": "Existing default three-stop handles only; custom arbitrary ramps outside this adapter",
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "rotation": "Original ANGLE raw fixed integer consumed as degrees; Mac float degree value follows retained exported-owner helper",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "triage": {
+      "experiment": "all",
+      "limitation": "Admission only; helper fallbacks, request normalization, world validation and arithmetic unchanged",
+      "sanitizers": false,
+      "scratch_source_sha256": "0edb71c3ab470e9a6f3c3960ee1e6d5bba435b7c9a6fc56f618e18db51016695",
+      "switch": "OLM_KIRA_TRIAGE_GATE_OFF=1"
+    },
+    "worker_path": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker",
+    "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "reduction": {
+    "accepted": [
+      {
+        "geometry": [
+          17,
+          11
+        ],
+        "kind": "crop"
+      },
+      {
+        "kind": "params",
+        "values": {
+          "2": 2
+        }
+      },
+      {
+        "kind": "params",
+        "values": {
+          "3": 1
+        }
+      }
+    ],
+    "attempts": 22,
+    "bounded": true,
+    "minimality_claimed": false,
+    "outcomes": {
+      "budget/budget,budget": 1,
+      "ok/exact,exact": 5,
+      "ok/mismatch,mismatch": 3,
+      "ok/mismatch,refusal": 3,
+      "reject/uncompared,refusal": 10
+    }
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "raw_sha256": "bb2f83e0dbc0ef1947b471fcbeaf085d7a7aa8d795f81d102f7845ccea89f52b",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "routes": {
+      "classic": {
+        "diff": {
+          "actual_bytes": 1496,
+          "actual_word_hex": "0080",
+          "different_bytes": 308,
+          "different_words": 155,
+          "expected_bytes": 1496,
+          "expected_word_hex": "0337",
+          "first_byte": 6,
+          "first_word": 3
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "2ad7f889d41f9e570e804e590f67186d831d22e56e0bcc533e46da27593f0c1c",
+        "status": "mismatch"
+      },
+      "smart": {
+        "diff": {
+          "actual_bytes": 1496,
+          "actual_word_hex": "0080",
+          "different_bytes": 308,
+          "different_words": 155,
+          "expected_bytes": 1496,
+          "expected_word_hex": "0337",
+          "first_byte": 6,
+          "first_word": 3
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 1 1 29 29",
+          "ERROR": "0"
+        },
+        "raw_sha256": "2ad7f889d41f9e570e804e590f67186d831d22e56e0bcc533e46da27593f0c1c",
+        "status": "mismatch"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 1
+}

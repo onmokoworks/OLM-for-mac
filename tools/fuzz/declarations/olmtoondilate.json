@@ -1,0 +1,23 @@
+{
+  "aex_sha256": "c05db8c118029ff3216d3cae8e6423e2eb41ca8f56de2fb3668db81b9b8c32b3",
+  "capture": "Original AEX PARAMS_SETUP via existing AEXCompat session protocol, no render",
+  "parameters": [
+    {
+      "default_value": 2.0,
+      "flags": 0,
+      "index": -1,
+      "name": "Search Radius",
+      "param_type": 10,
+      "precision": 1,
+      "slider_max": 100.0,
+      "slider_min": 0.0,
+      "slot": 1,
+      "ui_flags": 0,
+      "ui_height": 0,
+      "ui_width": 0,
+      "valid_max": 100.0,
+      "valid_min": 0.0
+    }
+  ],
+  "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261"
+}

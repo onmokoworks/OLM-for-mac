@@ -8,6 +8,7 @@
 #include "../../core/kirakira_mode4.h"
 #include "../../core/kirakira_warp.h"
 #include "../../core/kirakira_merge2.h"
+#include "../../core/kirakira_sincos.h"
 
 #include <algorithm>
 #include <cstdarg>
@@ -17,9 +18,38 @@
 #include <cstdlib>
 #include <cstring>
 #include <new>
+#include <fcntl.h>
+#include <unistd.h>
 #include <vector>
 
 namespace {
+
+// Refusal attribution for the fuzz campaign. When OLM_REFUSAL_TRACE names a
+// file, each failing admission guard appends "function:tag". The file is only
+// opened on a refusal, and the returned error code and all output bytes are
+// identical whether or not tracing is enabled.
+static PF_Err KiraRefusal(const char *function, const char *tag, int line, PF_Err err)
+{
+	const char *path = std::getenv("OLM_REFUSAL_TRACE");
+	if (path && path[0]) {
+		const int handle = ::open(path, O_WRONLY | O_CREAT | O_APPEND, 0666);
+		if (handle >= 0) {
+			char entry[384];
+			const int length = std::snprintf(entry, sizeof(entry), "%s:%s@%d\n", function, tag, line);
+			if (length > 0) {
+				const ssize_t written = ::write(handle, entry, (std::size_t)length);
+				(void)written;
+			}
+			::close(handle);
+		}
+	}
+	return err;
+}
+
+#define OLM_KIRA_REFUSAL(tag) KiraRefusal(__func__, tag, __LINE__, PF_Err_BAD_CALLBACK_PARAM)
+#define OLM_KIRA_ERROR(tag, code) KiraRefusal(__func__, tag, __LINE__, code)
+
+
 
 static void KiraDiagnosticLog(const char *format, ...)
 {
@@ -174,27 +204,33 @@ static int Reflect101Index(int i, int n)
 	return i;
 }
 
-static A_long AexRotatedExtent(A_long major, A_long minor, double abs_major, double abs_minor)
+static A_long AexRotatedExtent(A_long major, A_long minor, float abs_major, float abs_minor)
 {
-	return std::max<A_long>(major + 4, (A_long)((double)major * abs_major + (double)minor * abs_minor + 4.0));
+	return olm::kirakira::rotated_extent(major, minor, abs_major, abs_minor);
+}
+
+// PF worlds describe rows in bytes. Copy through an aligned local value:
+// the AEX address helpers (1812309f0/a20/a50) add y*rowbytes+x*sizeof(pixel),
+// and its readers/writers use unaligned scalar loads/stores. Host padding is
+// not a C++ PixelT array and need not preserve PixelT alignment.
+template <typename PixelT>
+static PixelT LoadWorldPixel(const PF_EffectWorld *world, A_long x, A_long y)
+{
+	const size_t offset = static_cast<size_t>(y) *
+		static_cast<size_t>(world->rowbytes) + static_cast<size_t>(x) * sizeof(PixelT);
+	PixelT pixel;
+	std::memcpy(&pixel, reinterpret_cast<const unsigned char *>(world->data) + offset,
+		sizeof(pixel));
+	return pixel;
 }
 
 template <typename PixelT>
-static PixelT *PixelAt(PF_EffectWorld *world, A_long x, A_long y)
+static void StoreWorldPixel(PF_EffectWorld *world, A_long x, A_long y, const PixelT &pixel)
 {
-	const size_t row_offset = static_cast<size_t>(y) *
-		static_cast<size_t>(world->rowbytes);
-	return reinterpret_cast<PixelT *>(
-		reinterpret_cast<char *>(world->data) + row_offset) + x;
-}
-
-template <typename PixelT>
-static const PixelT *PixelAtConst(const PF_EffectWorld *world, A_long x, A_long y)
-{
-	const size_t row_offset = static_cast<size_t>(y) *
-		static_cast<size_t>(world->rowbytes);
-	return reinterpret_cast<const PixelT *>(
-		reinterpret_cast<const char *>(world->data) + row_offset) + x;
+	const size_t offset = static_cast<size_t>(y) *
+		static_cast<size_t>(world->rowbytes) + static_cast<size_t>(x) * sizeof(PixelT);
+	std::memcpy(reinterpret_cast<unsigned char *>(world->data) + offset, &pixel,
+		sizeof(pixel));
 }
 
 template <typename PixelT>
@@ -364,18 +400,14 @@ static bool WorldLayoutIsSafe(const PF_EffectWorld *world, size_t pixel_size)
 		active_rowbytes > static_cast<int64_t>(world->rowbytes)) {
 		return false;
 	}
-	size_t alignment = 1;
-	if (pixel_size == sizeof(PF_PixelFloat)) alignment = alignof(PF_PixelFloat);
-	else if (pixel_size == sizeof(PF_Pixel16)) alignment = alignof(PF_Pixel16);
-	else if (pixel_size == sizeof(PF_Pixel8)) alignment = alignof(PF_Pixel8);
-	if ((reinterpret_cast<uintptr_t>(world->data) % alignment) != 0 ||
-		(static_cast<size_t>(world->rowbytes) % alignment) != 0) {
-		return false;
-	}
+	// Byte copies admit unaligned bases and arbitrary positive byte strides.
 	const uint64_t last_row_offset =
 		static_cast<uint64_t>(world->height - 1) *
 		static_cast<uint64_t>(world->rowbytes);
-	return last_row_offset <= UINT64_MAX - static_cast<uint64_t>(active_rowbytes);
+	const uintptr_t begin = reinterpret_cast<uintptr_t>(world->data);
+	const uint64_t available = static_cast<uint64_t>(UINTPTR_MAX - begin);
+	return last_row_offset <= available &&
+		static_cast<uint64_t>(active_rowbytes) <= available - last_row_offset;
 }
 
 static PF_Err ValidateWorldPair(
@@ -387,13 +419,13 @@ static PF_Err ValidateWorldPair(
 	PF_PixelFormat *format_out)
 {
 	if (!in_data || !out_data || !input || !output || !format_out)
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_KIRA_REFUSAL("world-null-argument");
 	PF_PixelFormat input_format = PF_PixelFormat_INVALID;
 	PF_PixelFormat output_format = PF_PixelFormat_INVALID;
 	PF_Err err = GetKiraPixelFormats(
 		in_data, input, output, &input_format, &output_format);
 	if (err) return err;
-	if (input_format != output_format) return PF_Err_BAD_CALLBACK_PARAM;
+	if (input_format != output_format) return OLM_KIRA_REFUSAL("world-format-mismatch");
 	const size_t pixel_size = PixelSizeForFormat(input_format);
 	const short format_bitdepth = BitDepthForFormat(input_format);
 	if (!pixel_size || !format_bitdepth ||
@@ -401,12 +433,12 @@ static PF_Err ValidateWorldPair(
 		input->width != output->width || input->height != output->height ||
 		!WorldLayoutIsSafe(input, pixel_size) ||
 		!WorldLayoutIsSafe(output, pixel_size)) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_KIRA_REFUSAL("world-layout-unsafe");
 	}
 	const uint64_t pixel_count = static_cast<uint64_t>(input->width) *
 		static_cast<uint64_t>(input->height);
 	if (pixel_count > static_cast<uint64_t>(SIZE_MAX / sizeof(FloatRGBA)))
-		return PF_Err_OUT_OF_MEMORY;
+		return OLM_KIRA_ERROR("world-allocation-overflow", PF_Err_OUT_OF_MEMORY);
 	*format_out = input_format;
 	return PF_Err_NONE;
 }
@@ -481,10 +513,9 @@ static std::vector<float> RotatedAxisBoxBlur(
 	// Mode 3 and Mode 4 both have recovered, non-identity Length=1 owners.
 	// The box-filter modes remain identity at one through DirectionBoxBlur.
 	if (length <= 0) return input;
-	const double pi = 3.14159265358979323846;
-	const double rad = angle_deg * pi / 180.0;
-	const double ac = std::abs(std::cos(rad));
-	const double as = std::abs(std::sin(rad));
+	const auto trig = olm::kirakira::extent_sincos(angle_deg);
+	const float ac = std::abs(trig.cosine);
+	const float as = std::abs(trig.sine);
 	const A_long rw = AexRotatedExtent(width, height, ac, as);
 	const A_long rh = AexRotatedExtent(height, width, ac, as);
 	const double temp_cx = (double)rw * 0.5;
@@ -599,7 +630,7 @@ static std::vector<FloatRGBA> ReadPixels(PF_EffectWorld *input)
 	std::vector<FloatRGBA> pixels((size_t)w * h);
 	for (A_long y = 0; y < h; ++y) {
 		for (A_long x = 0; x < w; ++x) {
-			pixels[(size_t)y * w + x] = PixelTraits<PixelT>::Read(*PixelAtConst<PixelT>(input, x, y));
+			pixels[(size_t)y * w + x] = PixelTraits<PixelT>::Read(LoadWorldPixel<PixelT>(input, x, y));
 		}
 	}
 	return pixels;
@@ -740,10 +771,12 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	AddColoredUnion(glow, highlight, info.highlight_color, info.highlight_use_ramp, info.highlight_ramp, highlight_scale);
 	for (FloatRGBA &g : glow) {
 		if (g.a > 1.0e-6f) {
-			// FUN_18114fd90 computes one float reciprocal and multiplies
-			// all RGB lanes in the captured PF32 owner. Keep the proven
-			// integer-depth division boundary until those owners are traced.
-			if (bitdepth == 32) {
+			// FUN_18114fd90 uses one reciprocal and three multiplies.
+			// F09 extends the PF32 proof to PF16: C28 matches through
+			// the rays and first differs at these separate divisions.
+			// PF8 retains its existing boundary pending the independent
+			// seed/ray differences in its corpus (see the F09 report).
+			if (bitdepth != 8) {
 				const float inverse_alpha = 1.0f / g.a;
 				g.r *= inverse_alpha;
 				g.g *= inverse_alpha;
@@ -790,7 +823,7 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 			KiraKiraDebugDumpPoint(debug, bitdepth, w, h, x, y, src, glow_normalized, glow_a, out);
 			// The actual integer-depth outer writers use CVTTSS2SI after
 			// clamp and scale for both merge modes.
-			*PixelAt<PixelT>(output, x, y) = PixelTraits<PixelT>::WriteAexTruncate(out);
+			StoreWorldPixel<PixelT>(output, x, y, PixelTraits<PixelT>::WriteAexTruncate(out));
 		}
 	}
 	return PF_Err_NONE;
@@ -1238,10 +1271,9 @@ static bool IsGenericBetaMode3BudgetAdmitted(
 		!IsGenericBetaFullFrameDimensions(width, height)) {
 		return false;
 	}
-	const double pi = 3.14159265358979323846;
-	const double radians = info.glow_rotation * pi / 180.0;
-	const double absolute_cosine = std::abs(std::cos(radians));
-	const double absolute_sine = std::abs(std::sin(radians));
+	const auto trig = olm::kirakira::extent_sincos(info.glow_rotation);
+	const float absolute_cosine = std::abs(trig.cosine);
+	const float absolute_sine = std::abs(trig.sine);
 	const A_long rotated_width =
 		AexRotatedExtent(width, height, absolute_cosine, absolute_sine);
 	const A_long rotated_height =
@@ -1317,10 +1349,9 @@ static bool GenericBetaDirectionalRayIsAdmitted(
 	A_long blur_mode)
 {
 	if (length <= 0) return true;
-	const double pi = 3.14159265358979323846;
-	const double radians = angle_degrees * pi / 180.0;
-	const double absolute_cosine = std::abs(std::cos(radians));
-	const double absolute_sine = std::abs(std::sin(radians));
+	const auto trig = olm::kirakira::extent_sincos(angle_degrees);
+	const float absolute_cosine = std::abs(trig.cosine);
+	const float absolute_sine = std::abs(trig.sine);
 	const A_long rotated_width =
 		AexRotatedExtent(width, height, absolute_cosine, absolute_sine);
 	const A_long rotated_height =
@@ -1363,12 +1394,30 @@ static bool IsGenericBetaMode34TupleForGeometry(
 			135.0 + info.glow_rotation, info.blur_mode);
 }
 
+static bool IsZeroRayTuple(const OLMKiraKiraInfo &info)
+{
+	// F10: FUN_18114f4a0 zero-initializes all five ray planes and skips
+	// each helper when its length is zero. Aggregation then leaves zero glow;
+	// the normal typed outer writer still runs (this is not a source copy).
+	// Seed/channel, colors, ramps and rotation cannot contribute on this branch.
+	// Keep resize and fractional source-opacity conversion outside this proof.
+	// The caller retains the generic finite-SDR, full-frame and storage guards.
+	return !info.approximated_input && info.source_opacity == 1.0 &&
+		info.glow_opacity >= 0.0 && info.glow_opacity <= 100.0 &&
+		info.channel >= 1 && info.channel <= 6 &&
+		info.blur_mode >= 1 && info.blur_mode <= 3 &&
+		(info.merge_mode == 1 || info.merge_mode == 2) &&
+		info.vertical_length == 0 && info.horizontal_length == 0 &&
+		info.diagonal_length == 0 && info.diagonal2_length == 0 &&
+		info.highlight_radius == 0;
+}
+
 static bool IsGenericBetaTupleForGeometry(
 	const OLMKiraKiraInfo &info,
 	A_long width,
 	A_long height)
 {
-	return (IsGenericBetaMode12Tuple(info) &&
+	return ((IsGenericBetaMode12Tuple(info) || IsZeroRayTuple(info)) &&
 			IsGenericBetaFullFrameDimensions(width, height)) ||
 		IsGenericBetaMode34TupleForGeometry(info, width, height);
 }
@@ -1413,10 +1462,8 @@ static bool IsClassicClosureLayout(
 		output->origin_x != 0 || output->origin_y != 0) {
 		return false;
 	}
-	const int64_t closure_rowbytes =
-		5 * static_cast<int64_t>(pixel_size) + 12;
-	return input->rowbytes == closure_rowbytes &&
-		output->rowbytes == closure_rowbytes &&
+	return WorldLayoutIsSafe(input, pixel_size) &&
+		WorldLayoutIsSafe(output, pixel_size) &&
 		input->extent_hint.left == 0 && input->extent_hint.top == 0 &&
 		input->extent_hint.right == 5 && input->extent_hint.bottom == 3 &&
 		output->extent_hint.left == 0 && output->extent_hint.top == 0 &&
@@ -1436,10 +1483,8 @@ static bool IsMode3Closure32x18Layout(
 		output->origin_x != 0 || output->origin_y != 0) {
 		return false;
 	}
-	const int64_t closure_rowbytes =
-		32 * static_cast<int64_t>(pixel_size) + 12;
-	return input->rowbytes == closure_rowbytes &&
-		output->rowbytes == closure_rowbytes &&
+	return WorldLayoutIsSafe(input, pixel_size) &&
+		WorldLayoutIsSafe(output, pixel_size) &&
 		input->extent_hint.left == 0 && input->extent_hint.top == 0 &&
 		input->extent_hint.right == 32 && input->extent_hint.bottom == 18 &&
 		output->extent_hint.left == 0 && output->extent_hint.top == 0 &&
@@ -1481,13 +1526,13 @@ static bool ClassicClosureSourceMatches(
 				static_cast<A_u_char>(64 + index * 11);
 			switch (format) {
 				case PF_PixelFormat_ARGB32: {
-					const PF_Pixel8 &actual = *PixelAtConst<PF_Pixel8>(input, x, y);
+					const PF_Pixel8 actual = LoadWorldPixel<PF_Pixel8>(input, x, y);
 					if (actual.alpha != alpha || actual.red != red ||
 						actual.green != green || actual.blue != blue) return false;
 					break;
 				}
 				case PF_PixelFormat_ARGB64: {
-					const PF_Pixel16 &actual = *PixelAtConst<PF_Pixel16>(input, x, y);
+					const PF_Pixel16 actual = LoadWorldPixel<PF_Pixel16>(input, x, y);
 					if (actual.alpha != ClosureByteToPF16(alpha) ||
 						actual.red != ClosureByteToPF16(red) ||
 						actual.green != ClosureByteToPF16(green) ||
@@ -1495,8 +1540,8 @@ static bool ClassicClosureSourceMatches(
 					break;
 				}
 				case PF_PixelFormat_ARGB128: {
-					const PF_PixelFloat &actual =
-						*PixelAtConst<PF_PixelFloat>(input, x, y);
+					const PF_PixelFloat actual =
+						LoadWorldPixel<PF_PixelFloat>(input, x, y);
 					if (!ClosureFloatBitsEqual(actual.alpha,
 							static_cast<float>(alpha) / 255.0f) ||
 						!ClosureFloatBitsEqual(actual.red,
@@ -1524,14 +1569,14 @@ static bool GenericBetaInputIsFiniteSDR(
 	for (A_long y = 0; y < input->height; ++y) {
 		for (A_long x = 0; x < input->width; ++x) {
 			if (format == PF_PixelFormat_ARGB64) {
-				const PF_Pixel16 &pixel = *PixelAtConst<PF_Pixel16>(input, x, y);
+				const PF_Pixel16 pixel = LoadWorldPixel<PF_Pixel16>(input, x, y);
 				if (pixel.alpha > PF_MAX_CHAN16 || pixel.red > PF_MAX_CHAN16 ||
 					pixel.green > PF_MAX_CHAN16 || pixel.blue > PF_MAX_CHAN16) {
 					return false;
 				}
 			} else if (format == PF_PixelFormat_ARGB128) {
-				const PF_PixelFloat &pixel =
-					*PixelAtConst<PF_PixelFloat>(input, x, y);
+				const PF_PixelFloat pixel =
+					LoadWorldPixel<PF_PixelFloat>(input, x, y);
 				const float lanes[] = {
 					pixel.alpha, pixel.red, pixel.green, pixel.blue
 				};
@@ -1958,10 +2003,10 @@ static PF_Err Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *para
 	PF_Err err = PF_Err_NONE;
 	if (!in_data || !in_data->pica_basicP || !out_data || !params || !output ||
 		!params[OLMKIRAKIRA_INPUT]) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_KIRA_REFUSAL("classic-callback-shape");
 	}
 	for (A_long index = 0; index < OLMKIRAKIRA_NUM_PARAMS; ++index) {
-		if (!params[index]) return PF_Err_BAD_CALLBACK_PARAM;
+		if (!params[index]) return OLM_KIRA_REFUSAL("classic-missing-param");
 	}
 	OLMKiraKiraInfo info;
 	ERR(ReadRenderInfo(in_data, params, &info));
@@ -1993,7 +2038,7 @@ static PF_Err Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *para
 		(int)exact_closure, (int)generic_beta, (int)source_family);
 	if (!exact_closure && !generic_beta) {
 		KiraDiagnosticLog("classic reject tuple_layout_source");
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_KIRA_REFUSAL("tuple-layout-source");
 	}
 	const short bitdepth = BitDepthForFormat(format);
 	ERR(RenderWorld(input, output, info, bitdepth));
@@ -2102,9 +2147,6 @@ static bool SmartClosureWorldPairIsSafeForDimensions(
 	const size_t pixel_size = PixelSizeForFormat(format);
 	const PF_WorldFlags expected_world_flags =
 		format == PF_PixelFormat_ARGB32 ? 0 : PF_WorldFlag_DEEP;
-	const int64_t expected_rowbytes =
-		static_cast<int64_t>(width) *
-		static_cast<int64_t>(pixel_size) + 12;
 	return pixel_size && input && output &&
 		input->width == width && input->height == height &&
 		output->width == width && output->height == height &&
@@ -2114,7 +2156,7 @@ static bool SmartClosureWorldPairIsSafeForDimensions(
 		input->extent_hint.right == width && input->extent_hint.bottom == height &&
 		output->extent_hint.left == 0 && output->extent_hint.top == 0 &&
 		output->extent_hint.right == width && output->extent_hint.bottom == height &&
-		input->rowbytes == expected_rowbytes && output->rowbytes == expected_rowbytes &&
+		WorldLayoutIsSafe(input, pixel_size) && WorldLayoutIsSafe(output, pixel_size) &&
 		input->world_flags == expected_world_flags &&
 		output->world_flags == expected_world_flags &&
 		WorldStorageRangesDoNotOverlap(input, output);
@@ -2151,7 +2193,7 @@ static PF_Err SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra
 	if (!in_data || !extra || !extra->input || !extra->output || !extra->cb ||
 		!extra->cb->checkout_layer) {
 		KiraDiagnosticLog("pre reject callback_shape");
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_KIRA_REFUSAL("pre-callback-shape");
 	}
 	const PF_LRect &requested_rect = extra->input->output_request.rect;
 	A_long generic_render_width = 0;
@@ -2198,7 +2240,7 @@ static PF_Err SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra
 	if (!exact_request_matches_known_frame &&
 		!request_contains_generic_full_frame) {
 		KiraDiagnosticLog("pre reject request_not_admitted");
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_KIRA_REFUSAL("request-not-admitted");
 	}
 	PF_RenderRequest req = extra->input->output_request;
 	PF_CheckoutResult in_result;
@@ -2255,7 +2297,7 @@ static PF_Err SmartPreRender(PF_InData *in_data, PF_OutData *, PF_PreRenderExtra
 		(!generic_beta_request && !exact_checkout_rects_are_full)) {
 		KiraDiagnosticLog("pre reject checkout_geometry expected=%ldx%ld",
 			(long)expected_width, (long)expected_height);
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_KIRA_REFUSAL("checkout-geometry");
 	}
 
 	PreRenderData *pre = new (std::nothrow) PreRenderData;
@@ -2286,7 +2328,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 		!extra->input || !extra->cb ||
 		!extra->cb->checkout_layer_pixels || !extra->cb->checkout_output) {
 		KiraDiagnosticLog("smart reject callback_shape");
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_KIRA_REFUSAL("smart-callback-shape");
 	}
 	PF_Err err = PF_Err_NONE;
 	PF_EffectWorld *input_world  = NULL;
@@ -2356,7 +2398,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 			pre ? (double)pre->comp_width : -1.0,
 			pre ? (double)pre->comp_height : -1.0);
 		if (!err && !exact_world_layout && !generic_world_layout) {
-			err = PF_Err_BAD_CALLBACK_PARAM;
+			err = OLM_KIRA_REFUSAL("world-layout");
 			KiraDiagnosticLog("smart reject world_layout");
 		}
 		OLMKiraKiraInfo info;
@@ -2370,9 +2412,9 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 			const bool exact_tuple_is_admitted =
 				(pre_is_classic && IsClassicClosureTuple(info)) ||
 				(pre_is_mode3_32x18 && IsMode3Closure32x18Tuple(info));
-			// The exact fixture remains isolated only when source and historical
-			// storage layout both match. Safe deviations are generic evidence and
-			// must satisfy its SDR, non-overlap, geometry, and budget checks.
+			// The exact fixture remains isolated by source, tuple, and full-frame
+			// geometry; byte stride and base alignment do not alter its pixels.
+			// Other sources still require the generic SDR and budget checks.
 			const bool exact_closure = exact_world_layout &&
 				exact_tuple_is_admitted &&
 				source_family != ClassicClosureSource_None &&
@@ -2387,7 +2429,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				(int)source_family, (int)exact_tuple_is_admitted,
 				(int)exact_closure, (int)generic_beta);
 			if (!exact_closure && !generic_beta) {
-				err = PF_Err_BAD_CALLBACK_PARAM;
+				err = OLM_KIRA_REFUSAL("tuple-or-source");
 				KiraDiagnosticLog("smart reject tuple_or_source");
 			}
 		}

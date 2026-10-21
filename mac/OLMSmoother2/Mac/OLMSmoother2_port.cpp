@@ -14,8 +14,11 @@
 #include <algorithm>
 #include <cstdint>
 #include <cstdio>
+#include <cstdlib>
 #include <new>
 #include <exception>
+#include <fcntl.h>
+#include <unistd.h>
 #include "../../../core/olm_sha256_rows.h"
 #ifndef OLMSMOOTHER2_SHIM_H
 #include "AEFX_SuiteHandlerTemplate.h"
@@ -36,6 +39,31 @@ static_assert(sizeof(_tmp_smoother2_decode_lut_10000_bin) == 40000,
               "captured decode LUT size drift");
 static_assert(sizeof(_tmp_smoother2_inverse_lut_10000_bin) == 40000,
               "captured inverse LUT size drift");
+
+// Refusal attribution for the fuzz campaign. When OLM_REFUSAL_TRACE names a
+// file, each failing admission guard appends "function:tag@line". The file is
+// only opened on a refusal, and the returned error code and all output bytes
+// are identical whether or not tracing is enabled.
+static PF_Err Smoother2Refusal(const char *function, const char *tag, int line, PF_Err err)
+{
+	const char *path = std::getenv("OLM_REFUSAL_TRACE");
+	if (path && path[0]) {
+		const int handle = ::open(path, O_WRONLY | O_CREAT | O_APPEND, 0666);
+		if (handle >= 0) {
+			char entry[384];
+			const int length = std::snprintf(entry, sizeof(entry), "%s:%s@%d\n", function, tag, line);
+			if (length > 0) {
+				const ssize_t written = ::write(handle, entry, (std::size_t)length);
+				(void)written;
+			}
+			::close(handle);
+		}
+	}
+	return err;
+}
+
+#define OLM_SM2_REFUSAL(tag) Smoother2Refusal(__func__, tag, __LINE__, PF_Err_BAD_CALLBACK_PARAM)
+#define OLM_SM2_ERROR(tag, code) Smoother2Refusal(__func__, tag, __LINE__, code)
 
 // ============================================================================
 // Constants read directly from the Windows binary (see DAT_180022xxx).
@@ -276,7 +304,7 @@ FetchParams(PF_InData *in_data, PF_ParamDef *params[], SMParams *p)
 #ifdef OLMSMOOTHER2_SHIM_H
 	AEGP_SuiteHandler suites(in_data->pica_basicP);
 	cps = suites.ColorParamSuite1();
-	if (!cps || !cps->PF_GetFloatingPointColorFromColorDef) return PF_Err_BAD_CALLBACK_PARAM;
+	if (!cps || !cps->PF_GetFloatingPointColorFromColorDef) return OLM_SM2_REFUSAL("fetch-color-suite");
 	ERR(cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref,
 		params[SM_KEY_COLOR], &p->key_color));
 	for (int i = 0; i < NUM_GAMMA_COLORS; ++i) {
@@ -285,19 +313,20 @@ FetchParams(PF_InData *in_data, PF_ParamDef *params[], SMParams *p)
 	}
 #else
 	if (!in_data || !in_data->pica_basicP || !in_data->pica_basicP->AcquireSuite ||
-	    !in_data->pica_basicP->ReleaseSuite) return PF_Err_BAD_CALLBACK_PARAM;
+	    !in_data->pica_basicP->ReleaseSuite) return OLM_SM2_REFUSAL("fetch-inputs");
 	const void *raw_suite = nullptr;
 	const SPErr acquire_err = in_data->pica_basicP->AcquireSuite(
 		kPFColorParamSuite, kPFColorParamSuiteVersion1, &raw_suite);
-	if (acquire_err) return (PF_Err)acquire_err;
+	if (acquire_err) return OLM_SM2_ERROR("fetch-suite-acquire", (PF_Err)acquire_err);
 	if (!raw_suite) {
 		const SPErr release_err = in_data->pica_basicP->ReleaseSuite(
 			kPFColorParamSuite, kPFColorParamSuiteVersion1);
-		return release_err ? (PF_Err)release_err : PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_SM2_ERROR("fetch-suite-null",
+			release_err ? (PF_Err)release_err : PF_Err_BAD_CALLBACK_PARAM);
 	}
 	cps = (PF_ColorParamSuite1 *)raw_suite;
 	try {
-		if (!cps->PF_GetFloatingPointColorFromColorDef) err = PF_Err_BAD_CALLBACK_PARAM;
+		if (!cps->PF_GetFloatingPointColorFromColorDef) err = OLM_SM2_REFUSAL("fetch-function-null");
 		if (!err) ERR(cps->PF_GetFloatingPointColorFromColorDef(in_data->effect_ref,
 			params[SM_KEY_COLOR], &p->key_color));
 		for (int i = 0; i < NUM_GAMMA_COLORS; ++i) {
@@ -4359,7 +4388,7 @@ RenderBits(PF_InData *in_data, PF_ParamDef *params[],
 	SMParams p; AEFX_CLR_STRUCT(p);
 	if (prefetched) p = *prefetched;
 	else ERR(FetchParams(in_data, params, &p));
-	if (err) return err;
+	if (err) return OLM_SM2_ERROR("renderbits-fetch", err);
 
 	const int32_t w = output->width;
 	const int32_t h = output->height;
@@ -4777,31 +4806,32 @@ WorldDepth(PF_InData *in_data,
            PF_EffectWorld *world,
            short *depth)
 {
-	if (!in_data || !out_data || !world || !depth) return PF_Err_BAD_CALLBACK_PARAM;
+	if (!in_data || !out_data || !world || !depth) return OLM_SM2_REFUSAL("world-depth-null");
 #ifdef OLMSMOOTHER2_SHIM_H
 	if (world->bitdepth == 8 || world->bitdepth == 16 || world->bitdepth == 32) {
 		*depth = world->bitdepth;
 		return PF_Err_NONE;
 	}
-	return PF_Err_BAD_CALLBACK_PARAM;
+	return OLM_SM2_REFUSAL("world-depth-format");
 #else
 	PF_Err err = PF_Err_NONE;
 	PF_PixelFormat format = PF_PixelFormat_INVALID;
 	(void)out_data;
 	if (!in_data->pica_basicP || !in_data->pica_basicP->AcquireSuite ||
-	    !in_data->pica_basicP->ReleaseSuite) return PF_Err_BAD_CALLBACK_PARAM;
+	    !in_data->pica_basicP->ReleaseSuite) return OLM_SM2_REFUSAL("world-depth-inputs");
 	const void *raw_suite = nullptr;
 	const SPErr acquire_err = in_data->pica_basicP->AcquireSuite(
 		kPFWorldSuite, kPFWorldSuiteVersion2, &raw_suite);
-	if (acquire_err) return (PF_Err)acquire_err;
+	if (acquire_err) return OLM_SM2_ERROR("world-depth-suite-acquire", (PF_Err)acquire_err);
 	if (!raw_suite) {
 		const SPErr release_err = in_data->pica_basicP->ReleaseSuite(
 			kPFWorldSuite, kPFWorldSuiteVersion2);
-		return release_err ? (PF_Err)release_err : PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_SM2_ERROR("world-depth-suite-null",
+			release_err ? (PF_Err)release_err : PF_Err_BAD_CALLBACK_PARAM);
 	}
 	PF_WorldSuite2 *world_suite = (PF_WorldSuite2 *)raw_suite;
 	try {
-		if (!world_suite->PF_GetPixelFormat) err = PF_Err_BAD_CALLBACK_PARAM;
+		if (!world_suite->PF_GetPixelFormat) err = OLM_SM2_REFUSAL("world-depth-function-null");
 		if (!err) err = world_suite->PF_GetPixelFormat(world, &format);
 	} catch (...) {
 		const std::exception_ptr body_error = std::current_exception();
@@ -4817,7 +4847,7 @@ WorldDepth(PF_InData *in_data,
 	case PF_PixelFormat_ARGB32:  *depth = 8;  return PF_Err_NONE;
 	case PF_PixelFormat_ARGB64:  *depth = 16; return PF_Err_NONE;
 	case PF_PixelFormat_ARGB128: *depth = 32; return PF_Err_NONE;
-	default: return PF_Err_BAD_CALLBACK_PARAM;
+	default: return OLM_SM2_REFUSAL("world-depth-pixel-format");
 	}
 #endif
 }
@@ -5156,13 +5186,13 @@ ValidatePublicWorlds(PF_InData *in_data,
 	    input->rowbytes <= 0 || output->rowbytes <= 0 ||
 	    input->origin_x != 0 || input->origin_y != 0 ||
 	    output->origin_x != 0 || output->origin_y != 0) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_SM2_REFUSAL("validate-world-shape");
 	}
 	short input_depth = 0, output_depth = 0;
 	PF_Err err = WorldDepth(in_data, out_data, input, &input_depth);
 	if (!err) err = WorldDepth(in_data, out_data, output, &output_depth);
 	if (err) return err;
-	if (input_depth != output_depth) return PF_Err_BAD_CALLBACK_PARAM;
+	if (input_depth != output_depth) return OLM_SM2_REFUSAL("validate-depth-mismatch");
 	const A_long pixel_size = input_depth == 8 ? (A_long)sizeof(PF_Pixel8) :
 	                          input_depth == 16 ? (A_long)sizeof(PF_Pixel16) :
 	                          input_depth == 32 ? (A_long)sizeof(PF_PixelFloat) : 0;
@@ -5171,7 +5201,7 @@ ValidatePublicWorlds(PF_InData *in_data,
 	    output->rowbytes < output->width * pixel_size ||
 	    input->height > INT32_MAX / input->rowbytes ||
 	    output->height > INT32_MAX / output->rowbytes) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_SM2_REFUSAL("validate-size-overflow");
 	}
 	const uintptr_t input_begin = (uintptr_t)input->data;
 	const uintptr_t output_begin = (uintptr_t)output->data;
@@ -5183,7 +5213,7 @@ ValidatePublicWorlds(PF_InData *in_data,
 	    output_begin > UINTPTR_MAX - output_span ||
 	    (input_begin < output_begin + output_span &&
 	     output_begin < input_begin + input_span)) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_SM2_REFUSAL("validate-overlap");
 	}
 	*depth = input_depth;
 	return PF_Err_NONE;
@@ -5195,7 +5225,7 @@ ValidatePublicWorlds(PF_InData *in_data,
 static PF_Err
 Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_LayerDef *output)
 {
-	if (!params || !params[SM_INPUT]) return PF_Err_BAD_CALLBACK_PARAM;
+	if (!params || !params[SM_INPUT]) return OLM_SM2_REFUSAL("render-input-param-null");
 	PF_LayerDef *input = &params[SM_INPUT]->u.ld;
 	short depth = 0;
 	PF_Err err = ValidatePublicWorlds(in_data, out_data, input, output, &depth);
@@ -5205,7 +5235,7 @@ Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *params[], PF_Layer
 	// output format) and fail closed at every depth instead of publishing the
 	// shared typed core through an unowned entry.
 	(void)depth;
-	return PF_Err_BAD_CALLBACK_PARAM;
+	return OLM_SM2_REFUSAL("classic-entry-unowned");
 }
 
 // ============================================================================
@@ -5224,7 +5254,7 @@ static PF_Err
 SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extra)
 {
 	if (!in_data || !out_data || !extra || !extra->input || !extra->output ||
-	    !extra->cb || !extra->cb->checkout_layer) return PF_Err_BAD_CALLBACK_PARAM;
+	    !extra->cb || !extra->cb->checkout_layer) return OLM_SM2_REFUSAL("prerender-null-inputs");
 	// The classifier is not a finite-radius filter: several cardinal and
 	// diagonal walkers continue along a connected class run until a frame edge.
 	// Consequently a fixed tile halo cannot preserve full-frame results.  Ask AE
@@ -5237,7 +5267,7 @@ SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extr
 	    in_data->downsample_x.num != in_data->downsample_x.den ||
 	    in_data->downsample_y.num <= 0 ||
 	    in_data->downsample_y.num != in_data->downsample_y.den) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_SM2_REFUSAL("prerender-frame-contract");
 	}
 	PF_Err err = PF_Err_NONE;
 	PF_RenderRequest req = extra->input->output_request;
@@ -5251,12 +5281,13 @@ SmartPreRender(PF_InData *in_data, PF_OutData *out_data, PF_PreRenderExtra *extr
 		SM_INPUT, SM_INPUT, &req,
 		in_data->current_time, in_data->time_step, in_data->time_scale,
 		&in_result));
+	if (err) return OLM_SM2_ERROR("prerender-checkout", err);
 
 	// result_rect/max_result_rect describe content bounds and may be empty for a
 	// transparent frame. ref dimensions are the checkout's full-frame authority.
 	if (!err && (in_result.ref_width != in_data->width ||
 	             in_result.ref_height != in_data->height)) {
-		err = PF_Err_BAD_CALLBACK_PARAM;
+		err = OLM_SM2_REFUSAL("prerender-reference-size");
 	}
 	if (!err) {
 		extra->output->result_rect = full_rect;
@@ -5271,11 +5302,11 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 {
 	if (!in_data || !out_data || !extra || !extra->input || !extra->cb ||
 	    !extra->cb->checkout_layer_pixels || !extra->cb->checkout_output) {
-		return PF_Err_BAD_CALLBACK_PARAM;
+		return OLM_SM2_REFUSAL("smartrender-null-inputs");
 	}
 #ifndef OLMSMOOTHER2_SHIM_H
 	if (!in_data->pica_basicP || !in_data->inter.checkout_param ||
-	    !in_data->inter.checkin_param) return PF_Err_BAD_CALLBACK_PARAM;
+	    !in_data->inter.checkin_param) return OLM_SM2_REFUSAL("smartrender-suite-missing");
 #endif
 	PF_Err err = PF_Err_NONE;
 	PF_EffectWorld *input_world  = nullptr;
@@ -5302,10 +5333,11 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 			                      &param_list[i]));
 			if (!err) param_checked_out[i] = true;
 		}
+		if (err) err = OLM_SM2_ERROR("smartrender-checkout", err);
 		if (!err && input_world && output_world) {
 			param_list[0].u.ld = *input_world;
 			err = ValidatePublicWorlds(in_data, out_data, input_world, output_world, &depth);
-			if (!err && depth != extra->input->bitdepth) err = PF_Err_BAD_CALLBACK_PARAM;
+			if (!err && depth != extra->input->bitdepth) err = OLM_SM2_REFUSAL("smartrender-depth-mismatch");
 			// Preserve the stronger source-bound owner when it matches exactly; only
 			// unmatched callers may fall through to the source-independent beta lane.
 			const bool retained_fixture = !err && V2SmartAdmission(
@@ -5314,15 +5346,16 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 				(const PF_ParamDef *const *)params, input_world, depth);
 			if (!err && retained_fixture && input_world->width == 1920 && input_world->height == 1080 &&
 			    !V2Case07WorldContract(in_data, input_world, output_world, depth)) {
-				err = PF_Err_BAD_CALLBACK_PARAM;
+				err = OLM_SM2_REFUSAL("smartrender-case07-world-contract");
 			}
 			if (!err && !retained_fixture && !generic_beta) {
-				err = PF_Err_BAD_CALLBACK_PARAM;
+				err = OLM_SM2_REFUSAL("smartrender-not-admitted");
 			}
 			if (!err) {
 				err = FetchParams(in_data, params, &decoded_params);
+				if (err) err = OLM_SM2_ERROR("smartrender-fetch-params", err);
 				if (!err && !DecodedColorsMatch((const PF_ParamDef *const *)params, decoded_params)) {
-					err = PF_Err_BAD_CALLBACK_PARAM;
+					err = OLM_SM2_REFUSAL("smartrender-decoded-colors");
 				}
 				if (!err) decoded_params_ready = true;
 			}
@@ -5344,24 +5377,25 @@ SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRenderExtra *extra
 				staged_output.data = reinterpret_cast<decltype(staged_output.data)>(output_stage.data());
 				staged_input.rowbytes = staged_output.rowbytes = (A_long)active_bytes;
 				param_list[0].u.ld = staged_input;
-				if (!decoded_params_ready) err = PF_Err_BAD_CALLBACK_PARAM;
+				if (!decoded_params_ready) err = OLM_SM2_REFUSAL("smartrender-params-unready");
 				else if (depth == 8) err = RenderBits<PF_Pixel8>(in_data, params, &staged_input, &staged_output, &decoded_params);
 				else if (depth == 16) err = RenderBits<PF_Pixel16>(in_data, params, &staged_input, &staged_output, &decoded_params);
 				else err = RenderBits<PF_PixelFloat>(in_data, params, &staged_input, &staged_output, &decoded_params);
+				if (err) err = OLM_SM2_ERROR("smartrender-render-bits", err);
 				if (!err) rendered = true;
 			}
 		} else if (!err) {
-			err = PF_Err_BAD_CALLBACK_PARAM;
+			err = OLM_SM2_REFUSAL("smartrender-worlds-absent");
 		}
 	} catch (PF_Err &thrown_err) {
-		if (!err) err = thrown_err;
+		if (!err) err = OLM_SM2_ERROR("smartrender-thrown", thrown_err);
 	} catch (const std::bad_alloc &) {
-		if (!err) err = (PF_Err)4;
+		if (!err) err = OLM_SM2_ERROR("smartrender-bad-alloc", (PF_Err)4);
 	} catch (...) {
 #ifdef OLMSMOOTHER2_SHIM_H
-		if (!err) err = PF_Err_BAD_CALLBACK_PARAM;
+		if (!err) err = OLM_SM2_REFUSAL("smartrender-exception");
 #else
-		if (!err) err = PF_Err_INTERNAL_STRUCT_DAMAGED;
+		if (!err) err = OLM_SM2_ERROR("smartrender-exception", PF_Err_INTERNAL_STRUCT_DAMAGED);
 #endif
 	}
 	for (A_long i = 1; i < SM_NUM_PARAMS; ++i) {
@@ -5442,14 +5476,14 @@ PF_Err EffectMain(PF_Cmd cmd, PF_InData *in_data, PF_OutData *out_data,
 			break;
 		}
 	} catch (PF_Err &thrown_err) {
-		err = thrown_err;
+		err = OLM_SM2_ERROR("effectmain-thrown", thrown_err);
 	} catch (const std::bad_alloc &) {
-		err = (PF_Err)4;
+		err = OLM_SM2_ERROR("effectmain-bad-alloc", (PF_Err)4);
 	} catch (...) {
 #ifdef OLMSMOOTHER2_SHIM_H
-		err = PF_Err_BAD_CALLBACK_PARAM;
+		err = OLM_SM2_REFUSAL("effectmain-exception");
 #else
-		err = PF_Err_INTERNAL_STRUCT_DAMAGED;
+		err = OLM_SM2_ERROR("effectmain-exception", PF_Err_INTERNAL_STRUCT_DAMAGED);
 #endif
 	}
 	return err;

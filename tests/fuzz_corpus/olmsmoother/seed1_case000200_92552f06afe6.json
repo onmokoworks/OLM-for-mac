@@ -1,0 +1,179 @@
+{
+  "case": {
+    "depth": 8,
+    "geometry": [
+      119,
+      1
+    ],
+    "index": 200,
+    "input_padding": 0,
+    "output_padding": 11,
+    "parameters": [
+      {
+        "kind": "b",
+        "slot": 1,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 2,
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "kind": "i",
+        "slot": 3,
+        "value": 6
+      }
+    ],
+    "profile": "sdr",
+    "seed": 1
+  },
+  "generator_version": 1,
+  "index": 200,
+  "input_sha256": "9b1ac733a9af16570805ad04bba29bf84b573deb554d8901199612b91351dca1",
+  "max_size": 256,
+  "operations": [
+    {
+      "geometry": [
+        119,
+        1
+      ],
+      "kind": "crop"
+    },
+    {
+      "kind": "params",
+      "values": {
+        "1": 0,
+        "2": [
+          255,
+          255,
+          255,
+          255
+        ],
+        "3": 6
+      }
+    }
+  ],
+  "pixels_zlib_base64": "eNoB3AEj/v/ibm//oInwkxXQngBVfJv/cq5GAE0rJgCWPHEAfOF79/YI2Unt868A7njC/1KFb8F/9BX/obNYINmk+Pk1OI4AwAC//1nKuf9+sij/MmObB02s0ACNu6T/eJVlHt+imwA/PmMAFO9U/+pc3f9o6oj/xFKjsC/OEAC1ph3/KMjc/8DZ6n8r3rb/r4+9/zjUXQDZsUpaidowAI+1hhEyBGsAzioeAGRimgOvuuH/2Fr3/7DtOf+WLFXG/ZsUtMMWj/+H7JsAfsNCSgGf7ranKw1EZPCJfwgUFP/Fv3b/0hbtijkkFkWzCl4A8UZC/0S6Ls2nqhP/FBbP/2ZnagCOu/P/EQ9oIO+u+eKa2+kAm02p/y9yPqPg6qj/wYvKAF/QmQBZ5Vr/UH9m/2lLmv9X4fdAISnI/0UeswBFIYX/R6IHAHVKzJ0OA7WBWh4zABhOGAAxoxAAj3ws/yBooP/fsvOyC1eYAC8UgAA8Dz8AA31kANC3O4oysZ7/+1lXALPCYOQx09H/28IbYo1Q7zjzipoAao0I/1qAwf/yjpJAx2ck/+Gq/v/jTsAAzkAQdIMtkQAvnr7/6Ei/AK+e+J/RvQQntZAiAJbdXI02YRr/CnDZ/4u+Df+Ua4V+pzjkGeb0hg==",
+  "plugin": "olmsmoother",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMSmoother.aex",
+    "aex_sha256": "6206f601b645dc915b78269ae403e5cbee642ac2812e320d85838ec72135fe82",
+    "candidate_sha256": "ca71b07e3f648002b12cf4839c1469196e33eab81fde0883969379076d5ff22d",
+    "declarations_sha256": "d11a2e2843d706ce086ce7ec13d07bd95aa07e82cf033e8a3d860a157998ce65",
+    "dependencies_sha256": {
+      "cli/OLMSmoother/shim/AEFX_SuiteHandlerTemplate.h": "43cfe2434c1571641acd0d077b688437fc016da7f829f541436955ac23acf9e4",
+      "cli/OLMSmoother/shim/OLMSmoother.h": "0bc74f0961357db7c3c9ecb6f84df5d0823de31fa442ca7a218438ce46a2380c",
+      "mac/OLMSmoother/Mac/OLMSmoother_port.cpp": "c768386a2e842fefa34d88318ea3292b7a0136c8e013d10d2e2670ff12b17032",
+      "tools/emulation/olmsmoother_v1_public_guard_harness_20260812.cpp": "115447f45660370427072e5642adb8c33816993dd0db5e938baa1c32bf82e672",
+      "tools/fuzz/harnesses/smoother_main.cpp": "ad614886e338ff2dd5625dfa9340437be425a31858b3f6a47cd9056d75701a7e"
+    },
+    "depth_limit": "PF32 is probed and retained as refusal/rejection, not promoted to supported",
+    "host": "Original AEX Unicorn CPU classic; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "mac_host": "existing v1 public guard CLI SDK shim; exactly the three v1 controls",
+    "mac_stride": "shared randomly padded input/output stride",
+    "oracle_owner": "original exported PF_Cmd_RENDER, as in the v1 key/tolerance public replay helper; original has no Smart advertisement",
+    "oracle_render_path": "classic",
+    "out_of_range_builder_defaults": [],
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "worker_path": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker",
+    "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "reduction": {
+    "accepted": [
+      {
+        "geometry": [
+          119,
+          1
+        ],
+        "kind": "crop"
+      },
+      {
+        "kind": "params",
+        "values": {
+          "1": 0,
+          "2": [
+            255,
+            255,
+            255,
+            255
+          ],
+          "3": 6
+        }
+      }
+    ],
+    "attempts": 10,
+    "bounded": true,
+    "minimality_claimed": false,
+    "outcomes": {
+      "ok/exact,exact": 8,
+      "ok/mismatch,mismatch": 2
+    }
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "raw_sha256": "c682c52f0bd50226a7c021d60dd6ad8248271be077e05d85db140cd70369b363",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "routes": {
+      "classic": {
+        "diff": {
+          "actual_bytes": 476,
+          "actual_word_hex": "ba",
+          "different_bytes": 4,
+          "different_words": 4,
+          "expected_bytes": 476,
+          "expected_word_hex": "ff",
+          "first_byte": 256,
+          "first_word": 256
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "5ee760e5d2f24178befadbd5e161c8223e4a5f854e6097ec1d6e93b5c085ec5e",
+        "status": "mismatch"
+      },
+      "smart": {
+        "diff": {
+          "actual_bytes": 476,
+          "actual_word_hex": "ba",
+          "different_bytes": 4,
+          "different_words": 4,
+          "expected_bytes": 476,
+          "expected_word_hex": "ff",
+          "first_byte": 256,
+          "first_word": 256
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 1 3 3 1",
+          "ERROR": "0"
+        },
+        "raw_sha256": "5ee760e5d2f24178befadbd5e161c8223e4a5f854e6097ec1d6e93b5c085ec5e",
+        "status": "mismatch"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 1
+}
