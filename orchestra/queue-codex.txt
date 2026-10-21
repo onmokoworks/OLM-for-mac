@@ -1,3 +1,4 @@
+T01-radial-offset-promote
 F03-kira-typed-row-io
 F02-dg-default-owner-compose
 F04-kira-tiny-smart-owner
@@ -6,3 +7,4 @@ F08-radial-zoom-general-first-divergence
 F09-kira-numeric-first-divergence
 F10-kira-admission-promotion
 F11-kira-float-sincos-recovery
+F12-kira-admission-repromotion
