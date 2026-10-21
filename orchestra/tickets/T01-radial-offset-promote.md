@@ -62,3 +62,12 @@ Your stop on the Classic mismatch->refusal(516) corpus change was correct. Now:
 2. Run the remaining Offset gates to completion (390 conditions, then the 9,645 regression),
    in background with logs, `--jobs 2`.
 3. Report a single table: before/after per suite and per fuzz route (seed 1 n 500).
+
+## Round 4 (orchestrator decision)
+Acceptance rule for this ticket, per route and per case:
+- allowed: exact->exact (same bytes), anything->exact, mismatch->mismatch, mismatch->refusal
+  (a wrong output becoming an honest refusal is not a correctness regression; list each one).
+- forbidden: exact->anything else, refusal/mismatch of a case that is exact on the base branch.
+The generic-world Classic refusal you found is therefore allowed. Proceed: run the 390 and 9,645
+gates to completion (background, logs, --jobs 2), seed 1 n 500 fuzz, then rebaseline the radialblur
+corpus if and only if every change is in the allowed set. Report the table.
