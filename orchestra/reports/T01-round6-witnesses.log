@@ -1,0 +1,6 @@
+ROUND6_WITNESS 89 ok {'base': {'classic': 'refusal', 'smart': 'refusal'}, 'after': {'classic': 'mismatch', 'smart': 'mismatch'}}
+ROUND6_WITNESS 193 ok {'base': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND6_WITNESS 363 ok {'base': {'classic': 'refusal', 'smart': 'refusal'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND6_WITNESS 421 ok {'base': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND6_WITNESS 425 ok {'base': {'classic': 'mismatch', 'smart': 'exact'}, 'after': {'classic': 'mismatch', 'smart': 'exact'}}
+ROUND6_WITNESS 459 ok {'base': {'classic': 'refusal', 'smart': 'refusal'}, 'after': {'classic': 'refusal', 'smart': 'mismatch'}}

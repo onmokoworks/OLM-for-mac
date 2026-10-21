@@ -1,0 +1,470 @@
+{
+  "artifacts": {
+    "T01-round4-corpus-after.json": {
+      "bytes": 48847,
+      "sha256": "b552642a6b65a693a2ebf27f964fcfd7f8a7700b6a8643e992c65b0fb4bb14de"
+    },
+    "T01-round4-corpus-base.json": {
+      "bytes": 49279,
+      "sha256": "bbc440cf2a7d92f2fc3f88f7503fca742b1e5fc01559cc757bf9bc968db8b5e0"
+    },
+    "T01-round4-fuzz-after.json": {
+      "bytes": 1728304,
+      "sha256": "91f9979862c3a46730a3021538fde5ba962a42e8b2b9dea59c1ca0800d557b20"
+    },
+    "T01-round4-fuzz-base.json": {
+      "bytes": 1731569,
+      "sha256": "b042717b0d2014d0cdbe626c24c8c4d46be7f0d0b7e9b30283a21ab67780cf1e"
+    },
+    "T01-round4-tests.json": {
+      "bytes": 2243,
+      "sha256": "3d6313861beff0dbe7349ce003786314a492146f5947f414190823d1bb7cb908"
+    }
+  },
+  "base_revision": "95b185ebb00e4ca0818b7a9971cf2f104d0ce628",
+  "base_source_sha256": "66ed2aeb5132e0a5670b3801a781e8d3e5a77c142533911c9b497b1b4b30db85",
+  "corpus": {
+    "base_to_candidate": [
+      {
+        "after": "exact",
+        "before": "exact",
+        "count": 23,
+        "route": "classic"
+      },
+      {
+        "after": "refusal",
+        "before": "mismatch",
+        "count": 1,
+        "route": "classic"
+      },
+      {
+        "after": "refusal",
+        "before": "refusal",
+        "count": 11,
+        "route": "classic"
+      },
+      {
+        "after": "exact",
+        "before": "exact",
+        "count": 35,
+        "route": "smart"
+      }
+    ],
+    "cases": 35,
+    "rebaselined": false,
+    "saved_to_candidate": [
+      {
+        "after": "exact",
+        "before": "mismatch",
+        "count": 23,
+        "route": "classic"
+      },
+      {
+        "after": "refusal",
+        "before": "mismatch",
+        "count": 1,
+        "route": "classic"
+      },
+      {
+        "after": "refusal",
+        "before": "refusal",
+        "count": 11,
+        "route": "classic"
+      },
+      {
+        "after": "exact",
+        "before": "mismatch",
+        "count": 35,
+        "route": "smart"
+      }
+    ]
+  },
+  "fuzz": {
+    "after": {
+      "aex_budget": 7,
+      "aex_ok": 461,
+      "aex_reject": 32,
+      "both_routes_exact": 137,
+      "classic_exact": 137,
+      "classic_refusal": 362,
+      "classic_uncompared": 1,
+      "pixel_mismatch_cases": 0,
+      "smart_exact": 180,
+      "smart_refusal": 319,
+      "smart_uncompared": 1
+    },
+    "after_pf8_outer_offset": {
+      "cases": 40,
+      "routes": {
+        "classic": {
+          "exact": 21,
+          "refusal": 19
+        },
+        "smart": {
+          "exact": 21,
+          "refusal": 19
+        }
+      }
+    },
+    "base": {
+      "aex_budget": 8,
+      "aex_ok": 460,
+      "aex_reject": 32,
+      "both_routes_exact": 85,
+      "classic_exact": 85,
+      "classic_mismatch": 1,
+      "classic_refusal": 413,
+      "classic_uncompared": 1,
+      "pixel_mismatch_cases": 1,
+      "smart_exact": 109,
+      "smart_refusal": 390,
+      "smart_uncompared": 1
+    },
+    "base_pf8_outer_offset": {
+      "cases": 40,
+      "routes": {
+        "classic": {
+          "exact": 5,
+          "refusal": 35
+        },
+        "smart": {
+          "exact": 5,
+          "refusal": 35
+        }
+      }
+    },
+    "forbidden": [
+      {
+        "after": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "0 0 0 0 0 1 1",
+            "ERROR": "516",
+            "INFO": "0 0 0 0"
+          },
+          "status": "refusal"
+        },
+        "before": {
+          "error": 0,
+          "metadata": {
+            "COUNTS": "0 0 0 0 0 1 1",
+            "ERROR": "0",
+            "INFO": "0 0 0 0"
+          },
+          "raw_sha256": "61419588ac096ac05cd390e83bc6a71aa4f6db1c7b50b1d36ab130dc272ccde8",
+          "status": "exact"
+        },
+        "index": 193,
+        "refusal_guards": {
+          "classic": [
+            "RenderWorld:generic-world-not-admitted@5362"
+          ],
+          "smart": [
+            "RenderWorld:generic-world-not-admitted@5362"
+          ]
+        },
+        "route": "classic"
+      },
+      {
+        "after": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 32 32 1 1 1 1",
+            "ERROR": "516",
+            "INFO": "0 0 0 0"
+          },
+          "status": "refusal"
+        },
+        "before": {
+          "error": 0,
+          "metadata": {
+            "COUNTS": "1 32 32 1 1 1 1",
+            "ERROR": "0",
+            "INFO": "0 0 0 0"
+          },
+          "raw_sha256": "61419588ac096ac05cd390e83bc6a71aa4f6db1c7b50b1d36ab130dc272ccde8",
+          "status": "exact"
+        },
+        "index": 193,
+        "refusal_guards": {
+          "classic": [
+            "RenderWorld:generic-world-not-admitted@5362"
+          ],
+          "smart": [
+            "RenderWorld:generic-world-not-admitted@5362"
+          ]
+        },
+        "route": "smart"
+      },
+      {
+        "after": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 32 32 1 1 1 1",
+            "ERROR": "516",
+            "INFO": "0 0 0 0"
+          },
+          "status": "refusal"
+        },
+        "before": {
+          "error": 0,
+          "metadata": {
+            "COUNTS": "1 32 32 1 1 1 1",
+            "ERROR": "0",
+            "INFO": "0 0 0 0"
+          },
+          "raw_sha256": "8405927c8b78605ecd5b76dd15eb2a7b5d0b85df52ce708a410305069cd117dc",
+          "status": "exact"
+        },
+        "index": 425,
+        "refusal_guards": {
+          "classic": [
+            "RenderWorld:generic-world-not-admitted@5362"
+          ],
+          "smart": [
+            "RenderWorld:generic-world-not-admitted@5362"
+          ]
+        },
+        "route": "smart"
+      }
+    ],
+    "oracle_status_changes": [
+      {
+        "after": {
+          "guards_intact": true,
+          "raw_sha256": "c8aeb32a63c24343b2e130fcf192b426e02193345159f9c66500eceed8142e4b",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "before": {
+          "diagnostic": "",
+          "limit_seconds": 10,
+          "reason": "wall timeout",
+          "status": "budget"
+        },
+        "index": 363
+      }
+    ],
+    "policy": [
+      {
+        "after": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "0 0 0 0 0 1 1",
+            "ERROR": "516",
+            "INFO": "0 0 0 0"
+          },
+          "status": "refusal"
+        },
+        "before": {
+          "diff": {
+            "actual_bytes": 4032,
+            "actual_word_hex": "08dd733f",
+            "different_bytes": 520,
+            "different_words": 157,
+            "expected_bytes": 4032,
+            "expected_word_hex": "361a813f",
+            "first_byte": 16,
+            "first_word": 4
+          },
+          "error": 0,
+          "metadata": {
+            "COUNTS": "0 0 0 0 0 1 1",
+            "ERROR": "0",
+            "INFO": "0 0 0 0"
+          },
+          "raw_sha256": "3be601058ea8a661745bda9e8d090ffee90ac05a1e5d21bb9bdef628ab7846b6",
+          "status": "mismatch"
+        },
+        "index": 425,
+        "refusal_guards": {
+          "classic": [
+            "RenderWorld:generic-world-not-admitted@5362"
+          ],
+          "smart": [
+            "RenderWorld:generic-world-not-admitted@5362"
+          ]
+        },
+        "route": "classic"
+      }
+    ],
+    "transitions": [
+      {
+        "after": "exact",
+        "before": "exact",
+        "count": 84,
+        "route": "classic"
+      },
+      {
+        "after": "refusal",
+        "before": "exact",
+        "count": 1,
+        "route": "classic"
+      },
+      {
+        "after": "refusal",
+        "before": "mismatch",
+        "count": 1,
+        "route": "classic"
+      },
+      {
+        "after": "exact",
+        "before": "refusal",
+        "count": 53,
+        "route": "classic"
+      },
+      {
+        "after": "refusal",
+        "before": "refusal",
+        "count": 360,
+        "route": "classic"
+      },
+      {
+        "after": "uncompared",
+        "before": "uncompared",
+        "count": 1,
+        "route": "classic"
+      },
+      {
+        "after": "exact",
+        "before": "exact",
+        "count": 107,
+        "route": "smart"
+      },
+      {
+        "after": "refusal",
+        "before": "exact",
+        "count": 2,
+        "route": "smart"
+      },
+      {
+        "after": "exact",
+        "before": "refusal",
+        "count": 73,
+        "route": "smart"
+      },
+      {
+        "after": "refusal",
+        "before": "refusal",
+        "count": 317,
+        "route": "smart"
+      },
+      {
+        "after": "uncompared",
+        "before": "uncompared",
+        "count": 1,
+        "route": "smart"
+      }
+    ]
+  },
+  "offset": {
+    "before": {
+      "exact": 32,
+      "mismatch": 16,
+      "refusal": 342
+    },
+    "conditions": 390,
+    "exact_public_replays": 2340
+  },
+  "production_source_sha256": "7cc086b942e9febe858c1a451d2047224bcbda1dc6e2163d79fdf4a7da5d57ea",
+  "retained": {
+    "interruption": "First run passed 390 but aggregation KeyError matrix stopped retained reporting at 6336; repaired run stopped on fuzz exact-to-refusal regression after 84 independent cases.",
+    "reported_exact_replays": 6336,
+    "requested_conditions": 9645,
+    "requested_public_replays": 57870,
+    "suites": [
+      {
+        "reported_exact_conditions": 30,
+        "reported_exact_replays": 180,
+        "suite": "getters",
+        "total_conditions": 30
+      },
+      {
+        "reported_exact_conditions": 252,
+        "reported_exact_replays": 1512,
+        "suite": "topology",
+        "total_conditions": 252
+      },
+      {
+        "reported_exact_conditions": 28,
+        "reported_exact_replays": 168,
+        "suite": "typed",
+        "total_conditions": 28
+      },
+      {
+        "reported_exact_conditions": 384,
+        "reported_exact_replays": 2304,
+        "suite": "independent",
+        "total_conditions": 384
+      },
+      {
+        "reported_exact_conditions": 180,
+        "reported_exact_replays": 1080,
+        "suite": "size_topology",
+        "total_conditions": 180
+      },
+      {
+        "reported_exact_conditions": 182,
+        "reported_exact_replays": 1092,
+        "suite": "zoom_fade",
+        "total_conditions": 299
+      },
+      {
+        "reported_exact_conditions": 0,
+        "reported_exact_replays": 0,
+        "suite": "rotation_size_noise_independent",
+        "total_conditions": 96
+      },
+      {
+        "reported_exact_conditions": 0,
+        "reported_exact_replays": 0,
+        "suite": "size_range",
+        "total_conditions": 560
+      },
+      {
+        "reported_exact_conditions": 0,
+        "reported_exact_replays": 0,
+        "suite": "size_enabled",
+        "total_conditions": 720
+      },
+      {
+        "reported_exact_conditions": 0,
+        "reported_exact_replays": 0,
+        "suite": "noise_range",
+        "total_conditions": 952
+      },
+      {
+        "reported_exact_conditions": 0,
+        "reported_exact_replays": 0,
+        "suite": "seed_thickness",
+        "total_conditions": 1532
+      },
+      {
+        "reported_exact_conditions": 0,
+        "reported_exact_replays": 0,
+        "suite": "quality",
+        "total_conditions": 2262
+      },
+      {
+        "reported_exact_conditions": 0,
+        "reported_exact_replays": 0,
+        "suite": "gain",
+        "total_conditions": 1140
+      },
+      {
+        "reported_exact_conditions": 0,
+        "reported_exact_replays": 0,
+        "suite": "strength",
+        "total_conditions": 1128
+      },
+      {
+        "reported_exact_conditions": 0,
+        "reported_exact_replays": 0,
+        "suite": "noop",
+        "total_conditions": 82
+      }
+    ]
+  },
+  "schema": "radialblur.T01-round4/1",
+  "status": "blocked"
+}

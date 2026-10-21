@@ -1,0 +1,66 @@
+{
+  "after_source_sha256": "bbe3731138805156ed487136e70dad5c39731fc560a284956b9f47e44d0297d8",
+  "before_source_sha256": "66ed2aeb5132e0a5670b3801a781e8d3e5a77c142533911c9b497b1b4b30db85",
+  "cases": 35,
+  "forbidden": [],
+  "oracle_changes": [],
+  "oracle_rechecks": [],
+  "pf8_outer_offset": {
+    "after": [],
+    "before": []
+  },
+  "policy": [],
+  "raw_transitions": [
+    {
+      "after": "exact",
+      "before": "exact",
+      "count": 23,
+      "route": "classic"
+    },
+    {
+      "after": "mismatch",
+      "before": "mismatch",
+      "count": 1,
+      "route": "classic"
+    },
+    {
+      "after": "refusal",
+      "before": "refusal",
+      "count": 11,
+      "route": "classic"
+    },
+    {
+      "after": "exact",
+      "before": "exact",
+      "count": 35,
+      "route": "smart"
+    }
+  ],
+  "transitions": [
+    {
+      "after": "exact",
+      "before": "exact",
+      "count": 23,
+      "route": "classic"
+    },
+    {
+      "after": "mismatch",
+      "before": "mismatch",
+      "count": 1,
+      "route": "classic"
+    },
+    {
+      "after": "refusal",
+      "before": "refusal",
+      "count": 11,
+      "route": "classic"
+    },
+    {
+      "after": "exact",
+      "before": "exact",
+      "count": 35,
+      "route": "smart"
+    }
+  ],
+  "unlisted": []
+}

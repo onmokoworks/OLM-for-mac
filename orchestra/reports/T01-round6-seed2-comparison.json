@@ -1,0 +1,207 @@
+{
+  "after_source_sha256": "bbe3731138805156ed487136e70dad5c39731fc560a284956b9f47e44d0297d8",
+  "before_source_sha256": "66ed2aeb5132e0a5670b3801a781e8d3e5a77c142533911c9b497b1b4b30db85",
+  "cases": 300,
+  "forbidden": [],
+  "oracle_changes": [],
+  "oracle_rechecks": [],
+  "pf8_outer_offset": {
+    "after": [
+      {
+        "count": 8,
+        "route": "classic",
+        "status": "exact"
+      },
+      {
+        "count": 11,
+        "route": "classic",
+        "status": "refusal"
+      },
+      {
+        "count": 8,
+        "route": "smart",
+        "status": "exact"
+      },
+      {
+        "count": 11,
+        "route": "smart",
+        "status": "refusal"
+      }
+    ],
+    "before": [
+      {
+        "count": 3,
+        "route": "classic",
+        "status": "exact"
+      },
+      {
+        "count": 16,
+        "route": "classic",
+        "status": "refusal"
+      },
+      {
+        "count": 3,
+        "route": "smart",
+        "status": "exact"
+      },
+      {
+        "count": 16,
+        "route": "smart",
+        "status": "refusal"
+      }
+    ]
+  },
+  "policy": [],
+  "raw_transitions": [
+    {
+      "after": "exact",
+      "before": "exact",
+      "count": 63,
+      "route": "classic"
+    },
+    {
+      "after": "mismatch",
+      "before": "mismatch",
+      "count": 3,
+      "route": "classic"
+    },
+    {
+      "after": "exact",
+      "before": "refusal",
+      "count": 25,
+      "route": "classic"
+    },
+    {
+      "after": "refusal",
+      "before": "refusal",
+      "count": 209,
+      "route": "classic"
+    },
+    {
+      "after": "exact",
+      "before": "exact",
+      "count": 82,
+      "route": "smart"
+    },
+    {
+      "after": "mismatch",
+      "before": "mismatch",
+      "count": 1,
+      "route": "smart"
+    },
+    {
+      "after": "exact",
+      "before": "refusal",
+      "count": 34,
+      "route": "smart"
+    },
+    {
+      "after": "mismatch",
+      "before": "refusal",
+      "count": 1,
+      "route": "smart"
+    },
+    {
+      "after": "refusal",
+      "before": "refusal",
+      "count": 182,
+      "route": "smart"
+    }
+  ],
+  "transitions": [
+    {
+      "after": "exact",
+      "before": "exact",
+      "count": 63,
+      "route": "classic"
+    },
+    {
+      "after": "mismatch",
+      "before": "mismatch",
+      "count": 3,
+      "route": "classic"
+    },
+    {
+      "after": "exact",
+      "before": "refusal",
+      "count": 25,
+      "route": "classic"
+    },
+    {
+      "after": "refusal",
+      "before": "refusal",
+      "count": 209,
+      "route": "classic"
+    },
+    {
+      "after": "exact",
+      "before": "exact",
+      "count": 82,
+      "route": "smart"
+    },
+    {
+      "after": "mismatch",
+      "before": "mismatch",
+      "count": 1,
+      "route": "smart"
+    },
+    {
+      "after": "exact",
+      "before": "refusal",
+      "count": 34,
+      "route": "smart"
+    },
+    {
+      "after": "mismatch",
+      "before": "refusal",
+      "count": 1,
+      "route": "smart"
+    },
+    {
+      "after": "refusal",
+      "before": "refusal",
+      "count": 182,
+      "route": "smart"
+    }
+  ],
+  "unlisted": [
+    {
+      "after": {
+        "diff": {
+          "actual_bytes": 1152,
+          "actual_word_hex": "0000c07f",
+          "different_bytes": 142,
+          "different_words": 47,
+          "expected_bytes": 1152,
+          "expected_word_hex": "0000807f",
+          "first_byte": 34,
+          "first_word": 8
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 32 32 1 1 1 1",
+          "ERROR": "0",
+          "INFO": "0 0 0 0"
+        },
+        "raw_sha256": "b1533640d1c92cc3426bb75856e342b78ce84516f5a767d6b8bd546d9abdb582",
+        "status": "mismatch"
+      },
+      "before": {
+        "error": 516,
+        "metadata": {
+          "COUNTS": "1 32 32 1 1 1 1",
+          "ERROR": "516",
+          "INFO": "0 0 0 0"
+        },
+        "status": "refusal"
+      },
+      "case": 217,
+      "refusal_guards": {
+        "classic": [
+          "RenderZoomTyped:unadmitted-zoom-profile@2894"
+        ]
+      },
+      "route": "smart"
+    }
+  ]
+}

@@ -930,14 +930,10 @@ static bool IsGenericProceduralNoiseProfile(const OLMRadialBlurInfo &info)
 
 static bool IsGenericBaselineControlProfile(const OLMRadialBlurInfo &info)
 {
-	const bool outer_offset_supported =
-		(info.outer_offset_mode == 1 && info.outer_offset == 0) ||
-		((info.outer_offset_mode == 2 || info.outer_offset_mode == 3) &&
-		 (info.outer_offset == 2 || info.outer_offset == 4));
-	const bool inner_offset_supported =
-		(info.inner_offset_mode == 1 && info.inner_offset == 0) ||
-		(info.blur_type == 2 && (info.inner_offset_mode == 2 || info.inner_offset_mode == 3) &&
-		 (info.inner_offset == 2 || info.inner_offset == 4));
+	const bool outer_offset_supported = info.outer_offset_mode >= 1 && info.outer_offset_mode <= 3 &&
+        info.outer_offset >= 0 && info.outer_offset <= 500;
+	const bool inner_offset_supported = info.inner_offset_mode >= 1 && info.inner_offset_mode <= 3 &&
+        info.inner_offset >= 0 && info.inner_offset <= 500;
 	return (info.blur_type == 1 || info.blur_type == 2) &&
 		std::isfinite(info.center_x) && std::isfinite(info.center_y) &&
 		info.outer_strength >= 0 && info.outer_strength <= 2000 &&
@@ -1020,6 +1016,9 @@ static bool IsGenericSizeNoiseWorldPair(
 	return IsGenericBaselineWorldPair<PixelT>(input, output, neutral);
 }
 
+static A_long RotationResolvedSpanForRadius(A_long strength, A_long offset,
+    A_long mode, A_long radius_count, A_long radius_index);
+
 static bool CheckedRadialGenericBudget(
 	A_long width,
 	A_long height,
@@ -1095,7 +1094,37 @@ static bool CheckedRadialGenericBudget(
 		  (uint64_t)((double)info.inner_strength * budget_quality_scale) : raw_strength;
 	const uint64_t strength = std::max(raw_strength, scaled_strength);
 	if (strength > UINT64_MAX - 8 || polar > UINT64_MAX / (strength + 8)) return false;
-	const uint64_t work = polar * (strength + 8);
+	uint64_t work = polar * (strength + 8);
+    if (bytes <= kMaxBytes && info.blur_type == 2 && (info.outer_offset != 0 || info.inner_offset != 0)) {
+        // Bound the added radius-dependent scatter with the same resolved spans
+        // as the render path. Retain the previous estimate as a lower bound.
+        // The full-polar occupancy estimate is conservative; its rejection is
+        // still a compatibility limitation, not proof of a Windows limit.
+        const auto scaled_control = [&](A_long value) {
+            return static_cast<A_long>(static_cast<double>(value) * budget_quality_scale);
+        };
+        const A_long outer = scaled_control(info.outer_strength);
+        const A_long inner = scaled_control(info.inner_strength);
+        const A_long outer_offset = scaled_control(info.outer_offset);
+        const A_long inner_offset = scaled_control(info.inner_offset);
+        const uint64_t fade = static_cast<uint64_t>(scaled_control(info.outer_edge_fade)) +
+            static_cast<uint64_t>(scaled_control(info.inner_edge_fade));
+        if (radius > static_cast<uint64_t>(std::numeric_limits<A_long>::max())) return false;
+        uint64_t offset_work = 0;
+        for (uint64_t ri = 0; ri < radius; ++ri) {
+            const A_long outer_span = RotationResolvedSpanForRadius(outer, outer_offset,
+                info.outer_offset_mode, static_cast<A_long>(radius), static_cast<A_long>(ri));
+            const A_long inner_span = RotationResolvedSpanForRadius(inner, inner_offset,
+                info.inner_offset_mode, static_cast<A_long>(radius), static_cast<A_long>(ri));
+            const uint64_t spans = static_cast<uint64_t>(std::min<A_long>(outer_span, 3000)) +
+                static_cast<uint64_t>(std::min<A_long>(inner_span, 3000));
+            if (spans > UINT64_MAX - fade - 8 || angular > UINT64_MAX / (spans + fade + 8)) return false;
+            const uint64_t row_work = angular * (spans + fade + 8);
+            if (offset_work > UINT64_MAX - row_work) return false;
+            offset_work += row_work;
+        }
+        work = std::max(work, offset_work);
+    }
 	if (estimated_bytes) *estimated_bytes = bytes > SIZE_MAX ? SIZE_MAX : (size_t)bytes;
 	if (estimated_work) *estimated_work = work;
 	return bytes <= kMaxBytes && work <= kMaxWork;
@@ -1529,6 +1558,20 @@ static A_long DynamicOffsetForRadius(A_long radius_count, A_long offset, A_long 
 {
 	if (offset <= 0) return 0;
 	return (A_long)((double)((radius_count / 2) * offset) / (double)std::max<A_long>(1, radius_index + 1));
+}
+
+// Original 24c0 uses DIVSS -> MULSS -> CVTTSS2SI for the radius Offset.
+// 1c90 then applies Add/Max/Override before its separate 3000 cap.
+static A_long RotationResolvedSpanForRadius(A_long strength, A_long offset,
+    A_long mode, A_long radius_count, A_long radius_index)
+{
+    const A_long product = (radius_count / 2) * offset;
+    const float reciprocal = RadialF32Div(1.0f, static_cast<float>(radius_index + 1));
+    const A_long dynamic = RadialCVTTSS2SI(RadialF32Mul(static_cast<float>(product), reciprocal));
+    if (mode == 1) return strength + dynamic;
+    if (mode == 2) return std::max(strength, dynamic);
+    if (mode == 3) return dynamic;
+    return strength;
 }
 
 template <typename PixelT>
@@ -4685,8 +4728,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				use_aex_typed_rotation_edge_offset_32x18) &&
 				info.outer_offset_mode == 2;
 			const A_long outer_span = use_native_quality_setup
-				? (info.outer_offset_mode == 3 ? DynamicOffsetForRadius(radius_count, native_quality_control(info.outer_offset), ri)
-				   : (info.outer_offset_mode == 2 ? std::max(native_quality_control(info.outer_strength), DynamicOffsetForRadius(radius_count, native_quality_control(info.outer_offset), ri)) : native_quality_control(info.outer_strength)))
+				? RotationResolvedSpanForRadius(native_quality_control(info.outer_strength), native_quality_control(info.outer_offset), info.outer_offset_mode, radius_count, ri)
 				: info.outer_offset_mode == 3
 				? DynamicOffsetForRadius(radius_count, std::max<A_long>(0, info.outer_offset - 1), ri)
 				: (use_mode2_dynamic
@@ -4707,8 +4749,7 @@ static PF_Err RenderRotationTyped(PF_EffectWorld *input, PF_EffectWorld *output,
 				use_aex_typed_rotation_inner_offset_pairwise ||
 				use_aex_typed_rotation_edge_offset_32x18;
 			const A_long inner_span = use_native_quality_setup
-				? (info.inner_offset_mode == 3 ? DynamicOffsetForRadius(radius_count, native_quality_control(info.inner_offset), ri)
-				   : (info.inner_offset_mode == 2 ? std::max(native_quality_control(info.inner_strength), DynamicOffsetForRadius(radius_count, native_quality_control(info.inner_offset), ri)) : native_quality_control(info.inner_strength)))
+				? RotationResolvedSpanForRadius(native_quality_control(info.inner_strength), native_quality_control(info.inner_offset), info.inner_offset_mode, radius_count, ri)
 				: use_dynamic_inner_offset &&
 				info.inner_offset_mode == 3
 				? DynamicOffsetForRadius(
@@ -5301,10 +5342,9 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		if (bitdepth == 32) return RenderZoomFloat(input, output, info, noise_world);
 		return OLM_RADIAL_REFUSAL("type3-bitdepth");
 	}
-	// A request whose controls select the generic beta family must either pass
-	// that family's complete world/layout contract or stop here.  In
-	// particular, malformed rowbytes/alignment/dimensions must never fall
-	// through to one of the historical fixed-fixture classifiers below.
+	// Preserve the world contract for requests already owned by the generic
+	// family. Expanding Offset admission must not take away the older Zoom
+	// dispatch for controls that previously selected it.
 	if (IsGenericRadialControlProfile(info)) {
 		bool admitted = false;
 		if (bitdepth == 8) admitted = (IsGenericBaselineWorldPair<PF_Pixel8>(input, output, info) ||
@@ -5317,6 +5357,20 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			IsGenericSizeNoiseWorldPair<PF_PixelFloat>(input, output, info)) &&
 			GenericRadialInputIsSDR<PF_PixelFloat>(input);
 		else return OLM_RADIAL_REFUSAL("generic-bitdepth");
+		// Before Offset expansion, generic Zoom accepted only Outer Add/0 or
+		// Max/Override 2/4, with Inner Add/0. Other Zoom offset controls reached
+		// RenderZoomTyped, whose own admission and F08 worker selection remain
+		// authoritative outside the generic world's aligned SDR contract.
+		const bool previous_generic_zoom_offsets =
+			((info.outer_offset_mode == 1 && info.outer_offset == 0) ||
+			 ((info.outer_offset_mode == 2 || info.outer_offset_mode == 3) &&
+			  (info.outer_offset == 2 || info.outer_offset == 4))) &&
+			info.inner_offset_mode == 1 && info.inner_offset == 0;
+		if (!admitted && info.blur_type == 1 && !previous_generic_zoom_offsets) {
+			if (bitdepth == 8) return RenderZoom8(input, output, info);
+			if (bitdepth == 16) return RenderZoom16(input, output, info);
+			return RenderZoomFloat(input, output, info);
+		}
 		if (!admitted && !RadialExperimentBypass("generic-world-not-admitted"))
 			return OLM_RADIAL_REFUSAL("generic-world-not-admitted");
 		// Original typed callers copy the world first and stop when all six
