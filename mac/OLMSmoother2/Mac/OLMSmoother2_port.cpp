@@ -4049,6 +4049,44 @@ static float win_FUN_18000bb10_adaptive_gamma(const FPix &center,
 	return gamma_in;
 }
 
+// SSE scalar arithmetic quiets an existing destination/source NaN before
+// generating negative indefinite for invalid non-NaN operands. ARM's default
+// invalid NaN has the opposite sign; operand order also matters for payloads.
+// Keep this at the operation boundary, including operand order from the AEX.
+static inline uint32_t sm2_float_bits(float v) {
+	uint32_t bits; std::memcpy(&bits, &v, sizeof(bits)); return bits;
+}
+static inline float sm2_float_word(uint32_t bits) {
+	float v; std::memcpy(&v, &bits, sizeof(v)); return v;
+}
+static inline float sm2_sse_mul(float dst, float src) {
+	const uint32_t d = sm2_float_bits(dst), s = sm2_float_bits(src);
+	const uint32_t da = d & 0x7fffffffU, sa = s & 0x7fffffffU;
+	if (da > 0x7f800000U) return sm2_float_word(d | 0x00400000U);
+	if (sa > 0x7f800000U) return sm2_float_word(s | 0x00400000U);
+	if ((da == 0x7f800000U && sa == 0) || (sa == 0x7f800000U && da == 0))
+		return sm2_float_word(0xffc00000U);
+	return dst * src;
+}
+static inline float sm2_sse_add(float dst, float src) {
+	const uint32_t d = sm2_float_bits(dst), s = sm2_float_bits(src);
+	const uint32_t da = d & 0x7fffffffU, sa = s & 0x7fffffffU;
+	if (da > 0x7f800000U) return sm2_float_word(d | 0x00400000U);
+	if (sa > 0x7f800000U) return sm2_float_word(s | 0x00400000U);
+	if (da == 0x7f800000U && sa == 0x7f800000U && ((d ^ s) >> 31))
+		return sm2_float_word(0xffc00000U);
+	return dst + src;
+}
+static inline float sm2_sse_div(float dst, float src) {
+	const uint32_t d = sm2_float_bits(dst), s = sm2_float_bits(src);
+	const uint32_t da = d & 0x7fffffffU, sa = s & 0x7fffffffU;
+	if (da > 0x7f800000U) return sm2_float_word(d | 0x00400000U);
+	if (sa > 0x7f800000U) return sm2_float_word(s | 0x00400000U);
+	if ((da == 0 && sa == 0) || (da == 0x7f800000U && sa == 0x7f800000U))
+		return sm2_float_word(0xffc00000U);
+	return dst / src;
+}
+
 // LITERAL port of FUN_18000c0d0:
 //   if (apply_byte): pow(rgb, 1/gamma) on center AND each sample
 //   if (center.a != 1): center.rgb *= center.a   (premul, unconditional)
@@ -4071,13 +4109,13 @@ static void gamma_decode_premul(FPix &center, SmootherPolygon &poly,
 		}
 	}
 	if (center.a != 1.0f) {
-		center.r *= center.a;
-		center.g *= center.a;
-		center.b *= center.a;
+		center.r = sm2_sse_mul(center.a, center.r);
+		center.g = sm2_sse_mul(center.a, center.g);
+		center.b = sm2_sse_mul(center.a, center.b);
 	}
 	for (int i = 0; i < poly.count; ++i) {
 		PolySample &s = poly.samples[i];
-		if (s.a != 1.0f) { s.r *= s.a; s.g *= s.a; s.b *= s.a; }
+		if (s.a != 1.0f) { s.r = sm2_sse_mul(s.a, s.r); s.g = sm2_sse_mul(s.a, s.g); s.b = sm2_sse_mul(s.a, s.b); }
 	}
 }
 
@@ -4112,23 +4150,23 @@ static void composite_separate_scalar(FPix &out, const FPix &center,
 	if (W < 0.0f) W = 0.0f;
 	if (W > 1.0f) W = 1.0f;
 	float blend = 1.0f - W;
-	out.r = blend * center.r;
-	out.g = blend * center.g;
-	out.b = blend * center.b;
-	out.a = blend * center.a;
+	out.r = sm2_sse_mul(blend, center.r);
+	out.g = sm2_sse_mul(blend, center.g);
+	out.b = sm2_sse_mul(blend, center.b);
+	out.a = sm2_sse_mul(blend, center.a);
 	for (int i = 0; i < poly.count; ++i) {
 		const PolySample &s = poly.samples[i];
 		// Windows FUN_18000ab00 uses MULSS followed by ADDSS. arm64 O2
 		// otherwise contracts these expressions into FMADD and moves the
 		// PF16/PF32 result by one or two ULPs.
-		volatile float weighted_r = s.w * s.r;
-		volatile float weighted_g = s.w * s.g;
-		volatile float weighted_b = s.w * s.b;
-		volatile float weighted_a = s.w * s.a;
-		out.r = out.r + weighted_r;
-		out.g = out.g + weighted_g;
-		out.b = out.b + weighted_b;
-		out.a = out.a + weighted_a;
+		volatile float weighted_r = sm2_sse_mul(s.w, s.r);
+		volatile float weighted_g = sm2_sse_mul(s.w, s.g);
+		volatile float weighted_b = sm2_sse_mul(s.w, s.b);
+		volatile float weighted_a = sm2_sse_mul(s.w, s.a);
+		out.r = sm2_sse_add(weighted_r, out.r);
+		out.g = sm2_sse_add(weighted_g, out.g);
+		out.b = sm2_sse_add(weighted_b, out.b);
+		out.a = sm2_sse_add(weighted_a, out.a);
 	}
 }
 
@@ -4145,7 +4183,7 @@ static void post_unpremul_gamma(FPix &px, bool gamma_enable, float gamma_value) 
 	if (a != 0.0f && a != 1.0f) {
 		// FUN_18000b120 uses three scalar DIVSS instructions. Computing one
 		// reciprocal and multiplying shifts the float32 rounding point.
-		px.r /= a; px.g /= a; px.b /= a;
+		px.r = sm2_sse_div(px.r, a); px.g = sm2_sse_div(px.g, a); px.b = sm2_sse_div(px.b, a);
 	}
 	if (gamma_enable && gamma_value > 0.0f) {
 		double e = (double)gamma_value;

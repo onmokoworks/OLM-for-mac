@@ -1,0 +1,125 @@
+{
+  "source_sha256": "5f8253539feaaf8f4c954e15273fc2b49a5109a999bafa6516c3237d91a296fc",
+  "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
+  "cases": [
+    {
+      "index": 299,
+      "geometry": [
+        3,
+        3
+      ],
+      "xy": [
+        2,
+        2
+      ],
+      "input_sha256": "61e7037e53183ba8964cf14fc6f89887c2c692e21bb5bd2e7f8cfc9bdec7c6db",
+      "core_public_aex_join": true,
+      "public_exact": true,
+      "public_aex_sha256": "68f5b4e5d66db5171c95b65a7054f9b106db6da2dac7d1f05e412d9213cdf993",
+      "public_mac_sha256": "68f5b4e5d66db5171c95b65a7054f9b106db6da2dac7d1f05e412d9213cdf993",
+      "source_plane_sha256": "036de83563b50f72a6e8ca08909f978e9aaf08aba9c8fe8a8bf2554c86c3592f",
+      "stages": {
+        "class_plane": {
+          "equal": true,
+          "aex_bytes": 36,
+          "mac_bytes": 36,
+          "different_bytes": 0,
+          "first_byte": null,
+          "aex_hex": null,
+          "mac_hex": null
+        },
+        "polygon": {
+          "equal": true,
+          "aex_bytes": 60,
+          "mac_bytes": 60,
+          "different_bytes": 0,
+          "first_byte": null,
+          "aex_hex": "a0b4273d6a5eff3c000000000000003fcdcc4c3d7530693c3be7dc3e7522993d00000000cdcccc3c196a693d0000000021a9033f000080ffcdcc4c3d",
+          "mac_hex": "a0b4273d6a5eff3c000000000000003fcdcc4c3d7530693c3be7dc3e7522993d00000000cdcccc3c196a693d0000000021a9033f000080ffcdcc4c3d"
+        },
+        "center": {
+          "equal": true,
+          "aex_bytes": 16,
+          "mac_bytes": 16,
+          "different_bytes": 0,
+          "first_byte": null,
+          "aex_hex": "3df2813ef39a7c3cd5cd6c3e0000807f",
+          "mac_hex": "3df2813ef39a7c3cd5cd6c3e0000807f"
+        },
+        "c0d0_center": {
+          "equal": true,
+          "aex_bytes": 16,
+          "mac_bytes": 16,
+          "different_bytes": 0,
+          "first_byte": null,
+          "aex_hex": "0000807f0000807f0000807f0000807f",
+          "mac_hex": "0000807f0000807f0000807f0000807f"
+        },
+        "c0d0_polygon": {
+          "equal": true,
+          "aex_bytes": 60,
+          "mac_bytes": 60,
+          "different_bytes": 0,
+          "first_byte": null,
+          "aex_hex": "a0b4a73c6a5e7f3c000000000000003fcdcc4c3d00000000000000000000000000000000cdcccc3c000080ff0000c0ff000080ff000080ffcdcc4c3d",
+          "mac_hex": "a0b4a73c6a5e7f3c000000000000003fcdcc4c3d00000000000000000000000000000000cdcccc3c000080ff0000c0ff000080ff000080ffcdcc4c3d"
+        },
+        "ab00": {
+          "equal": true,
+          "aex_bytes": 16,
+          "mac_bytes": 16,
+          "different_bytes": 0,
+          "first_byte": null,
+          "aex_hex": "0000c0ff0000c0ff0000c0ff0000c0ff",
+          "mac_hex": "0000c0ff0000c0ff0000c0ff0000c0ff"
+        },
+        "b120": {
+          "equal": true,
+          "aex_bytes": 16,
+          "mac_bytes": 16,
+          "different_bytes": 0,
+          "first_byte": null,
+          "aex_hex": "0000c0ff0000c0ff0000c0ff0000c0ff",
+          "mac_hex": "0000c0ff0000c0ff0000c0ff0000c0ff"
+        }
+      }
+    },
+    {
+      "index": 20,
+      "geometry": [
+        2,
+        5
+      ],
+      "xy": [
+        0,
+        1
+      ],
+      "input_sha256": "492c7844d6b4dd1f0c256699433d3504414e8ee90ef895ff438c316c2de7e91a",
+      "core_public_aex_join": true,
+      "public_exact": true,
+      "public_aex_sha256": "2375cbd8c5af2f59ed1ffc46cb81ea46a63d7ece23fae2a28f230b2a5255349b",
+      "public_mac_sha256": "2375cbd8c5af2f59ed1ffc46cb81ea46a63d7ece23fae2a28f230b2a5255349b",
+      "source_plane_sha256": "65c256f7d33eb3632156512d069e3b8baa684bda999dc6bf9403889609d6efc6",
+      "stages": {
+        "class_plane": {
+          "equal": true,
+          "aex_bytes": 40,
+          "mac_bytes": 40,
+          "different_bytes": 0,
+          "first_byte": null,
+          "aex_hex": null,
+          "mac_hex": null
+        },
+        "polygon": {
+          "equal": true,
+          "aex_bytes": 0,
+          "mac_bytes": 0,
+          "different_bytes": 0,
+          "first_byte": null,
+          "aex_hex": "",
+          "mac_hex": ""
+        }
+      }
+    }
+  ]
+}

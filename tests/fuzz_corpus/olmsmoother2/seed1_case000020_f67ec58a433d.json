@@ -177,13 +177,13 @@
   "provenance": {
     "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMSmoother2.aex",
     "aex_sha256": "7d42c00fe382304ea8a2b9d72af4f3a55f18b6fc03f6174786c97d7618b744c7",
-    "candidate_sha256": "e2137947446283e43f09f7a2495e9f8ef6b851acc313f830008e1c8e7f65631a",
+    "candidate_sha256": "e1c978066c0f554b318c51e3d61129cef15c02b78c319acad1169f3a2c9fb132",
     "declarations_sha256": "f07c33d4026db5e63ab823f7831f49a0992e889836a2161e6712990bad91587f",
     "dependencies_sha256": {
       "cli/OLMSmoother2/shim/OLMSmoother2.h": "7fb3928ba44ed4336335080bc589ea00d34f59b461faa675811436bcb49a4fcf",
       "mac/OLMSmoother2/Mac/OLMSmoother2_decode_lut_10000.h": "3f42b42800e4ea1542210f4a678e36777d8707132b13c9447213a18f2e9e3ba2",
       "mac/OLMSmoother2/Mac/OLMSmoother2_encode_lut_10000.h": "8fd0f56cea32a719d1576a6d0788d0e3d2823a6cfd627588e9b3e7e9084ac2ac",
-      "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp": "89b841cbfe251207a49b31ca102c3534b181a69106a68abba27389c2f6a357e9",
+      "mac/OLMSmoother2/Mac/OLMSmoother2_port.cpp": "5f8253539feaaf8f4c954e15273fc2b49a5109a999bafa6516c3237d91a296fc",
       "tools/emulation/olmsmoother2_public_key_gamma_harness_20261001.cpp": "22636eb61f2893fbc6b644b6326410a61a6b7eb6b0487e057d774cb3558fe3bc"
     },
     "host": "Original AEX Unicorn CPU per-route; production Mac EffectMain Classic + Smart fake host",
@@ -304,23 +304,13 @@
         "status": "refusal"
       },
       "smart": {
-        "diff": {
-          "actual_bytes": 160,
-          "actual_word_hex": "0000c07f",
-          "different_bytes": 2,
-          "different_words": 2,
-          "expected_bytes": 160,
-          "expected_word_hex": "0000c0ff",
-          "first_byte": 87,
-          "first_word": 21
-        },
         "error": 0,
         "metadata": {
           "CALLBACKS": "1,1,1,15,15,1",
           "ERROR": "0"
         },
-        "raw_sha256": "07b05d874a7de7f9966e61aef81be437f050c6e05708ad0656d773b8f2dd3a90",
-        "status": "mismatch"
+        "raw_sha256": "2375cbd8c5af2f59ed1ffc46cb81ea46a63d7ece23fae2a28f230b2a5255349b",
+        "status": "exact"
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"

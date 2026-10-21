@@ -1,10 +1,10 @@
 status: partial
 summary:
-- Reproduced Smart seed-1 n300 baseline: 292 exact / 8 mismatch / 0 refusal.
-- Corrected FUN_18000b2b0 comparison ordering; case 20 now differs only in generated NaN signs.
-- This prerequisite commit reduces case 20 from 951 bytes / 328 words to 27 bytes / 27 words; no complete seed-1 case changes status yet.
-- Seed 1 + seed 2 + retained corpus: 608 sanitized replays, no sanitizer errors, no base-exact case changed.
-- NaN arithmetic and the finite polygon-weight residuals remain separate follow-up commits in this ticket.
+- Smart seed-1 n300 improved from 292 exact / 8 mismatch to 298 exact / 2 mismatch / 0 refusal.
+- Classifier ordering is committed separately as a prerequisite; this commit closes the remaining C3/C4 nonfinite propagation/sign residuals.
+- Seed 2 improved 294/300 → 296/300; saved corpus improved 0/8 → 6/8 exact.
+- All base-exact outputs preserved; 608 ASan/UBSan replays match optimized output without diagnostics.
+- PF8/PF16 polygon-weight residuals and the independent two-NaN payload boundary remain open.
 
 facts:
 - Base: f87b3f1d6b2226a9744559974c86181eb4d7aa8e. Commands below ran successfully; exact evidence is in C01-classifier-verify.json and C01-stages-before.json.
@@ -48,3 +48,13 @@ Expected at this commit: counts/table above, zero base-exact changes and sanitiz
 
 next:
 Close NaN arithmetic with operation-level evidence, then investigate PF8/PF16 polygon weights. A 400-pair original-instruction experiment also exposed a separate two-NaN payload-selection boundary; do not infer native Windows payload precedence from Unicorn alone.
+
+Arithmetic closure (second commit):
+- Base 90ee9d99, evidence C01-arithmetic-verify.json. Optimized and sanitized seed1: 292/8 → 298/2; seed2: 294/6 → 296/4; retained corpus: 0/8 → 6/2. All six changed corpus rows now exact. Zero changes to base-exact cases.
+- C01-arithmetic-stages-after.json: retained case 299 has identical class plane, polygon, center, c0d0, ab00, and b120 bytes, with full reconstructed-core/public-AEX join. Case 20 also joins and is now public exact.
+- First case-299 boundary: c0d0 sample green 0 × -inf produces AEX ffc00000 versus previous Mac 7fc00000. In ab00, +inf + -inf similarly creates negative indefinite. Correct the operation itself; no writer/output-byte correction.
+- Helpers preserve MULSS/ADDSS/DIVSS operand order and noncontracted arithmetic. The original ab00 adds weighted sample as destination and accumulator as source.
+- `test_olmsmoother2_sse_C01.py`: 400 operand pairs / 1200 original instructions. All 1092 operations with at most one NaN match. Fourteen two-NaN pairs (42 operations) disagree in payload priority; full values retained in C01-sse-instructions.json. These are explicitly open, not hidden by a tolerance or asserted exact. The public generated/corpus matrices above do not hit this remaining differing-payload boundary. Do not infer native Windows/UCRT payload precedence from this Unicorn-only result.
+- Arithmetic verification: `PYTHONDONTWRITEBYTECODE=1 python3 tools/fuzz/verify_olmsmoother2_C01.py --base 90ee9d99 --label arithmetic-verify` (redirect output to ticket scratch); expected counters above, no base-exact changes, zero sanitizer errors.
+- Instruction verification: `PYTHONDONTWRITEBYTECODE=1 '/Users/onmk/Documents/Projects/Personal/OLM as/tools/emulation/.venv/bin/python' tools/emulation/test_olmsmoother2_sse_C01.py` (redirect to ticket scratch); expected 0 single-or-no-NaN mismatches and 14 open two-NaN pairs.
+- Additional changed files: tools/emulation/test_olmsmoother2_sse_C01.py; six corpus rows; C01-arithmetic-verify.json; C01-arithmetic-stages-after.json; C01-sse-instructions.json.
