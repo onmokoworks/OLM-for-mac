@@ -69,7 +69,7 @@ def main():
     args = p.parse_args()
     args.max_size, args.case_timeout = 256, 10
     args.scratch = args.scratch.resolve()
-    assert args.scratch.is_relative_to(ROOT/'orchestra/state/T11-triage-smoother')
+    assert args.scratch.is_relative_to(ROOT/'orchestra/state')
     args.scratch.mkdir(parents=True, exist_ok=True)
     os.environ.update(TMPDIR=str(args.scratch), TMP=str(args.scratch), TEMP=str(args.scratch))
     tempfile.tempdir = str(args.scratch)

@@ -1354,9 +1354,11 @@ struct Classifier8TailMemory {
 	static constexpr uint64_t kModule=0x180000000ull, kStack=0x700000000000ull;
 	uint8_t stack[0x180]{}; bool zf=false,sf=false,of=false;
 	template<class T> T raw(uint64_t a) const { T v{}; memcpy(&v,(const void*)(uintptr_t)a,sizeof(v));return v; }
-	uint8_t read8(uint64_t a) const { if(a>=kStack&&a<kStack+sizeof(stack))return stack[a-kStack]; return raw<uint8_t>(a); }
+	// Bound the integer offset before forming a native pointer; a+n can wrap.
+	bool is_stack(uint64_t a,size_t n=1) const { return a>=kStack&&n<=sizeof(stack)&&a-kStack<=sizeof(stack)-n; }
+	uint8_t read8(uint64_t a) const { if(is_stack(a))return stack[a-kStack]; return raw<uint8_t>(a); }
 	uint32_t read32(uint64_t a) const {
-		if(a>=kStack&&a+4<=kStack+sizeof(stack)){uint32_t v;memcpy(&v,stack+a-kStack,4);return v;}
+		if(is_stack(a,4)){uint32_t v;memcpy(&v,stack+(a-kStack),4);return v;}
 		if(a>=kModule+0xf000&&a<kModule+0xf0c4){
 			const uint64_t o=a-kModule; const int32_t *p=nullptr; uint64_t base=0;
 			if(o>=0xf000&&o<0xf024){p=DAT_18000f000;base=0xf000;}
@@ -1368,10 +1370,10 @@ struct Classifier8TailMemory {
 		}
 		return raw<uint32_t>(a);
 	}
-	uint64_t read64(uint64_t a) const { if(a>=kStack&&a+8<=kStack+sizeof(stack)){uint64_t v;memcpy(&v,stack+a-kStack,8);return v;} return raw<uint64_t>(a); }
-	void write8(uint64_t a,uint8_t v){if(a>=kStack&&a<kStack+sizeof(stack))stack[a-kStack]=v;else memcpy((void*)(uintptr_t)a,&v,1);}
-	void write32(uint64_t a,uint32_t v){if(a>=kStack&&a+4<=kStack+sizeof(stack))memcpy(stack+a-kStack,&v,4);else memcpy((void*)(uintptr_t)a,&v,4);}
-	void write64(uint64_t a,uint64_t v){if(a>=kStack&&a+8<=kStack+sizeof(stack))memcpy(stack+a-kStack,&v,8);else memcpy((void*)(uintptr_t)a,&v,8);}
+	uint64_t read64(uint64_t a) const { if(is_stack(a,8)){uint64_t v;memcpy(&v,stack+(a-kStack),8);return v;} return raw<uint64_t>(a); }
+	void write8(uint64_t a,uint8_t v){if(is_stack(a))stack[a-kStack]=v;else memcpy((void*)(uintptr_t)a,&v,1);}
+	void write32(uint64_t a,uint32_t v){if(is_stack(a,4))memcpy(stack+(a-kStack),&v,4);else memcpy((void*)(uintptr_t)a,&v,4);}
+	void write64(uint64_t a,uint64_t v){if(is_stack(a,8))memcpy(stack+(a-kStack),&v,8);else memcpy((void*)(uintptr_t)a,&v,8);}
 	uint64_t subflags(uint64_t a,uint64_t b,int w){const uint64_t mask=w==64?~0ull:((1ull<<w)-1);a&=mask;b&=mask;uint64_t r=(a-b)&mask;zf=r==0;sf=(r>>(w-1))&1;of=(((a^b)&(a^r))>>(w-1))&1;return r;}
 	void logicflags(uint64_t r,int w){const uint64_t mask=w==64?~0ull:((1ull<<w)-1);r&=mask;zf=r==0;sf=(r>>(w-1))&1;of=false;}
 };
@@ -2389,12 +2391,13 @@ struct SubHandler8Memory {
 	uint8_t stack[0x1000]{}; bool zf=false,sf=false,of=false; PF_EffectWorld *world=nullptr;
 	RenderState *state=nullptr; bool pf16=false;
 	template<class T> T raw(uint64_t a) const { T v{}; memcpy(&v,(const void*)(uintptr_t)a,sizeof(v));return v; }
-	bool is_stack(uint64_t a,size_t n=1) const { return a>=kStack&&a+n<=kStack+sizeof(stack); }
-	void *ptr(uint64_t a) { return is_stack(a)?(void*)(stack+a-kStack):(void*)(uintptr_t)a; }
+	// Bound the integer offset before forming a native pointer; a+n can wrap.
+	bool is_stack(uint64_t a,size_t n=1) const { return a>=kStack&&n<=sizeof(stack)&&a-kStack<=sizeof(stack)-n; }
+	void *ptr(uint64_t a) { return is_stack(a)?(void*)(stack+(a-kStack)):(void*)(uintptr_t)a; }
 	uint8_t read8(uint64_t a) const { if(is_stack(a))return stack[a-kStack]; return raw<uint8_t>(a); }
-	uint16_t read16(uint64_t a) const { if(is_stack(a,2)){uint16_t v;memcpy(&v,stack+a-kStack,2);return v;} return raw<uint16_t>(a); }
+	uint16_t read16(uint64_t a) const { if(is_stack(a,2)){uint16_t v;memcpy(&v,stack+(a-kStack),2);return v;} return raw<uint16_t>(a); }
 	uint32_t read32(uint64_t a) const {
-		if(is_stack(a,4)){uint32_t v;memcpy(&v,stack+a-kStack,4);return v;}
+		if(is_stack(a,4)){uint32_t v;memcpy(&v,stack+(a-kStack),4);return v;}
 		if(state&&a==(uintptr_t)state+8)return uint32_t(state->tolerance_lo);
 		if(state&&a==(uintptr_t)state+0xc)return uint32_t(state->tolerance_hi);
 		if(state&&pf16&&a==(uintptr_t)state+0x10)return uint32_t(state->threshold);
@@ -2414,11 +2417,11 @@ struct SubHandler8Memory {
 		}
 		return raw<uint32_t>(a);
 	}
-	uint64_t read64(uint64_t a) const { if(is_stack(a,8)){uint64_t v;memcpy(&v,stack+a-kStack,8);return v;} if(state&&a==(uintptr_t)state+(pf16?0x18:0x10))return (uintptr_t)world; if(world&&(a==(uintptr_t)world+0x10||a==(uintptr_t)world+0x18))return (uintptr_t)world->data; return raw<uint64_t>(a); }
+	uint64_t read64(uint64_t a) const { if(is_stack(a,8)){uint64_t v;memcpy(&v,stack+(a-kStack),8);return v;} if(state&&a==(uintptr_t)state+(pf16?0x18:0x10))return (uintptr_t)world; if(world&&(a==(uintptr_t)world+0x10||a==(uintptr_t)world+0x18))return (uintptr_t)world->data; return raw<uint64_t>(a); }
 	void write8(uint64_t a,uint8_t v){if(is_stack(a))stack[a-kStack]=v;else memcpy((void*)(uintptr_t)a,&v,1);}
-	void write16(uint64_t a,uint16_t v){if(is_stack(a,2))memcpy(stack+a-kStack,&v,2);else memcpy((void*)(uintptr_t)a,&v,2);}
-	void write32(uint64_t a,uint32_t v){if(is_stack(a,4))memcpy(stack+a-kStack,&v,4);else memcpy((void*)(uintptr_t)a,&v,4);}
-	void write64(uint64_t a,uint64_t v){if(is_stack(a,8))memcpy(stack+a-kStack,&v,8);else memcpy((void*)(uintptr_t)a,&v,8);}
+	void write16(uint64_t a,uint16_t v){if(is_stack(a,2))memcpy(stack+(a-kStack),&v,2);else memcpy((void*)(uintptr_t)a,&v,2);}
+	void write32(uint64_t a,uint32_t v){if(is_stack(a,4))memcpy(stack+(a-kStack),&v,4);else memcpy((void*)(uintptr_t)a,&v,4);}
+	void write64(uint64_t a,uint64_t v){if(is_stack(a,8))memcpy(stack+(a-kStack),&v,8);else memcpy((void*)(uintptr_t)a,&v,8);}
 	uint64_t subflags(uint64_t a,uint64_t b,int w){const uint64_t mask=w==64?~0ull:((1ull<<w)-1);a&=mask;b&=mask;uint64_t r=(a-b)&mask;zf=r==0;sf=(r>>(w-1))&1;of=(((a^b)&(a^r))>>(w-1))&1;return r;}
 	uint64_t addflags(uint64_t a,uint64_t b,int w){const uint64_t mask=w==64?~0ull:((1ull<<w)-1);a&=mask;b&=mask;uint64_t r=(a+b)&mask;zf=r==0;sf=(r>>(w-1))&1;of=((~(a^b)&(a^r))>>(w-1))&1;return r;}
 	void logicflags(uint64_t r,int w){const uint64_t mask=w==64?~0ull:((1ull<<w)-1);r&=mask;zf=r==0;sf=(r>>(w-1))&1;of=false;}
