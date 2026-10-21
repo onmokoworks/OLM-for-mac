@@ -1,8 +1,15 @@
 #!/bin/zsh
-# Run tickets sequentially on one engine: orchestra/queue.sh <engine> <model|-> T.. T..
+# Dynamic queue: orchestra/queue.sh <engine> <model|-> <queue-file>
+# Runs the first ticket id in the file that has not finished; append lines to add work.
 MAIN="/Users/onmk/Documents/Projects/Personal/OLM as"
-engine=$1; model=$2; shift 2; [[ $model == - ]] && model=""
-for t in "$@"; do
-  [[ -f "$MAIN/orchestra/state/$t.meta" ]] && grep -q '^exit' "$MAIN/orchestra/state/$t.meta" && continue
-  "$MAIN/orchestra/run.sh" "$t" "$engine" $model
+engine=$1; model=$2; q=$3; [[ $model == - ]] && model=""
+while true; do
+  next=""
+  while read -r t; do
+    [[ -z $t || $t == \#* ]] && continue
+    grep -q '^exit' "$MAIN/orchestra/state/$t.meta" 2>/dev/null && continue
+    next=$t; break
+  done < "$q"
+  [[ -z $next ]] && { sleep 120; continue; }
+  "$MAIN/orchestra/run.sh" "$next" "$engine" $model
 done
