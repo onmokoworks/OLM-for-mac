@@ -13,7 +13,7 @@ for meta in "$MAIN"/orchestra/state/*.meta(N); do
   echo "$changed" | grep -qE '(expected|golden)[^/]*\.(json|bin)$' && hits+=("touches-expected")
   scratch=$(du -sk "$wt/orchestra/state" 2>/dev/null | cut -f1); (( ${scratch:-0} > 5242880 )) && hits+=("scratch>5GiB")
   # repetition: same tool command issued many times recently
-  rep=$(tail -c 200000 "$log" | grep -E '^\s*(\$|>|exec|bash)' | sort | uniq -c | sort -rn | awk '$1>=8{print $1}' | head -1)
+  rep=$(tail -c 200000 "$log" | grep -E '^\s*(\$ |bash -lc)' | sort | uniq -c | sort -rn | awk '$1>=8{print $1}' | head -1)
   [[ -n $rep ]] && hits+=("repeating-cmd x$rep")
   (( ${#hits} )) && echo "$id: ${hits[*]}"
 done
