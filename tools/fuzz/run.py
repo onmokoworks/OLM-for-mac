@@ -15,12 +15,14 @@ import sys
 import tempfile
 import time
 import traceback
+import threading
 
 sys.dont_write_bytecode = True
 from core import evaluate, load_corpus, mismatch_routes, save_corpus, sha, shrink, signature
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SCRATCH = ROOT/'orchestra/state/T02-fuzz-framework-radialblur'
+CORPUS_LOCK = threading.Lock()
 
 
 def main_checkout():
@@ -54,12 +56,13 @@ def options():
     p.add_argument('--scratch', type=Path, default=DEFAULT_SCRATCH)
     p.add_argument('--report', type=Path)
     p.add_argument('--corpus', type=Path)
+    p.add_argument('--corpus-max-bytes', type=int, default=2_000_000)
     p.add_argument('--replay', type=Path, help='Replay a corpus JSON or directory; generation and shrinking are disabled')
     args = p.parse_args()
     if not args.plugin.isidentifier():
         p.error('plugin must be an adapter module name')
     if not (args.n > 0 and 1 <= args.jobs <= 32 and args.budget_minutes > 0 and args.case_timeout > 0
-            and 1 <= args.max_size <= 256 and args.shrink_attempts >= 0 and args.shrink_seconds >= 0):
+            and args.corpus_max_bytes >= 0 and 1 <= args.max_size <= 256 and args.shrink_attempts >= 0 and args.shrink_seconds >= 0):
         p.error('invalid count, jobs, time budget, shrink budget or size')
     if args.worker is None or not args.worker.is_file():
         p.error('set --worker or OLM_AEX_WORKER to the retained AEXCompat executable')
@@ -94,8 +97,15 @@ def run_one(adapter, seed, index, scratch, deadline, args, provenance):
             key = signature(adapter, reduced, observed)
             filename = f'seed{seed}_case{index:06d}_{sha(key.encode())[:12]}.json'
             path = args.corpus/filename
-            save_corpus(path, adapter, case, reduced, observed, reduction, provenance)
-            row.update(cluster=key, corpus=str(path.relative_to(ROOT)),
+            staged = directory/filename
+            save_corpus(staged, adapter, case, reduced, observed, reduction, provenance)
+            with CORPUS_LOCK:
+                prior_size = path.stat().st_size if path.exists() else 0
+                retained = disk_bytes(args.corpus) - prior_size + staged.stat().st_size <= args.corpus_max_bytes
+                if retained:
+                    staged.replace(path)
+            row.update(cluster=key, corpus=str(path.relative_to(ROOT)) if retained else None,
+                       corpus_retained=retained, corpus_omission=None if retained else 'byte cap',
                        shrunk_geometry=reduced['geometry'], shrink_attempts=reduction['attempts'],
                        shrink_accepted=len(reduction['accepted']))
         row['elapsed_seconds'] = round(time.monotonic()-started, 4)
@@ -142,7 +152,7 @@ def main():
               'seed':args.seed, 'requested':args.n, 'jobs':args.jobs,
               'budget_minutes':args.budget_minutes, 'case_timeout_seconds':args.case_timeout,
               'max_size':args.max_size, 'shrink_attempts':args.shrink_attempts,
-              'shrink_seconds':args.shrink_seconds, 'cases':[],
+              'shrink_seconds':args.shrink_seconds, 'corpus_max_bytes':args.corpus_max_bytes, 'cases':[],
               'claims_not_made':['Signature clusters are not proven root causes.',
                                  'Finite random coverage is not all-input compatibility.',
                                  'This is CPU AEX emulation vs a fake SDK host, not native AE/Windows UCRT validation.',
