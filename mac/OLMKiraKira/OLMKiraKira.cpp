@@ -1412,6 +1412,51 @@ static bool IsZeroRayTuple(const OLMKiraKiraInfo &info)
 		info.highlight_radius == 0;
 }
 
+static bool IsAlphaBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format)
+{
+	// F12: the Alpha constructor (18114edf0) produces one scalar channel.
+	// Strength 100% makes its powf exponent exactly one; Fade Out is unused.
+	// Modes 1/2 select one/three box passes in 181150790, and the Highlight
+	// branch in 18114f4a0 uses the corresponding isotropic box passes. F11
+	// recovers their shared float sin/cos and workspace extent arithmetic.
+	// Keep the PF8 normalization difference, color seed constructors, Gaussian,
+	// resizing, and opacity materialization outside this admission. The caller
+	// still requires finite SDR pixels and the existing full-frame/layout caps.
+	if ((format != PF_PixelFormat_ARGB64 && format != PF_PixelFormat_ARGB128) ||
+		info.channel != 1 || (info.blur_mode != 1 && info.blur_mode != 2) ||
+		(info.merge_mode != 1 && info.merge_mode != 2) ||
+		info.approximated_input || info.strength_multiplier != 1.0 ||
+		info.glow_opacity != 1.0 || info.source_opacity != 1.0 ||
+		!(info.brightness_gain >= 1.0 && info.brightness_gain <= 100.0) ||
+		// The AEX adds ray offsets and negates the inverse-warp angle as
+		// signed 32-bit integers. Require both operations to be representable.
+		!(info.glow_rotation > -2147483648.0 &&
+		  info.glow_rotation <= 2147483512.0)) {
+		return false;
+	}
+	auto ray_is_admitted = [](A_long length, A_long maximum,
+		const PF_PixelFloat &color, PF_Boolean use_ramp,
+		const OLMKiraKiraRampData &ramp) {
+		if (length < 0 || length > maximum) return false;
+		if (length == 0) return true;
+		// Custom ramp handles and HDR host colors need their own proof.
+		if (use_ramp) return RampIsClosureDefault(ramp);
+		return color.red >= 0.0f && color.red <= 1.0f &&
+			color.green >= 0.0f && color.green <= 1.0f &&
+			color.blue >= 0.0f && color.blue <= 1.0f;
+	};
+	return ray_is_admitted(info.vertical_length, 1000, info.vertical_color,
+			info.vertical_use_ramp, info.vertical_ramp) &&
+		ray_is_admitted(info.horizontal_length, 1000, info.horizontal_color,
+			info.horizontal_use_ramp, info.horizontal_ramp) &&
+		ray_is_admitted(info.diagonal_length, 1000, info.diagonal_color,
+			info.diagonal_use_ramp, info.diagonal_ramp) &&
+		ray_is_admitted(info.diagonal2_length, 1000, info.diagonal2_color,
+			info.diagonal2_use_ramp, info.diagonal2_ramp) &&
+		ray_is_admitted(info.highlight_radius, 500, info.highlight_color,
+			info.highlight_use_ramp, info.highlight_ramp);
+}
+
 static bool IsGenericBetaTupleForGeometry(
 	const OLMKiraKiraInfo &info,
 	A_long width,
@@ -2031,7 +2076,8 @@ static PF_Err Render(PF_InData *in_data, PF_OutData *out_data, PF_ParamDef *para
 	// than inheriting the older fixture-only rejection boundary.
 	const bool generic_beta =
 		!exact_closure &&
-		IsGenericBetaTupleForGeometry(info, input->width, input->height) &&
+		(IsGenericBetaTupleForGeometry(info, input->width, input->height) ||
+		 IsAlphaBoxTuple(info, format)) &&
 		IsGenericBetaClassicLayout(input, output) &&
 		GenericBetaInputIsFiniteSDR(input, format);
 	KiraDiagnosticLog("classic admission exact=%d generic=%d family=%d",
@@ -2421,8 +2467,9 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				ClassicClosureSourceMatches(input_world, format, source_family);
 			const bool generic_beta = !exact_closure &&
 				generic_world_layout && pre_is_generic_beta &&
-				IsGenericBetaTupleForGeometry(
-					info, input_world->width, input_world->height) &&
+				(IsGenericBetaTupleForGeometry(
+					info, input_world->width, input_world->height) ||
+				 IsAlphaBoxTuple(info, format)) &&
 				GenericBetaInputIsFiniteSDR(input_world, format);
 			KiraDiagnosticLog(
 				"smart admission family=%d exact_tuple=%d exact=%d generic=%d",
