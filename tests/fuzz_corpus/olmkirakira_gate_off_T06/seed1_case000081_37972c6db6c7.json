@@ -1,0 +1,317 @@
+{
+  "case": {
+    "depth": 8,
+    "geometry": [
+      14,
+      14
+    ],
+    "index": 81,
+    "input_padding": 3,
+    "output_padding": 32,
+    "parameters": [
+      {
+        "kind": "u",
+        "slot": 1,
+        "value": 1
+      },
+      {
+        "kind": "u",
+        "slot": 2,
+        "value": 2
+      },
+      {
+        "kind": "u",
+        "slot": 3,
+        "value": 1
+      },
+      {
+        "kind": "b",
+        "slot": 4,
+        "value": 0
+      },
+      {
+        "kind": "s",
+        "slot": 5,
+        "value": 1.0
+      },
+      {
+        "kind": "i",
+        "slot": 6,
+        "value": 522
+      },
+      {
+        "kind": "s",
+        "slot": 7,
+        "value": 0.0
+      },
+      {
+        "kind": "i",
+        "slot": 8,
+        "value": 100
+      },
+      {
+        "kind": "i",
+        "slot": 9,
+        "value": 100
+      },
+      {
+        "kind": "i",
+        "slot": 10,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 11,
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 13,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 16,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 17,
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 19,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 22,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 23,
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 25,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 28,
+        "value": 0
+      },
+      {
+        "kind": "c",
+        "slot": 29,
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 31,
+        "value": 0
+      },
+      {
+        "kind": "i",
+        "slot": 34,
+        "value": 14
+      },
+      {
+        "kind": "c",
+        "slot": 35,
+        "value": [
+          255,
+          255,
+          255,
+          255
+        ]
+      },
+      {
+        "kind": "b",
+        "slot": 37,
+        "value": 0
+      },
+      {
+        "kind": "a",
+        "slot": 40,
+        "value": 0.0
+      }
+    ],
+    "profile": "sdr",
+    "seed": 1
+  },
+  "generator_version": 1,
+  "index": 81,
+  "input_sha256": "5d1c33fbe52a6d888898fef7d3b78203c555195de1a0fa838ffde41be10eaf47",
+  "max_size": 256,
+  "operations": [
+    {
+      "kind": "params",
+      "values": {
+        "29": [
+          255,
+          255,
+          255,
+          255
+        ]
+      }
+    },
+    {
+      "kind": "params",
+      "values": {
+        "40": 0.0
+      }
+    }
+  ],
+  "pixels_zlib_base64": "eNoBEAPv/ABkNhsAVNO5JnZA/qVmG7l4l80gAOcx+LBAh04A0Uh4/5j2zP8XhgwA+86z/7wzHwCtT1YAPHAxAAlHAwATmEQAGAIL/0Zbef+hFQAAvlwL/8hMiV6bvZ//Uzla/xLzvwBhRwjN68YdfPd4NADeIA4+b7QS/56DmwDFNyT/2TYtXt/xCwCuphn/pWeWpQ6jFwC5siF6OMrB/3xbOP/tk2j/1QHCAEKP1hYQjsf/QwP4AKa2WP/BUPIA5NwwAGYTWP+0J4H/ZhjNAL527f8+Vrn/r39MEEFZxQCT2yMO3hZG//CbhP9qE/gAvpekAA55/Xflrxot6b2n0xywk6aRsnz/tPS/6K5s6ZOo5r3/rBKXhZBeDQDfZ64AYGh2ABK0CDWpfxGkttrWAJOI4QBlfA7/1bGgAG37mAAUEYEVmfvVAK4TCf+8AIP/jyvSALGLaf9GfdBKD1jz/w4UTQARnXowfM45/+rAVv/iTPP/lEjFaPeRG/+56FP/J89qACwIz/8bs4KBeQRs/1E/UwUBEJsAbBxJP5xR82UEEtP/S9Gu2aVThQAXqzoAuepC/xmZJACIRNd7ibD1/woCtwDKMq//2NphAIRxYADGcov/eeWrAEi/IPFeoV0/Ox37XocPUQBlYKb/oPSN/9QsMACtaPz/rX3nsxvUeP+wYRcAKg0K/SypXP/Yj1H/1XtsAO2TgfJnOdsAiRbtADZ2Uf8fecYAbbzzADSWNwBSk7Zax4D0/6ZJSgAVV1AAdG3J/38pxf+SPgUAINAt/hqz1Wq7i4GLb6FTAFvp2gCZK9SfNKrNTluhxmc9zKoAGW6f/w+KxSCjxWv/aKtdAAY6sTYXWYoL/IA+RwhUnsWihy7/t7Ulwow0Lv9n0TQ7FIIQADbUWILxvSM9qRMYC/RnVf/cNsxb4/CfFtcJtAAOx2sAbBTvmJHoQwkEvQH/2qoJtPmslP9GadQA5flWbUxfVf8DPz7/gbPi/6aIxgiDvIQA0lM1ADNIswA17PAAuCA1Un6x1P/9xTMAxPY9//dVbv+ps9sjlHwI",
+  "plugin": "olmkirakira",
+  "provenance": {
+    "aex_path": "/Users/onmk/Documents/Projects/Personal/OLM as/plugins_2025/OLMKiraKira.aex",
+    "aex_sha256": "60997c0c52207c15844a46289435231fa6b0a885f63778404e02cea6e03899f7",
+    "builder_anomalies": "Brightness Gain default 0.10000000149011612 is below declared min 1; sampling/shrinking default clamped to legal 1. Blur Mode samples declared 1..3 only.",
+    "candidate_sha256": "1ac1e99e6e802b828aefefb8ea2db5fcd912efe503d459e5286995de8dc1d2f3",
+    "declarations_sha256": "b1e500a914d04b30c4fcd581cbbb9caaa974e55cf683e9554c7d5d6e391a7731",
+    "dependencies_sha256": {
+      "mac/OLMKiraKira/OLMKiraKira.cpp": "5fd4818b4dec04fd14468fd986ded9498a765290923ddfec71e417faf7f52e14",
+      "mac/OLMKiraKira/OLMKiraKira.h": "26c5209a6fddebbde96190fe09e0749b6f7dd6bec1421815b7a6e5fa6f73d64d",
+      "tools/emulation/olmkirakira_public_smart_bounded_closure_harness_20260812.cpp": "49e5922fac66eaa53f57b45edf5ac06073bfb13dd3f24d85ddaae9c619877800",
+      "tools/fuzz/harnesses/kirakira_main.cpp": "14dee9cf51476808095c6dd1cb78b16310fbe09301b9dbc3f0d962f1a248346e",
+      "tools/fuzz/harnesses/parameters.hpp": "b6a909d5aed4ae6f45029d830e7cad78b5208a4186182b8d7e38465e7f0e8c5c"
+    },
+    "host": "Original AEX Unicorn CPU smartfx; production Mac EffectMain Classic + Smart fake host",
+    "layer": "None; independent layer worlds outside this adapter",
+    "oracle_render_path": "smartfx",
+    "out_of_range_builder_defaults": [
+      {
+        "builder_default": 0.10000000149011612,
+        "sampled_default": 1.0,
+        "slot": 5
+      }
+    ],
+    "ramps": "Existing default three-stop handles only; custom arbitrary ramps outside this adapter",
+    "reference_limit": "Retained host imports are not native Windows UCRT or AE proof",
+    "rotation": "Original ANGLE raw fixed integer consumed as degrees; Mac float degree value follows retained exported-owner helper",
+    "stage_support": "existing public replay helpers expose final raw output only",
+    "time": {
+      "scale": 24,
+      "step": 1,
+      "total": 1,
+      "value": 0
+    },
+    "triage": {
+      "experiment": "all",
+      "limitation": "Admission only; helper fallbacks, request normalization, world validation and arithmetic unchanged",
+      "sanitizers": false,
+      "scratch_source_sha256": "0edb71c3ab470e9a6f3c3960ee1e6d5bba435b7c9a6fc56f618e18db51016695",
+      "switch": "OLM_KIRA_TRIAGE_GATE_OFF=1"
+    },
+    "worker_path": "/Users/onmk/Documents/Codex/2026-10-05/task-3/AEXCompat-containment/guest/target/release/aex-guest-worker",
+    "worker_sha256": "3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261",
+    "world": "full frame, origin 0, downsample 1:1, raw ARGB, no conversion"
+  },
+  "reduction": {
+    "accepted": [
+      {
+        "kind": "params",
+        "values": {
+          "29": [
+            255,
+            255,
+            255,
+            255
+          ]
+        }
+      },
+      {
+        "kind": "params",
+        "values": {
+          "40": 0.0
+        }
+      }
+    ],
+    "attempts": 24,
+    "bounded": true,
+    "minimality_claimed": false,
+    "outcomes": {
+      "budget/budget,budget": 1,
+      "ok/exact,exact": 13,
+      "ok/exact,refusal": 8,
+      "ok/mismatch,mismatch": 2
+    }
+  },
+  "result": {
+    "first_mismatching_stage": null,
+    "oracle": {
+      "guards_intact": true,
+      "raw_sha256": "dfed3a16bff8b862691071c74275777935d7fe308c22c0d79438094387bde842",
+      "session_clean": true,
+      "status": "ok"
+    },
+    "routes": {
+      "classic": {
+        "diff": {
+          "actual_bytes": 784,
+          "actual_word_hex": "ff",
+          "different_bytes": 9,
+          "different_words": 9,
+          "expected_bytes": 784,
+          "expected_word_hex": "fe",
+          "first_byte": 97,
+          "first_word": 97
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "0 0 0 0 0",
+          "ERROR": "0"
+        },
+        "raw_sha256": "f7356ccb9baaddb565b0c09f6988b10a54a9f30402011ec5f39a5d4535859a9a",
+        "status": "mismatch"
+      },
+      "smart": {
+        "diff": {
+          "actual_bytes": 784,
+          "actual_word_hex": "ff",
+          "different_bytes": 9,
+          "different_words": 9,
+          "expected_bytes": 784,
+          "expected_word_hex": "fe",
+          "first_byte": 97,
+          "first_word": 97
+        },
+        "error": 0,
+        "metadata": {
+          "COUNTS": "1 1 1 25 25",
+          "ERROR": "0"
+        },
+        "raw_sha256": "f7356ccb9baaddb565b0c09f6988b10a54a9f30402011ec5f39a5d4535859a9a",
+        "status": "mismatch"
+      }
+    },
+    "stage_observation": "paired stages unavailable; final raw output only"
+  },
+  "schema": "olm-fuzz-case/1",
+  "seed": 1
+}

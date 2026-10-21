@@ -55,3 +55,17 @@ class Adapter(PublicAdapter):
         config.write_text(''.join(lines))
         return [self.binary,*case['geometry'],case['depth'],route,config,
                 case['input_padding'],case['output_padding']],case['pixels']
+
+    def candidate(self, case, directory, route, deadline):
+        # Copy the adapter rather than mutating shared env: runs use two threads.
+        import copy
+        trace = directory/f'refusal_trace_{route}.txt'
+        trace.unlink(missing_ok=True)
+        traced = copy.copy(self)
+        traced.env = dict(self.env, OLM_REFUSAL_TRACE=str(trace))
+        try:
+            result, raw = PublicAdapter.candidate(traced, case, directory, route, deadline)
+            guards = trace.read_text().splitlines() if trace.is_file() else []
+            return result, raw, guards
+        finally:
+            trace.unlink(missing_ok=True)
