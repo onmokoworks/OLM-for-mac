@@ -1,0 +1,55 @@
+OFFSET_PROMOTE_CALIBRATION 1 True
+OFFSET_PROMOTE_CALIBRATION 2 True
+OFFSET_PROMOTE_CALIBRATION 3 True
+OFFSET_PROMOTE_CALIBRATION 4 True
+OFFSET_PROMOTE_CALIBRATION 5 True
+OFFSET_PROMOTE_CALIBRATION 6 True
+OFFSET_PROMOTE_CALIBRATION 7 True
+OFFSET_PROMOTE_CALIBRATION 8 True
+OFFSET_PROMOTE_CALIBRATION 9 True
+OFFSET_PROMOTE_CALIBRATION 10 True
+OFFSET_PROMOTE_CALIBRATION 11 True
+OFFSET_PROMOTE_CALIBRATION 12 True
+OFFSET_PROMOTE_CALIBRATION 13 True
+OFFSET_PROMOTE_CALIBRATION 14 True
+OFFSET_PROMOTE_CALIBRATION 15 True
+OFFSET_PROMOTE_CALIBRATION 16 True
+OFFSET_PROMOTE_CALIBRATION 17 True
+OFFSET_PROMOTE_CALIBRATION 18 True
+ROUND5 1 seed1_case000193.json {'base': {'classic': 'exact', 'smart': 'exact'}, 'before': {'classic': 'refusal', 'smart': 'refusal'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND5 2 seed1_case000425.json {'base': {'classic': 'mismatch', 'smart': 'exact'}, 'before': {'classic': 'refusal', 'smart': 'refusal'}, 'after': {'classic': 'mismatch', 'smart': 'exact'}}
+ROUND5 3 seed1_case000006_253d4390d90b.json {'base': {'classic': 'exact', 'smart': 'exact'}, 'before': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND5 4 seed1_case000029_b099428e963b.json {'base': {'classic': 'refusal', 'smart': 'exact'}, 'before': {'classic': 'refusal', 'smart': 'exact'}, 'after': {'classic': 'refusal', 'smart': 'exact'}}
+ROUND5 5 seed1_case000034_f67ec58a433d.json {'base': {'classic': 'refusal', 'smart': 'exact'}, 'before': {'classic': 'refusal', 'smart': 'exact'}, 'after': {'classic': 'refusal', 'smart': 'exact'}}
+ROUND5 6 seed1_case000041_42e5f8af427d.json {'base': {'classic': 'exact', 'smart': 'exact'}, 'before': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND5 7 seed1_case000043_5a4c69b38522.json {'base': {'classic': 'exact', 'smart': 'exact'}, 'before': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND5 8 seed1_case000044_d1d38fe702c9.json {'base': {'classic': 'refusal', 'smart': 'exact'}, 'before': {'classic': 'refusal', 'smart': 'exact'}, 'after': {'classic': 'refusal', 'smart': 'exact'}}
+ROUND5 9 seed1_case000050_aa6536a877df.json {'base': {'classic': 'exact', 'smart': 'exact'}, 'before': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND5 10 seed1_case000081_9774c69c219e.json {'base': {'classic': 'exact', 'smart': 'exact'}, 'before': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND5 11 seed1_case000091_0f4b356bb556.json {'base': {'classic': 'exact', 'smart': 'exact'}, 'before': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND5 12 seed1_case000152_0f4b356bb556.json {'base': {'classic': 'exact', 'smart': 'exact'}, 'before': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND5 13 seed1_case000153_f8d4024784b4.json {'base': {'classic': 'refusal', 'smart': 'exact'}, 'before': {'classic': 'refusal', 'smart': 'exact'}, 'after': {'classic': 'refusal', 'smart': 'exact'}}
+ROUND5 14 seed1_case000180_f67ec58a433d.json {'base': {'classic': 'refusal', 'smart': 'exact'}, 'before': {'classic': 'refusal', 'smart': 'exact'}, 'after': {'classic': 'refusal', 'smart': 'exact'}}
+ROUND5 15 seed1_case000203_f8d4024784b4.json {'base': {'classic': 'exact', 'smart': 'exact'}, 'before': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND5 16 seed1_case000221_dc2eff5fb2aa.json {'base': {'classic': 'exact', 'smart': 'exact'}, 'before': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND5 17 seed1_case000230_f8d4024784b4.json {'base': {'classic': 'refusal', 'smart': 'exact'}, 'before': {'classic': 'refusal', 'smart': 'exact'}, 'after': {'classic': 'refusal', 'smart': 'exact'}}
+ROUND5 18 seed1_case000253_0f4b356bb556.json {'base': {'classic': 'exact', 'smart': 'exact'}, 'before': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND5 19 seed1_case000268_c68d152bb97c.json {'base': {'classic': 'refusal', 'smart': 'exact'}, 'before': {'classic': 'refusal', 'smart': 'exact'}, 'after': {'classic': 'refusal', 'smart': 'exact'}}
+ROUND5 20 seed1_case000269_d7848a7c740d.json {'base': {'classic': 'refusal', 'smart': 'exact'}, 'before': {'classic': 'refusal', 'smart': 'exact'}, 'after': {'classic': 'refusal', 'smart': 'exact'}}
+ROUND5 21 seed1_case000271_9a5b282a1ffa.json {'base': {'classic': 'exact', 'smart': 'exact'}, 'before': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND5 22 seed1_case000303_5a4c69b38522.json {'base': {'classic': 'exact', 'smart': 'exact'}, 'before': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND5 23 seed1_case000305_93a01b17e479.json {'base': {'classic': 'exact', 'smart': 'exact'}, 'before': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND5 24 seed1_case000328_93a01b17e479.json {'base': {'classic': 'exact', 'smart': 'exact'}, 'before': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND5 25 seed1_case000347_d1d38fe702c9.json {'base': {'classic': 'refusal', 'smart': 'exact'}, 'before': {'classic': 'refusal', 'smart': 'exact'}, 'after': {'classic': 'refusal', 'smart': 'exact'}}
+ROUND5 26 seed1_case000369_90303525f87f.json {'base': {'classic': 'exact', 'smart': 'exact'}, 'before': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND5 27 seed1_case000379_dc2eff5fb2aa.json {'base': {'classic': 'exact', 'smart': 'exact'}, 'before': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND5 28 seed1_case000384_d1d38fe702c9.json {'base': {'classic': 'refusal', 'smart': 'exact'}, 'before': {'classic': 'refusal', 'smart': 'exact'}, 'after': {'classic': 'refusal', 'smart': 'exact'}}
+ROUND5 29 seed1_case000390_f8d4024784b4.json {'base': {'classic': 'refusal', 'smart': 'exact'}, 'before': {'classic': 'refusal', 'smart': 'exact'}, 'after': {'classic': 'refusal', 'smart': 'exact'}}
+ROUND5 30 seed1_case000421_71f8c982c45b.json {'base': {'classic': 'exact', 'smart': 'exact'}, 'before': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND5 31 seed1_case000425_df3690c920ab.json {'base': {'classic': 'mismatch', 'smart': 'exact'}, 'before': {'classic': 'refusal', 'smart': 'exact'}, 'after': {'classic': 'mismatch', 'smart': 'exact'}}
+ROUND5 32 seed1_case000440_e04d91d93cb4.json {'base': {'classic': 'exact', 'smart': 'exact'}, 'before': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND5 33 seed1_case000444_253d4390d90b.json {'base': {'classic': 'exact', 'smart': 'exact'}, 'before': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND5 34 seed1_case000448_d1d38fe702c9.json {'base': {'classic': 'exact', 'smart': 'exact'}, 'before': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND5 35 seed1_case000458_e04d91d93cb4.json {'base': {'classic': 'exact', 'smart': 'exact'}, 'before': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND5 36 seed1_case000486_0f4b356bb556.json {'base': {'classic': 'exact', 'smart': 'exact'}, 'before': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}
+ROUND5 37 seed1_case000487_5a4c69b38522.json {'base': {'classic': 'exact', 'smart': 'exact'}, 'before': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}}

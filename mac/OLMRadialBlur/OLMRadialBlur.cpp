@@ -5342,10 +5342,9 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 		if (bitdepth == 32) return RenderZoomFloat(input, output, info, noise_world);
 		return OLM_RADIAL_REFUSAL("type3-bitdepth");
 	}
-	// A request whose controls select the generic beta family must either pass
-	// that family's complete world/layout contract or stop here.  In
-	// particular, malformed rowbytes/alignment/dimensions must never fall
-	// through to one of the historical fixed-fixture classifiers below.
+	// Preserve the world contract for requests already owned by the generic
+	// family. Expanding Offset admission must not take away the older Zoom
+	// dispatch for controls that previously selected it.
 	if (IsGenericRadialControlProfile(info)) {
 		bool admitted = false;
 		if (bitdepth == 8) admitted = (IsGenericBaselineWorldPair<PF_Pixel8>(input, output, info) ||
@@ -5358,6 +5357,20 @@ static PF_Err RenderWorld(PF_EffectWorld *input, PF_EffectWorld *output,
 			IsGenericSizeNoiseWorldPair<PF_PixelFloat>(input, output, info)) &&
 			GenericRadialInputIsSDR<PF_PixelFloat>(input);
 		else return OLM_RADIAL_REFUSAL("generic-bitdepth");
+		// Before Offset expansion, generic Zoom accepted only Outer Add/0 or
+		// Max/Override 2/4, with Inner Add/0. Other Zoom offset controls reached
+		// RenderZoomTyped, whose own admission and F08 worker selection remain
+		// authoritative outside the generic world's aligned SDR contract.
+		const bool previous_generic_zoom_offsets =
+			((info.outer_offset_mode == 1 && info.outer_offset == 0) ||
+			 ((info.outer_offset_mode == 2 || info.outer_offset_mode == 3) &&
+			  (info.outer_offset == 2 || info.outer_offset == 4))) &&
+			info.inner_offset_mode == 1 && info.inner_offset == 0;
+		if (!admitted && info.blur_type == 1 && !previous_generic_zoom_offsets) {
+			if (bitdepth == 8) return RenderZoom8(input, output, info);
+			if (bitdepth == 16) return RenderZoom16(input, output, info);
+			return RenderZoomFloat(input, output, info);
+		}
 		if (!admitted && !RadialExperimentBypass("generic-world-not-admitted"))
 			return OLM_RADIAL_REFUSAL("generic-world-not-admitted");
 		// Original typed callers copy the world first and stop when all six
