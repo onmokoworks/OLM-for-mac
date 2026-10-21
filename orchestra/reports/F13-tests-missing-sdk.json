@@ -1,0 +1,48 @@
+{
+  "baseline_revision": null,
+  "archived": false,
+  "tests": 8,
+  "failures": 7,
+  "errors": 0,
+  "rows": [
+    {
+      "test": "unittest.case.FunctionTestCase (test_generic_baseline_accepts_arbitrary_pixels_geometry_and_padding)",
+      "status": "failure",
+      "detail": "Traceback (most recent call last):\n  File \"/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/tests/test_olmradialblur_generic_baseline_20260820.py\", line 141, in test_generic_baseline_accepts_arbitrary_pixels_geometry_and_padding\n    assert built.returncode == 0, built.stderr\n           ^^^^^^^^^^^^^^^^^^^^^\nAssertionError: In file included from /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/orchestra/state/F13-radial-offset-newly-admitted-mismatch/radial_generic_baseline_4q8infdk/probe.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/mac/OLMRadialBlur/OLMRadialBlur.cpp:1:\n/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/mac/OLMRadialBlur/OLMRadialBlur.h:15:10: fatal error: 'AEConfig.h' file not found\n   15 | #include \"AEConfig.h\"\n      |          ^~~~~~~~~~~~\n1 error generated.\n\n"
+    },
+    {
+      "test": "unittest.case.FunctionTestCase (test_generic_baseline_parameter_range_under_asan_ubsan)",
+      "status": "failure",
+      "detail": "Traceback (most recent call last):\n  File \"/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/tests/test_olmradialblur_generic_baseline_sanitizers_20260820.py\", line 53, in test_generic_baseline_parameter_range_under_asan_ubsan\n    assert built.returncode == 0, built.stderr\n           ^^^^^^^^^^^^^^^^^^^^^\nAssertionError: In file included from /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/orchestra/state/F13-radial-offset-newly-admitted-mismatch/radial_generic_sanitize_f971d_0x/probe.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/mac/OLMRadialBlur/OLMRadialBlur.cpp:1:\n/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/mac/OLMRadialBlur/OLMRadialBlur.h:15:10: fatal error: 'AEConfig.h' file not found\n   15 | #include \"AEConfig.h\"\n      |          ^~~~~~~~~~~~\n1 error generated.\n\n"
+    },
+    {
+      "test": "unittest.case.FunctionTestCase (test_generic_radial_budget_bounds_memory_work_and_smart_staging)",
+      "status": "failure",
+      "detail": "Traceback (most recent call last):\n  File \"/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/tests/test_olmradialblur_generic_budget_20260821.py\", line 67, in test_generic_radial_budget_bounds_memory_work_and_smart_staging\n    assert build.returncode == 0, build.stderr\n           ^^^^^^^^^^^^^^^^^^^^^\nAssertionError: In file included from /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/orchestra/state/F13-radial-offset-newly-admitted-mismatch/radial_budget_wuuol6dl/probe.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/mac/OLMRadialBlur/OLMRadialBlur.cpp:1:\n/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/mac/OLMRadialBlur/OLMRadialBlur.h:15:10: fatal error: 'AEConfig.h' file not found\n   15 | #include \"AEConfig.h\"\n      |          ^~~~~~~~~~~~\n1 error generated.\n\n"
+    },
+    {
+      "test": "unittest.case.FunctionTestCase (test_generic_type3_zoom_extent_stride_alias_and_rotation_boundary)",
+      "status": "failure",
+      "detail": "Traceback (most recent call last):\n  File \"/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/tests/test_olmradialblur_generic_type3_sanitizers_20260820.py\", line 46, in test_generic_type3_zoom_extent_stride_alias_and_rotation_boundary\n    assert build.returncode == 0, build.stderr\n           ^^^^^^^^^^^^^^^^^^^^^\nAssertionError: In file included from /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/orchestra/state/F13-radial-offset-newly-admitted-mismatch/radial_type3_generic_46euan8m/probe.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/mac/OLMRadialBlur/OLMRadialBlur.cpp:1:\n/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/mac/OLMRadialBlur/OLMRadialBlur.h:15:10: fatal error: 'AEConfig.h' file not found\n   15 | #include \"AEConfig.h\"\n      |          ^~~~~~~~~~~~\n1 error generated.\n\n"
+    },
+    {
+      "test": "unittest.case.FunctionTestCase (test_global_polar_request_normalizes_to_full_frame_and_rejects_tiles)",
+      "status": "failure",
+      "detail": "Traceback (most recent call last):\n  File \"/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/tests/test_olmradialblur_global_polar_smart_contract_20260820.py\", line 45, in test_global_polar_request_normalizes_to_full_frame_and_rejects_tiles\n    assert build.returncode == 0, build.stderr\n           ^^^^^^^^^^^^^^^^^^^^^\nAssertionError: In file included from /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/orchestra/state/F13-radial-offset-newly-admitted-mismatch/radial_global_smart_pqvyle21/probe.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/mac/OLMRadialBlur/OLMRadialBlur.cpp:1:\n/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/mac/OLMRadialBlur/OLMRadialBlur.h:15:10: fatal error: 'AEConfig.h' file not found\n   15 | #include \"AEConfig.h\"\n      |          ^~~~~~~~~~~~\n1 error generated.\n\n"
+    },
+    {
+      "test": "unittest.case.FunctionTestCase (test_smart_lifecycle_advertises_extra_pixels_and_preserves_cleanup)",
+      "status": "pass"
+    },
+    {
+      "test": "unittest.case.FunctionTestCase (test_size_noise_classic_effectmain_all_depths_and_families)",
+      "status": "failure",
+      "detail": "Traceback (most recent call last):\n  File \"/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/tests/test_olmradialblur_size_noise_effectmain_20260821.py\", line 102, in test_size_noise_classic_effectmain_all_depths_and_families\n    assert build.returncode == 0, build.stderr\n           ^^^^^^^^^^^^^^^^^^^^^\nAssertionError: clang++: error: no such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/Util/AEGP_SuiteHandler.cpp'\nclang++: error: no such file or directory: '/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/Util/MissingSuiteError.cpp'\n\n"
+    },
+    {
+      "test": "unittest.case.FunctionTestCase (test_typed_inner_geometry_guard_accepts_centered_padded_and_rejects_near_misses)",
+      "status": "failure",
+      "detail": "Traceback (most recent call last):\n  File \"/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/tests/test_olmradialblur_typed_inner_geometry_guard_20260807.py\", line 47, in test_typed_inner_geometry_guard_accepts_centered_padded_and_rejects_near_misses\n    assert built.returncode == 0, built.stderr\n           ^^^^^^^^^^^^^^^^^^^^^\nAssertionError: In file included from /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/orchestra/state/F13-radial-offset-newly-admitted-mismatch/radial_inner_guard_sntybnpe/probe.cpp:1:\nIn file included from /Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/mac/OLMRadialBlur/OLMRadialBlur.cpp:1:\n/Users/onmk/Documents/Projects/Personal/OLM as/worktrees/F13-radial-offset-newly-admitted-mismatch/mac/OLMRadialBlur/OLMRadialBlur.h:15:10: fatal error: 'AEConfig.h' file not found\n   15 | #include \"AEConfig.h\"\n      |          ^~~~~~~~~~~~\n1 error generated.\n\n"
+    }
+  ]
+}

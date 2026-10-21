@@ -1,0 +1,27 @@
+OFFSET_PROMOTE_CALIBRATION 1 True
+OFFSET_PROMOTE_CALIBRATION 2 True
+OFFSET_PROMOTE_CALIBRATION 3 True
+OFFSET_PROMOTE_CALIBRATION 4 True
+OFFSET_PROMOTE_CALIBRATION 5 True
+OFFSET_PROMOTE_CALIBRATION 6 True
+OFFSET_PROMOTE_CALIBRATION 7 True
+OFFSET_PROMOTE_CALIBRATION 8 True
+OFFSET_PROMOTE_CALIBRATION 9 True
+OFFSET_PROMOTE_CALIBRATION 10 True
+OFFSET_PROMOTE_CALIBRATION 11 True
+OFFSET_PROMOTE_CALIBRATION 12 True
+OFFSET_PROMOTE_CALIBRATION 13 True
+OFFSET_PROMOTE_CALIBRATION 14 True
+OFFSET_PROMOTE_CALIBRATION 15 True
+OFFSET_PROMOTE_CALIBRATION 16 True
+OFFSET_PROMOTE_CALIBRATION 17 True
+OFFSET_PROMOTE_CALIBRATION 18 True
+F13 seed1_89_original {'before': {'classic': 'mismatch', 'smart': 'mismatch'}, 'after': {'classic': 'refusal', 'smart': 'refusal'}, 'sanitized': {'classic': 'refusal', 'smart': 'refusal'}, 'before_sanitized': {'classic': 'mismatch', 'smart': 'mismatch'}}
+F13 seed1_case000089.json {'before': {'classic': 'mismatch', 'smart': 'mismatch'}, 'after': {'classic': 'refusal', 'smart': 'refusal'}, 'sanitized': {'classic': 'refusal', 'smart': 'refusal'}, 'before_sanitized': {'classic': 'mismatch', 'smart': 'mismatch'}}
+F13 seed1_459_original {'before': {'classic': 'refusal', 'smart': 'mismatch'}, 'after': {'classic': 'refusal', 'smart': 'refusal'}, 'sanitized': {'classic': 'refusal', 'smart': 'refusal'}, 'before_sanitized': {'classic': 'refusal', 'smart': 'mismatch'}}
+F13 seed1_case000459.json {'before': {'classic': 'refusal', 'smart': 'mismatch'}, 'after': {'classic': 'refusal', 'smart': 'refusal'}, 'sanitized': {'classic': 'refusal', 'smart': 'refusal'}, 'before_sanitized': {'classic': 'refusal', 'smart': 'mismatch'}}
+F13 seed2_217_original {'before': {'classic': 'refusal', 'smart': 'mismatch'}, 'after': {'classic': 'refusal', 'smart': 'refusal'}, 'sanitized': {'classic': 'refusal', 'smart': 'refusal'}, 'before_sanitized': {'classic': 'refusal', 'smart': 'mismatch'}}
+F13 seed2_case000217.json {'before': {'classic': 'refusal', 'smart': 'mismatch'}, 'after': {'classic': 'refusal', 'smart': 'refusal'}, 'sanitized': {'classic': 'refusal', 'smart': 'refusal'}, 'before_sanitized': {'classic': 'refusal', 'smart': 'mismatch'}}
+F13 seed1_193_retained {'before': {'classic': 'exact', 'smart': 'exact'}, 'after': {'classic': 'exact', 'smart': 'exact'}, 'sanitized': {'classic': 'exact', 'smart': 'exact'}, 'before_sanitized': {'classic': 'exact', 'smart': 'exact'}}
+F13 seed1_219_retained {'before': {'classic': 'refusal', 'smart': 'exact'}, 'after': {'classic': 'refusal', 'smart': 'exact'}, 'sanitized': {'classic': 'refusal', 'smart': 'exact'}, 'before_sanitized': {'classic': 'refusal', 'smart': 'exact'}}
+F13 seed1_425_retained {'before': {'classic': 'mismatch', 'smart': 'exact'}, 'after': {'classic': 'mismatch', 'smart': 'exact'}, 'sanitized': {'classic': 'mismatch', 'smart': 'exact'}, 'before_sanitized': {'classic': 'mismatch', 'smart': 'exact'}}

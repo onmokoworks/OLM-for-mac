@@ -1130,6 +1130,23 @@ static bool CheckedRadialGenericBudget(
 	return bytes <= kMaxBytes && work <= kMaxWork;
 }
 
+// Called only after IsGenericBaselineWorldPair validates aligned storage.
+template <typename PixelT>
+static bool GenericRadialInputIsFinite(const PF_EffectWorld *input)
+{
+	if constexpr (std::is_same<PixelT, PF_PixelFloat>::value) {
+		for (A_long y = 0; y < input->height; ++y) {
+			const PixelT *row = reinterpret_cast<const PixelT *>(
+				reinterpret_cast<const A_u_char *>(input->data) + (size_t)y * input->rowbytes);
+			for (A_long x = 0; x < input->width; ++x) {
+				if (!std::isfinite(row[x].alpha) || !std::isfinite(row[x].red) ||
+					!std::isfinite(row[x].green) || !std::isfinite(row[x].blue)) return false;
+			}
+		}
+	}
+	return true;
+}
+
 template <typename PixelT>
 static bool GenericRadialInputIsSDR(const PF_EffectWorld *input)
 {
@@ -2579,8 +2596,14 @@ static PF_Err RenderZoomTyped(
 	, PF_EffectWorld *noise_world = nullptr
 )
 {
+	// The Offset fallback can reach this function outside RenderWorld's SDR
+	// contract. Preserve finite signed/HDR inputs, but do not let the expanded
+	// generic profile admit unproven NaN/Inf arithmetic. Nonfinite input must
+	// still qualify through the older typed profiles below (no-op copies are
+	// handled before this path and preserve their original payload bytes).
 	const bool use_generic_baseline =
-		info.blur_type == 1 && IsGenericBaselineWorldPair<PixelT>(input, output, info);
+		info.blur_type == 1 && IsGenericBaselineWorldPair<PixelT>(input, output, info) &&
+		GenericRadialInputIsFinite<PixelT>(input);
 	const bool use_generic_size_noise =
 		info.blur_type == 1 && IsGenericSizeNoiseWorldPair<PixelT>(input, output, info);
 	const bool use_generic_type3 =
