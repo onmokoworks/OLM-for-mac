@@ -1,11 +1,11 @@
 status: partial
 
 summary:
-- Closed the tiny full-frame Smart ownership/admission cluster for the existing finite-SDR zero-ray and PF16/PF32 Alpha/box rules.
-- Seed 1 Smart improves 48/0/252 to 103/0/197 exact/mismatch/refusal; fresh seed 4 improves 40/0/260 to 93/0/207.
-- All baseline exact outputs and all Classic records are unchanged; 546 independent production cases and 600 campaign replays are sanitizer-clean.
-- Seventy saved inputs have no numerical regression; two Smart refusals become exact. Production corpus is explicitly rebased and strict replay is 8/8.
-- PF8 and tiny Gaussian investigations have new paired boundaries; they are not promoted by this first cluster commit.
+- Two clusters closed: tiny Smart ownership (`cc42826f`) and PF8 unit-strength Alpha normalization/admission (this commit).
+- Cumulative Smart seed1: 48 -> 103 -> 130 exact; seed4: 40 -> 93 -> 128 exact; zero admitted mismatches.
+- All baseline exact outputs are retained; independent matrices, sanitizer replays and corpus sample audits pass.
+- Detailed second-cluster facts and verification are in `C04-kira-smart-pf8.md`; the first-cluster record is retained below.
+- Tiny scalar Gaussian remains the third investigation; its Length1 counterexample is excluded from the candidate.
 
 facts:
 

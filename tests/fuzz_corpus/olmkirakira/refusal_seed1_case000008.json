@@ -1,4 +1,50 @@
 {
+  "C04_PF8_expectation_update": {
+    "previous_result": {
+      "first_mismatching_stage": null,
+      "oracle": {
+        "guards_intact": true,
+        "raw_sha256": "c9756ce9c0788c621582829142ee12038dbc71a632a0e3517fc53b09bdb0fbe5",
+        "session_clean": true,
+        "status": "ok"
+      },
+      "oracles": {
+        "classic": {
+          "guards_intact": true,
+          "raw_sha256": "5b6fb58e61fa475939767d68a446f97f1bff02c0e5935a3ea8bb51e6515783d8",
+          "session_clean": true,
+          "status": "ok"
+        },
+        "smart": {
+          "guards_intact": true,
+          "raw_sha256": "c9756ce9c0788c621582829142ee12038dbc71a632a0e3517fc53b09bdb0fbe5",
+          "session_clean": true,
+          "status": "ok"
+        }
+      },
+      "routes": {
+        "classic": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "0 0 0 0 0",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        },
+        "smart": {
+          "error": 516,
+          "metadata": {
+            "COUNTS": "1 1 1 25 25",
+            "ERROR": "516"
+          },
+          "status": "refusal"
+        }
+      },
+      "stage_observation": "paired stages unavailable; final raw output only"
+    },
+    "reason": "Fresh AEX Smart exact after scalar Alpha normalization and PF8 admission.",
+    "report": "orchestra/reports/C04-kira-smart-pf8.md"
+  },
   "C04_expectation_update": {
     "previous_result": {
       "first_mismatching_stage": null,
@@ -299,12 +345,13 @@
         "status": "refusal"
       },
       "smart": {
-        "error": 516,
+        "error": 0,
         "metadata": {
           "COUNTS": "1 1 1 25 25",
-          "ERROR": "516"
+          "ERROR": "0"
         },
-        "status": "refusal"
+        "raw_sha256": "c9756ce9c0788c621582829142ee12038dbc71a632a0e3517fc53b09bdb0fbe5",
+        "status": "exact"
       }
     },
     "stage_observation": "paired stages unavailable; final raw output only"

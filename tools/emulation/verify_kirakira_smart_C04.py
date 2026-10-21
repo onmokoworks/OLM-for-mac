@@ -19,18 +19,33 @@ from probe_kirakira_tiny_owner_F04 import owner_source
 
 
 def cases(adapter, family):
+    if family.endswith('-boundary'):
+        gaussian=family.startswith('gaussian')
+        depths=(8,16,32) if gaussian else (8,)
+        modes=(3,) if gaussian else (1,2)
+        for i,(depth,mode,angle,length) in enumerate(itertools.product(depths,modes,
+                (-2147483647,-3000000,0,45000000,2147483512),((2,1000) if gaussian else (1,1000)))):
+            case=matrix_case(adapter,i,(9,7),depth,1+i%2,mode,1)
+            values={5:1,6:100,8:100,9:100,40:angle/65536,
+                    10:length,16:length,22:length,28:length,34:0 if gaussian else min(length,500)}
+            for param in case['parameters']:
+                if param['slot'] in values: param['value']=values[param['slot']]
+            yield case
+        return
     geometries = ((1, 1), (1, 9), (9, 1), (3, 3), (5, 3), (8, 6), (7, 11))
+    if family.startswith('pf8') or family.startswith('gaussian'):
+        geometries += ((9,7),(17,11),(31,23))
     if family == 'zero':
         for i, (g, d, m, c) in enumerate(itertools.product(geometries, (8,16,32), (1,2,3), (1,2,3,4,5,6))):
             yield matrix_case(adapter, i, g, d, 1+i%2, m, c)
-    elif family in ('alpha', 'gaussian', 'pf8', 'pf8-flat'):
-        for i, (g, d, m, r) in enumerate(itertools.product(geometries, ((8,) if family.startswith('pf8') else (16,32)), ((3,) if family == 'gaussian' else (1,2)), range(6))):
+    elif family in ('alpha', 'gaussian', 'gaussian-all', 'pf8', 'pf8-flat'):
+        for i, (g, d, m, r) in enumerate(itertools.product(geometries, ((8,) if family.startswith('pf8') else ((8,16,32) if family == 'gaussian-all' else (16,32))), ((3,) if family.startswith('gaussian') else (1,2)), range(6))):
             case = matrix_case(adapter, i, g, d, 1+i%2, m, 1)
             values = {5: [1,1.25,7.5,100][i%4], 6:100, 8:100, 9:100,
                       40:[0,1,22,90,359,-31,137,45000000][i%8]/65536}
             for j, slot in enumerate((10,16,22,28,34)):
-                values[slot] = [1,2,7,15,50,300][(i+j)%6] if r in (j,5) else 0
-            if family == 'gaussian': values[34] = 0
+                values[slot] = ([2,3,7,15,50,300] if family.startswith('gaussian') else [1,2,7,15,50,300])[(i+j)%6] if r in (j,5) else 0
+            if family.startswith('gaussian'): values[34] = 0
             if family == 'pf8-flat': values.update({s:0 for s in (13,19,25,31,37)})
             for p in case['parameters']:
                 if p['slot'] in values: p['value'] = values[p['slot']]
@@ -58,7 +73,7 @@ def main():
     p.add_argument('--scratch', type=Path, required=True)
     p.add_argument('--report', type=Path, required=True)
     p.add_argument('--source', type=Path, default=olmkirakira.SOURCE)
-    p.add_argument('--family', choices=('zero','alpha','gaussian','pf8','pf8-flat'))
+    p.add_argument('--family', choices=('zero','alpha','gaussian','gaussian-all','pf8','pf8-flat','pf8-boundary','gaussian-boundary'))
     p.add_argument('--gate-off', action='store_true')
     p.add_argument('--before-source', type=Path)
     p.add_argument('--campaign-dir', type=Path)

@@ -772,11 +772,12 @@ static PF_Err RenderTyped(PF_EffectWorld *input, PF_EffectWorld *output, const O
 	for (FloatRGBA &g : glow) {
 		if (g.a > 1.0e-6f) {
 			// FUN_18114fd90 uses one reciprocal and three multiplies.
-			// F09 extends the PF32 proof to PF16: C28 matches through
-			// the rays and first differs at these separate divisions.
-			// PF8 retains its existing boundary pending the independent
-			// seed/ray differences in its corpus (see the F09 report).
-			if (bitdepth != 8) {
+			// F09 proves PF16/32; C04 proves the PF8 unit-exponent Alpha
+			// scalar branch through source, seed and every ray. Restore its
+			// first differing operation here. Other PF8 seed branches retain
+			// their prior boundary until their upstream arithmetic is closed.
+			if (bitdepth != 8 ||
+				(info.channel == 1 && info.strength_multiplier == 1.0)) {
 				const float inverse_alpha = 1.0f / g.a;
 				g.r *= inverse_alpha;
 				g.g *= inverse_alpha;
@@ -1421,17 +1422,20 @@ static bool IsZeroRayTuple(const OLMKiraKiraInfo &info)
 		info.highlight_radius == 0;
 }
 
-static bool IsAlphaBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format)
+static bool IsAlphaBoxTuple(const OLMKiraKiraInfo &info, PF_PixelFormat format,
+	bool admit_pf8 = false)
 {
 	// F12: the Alpha constructor (18114edf0) produces one scalar channel.
 	// Strength 100% makes its powf exponent exactly one; Fade Out is unused.
 	// Modes 1/2 select one/three box passes in 181150790, and the Highlight
 	// branch in 18114f4a0 uses the corresponding isotropic box passes. F11
 	// recovers their shared float sin/cos and workspace extent arithmetic.
-	// Keep the PF8 normalization difference, color seed constructors, Gaussian,
-	// resizing, and opacity materialization outside this admission. The caller
+	// C04 additionally proves PF8 on Smart after scalar normalization recovery.
+	// Keep color seed constructors, Gaussian, resizing and opacity materialization
+	// outside this admission. The caller
 	// still requires finite SDR pixels and the existing full-frame/layout caps.
-	if ((format != PF_PixelFormat_ARGB64 && format != PF_PixelFormat_ARGB128) ||
+	if ((format != PF_PixelFormat_ARGB64 && format != PF_PixelFormat_ARGB128 &&
+		 !(admit_pf8 && format == PF_PixelFormat_ARGB32)) ||
 		info.channel != 1 || (info.blur_mode != 1 && info.blur_mode != 2) ||
 		(info.merge_mode != 1 && info.merge_mode != 2) ||
 		info.approximated_input || info.strength_multiplier != 1.0 ||
@@ -2477,7 +2481,7 @@ static PF_Err SmartRender(PF_InData *in_data, PF_OutData *out_data, PF_SmartRend
 				generic_world_layout && pre_is_generic_beta &&
 				(IsGenericBetaTupleForGeometry(
 					info, input_world->width, input_world->height) ||
-				 IsAlphaBoxTuple(info, format) ||
+				 IsAlphaBoxTuple(info, format, true) ||
 				 IsZeroRayTuple(info)) &&
 				GenericBetaInputIsFiniteSDR(input_world, format);
 			KiraDiagnosticLog(
