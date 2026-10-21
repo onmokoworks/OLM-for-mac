@@ -68,7 +68,7 @@ class PublicAdapter:
             elif kind == 'p':
                 value = [round(v*extent/100*65536)/65536 for v,extent in zip(d['default_components'], (w,h))]
             elif kind == 'c':
-                value = list(d['default_components'])
+                value = list(d['default_color'])
             elif kind in ('i','u','b'):
                 value = int(value)
             result.append({'slot':d['slot'], 'kind':kind, 'value':value})
@@ -161,6 +161,18 @@ class PublicAdapter:
             raise RuntimeError('Public harness build failed: '+repr(status)+' '+err.decode(errors='replace')[-4000:])
         return out
 
+    def compile_sdk(self, scratch, body, source, deadline, cores=()):
+        host = scratch/'host.cpp';host.write_text(body)
+        binary = scratch/'mac'
+        sdk = self.compile(['xcrun','--show-sdk-path'],deadline).decode().strip()
+        self.compile(['clang++','-std=c++17','-arch','arm64','-O2','-fno-fast-math','-ffp-contract=off',
+            '-Wno-deprecated-declarations','-Wno-pragma-pack','-ffunction-sections','-fdata-sections',
+            '-isysroot',sdk,*[x for p in ('Headers','Headers/SP','Util','Resources') for x in ('-I',self.main/p)],
+            '-I',ROOT/'core',host,source.with_name(source.stem+'_Strings.cpp'),*cores,
+            self.main/'Util/AEGP_SuiteHandler.cpp',self.main/'Util/MissingSuiteError.cpp',
+            '-Wl,-dead_strip','-framework','Cocoa','-o',binary],deadline)
+        return binary
+
     def oracle(self, case, directory, deadline):
         with tempfile.TemporaryDirectory(prefix='native_',dir=directory) as td:
             return self._oracle(case,Path(td),deadline)
@@ -192,7 +204,7 @@ class PublicAdapter:
             setup = next(m['setup'] for m in decoded if m['type']=='session_ready')
             frame = next(m for m in decoded if m['type']=='frame_done')
             close = next(m['close'] for m in decoded if m['type']=='session_closed')
-            keys = ('slot','param_type','valid_min','valid_max','default_value','default_components')
+            keys = ('slot','param_type','valid_min','valid_max','default_value','default_components','default_color')
             actual = [{k:d.get(k) for k in keys} for d in setup['parameters']]
             expected = [{k:d.get(k) for k in keys} for d in self.binding['parameters']]
             if actual!=expected:

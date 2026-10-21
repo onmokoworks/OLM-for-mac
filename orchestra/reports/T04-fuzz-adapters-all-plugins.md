@@ -1,7 +1,7 @@
 status: partial
 
 summary:
-- Added typed public-path adapters and measured 1/9 requested 300-case seed-1 campaigns so far.
+- Added typed public-path adapters and measured 2/9 requested 300-case seed-1 campaigns so far.
 - Original AEX Smart via the retained worker; production Mac Classic and Smart via existing public replay hosts.
 - Raw comparisons, bounded shrinking, separate refusal/budget/error counters, and a 2,000,000-byte corpus cap.
 - No production plugin, release gate, ledger, MAIN, emulator source, or installed bundle changes.
@@ -15,7 +15,7 @@ facts:
 | plugin | AEX ok/reject/budget | Classic exact/mismatch/refusal | Smart exact/mismatch/refusal | clusters | worker SHA-256 |
 |---|---|---|---|---|---|
 | olmdirectionalblur | 298/0/2 | 115/56/128 | 115/56/128 | 18 | `3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261` |
-| olmcolorkey | pending | pending | pending | — | — |
+| olmcolorkey | 300/0/0 | 256/3/41 | 256/3/41 | 2 | `3cb4855b7b3fb235388391cca11ddd1aa70fb6b2d4e34737a3e368d621184261` |
 | olmsmoother2 | pending | pending | pending | — | — |
 | olmkirakira | pending | pending | pending | — | — |
 | olmblur | pending | pending | pending | — | — |
@@ -27,6 +27,9 @@ facts:
 - `olmdirectionalblur`: `complete`, 300/300 cases, 30.89 s; corpus 56 files / 376132 bytes. Full counters: `{"aex_budget": 2, "aex_ok": 298, "both_routes_exact": 115, "classic_exact": 115, "classic_mismatch": 56, "classic_refusal": 128, "classic_uncompared": 1, "pixel_mismatch_cases": 56, "smart_exact": 115, "smart_mismatch": 56, "smart_refusal": 128, "smart_uncompared": 1}`. Campaign SHA-256 `24ca2fc461491bef2ea01ebee0a0af6138c2a8bd4b047f8409abec1d797c1ef6`; AEX `d3e5e4079a759d521dc7457ebf998487fe43b00f182a1e2f910b187936b6c06e`.
   First mismatch: seed 1, index 0, PF8, [21, 19], classic: `{"actual_bytes": 1596, "actual_word_hex": "50", "different_bytes": 34, "different_words": 34, "expected_bytes": 1596, "expected_word_hex": "54", "first_byte": 24, "first_word": 24}`.
   Corpus replay: 56/56 match saved statuses and raw hashes; replay_complete.
+- `olmcolorkey`: `complete`, 300/300 cases, 9.0629 s; corpus 3 files / 76619 bytes. Full counters: `{"aex_ok": 300, "both_routes_exact": 256, "classic_exact": 256, "classic_mismatch": 3, "classic_refusal": 41, "pixel_mismatch_cases": 3, "smart_exact": 256, "smart_mismatch": 3, "smart_refusal": 41}`. Campaign SHA-256 `aecda1de554621452af602ec7071c3883bd5b8a3ce3d44ec49295d2c7344b8bb`; AEX `9c6cca226a52d35ce7833fcc4c0f914f6b15b3abe0202e0957ba97ba3bb2cf2c`.
+  First mismatch: seed 1, index 20, PF32, [10, 22], classic: `{"actual_bytes": 3520, "actual_word_hex": "00000080", "different_bytes": 21, "different_words": 21, "expected_bytes": 3520, "expected_word_hex": "00000000", "first_byte": 3, "first_word": 0}`.
+  Corpus replay: 3/3 match saved statuses and raw hashes; replay_complete.
 
 inference:
 - These are finite CPU-emulation residuals, not native AE or Windows UCRT equivalence. Signature clusters are not proven causes; no numerical production changes were attempted.
@@ -47,8 +50,10 @@ verify:
 ```sh
 python3 tools/fuzz/run.py --plugin olmdirectionalblur --n 300 --seed 1 --scratch orchestra/state/T04-fuzz-adapters-all-plugins --report orchestra/state/T04-fuzz-adapters-all-plugins/olmdirectionalblur-verify.json --corpus orchestra/state/T04-fuzz-adapters-all-plugins/olmdirectionalblur-verify-corpus
 python3 tools/fuzz/run.py --plugin olmdirectionalblur --replay tests/fuzz_corpus/olmdirectionalblur --budget-minutes 5 --scratch orchestra/state/T04-fuzz-adapters-all-plugins --report orchestra/state/T04-fuzz-adapters-all-plugins/olmdirectionalblur-verify-replay.json
+python3 tools/fuzz/run.py --plugin olmcolorkey --n 300 --seed 1 --scratch orchestra/state/T04-fuzz-adapters-all-plugins --report orchestra/state/T04-fuzz-adapters-all-plugins/olmcolorkey-verify.json --corpus orchestra/state/T04-fuzz-adapters-all-plugins/olmcolorkey-verify-corpus
+python3 tools/fuzz/run.py --plugin olmcolorkey --replay tests/fuzz_corpus/olmcolorkey --budget-minutes 5 --scratch orchestra/state/T04-fuzz-adapters-all-plugins --report orchestra/state/T04-fuzz-adapters-all-plugins/olmcolorkey-verify-replay.json
 ```
 Expected: campaigns complete 300 cases with zero framework errors; retained corpus replay matches saved raw hashes/statuses. Keep the recorded worker/source hashes for comparable measurements. Read full counters for uncompared/error cells in addition to the compact summary table.
 
 next:
-- Continue in ticket order: olmcolorkey, olmsmoother2, olmkirakira, olmblur, colorkeep, olmdistancegradation, olmsmoother, olmtoondilate.
+- Continue in ticket order: olmsmoother2, olmkirakira, olmblur, colorkeep, olmdistancegradation, olmsmoother, olmtoondilate.
