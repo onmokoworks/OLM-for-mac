@@ -71,3 +71,11 @@ Acceptance rule for this ticket, per route and per case:
 The generic-world Classic refusal you found is therefore allowed. Proceed: run the 390 and 9,645
 gates to completion (background, logs, --jobs 2), seed 1 n 500 fuzz, then rebaseline the radialblur
 corpus if and only if every change is in the allowed set. Report the table.
+
+## Round 5 (orchestrator)
+Correct stop. Short round only:
+1. Attribute the exact->refusal cases (seed 1 #193 Classic+Smart, #425 Smart) with OLM_REFUSAL_TRACE.
+2. If the guard is the candidate's work-budget estimate: report estimated work, the cap, the
+   base estimate, and the AEX/Mac runtime of those cases. Then propose (do not apply) two options:
+   (a) budget estimate fix that keeps them admitted with justification, (b) cap removal.
+3. If it is any other guard: find why the candidate routes them there and fix so they stay exact.
